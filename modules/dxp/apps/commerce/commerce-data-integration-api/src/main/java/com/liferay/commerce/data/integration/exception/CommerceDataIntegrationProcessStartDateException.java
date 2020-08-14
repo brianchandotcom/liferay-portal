@@ -30,13 +30,15 @@ public class CommerceDataIntegrationProcessStartDateException
 	}
 
 	public CommerceDataIntegrationProcessStartDateException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceDataIntegrationProcessStartDateException(Throwable cause) {
-		super(cause);
+	public CommerceDataIntegrationProcessStartDateException(
+		Throwable throwable) {
+
+		super(throwable);
 	}
 
 }

@@ -28,12 +28,12 @@ public class CommerceAccountOrdersException extends ModelListenerException {
 		super(msg);
 	}
 
-	public CommerceAccountOrdersException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceAccountOrdersException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommerceAccountOrdersException(Throwable cause) {
-		super(cause);
+	public CommerceAccountOrdersException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -28,12 +28,12 @@ public class NoSuchInventoryWarehouseException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchInventoryWarehouseException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchInventoryWarehouseException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchInventoryWarehouseException(Throwable cause) {
-		super(cause);
+	public NoSuchInventoryWarehouseException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

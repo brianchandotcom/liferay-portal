@@ -29,13 +29,13 @@ public class CommerceInventoryWarehouseNameException extends PortalException {
 	}
 
 	public CommerceInventoryWarehouseNameException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceInventoryWarehouseNameException(Throwable cause) {
-		super(cause);
+	public CommerceInventoryWarehouseNameException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

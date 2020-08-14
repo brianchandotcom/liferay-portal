@@ -30,13 +30,13 @@ public class NoSuchAccountGroupCommerceAccountRelException
 	}
 
 	public NoSuchAccountGroupCommerceAccountRelException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public NoSuchAccountGroupCommerceAccountRelException(Throwable cause) {
-		super(cause);
+	public NoSuchAccountGroupCommerceAccountRelException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

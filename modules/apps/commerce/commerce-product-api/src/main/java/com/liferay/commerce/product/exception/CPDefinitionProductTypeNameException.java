@@ -28,12 +28,14 @@ public class CPDefinitionProductTypeNameException extends PortalException {
 		super(msg);
 	}
 
-	public CPDefinitionProductTypeNameException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPDefinitionProductTypeNameException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public CPDefinitionProductTypeNameException(Throwable cause) {
-		super(cause);
+	public CPDefinitionProductTypeNameException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

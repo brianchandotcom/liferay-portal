@@ -28,12 +28,14 @@ public class DuplicateCommerceOrderNoteException extends PortalException {
 		super(msg);
 	}
 
-	public DuplicateCommerceOrderNoteException(String msg, Throwable cause) {
-		super(msg, cause);
+	public DuplicateCommerceOrderNoteException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public DuplicateCommerceOrderNoteException(Throwable cause) {
-		super(cause);
+	public DuplicateCommerceOrderNoteException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

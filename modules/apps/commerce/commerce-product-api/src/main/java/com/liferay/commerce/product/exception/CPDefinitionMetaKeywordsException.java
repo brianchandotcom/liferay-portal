@@ -28,12 +28,12 @@ public class CPDefinitionMetaKeywordsException extends PortalException {
 		super(msg);
 	}
 
-	public CPDefinitionMetaKeywordsException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPDefinitionMetaKeywordsException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CPDefinitionMetaKeywordsException(Throwable cause) {
-		super(cause);
+	public CPDefinitionMetaKeywordsException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

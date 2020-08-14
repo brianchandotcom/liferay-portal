@@ -28,12 +28,12 @@ public class NoSuchCountryException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchCountryException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchCountryException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchCountryException(Throwable cause) {
-		super(cause);
+	public NoSuchCountryException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

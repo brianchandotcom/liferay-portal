@@ -30,13 +30,13 @@ public class CPDefinitionVirtualSettingTermsOfUseException
 	}
 
 	public CPDefinitionVirtualSettingTermsOfUseException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CPDefinitionVirtualSettingTermsOfUseException(Throwable cause) {
-		super(cause);
+	public CPDefinitionVirtualSettingTermsOfUseException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -28,12 +28,12 @@ public class GuestCartMaxAllowedException extends PortalException {
 		super(msg);
 	}
 
-	public GuestCartMaxAllowedException(String msg, Throwable cause) {
-		super(msg, cause);
+	public GuestCartMaxAllowedException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public GuestCartMaxAllowedException(Throwable cause) {
-		super(cause);
+	public GuestCartMaxAllowedException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

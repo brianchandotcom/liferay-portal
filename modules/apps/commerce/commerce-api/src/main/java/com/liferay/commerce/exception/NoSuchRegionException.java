@@ -28,12 +28,12 @@ public class NoSuchRegionException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchRegionException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchRegionException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchRegionException(Throwable cause) {
-		super(cause);
+	public NoSuchRegionException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

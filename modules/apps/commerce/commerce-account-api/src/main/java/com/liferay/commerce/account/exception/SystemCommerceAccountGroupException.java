@@ -28,12 +28,14 @@ public class SystemCommerceAccountGroupException extends PortalException {
 		super(msg);
 	}
 
-	public SystemCommerceAccountGroupException(String msg, Throwable cause) {
-		super(msg, cause);
+	public SystemCommerceAccountGroupException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public SystemCommerceAccountGroupException(Throwable cause) {
-		super(cause);
+	public SystemCommerceAccountGroupException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

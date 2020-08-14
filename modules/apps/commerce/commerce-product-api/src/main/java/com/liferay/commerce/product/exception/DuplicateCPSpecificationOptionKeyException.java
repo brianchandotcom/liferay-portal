@@ -30,13 +30,13 @@ public class DuplicateCPSpecificationOptionKeyException
 	}
 
 	public DuplicateCPSpecificationOptionKeyException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public DuplicateCPSpecificationOptionKeyException(Throwable cause) {
-		super(cause);
+	public DuplicateCPSpecificationOptionKeyException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

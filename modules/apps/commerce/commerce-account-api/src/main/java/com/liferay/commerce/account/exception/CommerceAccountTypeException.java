@@ -28,12 +28,12 @@ public class CommerceAccountTypeException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceAccountTypeException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceAccountTypeException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommerceAccountTypeException(Throwable cause) {
-		super(cause);
+	public CommerceAccountTypeException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

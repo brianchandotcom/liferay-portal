@@ -30,13 +30,13 @@ public class CommercePriceModifierExpirationDateException
 	}
 
 	public CommercePriceModifierExpirationDateException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommercePriceModifierExpirationDateException(Throwable cause) {
-		super(cause);
+	public CommercePriceModifierExpirationDateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

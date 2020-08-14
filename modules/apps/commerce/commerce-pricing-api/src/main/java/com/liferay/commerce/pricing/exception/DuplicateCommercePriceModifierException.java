@@ -29,13 +29,13 @@ public class DuplicateCommercePriceModifierException extends PortalException {
 	}
 
 	public DuplicateCommercePriceModifierException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public DuplicateCommercePriceModifierException(Throwable cause) {
-		super(cause);
+	public DuplicateCommercePriceModifierException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

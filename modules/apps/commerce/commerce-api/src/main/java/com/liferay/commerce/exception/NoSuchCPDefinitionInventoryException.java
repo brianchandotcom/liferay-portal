@@ -28,12 +28,14 @@ public class NoSuchCPDefinitionInventoryException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchCPDefinitionInventoryException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchCPDefinitionInventoryException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public NoSuchCPDefinitionInventoryException(Throwable cause) {
-		super(cause);
+	public NoSuchCPDefinitionInventoryException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

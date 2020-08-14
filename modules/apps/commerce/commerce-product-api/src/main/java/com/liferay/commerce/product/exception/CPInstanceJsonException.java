@@ -28,12 +28,12 @@ public class CPInstanceJsonException extends PortalException {
 		super(msg);
 	}
 
-	public CPInstanceJsonException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPInstanceJsonException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CPInstanceJsonException(Throwable cause) {
-		super(cause);
+	public CPInstanceJsonException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

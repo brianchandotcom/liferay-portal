@@ -28,12 +28,14 @@ public class CommerceOrderShippingMethodException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceOrderShippingMethodException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceOrderShippingMethodException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public CommerceOrderShippingMethodException(Throwable cause) {
-		super(cause);
+	public CommerceOrderShippingMethodException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -28,12 +28,12 @@ public class NoSuchTaxFixedRateException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchTaxFixedRateException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchTaxFixedRateException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchTaxFixedRateException(Throwable cause) {
-		super(cause);
+	public NoSuchTaxFixedRateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

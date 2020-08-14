@@ -28,12 +28,12 @@ public class CommerceOrderNoteContentException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceOrderNoteContentException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceOrderNoteContentException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommerceOrderNoteContentException(Throwable cause) {
-		super(cause);
+	public CommerceOrderNoteContentException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -28,12 +28,14 @@ public class CommerceCountryAlreadyExistsException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceCountryAlreadyExistsException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceCountryAlreadyExistsException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public CommerceCountryAlreadyExistsException(Throwable cause) {
-		super(cause);
+	public CommerceCountryAlreadyExistsException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

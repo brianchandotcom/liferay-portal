@@ -28,12 +28,12 @@ public class CommerceSubscriptionTypeException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceSubscriptionTypeException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceSubscriptionTypeException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommerceSubscriptionTypeException(Throwable cause) {
-		super(cause);
+	public CommerceSubscriptionTypeException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

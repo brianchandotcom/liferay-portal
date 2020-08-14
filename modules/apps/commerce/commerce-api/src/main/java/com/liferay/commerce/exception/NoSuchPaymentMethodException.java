@@ -28,12 +28,12 @@ public class NoSuchPaymentMethodException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchPaymentMethodException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchPaymentMethodException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchPaymentMethodException(Throwable cause) {
-		super(cause);
+	public NoSuchPaymentMethodException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

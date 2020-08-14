@@ -28,12 +28,14 @@ public class CommercePriceModifierTargetException extends PortalException {
 		super(msg);
 	}
 
-	public CommercePriceModifierTargetException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommercePriceModifierTargetException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public CommercePriceModifierTargetException(Throwable cause) {
-		super(cause);
+	public CommercePriceModifierTargetException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

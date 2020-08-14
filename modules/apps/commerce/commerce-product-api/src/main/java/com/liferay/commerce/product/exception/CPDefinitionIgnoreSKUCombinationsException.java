@@ -30,13 +30,13 @@ public class CPDefinitionIgnoreSKUCombinationsException
 	}
 
 	public CPDefinitionIgnoreSKUCombinationsException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CPDefinitionIgnoreSKUCombinationsException(Throwable cause) {
-		super(cause);
+	public CPDefinitionIgnoreSKUCombinationsException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

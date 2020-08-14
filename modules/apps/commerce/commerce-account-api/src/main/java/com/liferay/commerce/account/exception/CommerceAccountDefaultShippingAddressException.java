@@ -30,13 +30,13 @@ public class CommerceAccountDefaultShippingAddressException
 	}
 
 	public CommerceAccountDefaultShippingAddressException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceAccountDefaultShippingAddressException(Throwable cause) {
-		super(cause);
+	public CommerceAccountDefaultShippingAddressException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

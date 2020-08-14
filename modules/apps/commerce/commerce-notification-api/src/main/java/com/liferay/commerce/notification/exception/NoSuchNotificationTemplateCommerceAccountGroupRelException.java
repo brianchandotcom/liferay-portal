@@ -32,15 +32,15 @@ public class NoSuchNotificationTemplateCommerceAccountGroupRelException
 	}
 
 	public NoSuchNotificationTemplateCommerceAccountGroupRelException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
 	public NoSuchNotificationTemplateCommerceAccountGroupRelException(
-		Throwable cause) {
+		Throwable throwable) {
 
-		super(cause);
+		super(throwable);
 	}
 
 }

@@ -28,12 +28,12 @@ public class CPInstanceSkuException extends PortalException {
 		super(msg);
 	}
 
-	public CPInstanceSkuException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPInstanceSkuException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CPInstanceSkuException(Throwable cause) {
-		super(cause);
+	public CPInstanceSkuException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

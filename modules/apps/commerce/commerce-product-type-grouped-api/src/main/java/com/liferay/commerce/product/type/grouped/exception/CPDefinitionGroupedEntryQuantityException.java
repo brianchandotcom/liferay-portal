@@ -29,13 +29,13 @@ public class CPDefinitionGroupedEntryQuantityException extends PortalException {
 	}
 
 	public CPDefinitionGroupedEntryQuantityException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CPDefinitionGroupedEntryQuantityException(Throwable cause) {
-		super(cause);
+	public CPDefinitionGroupedEntryQuantityException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

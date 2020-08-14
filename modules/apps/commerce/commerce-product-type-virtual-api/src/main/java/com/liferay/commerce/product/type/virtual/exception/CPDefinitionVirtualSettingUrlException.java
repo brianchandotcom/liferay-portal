@@ -28,12 +28,14 @@ public class CPDefinitionVirtualSettingUrlException extends PortalException {
 		super(msg);
 	}
 
-	public CPDefinitionVirtualSettingUrlException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPDefinitionVirtualSettingUrlException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public CPDefinitionVirtualSettingUrlException(Throwable cause) {
-		super(cause);
+	public CPDefinitionVirtualSettingUrlException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

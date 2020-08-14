@@ -194,27 +194,31 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 					_transactionConfig, cpDefinitionVisibilityCallable);
 			}
 		}
-		catch (Throwable t) {
-			if (t instanceof NoSuchCPDefinitionException ||
-				t instanceof PrincipalException) {
+		catch (Throwable throwable) {
+			if (throwable instanceof NoSuchCPDefinitionException ||
+				throwable instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (t instanceof AssetCategoryException ||
-					 t instanceof AssetTagException ||
-					 t instanceof CPDefinitionExpirationDateException ||
-					 t instanceof CPDefinitionMetaDescriptionException ||
-					 t instanceof CPDefinitionMetaKeywordsException ||
-					 t instanceof CPDefinitionMetaTitleException ||
-					 t instanceof CPDefinitionNameDefaultLanguageException ||
-					 t instanceof FriendlyURLLengthException ||
-					 t instanceof NoSuchCatalogException ||
-					 t instanceof NoSuchCPDefinitionInventoryException ||
-					 t instanceof NumberFormatException) {
+			else if (throwable instanceof AssetCategoryException ||
+					 throwable instanceof AssetTagException ||
+					 throwable instanceof CPDefinitionExpirationDateException ||
+					 throwable instanceof
+						 CPDefinitionMetaDescriptionException ||
+					 throwable instanceof CPDefinitionMetaKeywordsException ||
+					 throwable instanceof CPDefinitionMetaTitleException ||
+					 throwable instanceof
+						 CPDefinitionNameDefaultLanguageException ||
+					 throwable instanceof FriendlyURLLengthException ||
+					 throwable instanceof NoSuchCatalogException ||
+					 throwable instanceof
+						 NoSuchCPDefinitionInventoryException ||
+					 throwable instanceof NumberFormatException) {
 
-				SessionErrors.add(actionRequest, t.getClass(), t);
+				SessionErrors.add(
+					actionRequest, throwable.getClass(), throwable);
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
@@ -222,9 +226,9 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
-				_log.error(t, t);
+				_log.error(throwable, throwable);
 
-				throw new Exception(t);
+				throw new Exception(throwable);
 			}
 		}
 	}

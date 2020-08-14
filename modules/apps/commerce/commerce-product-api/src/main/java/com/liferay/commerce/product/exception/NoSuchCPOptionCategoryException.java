@@ -28,12 +28,12 @@ public class NoSuchCPOptionCategoryException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchCPOptionCategoryException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchCPOptionCategoryException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchCPOptionCategoryException(Throwable cause) {
-		super(cause);
+	public NoSuchCPOptionCategoryException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

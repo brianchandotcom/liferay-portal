@@ -447,8 +447,8 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 		try {
 			return TransactionInvokerUtil.invoke(_transactionConfig, callable);
 		}
-		catch (Throwable t) {
-			throw new PortalException(t);
+		catch (Throwable throwable) {
+			throw new PortalException(throwable);
 		}
 	}
 

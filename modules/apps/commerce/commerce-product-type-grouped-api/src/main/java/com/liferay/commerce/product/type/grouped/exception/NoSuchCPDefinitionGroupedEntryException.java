@@ -30,13 +30,13 @@ public class NoSuchCPDefinitionGroupedEntryException
 	}
 
 	public NoSuchCPDefinitionGroupedEntryException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public NoSuchCPDefinitionGroupedEntryException(Throwable cause) {
-		super(cause);
+	public NoSuchCPDefinitionGroupedEntryException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

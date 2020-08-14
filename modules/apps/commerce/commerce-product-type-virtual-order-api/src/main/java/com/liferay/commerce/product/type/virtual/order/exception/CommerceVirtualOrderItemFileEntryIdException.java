@@ -30,13 +30,13 @@ public class CommerceVirtualOrderItemFileEntryIdException
 	}
 
 	public CommerceVirtualOrderItemFileEntryIdException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceVirtualOrderItemFileEntryIdException(Throwable cause) {
-		super(cause);
+	public CommerceVirtualOrderItemFileEntryIdException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

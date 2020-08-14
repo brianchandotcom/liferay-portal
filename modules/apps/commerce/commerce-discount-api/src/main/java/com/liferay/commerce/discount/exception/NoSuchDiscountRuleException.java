@@ -28,12 +28,12 @@ public class NoSuchDiscountRuleException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchDiscountRuleException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchDiscountRuleException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchDiscountRuleException(Throwable cause) {
-		super(cause);
+	public NoSuchDiscountRuleException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

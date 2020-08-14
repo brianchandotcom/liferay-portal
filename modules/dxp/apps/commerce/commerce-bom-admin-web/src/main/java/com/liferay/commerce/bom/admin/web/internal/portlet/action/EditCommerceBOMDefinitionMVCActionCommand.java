@@ -105,23 +105,24 @@ public class EditCommerceBOMDefinitionMVCActionCommand
 				deleteCommerceBOMDefinition(actionRequest);
 			}
 		}
-		catch (Throwable t) {
-			if (t instanceof NoSuchBOMDefinitionException ||
-				t instanceof PrincipalException) {
+		catch (Throwable throwable) {
+			if ((throwable instanceof NoSuchBOMDefinitionException) ||
+				(t instanceof PrincipalException)) {
 
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (t instanceof DuplicateCPAttachmentFileEntryException ||
-					 t instanceof NoSuchFileEntryException) {
+			else if ((throwable instanceof
+						DuplicateCPAttachmentFileEntryException) ||
+					 (t instanceof NoSuchFileEntryException)) {
 
 				hideDefaultErrorMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 			}
 			else {
-				_log.error(t, t);
+				_log.error(throwable, throwable);
 			}
 		}
 

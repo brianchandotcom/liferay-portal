@@ -104,24 +104,24 @@ public class EditCommerceAccountMVCActionCommand extends BaseMVCActionCommand {
 				setCurrentAccount(actionRequest);
 			}
 		}
-		catch (Throwable t) {
-			if (t instanceof NoSuchAccountException ||
-				t instanceof NoSuchAddressException ||
-				t instanceof PrincipalException) {
+		catch (Throwable throwable) {
+			if (throwable instanceof NoSuchAccountException ||
+				throwable instanceof NoSuchAddressException ||
+				throwable instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (t instanceof CommerceAccountNameException ||
-					 t instanceof DuplicateCommerceAccountException) {
+			else if (throwable instanceof CommerceAccountNameException ||
+					 throwable instanceof DuplicateCommerceAccountException) {
 
 				hideDefaultErrorMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 			}
 			else {
-				_log.error(t, t);
+				_log.error(throwable, throwable);
 			}
 		}
 

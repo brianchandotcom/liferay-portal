@@ -30,15 +30,15 @@ public class DuplicateCommercePricingClassCPDefinitionRelException
 	}
 
 	public DuplicateCommercePricingClassCPDefinitionRelException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
 	public DuplicateCommercePricingClassCPDefinitionRelException(
-		Throwable cause) {
+		Throwable throwable) {
 
-		super(cause);
+		super(throwable);
 	}
 
 }

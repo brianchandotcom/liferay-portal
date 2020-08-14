@@ -28,12 +28,14 @@ public class CommerceDiscountCouponCodeException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceDiscountCouponCodeException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceDiscountCouponCodeException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public CommerceDiscountCouponCodeException(Throwable cause) {
-		super(cause);
+	public CommerceDiscountCouponCodeException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

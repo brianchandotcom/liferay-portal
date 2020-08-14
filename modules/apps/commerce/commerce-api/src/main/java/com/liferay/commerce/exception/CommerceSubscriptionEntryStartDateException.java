@@ -30,13 +30,13 @@ public class CommerceSubscriptionEntryStartDateException
 	}
 
 	public CommerceSubscriptionEntryStartDateException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceSubscriptionEntryStartDateException(Throwable cause) {
-		super(cause);
+	public CommerceSubscriptionEntryStartDateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

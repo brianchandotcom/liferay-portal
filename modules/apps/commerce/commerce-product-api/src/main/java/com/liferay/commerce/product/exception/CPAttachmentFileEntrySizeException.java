@@ -28,12 +28,12 @@ public class CPAttachmentFileEntrySizeException extends PortalException {
 		super(msg);
 	}
 
-	public CPAttachmentFileEntrySizeException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPAttachmentFileEntrySizeException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CPAttachmentFileEntrySizeException(Throwable cause) {
-		super(cause);
+	public CPAttachmentFileEntrySizeException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

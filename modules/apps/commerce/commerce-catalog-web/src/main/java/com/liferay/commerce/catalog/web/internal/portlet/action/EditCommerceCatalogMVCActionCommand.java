@@ -113,29 +113,29 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 					_transactionConfig, commerceCatalogCallable);
 			}
 		}
-		catch (Throwable t) {
-			if (t instanceof CommerceCatalogProductsException ||
-				t instanceof CommerceCatalogSystemException ||
-				t instanceof NoSuchPriceListException) {
+		catch (Throwable throwable) {
+			if (throwable instanceof CommerceCatalogProductsException ||
+				throwable instanceof CommerceCatalogSystemException ||
+				throwable instanceof NoSuchPriceListException) {
 
 				hideDefaultErrorMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
-			else if (t instanceof NoSuchCatalogException ||
-					 t instanceof PrincipalException) {
+			else if (throwable instanceof NoSuchCatalogException ||
+					 throwable instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
-				_log.error(t, t);
+				_log.error(throwable, throwable);
 			}
 		}
 	}

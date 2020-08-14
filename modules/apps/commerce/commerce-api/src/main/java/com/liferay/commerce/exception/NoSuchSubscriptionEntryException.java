@@ -28,12 +28,12 @@ public class NoSuchSubscriptionEntryException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchSubscriptionEntryException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchSubscriptionEntryException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchSubscriptionEntryException(Throwable cause) {
-		super(cause);
+	public NoSuchSubscriptionEntryException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

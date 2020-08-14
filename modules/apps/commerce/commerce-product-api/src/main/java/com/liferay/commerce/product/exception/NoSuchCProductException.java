@@ -28,12 +28,12 @@ public class NoSuchCProductException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchCProductException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchCProductException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchCProductException(Throwable cause) {
-		super(cause);
+	public NoSuchCProductException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

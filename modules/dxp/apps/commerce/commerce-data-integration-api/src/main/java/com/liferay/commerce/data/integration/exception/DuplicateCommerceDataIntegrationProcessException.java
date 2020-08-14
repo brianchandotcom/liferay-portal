@@ -30,13 +30,15 @@ public class DuplicateCommerceDataIntegrationProcessException
 	}
 
 	public DuplicateCommerceDataIntegrationProcessException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public DuplicateCommerceDataIntegrationProcessException(Throwable cause) {
-		super(cause);
+	public DuplicateCommerceDataIntegrationProcessException(
+		Throwable throwable) {
+
+		super(throwable);
 	}
 
 }

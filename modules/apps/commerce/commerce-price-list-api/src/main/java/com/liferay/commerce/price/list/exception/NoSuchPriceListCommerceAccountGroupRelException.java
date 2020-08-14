@@ -30,13 +30,15 @@ public class NoSuchPriceListCommerceAccountGroupRelException
 	}
 
 	public NoSuchPriceListCommerceAccountGroupRelException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public NoSuchPriceListCommerceAccountGroupRelException(Throwable cause) {
-		super(cause);
+	public NoSuchPriceListCommerceAccountGroupRelException(
+		Throwable throwable) {
+
+		super(throwable);
 	}
 
 }

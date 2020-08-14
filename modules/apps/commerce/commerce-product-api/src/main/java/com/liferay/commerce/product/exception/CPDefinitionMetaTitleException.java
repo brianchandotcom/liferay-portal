@@ -28,12 +28,12 @@ public class CPDefinitionMetaTitleException extends PortalException {
 		super(msg);
 	}
 
-	public CPDefinitionMetaTitleException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPDefinitionMetaTitleException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CPDefinitionMetaTitleException(Throwable cause) {
-		super(cause);
+	public CPDefinitionMetaTitleException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

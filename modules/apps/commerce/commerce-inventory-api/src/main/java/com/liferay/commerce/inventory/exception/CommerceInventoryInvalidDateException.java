@@ -28,12 +28,14 @@ public class CommerceInventoryInvalidDateException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceInventoryInvalidDateException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceInventoryInvalidDateException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public CommerceInventoryInvalidDateException(Throwable cause) {
-		super(cause);
+	public CommerceInventoryInvalidDateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

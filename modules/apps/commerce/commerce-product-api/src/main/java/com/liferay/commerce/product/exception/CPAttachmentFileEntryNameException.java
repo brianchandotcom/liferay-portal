@@ -28,12 +28,12 @@ public class CPAttachmentFileEntryNameException extends PortalException {
 		super(msg);
 	}
 
-	public CPAttachmentFileEntryNameException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPAttachmentFileEntryNameException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CPAttachmentFileEntryNameException(Throwable cause) {
-		super(cause);
+	public CPAttachmentFileEntryNameException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

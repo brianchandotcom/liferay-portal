@@ -30,13 +30,13 @@ public class CommerceAccountUserRelEmailAddressException
 	}
 
 	public CommerceAccountUserRelEmailAddressException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceAccountUserRelEmailAddressException(Throwable cause) {
-		super(cause);
+	public CommerceAccountUserRelEmailAddressException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

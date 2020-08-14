@@ -28,12 +28,12 @@ public class NoSuchCPMeasurementUnitException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchCPMeasurementUnitException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchCPMeasurementUnitException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchCPMeasurementUnitException(Throwable cause) {
-		super(cause);
+	public NoSuchCPMeasurementUnitException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

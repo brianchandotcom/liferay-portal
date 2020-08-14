@@ -28,12 +28,12 @@ public class CommerceAddressCountryException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceAddressCountryException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceAddressCountryException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommerceAddressCountryException(Throwable cause) {
-		super(cause);
+	public CommerceAddressCountryException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -114,26 +114,26 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 				deleteCommerceDiscounts(actionRequest);
 			}
 		}
-		catch (Throwable t) {
-			if (t instanceof CommerceDiscountCouponCodeException ||
-				t instanceof NoSuchCatalogException) {
+		catch (Throwable throwable) {
+			if (throwable instanceof CommerceDiscountCouponCodeException ||
+				throwable instanceof NoSuchCatalogException) {
 
 				hideDefaultErrorMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCommerceDiscount");
 			}
-			else if (t instanceof NoSuchDiscountException ||
-					 t instanceof PrincipalException) {
+			else if (throwable instanceof NoSuchDiscountException ||
+					 throwable instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else {
-				_log.error(t, t);
+				_log.error(throwable, throwable);
 			}
 		}
 	}

@@ -29,13 +29,13 @@ public class CommerceOrderPurchaseOrderNumberException extends PortalException {
 	}
 
 	public CommerceOrderPurchaseOrderNumberException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceOrderPurchaseOrderNumberException(Throwable cause) {
-		super(cause);
+	public CommerceOrderPurchaseOrderNumberException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

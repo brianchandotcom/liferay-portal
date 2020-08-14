@@ -97,18 +97,18 @@ public class InviteUserMVCActionCommand extends BaseMVCActionCommand {
 				TransactionInvokerUtil.invoke(_transactionConfig, userCallable);
 			}
 		}
-		catch (Throwable t) {
-			if (t instanceof NoSuchAccountUserRelException ||
-				t instanceof PrincipalException) {
+		catch (Throwable throwable) {
+			if ((throwable instanceof NoSuchAccountUserRelException) ||
+				(t instanceof PrincipalException)) {
 
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (t instanceof UserEmailAddressException) {
+			else if (throwable instanceof UserEmailAddressException) {
 				hideDefaultErrorMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 
 				String redirect = _portal.getCurrentURL(actionRequest);
 

@@ -30,13 +30,13 @@ public class DuplicateCPDefinitionOptionRelKeyException
 	}
 
 	public DuplicateCPDefinitionOptionRelKeyException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public DuplicateCPDefinitionOptionRelKeyException(Throwable cause) {
-		super(cause);
+	public DuplicateCPDefinitionOptionRelKeyException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

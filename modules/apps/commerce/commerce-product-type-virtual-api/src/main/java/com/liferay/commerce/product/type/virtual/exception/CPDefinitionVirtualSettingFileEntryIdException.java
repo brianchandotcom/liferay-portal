@@ -30,13 +30,13 @@ public class CPDefinitionVirtualSettingFileEntryIdException
 	}
 
 	public CPDefinitionVirtualSettingFileEntryIdException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CPDefinitionVirtualSettingFileEntryIdException(Throwable cause) {
-		super(cause);
+	public CPDefinitionVirtualSettingFileEntryIdException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -28,12 +28,14 @@ public class NoSuchAvailabilityEstimateException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchAvailabilityEstimateException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchAvailabilityEstimateException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public NoSuchAvailabilityEstimateException(Throwable cause) {
-		super(cause);
+	public NoSuchAvailabilityEstimateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -28,12 +28,14 @@ public class CPDefinitionOptionValueRelKeyException extends PortalException {
 		super(msg);
 	}
 
-	public CPDefinitionOptionValueRelKeyException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPDefinitionOptionValueRelKeyException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public CPDefinitionOptionValueRelKeyException(Throwable cause) {
-		super(cause);
+	public CPDefinitionOptionValueRelKeyException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

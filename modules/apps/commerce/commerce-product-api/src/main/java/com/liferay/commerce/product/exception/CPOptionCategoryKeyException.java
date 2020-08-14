@@ -28,12 +28,12 @@ public class CPOptionCategoryKeyException extends PortalException {
 		super(msg);
 	}
 
-	public CPOptionCategoryKeyException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPOptionCategoryKeyException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CPOptionCategoryKeyException(Throwable cause) {
-		super(cause);
+	public CPOptionCategoryKeyException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

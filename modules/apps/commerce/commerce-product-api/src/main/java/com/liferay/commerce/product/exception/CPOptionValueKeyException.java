@@ -28,12 +28,12 @@ public class CPOptionValueKeyException extends PortalException {
 		super(msg);
 	}
 
-	public CPOptionValueKeyException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPOptionValueKeyException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CPOptionValueKeyException(Throwable cause) {
-		super(cause);
+	public CPOptionValueKeyException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

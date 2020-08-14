@@ -30,13 +30,13 @@ public class CommerceCountryThreeLettersISOCodeException
 	}
 
 	public CommerceCountryThreeLettersISOCodeException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceCountryThreeLettersISOCodeException(Throwable cause) {
-		super(cause);
+	public CommerceCountryThreeLettersISOCodeException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

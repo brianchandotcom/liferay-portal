@@ -30,13 +30,13 @@ public class NoSuchPricingClassCPDefinitionRelException
 	}
 
 	public NoSuchPricingClassCPDefinitionRelException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public NoSuchPricingClassCPDefinitionRelException(Throwable cause) {
-		super(cause);
+	public NoSuchPricingClassCPDefinitionRelException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

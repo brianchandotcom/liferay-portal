@@ -28,12 +28,14 @@ public class DuplicateCommerceChannelRelException extends PortalException {
 		super(msg);
 	}
 
-	public DuplicateCommerceChannelRelException(String msg, Throwable cause) {
-		super(msg, cause);
+	public DuplicateCommerceChannelRelException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public DuplicateCommerceChannelRelException(Throwable cause) {
-		super(cause);
+	public DuplicateCommerceChannelRelException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -28,12 +28,12 @@ public class NoSuchCatalogException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchCatalogException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchCatalogException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchCatalogException(Throwable cause) {
-		super(cause);
+	public NoSuchCatalogException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

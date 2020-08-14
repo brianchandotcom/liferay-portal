@@ -29,13 +29,13 @@ public class CommerceCurrencyFractionDigitsException extends PortalException {
 	}
 
 	public CommerceCurrencyFractionDigitsException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceCurrencyFractionDigitsException(Throwable cause) {
-		super(cause);
+	public CommerceCurrencyFractionDigitsException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

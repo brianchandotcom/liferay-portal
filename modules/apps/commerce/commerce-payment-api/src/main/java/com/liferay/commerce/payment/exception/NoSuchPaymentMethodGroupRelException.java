@@ -28,12 +28,14 @@ public class NoSuchPaymentMethodGroupRelException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchPaymentMethodGroupRelException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchPaymentMethodGroupRelException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public NoSuchPaymentMethodGroupRelException(Throwable cause) {
-		super(cause);
+	public NoSuchPaymentMethodGroupRelException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

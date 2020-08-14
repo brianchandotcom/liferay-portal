@@ -28,12 +28,12 @@ public class GuestWishListMaxAllowedException extends PortalException {
 		super(msg);
 	}
 
-	public GuestWishListMaxAllowedException(String msg, Throwable cause) {
-		super(msg, cause);
+	public GuestWishListMaxAllowedException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public GuestWishListMaxAllowedException(Throwable cause) {
-		super(cause);
+	public GuestWishListMaxAllowedException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -30,13 +30,13 @@ public class NoSuchInventoryReplenishmentItemException
 	}
 
 	public NoSuchInventoryReplenishmentItemException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public NoSuchInventoryReplenishmentItemException(Throwable cause) {
-		super(cause);
+	public NoSuchInventoryReplenishmentItemException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

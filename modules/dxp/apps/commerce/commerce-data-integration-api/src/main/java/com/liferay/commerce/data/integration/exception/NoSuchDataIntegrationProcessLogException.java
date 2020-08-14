@@ -30,13 +30,13 @@ public class NoSuchDataIntegrationProcessLogException
 	}
 
 	public NoSuchDataIntegrationProcessLogException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public NoSuchDataIntegrationProcessLogException(Throwable cause) {
-		super(cause);
+	public NoSuchDataIntegrationProcessLogException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

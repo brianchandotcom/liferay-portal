@@ -28,12 +28,12 @@ public class NoSuchWishListException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchWishListException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchWishListException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchWishListException(Throwable cause) {
-		super(cause);
+	public NoSuchWishListException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

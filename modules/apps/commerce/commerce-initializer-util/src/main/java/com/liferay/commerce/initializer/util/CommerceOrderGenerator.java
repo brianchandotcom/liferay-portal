@@ -102,8 +102,8 @@ public class CommerceOrderGenerator {
 			TransactionInvokerUtil.invoke(
 				_transactionConfig, generateOrdersCallable);
 		}
-		catch (Throwable t) {
-			_log.error(t, t);
+		catch (Throwable throwable) {
+			_log.error(throwable, throwable);
 		}
 	}
 

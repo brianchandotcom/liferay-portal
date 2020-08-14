@@ -68,8 +68,8 @@ public class AccountsCommerceHealthHttpStatus
 			TransactionInvokerUtil.invoke(
 				_transactionConfig, accountRoleCallable);
 		}
-		catch (Throwable t) {
-			_log.error(t, t);
+		catch (Throwable throwable) {
+			_log.error(throwable, throwable);
 		}
 	}
 

@@ -29,13 +29,13 @@ public class CommerceNotificationTemplateFromException extends PortalException {
 	}
 
 	public CommerceNotificationTemplateFromException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceNotificationTemplateFromException(Throwable cause) {
-		super(cause);
+	public CommerceNotificationTemplateFromException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

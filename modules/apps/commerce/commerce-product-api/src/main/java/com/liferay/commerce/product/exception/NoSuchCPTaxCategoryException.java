@@ -28,12 +28,12 @@ public class NoSuchCPTaxCategoryException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchCPTaxCategoryException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchCPTaxCategoryException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchCPTaxCategoryException(Throwable cause) {
-		super(cause);
+	public NoSuchCPTaxCategoryException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

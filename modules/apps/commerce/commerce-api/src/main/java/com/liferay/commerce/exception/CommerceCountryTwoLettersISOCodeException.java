@@ -29,13 +29,13 @@ public class CommerceCountryTwoLettersISOCodeException extends PortalException {
 	}
 
 	public CommerceCountryTwoLettersISOCodeException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceCountryTwoLettersISOCodeException(Throwable cause) {
-		super(cause);
+	public CommerceCountryTwoLettersISOCodeException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -29,12 +29,14 @@ public class NoSuchNotificationAttachmentException
 		super(msg);
 	}
 
-	public NoSuchNotificationAttachmentException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchNotificationAttachmentException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public NoSuchNotificationAttachmentException(Throwable cause) {
-		super(cause);
+	public NoSuchNotificationAttachmentException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

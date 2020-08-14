@@ -29,13 +29,13 @@ public class CPDefinitionNameDefaultLanguageException extends PortalException {
 	}
 
 	public CPDefinitionNameDefaultLanguageException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CPDefinitionNameDefaultLanguageException(Throwable cause) {
-		super(cause);
+	public CPDefinitionNameDefaultLanguageException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

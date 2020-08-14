@@ -28,12 +28,12 @@ public class CPDisplayLayoutLayoutUuidException extends PortalException {
 		super(msg);
 	}
 
-	public CPDisplayLayoutLayoutUuidException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPDisplayLayoutLayoutUuidException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CPDisplayLayoutLayoutUuidException(Throwable cause) {
-		super(cause);
+	public CPDisplayLayoutLayoutUuidException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

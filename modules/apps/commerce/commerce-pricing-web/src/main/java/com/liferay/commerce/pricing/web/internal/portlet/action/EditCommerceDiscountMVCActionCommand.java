@@ -64,11 +64,12 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 				updateCommerceDiscount(actionRequest);
 			}
 		}
-		catch (Throwable t) {
-			if (t instanceof CommerceDiscountCouponCodeException ||
-				t instanceof NoSuchDiscountException) {
+		catch (Throwable throwable) {
+			if (throwable instanceof CommerceDiscountCouponCodeException ||
+				throwable instanceof NoSuchDiscountException) {
 
-				SessionErrors.add(actionRequest, t.getClass(), t);
+				SessionErrors.add(
+					actionRequest, throwable.getClass(), throwable);
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
@@ -76,7 +77,7 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}

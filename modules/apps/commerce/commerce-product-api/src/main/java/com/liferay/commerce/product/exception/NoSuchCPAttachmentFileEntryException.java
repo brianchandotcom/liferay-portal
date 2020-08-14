@@ -28,12 +28,14 @@ public class NoSuchCPAttachmentFileEntryException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchCPAttachmentFileEntryException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchCPAttachmentFileEntryException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public NoSuchCPAttachmentFileEntryException(Throwable cause) {
-		super(cause);
+	public NoSuchCPAttachmentFileEntryException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

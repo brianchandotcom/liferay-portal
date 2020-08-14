@@ -28,12 +28,12 @@ public class DuplicateCProductException extends PortalException {
 		super(msg);
 	}
 
-	public DuplicateCProductException(String msg, Throwable cause) {
-		super(msg, cause);
+	public DuplicateCProductException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public DuplicateCProductException(Throwable cause) {
-		super(cause);
+	public DuplicateCProductException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -29,13 +29,13 @@ public class CommerceDiscountExpirationDateException extends PortalException {
 	}
 
 	public CommerceDiscountExpirationDateException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceDiscountExpirationDateException(Throwable cause) {
-		super(cause);
+	public CommerceDiscountExpirationDateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

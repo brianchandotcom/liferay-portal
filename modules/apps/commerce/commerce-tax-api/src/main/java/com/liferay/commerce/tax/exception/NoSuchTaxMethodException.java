@@ -28,12 +28,12 @@ public class NoSuchTaxMethodException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchTaxMethodException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchTaxMethodException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchTaxMethodException(Throwable cause) {
-		super(cause);
+	public NoSuchTaxMethodException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

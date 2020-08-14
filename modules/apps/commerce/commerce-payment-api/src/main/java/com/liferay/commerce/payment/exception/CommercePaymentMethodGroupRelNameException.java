@@ -30,13 +30,13 @@ public class CommercePaymentMethodGroupRelNameException
 	}
 
 	public CommercePaymentMethodGroupRelNameException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommercePaymentMethodGroupRelNameException(Throwable cause) {
-		super(cause);
+	public CommercePaymentMethodGroupRelNameException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

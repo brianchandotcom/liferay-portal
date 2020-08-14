@@ -28,12 +28,12 @@ public class NoSuchCPDisplayLayoutException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchCPDisplayLayoutException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchCPDisplayLayoutException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchCPDisplayLayoutException(Throwable cause) {
-		super(cause);
+	public NoSuchCPDisplayLayoutException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

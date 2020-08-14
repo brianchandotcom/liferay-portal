@@ -32,15 +32,15 @@ public class CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException
 	}
 
 	public CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
 	public CPDefinitionVirtualSettingTermsOfUseArticleResourcePKException(
-		Throwable cause) {
+		Throwable throwable) {
 
-		super(cause);
+		super(throwable);
 	}
 
 }

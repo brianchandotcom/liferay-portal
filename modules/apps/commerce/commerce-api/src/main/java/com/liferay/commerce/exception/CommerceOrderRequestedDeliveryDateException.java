@@ -30,13 +30,13 @@ public class CommerceOrderRequestedDeliveryDateException
 	}
 
 	public CommerceOrderRequestedDeliveryDateException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceOrderRequestedDeliveryDateException(Throwable cause) {
-		super(cause);
+	public CommerceOrderRequestedDeliveryDateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

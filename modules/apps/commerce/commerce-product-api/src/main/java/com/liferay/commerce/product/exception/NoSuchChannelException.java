@@ -28,12 +28,12 @@ public class NoSuchChannelException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchChannelException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchChannelException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchChannelException(Throwable cause) {
-		super(cause);
+	public NoSuchChannelException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

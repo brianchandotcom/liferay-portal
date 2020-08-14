@@ -28,12 +28,12 @@ public class NoSuchCurrencyException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchCurrencyException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchCurrencyException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchCurrencyException(Throwable cause) {
-		super(cause);
+	public NoSuchCurrencyException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -71,8 +71,8 @@ public class UpdateCommerceMLForecastAlertEntryMVCActionCommand
 					status);
 			}
 		}
-		catch (Throwable t) {
-			if (t instanceof PrincipalException) {
+		catch (Throwable throwable) {
+			if (throwable instanceof PrincipalException) {
 				hideDefaultErrorMessage(actionRequest);
 
 				SessionErrors.add(actionRequest, "principalException");

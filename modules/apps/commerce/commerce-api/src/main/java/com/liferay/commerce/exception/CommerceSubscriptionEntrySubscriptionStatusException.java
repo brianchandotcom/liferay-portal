@@ -30,15 +30,15 @@ public class CommerceSubscriptionEntrySubscriptionStatusException
 	}
 
 	public CommerceSubscriptionEntrySubscriptionStatusException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
 	public CommerceSubscriptionEntrySubscriptionStatusException(
-		Throwable cause) {
+		Throwable throwable) {
 
-		super(cause);
+		super(throwable);
 	}
 
 }

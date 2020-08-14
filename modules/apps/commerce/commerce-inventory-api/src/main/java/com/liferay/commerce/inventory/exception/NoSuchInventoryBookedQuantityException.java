@@ -29,12 +29,14 @@ public class NoSuchInventoryBookedQuantityException
 		super(msg);
 	}
 
-	public NoSuchInventoryBookedQuantityException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchInventoryBookedQuantityException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public NoSuchInventoryBookedQuantityException(Throwable cause) {
-		super(cause);
+	public NoSuchInventoryBookedQuantityException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

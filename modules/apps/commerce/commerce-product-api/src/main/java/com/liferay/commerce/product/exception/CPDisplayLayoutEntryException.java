@@ -28,12 +28,12 @@ public class CPDisplayLayoutEntryException extends PortalException {
 		super(msg);
 	}
 
-	public CPDisplayLayoutEntryException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPDisplayLayoutEntryException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CPDisplayLayoutEntryException(Throwable cause) {
-		super(cause);
+	public CPDisplayLayoutEntryException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -28,12 +28,12 @@ public class CPInstanceExpirationDateException extends PortalException {
 		super(msg);
 	}
 
-	public CPInstanceExpirationDateException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPInstanceExpirationDateException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CPInstanceExpirationDateException(Throwable cause) {
-		super(cause);
+	public CPInstanceExpirationDateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

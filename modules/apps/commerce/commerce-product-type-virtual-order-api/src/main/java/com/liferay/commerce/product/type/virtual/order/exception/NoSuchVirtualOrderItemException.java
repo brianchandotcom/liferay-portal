@@ -28,12 +28,12 @@ public class NoSuchVirtualOrderItemException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchVirtualOrderItemException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchVirtualOrderItemException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchVirtualOrderItemException(Throwable cause) {
-		super(cause);
+	public NoSuchVirtualOrderItemException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -28,12 +28,12 @@ public class NoSuchApplicationBrandException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchApplicationBrandException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchApplicationBrandException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchApplicationBrandException(Throwable cause) {
-		super(cause);
+	public NoSuchApplicationBrandException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

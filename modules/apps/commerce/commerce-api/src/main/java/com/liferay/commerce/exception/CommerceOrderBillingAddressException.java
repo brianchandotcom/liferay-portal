@@ -28,12 +28,14 @@ public class CommerceOrderBillingAddressException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceOrderBillingAddressException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceOrderBillingAddressException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public CommerceOrderBillingAddressException(Throwable cause) {
-		super(cause);
+	public CommerceOrderBillingAddressException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

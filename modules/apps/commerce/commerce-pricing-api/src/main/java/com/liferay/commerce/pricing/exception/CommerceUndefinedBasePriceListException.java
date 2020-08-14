@@ -29,13 +29,13 @@ public class CommerceUndefinedBasePriceListException extends PortalException {
 	}
 
 	public CommerceUndefinedBasePriceListException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceUndefinedBasePriceListException(Throwable cause) {
-		super(cause);
+	public CommerceUndefinedBasePriceListException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -29,13 +29,13 @@ public class DuplicateCommerceAccountGroupRelException extends PortalException {
 	}
 
 	public DuplicateCommerceAccountGroupRelException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public DuplicateCommerceAccountGroupRelException(Throwable cause) {
-		super(cause);
+	public DuplicateCommerceAccountGroupRelException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

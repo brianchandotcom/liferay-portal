@@ -30,13 +30,15 @@ public class CommercePriceListParentPriceListGroupIdException
 	}
 
 	public CommercePriceListParentPriceListGroupIdException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommercePriceListParentPriceListGroupIdException(Throwable cause) {
-		super(cause);
+	public CommercePriceListParentPriceListGroupIdException(
+		Throwable throwable) {
+
+		super(throwable);
 	}
 
 }

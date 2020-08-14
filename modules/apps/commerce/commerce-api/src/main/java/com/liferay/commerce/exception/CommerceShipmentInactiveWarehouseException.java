@@ -30,13 +30,13 @@ public class CommerceShipmentInactiveWarehouseException
 	}
 
 	public CommerceShipmentInactiveWarehouseException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceShipmentInactiveWarehouseException(Throwable cause) {
-		super(cause);
+	public CommerceShipmentInactiveWarehouseException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

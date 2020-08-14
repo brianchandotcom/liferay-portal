@@ -30,13 +30,13 @@ public class CPDefinitionOptionValueRelCPInstanceException
 	}
 
 	public CPDefinitionOptionValueRelCPInstanceException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CPDefinitionOptionValueRelCPInstanceException(Throwable cause) {
-		super(cause);
+	public CPDefinitionOptionValueRelCPInstanceException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

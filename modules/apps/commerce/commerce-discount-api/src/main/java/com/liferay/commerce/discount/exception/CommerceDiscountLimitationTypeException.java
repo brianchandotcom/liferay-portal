@@ -29,13 +29,13 @@ public class CommerceDiscountLimitationTypeException extends PortalException {
 	}
 
 	public CommerceDiscountLimitationTypeException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceDiscountLimitationTypeException(Throwable cause) {
-		super(cause);
+	public CommerceDiscountLimitationTypeException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

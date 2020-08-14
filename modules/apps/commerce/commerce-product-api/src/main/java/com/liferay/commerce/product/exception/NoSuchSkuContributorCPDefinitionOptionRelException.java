@@ -30,13 +30,15 @@ public class NoSuchSkuContributorCPDefinitionOptionRelException
 	}
 
 	public NoSuchSkuContributorCPDefinitionOptionRelException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public NoSuchSkuContributorCPDefinitionOptionRelException(Throwable cause) {
-		super(cause);
+	public NoSuchSkuContributorCPDefinitionOptionRelException(
+		Throwable throwable) {
+
+		super(throwable);
 	}
 
 }

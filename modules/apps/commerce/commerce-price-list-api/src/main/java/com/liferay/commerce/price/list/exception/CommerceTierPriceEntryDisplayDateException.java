@@ -30,13 +30,13 @@ public class CommerceTierPriceEntryDisplayDateException
 	}
 
 	public CommerceTierPriceEntryDisplayDateException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceTierPriceEntryDisplayDateException(Throwable cause) {
-		super(cause);
+	public CommerceTierPriceEntryDisplayDateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

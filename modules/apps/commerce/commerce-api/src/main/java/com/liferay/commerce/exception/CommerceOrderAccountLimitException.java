@@ -28,12 +28,12 @@ public class CommerceOrderAccountLimitException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceOrderAccountLimitException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceOrderAccountLimitException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommerceOrderAccountLimitException(Throwable cause) {
-		super(cause);
+	public CommerceOrderAccountLimitException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -28,12 +28,14 @@ public class CPDefinitionMetaDescriptionException extends PortalException {
 		super(msg);
 	}
 
-	public CPDefinitionMetaDescriptionException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPDefinitionMetaDescriptionException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public CPDefinitionMetaDescriptionException(Throwable cause) {
-		super(cause);
+	public CPDefinitionMetaDescriptionException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

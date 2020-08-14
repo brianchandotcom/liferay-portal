@@ -37,12 +37,12 @@ public class CommerceOrderValidatorException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceOrderValidatorException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceOrderValidatorException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommerceOrderValidatorException(Throwable cause) {
-		super(cause);
+	public CommerceOrderValidatorException(Throwable throwable) {
+		super(throwable);
 	}
 
 	public List<CommerceOrderValidatorResult>

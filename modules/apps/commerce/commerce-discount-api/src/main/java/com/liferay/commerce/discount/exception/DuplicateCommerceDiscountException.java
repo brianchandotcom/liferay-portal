@@ -28,12 +28,12 @@ public class DuplicateCommerceDiscountException extends PortalException {
 		super(msg);
 	}
 
-	public DuplicateCommerceDiscountException(String msg, Throwable cause) {
-		super(msg, cause);
+	public DuplicateCommerceDiscountException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public DuplicateCommerceDiscountException(Throwable cause) {
-		super(cause);
+	public DuplicateCommerceDiscountException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

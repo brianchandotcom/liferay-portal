@@ -28,12 +28,14 @@ public class CommerceOrderGuestCheckoutException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceOrderGuestCheckoutException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceOrderGuestCheckoutException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public CommerceOrderGuestCheckoutException(Throwable cause) {
-		super(cause);
+	public CommerceOrderGuestCheckoutException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

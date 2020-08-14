@@ -28,12 +28,12 @@ public class NoSuchBOMEntryException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchBOMEntryException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchBOMEntryException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchBOMEntryException(Throwable cause) {
-		super(cause);
+	public NoSuchBOMEntryException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

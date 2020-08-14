@@ -28,12 +28,12 @@ public class CommerceDiscountRuleTypeException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceDiscountRuleTypeException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceDiscountRuleTypeException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommerceDiscountRuleTypeException(Throwable cause) {
-		super(cause);
+	public CommerceDiscountRuleTypeException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

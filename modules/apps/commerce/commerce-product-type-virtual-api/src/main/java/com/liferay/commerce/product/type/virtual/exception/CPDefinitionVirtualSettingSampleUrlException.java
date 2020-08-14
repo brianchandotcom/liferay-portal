@@ -30,13 +30,13 @@ public class CPDefinitionVirtualSettingSampleUrlException
 	}
 
 	public CPDefinitionVirtualSettingSampleUrlException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CPDefinitionVirtualSettingSampleUrlException(Throwable cause) {
-		super(cause);
+	public CPDefinitionVirtualSettingSampleUrlException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

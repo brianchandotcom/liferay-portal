@@ -29,13 +29,13 @@ public class CommerceShippingMethodEngineKeyException extends PortalException {
 	}
 
 	public CommerceShippingMethodEngineKeyException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceShippingMethodEngineKeyException(Throwable cause) {
-		super(cause);
+	public CommerceShippingMethodEngineKeyException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

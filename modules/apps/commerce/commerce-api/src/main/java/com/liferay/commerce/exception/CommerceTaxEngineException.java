@@ -28,12 +28,12 @@ public class CommerceTaxEngineException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceTaxEngineException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceTaxEngineException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommerceTaxEngineException(Throwable cause) {
-		super(cause);
+	public CommerceTaxEngineException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

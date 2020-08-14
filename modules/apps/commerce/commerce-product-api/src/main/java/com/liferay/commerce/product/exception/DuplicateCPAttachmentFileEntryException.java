@@ -29,13 +29,13 @@ public class DuplicateCPAttachmentFileEntryException extends PortalException {
 	}
 
 	public DuplicateCPAttachmentFileEntryException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public DuplicateCPAttachmentFileEntryException(Throwable cause) {
-		super(cause);
+	public DuplicateCPAttachmentFileEntryException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

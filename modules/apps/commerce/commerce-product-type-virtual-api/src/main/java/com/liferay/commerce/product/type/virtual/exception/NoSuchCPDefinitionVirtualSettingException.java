@@ -30,13 +30,13 @@ public class NoSuchCPDefinitionVirtualSettingException
 	}
 
 	public NoSuchCPDefinitionVirtualSettingException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public NoSuchCPDefinitionVirtualSettingException(Throwable cause) {
-		super(cause);
+	public NoSuchCPDefinitionVirtualSettingException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

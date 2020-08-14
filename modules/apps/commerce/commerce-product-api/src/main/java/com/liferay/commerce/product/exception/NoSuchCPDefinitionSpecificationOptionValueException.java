@@ -30,15 +30,15 @@ public class NoSuchCPDefinitionSpecificationOptionValueException
 	}
 
 	public NoSuchCPDefinitionSpecificationOptionValueException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
 	public NoSuchCPDefinitionSpecificationOptionValueException(
-		Throwable cause) {
+		Throwable throwable) {
 
-		super(cause);
+		super(throwable);
 	}
 
 }

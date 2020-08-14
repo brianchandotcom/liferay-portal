@@ -29,12 +29,14 @@ public class NoSuchAccountOrganizationRelException
 		super(msg);
 	}
 
-	public NoSuchAccountOrganizationRelException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchAccountOrganizationRelException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public NoSuchAccountOrganizationRelException(Throwable cause) {
-		super(cause);
+	public NoSuchAccountOrganizationRelException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

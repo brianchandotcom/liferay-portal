@@ -28,12 +28,12 @@ public class NoSuchPricingClassException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchPricingClassException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchPricingClassException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchPricingClassException(Throwable cause) {
-		super(cause);
+	public NoSuchPricingClassException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

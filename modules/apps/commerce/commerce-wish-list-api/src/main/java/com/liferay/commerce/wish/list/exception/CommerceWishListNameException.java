@@ -28,12 +28,12 @@ public class CommerceWishListNameException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceWishListNameException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceWishListNameException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommerceWishListNameException(Throwable cause) {
-		super(cause);
+	public CommerceWishListNameException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

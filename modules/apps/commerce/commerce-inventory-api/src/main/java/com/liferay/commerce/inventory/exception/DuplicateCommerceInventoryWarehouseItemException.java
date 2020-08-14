@@ -30,13 +30,15 @@ public class DuplicateCommerceInventoryWarehouseItemException
 	}
 
 	public DuplicateCommerceInventoryWarehouseItemException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public DuplicateCommerceInventoryWarehouseItemException(Throwable cause) {
-		super(cause);
+	public DuplicateCommerceInventoryWarehouseItemException(
+		Throwable throwable) {
+
+		super(throwable);
 	}
 
 }

@@ -28,12 +28,12 @@ public class CPOptionKeyException extends PortalException {
 		super(msg);
 	}
 
-	public CPOptionKeyException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPOptionKeyException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CPOptionKeyException(Throwable cause) {
-		super(cause);
+	public CPOptionKeyException(Throwable throwable) {
+		super(throwable);
 	}
 
 	public static class MustNotBeDuplicate extends CPOptionKeyException {

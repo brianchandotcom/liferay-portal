@@ -28,12 +28,12 @@ public class NoSuchShippingFixedOptionException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchShippingFixedOptionException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchShippingFixedOptionException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchShippingFixedOptionException(Throwable cause) {
-		super(cause);
+	public NoSuchShippingFixedOptionException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -28,12 +28,12 @@ public class CommerceAccountGroupNameException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceAccountGroupNameException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceAccountGroupNameException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommerceAccountGroupNameException(Throwable cause) {
-		super(cause);
+	public CommerceAccountGroupNameException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

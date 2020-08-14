@@ -30,13 +30,13 @@ public class DuplicateCommerceChannelSiteGroupIdException
 	}
 
 	public DuplicateCommerceChannelSiteGroupIdException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public DuplicateCommerceChannelSiteGroupIdException(Throwable cause) {
-		super(cause);
+	public DuplicateCommerceChannelSiteGroupIdException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

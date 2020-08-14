@@ -28,12 +28,12 @@ public class CommercePaymentEngineException extends PortalException {
 		super(msg);
 	}
 
-	public CommercePaymentEngineException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommercePaymentEngineException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommercePaymentEngineException(Throwable cause) {
-		super(cause);
+	public CommercePaymentEngineException(Throwable throwable) {
+		super(throwable);
 	}
 
 	public static class MustSetPrimaryCurrency

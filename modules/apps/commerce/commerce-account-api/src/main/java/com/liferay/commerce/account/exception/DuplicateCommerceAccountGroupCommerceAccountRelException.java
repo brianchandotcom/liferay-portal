@@ -32,15 +32,15 @@ public class DuplicateCommerceAccountGroupCommerceAccountRelException
 	}
 
 	public DuplicateCommerceAccountGroupCommerceAccountRelException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
 	public DuplicateCommerceAccountGroupCommerceAccountRelException(
-		Throwable cause) {
+		Throwable throwable) {
 
-		super(cause);
+		super(throwable);
 	}
 
 }

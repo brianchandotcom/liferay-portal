@@ -28,12 +28,12 @@ public class NoSuchCPOptionValueException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchCPOptionValueException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchCPOptionValueException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchCPOptionValueException(Throwable cause) {
-		super(cause);
+	public NoSuchCPOptionValueException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

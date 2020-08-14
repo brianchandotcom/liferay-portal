@@ -28,12 +28,12 @@ public class DuplicateCommerceAccountException extends PortalException {
 		super(msg);
 	}
 
-	public DuplicateCommerceAccountException(String msg, Throwable cause) {
-		super(msg, cause);
+	public DuplicateCommerceAccountException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public DuplicateCommerceAccountException(Throwable cause) {
-		super(cause);
+	public DuplicateCommerceAccountException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

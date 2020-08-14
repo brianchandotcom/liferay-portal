@@ -28,12 +28,14 @@ public class DuplicateCommerceTaxFixedRateException extends PortalException {
 		super(msg);
 	}
 
-	public DuplicateCommerceTaxFixedRateException(String msg, Throwable cause) {
-		super(msg, cause);
+	public DuplicateCommerceTaxFixedRateException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public DuplicateCommerceTaxFixedRateException(Throwable cause) {
-		super(cause);
+	public DuplicateCommerceTaxFixedRateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -122,31 +122,34 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 					_transactionConfig, commerceCountryChannelsCallable);
 			}
 		}
-		catch (Throwable t) {
-			if (t instanceof NoSuchCountryException ||
-				t instanceof PrincipalException) {
+		catch (Throwable throwable) {
+			if (throwable instanceof NoSuchCountryException ||
+				throwable instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (t instanceof CommerceCountryAlreadyExistsException ||
-					 t instanceof CommerceCountryNameException ||
-					 t instanceof CommerceCountryThreeLettersISOCodeException ||
-					 t instanceof CommerceCountryTwoLettersISOCodeException) {
+			else if (throwable instanceof
+						CommerceCountryAlreadyExistsException ||
+					 throwable instanceof CommerceCountryNameException ||
+					 throwable instanceof
+						 CommerceCountryThreeLettersISOCodeException ||
+					 throwable instanceof
+						 CommerceCountryTwoLettersISOCodeException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCommerceCountry");
 			}
 			else {
-				_log.error(t, t);
+				_log.error(throwable, throwable);
 
-				throw new Exception(t);
+				throw new Exception(throwable);
 			}
 		}
 	}

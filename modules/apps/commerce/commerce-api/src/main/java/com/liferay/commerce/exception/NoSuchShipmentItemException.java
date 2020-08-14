@@ -28,12 +28,12 @@ public class NoSuchShipmentItemException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchShipmentItemException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchShipmentItemException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchShipmentItemException(Throwable cause) {
-		super(cause);
+	public NoSuchShipmentItemException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

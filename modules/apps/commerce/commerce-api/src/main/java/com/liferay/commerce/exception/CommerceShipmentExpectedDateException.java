@@ -28,12 +28,14 @@ public class CommerceShipmentExpectedDateException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceShipmentExpectedDateException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceShipmentExpectedDateException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public CommerceShipmentExpectedDateException(Throwable cause) {
-		super(cause);
+	public CommerceShipmentExpectedDateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

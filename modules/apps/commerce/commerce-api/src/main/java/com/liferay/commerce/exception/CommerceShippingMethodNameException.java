@@ -28,12 +28,14 @@ public class CommerceShippingMethodNameException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceShippingMethodNameException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceShippingMethodNameException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public CommerceShippingMethodNameException(Throwable cause) {
-		super(cause);
+	public CommerceShippingMethodNameException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

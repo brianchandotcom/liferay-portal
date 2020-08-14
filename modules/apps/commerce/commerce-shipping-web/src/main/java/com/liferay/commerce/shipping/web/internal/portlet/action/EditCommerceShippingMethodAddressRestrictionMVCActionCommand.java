@@ -70,14 +70,14 @@ public class EditCommerceShippingMethodAddressRestrictionMVCActionCommand
 			TransactionInvokerUtil.invoke(
 				_transactionConfig, commerceAddressRestrictionsCallable);
 		}
-		catch (Throwable t) {
-			if (t instanceof NoSuchAddressRestrictionException ||
-				t instanceof PrincipalException) {
+		catch (Throwable throwable) {
+			if (throwable instanceof NoSuchAddressRestrictionException ||
+				throwable instanceof PrincipalException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
@@ -85,7 +85,7 @@ public class EditCommerceShippingMethodAddressRestrictionMVCActionCommand
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
-				_log.error(t, t);
+				_log.error(throwable, throwable);
 			}
 		}
 	}

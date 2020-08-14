@@ -28,12 +28,14 @@ public class CPDefinitionExpirationDateException extends PortalException {
 		super(msg);
 	}
 
-	public CPDefinitionExpirationDateException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPDefinitionExpirationDateException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public CPDefinitionExpirationDateException(Throwable cause) {
-		super(cause);
+	public CPDefinitionExpirationDateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

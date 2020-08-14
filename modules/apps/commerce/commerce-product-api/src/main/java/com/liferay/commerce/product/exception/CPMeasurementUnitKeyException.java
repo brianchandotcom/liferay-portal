@@ -28,12 +28,12 @@ public class CPMeasurementUnitKeyException extends PortalException {
 		super(msg);
 	}
 
-	public CPMeasurementUnitKeyException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPMeasurementUnitKeyException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CPMeasurementUnitKeyException(Throwable cause) {
-		super(cause);
+	public CPMeasurementUnitKeyException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

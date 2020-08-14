@@ -28,12 +28,12 @@ public class NoSuchPriceListChannelRelException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchPriceListChannelRelException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchPriceListChannelRelException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchPriceListChannelRelException(Throwable cause) {
-		super(cause);
+	public NoSuchPriceListChannelRelException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

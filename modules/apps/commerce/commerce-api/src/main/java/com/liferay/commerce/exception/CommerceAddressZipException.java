@@ -28,12 +28,12 @@ public class CommerceAddressZipException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceAddressZipException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceAddressZipException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommerceAddressZipException(Throwable cause) {
-		super(cause);
+	public CommerceAddressZipException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

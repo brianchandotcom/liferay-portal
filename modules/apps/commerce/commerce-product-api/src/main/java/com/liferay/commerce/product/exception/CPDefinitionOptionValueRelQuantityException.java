@@ -30,13 +30,13 @@ public class CPDefinitionOptionValueRelQuantityException
 	}
 
 	public CPDefinitionOptionValueRelQuantityException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CPDefinitionOptionValueRelQuantityException(Throwable cause) {
-		super(cause);
+	public CPDefinitionOptionValueRelQuantityException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

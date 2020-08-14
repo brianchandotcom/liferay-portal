@@ -29,12 +29,14 @@ public class NoSuchInventoryWarehouseItemException
 		super(msg);
 	}
 
-	public NoSuchInventoryWarehouseItemException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchInventoryWarehouseItemException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public NoSuchInventoryWarehouseItemException(Throwable cause) {
-		super(cause);
+	public NoSuchInventoryWarehouseItemException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

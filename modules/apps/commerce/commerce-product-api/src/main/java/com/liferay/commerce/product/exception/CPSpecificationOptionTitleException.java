@@ -28,12 +28,14 @@ public class CPSpecificationOptionTitleException extends PortalException {
 		super(msg);
 	}
 
-	public CPSpecificationOptionTitleException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPSpecificationOptionTitleException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public CPSpecificationOptionTitleException(Throwable cause) {
-		super(cause);
+	public CPSpecificationOptionTitleException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

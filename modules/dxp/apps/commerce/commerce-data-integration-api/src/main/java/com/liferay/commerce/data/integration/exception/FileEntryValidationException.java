@@ -28,12 +28,12 @@ public class FileEntryValidationException extends PortalException {
 		super(msg);
 	}
 
-	public FileEntryValidationException(String msg, Throwable cause) {
-		super(msg, cause);
+	public FileEntryValidationException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public FileEntryValidationException(Throwable cause) {
-		super(cause);
+	public FileEntryValidationException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

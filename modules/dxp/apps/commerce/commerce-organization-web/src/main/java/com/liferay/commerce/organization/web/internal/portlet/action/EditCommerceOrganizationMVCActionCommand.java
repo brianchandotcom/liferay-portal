@@ -109,23 +109,23 @@ public class EditCommerceOrganizationMVCActionCommand
 				deleteOrganization(actionRequest);
 			}
 		}
-		catch (Throwable t) {
-			if (t instanceof NoSuchOrganizationException ||
-				t instanceof PrincipalException) {
+		catch (Throwable throwable) {
+			if ((throwable instanceof NoSuchOrganizationException) ||
+				(t instanceof PrincipalException)) {
 
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (t instanceof DuplicateOrganizationException ||
-					 t instanceof OrganizationNameException) {
+			else if ((throwable instanceof DuplicateOrganizationException) ||
+					 (t instanceof OrganizationNameException)) {
 
 				hideDefaultErrorMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 			}
 			else {
-				_log.error(t, t);
+				_log.error(throwable, throwable);
 			}
 		}
 

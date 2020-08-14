@@ -28,12 +28,14 @@ public class CommercePriceEntryDisplayDateException extends PortalException {
 		super(msg);
 	}
 
-	public CommercePriceEntryDisplayDateException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommercePriceEntryDisplayDateException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public CommercePriceEntryDisplayDateException(Throwable cause) {
-		super(cause);
+	public CommercePriceEntryDisplayDateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

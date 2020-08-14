@@ -29,12 +29,14 @@ public class NoSuchBOMFolderApplicationRelException
 		super(msg);
 	}
 
-	public NoSuchBOMFolderApplicationRelException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchBOMFolderApplicationRelException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public NoSuchBOMFolderApplicationRelException(Throwable cause) {
-		super(cause);
+	public NoSuchBOMFolderApplicationRelException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

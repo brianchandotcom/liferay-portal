@@ -28,12 +28,14 @@ public class NoSuchCPDefinitionOptionRelException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchCPDefinitionOptionRelException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchCPDefinitionOptionRelException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public NoSuchCPDefinitionOptionRelException(Throwable cause) {
-		super(cause);
+	public NoSuchCPDefinitionOptionRelException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

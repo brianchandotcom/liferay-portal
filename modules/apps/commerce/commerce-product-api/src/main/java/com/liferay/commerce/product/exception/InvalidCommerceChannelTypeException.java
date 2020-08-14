@@ -28,12 +28,14 @@ public class InvalidCommerceChannelTypeException extends PortalException {
 		super(msg);
 	}
 
-	public InvalidCommerceChannelTypeException(String msg, Throwable cause) {
-		super(msg, cause);
+	public InvalidCommerceChannelTypeException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public InvalidCommerceChannelTypeException(Throwable cause) {
-		super(cause);
+	public InvalidCommerceChannelTypeException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -30,13 +30,13 @@ public class CPAttachmentFileEntryExpirationDateException
 	}
 
 	public CPAttachmentFileEntryExpirationDateException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CPAttachmentFileEntryExpirationDateException(Throwable cause) {
-		super(cause);
+	public CPAttachmentFileEntryExpirationDateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

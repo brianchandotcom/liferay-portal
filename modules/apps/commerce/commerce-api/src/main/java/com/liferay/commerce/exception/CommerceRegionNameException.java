@@ -28,12 +28,12 @@ public class CommerceRegionNameException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceRegionNameException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceRegionNameException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommerceRegionNameException(Throwable cause) {
-		super(cause);
+	public CommerceRegionNameException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

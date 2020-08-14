@@ -28,12 +28,12 @@ public class CPOptionSKUContributorException extends PortalException {
 		super(msg);
 	}
 
-	public CPOptionSKUContributorException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPOptionSKUContributorException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CPOptionSKUContributorException(Throwable cause) {
-		super(cause);
+	public CPOptionSKUContributorException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -29,12 +29,14 @@ public class NoSuchShippingFixedOptionRelException
 		super(msg);
 	}
 
-	public NoSuchShippingFixedOptionRelException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchShippingFixedOptionRelException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public NoSuchShippingFixedOptionRelException(Throwable cause) {
-		super(cause);
+	public NoSuchShippingFixedOptionRelException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

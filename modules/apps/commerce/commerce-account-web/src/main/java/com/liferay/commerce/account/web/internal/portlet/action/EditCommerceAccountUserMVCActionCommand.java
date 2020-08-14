@@ -142,28 +142,29 @@ public class EditCommerceAccountUserMVCActionCommand
 					getSaveAndContinueRedirect(actionRequest));
 			}
 		}
-		catch (Throwable t) {
-			if (t instanceof NoSuchUserException ||
-				t instanceof PrincipalException) {
+		catch (Throwable throwable) {
+			if (throwable instanceof NoSuchUserException ||
+				throwable instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (t instanceof ContactBirthdayException ||
-					 t instanceof ContactNameException ||
-					 t instanceof GroupFriendlyURLException ||
-					 t instanceof UserEmailAddressException ||
-					 t instanceof UserFieldException ||
-					 t instanceof UserIdException ||
-					 t instanceof UserPasswordException ||
-					 t instanceof UserReminderQueryException ||
-					 t instanceof UserScreenNameException) {
+			else if (throwable instanceof ContactBirthdayException ||
+					 throwable instanceof ContactNameException ||
+					 throwable instanceof GroupFriendlyURLException ||
+					 throwable instanceof UserEmailAddressException ||
+					 throwable instanceof UserFieldException ||
+					 throwable instanceof UserIdException ||
+					 throwable instanceof UserPasswordException ||
+					 throwable instanceof UserReminderQueryException ||
+					 throwable instanceof UserScreenNameException) {
 
-				SessionErrors.add(actionRequest, t.getClass(), t);
+				SessionErrors.add(
+					actionRequest, throwable.getClass(), throwable);
 			}
 			else {
-				_log.error(t, t);
+				_log.error(throwable, throwable);
 			}
 		}
 	}

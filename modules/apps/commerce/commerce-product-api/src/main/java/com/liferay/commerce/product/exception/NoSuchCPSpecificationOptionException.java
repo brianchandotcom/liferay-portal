@@ -28,12 +28,14 @@ public class NoSuchCPSpecificationOptionException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchCPSpecificationOptionException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchCPSpecificationOptionException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public NoSuchCPSpecificationOptionException(Throwable cause) {
-		super(cause);
+	public NoSuchCPSpecificationOptionException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

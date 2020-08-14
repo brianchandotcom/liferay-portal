@@ -124,31 +124,34 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 				setActive(actionRequest);
 			}
 		}
-		catch (Throwable t) {
-			if (t instanceof CommerceGeocoderException) {
+		catch (Throwable throwable) {
+			if (throwable instanceof CommerceGeocoderException) {
 				hideDefaultErrorMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, t.getClass(), t.getMessage());
+				SessionErrors.add(
+					actionRequest, throwable.getClass(), t.getMessage());
 
 				actionResponse.setRenderParameter(
 					"commerceAdminModuleKey",
 					WarehousesCommerceAdminModule.KEY);
 			}
-			else if (t instanceof NoSuchWarehouseException ||
-					 t instanceof PrincipalException) {
+			else if (throwable instanceof NoSuchWarehouseException ||
+					 throwable instanceof PrincipalException) {
 
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (t instanceof CommerceInventoryWarehouseActiveException ||
-					 t instanceof CommerceInventoryWarehouseNameException ||
-					 t instanceof MVCCException) {
+			else if (throwable instanceof
+						CommerceInventoryWarehouseActiveException ||
+					 throwable instanceof
+						 CommerceInventoryWarehouseNameException ||
+					 throwable instanceof MVCCException) {
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 
-				SessionErrors.add(actionRequest, t.getClass());
+				SessionErrors.add(actionRequest, throwable.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCommerceInventoryWarehouse");

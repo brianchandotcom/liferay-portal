@@ -28,12 +28,12 @@ public class NoSuchBOMFolderException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchBOMFolderException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchBOMFolderException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchBOMFolderException(Throwable cause) {
-		super(cause);
+	public NoSuchBOMFolderException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -30,13 +30,15 @@ public class CommerceInventoryWarehouseItemQuantityException
 	}
 
 	public CommerceInventoryWarehouseItemQuantityException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceInventoryWarehouseItemQuantityException(Throwable cause) {
-		super(cause);
+	public CommerceInventoryWarehouseItemQuantityException(
+		Throwable throwable) {
+
+		super(throwable);
 	}
 
 }

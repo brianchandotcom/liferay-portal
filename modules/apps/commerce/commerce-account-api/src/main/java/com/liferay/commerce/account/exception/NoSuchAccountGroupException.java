@@ -28,12 +28,12 @@ public class NoSuchAccountGroupException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchAccountGroupException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchAccountGroupException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchAccountGroupException(Throwable cause) {
-		super(cause);
+	public NoSuchAccountGroupException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

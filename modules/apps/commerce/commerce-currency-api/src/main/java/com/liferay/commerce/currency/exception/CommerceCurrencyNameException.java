@@ -28,12 +28,12 @@ public class CommerceCurrencyNameException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceCurrencyNameException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceCurrencyNameException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommerceCurrencyNameException(Throwable cause) {
-		super(cause);
+	public CommerceCurrencyNameException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -30,13 +30,15 @@ public class CommercePaymentMethodGroupRelEngineKeyException
 	}
 
 	public CommercePaymentMethodGroupRelEngineKeyException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommercePaymentMethodGroupRelEngineKeyException(Throwable cause) {
-		super(cause);
+	public CommercePaymentMethodGroupRelEngineKeyException(
+		Throwable throwable) {
+
+		super(throwable);
 	}
 
 }

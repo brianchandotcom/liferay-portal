@@ -29,13 +29,13 @@ public class CPDefinitionOptionRelPriceTypeException extends PortalException {
 	}
 
 	public CPDefinitionOptionRelPriceTypeException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CPDefinitionOptionRelPriceTypeException(Throwable cause) {
-		super(cause);
+	public CPDefinitionOptionRelPriceTypeException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

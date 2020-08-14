@@ -28,12 +28,12 @@ public class CommerceGeocoderException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceGeocoderException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceGeocoderException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommerceGeocoderException(Throwable cause) {
-		super(cause);
+	public CommerceGeocoderException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

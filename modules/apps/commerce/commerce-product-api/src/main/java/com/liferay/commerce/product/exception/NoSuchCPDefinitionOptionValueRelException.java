@@ -30,13 +30,13 @@ public class NoSuchCPDefinitionOptionValueRelException
 	}
 
 	public NoSuchCPDefinitionOptionValueRelException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public NoSuchCPDefinitionOptionValueRelException(Throwable cause) {
-		super(cause);
+	public NoSuchCPDefinitionOptionValueRelException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

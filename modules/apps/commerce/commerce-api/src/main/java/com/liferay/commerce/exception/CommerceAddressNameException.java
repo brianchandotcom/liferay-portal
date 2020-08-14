@@ -28,12 +28,12 @@ public class CommerceAddressNameException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceAddressNameException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceAddressNameException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommerceAddressNameException(Throwable cause) {
-		super(cause);
+	public CommerceAddressNameException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -29,13 +29,13 @@ public class CommerceSubscriptionCPInstanceIdException extends PortalException {
 	}
 
 	public CommerceSubscriptionCPInstanceIdException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CommerceSubscriptionCPInstanceIdException(Throwable cause) {
-		super(cause);
+	public CommerceSubscriptionCPInstanceIdException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

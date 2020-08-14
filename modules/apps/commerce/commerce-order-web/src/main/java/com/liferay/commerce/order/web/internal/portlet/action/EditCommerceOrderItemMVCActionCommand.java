@@ -136,19 +136,21 @@ public class EditCommerceOrderItemMVCActionCommand
 				updateCustomFields(actionRequest);
 			}
 		}
-		catch (Throwable t) {
-			if (t instanceof CommerceOrderValidatorException) {
-				SessionErrors.add(actionRequest, t.getClass(), t);
+		catch (Throwable throwable) {
+			if (throwable instanceof CommerceOrderValidatorException) {
+				SessionErrors.add(
+					actionRequest, throwable.getClass(), throwable);
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
-			else if (t instanceof
+			else if (throwable instanceof
 						CommerceOrderItemRequestedDeliveryDateException) {
 
-				SessionErrors.add(actionRequest, t.getClass(), t);
+				SessionErrors.add(
+					actionRequest, throwable.getClass(), throwable);
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
@@ -156,7 +158,7 @@ public class EditCommerceOrderItemMVCActionCommand
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
-				_log.error(t, t);
+				_log.error(throwable, throwable);
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");

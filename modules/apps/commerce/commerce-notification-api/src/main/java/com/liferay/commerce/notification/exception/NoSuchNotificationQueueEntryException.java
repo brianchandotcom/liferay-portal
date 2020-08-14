@@ -29,12 +29,14 @@ public class NoSuchNotificationQueueEntryException
 		super(msg);
 	}
 
-	public NoSuchNotificationQueueEntryException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchNotificationQueueEntryException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public NoSuchNotificationQueueEntryException(Throwable cause) {
-		super(cause);
+	public NoSuchNotificationQueueEntryException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

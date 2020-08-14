@@ -28,12 +28,12 @@ public class CommerceVirtualOrderItemException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceVirtualOrderItemException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceVirtualOrderItemException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommerceVirtualOrderItemException(Throwable cause) {
-		super(cause);
+	public CommerceVirtualOrderItemException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

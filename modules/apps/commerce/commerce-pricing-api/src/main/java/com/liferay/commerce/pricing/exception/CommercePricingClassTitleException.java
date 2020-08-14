@@ -28,12 +28,12 @@ public class CommercePricingClassTitleException extends PortalException {
 		super(msg);
 	}
 
-	public CommercePricingClassTitleException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommercePricingClassTitleException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommercePricingClassTitleException(Throwable cause) {
-		super(cause);
+	public CommercePricingClassTitleException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

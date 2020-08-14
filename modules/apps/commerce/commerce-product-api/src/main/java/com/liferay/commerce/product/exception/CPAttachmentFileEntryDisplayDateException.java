@@ -29,13 +29,13 @@ public class CPAttachmentFileEntryDisplayDateException extends PortalException {
 	}
 
 	public CPAttachmentFileEntryDisplayDateException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public CPAttachmentFileEntryDisplayDateException(Throwable cause) {
-		super(cause);
+	public CPAttachmentFileEntryDisplayDateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

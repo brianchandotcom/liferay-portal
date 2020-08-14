@@ -28,12 +28,12 @@ public class NoSuchAddressRestrictionException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchAddressRestrictionException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchAddressRestrictionException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchAddressRestrictionException(Throwable cause) {
-		super(cause);
+	public NoSuchAddressRestrictionException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

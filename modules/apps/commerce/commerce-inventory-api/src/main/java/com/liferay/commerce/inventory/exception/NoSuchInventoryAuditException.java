@@ -28,12 +28,12 @@ public class NoSuchInventoryAuditException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchInventoryAuditException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchInventoryAuditException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchInventoryAuditException(Throwable cause) {
-		super(cause);
+	public NoSuchInventoryAuditException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

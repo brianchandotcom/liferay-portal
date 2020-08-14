@@ -28,12 +28,12 @@ public class NoSuchOrderNoteException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchOrderNoteException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchOrderNoteException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchOrderNoteException(Throwable cause) {
-		super(cause);
+	public NoSuchOrderNoteException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

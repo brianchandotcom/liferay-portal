@@ -28,12 +28,14 @@ public class CommerceShipmentItemQuantityException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceShipmentItemQuantityException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceShipmentItemQuantityException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public CommerceShipmentItemQuantityException(Throwable cause) {
-		super(cause);
+	public CommerceShipmentItemQuantityException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

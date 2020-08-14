@@ -28,12 +28,12 @@ public class MVCCException extends PortalException {
 		super(msg);
 	}
 
-	public MVCCException(String msg, Throwable cause) {
-		super(msg, cause);
+	public MVCCException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public MVCCException(Throwable cause) {
-		super(cause);
+	public MVCCException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

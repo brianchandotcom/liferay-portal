@@ -29,12 +29,14 @@ public class NoSuchDataIntegrationProcessException
 		super(msg);
 	}
 
-	public NoSuchDataIntegrationProcessException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchDataIntegrationProcessException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public NoSuchDataIntegrationProcessException(Throwable cause) {
-		super(cause);
+	public NoSuchDataIntegrationProcessException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

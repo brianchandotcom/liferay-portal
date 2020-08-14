@@ -35,12 +35,12 @@ public class CommerceShippingEngineException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceShippingEngineException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceShippingEngineException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommerceShippingEngineException(Throwable cause) {
-		super(cause);
+	public CommerceShippingEngineException(Throwable throwable) {
+		super(throwable);
 	}
 
 	public static class MustSetCurrency

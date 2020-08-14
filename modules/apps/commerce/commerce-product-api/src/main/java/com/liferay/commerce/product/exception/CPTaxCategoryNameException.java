@@ -28,12 +28,12 @@ public class CPTaxCategoryNameException extends PortalException {
 		super(msg);
 	}
 
-	public CPTaxCategoryNameException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPTaxCategoryNameException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CPTaxCategoryNameException(Throwable cause) {
-		super(cause);
+	public CPTaxCategoryNameException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -30,13 +30,13 @@ public class NoSuchApplicationModelCProductRelException
 	}
 
 	public NoSuchApplicationModelCProductRelException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public NoSuchApplicationModelCProductRelException(Throwable cause) {
-		super(cause);
+	public NoSuchApplicationModelCProductRelException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

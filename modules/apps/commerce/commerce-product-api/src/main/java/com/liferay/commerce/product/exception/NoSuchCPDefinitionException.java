@@ -28,12 +28,12 @@ public class NoSuchCPDefinitionException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchCPDefinitionException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchCPDefinitionException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchCPDefinitionException(Throwable cause) {
-		super(cause);
+	public NoSuchCPDefinitionException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

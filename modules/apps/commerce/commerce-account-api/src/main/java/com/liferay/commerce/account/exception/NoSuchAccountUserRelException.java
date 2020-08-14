@@ -28,12 +28,12 @@ public class NoSuchAccountUserRelException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchAccountUserRelException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchAccountUserRelException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public NoSuchAccountUserRelException(Throwable cause) {
-		super(cause);
+	public NoSuchAccountUserRelException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

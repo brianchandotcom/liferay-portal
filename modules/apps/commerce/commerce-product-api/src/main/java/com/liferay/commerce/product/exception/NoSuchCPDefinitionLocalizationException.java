@@ -30,13 +30,13 @@ public class NoSuchCPDefinitionLocalizationException
 	}
 
 	public NoSuchCPDefinitionLocalizationException(
-		String msg, Throwable cause) {
+		String msg, Throwable throwable) {
 
-		super(msg, cause);
+		super(msg, throwable);
 	}
 
-	public NoSuchCPDefinitionLocalizationException(Throwable cause) {
-		super(cause);
+	public NoSuchCPDefinitionLocalizationException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

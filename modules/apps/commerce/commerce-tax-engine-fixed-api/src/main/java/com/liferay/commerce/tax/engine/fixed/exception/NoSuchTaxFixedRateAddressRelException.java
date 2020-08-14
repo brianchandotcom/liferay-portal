@@ -29,12 +29,14 @@ public class NoSuchTaxFixedRateAddressRelException
 		super(msg);
 	}
 
-	public NoSuchTaxFixedRateAddressRelException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchTaxFixedRateAddressRelException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public NoSuchTaxFixedRateAddressRelException(Throwable cause) {
-		super(cause);
+	public NoSuchTaxFixedRateAddressRelException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

@@ -29,12 +29,14 @@ public class NoSuchCPDAvailabilityEstimateException
 		super(msg);
 	}
 
-	public NoSuchCPDAvailabilityEstimateException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchCPDAvailabilityEstimateException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public NoSuchCPDAvailabilityEstimateException(Throwable cause) {
-		super(cause);
+	public NoSuchCPDAvailabilityEstimateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

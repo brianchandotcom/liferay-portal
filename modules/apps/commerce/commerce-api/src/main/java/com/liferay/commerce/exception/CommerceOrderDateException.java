@@ -28,12 +28,12 @@ public class CommerceOrderDateException extends PortalException {
 		super(msg);
 	}
 
-	public CommerceOrderDateException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CommerceOrderDateException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CommerceOrderDateException(Throwable cause) {
-		super(cause);
+	public CommerceOrderDateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

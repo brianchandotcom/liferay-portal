@@ -28,12 +28,12 @@ public class CPInstanceDisplayDateException extends PortalException {
 		super(msg);
 	}
 
-	public CPInstanceDisplayDateException(String msg, Throwable cause) {
-		super(msg, cause);
+	public CPInstanceDisplayDateException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public CPInstanceDisplayDateException(Throwable cause) {
-		super(cause);
+	public CPInstanceDisplayDateException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

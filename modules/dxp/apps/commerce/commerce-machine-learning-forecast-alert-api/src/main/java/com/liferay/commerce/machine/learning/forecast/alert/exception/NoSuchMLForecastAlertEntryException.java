@@ -28,12 +28,14 @@ public class NoSuchMLForecastAlertEntryException extends NoSuchModelException {
 		super(msg);
 	}
 
-	public NoSuchMLForecastAlertEntryException(String msg, Throwable cause) {
-		super(msg, cause);
+	public NoSuchMLForecastAlertEntryException(
+		String msg, Throwable throwable) {
+
+		super(msg, throwable);
 	}
 
-	public NoSuchMLForecastAlertEntryException(Throwable cause) {
-		super(cause);
+	public NoSuchMLForecastAlertEntryException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

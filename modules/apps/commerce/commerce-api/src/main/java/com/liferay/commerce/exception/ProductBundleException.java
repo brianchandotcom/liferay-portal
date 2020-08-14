@@ -28,12 +28,12 @@ public class ProductBundleException extends PortalException {
 		super(msg);
 	}
 
-	public ProductBundleException(String msg, Throwable cause) {
-		super(msg, cause);
+	public ProductBundleException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
-	public ProductBundleException(Throwable cause) {
-		super(cause);
+	public ProductBundleException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

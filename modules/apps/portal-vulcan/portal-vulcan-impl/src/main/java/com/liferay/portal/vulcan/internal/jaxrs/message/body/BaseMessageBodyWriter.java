@@ -24,9 +24,6 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.vulcan.fields.FieldsQueryParam;
 import com.liferay.portal.vulcan.fields.RestrictFieldsQueryParam;
-import com.liferay.portal.vulcan.internal.jackson.databind.ser.DynamicPropertyFilter;
-import com.liferay.portal.vulcan.internal.jackson.databind.ser.ExtendedEntityPropertyFilter;
-import com.liferay.portal.vulcan.internal.jackson.databind.ser.VulcanDynamicPropertyFilter;
 import com.liferay.portal.vulcan.internal.jackson.databind.ser.VulcanPropertyFilter;
 import com.liferay.portal.vulcan.internal.jaxrs.serializer.JSONArrayStdSerializer;
 import com.liferay.portal.vulcan.internal.jaxrs.serializer.PageJsonSerializer;
@@ -123,14 +120,7 @@ public abstract class BaseMessageBodyWriter
 							fieldNames, restrictFieldNames);
 					}
 
-					DynamicPropertyFilter dynamicPropertyFilter =
-						VulcanDynamicPropertyFilter.of(propertyFilter);
-
-					addFilter("Liferay.Vulcan", dynamicPropertyFilter);
-					addFilter(
-						"Liferay.Vulcan.ExtendedEntityPropertyFilter",
-						ExtendedEntityPropertyFilter.with(
-							dynamicPropertyFilter));
+					addFilter("Liferay.Vulcan", propertyFilter);
 				}
 			});
 

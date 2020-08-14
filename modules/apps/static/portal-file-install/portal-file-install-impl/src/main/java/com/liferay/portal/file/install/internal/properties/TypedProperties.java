@@ -191,120 +191,19 @@ public class TypedProperties {
 		}
 
 		private String[] _parseProperty(String line) {
+			Matcher matcher = _linePattern.matcher(line);
 
-			// sorry for this spaghetti code, please replace it as soon as
-			// possible with a regexp when the Java 1.3 requirement is dropped
+			if (!matcher.matches()) {
+				_log.error("Unable to parse config line: " + line);
 
-			String[] result = new String[2];
-
-			StringBundler keySB = new StringBundler();
-			StringBundler valueSB = new StringBundler();
-
-			// state of the automaton:
-			// 0: key parsing
-			// 1: antislash found while parsing the key
-			// 2: separator crossing
-			// 3: white spaces
-			// 4: value parsing
-
-			int state = 0;
-
-			for (int pos = 0; pos < line.length(); pos++) {
-				char c = line.charAt(pos);
-
-				if (state == 0) {
-					if (c == '\\') {
-						state = 1;
-					}
-					else if (ArrayUtil.contains(_WHITE_SPACE, c)) {
-
-						// switch to the separator crossing state
-
-						state = 2;
-					}
-					else if (CharPool.EQUAL == c) {
-
-						// switch to the value parsing state
-
-						state = 3;
-					}
-					else {
-						keySB.append(c);
-					}
-				}
-				else if (state == 1) {
-					if ((CharPool.EQUAL == c) ||
-						ArrayUtil.contains(_WHITE_SPACE, c)) {
-
-						// this is an escaped separator or white space
-
-						keySB.append(c);
-					}
-					else {
-
-						// another escaped character, the '\' is preserved
-
-						keySB.append('\\');
-						keySB.append(c);
-					}
-
-					// return to the key parsing state
-
-					state = 0;
-				}
-				else if (state == 2) {
-					if (ArrayUtil.contains(_WHITE_SPACE, c)) {
-
-						// do nothing, eat all white spaces
-
-						state = 2;
-					}
-					else if (CharPool.EQUAL == c) {
-
-						// switch to the value parsing state
-
-						state = 3;
-					}
-					else {
-
-						// any other character indicates we encoutered the
-						// beginning of the value
-
-						valueSB.append(c);
-
-						// switch to the value parsing state
-
-						state = 4;
-					}
-				}
-				else if (state == 3) {
-					if (ArrayUtil.contains(_WHITE_SPACE, c)) {
-
-						// do nothing, eat all white spaces
-
-						state = 3;
-					}
-					else {
-
-						// any other character indicates we encoutered the
-						// beginning of the value
-
-						valueSB.append(c);
-
-						// switch to the value parsing state
-
-						state = 4;
-					}
-				}
-				else if (state == 4) {
-					valueSB.append(c);
-				}
+				return new String[2];
 			}
 
-			result[0] = keySB.toString();
-			result[1] = valueSB.toString();
+			String key = matcher.group(1);
 
-			return result;
+			String value = matcher.group(2);
+
+			return new String[] {key.trim(), value.trim()};
 		}
 
 		private String _readProperty() throws IOException {
@@ -354,6 +253,7 @@ public class TypedProperties {
 		}
 
 		private final List<String> _comments = new ArrayList<>();
+		private final Pattern _linePattern = Pattern.compile("(.+)=(.+)");
 		private final Pattern _pattern = Pattern.compile(
 			"\\s*[TILFDXSCBilfdxscb]?(\\[[\\S\\s]*\\]|\\{[\\S\\s]*\\}|" +
 				"\\([\\S\\s]*\\)|\"[\\S\\s]*\")\\s*");

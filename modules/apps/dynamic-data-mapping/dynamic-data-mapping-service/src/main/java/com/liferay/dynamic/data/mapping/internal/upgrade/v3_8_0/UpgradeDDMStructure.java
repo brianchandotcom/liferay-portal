@@ -51,6 +51,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -143,14 +144,33 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	}
 
 	private void _upgradeDDMStructure() throws Exception {
-		StringBundler sb = new StringBundler(6);
+		if (_structureIds.isEmpty()) {
+			return;
+		}
+
+		StringBundler sb = new StringBundler(7 + (2 * _structureIds.size()));
 
 		sb.append("select DDMStructure.structureId, ");
 		sb.append("DDMStructureVersion.definition from DDMStructure inner ");
 		sb.append("join DDMStructureVersion on DDMStructure.structureid = ");
 		sb.append("DDMStructureVersion.structureid where ");
 		sb.append("DDMStructure.version = DDMStructureVersion.version and ");
-		sb.append("DDMStructure.classnameId = ?");
+		sb.append("DDMStructure.classnameId = ? and DDMStructure.structureId ");
+		sb.append("in (");
+
+		Iterator<Long> iterator = _structureIds.iterator();
+
+		while (iterator.hasNext()) {
+			sb.append("?");
+
+			iterator.next();
+
+			if (iterator.hasNext()) {
+				sb.append(",");
+			}
+		}
+
+		sb.append(")");
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
 			PreparedStatement ps2 =
@@ -159,8 +179,17 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 					"update DDMStructure set definition = ? where " +
 						"structureId = ?")) {
 
+			int parameterIndex = 1;
+
 			ps1.setLong(
-				1, PortalUtil.getClassNameId(DDMFormInstance.class.getName()));
+				parameterIndex,
+				PortalUtil.getClassNameId(DDMFormInstance.class.getName()));
+
+			for (long structureId : _structureIds) {
+				parameterIndex++;
+
+				ps1.setLong(parameterIndex, structureId);
+			}
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {

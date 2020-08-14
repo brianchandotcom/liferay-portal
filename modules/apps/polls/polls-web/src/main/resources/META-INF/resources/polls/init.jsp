@@ -17,7 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
-page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %>
+page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+page import="com.liferay.portal.kernel.model.ModelHintsUtil" %>
 
 <%
 PollsDisplayContext pollsDisplayContext = (PollsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);

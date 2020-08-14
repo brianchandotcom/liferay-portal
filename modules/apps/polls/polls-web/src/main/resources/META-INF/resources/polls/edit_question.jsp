@@ -164,6 +164,25 @@ portletDisplay.setURLBack(redirect);
 	</aui:button-row>
 </aui:form>
 
+<aui:script use="aui-char-counter">
+
+	<%
+	for (int i = 1; i <= choicesCount; i++) {
+		char c = (char)(96 + i);
+	%>
+
+		new A.CharCounter({
+			input:
+				'#<portlet:namespace /><%= EditQuestionMVCActionCommand.CHOICE_DESCRIPTION_PREFIX + c %>',
+			maxLength: <%= ModelHintsUtil.getMaxLength(PollsChoice.class.getName(), "description") %>,
+		});
+
+	<%
+	}
+	%>
+
+</aui:script>
+
 <aui:script>
 	function <portlet:namespace />addPollChoice() {
 		var form = document.getElementById('<portlet:namespace />fm');

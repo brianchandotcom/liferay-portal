@@ -67,7 +67,7 @@ public class RemoteAppPortletRegistrar {
 			_log.info("Stopping remote apps");
 		}
 
-		Collection<RemoteAppPortlet> remoteAppPortlets;
+		Collection<RemoteAppPortlet> remoteAppPortlets = null;
 
 		synchronized (_remoteAppPortlets) {
 			remoteAppPortlets = _remoteAppPortlets.values();

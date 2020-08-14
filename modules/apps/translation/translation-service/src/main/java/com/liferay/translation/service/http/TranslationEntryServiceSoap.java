@@ -65,6 +65,30 @@ public class TranslationEntryServiceSoap {
 
 	public static com.liferay.translation.model.TranslationEntrySoap
 			addOrUpdateTranslationEntry(
+				long groupId,
+				com.liferay.info.item.InfoItemReference infoItemReference,
+				String content, String contentType,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.translation.model.TranslationEntry returnValue =
+				TranslationEntryServiceUtil.addOrUpdateTranslationEntry(
+					groupId, infoItemReference, content, contentType,
+					serviceContext);
+
+			return com.liferay.translation.model.TranslationEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.translation.model.TranslationEntrySoap
+			addOrUpdateTranslationEntry(
 				long groupId, String languageId,
 				com.liferay.info.item.InfoItemReference infoItemReference,
 				com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,

@@ -53,6 +53,52 @@ public class TranslationEntryServiceHttp {
 
 	public static com.liferay.translation.model.TranslationEntry
 			addOrUpdateTranslationEntry(
+				HttpPrincipal httpPrincipal, long groupId,
+				com.liferay.info.item.InfoItemReference infoItemReference,
+				String content, String contentType,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				TranslationEntryServiceUtil.class,
+				"addOrUpdateTranslationEntry",
+				_addOrUpdateTranslationEntryParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, infoItemReference, content, contentType,
+				serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.translation.model.TranslationEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.translation.model.TranslationEntry
+			addOrUpdateTranslationEntry(
 				HttpPrincipal httpPrincipal, long groupId, String languageId,
 				com.liferay.info.item.InfoItemReference infoItemReference,
 				com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,
@@ -63,7 +109,7 @@ public class TranslationEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				TranslationEntryServiceUtil.class,
 				"addOrUpdateTranslationEntry",
-				_addOrUpdateTranslationEntryParameterTypes0);
+				_addOrUpdateTranslationEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, languageId, infoItemReference,
@@ -102,6 +148,12 @@ public class TranslationEntryServiceHttp {
 
 	private static final Class<?>[]
 		_addOrUpdateTranslationEntryParameterTypes0 = new Class[] {
+			long.class, com.liferay.info.item.InfoItemReference.class,
+			String.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[]
+		_addOrUpdateTranslationEntryParameterTypes1 = new Class[] {
 			long.class, String.class,
 			com.liferay.info.item.InfoItemReference.class,
 			com.liferay.info.item.InfoItemFieldValues.class,

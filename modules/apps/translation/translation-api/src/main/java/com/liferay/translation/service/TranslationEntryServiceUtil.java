@@ -39,6 +39,18 @@ public class TranslationEntryServiceUtil {
 	 */
 	public static com.liferay.translation.model.TranslationEntry
 			addOrUpdateTranslationEntry(
+				long groupId,
+				com.liferay.info.item.InfoItemReference infoItemReference,
+				String content, String contentType,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addOrUpdateTranslationEntry(
+			groupId, infoItemReference, content, contentType, serviceContext);
+	}
+
+	public static com.liferay.translation.model.TranslationEntry
+			addOrUpdateTranslationEntry(
 				long groupId, String languageId,
 				com.liferay.info.item.InfoItemReference infoItemReference,
 				com.liferay.info.item.InfoItemFieldValues infoItemFieldValues,

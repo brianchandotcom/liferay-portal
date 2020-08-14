@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.BufferedReader;
 import java.io.FilterWriter;
@@ -215,13 +216,13 @@ public class TypedProperties {
 					if (c == '\\') {
 						state = 1;
 					}
-					else if (_contains(_WHITE_SPACE, c)) {
+					else if (ArrayUtil.contains(_WHITE_SPACE, c)) {
 
 						// switch to the separator crossing state
 
 						state = 2;
 					}
-					else if (_contains(_SEPARATORS, c)) {
+					else if (ArrayUtil.contains(_SEPARATORS, c)) {
 
 						// switch to the value parsing state
 
@@ -232,8 +233,8 @@ public class TypedProperties {
 					}
 				}
 				else if (state == 1) {
-					if (_contains(_SEPARATORS, c) ||
-						_contains(_WHITE_SPACE, c)) {
+					if (ArrayUtil.contains(_SEPARATORS, c) ||
+						ArrayUtil.contains(_WHITE_SPACE, c)) {
 
 						// this is an escaped separator or white space
 
@@ -252,13 +253,13 @@ public class TypedProperties {
 					state = 0;
 				}
 				else if (state == 2) {
-					if (_contains(_WHITE_SPACE, c)) {
+					if (ArrayUtil.contains(_WHITE_SPACE, c)) {
 
 						// do nothing, eat all white spaces
 
 						state = 2;
 					}
-					else if (_contains(_SEPARATORS, c)) {
+					else if (ArrayUtil.contains(_SEPARATORS, c)) {
 
 						// switch to the value parsing state
 
@@ -277,7 +278,7 @@ public class TypedProperties {
 					}
 				}
 				else if (state == 3) {
-					if (_contains(_WHITE_SPACE, c)) {
+					if (ArrayUtil.contains(_WHITE_SPACE, c)) {
 
 						// do nothing, eat all white spaces
 
@@ -337,7 +338,7 @@ public class TypedProperties {
 				_values.add(line);
 
 				while ((line.length() > 0) &&
-					   _contains(_WHITE_SPACE, line.charAt(0))) {
+					   ArrayUtil.contains(_WHITE_SPACE, line.charAt(0))) {
 
 					line = line.substring(1);
 				}
@@ -384,20 +385,6 @@ public class TypedProperties {
 			writeln(null);
 		}
 
-	}
-
-	private static boolean _contains(char[] array, char valueToFind) {
-		if (array == null) {
-			return false;
-		}
-
-		for (char c : array) {
-			if (valueToFind == c) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private static Object _convertFromString(String value) {

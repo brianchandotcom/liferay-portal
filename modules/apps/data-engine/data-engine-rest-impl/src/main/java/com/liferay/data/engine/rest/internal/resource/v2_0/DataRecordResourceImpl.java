@@ -368,12 +368,21 @@ public class DataRecordResourceImpl
 			for (String value : JSONUtil.toStringArray(jsonArray)) {
 				DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
 
-				String indexFieldName = _getIndexFieldName(
-					ddmStructure.getStructureId(), fieldName,
-					contextAcceptLanguage.getPreferredLocale());
+				String fieldType = ddmStructure.getFieldType(fieldName);
 
-				fieldBooleanFilter.addTerm(
-					indexFieldName, value, BooleanClauseOccur.SHOULD);
+				if (fieldType.equals("select")) {
+					value = StringBundler.concat(
+						StringPool.OPEN_BRACKET, value,
+						StringPool.CLOSE_BRACKET);
+				}
+
+				fieldBooleanFilter.add(
+					_ddmIndexer.createFieldValueQueryFilter(
+						_getIndexFieldName(
+							ddmStructure.getStructureId(), fieldName,
+							contextAcceptLanguage.getPreferredLocale()),
+						value, contextAcceptLanguage.getPreferredLocale()),
+					BooleanClauseOccur.SHOULD);
 			}
 
 			booleanFilter.add(fieldBooleanFilter, BooleanClauseOccur.MUST);

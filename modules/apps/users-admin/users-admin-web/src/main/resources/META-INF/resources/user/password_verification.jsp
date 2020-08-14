@@ -39,7 +39,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 		</div>
 	</aui:field-wrapper>
 
-	<aui:button-row>
+	<aui:button-row cssClass="position-fixed">
 		<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "verifyPassword();" %>' primary="<%= true %>" value="confirm" />
 
 		<aui:button type="cancel" />

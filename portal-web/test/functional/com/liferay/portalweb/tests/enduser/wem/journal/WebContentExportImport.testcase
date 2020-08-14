@@ -210,12 +210,11 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "Structure Name");
 
-		DynamicDataMapping.deleteField(fieldFieldLabel = "Text");
+		DataEngine.deleteField(fieldFieldLabel = "Text");
 
-		DynamicDataMapping.addField(
-			field = "Web Content",
+		DataEngine.addField(
 			fieldFieldLabel = "Web Content",
-			fieldName = "TestName");
+			fieldType = "Web Content");
 
 		WebContentStructures.saveCP(structureName = "Structure Name");
 

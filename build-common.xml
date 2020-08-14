@@ -1688,13 +1688,14 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 
 	<macrodef name="setup-dxp-app">
 		<attribute name="appname" />
+		<attribute name="appversion" />
 
 		<sequential>
 			<gradle-execute outputproperty="dxp.app.zip.file" setupbinariescache="false" task="printDependencyPath">
 				<arg value="--build-file=${project.dir}/modules/util.gradle" />
 				<arg value="--quiet" />
 				<arg value="-Dorg.gradle.internal.launcher.welcomeMessageEnabled=false" />
-				<arg value="-PdependencyNotation=com.liferay.portal:com.liferay.portal.dxp.apps.@{appname}:latest.release" />
+				<arg value="-PdependencyNotation=com.liferay.portal:com.liferay.portal.dxp.apps.@{appname}:@{appversion}" />
 			</gradle-execute>
 
 			<propertyregex
@@ -1714,7 +1715,7 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 							to="${project.dir}/modules/dxp/@{appname}"
 							type="merge"
 						/>
-						<srcfiles dir="${dxp.app.zip.dir}" includes="com.liferay.portal.dxp.apps.@{appname}-${build.setup.profile.dxp.app.lcs.version}.zip" />
+						<srcfiles dir="${dxp.app.zip.dir}" includes="com.liferay.portal.dxp.apps.@{appname}-@{appversion}.zip" />
 					</uptodate>
 				</not>
 				<then>
@@ -1722,15 +1723,15 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 
 					<unzip
 						dest="${project.dir}/modules/.releng/dxp/apps"
-						src="${dxp.app.zip.dir}/com.liferay.portal.dxp.apps.@{appname}-${build.setup.profile.dxp.app.lcs.version}.zip"
+						src="${dxp.app.zip.dir}/com.liferay.portal.dxp.apps.@{appname}-@{appversion}.zip"
 					>
 						<mapper
-							from="com.liferay.portal.dxp.apps.@{appname}-${build.setup.profile.dxp.app.lcs.version}/.releng/*"
+							from="com.liferay.portal.dxp.apps.@{appname}-@{appversion}/.releng/*"
 							to="@{appname}/*"
 							type="glob"
 						/>
 						<patternset>
-							<include name="com.liferay.portal.dxp.apps.@{appname}-${build.setup.profile.dxp.app.lcs.version}/.releng/**" />
+							<include name="com.liferay.portal.dxp.apps.@{appname}-@{appversion}/.releng/**" />
 						</patternset>
 					</unzip>
 
@@ -1738,15 +1739,15 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 
 					<unzip
 						dest="${project.dir}/modules/dxp/apps"
-						src="${dxp.app.zip.dir}/com.liferay.portal.dxp.apps.@{appname}-${build.setup.profile.dxp.app.lcs.version}.zip"
+						src="${dxp.app.zip.dir}/com.liferay.portal.dxp.apps.@{appname}-@{appversion}.zip"
 					>
 						<mapper
-							from="com.liferay.portal.dxp.apps.@{appname}-${build.setup.profile.dxp.app.lcs.version}/apps/*"
+							from="com.liferay.portal.dxp.apps.@{appname}-@{appversion}/apps/*"
 							to="@{appname}/*"
 							type="glob"
 						/>
 						<patternset>
-							<include name="com.liferay.portal.dxp.apps.@{appname}-${build.setup.profile.dxp.app.lcs.version}/apps/**" />
+							<include name="com.liferay.portal.dxp.apps.@{appname}-@{appversion}/apps/**" />
 						</patternset>
 					</unzip>
 				</then>

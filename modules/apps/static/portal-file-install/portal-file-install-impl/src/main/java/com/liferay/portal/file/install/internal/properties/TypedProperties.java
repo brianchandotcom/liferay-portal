@@ -39,14 +39,6 @@ import java.util.regex.Pattern;
  */
 public class TypedProperties {
 
-	public void clear() {
-		for (Layout layout : _layoutMap.values()) {
-			layout.clearValue();
-		}
-
-		_storage.clear();
-	}
-
 	public Object get(String key) {
 		String value = _storage.get(key);
 

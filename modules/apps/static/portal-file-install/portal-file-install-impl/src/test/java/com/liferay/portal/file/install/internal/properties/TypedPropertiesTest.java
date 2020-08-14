@@ -32,20 +32,6 @@ import org.junit.Test;
 public class TypedPropertiesTest {
 
 	@Test
-	public void testClear() throws IOException {
-		TypedProperties typedProperties = _createTypedProperties(
-			"testKey1 = \"testValue1\"\ntestKey2 = \"testValue2\"");
-
-		Assert.assertEquals("testValue1", typedProperties.get("testKey1"));
-		Assert.assertEquals("testValue2", typedProperties.get("testKey2"));
-
-		typedProperties.clear();
-
-		Assert.assertEquals(null, typedProperties.get("testKey1"));
-		Assert.assertEquals(null, typedProperties.get("testKey2"));
-	}
-
-	@Test
 	public void testKeySet() throws IOException {
 		TypedProperties typedProperties = _createTypedProperties(
 			"testKey1 = \"testValue1\"\ntestKey2 = \"testValue2\"");

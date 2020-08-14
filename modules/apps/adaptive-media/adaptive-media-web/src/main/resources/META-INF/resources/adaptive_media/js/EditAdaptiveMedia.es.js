@@ -14,13 +14,13 @@
 
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayRadio, ClayRadioGroup} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {useFormik} from 'formik';
 import React, {useState} from 'react';
 
 import {HelpMessage, RequiredMark} from './utils/formComponents.es';
 import Input from './utils/input.es';
+import { alphanumeric, required, validate } from "./utils/formValidations.es";
 
 const EditAdaptiveMedia = ({namespace}) => {
 	const [automaticUuid, setAutomaticUuid] = useState(true);
@@ -31,18 +31,14 @@ const EditAdaptiveMedia = ({namespace}) => {
 			name: '',
 			description: '',
 		},
-		validate: (values) => {
-			const errors = {};
-			console.log(values);
-
-			if (!values.name) {
-				errors.name = Liferay.Language.get('this-field-is-required');
-			}
-
-			//number
-
-			return errors;
-		},
+		validate: (values) =>
+			validate(
+				{
+					name: [required],
+					newUuid: [alphanumeric],
+				},
+				values
+			),
 		onSubmit: (values) => {
 			console.log(values);
 		},
@@ -146,6 +142,7 @@ const EditAdaptiveMedia = ({namespace}) => {
 
 				<Input
 					disabled={automaticUuid}
+					error={!automaticUuid && touched.newUuid && errors.newUuid}
 					label={Liferay.Language.get('id')}
 					name="newUuid"
 					onChange={handleChange}

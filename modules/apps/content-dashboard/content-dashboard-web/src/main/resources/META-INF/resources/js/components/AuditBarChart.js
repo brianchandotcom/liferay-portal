@@ -35,6 +35,7 @@ import {shortenNumber} from '../utils/shortenNumber';
 export default function AuditBarChart({rtl, vocabularies}) {
 	const auditBarChartData = useMemo(() => {
 		const dataKeys = new Set();
+		var maxValue = 0;
 
 		const bars = vocabularies.reduce((acc, category) => {
 			if (!category.categories) {
@@ -64,6 +65,10 @@ export default function AuditBarChart({rtl, vocabularies}) {
 
 			return category.categories.reduce(
 				(acc, {key, value}) => {
+					if (Number(value) > maxValue) {
+						maxValue = Number(value);
+					}
+
 					return {
 						...acc,
 						[key]: value,
@@ -87,10 +92,10 @@ export default function AuditBarChart({rtl, vocabularies}) {
 			{colors: {}, legendCheckboxes: {}}
 		);
 
-		return {bars, colors, data, legendCheckboxes};
+		return {bars, colors, data, legendCheckboxes, maxValue};
 	}, [vocabularies]);
 
-	const {bars, colors, data, legendCheckboxes} = auditBarChartData;
+	const {bars, colors, data, legendCheckboxes, maxValue} = auditBarChartData;
 
 	const [checkboxes, setCheckbox] = useState(legendCheckboxes);
 
@@ -230,10 +235,12 @@ export default function AuditBarChart({rtl, vocabularies}) {
 						tickLine={false}
 					/>
 					<YAxis
+						allowDataOverflow={true}
 						allowDecimals={false}
 						axisLine={{
 							stroke: BAR_CHART.stroke,
 						}}
+						domain={[0, maxValue]}
 						orientation={rtl ? 'right' : 'left'}
 						tick={<CustomYAxisTick rtl={rtl} />}
 						tickLine={false}

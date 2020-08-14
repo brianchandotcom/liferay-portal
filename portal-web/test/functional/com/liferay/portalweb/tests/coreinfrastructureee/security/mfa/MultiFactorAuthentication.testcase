@@ -61,7 +61,7 @@ definition {
 	@description = "This is a use case for LPS-109786"
 	@priority = "4"
 	test AssertNotificationsAfterMFADisabledOrEnabled {
-		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertNotificationsIfMFADisabledOrEnabled";
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#AssertNotificationsAfterMFADisabledOrEnabled";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -98,7 +98,8 @@ definition {
 		Notifications.gotoNotifications();
 
 		AssertTextEquals(
-			locator1 = "Notifications#NOTIFICATIONS_BODY_SPECIFIC",
+			key_contentBody = "Multi-factor authentication has been disabled by the system administrator and is unavailable to all instances. You will be notified when it becomes enabled again so long as you keep it enabled in Instance Settings.",
+			locator1 = "Notifications#NOTIFICATIONS_CONTENT",
 			value1 = "Multi-factor authentication has been disabled by the system administrator and is unavailable to all instances. You will be notified when it becomes enabled again so long as you keep it enabled in Instance Settings.");
 
 		Navigator.openURL();
@@ -112,7 +113,8 @@ definition {
 		Notifications.gotoNotifications();
 
 		AssertTextEquals(
-			locator1 = "Notifications#NOTIFICATIONS_BODY_SPECIFIC",
+			key_contentBody = "Multi-factor authentication has been enabled by the system administrator. If you do not want this you can disable it in Instance Settings.",
+			locator1 = "Notifications#NOTIFICATIONS_CONTENT",
 			value1 = "Multi-factor authentication has been enabled by the system administrator. If you do not want this you can disable it in Instance Settings.");
 
 		PortalSettings.gotoConfiguration(

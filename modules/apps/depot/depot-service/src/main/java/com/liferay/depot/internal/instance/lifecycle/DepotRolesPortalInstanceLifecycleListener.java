@@ -15,7 +15,6 @@
 package com.liferay.depot.internal.instance.lifecycle;
 
 import com.liferay.depot.constants.DepotRolesConstants;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
@@ -34,14 +33,11 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
-import java.util.AbstractMap;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -97,20 +93,21 @@ public class DepotRolesPortalInstanceLifecycleListener
 					"and-can-assign-asset-library-roles-to-users");
 		}
 
-		return StringPool.BLANK;
+		return null;
 	}
 
 	private Map<Locale, String> _getDescriptionMap(String name) {
-		Set<Locale> availableLocales = _language.getAvailableLocales();
+		Map<Locale, String> descriptionMap = new HashMap<>();
 
-		Stream<Locale> stream = availableLocales.stream();
+		for (Locale locale : _language.getAvailableLocales()) {
+			String description = _getDescription(locale, name);
 
-		return stream.map(
-			locale -> new AbstractMap.SimpleEntry<>(
-				locale, _getDescription(locale, name))
-		).collect(
-			Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
-		);
+			if (description != null) {
+				descriptionMap.put(locale, description);
+			}
+		}
+
+		return descriptionMap;
 	}
 
 	private Role _getOrCreateRole(

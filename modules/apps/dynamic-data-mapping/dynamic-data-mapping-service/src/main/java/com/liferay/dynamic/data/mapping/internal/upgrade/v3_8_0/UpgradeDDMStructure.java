@@ -320,6 +320,10 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	}
 
 	private void _upgradeDDMStructureVersion() throws Exception {
+		if (_nestedFieldsMap.isEmpty()) {
+			return;
+		}
+
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("select DDMStructureVersion.structureVersionId, ");
@@ -340,18 +344,19 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
-					String definition = rs.getString("definition");
-
 					long structureVersionId = rs.getLong("structureVersionId");
 
-					ps2.setString(
-						1,
-						_upgradeDDMStructureVersionDefinition(
-							definition, structureVersionId));
+					if (_nestedFieldsMap.get(structureVersionId) != null) {
+						ps2.setString(
+							1,
+							_upgradeDDMStructureVersionDefinition(
+								rs.getString("definition"),
+								structureVersionId));
 
-					ps2.setLong(2, structureVersionId);
+						ps2.setLong(2, structureVersionId);
 
-					ps2.addBatch();
+						ps2.addBatch();
+					}
 				}
 
 				ps2.executeBatch();
@@ -371,71 +376,68 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		List<Tuple> ddmFormFieldTuples = _nestedFieldsMap.get(
 			structureVersionId);
 
-		if (ddmFormFieldTuples != null) {
-			for (Tuple ddmFormFieldTuple : ddmFormFieldTuples) {
-				String fieldSetDDMFormFieldName =
+		for (Tuple ddmFormFieldTuple : ddmFormFieldTuples) {
+			String fieldSetDDMFormFieldName =
+				(String)ddmFormFieldTuple.getObject(_DDM_FORM_FIELD_TUPLE_NAME);
+
+			DDMFormField fieldSetDDMFormField = new DDMFormField(
+				fieldSetDDMFormFieldName, "fieldset");
+
+			LocalizedValue localizedValue = new LocalizedValue();
+
+			Set<Locale> locales = ddmForm.getAvailableLocales();
+
+			locales.forEach(
+				locale -> localizedValue.addString(
+					locale,
 					(String)ddmFormFieldTuple.getObject(
-						_DDM_FORM_FIELD_TUPLE_NAME);
+						_DDM_FORM_FIELD_TUPLE_LABEL)));
 
-				DDMFormField fieldSetDDMFormField = new DDMFormField(
-					fieldSetDDMFormFieldName, "fieldset");
+			fieldSetDDMFormField.setLabel(localizedValue);
 
-				LocalizedValue localizedValue = new LocalizedValue();
+			fieldSetDDMFormField.setProperty(
+				"ddmStructureId", StringPool.BLANK);
+			fieldSetDDMFormField.setProperty(
+				"ddmStructureLayoutId", StringPool.BLANK);
 
-				Set<Locale> locales = ddmForm.getAvailableLocales();
+			JSONArray rows = _jsonFactory.createJSONArray();
 
-				locales.forEach(
-					locale -> localizedValue.addString(
-						locale,
-						(String)ddmFormFieldTuple.getObject(
-							_DDM_FORM_FIELD_TUPLE_LABEL)));
+			List<String> nestedNames =
+				(List<String>)ddmFormFieldTuple.getObject(
+					_DDM_FORM_FIELD_TUPLE_NESTED_FIELD_NAMES);
 
-				fieldSetDDMFormField.setLabel(localizedValue);
+			nestedNames.forEach(
+				ddmFormFieldName -> {
+					fieldSetDDMFormField.addNestedDDMFormField(
+						ddmFormFieldsMap.get(ddmFormFieldName));
 
-				fieldSetDDMFormField.setProperty(
-					"ddmStructureId", StringPool.BLANK);
-				fieldSetDDMFormField.setProperty(
-					"ddmStructureLayoutId", StringPool.BLANK);
-
-				JSONArray rows = _jsonFactory.createJSONArray();
-
-				List<String> nestedNames =
-					(List<String>)ddmFormFieldTuple.getObject(
-						_DDM_FORM_FIELD_TUPLE_NESTED_FIELD_NAMES);
-
-				nestedNames.forEach(
-					ddmFormFieldName -> {
-						fieldSetDDMFormField.addNestedDDMFormField(
-							ddmFormFieldsMap.get(ddmFormFieldName));
-
-						rows.put(
+					rows.put(
+						JSONUtil.put(
+							"columns",
 							JSONUtil.put(
-								"columns",
 								JSONUtil.put(
-									JSONUtil.put(
-										"fields", JSONUtil.put(ddmFormFieldName)
-									).put(
-										"size",
-										ddmFormFieldTuple.getObject(
-											_DDM_FORM_FIELD_TUPLE_COLUMN_SIZE)
-									))));
+									"fields", JSONUtil.put(ddmFormFieldName)
+								).put(
+									"size",
+									ddmFormFieldTuple.getObject(
+										_DDM_FORM_FIELD_TUPLE_COLUMN_SIZE)
+								))));
 
-						ddmFormFieldsMap.remove(ddmFormFieldName);
-					});
+					ddmFormFieldsMap.remove(ddmFormFieldName);
+				});
 
-				fieldSetDDMFormField.setProperty("rows", rows);
+			fieldSetDDMFormField.setProperty("rows", rows);
 
-				fieldSetDDMFormField.setShowLabel(false);
+			fieldSetDDMFormField.setShowLabel(false);
 
-				ddmFormFieldsMap.put(
-					fieldSetDDMFormFieldName, fieldSetDDMFormField);
-			}
-
-			List<DDMFormField> ddmFormFields = new ArrayList<>(
-				ddmFormFieldsMap.values());
-
-			ddmForm.setDDMFormFields(ddmFormFields);
+			ddmFormFieldsMap.put(
+				fieldSetDDMFormFieldName, fieldSetDDMFormField);
 		}
+
+		List<DDMFormField> ddmFormFields = new ArrayList<>(
+			ddmFormFieldsMap.values());
+
+		ddmForm.setDDMFormFields(ddmFormFields);
 
 		DDMFormSerializerSerializeResponse ddmFormSerializerSerializeResponse =
 			_ddmFormSerializer.serialize(

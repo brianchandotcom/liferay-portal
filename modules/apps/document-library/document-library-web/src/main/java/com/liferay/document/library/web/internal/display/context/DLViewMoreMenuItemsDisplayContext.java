@@ -68,6 +68,30 @@ public class DLViewMoreMenuItemsDisplayContext {
 		return getSearchActionURL();
 	}
 
+	public String getDLFileEntryTypeScopeName(
+			DLFileEntryType dlFileEntryType, Locale locale)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		if (dlFileEntryType.getGroupId() == scopeGroup.getGroupId()) {
+			if (scopeGroup.getType() == GroupConstants.TYPE_DEPOT) {
+				return LanguageUtil.get(
+					_httpServletRequest, "current-asset-library");
+			}
+
+			return LanguageUtil.get(_httpServletRequest, "current-site");
+		}
+
+		Group dlFileEntryTypeGroup = GroupLocalServiceUtil.getGroup(
+			dlFileEntryType.getGroupId());
+
+		return dlFileEntryTypeGroup.getName(locale);
+	}
+
 	public String getEventName() {
 		if (_eventName != null) {
 			return _eventName;

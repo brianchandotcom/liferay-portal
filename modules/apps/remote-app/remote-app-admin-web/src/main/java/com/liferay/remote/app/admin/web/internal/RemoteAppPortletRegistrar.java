@@ -93,7 +93,7 @@ public class RemoteAppPortletRegistrar {
 			if (_remoteAppPortlets.containsKey(remoteAppEntryId)) {
 				throw new IllegalStateException(
 					"Remote app " + remoteAppEntryId +
-						" is already registered.");
+						" is already registered");
 			}
 
 			_remoteAppPortlets.put(remoteAppEntryId, remoteAppPortlet);

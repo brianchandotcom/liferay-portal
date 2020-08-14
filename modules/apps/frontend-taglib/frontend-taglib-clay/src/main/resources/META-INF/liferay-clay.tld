@@ -624,8 +624,8 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<name>dataset-display</name>
-		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.DatasetDisplayTag</tag-class>
+		<name>data-set-display</name>
+		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.DataSetDisplayTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>actionParameterName</name>

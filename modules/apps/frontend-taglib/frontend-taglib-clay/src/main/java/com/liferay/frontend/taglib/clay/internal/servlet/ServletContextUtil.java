@@ -16,7 +16,7 @@ package com.liferay.frontend.taglib.clay.internal.servlet;
 
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayViewSerializer;
 import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilterSerializer;
-import com.liferay.frontend.taglib.clay.servlet.taglib.DatasetDisplayTag;
+import com.liferay.frontend.taglib.clay.servlet.taglib.DataSetDisplayTag;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -41,7 +41,7 @@ public class ServletContextUtil {
 
 		StringBundler sb = new StringBundler(7);
 
-		sb.append(DatasetDisplayTag.class.getName());
+		sb.append(DataSetDisplayTag.class.getName());
 		sb.append(StringPool.POUND);
 
 		ThemeDisplay themeDisplay =

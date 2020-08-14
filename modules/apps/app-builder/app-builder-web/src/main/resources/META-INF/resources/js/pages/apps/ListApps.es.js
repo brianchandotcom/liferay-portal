@@ -70,6 +70,7 @@ export default ({
 		params: {dataDefinitionId, objectType},
 	},
 }) => {
+	const {scope} = useContext(AppContext);
 	const withBackUrl = useBackUrl();
 	const {defaultLanguageId} = useDataDefinition(dataDefinitionId);
 	const newAppLink = compile(editPath[0])({dataDefinitionId, objectType});
@@ -95,7 +96,7 @@ export default ({
 		title: Liferay.Language.get('there-are-no-apps-yet'),
 	};
 
-	const ENDPOINT = `/o/app-builder/v1.0/data-definitions/${dataDefinitionId}/apps`;
+	const ENDPOINT = `/o/app-builder/v1.0/data-definitions/${dataDefinitionId}/apps?scope=${scope}`;
 
 	const getEditAppUrl = ({dataDefinitionId, id}) => {
 		return withBackUrl(

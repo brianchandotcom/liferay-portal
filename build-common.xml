@@ -1687,15 +1687,15 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 	</macrodef>
 
 	<macrodef name="setup-dxp-app">
-		<attribute name="appname" />
-		<attribute name="appversion" />
+		<attribute name="dxp.app.name" />
+		<attribute name="dxp.app.version" />
 
 		<sequential>
 			<gradle-execute outputproperty="dxp.app.zip.file" setupbinariescache="false" task="printDependencyPath">
 				<arg value="--build-file=${project.dir}/modules/util.gradle" />
 				<arg value="--quiet" />
 				<arg value="-Dorg.gradle.internal.launcher.welcomeMessageEnabled=false" />
-				<arg value="-PdependencyNotation=com.liferay.portal:com.liferay.portal.dxp.apps.@{appname}:@{appversion}" />
+				<arg value="-PdependencyNotation=com.liferay.portal:com.liferay.portal.dxp.apps.@{dxp.app.name}:@{dxp.app.version}" />
 			</gradle-execute>
 
 			<propertyregex
@@ -1712,42 +1712,42 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 				<not>
 					<uptodate>
 						<mapper
-							to="${project.dir}/modules/dxp/@{appname}"
+							to="${project.dir}/modules/dxp/@{dxp.app.name}"
 							type="merge"
 						/>
-						<srcfiles dir="${dxp.app.zip.dir}" includes="com.liferay.portal.dxp.apps.@{appname}-@{appversion}.zip" />
+						<srcfiles dir="${dxp.app.zip.dir}" includes="com.liferay.portal.dxp.apps.@{dxp.app.name}-@{dxp.app.version}.zip" />
 					</uptodate>
 				</not>
 				<then>
-					<delete dir="${project.dir}/modules/.releng/dxp/apps/@{appname}" />
+					<delete dir="${project.dir}/modules/.releng/dxp/apps/@{dxp.app.name}" />
 
 					<unzip
 						dest="${project.dir}/modules/.releng/dxp/apps"
-						src="${dxp.app.zip.dir}/com.liferay.portal.dxp.apps.@{appname}-@{appversion}.zip"
+						src="${dxp.app.zip.dir}/com.liferay.portal.dxp.apps.@{dxp.app.name}-@{dxp.app.version}.zip"
 					>
 						<mapper
-							from="com.liferay.portal.dxp.apps.@{appname}-@{appversion}/.releng/*"
-							to="@{appname}/*"
+							from="com.liferay.portal.dxp.apps.@{dxp.app.name}-@{dxp.app.version}/.releng/*"
+							to="@{dxp.app.name}/*"
 							type="glob"
 						/>
 						<patternset>
-							<include name="com.liferay.portal.dxp.apps.@{appname}-@{appversion}/.releng/**" />
+							<include name="com.liferay.portal.dxp.apps.@{dxp.app.name}-@{dxp.app.version}/.releng/**" />
 						</patternset>
 					</unzip>
 
-					<delete dir="${project.dir}/modules/dxp/apps/@{appname}" />
+					<delete dir="${project.dir}/modules/dxp/apps/@{dxp.app.name}" />
 
 					<unzip
 						dest="${project.dir}/modules/dxp/apps"
-						src="${dxp.app.zip.dir}/com.liferay.portal.dxp.apps.@{appname}-@{appversion}.zip"
+						src="${dxp.app.zip.dir}/com.liferay.portal.dxp.apps.@{dxp.app.name}-@{dxp.app.version}.zip"
 					>
 						<mapper
-							from="com.liferay.portal.dxp.apps.@{appname}-@{appversion}/apps/*"
-							to="@{appname}/*"
+							from="com.liferay.portal.dxp.apps.@{dxp.app.name}-@{dxp.app.version}/apps/*"
+							to="@{dxp.app.name}/*"
 							type="glob"
 						/>
 						<patternset>
-							<include name="com.liferay.portal.dxp.apps.@{appname}-@{appversion}/apps/**" />
+							<include name="com.liferay.portal.dxp.apps.@{dxp.app.name}-@{dxp.app.version}/apps/**" />
 						</patternset>
 					</unzip>
 				</then>

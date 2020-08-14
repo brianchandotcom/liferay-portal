@@ -330,6 +330,97 @@ definition {
 		SelectFrameTop(value1 = "relative=top");
 	}
 
+	macro viewLocationInfoViaBlogs {
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		if (isSet(navTab)) {
+			AssertClick(
+				key_navTab = "${navTab}",
+				locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
+				value1 = "${navTab}");
+		}
+
+		ManagementBar.setFilterAndOrder(filterBy = "Everywhere");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		for (var title : list "${titleList}") {
+			AssertTextEquals(
+				key_locationName = "${locationName}",
+				key_title = "${title}",
+				locator1 = "ItemSelector#LOCATION_INFO_CARDS",
+				value1 = "${locationName}");
+		}
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		for (var title : list "${titleList}") {
+			AssertTextEquals(
+				key_locationName = "${locationName}",
+				key_title = "${title}",
+				locator1 = "ItemSelector#LOCATION_INFO_LIST",
+				value1 = "${locationName}");
+		}
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		for (var title : list "${titleList}") {
+			AssertTextEquals(
+				key_locationName = "${locationName}",
+				key_title = "${title}",
+				locator1 = "ItemSelector#LOCATION_INFO_TABLE",
+				value1 = "${locationName}");
+		}
+	}
+
+	macro viewLocationInfoViaWCD {
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertClick(
+			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
+			value1 = "Select");
+
+		SelectFrame(value1 = "relative=top");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Everywhere");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		for (var title : list "${titleList}") {
+			AssertTextEquals(
+				key_locationName = "${locationName}",
+				key_title = "${title}",
+				locator1 = "ItemSelector#LOCATION_INFO_CARDS_2",
+				value1 = "${locationName}");
+		}
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		for (var title : list "${titleList}") {
+			AssertTextEquals(
+				key_locationName = "${locationName}",
+				key_title = "${title}",
+				locator1 = "ItemSelector#LOCATION_INFO_LIST",
+				value1 = "${locationName}");
+		}
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		for (var title : list "${titleList}") {
+			AssertTextEquals(
+				key_locationName = "${locationName}",
+				key_title = "${title}",
+				locator1 = "ItemSelector#LOCATION_INFO_TABLE",
+				value1 = "${locationName}");
+		}
+	}
+
 	macro viewPreview {
 		AssertElementPresent(
 			key_footer = "${footer}",

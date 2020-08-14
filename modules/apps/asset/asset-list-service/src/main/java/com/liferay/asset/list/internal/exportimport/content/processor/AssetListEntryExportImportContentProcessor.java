@@ -273,15 +273,8 @@ public class AssetListEntryExportImportContentProcessor
 
 			long[] newClassTypeIds = classTypeIdsLongStream.map(
 				classTypeId -> {
-					long newClassTypeId = MapUtil.getLong(
-						ddmStructureIds, classTypeId, classTypeId);
-
-					if (newClassTypeId != classTypeId) {
-						return newClassTypeId;
-					}
-
-					return MapUtil.getLong(
-						dlFileEntryTypeIds, classTypeId, classTypeId);
+					return _getClassTypeIdFromClassTypeMaps(
+						classTypeId, ddmStructureIds, dlFileEntryTypeIds);
 				}
 			).toArray();
 
@@ -297,13 +290,8 @@ public class AssetListEntryExportImportContentProcessor
 				continue;
 			}
 
-			long newAnyClassType = MapUtil.getLong(
-				ddmStructureIds, anyClassType, anyClassType);
-
-			if (newAnyClassType == anyClassType) {
-				newAnyClassType = MapUtil.getLong(
-					dlFileEntryTypeIds, anyClassType, anyClassType);
-			}
+			long newAnyClassType = _getClassTypeIdFromClassTypeMaps(
+				anyClassType, ddmStructureIds, dlFileEntryTypeIds);
 
 			unicodeProperties.setProperty(
 				"anyClassType" + clazz.getSimpleName(),
@@ -379,6 +367,21 @@ public class AssetListEntryExportImportContentProcessor
 			groupIdMappingElement.addAttribute(
 				"group-key", group.getGroupKey());
 		}
+	}
+
+	private long _getClassTypeIdFromClassTypeMaps(
+		long classTypeId, Map<Long, Long>... classTypeMaps) {
+
+		for (Map<Long, Long> classTypeMap : classTypeMaps) {
+			long newClassTypeId = MapUtil.getLong(
+				classTypeMap, classTypeId, classTypeId);
+
+			if (newClassTypeId != classTypeId) {
+				return newClassTypeId;
+			}
+		}
+
+		return classTypeId;
 	}
 
 	@Reference

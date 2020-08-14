@@ -1653,6 +1653,15 @@ public abstract class BaseDocumentResourceTestCase {
 			valid = false;
 		}
 
+		Group group = testDepotEntry.getGroup();
+
+		if (!Objects.equals(
+				document.getAssetLibraryKey(), group.getGroupKey()) &&
+			!Objects.equals(document.getSiteId(), testGroup.getGroupId())) {
+
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1937,6 +1946,8 @@ public abstract class BaseDocumentResourceTestCase {
 
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		graphQLFields.add(new GraphQLField("siteId"));
 
 		for (Field field :
 				ReflectionUtil.getDeclaredFields(
@@ -2585,6 +2596,11 @@ public abstract class BaseDocumentResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("siteId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("sizeInBytes")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2679,6 +2695,7 @@ public abstract class BaseDocumentResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				numberOfComments = RandomTestUtil.randomInt();
+				siteId = testGroup.getGroupId();
 				sizeInBytes = RandomTestUtil.randomLong();
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
@@ -2687,6 +2704,8 @@ public abstract class BaseDocumentResourceTestCase {
 
 	protected Document randomIrrelevantDocument() throws Exception {
 		Document randomIrrelevantDocument = randomDocument();
+
+		randomIrrelevantDocument.setSiteId(irrelevantGroup.getGroupId());
 
 		return randomIrrelevantDocument;
 	}

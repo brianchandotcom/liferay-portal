@@ -332,6 +332,16 @@ public class DocumentSerDes {
 			sb.append("]");
 		}
 
+		if (document.getSiteId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteId\": ");
+
+			sb.append(document.getSiteId());
+		}
+
 		if (document.getSizeInBytes() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -584,6 +594,13 @@ public class DocumentSerDes {
 				String.valueOf(document.getRelatedContents()));
 		}
 
+		if (document.getSiteId() == null) {
+			map.put("siteId", null);
+		}
+		else {
+			map.put("siteId", String.valueOf(document.getSiteId()));
+		}
+
 		if (document.getSizeInBytes() == null) {
 			map.put("sizeInBytes", null);
 		}
@@ -768,6 +785,12 @@ public class DocumentSerDes {
 						).toArray(
 							size -> new RelatedContent[size]
 						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "siteId")) {
+				if (jsonParserFieldValue != null) {
+					document.setSiteId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "sizeInBytes")) {

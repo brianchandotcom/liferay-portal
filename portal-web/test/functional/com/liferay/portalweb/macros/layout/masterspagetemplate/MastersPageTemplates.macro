@@ -49,6 +49,8 @@ definition {
 	macro selectMasterViaPageDesignOptions {
 		Navigator.gotoNavTab(navTab = "Master");
 
+		MetalComponent.waitForCard(card = "${masterLayoutName}");
+
 		LexiconCard.clickCardTitle(card = "${masterLayoutName}");
 
 		AssertElementPresent(

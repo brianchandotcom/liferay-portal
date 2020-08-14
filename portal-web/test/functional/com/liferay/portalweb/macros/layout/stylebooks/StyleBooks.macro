@@ -50,6 +50,8 @@ definition {
 	macro selectStyleBookViaPageDesignOptions {
 		Navigator.gotoNavTab(navTab = "Style Book");
 
+		MetalComponent.waitForCard(card = "${styleBookName}");
+
 		LexiconCard.clickCardTitle(card = "${styleBookName}");
 
 		PageEditor.assertFragmentSidebarLoaded();

@@ -1,0 +1,7 @@
+@import 'atlas-variables';
+
+#password-verification-dialog .modal-dialog {
+	align-items: center;
+	display: flex;
+	min-height: subtract(100%, $modal-dialog-margin * 2);
+}

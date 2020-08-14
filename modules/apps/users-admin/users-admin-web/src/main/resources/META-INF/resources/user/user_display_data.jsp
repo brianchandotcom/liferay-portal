@@ -199,13 +199,13 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 				screenNameInput.value != '<%= selUser.getScreenName() %>'
 			) {
 				Liferay.Util.openModal({
-					height: '270px',
+					height: '320px',
 					id: 'password-verification-dialog',
 					onSelect: function () {
 						submitForm(form.form);
 					},
 					selectEventName: '<portlet:namespace/>verifyPassword',
-					size: 'lg',
+					size: 'md',
 					title: '<%= LanguageUtil.get(request, "confirm-password") %>',
 					url: '<%= verifyPasswordURL %>',
 				});

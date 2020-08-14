@@ -34,7 +34,7 @@ pageContext.setAttribute("portletURL", portletURL);
 		<div class="form-group-item">
 			<div class="input-group">
 				<div class="input-group-item">
-					<input class="form-control input-group-inset input-group-inset-after search-input search-portlet-keywords-input" name="<%= liferayPortletResponse.getNamespace() + "keywords" %>" placeholder="<%= LanguageUtil.get(request, "search") %>" type="text" value="<%= (searchDisplayContext.getKeywords() != null) ? HtmlUtil.escapeAttribute(searchDisplayContext.getKeywords()) : StringPool.BLANK %>" />
+					<input class="form-control input-group-inset input-group-inset-after search-input search-portlet-keywords-input" id="<%= liferayPortletResponse.getNamespace() + "keywords" %>" name="<%= liferayPortletResponse.getNamespace() + "keywords" %>" placeholder="<%= LanguageUtil.get(request, "search") %>" type="text" value="<%= (searchDisplayContext.getKeywords() != null) ? HtmlUtil.escapeAttribute(searchDisplayContext.getKeywords()) : StringPool.BLANK %>" />
 
 					<div class="input-group-inset-item input-group-inset-item-after">
 						<button class="btn btn-light btn-unstyled" onclick="<%= liferayPortletResponse.getNamespace() + "search();" %>" type="submit">

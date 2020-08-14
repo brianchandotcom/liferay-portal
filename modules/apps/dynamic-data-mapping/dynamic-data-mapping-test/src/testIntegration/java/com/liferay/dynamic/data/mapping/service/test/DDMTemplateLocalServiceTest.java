@@ -105,7 +105,7 @@ public class DDMTemplateLocalServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test(expected = TemplateCreationDisabledException.class)
-	public void testAddTemplateWithTemplateCreationDisable() throws Exception {
+	public void testAddTemplateWithTemplateCreationDisabled() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.dynamic.data.mapping.configuration." +

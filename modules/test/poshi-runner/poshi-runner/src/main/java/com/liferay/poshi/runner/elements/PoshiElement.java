@@ -49,8 +49,8 @@ import org.dom4j.tree.DefaultElement;
 public abstract class PoshiElement
 	extends DefaultElement implements PoshiNode<Element, PoshiElement> {
 
-	public PoshiElement() {
-		super("");
+	public PoshiElement(String name) {
+		super(name);
 	}
 
 	@Override

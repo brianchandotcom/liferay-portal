@@ -50,6 +50,7 @@ public class SetUpPoshiElement extends CommandPoshiElement {
 	}
 
 	protected SetUpPoshiElement() {
+		super(_ELEMENT_NAME);
 	}
 
 	protected SetUpPoshiElement(Element element) {

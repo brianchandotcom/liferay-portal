@@ -78,6 +78,7 @@ public class DescriptionPoshiElement extends PoshiElement {
 	}
 
 	protected DescriptionPoshiElement() {
+		super(_ELEMENT_NAME);
 	}
 
 	protected DescriptionPoshiElement(Element element) {

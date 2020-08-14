@@ -82,6 +82,7 @@ public class AndPoshiElement extends PoshiElement {
 	}
 
 	protected AndPoshiElement() {
+		super(_ELEMENT_NAME);
 	}
 
 	protected AndPoshiElement(Element element) {

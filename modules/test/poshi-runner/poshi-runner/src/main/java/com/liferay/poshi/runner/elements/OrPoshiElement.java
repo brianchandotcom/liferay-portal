@@ -82,6 +82,7 @@ public class OrPoshiElement extends PoshiElement {
 	}
 
 	protected OrPoshiElement() {
+		super(_ELEMENT_NAME);
 	}
 
 	protected OrPoshiElement(Element element) {

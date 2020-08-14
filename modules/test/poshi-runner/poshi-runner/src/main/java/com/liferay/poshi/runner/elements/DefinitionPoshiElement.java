@@ -150,6 +150,7 @@ public class DefinitionPoshiElement extends PoshiElement {
 	}
 
 	protected DefinitionPoshiElement() {
+		super(_ELEMENT_NAME);
 	}
 
 	protected DefinitionPoshiElement(Element element, URL url) {

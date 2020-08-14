@@ -50,6 +50,7 @@ public class FailPoshiElement extends EchoPoshiElement {
 	}
 
 	protected FailPoshiElement() {
+		super(_ELEMENT_NAME);
 	}
 
 	protected FailPoshiElement(Element element) {

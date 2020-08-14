@@ -27,7 +27,7 @@ public abstract class PoshiComment
 	extends DefaultComment implements PoshiNode<Comment, PoshiComment> {
 
 	public PoshiComment() {
-		super(null);
+		super("");
 	}
 
 	@Override

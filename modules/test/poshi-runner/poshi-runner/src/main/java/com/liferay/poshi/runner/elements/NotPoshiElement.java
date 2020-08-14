@@ -83,6 +83,7 @@ public class NotPoshiElement extends PoshiElement {
 	}
 
 	protected NotPoshiElement() {
+		super(_ELEMENT_NAME);
 	}
 
 	protected NotPoshiElement(Element element) {

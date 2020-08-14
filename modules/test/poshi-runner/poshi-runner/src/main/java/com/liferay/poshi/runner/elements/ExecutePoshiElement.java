@@ -240,6 +240,7 @@ public class ExecutePoshiElement extends PoshiElement {
 	}
 
 	protected ExecutePoshiElement() {
+		this(_ELEMENT_NAME);
 	}
 
 	protected ExecutePoshiElement(Element element) {
@@ -257,6 +258,10 @@ public class ExecutePoshiElement extends PoshiElement {
 		throws PoshiScriptParserException {
 
 		super("execute", parentPoshiElement, poshiScript);
+	}
+
+	protected ExecutePoshiElement(String name) {
+		super(name);
 	}
 
 	protected ExecutePoshiElement(String name, Element element) {

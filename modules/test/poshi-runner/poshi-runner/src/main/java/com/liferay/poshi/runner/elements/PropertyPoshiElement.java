@@ -50,6 +50,7 @@ public class PropertyPoshiElement extends VarPoshiElement {
 	}
 
 	protected PropertyPoshiElement() {
+		super(_ELEMENT_NAME);
 	}
 
 	protected PropertyPoshiElement(Element element) {

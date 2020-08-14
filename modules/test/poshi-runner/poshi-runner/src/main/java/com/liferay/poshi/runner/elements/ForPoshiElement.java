@@ -99,6 +99,7 @@ public class ForPoshiElement extends PoshiElement {
 	}
 
 	protected ForPoshiElement() {
+		super(_ELEMENT_NAME);
 	}
 
 	protected ForPoshiElement(Element element) {

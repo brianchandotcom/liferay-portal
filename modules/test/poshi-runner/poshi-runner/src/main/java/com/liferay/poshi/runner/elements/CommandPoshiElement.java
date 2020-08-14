@@ -131,6 +131,7 @@ public class CommandPoshiElement extends PoshiElement {
 	}
 
 	protected CommandPoshiElement() {
+		this(_ELEMENT_NAME);
 	}
 
 	protected CommandPoshiElement(Element element) {
@@ -148,6 +149,10 @@ public class CommandPoshiElement extends PoshiElement {
 		throws PoshiScriptParserException {
 
 		this(_ELEMENT_NAME, parentPoshiElement, poshiScript);
+	}
+
+	protected CommandPoshiElement(String name) {
+		super(name);
 	}
 
 	protected CommandPoshiElement(String name, Element element) {

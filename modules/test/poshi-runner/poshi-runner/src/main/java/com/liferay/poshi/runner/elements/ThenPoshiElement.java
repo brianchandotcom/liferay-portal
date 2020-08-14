@@ -75,6 +75,7 @@ public class ThenPoshiElement extends PoshiElement {
 	}
 
 	protected ThenPoshiElement() {
+		this(_ELEMENT_NAME);
 	}
 
 	protected ThenPoshiElement(Element element) {
@@ -90,6 +91,10 @@ public class ThenPoshiElement extends PoshiElement {
 		throws PoshiScriptParserException {
 
 		super(_ELEMENT_NAME, parentPoshiElement, poshiScript);
+	}
+
+	protected ThenPoshiElement(String name) {
+		super(name);
 	}
 
 	protected ThenPoshiElement(String name, Element element) {

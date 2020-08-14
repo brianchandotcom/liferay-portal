@@ -50,6 +50,7 @@ public class WhilePoshiElement extends IfPoshiElement {
 	}
 
 	protected WhilePoshiElement() {
+		super(_ELEMENT_NAME);
 	}
 
 	protected WhilePoshiElement(Element element) {

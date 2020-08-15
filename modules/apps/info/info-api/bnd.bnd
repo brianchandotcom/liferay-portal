@@ -17,6 +17,7 @@ Export-Package:\
 	com.liferay.info.item.capability,\
 	com.liferay.info.item.field.reader,\
 	com.liferay.info.item.provider,\
+	com.liferay.info.item.provider.filter,\
 	com.liferay.info.item.renderer,\
 	com.liferay.info.item.renderer.template,\
 	com.liferay.info.item.selector,\

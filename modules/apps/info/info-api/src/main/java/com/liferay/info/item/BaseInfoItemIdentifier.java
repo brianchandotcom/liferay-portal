@@ -14,6 +14,9 @@
 
 package com.liferay.info.item;
 
+import com.liferay.info.item.provider.filter.InfoItemServiceFilter;
+import com.liferay.info.item.provider.filter.OptionalPropertyInfoItemServiceFilter;
+
 import java.util.Optional;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -32,6 +35,13 @@ public abstract class BaseInfoItemIdentifier implements InfoItemIdentifier {
 	@Override
 	public void setVersion(String version) {
 		_version = version;
+	}
+
+	protected static InfoItemServiceFilter getInfoServiceFilter(
+		Class<? extends InfoItemIdentifier> infoServiceFilterClass) {
+
+		return new OptionalPropertyInfoItemServiceFilter(
+			"info.item.identifier", infoServiceFilterClass.getName());
 	}
 
 	private String _version;

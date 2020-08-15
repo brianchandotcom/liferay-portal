@@ -55,7 +55,11 @@ definition {
 	test DataTableSmoke {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/lazy");
 
-		AlloyShowcase.viewPaginator();
+		AlloyShowcase.viewPaginator(
+			screenName1 = "John",
+			screenName2 = "Philip",
+			screenName3 = "George",
+			screenName4 = "William");
 
 		AlloyShowcase.selectRowsPerPage();
 	}

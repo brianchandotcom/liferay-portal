@@ -111,7 +111,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "Philip");
+			value1 = "${screenName2}");
 
 		Click(
 			key_pageNum = "3",
@@ -123,7 +123,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "George");
+			value1 = "${screenName3}");
 
 		Click(
 			key_buttonLabel = "previousPage",
@@ -135,7 +135,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "Philip");
+			value1 = "${screenName2}");
 
 		Click(
 			key_buttonLabel = "lastPage",
@@ -150,7 +150,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "William");
+			value1 = "${screenName4}");
 
 		Click(
 			key_buttonLabel = "firstPage",
@@ -165,7 +165,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "John");
+			value1 = "${screenName1}");
 	}
 
 }

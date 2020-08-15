@@ -261,15 +261,16 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			return layoutDisplayPageObjectProvider.getDisplayObject();
 		}
 
+		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
+			layoutDisplayPageObjectProvider.getClassPK());
+
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			(InfoItemObjectProvider<Object>)
 				infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemObjectProvider.class,
 					portal.getClassName(
-						layoutDisplayPageObjectProvider.getClassNameId()));
-
-		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
-			layoutDisplayPageObjectProvider.getClassPK());
+						layoutDisplayPageObjectProvider.getClassNameId()),
+					infoItemIdentifier.getInfoServiceFilter());
 
 		infoItemIdentifier.setVersion(InfoItemIdentifier.VERSION_LATEST);
 

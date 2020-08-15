@@ -86,18 +86,19 @@ public class GetInfoItemFieldValueMVCResourceCommand
 			return;
 		}
 
-		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemObjectProvider.class, className);
-
-		if (infoItemObjectProvider == null) {
-			return;
-		}
-
 		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
 
 		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
 			classPK);
+
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemObjectProvider.class, className,
+				infoItemIdentifier.getInfoServiceFilter());
+
+		if (infoItemObjectProvider == null) {
+			return;
+		}
 
 		Object object = infoItemObjectProvider.getInfoItem(infoItemIdentifier);
 

@@ -119,14 +119,15 @@ public class GetFragmentEntryLinkMVCResourceCommand
 			if (Validator.isNotNull(collectionItemClassName) &&
 				(collectionItemClassPK > 0)) {
 
+				InfoItemIdentifier infoItemIdentifier =
+					new ClassPKInfoItemIdentifier(collectionItemClassPK);
+
 				InfoItemObjectProvider<Object> infoItemObjectProvider =
 					_infoItemServiceTracker.getFirstInfoItemService(
-						InfoItemObjectProvider.class, collectionItemClassName);
+						InfoItemObjectProvider.class, collectionItemClassName,
+						infoItemIdentifier.getInfoServiceFilter());
 
 				if (infoItemObjectProvider != null) {
-					InfoItemIdentifier infoItemIdentifier =
-						new ClassPKInfoItemIdentifier(collectionItemClassPK);
-
 					Object infoItemObject = infoItemObjectProvider.getInfoItem(
 						infoItemIdentifier);
 

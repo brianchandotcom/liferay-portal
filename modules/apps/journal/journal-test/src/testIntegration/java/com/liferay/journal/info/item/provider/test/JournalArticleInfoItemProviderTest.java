@@ -78,7 +78,8 @@ public class JournalArticleInfoItemProviderTest {
 			(InfoItemObjectProvider<JournalArticle>)
 				_infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemObjectProvider.class,
-					JournalArticle.class.getName());
+					JournalArticle.class.getName(),
+					infoItemIdentifier.getInfoServiceFilter());
 
 		JournalArticle publishedArticle =
 			journalArticleInfoItemProvider.getInfoItem(infoItemIdentifier);
@@ -97,14 +98,15 @@ public class JournalArticleInfoItemProviderTest {
 	public void testGetInvalidInfoItemFromJournalInfoItemProvider()
 		throws Exception {
 
+		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
+			RandomTestUtil.randomLong());
+
 		InfoItemObjectProvider<JournalArticle> journalArticleInfoItemProvider =
 			(InfoItemObjectProvider<JournalArticle>)
 				_infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemObjectProvider.class,
-					JournalArticle.class.getName());
-
-		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
-			RandomTestUtil.randomLong());
+					JournalArticle.class.getName(),
+					infoItemIdentifier.getInfoServiceFilter());
 
 		journalArticleInfoItemProvider.getInfoItem(infoItemIdentifier);
 	}

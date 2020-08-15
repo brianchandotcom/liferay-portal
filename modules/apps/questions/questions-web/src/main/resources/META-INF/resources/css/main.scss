@@ -45,6 +45,7 @@
 
 .questions-user {
 	width: max-content;
+
 	.questions-user-popover {
 		display: none;
 		min-width: 234px;
@@ -116,6 +117,8 @@
 }
 
 .questions-card {
+	cursor: pointer;
+
 	.card {
 		border-radius: 0.5rem;
 		box-shadow: none;
@@ -138,6 +141,20 @@
 		.card {
 			box-shadow: 0 1.25rem 2.5rem rgba($dark, 0.16);
 		}
+	}
+
+	.questions-new-section {
+		margin: 0 80px;
+
+		.c-empty-state-footer {
+			margin-top: -50px;
+		}
+	}
+
+	.questions-section-cards {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
 	}
 }
 

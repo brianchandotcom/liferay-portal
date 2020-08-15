@@ -16,14 +16,15 @@ package com.liferay.analytics.reports.web.internal.product.navigation.control.me
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
-import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -136,12 +137,14 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(user));
+			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(
+					JournalArticle.class.getName(),
+					_journalArticle.getResourcePrimKey())));
 
 		mockHttpServletRequest.setAttribute(
-			AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
-			_infoDisplayContributor.getInfoDisplayObjectProvider(
-				_journalArticle.getResourcePrimKey()));
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(user));
 
 		return mockHttpServletRequest;
 	}
@@ -173,15 +176,16 @@ public class AnalyticsReportsProductNavigationControlMenuEntryTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject(filter = "component.name=*.JournalArticleInfoDisplayContributor")
-	private InfoDisplayContributor<JournalArticle> _infoDisplayContributor;
-
 	private JournalArticle _journalArticle;
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	private Layout _layout;
+
+	@Inject(filter = "component.name=*.JournalArticleLayoutDisplayPageProvider")
+	private LayoutDisplayPageProvider<JournalArticle>
+		_layoutDisplayPageProvider;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

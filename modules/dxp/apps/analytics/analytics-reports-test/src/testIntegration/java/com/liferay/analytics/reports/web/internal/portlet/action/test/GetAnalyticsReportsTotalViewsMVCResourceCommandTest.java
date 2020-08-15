@@ -15,11 +15,11 @@
 package com.liferay.analytics.reports.web.internal.portlet.action.test;
 
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockHttpUtil;
-import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockInfoDisplayObjectProviderUtil;
+import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockLayoutDisplayPageObjectProviderUtil;
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockThemeDisplayUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.exception.NestableRuntimeException;
@@ -166,9 +166,10 @@ public class GetAnalyticsReportsTotalViewsMVCResourceCommandTest {
 
 		try {
 			mockLiferayResourceRequest.setAttribute(
-				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
-				MockInfoDisplayObjectProviderUtil.getInfoDisplayObjectProvider(
-					_infoDisplayContributorTracker, _portal));
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+				MockLayoutDisplayPageObjectProviderUtil.
+					getLayoutDisplayPageObjectProvider(
+						_layoutDisplayPageProviderTracker, _portal));
 			mockLiferayResourceRequest.setAttribute(
 				WebKeys.THEME_DISPLAY,
 				MockThemeDisplayUtil.getThemeDisplay(
@@ -194,10 +195,10 @@ public class GetAnalyticsReportsTotalViewsMVCResourceCommandTest {
 	@Inject
 	private Http _http;
 
-	@Inject
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
-
 	private Layout _layout;
+
+	@Inject
+	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;

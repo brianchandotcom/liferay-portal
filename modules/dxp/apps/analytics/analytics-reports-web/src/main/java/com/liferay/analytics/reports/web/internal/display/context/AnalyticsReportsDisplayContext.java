@@ -20,7 +20,7 @@ import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReports
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.analytics.reports.web.internal.model.TrafficSource;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -66,15 +66,16 @@ public class AnalyticsReportsDisplayContext<T> {
 		AnalyticsReportsDataProvider analyticsReportsDataProvider,
 		AnalyticsReportsInfoItem<T> analyticsReportsInfoItem,
 		T analyticsReportsInfoItemObject, String canonicalURL,
-		InfoDisplayObjectProvider<T> infoDisplayObjectProvider, Portal portal,
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		ResourceBundle resourceBundle, ThemeDisplay themeDisplay, User user) {
+		LayoutDisplayPageObjectProvider<T> layoutDisplayPageObjectProvider,
+		Portal portal, RenderRequest renderRequest,
+		RenderResponse renderResponse, ResourceBundle resourceBundle,
+		ThemeDisplay themeDisplay, User user) {
 
 		_analyticsReportsDataProvider = analyticsReportsDataProvider;
 		_analyticsReportsInfoItem = analyticsReportsInfoItem;
 		_analyticsReportsInfoItemObject = analyticsReportsInfoItemObject;
 		_canonicalURL = canonicalURL;
-		_infoDisplayObjectProvider = infoDisplayObjectProvider;
+		_layoutDisplayPageObjectProvider = layoutDisplayPageObjectProvider;
 		_portal = portal;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
@@ -232,9 +233,10 @@ public class AnalyticsReportsDisplayContext<T> {
 
 		resourceURL.setParameter(
 			"classNameId",
-			String.valueOf(_infoDisplayObjectProvider.getClassNameId()));
+			String.valueOf(_layoutDisplayPageObjectProvider.getClassNameId()));
 		resourceURL.setParameter(
-			"classPK", String.valueOf(_infoDisplayObjectProvider.getClassPK()));
+			"classPK",
+			String.valueOf(_layoutDisplayPageObjectProvider.getClassPK()));
 
 		resourceURL.setResourceID(resourceID);
 
@@ -371,7 +373,8 @@ public class AnalyticsReportsDisplayContext<T> {
 	private final T _analyticsReportsInfoItemObject;
 	private final String _canonicalURL;
 	private Map<String, Object> _data;
-	private final InfoDisplayObjectProvider<T> _infoDisplayObjectProvider;
+	private final LayoutDisplayPageObjectProvider<T>
+		_layoutDisplayPageObjectProvider;
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

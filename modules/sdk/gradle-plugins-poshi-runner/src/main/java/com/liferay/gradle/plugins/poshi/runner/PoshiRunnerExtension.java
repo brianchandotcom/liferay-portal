@@ -115,6 +115,6 @@ public class PoshiRunnerExtension {
 	private Object _poshiPropertiesFile = "poshi.properties";
 	private final Project _project;
 	private final Set<Object> _testNames = new LinkedHashSet<>();
-	private Object _version = "1.0.272";
+	private Object _version = "1.0.274";
 
 }

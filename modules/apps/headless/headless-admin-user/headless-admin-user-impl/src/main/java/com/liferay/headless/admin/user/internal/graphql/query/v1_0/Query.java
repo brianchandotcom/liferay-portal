@@ -1464,6 +1464,10 @@ public class Query {
 
 		@GraphQLField
 		public Site parentSite() throws Exception {
+			if (_site.getParentSiteId() == null) {
+				return null;
+			}
+
 			return _applyComponentServiceObjects(
 				_siteResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,

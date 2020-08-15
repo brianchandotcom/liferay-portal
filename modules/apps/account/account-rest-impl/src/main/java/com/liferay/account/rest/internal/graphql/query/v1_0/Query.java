@@ -355,6 +355,10 @@ public class Query {
 
 		@GraphQLField(description = "")
 		public Account parentAccount() throws Exception {
+			if (_account.getParentAccountId() == null) {
+				return null;
+			}
+
 			return _applyComponentServiceObjects(
 				_accountResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,

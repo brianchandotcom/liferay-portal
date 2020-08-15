@@ -4189,6 +4189,10 @@ public class Query {
 
 		@GraphQLField(description = "Retrieves the comment.")
 		public Comment parentComment() throws Exception {
+			if (_comment.getParentCommentId() == null) {
+				return null;
+			}
+
 			return _applyComponentServiceObjects(
 				_commentResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -4211,6 +4215,10 @@ public class Query {
 
 		@GraphQLField(description = "Retrieves the document folder.")
 		public DocumentFolder parentDocumentFolder() throws Exception {
+			if (_documentFolder.getParentDocumentFolderId() == null) {
+				return null;
+			}
+
 			return _applyComponentServiceObjects(
 				_documentFolderResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -4235,6 +4243,10 @@ public class Query {
 		@GraphQLField(description = "Retrieves the message board message.")
 		public MessageBoardMessage parentMessageBoardMessage()
 			throws Exception {
+
+			if (_messageBoardMessage.getParentMessageBoardMessageId() == null) {
+				return null;
+			}
 
 			return _applyComponentServiceObjects(
 				_messageBoardMessageResourceComponentServiceObjects,
@@ -4261,6 +4273,10 @@ public class Query {
 		public MessageBoardSection parentMessageBoardSection()
 			throws Exception {
 
+			if (_messageBoardSection.getParentMessageBoardSectionId() == null) {
+				return null;
+			}
+
 			return _applyComponentServiceObjects(
 				_messageBoardSectionResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -4284,6 +4300,10 @@ public class Query {
 
 		@GraphQLField(description = "")
 		public NavigationMenu parentNavigationMenu() throws Exception {
+			if (_navigationMenuItem.getParentNavigationMenuId() == null) {
+				return null;
+			}
+
 			return _applyComponentServiceObjects(
 				_navigationMenuResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -4310,6 +4330,12 @@ public class Query {
 		public StructuredContentFolder parentStructuredContentFolder()
 			throws Exception {
 
+			if (_structuredContentFolder.getParentStructuredContentFolderId() ==
+					null) {
+
+				return null;
+			}
+
 			return _applyComponentServiceObjects(
 				_structuredContentFolderResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,
@@ -4332,6 +4358,10 @@ public class Query {
 
 		@GraphQLField(description = "Retrieves the wiki page")
 		public WikiPage parentWikiPage() throws Exception {
+			if (_wikiPage.getParentWikiPageId() == null) {
+				return null;
+			}
+
 			return _applyComponentServiceObjects(
 				_wikiPageResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,

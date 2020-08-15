@@ -245,6 +245,56 @@ definition {
 		}
 	}
 
+	macro submitImmediate {
+		if ("${immediate}" == "true") {
+			if (isSet(checkboxNameList)) {
+				for (var checkboxNameList : list "${checkboxNameList}") {
+					Check(
+						key_opt = "${checkboxNameList}",
+						locator1 = "JSFShowcase#GENERAL_CHECKBOX");
+				}
+			}
+
+			Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
+
+			if (isSet(textValue)) {
+				for (var textValue : list "${textValue}") {
+					AssertElementPresent(
+						key_attribute = "${textValue}",
+						locator1 = "JSFShowcase#MODEL_VALUE");
+				}
+			}
+
+			AssertElementPresent(
+				key_message = "${messageImmediate1}",
+				locator1 = "JSFShowcase#RESULT_MESSAGE");
+		}
+
+		if ("${immediate}" == "false") {
+			if (isSet(checkboxNameList)) {
+				for (var checkboxNameList : list "${checkboxNameList}") {
+					Check(
+						key_opt = "${checkboxNameList}",
+						locator1 = "JSFShowcase#GENERAL_CHECKBOX_2");
+				}
+			}
+
+			Click(locator1 = "JSFShowcase#GENERAL_BUTTON_2");
+
+			if (isSet(textValue)) {
+				for (var textValue : list "${textValue}") {
+					AssertElementPresent(
+						key_attribute = "${textValue}",
+						locator1 = "JSFShowcase#MODEL_VALUE_2");
+				}
+			}
+
+			AssertElementPresent(
+				key_message = "${messageImmediate2}",
+				locator1 = "JSFShowcase#RESULT_MESSAGE");
+		}
+	}
+
 	macro submitMessage {
 		Type(
 			key_text = "${text}",

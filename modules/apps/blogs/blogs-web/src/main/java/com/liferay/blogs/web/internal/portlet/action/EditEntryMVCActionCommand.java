@@ -362,8 +362,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-		String portletResource = _http.getParameter(
-			redirect, "portletResource", false);
+		String portletResource = ParamUtil.getString(
+			actionRequest, "referringPortletResource");
 
 		if (Validator.isNotNull(portletResource)) {
 			String namespace = _portal.getPortletNamespace(portletResource);

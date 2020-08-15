@@ -487,8 +487,8 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		int workflowAction = ParamUtil.getInteger(
 			actionRequest, "workflowAction", WorkflowConstants.ACTION_PUBLISH);
 
-		String portletId = _http.getParameter(
-			redirect, "portletResource", false);
+		String portletId = ParamUtil.getString(
+			actionRequest, "referringPortletResource");
 
 		String namespace = _portal.getPortletNamespace(portletId);
 

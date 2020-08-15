@@ -26,9 +26,11 @@ import apiFetch from './util/apiFetch';
 import 'graphiql/graphiql.css';
 
 const APIGUI = () => {
+	const urlParams = new URLSearchParams(window.location.search);
+
 	const [active, setActive] = useState(false);
 	const [endpoints, setEndpoints] = useState([]);
-	const [endpoint, setEndpoint] = useState();
+	const [endpoint, setEndpoint] = useState(urlParams.get('endpoint'));
 	const [showHeaders, setShowHeaders] = useState(false);
 	const [showGraphQL, setShowGraphQL] = useState(false);
 	const [headers, setHeaders] = useState([{key: '', value: ''}]);
@@ -154,6 +156,12 @@ const APIGUI = () => {
 												key={i}
 												onClick={() => {
 													setActive(false);
+													const path = `${window.location.protocol}//${window.location.host}${window.location.pathname}?endpoint=${endpoint}`;
+													window.history.pushState(
+														{path},
+														'',
+														path
+													);
 													setEndpoint(endpoint);
 												}}
 											>

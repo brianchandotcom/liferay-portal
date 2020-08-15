@@ -1,0 +1,162 @@
+definition {
+
+	macro filterUsers {
+		Click(
+			key_name = "${name}",
+			locator1 = "PrimeFacesUsersPortlet#SORT_BUTTON");
+
+		if ("${sort}" == "ascending") {
+			AssertElementPresent(locator1 = "PrimeFacesUsersPortlet#SORTED_ASCENDING_ICON");
+		}
+		else {
+			AssertElementPresent(locator1 = "PrimeFacesUsersPortlet#SORTED_DESCENDING_ICON_");
+
+		}
+
+		if (isSet(filterName)) {
+			Type(
+				key_name = "${name}",
+				locator1 = "PrimeFacesUsersPortlet#COLUMN_FILTER",
+				value1 = "${filterName}");
+		}
+
+		AssertTextEquals.assertPartialText(
+			key_row = "1",
+			locator1 = "PrimeFacesUsersPortlet#SCREEN_NAME",
+			value1 = "${screenName1}");
+
+		AssertTextEquals.assertPartialText(
+			key_row = "2",
+			locator1 = "PrimeFacesUsersPortlet#SCREEN_NAME",
+			value1 = "${screenName2}");
+
+		if (isSet(screenName3)) {
+			AssertTextEquals.assertPartialText(
+				key_row = "3",
+				locator1 = "PrimeFacesUsersPortlet#SCREEN_NAME",
+				value1 = "${screenName3}");
+		}
+	}
+
+	macro setRowsPerPage {
+		Click(locator1 = "PrimeFacesUsersPortlet#PREFERENCE_LINK");
+
+		Type(
+			locator1 = "PrimeFacesUsersPortlet#ROWS_PER_PAGE_INPUT",
+			value1 = "3");
+
+		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
+	}
+
+	macro sortUsers {
+		Click(
+			key_name = "screenName",
+			locator1 = "PrimeFacesUsersPortlet#SORT_BUTTON");
+
+		if ("${sort}" == "ascending") {
+			AssertElementPresent(locator1 = "PrimeFacesUsersPortlet#SORTED_ASCENDING_ICON");
+		}
+		else {
+			AssertElementPresent(locator1 = "PrimeFacesUsersPortlet#SORTED_DESCENDING_ICON_");
+
+		}
+
+		AssertTextEquals.assertPartialText(
+			key_row = "1",
+			locator1 = "PrimeFacesUsersPortlet#SCREEN_NAME",
+			value1 = "${screenName1}");
+
+		AssertTextEquals.assertPartialText(
+			key_row = "2",
+			locator1 = "PrimeFacesUsersPortlet#SCREEN_NAME",
+			value1 = "${screenName2}");
+
+		AssertTextEquals.assertPartialText(
+			key_row = "3",
+			locator1 = "PrimeFacesUsersPortlet#SCREEN_NAME",
+			value1 = "${screenName3}");
+
+		Click(
+			key_buttonLabel = "Last Page",
+			locator1 = "PrimeFacesUsersPortlet#PAGINATOR_BUTTON");
+
+		AssertTextEquals.assertPartialText(
+			key_row = "1",
+			locator1 = "PrimeFacesUsersPortlet#SCREEN_NAME",
+			value1 = "${screenName4}");
+	}
+
+	macro viewPaginator {
+		Click(
+			key_buttonLabel = "Next Page",
+			locator1 = "PrimeFacesUsersPortlet#PAGINATOR_BUTTON");
+
+		AssertElementPresent(
+			key_pageNum = "2",
+			locator1 = "PrimeFacesUsersPortlet#PAGE_BUTTON_ACTIVE");
+
+		AssertTextEquals(
+			key_cellName = "screenName",
+			locator1 = "PrimeFacesUsersPortlet#USER_CELL_NAME",
+			value1 = "${screenName2}");
+
+		Click(
+			key_buttonLabel = "3",
+			locator1 = "PrimeFacesUsersPortlet#PAGINATOR_BUTTON");
+
+		AssertElementPresent(
+			key_pageNum = "3",
+			locator1 = "PrimeFacesUsersPortlet#PAGE_BUTTON_ACTIVE");
+
+		AssertTextEquals(
+			key_cellName = "screenName",
+			locator1 = "PrimeFacesUsersPortlet#USER_CELL_NAME",
+			value1 = "${screenName3}");
+
+		Click(
+			key_buttonLabel = "Previous Page",
+			locator1 = "PrimeFacesUsersPortlet#PAGINATOR_BUTTON");
+
+		AssertElementPresent(
+			key_pageNum = "2",
+			locator1 = "PrimeFacesUsersPortlet#PAGE_BUTTON_ACTIVE");
+
+		AssertTextEquals(
+			key_cellName = "screenName",
+			locator1 = "PrimeFacesUsersPortlet#USER_CELL_NAME",
+			value1 = "${screenName2}");
+
+		Click(
+			key_buttonLabel = "Last Page",
+			locator1 = "PrimeFacesUsersPortlet#PAGINATOR_BUTTON");
+
+		AssertElementPresent(
+			key_buttonLabel = "Next Page",
+			locator1 = "PrimeFacesUsersPortlet#PAGE_BUTTON_DISABLE");
+		AssertElementPresent(
+			key_buttonLabel = "Last Page",
+			locator1 = "PrimeFacesUsersPortlet#PAGE_BUTTON_DISABLE");
+
+		AssertTextEquals(
+			key_cellName = "screenName",
+			locator1 = "PrimeFacesUsersPortlet#USER_CELL_NAME",
+			value1 = "${screenName3}");
+
+		Click(
+			key_buttonLabel = "First Page",
+			locator1 = "PrimeFacesUsersPortlet#PAGINATOR_BUTTON");
+
+		AssertElementPresent(
+			key_buttonLabel = "First Page",
+			locator1 = "PrimeFacesUsersPortlet#PAGE_BUTTON_DISABLE");
+		AssertElementPresent(
+			key_buttonLabel = "Previous Page",
+			locator1 = "PrimeFacesUsersPortlet#PAGE_BUTTON_DISABLE");
+
+		AssertTextEquals(
+			key_cellName = "screenName",
+			locator1 = "PrimeFacesUsersPortlet#USER_CELL_NAME",
+			value1 = "${screenName1}");
+	}
+
+}

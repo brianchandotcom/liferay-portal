@@ -113,24 +113,20 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 		Map<String, Object> displayAttributes =
 			LinkedHashMapBuilder.<String, Object>put(
 				"name", layout.getName(locale)
-			).<String, Object>put(
-				"friendly-url", layout.getFriendlyURL()
-			).<String, Object>put(
-				"Type Settings", layout.getTypeSettingsProperties()
 			).build();
 
 		String userName = layout.getUserName();
 
 		if (Validator.isNotNull(userName)) {
-			displayAttributes.put("Created By", userName);
+			displayAttributes.put("created-by", userName);
 		}
 
-		displayAttributes.put("Created Date", layout.getCreateDate());
-		displayAttributes.put("Last Modified", layout.getModifiedDate());
+		displayAttributes.put("create-date", layout.getCreateDate());
+		displayAttributes.put("last-modified", layout.getModifiedDate());
 
 		Group group = layout.getGroup();
 
-		displayAttributes.put("Site", group.getName(locale));
+		displayAttributes.put("site", group.getName(locale));
 
 		try {
 			Theme theme = layout.getTheme();
@@ -170,9 +166,9 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 	}
 
 	private static final String[] _DISPLAY_ATTRIBUTE_NAMES = {
-		"title", "description", "keywords", "robots", "type", "hidden",
-		"system", "css", "priority", "publishDate", "lastPublishDate", "status",
-		"statusByUserName", "statusDate"
+		"css", "description", "friendlyURL", "hidden", "keywords",
+		"lastPublishDate", "priority", "publishDate", "robots", "system",
+		"title", "type", "typeSettings"
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

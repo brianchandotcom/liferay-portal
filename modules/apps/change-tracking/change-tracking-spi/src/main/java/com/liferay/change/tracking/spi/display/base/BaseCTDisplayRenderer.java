@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -135,15 +136,19 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 			themeDisplay.getLocale(), getClass());
 
 		for (Map.Entry<String, Object> entry : displayAttributes.entrySet()) {
+			String key = entry.getKey();
+
 			writer.write("<tr><td>");
-			writer.write(LanguageUtil.get(resourceBundle, entry.getKey()));
+			writer.write(
+				LanguageUtil.get(
+					resourceBundle, CamelCaseUtil.fromCamelCase(key)));
 			writer.write("</td><td>");
 
 			Object value = entry.getValue();
 
 			if (value instanceof Blob) {
 				String downloadURL = displayContext.getDownloadURL(
-					entry.getKey(), 0, null);
+					key, 0, null);
 
 				if (downloadURL == null) {
 					writer.write(

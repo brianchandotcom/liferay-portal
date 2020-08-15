@@ -14,6 +14,7 @@
 
 package com.liferay.info.item;
 
+import com.liferay.info.item.provider.filter.InfoItemServiceFilter;
 import com.liferay.petra.string.StringBundler;
 
 import java.util.Objects;
@@ -22,6 +23,9 @@ import java.util.Objects;
  * @author Jorge Ferrer
  */
 public class GroupKeyInfoItemIdentifier extends BaseInfoItemIdentifier {
+
+	public static final InfoItemServiceFilter INFO_SERVICE_FILTER =
+		getInfoServiceFilter(GroupKeyInfoItemIdentifier.class);
 
 	public GroupKeyInfoItemIdentifier(long groupId, String key) {
 		_groupId = groupId;
@@ -52,6 +56,10 @@ public class GroupKeyInfoItemIdentifier extends BaseInfoItemIdentifier {
 
 	public long getGroupId() {
 		return _groupId;
+	}
+
+	public InfoItemServiceFilter getInfoServiceFilter() {
+		return INFO_SERVICE_FILTER;
 	}
 
 	public String getKey() {

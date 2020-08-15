@@ -14,6 +14,7 @@
 
 package com.liferay.info.item;
 
+import com.liferay.info.item.provider.filter.InfoItemServiceFilter;
 import com.liferay.petra.string.StringBundler;
 
 import java.util.Objects;
@@ -22,6 +23,9 @@ import java.util.Objects;
  * @author Jorge Ferrer
  */
 public class ClassPKInfoItemIdentifier extends BaseInfoItemIdentifier {
+
+	public static final InfoItemServiceFilter INFO_SERVICE_FILTER =
+		getInfoServiceFilter(ClassPKInfoItemIdentifier.class);
 
 	public ClassPKInfoItemIdentifier(long classPK) {
 		_classPK = classPK;
@@ -45,6 +49,10 @@ public class ClassPKInfoItemIdentifier extends BaseInfoItemIdentifier {
 
 	public long getClassPK() {
 		return _classPK;
+	}
+
+	public InfoItemServiceFilter getInfoServiceFilter() {
+		return INFO_SERVICE_FILTER;
 	}
 
 	@Override

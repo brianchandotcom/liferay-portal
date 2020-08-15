@@ -5260,7 +5260,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						<and>
 							<equals arg1="${remote.elasticsearch.clusters.enabled}" arg2="true" />
 							<not>
-								<contains string="${test.name.skip.portal.instance}" substring="CrossCluster" />
+								<contains string="${test.name.skip.portal.instance}" substring="#Smoke" />
 							</not>
 						</and>
 						<then>

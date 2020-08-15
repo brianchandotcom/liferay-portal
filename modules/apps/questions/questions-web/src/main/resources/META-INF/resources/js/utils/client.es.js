@@ -846,6 +846,7 @@ export const getSectionsByIdQuery = gql`
 export const getSectionsQuery = gql`
 	query messageBoardSections($siteKey: String!) {
 		messageBoardSections(siteKey: $siteKey, sort: "title:desc") {
+			actions
 			items {
 				description
 				id

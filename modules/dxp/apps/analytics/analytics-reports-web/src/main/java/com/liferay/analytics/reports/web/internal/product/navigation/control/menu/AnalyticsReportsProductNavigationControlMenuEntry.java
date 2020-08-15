@@ -17,8 +17,8 @@ package com.liferay.analytics.reports.web.internal.product.navigation.control.me
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemTracker;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
-import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -119,16 +119,18 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 			values.put("cssClass", "active");
 		}
 		else {
-			InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-				(InfoDisplayObjectProvider<?>)httpServletRequest.getAttribute(
-					AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+				(LayoutDisplayPageObjectProvider<?>)
+					httpServletRequest.getAttribute(
+						LayoutDisplayPageWebKeys.
+							LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
 			try {
 				values.put(
 					"analyticsReportsPanelURL",
 					AnalyticsReportsUtil.getAnalyticsReportsPanelURL(
-						infoDisplayObjectProvider.getClassNameId(),
-						infoDisplayObjectProvider.getClassPK(),
+						layoutDisplayPageObjectProvider.getClassNameId(),
+						layoutDisplayPageObjectProvider.getClassPK(),
 						httpServletRequest, _portletURLFactory));
 			}
 			catch (WindowStateException windowStateException) {
@@ -189,13 +191,13 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-			(InfoDisplayObjectProvider<?>)httpServletRequest.getAttribute(
-				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			(LayoutDisplayPageObjectProvider<?>)httpServletRequest.getAttribute(
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
 		if (!AnalyticsReportsUtil.isShowAnalyticsReportsPanel(
 				_analyticsReportsInfoItemTracker, themeDisplay.getCompanyId(),
-				httpServletRequest, infoDisplayObjectProvider,
+				httpServletRequest, layoutDisplayPageObjectProvider,
 				themeDisplay.getLayout(), themeDisplay.getPermissionChecker(),
 				_portal)) {
 

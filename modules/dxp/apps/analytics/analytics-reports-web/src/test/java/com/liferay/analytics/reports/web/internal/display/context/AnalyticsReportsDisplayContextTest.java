@@ -19,7 +19,7 @@ import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReports
 import com.liferay.analytics.reports.web.internal.model.CountrySearchKeywords;
 import com.liferay.analytics.reports.web.internal.model.SearchKeyword;
 import com.liferay.analytics.reports.web.internal.model.TrafficSource;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -97,7 +97,7 @@ public class AnalyticsReportsDisplayContextTest {
 					RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
 					false),
 				_getAnalyticsReportsItem(LocaleUtil.US), null, null,
-				_getInfoDisplayObjectProvider(), new PortalImpl(),
+				_getLayoutDisplayPageObjectProvider(), new PortalImpl(),
 				new MockLiferayPortletRenderRequest(),
 				new MockLiferayPortletRenderResponse(), _getResourceBundle(),
 				_getThemeDisplay(_getLayout()),
@@ -135,7 +135,7 @@ public class AnalyticsReportsDisplayContextTest {
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, _getInfoDisplayObjectProvider(), new PortalImpl(),
+				null, _getLayoutDisplayPageObjectProvider(), new PortalImpl(),
 				new MockLiferayPortletRenderRequest(),
 				new MockLiferayPortletRenderResponse(), _getResourceBundle(),
 				_getThemeDisplay(_getLayout()), null);
@@ -172,7 +172,7 @@ public class AnalyticsReportsDisplayContextTest {
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, _getInfoDisplayObjectProvider(), new PortalImpl(),
+				null, _getLayoutDisplayPageObjectProvider(), new PortalImpl(),
 				new MockLiferayPortletRenderRequest(),
 				new MockLiferayPortletRenderResponse(), _getResourceBundle(),
 				_getThemeDisplay(_getLayout()), user);
@@ -199,7 +199,7 @@ public class AnalyticsReportsDisplayContextTest {
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, _getInfoDisplayObjectProvider(), new PortalImpl(),
+				null, _getLayoutDisplayPageObjectProvider(), new PortalImpl(),
 				new MockLiferayPortletRenderRequest(),
 				new MockLiferayPortletRenderResponse(), _getResourceBundle(),
 				_getThemeDisplay(_getLayout()), null);
@@ -242,7 +242,7 @@ public class AnalyticsReportsDisplayContextTest {
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, _getInfoDisplayObjectProvider(), new PortalImpl(),
+				null, _getLayoutDisplayPageObjectProvider(), new PortalImpl(),
 				new MockLiferayPortletRenderRequest(),
 				new MockLiferayPortletRenderResponse(), _getResourceBundle(),
 				_getThemeDisplay(_getLayout()), null);
@@ -304,7 +304,7 @@ public class AnalyticsReportsDisplayContextTest {
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, _getInfoDisplayObjectProvider(), new PortalImpl(),
+				null, _getLayoutDisplayPageObjectProvider(), new PortalImpl(),
 				new MockLiferayPortletRenderRequest(),
 				new MockLiferayPortletRenderResponse(), _getResourceBundle(),
 				_getThemeDisplay(layout), _getUser(authorPortraitURL));
@@ -383,7 +383,7 @@ public class AnalyticsReportsDisplayContextTest {
 		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
 			new AnalyticsReportsDisplayContext(
 				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, _getInfoDisplayObjectProvider(), new PortalImpl(),
+				null, _getLayoutDisplayPageObjectProvider(), new PortalImpl(),
 				new MockLiferayPortletRenderRequest(),
 				new MockLiferayPortletRenderResponse(), _getResourceBundle(),
 				_getThemeDisplay(layout), _getUser(authorPortraitURL));
@@ -561,10 +561,6 @@ public class AnalyticsReportsDisplayContextTest {
 		};
 	}
 
-	private InfoDisplayObjectProvider<Object> _getInfoDisplayObjectProvider() {
-		return Mockito.mock(InfoDisplayObjectProvider.class);
-	}
-
 	private Layout _getLayout() {
 		Layout layout = Mockito.mock(Layout.class);
 
@@ -577,6 +573,12 @@ public class AnalyticsReportsDisplayContextTest {
 		).getPublishDate();
 
 		return layout;
+	}
+
+	private LayoutDisplayPageObjectProvider<Object>
+		_getLayoutDisplayPageObjectProvider() {
+
+		return Mockito.mock(LayoutDisplayPageObjectProvider.class);
 	}
 
 	private ResourceBundle _getResourceBundle() {

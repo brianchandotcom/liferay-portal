@@ -16,7 +16,6 @@ package com.liferay.layout.seo.web.internal.servlet.taglib.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
-import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -25,9 +24,6 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.ImageInfoFieldType;
@@ -36,11 +32,16 @@ import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.type.WebImage;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -1053,13 +1054,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 
-		InfoDisplayContributor<?> infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
-
-		httpServletRequest.setAttribute(
-			AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
-			infoDisplayContributor.getInfoDisplayObjectProvider(classPK));
-
 		InfoItemObjectProvider<?> infoItemObjectProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemObjectProvider.class, className);
@@ -1076,6 +1070,15 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		httpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_ITEM_DETAILS,
 			infoItemDetailsProvider.getInfoItemDetails(infoItem));
+
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			_layoutDisplayPageProviderTracker.getLayoutDisplayPageProvider(
+				className);
+
+		httpServletRequest.setAttribute(
+			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(className, classPK)));
 
 		return httpServletRequest;
 	}
@@ -1192,10 +1195,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 						(Class<?>)InfoItemFieldValuesProvider.class,
 					new MockInfoItemFieldValuesProvider(), new HashMap<>());
 
-		httpServletRequest.setAttribute(
-			AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
-			new MockInfoDisplayObjectProvider());
-
 		InfoItemClassDetails infoItemClassDetails = new InfoItemClassDetails(
 			MockObject.class.getName());
 
@@ -1204,6 +1203,10 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		httpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_ITEM_DETAILS, infoItemDetails);
+
+		httpServletRequest.setAttribute(
+			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+			new MockLayoutDisplayPageObjectProvider());
 
 		try {
 			unsafeRunnable.run();
@@ -1252,15 +1255,15 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	private GroupLocalService _groupLocalService;
 
 	@Inject
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
-
-	@Inject
 	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Inject
 	private Language _language;
 
 	private Layout _layout;
+
+	@Inject
+	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
@@ -1277,56 +1280,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
-
-	private static class MockInfoDisplayObjectProvider
-		implements InfoDisplayObjectProvider<MockObject> {
-
-		@Override
-		public long getClassNameId() {
-			return PortalUtil.getClassNameId(MockObject.class);
-		}
-
-		@Override
-		public long getClassPK() {
-			return 0;
-		}
-
-		@Override
-		public long getClassTypeId() {
-			return 0;
-		}
-
-		@Override
-		public String getDescription(Locale locale) {
-			return null;
-		}
-
-		@Override
-		public MockObject getDisplayObject() {
-			return null;
-		}
-
-		@Override
-		public long getGroupId() {
-			return 0;
-		}
-
-		@Override
-		public String getKeywords(Locale locale) {
-			return null;
-		}
-
-		@Override
-		public String getTitle(Locale locale) {
-			return null;
-		}
-
-		@Override
-		public String getURLTitle(Locale locale) {
-			return null;
-		}
-
-	}
 
 	private static class MockInfoItemFieldValuesProvider
 		implements InfoItemFieldValuesProvider<MockObject> {
@@ -1400,6 +1353,56 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 					).build(),
 					"mappedImageAlt")
 			).build();
+		}
+
+	}
+
+	private static class MockLayoutDisplayPageObjectProvider
+		implements LayoutDisplayPageObjectProvider<MockObject> {
+
+		@Override
+		public long getClassNameId() {
+			return PortalUtil.getClassNameId(MockObject.class);
+		}
+
+		@Override
+		public long getClassPK() {
+			return 0;
+		}
+
+		@Override
+		public long getClassTypeId() {
+			return 0;
+		}
+
+		@Override
+		public String getDescription(Locale locale) {
+			return null;
+		}
+
+		@Override
+		public MockObject getDisplayObject() {
+			return null;
+		}
+
+		@Override
+		public long getGroupId() {
+			return 0;
+		}
+
+		@Override
+		public String getKeywords(Locale locale) {
+			return null;
+		}
+
+		@Override
+		public String getTitle(Locale locale) {
+			return null;
+		}
+
+		@Override
+		public String getURLTitle(Locale locale) {
+			return null;
 		}
 
 	}

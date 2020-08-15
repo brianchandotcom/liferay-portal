@@ -15,7 +15,7 @@
 package com.liferay.analytics.reports.web.internal.layout.seo;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,16 +45,15 @@ public class CanonicalURLProvider {
 
 	public CanonicalURLProvider(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
-		HttpServletRequest httpServletRequest,
-		InfoDisplayObjectProvider<?> infoDisplayObjectProvider,
-		Language language, LayoutSEOLinkManager layoutSEOLinkManager,
-		Portal portal) {
+		HttpServletRequest httpServletRequest, Language language,
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
+		LayoutSEOLinkManager layoutSEOLinkManager, Portal portal) {
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
 		_httpServletRequest = httpServletRequest;
-		_infoDisplayObjectProvider = infoDisplayObjectProvider;
 		_language = language;
+		_layoutDisplayPageObjectProvider = layoutDisplayPageObjectProvider;
 		_layoutSEOLinkManager = layoutSEOLinkManager;
 		_portal = portal;
 
@@ -105,11 +104,12 @@ public class CanonicalURLProvider {
 	private String _getCanonicalURL(Locale locale) throws PortalException {
 		String completeURL = _portal.getCurrentCompleteURL(_httpServletRequest);
 
-		if (_infoDisplayObjectProvider != null) {
+		if (_layoutDisplayPageObjectProvider != null) {
 			completeURL = _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
 				_portal.getClassName(
-					_infoDisplayObjectProvider.getClassNameId()),
-				_infoDisplayObjectProvider.getClassPK(), locale, _themeDisplay);
+					_layoutDisplayPageObjectProvider.getClassNameId()),
+				_layoutDisplayPageObjectProvider.getClassPK(), locale,
+				_themeDisplay);
 		}
 
 		return _portal.getCanonicalURL(
@@ -134,8 +134,9 @@ public class CanonicalURLProvider {
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoDisplayObjectProvider<?> _infoDisplayObjectProvider;
 	private final Language _language;
+	private final LayoutDisplayPageObjectProvider<?>
+		_layoutDisplayPageObjectProvider;
 	private final LayoutSEOLinkManager _layoutSEOLinkManager;
 	private final Portal _portal;
 	private final ThemeDisplay _themeDisplay;

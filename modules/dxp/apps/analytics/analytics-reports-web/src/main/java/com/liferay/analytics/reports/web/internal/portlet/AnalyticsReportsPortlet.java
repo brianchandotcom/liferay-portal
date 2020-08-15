@@ -20,11 +20,11 @@ import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPort
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsWebKeys;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
 import com.liferay.analytics.reports.web.internal.display.context.AnalyticsReportsDisplayContext;
-import com.liferay.analytics.reports.web.internal.info.display.contributor.util.InfoDisplayContributorUtil;
+import com.liferay.analytics.reports.web.internal.info.display.contributor.util.LayoutDisplayPageObjectProviderUtil;
 import com.liferay.analytics.reports.web.internal.layout.seo.CanonicalURLProvider;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -93,22 +93,25 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 			return;
 		}
 
-		InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-			InfoDisplayContributorUtil.getInfoDisplayObjectProvider(
-				httpServletRequest, _infoDisplayContributorTracker, _portal);
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			LayoutDisplayPageObjectProviderUtil.
+				getLayoutDisplayPageObjectProvider(
+					httpServletRequest, _layoutDisplayPageProviderTracker,
+					_portal);
 
 		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem = null;
 		Object analyticsReportsInfoItemObject = null;
 
-		if (infoDisplayObjectProvider != null) {
+		if (layoutDisplayPageObjectProvider != null) {
 			analyticsReportsInfoItem =
 				(AnalyticsReportsInfoItem<Object>)
 					_analyticsReportsInfoItemTracker.
 						getAnalyticsReportsInfoItem(
 							_portal.getClassName(
-								infoDisplayObjectProvider.getClassNameId()));
+								layoutDisplayPageObjectProvider.
+									getClassNameId()));
 			analyticsReportsInfoItemObject =
-				infoDisplayObjectProvider.getDisplayObject();
+				layoutDisplayPageObjectProvider.getDisplayObject();
 		}
 
 		ThemeDisplay themeDisplay =
@@ -130,9 +133,8 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 
 		CanonicalURLProvider canonicalURLProvider = new CanonicalURLProvider(
 			_assetDisplayPageFriendlyURLProvider,
-			_portal.getHttpServletRequest(renderRequest),
-			infoDisplayObjectProvider, _language, _layoutSEOLinkManager,
-			_portal);
+			_portal.getHttpServletRequest(renderRequest), _language,
+			layoutDisplayPageObjectProvider, _layoutSEOLinkManager, _portal);
 
 		try {
 			canonicalURL = canonicalURLProvider.getCanonicalURL();
@@ -146,8 +148,8 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 			new AnalyticsReportsDisplayContext(
 				new AnalyticsReportsDataProvider(_http),
 				analyticsReportsInfoItem, analyticsReportsInfoItemObject,
-				canonicalURL, infoDisplayObjectProvider, _portal, renderRequest,
-				renderResponse,
+				canonicalURL, layoutDisplayPageObjectProvider, _portal,
+				renderRequest, renderResponse,
 				ResourceBundleUtil.getBundle(
 					"content.Language", themeDisplay.getLocale(), getClass()),
 				themeDisplay,
@@ -169,10 +171,10 @@ public class AnalyticsReportsPortlet extends MVCPortlet {
 	private Http _http;
 
 	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private Language _language;
 
 	@Reference
-	private Language _language;
+	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Reference
 	private LayoutSEOLinkManager _layoutSEOLinkManager;

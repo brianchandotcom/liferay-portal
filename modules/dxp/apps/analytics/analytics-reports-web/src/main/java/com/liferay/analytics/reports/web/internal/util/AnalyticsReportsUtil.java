@@ -20,7 +20,7 @@ import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPort
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -134,7 +134,7 @@ public class AnalyticsReportsUtil {
 	public static boolean isShowAnalyticsReportsPanel(
 			AnalyticsReportsInfoItemTracker analyticsReportsInfoItemTracker,
 			long companyId, HttpServletRequest httpServletRequest,
-			InfoDisplayObjectProvider<?> infoDisplayObjectProvider,
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
 			Layout layout, PermissionChecker permissionChecker, Portal portal)
 		throws PortalException {
 
@@ -142,15 +142,15 @@ public class AnalyticsReportsUtil {
 			return false;
 		}
 
-		if ((infoDisplayObjectProvider == null) ||
-			(infoDisplayObjectProvider.getDisplayObject() == null)) {
+		if ((layoutDisplayPageObjectProvider == null) ||
+			(layoutDisplayPageObjectProvider.getDisplayObject() == null)) {
 
 			return false;
 		}
 
 		if (!_hasAnalyticsReportsInfoItem(
-				analyticsReportsInfoItemTracker, infoDisplayObjectProvider,
-				portal)) {
+				analyticsReportsInfoItemTracker,
+				layoutDisplayPageObjectProvider, portal)) {
 
 			return false;
 		}
@@ -179,8 +179,8 @@ public class AnalyticsReportsUtil {
 		}
 
 		if (!_hasEditPermission(
-				infoDisplayObjectProvider.getClassNameId(),
-				infoDisplayObjectProvider.getClassPK(), layout,
+				layoutDisplayPageObjectProvider.getClassNameId(),
+				layoutDisplayPageObjectProvider.getClassPK(), layout,
 				permissionChecker)) {
 
 			return false;
@@ -191,12 +191,13 @@ public class AnalyticsReportsUtil {
 
 	private static boolean _hasAnalyticsReportsInfoItem(
 		AnalyticsReportsInfoItemTracker analyticsReportsInfoItemTracker,
-		InfoDisplayObjectProvider<?> infoDisplayObjectProvider, Portal portal) {
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
+		Portal portal) {
 
 		AnalyticsReportsInfoItem<?> analyticsReportsInfoItem =
 			analyticsReportsInfoItemTracker.getAnalyticsReportsInfoItem(
 				portal.getClassName(
-					infoDisplayObjectProvider.getClassNameId()));
+					layoutDisplayPageObjectProvider.getClassNameId()));
 
 		if (analyticsReportsInfoItem == null) {
 			return false;

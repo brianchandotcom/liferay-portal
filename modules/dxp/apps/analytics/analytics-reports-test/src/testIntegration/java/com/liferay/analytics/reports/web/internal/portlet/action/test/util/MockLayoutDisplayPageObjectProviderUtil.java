@@ -14,9 +14,9 @@
 
 package com.liferay.analytics.reports.web.internal.portlet.action.test.util;
 
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
@@ -25,25 +25,26 @@ import java.util.Locale;
 /**
  * @author Cristina González
  */
-public class MockInfoDisplayObjectProviderUtil {
+public class MockLayoutDisplayPageObjectProviderUtil {
 
-	public static InfoDisplayObjectProvider<Object>
-		getInfoDisplayObjectProvider(
-			InfoDisplayContributorTracker infoDisplayContributorTracker,
+	public static LayoutDisplayPageObjectProvider<Object>
+		getLayoutDisplayPageObjectProvider(
+			LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker,
 			Portal portal) {
 
-		return new InfoDisplayObjectProvider() {
+		return new LayoutDisplayPageObjectProvider<Object>() {
 
 			@Override
 			public long getClassNameId() {
-				List<InfoDisplayContributor<?>> infoDisplayContributors =
-					infoDisplayContributorTracker.getInfoDisplayContributors();
+				List<LayoutDisplayPageProvider<?>> layoutDisplayPageProviders =
+					layoutDisplayPageProviderTracker.
+						getLayoutDisplayPageProviders();
 
-				InfoDisplayContributor<?> infoDisplayContributor =
-					infoDisplayContributors.get(0);
+				LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+					layoutDisplayPageProviders.get(0);
 
 				return portal.getClassNameId(
-					infoDisplayContributor.getClassName());
+					layoutDisplayPageProvider.getClassName());
 			}
 
 			@Override

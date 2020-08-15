@@ -14,10 +14,10 @@
 
 package com.liferay.layout.seo.web.internal.util;
 
-import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -55,16 +55,16 @@ public class FriendlyURLMapperProvider {
 				WebKeys.THEME_DISPLAY);
 
 		return Optional.ofNullable(
-			(InfoDisplayObjectProvider<?>)httpServletRequest.getAttribute(
-				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER)
+			(LayoutDisplayPageObjectProvider<?>)httpServletRequest.getAttribute(
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER)
 		).filter(
-			infoDisplayObjectProvider -> {
+			layoutDisplayPageObjectProvider -> {
 				try {
 					return AssetDisplayPageUtil.hasAssetDisplayPage(
 						themeDisplay.getScopeGroupId(),
-						infoDisplayObjectProvider.getClassNameId(),
-						infoDisplayObjectProvider.getClassPK(),
-						infoDisplayObjectProvider.getClassTypeId());
+						layoutDisplayPageObjectProvider.getClassNameId(),
+						layoutDisplayPageObjectProvider.getClassPK(),
+						layoutDisplayPageObjectProvider.getClassTypeId());
 				}
 				catch (PortalException portalException) {
 					_log.error(portalException, portalException);
@@ -73,10 +73,10 @@ public class FriendlyURLMapperProvider {
 				}
 			}
 		).map(
-			infoDisplayObjectProvider ->
+			layoutDisplayPageObjectProvider ->
 				(FriendlyURLMapper)new AssetDisplayPageFriendlyURLMapper(
 					_assetDisplayPageFriendlyURLProvider,
-					_classNameLocalService, infoDisplayObjectProvider,
+					_classNameLocalService, layoutDisplayPageObjectProvider,
 					themeDisplay)
 		).orElseGet(
 			() -> new DefaultPageFriendlyURLMapper()
@@ -89,16 +89,17 @@ public class FriendlyURLMapperProvider {
 		public String getMappedFriendlyURL(String url, Locale locale)
 			throws PortalException {
 
-			if (_infoDisplayObjectProvider == null) {
+			if (_layoutDisplayPageObjectProvider == null) {
 				return url;
 			}
 
 			ClassName className = _classNameLocalService.getClassName(
-				_infoDisplayObjectProvider.getClassNameId());
+				_layoutDisplayPageObjectProvider.getClassNameId());
 
 			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
 				className.getClassName(),
-				_infoDisplayObjectProvider.getClassPK(), locale, _themeDisplay);
+				_layoutDisplayPageObjectProvider.getClassPK(), locale,
+				_themeDisplay);
 		}
 
 		@Override
@@ -106,7 +107,7 @@ public class FriendlyURLMapperProvider {
 				Map<Locale, String> friendlyURLs)
 			throws PortalException {
 
-			if (_infoDisplayObjectProvider == null) {
+			if (_layoutDisplayPageObjectProvider == null) {
 				return friendlyURLs;
 			}
 
@@ -125,20 +126,21 @@ public class FriendlyURLMapperProvider {
 			AssetDisplayPageFriendlyURLProvider
 				assetDisplayPageFriendlyURLProvider,
 			ClassNameLocalService classNameLocalService,
-			InfoDisplayObjectProvider<?> infoDisplayObjectProvider,
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
 			ThemeDisplay themeDisplay) {
 
 			_assetDisplayPageFriendlyURLProvider =
 				assetDisplayPageFriendlyURLProvider;
 			_classNameLocalService = classNameLocalService;
-			_infoDisplayObjectProvider = infoDisplayObjectProvider;
+			_layoutDisplayPageObjectProvider = layoutDisplayPageObjectProvider;
 			_themeDisplay = themeDisplay;
 		}
 
 		private final AssetDisplayPageFriendlyURLProvider
 			_assetDisplayPageFriendlyURLProvider;
 		private final ClassNameLocalService _classNameLocalService;
-		private final InfoDisplayObjectProvider<?> _infoDisplayObjectProvider;
+		private final LayoutDisplayPageObjectProvider<?>
+			_layoutDisplayPageObjectProvider;
 		private final ThemeDisplay _themeDisplay;
 
 	}

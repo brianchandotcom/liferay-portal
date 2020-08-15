@@ -92,9 +92,15 @@ public class GetInfoItemMappingFieldsMVCResourceCommand
 			return;
 		}
 
+		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
+
+		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
+			classPK);
+
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemObjectProvider.class, itemClassName);
+				InfoItemObjectProvider.class, itemClassName,
+				infoItemIdentifier.getInfoServiceFilter());
 
 		if (infoItemObjectProvider == null) {
 			JSONPortletResponseUtil.writeJSON(
@@ -103,11 +109,6 @@ public class GetInfoItemMappingFieldsMVCResourceCommand
 
 			return;
 		}
-
-		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
-
-		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
-			classPK);
 
 		Object infoItemObject = infoItemObjectProvider.getInfoItem(
 			infoItemIdentifier);

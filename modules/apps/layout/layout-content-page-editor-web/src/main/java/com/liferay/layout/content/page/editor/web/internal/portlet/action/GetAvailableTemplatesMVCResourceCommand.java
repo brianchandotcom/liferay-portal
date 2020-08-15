@@ -132,15 +132,16 @@ public class GetAvailableTemplatesMVCResourceCommand
 	}
 
 	private Object _getInfoItemObject(String className, long classPK) {
+		InfoItemIdentifier infoItemIdentifier = new ClassPKInfoItemIdentifier(
+			classPK);
+
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemObjectProvider.class, className);
+				InfoItemObjectProvider.class, className,
+				infoItemIdentifier.getInfoServiceFilter());
 
 		try {
 			if (infoItemObjectProvider != null) {
-				InfoItemIdentifier infoItemIdentifier =
-					new ClassPKInfoItemIdentifier(classPK);
-
 				return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
 			}
 		}

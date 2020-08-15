@@ -32,20 +32,6 @@ definition {
 			value1 = "${state}");
 	}
 
-	macro exportFile {
-		for (var lastName : list "${lastName}") {
-			AssertElementPresent(
-				key_lastName = "${lastName}",
-				locator1 = "BridgeDemos#EXPORT_LINK");
-
-			Click(
-				key_lastName = "${lastName}",
-				locator1 = "BridgeDemos#EXPORT_LINK");
-
-			DownloadTempFile();
-		}
-	}
-
 	macro editDateFormat {
 		BridgeDemos.gotoEdit();
 
@@ -60,72 +46,6 @@ definition {
 			displayDate = "${displayDate}");
 	}
 
-	macro ViewNames {
-		Click(
-			key_customerId = "${customerId}",
-			locator1 = "BridgeDemos#CUSTOMER_EDIT_BUTTON");
-
-		AssertTextEquals(
-			key_customerId = "${customerId}",
-			locator1 = "BridgeDemos#CUSTOMER_FIRST_NAME",
-			value1 = "${firstName}");
-		AssertTextEquals(
-			key_customerId = "${customerId}",
-			locator1 = "BridgeDemos#CUSTOMER_LAST_NAME",
-			value1 = "${lastName}");
-
-		AssertTextEquals(
-			key_item = "First Name",
-			locator1 = "BridgeDemos#BOOKINGS_INPUT_FIELD",
-			value1 = "${firstName}");
-		AssertTextEquals(
-			key_item = "Last Name",
-			locator1 = "BridgeDemos#BOOKINGS_INPUT_FIELD",
-			value1 = "${lastName}");
-
-		if (isSet(lastNameEdit)) {
-			Type(
-				key_item = "Last Name",
-				locator1 = "BridgeDemos#BOOKINGS_INPUT_FIELD",
-				value1 = "${lastNameEdit}");
-		}
-
-		if (isSet(firstNameEdit)) {
-			Type(
-				key_item = "First Name",
-				locator1 = "BridgeDemos#BOOKINGS_INPUT_FIELD",
-				value1 = "${firstNameEdit}");
-		}
-
-		Click(locator1 = "BridgeDemos#SUBMIT_BUTTON");
-
-		if (isSet(lastNameEdit)) {
-			AssertTextEquals(
-				key_customerId = "${customerId}",
-				locator1 = "BridgeDemos#CUSTOMER_LAST_NAME",
-				value1 = "${lastNameEdit}");
-
-		Type(
-			key_item = "Last Name",
-			locator1 = "BridgeDemos#BOOKINGS_INPUT_FIELD",
-			value1 = "${lastName}");
-		}
-
-		if (isSet(firstNameEdit)) {
-			AssertTextEquals(
-				key_customerId = "${customerId}",
-				locator1 = "BridgeDemos#CUSTOMER_FIRST_NAME",
-				value1 = "${firstNameEdit}");
-
-		Type(
-			key_item = "First Name",
-			locator1 = "BridgeDemos#BOOKINGS_INPUT_FIELD",
-			value1 = "${firstName}");
-		}
-
-		Click(locator1 = "BridgeDemos#SUBMIT_BUTTON");
-	}
-
 	macro editStartDate {
 		Click(locator1 = "BridgeDemos#CUSTOMER_EDIT_BUTTON");
 
@@ -138,6 +58,20 @@ definition {
 		BridgeDemos.viewDateFormat(
 			dateFormat = "${dateFormat}",
 			displayDate = "${displayDate}");
+	}
+
+	macro exportFile {
+		for (var lastName : list "${lastName}") {
+			AssertElementPresent(
+				key_lastName = "${lastName}",
+				locator1 = "BridgeDemos#EXPORT_LINK");
+
+			Click(
+				key_lastName = "${lastName}",
+				locator1 = "BridgeDemos#EXPORT_LINK");
+
+			DownloadTempFile();
+		}
 	}
 
 	macro gotoEdit {
@@ -327,10 +261,76 @@ definition {
 		}
 	}
 
+	macro viewNames {
+		Click(
+			key_customerId = "${customerId}",
+			locator1 = "BridgeDemos#CUSTOMER_EDIT_BUTTON");
+
+		AssertTextEquals(
+			key_customerId = "${customerId}",
+			locator1 = "BridgeDemos#CUSTOMER_FIRST_NAME",
+			value1 = "${firstName}");
+		AssertTextEquals(
+			key_customerId = "${customerId}",
+			locator1 = "BridgeDemos#CUSTOMER_LAST_NAME",
+			value1 = "${lastName}");
+
+		AssertTextEquals(
+			key_item = "First Name",
+			locator1 = "BridgeDemos#BOOKINGS_INPUT_FIELD",
+			value1 = "${firstName}");
+		AssertTextEquals(
+			key_item = "Last Name",
+			locator1 = "BridgeDemos#BOOKINGS_INPUT_FIELD",
+			value1 = "${lastName}");
+
+		if (isSet(lastNameEdit)) {
+			Type(
+				key_item = "Last Name",
+				locator1 = "BridgeDemos#BOOKINGS_INPUT_FIELD",
+				value1 = "${lastNameEdit}");
+		}
+
+		if (isSet(firstNameEdit)) {
+			Type(
+				key_item = "First Name",
+				locator1 = "BridgeDemos#BOOKINGS_INPUT_FIELD",
+				value1 = "${firstNameEdit}");
+		}
+
+		Click(locator1 = "BridgeDemos#SUBMIT_BUTTON");
+
+		if (isSet(lastNameEdit)) {
+			AssertTextEquals(
+				key_customerId = "${customerId}",
+				locator1 = "BridgeDemos#CUSTOMER_LAST_NAME",
+				value1 = "${lastNameEdit}");
+
+			Type(
+				key_item = "Last Name",
+				locator1 = "BridgeDemos#BOOKINGS_INPUT_FIELD",
+				value1 = "${lastName}");
+		}
+
+		if (isSet(firstNameEdit)) {
+			AssertTextEquals(
+				key_customerId = "${customerId}",
+				locator1 = "BridgeDemos#CUSTOMER_FIRST_NAME",
+				value1 = "${firstNameEdit}");
+
+			Type(
+				key_item = "First Name",
+				locator1 = "BridgeDemos#BOOKINGS_INPUT_FIELD",
+				value1 = "${firstName}");
+		}
+
+		Click(locator1 = "BridgeDemos#SUBMIT_BUTTON");
+	}
+
 	macro viewStartDate {
 		Click(
 			key_customerId = "${customerId}",
-			locator1 = "BridgeDemos#CUSTOMER_EDIT_BUTTON");		
+			locator1 = "BridgeDemos#CUSTOMER_EDIT_BUTTON");
 
 		AssertTextEquals(
 			key_item = "Start Date",

@@ -9,7 +9,6 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-
 	}
 
 	tearDown {
@@ -326,6 +325,7 @@ definition {
 
 	@priority = "5"
 	test OutputSmoke {
+
 		// OutputFormatGeneral
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/outputformat/general");

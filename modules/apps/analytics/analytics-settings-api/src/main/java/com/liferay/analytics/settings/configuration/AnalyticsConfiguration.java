@@ -18,6 +18,8 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Marcellus Tavares
  */
@@ -28,6 +30,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.analytics.settings.configuration.AnalyticsConfiguration"
 )
+@ProviderType
 public interface AnalyticsConfiguration {
 
 	@Meta.AD(required = false)

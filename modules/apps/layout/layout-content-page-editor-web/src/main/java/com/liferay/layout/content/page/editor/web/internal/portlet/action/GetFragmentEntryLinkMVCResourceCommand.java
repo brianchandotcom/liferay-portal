@@ -24,13 +24,14 @@ import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -106,9 +107,9 @@ public class GetFragmentEntryLinkMVCResourceCommand
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(resourceRequest);
 
-			InfoDisplayContributor<?> currentInfoDisplayContributor =
-				(InfoDisplayContributor<?>)httpServletRequest.getAttribute(
-					InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR);
+			LayoutDisplayPageProvider<?> currentLayoutDisplayPageProvider =
+				(LayoutDisplayPageProvider<?>)httpServletRequest.getAttribute(
+					LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER);
 
 			if (Validator.isNotNull(collectionItemClassName) &&
 				(collectionItemClassPK > 0)) {
@@ -132,14 +133,14 @@ public class GetFragmentEntryLinkMVCResourceCommand
 						infoItemObject);
 				}
 
-				InfoDisplayContributor<?> infoDisplayContributor =
-					_infoDisplayContributorTracker.getInfoDisplayContributor(
-						collectionItemClassName);
+				LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+					_layoutDisplayPageProviderTracker.
+						getLayoutDisplayPageProvider(collectionItemClassName);
 
-				if (infoDisplayContributor != null) {
+				if (layoutDisplayPageProvider != null) {
 					httpServletRequest.setAttribute(
-						InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR,
-						infoDisplayContributor);
+						LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
+						layoutDisplayPageProvider);
 				}
 			}
 
@@ -179,8 +180,8 @@ public class GetFragmentEntryLinkMVCResourceCommand
 					InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT);
 
 				httpServletRequest.setAttribute(
-					InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR,
-					currentInfoDisplayContributor);
+					LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
+					currentLayoutDisplayPageProvider);
 			}
 
 			if (SessionErrors.contains(
@@ -210,10 +211,10 @@ public class GetFragmentEntryLinkMVCResourceCommand
 	private FragmentRendererController _fragmentRendererController;
 
 	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Reference
 	private Portal _portal;

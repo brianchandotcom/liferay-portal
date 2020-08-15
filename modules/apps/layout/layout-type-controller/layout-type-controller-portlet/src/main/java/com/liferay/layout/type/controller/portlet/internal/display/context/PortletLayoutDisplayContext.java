@@ -16,18 +16,20 @@ package com.liferay.layout.type.controller.portlet.internal.display.context;
 
 import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRendererTracker;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.info.type.WebImage;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
@@ -77,17 +79,17 @@ public class PortletLayoutDisplayContext {
 	public PortletLayoutDisplayContext(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		InfoItemServiceTracker infoItemServiceTracker,
 		InfoListRendererTracker infoListRendererTracker,
+		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker,
 		LayoutListRetrieverTracker layoutListRetrieverTracker,
 		ListObjectReferenceFactoryTracker listObjectReferenceFactoryTracker) {
 
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
-		_infoDisplayContributorTracker = infoDisplayContributorTracker;
 		_infoItemServiceTracker = infoItemServiceTracker;
 		_infoListRendererTracker = infoListRendererTracker;
+		_layoutDisplayPageProviderTracker = layoutDisplayPageProviderTracker;
 		_layoutListRetrieverTracker = layoutListRetrieverTracker;
 		_listObjectReferenceFactoryTracker = listObjectReferenceFactoryTracker;
 	}
@@ -175,7 +177,7 @@ public class PortletLayoutDisplayContext {
 			listObjectReference, defaultLayoutListRetrieverContext);
 	}
 
-	public InfoDisplayContributor<?> getCollectionInfoDisplayContributor(
+	public LayoutDisplayPageProvider<?> getCollectionLayoutDisplayPageProvider(
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem) {
 
@@ -192,7 +194,7 @@ public class PortletLayoutDisplayContext {
 			className = FileEntry.class.getName();
 		}
 
-		return _infoDisplayContributorTracker.getInfoDisplayContributor(
+		return _layoutDisplayPageProviderTracker.getLayoutDisplayPageProvider(
 			className);
 	}
 
@@ -216,32 +218,44 @@ public class PortletLayoutDisplayContext {
 			long classPK = linkJSONObject.getLong("classPK");
 
 			if ((classNameId != 0L) && (classPK != 0L)) {
-				InfoDisplayContributor<Object> infoDisplayContributor =
-					(InfoDisplayContributor<Object>)
-						_infoDisplayContributorTracker.
-							getInfoDisplayContributor(
-								PortalUtil.getClassName(classNameId));
+				String className = PortalUtil.getClassName(classNameId);
 
-				if (infoDisplayContributor != null) {
-					InfoDisplayObjectProvider<Object>
-						infoDisplayObjectProvider =
-							infoDisplayContributor.getInfoDisplayObjectProvider(
-								classPK);
+				InfoItemFieldValuesProvider<Object>
+					infoItemFieldValuesProvider =
+						_infoItemServiceTracker.getFirstInfoItemService(
+							InfoItemFieldValuesProvider.class, className);
 
-					if (infoDisplayObjectProvider != null) {
-						Object object =
-							infoDisplayContributor.getInfoDisplayFieldValue(
-								infoDisplayObjectProvider.getDisplayObject(),
-								fieldId, LocaleUtil.getDefault());
+				InfoItemObjectProvider<Object> infoItemObjectProvider =
+					_infoItemServiceTracker.getFirstInfoItemService(
+						InfoItemObjectProvider.class, className);
 
-						if (object instanceof String) {
-							String fieldValue = (String)object;
+				if ((infoItemObjectProvider != null) &&
+					(infoItemFieldValuesProvider != null)) {
 
-							if (Validator.isNotNull(fieldValue)) {
-								return fieldValue;
+					InfoItemIdentifier infoItemIdentifier =
+						new ClassPKInfoItemIdentifier(classPK);
+
+					Object infoItem = infoItemObjectProvider.getInfoItem(
+						infoItemIdentifier);
+
+					if (infoItem != null) {
+						InfoFieldValue<Object> infoItemFieldValue =
+							infoItemFieldValuesProvider.getInfoItemFieldValue(
+								infoItem, fieldId);
+
+						if (infoItemFieldValue != null) {
+							Object object = infoItemFieldValue.getValue(
+								LocaleUtil.getDefault());
+
+							if (object instanceof String) {
+								String fieldValue = (String)object;
+
+								if (Validator.isNotNull(fieldValue)) {
+									return fieldValue;
+								}
+
+								return StringPool.BLANK;
 							}
-
-							return StringPool.BLANK;
 						}
 					}
 				}
@@ -621,39 +635,50 @@ public class PortletLayoutDisplayContext {
 			long classPK = rowConfigJSONObject.getLong("classPK");
 
 			if ((classNameId != 0L) && (classPK != 0L)) {
-				InfoDisplayContributor<Object> infoDisplayContributor =
-					(InfoDisplayContributor<Object>)
-						_infoDisplayContributorTracker.
-							getInfoDisplayContributor(
-								PortalUtil.getClassName(classNameId));
+				String className = PortalUtil.getClassName(classNameId);
 
-				if (infoDisplayContributor != null) {
-					InfoDisplayObjectProvider<Object>
-						infoDisplayObjectProvider =
-							(InfoDisplayObjectProvider<Object>)
-								infoDisplayContributor.
-									getInfoDisplayObjectProvider(classPK);
+				InfoItemFieldValuesProvider<Object>
+					infoItemFieldValuesProvider =
+						_infoItemServiceTracker.getFirstInfoItemService(
+							InfoItemFieldValuesProvider.class, className);
 
-					if (infoDisplayObjectProvider != null) {
-						Object object =
-							infoDisplayContributor.getInfoDisplayFieldValue(
-								infoDisplayObjectProvider.getDisplayObject(),
-								fieldId, LocaleUtil.getDefault());
+				InfoItemObjectProvider<Object> infoItemObjectProvider =
+					_infoItemServiceTracker.getFirstInfoItemService(
+						InfoItemObjectProvider.class, className);
 
-						if (object instanceof JSONObject) {
-							JSONObject fieldValueJSONObject =
-								(JSONObject)object;
+				if ((infoItemObjectProvider != null) &&
+					(infoItemFieldValuesProvider != null)) {
 
-							return fieldValueJSONObject.getString(
-								"url", StringPool.BLANK);
-						}
-						else if (object instanceof String) {
-							return (String)object;
-						}
-						else if (object instanceof WebImage) {
-							WebImage webImage = (WebImage)object;
+					InfoItemIdentifier infoItemIdentifier =
+						new ClassPKInfoItemIdentifier(classPK);
 
-							return webImage.getUrl();
+					Object infoItem = infoItemObjectProvider.getInfoItem(
+						infoItemIdentifier);
+
+					if (infoItem != null) {
+						InfoFieldValue<Object> infoItemFieldValue =
+							infoItemFieldValuesProvider.getInfoItemFieldValue(
+								infoItem, fieldId);
+
+						if (infoItemFieldValue != null) {
+							Object object = infoItemFieldValue.getValue(
+								LocaleUtil.getDefault());
+
+							if (object instanceof JSONObject) {
+								JSONObject fieldValueJSONObject =
+									(JSONObject)object;
+
+								return fieldValueJSONObject.getString(
+									"url", StringPool.BLANK);
+							}
+							else if (object instanceof String) {
+								return (String)object;
+							}
+							else if (object instanceof WebImage) {
+								WebImage webImage = (WebImage)object;
+
+								return webImage.getUrl();
+							}
 						}
 					}
 				}
@@ -770,9 +795,10 @@ public class PortletLayoutDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
-	private final InfoDisplayContributorTracker _infoDisplayContributorTracker;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private final InfoListRendererTracker _infoListRendererTracker;
+	private final LayoutDisplayPageProviderTracker
+		_layoutDisplayPageProviderTracker;
 	private final LayoutListRetrieverTracker _layoutListRetrieverTracker;
 	private LayoutStructure _layoutStructure;
 	private final ListObjectReferenceFactoryTracker

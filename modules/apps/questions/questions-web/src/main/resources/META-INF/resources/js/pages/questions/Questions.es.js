@@ -40,22 +40,37 @@ function getFilterOptions() {
 	return [
 		{
 			label: Liferay.Language.get('latest-created'),
+			title: Liferay.Language.get(
+				'showing-questions-ordered-by-last-created-first'
+			),
 			value: 'latest-created',
 		},
 		{
 			label: Liferay.Language.get('latest-edited'),
+			title: Liferay.Language.get(
+				'showing-questions-ordered-by-last-edited-first'
+			),
 			value: 'latest-edited',
 		},
 		{
 			label: Liferay.Language.get('voted-in-the-last-week'),
+			title: Liferay.Language.get(
+				'showing-questions-that-have-at-least-one-vote-in-the-last-week-ordered-by-votes-received'
+			),
 			value: 'week',
 		},
 		{
 			label: Liferay.Language.get('voted-in-the-last-month'),
+			title: Liferay.Language.get(
+				'showing-questions-that-have-at-least-one-vote-in-the-last-month-ordered-by-votes-received'
+			),
 			value: 'month',
 		},
 		{
 			label: Liferay.Language.get('most-voted'),
+			title: Liferay.Language.get(
+				'showing-questions-that-have-at-least-one-vote-ordered-by-votes-received'
+			),
 			value: 'most-voted',
 		},
 	];
@@ -332,6 +347,7 @@ export default withRouter(
 											<ClaySelect.Option
 												key={option.value}
 												label={option.label}
+												title={option.title}
 												value={option.value}
 											/>
 										))}

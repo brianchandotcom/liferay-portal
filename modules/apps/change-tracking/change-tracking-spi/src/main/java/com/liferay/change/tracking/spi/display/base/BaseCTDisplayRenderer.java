@@ -22,9 +22,11 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.InputStream;
@@ -36,10 +38,10 @@ import java.sql.SQLException;
 import java.text.Format;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.function.Function;
 
 import javax.servlet.http.HttpServletRequest;
@@ -121,44 +123,27 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		Locale locale = themeDisplay.getLocale();
+
 		Format format = FastDateFormatFactoryUtil.getDateTime(
-			themeDisplay.getLocale(), themeDisplay.getTimeZone());
+			locale, themeDisplay.getTimeZone());
 
-		T model = displayContext.getModel();
-
-		Map<String, Function<T, Object>> attributeGetterFunctions =
-			model.getAttributeGetterFunctions();
-
-		String[] displayAttributeNames = getDisplayAttributeNames();
-
-		if (displayAttributeNames == null) {
-			Set<String> keySet = attributeGetterFunctions.keySet();
-
-			displayAttributeNames = keySet.toArray(new String[0]);
-		}
+		Map<String, Object> displayAttributes = getDisplayAttributes(
+			locale, displayContext.getModel());
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			themeDisplay.getLocale(), getClass());
 
-		for (String displayAttributeName : displayAttributeNames) {
-			Function<T, Object> function = attributeGetterFunctions.get(
-				displayAttributeName);
-
-			if (function == null) {
-				throw new NullPointerException(
-					"No attribute for name " + displayAttributeName);
-			}
-
+		for (Map.Entry<String, Object> entry : displayAttributes.entrySet()) {
 			writer.write("<tr><td>");
-			writer.write(
-				LanguageUtil.get(resourceBundle, displayAttributeName));
+			writer.write(LanguageUtil.get(resourceBundle, entry.getKey()));
 			writer.write("</td><td>");
 
-			Object attributeValue = function.apply(model);
+			Object value = entry.getValue();
 
-			if (attributeValue instanceof Blob) {
+			if (value instanceof Blob) {
 				String downloadURL = displayContext.getDownloadURL(
-					displayAttributeName, 0, null);
+					entry.getKey(), 0, null);
 
 				if (downloadURL == null) {
 					writer.write(
@@ -172,14 +157,14 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 					writer.write("</a>");
 				}
 			}
-			else if (attributeValue instanceof Date) {
-				writer.write(format.format(attributeValue));
+			else if (value instanceof Date) {
+				writer.write(format.format(value));
 			}
-			else if (attributeValue instanceof String) {
-				writer.write(HtmlUtil.escape(attributeValue.toString()));
+			else if (value instanceof String) {
+				writer.write(HtmlUtil.escape(value.toString()));
 			}
 			else {
-				writer.write(String.valueOf(attributeValue));
+				writer.write(String.valueOf(value));
 			}
 
 			writer.write("</td></tr>");
@@ -190,6 +175,35 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 
 	protected abstract CTService<T> getCTService();
 
-	protected abstract String[] getDisplayAttributeNames();
+	protected String[] getDisplayAttributeNames() {
+		return null;
+	}
+
+	protected Map<String, Object> getDisplayAttributes(Locale locale, T model) {
+		Map<String, Object> attributes = new LinkedHashMap<>();
+
+		Map<String, Function<T, Object>> attributeGetterFunctions =
+			model.getAttributeGetterFunctions();
+
+		for (Map.Entry<String, Function<T, Object>> entry :
+				attributeGetterFunctions.entrySet()) {
+
+			String attributeName = entry.getKey();
+
+			if ((getDisplayAttributeNames() == null) ||
+				ArrayUtil.contains(getDisplayAttributeNames(), attributeName)) {
+
+				Function<T, Object> attributeGetterFunction = entry.getValue();
+
+				Object value = attributeGetterFunction.apply(model);
+
+				if (Validator.isNotNull(value)) {
+					attributes.put(attributeName, value);
+				}
+			}
+		}
+
+		return attributes;
+	}
 
 }

@@ -17,9 +17,9 @@ package com.liferay.layout.taglib.internal.servlet;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.renderer.InfoListRendererTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.layout.util.LayoutClassedModelUsageRecorder;
@@ -63,12 +63,6 @@ public class ServletContextUtil {
 		return _frontendTokenDefinitionRegistry;
 	}
 
-	public static final InfoDisplayContributorTracker
-		getInfoDisplayContributorTracker() {
-
-		return _infoDisplayContributorTracker;
-	}
-
 	public static final InfoItemServiceTracker getInfoItemServiceTracker() {
 		return _infoItemServiceTracker;
 	}
@@ -81,6 +75,12 @@ public class ServletContextUtil {
 		getLayoutClassedModelUsageRecorders() {
 
 		return _layoutClassedModelUsageRecorders;
+	}
+
+	public static final LayoutDisplayPageProviderTracker
+		getLayoutDisplayPageProviderTracker() {
+
+		return _layoutDisplayPageProviderTracker;
 	}
 
 	public static final LayoutListRetrieverTracker
@@ -157,13 +157,6 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setInfoDisplayContributorTracker(
-		InfoDisplayContributorTracker infoDisplayContributorTracker) {
-
-		_infoDisplayContributorTracker = infoDisplayContributorTracker;
-	}
-
-	@Reference(unbind = "-")
 	protected void setInfoItemServiceTracker(
 		InfoItemServiceTracker infoItemServiceTracker) {
 
@@ -175,6 +168,13 @@ public class ServletContextUtil {
 		InfoListRendererTracker infoListRendererTracker) {
 
 		_infoListRendererTracker = infoListRendererTracker;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutDisplayPageProviderTracker(
+		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker) {
+
+		_layoutDisplayPageProviderTracker = layoutDisplayPageProviderTracker;
 	}
 
 	@Reference(unbind = "-")
@@ -204,11 +204,12 @@ public class ServletContextUtil {
 	private static FragmentRendererTracker _fragmentRendererTracker;
 	private static FrontendTokenDefinitionRegistry
 		_frontendTokenDefinitionRegistry;
-	private static InfoDisplayContributorTracker _infoDisplayContributorTracker;
 	private static InfoItemServiceTracker _infoItemServiceTracker;
 	private static InfoListRendererTracker _infoListRendererTracker;
 	private static final Map<String, LayoutClassedModelUsageRecorder>
 		_layoutClassedModelUsageRecorders = new ConcurrentHashMap<>();
+	private static LayoutDisplayPageProviderTracker
+		_layoutDisplayPageProviderTracker;
 	private static LayoutListRetrieverTracker _layoutListRetrieverTracker;
 	private static ListObjectReferenceFactoryTracker
 		_listObjectReferenceFactoryTracker;

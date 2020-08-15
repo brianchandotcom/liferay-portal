@@ -17,9 +17,9 @@ package com.liferay.layout.type.controller.portlet.internal.layout.type.controll
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.renderer.InfoListRendererTracker;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
@@ -99,8 +99,8 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			PortletLayoutDisplayContext.class.getName(),
 			new PortletLayoutDisplayContext(
 				_frontendTokenDefinitionRegistry, httpServletRequest,
-				httpServletResponse, _infoDisplayContributorTracker,
-				_infoItemServiceTracker, _infoListRendererTracker,
+				httpServletResponse, _infoItemServiceTracker,
+				_infoListRendererTracker, _layoutDisplayPageProviderTracker,
 				_layoutListRetrieverTracker,
 				_listObjectReferenceFactoryTracker));
 
@@ -231,13 +231,13 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
 
 	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
-
-	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private InfoListRendererTracker _infoListRendererTracker;
+
+	@Reference
+	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Reference
 	private LayoutListRetrieverTracker _layoutListRetrieverTracker;

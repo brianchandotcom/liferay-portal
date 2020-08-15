@@ -58,10 +58,10 @@ for (String childrenItemId : childrenItemIds) {
 					<clay:row>
 
 						<%
-						InfoDisplayContributor<?> currentInfoDisplayContributor = (InfoDisplayContributor<?>)request.getAttribute(InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR);
+						LayoutDisplayPageProvider<?> currentLayoutDisplayPageProvider = (LayoutDisplayPageProvider<?>)request.getAttribute(LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER);
 
 						try {
-							request.setAttribute(InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR, renderFragmentLayoutDisplayContext.getCollectionInfoDisplayContributor(collectionStyledLayoutStructureItem));
+							request.setAttribute(LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER, renderFragmentLayoutDisplayContext.getLayoutDisplayPageProvider(collectionStyledLayoutStructureItem));
 
 							for (Object collectionObject : renderFragmentLayoutDisplayContext.getCollection(collectionStyledLayoutStructureItem, segmentsExperienceIds)) {
 								request.setAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT, collectionObject);
@@ -80,7 +80,7 @@ for (String childrenItemId : childrenItemIds) {
 						finally {
 							request.removeAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT);
 
-							request.setAttribute(InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR, currentInfoDisplayContributor);
+							request.setAttribute(LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER, currentLayoutDisplayPageProvider);
 						}
 						%>
 

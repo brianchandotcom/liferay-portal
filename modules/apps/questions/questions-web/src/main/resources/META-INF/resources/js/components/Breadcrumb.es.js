@@ -23,7 +23,7 @@ import BreadcrumbDropdown from './BreadcrumbDropdown.es';
 import Link from './Link.es';
 import NewTopicModal from './NewTopicModal.es';
 
-export default withRouter(({history ,section}) => {
+export default withRouter(({history, section}) => {
 	const MAX_SECTIONS_IN_BREADCRUMB = 3;
 	const historyPushParser = historyPushWithSlug(history.push);
 	const [breadcrumbNodes, setBreadcrumbNodes] = useState([]);

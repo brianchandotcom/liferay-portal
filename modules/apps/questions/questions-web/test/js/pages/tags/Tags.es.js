@@ -57,8 +57,7 @@ describe('Tags', () => {
 	});
 
 	it('Shows list of tags', async () => {
-		const path = '/questions/:sectionTitle';
-		const route = '/questions/:sectionTitle/tags';
+		const route = '/tags';
 
 		const link = new HttpLink({
 			credentials: 'include',
@@ -77,7 +76,7 @@ describe('Tags', () => {
 			contextValue: {siteKey: '20020'},
 			link,
 			route,
-			ui: <Route component={Tags} path={path} />,
+			ui: <Route component={Tags} />,
 		});
 
 		const firstTag = await findByText('new');

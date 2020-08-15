@@ -42,42 +42,41 @@ export default (props) => {
 				<Router>
 					<ErrorBoundary>
 						<div>
-							<Route component={Home} exact path="/" />
-							<Route component={Home} exact path="/questions" />
-							<Route
-								component={ForumsToQuestion}
-								exact
-								path="/question/:questionId"
-							/>
-							<Route
-								component={UserActivity}
-								exact
-								path="/activity/:creatorId"
-							/>
-							<Route
-								component={UserSubscriptions}
-								exact
-								path="/subscriptions/:creatorId"
-							/>
+							<NavigationBar />
 
 							<Switch>
+								<Route component={Home} exact path="/" />
 								<Route
+									component={Home}
+									exact
+									path="/questions"
+								/>
+								<Route
+									component={ForumsToQuestion}
+									exact
+									path="/question/:questionId"
+								/>
+								<Route
+									component={UserActivity}
+									exact
+									path="/activity/:creatorId"
+								/>
+								<Route
+									component={UserSubscriptions}
+									exact
+									path="/subscriptions/:creatorId"
+								/>
+								<Route
+									component={Questions}
 									exact
 									path="/questions/tag/:tag"
-									render={(props) => (
-										<>
-											<NavigationBar {...props} />
-											<Questions {...props} />
-										</>
-									)}
 								/>
+								<Route component={Tags} exact path="/tags" />
 
 								<Route
 									path="/questions/:sectionTitle"
 									render={({match: {path}}) => (
 										<>
-											<NavigationBar />
-
 											<Switch>
 												<ProtectedRoute
 													component={EditAnswer}
@@ -98,11 +97,6 @@ export default (props) => {
 													component={NewQuestion}
 													exact
 													path={`${path}/new`}
-												/>
-												<Route
-													component={Tags}
-													exact
-													path={`${path}/tags`}
 												/>
 												<Route
 													component={Question}

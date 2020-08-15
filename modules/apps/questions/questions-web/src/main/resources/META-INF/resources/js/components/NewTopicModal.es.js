@@ -18,13 +18,13 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
 import React, {useContext, useRef} from 'react';
 
-import { AppContext } from '../AppContext.es';
+import {AppContext} from '../AppContext.es';
 import {createSubTopicQuery, createTopicQuery} from '../utils/client.es';
 import {deleteCacheVariables} from '../utils/utils.es';
 
 export default ({currentSectionId, onClose, onCreateNavigateTo, visible}) => {
-    const context = useContext(AppContext);
-    const topicName = useRef(null);
+	const context = useContext(AppContext);
+	const topicName = useRef(null);
 	const topicDescription = useRef(null);
 
 	const [createNewSubTopic] = useMutation(createSubTopicQuery, {
@@ -41,9 +41,7 @@ export default ({currentSectionId, onClose, onCreateNavigateTo, visible}) => {
 
 	const [createNewTopic] = useMutation(createTopicQuery, {
 		onCompleted(data) {
-			onCreateNavigateTo(
-				data.createSiteMessageBoardSection.title
-			);
+			onCreateNavigateTo(data.createSiteMessageBoardSection.title);
 		},
 		update(proxy) {
 			deleteCacheVariables(proxy, 'MessageBoardSection');
@@ -53,28 +51,25 @@ export default ({currentSectionId, onClose, onCreateNavigateTo, visible}) => {
 	});
 
 	const createTopic = () => {
-        if(currentSectionId) {
-            createNewSubTopic({
-                variables: {
-                    description:
-                        topicDescription.current
-                            .value,
-                    parentMessageBoardSectionId: currentSectionId,
-                    title: topicName.current.value,
-                },
-            });
-        } else {
-            createNewTopic({
-                variables: {
-                    description:
-                        topicDescription.current
-                            .value,
-                    siteKey: context.siteKey,
-                    title: topicName.current.value,
-                },
-            });
-        }
-    };
+		if (currentSectionId) {
+			createNewSubTopic({
+				variables: {
+					description: topicDescription.current.value,
+					parentMessageBoardSectionId: currentSectionId,
+					title: topicName.current.value,
+				},
+			});
+		}
+		else {
+			createNewTopic({
+				variables: {
+					description: topicDescription.current.value,
+					siteKey: context.siteKey,
+					title: topicName.current.value,
+				},
+			});
+		}
+	};
 
 	const {observer, onClose: close} = useModal({
 		onClose,
@@ -128,7 +123,7 @@ export default ({currentSectionId, onClose, onCreateNavigateTo, visible}) => {
 								<ClayButton
 									displayType="primary"
 									onClick={() => {
-										createTopic()
+										createTopic();
 										close();
 									}}
 								>

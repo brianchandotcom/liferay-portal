@@ -23,7 +23,6 @@ import UserIcon from '../../components/UserIcon.es';
 import useQueryParams from '../../hooks/useQueryParams.es';
 import {getUserActivityQuery} from '../../utils/client.es';
 import {historyPushWithSlug} from '../../utils/utils.es';
-import NavigationBar from '../NavigationBar.es';
 
 export default withRouter(
 	({
@@ -94,18 +93,14 @@ export default withRouter(
 		};
 
 		return (
-			<>
-				<NavigationBar />
-
-				<section className="questions-section questions-section-list">
-					<div className="questions-container">
-						<div className="c-p-5 row">
-							<PageHeader />
-							<Questions />
-						</div>
+			<section className="questions-section questions-section-list">
+				<div className="questions-container">
+					<div className="c-p-5 row">
+						<PageHeader />
+						<Questions />
 					</div>
-				</section>
-			</>
+				</div>
+			</section>
 		);
 
 		function PageHeader() {

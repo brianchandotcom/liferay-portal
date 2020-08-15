@@ -29,7 +29,6 @@ import {
 	unsubscribeMyUserAccountQuery,
 } from '../../utils/client.es';
 import {historyPushWithSlug} from '../../utils/utils.es';
-import NavigationBar from '../NavigationBar.es';
 
 export default withRouter(({history}) => {
 	const [entity, setEntity] = useState({});
@@ -133,21 +132,17 @@ export default withRouter(({history}) => {
 	};
 
 	return (
-		<>
-			<NavigationBar />
-
-			<section className="questions-section questions-section-list">
-				<div className="c-p-5 questions-container row">
-					<div className="col-xl-8 offset-xl-2">
-						<h2 className="sheet-subtitle">Topics</h2>
-						<Topics />
-						<h2 className="mt-5 sheet-subtitle">Questions</h2>
-						<Questions />
-					</div>
+		<section className="questions-section questions-section-list">
+			<div className="c-p-5 questions-container row">
+				<div className="col-xl-8 offset-xl-2">
+					<h2 className="sheet-subtitle">Topics</h2>
+					<Topics />
+					<h2 className="mt-5 sheet-subtitle">Questions</h2>
+					<Questions />
 				</div>
-				<Alert displayType={'success'} info={info} />
-			</section>
-		</>
+			</div>
+			<Alert displayType={'success'} info={info} />
+		</section>
 	);
 
 	function Topics() {

@@ -18,9 +18,10 @@ import com.liferay.flags.taglib.servlet.taglib.react.FlagsTag;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -99,7 +100,9 @@ public class ContentFlagsFragmentRenderer
 		Tuple displayObject = getDisplayObject(
 			fragmentRendererContext, httpServletRequest);
 
-		flagsTag.setClassName(GetterUtil.getString(displayObject.getObject(0)));
+		String className = GetterUtil.getString(displayObject.getObject(0));
+
+		flagsTag.setClassName(className);
 
 		long classPK = GetterUtil.getLong(displayObject.getObject(1));
 
@@ -120,18 +123,20 @@ public class ContentFlagsFragmentRenderer
 							fragmentEntryLink.getEditableValues(),
 							"message"))));
 
-			InfoDisplayContributor<?> infoDisplayContributor =
-				(InfoDisplayContributor<?>)httpServletRequest.getAttribute(
-					InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR);
+			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+				(LayoutDisplayPageProvider<?>)httpServletRequest.getAttribute(
+					LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER);
 
-			if (infoDisplayContributor != null) {
-				InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-					infoDisplayContributor.getInfoDisplayObjectProvider(
-						classPK);
+			if (layoutDisplayPageProvider != null) {
+				LayoutDisplayPageObjectProvider<?>
+					layoutDisplayPageObjectProvider =
+						layoutDisplayPageProvider.
+							getLayoutDisplayPageObjectProvider(
+								new InfoItemReference(className, classPK));
 
-				if (infoDisplayObjectProvider != null) {
+				if (layoutDisplayPageObjectProvider != null) {
 					flagsTag.setContentTitle(
-						infoDisplayObjectProvider.getTitle(
+						layoutDisplayPageObjectProvider.getTitle(
 							fragmentRendererContext.getLocale()));
 				}
 			}

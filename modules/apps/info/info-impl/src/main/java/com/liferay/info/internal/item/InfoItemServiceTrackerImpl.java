@@ -28,6 +28,7 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
+import com.liferay.info.item.provider.filter.InfoItemServiceFilter;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.selector.InfoItemSelector;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
@@ -80,7 +81,8 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 
 	@Override
 	public <P> List<P> getAllInfoItemServices(
-		Class<P> serviceClass, String itemClassName, String filterString) {
+		Class<P> serviceClass, String itemClassName,
+		InfoItemServiceFilter infoItemServiceFilter) {
 
 		ServiceTrackerMap
 			<String, ? extends List<ServiceReferenceServiceTuple<P, P>>>
@@ -96,15 +98,17 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 			Stream<ServiceReferenceServiceTuple<P, P>> stream =
 				serviceReferenceServiceTuples.stream();
 
-			if (filterString != null) {
+			if (infoItemServiceFilter != null) {
 				try {
-					Filter filter = FrameworkUtil.createFilter(filterString);
+					Filter filter = FrameworkUtil.createFilter(
+						infoItemServiceFilter.getFilterString());
 
 					stream = stream.filter(
 						srst -> filter.match(srst.getServiceReference()));
 				}
 				catch (InvalidSyntaxException invalidSyntaxException) {
-					return Collections.emptyList();
+					throw new RuntimeException(
+						"Incorrect filter string", invalidSyntaxException);
 				}
 			}
 
@@ -120,10 +124,11 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 
 	@Override
 	public <P> P getFirstInfoItemService(
-		Class<P> serviceClass, String itemClassName, String filterString) {
+		Class<P> serviceClass, String itemClassName,
+		InfoItemServiceFilter infoItemServiceFilter) {
 
 		List<?> infoItemServices = getAllInfoItemServices(
-			serviceClass, itemClassName, filterString);
+			serviceClass, itemClassName, infoItemServiceFilter);
 
 		if (ListUtil.isEmpty(infoItemServices)) {
 			return null;

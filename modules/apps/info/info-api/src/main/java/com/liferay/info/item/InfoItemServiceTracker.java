@@ -16,6 +16,7 @@ package com.liferay.info.item;
 
 import com.liferay.info.exception.CapabilityVerificationException;
 import com.liferay.info.item.capability.InfoItemCapability;
+import com.liferay.info.item.provider.filter.InfoItemServiceFilter;
 
 import java.util.List;
 
@@ -37,7 +38,8 @@ public interface InfoItemServiceTracker {
 	}
 
 	public <P> List<P> getAllInfoItemServices(
-		Class<P> serviceClass, String itemClassName, String filterString);
+		Class<P> serviceClass, String itemClassName,
+		InfoItemServiceFilter infoItemServiceFilter);
 
 	public default <P> P getFirstInfoItemService(
 		Class<P> serviceClass, String itemClassName) {
@@ -46,7 +48,8 @@ public interface InfoItemServiceTracker {
 	}
 
 	public <P> P getFirstInfoItemService(
-		Class<P> serviceClass, String itemClassName, String filterString);
+		Class<P> serviceClass, String itemClassName,
+		InfoItemServiceFilter infoItemServiceFilter);
 
 	public List<InfoItemCapability> getInfoItemCapabilities(
 		String itemClassName);

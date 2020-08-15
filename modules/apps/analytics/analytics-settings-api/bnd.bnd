@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Analytics Settings API
 Bundle-SymbolicName: com.liferay.analytics.settings.api
-Bundle-Version: 4.1.5
+Bundle-Version: 4.2.0
 Export-Package: com.liferay.analytics.settings.configuration

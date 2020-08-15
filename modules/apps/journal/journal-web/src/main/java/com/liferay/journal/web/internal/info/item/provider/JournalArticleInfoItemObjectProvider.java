@@ -41,7 +41,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  */
 @Component(
-	immediate = true, property = "service.ranking:Integer=100",
+	immediate = true,
+	property = {
+		"info.item.identifier=com.liferay.info.item.ClassPKInfoItemIdentifier",
+		"info.item.identifier=com.liferay.info.item.GroupKeyInfoItemIdentifier",
+		"info.item.identifier=com.liferay.info.item.GroupUrlTitleInfoItemIdentifier",
+		"service.ranking:Integer=100"
+	},
 	service = InfoItemObjectProvider.class
 )
 public class JournalArticleInfoItemObjectProvider

@@ -12,21 +12,28 @@
  * details.
  */
 
-package com.liferay.change.tracking.web.internal.display.user;
+package com.liferay.users.admin.web.internal.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.base.BaseCTDisplayRenderer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.service.permission.UserPermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -41,7 +48,31 @@ public class UserCTDisplayRenderer extends BaseCTDisplayRenderer<User> {
 
 	@Override
 	public String getEditURL(HttpServletRequest httpServletRequest, User user) {
-		return null;
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!_userPermission.contains(
+				themeDisplay.getPermissionChecker(), themeDisplay.getUserId(),
+				ActionKeys.UPDATE)) {
+
+			return null;
+		}
+
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			httpServletRequest, UsersAdminPortletKeys.USERS_ADMIN,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/users_admin/edit_user");
+		portletURL.setParameter("p_u_i_d", String.valueOf(user.getUserId()));
+
+		String currentURL = _portal.getCurrentURL(httpServletRequest);
+
+		portletURL.setParameter("backURL", currentURL);
+		portletURL.setParameter("redirect", currentURL);
+
+		return portletURL.toString();
 	}
 
 	@Override
@@ -58,16 +89,6 @@ public class UserCTDisplayRenderer extends BaseCTDisplayRenderer<User> {
 		}
 
 		return user.getScreenName();
-	}
-
-	@Override
-	public String getTypeName(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, getClass());
-
-		return _language.get(
-			resourceBundle,
-			"model.resource.com.liferay.portal.kernel.model.User");
 	}
 
 	@Override
@@ -105,6 +126,12 @@ public class UserCTDisplayRenderer extends BaseCTDisplayRenderer<User> {
 	private Language _language;
 
 	@Reference
+	private Portal _portal;
+
+	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserPermission _userPermission;
 
 }

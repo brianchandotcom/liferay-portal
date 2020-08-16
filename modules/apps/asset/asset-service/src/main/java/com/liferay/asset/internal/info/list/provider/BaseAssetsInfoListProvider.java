@@ -16,7 +16,6 @@ package com.liferay.asset.internal.info.list.provider;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.list.provider.InfoListProviderContext;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.portal.kernel.model.Company;
@@ -87,9 +86,6 @@ public abstract class BaseAssetsInfoListProvider {
 
 		return assetEntryQuery;
 	}
-
-	@Reference
-	protected InfoDisplayContributorTracker infoDisplayContributorTracker;
 
 	@Reference
 	protected Portal portal;

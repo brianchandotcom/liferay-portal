@@ -21,9 +21,10 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.aop.AopService;
@@ -196,31 +197,25 @@ public class AssetDisplayPageEntryLocalServiceImpl
 		long groupId, long classNameId, long classPK,
 		long layoutPageTemplateEntryId) {
 
-		InfoDisplayContributor<?> infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(
-				_portal.getClassName(classNameId));
+		String className = _portal.getClassName(classNameId);
 
-		if (infoDisplayContributor == null) {
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			_layoutDisplayPageProviderTracker.getLayoutDisplayPageProvider(
+				className);
+
+		if (layoutDisplayPageProvider == null) {
 			return LayoutConstants.DEFAULT_PLID;
 		}
 
-		InfoDisplayObjectProvider<?> infoDisplayObjectProvider = null;
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(className, classPK));
 
-		try {
-			infoDisplayObjectProvider =
-				infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
-			}
-		}
-
-		if (infoDisplayObjectProvider == null) {
+		if (layoutDisplayPageObjectProvider == null) {
 			return LayoutConstants.DEFAULT_PLID;
 		}
 
-		long classTypeId = infoDisplayObjectProvider.getClassTypeId();
+		long classTypeId = layoutDisplayPageObjectProvider.getClassTypeId();
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry = Optional.ofNullable(
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
@@ -286,7 +281,7 @@ public class AssetDisplayPageEntryLocalServiceImpl
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -23,7 +23,6 @@ import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.layout.page.template.serializer.LayoutStructureItemJSONSerializer;
@@ -242,9 +241,6 @@ public class AddFragmentCompositionMVCActionCommand
 
 	@Reference
 	private FragmentRendererTracker _fragmentRendererTracker;
-
-	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

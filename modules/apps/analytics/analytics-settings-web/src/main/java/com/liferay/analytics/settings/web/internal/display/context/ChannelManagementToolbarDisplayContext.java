@@ -39,11 +39,10 @@ public class ChannelManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public ChannelManagementToolbarDisplayContext(
-		HttpServletRequest httpServletRequest,
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
 		ChannelDisplayContext channelDisplayContext,
-		ChannelSearch channelSearch) {
+		ChannelSearch channelSearch, HttpServletRequest httpServletRequest,
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,

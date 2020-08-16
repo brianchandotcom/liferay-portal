@@ -36,7 +36,7 @@ GroupDisplayContext groupDisplayContext = new GroupDisplayContext("/analytics_se
 	</h2>
 
 	<clay:management-toolbar
-		displayContext="<%= new GroupManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, groupDisplayContext) %>"
+		displayContext="<%= new GroupManagementToolbarDisplayContext(groupDisplayContext, request, liferayPortletRequest, liferayPortletResponse) %>"
 	/>
 
 	<aui:form action="<%= editSyncedSitesURL %>" method="post" name="fm">

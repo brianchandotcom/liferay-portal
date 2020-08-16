@@ -15,20 +15,20 @@
 package com.liferay.change.tracking.web.internal.display.user;
 
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
-import com.liferay.change.tracking.spi.display.context.DisplayContext;
+import com.liferay.change.tracking.spi.display.base.BaseCTDisplayRenderer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.Writer;
-
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Samuel Trong Tran
  */
 @Component(immediate = true, service = CTDisplayRenderer.class)
-public class UserCTDisplayRenderer implements CTDisplayRenderer<User> {
+public class UserCTDisplayRenderer extends BaseCTDisplayRenderer<User> {
 
 	@Override
 	public String getEditURL(HttpServletRequest httpServletRequest, User user) {
@@ -71,41 +71,40 @@ public class UserCTDisplayRenderer implements CTDisplayRenderer<User> {
 	}
 
 	@Override
-	public void render(DisplayContext<User> displayContext) throws Exception {
-		HttpServletResponse httpServletResponse =
-			displayContext.getHttpServletResponse();
-
-		Writer writer = httpServletResponse.getWriter();
-
-		writer.write("<p><b>");
-
-		HttpServletRequest httpServletRequest =
-			displayContext.getHttpServletRequest();
-
-		writer.write(_language.get(httpServletRequest, "user-id"));
-
-		writer.write("</b>: ");
-
-		User user = displayContext.getModel();
-
-		writer.write(String.valueOf(user.getUserId()));
-
-		writer.write("</p><p><b>");
-		writer.write(_language.get(httpServletRequest, "name"));
-		writer.write("</b>: ");
-		writer.write(HtmlUtil.escape(user.getFullName()));
-		writer.write("</p><p><b>");
-		writer.write(_language.get(httpServletRequest, "screen-name"));
-		writer.write("</b>: ");
-		writer.write(HtmlUtil.escape(user.getScreenName()));
-		writer.write("</p><p><b>");
-		writer.write(_language.get(httpServletRequest, "email-address"));
-		writer.write("</b>: ");
-		writer.write(user.getEmailAddress());
-		writer.write("</p>");
+	protected CTService<User> getCTService() {
+		return _userLocalService;
 	}
+
+	@Override
+	protected String[] getDisplayAttributeNames() {
+		return _DISPLAY_ATTRIBUTE_NAMES;
+	}
+
+	@Override
+	protected Map<String, Object> getDisplayAttributes(
+		Locale locale, User user) {
+
+		return LinkedHashMapBuilder.<String, Object>put(
+			"fullName", user.getFullName()
+		).put(
+			"screenName", user.getScreenName()
+		).put(
+			"emailAddress", user.getEmailAddress()
+		).putAll(
+			super.getDisplayAttributes(locale, user)
+		).build();
+	}
+
+	private static final String[] _DISPLAY_ATTRIBUTE_NAMES = {
+		"comments", "createDate", "facebookId", "greeting", "googleUserId",
+		"jobTitle", "languageId", "lastLoginDate", "lastLoginIP", "loginDate",
+		"loginIP", "modifiedDate", "openId", "timeZoneId"
+	};
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

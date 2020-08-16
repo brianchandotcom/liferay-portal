@@ -14,7 +14,6 @@
 
 package com.liferay.analytics.settings.web.internal.display.context;
 
-import com.liferay.analytics.settings.web.internal.search.ChannelSearch;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
@@ -40,15 +39,13 @@ public class ChannelManagementToolbarDisplayContext
 
 	public ChannelManagementToolbarDisplayContext(
 		ChannelDisplayContext channelDisplayContext,
-		ChannelSearch channelSearch, HttpServletRequest httpServletRequest,
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			channelSearch);
-
-		_channelDisplayContext = channelDisplayContext;
+			channelDisplayContext.getChannelSearch());
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -103,7 +100,6 @@ public class ChannelManagementToolbarDisplayContext
 		return false;
 	}
 
-	private final ChannelDisplayContext _channelDisplayContext;
 	private final ResourceBundle _resourceBundle;
 
 }

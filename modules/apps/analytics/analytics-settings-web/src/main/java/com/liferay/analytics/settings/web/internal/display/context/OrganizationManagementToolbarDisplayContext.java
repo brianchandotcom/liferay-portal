@@ -49,8 +49,6 @@ public class OrganizationManagementToolbarDisplayContext
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			organizationDisplayContext.getOrganizationSearch());
 
-		_organizationDisplayContext = organizationDisplayContext;
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -135,7 +133,6 @@ public class OrganizationManagementToolbarDisplayContext
 		return new String[] {"organization-name"};
 	}
 
-	private final OrganizationDisplayContext _organizationDisplayContext;
 	private final ResourceBundle _resourceBundle;
 
 }

@@ -89,7 +89,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 		</c:when>
 		<c:otherwise>
 			<clay:management-toolbar
-				displayContext="<%= new ChannelManagementToolbarDisplayContext(channelDisplayContext, channelSearch, request, liferayPortletRequest, liferayPortletResponse) %>"
+				displayContext="<%= new ChannelManagementToolbarDisplayContext(channelDisplayContext, request, liferayPortletRequest, liferayPortletResponse) %>"
 				elementClasses="custom-management-toolbar"
 			/>
 

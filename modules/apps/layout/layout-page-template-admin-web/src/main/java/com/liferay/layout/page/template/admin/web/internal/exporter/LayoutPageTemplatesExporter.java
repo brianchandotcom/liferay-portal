@@ -30,7 +30,6 @@ import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter.DisplayPageTemplateDTOConverter;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter.MasterPageDTOConverter;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.converter.PageDefinitionDTOConverter;
@@ -442,9 +441,6 @@ public class LayoutPageTemplatesExporter {
 
 	@Reference
 	private FragmentRendererTracker _fragmentRendererTracker;
-
-	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -34,7 +34,6 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorCriterion;
@@ -60,6 +59,7 @@ import com.liferay.layout.content.page.editor.web.internal.constants.ContentPage
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkItemSelectorUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
@@ -1635,21 +1635,25 @@ public class ContentPageEditorDisplayContext {
 	private Set<Map<String, Object>> _getMappedInfoItems() throws Exception {
 		Set<Map<String, Object>> mappedInfoItems = new HashSet<>();
 
-		Set<InfoDisplayObjectProvider<?>> infoDisplayObjectProviders =
-			ContentUtil.getMappedInfoDisplayObjectProviders(
-				getGroupId(), themeDisplay.getPlid());
+		Set<LayoutDisplayPageObjectProvider<?>>
+			layoutDisplayPageObjectProviders =
+				ContentUtil.getMappedLayoutDisplayPageObjectProviders(
+					getGroupId(), themeDisplay.getPlid());
 
-		for (InfoDisplayObjectProvider<?> infoDisplayObjectProvider :
-				infoDisplayObjectProviders) {
+		for (LayoutDisplayPageObjectProvider<?>
+				layoutDisplayPageObjectProvider :
+					layoutDisplayPageObjectProviders) {
 
 			mappedInfoItems.add(
 				HashMapBuilder.<String, Object>put(
-					"classNameId", infoDisplayObjectProvider.getClassNameId()
+					"classNameId",
+					layoutDisplayPageObjectProvider.getClassNameId()
 				).put(
-					"classPK", infoDisplayObjectProvider.getClassPK()
+					"classPK", layoutDisplayPageObjectProvider.getClassPK()
 				).put(
 					"title",
-					infoDisplayObjectProvider.getTitle(themeDisplay.getLocale())
+					layoutDisplayPageObjectProvider.getTitle(
+						themeDisplay.getLocale())
 				).build());
 		}
 

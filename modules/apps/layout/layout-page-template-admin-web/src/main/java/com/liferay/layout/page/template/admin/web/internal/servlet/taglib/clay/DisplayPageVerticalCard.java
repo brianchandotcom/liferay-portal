@@ -24,8 +24,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.DisplayPageActionDropdownItemsProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -64,9 +65,9 @@ public class DisplayPageVerticalCard
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
-		_infoDisplayContributorTracker =
-			(InfoDisplayContributorTracker)renderRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER);
+		_infoItemServiceTracker =
+			(InfoItemServiceTracker)renderRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_SERVICE_TRACKER);
 		_layoutPageTemplateEntry = (LayoutPageTemplateEntry)baseModel;
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -202,19 +203,23 @@ public class DisplayPageVerticalCard
 	}
 
 	private String _getTypeLabel() {
-		InfoDisplayContributor<?> infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(
+		InfoItemDetailsProvider<?> infoItemDetailsProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemDetailsProvider.class,
 				_layoutPageTemplateEntry.getClassName());
 
-		if (infoDisplayContributor == null) {
+		if (infoItemDetailsProvider == null) {
 			return StringPool.BLANK;
 		}
 
-		return infoDisplayContributor.getLabel(_themeDisplay.getLocale());
+		InfoItemClassDetails infoItemClassDetails =
+			infoItemDetailsProvider.getInfoItemClassDetails();
+
+		return infoItemClassDetails.getLabel(_themeDisplay.getLocale());
 	}
 
 	private final Layout _draftLayout;
-	private final InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

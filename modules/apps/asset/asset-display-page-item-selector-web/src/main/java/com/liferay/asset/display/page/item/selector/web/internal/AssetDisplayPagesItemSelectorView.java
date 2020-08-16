@@ -18,7 +18,7 @@ import com.liferay.asset.display.page.item.selector.criterion.AssetDisplayPageSe
 import com.liferay.asset.display.page.item.selector.web.internal.constants.AssetDisplayPageItemSelectorWebKeys;
 import com.liferay.asset.display.page.item.selector.web.internal.display.context.AssetDisplayPagesItemSelectorViewDisplayContext;
 import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -93,8 +93,8 @@ public class AssetDisplayPagesItemSelectorView
 			assetDisplayPagesItemSelectorViewDisplayContext);
 
 		servletRequest.setAttribute(
-			InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR_TRACKER,
-			_infoDisplayContributorTracker);
+			InfoDisplayWebKeys.INFO_ITEM_SERVICE_TRACKER,
+			_infoItemServiceTracker);
 
 		ServletContext servletContext = _servletContext;
 
@@ -109,7 +109,7 @@ public class AssetDisplayPagesItemSelectorView
 			new UUIDItemSelectorReturnType());
 
 	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.asset.display.page.item.selector.web)"

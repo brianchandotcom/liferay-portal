@@ -18,9 +18,9 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;
 import com.liferay.info.item.renderer.InfoItemTemplatedRenderer;
@@ -173,22 +173,23 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		String className, long classPK,
 		Optional<Object> displayObjectOptional) {
 
-		InfoDisplayContributor<?> infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
+		InfoItemObjectProvider<?> infoItemObjectProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemObjectProvider.class, className);
 
-		if (infoDisplayContributor == null) {
+		if (infoItemObjectProvider == null) {
 			return displayObjectOptional.orElse(null);
 		}
 
 		try {
-			InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-				infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
+			Object infoItem = infoItemObjectProvider.getInfoItem(
+				new ClassPKInfoItemIdentifier(classPK));
 
-			if (infoDisplayObjectProvider == null) {
+			if (infoItem == null) {
 				return displayObjectOptional.orElse(null);
 			}
 
-			return infoDisplayObjectProvider.getDisplayObject();
+			return infoItem;
 		}
 		catch (Exception exception) {
 		}
@@ -255,9 +256,9 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
 
 	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private InfoItemRendererTracker _infoItemRendererTracker;
 
 	@Reference
-	private InfoItemRendererTracker _infoItemRendererTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 }

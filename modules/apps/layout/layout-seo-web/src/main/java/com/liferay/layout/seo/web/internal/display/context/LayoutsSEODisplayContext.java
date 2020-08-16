@@ -25,10 +25,9 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.item.selector.ItemSelector;
@@ -86,7 +85,6 @@ public class LayoutsSEODisplayContext {
 
 	public LayoutsSEODisplayContext(
 		DLAppService dlAppService, DLURLHelper dlurlHelper,
-		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		InfoItemServiceTracker infoItemServiceTracker,
 		ItemSelector itemSelector,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
@@ -99,7 +97,6 @@ public class LayoutsSEODisplayContext {
 
 		_dlAppService = dlAppService;
 		_dlurlHelper = dlurlHelper;
-		_infoDisplayContributorTracker = infoDisplayContributorTracker;
 		_infoItemServiceTracker = infoItemServiceTracker;
 		_itemSelector = itemSelector;
 		_layoutPageTemplateEntryLocalService =
@@ -557,14 +554,15 @@ public class LayoutsSEODisplayContext {
 	}
 
 	private String _getTypeLabel(String className) {
-		InfoDisplayContributor<?> infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
+		InfoItemClassDetails infoItemClassDetails =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemClassDetails.class, className);
 
-		if (infoDisplayContributor == null) {
+		if (infoItemClassDetails == null) {
 			return StringPool.BLANK;
 		}
 
-		return infoDisplayContributor.getLabel(_themeDisplay.getLocale());
+		return infoItemClassDetails.getLabel(_themeDisplay.getLocale());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -575,7 +573,6 @@ public class LayoutsSEODisplayContext {
 	private final DLURLHelper _dlurlHelper;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoDisplayContributorTracker _infoDisplayContributorTracker;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private final ItemSelector _itemSelector;
 	private Long _layoutId;

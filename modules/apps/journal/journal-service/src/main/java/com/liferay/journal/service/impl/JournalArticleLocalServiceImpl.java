@@ -42,9 +42,7 @@ import com.liferay.exportimport.kernel.exception.ExportImportContentValidationEx
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.configuration.JournalGroupServiceConfiguration;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalActivityKeys;
@@ -74,6 +72,9 @@ import com.liferay.journal.util.JournalDefaultTemplateProvider;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.util.comparator.ArticleIDComparator;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.XMLUtil;
@@ -8861,25 +8862,28 @@ public class JournalArticleLocalServiceImpl
 
 		Map<String, String> friendlyURLMap = new HashMap<>();
 
-		InfoDisplayContributor<?> infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			_layoutDisplayPageProviderTracker.getLayoutDisplayPageProvider(
 				JournalArticle.class.getName());
 
-		if (infoDisplayContributor == null) {
+		if (layoutDisplayPageProvider == null) {
 			return friendlyURLMap;
 		}
 
-		InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-			infoDisplayContributor.getInfoDisplayObjectProvider(
-				article.getResourcePrimKey());
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(
+					JournalArticle.class.getName(),
+					article.getResourcePrimKey()));
 
-		if ((themeDisplay == null) || (infoDisplayObjectProvider == null) ||
+		if ((themeDisplay == null) ||
+			(layoutDisplayPageObjectProvider == null) ||
 			(themeDisplay.getSiteGroup() == null) ||
 			!AssetDisplayPageUtil.hasAssetDisplayPage(
 				themeDisplay.getScopeGroupId(),
-				infoDisplayObjectProvider.getClassNameId(),
-				infoDisplayObjectProvider.getClassPK(),
-				infoDisplayObjectProvider.getClassTypeId())) {
+				layoutDisplayPageObjectProvider.getClassNameId(),
+				layoutDisplayPageObjectProvider.getClassPK(),
+				layoutDisplayPageObjectProvider.getClassTypeId())) {
 
 			return friendlyURLMap;
 		}
@@ -8887,16 +8891,16 @@ public class JournalArticleLocalServiceImpl
 		StringBundler sb = new StringBundler(2);
 
 		Group group = groupLocalService.getGroup(
-			infoDisplayObjectProvider.getGroupId());
+			layoutDisplayPageObjectProvider.getGroupId());
 
 		sb.append(
 			_portal.getGroupFriendlyURL(
 				group.getPublicLayoutSet(), themeDisplay));
 
-		sb.append(infoDisplayContributor.getInfoURLSeparator());
+		sb.append(layoutDisplayPageProvider.getURLSeparator());
 
 		for (String availableLanguageId : article.getAvailableLanguageIds()) {
-			String urlTitle = infoDisplayObjectProvider.getURLTitle(
+			String urlTitle = layoutDisplayPageObjectProvider.getURLTitle(
 				LocaleUtil.fromLanguageId(availableLanguageId));
 
 			friendlyURLMap.put(availableLanguageId, sb.toString() + urlTitle);
@@ -9050,9 +9054,6 @@ public class JournalArticleLocalServiceImpl
 	private Http _http;
 
 	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
-
-	@Reference
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
 
@@ -9064,6 +9065,9 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	private JournalHelper _journalHelper;
+
+	@Reference
+	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Reference
 	private Portal _portal;

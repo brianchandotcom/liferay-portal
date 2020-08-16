@@ -489,6 +489,9 @@ export const getThreads = (
 	) {
 		return client
 			.query({
+				context: {
+					uri: '/o/graphql?restrictFields=actions',
+				},
 				query: getSectionThreadsQuery,
 				variables: {
 					messageBoardSectionId: section.id,
@@ -527,6 +530,9 @@ export const getThreads = (
 
 	return client
 		.query({
+			context: {
+				uri: '/o/graphql?restrictFields=actions',
+			},
 			query: getThreadsQuery,
 			variables: {
 				filter,

@@ -62,7 +62,7 @@ String redirect = portletURL.toString();
 				%>
 
 				<clay:management-toolbar
-					displayContext="<%= new FieldManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fieldDisplayContext) %>"
+					displayContext="<%= new FieldManagementToolbarDisplayContext(fieldDisplayContext, request, liferayPortletRequest, liferayPortletResponse) %>"
 				/>
 
 				<liferay-ui:search-container
@@ -110,7 +110,7 @@ String redirect = portletURL.toString();
 				%>
 
 				<clay:management-toolbar
-					displayContext="<%= new FieldManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, fieldDisplayContext) %>"
+					displayContext="<%= new FieldManagementToolbarDisplayContext(fieldDisplayContext, request, liferayPortletRequest, liferayPortletResponse) %>"
 				/>
 
 				<liferay-ui:search-container

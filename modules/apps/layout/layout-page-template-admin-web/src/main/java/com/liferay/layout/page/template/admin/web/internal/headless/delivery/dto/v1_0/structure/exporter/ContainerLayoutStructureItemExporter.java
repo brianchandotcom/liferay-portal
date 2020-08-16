@@ -24,9 +24,11 @@ import com.liferay.headless.delivery.dto.v1_0.Layout;
 import com.liferay.headless.delivery.dto.v1_0.Mapping;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageSectionDefinition;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.page.template.util.AlignConverter;
 import com.liferay.layout.page.template.util.BorderRadiusConverter;
 import com.liferay.layout.page.template.util.JustifyConverter;
@@ -212,40 +214,47 @@ public class ContainerLayoutStructureItemExporter
 			return null;
 		}
 
-		InfoDisplayContributor<Object> infoDisplayContributor =
-			(InfoDisplayContributor<Object>)
-				_infoDisplayContributorTracker.getInfoDisplayContributor(
-					className);
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class, className);
 
-		if (infoDisplayContributor == null) {
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemObjectProvider.class, className);
+
+		if ((infoItemFieldValuesProvider == null) ||
+			(infoItemObjectProvider == null)) {
+
 			return null;
 		}
 
 		long classPK = jsonObject.getLong("classPK");
 
 		try {
-			InfoDisplayObjectProvider<Object> infoDisplayObjectProvider =
-				(InfoDisplayObjectProvider<Object>)
-					infoDisplayContributor.getInfoDisplayObjectProvider(
-						classPK);
+			Object infoItem = infoItemObjectProvider.getInfoItem(
+				new ClassPKInfoItemIdentifier(classPK));
 
-			if (infoDisplayObjectProvider == null) {
+			if (infoItem == null) {
 				return null;
 			}
 
-			Map<String, Object> fieldValues =
-				infoDisplayContributor.getInfoDisplayFieldsValues(
-					infoDisplayObjectProvider.getDisplayObject(),
-					LocaleUtil.getMostRelevantLocale());
+			InfoFieldValue<Object> infoFieldValue =
+				infoItemFieldValuesProvider.getInfoItemFieldValue(
+					infoItem, jsonObject.getString("fieldId"));
 
-			Object fieldValue = fieldValues.get(
-				jsonObject.getString("fieldId"));
-
-			if (transformerFunction != null) {
-				fieldValue = transformerFunction.apply(fieldValue);
+			if (infoFieldValue == null) {
+				return null;
 			}
 
-			String valueString = GetterUtil.getString(fieldValue);
+			Object infoFieldValueValue = infoFieldValue.getValue(
+				LocaleUtil.getMostRelevantLocale());
+
+			if (transformerFunction != null) {
+				infoFieldValueValue = transformerFunction.apply(
+					infoFieldValueValue);
+			}
+
+			String valueString = GetterUtil.getString(infoFieldValueValue);
 
 			if (Validator.isNull(valueString)) {
 				return null;
@@ -594,7 +603,7 @@ public class ContainerLayoutStructureItemExporter
 		ContainerLayoutStructureItemExporter.class);
 
 	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private Portal _portal;

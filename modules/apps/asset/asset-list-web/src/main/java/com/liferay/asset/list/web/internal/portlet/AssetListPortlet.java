@@ -30,7 +30,6 @@ import com.liferay.asset.list.web.internal.servlet.taglib.util.ListItemsActionDr
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.InfoListProviderTracker;
@@ -171,9 +170,6 @@ public class AssetListPortlet extends MVCPortlet {
 
 	@Reference
 	private DLAppService _dlAppService;
-
-	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
 	private InfoEditURLProviderTracker _infoEditURLProviderTracker;

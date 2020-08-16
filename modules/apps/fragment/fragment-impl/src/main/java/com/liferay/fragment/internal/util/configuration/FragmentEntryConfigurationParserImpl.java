@@ -16,9 +16,9 @@ package com.liferay.fragment.internal.util.configuration;
 
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
 import com.liferay.layout.list.retriever.LayoutListRetriever;
 import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
@@ -507,22 +507,18 @@ public class FragmentEntryConfigurationParserImpl
 			String className = GetterUtil.getString(
 				jsonObject.getString("className"));
 
-			InfoDisplayContributor<?> infoDisplayContributor =
-				_infoDisplayContributorTracker.getInfoDisplayContributor(
-					className);
+			InfoItemObjectProvider<?> infoItemObjectProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemObjectProvider.class, className);
 
-			if (infoDisplayContributor == null) {
+			if (infoItemObjectProvider == null) {
 				return null;
 			}
 
 			long classPK = GetterUtil.getLong(jsonObject.getString("classPK"));
 
-			InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-				infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
-
-			if (infoDisplayObjectProvider != null) {
-				return infoDisplayObjectProvider.getDisplayObject();
-			}
+			return infoItemObjectProvider.getInfoItem(
+				new ClassPKInfoItemIdentifier(classPK));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -654,7 +650,7 @@ public class FragmentEntryConfigurationParserImpl
 		FragmentEntryConfigurationParserImpl.class);
 
 	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private LayoutListRetrieverTracker _layoutListRetrieverTracker;

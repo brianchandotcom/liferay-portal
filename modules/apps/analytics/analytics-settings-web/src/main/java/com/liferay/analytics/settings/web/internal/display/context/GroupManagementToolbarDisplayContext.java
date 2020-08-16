@@ -40,10 +40,10 @@ public class GroupManagementToolbarDisplayContext
 	extends SearchContainerManagementToolbarDisplayContext {
 
 	public GroupManagementToolbarDisplayContext(
+		GroupDisplayContext groupDisplayContext,
 		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		GroupDisplayContext groupDisplayContext) {
+		LiferayPortletResponse liferayPortletResponse) {
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,

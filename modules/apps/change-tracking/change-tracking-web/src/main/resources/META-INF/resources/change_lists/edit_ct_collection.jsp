@@ -92,7 +92,7 @@ portletDisplay.setShowBackIcon(true);
 							<div class="col-5">
 								<div class="autofit-row">
 									<div class="autofit-col">
-										<input checked="<%= true %>" class="field" id="<portlet:namespace/>publishTimeNow" name="<portlet:namespace/>publishTime" type="radio" value="now" />
+										<input class="field" id="<portlet:namespace/>publishTimeNow" name="<portlet:namespace/>publishTime" onchange="<portlet:namespace/>onPublishTimeChange(event)" type="radio" value="now" />
 									</div>
 
 									<div class="autofit-col autofit-col-expand">
@@ -112,7 +112,7 @@ portletDisplay.setShowBackIcon(true);
 							<div class="col-6">
 								<div class="autofit-row">
 									<div class="autofit-col">
-										<input class="field" id="<portlet:namespace/>publishTimeLater" name="<portlet:namespace/>publishTime" type="radio" value="later" />
+										<input class="field" id="<portlet:namespace/>publishTimeLater" name="<portlet:namespace/>publishTime" onchange="<portlet:namespace/>onPublishTimeChange(event)" type="radio" value="later" />
 									</div>
 
 									<div class="autofit-col autofit-col-expand">
@@ -131,10 +131,23 @@ portletDisplay.setShowBackIcon(true);
 						</div>
 					</aui:fieldset>
 				</div>
+
+				<aui:script>
+					function <portlet:namespace/>onPublishTimeChange(event) {
+						var form = event.currentTarget.form;
+
+						var elements = form.getElementsByTagName('button');
+
+						Liferay.Util.toggleDisabled(
+							elements['<portlet:namespace/>saveButton'],
+							false
+						);
+					}
+				</aui:script>
 			</c:if>
 
 			<aui:button-row>
-				<aui:button id="saveButton" type="submit" value="<%= LanguageUtil.get(request, saveButtonLabel) %>" />
+				<aui:button disabled="<%= true %>" id="saveButton" type="submit" value="<%= LanguageUtil.get(request, saveButtonLabel) %>" />
 
 				<aui:button href="<%= redirect %>" type="cancel" />
 			</aui:button-row>

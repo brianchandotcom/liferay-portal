@@ -43,7 +43,7 @@ const DEFAULT_LIST_STYLE = {
 	value: LIST_STYLE_GRID,
 };
 
-export const CollectionConfigurationPanel = ({item}) => {
+export const CollectionGeneralPanel = ({item}) => {
 	const collectionLayoutId = useId();
 	const collectionListItemStyleId = useId();
 	const collectionNumberOfItemsId = useId();

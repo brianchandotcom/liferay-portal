@@ -23,7 +23,7 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import {config} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import FragmentService from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/FragmentService';
 import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
-import {FragmentConfigurationPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/item-configuration-panels/FragmentConfigurationPanel';
+import {FragmentGeneralPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/item-configuration-panels/FragmentGeneralPanel';
 
 jest.mock(
 	'../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
@@ -101,7 +101,7 @@ const mockDispatch = jest.fn((a) => {
 	}
 });
 
-const renderConfigurationPanel = ({
+const renderGeneralPanel = ({
 	segmentsExperienceId,
 	fragmentEntryLink = defaultFragmentEntryLink,
 }) => {
@@ -112,12 +112,12 @@ const renderConfigurationPanel = ({
 
 	return render(
 		<StoreAPIContextProvider dispatch={mockDispatch} getState={() => state}>
-			<FragmentConfigurationPanel item={item} />
+			<FragmentGeneralPanel item={item} />
 		</StoreAPIContextProvider>
 	);
 };
 
-describe('FragmentConfigurationPanel', () => {
+describe('FragmentGeneralPanel', () => {
 	afterEach(() => {
 		cleanup();
 
@@ -128,7 +128,7 @@ describe('FragmentConfigurationPanel', () => {
 	it('does not prefix values with segments if we do not have experiences', async () => {
 		config.defaultSegmentsExperienceId = null;
 
-		const {getByLabelText} = renderConfigurationPanel({
+		const {getByLabelText} = renderGeneralPanel({
 			segmentsExperienceId: null,
 		});
 
@@ -153,7 +153,7 @@ describe('FragmentConfigurationPanel', () => {
 	it('prefix values with segments when we have experiences', async () => {
 		config.defaultSegmentsExperienceId = '2';
 
-		const {getByLabelText} = renderConfigurationPanel({
+		const {getByLabelText} = renderGeneralPanel({
 			segmentsExperienceId: '1',
 		});
 
@@ -178,7 +178,7 @@ describe('FragmentConfigurationPanel', () => {
 	it('prefix values with default experience when segmentsExperience is null', async () => {
 		config.defaultSegmentsExperienceId = '2';
 
-		const {getByLabelText} = renderConfigurationPanel({
+		const {getByLabelText} = renderGeneralPanel({
 			segmentsExperienceId: null,
 		});
 
@@ -251,7 +251,7 @@ describe('FragmentConfigurationPanel', () => {
 			name: 'Heading',
 		};
 
-		const {getByLabelText} = renderConfigurationPanel({
+		const {getByLabelText} = renderGeneralPanel({
 			fragmentEntryLink,
 			segmentsExperienceId: '0',
 		});

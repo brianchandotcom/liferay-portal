@@ -20,7 +20,7 @@ import {ResizeContextProvider} from '../../../../../../../src/main/resources/MET
 import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import updateItemConfig from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
 import updateRowColumns from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateRowColumns';
-import {RowConfigurationPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/item-configuration-panels/RowConfigurationPanel';
+import {RowGeneralPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/item-configuration-panels/RowGeneralPanel';
 
 const ITEM_CONFIG = {
 	gutters: true,
@@ -57,7 +57,7 @@ const renderComponent = ({
 			<ResizeContextProvider
 				value={{...RESIZE_CONTEXT_STATE, ...contextState}}
 			>
-				<RowConfigurationPanel
+				<RowGeneralPanel
 					item={{
 						children: [],
 						config: {...ITEM_CONFIG, ...config},
@@ -92,7 +92,7 @@ jest.mock(
 	() => jest.fn()
 );
 
-describe('RowConfigurationPanel', () => {
+describe('RowGeneralPanel', () => {
 	afterEach(() => {
 		cleanup();
 		updateItemConfig.mockClear();

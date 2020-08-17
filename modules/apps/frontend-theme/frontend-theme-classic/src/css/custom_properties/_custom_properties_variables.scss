@@ -23,16 +23,16 @@ $spacers-cp: map-deep-merge(
 $theme-colors-cp: ();
 $theme-colors-cp: map-deep-merge(
 	(
+		danger: var(--danger),
+		dark: var(--dark),
+		gray-dark: var(--gray-800),
+		info: var(--info),
+		light: var(--light),
+		lighter: var(--gray-100),
 		primary: var(--primary),
 		secondary: var(--secondary),
 		success: var(--success),
-		info: var(--info),
 		warning: var(--warning),
-		danger: var(--danger),
-		light: var(--light),
-		lighter: var(--gray-100),
-		gray-dark: var(--gray-800),
-		dark: var(--dark),
 	),
 	$theme-colors-cp
 );
@@ -40,7 +40,7 @@ $theme-colors-cp: map-deep-merge(
 :root {
 	// Colors
 
-	--white: #{$white};
+	--black: #{$black};
 	--gray-100: #{$gray-100};
 	--gray-200: #{$gray-200};
 	--gray-300: #{$gray-300};
@@ -50,13 +50,17 @@ $theme-colors-cp: map-deep-merge(
 	--gray-700: #{$gray-700};
 	--gray-800: #{$gray-800};
 	--gray-900: #{$gray-900};
-	--black: #{$black};
 	--transparent: transparent;
+	--white: #{$white};
 
 	@each $key, $value in $theme-colors {
 		--#{$key}: #{$value};
 	}
 
+	--danger-l1: #{$danger-l1};
+	--danger-l2: #{$danger-l2};
+	--info-l1: #{$info-l1};
+	--info-l2: #{$info-l2};
 	--primary-d1: #{$primary-d1};
 	--primary-l1: #{$primary-l1};
 	--primary-l3: #{$primary-l3};
@@ -64,12 +68,8 @@ $theme-colors-cp: map-deep-merge(
 	--success-d1: #{$success-d1};
 	--success-l1: #{$success-l1};
 	--success-l2: #{$success-l2};
-	--info-l1: #{$info-l1};
-	--info-l2: #{$info-l2};
 	--warning-l1: #{$warning-l1};
 	--warning-l2: #{$warning-l2};
-	--danger-l1: #{$danger-l1};
-	--danger-l2: #{$danger-l2};
 
 	// Spacers
 
@@ -98,34 +98,34 @@ $theme-colors-cp: map-deep-merge(
 
 	// Border radius
 
+	--border-radius: #{$border-radius};
 	--border-radius-circle: 50%;
 	--border-radius-lg: #{$border-radius-lg};
 	--border-radius-sm: #{$border-radius-sm};
-	--border-radius: #{$border-radius};
 	--rounded-pill: #{$rounded-pill};
 
 	// Shadows
 
-	--box-shadow-sm: #{$box-shadow-sm};
 	--box-shadow: #{$box-shadow};
 	--box-shadow-lg: #{$box-shadow-lg};
+	--box-shadow-sm: #{$box-shadow-sm};
 
 	// Fonts
 
-	--font-family-sans-serif: #{$font-family-sans-serif};
-	--font-family-monospace: #{$font-family-monospace};
 	--font-family-base: #{$font-family-base};
+	--font-family-monospace: #{$font-family-monospace};
+	--font-family-sans-serif: #{$font-family-sans-serif};
 
-	--font-size-sm: #{$font-size-sm};
 	--font-size-base: #{$font-size-base};
 	--font-size-lg: #{$font-size-lg};
+	--font-size-sm: #{$font-size-sm};
 
+	--font-weight-bold: #{$font-weight-bold};
+	--font-weight-bolder: #{$font-weight-bolder};
 	--font-weight-light: #{$font-weight-light};
 	--font-weight-lighter: #{$font-weight-lighter};
 	--font-weight-normal: #{$font-weight-normal};
 	--font-weight-semi-bold: #{$font-weight-semi-bold};
-	--font-weight-bold: #{$font-weight-bold};
-	--font-weight-bolder: #{$font-weight-bolder};
 
 	--line-height-base: #{$line-height-base};
 	--line-height-sm: 1.15;
@@ -176,21 +176,21 @@ $theme-colors-cp: map-deep-merge(
 
 	// Body
 
-	--body-color: $body-color;
 	--body-bg: $body-bg;
+	--body-color: $body-color;
 
 	// Portlet vars
 
 	--portlet-bg: transparent;
+	--portlet-content-border-radius: 0;
 	--portlet-header-margin-bottom: calc(
 		var(--spacer) * #{$portlet-header-margin-bottom}
 	);
-	--portlet-content-border-radius: 0;
 
-	--portlet-topper-border-radius: var(--border-radius-sm)
-		var(--border-radius-sm) 0 0;
 	--portlet-topper-bg: var(--primary);
 	--portlet-topper-border: var(--portlet-topper-bg);
+	--portlet-topper-border-radius: var(--border-radius-sm)
+		var(--border-radius-sm) 0 0;
 	--portlet-topper-color: var(--white);
 	--portlet-topper-link-color: var(--portlet-topper-color);
 	--portlet-topper-link-hover-color: var(--portlet-topper-link-color);

@@ -1548,23 +1548,23 @@ definition {
 			key_nodeName = "${fragmentName}",
 			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE");
 
-		var style1 = selenium.getElementHeight("PageEditor#CONFIGURATION_PANEL_CONFIGURATION");
+		var defaultHeight = selenium.getElementHeight("PageEditor#CONFIGURATION_PANEL_CONFIGURATION");
 
-		echo("${style1}");
+		echo("### The default height of item configuration panel is ${defaultHeight}");
 
-		DragAndDrop.DragAndDropObject(
+		DragAndDrop.dragAndDrop(
 			locator1 = "PageEditor#CONFIGURATION_PANEL_HANDLE",
-			position = "${position}");
+			value1 = "${position}");
 
-		var style2 = selenium.getElementHeight("PageEditor#CONFIGURATION_PANEL_CONFIGURATION");
+		Pause(locator1 = "3000");
 
-		echo("${style2}");
+		var updatedHeight = selenium.getElementHeight("PageEditor#CONFIGURATION_PANEL_CONFIGURATION");
 
-		var style = MathUtil.difference("${style2}","${style1}");
+		echo("### The updated height of item configuration panel is ${updatedHeight}");
 
-		TestUtils.assertEquals(
-			actual = "${style}",
-			expected = "${value}");
+		TestUtils.assertNotEquals(
+			actual = "${updatedHeight}",
+			expected = "${defaultHeight}");
 	}
 
 	macro resolveComment {

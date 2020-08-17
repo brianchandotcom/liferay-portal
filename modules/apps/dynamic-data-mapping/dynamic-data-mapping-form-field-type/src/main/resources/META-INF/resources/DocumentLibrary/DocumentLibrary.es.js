@@ -176,6 +176,9 @@ const DocumentLibrary = ({
 					{transformedFileEntryTitle && (
 						<ClayInput.GroupItem append shrink>
 							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get(
+									'unselect-file'
+								)}
 								className="clear-button"
 								displayType="secondary"
 								onClick={onClearButtonClicked}

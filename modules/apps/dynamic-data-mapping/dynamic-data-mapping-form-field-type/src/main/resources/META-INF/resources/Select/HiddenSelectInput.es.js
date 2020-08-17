@@ -19,7 +19,7 @@ const noop = () => {};
 
 const HiddenSelectInput = ({multiple, name, options, value}) => (
 	<ClaySelect
-		aria-label="select"
+		aria-hidden="true"
 		className="form-control"
 		hidden
 		id={name}

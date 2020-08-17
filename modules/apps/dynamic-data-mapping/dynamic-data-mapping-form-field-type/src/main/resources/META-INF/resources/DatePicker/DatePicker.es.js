@@ -166,7 +166,7 @@ const DatePicker = ({
 	return (
 		<>
 			<input
-				aria-label="date_picker_hidden"
+				aria-hidden="true"
 				name={name}
 				type="hidden"
 				value={getValueForHidden(value)}

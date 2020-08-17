@@ -43,14 +43,16 @@ const TableBodyColumns = ({
 	onChange,
 	onFocus,
 	row,
-	rowIndex,
 	value,
-}) =>
-	columns.map((column, colIndex) => {
+}) => {
+	const columnLabel = Liferay.Language.get('column');
+	const rowLabel = Liferay.Language.get('row');
+
+	return columns.map((column, colIndex) => {
 		return (
 			<ClayTable.Cell key={`cell-${column.value}-${colIndex}`}>
 				<ClayRadio
-					aria-label={`grid_${rowIndex}_${colIndex}`}
+					aria-label={`${rowLabel}: ${row.label}, ${columnLabel}: ${column.label}`}
 					checked={column.value === value[row.value]}
 					className="form-builder-grid-field"
 					disabled={disabled}
@@ -63,6 +65,7 @@ const TableBodyColumns = ({
 			</ClayTable.Cell>
 		);
 	});
+};
 
 const Grid = ({
 	columns = [{label: 'col1', value: 'fieldId'}],
@@ -84,7 +87,7 @@ const Grid = ({
 
 				return (
 					<ClayInput
-						aria-label="grid_hidden"
+						aria-hidden="true"
 						key={`row-${row.value}-${rowIndex}`}
 						name={name}
 						type="hidden"
@@ -112,7 +115,6 @@ const Grid = ({
 								onChange={onChange}
 								onFocus={onFocus}
 								row={row}
-								rowIndex={rowIndex}
 								value={value}
 							/>
 						</ClayTable.Row>

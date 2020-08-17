@@ -89,7 +89,6 @@ const Numeric = ({
 	return (
 		<ClayInput
 			{...otherProps}
-			aria-label="numeric"
 			disabled={disabled}
 			onChange={(event) => {
 				const {value: newValue} = event.target;

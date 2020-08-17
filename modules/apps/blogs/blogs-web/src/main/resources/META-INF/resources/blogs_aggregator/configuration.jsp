@@ -203,6 +203,7 @@ if (organizationId > 0) {
 					<div class="sheet-subtitle">
 						<liferay-ui:message key="rss-settings" />
 					</div>
+
 					<liferay-rss:rss-settings
 						delta="<%= rssDelta %>"
 						displayStyle="<%= rssDisplayStyle %>"

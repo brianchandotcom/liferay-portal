@@ -149,7 +149,7 @@ portletURL.setParameter("keywords", keywords);
 				commentRelatedSearchResults="<%= searchResult.getCommentRelatedSearchResults() %>"
 				containerName="<%= curNode.getName() %>"
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
-				description="<%= HtmlUtil.stripHtml(formattedContent) %>"
+				description="<%= StringUtil.shorten(HtmlUtil.stripHtml(formattedContent), 200) %>"
 				fileEntryRelatedSearchResults="<%= searchResult.getFileEntryRelatedSearchResults() %>"
 				highlightEnabled="<%= queryConfig.isHighlightEnabled() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"

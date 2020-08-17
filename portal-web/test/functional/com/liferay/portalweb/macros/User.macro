@@ -1379,7 +1379,9 @@ definition {
 			locator1 = "TextInput#EMAIL_ADDRESS",
 			value1 = "${userEmailAddress}");
 
-		PortletEntry.save();
+		Button.clickSave();
+
+		User.confirmPassword(password = "${password}");
 	}
 
 	macro editPasswordCP {

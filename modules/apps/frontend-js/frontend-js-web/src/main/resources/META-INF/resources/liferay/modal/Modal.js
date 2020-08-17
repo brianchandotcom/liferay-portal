@@ -430,22 +430,7 @@ class Iframe extends React.Component {
 
 		iframeURL.searchParams.set(`_${namespace}_bodyCssClass`, bodyCssClass);
 
-		this.state = {loading: true, src: iframeURL.toString()};
-	}
-
-	componentDidUpdate(prevProps, prevState) {
-		if (!this.state.loading && prevState.loading) {
-			Liferay.fire('modalIframeLoaded', {src: this.state.src});
-
-			if (this.props.onOpen) {
-				const iframeWindow = this.iframeRef.current.contentWindow;
-
-				this.props.onOpen({
-					container: iframeWindow.document.body,
-					processClose: this.props.processClose,
-				});
-			}
-		}
+		this.state = {src: iframeURL.toString()};
 	}
 
 	componentWillUnmount() {
@@ -483,22 +468,24 @@ class Iframe extends React.Component {
 
 		this.props.updateLoading(false);
 
-		this.setState({loading: false});
-
 		iframeWindow.onunload = () => {
 			this.props.updateLoading(true);
-
-			this.setState({loading: true});
 		};
+
+		Liferay.fire('modalIframeLoaded', {src: this.state.src});
+
+		if (this.props.onOpen) {
+			this.props.onOpen({
+				container: iframeWindow.document.body,
+				processClose: this.props.processClose,
+			});
+		}
 	};
 
 	render() {
 		return (
 			<iframe
 				{...this.props.iframeProps}
-				className={classNames({
-					hide: this.state.loading,
-				})}
 				onLoad={this.onLoadHandler}
 				ref={this.iframeRef}
 				src={this.state.src}

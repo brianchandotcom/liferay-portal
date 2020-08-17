@@ -21,9 +21,8 @@ import com.liferay.remote.app.admin.web.internal.portlet.RemoteAppPortlet;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -67,16 +66,8 @@ public class RemoteAppPortletRegistrar {
 			_log.info("Stopping remote apps");
 		}
 
-		Collection<RemoteAppPortlet> remoteAppPortlets = null;
-
-		synchronized (_remoteAppPortlets) {
-			remoteAppPortlets = _remoteAppPortlets.values();
-
-			_remoteAppPortlets.clear();
-		}
-
-		for (RemoteAppPortlet remoteAppPortlet : remoteAppPortlets) {
-			remoteAppPortlet.unregister();
+		for (long id : _remoteAppPortlets.keySet()) {
+			_unregisterPortlet(id);
 		}
 	}
 
@@ -89,17 +80,15 @@ public class RemoteAppPortletRegistrar {
 
 		long remoteAppEntryId = remoteAppEntry.getEntryId();
 
-		synchronized (_remoteAppPortlets) {
-			if (_remoteAppPortlets.containsKey(remoteAppEntryId)) {
-				throw new IllegalStateException(
-					"Remote app " + remoteAppEntryId +
-						" is already registered");
-			}
+		RemoteAppPortlet existingRemoteAppPortlet =
+			_remoteAppPortlets.putIfAbsent(remoteAppEntryId, remoteAppPortlet);
 
-			_remoteAppPortlets.put(remoteAppEntryId, remoteAppPortlet);
-
-			remoteAppPortlet.register(_bundleContext);
+		if (existingRemoteAppPortlet != null) {
+			throw new IllegalStateException(
+				"Remote app " + remoteAppEntryId + " is already registered");
 		}
+
+		remoteAppPortlet.register(_bundleContext);
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Started remote app " + remoteAppPortlet.getName());
@@ -107,11 +96,7 @@ public class RemoteAppPortletRegistrar {
 	}
 
 	private void _unregisterPortlet(long id) {
-		RemoteAppPortlet remoteAppPortlet;
-
-		synchronized (_remoteAppPortlets) {
-			remoteAppPortlet = _remoteAppPortlets.remove(id);
-		}
+		RemoteAppPortlet remoteAppPortlet = _remoteAppPortlets.remove(id);
 
 		if (remoteAppPortlet != null) {
 			remoteAppPortlet.unregister();
@@ -126,7 +111,7 @@ public class RemoteAppPortletRegistrar {
 		RemoteAppPortletRegistrar.class);
 
 	private BundleContext _bundleContext;
-	private final Map<Long, RemoteAppPortlet> _remoteAppPortlets =
-		new HashMap<>();
+	private final ConcurrentMap<Long, RemoteAppPortlet> _remoteAppPortlets =
+		new ConcurrentHashMap<>();
 
 }

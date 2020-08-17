@@ -37,8 +37,9 @@ public class RemoteAppEntryTable extends BaseTable<RemoteAppEntryTable> {
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<RemoteAppEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<RemoteAppEntryTable, Long> entryId = createColumn(
-		"entryId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<RemoteAppEntryTable, Long> remoteAppEntryId =
+		createColumn(
+			"remoteAppEntryId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<RemoteAppEntryTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<RemoteAppEntryTable, Long> userId = createColumn(

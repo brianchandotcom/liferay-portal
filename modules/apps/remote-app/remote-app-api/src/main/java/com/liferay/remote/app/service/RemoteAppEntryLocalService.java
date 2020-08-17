@@ -94,11 +94,11 @@ public interface RemoteAppEntryLocalService
 	/**
 	 * Creates a new remote app entry with the primary key. Does not add the remote app entry to the database.
 	 *
-	 * @param entryId the primary key for the new remote app entry
+	 * @param remoteAppEntryId the primary key for the new remote app entry
 	 * @return the new remote app entry
 	 */
 	@Transactional(enabled = false)
-	public RemoteAppEntry createRemoteAppEntry(long entryId);
+	public RemoteAppEntry createRemoteAppEntry(long remoteAppEntryId);
 
 	/**
 	 * @throws PortalException
@@ -114,12 +114,12 @@ public interface RemoteAppEntryLocalService
 	 * <strong>Important:</strong> Inspect RemoteAppEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param entryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry that was removed
 	 * @throws PortalException if a remote app entry with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public RemoteAppEntry deleteRemoteAppEntry(long entryId)
+	public RemoteAppEntry deleteRemoteAppEntry(long remoteAppEntryId)
 		throws PortalException;
 
 	/**
@@ -205,7 +205,7 @@ public interface RemoteAppEntryLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public RemoteAppEntry fetchRemoteAppEntry(long entryId);
+	public RemoteAppEntry fetchRemoteAppEntry(long remoteAppEntryId);
 
 	/**
 	 * Returns the remote app entry with the matching UUID and company.
@@ -268,12 +268,12 @@ public interface RemoteAppEntryLocalService
 	/**
 	 * Returns the remote app entry with the primary key.
 	 *
-	 * @param entryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry
 	 * @throws PortalException if a remote app entry with the primary key could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public RemoteAppEntry getRemoteAppEntry(long entryId)
+	public RemoteAppEntry getRemoteAppEntry(long remoteAppEntryId)
 		throws PortalException;
 
 	/**

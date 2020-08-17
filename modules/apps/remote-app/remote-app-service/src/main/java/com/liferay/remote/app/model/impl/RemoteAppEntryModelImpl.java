@@ -78,7 +78,7 @@ public class RemoteAppEntryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"entryId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"remoteAppEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"name", Types.VARCHAR}, {"url", Types.VARCHAR}
@@ -90,7 +90,7 @@ public class RemoteAppEntryModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("remoteAppEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
@@ -101,7 +101,7 @@ public class RemoteAppEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RemoteAppEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,entryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,url VARCHAR(75) null)";
+		"create table RemoteAppEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,remoteAppEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,url VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table RemoteAppEntry";
 
@@ -144,17 +144,17 @@ public class RemoteAppEntryModelImpl
 
 	@Override
 	public long getPrimaryKey() {
-		return _entryId;
+		return _remoteAppEntryId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setEntryId(primaryKey);
+		setRemoteAppEntryId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _entryId;
+		return _remoteAppEntryId;
 	}
 
 	@Override
@@ -272,10 +272,12 @@ public class RemoteAppEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"uuid",
 			(BiConsumer<RemoteAppEntry, String>)RemoteAppEntry::setUuid);
-		attributeGetterFunctions.put("entryId", RemoteAppEntry::getEntryId);
+		attributeGetterFunctions.put(
+			"remoteAppEntryId", RemoteAppEntry::getRemoteAppEntryId);
 		attributeSetterBiConsumers.put(
-			"entryId",
-			(BiConsumer<RemoteAppEntry, Long>)RemoteAppEntry::setEntryId);
+			"remoteAppEntryId",
+			(BiConsumer<RemoteAppEntry, Long>)
+				RemoteAppEntry::setRemoteAppEntryId);
 		attributeGetterFunctions.put("companyId", RemoteAppEntry::getCompanyId);
 		attributeSetterBiConsumers.put(
 			"companyId",
@@ -348,13 +350,13 @@ public class RemoteAppEntryModelImpl
 	}
 
 	@Override
-	public long getEntryId() {
-		return _entryId;
+	public long getRemoteAppEntryId() {
+		return _remoteAppEntryId;
 	}
 
 	@Override
-	public void setEntryId(long entryId) {
-		_entryId = entryId;
+	public void setRemoteAppEntryId(long remoteAppEntryId) {
+		_remoteAppEntryId = remoteAppEntryId;
 	}
 
 	@Override
@@ -577,12 +579,12 @@ public class RemoteAppEntryModelImpl
 
 	@Override
 	public long getContainerModelId() {
-		return getEntryId();
+		return getRemoteAppEntryId();
 	}
 
 	@Override
 	public void setContainerModelId(long containerModelId) {
-		_entryId = containerModelId;
+		_remoteAppEntryId = containerModelId;
 	}
 
 	@Override
@@ -709,7 +711,7 @@ public class RemoteAppEntryModelImpl
 
 		remoteAppEntryImpl.setMvccVersion(getMvccVersion());
 		remoteAppEntryImpl.setUuid(getUuid());
-		remoteAppEntryImpl.setEntryId(getEntryId());
+		remoteAppEntryImpl.setRemoteAppEntryId(getRemoteAppEntryId());
 		remoteAppEntryImpl.setCompanyId(getCompanyId());
 		remoteAppEntryImpl.setUserId(getUserId());
 		remoteAppEntryImpl.setUserName(getUserName());
@@ -814,7 +816,7 @@ public class RemoteAppEntryModelImpl
 			remoteAppEntryCacheModel.uuid = null;
 		}
 
-		remoteAppEntryCacheModel.entryId = getEntryId();
+		remoteAppEntryCacheModel.remoteAppEntryId = getRemoteAppEntryId();
 
 		remoteAppEntryCacheModel.companyId = getCompanyId();
 
@@ -938,7 +940,7 @@ public class RemoteAppEntryModelImpl
 	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
-	private long _entryId;
+	private long _remoteAppEntryId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;

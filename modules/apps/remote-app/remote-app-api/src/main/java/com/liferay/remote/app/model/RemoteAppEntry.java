@@ -36,12 +36,12 @@ public interface RemoteAppEntry extends PersistedModel, RemoteAppEntryModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>com.liferay.remote.app.model.impl.RemoteAppEntryImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<RemoteAppEntry, Long> ENTRY_ID_ACCESSOR =
-		new Accessor<RemoteAppEntry, Long>() {
+	public static final Accessor<RemoteAppEntry, Long>
+		REMOTE_APP_ENTRY_ID_ACCESSOR = new Accessor<RemoteAppEntry, Long>() {
 
 			@Override
 			public Long get(RemoteAppEntry remoteAppEntry) {
-				return remoteAppEntry.getEntryId();
+				return remoteAppEntry.getRemoteAppEntryId();
 			}
 
 			@Override

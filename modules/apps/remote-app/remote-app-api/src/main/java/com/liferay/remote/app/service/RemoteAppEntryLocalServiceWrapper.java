@@ -75,14 +75,15 @@ public class RemoteAppEntryLocalServiceWrapper
 	/**
 	 * Creates a new remote app entry with the primary key. Does not add the remote app entry to the database.
 	 *
-	 * @param entryId the primary key for the new remote app entry
+	 * @param remoteAppEntryId the primary key for the new remote app entry
 	 * @return the new remote app entry
 	 */
 	@Override
 	public com.liferay.remote.app.model.RemoteAppEntry createRemoteAppEntry(
-		long entryId) {
+		long remoteAppEntryId) {
 
-		return _remoteAppEntryLocalService.createRemoteAppEntry(entryId);
+		return _remoteAppEntryLocalService.createRemoteAppEntry(
+			remoteAppEntryId);
 	}
 
 	/**
@@ -103,16 +104,17 @@ public class RemoteAppEntryLocalServiceWrapper
 	 * <strong>Important:</strong> Inspect RemoteAppEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param entryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry that was removed
 	 * @throws PortalException if a remote app entry with the primary key could not be found
 	 */
 	@Override
 	public com.liferay.remote.app.model.RemoteAppEntry deleteRemoteAppEntry(
-			long entryId)
+			long remoteAppEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _remoteAppEntryLocalService.deleteRemoteAppEntry(entryId);
+		return _remoteAppEntryLocalService.deleteRemoteAppEntry(
+			remoteAppEntryId);
 	}
 
 	/**
@@ -230,9 +232,10 @@ public class RemoteAppEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.remote.app.model.RemoteAppEntry fetchRemoteAppEntry(
-		long entryId) {
+		long remoteAppEntryId) {
 
-		return _remoteAppEntryLocalService.fetchRemoteAppEntry(entryId);
+		return _remoteAppEntryLocalService.fetchRemoteAppEntry(
+			remoteAppEntryId);
 	}
 
 	/**
@@ -326,16 +329,16 @@ public class RemoteAppEntryLocalServiceWrapper
 	/**
 	 * Returns the remote app entry with the primary key.
 	 *
-	 * @param entryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry
 	 * @throws PortalException if a remote app entry with the primary key could not be found
 	 */
 	@Override
 	public com.liferay.remote.app.model.RemoteAppEntry getRemoteAppEntry(
-			long entryId)
+			long remoteAppEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _remoteAppEntryLocalService.getRemoteAppEntry(entryId);
+		return _remoteAppEntryLocalService.getRemoteAppEntry(remoteAppEntryId);
 	}
 
 	/**

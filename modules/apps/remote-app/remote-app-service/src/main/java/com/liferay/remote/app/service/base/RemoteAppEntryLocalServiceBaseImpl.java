@@ -98,13 +98,13 @@ public abstract class RemoteAppEntryLocalServiceBaseImpl
 	/**
 	 * Creates a new remote app entry with the primary key. Does not add the remote app entry to the database.
 	 *
-	 * @param entryId the primary key for the new remote app entry
+	 * @param remoteAppEntryId the primary key for the new remote app entry
 	 * @return the new remote app entry
 	 */
 	@Override
 	@Transactional(enabled = false)
-	public RemoteAppEntry createRemoteAppEntry(long entryId) {
-		return remoteAppEntryPersistence.create(entryId);
+	public RemoteAppEntry createRemoteAppEntry(long remoteAppEntryId) {
+		return remoteAppEntryPersistence.create(remoteAppEntryId);
 	}
 
 	/**
@@ -114,16 +114,16 @@ public abstract class RemoteAppEntryLocalServiceBaseImpl
 	 * <strong>Important:</strong> Inspect RemoteAppEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param entryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry that was removed
 	 * @throws PortalException if a remote app entry with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public RemoteAppEntry deleteRemoteAppEntry(long entryId)
+	public RemoteAppEntry deleteRemoteAppEntry(long remoteAppEntryId)
 		throws PortalException {
 
-		return remoteAppEntryPersistence.remove(entryId);
+		return remoteAppEntryPersistence.remove(remoteAppEntryId);
 	}
 
 	/**
@@ -235,8 +235,8 @@ public abstract class RemoteAppEntryLocalServiceBaseImpl
 	}
 
 	@Override
-	public RemoteAppEntry fetchRemoteAppEntry(long entryId) {
-		return remoteAppEntryPersistence.fetchByPrimaryKey(entryId);
+	public RemoteAppEntry fetchRemoteAppEntry(long remoteAppEntryId) {
+		return remoteAppEntryPersistence.fetchByPrimaryKey(remoteAppEntryId);
 	}
 
 	/**
@@ -257,15 +257,15 @@ public abstract class RemoteAppEntryLocalServiceBaseImpl
 	/**
 	 * Returns the remote app entry with the primary key.
 	 *
-	 * @param entryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry
 	 * @throws PortalException if a remote app entry with the primary key could not be found
 	 */
 	@Override
-	public RemoteAppEntry getRemoteAppEntry(long entryId)
+	public RemoteAppEntry getRemoteAppEntry(long remoteAppEntryId)
 		throws PortalException {
 
-		return remoteAppEntryPersistence.findByPrimaryKey(entryId);
+		return remoteAppEntryPersistence.findByPrimaryKey(remoteAppEntryId);
 	}
 
 	@Override
@@ -277,7 +277,7 @@ public abstract class RemoteAppEntryLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(RemoteAppEntry.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("entryId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("remoteAppEntryId");
 
 		return actionableDynamicQuery;
 	}
@@ -294,7 +294,8 @@ public abstract class RemoteAppEntryLocalServiceBaseImpl
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(RemoteAppEntry.class);
 
-		indexableActionableDynamicQuery.setPrimaryKeyPropertyName("entryId");
+		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
+			"remoteAppEntryId");
 
 		return indexableActionableDynamicQuery;
 	}
@@ -306,7 +307,7 @@ public abstract class RemoteAppEntryLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(RemoteAppEntry.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("entryId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("remoteAppEntryId");
 	}
 
 	@Override

@@ -99,18 +99,18 @@ public interface RemoteAppEntryModel
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the entry ID of this remote app entry.
+	 * Returns the remote app entry ID of this remote app entry.
 	 *
-	 * @return the entry ID of this remote app entry
+	 * @return the remote app entry ID of this remote app entry
 	 */
-	public long getEntryId();
+	public long getRemoteAppEntryId();
 
 	/**
-	 * Sets the entry ID of this remote app entry.
+	 * Sets the remote app entry ID of this remote app entry.
 	 *
-	 * @param entryId the entry ID of this remote app entry
+	 * @param remoteAppEntryId the remote app entry ID of this remote app entry
 	 */
-	public void setEntryId(long entryId);
+	public void setRemoteAppEntryId(long remoteAppEntryId);
 
 	/**
 	 * Returns the company ID of this remote app entry.

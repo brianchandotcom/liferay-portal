@@ -35,7 +35,7 @@ public class RemoteAppEntrySoap implements Serializable {
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
-		soapModel.setEntryId(model.getEntryId());
+		soapModel.setRemoteAppEntryId(model.getRemoteAppEntryId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
@@ -94,11 +94,11 @@ public class RemoteAppEntrySoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _entryId;
+		return _remoteAppEntryId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setEntryId(pk);
+		setRemoteAppEntryId(pk);
 	}
 
 	public long getMvccVersion() {
@@ -117,12 +117,12 @@ public class RemoteAppEntrySoap implements Serializable {
 		_uuid = uuid;
 	}
 
-	public long getEntryId() {
-		return _entryId;
+	public long getRemoteAppEntryId() {
+		return _remoteAppEntryId;
 	}
 
-	public void setEntryId(long entryId) {
-		_entryId = entryId;
+	public void setRemoteAppEntryId(long remoteAppEntryId) {
+		_remoteAppEntryId = remoteAppEntryId;
 	}
 
 	public long getCompanyId() {
@@ -183,7 +183,7 @@ public class RemoteAppEntrySoap implements Serializable {
 
 	private long _mvccVersion;
 	private String _uuid;
-	private long _entryId;
+	private long _remoteAppEntryId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;

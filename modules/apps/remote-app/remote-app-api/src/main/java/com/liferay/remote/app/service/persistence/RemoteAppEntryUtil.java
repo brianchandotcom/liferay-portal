@@ -253,19 +253,19 @@ public class RemoteAppEntryUtil {
 	/**
 	 * Returns the remote app entries before and after the current remote app entry in the ordered set where uuid = &#63;.
 	 *
-	 * @param entryId the primary key of the current remote app entry
+	 * @param remoteAppEntryId the primary key of the current remote app entry
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next remote app entry
 	 * @throws NoSuchEntryException if a remote app entry with the primary key could not be found
 	 */
 	public static RemoteAppEntry[] findByUuid_PrevAndNext(
-			long entryId, String uuid,
+			long remoteAppEntryId, String uuid,
 			OrderByComparator<RemoteAppEntry> orderByComparator)
 		throws com.liferay.remote.app.exception.NoSuchEntryException {
 
 		return getPersistence().findByUuid_PrevAndNext(
-			entryId, uuid, orderByComparator);
+			remoteAppEntryId, uuid, orderByComparator);
 	}
 
 	/**
@@ -436,7 +436,7 @@ public class RemoteAppEntryUtil {
 	/**
 	 * Returns the remote app entries before and after the current remote app entry in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param entryId the primary key of the current remote app entry
+	 * @param remoteAppEntryId the primary key of the current remote app entry
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -444,12 +444,12 @@ public class RemoteAppEntryUtil {
 	 * @throws NoSuchEntryException if a remote app entry with the primary key could not be found
 	 */
 	public static RemoteAppEntry[] findByUuid_C_PrevAndNext(
-			long entryId, String uuid, long companyId,
+			long remoteAppEntryId, String uuid, long companyId,
 			OrderByComparator<RemoteAppEntry> orderByComparator)
 		throws com.liferay.remote.app.exception.NoSuchEntryException {
 
 		return getPersistence().findByUuid_C_PrevAndNext(
-			entryId, uuid, companyId, orderByComparator);
+			remoteAppEntryId, uuid, companyId, orderByComparator);
 	}
 
 	/**
@@ -557,24 +557,24 @@ public class RemoteAppEntryUtil {
 	/**
 	 * Creates a new remote app entry with the primary key. Does not add the remote app entry to the database.
 	 *
-	 * @param entryId the primary key for the new remote app entry
+	 * @param remoteAppEntryId the primary key for the new remote app entry
 	 * @return the new remote app entry
 	 */
-	public static RemoteAppEntry create(long entryId) {
-		return getPersistence().create(entryId);
+	public static RemoteAppEntry create(long remoteAppEntryId) {
+		return getPersistence().create(remoteAppEntryId);
 	}
 
 	/**
 	 * Removes the remote app entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param entryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry that was removed
 	 * @throws NoSuchEntryException if a remote app entry with the primary key could not be found
 	 */
-	public static RemoteAppEntry remove(long entryId)
+	public static RemoteAppEntry remove(long remoteAppEntryId)
 		throws com.liferay.remote.app.exception.NoSuchEntryException {
 
-		return getPersistence().remove(entryId);
+		return getPersistence().remove(remoteAppEntryId);
 	}
 
 	public static RemoteAppEntry updateImpl(RemoteAppEntry remoteAppEntry) {
@@ -584,24 +584,24 @@ public class RemoteAppEntryUtil {
 	/**
 	 * Returns the remote app entry with the primary key or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
-	 * @param entryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry
 	 * @throws NoSuchEntryException if a remote app entry with the primary key could not be found
 	 */
-	public static RemoteAppEntry findByPrimaryKey(long entryId)
+	public static RemoteAppEntry findByPrimaryKey(long remoteAppEntryId)
 		throws com.liferay.remote.app.exception.NoSuchEntryException {
 
-		return getPersistence().findByPrimaryKey(entryId);
+		return getPersistence().findByPrimaryKey(remoteAppEntryId);
 	}
 
 	/**
 	 * Returns the remote app entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param entryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry, or <code>null</code> if a remote app entry with the primary key could not be found
 	 */
-	public static RemoteAppEntry fetchByPrimaryKey(long entryId) {
-		return getPersistence().fetchByPrimaryKey(entryId);
+	public static RemoteAppEntry fetchByPrimaryKey(long remoteAppEntryId) {
+		return getPersistence().fetchByPrimaryKey(remoteAppEntryId);
 	}
 
 	/**

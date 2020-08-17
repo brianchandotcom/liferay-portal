@@ -76,13 +76,13 @@ public class RemoteAppEntryLocalServiceUtil {
 	/**
 	 * Creates a new remote app entry with the primary key. Does not add the remote app entry to the database.
 	 *
-	 * @param entryId the primary key for the new remote app entry
+	 * @param remoteAppEntryId the primary key for the new remote app entry
 	 * @return the new remote app entry
 	 */
 	public static com.liferay.remote.app.model.RemoteAppEntry
-		createRemoteAppEntry(long entryId) {
+		createRemoteAppEntry(long remoteAppEntryId) {
 
-		return getService().createRemoteAppEntry(entryId);
+		return getService().createRemoteAppEntry(remoteAppEntryId);
 	}
 
 	/**
@@ -103,15 +103,15 @@ public class RemoteAppEntryLocalServiceUtil {
 	 * <strong>Important:</strong> Inspect RemoteAppEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
 	 * </p>
 	 *
-	 * @param entryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry that was removed
 	 * @throws PortalException if a remote app entry with the primary key could not be found
 	 */
 	public static com.liferay.remote.app.model.RemoteAppEntry
-			deleteRemoteAppEntry(long entryId)
+			deleteRemoteAppEntry(long remoteAppEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().deleteRemoteAppEntry(entryId);
+		return getService().deleteRemoteAppEntry(remoteAppEntryId);
 	}
 
 	/**
@@ -223,9 +223,9 @@ public class RemoteAppEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.remote.app.model.RemoteAppEntry
-		fetchRemoteAppEntry(long entryId) {
+		fetchRemoteAppEntry(long remoteAppEntryId) {
 
-		return getService().fetchRemoteAppEntry(entryId);
+		return getService().fetchRemoteAppEntry(remoteAppEntryId);
 	}
 
 	/**
@@ -311,15 +311,15 @@ public class RemoteAppEntryLocalServiceUtil {
 	/**
 	 * Returns the remote app entry with the primary key.
 	 *
-	 * @param entryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry
 	 * @throws PortalException if a remote app entry with the primary key could not be found
 	 */
 	public static com.liferay.remote.app.model.RemoteAppEntry getRemoteAppEntry(
-			long entryId)
+			long remoteAppEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().getRemoteAppEntry(entryId);
+		return getService().getRemoteAppEntry(remoteAppEntryId);
 	}
 
 	/**

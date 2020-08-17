@@ -45,7 +45,7 @@ public class RemoteAppEntryWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
-		attributes.put("entryId", getEntryId());
+		attributes.put("remoteAppEntryId", getRemoteAppEntryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -71,10 +71,10 @@ public class RemoteAppEntryWrapper
 			setUuid(uuid);
 		}
 
-		Long entryId = (Long)attributes.get("entryId");
+		Long remoteAppEntryId = (Long)attributes.get("remoteAppEntryId");
 
-		if (entryId != null) {
-			setEntryId(entryId);
+		if (remoteAppEntryId != null) {
+			setRemoteAppEntryId(remoteAppEntryId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -168,16 +168,6 @@ public class RemoteAppEntryWrapper
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
-	}
-
-	/**
-	 * Returns the entry ID of this remote app entry.
-	 *
-	 * @return the entry ID of this remote app entry
-	 */
-	@Override
-	public long getEntryId() {
-		return model.getEntryId();
 	}
 
 	/**
@@ -297,6 +287,16 @@ public class RemoteAppEntryWrapper
 	}
 
 	/**
+	 * Returns the remote app entry ID of this remote app entry.
+	 *
+	 * @return the remote app entry ID of this remote app entry
+	 */
+	@Override
+	public long getRemoteAppEntryId() {
+		return model.getRemoteAppEntryId();
+	}
+
+	/**
 	 * Returns the url of this remote app entry.
 	 *
 	 * @return the url of this remote app entry
@@ -394,16 +394,6 @@ public class RemoteAppEntryWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
-	}
-
-	/**
-	 * Sets the entry ID of this remote app entry.
-	 *
-	 * @param entryId the entry ID of this remote app entry
-	 */
-	@Override
-	public void setEntryId(long entryId) {
-		model.setEntryId(entryId);
 	}
 
 	/**
@@ -507,6 +497,16 @@ public class RemoteAppEntryWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the remote app entry ID of this remote app entry.
+	 *
+	 * @param remoteAppEntryId the remote app entry ID of this remote app entry
+	 */
+	@Override
+	public void setRemoteAppEntryId(long remoteAppEntryId) {
+		model.setRemoteAppEntryId(remoteAppEntryId);
 	}
 
 	/**

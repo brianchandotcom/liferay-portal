@@ -120,12 +120,16 @@ file when tests fail.
 
 ### selenium.chrome.driver.executable
 
-Sets the name of the ChromeDriver executable file.
+Sets the name of the ChromeDriver executable file to be found in `selenium.executable.dir.name`.
 
 ### selenium.desired.capabilities.platform
 
 Sets the name of the platform for desired capabilities. This is only necessary
 for Internet Explorer and RemoteDriver.
+
+### selenium.edge.driver.executable
+
+Sets the name of the Edge driver executable file to be found in `selenium.executable.dir.name`. If unset, WebDriver will use the system Edge Driver binary.
 
 ### selenium.executable.dir.name
 
@@ -133,7 +137,7 @@ Sets the directory path where all Selenium executables are found.
 
 ### selenium.ie.driver.executable
 
-Sets the name of the IEDriver executable file.
+Sets the name of the IEDriver executable file to be found in `selenium.executable.dir.name`.
 
 ### selenium.remote.driver.enabled
 

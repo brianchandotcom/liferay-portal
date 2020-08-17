@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.info.item.provider;
+package com.liferay.dynamic.data.mapping.internal.info.item.provider;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.info.field.converter.DDMFormFieldInfoFieldConverter;
+import com.liferay.dynamic.data.mapping.info.item.provider.DDMFormValuesInfoFieldValuesProvider;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
@@ -60,10 +61,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Tardín
  */
 @Component(service = DDMFormValuesInfoFieldValuesProvider.class)
-public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
+public class DDMFormValuesInfoFieldValuesProviderImpl
+	implements DDMFormValuesInfoFieldValuesProvider<GroupedModel> {
 
 	public List<InfoFieldValue<InfoLocalizedValue<Object>>> getInfoFieldValues(
-		T t, DDMFormValues ddmFormValues) {
+		GroupedModel groupedModel, DDMFormValues ddmFormValues) {
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
@@ -73,7 +75,8 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 		return stream.flatMap(
 			ddmFormFieldValue -> {
 				List<InfoFieldValue<InfoLocalizedValue<Object>>>
-					infoFieldValues = _getInfoFieldValues(t, ddmFormFieldValue);
+					infoFieldValues = _getInfoFieldValues(
+						groupedModel, ddmFormFieldValue);
 
 				return infoFieldValues.stream();
 			}
@@ -83,20 +86,20 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 	}
 
 	private void _addDDMFormFieldValue(
-		T t, DDMFormFieldValue ddmFormFieldValue,
+		GroupedModel groupedModel, DDMFormFieldValue ddmFormFieldValue,
 		List<InfoFieldValue<InfoLocalizedValue<Object>>> infoFieldValues) {
 
-		_addNestedFields(t, ddmFormFieldValue, infoFieldValues);
+		_addNestedFields(groupedModel, ddmFormFieldValue, infoFieldValues);
 
 		_getInfoFieldValue(
-			t, ddmFormFieldValue
+			groupedModel, ddmFormFieldValue
 		).map(
 			infoFieldValues::add
 		);
 	}
 
 	private void _addNestedFields(
-		T t, DDMFormFieldValue ddmFormFieldValue,
+		GroupedModel groupedModel, DDMFormFieldValue ddmFormFieldValue,
 		List<InfoFieldValue<InfoLocalizedValue<Object>>> infoFieldValues) {
 
 		Map<String, List<DDMFormFieldValue>> nestedDDMFormFieldValuesMap =
@@ -109,12 +112,13 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 
 			ddmFormFieldValues.forEach(
 				nestedDDMFormFieldValue -> _addDDMFormFieldValue(
-					t, nestedDDMFormFieldValue, infoFieldValues));
+					groupedModel, nestedDDMFormFieldValue, infoFieldValues));
 		}
 	}
 
 	private Optional<InfoFieldValue<InfoLocalizedValue<Object>>>
-		_getInfoFieldValue(T t, DDMFormFieldValue ddmFormFieldValue) {
+		_getInfoFieldValue(
+			GroupedModel groupedModel, DDMFormFieldValue ddmFormFieldValue) {
 
 		Value value = ddmFormFieldValue.getValue();
 
@@ -136,19 +140,20 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 							consumer.accept(
 								locale,
 								_sanitizeDDMFormFieldValue(
-									t, ddmFormFieldValue, locale));
+									groupedModel, ddmFormFieldValue, locale));
 						}
 					}
 				).build()));
 	}
 
 	private List<InfoFieldValue<InfoLocalizedValue<Object>>>
-		_getInfoFieldValues(T t, DDMFormFieldValue ddmFormFieldValue) {
+		_getInfoFieldValues(
+			GroupedModel groupedModel, DDMFormFieldValue ddmFormFieldValue) {
 
 		List<InfoFieldValue<InfoLocalizedValue<Object>>> infoFieldValues =
 			new ArrayList<>();
 
-		_addDDMFormFieldValue(t, ddmFormFieldValue, infoFieldValues);
+		_addDDMFormFieldValue(groupedModel, ddmFormFieldValue, infoFieldValues);
 
 		return infoFieldValues;
 	}
@@ -184,7 +189,8 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 	}
 
 	private Object _sanitizeDDMFormFieldValue(
-		T t, DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+		GroupedModel groupedModel, DDMFormFieldValue ddmFormFieldValue,
+		Locale locale) {
 
 		Value value = ddmFormFieldValue.getValue();
 
@@ -242,9 +248,10 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 			}
 
 			return SanitizerUtil.sanitize(
-				t.getCompanyId(), t.getGroupId(), t.getUserId(),
-				t.getModelClassName(), (long)t.getPrimaryKeyObj(),
-				ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL, valueString, null);
+				groupedModel.getCompanyId(), groupedModel.getGroupId(),
+				groupedModel.getUserId(), groupedModel.getModelClassName(),
+				(long)groupedModel.getPrimaryKeyObj(), ContentTypes.TEXT_HTML,
+				Sanitizer.MODE_ALL, valueString, null);
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -256,7 +263,7 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFormValuesInfoFieldValuesProvider.class);
+		DDMFormValuesInfoFieldValuesProviderImpl.class);
 
 	@Reference
 	private DDMBeanTranslator _ddmBeanTranslator;

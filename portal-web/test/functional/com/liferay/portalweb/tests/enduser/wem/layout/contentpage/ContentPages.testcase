@@ -448,7 +448,7 @@ definition {
 
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
-				panel = "Configuration",
+				panel = "General",
 				spaceBetweenColumns = "true");
 		}
 
@@ -479,7 +479,7 @@ definition {
 		task ("Edit the row's properties") {
 			PageEditor.editLayoutGrid(
 				columnCount = "3",
-				panel = "Configuration",
+				panel = "General",
 				spaceBetweenColumns = "false");
 		}
 

@@ -53,11 +53,11 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		var key_navItem = "Configuration";
+		var key_navItem = "General";
 
 		AssertVisible(
 			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "Configuration");
+			value1 = "General");
 	}
 
 	@description = "This is a test for LPS-99377. User can change checkbox fragment configuration."
@@ -204,9 +204,9 @@ definition {
 			Pause(locator1 = "3000");
 
 			AssertClick(
-				key_navItem = "Configuration",
+				key_navItem = "General",
 				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "Configuration");
+				value1 = "General");
 
 			AssertVisible(locator1 = "FragmentEditor#FRAGMENTS_EDITOR_FLOATING_CONFIGURATION_PANEL");
 		}

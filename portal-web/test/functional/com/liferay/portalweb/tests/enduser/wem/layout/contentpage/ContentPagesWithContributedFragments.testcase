@@ -728,7 +728,7 @@ definition {
 
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
-				panel = "Configuration");
+				panel = "General");
 		}
 
 		task ("Add a Collection Display fragment to column 1") {
@@ -2298,9 +2298,9 @@ definition {
 		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertClick(
-			key_navItem = "Configuration",
+			key_navItem = "General",
 			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "Configuration");
+			value1 = "General");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",
@@ -2378,9 +2378,9 @@ definition {
 		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertClick(
-			key_navItem = "Configuration",
+			key_navItem = "General",
 			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "Configuration");
+			value1 = "General");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",
@@ -2717,9 +2717,9 @@ definition {
 		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertClick(
-			key_navItem = "Configuration",
+			key_navItem = "General",
 			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "Configuration");
+			value1 = "General");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",
@@ -2838,9 +2838,9 @@ definition {
 		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertClick(
-			key_navItem = "Configuration",
+			key_navItem = "General",
 			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "Configuration");
+			value1 = "General");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",

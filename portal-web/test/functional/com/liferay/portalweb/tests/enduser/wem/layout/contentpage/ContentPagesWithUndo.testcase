@@ -616,7 +616,7 @@ definition {
 
 		PageEditor.editLayoutGrid(
 			columnCount = "1",
-			panel = "Configuration");
+			panel = "General");
 
 		PageEditor.viewGridStyle(
 			columnCount = "1",
@@ -626,7 +626,7 @@ definition {
 
 		PageEditor.editLayoutGrid(
 			columnCount = "2",
-			panel = "Configuration");
+			panel = "General");
 
 		PageEditor.viewGridStyle(
 			columnCount = "2",

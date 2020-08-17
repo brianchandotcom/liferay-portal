@@ -763,7 +763,7 @@ definition {
 		task ("Configure the Grid") {
 			PageEditor.editLayoutGrid(
 				columnCount = "2",
-				panel = "Configuration");
+				panel = "General");
 
 			PageEditor.editLayoutGrid(
 				inverseOrder = "true",

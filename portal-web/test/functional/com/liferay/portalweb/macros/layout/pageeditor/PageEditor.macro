@@ -629,9 +629,9 @@ definition {
 		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertClick(
-			key_navItem = "Configuration",
+			key_navItem = "General",
 			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "Configuration");
+			value1 = "General");
 
 		Click(locator1 = "PageEditor#PLUS_ICON_BUTTON");
 
@@ -712,9 +712,9 @@ definition {
 		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertClick(
-			key_navItem = "Configuration",
+			key_navItem = "General",
 			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "Configuration");
+			value1 = "General");
 
 		if (isSet(inCollectionDisplay)) {
 			Select(
@@ -1203,11 +1203,11 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Selection");
 
-		if ("${panel}" == "Configuration") {
+		if ("${panel}" == "General") {
 			AssertClick(
-				key_navItem = "Configuration",
+				key_navItem = "General",
 				locator1 = "PageEditor#NAV_ITEM_BUTTON",
-				value1 = "Configuration");
+				value1 = "General");
 
 			if (isSet(columnCount)) {
 				Select(
@@ -1343,9 +1343,9 @@ definition {
 			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE");
 
 		AssertClick(
-			key_navItem = "Configuration",
+			key_navItem = "General",
 			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "Configuration");
+			value1 = "General");
 	}
 
 	macro gotoContentConfiguration {
@@ -1367,9 +1367,9 @@ definition {
 		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertClick(
-			key_navItem = "Configuration",
+			key_navItem = "General",
 			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "Configuration");
+			value1 = "General");
 	}
 
 	macro gotoDuplicate {
@@ -1415,9 +1415,9 @@ definition {
 		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertClick(
-			key_navItem = "Configuration",
+			key_navItem = "General",
 			locator1 = "PageEditor#NAV_ITEM_BUTTON",
-			value1 = "Configuration");
+			value1 = "General");
 
 		Click(locator1 = "PageEditor#PLUS_ICON_BUTTON");
 

@@ -34,4 +34,10 @@
 		<implicit-parameter name="mvcPath">/view.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
 	</route>
+	<route>
+		<pattern>/{userIdAndInstanceId}/rss</pattern>
+		<ignored-parameter name="p_p_cacheability" />
+		<implicit-parameter name="p_p_lifecycle">2</implicit-parameter>
+		<implicit-parameter name="p_p_resource_id">getRSS</implicit-parameter>
+	</route>
 </routes>

@@ -161,7 +161,7 @@ definition {
 
 		Translations.exportTranslation(
 			defaultLanguage = "English (United States)",
-			exportFileFormat = "XLIFF 1.2",
+			exportFileFormat = "application/x-xliff+xml",
 			languageList = "Spanish (Spain)");
 
 		Translations.translateFile(

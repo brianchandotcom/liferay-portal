@@ -104,6 +104,7 @@ if (Validator.isNotNull(keywords)) {
 	searchContext.setAttribute("paginationType", "more");
 	searchContext.setEnd(bookmarksSearchContainer.getEnd());
 	searchContext.setFolderIds(new long[] {folderId});
+	searchContext.setIncludeInternalAssetCategories(true);
 	searchContext.setKeywords(keywords);
 	searchContext.setStart(bookmarksSearchContainer.getStart());
 

@@ -74,8 +74,6 @@ public class FileEntryInfoItemFormProvider
 		).infoFieldSetEntry(
 			FileEntryInfoItemFields.authorNameInfoField
 		).infoFieldSetEntry(
-			FileEntryInfoItemFields.authorNameInfoField
-		).infoFieldSetEntry(
 			FileEntryInfoItemFields.authorProfileImageInfoField
 		).infoFieldSetEntry(
 			FileEntryInfoItemFields.previewImage
@@ -91,13 +89,13 @@ public class FileEntryInfoItemFormProvider
 		).infoFieldSetEntry(
 			FileEntryInfoItemFields.fileName
 		).infoFieldSetEntry(
-			FileEntryInfoItemFields.downloadURL
+			FileEntryInfoItemFields.mimeType
 		).infoFieldSetEntry(
 			FileEntryInfoItemFields.fileURL
 		).infoFieldSetEntry(
-			FileEntryInfoItemFields.mimeType
-		).infoFieldSetEntry(
 			FileEntryInfoItemFields.size
+		).infoFieldSetEntry(
+			FileEntryInfoItemFields.downloadURL
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "file-information")
 		).name(

@@ -57,4 +57,21 @@ definition {
 			value1 = "WC Title 5");
 	}
 
+	@description = "Validate if the user can filter by title"
+	@priority = "5"
+	test ContentDashboardViewInfoPanel {
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		ContentDashboard.openInfoPanelByDropdownMenu();
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#INFO_PANEL_TITLE",
+			value1 = "Content Info");
+	}
+
 }

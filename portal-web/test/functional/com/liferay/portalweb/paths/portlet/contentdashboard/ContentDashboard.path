@@ -23,6 +23,21 @@
 	<td>(//*[contains(@class, 'text-truncate')])[4]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>INFO_OPTION</td>
+	<td>//*[contains(@data-action, 'showInfo')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_PANEL_TITLE</td>
+	<td>//*[contains(@class, 'text-truncate') and contains(text(),'Content Info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_MENU_DROPDOWN_BUTTON</td>
+	<td>//*[contains(@class, 'dropdown-toggle btn btn-monospaced btn-unstyled')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

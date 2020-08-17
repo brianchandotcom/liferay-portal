@@ -10,4 +10,9 @@ definition {
 		Click(locator1 = "ContentDashboard#FILTER_BY_TITLE_OPTION");
 	}
 
+	macro openInfoPanelByDropdownMenu{
+		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
+
+		Click(locator1 = "ContentDashboard#INFO_OPTION");
+	}
 }

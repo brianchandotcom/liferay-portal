@@ -260,10 +260,3 @@ else {
 		</c:when>
 	</c:choose>
 </aui:form>
-
-<aui:script use="aui-base">
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectOrganizationRoleFm',
-		'<%= HtmlUtil.escapeJS(eventName) %>'
-	);
-</aui:script>

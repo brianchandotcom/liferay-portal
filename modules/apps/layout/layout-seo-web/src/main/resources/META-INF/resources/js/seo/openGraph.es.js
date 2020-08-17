@@ -41,7 +41,7 @@ export default function ({namespace, uploadOpenGraphImageURL}) {
 
 	openGraphImageButton.addEventListener('click', () => {
 		openSelectionModal({
-			onSelect(selectedItem) {
+			onSelect: (selectedItem) => {
 				if (selectedItem) {
 					const itemValue = JSON.parse(selectedItem.value);
 

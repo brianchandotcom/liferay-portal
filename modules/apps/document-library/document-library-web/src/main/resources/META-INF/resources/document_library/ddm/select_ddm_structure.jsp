@@ -86,10 +86,3 @@ SearchContainer<com.liferay.dynamic.data.mapping.model.DDMStructure> ddmStructur
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectDDMStructureFm',
-		'<%= HtmlUtil.escapeJS(dlSelectDDMStructureDisplayContext.getEventName()) %>'
-	);
-</aui:script>

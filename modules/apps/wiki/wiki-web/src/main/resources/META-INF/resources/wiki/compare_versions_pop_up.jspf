@@ -18,19 +18,8 @@
 	dom.delegate(document.body, 'click', '.compare-to-link > a', function (event) {
 		var currentTarget = event.delegateTarget;
 
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					destroyOnHide: true,
-					modal: true,
-				},
-				eventName: '<portlet:namespace />selectVersionFm',
-				id: '<portlet:namespace />compareVersions' + currentTarget.id,
-				title: '<liferay-ui:message key="compare-versions" />',
-				uri: currentTarget.dataset.uri,
-			},
-			function (event) {
+		Liferay.Util.openSelectionModal({
+			onSelect: function (event) {
 				<portlet:renderURL var="compareVersionURL">
 					<portlet:param name="mvcRenderCommandName" value="/wiki/compare_versions" />
 					<portlet:param name="backURL" value="<%= currentURL %>" />
@@ -51,7 +40,10 @@
 				);
 
 				location.href = uri;
-			}
-		);
+			},
+			selectEventName: '<portlet:namespace />selectVersionFm',
+			title: '<liferay-ui:message key="compare-versions" />',
+			url: currentTarget.dataset.uri,
+		});
 	});
 </aui:script>

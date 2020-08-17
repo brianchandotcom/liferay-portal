@@ -183,19 +183,8 @@ for (long defaultTeamId : defaultTeamIds) {
 				config.uri
 			);
 
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true,
-					},
-					id: config.id,
-					selectedData: searchContainerData,
-					title: config.title,
-					uri: uri,
-				},
-				function (event) {
+			Liferay.Util.openSelectionModal({
+				onSelect: function (event) {
 					var entityId = event.entityid;
 
 					var rowColumns = [
@@ -208,8 +197,12 @@ for (long defaultTeamId : defaultTeamIds) {
 					searchContainer.addRow(rowColumns, entityId);
 
 					searchContainer.updateDataStore();
-				}
-			);
+				},
+				selectEventName: config.id,
+				selectedData: searchContainerData,
+				title: config.title,
+				url: uri,
+			});
 		});
 	};
 

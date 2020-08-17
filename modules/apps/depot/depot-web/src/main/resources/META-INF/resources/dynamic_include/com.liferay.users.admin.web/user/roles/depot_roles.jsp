@@ -212,21 +212,8 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 		A.one('#<portlet:namespace />selectDepotRoleLink').on('click', function (
 			event
 		) {
-			Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						modal: true,
-					},
-
-					id:
-						'<%= depotAdminRolesDisplayContext.getSelectDepotRolesEventName() %>',
-					selectedData: searchContainer.getData(true),
-					title: '<liferay-ui:message arguments="role" key="select-x" />',
-					uri:
-						'<%= depotAdminRolesDisplayContext.getSelectDepotRolesURL() %>',
-				},
-				function (event) {
+			Util.openSelectionModal({
+				onSelect: function (event) {
 					var A = AUI();
 					var LString = A.Lang.String;
 
@@ -294,8 +281,13 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 					searchContainer.addRow(rowColumns, id);
 
 					searchContainer.updateDataStore();
-				}
-			);
+				},
+				selectedData: searchContainer.getData(true),
+				selectEventName:
+					'<%= depotAdminRolesDisplayContext.getSelectDepotRolesEventName() %>',
+				title: '<liferay-ui:message arguments="role" key="select-x" />',
+				url: '<%= depotAdminRolesDisplayContext.getSelectDepotRolesURL() %>',
+			});
 		});
 	</aui:script>
 </c:if>

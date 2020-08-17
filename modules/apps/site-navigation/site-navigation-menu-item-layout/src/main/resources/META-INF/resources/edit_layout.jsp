@@ -90,7 +90,7 @@ if (selLayout != null) {
 
 	A.one('#<portlet:namespace />chooseLayout').on('click', function (event) {
 		Liferay.Util.openSelectionModal({
-			onSelect: function(selectedItem) {
+			onSelect: function (selectedItem) {
 				if (selectedItem) {
 					groupId.val(selectedItem.groupId);
 

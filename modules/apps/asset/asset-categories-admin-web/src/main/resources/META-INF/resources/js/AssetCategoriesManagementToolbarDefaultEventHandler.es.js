@@ -33,7 +33,7 @@ class AssetCategoriesManagementToolbarDefaultEventHandler extends DefaultEventHa
 		const namespace = this.namespace;
 
 		openSelectionModal({
-			onSelect(selectedItem) {
+			onSelect: (selectedItem) => {
 				const category = selectedItem
 					? selectedItem[Object.keys(selectedItem)[0]]
 					: null;

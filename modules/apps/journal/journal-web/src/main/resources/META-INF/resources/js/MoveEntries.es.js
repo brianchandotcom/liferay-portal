@@ -67,7 +67,7 @@ class MoveEntries extends PortletBase {
 	 */
 	_handleSelectFolderButtonClick() {
 		openSelectionModal({
-			onSelect(selectedItem) {
+			onSelect: (selectedItem) => {
 				if (selectedItem) {
 					var folderData = {
 						idString: 'newFolderId',

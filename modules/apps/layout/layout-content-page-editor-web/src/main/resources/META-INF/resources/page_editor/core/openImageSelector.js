@@ -19,7 +19,7 @@ import {config} from '../app/config/index';
 export function openImageSelector(callback, destroyedCallback = null) {
 	openSelectionModal({
 		onClose: destroyedCallback,
-		onSelect(selectedItem) {
+		onSelect: (selectedItem) => {
 			if (selectedItem) {
 				const {returnType, value} = selectedItem;
 

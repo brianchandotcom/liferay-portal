@@ -44,7 +44,7 @@ export default function ({namespace, uploadOpenGraphImageURL}) {
 
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
-			onSelect(selectedItem) {
+			onSelect: (selectedItem) => {
 				if (selectedItem) {
 					const itemValue = JSON.parse(selectedItem.value);
 

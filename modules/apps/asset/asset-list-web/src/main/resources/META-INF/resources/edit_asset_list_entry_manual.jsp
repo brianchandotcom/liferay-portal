@@ -223,7 +223,7 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 
 			Liferay.Util.openSelectionModal({
 				multiple: true,
-				onSelect: function(selectedItems) {
+				onSelect: function (selectedItems) {
 					if (selectedItems) {
 						var assetEntryIds = [];
 

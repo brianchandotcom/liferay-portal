@@ -65,73 +65,59 @@ if (organizationId > 0) {
 					'<portlet:namespace />selectOrganizationButton'
 				);
 
-				if (<portlet:namespace />selectOrganizationButton) {
-					<portlet:namespace />selectOrganizationButton.addEventListener(
-						'click',
-						function (event) {
-							Liferay.Util.selectEntity(
-								{
-									dialog: {
-										constrain: true,
-										destroyOnHide: true,
-										modal: true,
-									},
+				<portlet:namespace />selectOrganizationButton.addEventListener(
+					'click',
+					function (event) {
+						Liferay.Util.openSelectionModal({
+							onSelect: function (event) {
+								var form = document.getElementById('<portlet:namespace />fm');
 
-									<%
-									String portletId = PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW);
-									%>
-
-									id:
-										'<%= PortalUtil.getPortletNamespace(portletId) %>selectOrganization',
-									title:
-										'<liferay-ui:message arguments="organization" key="select-x" />',
-
-									<%
-									PortletURL selectOrganizationURL = PortletProviderUtil.getPortletURL(request, Organization.class.getName(), PortletProvider.Action.BROWSE);
-
-									selectOrganizationURL.setWindowState(LiferayWindowState.POP_UP);
-									%>
-
-									uri: '<%= selectOrganizationURL.toString() %>',
-								},
-								function (event) {
-									var form = document.getElementById(
-										'<portlet:namespace />fm'
+								if (form) {
+									var organizationId = form.querySelector(
+										'#<portlet:namespace />organizationId'
 									);
 
-									if (form) {
-										var organizationId = form.querySelector(
-											'#<portlet:namespace />organizationId'
-										);
+									if (organizationId) {
+										organizationId.setAttribute('value', event.entityid);
+									}
 
-										if (organizationId) {
-											organizationId.setAttribute(
-												'value',
-												event.entityid
-											);
-										}
+									var organizationName = form.querySelector(
+										'#<portlet:namespace />organizationName'
+									);
 
-										var organizationName = form.querySelector(
-											'#<portlet:namespace />organizationName'
-										);
-
-										if (organizationName) {
-											organizationName.setAttribute(
-												'value',
-												event.entityname
-											);
-										}
-
-										Liferay.Util.toggleDisabled(
-											'#<portlet:namespace />removeOrganizationButton',
-											false
+									if (organizationName) {
+										organizationName.setAttribute(
+											'value',
+											event.entityname
 										);
 									}
+
+									Liferay.Util.toggleDisabled(
+										'#<portlet:namespace />removeOrganizationButton',
+										false
+									);
 								}
-							);
-						}
-					);
-				}
+							},
+
+							<%
+							String portletId = PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW);
+							%>
+
+							selectEventName:
+								'<%= PortalUtil.getPortletNamespace(portletId) %>selectOrganization',
+							title:
+								'<liferay-ui:message arguments="organization" key="select-x" />',
+
+							<%
+							PortletURL selectOrganizationURL = PortletProviderUtil.getPortletURL(request, Organization.class.getName(), PortletProvider.Action.BROWSE);
+
+							selectOrganizationURL.setWindowState(LiferayWindowState.POP_UP);
+							%>
+
+							url: '<%= selectOrganizationURL.toString() %>',
+						});
+					}
+				);
 
 				Liferay.Util.toggleSelectBox(
 					'<portlet:namespace />selectionMethod',

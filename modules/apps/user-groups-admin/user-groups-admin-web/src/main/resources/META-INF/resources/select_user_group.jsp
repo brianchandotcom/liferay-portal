@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUserGroup");
-
 User selUser = PortalUtil.getSelectedUser(request);
 
 SelectUserGroupManagementToolbarDisplayContext selectUserGroupManagementToolbarDisplayContext = new SelectUserGroupManagementToolbarDisplayContext(request, renderRequest, renderResponse);
@@ -95,10 +93,3 @@ renderResponse.setTitle(LanguageUtil.get(request, "user-groups"));
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script use="aui-base">
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectUserGroupFm',
-		'<%= HtmlUtil.escapeJS(eventName) %>'
-	);
-</aui:script>

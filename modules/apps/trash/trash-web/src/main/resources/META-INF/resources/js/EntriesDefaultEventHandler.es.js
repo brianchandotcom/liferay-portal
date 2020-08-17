@@ -12,26 +12,14 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+import {DefaultEventHandler, openSelectionModal} from 'frontend-js-web';
 
 class EntriesDefaultEventHandler extends DefaultEventHandler {
 	moveEntry(itemData) {
 		const instance = this;
 
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					destroyOnHide: true,
-					modal: true,
-					width: 1024,
-				},
-				eventName: this.ns('selectContainer'),
-				id: this.ns('selectContainer'),
-				title: Liferay.Language.get('warning'),
-				uri: itemData.moveEntryURL,
-			},
-			(event) => {
+		openSelectionModal({
+			onSelect: (event) => {
 				const selectContainerForm = document.getElementById(
 					`${instance.namespace}selectContainerForm`
 				);
@@ -74,8 +62,11 @@ class EntriesDefaultEventHandler extends DefaultEventHandler {
 
 					submitForm(selectContainerForm);
 				}
-			}
-		);
+			},
+			selectEventName: this.ns('selectContainer'),
+			title: Liferay.Language.get('warning'),
+			url: itemData.moveEntryURL,
+		});
 	}
 
 	restoreEntry(itemData) {

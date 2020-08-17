@@ -118,7 +118,7 @@ renderResponse.setTitle(role.getTitle(locale));
 	var addAssignees = function (event) {
 		Liferay.Util.openSelectionModal({
 			multiple: true,
-			onSelect: function(selectedItem) {
+			onSelect: function (selectedItem) {
 				if (selectedItem) {
 					var assignmentsRedirect = Liferay.Util.PortletURL.createPortletURL(
 						'<%= portletURL.toString() %>',

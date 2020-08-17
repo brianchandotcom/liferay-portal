@@ -310,7 +310,7 @@ else {
 		Liferay.Util.openSelectionModal({
 			buttonAddLabel: '<liferay-ui:message key="done" />',
 			multiple: true,
-			onSelect: function(data) {
+			onSelect: function (data) {
 				if (data) {
 					<portlet:renderURL var="assignmentsURL">
 						<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />

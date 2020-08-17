@@ -29,7 +29,7 @@ const ACTIONS = {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('delete'),
 			multiple: true,
-			onSelect(selectedItems) {
+			onSelect: (selectedItems) => {
 				if (selectedItems) {
 					if (
 						confirm(

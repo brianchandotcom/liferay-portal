@@ -397,7 +397,7 @@ else {
 		chooseSiteNavigationMenuButton.addEventListener('click', function (event) {
 			Liferay.Util.openSelectionModal({
 				id: '<portlet:namespace />selectSiteNavigationMenu',
-				onSelect: function(selectedItem) {
+				onSelect: function (selectedItem) {
 					if (selectedItem) {
 						navigationMenuName.innerText = selectedItem.name;
 						rootMenuItemIdInput.value = '0';
@@ -411,8 +411,7 @@ else {
 				},
 				selectEventName:
 					'<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuEventName() %>',
-				title:
-					'<liferay-ui:message key="select-site-navigation-menu" />',
+				title: '<liferay-ui:message key="select-site-navigation-menu" />',
 				url:
 					'<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuItemSelectorURL() %>',
 			});

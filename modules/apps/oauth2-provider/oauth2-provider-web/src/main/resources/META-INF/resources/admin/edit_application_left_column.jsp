@@ -201,35 +201,26 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 
 					if (selectUserButton) {
 						selectUserButton.addEventListener('click', function (event) {
-							Liferay.Util.selectEntity(
-								{
-									dialog: {
-										modal: true,
-										destroyOnHide: true,
-									},
-
-									<%
-									SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayContext(request, renderRequest, renderResponse);
-									%>
-
-									eventName:
-										'<%= HtmlUtil.escapeJS(selectUsersDisplayContext.getEventName()) %>',
-									id:
-										'<%= HtmlUtil.escapeJS(selectUsersDisplayContext.getEventName()) %>',
-
-									title: '<liferay-ui:message key="users" />',
-									uri:
-										'<%= HtmlUtil.escapeJS(String.valueOf(selectUsersDisplayContext.getPortletURL())) %>',
-								},
-								function (event) {
+							Liferay.Util.openSelectionModal({
+								onSelect: function (event) {
 									A.one('#<portlet:namespace />clientCredentialUserId').val(
 										event.userid
 									);
 									A.one('#<portlet:namespace />clientCredentialUserName').val(
 										event.screenname
 									);
-								}
-							);
+								},
+
+								<%
+								SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayContext(request, renderRequest, renderResponse);
+								%>
+
+								selectEventName:
+									'<%= HtmlUtil.escapeJS(selectUsersDisplayContext.getEventName()) %>',
+								title: '<liferay-ui:message key="users" />',
+								url:
+									'<%= HtmlUtil.escapeJS(String.valueOf(selectUsersDisplayContext.getPortletURL())) %>',
+							});
 						});
 					}
 				</aui:script>

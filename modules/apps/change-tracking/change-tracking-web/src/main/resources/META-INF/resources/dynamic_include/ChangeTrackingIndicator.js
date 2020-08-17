@@ -14,7 +14,7 @@
 
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {createPortletURL} from 'frontend-js-web';
+import {createPortletURL, navigate, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -35,25 +35,18 @@ const Component = ({
 	Liferay.on('destroyPortlet', onDestroyPortlet);
 
 	const onSelectChangeList = function () {
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					modal: true,
-					width: 900,
-				},
-				id: namespace + 'selectChangeList',
-				title: Liferay.Language.get('select-a-publication'),
-				uri: selectURL,
-			},
-			(event) => {
+		openSelectionModal({
+			onSelect: (event) => {
 				const portletURL = createPortletURL(checkoutURL, {
 					ctCollectionId: event.ctcollectionid,
 				});
 
-				Liferay.Util.navigate(portletURL.toString());
-			}
-		);
+				navigate(portletURL.toString());
+			},
+			selectEventName: namespace + 'selectChangeList',
+			title: Liferay.Language.get('select-a-publication'),
+			url: selectURL,
+		});
 	};
 
 	Liferay.on(namespace + 'openDialog', onSelectChangeList);

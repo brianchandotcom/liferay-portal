@@ -93,7 +93,7 @@
 
 	chooseSpecificDisplayPage.addEventListener('click', function (event) {
 		Liferay.Util.openSelectionModal({
-			onSelect: function(selectedItem) {
+			onSelect: function (selectedItem) {
 				assetDisplayPageIdInput.value = '';
 
 				pagesContainerInput.value = '';
@@ -113,7 +113,8 @@
 					}
 				}
 			},
-			selectEventName: '<%= selectAssetDisplayPageDisplayContext.getEventName() %>',
+			selectEventName:
+				'<%= selectAssetDisplayPageDisplayContext.getEventName() %>',
 			title: '<liferay-ui:message key="select-page" />',
 			url:
 				'<%= selectAssetDisplayPageDisplayContext.getAssetDisplayPageItemSelectorURL() %>',

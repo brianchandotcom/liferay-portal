@@ -19,7 +19,7 @@ import ClayIcon from '@clayui/icon';
 import ClayMultiSelect from '@clayui/multi-select';
 import classNames from 'classnames';
 import {usePrevious} from 'frontend-js-react-web';
-import {openSelectionModal} from 'frontend-js-web';
+import {ItemSelectorDialog} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -108,7 +108,8 @@ function AssetVocabulariesCategoriesSelector({
 				)
 			) {
 				validAddedItems.push(item);
-			} else {
+			}
+			else {
 				invalidAddedItems.push(item);
 			}
 		});
@@ -139,35 +140,39 @@ function AssetVocabulariesCategoriesSelector({
 			vocabularyIds: sourceItemsVocabularyIds.concat(),
 		});
 
-		openSelectionModal({
+		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('done'),
-			multiple: true,
-			onSelect(dialogSelectedItems) {
-				if (dialogSelectedItems) {
-					const newValues = Object.keys(dialogSelectedItems).reduce(
-						(acc, itemKey) => {
-							const item = dialogSelectedItems[itemKey];
-							if (!item.unchecked) {
-								acc.push({
-									label: item.value,
-									value: item.categoryId,
-								});
-							}
-
-							return acc;
-						},
-						[]
-					);
-
-					onSelectedItemsChange(newValues);
-				}
-			},
-			selectEventName: eventName,
-			size: 'lg',
+			dialogClasses: 'modal-lg',
+			eventName,
 			title: label
 				? Liferay.Util.sub(Liferay.Language.get('select-x'), label)
 				: Liferay.Language.get('select-categories'),
 			url,
+		});
+
+		itemSelectorDialog.open();
+
+		itemSelectorDialog.on('selectedItemChange', (event) => {
+			const dialogSelectedItems = event.selectedItem;
+
+			if (dialogSelectedItems) {
+				const newValues = Object.keys(dialogSelectedItems).reduce(
+					(acc, itemKey) => {
+						const item = dialogSelectedItems[itemKey];
+						if (!item.unchecked) {
+							acc.push({
+								label: item.value,
+								value: item.categoryId,
+							});
+						}
+
+						return acc;
+					},
+					[]
+				);
+
+				onSelectedItemsChange(newValues);
+			}
 		});
 	};
 

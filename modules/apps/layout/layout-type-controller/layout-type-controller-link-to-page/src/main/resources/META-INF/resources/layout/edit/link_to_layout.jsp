@@ -34,7 +34,7 @@
 				event.preventDefault();
 
 				Liferay.Util.openSelectionModal({
-					onSelect(selectedItem) {
+					onSelect: function(selectedItem) {
 						const linkToLayoutName = document.getElementById('<portlet:namespace />linkToLayoutName');
 						const linkToLayoutUuid = document.getElementById('<portlet:namespace />linkToLayoutUuid');
 

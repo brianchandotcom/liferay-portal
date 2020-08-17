@@ -40,7 +40,7 @@ class SharedAssets extends PortletBase {
 
 		if (itemData && itemData.action === 'openAssetTypesSelector') {
 			openSelectionModal({
-				onSelect(selectedItem) {
+				onSelect: (selectedItem) => {
 					if (selectedItem) {
 						let uri = viewAssetTypeURL;
 

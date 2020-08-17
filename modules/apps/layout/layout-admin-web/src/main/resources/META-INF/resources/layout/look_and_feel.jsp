@@ -247,7 +247,7 @@ else {
 				Liferay.Util.openSelectionModal({
 					buttonAddLabel: '<liferay-ui:message key="done" />',
 					multiple: true,
-					onSelect: function(selectedItem) {
+					onSelect: function (selectedItem) {
 						if (selectedItem) {
 							var masterLayoutName = document.getElementById(
 								'<portlet:namespace />masterLayoutName'
@@ -315,7 +315,7 @@ else {
 			Liferay.Util.openSelectionModal({
 				buttonAddLabel: '<liferay-ui:message key="done" />',
 				multiple: true,
-				onSelect: function(selectedItem) {
+				onSelect: function (selectedItem) {
 					if (selectedItem) {
 						var styleBookName = document.getElementById(
 							'<portlet:namespace />styleBookName'

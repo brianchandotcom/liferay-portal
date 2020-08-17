@@ -119,19 +119,8 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 	dom.delegate(document.body, 'click', '.compare-to-link > a', function (event) {
 		var currentTarget = event.delegateTarget;
 
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					destroyOnHide: true,
-					modal: true,
-				},
-				eventName: '<portlet:namespace />selectVersionFm',
-				id: '<portlet:namespace />compareVersions' + currentTarget.id,
-				title: '<liferay-ui:message key="compare-versions" />',
-				uri: currentTarget.dataset.uri,
-			},
-			function (event) {
+		Liferay.Util.openSelectionModal({
+			onSelect: function (event) {
 				var uri = '<%= HtmlUtil.escapeJS(compareVersionURL) %>';
 
 				uri = Liferay.Util.addParams(
@@ -143,8 +132,11 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 					uri
 				);
 
-				location.href = uri;
-			}
-		);
+				Liferay.Util.navigate(uri);
+			},
+			selectEventName: '<portlet:namespace />selectVersionFm',
+			title: '<liferay-ui:message key="compare-versions" />',
+			url: currentTarget.dataset.uri,
+		});
 	});
 </aui:script>

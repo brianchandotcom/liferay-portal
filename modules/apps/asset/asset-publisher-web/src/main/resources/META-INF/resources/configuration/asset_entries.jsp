@@ -259,7 +259,7 @@ for (long groupId : groupIds) {
 
 			Liferay.Util.openSelectionModal({
 				multiple: true,
-				onSelect: function(selectedItems) {
+				onSelect: function (selectedItems) {
 					if (selectedItems) {
 						selectAssets(selectedItems);
 					}

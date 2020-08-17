@@ -121,10 +121,3 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectThemeFm',
-		'<%= HtmlUtil.escapeJS(selectThemeDisplayContext.getEventName()) %>'
-	);
-</aui:script>

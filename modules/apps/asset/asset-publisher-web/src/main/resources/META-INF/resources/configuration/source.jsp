@@ -248,208 +248,208 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 		String className = assetPublisherWebHelper.getClassName(curRendererFactory);
 	%>
 
-			Util.toggleSelectBox(
-				'<portlet:namespace />anyClassType<%= className %>',
-				'false',
-				'<portlet:namespace /><%= className %>Boxes'
-			);
+		Util.toggleSelectBox(
+			'<portlet:namespace />anyClassType<%= className %>',
+			'false',
+			'<portlet:namespace /><%= className %>Boxes'
+		);
 
-			var <%= className %>Options = document.getElementById(
-				'<portlet:namespace /><%= className %>Options'
-			);
+		var <%= className %>Options = document.getElementById(
+			'<portlet:namespace /><%= className %>Options'
+		);
 
-			function <portlet:namespace />toggle<%= className %>(removeOrderBySubtype) {
-				var assetOptions = assetMultipleSelector.options;
+		function <portlet:namespace />toggle<%= className %>(removeOrderBySubtype) {
+			var assetOptions = assetMultipleSelector.options;
 
-				var showOptions =
-					assetSelector.value == '<%= curRendererFactory.getClassNameId() %>' ||
-					(assetSelector.value == 'false' &&
-						assetOptions.length == 1 &&
-						assetOptions[0].value ==
-							'<%= curRendererFactory.getClassNameId() %>');
+			var showOptions =
+				assetSelector.value == '<%= curRendererFactory.getClassNameId() %>' ||
+				(assetSelector.value == 'false' &&
+					assetOptions.length == 1 &&
+					assetOptions[0].value ==
+						'<%= curRendererFactory.getClassNameId() %>');
 
-				if (showOptions) {
-					<%= className %>Options.classList.remove('hide');
-				}
-				else {
-					<%= className %>Options.classList.add('hide');
-				}
-
-				if (removeOrderBySubtype) {
-					Array.prototype.forEach.call(
-						orderingPanel.querySelectorAll('.order-by-subtype'),
-						function (option) {
-							dom.exitDocument(option);
-						}
-					);
-				}
-
-				<c:if test="<%= assetPublisherDisplayContext.isShowSubtypeFieldsFilter() %>">
-					<%= className %>toggleSubclassesFields(true);
-				</c:if>
+			if (showOptions) {
+				<%= className %>Options.classList.remove('hide');
+			}
+			else {
+				<%= className %>Options.classList.add('hide');
 			}
 
-			<%
-			ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
-
-			List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(assetPublisherDisplayContext.getReferencedModelsGroupIds(), locale);
-
-			if (assetAvailableClassTypes.isEmpty()) {
-				continue;
-			}
-
-			for (ClassType classType : assetAvailableClassTypes) {
-				List<ClassTypeField> classTypeFields = classType.getClassTypeFields();
-
-				if (classTypeFields.isEmpty()) {
-					continue;
-				}
-			%>
-
-					var optgroupClose = '</optgroup>';
-					var optgroupOpen =
-						'<optgroup class="order-by-subtype" label="<%= HtmlUtil.escape(classType.getName()) %>">';
-
-					var columnBuffer1 = [optgroupOpen];
-					var columnBuffer2 = [optgroupOpen];
-
-					<%
-					String orderByColumn1 = assetPublisherDisplayContext.getOrderByColumn1();
-					String orderByColumn2 = assetPublisherDisplayContext.getOrderByColumn2();
-
-					for (ClassTypeField classTypeField : classTypeFields) {
-						String value = assetPublisherWebHelper.encodeName(classTypeField.getClassTypeId(), classTypeField.getName(), null);
-						String selectedOrderByColumn1 = StringPool.BLANK;
-						String selectedOrderByColumn2 = StringPool.BLANK;
-
-						if (orderByColumn1.equals(value)) {
-							selectedOrderByColumn1 = "selected";
-						}
-
-						if (orderByColumn2.equals(value)) {
-							selectedOrderByColumn2 = "selected";
-						}
-					%>
-
-							columnBuffer1.push(
-								'<option <%= selectedOrderByColumn1 %> value="<%= value %>"><%= HtmlUtil.escapeJS(classTypeField.getLabel()) %></option>'
-							);
-							columnBuffer2.push(
-								'<option <%= selectedOrderByColumn2 %> value="<%= value %>"><%= HtmlUtil.escapeJS(classTypeField.getLabel()) %></option>'
-							);
-
-					<%
+			if (removeOrderBySubtype) {
+				Array.prototype.forEach.call(
+					orderingPanel.querySelectorAll('.order-by-subtype'),
+					function (option) {
+						dom.exitDocument(option);
 					}
-					%>
-
-					columnBuffer1.push(optgroupClose);
-					columnBuffer2.push(optgroupClose);
-
-					MAP_DDM_STRUCTURES[
-						'<%= className %>_<%= classType.getClassTypeId() %>_optTextOrderByColumn1'
-					] = columnBuffer1.join('');
-					MAP_DDM_STRUCTURES[
-						'<%= className %>_<%= classType.getClassTypeId() %>_optTextOrderByColumn2'
-					] = columnBuffer2.join('');
-
-			<%
+				);
 			}
-			%>
-
-			var <%= className %>SubtypeSelector = document.getElementById(
-				'<portlet:namespace />anyClassType<%= className %>'
-			);
 
 			<c:if test="<%= assetPublisherDisplayContext.isShowSubtypeFieldsFilter() %>">
-				function <%= className %>toggleSubclassesFields(
-					hideSubtypeFilterEnableWrapper
+				<%= className %>toggleSubclassesFields(true);
+			</c:if>
+		}
+
+		<%
+		ClassTypeReader classTypeReader = curRendererFactory.getClassTypeReader();
+
+		List<ClassType> assetAvailableClassTypes = classTypeReader.getAvailableClassTypes(assetPublisherDisplayContext.getReferencedModelsGroupIds(), locale);
+
+		if (assetAvailableClassTypes.isEmpty()) {
+			continue;
+		}
+
+		for (ClassType classType : assetAvailableClassTypes) {
+			List<ClassTypeField> classTypeFields = classType.getClassTypeFields();
+
+			if (classTypeFields.isEmpty()) {
+				continue;
+			}
+		%>
+
+			var optgroupClose = '</optgroup>';
+			var optgroupOpen =
+				'<optgroup class="order-by-subtype" label="<%= HtmlUtil.escape(classType.getName()) %>">';
+
+			var columnBuffer1 = [optgroupOpen];
+			var columnBuffer2 = [optgroupOpen];
+
+			<%
+			String orderByColumn1 = assetPublisherDisplayContext.getOrderByColumn1();
+			String orderByColumn2 = assetPublisherDisplayContext.getOrderByColumn2();
+
+			for (ClassTypeField classTypeField : classTypeFields) {
+				String value = assetPublisherWebHelper.encodeName(classTypeField.getClassTypeId(), classTypeField.getName(), null);
+				String selectedOrderByColumn1 = StringPool.BLANK;
+				String selectedOrderByColumn2 = StringPool.BLANK;
+
+				if (orderByColumn1.equals(value)) {
+					selectedOrderByColumn1 = "selected";
+				}
+
+				if (orderByColumn2.equals(value)) {
+					selectedOrderByColumn2 = "selected";
+				}
+			%>
+
+				columnBuffer1.push(
+					'<option <%= selectedOrderByColumn1 %> value="<%= value %>"><%= HtmlUtil.escapeJS(classTypeField.getLabel()) %></option>'
+				);
+				columnBuffer2.push(
+					'<option <%= selectedOrderByColumn2 %> value="<%= value %>"><%= HtmlUtil.escapeJS(classTypeField.getLabel()) %></option>'
+				);
+
+			<%
+			}
+			%>
+
+			columnBuffer1.push(optgroupClose);
+			columnBuffer2.push(optgroupClose);
+
+			MAP_DDM_STRUCTURES[
+				'<%= className %>_<%= classType.getClassTypeId() %>_optTextOrderByColumn1'
+			] = columnBuffer1.join('');
+			MAP_DDM_STRUCTURES[
+				'<%= className %>_<%= classType.getClassTypeId() %>_optTextOrderByColumn2'
+			] = columnBuffer2.join('');
+
+		<%
+		}
+		%>
+
+		var <%= className %>SubtypeSelector = document.getElementById(
+			'<portlet:namespace />anyClassType<%= className %>'
+		);
+
+		<c:if test="<%= assetPublisherDisplayContext.isShowSubtypeFieldsFilter() %>">
+			function <%= className %>toggleSubclassesFields(
+				hideSubtypeFilterEnableWrapper
+			) {
+				var selectedSubtype = <%= className %>SubtypeSelector.value;
+
+				var structureOptions = document.getElementById(
+					'<portlet:namespace />' + selectedSubtype + '_<%= className %>Options'
+				);
+
+				if (structureOptions) {
+					structureOptions.classList.remove('hide');
+				}
+
+				var subtypeFieldsWrappers = document.querySelectorAll(
+					'#<portlet:namespace /><%= className %>subtypeFieldsWrapper, #<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper'
+				);
+
+				Array.prototype.forEach.call(subtypeFieldsWrappers, function (
+					subtypeFieldsWrapper
 				) {
-					var selectedSubtype = <%= className %>SubtypeSelector.value;
-
-					var structureOptions = document.getElementById(
-						'<portlet:namespace />' + selectedSubtype + '_<%= className %>Options'
-					);
-
-					if (structureOptions) {
-						structureOptions.classList.remove('hide');
-					}
-
-					var subtypeFieldsWrappers = document.querySelectorAll(
-						'#<portlet:namespace /><%= className %>subtypeFieldsWrapper, #<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper'
-					);
-
-					Array.prototype.forEach.call(subtypeFieldsWrappers, function (
-						subtypeFieldsWrapper
-					) {
-						if (selectedSubtype != 'false' && selectedSubtype != 'true') {
-							Array.prototype.forEach.call(
-								orderingPanel.querySelectorAll('.order-by-subtype'),
-								function (option) {
-									dom.exitDocument(option);
-								}
-							);
-
-							var optTextOrderByColumn1 =
-								MAP_DDM_STRUCTURES[
-									'<%= className %>_' +
-										selectedSubtype +
-										'_optTextOrderByColumn1'
-								];
-
-							if (optTextOrderByColumn1) {
-								dom.append(orderByColumn1, optTextOrderByColumn1);
+					if (selectedSubtype != 'false' && selectedSubtype != 'true') {
+						Array.prototype.forEach.call(
+							orderingPanel.querySelectorAll('.order-by-subtype'),
+							function (option) {
+								dom.exitDocument(option);
 							}
+						);
 
-							var optTextOrderByColumn2 =
-								MAP_DDM_STRUCTURES[
-									'<%= className %>_' +
-										selectedSubtype +
-										'_optTextOrderByColumn2'
-								];
+						var optTextOrderByColumn1 =
+							MAP_DDM_STRUCTURES[
+								'<%= className %>_' +
+									selectedSubtype +
+									'_optTextOrderByColumn1'
+							];
 
-							if (optTextOrderByColumn2) {
-								dom.append(orderByColumn2, optTextOrderByColumn2);
-							}
+						if (optTextOrderByColumn1) {
+							dom.append(orderByColumn1, optTextOrderByColumn1);
+						}
 
-							if (structureOptions) {
-								subtypeFieldsWrapper.classList.remove('hide');
-							}
-							else if (hideSubtypeFilterEnableWrapper) {
-								subtypeFieldsWrapper.classList.add('hide');
-							}
+						var optTextOrderByColumn2 =
+							MAP_DDM_STRUCTURES[
+								'<%= className %>_' +
+									selectedSubtype +
+									'_optTextOrderByColumn2'
+							];
+
+						if (optTextOrderByColumn2) {
+							dom.append(orderByColumn2, optTextOrderByColumn2);
+						}
+
+						if (structureOptions) {
+							subtypeFieldsWrapper.classList.remove('hide');
 						}
 						else if (hideSubtypeFilterEnableWrapper) {
 							subtypeFieldsWrapper.classList.add('hide');
 						}
-					});
+					}
+					else if (hideSubtypeFilterEnableWrapper) {
+						subtypeFieldsWrapper.classList.add('hide');
+					}
+				});
+			}
+
+			<%= className %>toggleSubclassesFields(false);
+
+			<%= className %>SubtypeSelector.addEventListener('change', function (event) {
+				setDDMFields('<%= className %>', '', '', '', '');
+
+				var subtypeFieldsFilterEnabledCheckbox = document.getElementById(
+					'<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>'
+				);
+
+				if (subtypeFieldsFilterEnabledCheckbox) {
+					subtypeFieldsFilterEnabledCheckbox.checked = false;
 				}
 
-				<%= className %>toggleSubclassesFields(false);
+				var assetSubtypeFields = sourcePanel.querySelectorAll(
+					'.asset-subtypefields'
+				);
 
-				<%= className %>SubtypeSelector.addEventListener('change', function (event) {
-					setDDMFields('<%= className %>', '', '', '', '');
-
-					var subtypeFieldsFilterEnabledCheckbox = document.getElementById(
-						'<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>'
-					);
-
-					if (subtypeFieldsFilterEnabledCheckbox) {
-						subtypeFieldsFilterEnabledCheckbox.checked = false;
-					}
-
-					var assetSubtypeFields = sourcePanel.querySelectorAll(
-						'.asset-subtypefields'
-					);
-
-					Array.prototype.forEach.call(assetSubtypeFields, function (
-						assetSubtypeField
-					) {
-						assetSubtypeField.classList.add('hide');
-					});
-
-					<%= className %>toggleSubclassesFields(true);
+				Array.prototype.forEach.call(assetSubtypeFields, function (
+					assetSubtypeField
+				) {
+					assetSubtypeField.classList.add('hide');
 				});
-			</c:if>
+
+				<%= className %>toggleSubclassesFields(true);
+			});
+		</c:if>
 
 	<%
 	}
@@ -462,7 +462,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 			String className = assetPublisherWebHelper.getClassName(curRendererFactory);
 		%>
 
-				<portlet:namespace />toggle<%= className %>(removeOrderBySubtype);
+			<portlet:namespace />toggle<%= className %>(removeOrderBySubtype);
 
 		<%
 		}

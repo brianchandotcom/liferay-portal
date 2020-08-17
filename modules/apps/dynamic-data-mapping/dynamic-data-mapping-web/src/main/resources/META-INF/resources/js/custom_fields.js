@@ -402,7 +402,7 @@ AUI.add(
 					var portletNamespace = instance.get('portletNamespace');
 
 					Liferay.Util.openSelectionModal({
-						onSelect(selectedItem) {
+						onSelect: (selectedItem) => {
 							if (selectedItem) {
 								var itemValue = JSON.parse(selectedItem.value);
 
@@ -611,7 +611,7 @@ AUI.add(
 					var portletNamespace = instance.get('portletNamespace');
 
 					Liferay.Util.openSelectionModal({
-						onSelect(selectedItem) {
+						onSelect: (selectedItem) => {
 							if (selectedItem) {
 								var itemValue = JSON.parse(selectedItem.value);
 

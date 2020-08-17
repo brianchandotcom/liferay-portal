@@ -155,12 +155,10 @@ const openSelectionModal = ({
 
 			eventHandlers.push(selectEventHandler);
 
+			const itemElements = container.querySelectorAll('.selector-button');
+
 			if (selectedData) {
 				const selectedDataSet = new Set(selectedData);
-
-				const itemElements = container.querySelectorAll(
-					'.selector-button'
-				);
 
 				itemElements.forEach((itemElement) => {
 					const itemId =
@@ -172,6 +170,12 @@ const openSelectionModal = ({
 					}
 				});
 			}
+
+			itemElements.forEach((itemElement) => {
+				itemElement.addEventListener('click', (event) => {
+					Liferay.fire(selectEventName, event.currentTarget.dataset);
+				});
+			});
 		},
 		title,
 		url,

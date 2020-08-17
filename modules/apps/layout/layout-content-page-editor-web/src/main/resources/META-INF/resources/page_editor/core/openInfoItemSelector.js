@@ -22,7 +22,7 @@ export function openInfoItemSelector(
 ) {
 	openSelectionModal({
 		onClose: destroyedCallback,
-		onSelect(selectedItem) {
+		onSelect: (selectedItem) => {
 			if (selectedItem && selectedItem.value) {
 				const infoItem = {
 					...JSON.parse(selectedItem.value),

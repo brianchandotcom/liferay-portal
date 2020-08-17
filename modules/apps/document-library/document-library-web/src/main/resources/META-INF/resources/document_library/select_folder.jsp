@@ -21,8 +21,6 @@ Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
 long folderId = BeanParamUtil.getLong(folder, request, "folderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectFolder");
-
 long repositoryId = scopeGroupId;
 String folderName = LanguageUtil.get(request, "home");
 
@@ -177,10 +175,3 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
-
-<aui:script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectFolderFm',
-		'<%= HtmlUtil.escapeJS(eventName) %>'
-	);
-</aui:script>

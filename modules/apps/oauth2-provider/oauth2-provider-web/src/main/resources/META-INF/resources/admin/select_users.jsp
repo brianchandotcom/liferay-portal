@@ -70,10 +70,3 @@ SelectUsersDisplayContext selectUsersDisplayContext = new SelectUsersDisplayCont
 		/>
 	</liferay-ui:search-container>
 </aui:form>
-
-<aui:script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectUser',
-		'<%= HtmlUtil.escapeJS(selectUsersDisplayContext.getEventName()) %>'
-	);
-</aui:script>

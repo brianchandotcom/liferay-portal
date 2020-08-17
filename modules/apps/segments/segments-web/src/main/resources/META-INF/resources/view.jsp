@@ -186,7 +186,7 @@ request.setAttribute("view.jsp-eventName", eventName);
 		Liferay.Util.openSelectionModal({
 			eventName: '<%= eventName %>',
 			multiple: true,
-			onSelect: function(selectedItem) {
+			onSelect: function (selectedItem) {
 				if (selectedItem) {
 					var data = {
 						segmentsEntryId: segmentsEntryId,

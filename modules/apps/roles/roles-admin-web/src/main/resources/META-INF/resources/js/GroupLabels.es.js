@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import {openSelectionModal} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 export default function GroupLabels({
@@ -40,30 +41,6 @@ export default function GroupLabels({
 				.split('@@')
 				.filter((name) => !!name)
 		);
-	}, [portletNamespace, target]);
-
-	useEffect(() => {
-		const selectGroupHandle = Liferay.on(
-			`${portletNamespace}selectGroup`,
-			(event) => {
-				if (event.grouptarget === target) {
-					setGroupIds((groupIds) =>
-						groupIds.indexOf(event.groupid) == -1
-							? [...groupIds, event.groupid]
-							: groupIds
-					);
-					setGroupNames((groupNames) =>
-						groupNames.indexOf(event.groupdescriptivename) == -1
-							? [...groupNames, event.groupdescriptivename]
-							: groupNames
-					);
-				}
-			}
-		);
-
-		return () => {
-			Liferay.detach(selectGroupHandle);
-		};
 	}, [portletNamespace, target]);
 
 	useEffect(() => {
@@ -111,19 +88,33 @@ export default function GroupLabels({
 			<ClayButton
 				displayType="unstyled"
 				onClick={() => {
-					Liferay.Util.selectEntity({
-						dialog: {
-							constrain: true,
-							modal: true,
-							width: 600,
+					openSelectionModal({
+						onSelect: (event) => {
+							if (event.grouptarget === target) {
+								setGroupIds((groupIds) =>
+									groupIds.indexOf(event.groupid) == -1
+										? [...groupIds, event.groupid]
+										: groupIds
+								);
+								setGroupNames((groupNames) =>
+									groupNames.indexOf(
+										event.groupdescriptivename
+									) == -1
+										? [
+												...groupNames,
+												event.groupdescriptivename,
+										  ]
+										: groupNames
+								);
+							}
 						},
-						id: `${portletNamespace}selectGroup${target}`,
+						selectEventName: `${portletNamespace}selectGroup${target}`,
 						selectedData: groupIds,
 						title: Liferay.Util.sub(
 							Liferay.Language.get('select-x'),
 							Liferay.Language.get('site')
 						),
-						uri: itemSelectorURL,
+						url: itemSelectorURL,
 					});
 				}}
 			>

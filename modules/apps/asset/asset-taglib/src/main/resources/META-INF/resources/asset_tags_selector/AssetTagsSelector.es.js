@@ -131,7 +131,7 @@ function AssetTagsSelector({
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('done'),
 			multiple: true,
-			onSelect(dialogSelectedItems) {
+			onSelect: (dialogSelectedItems) => {
 				if (dialogSelectedItems && dialogSelectedItems.items.length) {
 					const newValues = dialogSelectedItems.items
 						.split(',')

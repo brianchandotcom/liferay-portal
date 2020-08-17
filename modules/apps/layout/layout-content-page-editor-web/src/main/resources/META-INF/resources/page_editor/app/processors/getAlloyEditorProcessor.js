@@ -84,7 +84,7 @@ export default function getAlloyEditorProcessor(
 					changeLinkCallback
 				) => {
 					openSelectionModal({
-						onSelect(selectedItem) {
+						onSelect: (selectedItem) => {
 							if (selectedItem) {
 								changeLinkCallback(selectedItem);
 							}

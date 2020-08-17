@@ -37,24 +37,17 @@ class UserGroupsManagementToolbarDefaultEventHandler extends DefaultEventHandler
 	}
 
 	selectRoles(itemData) {
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					destroyOnHide: true,
-					modal: true,
-				},
-				eventName: this.ns('selectRole'),
-				title: Liferay.Language.get('select-role'),
-				uri: itemData.selectRolesURL,
-			},
-			(event) => {
+		openSelectionModal({
+			onSelect: (event) => {
 				location.href = addParams(
 					`${this.ns('roleId')}=${event.id}`,
 					itemData.viewRoleURL
 				);
-			}
-		);
+			},
+			selectEventName: this.ns('selectRole'),
+			title: Liferay.Language.get('select-role'),
+			url: itemData.selectRolesURL,
+		});
 	}
 
 	selectRole(itemData) {

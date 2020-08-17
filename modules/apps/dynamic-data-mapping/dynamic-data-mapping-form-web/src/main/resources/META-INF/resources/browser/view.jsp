@@ -88,10 +88,3 @@
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
-
-<aui:script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectDDMFormFm',
-		'<%= HtmlUtil.escapeJS(ddmFormBrowserDisplayContext.getEventName()) %>'
-	);
-</aui:script>

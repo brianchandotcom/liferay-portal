@@ -134,7 +134,7 @@
 			Liferay.Util.openSelectionModal({
 				buttonAddLabel: '<liferay-ui:message key="done" />',
 				multiple: true,
-				onSelect: function(assetEntryIds) {
+				onSelect: function (assetEntryIds) {
 					if (assetEntryIds) {
 						Array.prototype.forEach.call(assetEntryIds, function (
 							assetEntry
@@ -149,13 +149,9 @@
 
 								var entryHtml =
 									'<h4 class="list-group-title">' +
-									Liferay.Util.escapeHTML(
-										assetEntry.assettitle
-									) +
+									Liferay.Util.escapeHTML(assetEntry.assettitle) +
 									'</h4><p class="list-group-subtitle">' +
-									Liferay.Util.escapeHTML(
-										assetEntry.assettype
-									) +
+									Liferay.Util.escapeHTML(assetEntry.assettype) +
 									'</p><p class="list-group-subtitle">' +
 									Liferay.Util.escapeHTML(
 										assetEntry.groupdescriptivename

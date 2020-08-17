@@ -135,13 +135,14 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 
 	function <portlet:namespace />addUsers(event) {
 		Liferay.Util.openSelectionModal({
-			onSelect: function(selectedItem) {
+			onSelect: function (selectedItem) {
 				if (selectedItem) {
 					Liferay.Util.postForm(form, {
 						data: {
 							addUserIds: selectedItem,
 						},
-						url: '<portlet:actionURL name="editUserGroupAssignments" />',
+						url:
+							'<portlet:actionURL name="editUserGroupAssignments" />',
 					});
 				}
 			},

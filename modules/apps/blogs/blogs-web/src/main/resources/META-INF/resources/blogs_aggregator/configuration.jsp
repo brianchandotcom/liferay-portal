@@ -61,79 +61,66 @@ if (organizationId > 0) {
 					<aui:button name="removeOrganizationButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
 				</div>
 
-				<aui:script>
+				<aui:script sandbox="<%= true %>">
 					var <portlet:namespace />selectOrganizationButton = document.getElementById(
 						'<portlet:namespace />selectOrganizationButton'
 					);
 
-					if (<portlet:namespace />selectOrganizationButton) {
-						<portlet:namespace />selectOrganizationButton.addEventListener(
-							'click',
-							function (event) {
-								Liferay.Util.selectEntity(
-									{
-										dialog: {
-											constrain: true,
-											destroyOnHide: true,
-											modal: true,
-										},
+					<portlet:namespace />selectOrganizationButton.addEventListener(
+						'click',
+						function (event) {
+							Liferay.Util.openSelectionModal({
+								onSelect: function (event) {
+									var form = document.getElementById('<portlet:namespace />fm');
 
-										<%
-										String portletId = PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW);
-										%>
-
-										id:
-											'<%= PortalUtil.getPortletNamespace(portletId) %>selectOrganization',
-										title:
-											'<liferay-ui:message arguments="organization" key="select-x" />',
-
-										<%
-										PortletURL selectOrganizationURL = PortletProviderUtil.getPortletURL(request, Organization.class.getName(), PortletProvider.Action.BROWSE);
-
-										selectOrganizationURL.setParameter("tabs1", "organizations");
-										selectOrganizationURL.setWindowState(LiferayWindowState.POP_UP);
-										%>
-
-										uri: '<%= selectOrganizationURL.toString() %>',
-									},
-									function (event) {
-										var form = document.getElementById(
-											'<portlet:namespace />fm'
+									if (form) {
+										var organizationId = form.querySelector(
+											'#<portlet:namespace />organizationId'
 										);
 
-										if (form) {
-											var organizationId = form.querySelector(
-												'#<portlet:namespace />organizationId'
-											);
-
-											if (organizationId) {
-												organizationId.setAttribute(
-													'value',
-													event.entityid
-												);
-											}
-
-											var organizationName = form.querySelector(
-												'#<portlet:namespace />organizationName'
-											);
-
-											if (organizationName) {
-												organizationName.setAttribute(
-													'value',
-													event.entityname
-												);
-											}
+										if (organizationId) {
+											organizationId.setAttribute('value', event.entityid);
 										}
 
-										Liferay.Util.toggleDisabled(
-											'#<portlet:namespace />removeOrganizationButton',
-											false
+										var organizationName = form.querySelector(
+											'#<portlet:namespace />organizationName'
 										);
+
+										if (organizationName) {
+											organizationName.setAttribute(
+												'value',
+												event.entityname
+											);
+										}
 									}
-								);
-							}
-						);
-					}
+
+									Liferay.Util.toggleDisabled(
+										'#<portlet:namespace />removeOrganizationButton',
+										false
+									);
+								},
+
+								<%
+								String portletId = PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW);
+								%>
+
+								selectEventName:
+									'<%= PortalUtil.getPortletNamespace(portletId) %>selectOrganization',
+
+								title:
+									'<liferay-ui:message arguments="organization" key="select-x" />',
+
+								<%
+								PortletURL selectOrganizationURL = PortletProviderUtil.getPortletURL(request, Organization.class.getName(), PortletProvider.Action.BROWSE);
+
+								selectOrganizationURL.setParameter("tabs1", "organizations");
+								selectOrganizationURL.setWindowState(LiferayWindowState.POP_UP);
+								%>
+
+								url: '<%= selectOrganizationURL.toString() %>',
+							});
+						}
+					);
 				</aui:script>
 
 				<aui:script require="metal-dom/src/dom">

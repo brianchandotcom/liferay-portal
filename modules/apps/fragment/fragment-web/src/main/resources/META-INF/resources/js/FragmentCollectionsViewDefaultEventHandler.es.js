@@ -23,6 +23,7 @@ import {Config} from 'metal-state';
  * @class FragmentCollectionsViewDefaultEventHandler
  */
 class FragmentCollectionsViewDefaultEventHandler extends DefaultEventHandler {
+
 	/**
 	 * Opens an item selector to remove selected collections
 	 * @private
@@ -106,7 +107,7 @@ class FragmentCollectionsViewDefaultEventHandler extends DefaultEventHandler {
 		openSelectionModal({
 			buttonAddLabel: dialogButtonLabel,
 			multiple: true,
-			onSelect(selectedItem) {
+			onSelect: (selectedItem) => {
 				if (selectedItem) {
 					callback(selectedItem);
 				}
@@ -146,6 +147,7 @@ class FragmentCollectionsViewDefaultEventHandler extends DefaultEventHandler {
 }
 
 FragmentCollectionsViewDefaultEventHandler.STATE = {
+
 	/**
 	 * @default undefined
 	 * @instance

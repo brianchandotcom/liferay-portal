@@ -130,7 +130,7 @@ SearchContainer<?> searchContainer = editPasswordPolicyAssignmentsManagementTool
 	var addAssignees = function (event) {
 		Liferay.Util.openSelectionModal({
 			multiple: true,
-			onSelect: function(result) {
+			onSelect: function (result) {
 				if (result && result.item) {
 					var form = document.getElementById('<portlet:namespace />fm');
 

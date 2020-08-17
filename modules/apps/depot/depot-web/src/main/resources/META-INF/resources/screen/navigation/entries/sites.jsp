@@ -113,21 +113,8 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 		);
 
 		addConnectedSiteButton.addEventListener('click', function (event) {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true,
-					},
-					eventName:
-						'<%= liferayPortletResponse.getNamespace() + "selectSite" %>',
-					id: '<portlet:namespace />selectSite',
-					title: '<liferay-ui:message key="select-site" />',
-					uri:
-						'<%= String.valueOf(depotAdminSitesDisplayContext.getItemSelectorURL()) %>',
-				},
-				function (event) {
+			Liferay.Util.openSelectionModal({
+				onSelect: function (event) {
 					var toGroupIdInput = document.querySelector(
 						'#<portlet:namespace />toGroupId'
 					);
@@ -141,8 +128,13 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 					redirectInput.value = '<%= currentURL %>';
 
 					submitForm(toGroupIdInput.form);
-				}
-			);
+				},
+				selectEventName:
+					'<%= liferayPortletResponse.getNamespace() + "selectSite" %>',
+				title: '<liferay-ui:message key="select-site" />',
+				url:
+					'<%= String.valueOf(depotAdminSitesDisplayContext.getItemSelectorURL()) %>',
+			});
 		});
 	</aui:script>
 </clay:sheet-section>

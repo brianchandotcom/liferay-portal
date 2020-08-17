@@ -17,8 +17,6 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectGroup");
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/document_library/select_group.jsp");
@@ -143,10 +141,3 @@ portletURL.setParameter("mvcPath", "/document_library/select_group.jsp");
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
-
-<aui:script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectGroupFm',
-		'<%= HtmlUtil.escapeJS(eventName) %>'
-	);
-</aui:script>

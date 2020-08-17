@@ -103,7 +103,7 @@ AssetCategory category = (AssetCategory)row.getObject();
 			moveCategoryIcon.addEventListener('click', function (event) {
 				Liferay.Util.openSelectionModal({
 					multiple: true,
-					onSelect: function(selectedItem) {
+					onSelect: function (selectedItem) {
 						if (selectedItem) {
 							var parentCategoryId = 0;
 							var vocabularyId = 0;
@@ -125,7 +125,9 @@ AssetCategory category = (AssetCategory)row.getObject();
 								document.<portlet:namespace />moveCategoryFm.<portlet:namespace />parentCategoryId.value = parentCategoryId;
 								document.<portlet:namespace />moveCategoryFm.<portlet:namespace />vocabularyId.value = vocabularyId;
 
-								submitForm(document.<portlet:namespace />moveCategoryFm);
+								submitForm(
+									document.<portlet:namespace />moveCategoryFm
+								);
 							}
 						}
 					},

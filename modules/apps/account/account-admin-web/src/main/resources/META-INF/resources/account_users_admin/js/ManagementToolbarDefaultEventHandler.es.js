@@ -97,7 +97,7 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 		openSelectionModal({
 			buttonAddLabel: dialogButtonLabel,
 			multiple: true,
-			onSelect(selectedItem) {
+			onSelect: (selectedItem) => {
 				if (selectedItem) {
 					callback(selectedItem);
 				}

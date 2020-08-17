@@ -227,19 +227,8 @@ if (parentOrganization != null) {
 		selectOrganizationLink.on('click', function (event) {
 			var searchContainerData = searchContainer.getData();
 
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						modal: true,
-					},
-					id: '<portlet:namespace />selectOrganization',
-					selectedData: [searchContainerData],
-					title:
-						'<liferay-ui:message arguments="parent-organization" key="select-x" />',
-					uri: '<%= selectOrganizationRenderURL %>',
-				},
-				function (event) {
+			Liferay.Util.openSelectionModal({
+				onSelect: function (event) {
 					var rowColumns = [];
 
 					var href =
@@ -265,8 +254,13 @@ if (parentOrganization != null) {
 					selectOrganizationLinkText.text(
 						'<liferay-ui:message key="change" />'
 					);
-				}
-			);
+				},
+				selectEventName: '<portlet:namespace />selectOrganization',
+				selectedData: [searchContainerData],
+				title:
+					'<liferay-ui:message arguments="parent-organization" key="select-x" />',
+				url: '<%= selectOrganizationRenderURL %>',
+			});
 		});
 	}
 </aui:script>

@@ -20,7 +20,6 @@
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
 double sourceVersion = ParamUtil.getDouble(request, "sourceVersion");
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectVersionFm");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -96,10 +95,3 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
-
-<aui:script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectVersionFm',
-		'<%= HtmlUtil.escapeJS(eventName) %>'
-	);
-</aui:script>

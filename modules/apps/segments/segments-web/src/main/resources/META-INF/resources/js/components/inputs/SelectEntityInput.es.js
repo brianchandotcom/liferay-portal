@@ -46,7 +46,7 @@ class SelectEntityInput extends React.Component {
 			openSelectionModal({
 				buttonAddLabel: Liferay.Language.get('select'),
 				multiple: true,
-				onSelect(selectedItems) {
+				onSelect: (selectedItems) => {
 					if (selectedItems) {
 						const selectedValues = selectedItems.map((item) => ({
 							displayValue: item.name,
@@ -60,40 +60,19 @@ class SelectEntityInput extends React.Component {
 				title,
 				url: uri,
 			});
-
-			itemSelectorDialog.open();
-
-			itemSelectorDialog.on('selectedItemChange', (event) => {
-				const selectedItems = event.selectedItem;
-
-				if (selectedItems) {
-					const selectedValues = selectedItems.map((item) => ({
-						displayValue: item.name,
-						value: item.id,
-					}));
-
-					onChange(selectedValues);
-				}
-			});
-		} else {
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true,
-					},
-					id,
-					title,
-					uri,
-				},
-				(event) => {
+		}
+		else {
+			openSelectionModal({
+				onSelect: (event) => {
 					onChange({
 						displayValue: event.entityname,
 						value: event.entityid,
 					});
-				}
-			);
+				},
+				selectEventName: id,
+				title,
+				url: uri,
+			});
 		}
 	};
 

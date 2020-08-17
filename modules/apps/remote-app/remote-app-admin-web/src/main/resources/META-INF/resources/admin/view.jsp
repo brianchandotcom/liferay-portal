@@ -17,19 +17,19 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-RemoteAppAdminDataSetDisplayContext remoteAppAdminDataSetDisplayContext = (RemoteAppAdminDataSetDisplayContext)renderRequest.getAttribute("remoteAppAdminDataSetDisplayContext");
+RemoteAppAdminDisplayContext remoteAppAdminDisplayContext = (RemoteAppAdminDisplayContext)renderRequest.getAttribute(RemoteAppAdminWebKeys.REMOTE_APP_ADMIN_DISPLAY_CONTEXT);
 %>
 
 <clay:data-set-display
 	actionParameterName="remoteAppEntryId"
-	creationMenu="<%= remoteAppAdminDataSetDisplayContext.getCreationMenu() %>"
+	creationMenu="<%= remoteAppAdminDisplayContext.getCreationMenu() %>"
 	dataProviderKey="<%= RemoteAppAdminConstants.REMOTE_APP_ENTRY_DATA_SET_DISPLAY %>"
 	formId='<%= liferayPortletResponse.getNamespace() + "fm" %>'
 	id="<%= RemoteAppAdminConstants.REMOTE_APP_ENTRY_DATA_SET_DISPLAY %>"
 	itemsPerPage="<%= 10 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
-	portletURL="<%= remoteAppAdminDataSetDisplayContext.getCurrentPortletURL() %>"
+	portletURL="<%= remoteAppAdminDisplayContext.getCurrentPortletURL() %>"
 	selectedItemsKey="remoteAppEntryId"
 	selectionType="multiple"
 	style="fluid"

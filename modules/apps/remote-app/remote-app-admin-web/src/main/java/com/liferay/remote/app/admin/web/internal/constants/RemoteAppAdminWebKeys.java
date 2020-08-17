@@ -19,6 +19,9 @@ package com.liferay.remote.app.admin.web.internal.constants;
  */
 public class RemoteAppAdminWebKeys {
 
+	public static final String REMOTE_APP_ADMIN_DISPLAY_CONTEXT =
+		"REMOTE_APP_ADMIN_DISPLAY_CONTEXT";
+
 	public static final String REMOTE_APP_ENTRY = "REMOTE_APP_ENTRY";
 
 }

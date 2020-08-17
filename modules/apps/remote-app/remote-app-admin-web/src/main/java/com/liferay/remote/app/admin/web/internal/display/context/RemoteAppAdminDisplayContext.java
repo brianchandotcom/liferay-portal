@@ -30,9 +30,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class RemoteAppAdminDataSetDisplayContext {
+public class RemoteAppAdminDisplayContext {
 
-	public RemoteAppAdminDataSetDisplayContext(
+	public RemoteAppAdminDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		RemoteAppEntryLocalService remoteAppEntryLocalService) {
 
@@ -43,12 +43,14 @@ public class RemoteAppAdminDataSetDisplayContext {
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
-				PortletURL addEntryURL = _renderResponse.createRenderURL();
+				PortletURL addRemoteAppEntryURL =
+					_renderResponse.createRenderURL();
 
-				addEntryURL.setParameter("mvcRenderCommandName", "/edit_entry");
-				addEntryURL.setParameter("redirect", _getRedirect());
+				addRemoteAppEntryURL.setParameter(
+					"mvcRenderCommandName", "/edit_remote_app_entry");
+				addRemoteAppEntryURL.setParameter("redirect", _getRedirect());
 
-				dropdownItem.setHref(addEntryURL);
+				dropdownItem.setHref(addRemoteAppEntryURL);
 
 				dropdownItem.setLabel(_getLabel("add-remote-web-app"));
 			}

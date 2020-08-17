@@ -94,7 +94,7 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 				InfoDisplayWebKeys.INFO_ITEM_DETAILS);
 
 		InfoItemRenderer<Object> infoItemRenderer = _getInfoItemRenderer(
-			infoItemDetails.getClass());
+			infoItemDetails.getClassName());
 
 		if (infoItemRenderer == null) {
 			if (FragmentRendererUtil.isEditMode(httpServletRequest)) {
@@ -112,11 +112,11 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 	}
 
 	private InfoItemRenderer<Object> _getInfoItemRenderer(
-		Class<?> displayObjectClass) {
+		String displayObjectClassName) {
 
 		List<InfoItemRenderer<?>> infoItemRenderers =
-			FragmentRendererUtil.getInfoItemRenderers(
-				displayObjectClass, _infoItemRendererTracker);
+			_infoItemRendererTracker.getInfoItemRenderers(
+				displayObjectClassName);
 
 		if (infoItemRenderers == null) {
 			return null;

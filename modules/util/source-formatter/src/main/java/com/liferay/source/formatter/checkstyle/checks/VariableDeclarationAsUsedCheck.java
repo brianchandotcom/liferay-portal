@@ -56,8 +56,6 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 	private void _checkAsUsed(
 		DetailAST detailAST, DetailAST variableDefinitionDetailAST) {
 
-		List<Variable> variables = _getVariables(variableDefinitionDetailAST);
-
 		if (hasParentWithTokenType(
 				variableDefinitionDetailAST, TokenTypes.FOR_EACH_CLAUSE,
 				TokenTypes.FOR_INIT)) {
@@ -68,11 +66,8 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 		DetailAST nameDetailAST = variableDefinitionDetailAST.findFirstToken(
 			TokenTypes.IDENT);
 
-		List<DetailAST> identDetailASTList = _getIdentDetailASTList(
-			variableDefinitionDetailAST);
-
 		List<DetailAST> dependentIdentDetailASTList =
-			_getDependentIdentDetailASTList(variables, identDetailASTList);
+			_getDependentIdentDetailASTList(variableDefinitionDetailAST);
 
 		if (dependentIdentDetailASTList.isEmpty()) {
 			return;
@@ -90,7 +85,8 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 					"manage|next|open|post|put|read|register|resolve|run|send|",
 					"test|transform|unzip|update|zip)([A-Z].*)?"),
 				"currentTimeMillis", "nextVersion", "toString") &&
-			!_containsVariableType(variables, "ActionQueue", "File")) {
+			!_containsVariableType(
+				variableDefinitionDetailAST, "ActionQueue", "File")) {
 
 			_checkMoveAfterBranchingStatement(
 				detailAST, variableDefinitionDetailAST, variableName,
@@ -109,13 +105,12 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 
 		_checkInline(
 			variableDefinitionDetailAST, nameDetailAST, variableName,
-			identDetailASTList, firstDependentIdentDetailAST);
+			firstDependentIdentDetailAST);
 	}
 
 	private void _checkInline(
 		DetailAST variableDefinitionDetailAST, DetailAST nameDetailAST,
-		String variableName, List<DetailAST> identDetailASTList,
-		DetailAST firstDependentIdentDetailAST) {
+		String variableName, DetailAST firstDependentIdentDetailAST) {
 
 		DetailAST assignMethodCallDetailAST = _getAssignMethodCallDetailAST(
 			variableDefinitionDetailAST);
@@ -124,9 +119,26 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 			return;
 		}
 
+		List<DetailAST> followingIdentDetailASTList = new ArrayList<>();
+
+		DetailAST nextSiblingDetailAST =
+			variableDefinitionDetailAST.getNextSibling();
+
+		while (true) {
+			if (nextSiblingDetailAST == null) {
+				break;
+			}
+
+			followingIdentDetailASTList.addAll(
+				getAllChildTokens(
+					nextSiblingDetailAST, true, TokenTypes.IDENT));
+
+			nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
+		}
+
 		DetailAST identDetailAST = null;
 
-		for (DetailAST curIdentDetailAST : identDetailASTList) {
+		for (DetailAST curIdentDetailAST : followingIdentDetailASTList) {
 			if ((curIdentDetailAST.getLineNo() <= nameDetailAST.getLineNo()) ||
 				!variableName.equals(curIdentDetailAST.getText())) {
 
@@ -299,10 +311,17 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 	}
 
 	private boolean _containsVariableType(
-		List<Variable> variables, String... variableTypeNames) {
+		DetailAST variableDefinitionDetailAST, String... variableTypeNames) {
 
-		for (Variable variable : variables) {
-			if (ArrayUtil.contains(variableTypeNames, variable.getTypeName())) {
+		List<DetailAST> identDetailASTList = getAllChildTokens(
+			variableDefinitionDetailAST, true, TokenTypes.IDENT);
+
+		for (DetailAST identDetailAST : identDetailASTList) {
+			if (ArrayUtil.contains(
+					variableTypeNames,
+					getVariableTypeName(
+						identDetailAST, identDetailAST.getText(), false))) {
+
 				return true;
 			}
 		}
@@ -358,9 +377,12 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 	}
 
 	private List<DetailAST> _getDependentIdentDetailASTList(
-		List<Variable> variables, List<DetailAST> identDetailASTList) {
+		DetailAST variableDefinitionDetailAST) {
 
-		List<DetailAST> dependentIdentDetailASTList = new ArrayList<>();
+		List<Variable> variables = new ArrayList<>();
+
+		List<DetailAST> identDetailASTList = getAllChildTokens(
+			variableDefinitionDetailAST, true, TokenTypes.IDENT);
 
 		for (DetailAST identDetailAST : identDetailASTList) {
 			if (_isMethodNameDetailAST(identDetailAST)) {
@@ -369,10 +391,65 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 
 			String name = identDetailAST.getText();
 
+			if (Character.isUpperCase(name.charAt(0))) {
+				continue;
+			}
+
+			String typeName = getVariableTypeName(identDetailAST, name, false);
+
+			if (equals(
+					variableDefinitionDetailAST, identDetailAST.getParent()) ||
+				(!typeName.equals("ActionRequest") &&
+				 !typeName.equals("PortletRequest") &&
+				 !typeName.equals("ResourceRequest"))) {
+
+				variables.add(
+					new Variable(
+						name,
+						_hasPossibleValueChangeOperation(identDetailAST)));
+			}
+		}
+
+		List<DetailAST> followingIdentDetailASTList = new ArrayList<>();
+
+		DetailAST nextSiblingDetailAST =
+			variableDefinitionDetailAST.getNextSibling();
+
+		while (true) {
+			if (nextSiblingDetailAST == null) {
+				break;
+			}
+
+			followingIdentDetailASTList.addAll(
+				getAllChildTokens(
+					nextSiblingDetailAST, true, TokenTypes.IDENT));
+
+			nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
+		}
+
+		return _getDependentIdentDetailASTList(
+			variables, followingIdentDetailASTList);
+	}
+
+	private List<DetailAST> _getDependentIdentDetailASTList(
+		List<Variable> variables, List<DetailAST> followingIdentDetailASTList) {
+
+		List<DetailAST> dependentIdentDetailASTList = new ArrayList<>();
+
+		for (DetailAST identDetailAST : followingIdentDetailASTList) {
+			if (_isMethodNameDetailAST(identDetailAST)) {
+				continue;
+			}
+
+			String name = identDetailAST.getText();
+
 			for (Variable variable : variables) {
-				if (name.equals(variable.getName()) &&
-					(variable.hasPossibleValueChangeOperation() ||
-					 _hasPossibleValueChangeOperation(identDetailAST))) {
+				if (!name.equals(variable.getName())) {
+					continue;
+				}
+
+				if (_hasPossibleValueChangeOperation(identDetailAST) ||
+					variable.hasPossibleValueChangeOperation()) {
 
 					dependentIdentDetailASTList.add(identDetailAST);
 				}
@@ -380,27 +457,6 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 		}
 
 		return dependentIdentDetailASTList;
-	}
-
-	private List<DetailAST> _getIdentDetailASTList(
-		DetailAST variableDefinitionDetailAST) {
-
-		List<DetailAST> identDetailASTList = new ArrayList<>();
-
-		DetailAST nextSiblingDetailAST =
-			variableDefinitionDetailAST.getNextSibling();
-
-		while (true) {
-			if (nextSiblingDetailAST == null) {
-				return identDetailASTList;
-			}
-
-			identDetailASTList.addAll(
-				getAllChildTokens(
-					nextSiblingDetailAST, true, TokenTypes.IDENT));
-
-			nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
-		}
 	}
 
 	private DetailAST _getIfStatementDetailAST(
@@ -475,43 +531,6 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 		}
 
 		return lastBranchingStatementDetailAST;
-	}
-
-	private List<Variable> _getVariables(
-		DetailAST variableDefinitionDetailAST) {
-
-		List<Variable> variables = new ArrayList<>();
-
-		List<DetailAST> identDetailASTList = getAllChildTokens(
-			variableDefinitionDetailAST, true, TokenTypes.IDENT);
-
-		for (DetailAST identDetailAST : identDetailASTList) {
-			if (_isMethodNameDetailAST(identDetailAST)) {
-				continue;
-			}
-
-			String name = identDetailAST.getText();
-
-			if (Character.isUpperCase(name.charAt(0))) {
-				continue;
-			}
-
-			String typeName = getVariableTypeName(identDetailAST, name, false);
-
-			if (equals(
-					variableDefinitionDetailAST, identDetailAST.getParent()) ||
-				(!typeName.equals("ActionRequest") &&
-				 !typeName.equals("PortletRequest") &&
-				 !typeName.equals("ResourceRequest"))) {
-
-				variables.add(
-					new Variable(
-						name, typeName,
-						_hasPossibleValueChangeOperation(identDetailAST)));
-			}
-		}
-
-		return variables;
 	}
 
 	private boolean _hasChainStyle(
@@ -675,21 +694,13 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 
 	private class Variable {
 
-		public Variable(
-			String name, String typeName,
-			boolean hasPossibleValueChangeOperation) {
-
+		public Variable(String name, boolean hasPossibleValueChangeOperation) {
 			_name = name;
-			_typeName = typeName;
 			_hasPossibleValueChangeOperation = hasPossibleValueChangeOperation;
 		}
 
 		public String getName() {
 			return _name;
-		}
-
-		public String getTypeName() {
-			return _typeName;
 		}
 
 		public boolean hasPossibleValueChangeOperation() {
@@ -698,7 +709,6 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 
 		private final boolean _hasPossibleValueChangeOperation;
 		private final String _name;
-		private final String _typeName;
 
 	}
 

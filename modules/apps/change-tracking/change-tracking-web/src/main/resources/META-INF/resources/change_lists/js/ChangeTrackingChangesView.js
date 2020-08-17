@@ -965,7 +965,7 @@ class ChangeTrackingChangesView extends React.Component {
 
 					<ClayManagementToolbar.Item className="nav-item-expand" />
 
-					<ClayManagementToolbar.Item>
+					<ClayManagementToolbar.Item className="simple-toggle-switch-reverse">
 						<ClayToggle
 							label={Liferay.Language.get('show-all-items')}
 							onToggle={(showHideable) =>

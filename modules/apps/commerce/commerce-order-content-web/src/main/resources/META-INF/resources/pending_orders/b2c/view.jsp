@@ -33,7 +33,7 @@ Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
 >
 	<div class="container-fluid-1280" id="<portlet:namespace />ordersContainer">
 		<div class="commerce-orders-container" id="<portlet:namespace />entriesContainer">
-			<clay:dataset-display
+			<clay:data-set-display
 				dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDERS %>"
 				id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDERS %>"
 				itemsPerPage="<%= 10 %>"

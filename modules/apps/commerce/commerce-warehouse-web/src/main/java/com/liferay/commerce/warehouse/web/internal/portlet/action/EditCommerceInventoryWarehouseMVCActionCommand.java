@@ -129,7 +129,7 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 				hideDefaultErrorMessage(actionRequest);
 
 				SessionErrors.add(
-					actionRequest, throwable.getClass(), t.getMessage());
+					actionRequest, throwable.getClass(), throwable.getMessage());
 
 				actionResponse.setRenderParameter(
 					"commerceAdminModuleKey",

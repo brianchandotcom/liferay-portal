@@ -77,8 +77,11 @@ public class AttachmentsUploadResponseHandler implements UploadResponseHandler {
 
 			JSONObject errorJSONObject = _jsonFactory.createJSONObject();
 
-			errorJSONObject.put("errorType", errorType);
-			errorJSONObject.put("message", errorMessage);
+			errorJSONObject.put(
+				"errorType", errorType
+			).put(
+				"message", errorMessage
+			);
 
 			jsonObject.put("error", errorJSONObject);
 		}

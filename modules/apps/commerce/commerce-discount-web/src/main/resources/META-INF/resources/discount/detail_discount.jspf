@@ -50,21 +50,25 @@ String level3 = StringPool.BLANK;
 String level4 = StringPool.BLANK;
 
 if (commerceDiscount != null) {
-	level2Disabled = (commerceDiscount.getLevel2() == null) || (commerceDiscount.getLevel2().doubleValue() <= 0);
-	level3Disabled = (commerceDiscount.getLevel3() == null) || (commerceDiscount.getLevel3().doubleValue() <= 0);
-	level4Disabled = (commerceDiscount.getLevel4() == null) || (commerceDiscount.getLevel4().doubleValue() <= 0);
+	BigDecimal level2BigDecimal = commerceDiscount.getLevel2();
+	BigDecimal level3BigDecimal = commerceDiscount.getLevel3();
+	BigDecimal level4BigDecimal = commerceDiscount.getLevel4();
+
+	level2Disabled = (level2BigDecimal == null) || (level2BigDecimal.doubleValue() <= 0);
+	level3Disabled = (level3BigDecimal == null) || (level3BigDecimal.doubleValue() <= 0);
+	level4Disabled = (level4BigDecimal == null) || (level4BigDecimal.doubleValue() <= 0);
 
 	if (usePercentage) {
 		level1 = commerceDiscountDisplayContext.getLocalizedPercentage(commerceDiscount.getLevel1(), locale);
-		level2 = commerceDiscountDisplayContext.getLocalizedPercentage(commerceDiscount.getLevel2(), locale);
-		level3 = commerceDiscountDisplayContext.getLocalizedPercentage(commerceDiscount.getLevel3(), locale);
-		level4 = commerceDiscountDisplayContext.getLocalizedPercentage(commerceDiscount.getLevel4(), locale);
+		level2 = commerceDiscountDisplayContext.getLocalizedPercentage(level2BigDecimal, locale);
+		level3 = commerceDiscountDisplayContext.getLocalizedPercentage(level3BigDecimal, locale);
+		level4 = commerceDiscountDisplayContext.getLocalizedPercentage(level4BigDecimal, locale);
 	}
 	else {
 		level1 = String.valueOf(commerceDiscountDisplayContext.round(commerceDiscount.getLevel1()));
-		level2 = String.valueOf(commerceDiscountDisplayContext.round(commerceDiscount.getLevel2()));
-		level3 = String.valueOf(commerceDiscountDisplayContext.round(commerceDiscount.getLevel3()));
-		level4 = String.valueOf(commerceDiscountDisplayContext.round(commerceDiscount.getLevel4()));
+		level2 = String.valueOf(commerceDiscountDisplayContext.round(level2BigDecimal));
+		level3 = String.valueOf(commerceDiscountDisplayContext.round(level3BigDecimal));
+		level4 = String.valueOf(commerceDiscountDisplayContext.round(level4BigDecimal));
 	}
 }
 

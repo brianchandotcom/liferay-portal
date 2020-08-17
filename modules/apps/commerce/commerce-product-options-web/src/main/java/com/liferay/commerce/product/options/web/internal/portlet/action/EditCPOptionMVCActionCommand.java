@@ -124,8 +124,10 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			jsonObject.put(
-				"message", LanguageUtil.get(actionRequest.getLocale(), key));
-			jsonObject.put("success", false);
+				"message", LanguageUtil.get(actionRequest.getLocale(), key)
+			).put(
+				"success", false
+			);
 		}
 
 		hideDefaultSuccessMessage(actionRequest);

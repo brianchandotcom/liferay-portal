@@ -69,10 +69,12 @@ public class CPOptionValuesMVCResourceCommand extends BaseMVCResourceCommand {
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 			jsonObject.put(
-				"cpOptionValueId", cpOptionValue.getCPOptionValueId());
-			jsonObject.put(
-				"name", cpOptionValue.getName(themeDisplay.getLocale()));
-			jsonObject.put("priority", cpOptionValue.getPriority());
+				"cpOptionValueId", cpOptionValue.getCPOptionValueId()
+			).put(
+				"name", cpOptionValue.getName(themeDisplay.getLocale())
+			).put(
+				"priority", cpOptionValue.getPriority()
+			);
 
 			jsonArray.put(jsonObject);
 		}

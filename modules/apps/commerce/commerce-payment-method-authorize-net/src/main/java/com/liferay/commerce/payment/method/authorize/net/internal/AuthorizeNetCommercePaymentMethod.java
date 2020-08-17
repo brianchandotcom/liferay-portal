@@ -29,11 +29,9 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Portal;
@@ -283,11 +281,16 @@ public class AuthorizeNetCommercePaymentMethod
 			_jsonFactory.createJSONObject();
 
 		hostedPaymentReturnOptionsJSONObject.put(
-			"cancelUrl", _fixURL(cancelURL));
-		hostedPaymentReturnOptionsJSONObject.put("cancelUrlText", "Cancel");
-		hostedPaymentReturnOptionsJSONObject.put("showReceipt", true);
-		hostedPaymentReturnOptionsJSONObject.put("url", _fixURL(returnURL));
-		hostedPaymentReturnOptionsJSONObject.put("urlText", "Continue");
+			"cancelUrl", _fixURL(cancelURL)
+		).put(
+			"cancelUrlText", "Cancel"
+		).put(
+			"showReceipt", true
+		).put(
+			"url", _fixURL(returnURL)
+		).put(
+			"urlText", "Continue"
+		);
 
 		_addSetting(
 			settings, "hostedPaymentReturnOptions",
@@ -297,11 +300,12 @@ public class AuthorizeNetCommercePaymentMethod
 			_jsonFactory.createJSONObject();
 
 		hostedPaymentPaymentOptionsJSONObject.put(
-			"cardCodeRequired", configuration.requireCardCodeVerification());
-		hostedPaymentPaymentOptionsJSONObject.put(
-			"showBankAccount", configuration.showBankAccount());
-		hostedPaymentPaymentOptionsJSONObject.put(
-			"showCreditCard", configuration.showCreditCard());
+			"cardCodeRequired", configuration.requireCardCodeVerification()
+		).put(
+			"showBankAccount", configuration.showBankAccount()
+		).put(
+			"showCreditCard", configuration.showCreditCard()
+		);
 
 		_addSetting(
 			settings, "hostedPaymentPaymentOptions",
@@ -320,8 +324,11 @@ public class AuthorizeNetCommercePaymentMethod
 		JSONObject hostedPaymentShippingAddressOptionsJSONObject =
 			_jsonFactory.createJSONObject();
 
-		hostedPaymentShippingAddressOptionsJSONObject.put("required", false);
-		hostedPaymentShippingAddressOptionsJSONObject.put("show", false);
+		hostedPaymentShippingAddressOptionsJSONObject.put(
+			"required", false
+		).put(
+			"show", false
+		);
 
 		_addSetting(
 			settings, "hostedPaymentShippingAddressOptions",
@@ -330,8 +337,11 @@ public class AuthorizeNetCommercePaymentMethod
 		JSONObject hostedPaymentBillingAddressOptionsJSONObject =
 			_jsonFactory.createJSONObject();
 
-		hostedPaymentBillingAddressOptionsJSONObject.put("required", false);
-		hostedPaymentBillingAddressOptionsJSONObject.put("show", false);
+		hostedPaymentBillingAddressOptionsJSONObject.put(
+			"required", false
+		).put(
+			"show", false
+		);
 
 		_addSetting(
 			settings, "hostedPaymentBillingAddressOptions",
@@ -341,9 +351,12 @@ public class AuthorizeNetCommercePaymentMethod
 			_jsonFactory.createJSONObject();
 
 		hostedPaymentCustomerOptionsJSJSONObject.put(
-			"addPaymentProfile", false);
-		hostedPaymentCustomerOptionsJSJSONObject.put("requiredEmail", false);
-		hostedPaymentCustomerOptionsJSJSONObject.put("showEmail", false);
+			"addPaymentProfile", false
+		).put(
+			"requiredEmail", false
+		).put(
+			"showEmail", false
+		);
 
 		_addSetting(
 			settings, "hostedPaymentCustomerOptions",
@@ -356,10 +369,10 @@ public class AuthorizeNetCommercePaymentMethod
 			_commerceChannelLocalService.getCommerceChannelByGroupId(groupId);
 
 		hostedPaymentOrderOptionsJSONObject.put(
-			"merchantName", commerceChannel.getName());
-
-		hostedPaymentOrderOptionsJSONObject.put(
-			"show", configuration.showStoreName());
+			"merchantName", commerceChannel.getName()
+		).put(
+			"show", configuration.showStoreName()
+		);
 
 		_addSetting(
 			settings, "hostedPaymentOrderOptions",
@@ -370,7 +383,7 @@ public class AuthorizeNetCommercePaymentMethod
 
 	private AuthorizeNetGroupServiceConfiguration _getConfiguration(
 			long groupId)
-		throws ConfigurationException {
+		throws Exception {
 
 		return _configurationProvider.getConfiguration(
 			AuthorizeNetGroupServiceConfiguration.class,

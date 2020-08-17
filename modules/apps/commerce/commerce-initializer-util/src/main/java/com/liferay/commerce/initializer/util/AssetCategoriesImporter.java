@@ -146,8 +146,11 @@ public class AssetCategoriesImporter {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		jsonObject.put("RoleName", "User");
-		jsonObject.put("Scope", 4);
+		jsonObject.put(
+			"RoleName", "User"
+		).put(
+			"Scope", 4
+		);
 
 		JSONArray actionIdsJSONArray = _jsonFactory.createJSONArray();
 

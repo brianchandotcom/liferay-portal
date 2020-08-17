@@ -171,11 +171,14 @@ public class MiniumCPContentListEntryRenderer
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-			jsonObject.put("checkboxVisible", true);
-			jsonObject.put("compareAvailable", true);
 			jsonObject.put(
+				"checkboxVisible", true
+			).put(
+				"compareAvailable", true
+			).put(
 				"inCompare",
-				cpDefinitionIds.contains(cpCatalogEntry.getCPDefinitionId()));
+				cpDefinitionIds.contains(cpCatalogEntry.getCPDefinitionId())
+			);
 
 			context.put("compareCheckboxVisible", true);
 			context.put("compareState", jsonObject);

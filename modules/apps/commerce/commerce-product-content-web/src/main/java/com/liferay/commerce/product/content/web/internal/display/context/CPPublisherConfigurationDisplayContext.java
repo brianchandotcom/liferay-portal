@@ -205,8 +205,11 @@ public class CPPublisherConfigurationDisplayContext
 				continue;
 			}
 
-			ruleJSONObject.put("queryValues", queryValues);
-			ruleJSONObject.put("type", queryName);
+			ruleJSONObject.put(
+				"queryValues", queryValues
+			).put(
+				"type", queryName
+			);
 
 			rulesJSONArray.put(ruleJSONObject);
 		}

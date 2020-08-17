@@ -92,8 +92,11 @@ public class CPInstanceUpgradeProcess extends UpgradeProcess {
 					JSONObject outputJSONObject =
 						_jsonFactory.createJSONObject();
 
-					outputJSONObject.put("key", rs2.getString("key_"));
-					outputJSONObject.put("value", valueOutputJSONArray);
+					outputJSONObject.put(
+						"key", rs2.getString("key_")
+					).put(
+						"value", valueOutputJSONArray
+					);
 
 					outputJSONArray.put(outputJSONObject);
 				}

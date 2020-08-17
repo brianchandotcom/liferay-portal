@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Locale;
 import java.util.Map;
@@ -52,17 +53,19 @@ public class CPContentPortletDisplayTemplateHandler
 
 	@Override
 	public String getName(Locale locale) {
+		StringBundler sb = new StringBundler(3);
+
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		String portletTitle = _portal.getPortletTitle(
-			CPPortletKeys.CP_CONTENT_WEB, resourceBundle);
+		sb.append(
+			_portal.getPortletTitle(
+				CPPortletKeys.CP_CONTENT_WEB, resourceBundle));
 
-		return portletTitle.concat(
-			StringPool.SPACE
-		).concat(
-			LanguageUtil.get(locale, "template")
-		);
+		sb.append(StringPool.SPACE);
+		sb.append(LanguageUtil.get(locale, "template"));
+
+		return sb.toString();
 	}
 
 	@Override

@@ -124,16 +124,21 @@ public class AddCommerceWishListItemMVCActionCommand
 
 			jsonObject.put(
 				"commerceWishListItemId",
-				commerceWishListItem.getCommerceWishListItemId());
-			jsonObject.put(
-				"commerceWishListItemsCount", commerceWishListItemsCount);
-			jsonObject.put("success", true);
+				commerceWishListItem.getCommerceWishListItemId()
+			).put(
+				"commerceWishListItemsCount", commerceWishListItemsCount
+			).put(
+				"success", true
+			);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
 
-			jsonObject.put("error", exception.getMessage());
-			jsonObject.put("success", false);
+			jsonObject.put(
+				"error", exception.getMessage()
+			).put(
+				"success", false
+			);
 		}
 
 		hideDefaultSuccessMessage(actionRequest);

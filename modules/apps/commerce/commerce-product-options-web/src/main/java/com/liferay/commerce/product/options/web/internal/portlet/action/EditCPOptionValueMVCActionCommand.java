@@ -124,8 +124,11 @@ public class EditCPOptionValueMVCActionCommand extends BaseMVCActionCommand {
 				_log.error(exception, exception);
 			}
 
-			jsonObject.put("message", message);
-			jsonObject.put("success", false);
+			jsonObject.put(
+				"message", message
+			).put(
+				"success", false
+			);
 		}
 
 		hideDefaultSuccessMessage(actionRequest);

@@ -110,14 +110,18 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				cpDefinitionId, ddmFormValues);
 
 			if (cpInstance != null) {
-				jsonObject.put("cpInstanceExist", true);
-				jsonObject.put("cpInstanceId", cpInstance.getCPInstanceId());
-				jsonObject.put("gtin", cpInstance.getGtin());
 				jsonObject.put(
+					"cpInstanceExist", true
+				).put(
+					"cpInstanceId", cpInstance.getCPInstanceId()
+				).put(
+					"gtin", cpInstance.getGtin()
+				).put(
 					"manufacturerPartNumber",
-					cpInstance.getManufacturerPartNumber());
-
-				jsonObject.put("sku", cpInstance.getSku());
+					cpInstance.getManufacturerPartNumber()
+				).put(
+					"sku", cpInstance.getSku()
+				);
 
 				CommercePriceConfiguration commercePriceConfiguration =
 					_configurationProvider.getConfiguration(
@@ -166,8 +170,11 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		catch (Exception exception) {
 			_log.error(exception, exception);
 
-			jsonObject.put("error", exception.getMessage());
-			jsonObject.put("success", false);
+			jsonObject.put(
+				"error", exception.getMessage()
+			).put(
+				"success", false
+			);
 		}
 
 		hideDefaultErrorMessage(actionRequest);

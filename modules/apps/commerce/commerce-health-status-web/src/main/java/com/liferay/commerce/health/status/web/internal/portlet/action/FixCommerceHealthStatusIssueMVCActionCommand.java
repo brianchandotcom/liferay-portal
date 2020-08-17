@@ -88,8 +88,11 @@ public class FixCommerceHealthStatusIssueMVCActionCommand
 
 			_log.error(exception, exception);
 
-			jsonObject.put("error", exception.getMessage());
-			jsonObject.put("success", false);
+			jsonObject.put(
+				"error", exception.getMessage()
+			).put(
+				"success", false
+			);
 		}
 
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);

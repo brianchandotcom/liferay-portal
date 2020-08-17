@@ -74,10 +74,13 @@ public class CPOptionsMVCResourceCommand extends BaseMVCResourceCommand {
 		for (CPOption cpOption : cpOptions) {
 			JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-			jsonObject.put("cpOptionId", cpOption.getCPOptionId());
-			jsonObject.put("key", cpOption.getKey());
 			jsonObject.put(
-				"name", cpOption.getName(themeDisplay.getLanguageId()));
+				"cpOptionId", cpOption.getCPOptionId()
+			).put(
+				"key", cpOption.getKey()
+			).put(
+				"name", cpOption.getName(themeDisplay.getLanguageId())
+			);
 
 			if (_hasDDMFormFieldTypeProperties(
 					cpOption.getDDMFormFieldTypeName()) &&

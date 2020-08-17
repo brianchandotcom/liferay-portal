@@ -8,7 +8,7 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
- 
+
 import ClayChart from '@clayui/charts';
 import React, {useCallback, useRef} from 'react';
 import ResizeObserver from 'resize-observer-polyfill';

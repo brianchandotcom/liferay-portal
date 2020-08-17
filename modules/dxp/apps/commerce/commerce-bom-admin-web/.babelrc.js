@@ -1,1 +1,18 @@
-{"ignore":["**/dev-build"],"plugins":["@babel/proposal-class-properties","@babel/proposal-object-rest-spread",["module-resolver",{"root":["./src/main/resources/META-INF/resources/js/"],"alias":{"test":"./test/js/"}}]],"presets":["@babel/preset-env","@babel/preset-react"]}
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+/* eslint-disable */
+module.exports = {
+	presets: ['@babel/preset-env', '@babel/preset-react'],
+};

@@ -9,6 +9,4 @@
  * distribution rights of the Software.
  */
 
- module.exports = {
- 	presets: ['@babel/preset-react'],
- }
+module.exports = {};

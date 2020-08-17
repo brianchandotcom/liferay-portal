@@ -68,7 +68,7 @@ if (!ldapFilterValidator.isValid(userFilter)) {
 	return;
 }
 
-String userMappingsParams = "screenName=" + ParamUtil.getString(request, "userMappingScreenName") + "\npassword=" + ParamUtil.getString(request, "userMappingPassword") + "\nemailAddress=" + ParamUtil.getString(request, "userMappingEmailAddress") + "\nfullName=" + ParamUtil.getString(request, "userMappingFullName") + "\nfirstName=" + ParamUtil.getString(request, "userMappingFirstName") + "\nlastName=" + ParamUtil.getString(request, "userMappingLastName") + "\njobTitle=" + ParamUtil.getString(request, "userMappingJobTitle") + "\ngroup=" + ParamUtil.getString(request, "userMappingGroup");
+String userMappingsParams = StringBundler.concat("screenName=", ParamUtil.getString(request, "userMappingScreenName"), "\npassword=", ParamUtil.getString(request, "userMappingPassword"), "\nemailAddress=", ParamUtil.getString(request, "userMappingEmailAddress"), "\nfullName=", ParamUtil.getString(request, "userMappingFullName"), "\nfirstName=", ParamUtil.getString(request, "userMappingFirstName"), "\nlastName=", ParamUtil.getString(request, "userMappingLastName"), "\njobTitle=", ParamUtil.getString(request, "userMappingJobTitle"), "\ngroup=", ParamUtil.getString(request, "userMappingGroup"));
 
 Properties userMappings = PropertiesUtil.load(userMappingsParams);
 

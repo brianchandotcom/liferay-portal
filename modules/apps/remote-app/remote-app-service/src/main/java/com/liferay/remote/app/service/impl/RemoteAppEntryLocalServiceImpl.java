@@ -92,7 +92,7 @@ public class RemoteAppEntryLocalServiceImpl
 			companyId, StringUtil.trim(url));
 
 		if ((remoteAppEntry != null) &&
-			(remoteAppEntry.getEntryId() != remoteAppEntryId)) {
+			(remoteAppEntry.getRemoteAppEntryId() != remoteAppEntryId)) {
 
 			throw new DuplicateRemoteAppEntryURLException(
 				"{remoteAppEntryId=" + remoteAppEntryId + "}");

@@ -119,7 +119,7 @@ public class RemoteAppPortlet extends MVCPortlet {
 	}
 
 	private String _getPortletName() {
-		return "remote_app_" + _remoteAppEntry.getEntryId();
+		return "remote_app_" + _remoteAppEntry.getRemoteAppEntryId();
 	}
 
 	private ResourceBundle _getResourceBundle(Locale locale) {

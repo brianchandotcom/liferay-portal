@@ -78,7 +78,7 @@ public class RemoteAppEntryClayDataSetActionProvider
 		deleteEntryURL.setParameter(ActionRequest.ACTION_NAME, "/delete_entry");
 		deleteEntryURL.setParameter(
 			"remoteAppEntryId",
-			String.valueOf(remoteAppClayDataSetEntry.getEntryId()));
+			String.valueOf(remoteAppClayDataSetEntry.getRemoteAppEntryId()));
 
 		dropdownItem.setHref(deleteEntryURL.toString());
 
@@ -95,7 +95,7 @@ public class RemoteAppEntryClayDataSetActionProvider
 		editEntryURL.setParameter("mvcRenderCommandName", "/edit_entry");
 		editEntryURL.setParameter(
 			"remoteAppEntryId",
-			String.valueOf(remoteAppClayDataSetEntry.getEntryId()));
+			String.valueOf(remoteAppClayDataSetEntry.getRemoteAppEntryId()));
 
 		String currentURL = ParamUtil.getString(
 			httpServletRequest, "currentUrl",

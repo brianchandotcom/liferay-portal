@@ -153,7 +153,15 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		LexiconEntry.viewEntryName(rowEntry = "userfn3 userln3");
+		var key_userScreenName = "usersn3";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SiteMemberships#USER_TABLE_NAME",
+			value1 = "userfn3 userln3");
+
+		AssertTextEquals(
+			locator1 = "SiteMemberships#USER_TABLE_SCREEN_NAME",
+			value1 = "usersn3");
 
 		LexiconEntry.openEntryMenu(rowEntry = "userfn3 userln3");
 
@@ -185,7 +193,11 @@ definition {
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 
-		Navigator.viewNoNavTab(navTab = "Control Panel");
+		Navigator.gotoNavTab(navTab = "Control Panel");
+
+		AssertElementNotPresent(
+			key_category = "Sites",
+			locator1 = "ApplicationsMenu#CATEGORY");
 
 		User.logoutUserPG();
 
@@ -231,7 +243,11 @@ definition {
 
 		ApplicationsMenuHelper.openApplicationsMenu();
 
-		Navigator.viewNoNavTab(navTab = "Control Panel");
+		Navigator.gotoNavTab(navTab = "Control Panel");
+
+		AssertElementNotPresent(
+			key_category = "Sites",
+			locator1 = "ApplicationsMenu#CATEGORY");
 
 		User.logoutUserPG();
 

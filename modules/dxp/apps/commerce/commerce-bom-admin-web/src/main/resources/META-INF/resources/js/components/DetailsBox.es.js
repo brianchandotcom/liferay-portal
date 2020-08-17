@@ -56,8 +56,8 @@ export default function DetailsBox() {
 		);
 
 		return {
-			number: spot.number,
 			name: relatedProduct.name,
+			number: spot.number,
 			sku: relatedProduct.sku,
 			url: relatedProduct.url,
 		};

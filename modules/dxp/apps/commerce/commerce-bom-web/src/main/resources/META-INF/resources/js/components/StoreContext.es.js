@@ -38,8 +38,8 @@ function initializeActions(actions, dispatch) {
 
 const reducers = combineReducers({
 	app: appReducer,
-	folder: folderReducer,
 	area: areaReducer,
+	folder: folderReducer,
 });
 
 export function StoreProvider(props) {

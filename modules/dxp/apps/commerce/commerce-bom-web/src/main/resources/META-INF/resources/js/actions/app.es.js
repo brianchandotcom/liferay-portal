@@ -11,8 +11,8 @@
 
 export const actionDefinition = {
 	INITIALIZE: 'initalize',
-	SET_BASENAME: 'setBasename',
 	SET_BASE_PATH_URL: 'setBasePathUrl',
+	SET_BASENAME: 'setBasename',
 	SET_ERROR: 'setError',
 	SET_HISTORY: 'setHistory',
 	SET_LOADING: 'setLoading',

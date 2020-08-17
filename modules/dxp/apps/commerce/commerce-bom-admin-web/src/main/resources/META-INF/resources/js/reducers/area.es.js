@@ -103,8 +103,8 @@ export default function reducer(state = initialState, action) {
 			return {
 				...state,
 				imageUrl,
-				name,
 				mappedProducts: products || [],
+				name,
 				spots: spots || [],
 			};
 		case actionDefinition.GET_PRODUCTS_FULFILLED:

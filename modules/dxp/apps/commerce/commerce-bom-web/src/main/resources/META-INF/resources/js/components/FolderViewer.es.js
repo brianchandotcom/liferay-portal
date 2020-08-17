@@ -75,7 +75,7 @@ function Brands(props) {
 }
 
 function Card(props) {
-	const {actions, state} = useContext(StoreContext);
+	const {state} = useContext(StoreContext);
 
 	const itemsCard = (
 		<div className="area-card card image-card">

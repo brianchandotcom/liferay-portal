@@ -11,8 +11,8 @@
 
 export const actionDefinition = {
 	GET_FOLDER_FULFILLED: 'getFolderFulfilled',
-	GET_FOLDER_REJECTED: 'getFolderRejected',
 	GET_FOLDER_PENDING: 'getFolderPending',
+	GET_FOLDER_REJECTED: 'getFolderRejected',
 };
 
 const getFolder = (dispatch) => (endpoint, id) => {
@@ -29,14 +29,14 @@ const getFolder = (dispatch) => (endpoint, id) => {
 		.then((response) => response.json())
 		.then((data) =>
 			dispatch({
-				type: actionDefinition.GET_FOLDER_FULFILLED,
 				payload: data,
+				type: actionDefinition.GET_FOLDER_FULFILLED,
 			})
 		)
 		.catch((err) =>
 			dispatch({
-				type: actionDefinition.GET_FOLDER_REJECTED,
 				payload: err,
+				type: actionDefinition.GET_FOLDER_REJECTED,
 			})
 		);
 };

@@ -26,6 +26,26 @@ const mockedContext = {
 			highlightedDetail: {
 				number: 1,
 			},
+			mappedProducts: [
+				{
+					id: 'PR01',
+					name: 'Product 1',
+					price: '$ 12.99',
+					sku: 'sku01',
+				},
+				{
+					id: 'PR02',
+					name: 'Product 2',
+					price: '$ 12.99',
+					sku: 'sku02',
+				},
+				{
+					id: 'PR03',
+					name: 'Product 3',
+					price: '$ 12.99',
+					sku: 'sku03',
+				},
+			],
 			spots: [
 				{
 					id: 'SP01',
@@ -62,26 +82,6 @@ const mockedContext = {
 						y: 75,
 					},
 					productId: 'PR03',
-				},
-			],
-			mappedProducts: [
-				{
-					id: 'PR01',
-					name: 'Product 1',
-					price: '$ 12.99',
-					sku: 'sku01',
-				},
-				{
-					id: 'PR02',
-					name: 'Product 2',
-					price: '$ 12.99',
-					sku: 'sku02',
-				},
-				{
-					id: 'PR03',
-					name: 'Product 3',
-					price: '$ 12.99',
-					sku: 'sku03',
 				},
 			],
 		},

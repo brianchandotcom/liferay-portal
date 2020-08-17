@@ -12,12 +12,12 @@
 import {actionDefinition} from '../actions/app.es';
 
 export const initialState = {
-	loading: false,
-	error: null,
-	spritemap: null,
 	areaApiUrl: null,
-	productApiUrl: null,
+	error: null,
 	initialized: false,
+	loading: false,
+	productApiUrl: null,
+	spritemap: null,
 };
 
 export default function reducer(state = initialState, action) {

@@ -27,10 +27,10 @@ const mockedContext = {
 		},
 		area: {
 			availableProducts: [],
-			imageUrl: '/testImg.jpg',
 			highlightedDetail: {
 				number: 1,
 			},
+			imageUrl: '/testImg.jpg',
 			mappedProducts: [
 				{
 					id: 'PR01',

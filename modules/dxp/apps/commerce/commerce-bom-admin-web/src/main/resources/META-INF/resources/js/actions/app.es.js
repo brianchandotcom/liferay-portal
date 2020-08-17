@@ -10,40 +10,40 @@
  */
 
 export const actionDefinition = {
-	UPDATE_BREADCRUMBS: 'updateBreadcrumbs',
+	INITIALIZE_APP_DATA: 'initializeAppData',
 	SET_ERROR: 'setError',
 	SET_LOADING: 'setLoading',
 	SET_SPRITEMAP: 'setSpritemap',
-	INITIALIZE_APP_DATA: 'initializeAppData',
+	UPDATE_BREADCRUMBS: 'updateBreadcrumbs',
 };
 
 const initializeAppData = (dispatch) => (data) =>
 	dispatch({
-		type: actionDefinition.INITIALIZE_APP_DATA,
 		payload: {
-			spritemap: data.spritemap,
 			areaApiUrl: data.areaApiUrl,
-			productApiUrl: data.productApiUrl,
 			areaId: data.areaId,
+			productApiUrl: data.productApiUrl,
+			spritemap: data.spritemap,
 		},
+		type: actionDefinition.INITIALIZE_APP_DATA,
 	});
 
 const setError = (dispatch) => (error) =>
 	dispatch({
-		type: actionDefinition.SET_ERROR,
 		payload: error,
+		type: actionDefinition.SET_ERROR,
 	});
 
 const setLoading = (dispatch) => (loading) =>
 	dispatch({
-		type: actionDefinition.SET_LOADING,
 		payload: loading,
+		type: actionDefinition.SET_LOADING,
 	});
 
 const setSpritemap = (dispatch) => (spritemap) =>
 	dispatch({
-		type: actionDefinition.SET_SPRITEMAP,
 		payload: spritemap,
+		type: actionDefinition.SET_SPRITEMAP,
 	});
 
 export const actions = {

@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import React, {Fragment, useContext, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import EditNumberForm from './EditNumberForm.es';
 import {StoreContext} from './StoreContext.es';
@@ -83,8 +83,8 @@ export function CustomCursor(props) {
 				props.visible ? ` custom-cursor--visible` : ``
 			}`}
 			style={{
-				top: props.y ? props.y + 'px' : 0,
 				left: props.x ? props.x + 'px' : 0,
+				top: props.y ? props.y + 'px' : 0,
 			}}
 		>
 			<Icon spritemap={state.app.spritemap} symbol={'plus'} />
@@ -98,8 +98,8 @@ function PictureBox() {
 
 	const [cursor, updateCursor] = useState({
 		x: 0,
-		y: 0,
 		visible: false,
+		y: 0,
 	});
 
 	function handleMouseMove(e) {

@@ -25,11 +25,11 @@ window.Liferay = {
 };
 
 const fakeData = {
-	id: 'adminPartFinder',
-	spritemap: '/test-icons.svg',
-	areaId: 'asd',
 	areaApiUrl: apiEndpointDefinitions.AREA,
+	areaId: 'asd',
+	id: 'adminPartFinder',
 	productApiUrl: apiEndpointDefinitions.PRODUCTS,
+	spritemap: '/test-icons.svg',
 };
 
 ReactDOM.render(

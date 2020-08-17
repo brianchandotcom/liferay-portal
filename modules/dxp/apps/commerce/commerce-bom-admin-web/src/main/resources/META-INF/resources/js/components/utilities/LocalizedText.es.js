@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import React, {Fragment} from 'react';
+import React from 'react';
 
 export function convertString(string) {
 	try {

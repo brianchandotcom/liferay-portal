@@ -40,11 +40,11 @@ const spotFormDataEdit = {
 };
 
 const spotFormDataCreate = {
-	state: 'create',
 	position: {
 		x: 50,
 		y: 50,
 	},
+	state: 'create',
 };
 
 const mockedContext = {
@@ -53,10 +53,19 @@ const mockedContext = {
 			spritemap: '/spritemap.test.svg',
 		},
 		area: {
-			spotFormData: spotFormDataEdit,
+			availableProducts: [],
 			highlightedDetail: {
 				number: 1,
 			},
+			mappedProducts: [
+				{
+					id: 'PR01',
+					name: 'Product 1',
+					price: '$ 12.99',
+					sku: 'sku01',
+				},
+			],
+			spotFormData: spotFormDataEdit,
 			spots: [
 				{
 					id: 'SP01',
@@ -66,15 +75,6 @@ const mockedContext = {
 						y: 75,
 					},
 					productId: 'PR01',
-				},
-			],
-			availableProducts: [],
-			mappedProducts: [
-				{
-					id: 'PR01',
-					name: 'Product 1',
-					price: '$ 12.99',
-					sku: 'sku01',
 				},
 			],
 		},

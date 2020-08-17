@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {StoreContext} from './StoreContext.es';
 import HighlightedText from './utilities/HighlightedText.es';
@@ -223,8 +223,8 @@ const EditNumberForm = React.memo((props) => {
 			style={
 				position
 					? {
-							left: position.x + '%',
 							bottom: position.y + '%',
+							left: position.x + '%',
 					  }
 					: null
 			}
@@ -313,8 +313,8 @@ const EditNumberForm = React.memo((props) => {
 									selectedElement={
 										formData.productId
 											? {
-													value: formData.productId,
 													label: formData.query,
+													value: formData.productId,
 											  }
 											: null
 									}

@@ -412,7 +412,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		if (isSet(kbFolderName)) {
-			SelectFrame(locator1 = "KnowledgeBaseSelectParent#SELECT_PARENT_DISPLAY_IFRAME");
+			Modal.selectFrameSpecific(modalTitle = "Select Entry");
 
 			AssertClick(
 				key_kbFolderName = "${kbFolderName}",
@@ -422,7 +422,7 @@ definition {
 			SelectFrame(value1 = "relative=top");
 		}
 
-		SelectFrame(locator1 = "KnowledgeBaseSelectParent#SELECT_PARENT_DISPLAY_IFRAME");
+		Modal.selectFrameSpecific(modalTitle = "Select Entry");
 
 		Click(
 			key_kbArticleTitle = "${kbArticleTitle}",
@@ -487,7 +487,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		SelectFrame(locator1 = "KnowledgeBaseSelectParent#SELECT_PARENT_DISPLAY_IFRAME");
+		Modal.selectFrameSpecific(modalTitle = "Select Entry");
 
 		AssertClick(
 			key_kbFolderName = "${kbFolderName}",
@@ -970,7 +970,7 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		SelectFrame(locator1 = "KnowledgeBaseSelectParent#SELECT_PARENT_DISPLAY_IFRAME");
+		Modal.selectFrameSpecific(modalTitle = "Select Entry");
 
 		AssertClick(
 			key_kbArticleTitle = "${kbArticleTitle}",

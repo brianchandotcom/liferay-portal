@@ -124,6 +124,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODAL_ANY</td>
+	<td>//*[contains(@class,'modal-dialog') and contains(.,'${key_title}')]//iframe</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_VARIATION_IFRAME</td>
 	<td>//iframe[contains(@id,'pagesVariationsDialog_iframe_')]</td>
 	<td></td>

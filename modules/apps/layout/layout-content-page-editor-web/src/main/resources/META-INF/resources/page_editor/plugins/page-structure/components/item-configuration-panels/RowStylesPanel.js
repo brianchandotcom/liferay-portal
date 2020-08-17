@@ -148,8 +148,8 @@ export const RowStylesPanel = ({item}) => {
 	return (
 		<>
 			<p className="page-editor__row-styles-panel__viewport-label">
+				<ClayIcon className="mr-2" symbol={viewportSize.icon} />
 				{viewportSize.label}
-				<ClayIcon className="ml-1" symbol={viewportSize.icon} />
 			</p>
 
 			<div className="page-editor__page-structure__section__custom-styles">

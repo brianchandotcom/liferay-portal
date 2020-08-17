@@ -8440,6 +8440,105 @@ paths:
                     description:
                         ""
             tags: ["StructuredContent"]
+    "/sites/{siteId}/structured-contents/{structuredContentKey}":
+        delete:
+            description:
+                Deletes the structured content by its key and returns a 204 if the operation succeeds.
+            operationId: deleteSiteStructuredContent
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: structuredContentKey
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["StructuredContent"]
+        get:
+            # @review
+            description:
+                Retrieves a structured content by its key.
+            operationId: getSiteStructuredContent
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: structuredContentKey
+                  required: true
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContent"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContent"
+                    description:
+                        ""
+            tags: ["StructuredContent"]
+        put:
+            description:
+                Replaces the structured content by its key with the information sent in the request body.
+                Any missing fields are deleted, unless they are required.
+            operationId: putSiteStructuredContent
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: structuredContentKey
+                  required: true
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContent"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/StructuredContent"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContent"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/StructuredContent"
+                    description:
+                        ""
+            tags: ["StructuredContent"]
     "/sites/{siteId}/wiki-nodes":
         get:
             # @review

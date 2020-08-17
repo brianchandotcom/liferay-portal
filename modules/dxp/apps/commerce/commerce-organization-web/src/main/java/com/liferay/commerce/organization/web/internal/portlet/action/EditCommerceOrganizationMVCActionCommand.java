@@ -88,10 +88,10 @@ public class EditCommerceOrganizationMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				Callable<Organization> organizationCallable =
-					new OrganizationCallable(actionRequest);
-
 				if (cmd.equals(Constants.ADD)) {
+					Callable<Organization> organizationCallable =
+						new OrganizationCallable(actionRequest);
+
 					Organization organization = TransactionInvokerUtil.invoke(
 						_transactionConfig, organizationCallable);
 

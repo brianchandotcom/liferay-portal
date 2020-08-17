@@ -9,8 +9,6 @@
  * distribution rights of the Software.
  */
 
-import React, {Fragment} from 'react';
-
 import {convertString} from '../../utilities/localization.es';
 
 function LocalizedText(props) {

@@ -12,8 +12,8 @@
 import '../css/main.scss';
 
 import 'clay-css/lib/css/atlas.css';
+import {render} from 'frontend-js-react-web';
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import Container from './Container';
 
@@ -27,5 +27,5 @@ window.Liferay = {
 };
 
 export default function (id, props, context) {
-	ReactDOM.render(<Container />, document.getElementById(id));
+	render(<Container />, document.getElementById(id));
 }

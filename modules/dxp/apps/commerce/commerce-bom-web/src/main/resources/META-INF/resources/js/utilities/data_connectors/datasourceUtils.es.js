@@ -98,7 +98,7 @@ export function formatRemoteKey(remoteKey, remoteValue) {
 
 export function formatSetting(settingName, settingValue) {
 	switch (settingName) {
-		case 'remote':
+		case 'remote': {
 			const remoteKeys = Object.keys(settingValue);
 			const formattedRemote = remoteKeys.reduce((acc, remoteKey) => {
 				const remoteValue = settingValue[remoteKey];
@@ -110,6 +110,7 @@ export function formatSetting(settingName, settingValue) {
 			}, {});
 
 			return [settingName, formattedRemote];
+		}
 		default:
 			return [settingName, settingValue];
 	}

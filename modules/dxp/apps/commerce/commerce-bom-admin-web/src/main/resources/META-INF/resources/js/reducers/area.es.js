@@ -40,7 +40,7 @@ export default function reducer(state = initialState, action) {
 				...state,
 				spotFormData: null,
 			};
-		case actionDefinition.SELECT_SPOT:
+		case actionDefinition.SELECT_SPOT: {
 			const {productId, ...spotData} = state.spots.reduce(
 				(found, spot) => found || (spot.id === action.payload && spot),
 				null
@@ -67,7 +67,8 @@ export default function reducer(state = initialState, action) {
 					...spotFormData,
 				},
 			};
-		case actionDefinition.UPDATE_FORM_VALUE:
+		}
+		case actionDefinition.UPDATE_FORM_VALUE: {
 			const key = action.payload.key;
 			const value = action.payload.value;
 
@@ -84,6 +85,7 @@ export default function reducer(state = initialState, action) {
 					[key]: value,
 				},
 			};
+		}
 		case actionDefinition.UNSELECT_SPOT:
 			return {
 				...state,
@@ -97,7 +99,7 @@ export default function reducer(state = initialState, action) {
 					state: 'create',
 				},
 			};
-		case actionDefinition.GET_AREA_FULFILLED:
+		case actionDefinition.GET_AREA_FULFILLED: {
 			const {imageUrl, name, products, spots} = action.payload.data;
 
 			return {
@@ -107,6 +109,7 @@ export default function reducer(state = initialState, action) {
 				name,
 				spots: spots || [],
 			};
+		}
 		case actionDefinition.GET_PRODUCTS_FULFILLED:
 			return {
 				...state,

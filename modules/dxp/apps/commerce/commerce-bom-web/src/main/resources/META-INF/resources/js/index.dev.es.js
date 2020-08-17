@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
+import {render} from 'frontend-js-react-web';
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import apiEndpointDefinitions from '../../../../../../dev/apiEndpointDefinitions';
 import App from './App.es';
@@ -38,7 +38,7 @@ const props = {
 	spritemap: '/test-icons.svg',
 };
 
-ReactDOM.render(
+render(
 	<StoreProvider>
 		<App {...props} />
 	</StoreProvider>,

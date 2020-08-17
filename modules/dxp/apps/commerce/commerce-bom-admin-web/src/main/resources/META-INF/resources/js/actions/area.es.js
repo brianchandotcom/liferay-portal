@@ -186,10 +186,10 @@ const submitSpotChanges = (dispatch) => (endpoint, areaId, formData) => {
 
 	return fetch(endpoint + '/' + areaId + '/spot/' + id, {
 		body: JSON.stringify(data),
-		method: 'PUT',
 		headers: new Headers({
 			'Content-Type': 'application/json',
 		}),
+		method: 'PUT',
 	})
 		.then(() => {
 			dispatch({

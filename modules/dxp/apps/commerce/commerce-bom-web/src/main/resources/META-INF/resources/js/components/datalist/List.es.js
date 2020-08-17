@@ -9,8 +9,6 @@
  * distribution rights of the Software.
  */
 
-import React, {Fragment} from 'react';
-
 import HighlightedText from '../utilities/HighlightedText.es';
 
 export function Empty() {

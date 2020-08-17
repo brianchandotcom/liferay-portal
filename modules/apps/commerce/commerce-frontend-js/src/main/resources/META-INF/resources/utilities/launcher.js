@@ -12,6 +12,7 @@
  * details.
  */
 
+import {render} from 'frontend-js-react-web';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -41,5 +42,5 @@ export default function launcher(
 	}
 
 	// eslint-disable-next-line liferay-portal/no-react-dom-render
-	ReactDOM.render(<Component {...props} />, container);
+	render(<Component {...props} />, container);
 }

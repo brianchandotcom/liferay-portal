@@ -10,14 +10,14 @@
  */
 
 import OrgChartContainer from 'components/OrgChartContainer';
+import {render} from 'frontend-js-react-web';
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 export default function (componentId, id, props) {
 	let instance = null;
 	const portletFrame = window.document.getElementById(id);
 
-	ReactDOM.render(
+	render(
 		<OrgChartContainer
 			ref={(component) => {
 				instance = component;

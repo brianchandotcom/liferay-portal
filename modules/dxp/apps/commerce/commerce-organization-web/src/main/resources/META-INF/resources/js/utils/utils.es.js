@@ -41,9 +41,9 @@ export function endpointBuilder({
 }
 
 export function callApi(parameters) {
-	return fetch(endpointBuilder(parameters))
-		.then((response) => response.json())
-		.catch((e) => {});
+	return fetch(endpointBuilder(parameters)).then((response) =>
+		response.json()
+	);
 }
 
 export const noop = () => {};
@@ -117,8 +117,6 @@ export function getLocalizedText(string) {
 		return w.Liferay.Language.get(string);
 	}
 	catch (error) {
-		console.log(error);
-
 		return string;
 	}
 }

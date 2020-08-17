@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
+import {render} from 'frontend-js-react-web';
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import App from './App.es';
 import {StoreProvider} from './components/StoreContext.es';
@@ -18,7 +18,7 @@ import {StoreProvider} from './components/StoreContext.es';
 export default function (componentId, id, props) {
 	const portletFrame = window.document.getElementById(id);
 	let instance = null;
-	ReactDOM.render(
+	render(
 		<StoreProvider>
 			<App
 				ref={(component) => {

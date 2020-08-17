@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -55,9 +56,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Andrea Di Giorgi
@@ -622,20 +621,23 @@ public class CommerceAddressLocalServiceImpl
 
 		SearchContext searchContext = new SearchContext();
 
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(
-			Field.CLASS_NAME_ID,
-			classNameLocalService.getClassNameId(className));
-
-		attributes.put(Field.CLASS_PK, classPK);
-		attributes.put(Field.NAME, keywords);
-		attributes.put("city", keywords);
-		attributes.put("countryName", keywords);
-		attributes.put("regionName", keywords);
-		attributes.put("zip", keywords);
-
-		searchContext.setAttributes(attributes);
+		searchContext.setAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				Field.CLASS_NAME_ID,
+				classNameLocalService.getClassNameId(className)
+			).put(
+				Field.CLASS_PK, classPK
+			).put(
+				Field.NAME, keywords
+			).put(
+				"city", keywords
+			).put(
+				"countryName", keywords
+			).put(
+				"regionName", keywords
+			).put(
+				"zip", keywords
+			).build());
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setStart(start);

@@ -63,6 +63,7 @@ page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.PortletPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
@@ -72,7 +73,6 @@ page import="com.liferay.taglib.util.CustomAttributesUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Collections" %><%@
-page import="java.util.HashMap" %><%@
 page import="java.util.HashSet" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@

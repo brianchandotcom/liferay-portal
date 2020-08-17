@@ -26,9 +26,9 @@ CommerceOrderEditDisplayContext commerceOrderEditDisplayContext = (CommerceOrder
 >
 
 	<%
-	Map<String, String> contextParams = new HashMap<>();
-
-	contextParams.put("commerceOrderId", String.valueOf(commerceOrderEditDisplayContext.getCommerceOrderId()));
+	Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+			"commerceOrderId", String.valueOf(commerceOrderEditDisplayContext.getCommerceOrderId())
+		).build();
 	%>
 
 	<commerce-ui:dataset-display

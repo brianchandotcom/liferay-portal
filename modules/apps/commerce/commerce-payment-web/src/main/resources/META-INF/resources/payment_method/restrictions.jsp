@@ -29,9 +29,9 @@ long commerceChannelId = commercePaymentMethodGroupRelsDisplayContext.getCommerc
 	<aui:input name="commerceChannelId" type="hidden" value="<%= commerceChannelId %>" />
 
 	<%
-	Map<String, String> contextParams = new HashMap<>();
-
-	contextParams.put("commerceChannelId", String.valueOf(commerceChannelId));
+	Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+		"commerceChannelId", String.valueOf(commerceChannelId)
+	).build();
 	%>
 
 	<commerce-ui:dataset-display

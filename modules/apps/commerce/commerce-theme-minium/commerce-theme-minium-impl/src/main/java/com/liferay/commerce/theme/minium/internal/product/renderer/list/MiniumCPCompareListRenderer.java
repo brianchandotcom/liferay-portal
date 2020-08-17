@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,7 +41,6 @@ import com.liferay.portal.template.soy.renderer.ComponentDescriptor;
 import com.liferay.portal.template.soy.renderer.SoyComponentRenderer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -158,26 +158,22 @@ public class MiniumCPCompareListRenderer implements CPContentListRenderer {
 			"ProductsCompare.render",
 			"commerce-frontend-taglib/products_compare/ProductsCompare.es");
 
-		Map<String, Object> context = new HashMap<>();
-
-		context.put("limit", limit);
-
-		context.put(
-			"editCompareProductActionURL",
-			editCompareProductActionURL.toString());
-
-		context.put(
+		Map<String, Object> context = HashMapBuilder.<String, Object>put(
 			"compareProductsURL",
-			cpCompareContentHelper.getCompareProductsURL(themeDisplay));
-
-		context.put(
+			cpCompareContentHelper.getCompareProductsURL(themeDisplay)
+		).put(
+			"editCompareProductActionURL",
+			editCompareProductActionURL.toString()
+		).put(
+			"limit", limit
+		).put(
 			"portletNamespace",
-			_portal.getPortletNamespace(CPPortletKeys.CP_COMPARE_CONTENT_WEB));
-
-		context.put(
-			"spritemap", themeDisplay.getPathThemeImages() + "/icons.svg");
-
-		context.put("products", products);
+			_portal.getPortletNamespace(CPPortletKeys.CP_COMPARE_CONTENT_WEB)
+		).put(
+			"products", products
+		).put(
+			"spritemap", themeDisplay.getPathThemeImages() + "/icons.svg"
+		).build();
 
 		_soyComponentRenderer.renderSoyComponent(
 			httpServletRequest, httpServletResponse, componentDescriptor,

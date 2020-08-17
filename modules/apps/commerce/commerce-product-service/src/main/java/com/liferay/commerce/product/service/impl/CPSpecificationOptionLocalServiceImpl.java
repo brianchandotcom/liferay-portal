@@ -47,13 +47,14 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -247,18 +248,25 @@ public class CPSpecificationOptionLocalServiceImpl
 
 		SearchContext searchContext = new SearchContext();
 
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> params =
+			LinkedHashMapBuilder.<String, Object>put(
+				"keywords", keywords
+			).build();
 
-		params.put("keywords", keywords);
-
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(CPField.CP_OPTION_CATEGORY_ID, keywords);
-		attributes.put(CPField.CP_OPTION_CATEGORY_TITLE, keywords);
-		attributes.put(Field.CONTENT, keywords);
-		attributes.put(Field.DESCRIPTION, keywords);
-		attributes.put(Field.ENTRY_CLASS_PK, keywords);
-		attributes.put(Field.TITLE, keywords);
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				CPField.CP_OPTION_CATEGORY_ID, keywords
+			).put(
+				CPField.CP_OPTION_CATEGORY_TITLE, keywords
+			).put(
+				Field.CONTENT, keywords
+			).put(
+				Field.DESCRIPTION, keywords
+			).put(
+				Field.ENTRY_CLASS_PK, keywords
+			).put(
+				Field.TITLE, keywords
+			).build();
 
 		if (facetable != null) {
 			attributes.put(CPField.FACETABLE, facetable);

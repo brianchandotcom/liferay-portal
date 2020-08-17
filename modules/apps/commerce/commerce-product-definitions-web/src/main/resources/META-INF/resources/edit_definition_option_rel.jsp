@@ -121,9 +121,9 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 					datasetDisplayId = CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTION_VALUES_STATIC;
 				}
 
-				Map<String, String> contextParams = new HashMap<>();
-
-				contextParams.put("cpDefinitionOptionRelId", String.valueOf(cpDefinitionOptionRelId));
+				Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+					"cpDefinitionOptionRelId", String.valueOf(cpDefinitionOptionRelId)
+				).build();
 				%>
 
 				<commerce-ui:dataset-display

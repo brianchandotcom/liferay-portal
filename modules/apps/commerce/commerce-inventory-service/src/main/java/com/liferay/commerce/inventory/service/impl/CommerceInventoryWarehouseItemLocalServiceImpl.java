@@ -31,12 +31,12 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -348,21 +348,23 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 			commerceInventoryAuditTypeRegistry.getCommerceInventoryAuditType(
 				CommerceInventoryConstants.AUDIT_TYPE_MOVE_QUANTITY);
 
-		Map<String, String> context = new HashMap<>();
-
-		CommerceInventoryWarehouse fromCommerceInventoryWarehouse =
-			fromWarehouseItem.getCommerceInventoryWarehouse();
-
-		context.put(
+		Map<String, String> context = HashMapBuilder.put(
 			CommerceInventoryAuditTypeConstants.FROM,
-			String.valueOf(fromCommerceInventoryWarehouse.getName()));
+			() -> {
+				CommerceInventoryWarehouse fromCommerceInventoryWarehouse =
+					fromWarehouseItem.getCommerceInventoryWarehouse();
 
-		CommerceInventoryWarehouse toCommerceInventoryWarehouse =
-			toWarehouseItem.getCommerceInventoryWarehouse();
-
-		context.put(
+				return String.valueOf(fromCommerceInventoryWarehouse.getName());
+			}
+		).put(
 			CommerceInventoryAuditTypeConstants.TO,
-			String.valueOf(toCommerceInventoryWarehouse.getName()));
+			() -> {
+				CommerceInventoryWarehouse toCommerceInventoryWarehouse =
+					toWarehouseItem.getCommerceInventoryWarehouse();
+
+				return String.valueOf(toCommerceInventoryWarehouse.getName());
+			}
+		).build();
 
 		commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, sku, commerceInventoryAuditType.getType(),
@@ -394,18 +396,16 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 			commerceInventoryAuditTypeRegistry.getCommerceInventoryAuditType(
 				CommerceInventoryConstants.AUDIT_TYPE_UPDATE_WAREHOUSE_ITEM);
 
-		Map<String, String> context = new HashMap<>();
-
-		context.put(
-			CommerceInventoryAuditTypeConstants.RESERVED,
-			String.valueOf(reservedQuantity));
-
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			commerceInventoryWarehouseItem.getCommerceInventoryWarehouse();
 
-		context.put(
+		Map<String, String> context = HashMapBuilder.put(
+			CommerceInventoryAuditTypeConstants.RESERVED,
+			String.valueOf(reservedQuantity)
+		).put(
 			CommerceInventoryAuditTypeConstants.WAREHOUSE,
-			String.valueOf(commerceInventoryWarehouse.getName()));
+			String.valueOf(commerceInventoryWarehouse.getName())
+		).build();
 
 		commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, commerceInventoryWarehouseItem.getSku(),
@@ -439,14 +439,13 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 			commerceInventoryAuditTypeRegistry.getCommerceInventoryAuditType(
 				CommerceInventoryConstants.AUDIT_TYPE_UPDATE_WAREHOUSE_ITEM);
 
-		Map<String, String> context = new HashMap<>();
-
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			commerceInventoryWarehouseItem.getCommerceInventoryWarehouse();
 
-		context.put(
+		Map<String, String> context = HashMapBuilder.put(
 			CommerceInventoryAuditTypeConstants.WAREHOUSE,
-			String.valueOf(commerceInventoryWarehouse.getName()));
+			String.valueOf(commerceInventoryWarehouse.getName())
+		).build();
 
 		commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, commerceInventoryWarehouseItem.getSku(),

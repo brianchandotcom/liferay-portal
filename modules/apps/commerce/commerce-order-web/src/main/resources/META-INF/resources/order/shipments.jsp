@@ -28,11 +28,11 @@ PortletURL portletURL = commerceOrderEditDisplayContext.getCommerceShipmentsPort
 </liferay-portlet:renderURL>
 
 <%
-Map<String, String> contextParams = new HashMap<>();
-
 CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder();
 
-contextParams.put("commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId()));
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId())
+).build();
 %>
 
 <commerce-ui:dataset-display

@@ -21,9 +21,9 @@ CommerceShipmentDisplayContext commerceShipmentDisplayContext = (CommerceShipmen
 
 CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceShipment();
 
-Map<String, String> contextParams = new HashMap<>();
-
-contextParams.put("commerceShipmentId", String.valueOf(commerceShipment.getCommerceShipmentId()));
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"commerceShipmentId", String.valueOf(commerceShipment.getCommerceShipmentId())
+).build();
 %>
 
 <portlet:actionURL name="editCommerceShipment" var="editCommerceShipmentURL" />

@@ -31,9 +31,9 @@ if (cpTaxCategory != null) {
 	title = LanguageUtil.format(request, "edit-x", cpTaxCategory.getName(languageId), false);
 }
 
-Map<String, Object> data = new HashMap<>();
-
-data.put("direction-right", StringPool.TRUE);
+Map<String, Object> data = HashMapBuilder.<String, Object>put(
+	"direction-right", StringPool.TRUE
+).build();
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), redirect, data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);

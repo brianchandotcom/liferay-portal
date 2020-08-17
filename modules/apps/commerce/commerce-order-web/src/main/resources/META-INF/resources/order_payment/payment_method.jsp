@@ -23,9 +23,9 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 
 long commerceOrderId = commerceOrder.getCommerceOrderId();
 
-Map<String, String> contextParams = new HashMap<>();
-
-contextParams.put("commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId()));
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"commerceOrderId", String.valueOf(commerceOrderId)
+).build();
 %>
 
 <portlet:actionURL name="editCommerceOrder" var="editCommerceOrderPaymentMethodActionURL" />

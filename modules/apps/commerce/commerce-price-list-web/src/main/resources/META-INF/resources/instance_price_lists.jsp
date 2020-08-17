@@ -49,9 +49,9 @@ productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
 		<liferay-ui:error exception="<%= DuplicateCommercePriceEntryException.class %>" message="one-or-more-selected-entries-already-exist" />
 
 		<%
-		Map<String, String> contextParams = new HashMap<>();
-
-		contextParams.put("cpInstanceId", String.valueOf(cpInstanceId));
+		Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+			"cpInstanceId", String.valueOf(cpInstanceId)
+		).build();
 		%>
 
 		<commerce-ui:dataset-display

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -313,20 +314,24 @@ public class CPInstanceLocalServiceTest {
 				_commerceCatalog.getGroupId(), cpDefinition.getCPDefinitionId(),
 				true, 2);
 
-		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-			cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
-
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			cpDefinitionOptionValueRels.get(0);
-
 		Map<Long, List<Long>>
 			cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds =
-				new HashMap<>();
+				HashMapBuilder.<Long, List<Long>>put(
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+					() -> {
+						List<CPDefinitionOptionValueRel>
+							cpDefinitionOptionValueRels =
+								cpDefinitionOptionRel.
+									getCPDefinitionOptionValueRels();
 
-		cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds.put(
-			cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-			Arrays.asList(
-				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId()));
+						CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+							cpDefinitionOptionValueRels.get(0);
+
+						return Arrays.asList(
+							cpDefinitionOptionValueRel.
+								getCPDefinitionOptionValueRelId());
+					}
+				).build();
 
 		CPInstance cpInstanceA = CPTestUtil.addCPDefinitionCPInstance(
 			cpDefinition.getCPDefinitionId(),
@@ -385,20 +390,24 @@ public class CPInstanceLocalServiceTest {
 				_commerceCatalog.getGroupId(), cpDefinition.getCPDefinitionId(),
 				true, 2);
 
-		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-			cpDefinitionOptionRel.getCPDefinitionOptionValueRels();
-
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			cpDefinitionOptionValueRels.get(0);
-
 		Map<Long, List<Long>>
 			cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds =
-				new HashMap<>();
+				HashMapBuilder.<Long, List<Long>>put(
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+					() -> {
+						List<CPDefinitionOptionValueRel>
+							cpDefinitionOptionValueRels =
+								cpDefinitionOptionRel.
+									getCPDefinitionOptionValueRels();
 
-		cpDefinitionOptionRelIdCPDefinitionOptionValueRelIds.put(
-			cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-			Arrays.asList(
-				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId()));
+						CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+							cpDefinitionOptionValueRels.get(0);
+
+						return Arrays.asList(
+							cpDefinitionOptionValueRel.
+								getCPDefinitionOptionValueRelId());
+					}
+				).build();
 
 		CPTestUtil.addCPDefinitionCPInstance(
 			cpDefinition.getCPDefinitionId(),

@@ -25,9 +25,9 @@ PortletURL portletURL = commerceNotificationQueueEntriesDisplayContext.getPortle
 
 portletURL.setParameter("notificationNavigationItem", notificationNavigationItem);
 
-Map<String, String> contextParams = new HashMap<>();
-
-contextParams.put("commerceChannelId", String.valueOf(commerceNotificationQueueEntriesDisplayContext.getCommerceChannelId()));
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"commerceChannelId", String.valueOf(commerceNotificationQueueEntriesDisplayContext.getCommerceChannelId())
+).build();
 %>
 
 <commerce-ui:dataset-display

@@ -32,9 +32,9 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 		<%
-		Map<String, String> contextParams = new HashMap<>();
-
-		contextParams.put("commercePriceEntryId", String.valueOf(commercePriceEntryId));
+		Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+			"commercePriceEntryId", String.valueOf(commercePriceEntryId)
+		).build();
 		%>
 
 		<commerce-ui:dataset-display

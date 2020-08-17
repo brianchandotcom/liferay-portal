@@ -50,6 +50,8 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -61,7 +63,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -675,12 +676,14 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 
 		SearchContext searchContext = new SearchContext();
 
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(
-			CommerceSubscriptionEntryIndexer.FIELD_CP_INSTANCE_ID, keywords);
-		attributes.put(CommerceSubscriptionEntryIndexer.FIELD_SKU, keywords);
-		attributes.put(Field.ENTRY_CLASS_PK, keywords);
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				CommerceSubscriptionEntryIndexer.FIELD_CP_INSTANCE_ID, keywords
+			).put(
+				CommerceSubscriptionEntryIndexer.FIELD_SKU, keywords
+			).put(
+				Field.ENTRY_CLASS_PK, keywords
+			).build();
 
 		if (maxSubscriptionCycles != null) {
 			attributes.put(
@@ -694,9 +697,10 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 				subscriptionStatus);
 		}
 
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("keywords", keywords);
+		LinkedHashMap<String, Object> params =
+			LinkedHashMapBuilder.<String, Object>put(
+				"keywords", keywords
+			).build();
 
 		attributes.put("params", params);
 

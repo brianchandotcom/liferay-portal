@@ -65,13 +65,13 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -877,9 +877,9 @@ public class CommerceOrderTest {
 	}
 
 	private Role _addSalesAgentRole() throws Exception {
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		titleMap.put(_serviceContext.getLocale(), "Sales Agent");
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			_serviceContext.getLocale(), "Sales Agent"
+		).build();
 
 		Role role = _roleLocalService.addRole(
 			_user.getUserId(), null, 0, "Sales Agent", titleMap, null, 1, null,

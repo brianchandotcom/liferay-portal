@@ -52,6 +52,8 @@ import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -64,8 +66,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -597,20 +597,22 @@ public class CPTestUtil {
 
 		SearchContext searchContext = new SearchContext();
 
-		Map<String, Serializable> attributes = new HashMap<>();
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				Field.STATUS, status
+			).put(
+				"params",
+				LinkedHashMapBuilder.<String, Object>put(
+					"keywords",
+					() -> {
+						if (Validator.isNotNull(keywords)) {
+							return keywords;
+						}
 
-		attributes.put(Field.STATUS, status);
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		if (Validator.isNotNull(keywords)) {
-			params.put("keywords", keywords);
-		}
-		else {
-			params.put("keywords", StringPool.STAR);
-		}
-
-		attributes.put("params", params);
+						return StringPool.STAR;
+					}
+				).build()
+			).build();
 
 		searchContext.setAttributes(attributes);
 

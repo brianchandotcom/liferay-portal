@@ -66,9 +66,9 @@ tierPriceEntriesURL.setParameter("toolbarItem", toolbarItem);
 
 String title = commerceTierPriceEntryDisplayContext.getContextTitle();
 
-Map<String, Object> data = new HashMap<>();
-
-data.put("direction-right", StringPool.TRUE);
+Map<String, Object> data = HashMapBuilder.<String, Object>put(
+	"direction-right", StringPool.TRUE
+).build();
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "price-lists"), priceListsURL, data);
 PortalUtil.addPortletBreadcrumbEntry(request, commercePriceList.getName(), editPriceListURL.toString(), data);

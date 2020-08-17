@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -174,13 +175,11 @@ public class MercanetServlet extends HttpServlet {
 					Integer.valueOf(keyVersion),
 					mercanetGroupServiceConfiguration.secretKey());
 
-				Map<String, String> verifyMap = new HashMap<>();
-
-				verifyMap.put("Data", data);
-
-				String seal = ParamUtil.getString(httpServletRequest, "Seal");
-
-				verifyMap.put("Seal", seal);
+				Map<String, String> verifyMap = HashMapBuilder.put(
+					"Data", data
+				).put(
+					"Seal", ParamUtil.getString(httpServletRequest, "Seal")
+				).build();
 
 				PaypageResponse paypageResponse = paypageClient.decodeResponse(
 					verifyMap);

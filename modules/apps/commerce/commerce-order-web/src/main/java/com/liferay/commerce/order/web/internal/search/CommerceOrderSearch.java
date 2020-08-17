@@ -21,11 +21,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -131,12 +131,12 @@ public class CommerceOrderSearch extends SearchContainer<CommerceOrder> {
 		"order-date", "status", "customer-name", "customer-id", "order-id",
 		"order-value", "notes");
 	private static final Map<String, String> _orderableHeaders =
-		new LinkedHashMap<String, String>() {
-			{
-				put("create-date", "order-date");
-				put("order-id", "order-id");
-				put("total", "order-value");
-			}
-		};
+		LinkedHashMapBuilder.put(
+			"create-date", "order-date"
+		).put(
+			"order-id", "order-id"
+		).put(
+			"total", "order-value"
+		).build();
 
 }

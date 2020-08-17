@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Map<String, Object> contextObjects = new HashMap<>();
-
 CommerceOrderContentDisplayContext commerceOrderContentDisplayContext = (CommerceOrderContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-contextObjects.put("commerceOrderContentDisplayContext", commerceOrderContentDisplayContext);
+Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+	"commerceOrderContentDisplayContext", commerceOrderContentDisplayContext
+).build();
 %>
 
 <liferay-ddm:template-renderer

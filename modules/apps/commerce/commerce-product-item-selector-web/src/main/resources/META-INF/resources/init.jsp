@@ -30,14 +30,18 @@ page import="com.liferay.commerce.product.item.selector.web.internal.display.con
 page import="com.liferay.commerce.product.item.selector.web.internal.display.context.CPSpecificationOptionItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.commerce.product.item.selector.web.internal.display.context.CommerceChannelItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
+page import="com.liferay.commerce.product.model.CPInstance" %><%@
+page import="com.liferay.commerce.product.model.CPOption" %><%@
+page import="com.liferay.commerce.product.model.CPSpecificationOption" %><%@
+page import="com.liferay.commerce.product.model.CommerceChannel" %><%@
 page import="com.liferay.commerce.product.type.CPType" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.Map" %>
+<%@ page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

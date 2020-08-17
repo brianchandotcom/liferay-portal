@@ -55,6 +55,8 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -72,7 +74,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -1743,18 +1744,21 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		SearchContext searchContext = new SearchContext();
 
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("keywords", keywords);
-
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(CPField.CP_DEFINITION_ID, cpDefinitionId);
-		attributes.put(
-			CPField.CP_DEFINITION_STATUS, WorkflowConstants.STATUS_ANY);
-		attributes.put(Field.CONTENT, keywords);
-		attributes.put(Field.STATUS, status);
-		attributes.put("params", params);
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				CPField.CP_DEFINITION_ID, cpDefinitionId
+			).put(
+				CPField.CP_DEFINITION_STATUS, WorkflowConstants.STATUS_ANY
+			).put(
+				Field.CONTENT, keywords
+			).put(
+				Field.STATUS, status
+			).put(
+				"params",
+				LinkedHashMapBuilder.<String, Object>put(
+					"keywords", keywords
+				).build()
+			).build();
 
 		searchContext.setAttributes(attributes);
 
@@ -1784,18 +1788,21 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		SearchContext searchContext = new SearchContext();
 
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("keywords", keywords);
-
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(CPField.CP_DEFINITION_ID, cpDefinitionId);
-		attributes.put(
-			CPField.CP_DEFINITION_STATUS, WorkflowConstants.STATUS_ANY);
-		attributes.put(Field.CONTENT, keywords);
-		attributes.put(Field.STATUS, status);
-		attributes.put("params", params);
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				CPField.CP_DEFINITION_ID, cpDefinitionId
+			).put(
+				CPField.CP_DEFINITION_STATUS, WorkflowConstants.STATUS_ANY
+			).put(
+				Field.CONTENT, keywords
+			).put(
+				Field.STATUS, status
+			).put(
+				"params",
+				LinkedHashMapBuilder.<String, Object>put(
+					"keywords", keywords
+				).build()
+			).build();
 
 		searchContext.setAttributes(attributes);
 
@@ -1823,15 +1830,17 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		SearchContext searchContext = new SearchContext();
 
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("keywords", keywords);
-
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(Field.CONTENT, keywords);
-		attributes.put(Field.STATUS, status);
-		attributes.put("params", params);
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				Field.CONTENT, keywords
+			).put(
+				Field.STATUS, status
+			).put(
+				"params",
+				LinkedHashMapBuilder.<String, Object>put(
+					"keywords", keywords
+				).build()
+			).build();
 
 		searchContext.setAttributes(attributes);
 
@@ -1862,15 +1871,17 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		SearchContext searchContext = new SearchContext();
 
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("keywords", keywords);
-
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(Field.CONTENT, keywords);
-		attributes.put(Field.STATUS, status);
-		attributes.put("params", params);
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				Field.CONTENT, keywords
+			).put(
+				Field.STATUS, status
+			).put(
+				"params",
+				LinkedHashMapBuilder.<String, Object>put(
+					"keywords", keywords
+				).build()
+			).build();
 
 		searchContext.setAttributes(attributes);
 

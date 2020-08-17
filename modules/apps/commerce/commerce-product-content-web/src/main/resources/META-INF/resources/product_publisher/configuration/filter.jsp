@@ -46,16 +46,23 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 <div id="<portlet:namespace />ConditionForm"></div>
 
 <%
-Map<String, Object> context = new HashMap<>();
-
-context.put("categorySelectorURL", cpPublisherConfigurationDisplayContext.getCategorySelectorURL());
-context.put("id", "autofield");
-context.put("groupIds", String.valueOf(company.getGroupId()));
-context.put("namespace", liferayPortletResponse.getNamespace());
-context.put("pathThemeImages", themeDisplay.getPathThemeImages());
-context.put("rules", cpPublisherConfigurationDisplayContext.getAutoFieldRulesJSONArray());
-context.put("tagSelectorURL", cpPublisherConfigurationDisplayContext.getTagSelectorURL());
-context.put("vocabularyIds", cpPublisherConfigurationDisplayContext.getVocabularyIds());
+Map<String, Object> context = HashMapBuilder.<String, Object>put(
+	"categorySelectorURL", cpPublisherConfigurationDisplayContext.getCategorySelectorURL()
+).put(
+	"groupIds", String.valueOf(company.getGroupId())
+).put(
+	"id", "autofield"
+).put(
+	"namespace", liferayPortletResponse.getNamespace()
+).put(
+	"pathThemeImages", themeDisplay.getPathThemeImages()
+).put(
+	"rules", cpPublisherConfigurationDisplayContext.getAutoFieldRulesJSONArray()
+).put(
+	"tagSelectorURL", cpPublisherConfigurationDisplayContext.getTagSelectorURL()
+).put(
+	"vocabularyIds", cpPublisherConfigurationDisplayContext.getVocabularyIds()
+).build();
 %>
 
 <soy:template-renderer

@@ -38,10 +38,10 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -409,17 +409,16 @@ public class CommerceShipmentItemLocalServiceImpl
 			commerceShipmentItem.getCommerceInventoryWarehouseId(),
 			commerceOrderItem.getSku(), quantity);
 
-		Map<String, String> context = new HashMap<>();
-
-		context.put(
+		Map<String, String> context = HashMapBuilder.put(
 			CommerceInventoryAuditTypeConstants.ORDER_ID,
-			String.valueOf(commerceOrderItem.getCommerceOrderId()));
-		context.put(
+			String.valueOf(commerceOrderItem.getCommerceOrderId())
+		).put(
 			CommerceInventoryAuditTypeConstants.ORDER_ITEM_ID,
-			String.valueOf(commerceOrderItem.getCommerceOrderItemId()));
-		context.put(
+			String.valueOf(commerceOrderItem.getCommerceOrderItemId())
+		).put(
 			CommerceInventoryAuditTypeConstants.SHIPMENT_ID,
-			String.valueOf(commerceShipmentItem.getCommerceShipmentId()));
+			String.valueOf(commerceShipmentItem.getCommerceShipmentId())
+		).build();
 
 		_commerceInventoryBookedQuantityLocalService.
 			resetCommerceBookedQuantity(
@@ -449,20 +448,19 @@ public class CommerceShipmentItemLocalServiceImpl
 			commerceShipmentItemPersistence.findByPrimaryKey(
 				commerceShipmentItemId);
 
-		Map<String, String> context = new HashMap<>();
-
-		context.put(
+		Map<String, String> context = HashMapBuilder.put(
 			CommerceInventoryAuditTypeConstants.ORDER_ID,
-			String.valueOf(commerceOrderItem.getCommerceOrderId()));
-		context.put(
+			String.valueOf(commerceOrderItem.getCommerceOrderId())
+		).put(
 			CommerceInventoryAuditTypeConstants.ORDER_ITEM_ID,
-			String.valueOf(commerceOrderItem.getCommerceOrderItemId()));
-		context.put(
+			String.valueOf(commerceOrderItem.getCommerceOrderItemId())
+		).put(
 			CommerceInventoryAuditTypeConstants.SHIPMENT_ID,
-			String.valueOf(commerceShipmentItem.getCommerceShipmentId()));
-		context.put(
+			String.valueOf(commerceShipmentItem.getCommerceShipmentId())
+		).put(
 			CommerceInventoryAuditTypeConstants.SHIPMENT_ITEM_ID,
-			String.valueOf(commerceShipmentItemId));
+			String.valueOf(commerceShipmentItemId)
+		).build();
 
 		_commerceInventoryEngine.consumeQuantity(
 			commerceShipmentItem.getUserId(),

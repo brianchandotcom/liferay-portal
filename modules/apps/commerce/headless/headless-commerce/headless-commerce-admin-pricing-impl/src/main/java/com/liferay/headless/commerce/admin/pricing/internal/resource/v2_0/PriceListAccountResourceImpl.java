@@ -25,7 +25,6 @@ import com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.P
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.PriceListAccountUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceListAccountResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -154,18 +153,20 @@ public class PriceListAccountResourceImpl
 
 	private Map<String, Map<String, String>> _getActions(
 			CommercePriceListAccountRel commercePriceListAccountRel)
-		throws PortalException {
-
-		CommercePriceList commercePriceList =
-			commercePriceListAccountRel.getCommercePriceList();
+		throws Exception {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
-			addAction(
-				"UPDATE", commercePriceList.getCommercePriceListId(),
-				"deletePriceListAccount", commercePriceList.getUserId(),
-				"com.liferay.commerce.price.list.model.CommercePriceList",
-				commercePriceList.getGroupId())
+			() -> {
+				CommercePriceList commercePriceList =
+					commercePriceListAccountRel.getCommercePriceList();
+
+				return addAction(
+					"UPDATE", commercePriceList.getCommercePriceListId(),
+					"deletePriceListAccount", commercePriceList.getUserId(),
+					"com.liferay.commerce.price.list.model.CommercePriceList",
+					commercePriceList.getGroupId());
+			}
 		).build();
 	}
 

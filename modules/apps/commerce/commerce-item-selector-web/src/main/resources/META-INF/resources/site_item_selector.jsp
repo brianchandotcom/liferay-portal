@@ -67,10 +67,11 @@ String itemSelectedEventName = simpleSiteItemSelectorViewDisplayContext.getItemS
 			/>
 
 			<%
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("id", group.getGroupId());
-			data.put("name", group.getName(locale));
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"id", group.getGroupId()
+			).put(
+				"name", group.getName(locale)
+			).build();
 
 			row.setData(data);
 			%>

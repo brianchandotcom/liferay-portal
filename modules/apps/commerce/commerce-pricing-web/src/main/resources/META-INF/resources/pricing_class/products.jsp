@@ -106,9 +106,9 @@ boolean hasPermission = commercePricingClassCPDefinitionDisplayContext.hasPermis
 			>
 
 				<%
-				Map<String, String> contextParams = new HashMap<>();
-
-				contextParams.put("commercePricingClassId", String.valueOf(commercePricingClassId));
+				Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+					"commercePricingClassId", String.valueOf(commercePricingClassId)
+				).build();
 				%>
 
 				<commerce-ui:dataset-display

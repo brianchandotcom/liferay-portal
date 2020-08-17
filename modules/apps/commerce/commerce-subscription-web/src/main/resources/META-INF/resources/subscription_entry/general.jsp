@@ -23,9 +23,9 @@ CommerceSubscriptionEntry commerceSubscriptionEntry = commerceSubscriptionEntryD
 List<CPSubscriptionType> cpSubscriptionTypes = commerceSubscriptionEntryDisplayContext.getCPSubscriptionTypes();
 int orderPaymentStatus = commerceSubscriptionEntryDisplayContext.getOrderPaymentStatus();
 
-Map<String, String> contextParams = new HashMap<>();
-
-contextParams.put("commerceSubscriptionEntryId", String.valueOf(commerceSubscriptionEntry.getCommerceSubscriptionEntryId()));
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"commerceSubscriptionEntryId", String.valueOf(commerceSubscriptionEntry.getCommerceSubscriptionEntryId())
+).build();
 
 int subscriptionLength = BeanParamUtil.getInteger(commerceSubscriptionEntry, request, "subscriptionLength", 1);
 String subscriptionType = BeanParamUtil.getString(commerceSubscriptionEntry, request, "subscriptionType");

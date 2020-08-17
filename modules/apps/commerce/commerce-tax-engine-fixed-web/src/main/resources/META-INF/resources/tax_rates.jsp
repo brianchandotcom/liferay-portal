@@ -21,10 +21,11 @@ CommerceTaxFixedRatesDisplayContext commerceTaxFixedRatesDisplayContext = (Comme
 %>
 
 <%
-Map<String, String> contextParams = new HashMap<>();
-
-contextParams.put("commerceChannelId", String.valueOf(commerceTaxFixedRatesDisplayContext.getCommerceChannelId()));
-contextParams.put("commerceTaxMethodId", String.valueOf(commerceTaxFixedRatesDisplayContext.getCommerceTaxMethodId()));
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"commerceChannelId", String.valueOf(commerceTaxFixedRatesDisplayContext.getCommerceChannelId())
+).put(
+	"commerceTaxMethodId", String.valueOf(commerceTaxFixedRatesDisplayContext.getCommerceTaxMethodId())
+).build();
 %>
 
 <commerce-ui:dataset-display

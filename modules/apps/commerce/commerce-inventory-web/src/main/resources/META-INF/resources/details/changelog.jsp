@@ -19,9 +19,9 @@
 <%
 CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInventoryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-Map<String, String> contextParams = new HashMap<>();
-
-contextParams.put("sku", commerceInventoryDisplayContext.getSku());
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"sku", commerceInventoryDisplayContext.getSku()
+).build();
 %>
 
 <commerce-ui:panel

@@ -19,7 +19,7 @@
 <%
 CPDefinitionItemSelectorViewDisplayContext cpDefinitionItemSelectorViewDisplayContext = (CPDefinitionItemSelectorViewDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-SearchContainer cpDefinitionSearchContainer = cpDefinitionItemSelectorViewDisplayContext.getSearchContainer();
+SearchContainer<CPDefinition> cpDefinitionSearchContainer = cpDefinitionItemSelectorViewDisplayContext.getSearchContainer();
 
 String displayStyle = cpDefinitionItemSelectorViewDisplayContext.getDisplayStyle();
 
@@ -75,10 +75,11 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 		>
 
 			<%
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("cp-definition-id", cpDefinition.getCPDefinitionId());
-			data.put("name", cpDefinition.getName(themeDisplay.getLanguageId()));
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"cp-definition-id", cpDefinition.getCPDefinitionId()
+			).put(
+				"name", cpDefinition.getName(themeDisplay.getLanguageId())
+			).build();
 
 			row.setData(data);
 

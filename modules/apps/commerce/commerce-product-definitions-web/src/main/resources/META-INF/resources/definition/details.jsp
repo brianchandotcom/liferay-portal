@@ -318,9 +318,9 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 				>
 
 					<%
-					Map<String, String> contextParams = new HashMap<>();
-
-					contextParams.put("cpDefinitionId", String.valueOf(cpDefinitionId));
+					Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+						"cpDefinitionId", String.valueOf(cpDefinitionId)
+					).build();
 					%>
 
 					<commerce-ui:dataset-display

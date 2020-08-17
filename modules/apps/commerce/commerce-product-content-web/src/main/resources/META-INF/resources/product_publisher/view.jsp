@@ -19,11 +19,11 @@
 <%
 CPPublisherDisplayContext cpPublisherDisplayContext = (CPPublisherDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-Map<String, Object> contextObjects = new HashMap<>();
+Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+	"cpPublisherDisplayContext", cpPublisherDisplayContext
+).build();
 
-contextObjects.put("cpPublisherDisplayContext", cpPublisherDisplayContext);
-
-SearchContainer searchContainer = cpPublisherDisplayContext.getSearchContainer();
+SearchContainer<CPCatalogEntry> searchContainer = cpPublisherDisplayContext.getSearchContainer();
 
 List<CPCatalogEntry> results = searchContainer.getResults();
 %>

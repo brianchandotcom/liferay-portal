@@ -25,9 +25,9 @@ List<AssetCategory> assetCategoryList = new ArrayList<>();
 
 assetCategoryList.add(assetCategory);
 
-Map<String, Object> contextObjects = new HashMap<>();
-
-contextObjects.put("cpCategoryContentDisplayContext", cpCategoryContentDisplayContext);
+Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+	"cpCategoryContentDisplayContext", cpCategoryContentDisplayContext
+).build();
 %>
 
 <liferay-ddm:template-renderer

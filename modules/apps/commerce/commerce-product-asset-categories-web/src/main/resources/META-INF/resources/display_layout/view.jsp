@@ -19,9 +19,9 @@
 <%
 CategoryCPDisplayLayoutDisplayContext categoryCPDisplayLayoutDisplayContext = (CategoryCPDisplayLayoutDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-Map<String, String> contextParams = new HashMap<>();
-
-contextParams.put("commerceChannelId", String.valueOf(categoryCPDisplayLayoutDisplayContext.getCommerceChannelId()));
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"commerceChannelId", String.valueOf(categoryCPDisplayLayoutDisplayContext.getCommerceChannelId())
+).build();
 %>
 
 <commerce-ui:dataset-display

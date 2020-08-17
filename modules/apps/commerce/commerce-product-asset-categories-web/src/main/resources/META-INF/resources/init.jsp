@@ -56,6 +56,7 @@ page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
@@ -66,8 +67,7 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.List" %><%@
+<%@ page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>

@@ -54,8 +54,8 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -132,18 +132,15 @@ public class DDMFormImporter {
 
 		//DDM Form
 
-		String description = jsonObject.getString("description");
-		String name = jsonObject.getString("name");
-
 		Locale locale = serviceContext.getLocale();
 
-		Map<Locale, String> nameMap = new HashMap<>();
+		Map<Locale, String> nameMap = HashMapBuilder.put(
+			locale, jsonObject.getString("name")
+		).build();
 
-		nameMap.put(locale, name);
-
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		descriptionMap.put(locale, description);
+		Map<Locale, String> descriptionMap = HashMapBuilder.put(
+			locale, jsonObject.getString("description")
+		).build();
 
 		String jsonForm = jsonObject.getString("ddmStructure");
 

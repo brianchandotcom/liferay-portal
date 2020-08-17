@@ -24,9 +24,9 @@ boolean hasPermission = commercePricingClassDiscountDisplayContext.hasPermission
 
 CommercePricingClass commercePricingClass = commercePricingClassDiscountDisplayContext.getCommercePricingClass();
 
-Map<String, String> contextParams = new HashMap<>();
-
-contextParams.put("commercePricingClassId", String.valueOf(commercePricingClass.getCommercePricingClassId()));
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"commercePricingClassId", String.valueOf(commercePricingClass.getCommercePricingClassId())
+).build();
 %>
 
 <c:if test="<%= hasPermission %>">

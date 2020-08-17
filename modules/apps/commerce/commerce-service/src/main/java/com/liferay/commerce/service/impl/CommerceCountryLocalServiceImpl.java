@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -54,7 +55,6 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -297,15 +297,13 @@ public class CommerceCountryLocalServiceImpl
 				String twoLettersISOCode = jsonObject.getString(
 					"twoLettersISOCode");
 
-				String localizedName = LanguageUtil.get(
-					serviceContext.getLocale(), "country." + name);
-
-				Map<Locale, String> nameMap = new HashMap<>();
-
-				nameMap.put(serviceContext.getLocale(), localizedName);
-
 				commerceCountryLocalService.addCommerceCountry(
-					nameMap, true, true, twoLettersISOCode, threeLettersISOCode,
+					HashMapBuilder.put(
+						serviceContext.getLocale(),
+						LanguageUtil.get(
+							serviceContext.getLocale(), "country." + name)
+					).build(),
+					true, true, twoLettersISOCode, threeLettersISOCode,
 					numericISOCode, false, priority, true, serviceContext);
 
 				CommerceRegionsStarter commerceRegionsStarter =
@@ -403,15 +401,20 @@ public class CommerceCountryLocalServiceImpl
 
 		SearchContext searchContext = new SearchContext();
 
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put("active", active);
-
-		attributes.put(Field.ENTRY_CLASS_PK, keywords);
-		attributes.put(Field.NAME, keywords);
-		attributes.put("numericISOCode", keywords);
-		attributes.put("threeLettersISOCode", keywords);
-		attributes.put("twoLettersISOCode", keywords);
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				Field.ENTRY_CLASS_PK, keywords
+			).put(
+				Field.NAME, keywords
+			).put(
+				"active", active
+			).put(
+				"numericISOCode", keywords
+			).put(
+				"threeLettersISOCode", keywords
+			).put(
+				"twoLettersISOCode", keywords
+			).build();
 
 		searchContext.setAttributes(attributes);
 

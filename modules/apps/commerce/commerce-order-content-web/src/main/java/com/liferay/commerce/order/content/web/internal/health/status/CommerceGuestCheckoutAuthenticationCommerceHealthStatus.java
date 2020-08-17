@@ -43,10 +43,10 @@ import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -153,18 +153,17 @@ public class CommerceGuestCheckoutAuthenticationCommerceHealthStatus
 				JournalArticle.class.getName(),
 				journalArticle.getResourcePrimKey());
 
-			Map<String, String[]> parameterMap = new HashMap<>();
-
-			parameterMap.put(
-				"articleId", new String[] {journalArticle.getArticleId()});
-			parameterMap.put(
+			Map<String, String[]> parameterMap = HashMapBuilder.put(
+				"articleId", new String[] {journalArticle.getArticleId()}
+			).put(
 				"assetEntryId",
-				new String[] {String.valueOf(assetEntry.getEntryId())});
-			parameterMap.put(
+				new String[] {String.valueOf(assetEntry.getEntryId())}
+			).put(
 				"groupId",
-				new String[] {String.valueOf(journalArticle.getGroupId())});
-			parameterMap.put(
-				"showAvailableLocales", new String[] {Boolean.TRUE.toString()});
+				new String[] {String.valueOf(journalArticle.getGroupId())}
+			).put(
+				"showAvailableLocales", new String[] {Boolean.TRUE.toString()}
+			).build();
 
 			for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
 				portletPreferences.setValues(entry.getKey(), entry.getValue());

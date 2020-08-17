@@ -32,11 +32,11 @@ page import="com.liferay.commerce.shipping.web.internal.servlet.taglib.ui.Commer
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.Map" %>
+<%@ page import="java.util.Map" %>
 
 <liferay-frontend:defineObjects />
 

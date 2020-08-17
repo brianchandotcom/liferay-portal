@@ -22,9 +22,9 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 long cpDefinitionId = cpDefinitionsDisplayContext.getCPDefinitionId();
 
-Map<String, String> contextParams = new HashMap<>();
-
-contextParams.put("cpDefinitionId", String.valueOf(cpDefinitionId));
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"cpDefinitionId", String.valueOf(cpDefinitionId)
+).build();
 %>
 
 <portlet:actionURL name="editProductDefinition" var="editProductDefinitionActionURL" />

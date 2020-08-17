@@ -31,9 +31,9 @@ CPDataSourceResult cpDataSourceResult = cpCompareContentMiniDisplayContext.getCP
 	<c:when test="<%= cpCompareContentMiniDisplayContext.isSelectionStyleADT() %>">
 
 		<%
-		Map<String, Object> contextObjects = new HashMap<>();
-
-		contextObjects.put("cpCompareContentMiniDisplayContext", cpCompareContentMiniDisplayContext);
+		Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+			"cpCompareContentMiniDisplayContext", cpCompareContentMiniDisplayContext
+		).build();
 		%>
 
 		<liferay-ddm:template-renderer

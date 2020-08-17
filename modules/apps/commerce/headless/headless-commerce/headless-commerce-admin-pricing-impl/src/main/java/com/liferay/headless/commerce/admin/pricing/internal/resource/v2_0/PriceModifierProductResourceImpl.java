@@ -26,7 +26,6 @@ import com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.P
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.PriceModifierProductUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceModifierProductResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -164,18 +163,21 @@ public class PriceModifierProductResourceImpl
 
 	private Map<String, Map<String, String>> _getActions(
 			CommercePriceModifierRel commercePriceModifierRel)
-		throws PortalException {
-
-		CommercePriceModifier commercePriceModifier =
-			commercePriceModifierRel.getCommercePriceModifier();
+		throws Exception {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
-			addAction(
-				"UPDATE", commercePriceModifier.getCommercePriceListId(),
-				"deletePriceModifierProduct", commercePriceModifier.getUserId(),
-				"com.liferay.commerce.price.list.model.CommercePriceList",
-				commercePriceModifier.getGroupId())
+			() -> {
+				CommercePriceModifier commercePriceModifier =
+					commercePriceModifierRel.getCommercePriceModifier();
+
+				return addAction(
+					"UPDATE", commercePriceModifier.getCommercePriceListId(),
+					"deletePriceModifierProduct",
+					commercePriceModifier.getUserId(),
+					"com.liferay.commerce.price.list.model.CommercePriceList",
+					commercePriceModifier.getGroupId());
+			}
 		).build();
 	}
 

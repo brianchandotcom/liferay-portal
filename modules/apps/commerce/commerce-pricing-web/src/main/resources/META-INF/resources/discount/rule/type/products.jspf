@@ -119,9 +119,9 @@ String typeSettings = unicodeProperties.getProperty(commerceDiscountRule.getType
 	>
 
 		<%
-		Map<String, String> contextParams = new HashMap<>();
-
-		contextParams.put("commerceDiscountRuleId", String.valueOf(commerceDiscountRule.getCommerceDiscountRuleId()));
+		Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+			"commerceDiscountRuleId", String.valueOf(commerceDiscountRule.getCommerceDiscountRuleId())
+		).build();
 		%>
 
 		<commerce-ui:dataset-display

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -45,7 +46,6 @@ import java.net.URI;
 import java.net.URLEncoder;
 
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -73,9 +73,9 @@ public class CPAttachmentFileEntryCreator {
 		serviceContext.setUserId(userId);
 		serviceContext.setCompanyId(user.getCompanyId());
 
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		titleMap.put(serviceContext.getLocale(), fileName);
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			serviceContext.getLocale(), fileName
+		).build();
 
 		InputStream inputStream = null;
 

@@ -405,16 +405,15 @@ public class MiniumSiteInitializer implements SiteInitializer {
 			_commerceShippingEngineRegistry.getCommerceShippingEngine(
 				shippingMethod);
 
-		Map<Locale, String> nameMap = new HashMap<>();
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		nameMap.put(locale, commerceShippingEngine.getName(locale));
-		descriptionMap.put(
-			locale, commerceShippingEngine.getDescription(locale));
-
 		CommerceShippingMethod commerceShippingMethod =
 			_commerceShippingMethodLocalService.addCommerceShippingMethod(
-				serviceContext.getUserId(), groupId, nameMap, descriptionMap,
+				serviceContext.getUserId(), groupId,
+				HashMapBuilder.<Locale, String>put(
+					locale, commerceShippingEngine.getName(locale)
+				).build(),
+				HashMapBuilder.<Locale, String>put(
+					locale, commerceShippingEngine.getDescription(locale)
+				).build(),
 				null, shippingMethod, 0, true);
 
 		setCommerceShippingOption(
@@ -431,16 +430,15 @@ public class MiniumSiteInitializer implements SiteInitializer {
 			String description, BigDecimal price, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<Locale, String> nameMap = new HashMap<>();
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		nameMap.put(serviceContext.getLocale(), name);
-		descriptionMap.put(serviceContext.getLocale(), description);
-
 		_commerceShippingFixedOptionLocalService.addCommerceShippingFixedOption(
 			serviceContext.getUserId(), commerceShippingMethod.getGroupId(),
-			commerceShippingMethod.getCommerceShippingMethodId(), nameMap,
-			descriptionMap, price, 0);
+			commerceShippingMethod.getCommerceShippingMethodId(),
+			HashMapBuilder.<Locale, String>put(
+				serviceContext.getLocale(), name
+			).build(),
+			HashMapBuilder.<Locale, String>put(
+				serviceContext.getLocale(), description
+			).build(), price, 0);
 	}
 
 	protected void setDefaultCatalogImage(

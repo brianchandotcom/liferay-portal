@@ -29,12 +29,12 @@ page import="com.liferay.commerce.product.asset.categories.navigation.web.intern
 page import="com.liferay.commerce.product.asset.categories.navigation.web.internal.portlet.CPAssetCategoriesNavigationPortlet" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.List" %><%@
+<%@ page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
 <liferay-theme:defineObjects />

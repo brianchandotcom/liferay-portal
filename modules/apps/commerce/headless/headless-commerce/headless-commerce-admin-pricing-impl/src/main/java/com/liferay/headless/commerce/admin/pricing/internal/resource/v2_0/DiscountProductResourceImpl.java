@@ -26,7 +26,6 @@ import com.liferay.headless.commerce.admin.pricing.internal.dto.v2_0.converter.D
 import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.DiscountProductUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.DiscountProductResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -158,21 +157,23 @@ public class DiscountProductResourceImpl
 
 	private Map<String, Map<String, String>> _getActions(
 			CommerceDiscountRel commerceDiscountRel)
-		throws PortalException {
-
-		ServiceContext serviceContext =
-			_serviceContextHelper.getServiceContext();
-
-		CommerceDiscount commerceDiscount =
-			commerceDiscountRel.getCommerceDiscount();
+		throws Exception {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
-			addAction(
-				"UPDATE", commerceDiscount.getCommerceDiscountId(),
-				"deleteDiscountProduct", commerceDiscountRel.getUserId(),
-				"com.liferay.commerce.discount.model.CommerceDiscount",
-				serviceContext.getScopeGroupId())
+			() -> {
+				ServiceContext serviceContext =
+					_serviceContextHelper.getServiceContext();
+
+				CommerceDiscount commerceDiscount =
+					commerceDiscountRel.getCommerceDiscount();
+
+				return addAction(
+					"UPDATE", commerceDiscount.getCommerceDiscountId(),
+					"deleteDiscountProduct", commerceDiscountRel.getUserId(),
+					"com.liferay.commerce.discount.model.CommerceDiscount",
+					serviceContext.getScopeGroupId());
+			}
 		).build();
 	}
 

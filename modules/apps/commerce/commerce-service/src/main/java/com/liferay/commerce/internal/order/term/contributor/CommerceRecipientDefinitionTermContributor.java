@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -228,14 +229,15 @@ public class CommerceRecipientDefinitionTermContributor
 	private static final String _USER_GROUP_NAME = "[%USER_GROUP_NAME%]";
 
 	private static final Map<String, String> _commerceOrderDefinitionTermsMap =
-		new HashMap<String, String>() {
-			{
-				put(_ACCOUNT_ROLE_ADMINISTRATOR, "account-role-administrator");
-				put(_ACCOUNT_ROLE_ORDER_MANAGER, "account-role-order-manager");
-				put(_ORDER_CREATOR, "order-creator-definition-term");
-				put(_USER_GROUP_NAME, "user-group-name");
-			}
-		};
+		HashMapBuilder.put(
+			_ACCOUNT_ROLE_ADMINISTRATOR, "account-role-administrator"
+		).put(
+			_ACCOUNT_ROLE_ORDER_MANAGER, "account-role-order-manager"
+		).put(
+			_ORDER_CREATOR, "order-creator-definition-term"
+		).put(
+			_USER_GROUP_NAME, "user-group-name"
+		).build();
 
 	@Reference
 	private CommerceAccountUserRelLocalService

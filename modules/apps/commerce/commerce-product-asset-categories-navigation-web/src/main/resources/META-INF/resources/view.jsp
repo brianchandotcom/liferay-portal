@@ -20,9 +20,9 @@
 String vocabularyNavigation = cpAssetCategoriesNavigationDisplayContext.getVocabularyNavigation(themeDisplay);
 List<AssetCategory> assetCategories = cpAssetCategoriesNavigationDisplayContext.getAssetCategories();
 
-Map<String, Object> contextObjects = new HashMap<>();
-
-contextObjects.put("cpAssetCategoriesNavigationDisplayContext", cpAssetCategoriesNavigationDisplayContext);
+Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+	"cpAssetCategoriesNavigationDisplayContext", cpAssetCategoriesNavigationDisplayContext
+).build();
 
 String vocabularyTitle = StringPool.BLANK;
 

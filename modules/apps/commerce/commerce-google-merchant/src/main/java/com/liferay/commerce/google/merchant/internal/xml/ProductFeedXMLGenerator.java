@@ -42,15 +42,14 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
@@ -174,21 +173,17 @@ public class ProductFeedXMLGenerator {
 	}
 
 	private SearchContext _getSearchContext(CommerceChannel commerceChannel) {
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		long commerceChannelGroupId = commerceChannel.getGroupId();
-
-		long[] commerceAccountGroupIds = {
-			CommerceAccountConstants.ACCOUNT_ID_GUEST
-		};
-
-		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-		attributes.put("commerceAccountGroupIds", commerceAccountGroupIds);
-		attributes.put("commerceChannelGroupId", commerceChannelGroupId);
-
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setAttributes(attributes);
+		searchContext.setAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				Field.STATUS, WorkflowConstants.STATUS_APPROVED
+			).put(
+				"commerceAccountGroupIds",
+				new long[] {CommerceAccountConstants.ACCOUNT_ID_GUEST}
+			).put(
+				"commerceChannelGroupId", commerceChannel.getGroupId()
+			).build());
 		searchContext.setCompanyId(commerceChannel.getCompanyId());
 
 		return searchContext;

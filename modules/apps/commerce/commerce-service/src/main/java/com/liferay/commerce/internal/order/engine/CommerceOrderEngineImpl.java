@@ -80,10 +80,10 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -222,17 +222,16 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			Map<String, String> context = new HashMap<>();
-
-			context.put(
+			Map<String, String> context = HashMapBuilder.put(
 				CommerceInventoryAuditTypeConstants.ACCOUNT_NAME,
-				commerceAccount.getName());
-			context.put(
+				commerceAccount.getName()
+			).put(
 				CommerceInventoryAuditTypeConstants.ORDER_ID,
-				String.valueOf(commerceOrderItem.getCommerceOrderId()));
-			context.put(
+				String.valueOf(commerceOrderItem.getCommerceOrderId())
+			).put(
 				CommerceInventoryAuditTypeConstants.ORDER_ITEM_ID,
-				String.valueOf(commerceOrderItem.getCommerceOrderItemId()));
+				String.valueOf(commerceOrderItem.getCommerceOrderItemId())
+			).build();
 
 			CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
 				_commerceInventoryBookedQuantityLocalService.
@@ -452,9 +451,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 		}
 	}
 
-	private boolean _isGuestCheckoutEnabled(long groupId)
-		throws PortalException {
-
+	private boolean _isGuestCheckoutEnabled(long groupId) throws Exception {
 		CommerceOrderCheckoutConfiguration commerceOrderCheckoutConfiguration =
 			_configurationProvider.getConfiguration(
 				CommerceOrderCheckoutConfiguration.class,
@@ -542,7 +539,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 	private void _updateCommerceDiscountUsageEntry(
 			long companyId, long commerceAccountId, long commerceOrderId,
 			String couponCode, ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		if (!Validator.isBlank(couponCode)) {
 			CommerceDiscount commerceDiscount =
@@ -565,7 +562,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 	}
 
 	private void _validateCheckout(CommerceOrder commerceOrder)
-		throws PortalException {
+		throws Exception {
 
 		if (!_commerceOrderValidatorRegistry.isValid(null, commerceOrder)) {
 			throw new CommerceOrderValidatorException();

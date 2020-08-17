@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -88,7 +89,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1479,14 +1479,13 @@ public class CommerceOrderItemLocalServiceImpl
 					fetchCommerceInventoryBookedQuantity(bookedQuantityId);
 
 			if (commerceInventoryBookedQuantity != null) {
-				Map<String, String> context = new HashMap<>();
-
-				context.put(
+				Map<String, String> context = HashMapBuilder.put(
 					CommerceInventoryAuditTypeConstants.ORDER_ID,
-					String.valueOf(commerceOrderItem.getCommerceOrderId()));
-				context.put(
+					String.valueOf(commerceOrderItem.getCommerceOrderId())
+				).put(
 					CommerceInventoryAuditTypeConstants.ORDER_ITEM_ID,
-					String.valueOf(commerceOrderItem.getCommerceOrderItemId()));
+					String.valueOf(commerceOrderItem.getCommerceOrderItemId())
+				).build();
 
 				_commerceInventoryBookedQuantityLocalService.
 					updateCommerceInventoryBookedQuantity(

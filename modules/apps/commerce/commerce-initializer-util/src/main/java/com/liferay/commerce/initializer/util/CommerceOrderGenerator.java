@@ -74,13 +74,12 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.Callable;
 
@@ -456,11 +455,10 @@ public class CommerceOrderGenerator {
 
 		SearchContext searchContext = new SearchContext();
 
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-
-		searchContext.setAttributes(attributes);
+		searchContext.setAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				Field.STATUS, WorkflowConstants.STATUS_APPROVED
+			).build());
 
 		Group group = _groupLocalService.getGroup(groupId);
 

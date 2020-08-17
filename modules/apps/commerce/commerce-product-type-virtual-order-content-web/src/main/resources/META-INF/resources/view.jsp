@@ -29,9 +29,9 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 	<c:otherwise>
 
 		<%
-		Map<String, Object> contextObjects = new HashMap<>();
-
-		contextObjects.put("commerceVirtualOrderItemContentDisplayContext", commerceVirtualOrderItemContentDisplayContext);
+		Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+			"commerceVirtualOrderItemContentDisplayContext", commerceVirtualOrderItemContentDisplayContext
+		).build();
 
 		SearchContainer<CommerceVirtualOrderItem> commerceVirtualOrderContentDisplayContextSearchContainer = commerceVirtualOrderItemContentDisplayContext.getSearchContainer();
 		%>

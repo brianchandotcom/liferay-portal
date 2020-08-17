@@ -24,6 +24,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -31,8 +33,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -61,17 +61,17 @@ public abstract class BaseCPDataSourceAssetEntryImpl implements CPDataSource {
 
 		SearchContext searchContext = new SearchContext();
 
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-		attributes.put(
-			"excludedCPDefinitionId", cpCatalogEntry.getCPDefinitionId());
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("keywords", StringPool.STAR);
-
-		attributes.put("params", params);
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				Field.STATUS, WorkflowConstants.STATUS_APPROVED
+			).put(
+				"excludedCPDefinitionId", cpCatalogEntry.getCPDefinitionId()
+			).put(
+				"params",
+				LinkedHashMapBuilder.<String, Object>put(
+					"keywords", StringPool.STAR
+				).build()
+			).build();
 
 		searchContext.setAttributes(attributes);
 

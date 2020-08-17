@@ -19,7 +19,7 @@
 <%
 CommerceChannelItemSelectorViewDisplayContext commerceChannelItemSelectorViewDisplayContext = (CommerceChannelItemSelectorViewDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-SearchContainer commerceChannelSearchContainer = commerceChannelItemSelectorViewDisplayContext.getSearchContainer();
+SearchContainer<CommerceChannel> commerceChannelSearchContainer = commerceChannelItemSelectorViewDisplayContext.getSearchContainer();
 String itemSelectedEventName = commerceChannelItemSelectorViewDisplayContext.getItemSelectedEventName();
 PortletURL portletURL = commerceChannelItemSelectorViewDisplayContext.getPortletURL();
 %>
@@ -71,10 +71,11 @@ PortletURL portletURL = commerceChannelItemSelectorViewDisplayContext.getPortlet
 		>
 
 			<%
-			Map<String, Object> data = new HashMap<>();
-
-			data.put("commerce-channel-id", commerceChannel.getCommerceChannelId());
-			data.put("name", commerceChannel.getName());
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"commerce-channel-id", commerceChannel.getCommerceChannelId()
+			).put(
+				"name", commerceChannel.getName()
+			).build();
 
 			row.setData(data);
 			%>

@@ -24,9 +24,9 @@ CommerceShippingFixedOptionRelsDisplayContext commerceShippingFixedOptionRelsDis
 	<c:when test="<%= commerceShippingFixedOptionRelsDisplayContext.isVisible() %>">
 
 		<%
-		Map<String, String> contextParams = new HashMap<>();
-
-		contextParams.put("commerceShippingMethodId", String.valueOf(commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingMethodId()));
+		Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+			"commerceShippingMethodId", String.valueOf(commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingMethodId())
+		).build();
 		%>
 
 		<commerce-ui:dataset-display

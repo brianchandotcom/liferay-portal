@@ -24,9 +24,9 @@ CPInstanceDisplayContext cpInstanceDisplayContext = (CPInstanceDisplayContext)re
 	<div class="pt-4" id="<portlet:namespace />productInstancesContainer">
 
 		<%
-		Map<String, String> contextParams = new HashMap<>();
-
-		contextParams.put("cpDefinitionId", String.valueOf(cpInstanceDisplayContext.getCPDefinitionId()));
+		Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+			"cpDefinitionId", String.valueOf(cpInstanceDisplayContext.getCPDefinitionId())
+		).build();
 		%>
 
 		<commerce-ui:dataset-display

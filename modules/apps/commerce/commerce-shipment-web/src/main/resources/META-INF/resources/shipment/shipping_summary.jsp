@@ -190,9 +190,9 @@ Format dateFormat = FastDateFormatFactoryUtil.getDate(DateFormat.MEDIUM, locale,
 >
 
 	<%
-	Map<String, String> contextParams = new HashMap<>();
-
-	contextParams.put("commerceShipmentId", String.valueOf(commerceShipment.getCommerceShipmentId()));
+	Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+		"commerceShipmentId", String.valueOf(commerceShipment.getCommerceShipmentId())
+	).build();
 	%>
 
 	<commerce-ui:dataset-display

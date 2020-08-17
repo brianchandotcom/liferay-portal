@@ -41,9 +41,9 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 			<%
-			Map<String, String> contextParams = new HashMap<>();
-
-			contextParams.put("cpDefinitionId", String.valueOf(cpDefinitionLinkDisplayContext.getCPDefinitionId()));
+			Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+				"cpDefinitionId", String.valueOf(cpDefinitionLinkDisplayContext.getCPDefinitionId())
+			).build();
 			%>
 
 			<commerce-ui:dataset-display

@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -91,7 +92,6 @@ import java.io.InputStream;
 
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
@@ -309,8 +309,6 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 		String ddmStructureKey = jsonObject.getString("ddmStructureKey");
 		String ddmTemplateKey = jsonObject.getString("ddmTemplateKey");
-		String description = jsonObject.getString("description");
-		String title = jsonObject.getString("title");
 
 		DDMStructure ddmStructure = fetchOrAddDDMStructure(
 			ddmStructureKey, classLoader, dependenciesFilePath,
@@ -330,11 +328,13 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 		Locale locale = serviceContext.getLocale();
 
-		Map<Locale, String> titleMap = new HashMap<>();
-		Map<Locale, String> descriptionMap = new HashMap<>();
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			locale, jsonObject.getString("title")
+		).build();
 
-		titleMap.put(locale, title);
-		descriptionMap.put(locale, description);
+		Map<Locale, String> descriptionMap = HashMapBuilder.put(
+			locale, jsonObject.getString("description")
+		).build();
 
 		String content = StringUtil.read(
 			classLoader, dependenciesFilePath + articleId + ".xml");
@@ -558,9 +558,9 @@ public class CPFileImporterImpl implements CPFileImporter {
 			String script, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(LocaleUtil.getSiteDefault(), name);
+		Map<Locale, String> nameMap = HashMapBuilder.put(
+			LocaleUtil.getSiteDefault(), name
+		).build();
 
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			serviceContext.getScopeGroupId(), classNameId, getKey(name));
@@ -677,12 +677,19 @@ public class CPFileImporterImpl implements CPFileImporter {
 			fileEntry -> {
 				JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-				jsonObject.put("alt", fileEntry.getTitle());
-				jsonObject.put("groupId", fileEntry.getGroupId());
-				jsonObject.put("name", fileEntry.getFileName());
-				jsonObject.put("title", fileEntry.getTitle());
-				jsonObject.put("type", "document");
-				jsonObject.put("uuid", fileEntry.getUuid());
+				jsonObject.put(
+					"alt", fileEntry.getTitle()
+				).put(
+					"groupId", fileEntry.getGroupId()
+				).put(
+					"name", fileEntry.getFileName()
+				).put(
+					"title", fileEntry.getTitle()
+				).put(
+					"type", "document"
+				).put(
+					"uuid", fileEntry.getUuid()
+				);
 
 				return jsonObject.toJSONString();
 			},
@@ -702,17 +709,16 @@ public class CPFileImporterImpl implements CPFileImporter {
 	protected Role getRole(String name, int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		titleMap.put(serviceContext.getLocale(), name);
-
 		Role role = _roleLocalService.fetchRole(
 			serviceContext.getCompanyId(), name);
 
 		if (role == null) {
 			role = _roleLocalService.addRole(
-				serviceContext.getUserId(), null, 0, name, titleMap, null, type,
-				null, serviceContext);
+				serviceContext.getUserId(), null, 0, name,
+				HashMapBuilder.put(
+					serviceContext.getLocale(), name
+				).build(),
+				null, type, null, serviceContext);
 		}
 
 		return role;

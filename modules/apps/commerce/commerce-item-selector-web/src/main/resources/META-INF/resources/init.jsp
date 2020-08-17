@@ -33,11 +33,11 @@ page import="com.liferay.commerce.item.selector.web.internal.display.context.Sim
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.List" %><%@
+<%@ page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>

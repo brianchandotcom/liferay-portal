@@ -26,14 +26,14 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -81,21 +81,22 @@ public class CPDataSourceDefinitionLinkTypeImpl implements CPDataSource {
 
 		SearchContext searchContext = new SearchContext();
 
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-		attributes.put(
-			"definitionLinkCPDefinitionId", cpCatalogEntry.getCPDefinitionId());
-		attributes.put(
-			"definitionLinkType", _cpDefinitionLinkTypeConfiguration.type());
-		attributes.put(
-			"excludedCPDefinitionId", cpCatalogEntry.getCPDefinitionId());
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("keywords", StringPool.STAR);
-
-		attributes.put("params", params);
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				Field.STATUS, WorkflowConstants.STATUS_APPROVED
+			).put(
+				"definitionLinkCPDefinitionId",
+				cpCatalogEntry.getCPDefinitionId()
+			).put(
+				"definitionLinkType", _cpDefinitionLinkTypeConfiguration.type()
+			).put(
+				"excludedCPDefinitionId", cpCatalogEntry.getCPDefinitionId()
+			).put(
+				"params",
+				LinkedHashMapBuilder.<String, Object>put(
+					"keywords", StringPool.STAR
+				).build()
+			).build();
 
 		searchContext.setAttributes(attributes);
 

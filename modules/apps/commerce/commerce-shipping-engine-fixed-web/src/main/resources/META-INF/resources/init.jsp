@@ -37,14 +37,14 @@ page import="com.liferay.commerce.shipping.engine.fixed.web.internal.frontend.Co
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.math.BigDecimal" %>
 
-<%@ page import="java.util.HashMap" %><%@
-page import="java.util.List" %><%@
+<%@ page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
 <liferay-frontend:defineObjects />

@@ -21,9 +21,9 @@ CPAttachmentFileEntriesDisplayContext cpAttachmentFileEntriesDisplayContext = (C
 
 PortletURL portletURL = cpAttachmentFileEntriesDisplayContext.getPortletURL();
 
-Map<String, String> contextParams = new HashMap<>();
-
-contextParams.put("cpDefinitionId", String.valueOf(cpAttachmentFileEntriesDisplayContext.getCPDefinitionId()));
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"cpDefinitionId", String.valueOf(cpAttachmentFileEntriesDisplayContext.getCPDefinitionId())
+).build();
 %>
 
 <c:if test="<%= CommerceCatalogPermission.contains(permissionChecker, cpAttachmentFileEntriesDisplayContext.getCPDefinition(), ActionKeys.UPDATE) %>">

@@ -40,14 +40,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -279,18 +279,23 @@ public class CPOptionValueLocalServiceImpl
 
 		SearchContext searchContext = new SearchContext();
 
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("keywords", keywords);
-
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(_FIELD_KEY, keywords);
-		attributes.put(Field.CONTENT, keywords);
-		attributes.put(Field.ENTRY_CLASS_PK, keywords);
-		attributes.put(Field.NAME, keywords);
-		attributes.put("CPOptionId", cpOptionId);
-		attributes.put("params", params);
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				_FIELD_KEY, keywords
+			).put(
+				Field.CONTENT, keywords
+			).put(
+				Field.ENTRY_CLASS_PK, keywords
+			).put(
+				Field.NAME, keywords
+			).put(
+				"CPOptionId", cpOptionId
+			).put(
+				"params",
+				LinkedHashMapBuilder.<String, Object>put(
+					"keywords", keywords
+				).build()
+			).build();
 
 		searchContext.setAttributes(attributes);
 

@@ -138,9 +138,9 @@ CProduct cProduct = cpDefinition.getCProduct();
 		>
 
 			<%
-			Map<String, String> contextParams = new HashMap<>();
-
-			contextParams.put("cpDefinitionId", String.valueOf(cpDefinitionPricingClassDisplayContext.getCPDefinitionId()));
+			Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+				"cpDefinitionId", String.valueOf(cpDefinitionPricingClassDisplayContext.getCPDefinitionId())
+			).build();
 			%>
 
 			<commerce-ui:dataset-display

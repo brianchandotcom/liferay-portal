@@ -145,9 +145,9 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 		>
 
 			<%
-			Map<String, String> contextParams = new HashMap<>();
-
-			contextParams.put("cpDefinitionId", String.valueOf(cpDefinitionOptionRelDisplayContext.getCPDefinitionId()));
+			Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+				"cpDefinitionId", String.valueOf(cpDefinitionOptionRelDisplayContext.getCPDefinitionId())
+			).build();
 			%>
 
 			<commerce-ui:dataset-display

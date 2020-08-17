@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -310,19 +311,17 @@ public class CommerceOrderDefinitionTermContributor
 		CommerceOrderDefinitionTermContributor.class);
 
 	private static final Map<String, String> _commerceOrderDefinitionTermsMap =
-		new HashMap<String, String>() {
-			{
-				put(
-					_ORDER_BILLING_ADDRESS,
-					"order-billing-address-definition-term");
-				put(_ORDER_CREATOR, "order-creator-definition-term");
-				put(_ORDER_ID, "order-id-definition-term");
-				put(_ORDER_ITEMS, "order-items-definition-term");
-				put(
-					_ORDER_SHIPPING_ADDRESS,
-					"order-shipping-address-definition-term");
-			}
-		};
+		HashMapBuilder.put(
+			_ORDER_BILLING_ADDRESS, "order-billing-address-definition-term"
+		).put(
+			_ORDER_CREATOR, "order-creator-definition-term"
+		).put(
+			_ORDER_ID, "order-id-definition-term"
+		).put(
+			_ORDER_ITEMS, "order-items-definition-term"
+		).put(
+			_ORDER_SHIPPING_ADDRESS, "order-shipping-address-definition-term"
+		).build();
 
 	@Reference
 	private UserLocalService _userLocalService;

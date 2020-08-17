@@ -36,13 +36,13 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -217,15 +217,17 @@ public class CPDisplayLayoutLocalServiceImpl
 
 		SearchContext searchContext = new SearchContext();
 
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("keywords", keywords);
-
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put("entryModelClassName", className);
-		attributes.put("params", params);
-		attributes.put("searchFilterEnabled", true);
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				"entryModelClassName", className
+			).put(
+				"params",
+				LinkedHashMapBuilder.<String, Object>put(
+					"keywords", keywords
+				).build()
+			).put(
+				"searchFilterEnabled", true
+			).build();
 
 		searchContext.setAttributes(attributes);
 

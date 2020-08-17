@@ -34,9 +34,9 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
 
 		<%
-		Map<String, String> contextParams = new HashMap<>();
-
-		contextParams.put("commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId()));
+		Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+			"commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId())
+		).build();
 		%>
 
 		<commerce-ui:dataset-display

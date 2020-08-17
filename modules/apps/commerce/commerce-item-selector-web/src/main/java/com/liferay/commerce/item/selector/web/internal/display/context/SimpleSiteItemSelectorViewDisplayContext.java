@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -127,10 +128,12 @@ public class SimpleSiteItemSelectorViewDisplayContext
 		searchContainer.setOrderByType(orderByType);
 		searchContainer.setSearch(_search);
 
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("active", true);
-		params.put("site", true);
+		LinkedHashMap<String, Object> params =
+			LinkedHashMapBuilder.<String, Object>put(
+				"active", true
+			).put(
+				"site", true
+			).build();
 
 		int total = _groupService.searchCount(
 			cpRequestHelper.getCompanyId(), null, null, new String[0]);

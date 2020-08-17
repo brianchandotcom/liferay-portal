@@ -33,10 +33,11 @@ List<CPCatalogEntry> results = cpCatalogEntrySearchContainer.getResults();
 	<c:when test="<%= cpSearchResultsDisplayContext.isSelectionStyleADT() %>">
 
 		<%
-		Map<String, Object> contextObjects = new HashMap<>();
-
-		contextObjects.put("cpContentHelper", request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER));
-		contextObjects.put("cpSearchResultsDisplayContext", cpSearchResultsDisplayContext);
+		Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
+			"cpContentHelper", request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER)
+		).put(
+			"cpSearchResultsDisplayContext", cpSearchResultsDisplayContext
+		).build();
 		%>
 
 		<liferay-ddm:template-renderer

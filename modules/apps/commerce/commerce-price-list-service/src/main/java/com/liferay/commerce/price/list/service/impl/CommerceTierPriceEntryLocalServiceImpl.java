@@ -52,6 +52,8 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -67,7 +69,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -630,7 +631,9 @@ public class CommerceTierPriceEntryLocalServiceImpl
 					expirationDateDay, expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
 			}
-			catch (NoSuchTierPriceEntryException nstpee) {
+			catch (NoSuchTierPriceEntryException
+						noSuchTierPriceEntryException) {
+
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Unable to find tier price entry with ID: " +
@@ -790,15 +793,17 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 		SearchContext searchContext = new SearchContext();
 
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("keywords", keywords);
-
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(Field.ENTRY_CLASS_PK, keywords);
-		attributes.put("commercePriceEntryId", commercePriceEntryId);
-		attributes.put("params", params);
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				Field.ENTRY_CLASS_PK, keywords
+			).put(
+				"commercePriceEntryId", commercePriceEntryId
+			).put(
+				"params",
+				LinkedHashMapBuilder.<String, Object>put(
+					"keywords", keywords
+				).build()
+			).build();
 
 		searchContext.setAttributes(attributes);
 

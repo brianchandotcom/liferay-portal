@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
@@ -416,13 +417,16 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		SearchContext searchContext = new SearchContext();
 
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(
-			CPField.RELATED_ENTITY_CLASS_NAME_ID, cpDefinitionClassNameId);
-		attributes.put(CPField.RELATED_ENTITY_CLASS_PK, cpDefinitionId);
-		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-		attributes.put(Field.TYPE, type);
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				CPField.RELATED_ENTITY_CLASS_NAME_ID, cpDefinitionClassNameId
+			).put(
+				CPField.RELATED_ENTITY_CLASS_PK, cpDefinitionId
+			).put(
+				Field.STATUS, WorkflowConstants.STATUS_APPROVED
+			).put(
+				Field.TYPE, type
+			).build();
 
 		List<String> optionsKeys = new ArrayList<>();
 

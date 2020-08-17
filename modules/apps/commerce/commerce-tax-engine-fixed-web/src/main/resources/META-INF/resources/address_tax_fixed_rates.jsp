@@ -38,10 +38,11 @@ CommerceTaxFixedRateAddressRelsDisplayContext commerceTaxFixedRateAddressRelsDis
 	</commerce-ui:panel>
 
 	<%
-	Map<String, String> contextParams = new HashMap<>();
-
-	contextParams.put("commerceChannelId", String.valueOf(commerceTaxFixedRateAddressRelsDisplayContext.getCommerceChannelId()));
-	contextParams.put("commerceTaxMethodId", String.valueOf(commerceTaxFixedRateAddressRelsDisplayContext.getCommerceTaxMethodId()));
+	Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+		"commerceChannelId", String.valueOf(commerceTaxFixedRateAddressRelsDisplayContext.getCommerceChannelId())
+	).put(
+		"commerceTaxMethodId", String.valueOf(commerceTaxFixedRateAddressRelsDisplayContext.getCommerceTaxMethodId())
+	).build();
 	%>
 
 	<commerce-ui:dataset-display

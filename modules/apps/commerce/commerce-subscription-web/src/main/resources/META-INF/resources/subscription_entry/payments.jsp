@@ -19,9 +19,9 @@
 <%
 CommerceSubscriptionEntryDisplayContext commerceSubscriptionEntryDisplayContext = (CommerceSubscriptionEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-Map<String, String> contextParams = new HashMap<>();
-
-contextParams.put("commerceSubscriptionEntryId", String.valueOf(commerceSubscriptionEntryDisplayContext.getCommerceSubscriptionEntryId()));
+Map<String, String> contextParams = HashMapBuilder.<String, String>put(
+	"commerceSubscriptionEntryId", String.valueOf(commerceSubscriptionEntryDisplayContext.getCommerceSubscriptionEntryId())
+).build();
 %>
 
 <div class="row">

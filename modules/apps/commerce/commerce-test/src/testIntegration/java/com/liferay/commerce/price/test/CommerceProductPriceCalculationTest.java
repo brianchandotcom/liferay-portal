@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -71,7 +72,6 @@ import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -1927,14 +1927,11 @@ public class CommerceProductPriceCalculationTest {
 		_getCPDefinitionOptionRelIdCPDefinitionOptionValueRelIds(
 			CPDefinitionOptionValueRel cpDefinitionOptionValueRel) {
 
-		Map<Long, List<Long>> map = new HashMap<>();
-
-		map.put(
+		return HashMapBuilder.<Long, List<Long>>put(
 			cpDefinitionOptionValueRel.getCPDefinitionOptionRelId(),
 			Arrays.asList(
-				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId()));
-
-		return map;
+				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId())
+		).build();
 	}
 
 	private void _updateBundleCPInstancePrices(

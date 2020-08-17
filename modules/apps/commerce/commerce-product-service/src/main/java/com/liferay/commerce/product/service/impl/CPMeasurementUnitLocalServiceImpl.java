@@ -24,10 +24,10 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -270,9 +270,9 @@ public class CPMeasurementUnitLocalServiceImpl
 			double priority, int type, ServiceContext serviceContext)
 		throws PortalException {
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(serviceContext.getLocale(), name);
+		Map<Locale, String> nameMap = HashMapBuilder.put(
+			serviceContext.getLocale(), name
+		).build();
 
 		CPMeasurementUnit cpMeasurementUnit =
 			cpMeasurementUnitPersistence.fetchByC_K_T(

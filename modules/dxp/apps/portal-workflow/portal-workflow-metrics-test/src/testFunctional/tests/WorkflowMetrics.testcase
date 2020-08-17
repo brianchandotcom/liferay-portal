@@ -2208,7 +2208,7 @@ definition {
 	@description = "LRQA-53661 Automate LPS-89119: [SLA] Define the SLA timer calendar"
 	@priority = "5"
 	test VerifySLACustomCalendar {
-		property portal.upstream = "quarantine";
+
 		property test.name.skip.portal.instance = "WorkflowMetrics#VerifySLACustomCalendar";
 
 		var appName = "com.liferay.portal.workflow.metrics.sla.calendar.sample";

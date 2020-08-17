@@ -645,6 +645,7 @@ public class DLAdminDisplayContext {
 		searchContext.setFolderIds(new long[] {searchFolderId});
 
 		searchContext.setIncludeDiscussions(true);
+		searchContext.setIncludeInternalAssetCategories(true);
 
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 

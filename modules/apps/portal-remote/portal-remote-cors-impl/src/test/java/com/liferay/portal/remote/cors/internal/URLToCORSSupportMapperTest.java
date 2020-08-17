@@ -14,6 +14,8 @@
 
 package com.liferay.portal.remote.cors.internal;
 
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,15 +27,33 @@ public class URLToCORSSupportMapperTest
 
 	@Before
 	public void setUp() {
-		_urlToCORSSupportMapper = new URLToCORSSupportMapper(
-			buildCORSSupports());
+		Map<String, CORSSupport> corsSupports = buildCORSSupports();
+
+		_dynamicURLToCORSSupportMapper = new DynamicURLToCORSSupportMapper(
+			corsSupports);
+		_simpleURLToCORSSupportMapper = new SimpleURLToCORSSupportMapper(
+			corsSupports);
+		_staticURLToCORSSupportMapper = new StaticURLToCORSSupportMapper(
+			corsSupports);
 	}
 
 	@Test
-	public void testGet() throws Exception {
-		super.testGetCorrectness(_urlToCORSSupportMapper);
+	public void testDynamicGet() throws Exception {
+		super.testGetCorrectness(_dynamicURLToCORSSupportMapper);
 	}
 
-	private URLToCORSSupportMapper _urlToCORSSupportMapper;
+	@Test
+	public void testSimpleGet() throws Exception {
+		super.testGetCorrectness(_simpleURLToCORSSupportMapper);
+	}
+
+	@Test
+	public void testStaticGet() throws Exception {
+		super.testGetCorrectness(_staticURLToCORSSupportMapper);
+	}
+
+	private URLToCORSSupportMapper _dynamicURLToCORSSupportMapper;
+	private URLToCORSSupportMapper _simpleURLToCORSSupportMapper;
+	private URLToCORSSupportMapper _staticURLToCORSSupportMapper;
 
 }

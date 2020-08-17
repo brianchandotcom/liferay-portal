@@ -221,6 +221,7 @@ public class SessionImpl implements Session {
 		}
 	}
 
+	@Override
 	public void evict(Class<?> clazz, Serializable id) throws ORMException {
 		try {
 			EventSource eventSource = (EventSource)_session;

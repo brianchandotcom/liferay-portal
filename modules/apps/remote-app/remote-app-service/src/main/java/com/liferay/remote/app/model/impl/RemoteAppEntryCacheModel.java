@@ -49,7 +49,7 @@ public class RemoteAppEntryCacheModel
 		RemoteAppEntryCacheModel remoteAppEntryCacheModel =
 			(RemoteAppEntryCacheModel)object;
 
-		if ((entryId == remoteAppEntryCacheModel.entryId) &&
+		if ((remoteAppEntryId == remoteAppEntryCacheModel.remoteAppEntryId) &&
 			(mvccVersion == remoteAppEntryCacheModel.mvccVersion)) {
 
 			return true;
@@ -60,7 +60,7 @@ public class RemoteAppEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, entryId);
+		int hashCode = HashUtil.hash(0, remoteAppEntryId);
 
 		return HashUtil.hash(hashCode, mvccVersion);
 	}
@@ -83,8 +83,8 @@ public class RemoteAppEntryCacheModel
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
-		sb.append(", entryId=");
-		sb.append(entryId);
+		sb.append(", remoteAppEntryId=");
+		sb.append(remoteAppEntryId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -117,7 +117,7 @@ public class RemoteAppEntryCacheModel
 			remoteAppEntryImpl.setUuid(uuid);
 		}
 
-		remoteAppEntryImpl.setEntryId(entryId);
+		remoteAppEntryImpl.setRemoteAppEntryId(remoteAppEntryId);
 		remoteAppEntryImpl.setCompanyId(companyId);
 		remoteAppEntryImpl.setUserId(userId);
 
@@ -166,7 +166,7 @@ public class RemoteAppEntryCacheModel
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
-		entryId = objectInput.readLong();
+		remoteAppEntryId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 
@@ -189,7 +189,7 @@ public class RemoteAppEntryCacheModel
 			objectOutput.writeUTF(uuid);
 		}
 
-		objectOutput.writeLong(entryId);
+		objectOutput.writeLong(remoteAppEntryId);
 
 		objectOutput.writeLong(companyId);
 
@@ -222,7 +222,7 @@ public class RemoteAppEntryCacheModel
 
 	public long mvccVersion;
 	public String uuid;
-	public long entryId;
+	public long remoteAppEntryId;
 	public long companyId;
 	public long userId;
 	public String userName;

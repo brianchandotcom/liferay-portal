@@ -4,7 +4,7 @@
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.remote.app.model.RemoteAppEntry" />
 	<class dynamic-update="true" name="com.liferay.remote.app.model.impl.RemoteAppEntryImpl" table="RemoteAppEntry">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="entryId" type="long">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="remoteAppEntryId" type="long">
 			<generator class="assigned" />
 		</id>
 		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />

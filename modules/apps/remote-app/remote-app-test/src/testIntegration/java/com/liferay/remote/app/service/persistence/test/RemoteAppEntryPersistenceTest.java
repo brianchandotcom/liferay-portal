@@ -153,8 +153,8 @@ public class RemoteAppEntryPersistenceTest {
 		Assert.assertEquals(
 			existingRemoteAppEntry.getUuid(), newRemoteAppEntry.getUuid());
 		Assert.assertEquals(
-			existingRemoteAppEntry.getEntryId(),
-			newRemoteAppEntry.getEntryId());
+			existingRemoteAppEntry.getRemoteAppEntryId(),
+			newRemoteAppEntry.getRemoteAppEntryId());
 		Assert.assertEquals(
 			existingRemoteAppEntry.getCompanyId(),
 			newRemoteAppEntry.getCompanyId());
@@ -227,10 +227,10 @@ public class RemoteAppEntryPersistenceTest {
 
 	protected OrderByComparator<RemoteAppEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"RemoteAppEntry", "mvccVersion", true, "uuid", true, "entryId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "name", true, "url",
-			true);
+			"RemoteAppEntry", "mvccVersion", true, "uuid", true,
+			"remoteAppEntryId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true, "name",
+			true, "url", true);
 	}
 
 	@Test
@@ -378,7 +378,7 @@ public class RemoteAppEntryPersistenceTest {
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq(
-				"entryId", newRemoteAppEntry.getEntryId()));
+				"remoteAppEntryId", newRemoteAppEntry.getRemoteAppEntryId()));
 
 		List<RemoteAppEntry> result = _persistence.findWithDynamicQuery(
 			dynamicQuery);
@@ -396,7 +396,8 @@ public class RemoteAppEntryPersistenceTest {
 			RemoteAppEntry.class, _dynamicQueryClassLoader);
 
 		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("entryId", RandomTestUtil.nextLong()));
+			RestrictionsFactoryUtil.eq(
+				"remoteAppEntryId", RandomTestUtil.nextLong()));
 
 		List<RemoteAppEntry> result = _persistence.findWithDynamicQuery(
 			dynamicQuery);
@@ -411,20 +412,22 @@ public class RemoteAppEntryPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			RemoteAppEntry.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property("entryId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("remoteAppEntryId"));
 
-		Object newEntryId = newRemoteAppEntry.getEntryId();
+		Object newRemoteAppEntryId = newRemoteAppEntry.getRemoteAppEntryId();
 
 		dynamicQuery.add(
-			RestrictionsFactoryUtil.in("entryId", new Object[] {newEntryId}));
+			RestrictionsFactoryUtil.in(
+				"remoteAppEntryId", new Object[] {newRemoteAppEntryId}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		Object existingEntryId = result.get(0);
+		Object existingRemoteAppEntryId = result.get(0);
 
-		Assert.assertEquals(existingEntryId, newEntryId);
+		Assert.assertEquals(existingRemoteAppEntryId, newRemoteAppEntryId);
 	}
 
 	@Test
@@ -432,11 +435,12 @@ public class RemoteAppEntryPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			RemoteAppEntry.class, _dynamicQueryClassLoader);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.property("entryId"));
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("remoteAppEntryId"));
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.in(
-				"entryId", new Object[] {RandomTestUtil.nextLong()}));
+				"remoteAppEntryId", new Object[] {RandomTestUtil.nextLong()}));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 

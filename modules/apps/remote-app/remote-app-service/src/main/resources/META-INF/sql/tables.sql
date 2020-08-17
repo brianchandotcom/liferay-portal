@@ -1,7 +1,7 @@
 create table RemoteAppEntry (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	entryId LONG not null primary key,
+	remoteAppEntryId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,

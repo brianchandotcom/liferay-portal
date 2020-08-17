@@ -157,14 +157,14 @@ public interface RemoteAppEntryPersistence
 	/**
 	 * Returns the remote app entries before and after the current remote app entry in the ordered set where uuid = &#63;.
 	 *
-	 * @param entryId the primary key of the current remote app entry
+	 * @param remoteAppEntryId the primary key of the current remote app entry
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next remote app entry
 	 * @throws NoSuchEntryException if a remote app entry with the primary key could not be found
 	 */
 	public RemoteAppEntry[] findByUuid_PrevAndNext(
-			long entryId, String uuid,
+			long remoteAppEntryId, String uuid,
 			com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 				orderByComparator)
 		throws NoSuchEntryException;
@@ -309,7 +309,7 @@ public interface RemoteAppEntryPersistence
 	/**
 	 * Returns the remote app entries before and after the current remote app entry in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param entryId the primary key of the current remote app entry
+	 * @param remoteAppEntryId the primary key of the current remote app entry
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -317,7 +317,7 @@ public interface RemoteAppEntryPersistence
 	 * @throws NoSuchEntryException if a remote app entry with the primary key could not be found
 	 */
 	public RemoteAppEntry[] findByUuid_C_PrevAndNext(
-			long entryId, String uuid, long companyId,
+			long remoteAppEntryId, String uuid, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<RemoteAppEntry>
 				orderByComparator)
 		throws NoSuchEntryException;
@@ -406,39 +406,40 @@ public interface RemoteAppEntryPersistence
 	/**
 	 * Creates a new remote app entry with the primary key. Does not add the remote app entry to the database.
 	 *
-	 * @param entryId the primary key for the new remote app entry
+	 * @param remoteAppEntryId the primary key for the new remote app entry
 	 * @return the new remote app entry
 	 */
-	public RemoteAppEntry create(long entryId);
+	public RemoteAppEntry create(long remoteAppEntryId);
 
 	/**
 	 * Removes the remote app entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param entryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry that was removed
 	 * @throws NoSuchEntryException if a remote app entry with the primary key could not be found
 	 */
-	public RemoteAppEntry remove(long entryId) throws NoSuchEntryException;
+	public RemoteAppEntry remove(long remoteAppEntryId)
+		throws NoSuchEntryException;
 
 	public RemoteAppEntry updateImpl(RemoteAppEntry remoteAppEntry);
 
 	/**
 	 * Returns the remote app entry with the primary key or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
-	 * @param entryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry
 	 * @throws NoSuchEntryException if a remote app entry with the primary key could not be found
 	 */
-	public RemoteAppEntry findByPrimaryKey(long entryId)
+	public RemoteAppEntry findByPrimaryKey(long remoteAppEntryId)
 		throws NoSuchEntryException;
 
 	/**
 	 * Returns the remote app entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param entryId the primary key of the remote app entry
+	 * @param remoteAppEntryId the primary key of the remote app entry
 	 * @return the remote app entry, or <code>null</code> if a remote app entry with the primary key could not be found
 	 */
-	public RemoteAppEntry fetchByPrimaryKey(long entryId);
+	public RemoteAppEntry fetchByPrimaryKey(long remoteAppEntryId);
 
 	/**
 	 * Returns all the remote app entries.

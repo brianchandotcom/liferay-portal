@@ -29,7 +29,7 @@ function getActiveFragmentEntryLink({
 }) {
 	if (highlightMessageId) {
 		return Object.values(fragmentEntryLinks).find((fragmentEntryLink) =>
-			fragmentEntryLink.comments.find(
+			fragmentEntryLink.comments.some(
 				(comment) =>
 					comment.commentId === highlightMessageId ||
 					comment.children?.some(

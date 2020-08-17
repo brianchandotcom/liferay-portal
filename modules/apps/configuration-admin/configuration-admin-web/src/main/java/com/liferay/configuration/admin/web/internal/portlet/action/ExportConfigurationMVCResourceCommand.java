@@ -314,6 +314,10 @@ public class ExportConfigurationMVCResourceCommand
 			properties.put(attributeDefinition.getID(), value);
 		}
 
+		if (!Scope.SYSTEM.equals(scope)) {
+			properties.put(scope.getPropertyKey(), scopePK);
+		}
+
 		return properties;
 	}
 

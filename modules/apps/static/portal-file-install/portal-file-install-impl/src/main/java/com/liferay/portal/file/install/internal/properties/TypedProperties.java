@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.io.BufferedReader;
 import java.io.FilterWriter;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,13 +42,20 @@ import java.util.regex.Pattern;
 public class TypedProperties {
 
 	public Object get(String key) {
-		String value = _storage.get(key);
+		ObjectValuePair<String, List<String>> objectValuePair = _storage.get(
+			key);
 
-		if (value != null) {
-			return _convertFromString(value);
+		if (objectValuePair == null) {
+			return null;
 		}
 
-		return value;
+		String string = objectValuePair.getKey();
+
+		if (string != null) {
+			return _convertFromString(string);
+		}
+
+		return string;
 	}
 
 	public Set<String> keySet() {
@@ -59,36 +68,40 @@ public class TypedProperties {
 		while (propertiesReader.nextProperty()) {
 			_storage.put(
 				propertiesReader.getPropertyName(),
-				propertiesReader.getPropertyValue());
-
-			_layoutMap.put(
-				propertiesReader.getPropertyName(),
-				new Layout(new ArrayList<>(propertiesReader.getValues())));
+				new ObjectValuePair<>(
+					propertiesReader.getPropertyValue(),
+					propertiesReader.getValues()));
 		}
 
 		_header = propertiesReader.getComment();
 	}
 
 	public void put(String key, Object value) {
-		String old = _storage.put(key, _convertToString(value));
+		ObjectValuePair<String, List<String>> old = _storage.get(key);
 
-		if ((old == null) || !old.equals(value)) {
-			Layout layout = _layoutMap.get(key);
+		ObjectValuePair<String, List<String>> objectValuePair =
+			new ObjectValuePair<>(_convertToString(value), null);
 
-			if (layout != null) {
-				layout.clearValue();
+		if (old != null) {
+			Object oldObject = _convertFromString(old.getKey());
+
+			if (Objects.equals(oldObject, value)) {
+				objectValuePair.setValue(old.getValue());
+			}
+			else {
+				Class<?> clazz = value.getClass();
+
+				if (clazz.isArray() && Objects.deepEquals(oldObject, value)) {
+					objectValuePair.setValue(old.getValue());
+				}
 			}
 		}
+
+		_storage.put(key, objectValuePair);
 	}
 
-	public String remove(String key) {
-		Layout layout = _layoutMap.get(key);
-
-		if (layout != null) {
-			layout.clearValue();
-		}
-
-		return _storage.remove(key);
+	public void remove(String key) {
+		_storage.remove(key);
 	}
 
 	public void save(Writer writer) throws IOException {
@@ -97,31 +110,25 @@ public class TypedProperties {
 				propertiesWriter.writeln(_header);
 			}
 
-			for (Map.Entry<String, String> entry : _storage.entrySet()) {
-				String key = entry.getKey();
+			for (Map.Entry<String, ObjectValuePair<String, List<String>>>
+					entry : _storage.entrySet()) {
 
-				String value = entry.getValue();
+				ObjectValuePair<String, List<String>> objectValuePair =
+					entry.getValue();
 
-				Layout layout = _layoutMap.get(key);
+				List<String> layout = objectValuePair.getValue();
 
-				if (layout == null) {
-					propertiesWriter.writeProperty(key, value);
-
-					continue;
-				}
-
-				List<String> values = layout.getValues();
-
-				if (values == null) {
-					propertiesWriter.writeProperty(key, value);
+				if ((layout == null) || layout.isEmpty()) {
+					propertiesWriter.writeProperty(
+						entry.getKey(), objectValuePair.getKey());
 
 					continue;
 				}
 
-				int size = values.size();
+				int size = layout.size();
 
 				for (int i = 0; i < size; i++) {
-					String string = values.get(i);
+					String string = layout.get(i);
 
 					if (i < (size - 1)) {
 						propertiesWriter.writeln(string + "\\");
@@ -153,7 +160,7 @@ public class TypedProperties {
 		}
 
 		public List<String> getValues() {
-			return _values;
+			return new ArrayList<>(_values);
 		}
 
 		public boolean nextProperty() throws IOException {
@@ -338,25 +345,7 @@ public class TypedProperties {
 		TypedProperties.class);
 
 	private String _header;
-	private final Map<String, Layout> _layoutMap = new LinkedHashMap<>();
-	private final Map<String, String> _storage = new LinkedHashMap<>();
-
-	private static class Layout {
-
-		public Layout(List<String> values) {
-			_values = values;
-		}
-
-		public void clearValue() {
-			_values = null;
-		}
-
-		public List<String> getValues() {
-			return _values;
-		}
-
-		private List<String> _values;
-
-	}
+	private final Map<String, ObjectValuePair<String, List<String>>> _storage =
+		new LinkedHashMap<>();
 
 }

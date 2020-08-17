@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.remote.app.admin.web.internal.constants.RemoteAppAdminPortletKeys;
 import com.liferay.remote.app.admin.web.internal.constants.RemoteAppAdminWebKeys;
-import com.liferay.remote.app.admin.web.internal.display.context.RemoteAppAdminDataSetDisplayContext;
+import com.liferay.remote.app.admin.web.internal.display.context.RemoteAppAdminDisplayContext;
 import com.liferay.remote.app.exception.NoSuchEntryException;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 
@@ -37,11 +37,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + RemoteAppAdminPortletKeys.REMOTE_APP_ADMIN,
-		"mvc.command.name=/edit_entry"
+		"mvc.command.name=/edit_remote_app_entry"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditEntryMVCRenderCommand implements MVCRenderCommand {
+public class EditRemoteAppEntryMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -49,8 +49,8 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		renderRequest.setAttribute(
-			"remoteAppAdminDataSetDisplayContext",
-			new RemoteAppAdminDataSetDisplayContext(
+			RemoteAppAdminWebKeys.REMOTE_APP_ADMIN_DISPLAY_CONTEXT,
+			new RemoteAppAdminDisplayContext(
 				renderRequest, renderResponse, _remoteAppEntryLocalService));
 
 		try {
@@ -74,7 +74,7 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 			throw new PortletException(exception);
 		}
 
-		return "/admin/edit_entry.jsp";
+		return "/admin/edit_remote_app_entry.jsp";
 	}
 
 	@Reference

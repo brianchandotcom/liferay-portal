@@ -61,49 +61,51 @@ public class RemoteAppEntryClayDataSetActionProvider
 			(RemoteAppClayDataSetEntry)model;
 
 		return DropdownItemListBuilder.add(
-			dropdownItem -> _buildEditAction(
+			dropdownItem -> _buildEditRemoteAppEntryAction(
 				dropdownItem, httpServletRequest, remoteAppClayDataSetEntry)
 		).add(
-			dropdownItem -> _buildDeleteAction(
+			dropdownItem -> _buildDeleteRemoteAppEntryAction(
 				dropdownItem, httpServletRequest, remoteAppClayDataSetEntry)
 		).build();
 	}
 
-	private void _buildDeleteAction(
+	private void _buildDeleteRemoteAppEntryAction(
 		DropdownItem dropdownItem, HttpServletRequest httpServletRequest,
 		RemoteAppClayDataSetEntry remoteAppClayDataSetEntry) {
 
-		PortletURL deleteEntryURL = _getActionURL(httpServletRequest);
+		PortletURL deleteRemoteAppEntryURL = _getActionURL(httpServletRequest);
 
-		deleteEntryURL.setParameter(ActionRequest.ACTION_NAME, "/delete_entry");
-		deleteEntryURL.setParameter(
+		deleteRemoteAppEntryURL.setParameter(
+			ActionRequest.ACTION_NAME, "/delete_remote_app_entry");
+		deleteRemoteAppEntryURL.setParameter(
 			"remoteAppEntryId",
-			String.valueOf(remoteAppClayDataSetEntry.getEntryId()));
+			String.valueOf(remoteAppClayDataSetEntry.getRemoteAppEntryId()));
 
-		dropdownItem.setHref(deleteEntryURL.toString());
+		dropdownItem.setHref(deleteRemoteAppEntryURL.toString());
 
 		dropdownItem.setIcon("times-circle");
 		dropdownItem.setLabel(_getMessage(httpServletRequest, "delete"));
 	}
 
-	private void _buildEditAction(
+	private void _buildEditRemoteAppEntryAction(
 		DropdownItem dropdownItem, HttpServletRequest httpServletRequest,
 		RemoteAppClayDataSetEntry remoteAppClayDataSetEntry) {
 
-		PortletURL editEntryURL = _getRenderURL(httpServletRequest);
+		PortletURL editRemoteAppEntryURL = _getRenderURL(httpServletRequest);
 
-		editEntryURL.setParameter("mvcRenderCommandName", "/edit_entry");
-		editEntryURL.setParameter(
+		editRemoteAppEntryURL.setParameter(
+			"mvcRenderCommandName", "/edit_remote_app_entry");
+		editRemoteAppEntryURL.setParameter(
 			"remoteAppEntryId",
-			String.valueOf(remoteAppClayDataSetEntry.getEntryId()));
+			String.valueOf(remoteAppClayDataSetEntry.getRemoteAppEntryId()));
 
 		String currentURL = ParamUtil.getString(
 			httpServletRequest, "currentUrl",
 			_portal.getCurrentURL(httpServletRequest));
 
-		editEntryURL.setParameter("redirect", currentURL);
+		editRemoteAppEntryURL.setParameter("redirect", currentURL);
 
-		dropdownItem.setHref(editEntryURL);
+		dropdownItem.setHref(editRemoteAppEntryURL);
 		dropdownItem.setLabel(_getMessage(httpServletRequest, "edit"));
 	}
 

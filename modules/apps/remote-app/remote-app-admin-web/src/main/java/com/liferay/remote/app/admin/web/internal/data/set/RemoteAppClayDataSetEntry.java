@@ -30,12 +30,12 @@ public class RemoteAppClayDataSetEntry {
 		_locale = locale;
 	}
 
-	public long getEntryId() {
-		return _remoteAppEntry.getEntryId();
-	}
-
 	public String getName() {
 		return _remoteAppEntry.getName(_locale);
+	}
+
+	public long getRemoteAppEntryId() {
+		return _remoteAppEntry.getRemoteAppEntryId();
 	}
 
 	public String getURL() {

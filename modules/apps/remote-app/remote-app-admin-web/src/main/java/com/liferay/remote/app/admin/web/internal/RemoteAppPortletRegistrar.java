@@ -41,7 +41,7 @@ public class RemoteAppPortletRegistrar {
 	}
 
 	public void unregisterPortlet(RemoteAppEntry remoteAppEntry) {
-		_unregisterPortlet(remoteAppEntry.getEntryId());
+		_unregisterPortlet(remoteAppEntry.getRemoteAppEntryId());
 	}
 
 	@Activate
@@ -66,8 +66,8 @@ public class RemoteAppPortletRegistrar {
 			_log.info("Stopping remote apps");
 		}
 
-		for (long id : _remoteAppPortlets.keySet()) {
-			_unregisterPortlet(id);
+		for (long remoteAppEntryId : _remoteAppPortlets.keySet()) {
+			_unregisterPortlet(remoteAppEntryId);
 		}
 	}
 
@@ -78,7 +78,7 @@ public class RemoteAppPortletRegistrar {
 		RemoteAppPortlet remoteAppPortlet = new RemoteAppPortlet(
 			remoteAppEntry);
 
-		long remoteAppEntryId = remoteAppEntry.getEntryId();
+		long remoteAppEntryId = remoteAppEntry.getRemoteAppEntryId();
 
 		RemoteAppPortlet existingRemoteAppPortlet =
 			_remoteAppPortlets.putIfAbsent(remoteAppEntryId, remoteAppPortlet);
@@ -95,8 +95,9 @@ public class RemoteAppPortletRegistrar {
 		}
 	}
 
-	private void _unregisterPortlet(long id) {
-		RemoteAppPortlet remoteAppPortlet = _remoteAppPortlets.remove(id);
+	private void _unregisterPortlet(long remoteAppEntryId) {
+		RemoteAppPortlet remoteAppPortlet = _remoteAppPortlets.remove(
+			remoteAppEntryId);
 
 		if (remoteAppPortlet != null) {
 			remoteAppPortlet.unregister();

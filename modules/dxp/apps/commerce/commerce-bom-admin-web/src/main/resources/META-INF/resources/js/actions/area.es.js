@@ -23,9 +23,9 @@ export const actionDefinition = {
 	GET_PRODUCTS_PENDING: 'getProductsPending',
 	GET_PRODUCTS_REJECTED: 'getProductsRejected',
 	HIGHLIGHT_DETAIL: 'highlightDetail',
-	SELECT_DETAIL: 'selectDetail',
 	RESET_FORM_DATA: 'resetFormData',
 	RESET_PRODUCTS: 'resetProducts',
+	SELECT_DETAIL: 'selectDetail',
 	SELECT_SPOT: 'selectSpot',
 	SUBMIT_NEW_SPOT_FULFILLED: 'submitNewSpotFulfilled',
 	SUBMIT_NEW_SPOT_PENDING: 'submitNewSpotPending',
@@ -126,18 +126,18 @@ const updateFormValue = (dispatch) => (key, value) =>
 	});
 
 const submitNewSpot = (dispatch) => (endpoint, areaId, formData) => {
-	const {changed, originalData, query, state, ...data} = formData;
+	const {...data} = formData;
 
 	dispatch({
 		type: actionDefinition.SUBMIT_NEW_SPOT_PENDING,
 	});
 
 	return fetch(endpoint + '/' + areaId + '/spot', {
-		method: 'POST',
 		body: JSON.stringify(data),
 		headers: new Headers({
 			'Content-Type': 'application/json',
 		}),
+		method: 'POST',
 	})
 		.then(() => {
 			dispatch({
@@ -178,15 +178,15 @@ const deleteSpot = (dispatch) => (endpoint, areaId, spotId) => {
 };
 
 const submitSpotChanges = (dispatch) => (endpoint, areaId, formData) => {
-	const {changed, id, originalData, query, state, ...data} = formData;
+	const {id, ...data} = formData;
 
 	dispatch({
 		type: actionDefinition.SUBMIT_SPOT_CHANGES_PENDING,
 	});
 
 	return fetch(endpoint + '/' + areaId + '/spot/' + id, {
-		method: 'PUT',
 		body: JSON.stringify(data),
+		method: 'PUT',
 		headers: new Headers({
 			'Content-Type': 'application/json',
 		}),
@@ -214,8 +214,8 @@ export const actions = {
 	highlightDetail,
 	resetProducts,
 	select,
-	submitNewSpot,
 	selectSpot,
+	submitNewSpot,
 	submitSpotChanges,
 	unselectSpot,
 	updateFormValue,

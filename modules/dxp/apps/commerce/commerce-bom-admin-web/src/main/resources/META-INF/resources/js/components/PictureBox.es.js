@@ -97,8 +97,8 @@ function PictureBox() {
 	const {actions, state} = React.useContext(StoreContext);
 
 	const [cursor, updateCursor] = useState({
-		x: 0,
 		visible: false,
+		x: 0,
 		y: 0,
 	});
 

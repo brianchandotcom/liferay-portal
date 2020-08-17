@@ -120,7 +120,6 @@ function doSubmit() {
 
 class AddToCartButton extends Component {
 	created() {
-		this.quantity = this.quantity;
 		resetInputQuantity.call(this);
 		this._handleMarkerAnimation = this._handleMarkerAnimation.bind(this);
 	}

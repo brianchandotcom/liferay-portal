@@ -24,10 +24,10 @@ function App(props) {
 	useEffect(() => {
 		if (!state.app.initialized) {
 			actions.initializeAppData({
-				spritemap: props.spritemap,
 				areaApiUrl: props.areaApiUrl,
-				productApiUrl: props.productApiUrl,
 				areaId: props.areaId,
+				productApiUrl: props.productApiUrl,
+				spritemap: props.spritemap,
 			});
 		}
 

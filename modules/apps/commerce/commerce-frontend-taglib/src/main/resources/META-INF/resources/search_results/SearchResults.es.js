@@ -12,9 +12,8 @@
  * details.
  */
 
-import {fetch} from 'frontend-js-web';
+import {debounce, fetch} from 'frontend-js-web';
 import Component from 'metal-component';
-import debounce from 'metal-debounce';
 import Soy, {Config} from 'metal-soy';
 
 import template from './SearchResults.soy';

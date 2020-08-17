@@ -22,7 +22,7 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import {fetchParams, getValueFromItem} from '../../../../../utilities/index';
+import {getValueFromItem} from '../../../../../utilities/index';
 import {isValuesArrayChanged} from '../../../utilities/filters';
 
 const DEFAULT_PAGE_SIZE = 10;

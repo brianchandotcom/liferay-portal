@@ -46,8 +46,8 @@ export default class Datasource {
 				(acc, filter) => ({
 					...acc,
 					[filter.field]: {
-						value: filter.value,
 						operations: filter.operations,
+						value: filter.value,
 					},
 				}),
 				{}
@@ -115,8 +115,8 @@ export default class Datasource {
 
 	initializeProperties() {
 		this.pagination = {
-			pageSize: 20,
 			page: 1,
+			pageSize: 20,
 		};
 		this.readAtCreation = true;
 		this.filters = null;

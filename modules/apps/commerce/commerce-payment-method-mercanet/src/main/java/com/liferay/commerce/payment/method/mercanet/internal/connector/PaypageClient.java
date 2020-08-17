@@ -120,9 +120,9 @@ public class PaypageClient {
 			throw new Exception(
 				"Exception while parsing PaymentRequest", exception);
 		}
-		catch (IOException ioe) {
+		catch (IOException ioException) {
 			throw new Exception(
-				"Exception while processing response from server", ioe);
+				"Exception while processing response from server", ioException);
 		}
 	}
 

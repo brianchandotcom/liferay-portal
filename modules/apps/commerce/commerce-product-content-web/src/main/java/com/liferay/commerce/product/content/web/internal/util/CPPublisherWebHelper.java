@@ -80,7 +80,7 @@ public class CPPublisherWebHelper {
 					cpCatalogEntries.add(cpCatalogEntry);
 				}
 			}
-			catch (NoSuchCPDefinitionException nscpde) {
+			catch (NoSuchCPDefinitionException noSuchCPDefinitionException) {
 				missingAssetCPDefinitionIds.add(cpDefinitionId);
 			}
 		}

@@ -93,7 +93,7 @@ public class TaxCategoryHelper {
 
 			return _dtoMapper.modelToDTO(cpTaxCategory);
 		}
-		catch (NoSuchCPTaxCategoryException nscptce) {
+		catch (NoSuchCPTaxCategoryException noSuchCPTaxCategoryException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to find taxCategory with ID: " +

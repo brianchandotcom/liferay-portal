@@ -430,8 +430,9 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 			try {
 				dlAppLocalService.getFileEntry(fileEntryId);
 			}
-			catch (NoSuchFileEntryException nsfee) {
-				throw new CommerceVirtualOrderItemFileEntryIdException(nsfee);
+			catch (NoSuchFileEntryException noSuchFileEntryException) {
+				throw new CommerceVirtualOrderItemFileEntryIdException(
+					noSuchFileEntryException);
 			}
 		}
 		else if ((fileEntryId <= 0) && Validator.isNull(url)) {

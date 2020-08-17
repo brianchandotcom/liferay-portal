@@ -113,9 +113,9 @@ public class CPAttachmentFileEntryCreator {
 				serviceContext.getScopeGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName);
 		}
-		catch (NoSuchFileEntryException nsfee) {
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(nsfee, nsfee);
+				_log.debug(noSuchFileEntryException, noSuchFileEntryException);
 			}
 
 			file = FileUtil.createTempFile(inputStream);

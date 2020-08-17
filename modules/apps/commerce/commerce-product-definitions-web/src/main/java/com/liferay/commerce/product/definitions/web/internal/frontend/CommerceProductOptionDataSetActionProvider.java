@@ -133,8 +133,8 @@ public class CommerceProductOptionDataSetActionProvider
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 		}
-		catch (WindowStateException wse) {
-			_log.error(wse, wse);
+		catch (WindowStateException windowStateException) {
+			_log.error(windowStateException, windowStateException);
 		}
 
 		return portletURL;

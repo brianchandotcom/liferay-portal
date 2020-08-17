@@ -145,7 +145,7 @@ public class WarehouseHelper {
 
 			return _dtoMapper.modelToDTO(commerceInventoryWarehouse);
 		}
-		catch (NoSuchWarehouseException nswe) {
+		catch (NoSuchWarehouseException noSuchWarehouseException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to find availabilityEstimate with ID: " +

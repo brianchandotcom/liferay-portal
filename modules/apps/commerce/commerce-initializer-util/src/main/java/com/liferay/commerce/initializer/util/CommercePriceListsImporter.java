@@ -207,8 +207,12 @@ public class CommercePriceListsImporter {
 								0, serviceContext);
 					}
 				}
-				catch (NoSuchAccountGroupException nsage) {
-					_log.error(nsage, nsage);
+				catch (NoSuchAccountGroupException
+							noSuchAccountGroupException) {
+
+					_log.error(
+						noSuchAccountGroupException,
+						noSuchAccountGroupException);
 				}
 			}
 		}

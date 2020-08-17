@@ -82,8 +82,9 @@ public class CPDefinitionVirtualSettingDetailsSampleFormNavigatorEntry
 		try {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
-		catch (ServletException se) {
-			throw new IOException("Unable to include " + getJspPath(), se);
+		catch (ServletException servletException) {
+			throw new IOException(
+				"Unable to include " + getJspPath(), servletException);
 		}
 	}
 

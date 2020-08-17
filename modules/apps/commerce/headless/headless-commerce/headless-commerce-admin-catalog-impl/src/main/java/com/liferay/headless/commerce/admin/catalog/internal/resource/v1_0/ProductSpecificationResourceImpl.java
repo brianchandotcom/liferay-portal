@@ -110,7 +110,7 @@ public class ProductSpecificationResourceImpl
 						getCPDefinitionSpecificationOptionValueId());
 			}
 			catch (NoSuchCPDefinitionSpecificationOptionValueException
-						nscpdsove) {
+						noSuchCPDefinitionSpecificationOptionValueException) {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(

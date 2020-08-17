@@ -168,10 +168,10 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 					commerceInventoryWarehouseItem.getQuantity() + quantity,
 					commerceInventoryWarehouseItem.getMvccVersion());
 		}
-		catch (MVCCException mvcce) {
-			_log.error(mvcce.getMessage(), mvcce);
+		catch (MVCCException mvccException) {
+			_log.error(mvccException.getMessage(), mvccException);
 
-			throw mvcce;
+			throw mvccException;
 		}
 
 		CommerceInventoryAuditType commerceInventoryAuditType =

@@ -156,8 +156,8 @@ public class CPSortPortlet
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpSearchResultsDisplayContext);
 		}
-		catch (ConfigurationException ce) {
-			_log.error(ce, ce);
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException, configurationException);
 		}
 
 		super.render(renderRequest, renderResponse);

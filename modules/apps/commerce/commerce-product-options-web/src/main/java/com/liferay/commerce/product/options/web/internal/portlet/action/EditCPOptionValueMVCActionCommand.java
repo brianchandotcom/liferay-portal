@@ -171,12 +171,12 @@ public class EditCPOptionValueMVCActionCommand extends BaseMVCActionCommand {
 					cpOptionValueId, nameMap, priority, key, serviceContext);
 			}
 		}
-		catch (CPOptionValueKeyException cpovke) {
+		catch (CPOptionValueKeyException cpOptionValueKeyException) {
 			throw new CPOptionValueKeyException(
 				LanguageUtil.format(
 					_portal.getHttpServletRequest(actionRequest),
 					"the-key-x-is-already-being-used", key),
-				cpovke);
+				cpOptionValueKeyException);
 		}
 
 		return cpOptionValue;

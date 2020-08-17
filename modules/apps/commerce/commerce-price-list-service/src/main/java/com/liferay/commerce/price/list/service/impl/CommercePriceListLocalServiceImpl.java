@@ -1201,7 +1201,7 @@ public class CommercePriceListLocalServiceImpl
 					expirationDateDay, expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
 			}
-			catch (NoSuchPriceListException nsple) {
+			catch (NoSuchPriceListException noSuchPriceListException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Unable to find price list with ID: " +

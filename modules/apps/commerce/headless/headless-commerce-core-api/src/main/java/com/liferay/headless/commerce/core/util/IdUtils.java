@@ -40,7 +40,7 @@ public class IdUtils {
 
 			numberFormat.parse(id);
 		}
-		catch (ParseException pe) {
+		catch (ParseException parseException) {
 			return false;
 		}
 

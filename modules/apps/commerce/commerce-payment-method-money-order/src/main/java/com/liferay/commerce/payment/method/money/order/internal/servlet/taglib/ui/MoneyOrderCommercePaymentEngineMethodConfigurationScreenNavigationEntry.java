@@ -128,8 +128,8 @@ public class
 				MoneyOrderGroupServiceConfiguration.class.getName(),
 				moneyOrderGroupServiceConfiguration);
 		}
-		catch (PortalException pe) {
-			throw new IOException(pe);
+		catch (PortalException portalException) {
+			throw new IOException(portalException);
 		}
 
 		_jspRenderer.renderJSP(

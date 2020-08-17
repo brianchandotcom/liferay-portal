@@ -424,8 +424,9 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			try {
 				dlAppLocalService.getFileEntry(fileEntryId);
 			}
-			catch (NoSuchFileEntryException nsfee) {
-				throw new CPDefinitionVirtualSettingFileEntryIdException(nsfee);
+			catch (NoSuchFileEntryException noSuchFileEntryException) {
+				throw new CPDefinitionVirtualSettingFileEntryIdException(
+					noSuchFileEntryException);
 			}
 		}
 		else if ((fileEntryId <= 0) && Validator.isNull(url)) {
@@ -440,9 +441,9 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 				try {
 					dlAppLocalService.getFileEntry(sampleFileEntryId);
 				}
-				catch (NoSuchFileEntryException nsfee) {
+				catch (NoSuchFileEntryException noSuchFileEntryException) {
 					throw new CPDefinitionVirtualSettingSampleFileEntryIdException(
-						nsfee);
+						noSuchFileEntryException);
 				}
 			}
 			else if ((sampleFileEntryId <= 0) && Validator.isNull(sampleUrl)) {

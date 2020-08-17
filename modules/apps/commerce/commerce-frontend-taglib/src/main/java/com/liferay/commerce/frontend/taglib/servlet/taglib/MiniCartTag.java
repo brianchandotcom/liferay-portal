@@ -159,8 +159,8 @@ public class MiniCartTag extends IncludeTag {
 
 			return commercePriceConfiguration.displayDiscountLevels();
 		}
-		catch (ConfigurationException exception) {
-			_log.error(exception, exception);
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException, configurationException);
 
 			return false;
 		}

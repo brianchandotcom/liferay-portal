@@ -135,8 +135,8 @@ public class CPSearchResultsPortlet
 			renderRequest.setAttribute(
 				CPContentWebKeys.CP_CONTENT_HELPER, _cpContentHelper);
 		}
-		catch (ConfigurationException ce) {
-			_log.error(ce, ce);
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException, configurationException);
 		}
 
 		super.render(renderRequest, renderResponse);

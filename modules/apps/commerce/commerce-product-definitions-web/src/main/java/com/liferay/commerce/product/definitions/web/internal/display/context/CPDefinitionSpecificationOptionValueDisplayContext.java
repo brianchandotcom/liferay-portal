@@ -114,9 +114,9 @@ public class CPDefinitionSpecificationOptionValueDisplayContext
 
 			return cpOptionCategory.getTitle(themeDisplay.getLocale());
 		}
-		catch (PrincipalException portalException) {
+		catch (PrincipalException principalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
+				_log.debug(principalException, principalException);
 			}
 		}
 

@@ -236,8 +236,8 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 		}
-		catch (WindowStateException wse) {
-			_log.error(wse, wse);
+		catch (WindowStateException windowStateException) {
+			_log.error(windowStateException, windowStateException);
 		}
 
 		return getClayHeadlessDataSetActionTemplates(
@@ -687,8 +687,8 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 		}
-		catch (WindowStateException wse) {
-			throw new PortalException(wse);
+		catch (WindowStateException windowStateException) {
+			throw new PortalException(windowStateException);
 		}
 
 		return portletURL.toString();

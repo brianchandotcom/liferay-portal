@@ -179,7 +179,9 @@ public class SpecificationResourceImpl
 				return _toSpecification(
 					cpSpecificationOption.getCPSpecificationOptionId());
 			}
-			catch (NoSuchCPSpecificationOptionException nscpsoe) {
+			catch (NoSuchCPSpecificationOptionException
+						noSuchCPSpecificationOptionException) {
+
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Unable to find specification with ID: " +

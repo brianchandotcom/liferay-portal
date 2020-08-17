@@ -67,8 +67,8 @@ public class CheckCommerceNotificationQueueEntryMessageListener
 					new SystemSettingsLocator(
 						CommerceNotificationQueueEntryConstants.SERVICE_NAME));
 		}
-		catch (ConfigurationException ce) {
-			_log.error(ce, ce);
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException, configurationException);
 		}
 
 		Trigger trigger = _triggerFactory.createTrigger(

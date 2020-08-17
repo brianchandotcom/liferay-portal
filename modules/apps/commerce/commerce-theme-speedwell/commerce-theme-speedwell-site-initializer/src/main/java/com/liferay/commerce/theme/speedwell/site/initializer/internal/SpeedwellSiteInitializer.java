@@ -254,8 +254,8 @@ public class SpeedwellSiteInitializer implements SiteInitializer {
 
 			setThemeSettings(serviceContext);
 		}
-		catch (InitializationException ie) {
-			throw ie;
+		catch (InitializationException initializationException) {
+			throw initializationException;
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

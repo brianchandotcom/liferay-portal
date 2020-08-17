@@ -340,7 +340,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 					commercePriceEntryId, quantity,
 					new CommerceTierPriceEntryMinQuantityComparator(false));
 		}
-		catch (NoSuchTierPriceEntryException nstpee) {
+		catch (NoSuchTierPriceEntryException noSuchTierPriceEntryException) {
 		}
 
 		return commerceTierPriceEntry;

@@ -1789,9 +1789,9 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	protected String getCommerceOrderPaymentContent(
-		CommercePaymentEngineException cpee) {
+		CommercePaymentEngineException commercePaymentEngineException) {
 
-		return StackTraceUtil.getStackTrace(cpee);
+		return StackTraceUtil.getStackTrace(commercePaymentEngineException);
 	}
 
 	protected List<CommerceOrder> getCommerceOrders(Hits hits)

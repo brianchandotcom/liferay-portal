@@ -150,19 +150,19 @@ public class JsonHelperTest {
 	private void _assertException(
 		String failingExpression, Class<?> exceptionClass) {
 
-		Exception actualException = null;
+		Exception exception1 = null;
 
 		try {
 			_jsonHelper.getFirstElementStringValue(failingExpression);
 		}
-		catch (Exception exception) {
-			actualException = e;
+		catch (Exception exception2) {
+			exception1 = e;
 		}
 
-		Assert.assertNotNull("Exception instance", actualException);
+		Assert.assertNotNull("Exception instance", exception1);
 
 		Assert.assertEquals(
-			"Exception class", actualException.getClass(), exceptionClass);
+			"Exception class", exception1.getClass(), exceptionClass);
 	}
 
 	private final JSONFactory _jsonFactory = new JSONFactoryImpl();

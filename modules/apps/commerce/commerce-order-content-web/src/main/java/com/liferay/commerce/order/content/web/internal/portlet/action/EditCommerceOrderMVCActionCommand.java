@@ -253,10 +253,13 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else if (exception instanceof CommerceOrderValidatorException) {
-				CommerceOrderValidatorException cove =
-					(CommerceOrderValidatorException)exception;
+				CommerceOrderValidatorException
+					commerceOrderValidatorException =
+						(CommerceOrderValidatorException)exception;
 
-				SessionErrors.add(actionRequest, cove.getClass(), cove);
+				SessionErrors.add(
+					actionRequest, commerceOrderValidatorException.getClass(),
+					commerceOrderValidatorException);
 
 				hideDefaultErrorMessage(actionRequest);
 			}

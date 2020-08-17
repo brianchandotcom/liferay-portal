@@ -71,8 +71,8 @@ public class BingCommerceGeocoder implements CommerceGeocoder {
 			return _getCoordinates(
 				street, city, zip, commerceRegion, commerceCountry);
 		}
-		catch (CommerceGeocoderException cge) {
-			throw cge;
+		catch (CommerceGeocoderException commerceGeocoderException) {
+			throw commerceGeocoderException;
 		}
 		catch (Exception exception) {
 			throw new CommerceGeocoderException(exception);
@@ -89,8 +89,8 @@ public class BingCommerceGeocoder implements CommerceGeocoder {
 			return _getCoordinates(
 				street, city, zip, commerceRegion, commerceCountry);
 		}
-		catch (CommerceGeocoderException cge) {
-			throw cge;
+		catch (CommerceGeocoderException commerceGeocoderException) {
+			throw commerceGeocoderException;
 		}
 		catch (Exception exception) {
 			throw new CommerceGeocoderException(exception);

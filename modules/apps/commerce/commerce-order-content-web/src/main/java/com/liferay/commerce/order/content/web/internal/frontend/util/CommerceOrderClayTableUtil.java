@@ -198,8 +198,8 @@ public class CommerceOrderClayTableUtil {
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 		}
-		catch (WindowStateException wse) {
-			_log.error(wse, wse);
+		catch (WindowStateException windowStateException) {
+			_log.error(windowStateException, windowStateException);
 		}
 
 		portletURL.setParameter("backURL", portletURL.toString());

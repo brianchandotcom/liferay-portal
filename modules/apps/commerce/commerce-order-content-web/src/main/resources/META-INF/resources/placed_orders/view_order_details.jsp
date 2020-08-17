@@ -55,10 +55,10 @@ if (commerceOrder != null) {
 <liferay-ui:error exception="<%= CommerceOrderValidatorException.class %>">
 
 	<%
-	CommerceOrderValidatorException cove = (CommerceOrderValidatorException)errorException;
+	CommerceOrderValidatorException commerceOrderValidatorException = (CommerceOrderValidatorException)errorException;
 
-	if (cove != null) {
-		for (CommerceOrderValidatorResult commerceOrderValidatorResult : cove.getCommerceOrderValidatorResults()) {
+	if (commerceOrderValidatorException != null) {
+		for (CommerceOrderValidatorResult commerceOrderValidatorResult : commerceOrderValidatorException.getCommerceOrderValidatorResults()) {
 	%>
 
 			<liferay-ui:message key="<%= commerceOrderValidatorResult.getLocalizedMessage() %>" />

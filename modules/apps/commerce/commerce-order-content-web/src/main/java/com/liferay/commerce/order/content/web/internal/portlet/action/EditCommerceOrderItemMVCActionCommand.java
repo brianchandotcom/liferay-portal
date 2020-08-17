@@ -113,10 +113,14 @@ public class EditCommerceOrderItemMVCActionCommand
 				deleteCommerceOrderItems(actionRequest);
 			}
 		}
-		catch (CommerceOrderValidatorException cove) {
+		catch (CommerceOrderValidatorException
+					commerceOrderValidatorException) {
+
 			hideDefaultErrorMessage(actionRequest);
 
-			SessionErrors.add(actionRequest, cove.getClass(), cove);
+			SessionErrors.add(
+				actionRequest, commerceOrderValidatorException.getClass(),
+				commerceOrderValidatorException);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchOrderException ||

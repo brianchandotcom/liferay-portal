@@ -462,7 +462,7 @@ public class CommercePriceModifierLocalServiceImpl
 						expirationDateYear, expirationDateHour,
 						expirationDateMinute, neverExpire, serviceContext);
 			}
-			catch (NoSuchPriceModifierException nspme) {
+			catch (NoSuchPriceModifierException noSuchPriceModifierException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Unable to find price modifier with ID: " +

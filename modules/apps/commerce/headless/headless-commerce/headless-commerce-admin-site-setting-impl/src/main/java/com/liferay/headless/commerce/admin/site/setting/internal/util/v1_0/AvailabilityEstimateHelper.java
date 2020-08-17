@@ -115,7 +115,9 @@ public class AvailabilityEstimateHelper {
 
 			return _dtoMapper.modelToDTO(commerceAvailabilityEstimate);
 		}
-		catch (NoSuchAvailabilityEstimateException nsaee) {
+		catch (NoSuchAvailabilityEstimateException
+					noSuchAvailabilityEstimateException) {
+
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to find availabilityEstimate with ID: " +

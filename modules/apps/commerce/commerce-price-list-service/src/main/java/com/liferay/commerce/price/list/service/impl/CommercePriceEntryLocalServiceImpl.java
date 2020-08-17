@@ -871,7 +871,7 @@ public class CommercePriceEntryLocalServiceImpl
 					expirationDateHour, expirationDateMinute, neverExpire,
 					serviceContext);
 			}
-			catch (NoSuchPriceEntryException nspee) {
+			catch (NoSuchPriceEntryException noSuchPriceEntryException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Unable to find price entry with ID: " +

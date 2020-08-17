@@ -69,8 +69,8 @@ public class DownloadCommerceVirtualOrderItemMVCResourceCommand
 				MimeTypesUtil.getContentType(file),
 				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (Exception exception) {
+			_log.error(exception, exception);
 		}
 	}
 

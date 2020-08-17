@@ -61,8 +61,8 @@ public class ProductDefinitionMessageListener extends BaseMessageListener {
 				TimeUnit.class,
 				productDefinitionConfiguration.generatorTimeIntervalUnit());
 		}
-		catch (IllegalArgumentException iae) {
-			_log.error(iae, iae);
+		catch (IllegalArgumentException illegalArgumentException) {
+			_log.error(illegalArgumentException, illegalArgumentException);
 		}
 
 		String className = clazz.getName();

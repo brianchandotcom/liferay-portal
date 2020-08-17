@@ -122,7 +122,9 @@ public class MeasurementUnitHelper {
 
 			return _dtoMapper.modelToDTO(cpMeasurementUnit);
 		}
-		catch (NoSuchCPMeasurementUnitException nscpmue) {
+		catch (NoSuchCPMeasurementUnitException
+					noSuchCPMeasurementUnitException) {
+
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to find measurementUnit with ID: " +

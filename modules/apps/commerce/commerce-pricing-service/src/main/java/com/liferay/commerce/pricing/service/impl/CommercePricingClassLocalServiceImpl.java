@@ -313,7 +313,7 @@ public class CommercePricingClassLocalServiceImpl
 						commercePricingClassId, userId, titleMap,
 						descriptionMap, serviceContext);
 			}
-			catch (NoSuchPricingClassException nspc) {
+			catch (NoSuchPricingClassException noSuchPricingClassException) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Unable to find pricing class with ID: " +

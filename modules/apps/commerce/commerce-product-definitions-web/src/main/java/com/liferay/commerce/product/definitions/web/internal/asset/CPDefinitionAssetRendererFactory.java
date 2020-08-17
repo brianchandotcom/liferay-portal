@@ -140,7 +140,7 @@ public class CPDefinitionAssetRendererFactory
 		try {
 			liferayPortletURL.setWindowState(windowState);
 		}
-		catch (WindowStateException wse) {
+		catch (WindowStateException windowStateException) {
 		}
 
 		return liferayPortletURL;

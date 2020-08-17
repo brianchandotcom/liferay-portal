@@ -52,7 +52,9 @@ public class RelatedProductUtil {
 					cpDefinitionLink.getPriority()),
 				serviceContext);
 		}
-		catch (NoSuchCPDefinitionLinkException nscpdle) {
+		catch (NoSuchCPDefinitionLinkException
+					noSuchCPDefinitionLinkException) {
+
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to find relatedProduct with ID: " +

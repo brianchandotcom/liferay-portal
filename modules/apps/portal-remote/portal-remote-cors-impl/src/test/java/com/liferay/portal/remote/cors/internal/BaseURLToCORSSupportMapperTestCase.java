@@ -36,7 +36,7 @@ import org.junit.ComparisonFailure;
 /**
  * @author Arthur Chan
  */
-public abstract class BaseURLToCORSSupportMapperTestBase {
+public abstract class BaseURLToCORSSupportMapperTestCase {
 
 	protected static void setLogFilePath(String path) throws IOException {
 		_logFilePath = Paths.get(path);

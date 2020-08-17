@@ -23,7 +23,7 @@ import org.junit.Test;
  * @author Arthur Chan
  */
 public class URLToCORSSupportMapperTest
-	extends BaseURLToCORSSupportMapperTestBase {
+	extends BaseURLToCORSSupportMapperTestCase {
 
 	@Before
 	public void setUp() {

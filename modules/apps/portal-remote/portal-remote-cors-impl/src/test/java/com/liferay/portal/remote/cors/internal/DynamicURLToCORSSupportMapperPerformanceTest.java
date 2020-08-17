@@ -22,7 +22,7 @@ import org.junit.Test;
  * @author Arthur Chan
  */
 public class DynamicURLToCORSSupportMapperPerformanceTest
-	extends BaseURLToCORSSupportMapperTestBase {
+	extends BaseURLToCORSSupportMapperTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

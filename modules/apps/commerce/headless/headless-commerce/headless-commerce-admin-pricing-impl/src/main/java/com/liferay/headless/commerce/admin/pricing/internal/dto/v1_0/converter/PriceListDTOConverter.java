@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.PriceList;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -73,7 +72,7 @@ public class PriceListDTOConverter
 	}
 
 	private long _getCatalogId(CommercePriceList commercePriceList)
-		throws PortalException {
+		throws Exception {
 
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogService.fetchCommerceCatalogByGroupId(

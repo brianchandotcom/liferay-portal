@@ -59,7 +59,6 @@ import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
@@ -214,7 +213,7 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 
 	private Map<String, Map<String, String>> _getActions(
 			CommerceDiscount commerceDiscount)
-		throws PortalException {
+		throws Exception {
 
 		ServiceContext serviceContext =
 			_serviceContextHelper.getServiceContext();
@@ -299,7 +298,7 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 
 	private CommerceDiscount _updateDiscount(
 			CommerceDiscount commerceDiscount, Discount discount)
-		throws PortalException {
+		throws Exception {
 
 		ServiceContext serviceContext =
 			_serviceContextHelper.getServiceContext();
@@ -369,7 +368,7 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 
 	private CommerceDiscount _updateNestedResources(
 			Discount discount, CommerceDiscount commerceDiscount)
-		throws PortalException {
+		throws Exception {
 
 		// Discount account groups
 
@@ -552,7 +551,7 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 	}
 
 	private CommerceDiscount _upsertCommerceDiscount(Discount discount)
-		throws PortalException {
+		throws Exception {
 
 		ServiceContext serviceContext =
 			_serviceContextHelper.getServiceContext();

@@ -101,7 +101,7 @@ public class CommercePlacedOrderItemDataSetDataProvider
 
 	private String _formatDiscountAmount(
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		if (commerceOrderItemPrice.getDiscountAmount() == null) {
 			return StringPool.BLANK;
@@ -115,7 +115,7 @@ public class CommercePlacedOrderItemDataSetDataProvider
 
 	private String _formatFinalPrice(
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		if (commerceOrderItemPrice.getFinalPrice() == null) {
 			return StringPool.BLANK;
@@ -128,7 +128,7 @@ public class CommercePlacedOrderItemDataSetDataProvider
 
 	private String _formatPromoPrice(
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		CommerceMoney promoPrice = commerceOrderItemPrice.getPromoPrice();
 
@@ -147,7 +147,7 @@ public class CommercePlacedOrderItemDataSetDataProvider
 
 	private String _formatSubscriptionPeriod(
 			CommerceOrderItem commerceOrderItem, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
 
@@ -185,7 +185,7 @@ public class CommercePlacedOrderItemDataSetDataProvider
 
 	private String _formatUnitPrice(
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		if (commerceOrderItemPrice.getUnitPrice() == null) {
 			return StringPool.BLANK;
@@ -240,7 +240,7 @@ public class CommercePlacedOrderItemDataSetDataProvider
 
 	private String _getCommerceOrderOptions(
 			CommerceOrderItem commerceOrderItem, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 

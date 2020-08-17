@@ -26,7 +26,6 @@ import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalServic
 import com.liferay.commerce.price.list.test.util.CommercePriceEntryTestUtil;
 import com.liferay.commerce.price.list.test.util.CommerceTierPriceEntryTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -408,7 +407,7 @@ public class CommerceTierPriceEntryLocalServiceTest {
 			CommercePriceEntry commercePriceEntry, int minQuantity,
 			double price, double promoPrice,
 			CommerceTierPriceEntry commerceTierPriceEntry)
-		throws PortalException {
+		throws Exception {
 
 		CommercePriceEntry actualCommercePriceEntry =
 			commerceTierPriceEntry.getCommercePriceEntry();

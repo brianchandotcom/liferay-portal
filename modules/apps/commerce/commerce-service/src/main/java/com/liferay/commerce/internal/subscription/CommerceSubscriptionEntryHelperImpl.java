@@ -194,7 +194,7 @@ public class CommerceSubscriptionEntryHelperImpl
 	}
 
 	private void _addShipment(CommerceOrderItem commerceOrderItem)
-		throws PortalException {
+		throws Exception {
 
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 

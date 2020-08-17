@@ -23,7 +23,6 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceEntry;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -101,7 +100,7 @@ public class PriceEntryDTOConverter
 
 	private String _formatPrice(
 			BigDecimal price, CommerceCurrency commerceCurrency, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		if (price == null) {
 			price = BigDecimal.ZERO;

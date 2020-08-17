@@ -27,7 +27,6 @@ import com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.A
 import com.liferay.headless.commerce.admin.account.internal.util.v1_0.AccountMemberUtil;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountMemberResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -288,7 +287,7 @@ public class AccountMemberResourceImpl extends BaseAccountMemberResourceImpl {
 	private void _updateCommerceAccountUserRel(
 			CommerceAccount commerceAccount, User user,
 			AccountMember accountMember)
-		throws PortalException {
+		throws Exception {
 
 		long[] roleIds = null;
 

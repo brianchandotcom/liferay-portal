@@ -307,7 +307,7 @@ public class AttachmentUtil {
 	private static FileEntry _addFileEntry(
 			long groupId, long userId, File file, String contentType,
 			UniqueFileNameProvider uniqueFileNameProvider)
-		throws PortalException {
+		throws Exception {
 
 		String uniqueFileName = uniqueFileNameProvider.provide(
 			file.getName(),
@@ -345,7 +345,7 @@ public class AttachmentUtil {
 
 	private static void _validateMethodRequiredParams(
 			Long id, String externalReferenceCode)
-		throws MethodRequiredParameterMissingException {
+		throws Exception {
 
 		if (Validator.isNull(id) && Validator.isNull(externalReferenceCode)) {
 			throw new MethodRequiredParameterMissingException(

@@ -183,7 +183,7 @@ public class CommerceSubscriptionsNotificationTest {
 			CommerceSubscriptionNotificationConstants.SUBSCRIPTION_CANCELLED);
 	}
 
-	private void _addCommerceNotificationTemplates() throws PortalException {
+	private void _addCommerceNotificationTemplates() throws Exception {
 		_commerceNotificationTemplateList = new ArrayList<>(4);
 
 		for (String commerceSubscriptionNotification :

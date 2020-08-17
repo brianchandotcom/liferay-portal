@@ -30,7 +30,6 @@ import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.PriceModif
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceModifierResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -237,7 +236,7 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 
 	private Map<String, Map<String, String>> _getActions(
 			CommercePriceModifier commercePriceModifier)
-		throws PortalException {
+		throws Exception {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
@@ -328,7 +327,7 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 	private void _updateNestedResources(
 			PriceModifier priceModifier,
 			CommercePriceModifier commercePriceModifier)
-		throws PortalException {
+		throws Exception {
 
 		PriceModifierUtil.upsertCommercePriceModifierRels(
 			_assetCategoryLocalService, _commercePricingClassService,
@@ -339,7 +338,7 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 	private CommercePriceModifier _updatePriceModifier(
 			CommercePriceModifier commercePriceModifier,
 			PriceModifier priceModifier)
-		throws PortalException {
+		throws Exception {
 
 		ServiceContext serviceContext =
 			_serviceContextHelper.getServiceContext();
@@ -375,7 +374,7 @@ public class PriceModifierResourceImpl extends BasePriceModifierResourceImpl {
 
 	private CommercePriceModifier _upsertCommercePriceModifier(
 			CommercePriceList commercePriceList, PriceModifier priceModifier)
-		throws PortalException {
+		throws Exception {
 
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			commercePriceList.getGroupId());

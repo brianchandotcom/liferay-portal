@@ -268,7 +268,7 @@ public class AuthorizeNetCommercePaymentMethod
 
 	private ArrayOfSetting _getArrayOfSetting(
 			long groupId, String cancelURL, String returnURL)
-		throws PortalException {
+		throws Exception {
 
 		AuthorizeNetGroupServiceConfiguration configuration = _getConfiguration(
 			groupId);
@@ -410,7 +410,7 @@ public class AuthorizeNetCommercePaymentMethod
 
 	private TransactionRequestType _getTransactionRequestType(
 			CommerceOrder commerceOrder)
-		throws PortalException {
+		throws Exception {
 
 		TransactionRequestType transactionRequestType =
 			new TransactionRequestType();

@@ -19,7 +19,6 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil;
 import com.liferay.headless.commerce.admin.channel.client.dto.v1_0.Channel;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -151,7 +150,7 @@ public class ChannelResourceTest extends BaseChannelResourceTestCase {
 		return _addChannel(randomChannel());
 	}
 
-	private Channel _addChannel(Channel channel) throws PortalException {
+	private Channel _addChannel(Channel channel) throws Exception {
 		CommerceChannel commerceChannel =
 			CommerceChannelLocalServiceUtil.addCommerceChannel(
 				channel.getSiteGroupId(), channel.getName(), channel.getType(),

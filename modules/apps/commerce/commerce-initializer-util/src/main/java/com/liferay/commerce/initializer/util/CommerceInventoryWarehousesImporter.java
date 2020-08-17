@@ -85,7 +85,7 @@ public class CommerceInventoryWarehousesImporter {
 
 	private CommerceInventoryWarehouse _importCommerceInventoryWarehouse(
 			JSONObject jsonObject, ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		// Commerce inventory warehouse
 

@@ -29,7 +29,6 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Status;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Summary;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
@@ -148,7 +147,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 
 	private String _formatPrice(
 			BigDecimal price, CommerceCurrency commerceCurrency, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		if (price == null) {
 			price = BigDecimal.ZERO;
@@ -159,7 +158,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 
 	private String[] _getFormattedDiscountPercentages(
 			BigDecimal[] discountPercentages, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		List<String> formattedDiscountPercentages = new ArrayList<>();
 
@@ -198,7 +197,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 	}
 
 	private Summary _getSummary(CommerceOrder commerceOrder, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
@@ -294,7 +293,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 	private void _setShippingDiscountOnSummary(
 			CommerceOrder commerceOrder, CommerceCurrency commerceCurrency,
 			Locale locale, String priceDisplayType, Summary summary)
-		throws PortalException {
+		throws Exception {
 
 		BigDecimal shippingDiscountAmount =
 			commerceOrder.getShippingDiscountAmount();
@@ -350,7 +349,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 	private void _setSubtotalDiscountOnSummary(
 			CommerceOrder commerceOrder, CommerceCurrency commerceCurrency,
 			Locale locale, String priceDisplayType, Summary summary)
-		throws PortalException {
+		throws Exception {
 
 		BigDecimal subtotalDiscountAmount =
 			commerceOrder.getSubtotalDiscountAmount();
@@ -406,7 +405,7 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 	private void _setTotalDiscountOnSummary(
 			CommerceOrder commerceOrder, CommerceCurrency commerceCurrency,
 			Locale locale, String priceDisplayType, Summary summary)
-		throws PortalException {
+		throws Exception {
 
 		BigDecimal totalDiscountAmount = commerceOrder.getTotalDiscountAmount();
 

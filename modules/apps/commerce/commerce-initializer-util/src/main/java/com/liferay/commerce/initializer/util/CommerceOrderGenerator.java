@@ -380,7 +380,7 @@ public class CommerceOrderGenerator {
 		}
 	}
 
-	private int _getAccountType(long groupId) throws PortalException {
+	private int _getAccountType(long groupId) throws Exception {
 		CommerceAccountGroupServiceConfiguration
 			commerceAccountGroupServiceConfiguration =
 				_configurationProvider.getConfiguration(
@@ -414,9 +414,7 @@ public class CommerceOrderGenerator {
 			commerceShippingMethod.getEngineKey());
 	}
 
-	private long _getCommerceShippingMethodId(long groupId)
-		throws PortalException {
-
+	private long _getCommerceShippingMethodId(long groupId) throws Exception {
 		List<CommerceShippingMethod> commerceShippingMethods =
 			_commerceShippingMethodLocalService.getCommerceShippingMethods(
 				_commerceChannelLocalService.
@@ -450,9 +448,7 @@ public class CommerceOrderGenerator {
 		return maxOrderQuantity;
 	}
 
-	private SearchContext _getSearchContext(long groupId)
-		throws PortalException {
-
+	private SearchContext _getSearchContext(long groupId) throws Exception {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAttributes(

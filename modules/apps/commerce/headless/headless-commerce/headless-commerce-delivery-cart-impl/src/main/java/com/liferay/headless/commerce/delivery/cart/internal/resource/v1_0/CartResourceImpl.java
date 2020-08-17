@@ -44,7 +44,6 @@ import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CouponCode;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.CartDTOConverter;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartResource;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -167,7 +166,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	private CommerceAddress _addCommerceAddress(
 			CommerceOrder commerceOrder, Address address, int type,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		CommerceCountry commerceCountry =
 			_commerceCountryService.getCommerceCountry(
@@ -186,7 +185,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 	private CommerceOrder _addCommerceOrder(
 			Cart cart, long commerceChannelGroupId, long userId)
-		throws PortalException {
+		throws Exception {
 
 		long commerceCurrencyId = 0;
 
@@ -209,7 +208,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	private long _getCommerceRegionId(
 			CommerceAddress commerceAddress, CommerceCountry commerceCountry,
 			Address address)
-		throws PortalException {
+		throws Exception {
 
 		if (Validator.isNull(address.getRegionISOCode()) &&
 			(commerceAddress != null)) {

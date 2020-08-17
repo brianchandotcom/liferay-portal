@@ -24,7 +24,6 @@ import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.Sku;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -83,7 +82,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 	private String _formatPrice(
 			long companyId, CommercePriceEntry priceEntry, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		if (priceEntry == null) {
 			CommerceCurrency commerceCurrency =

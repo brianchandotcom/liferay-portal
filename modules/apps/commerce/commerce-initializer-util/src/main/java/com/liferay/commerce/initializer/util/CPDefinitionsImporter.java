@@ -195,7 +195,7 @@ public class CPDefinitionsImporter {
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
 			long maxSubscriptionCycles, long[] assetCategoryIds,
 			String[] assetTagNames, ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		serviceContext.setAssetCategoryIds(assetCategoryIds);
 		serviceContext.setAssetTagNames(assetTagNames);
@@ -259,7 +259,7 @@ public class CPDefinitionsImporter {
 	private void _addWarehouseQuantities(
 			JSONObject skuJSONObject, long[] commerceInventoryWarehouseIds,
 			ServiceContext serviceContext, CPInstance cpInstance)
-		throws PortalException {
+		throws Exception {
 
 		for (int i = 0; i < commerceInventoryWarehouseIds.length; i++) {
 			long commerceInventoryWarehouseId =
@@ -280,7 +280,7 @@ public class CPDefinitionsImporter {
 
 	private long _getCPTaxCategoryId(
 			String taxCategory, ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		if (Validator.isNull(taxCategory)) {
 			return 0;
@@ -492,7 +492,7 @@ public class CPDefinitionsImporter {
 					cpDefinition.getCPDefinitionId(), serviceContext);
 			}
 			catch (NoSuchSkuContributorCPDefinitionOptionRelException
-						nssccpdore) {
+						noSuchSkuContributorCPDefinitionOptionRelException) {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
@@ -693,7 +693,7 @@ public class CPDefinitionsImporter {
 	private CPDefinitionOptionRel _importCPDefinitionOptionRel(
 			long catalogGroupId, long companyId, long cpDefinitionId,
 			JSONObject jsonObject, ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		// Commerce product definition option rel
 
@@ -750,7 +750,7 @@ public class CPDefinitionsImporter {
 	private CPDefinitionOptionValueRel _importCPDefinitionOptionValueRel(
 			String key, CPDefinitionOptionRel cpDefinitionOptionRel,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		CPOptionValue cpOptionValue =
 			_cpOptionValueLocalService.getCPOptionValue(
@@ -767,7 +767,7 @@ public class CPDefinitionsImporter {
 			_importCPDefinitionSpecificationOptionValue(
 				long companyId, long cpDefinitionId, JSONObject jsonObject,
 				double defaultPriority, ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		CPSpecificationOption cpSpecificationOption =
 			_cpSpecificationOptionLocalService.getCPSpecificationOption(
@@ -803,7 +803,7 @@ public class CPDefinitionsImporter {
 			long cpDefinitionId, JSONObject skuJSONObject,
 			long[] commerceInventoryWarehouseIds, Calendar calendar,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		String sku = skuJSONObject.getString("Sku");
 		String manufacturerPartNumber = skuJSONObject.getString(
@@ -922,7 +922,7 @@ public class CPDefinitionsImporter {
 	private CPDAvailabilityEstimate _updateCPDAvailabilityEstimate(
 			long cProductId, String availabilityEstimate,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		List<CommerceAvailabilityEstimate> commerceAvailabilityEstimates =
 			_commerceAvailabilityEstimateLocalService.

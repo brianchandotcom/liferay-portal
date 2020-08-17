@@ -23,7 +23,6 @@ import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.Discount;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -128,7 +127,7 @@ public class DiscountDTOConverter
 
 	private String _getAmountFormatted(
 			CommerceDiscount commerceDiscount, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		BigDecimal amount = _getAmount(commerceDiscount);
 

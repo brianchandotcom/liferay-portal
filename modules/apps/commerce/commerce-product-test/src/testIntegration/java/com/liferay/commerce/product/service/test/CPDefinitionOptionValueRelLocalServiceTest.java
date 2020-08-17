@@ -33,7 +33,6 @@ import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -851,7 +850,7 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 			CPDefinitionOptionValueRel cpDefinitionOptionValueRel,
 			long cpInstanceId, boolean preselected, BigDecimal price,
 			int quantity)
-		throws PortalException {
+		throws Exception {
 
 		return _cpDefinitionOptionValueRelLocalService.
 			updateCPDefinitionOptionValueRel(

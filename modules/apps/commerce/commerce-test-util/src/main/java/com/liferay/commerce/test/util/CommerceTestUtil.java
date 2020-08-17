@@ -553,7 +553,7 @@ public class CommerceTestUtil {
 	}
 
 	private static CommerceCountry _setUpCountry(ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		CommerceCountry commerceCountry =
 			CommerceCountryLocalServiceUtil.fetchCommerceCountry(
@@ -572,7 +572,7 @@ public class CommerceTestUtil {
 
 	private static CommerceRegion _setUpRegion(
 			CommerceCountry commerceCountry, ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		CommerceRegion commerceRegion;
 

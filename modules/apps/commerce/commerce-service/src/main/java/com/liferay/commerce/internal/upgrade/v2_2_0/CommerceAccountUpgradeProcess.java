@@ -18,7 +18,6 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.service.CommerceAccountOrganizationRelLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.EmailAddress;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.ArrayList;
@@ -112,7 +110,7 @@ public class CommerceAccountUpgradeProcess extends UpgradeProcess {
 
 	private void _addCommerceAccount(
 			Organization organization, long parentCommerceAccountId)
-		throws PortalException {
+		throws Exception {
 
 		String email = _getOrganizationEmailAddress(organization);
 
@@ -155,7 +153,7 @@ public class CommerceAccountUpgradeProcess extends UpgradeProcess {
 	}
 
 	private long _getParentCommerceAccountId(long parentOrganizationId)
-		throws PortalException, SQLException {
+		throws Exception {
 
 		if (parentOrganizationId == 0) {
 			return 0;

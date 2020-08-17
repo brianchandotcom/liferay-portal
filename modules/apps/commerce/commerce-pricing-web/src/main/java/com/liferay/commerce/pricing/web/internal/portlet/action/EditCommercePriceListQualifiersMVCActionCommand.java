@@ -19,7 +19,6 @@ import com.liferay.commerce.price.list.service.CommercePriceListAccountRelServic
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelService;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -100,7 +99,7 @@ public class EditCommercePriceListQualifiersMVCActionCommand
 
 	private void _deleteCommercePriceListAccountGroupRels(
 			long commercePriceListId)
-		throws PortalException {
+		throws Exception {
 
 		if (_commercePriceListCommerceAccountGroupRelService.
 				getCommercePriceListCommerceAccountGroupRelsCount(
@@ -115,7 +114,7 @@ public class EditCommercePriceListQualifiersMVCActionCommand
 	}
 
 	private void _deleteCommercePriceListAccountRels(long commercePriceListId)
-		throws PortalException {
+		throws Exception {
 
 		if (_commercePriceListAccountRelService.
 				getCommercePriceListAccountRelsCount(commercePriceListId) ==

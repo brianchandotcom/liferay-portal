@@ -297,7 +297,8 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 		catch (PayPalRESTException ppre) {
 			_log.error(ppre.getMessage(), ppre);
 
-			List<String> resultMessages = _getErrorMessages(ppre);
+			List<String> resultMessages = _getErrorMessages(
+				payPalRESTException);
 
 			return new CommercePaymentResult(
 				null, commercePaymentRequest.getCommerceOrderId(),
@@ -348,7 +349,8 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 		catch (PayPalRESTException ppre) {
 			_log.error(ppre.getMessage(), ppre);
 
-			List<String> resultMessages = _getErrorMessages(ppre);
+			List<String> resultMessages = _getErrorMessages(
+				payPalRESTException);
 
 			return new CommercePaymentResult(
 				null, commercePaymentRequest.getCommerceOrderId(),
@@ -599,7 +601,8 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 		catch (PayPalRESTException ppre) {
 			_log.error(ppre.getMessage(), ppre);
 
-			List<String> resultMessages = _getErrorMessages(ppre);
+			List<String> resultMessages = _getErrorMessages(
+				payPalRESTException);
 
 			return new CommercePaymentResult(
 				null, commercePaymentRequest.getCommerceOrderId(), status, true,
@@ -667,7 +670,8 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 		catch (PayPalRESTException ppre) {
 			_log.error(ppre.getMessage(), ppre);
 
-			List<String> resultMessages = _getErrorMessages(ppre);
+			List<String> resultMessages = _getErrorMessages(
+				payPalRESTException);
 
 			return new CommercePaymentResult(
 				null, commercePaymentRequest.getCommerceOrderId(), status, true,
@@ -877,7 +881,9 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			payPalGroupServiceConfiguration.mode());
 	}
 
-	private List<String> _getErrorMessages(PayPalRESTException ppre) {
+	private List<String> _getErrorMessages(
+		PayPalRESTException payPalRESTException) {
+
 		List<String> resultMessages = new ArrayList<>();
 
 		Error details = ppre.getDetails();

@@ -19,7 +19,6 @@ import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.exception.CPOptionSKUContributorException;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -189,7 +188,7 @@ public class CPOptionLocalServiceTest {
 	private void _addCPOptions(
 			String[] optionFieldTypes, boolean skuContributor,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		for (String optionFieldType : optionFieldTypes) {
 			_cpOptionLocalService.addCPOption(

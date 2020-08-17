@@ -387,7 +387,7 @@ public class AccountResourceImpl
 
 	private long _getCommerceRegionId(
 			CommerceCountry commerceCountry, AccountAddress accountAddress)
-		throws PortalException {
+		throws Exception {
 
 		if (Validator.isNull(accountAddress.getRegionISOCode()) ||
 			(commerceCountry == null)) {
@@ -437,7 +437,7 @@ public class AccountResourceImpl
 	}
 
 	private CommerceAccount _updateAccount(Long id, Account account)
-		throws PortalException {
+		throws Exception {
 
 		CommerceAccount commerceAccount =
 			_commerceAccountService.getCommerceAccount(id);
@@ -474,7 +474,7 @@ public class AccountResourceImpl
 	private CommerceAccount _updateNestedResources(
 			Account account, CommerceAccount commerceAccount,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		// Account addresses
 

@@ -25,7 +25,6 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.CategoryHelper;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CategoryResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -138,7 +137,7 @@ public class CategoryResourceImpl extends BaseCategoryResourceImpl {
 
 	private void _updateProductCategories(
 			CPDefinition cpDefinition, Category[] categories)
-		throws PortalException {
+		throws Exception {
 
 		long[] assetCategoryIds = new long[0];
 

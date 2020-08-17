@@ -226,7 +226,7 @@ public class CommerceOrderStatusNotificationTest {
 			CommerceOrderConstants.ORDER_NOTIFICATION_COMPLETED);
 	}
 
-	private void _addCommerceNotificationTemplates() throws PortalException {
+	private void _addCommerceNotificationTemplates() throws Exception {
 		_commerceNotificationTemplateList = new ArrayList<>(4);
 
 		ServiceContext serviceContext = _serviceContext;

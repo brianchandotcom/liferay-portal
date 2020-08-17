@@ -23,7 +23,6 @@ import com.liferay.commerce.service.CommerceCountryServiceUtil;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceRegionLocalServiceUtil;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.ShippingAddress;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -64,7 +63,7 @@ public class ShippingAddressUtil {
 			CommerceAddressService commerceAddressService,
 			CommerceOrder commerceOrder, ShippingAddress shippingAddress,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		CommerceCountry commerceCountry =
 			CommerceCountryServiceUtil.getCommerceCountry(
@@ -93,7 +92,7 @@ public class ShippingAddressUtil {
 	private static long _getCommerceRegionId(
 			CommerceAddress commerceAddress, CommerceCountry commerceCountry,
 			ShippingAddress shippingAddress)
-		throws PortalException {
+		throws Exception {
 
 		if (Validator.isNull(shippingAddress.getRegionISOCode()) &&
 			(commerceAddress != null)) {

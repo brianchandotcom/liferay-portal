@@ -445,7 +445,7 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 
 	private void _completeOrderWithoutPaymentMethod(
 			long commerceOrderId, HttpServletRequest httpServletRequest)
-		throws PortalException {
+		throws Exception {
 
 		long userId = _portal.getUserId(httpServletRequest);
 

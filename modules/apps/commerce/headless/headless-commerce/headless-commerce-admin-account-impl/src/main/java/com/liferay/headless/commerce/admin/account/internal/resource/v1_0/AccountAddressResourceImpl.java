@@ -30,7 +30,6 @@ import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountAddress;
 import com.liferay.headless.commerce.admin.account.internal.dto.v1_0.converter.AccountAddressDTOConverter;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountAddressResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -368,7 +367,7 @@ public class AccountAddressResourceImpl extends BaseAccountAddressResourceImpl {
 
 	private long _getCommerceRegionId(
 			CommerceCountry commerceCountry, AccountAddress accountAddress)
-		throws PortalException {
+		throws Exception {
 
 		if (Validator.isNull(accountAddress.getRegionISOCode()) ||
 			(commerceCountry == null)) {

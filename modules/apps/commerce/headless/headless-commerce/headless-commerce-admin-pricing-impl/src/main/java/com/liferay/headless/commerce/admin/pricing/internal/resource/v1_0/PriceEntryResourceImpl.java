@@ -30,7 +30,6 @@ import com.liferay.headless.commerce.admin.pricing.internal.dto.v1_0.converter.P
 import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.TierPriceUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v1_0.PriceEntryResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -260,7 +259,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 	private void _updateNestedResources(
 			PriceEntry priceEntry, CommercePriceEntry commercePriceEntry,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		TierPrice[] tierPrices = priceEntry.getTierPrices();
 
@@ -275,7 +274,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 
 	private CommercePriceEntry _updatePriceEntry(
 			CommercePriceEntry commercePriceEntry, PriceEntry priceEntry)
-		throws PortalException {
+		throws Exception {
 
 		// Commerce price entry
 
@@ -296,7 +295,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 
 	private CommercePriceEntry _upsertCommercePriceEntry(
 			CommercePriceList commercePriceList, PriceEntry priceEntry)
-		throws PortalException {
+		throws Exception {
 
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			commercePriceList.getGroupId());

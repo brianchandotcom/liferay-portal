@@ -38,7 +38,6 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -408,7 +407,7 @@ public class CommercePriceModifierTest {
 	private static CommercePriceEntry _addCommercePriceEntry(
 			long cpProductId, String cpInstanceUuid, long commercePriceListId,
 			String externalReferenceCode, BigDecimal price)
-		throws PortalException {
+		throws Exception {
 
 		CommercePriceList commercePriceList =
 			CommercePriceListLocalServiceUtil.getCommercePriceList(

@@ -400,7 +400,7 @@ public class CPSpecificationOptionLocalServiceImpl
 
 	private void _reindexCPDefinitions(
 			long companyId, long cpSpecificationOptionId)
-		throws PortalException {
+		throws Exception {
 
 		final Indexer<CPDefinition> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(CPDefinition.class);

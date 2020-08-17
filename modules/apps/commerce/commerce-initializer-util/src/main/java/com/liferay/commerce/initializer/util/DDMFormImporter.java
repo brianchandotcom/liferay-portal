@@ -287,7 +287,7 @@ public class DDMFormImporter {
 	private void _updateDDMStructureLayout(
 			DDMStructure structure, DDMForm ddmForm, String jsonFormLayout,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		long userId = serviceContext.getUserId();
 

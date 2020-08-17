@@ -37,7 +37,6 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -453,7 +452,7 @@ public class CommerceDiscountLocalServiceTest {
 	private List<CommerceDiscount> _getOrderCommerceDiscountByHierarchy(
 			long companyId, long commerceAccountId, long commerceChannelId,
 			String commerceDiscountTargetType)
-		throws PortalException {
+		throws Exception {
 
 		List<CommerceDiscount> commerceDiscounts =
 			_commerceDiscountLocalService.getAccountAndChannelCommerceDiscounts(
@@ -509,7 +508,7 @@ public class CommerceDiscountLocalServiceTest {
 	private List<CommerceDiscount> _getProductCommerceDiscountByHierarchy(
 			long companyId, long commerceAccountId, long commerceChannelId,
 			long cpDefinitionId)
-		throws PortalException {
+		throws Exception {
 
 		List<CommerceDiscount> commerceDiscounts =
 			_commerceDiscountLocalService.getAccountAndChannelCommerceDiscounts(
@@ -562,7 +561,7 @@ public class CommerceDiscountLocalServiceTest {
 
 	private void _orderAssertEquals(
 			CommerceDiscount expectedDiscount, String type)
-		throws PortalException {
+		throws Exception {
 
 		List<CommerceDiscount> commerceDiscounts =
 			_getOrderCommerceDiscountByHierarchy(
@@ -579,7 +578,7 @@ public class CommerceDiscountLocalServiceTest {
 
 	private void _productAssertEquals(
 			CommerceDiscount expectedDiscount, long cpDefinitionId)
-		throws PortalException {
+		throws Exception {
 
 		List<CommerceDiscount> commerceDiscounts =
 			_getProductCommerceDiscountByHierarchy(

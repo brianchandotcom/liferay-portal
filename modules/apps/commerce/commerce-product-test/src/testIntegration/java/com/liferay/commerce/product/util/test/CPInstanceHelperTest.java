@@ -371,7 +371,7 @@ public class CPInstanceHelperTest {
 	public final FrutillaRule frutillaRule = new FrutillaRule();
 
 	private String _getSerializedDDMFormValues(CPInstance cpInstance)
-		throws PortalException {
+		throws Exception {
 
 		Map<String, List<String>>
 			cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys =

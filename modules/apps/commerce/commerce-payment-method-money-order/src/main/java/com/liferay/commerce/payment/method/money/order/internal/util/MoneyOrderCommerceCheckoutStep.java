@@ -26,7 +26,6 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -143,7 +142,7 @@ public class MoneyOrderCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 	private CommerceOrder _getCommerceOrder(
 			HttpServletRequest httpServletRequest)
-		throws PortalException {
+		throws Exception {
 
 		String commerceOrderUuid = ParamUtil.getString(
 			httpServletRequest, "commerceOrderUuid");

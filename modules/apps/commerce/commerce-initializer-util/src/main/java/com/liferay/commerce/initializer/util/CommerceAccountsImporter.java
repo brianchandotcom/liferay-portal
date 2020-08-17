@@ -57,7 +57,6 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.List;
@@ -115,7 +114,7 @@ public class CommerceAccountsImporter {
 	private void _importCommerceAccount(
 			JSONObject jsonObject, ClassLoader classLoader,
 			String dependenciesPath, ServiceContext serviceContext)
-		throws IOException, PortalException {
+		throws Exception {
 
 		String name = jsonObject.getString("Name");
 
@@ -264,8 +263,9 @@ public class CommerceAccountsImporter {
 								serviceContext);
 					}
 				}
-				catch (NoSuchPriceListException nsple) {
-					_log.error(nsple, nsple);
+				catch (NoSuchPriceListException noSuchPriceListException) {
+					_log.error(
+						noSuchPriceListException, noSuchPriceListException);
 				}
 			}
 		}
@@ -324,8 +324,12 @@ public class CommerceAccountsImporter {
 								relExternalReferenceCode, serviceContext);
 					}
 				}
-				catch (NoSuchAccountGroupException nsage) {
-					_log.error(nsage, nsage);
+				catch (NoSuchAccountGroupException
+							noSuchAccountGroupException) {
+
+					_log.error(
+						noSuchAccountGroupException,
+						noSuchAccountGroupException);
 				}
 			}
 		}

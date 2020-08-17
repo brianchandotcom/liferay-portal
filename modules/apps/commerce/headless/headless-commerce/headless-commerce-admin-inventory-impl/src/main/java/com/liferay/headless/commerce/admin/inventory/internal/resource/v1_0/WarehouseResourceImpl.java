@@ -26,7 +26,6 @@ import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseReso
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
@@ -237,7 +236,7 @@ public class WarehouseResourceImpl
 	private void _updateNestedResources(
 			Warehouse warehouse,
 			CommerceInventoryWarehouse commerceInventoryWarehouse)
-		throws PortalException {
+		throws Exception {
 
 		WarehouseItem[] warehouseItems = warehouse.getWarehouseItems();
 

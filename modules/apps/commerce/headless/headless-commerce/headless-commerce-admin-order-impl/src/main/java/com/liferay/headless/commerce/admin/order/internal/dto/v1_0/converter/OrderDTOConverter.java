@@ -27,7 +27,6 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Status;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
@@ -168,7 +167,7 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 
 	private String _formatPrice(
 			BigDecimal price, CommerceCurrency commerceCurrency, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		if (price == null) {
 			price = BigDecimal.ZERO;
@@ -229,7 +228,7 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 	private void _setOrderShipping(
 			CommerceCurrency commerceCurrency, CommerceOrder commerceOrder,
 			Order order, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		CommerceMoney commerceOrderShippingAmountMoney =
 			commerceOrder.getShippingMoney();
@@ -337,7 +336,7 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 	private void _setOrderSubtotal(
 			CommerceCurrency commerceCurrency, CommerceOrder commerceOrder,
 			Order order, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		CommerceMoney commerceOrderSubtotalMoney =
 			commerceOrder.getSubtotalMoney();
@@ -450,7 +449,7 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 	private void _setOrderTotal(
 			CommerceCurrency commerceCurrency, CommerceOrder commerceOrder,
 			Order order, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		CommerceMoney commerceOrderTotalMoney = commerceOrder.getTotalMoney();
 

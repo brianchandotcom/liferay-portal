@@ -32,7 +32,6 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -357,9 +356,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			deliveryMaxSubscriptionCycles);
 	}
 
-	private String _getCommercePricingConfigurationKey()
-		throws ConfigurationException {
-
+	private String _getCommercePricingConfigurationKey() throws Exception {
 		CommercePricingConfiguration commercePricingConfiguration =
 			_configurationProvider.getConfiguration(
 				CommercePricingConfiguration.class,
@@ -372,7 +369,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 	private void _updateCommercePriceEntry(
 			CPInstance cpInstance, String type, BigDecimal price,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.

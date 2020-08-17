@@ -20,7 +20,6 @@ import com.liferay.commerce.pricing.service.CommercePricingClassService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductGroup;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -68,7 +67,7 @@ public class ProductGroupDTOConverter
 	}
 
 	private int _getProductsCount(long commercePricingClassId)
-		throws PortalException {
+		throws Exception {
 
 		return _commercePricingClassCPDefinitionRelService.
 			getCommercePricingClassCPDefinitionRelsCount(

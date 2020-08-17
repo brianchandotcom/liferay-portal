@@ -29,7 +29,6 @@ import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.util.CommerceShippingHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -215,7 +214,7 @@ public class CommerceShippingHelperTest {
 	}
 
 	private static void _addCPDefinitionProperties(CPInstance cpInstance)
-		throws PortalException {
+		throws Exception {
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 

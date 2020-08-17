@@ -58,7 +58,6 @@ import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.TestCommerceContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -839,7 +838,7 @@ public class CommerceOrderItemLocalServiceTest {
 			CPDefinition cpDefinition, boolean linkToProduct,
 			boolean skuContributor,
 			List<CommerceOptionValue> commerceOptionValues)
-		throws PortalException {
+		throws Exception {
 
 		for (CommerceOptionValue commerceOptionValue : commerceOptionValues) {
 			CPOption cpOption = CPOptionLocalServiceUtil.addCPOption(
@@ -1322,7 +1321,7 @@ public class CommerceOrderItemLocalServiceTest {
 	}
 
 	private void _assertDeleteOrderItem(CommerceOrderItem bundleOrderItem)
-		throws PortalException {
+		throws Exception {
 
 		long commerceOrderId = bundleOrderItem.getCommerceOrderId();
 
@@ -1341,7 +1340,7 @@ public class CommerceOrderItemLocalServiceTest {
 	private void _assertUpdateOrderItem(
 			int factor, CommerceOrderItem bundleOrderItem,
 			CommerceOrderItem childOrderItem)
-		throws PortalException {
+		throws Exception {
 
 		int originalBundleQuantity = bundleOrderItem.getQuantity();
 
@@ -1383,7 +1382,7 @@ public class CommerceOrderItemLocalServiceTest {
 
 	private CPInstance _buildProductBundleSingleOptionCPInstance(
 			long cpDefinitionId, String key)
-		throws PortalException {
+		throws Exception {
 
 		_cpInstanceLocalService.buildCPInstances(
 			cpDefinitionId, _serviceContext);
@@ -1445,7 +1444,7 @@ public class CommerceOrderItemLocalServiceTest {
 	private CPInstance _getBundleCPInstanceWithUnavailableChildSKU(
 			long cpDefinitionOptionRelId, List<CPInstance> bundleCPInstances,
 			CPInstance unavailableCPInstance)
-		throws PortalException {
+		throws Exception {
 
 		for (CPInstance bundleCPInstance : bundleCPInstances) {
 			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =

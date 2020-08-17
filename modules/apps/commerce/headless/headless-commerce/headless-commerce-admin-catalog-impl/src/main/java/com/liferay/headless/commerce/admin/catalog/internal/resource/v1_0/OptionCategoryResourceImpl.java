@@ -24,7 +24,6 @@ import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
@@ -156,7 +155,7 @@ public class OptionCategoryResourceImpl
 
 	private CPOptionCategory _updateOptionCategory(
 			Long id, OptionCategory optionCategory)
-		throws PortalException {
+		throws Exception {
 
 		CPOptionCategory cpOptionCategory =
 			_cpOptionCategoryService.getCPOptionCategory(id);

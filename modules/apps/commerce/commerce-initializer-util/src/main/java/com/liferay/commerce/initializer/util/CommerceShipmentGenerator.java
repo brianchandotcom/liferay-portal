@@ -25,7 +25,6 @@ import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShipmentItemLocalService;
 import com.liferay.commerce.service.CommerceShipmentLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -92,7 +91,7 @@ public class CommerceShipmentGenerator {
 	private void _generateCommerceShipment(
 			CommerceOrder commerceOrder,
 			List<CommerceInventoryWarehouse> commerceInventoryWarehouses)
-		throws PortalException {
+		throws Exception {
 
 		// Commerce order items
 
@@ -149,7 +148,7 @@ public class CommerceShipmentGenerator {
 			long commerceShipmentId, List<CommerceOrderItem> commerceOrderItems,
 			List<CommerceInventoryWarehouse> commerceInventoryWarehouses,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			CommerceInventoryWarehouse commerceInventoryWarehouse =
@@ -221,7 +220,7 @@ public class CommerceShipmentGenerator {
 
 	private List<CommerceInventoryWarehouse> _getCommerceInventoryWarehouses(
 			long groupId)
-		throws PortalException {
+		throws Exception {
 
 		Group group = _groupLocalService.getGroup(groupId);
 
@@ -239,7 +238,7 @@ public class CommerceShipmentGenerator {
 	private int _getRandomCommerceInventoryWarehouseItemQuantity(
 			CommerceOrderItem commerceOrderItem,
 			CommerceInventoryWarehouse commerceInventoryWarehouse, int quantity)
-		throws PortalException {
+		throws Exception {
 
 		int commerceInventoryWarehouseItemQuantity =
 			_commerceOrderItemService.getCommerceInventoryWarehouseItemQuantity(

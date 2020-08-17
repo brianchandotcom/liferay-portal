@@ -142,7 +142,7 @@ public class CommerceOrderItemDataSetDataProvider
 
 	private String _getDiscount(
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		CommerceMoney discountAmount =
 			commerceOrderItemPrice.getDiscountAmount();
@@ -245,7 +245,7 @@ public class CommerceOrderItemDataSetDataProvider
 
 	private String _getPrice(
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		CommerceMoney unitPrice = commerceOrderItemPrice.getUnitPrice();
 
@@ -265,7 +265,7 @@ public class CommerceOrderItemDataSetDataProvider
 	private String _getSubscriptionDuration(
 			CommerceOrderItem commerceOrderItem,
 			HttpServletRequest httpServletRequest)
-		throws PortalException {
+		throws Exception {
 
 		String subscriptionDuration = StringPool.BLANK;
 
@@ -344,7 +344,7 @@ public class CommerceOrderItemDataSetDataProvider
 	private String _getSubscriptionPeriod(
 			CommerceOrderItem commerceOrderItem,
 			HttpServletRequest httpServletRequest)
-		throws PortalException {
+		throws Exception {
 
 		String subscriptionPeriod = StringPool.BLANK;
 
@@ -422,7 +422,7 @@ public class CommerceOrderItemDataSetDataProvider
 
 	private String _getTotal(
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		CommerceMoney finalPrice = commerceOrderItemPrice.getFinalPrice();
 

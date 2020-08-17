@@ -346,7 +346,7 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 	}
 
 	private long _getCatalogId(CommercePriceList commercePriceList)
-		throws PortalException {
+		throws Exception {
 
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.fetchCommerceCatalogByGroupId(

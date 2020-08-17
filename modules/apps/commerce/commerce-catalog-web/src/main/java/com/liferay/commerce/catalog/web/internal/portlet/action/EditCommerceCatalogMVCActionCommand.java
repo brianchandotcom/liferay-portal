@@ -26,7 +26,6 @@ import com.liferay.commerce.product.exception.CommerceCatalogSystemException;
 import com.liferay.commerce.product.exception.NoSuchCatalogException;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -194,7 +193,7 @@ public class EditCommerceCatalogMVCActionCommand extends BaseMVCActionCommand {
 
 	private void _updateBasePriceListAndPromotion(
 			ActionRequest actionRequest, CommerceCatalog commerceCatalog)
-		throws PortalException {
+		throws Exception {
 
 		CommercePricingConfiguration commercePricingConfiguration =
 			_configurationProvider.getConfiguration(

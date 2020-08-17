@@ -393,7 +393,7 @@ public class CommerceNotificationTest {
 			new long[] {_orderManagerRole.getRoleId()});
 	}
 
-	private String _setUpUserGroup() throws PortalException {
+	private String _setUpUserGroup() throws Exception {
 		UserGroup userGroup = _userGroupLocalService.addUserGroup(
 			_user.getUserId(), _company.getCompanyId(), "Test User Group",
 			RandomTestUtil.randomString(), _serviceContext);

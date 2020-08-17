@@ -20,7 +20,6 @@ import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -80,7 +79,7 @@ public class ProductHelper {
 	}
 
 	private long[] _getCommerceCatalogGroupIds(long companyId)
-		throws PortalException {
+		throws Exception {
 
 		List<CommerceCatalog> commerceCatalogs =
 			_commerceCatalogLocalService.searchCommerceCatalogs(companyId);

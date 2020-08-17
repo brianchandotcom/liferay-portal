@@ -29,7 +29,6 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -694,7 +693,7 @@ public class CommercePriceEntryLocalServiceTest {
 	private static void _assertPriceEntryAttributes(
 			CPInstance cpInstance, double price, double promoPrice,
 			CommercePriceEntry commercePriceEntry)
-		throws PortalException {
+		throws Exception {
 
 		CPInstance actualCpInstance = commercePriceEntry.getCPInstance();
 

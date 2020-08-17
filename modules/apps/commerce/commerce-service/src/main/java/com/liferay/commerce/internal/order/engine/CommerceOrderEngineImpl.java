@@ -212,7 +212,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 			});
 	}
 
-	private void _bookQuantities(long commerceOrderId) throws PortalException {
+	private void _bookQuantities(long commerceOrderId) throws Exception {
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 
@@ -287,7 +287,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 	private CommerceOrder _checkCommerceOrderShipmentStatus(
 			CommerceOrder commerceOrder)
-		throws PortalException {
+		throws Exception {
 
 		CommerceOrderStatus shippedCommerceOrderStatus =
 			_commerceOrderStatusRegistry.getCommerceOrderStatus(
@@ -329,7 +329,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 	private CommerceOrder _checkoutCommerceOrder(
 			CommerceOrder commerceOrder, long userId)
-		throws PortalException {
+		throws Exception {
 
 		if (commerceOrder.isGuestOrder() &&
 			!_isGuestCheckoutEnabled(commerceOrder.getGroupId())) {
@@ -506,7 +506,7 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 
 	private CommerceOrder _transitionCommerceOrder(
 			CommerceOrder commerceOrder, int orderStatus, long userId)
-		throws PortalException {
+		throws Exception {
 
 		CommerceOrderStatus commerceOrderStatus =
 			_commerceOrderStatusRegistry.getCommerceOrderStatus(orderStatus);

@@ -25,7 +25,6 @@ import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.price.list.test.util.CommercePriceListTestUtil;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -723,7 +722,7 @@ public class CommercePriceListLocalServiceTest {
 
 	private static void _assertPriceListAttributes(
 			Currency currency, String name, CommercePriceList commercePriceList)
-		throws PortalException {
+		throws Exception {
 
 		CommerceCurrency commerceCurrency =
 			commercePriceList.getCommerceCurrency();

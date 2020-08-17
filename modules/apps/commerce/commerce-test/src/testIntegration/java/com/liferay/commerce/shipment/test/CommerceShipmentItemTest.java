@@ -36,7 +36,6 @@ import com.liferay.commerce.shipment.test.util.CommerceShipmentTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.TestCommerceContext;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -321,7 +320,7 @@ public class CommerceShipmentItemTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private void _resetCommerceShipment() throws PortalException {
+	private void _resetCommerceShipment() throws Exception {
 		CommerceShipmentLocalServiceUtil.deleteCommerceShipment(
 			_commerceShipment, true);
 

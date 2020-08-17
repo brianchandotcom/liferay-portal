@@ -23,7 +23,6 @@ import com.liferay.commerce.discount.service.CommerceDiscountRelLocalService;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
@@ -62,7 +61,7 @@ public class CommerceDiscountsImporter {
 
 	private CommerceDiscount _addCommerceDiscount(
 			JSONObject jsonObject, ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		// Add Commerce Discount
 
@@ -88,7 +87,7 @@ public class CommerceDiscountsImporter {
 
 	private void _importCommerceDiscount(
 			JSONObject jsonObject, ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		CommerceDiscount commerceDiscount = _addCommerceDiscount(
 			jsonObject, serviceContext);

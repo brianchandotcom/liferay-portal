@@ -32,7 +32,6 @@ import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -226,7 +225,7 @@ public class CommerceOptionValueHelperTest {
 
 	private String _getRandomCPDefinitionOptionValueRelsCombinationJSONString(
 			long cpDefinitionId)
-		throws PortalException {
+		throws Exception {
 
 		List<CPDefinitionOptionValueRel> randomCPDefinitionOptionValueRels =
 			CPTestUtil.getRandomCPDefinitionOptionValueRels(cpDefinitionId);

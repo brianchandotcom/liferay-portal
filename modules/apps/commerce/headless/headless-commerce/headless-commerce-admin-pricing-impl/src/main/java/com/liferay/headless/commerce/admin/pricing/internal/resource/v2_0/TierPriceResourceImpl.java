@@ -27,7 +27,6 @@ import com.liferay.headless.commerce.admin.pricing.internal.util.v2_0.TierPriceU
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.TierPriceResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -236,7 +235,7 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 
 	private Map<String, Map<String, String>> _getActions(
 			CommerceTierPriceEntry commerceTierPriceEntry)
-		throws PortalException {
+		throws Exception {
 
 		CommercePriceEntry commercePriceEntry =
 			commerceTierPriceEntry.getCommercePriceEntry();
@@ -332,7 +331,7 @@ public class TierPriceResourceImpl extends BaseTierPriceResourceImpl {
 
 	private CommerceTierPriceEntry _updateCommerceTierPriceEntry(
 			CommerceTierPriceEntry commerceTierPriceEntry, TierPrice tierPrice)
-		throws PortalException {
+		throws Exception {
 
 		ServiceContext serviceContext =
 			_serviceContextHelper.getServiceContext();

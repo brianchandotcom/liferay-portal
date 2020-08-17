@@ -31,7 +31,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Http;
@@ -277,7 +276,7 @@ public class MercanetCommercePaymentMethod implements CommercePaymentMethod {
 	}
 
 	private MercanetGroupServiceConfiguration _getConfiguration(long groupId)
-		throws ConfigurationException {
+		throws Exception {
 
 		return _configurationProvider.getConfiguration(
 			MercanetGroupServiceConfiguration.class,

@@ -23,7 +23,6 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceList;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.Status;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
@@ -106,7 +105,7 @@ public class PriceListDTOConverter
 	}
 
 	private long _getCatalogId(CommercePriceList commercePriceList)
-		throws PortalException {
+		throws Exception {
 
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogService.fetchCommerceCatalogByGroupId(
@@ -120,7 +119,7 @@ public class PriceListDTOConverter
 	}
 
 	private String _getCatalogName(CommercePriceList commercePriceList)
-		throws PortalException {
+		throws Exception {
 
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogService.fetchCommerceCatalogByGroupId(

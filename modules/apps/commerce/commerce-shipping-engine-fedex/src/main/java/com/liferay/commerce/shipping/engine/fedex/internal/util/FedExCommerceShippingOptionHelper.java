@@ -69,7 +69,6 @@ import com.liferay.commerce.shipping.origin.locator.CommerceShippingOriginLocato
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -185,8 +184,12 @@ public class FedExCommerceShippingOptionHelper {
 			try {
 				_executeRateRequest(rates, entry.getValue(), entry.getKey());
 			}
-			catch (CommerceShippingEngineException csee) {
-				_log.error(csee, csee);
+			catch (CommerceShippingEngineException
+						commerceShippingEngineException) {
+
+				_log.error(
+					commerceShippingEngineException,
+					commerceShippingEngineException);
 			}
 		}
 
@@ -314,7 +317,7 @@ public class FedExCommerceShippingOptionHelper {
 	}
 
 	private Address _getAddress(CommerceAddress commerceAddress)
-		throws PortalException {
+		throws Exception {
 
 		CommerceCountry commerceCountry =
 			commerceAddress.fetchCommerceCountry();
@@ -364,9 +367,7 @@ public class FedExCommerceShippingOptionHelper {
 		return address;
 	}
 
-	private BigDecimal _getAmount(Money money)
-		throws CommerceShippingEngineException {
-
+	private BigDecimal _getAmount(Money money) throws Exception {
 		CommerceCurrency moneyCommerceCurrency = null;
 
 		String code = money.getCurrency();
@@ -415,7 +416,7 @@ public class FedExCommerceShippingOptionHelper {
 	}
 
 	private CPMeasurementUnit _getCPMeasurementUnit(int type, String... keys)
-		throws CommerceShippingEngineException {
+		throws Exception {
 
 		List<CPMeasurementUnit> cpMeasurementUnits =
 			_cpMeasurementUnitLocalService.getCPMeasurementUnits(
@@ -484,9 +485,7 @@ public class FedExCommerceShippingOptionHelper {
 		return girth + fedExWidth;
 	}
 
-	private Party _getParty(CommerceAddress commerceAddress)
-		throws PortalException {
-
+	private Party _getParty(CommerceAddress commerceAddress) throws Exception {
 		Party party = new Party();
 
 		party.setAddress(_getAddress(commerceAddress));
@@ -510,7 +509,7 @@ public class FedExCommerceShippingOptionHelper {
 	}
 
 	private BigDecimal _getPrice(List<CommerceOrderItem> commerceOrderItems)
-		throws PortalException {
+		throws Exception {
 
 		BigDecimal price = BigDecimal.ZERO;
 
@@ -571,7 +570,7 @@ public class FedExCommerceShippingOptionHelper {
 	private RequestedPackageLineItem[]
 			_getRequestedPackageLineItemsByDimensions(
 				List<CommerceOrderItem> commerceOrderItems)
-		throws PortalException {
+		throws Exception {
 
 		int maxSize =
 			_fedExCommerceShippingEngineGroupServiceConfiguration.

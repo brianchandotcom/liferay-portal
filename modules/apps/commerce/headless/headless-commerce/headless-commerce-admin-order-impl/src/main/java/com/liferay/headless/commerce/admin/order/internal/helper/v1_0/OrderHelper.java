@@ -21,7 +21,6 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.OrderDTOConverter;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -105,7 +104,7 @@ public class OrderHelper {
 	}
 
 	private long[] _getCommerceChannelGroupIds(long companyId)
-		throws PortalException {
+		throws Exception {
 
 		List<CommerceChannel> commerceChannels =
 			_commerceChannelLocalService.searchCommerceChannels(companyId);

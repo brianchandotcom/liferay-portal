@@ -34,7 +34,6 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Availability;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Price;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.language.LanguageResources;
@@ -108,7 +107,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 	private Availability _getAvailability(
 			long companyId, long channelGroupId, String sku,
 			CPInstance cpInstance, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		Availability availability = new Availability();
 		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
@@ -134,7 +133,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 	private String[] _getFormattedDiscountPercentages(
 			BigDecimal[] discountPercentages, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		List<String> formattedDiscountPercentages = new ArrayList<>();
 
@@ -154,7 +153,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 	}
 
 	private Map<String, String> _getOptions(CPInstance cpInstance)
-		throws PortalException {
+		throws Exception {
 
 		Map<String, String> options = new HashMap<>();
 
@@ -199,7 +198,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 	private Price _getPrice(
 			CPInstance cpInstance, int quantity,
 			CommerceContext commerceContext, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		CommerceProductPrice commerceProductPrice =
 			_commerceProductPriceCalculation.getCommerceProductPrice(

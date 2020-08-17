@@ -28,7 +28,6 @@ import com.liferay.commerce.service.CommerceCountryLocalService;
 import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.commerce.shipping.origin.locator.CommerceShippingOriginLocator;
 import com.liferay.commerce.shipping.origin.locator.internal.util.DistanceCalculator;
-import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -113,7 +112,7 @@ public class CommerceShippingOriginLocatorImpl
 
 	private CommerceInventoryWarehouse _getClosestCommerceInventoryWarehouse(
 			long groupId, CommerceAddress commerceAddress, String sku)
-		throws PortalException {
+		throws Exception {
 
 		List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
 			_commerceInventoryWarehouseLocalService.
@@ -164,7 +163,7 @@ public class CommerceShippingOriginLocatorImpl
 
 	private CommerceAddress _getCommerceAddress(
 			CommerceInventoryWarehouse commerceInventoryWarehouse, long groupId)
-		throws PortalException {
+		throws Exception {
 
 		CommerceAddress commerceAddress =
 			_commerceAddressLocalService.createCommerceAddress(
@@ -197,7 +196,7 @@ public class CommerceShippingOriginLocatorImpl
 
 	private CommerceCountry _getCommerceCountry(
 			long companyId, String countryCode)
-		throws PortalException {
+		throws Exception {
 
 		return _commerceCountryLocalService.getCommerceCountry(
 			companyId, countryCode);
@@ -205,7 +204,7 @@ public class CommerceShippingOriginLocatorImpl
 
 	private CommerceRegion _getCommerceRegion(
 			long commerceCountryId, String regionCode)
-		throws PortalException {
+		throws Exception {
 
 		return _commerceRegionLocalService.getCommerceRegion(
 			commerceCountryId, regionCode);

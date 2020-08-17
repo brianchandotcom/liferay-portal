@@ -24,7 +24,6 @@ import com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGrou
 import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.discount.service.CommerceDiscountLocalServiceUtil;
 import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.DiscountAccountGroup;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -350,7 +349,7 @@ public class DiscountAccountGroupResourceTest
 
 	private DiscountAccountGroup _addDiscountAccountGroup(
 			DiscountAccountGroup discountAccountGroup)
-		throws PortalException {
+		throws Exception {
 
 		CommerceDiscountCommerceAccountGroupRel
 			commerceDiscountCommerceAccountGroupRel =
@@ -369,7 +368,7 @@ public class DiscountAccountGroupResourceTest
 	private DiscountAccountGroup _toDiscountAccountGroup(
 			CommerceDiscountCommerceAccountGroupRel
 				commerceDiscountCommerceAccountGroupRel)
-		throws PortalException {
+		throws Exception {
 
 		CommerceAccountGroup commerceAccountGroup =
 			commerceDiscountCommerceAccountGroupRel.getCommerceAccountGroup();

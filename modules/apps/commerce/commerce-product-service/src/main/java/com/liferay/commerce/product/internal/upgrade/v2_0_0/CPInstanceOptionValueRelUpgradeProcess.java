@@ -122,9 +122,7 @@ public class CPInstanceOptionValueRelUpgradeProcess
 		return 0;
 	}
 
-	private void _importContentFromCPInstanceJsonField()
-		throws JSONException, SQLException {
-
+	private void _importContentFromCPInstanceJsonField() throws Exception {
 		String insertCPInstanceOptionValueRelSQL = StringBundler.concat(
 			"insert into CPInstanceOptionValueRel(uuid_, ",
 			"CPInstanceOptionValueRelId, groupId, companyId, userId, ",

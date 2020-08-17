@@ -20,7 +20,6 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
@@ -86,7 +85,7 @@ public class AttachmentDTOConverter
 
 	private Map<String, String> _getAttachmentOptions(
 			CPAttachmentFileEntry cpAttachmentFileEntry)
-		throws JSONException {
+		throws Exception {
 
 		String json = cpAttachmentFileEntry.getJson();
 

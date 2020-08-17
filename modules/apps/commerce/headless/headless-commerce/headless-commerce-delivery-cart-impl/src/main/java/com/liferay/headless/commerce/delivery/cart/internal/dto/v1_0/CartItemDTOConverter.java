@@ -32,7 +32,6 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Price;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Settings;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -96,7 +95,7 @@ public class CartItemDTOConverter
 	}
 
 	private Price _getPrice(CommerceOrderItem commerceOrderItem, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 

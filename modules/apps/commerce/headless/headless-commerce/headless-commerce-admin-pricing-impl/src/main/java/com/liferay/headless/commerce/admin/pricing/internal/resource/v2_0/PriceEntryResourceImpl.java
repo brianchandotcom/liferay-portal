@@ -33,7 +33,6 @@ import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceEntryResou
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
@@ -257,7 +256,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 
 	private Map<String, Map<String, String>> _getActions(
 			CommercePriceEntry commercePriceEntry)
-		throws PortalException {
+		throws Exception {
 
 		CommercePriceList commercePriceList =
 			commercePriceEntry.getCommercePriceList();
@@ -353,7 +352,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 
 	private void _updateNestedResources(
 			PriceEntry priceEntry, CommercePriceEntry commercePriceEntry)
-		throws PortalException {
+		throws Exception {
 
 		TierPrice[] tierPrices = priceEntry.getTierPrices();
 
@@ -368,7 +367,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 
 	private CommercePriceEntry _updatePriceEntry(
 			CommercePriceEntry commercePriceEntry, PriceEntry priceEntry)
-		throws PortalException {
+		throws Exception {
 
 		// Commerce price entry
 
@@ -407,7 +406,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 
 	private CommercePriceEntry _upsertCommercePriceEntry(
 			CommercePriceList commercePriceList, PriceEntry priceEntry)
-		throws PortalException {
+		throws Exception {
 
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			commercePriceList.getGroupId());

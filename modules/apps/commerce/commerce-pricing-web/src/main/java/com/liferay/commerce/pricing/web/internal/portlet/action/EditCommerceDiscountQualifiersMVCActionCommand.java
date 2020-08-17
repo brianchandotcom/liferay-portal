@@ -19,7 +19,6 @@ import com.liferay.commerce.discount.service.CommerceDiscountAccountRelService;
 import com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGroupRelService;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -98,7 +97,7 @@ public class EditCommerceDiscountQualifiersMVCActionCommand
 
 	private void _deleteCommerceDiscountAccountGroupRels(
 			long commerceDiscountId)
-		throws PortalException {
+		throws Exception {
 
 		if (_commerceDiscountCommerceAccountGroupRelService.
 				getCommerceDiscountCommerceAccountGroupRelsCount(
@@ -113,7 +112,7 @@ public class EditCommerceDiscountQualifiersMVCActionCommand
 	}
 
 	private void _deleteCommerceDiscountAccountRels(long commerceDiscountId)
-		throws PortalException {
+		throws Exception {
 
 		if (_commerceDiscountAccountRelService.
 				getCommerceDiscountAccountRelsCount(commerceDiscountId) == 0) {

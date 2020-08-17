@@ -31,9 +31,15 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -64,6 +70,16 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 		throws PortletException {
 
 		try {
+			Folder folder = ActionUtil.getFolder(renderRequest);
+
+			if (folder != null) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)renderRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				checkPermissions(themeDisplay.getPermissionChecker(), folder);
+			}
+
 			renderRequest.setAttribute(
 				DLWebKeys.DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR,
 				_dlPortletToolbarContributorRegistry.
@@ -92,6 +108,14 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 		catch (IOException ioException) {
 			throw new PortletException(ioException);
 		}
+	}
+
+	protected void checkPermissions(
+			PermissionChecker permissionChecker, Folder folder)
+		throws PortalException {
+
+		_folderModelResourcePermission.check(
+			permissionChecker, folder, ActionKeys.ACCESS);
 	}
 
 	@Override
@@ -164,6 +188,11 @@ public class DLViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 	@Reference
 	private DLTrashHelper _dlTrashHelper;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.repository.model.Folder)"
+	)
+	private ModelResourcePermission<Folder> _folderModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

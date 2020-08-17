@@ -14,12 +14,14 @@
 
 package com.liferay.translation.service.impl;
 
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.petra.io.StreamUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -120,6 +122,16 @@ public class TranslationEntryLocalServiceImpl
 
 		translationEntry = translationEntryPersistence.update(translationEntry);
 
+		_assetEntryLocalService.updateEntry(
+			translationEntry.getUserId(), translationEntry.getGroupId(),
+			translationEntry.getCreateDate(),
+			translationEntry.getModifiedDate(),
+			TranslationEntry.class.getName(),
+			translationEntry.getTranslationEntryId(),
+			translationEntry.getUuid(), 0, null, null, false, false, null, null,
+			null, null, null, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, null, null, 0, 0, 0D);
+
 		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			translationEntry.getCompanyId(), translationEntry.getGroupId(),
 			serviceContext.getUserId(), TranslationEntry.class.getName(),
@@ -213,6 +225,9 @@ public class TranslationEntryLocalServiceImpl
 			throw new PortalException(exception);
 		}
 	}
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

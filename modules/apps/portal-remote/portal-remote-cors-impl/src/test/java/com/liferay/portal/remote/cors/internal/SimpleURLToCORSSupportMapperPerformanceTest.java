@@ -31,7 +31,7 @@ public class SimpleURLToCORSSupportMapperPerformanceTest
 
 	@Before
 	public void setUp() {
-		_simpleURLToCORSSupportMapper = new URLToCORSSupportMapper(
+		_simpleURLToCORSSupportMapper = new SimpleURLToCORSSupportMapper(
 			super.buildCORSSupports());
 	}
 

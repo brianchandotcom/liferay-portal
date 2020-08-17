@@ -16,21 +16,16 @@ package com.liferay.users.admin.web.internal.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.base.BaseCTDisplayRenderer;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.permission.UserPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -92,44 +87,48 @@ public class UserCTDisplayRenderer extends BaseCTDisplayRenderer<User> {
 	}
 
 	@Override
-	protected CTService<User> getCTService() {
-		return _userLocalService;
+	protected void buildDisplay(DisplayBuilder<User> displayBuilder) {
+		User user = displayBuilder.getModel();
+
+		displayBuilder.display(
+			"full-name", user.getFullName()
+		).display(
+			"screen-name", user.getScreenName()
+		).display(
+			"email-address", user.getEmailAddress()
+		).display(
+			"comments", user.getComments()
+		).display(
+			"create-date", user.getCreateDate()
+		).display(
+			"facebook-id", user.getFacebookId()
+		).display(
+			"greeting", user.getGreeting()
+		).display(
+			"google-user-id", user.getGoogleUserId()
+		).display(
+			"job-title", user.getJobTitle()
+		).display(
+			"language-id", user.getLanguageId()
+		).display(
+			"last-login-date", user.getLastLoginDate()
+		).display(
+			"last-login-ip", user.getLastLoginIP()
+		).display(
+			"login-date", user.getLoginDate()
+		).display(
+			"login-ip", user.getLoginIP()
+		).display(
+			"modified-date", user.getModifiedDate()
+		).display(
+			"open-id", user.getOpenId()
+		).display(
+			"time-zone-id", user.getTimeZoneId()
+		);
 	}
-
-	@Override
-	protected String[] getDisplayAttributeNames() {
-		return _DISPLAY_ATTRIBUTE_NAMES;
-	}
-
-	@Override
-	protected Map<String, Object> getDisplayAttributes(
-		Locale locale, User user) {
-
-		return LinkedHashMapBuilder.<String, Object>put(
-			"fullName", user.getFullName()
-		).put(
-			"screenName", user.getScreenName()
-		).put(
-			"emailAddress", user.getEmailAddress()
-		).putAll(
-			super.getDisplayAttributes(locale, user)
-		).build();
-	}
-
-	private static final String[] _DISPLAY_ATTRIBUTE_NAMES = {
-		"comments", "createDate", "facebookId", "greeting", "googleUserId",
-		"jobTitle", "languageId", "lastLoginDate", "lastLoginIP", "loginDate",
-		"loginIP", "modifiedDate", "openId", "timeZoneId"
-	};
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 	@Reference
 	private UserPermission _userPermission;

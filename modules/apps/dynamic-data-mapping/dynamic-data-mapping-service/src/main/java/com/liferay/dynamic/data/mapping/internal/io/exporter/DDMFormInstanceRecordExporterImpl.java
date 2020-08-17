@@ -49,9 +49,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.text.Format;
 
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -110,13 +107,6 @@ public class DDMFormInstanceRecordExporterImpl
 		}
 
 		return builder.build();
-	}
-
-	protected DateTimeFormatter getDateTimeFormatter(Locale locale) {
-		DateTimeFormatter dateTimeFormatter =
-			DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
-
-		return dateTimeFormatter.withLocale(locale);
 	}
 
 	protected Map<String, String> getDDMFormFieldsLabel(

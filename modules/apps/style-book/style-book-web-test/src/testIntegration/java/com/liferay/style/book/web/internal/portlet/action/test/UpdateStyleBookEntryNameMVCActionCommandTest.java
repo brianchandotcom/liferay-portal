@@ -114,7 +114,6 @@ public class UpdateStyleBookEntryNameMVCActionCommandTest {
 		actionRequest.addParameter(
 			"styleBookEntryId",
 			String.valueOf(styleBookEntry.getStyleBookEntryId()));
-
 		actionRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
 
 		ReflectionTestUtil.invoke(
@@ -153,7 +152,6 @@ public class UpdateStyleBookEntryNameMVCActionCommandTest {
 		actionRequest.addParameter(
 			"styleBookEntryId",
 			String.valueOf(styleBookEntry.getStyleBookEntryId()));
-
 		actionRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
 
 		ReflectionTestUtil.invoke(
@@ -178,7 +176,6 @@ public class UpdateStyleBookEntryNameMVCActionCommandTest {
 		actionRequest.addParameter(
 			"styleBookEntryId",
 			String.valueOf(styleBookEntry.getStyleBookEntryId()));
-
 		actionRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
 
 		ReflectionTestUtil.invoke(
@@ -203,7 +200,6 @@ public class UpdateStyleBookEntryNameMVCActionCommandTest {
 		actionRequest.addParameter(
 			"styleBookEntryId",
 			String.valueOf(styleBookEntry.getStyleBookEntryId()));
-
 		actionRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
 
 		ReflectionTestUtil.invoke(
@@ -228,7 +224,6 @@ public class UpdateStyleBookEntryNameMVCActionCommandTest {
 		actionRequest.addParameter(
 			"styleBookEntryId",
 			String.valueOf(styleBookEntry.getStyleBookEntryId()));
-
 		actionRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
 
 		ReflectionTestUtil.invoke(

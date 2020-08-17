@@ -133,6 +133,7 @@ public class DefaultMBAdminListDisplayContext
 			searchContext.setCategoryIds(categoryIdsArray);
 			searchContext.setEnd(searchContainer.getEnd());
 			searchContext.setIncludeAttachments(true);
+			searchContext.setIncludeInternalAssetCategories(true);
 
 			String keywords = ParamUtil.getString(
 				_httpServletRequest, "keywords");

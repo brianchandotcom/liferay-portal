@@ -114,7 +114,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUBMIT_FILE_BUTTON</td>//form[@method='post'][@enctype='multipart/form-data']/a[contains(.,'Submit')]
+	<td>SUBMIT_FILE_BUTTON</td>
 	<td>//form[@method='post'][@enctype='multipart/form-data']/*[@type='submit' or @value='Submit' or contains(.,'Submit')]</td>
 	<td></td>
 </tr>

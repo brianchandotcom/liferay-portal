@@ -358,26 +358,6 @@ definition {
 		}
 	}
 
-	macro submitMessages {
-
-		Type(
-			key_text = "${text}",
-			locator1 = "TextInput#GENERAL_TEXT_INPUT_${messageNum}",
-			value1 = "${textValue${messageNum}}");
-
-		Click(locator1 = "JSFShowcase#GENERAL_BUTTON_${messageNum}");
-
-		AssertTextEquals(
-			key_text = "${text}",
-			locator1 = "TextInput#GENERAL_TEXT_INPUT_${messageNum}",
-			value1 = "${textValue${messageNum}}");
-
-		AssertTextEquals(
-			key_message = "${message${messageNum}}",
-			locator1 = "JSFShowcase#RESULT_MESSAGE",
-			value1 = "${message${messageNum}}");
-	}
-
 	macro submitText {
 		if ("${textArea}" == "true") {
 			Type(

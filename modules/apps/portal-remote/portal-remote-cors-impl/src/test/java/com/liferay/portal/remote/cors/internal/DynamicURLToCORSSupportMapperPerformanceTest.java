@@ -16,11 +16,13 @@ package com.liferay.portal.remote.cors.internal;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * @author Arthur Chan
  */
+@Ignore
 public class DynamicURLToCORSSupportMapperPerformanceTest
 	extends BaseURLToCORSSupportMapperTestCase {
 

@@ -316,7 +316,6 @@ function DataSetDisplay({
 				filters={filters}
 				fluid={style === 'fluid'}
 				onFiltersChange={updateFilters}
-				selectable={selectable}
 				selectAllItems={() =>
 					selectItems(items.map((item) => item[selectedItemsKey]))
 				}

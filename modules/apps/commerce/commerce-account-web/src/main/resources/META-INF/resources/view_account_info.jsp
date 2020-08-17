@@ -75,7 +75,7 @@ CommerceAccount commerceAccount = commerceAccountDisplayContext.getCurrentCommer
 			addOrganizationsModal
 		) {
 			addOrganizationsModal.on('addOrganization', function (event) {
-				let orgIds = event
+				var orgIds = event
 					.map(function (org) {
 						return org.id;
 					})

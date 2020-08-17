@@ -77,7 +77,7 @@ portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backUR
 			userInvitationModal
 		) {
 			userInvitationModal.on('inviteUserToAccount', function (users) {
-				let existingUsersIds = users
+				var existingUsersIds = users
 					.filter(function (el) {
 						return el.userId;
 					})
@@ -86,7 +86,7 @@ portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backUR
 					})
 					.join(',');
 
-				let newUsersEmails = users
+				var newUsersEmails = users
 					.filter(function (el) {
 						return !el.userId;
 					})

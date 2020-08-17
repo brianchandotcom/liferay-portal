@@ -87,7 +87,7 @@ request.setAttribute("view.jsp-filterPerAccount", false);
 
 		Liferay.componentReady('addAccountModal').then(function (addAccountModal) {
 			addAccountModal.on('AddAccountModalSave', function (event) {
-				let existingUserIds = event.administratorsEmail
+				var existingUserIds = event.administratorsEmail
 					.filter(function (el) {
 						return el.userId;
 					})
@@ -96,7 +96,7 @@ request.setAttribute("view.jsp-filterPerAccount", false);
 					})
 					.join(',');
 
-				let newUserEmails = event.administratorsEmail
+				var newUserEmails = event.administratorsEmail
 					.filter(function (el) {
 						return !el.userId;
 					})

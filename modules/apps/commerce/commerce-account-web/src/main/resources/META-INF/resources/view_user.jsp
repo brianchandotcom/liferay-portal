@@ -116,7 +116,7 @@ portletURL.setParameter("userId", String.valueOf(selectedUser.getUserId()));
 
 			Liferay.componentReady('userRolesModal').then(function (userRolesModal) {
 				userRolesModal.on('updateRoles', function (selectedRoles) {
-					let selectedRoleIds = selectedRoles
+					var selectedRoleIds = selectedRoles
 						.map(function (role) {
 							return role.id;
 						})

@@ -16,30 +16,28 @@ package com.liferay.change.tracking.spi.display.base;
 
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
-import com.liferay.portal.kernel.dao.orm.ORMException;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
-import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.io.InputStream;
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.io.Writer;
 
 import java.sql.Blob;
-import java.sql.SQLException;
 
 import java.text.Format;
 
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -55,32 +53,9 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 	implements CTDisplayRenderer<T> {
 
 	@Override
-	public InputStream getDownloadInputStream(T model, String key)
-		throws PortalException {
+	public String getEditURL(HttpServletRequest httpServletRequest, T model)
+		throws Exception {
 
-		CTService<T> ctService = getCTService();
-
-		return ctService.updateWithUnsafeFunction(
-			ctPersistence -> {
-				Map<String, Function<T, Object>> attributeGetterFunctions =
-					model.getAttributeGetterFunctions();
-
-				Function<T, Object> function = attributeGetterFunctions.get(
-					key);
-
-				Blob blob = (Blob)function.apply(model);
-
-				try {
-					return blob.getBinaryStream();
-				}
-				catch (SQLException sqlException) {
-					throw new ORMException(sqlException);
-				}
-			});
-	}
-
-	@Override
-	public String getEditURL(HttpServletRequest httpServletRequest, T model) {
 		return null;
 	}
 
@@ -124,68 +99,18 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Locale locale = themeDisplay.getLocale();
-
-		Format format = FastDateFormatFactoryUtil.getDateTime(
-			locale, themeDisplay.getTimeZone());
-
-		Map<String, Object> displayAttributes = getDisplayAttributes(
-			locale, displayContext.getModel());
-
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			themeDisplay.getLocale(), getClass());
 
-		for (Map.Entry<String, Object> entry : displayAttributes.entrySet()) {
-			String key = entry.getKey();
-
-			writer.write("<tr><td>");
-			writer.write(
-				LanguageUtil.get(
-					resourceBundle, CamelCaseUtil.fromCamelCase(key)));
-			writer.write("</td><td>");
-
-			Object value = entry.getValue();
-
-			if (value instanceof Blob) {
-				String downloadURL = displayContext.getDownloadURL(
-					key, 0, null);
-
-				if (downloadURL == null) {
-					writer.write(
-						LanguageUtil.get(resourceBundle, "no-download"));
-				}
-				else {
-					writer.write("<a href=\"");
-					writer.write(downloadURL);
-					writer.write("\" >");
-					writer.write(LanguageUtil.get(resourceBundle, "download"));
-					writer.write("</a>");
-				}
-			}
-			else if (value instanceof Date) {
-				writer.write(format.format(value));
-			}
-			else if (value instanceof String) {
-				writer.write(HtmlUtil.escape(value.toString()));
-			}
-			else {
-				writer.write(String.valueOf(value));
-			}
-
-			writer.write("</td></tr>");
-		}
+		buildDisplay(
+			new DisplayBuilderImpl<>(
+				displayContext, resourceBundle, themeDisplay));
 
 		writer.write("</table></div>");
 	}
 
-	protected abstract CTService<T> getCTService();
-
-	protected String[] getDisplayAttributeNames() {
-		return null;
-	}
-
-	protected Map<String, Object> getDisplayAttributes(Locale locale, T model) {
-		Map<String, Object> attributes = new LinkedHashMap<>();
+	protected void buildDisplay(DisplayBuilder<T> displayBuilder) {
+		T model = displayBuilder.getModel();
 
 		Map<String, Function<T, Object>> attributeGetterFunctions =
 			model.getAttributeGetterFunctions();
@@ -193,22 +118,126 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 		for (Map.Entry<String, Function<T, Object>> entry :
 				attributeGetterFunctions.entrySet()) {
 
-			String attributeName = entry.getKey();
+			Function<T, Object> function = entry.getValue();
 
-			if ((getDisplayAttributeNames() == null) ||
-				ArrayUtil.contains(getDisplayAttributeNames(), attributeName)) {
+			displayBuilder.display(
+				CamelCaseUtil.fromCamelCase(entry.getKey()),
+				function.apply(model));
+		}
+	}
 
-				Function<T, Object> attributeGetterFunction = entry.getValue();
+	protected interface DisplayBuilder<T> {
 
-				Object value = attributeGetterFunction.apply(model);
+		public DisplayBuilder<T> display(String languageKey, Object value);
 
-				if (Validator.isNotNull(value)) {
-					attributes.put(attributeName, value);
+		public DisplayBuilder<T> display(
+			String languageKey,
+			UnsafeSupplier<Object, Exception> unsafeSupplier);
+
+		public Locale getLocale();
+
+		public T getModel();
+
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseCTDisplayRenderer.class);
+
+	private static class DisplayBuilderImpl<T> implements DisplayBuilder<T> {
+
+		@Override
+		public DisplayBuilder<T> display(String languageKey, Object value) {
+			HttpServletResponse httpServletResponse =
+				_displayContext.getHttpServletResponse();
+
+			try {
+				Writer writer = httpServletResponse.getWriter();
+
+				writer.write("<tr><td>");
+				writer.write(LanguageUtil.get(_resourceBundle, languageKey));
+				writer.write("</td><td>");
+
+				if (value instanceof Blob) {
+					String downloadURL = _displayContext.getDownloadURL(
+						languageKey, 0, null);
+
+					if (downloadURL == null) {
+						writer.write(
+							LanguageUtil.get(_resourceBundle, "no-download"));
+					}
+					else {
+						writer.write("<a href=\"");
+						writer.write(downloadURL);
+						writer.write("\" >");
+						writer.write(
+							LanguageUtil.get(_resourceBundle, "download"));
+						writer.write("</a>");
+					}
 				}
+				else if (value instanceof Date) {
+					Format format = FastDateFormatFactoryUtil.getDateTime(
+						_resourceBundle.getLocale(),
+						_themeDisplay.getTimeZone());
+
+					writer.write(format.format(value));
+				}
+				else {
+					writer.write(HtmlUtil.escape(String.valueOf(value)));
+				}
+
+				writer.write("</td></tr>");
 			}
+			catch (IOException ioException) {
+				throw new UncheckedIOException(ioException);
+			}
+
+			return this;
 		}
 
-		return attributes;
+		@Override
+		public DisplayBuilder<T> display(
+			String languageKey,
+			UnsafeSupplier<Object, Exception> unsafeSupplier) {
+
+			try {
+				Object value = unsafeSupplier.get();
+
+				if (value != null) {
+					display(languageKey, value);
+				}
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(exception, exception);
+				}
+			}
+
+			return this;
+		}
+
+		@Override
+		public Locale getLocale() {
+			return _resourceBundle.getLocale();
+		}
+
+		@Override
+		public T getModel() {
+			return _displayContext.getModel();
+		}
+
+		private DisplayBuilderImpl(
+			DisplayContext<T> displayContext, ResourceBundle resourceBundle,
+			ThemeDisplay themeDisplay) {
+
+			_displayContext = displayContext;
+			_resourceBundle = resourceBundle;
+			_themeDisplay = themeDisplay;
+		}
+
+		private final DisplayContext<T> _displayContext;
+		private final ResourceBundle _resourceBundle;
+		private final ThemeDisplay _themeDisplay;
+
 	}
 
 }

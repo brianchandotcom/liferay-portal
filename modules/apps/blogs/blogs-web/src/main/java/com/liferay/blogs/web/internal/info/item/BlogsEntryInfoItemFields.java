@@ -91,7 +91,7 @@ public interface BlogsEntryInfoItemFields {
 		).infoFieldType(
 			DateInfoFieldType.INSTANCE
 		).name(
-			"publishDate"
+			"displayDate"
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				BlogsEntryInfoItemFields.class, "display-date")

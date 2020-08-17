@@ -194,7 +194,7 @@ definition {
 		);
 
 		if (selenium.isElementPresent("//iframe[not(contains(@class,'hidden'))]")) {
-			selenium.selectFrame("//iframe");
+			selenium.selectFrame("//iframe[not(contains(@class,'hidden'))]");
 		}
 
 		selenium.pause("3000");

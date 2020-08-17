@@ -231,9 +231,10 @@ definition {
 			key_questionTitle = "${questionTitle}",
 			locator1 = "Questions#QUESTIONS_TITLE");
 
-		AssertElementPresent(
-			key_questionTabField = "${questionTabField}",
-			locator1 = "Questions#QUESTIONS_LIST_ACTIVE_TAB_FIELD");
+		AssertTextEquals(
+			key_questionTitle = "${questionTitle}",
+			locator1 = "Questions#QUESTIONS_DETAILS_TITLE",
+			value1 = "${questionTitle}");
 	}
 
 	macro gotoTab {

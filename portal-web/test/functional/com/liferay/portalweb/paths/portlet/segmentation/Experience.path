@@ -15,12 +15,12 @@
 </tr>
 <tr>
 	<td>FRAGMENT_HEADING</td>
-	<td>//h1[@class='component-heading mb-0 mb-3 text-left text-break page-editor__editable']</td>
+	<td>//h1[@class='component-heading text-break page-editor__editable']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLISHED_HEADING</td>
-	<td>//h1[contains(@class,'component-heading mb-0 mb-3 text-left text-break')]</td>
+	<td>//h1[@class='component-heading text-break']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -35,13 +35,13 @@ public class FieldChecker extends EmptyOnClickRowChecker {
 
 		if (StringUtil.equalsIgnoreCase(
 				mvcRenderCommandName,
-				"/analytics_settings/edit_synced_contact_fields")) {
+				"/analytics_settings/edit_synced_contacts_fields")) {
 
 			setRowIds("syncedContactFieldNames");
 		}
 		else if (StringUtil.equalsIgnoreCase(
 					mvcRenderCommandName,
-					"/analytics_settings/edit_synced_user_fields")) {
+					"/analytics_settings/edit_synced_users_fields")) {
 
 			setRowIds("syncedUserFieldNames");
 		}

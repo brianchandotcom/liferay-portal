@@ -58,7 +58,7 @@ String redirect = portletURL.toString();
 			<liferay-ui:section>
 
 				<%
-				FieldDisplayContext fieldDisplayContext = new FieldDisplayContext("/analytics_settings/edit_synced_contact_fields", renderRequest, renderResponse);
+				FieldDisplayContext fieldDisplayContext = new FieldDisplayContext("/analytics_settings/edit_synced_contacts_fields", renderRequest, renderResponse);
 				%>
 
 				<clay:management-toolbar
@@ -66,9 +66,9 @@ String redirect = portletURL.toString();
 				/>
 
 				<liferay-ui:search-container
-					id="selectContactFields"
+					id="selectContactsFields"
 					searchContainer="<%= fieldDisplayContext.getFieldSearch() %>"
-					var="contactFieldsSearchContainer"
+					var="contactsFieldsSearchContainer"
 				>
 					<liferay-ui:search-container-row
 						className="com.liferay.analytics.settings.web.internal.model.Field"
@@ -106,7 +106,7 @@ String redirect = portletURL.toString();
 			<liferay-ui:section>
 
 				<%
-				FieldDisplayContext fieldDisplayContext = new FieldDisplayContext("/analytics_settings/edit_synced_user_fields", renderRequest, renderResponse);
+				FieldDisplayContext fieldDisplayContext = new FieldDisplayContext("/analytics_settings/edit_synced_users_fields", renderRequest, renderResponse);
 				%>
 
 				<clay:management-toolbar
@@ -114,9 +114,9 @@ String redirect = portletURL.toString();
 				/>
 
 				<liferay-ui:search-container
-					id="selectUserFields"
+					id="selectUsersFields"
 					searchContainer="<%= fieldDisplayContext.getFieldSearch() %>"
-					var="userFieldsSearchContainer"
+					var="usersFieldsSearchContainer"
 				>
 					<liferay-ui:search-container-row
 						className="com.liferay.analytics.settings.web.internal.model.Field"

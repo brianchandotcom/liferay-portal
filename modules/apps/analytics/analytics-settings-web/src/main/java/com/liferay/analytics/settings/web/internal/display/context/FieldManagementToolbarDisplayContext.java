@@ -44,24 +44,24 @@ public class FieldManagementToolbarDisplayContext
 	public String getComponentId() {
 		if (StringUtil.equalsIgnoreCase(
 				_fieldDisplayContext.getMVCRenderCommandName(),
-				"/analytics_settings/edit_synced_contact_fields")) {
+				"/analytics_settings/edit_synced_contacts_fields")) {
 
-			return "contactFieldsManagementToolbar";
+			return "contactsFieldsManagementToolbar";
 		}
 
-		return "userFieldsManagementToolbar";
+		return "usersFieldsManagementToolbar";
 	}
 
 	@Override
 	public String getSearchContainerId() {
 		if (StringUtil.equalsIgnoreCase(
 				_fieldDisplayContext.getMVCRenderCommandName(),
-				"/analytics_settings/edit_synced_contact_fields")) {
+				"/analytics_settings/edit_synced_contacts_fields")) {
 
-			return "selectContactFields";
+			return "selectContactsFields";
 		}
 
-		return "selectUserFields";
+		return "selectUsersFields";
 	}
 
 	private final FieldDisplayContext _fieldDisplayContext;

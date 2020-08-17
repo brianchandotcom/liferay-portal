@@ -58,37 +58,7 @@ public class FieldDisplayContext {
 
 		if (StringUtil.equalsIgnoreCase(
 				_mvcRenderCommandName,
-				"/analytics_settings/edit_synced_user_fields")) {
-
-			for (String fieldName : _requiredUserFieldNames) {
-				fields.add(
-					new Field(
-						"Default Field", _userFieldNames.get(fieldName),
-						fieldName));
-			}
-
-			for (Map.Entry<String, String> entry : _userFieldNames.entrySet()) {
-				if (_requiredUserFieldNames.contains(entry.getKey())) {
-					continue;
-				}
-
-				fields.add(
-					new Field(
-						"Default Field", entry.getValue(), entry.getKey()));
-			}
-
-			fieldSearch.setRowChecker(
-				new FieldChecker(
-					_mvcRenderCommandName, _renderResponse,
-					SetUtil.fromList(_requiredUserFieldNames),
-					SetUtil.fromArray(
-						_analyticsConfiguration.syncedUserFieldNames())));
-			fieldSearch.setTotal(
-				_userFieldNames.size() - _requiredUserFieldNames.size());
-		}
-		else if (StringUtil.equalsIgnoreCase(
-					_mvcRenderCommandName,
-					"/analytics_settings/edit_synced_contact_fields")) {
+				"/analytics_settings/edit_synced_contacts_fields")) {
 
 			for (String fieldName : _requiredContactFieldNames) {
 				fields.add(
@@ -117,6 +87,36 @@ public class FieldDisplayContext {
 						_analyticsConfiguration.syncedContactFieldNames())));
 			fieldSearch.setTotal(
 				_contactFieldNames.size() - _requiredContactFieldNames.size());
+		}
+		else if (StringUtil.equalsIgnoreCase(
+					_mvcRenderCommandName,
+					"/analytics_settings/edit_synced_users_fields")) {
+
+			for (String fieldName : _requiredUserFieldNames) {
+				fields.add(
+					new Field(
+						"Default Field", _userFieldNames.get(fieldName),
+						fieldName));
+			}
+
+			for (Map.Entry<String, String> entry : _userFieldNames.entrySet()) {
+				if (_requiredUserFieldNames.contains(entry.getKey())) {
+					continue;
+				}
+
+				fields.add(
+					new Field(
+						"Default Field", entry.getValue(), entry.getKey()));
+			}
+
+			fieldSearch.setRowChecker(
+				new FieldChecker(
+					_mvcRenderCommandName, _renderResponse,
+					SetUtil.fromList(_requiredUserFieldNames),
+					SetUtil.fromArray(
+						_analyticsConfiguration.syncedUserFieldNames())));
+			fieldSearch.setTotal(
+				_userFieldNames.size() - _requiredUserFieldNames.size());
 		}
 
 		fieldSearch.setResults(fields);

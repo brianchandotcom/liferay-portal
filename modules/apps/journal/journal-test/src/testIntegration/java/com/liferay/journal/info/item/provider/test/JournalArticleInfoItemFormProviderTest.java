@@ -161,10 +161,24 @@ public class JournalArticleInfoItemFormProviderTest {
 
 		infoField = iterator.next();
 
+		Assert.assertEquals("displayDate", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
+		Assert.assertEquals(
+			DateInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+
+		infoField = iterator.next();
+
 		Assert.assertEquals("displayPageURL", infoField.getName());
 		Assert.assertFalse(infoField.isLocalizable());
 		Assert.assertEquals(
 			URLInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+
+		infoField = iterator.next();
+
+		Assert.assertEquals("expirationDate", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
+		Assert.assertEquals(
+			DateInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 
 		infoField = iterator.next();
 

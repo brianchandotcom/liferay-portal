@@ -23,11 +23,13 @@ import {EDITABLE_TYPES} from '../../../app/config/constants/editableTypes';
 import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {LAYOUT_TYPES} from '../../../app/config/constants/layoutTypes';
+import {ORIGIN_TYPES} from '../../../app/config/constants/originTypes';
 import {config} from '../../../app/config/index';
 import selectCanUpdateEditables from '../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemConfiguration from '../../../app/selectors/selectCanUpdateItemConfiguration';
 import {useSelector} from '../../../app/store/index';
 import getLayoutDataItemLabel from '../../../app/utils/getLayoutDataItemLabel';
+import {DragAndDropContextProvider} from '../../../app/utils/useDragAndDrop';
 import PageStructureSidebarSection from './PageStructureSidebarSection';
 import StructureTreeNode from './StructureTreeNode';
 
@@ -112,11 +114,13 @@ export default function PageStructureSidebar() {
 						)}
 					</ClayAlert>
 				)}
-				<Treeview
-					NodeComponent={StructureTreeNode}
-					nodes={nodes}
-					selectedNodeIds={[activeItemId]}
-				/>
+				<DragAndDropContextProvider>
+					<Treeview
+						NodeComponent={StructureTreeNode}
+						nodes={nodes}
+						selectedNodeIds={[activeItemId]}
+					/>
+				</DragAndDropContextProvider>
 			</div>
 		</PageStructureSidebarSection>
 	);
@@ -176,10 +180,13 @@ function visit(
 				activable: canUpdateEditables,
 				children: [],
 				disabled: !isMasterPage && itemInMasterLayout,
+				draggable: false,
 				expanded: childId === activeItemId,
 				icon: EDITABLE_TYPE_ICONS[type],
 				id: childId,
 				name: EDITABLE_TYPE_LABELS[type],
+				origin: ORIGIN_TYPES.treeview,
+				parentId: item.parentId,
 				removable: false,
 				type: ITEM_TYPES.editable,
 			});
@@ -249,11 +256,16 @@ function visit(
 			canUpdateItemConfiguration,
 		children,
 		disabled: !isMasterPage && itemInMasterLayout,
+		draggable: true,
 		expanded: item.itemId === activeItemId,
 		icon,
 		id: item.itemId,
+		itemId: item.itemId,
+		itemType: ITEM_TYPES.layoutDataItem,
 		name: getLayoutDataItemLabel(item, fragmentEntryLinks),
+		origin: ORIGIN_TYPES.treeview,
+		parentItemId: item.parentId,
 		removable: !itemInMasterLayout && isRemovable(item, layoutData),
-		type: ITEM_TYPES.layoutDataItem,
+		type: item.type,
 	};
 }

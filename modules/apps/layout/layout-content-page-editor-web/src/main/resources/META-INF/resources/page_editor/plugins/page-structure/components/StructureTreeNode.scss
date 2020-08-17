@@ -12,6 +12,18 @@
 	padding-right: 8px;
 	white-space: nowrap;
 
+	&.drag-over-bottom {
+		border-bottom: 4px solid $primary-l1;
+	}
+
+	&.drag-over-top {
+		border-top: 4px solid $primary-l1;
+	}
+
+	&.drag-over-middle {
+		box-shadow: inset 0 0 0 4px $primary-l1;
+	}
+
 	&__mask {
 		height: 100%;
 		left: 0;

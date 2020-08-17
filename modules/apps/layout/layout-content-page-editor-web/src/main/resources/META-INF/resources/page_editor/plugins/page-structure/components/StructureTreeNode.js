@@ -32,6 +32,12 @@ import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
 import selectCanUpdatePageStructure from '../../../app/selectors/selectCanUpdatePageStructure';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import deleteItem from '../../../app/thunks/deleteItem';
+import moveItem from '../../../app/thunks/moveItem';
+import {
+	TARGET_POSITION,
+	useDragItem,
+	useDropTarget,
+} from '../../../app/utils/useDragAndDrop';
 
 const nodeIsHovered = (nodeId, hoveredItemId) =>
 	nodeId === fromControlsId(hoveredItemId);
@@ -42,13 +48,37 @@ export default function StructureTreeNode({node}) {
 	const activationOrigin = useActivationOrigin();
 	const activeItemId = useActiveItemId();
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
+	const dispatch = useDispatch();
 	const hoverItem = useHoverItem();
 	const hoveredItemId = useHoveredItemId();
+	const layoutData = useSelector((state) => state.layoutData);
+	const segmentsExperienceId = useSelector(
+		(state) => state.segmentsExperienceId
+	);
+
 	const nodeRef = useRef();
 	const selectItem = useSelectItem();
 	const toControlsId = useToControlsId();
 
 	const isActive = node.activable && nodeIsSelected(node.id, activeItemId);
+
+	const {isOverTarget, targetPosition, targetRef} = useDropTarget(
+		{...node, parentId: node.parentItemId},
+		layoutData
+	);
+
+	const {handlerRef, isDraggingSource} = useDragItem(
+		{...node, parentId: node.parentItemId},
+		(parentItemId, position) =>
+			dispatch(
+				moveItem({
+					itemId: node.itemId,
+					parentItemId,
+					position,
+					segmentsExperienceId,
+				})
+			)
+	);
 
 	useEffect(() => {
 		if (
@@ -68,6 +98,12 @@ export default function StructureTreeNode({node}) {
 		<div
 			aria-selected={isActive}
 			className={classNames('page-editor__page-structure__tree-node', {
+				'drag-over-bottom':
+					isOverTarget && targetPosition === TARGET_POSITION.BOTTOM,
+				'drag-over-middle':
+					isOverTarget && targetPosition === TARGET_POSITION.MIDDLE,
+				'drag-over-top':
+					isOverTarget && targetPosition === TARGET_POSITION.TOP,
 				'page-editor__page-structure__tree-node--active': isActive,
 				'page-editor__page-structure__tree-node--bold':
 					node.activable && node.type !== ITEM_TYPES.editable,
@@ -79,15 +115,24 @@ export default function StructureTreeNode({node}) {
 			onMouseLeave={(event) => {
 				event.stopPropagation();
 
+				if (isDraggingSource) {
+					return;
+				}
+
 				if (nodeIsHovered(node.id, hoveredItemId)) {
 					hoverItem(null);
 				}
 			}}
 			onMouseOver={(event) => {
 				event.stopPropagation();
+
+				if (isDraggingSource) {
+					return;
+				}
+
 				hoverItem(node.id);
 			}}
-			ref={nodeRef}
+			ref={targetRef}
 		>
 			<ClayButton
 				aria-label={Liferay.Util.sub(Liferay.Language.get('select-x'), [
@@ -108,6 +153,7 @@ export default function StructureTreeNode({node}) {
 					}
 				}}
 				onDoubleClick={(event) => event.stopPropagation()}
+				ref={node.draggable ? handlerRef : nodeRef}
 			/>
 
 			<NameLabel

@@ -28,6 +28,7 @@ import {useCollectionItemIndex} from '../components/CollectionItemContext';
 import {useSelectItem} from '../components/Controls';
 import {getToControlsId} from '../components/layout-data-items/Collection';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {ORIGIN_TYPES} from '../config/constants/originTypes';
 import {useSelector} from '../store/index';
 
 const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
@@ -387,6 +388,13 @@ function computeHover({
 		return;
 	}
 
+	if (
+		(sourceItem.origin === ORIGIN_TYPES.treeview && !targetItem.origin) ||
+		(!sourceItem.origin && targetItem.origin === ORIGIN_TYPES.treeview)
+	) {
+		return;
+	}
+
 	// Dragging over itself or a descendant
 
 	if (itemIsAncestor(sourceItem, targetItem, layoutDataRef)) {
@@ -418,7 +426,7 @@ function computeHover({
 		const targetIsFragment =
 			targetItem.type === LAYOUT_DATA_ITEM_TYPES.fragment;
 		const targetIsEmpty =
-			layoutDataRef.current.items[targetItem.itemId].children.length ===
+			layoutDataRef.current.items[targetItem.itemId]?.children.length ===
 			0;
 
 		return (
@@ -527,7 +535,9 @@ function computeHover({
 				monitor,
 				siblingItem,
 				sourceItem,
-				targetItem: elevatedTargetItem,
+				targetItem: targetItem.origin
+					? {...elevatedTargetItem, origin: targetItem.origin}
+					: elevatedTargetItem,
 				targetRefs,
 			});
 		}

@@ -35,6 +35,7 @@ definition {
 	@priority = "5"
 	test AddChildSiteFromImportedSiteTemplate {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SitesUsecase#AddChildSiteFromImportedSiteTemplate";
 		property testray.component.names = "Training";
 

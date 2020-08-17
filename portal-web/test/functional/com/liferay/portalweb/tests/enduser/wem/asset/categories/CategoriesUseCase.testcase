@@ -834,6 +834,7 @@ definition {
 	@priority = "5"
 	test ImportLAR {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Training";
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");

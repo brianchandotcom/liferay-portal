@@ -11,7 +11,7 @@ definition {
 		User.firstLoginPG();
 
 		ApplicationsMenu.gotoPortlet(
-			category = "Content",
+			category = "Publications",
 			panel = "Applications",
 			portlet = "Settings");
 
@@ -26,7 +26,7 @@ definition {
 		}
 		else {
 			ApplicationsMenu.gotoPortlet(
-				category = "Content",
+				category = "Publications",
 				panel = "Applications",
 				portlet = "Settings");
 
@@ -75,7 +75,7 @@ definition {
 			publicationName = "Publication Name");
 
 		ApplicationsMenu.gotoPortlet(
-			category = "Content",
+			category = "Publications",
 			panel = "Applications",
 			portlet = "Manage Publications");
 

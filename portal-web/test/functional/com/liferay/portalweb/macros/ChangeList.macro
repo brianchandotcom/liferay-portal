@@ -2,7 +2,7 @@ definition {
 
 	macro cancelPublicationCreation {
 		ApplicationsMenu.gotoPortlet(
-			category = "Content",
+			category = "Publications",
 			panel = "Applications",
 			portlet = "Manage Publications");
 
@@ -18,7 +18,7 @@ definition {
 	macro createNewPublication {
 		if ("${gotoManagePublications}" == "true") {
 			ApplicationsMenu.gotoPortlet(
-				category = "Content",
+				category = "Publications",
 				panel = "Applications",
 				portlet = "Manage Publications");
 
@@ -106,7 +106,7 @@ definition {
 	macro prepareToPublish {
 		if ("${gotoManagePublications}" == "true") {
 			ApplicationsMenu.gotoPortlet(
-				category = "Content",
+				category = "Publications",
 				panel = "Applications",
 				portlet = "Manage Publications");
 

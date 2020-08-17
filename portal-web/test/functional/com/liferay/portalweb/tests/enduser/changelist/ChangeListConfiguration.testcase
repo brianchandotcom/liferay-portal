@@ -33,7 +33,7 @@ definition {
 		Staging.activateStagingCP(siteName = "${siteName}");
 
 		ApplicationsMenu.gotoPortlet(
-			category = "Content",
+			category = "Publications",
 			panel = "Applications",
 			portlet = "Settings");
 
@@ -47,7 +47,7 @@ definition {
 		property portal.acceptance = "true";
 
 		ApplicationsMenu.gotoPortlet(
-			category = "Content",
+			category = "Publications",
 			panel = "Applications",
 			portlet = "Settings");
 
@@ -78,7 +78,7 @@ definition {
 			site = "Guest");
 
 		ApplicationsMenu.gotoPortlet(
-			category = "Content",
+			category = "Publications",
 			panel = "Applications",
 			portlet = "Settings",
 			site = "Guest");
@@ -96,14 +96,14 @@ definition {
 		property test.name.skip.portal.instance = "ChangeListConfiguration#EnableDisableChangeList";
 
 		ApplicationsMenu.gotoPortlet(
-			category = "Content",
+			category = "Publications",
 			panel = "Applications",
 			portlet = "Settings");
 
 		ChangeList.enableChangeList();
 
 		ApplicationsMenu.gotoPortlet(
-			category = "Content",
+			category = "Publications",
 			panel = "Applications",
 			portlet = "Settings");
 

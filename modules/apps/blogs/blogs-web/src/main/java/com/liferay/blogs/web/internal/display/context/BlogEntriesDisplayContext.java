@@ -251,6 +251,7 @@ public class BlogEntriesDisplayContext {
 				Field.STATUS, WorkflowConstants.STATUS_ANY);
 			searchContext.setEnd(searchContainer.getEnd());
 			searchContext.setIncludeDiscussions(true);
+			searchContext.setIncludeInternalAssetCategories(true);
 			searchContext.setKeywords(keywords);
 			searchContext.setStart(searchContainer.getStart());
 

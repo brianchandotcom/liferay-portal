@@ -224,6 +224,7 @@ public class DefaultWikiListPagesDisplayContext
 			searchContext.setEnd(searchContainer.getEnd());
 			searchContext.setIncludeAttachments(true);
 			searchContext.setIncludeDiscussions(true);
+			searchContext.setIncludeInternalAssetCategories(true);
 			searchContext.setKeywords(keywords);
 			searchContext.setNodeIds(new long[] {_wikiNode.getNodeId()});
 			searchContext.setStart(searchContainer.getStart());

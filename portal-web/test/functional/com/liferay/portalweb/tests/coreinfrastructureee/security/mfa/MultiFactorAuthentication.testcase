@@ -254,6 +254,74 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-102468"
+	@priority = "5"
+	test DisableOTPForInstanceOnSystemLevel {
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#DisableOTPForInstanceOnSystemLevel";
+
+		MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMFA = "false");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Virtual Instances");
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		PortalInstances.viewCP(virtualHost = "www.able.com");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Multi-Factor Authentication",
+			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		MultiFactorAuthentication.configureOTPEmailSender(
+			emailAddress = "test@www.able.com",
+			emailSenderName = "Joe Bloggs");
+
+		MultiFactorAuthentication.viewOTPEmailSenderCP(
+			emailAddress = "test@www.able.com",
+			emailSenderName = "Joe Bloggs");
+
+		MultiFactorAuthentication.configureOTP(enableOTP = "true");
+
+		SignOut.signOutOfSpecificURL(url = "http://www.able.com:8080");
+
+		SignIn.signInSpecificURL(
+			url = "http://www.able.com:8080/",
+			userEmailAddress = "test@www.able.com");
+
+		MultiFactorAuthentication.sendOTPEmailPG();
+
+		MultiFactorAuthentication.verifyOTP(
+			portalURL = "http://www.able.com:8080",
+			recipient = "test test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com",
+			userPassword = "test");
+
+		SignOut.signOutOfSpecificURL(url = "http://www.able.com:8080");
+
+		Navigator.openURL();
+
+		MultiFactorAuthentication.configureMFAOnSystemLevel(disabledMFA = "true");
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+	}
+
 	@description = "This is a use case for LPS-102467 and LPS-110444"
 	@priority = "5"
 	test EditEmailTemplate {

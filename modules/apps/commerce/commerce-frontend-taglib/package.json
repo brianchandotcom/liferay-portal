@@ -4,9 +4,9 @@
 		"clay-modal": "^2.5.0",
 		"clay-pagination-bar": "^2.4.1",
 		"clay-table": "^2.4.1",
+		"frontend-js-web": "*",
 		"metal": "^2.13.2",
 		"metal-component": "^2.13.2",
-		"metal-debounce": "^2.0.0",
 		"metal-soy": "^2.13.2",
 		"metal-state": "^2.13.2"
 	},

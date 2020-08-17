@@ -14,8 +14,8 @@
 
 'use strict';
 
+import {debounce} from 'frontend-js-web';
 import Component from 'metal-component';
-import debounce from 'metal-debounce';
 import Soy, {Config} from 'metal-soy';
 
 import template from './OrdersTable.soy';

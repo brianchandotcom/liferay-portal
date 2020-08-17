@@ -69,22 +69,25 @@ dependencies {
 				String portalVersion = matcher.group("portalVersion")
 
 				if (portalVersion.startsWith("6.1")) {
-					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-ee-6.1.x", version: "20190325111923-20a286f"
+					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-ee-6.1.x", version: "20200811-b06bc2b7"
 				}
 				else if (portalVersion.startsWith("6.2")) {
-					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-ee-6.2.x", version: "20190325111857-3731418"
+					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-ee-6.2.x", version: "20200811-cf2fff7"
 				}
 				else if (portalVersion.startsWith("7.0")) {
-					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.0.x", version: "20191031-756de9c"
+					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.0.x", version: "20200811-4662f52"
 				}
 				else if (portalVersion.startsWith("7.1")) {
-					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.1.x", version: "20191031-de8a7da"
+					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.1.x", version: "20200811-375c6d0"
 				}
 				else if (portalVersion.startsWith("7.2")) {
-					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.2.x", version: "20191031-796bf3b"
+					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.2.x", version: "20200811-c4860d03"
 				}
 				else if (portalVersion.startsWith("7.3")) {
-					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-master", version: "20200203-b072f5d"
+					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-7.3.x", version: "20200811-cdc353a"
+				}
+				else if (portalVersion.startsWith("7.4")) {
+					poshiRunnerResources group: "com.liferay.poshi.runner.resources", name: "portal-master", version: "20200811-cdc353a"
 				}
 			}
 		}

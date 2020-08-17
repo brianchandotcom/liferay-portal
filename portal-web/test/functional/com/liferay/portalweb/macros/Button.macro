@@ -30,6 +30,10 @@ definition {
 		Click(locator1 = "Button#COMMENT");
 	}
 
+	macro clickConfirm {
+		Click(locator1 = "Button#CONFIRM");
+	}
+
 	macro clickDelete {
 		Button.click(button = "Delete");
 	}

@@ -14,7 +14,7 @@
 
 'use strict';
 
-import {debounce} from 'frontend-js-web';
+import {debounce, fetch} from 'frontend-js-web';
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
@@ -126,14 +126,7 @@ class UserInvitation extends Component {
 	}
 
 	_fetchUsers() {
-		return fetch(
-			this.usersAPI + '?p_auth=' + Liferay.authToken + '&q=' + this.query,
-			{
-				credentials: 'include',
-				headers: new Headers({'x-csrf-token': Liferay.authToken}),
-				method: 'GET',
-			}
-		)
+		return fetch(this.usersAPI + '&q=' + this.query)
 			.then((response) => response.json())
 			.then((response) => {
 				this._loading = false;

@@ -9,6 +9,8 @@
  * distribution rights of the Software.
  */
 
+import {fetch} from 'frontend-js-web';
+
 export const actionDefinition = {
 	CREATE_SPOT: 'createSpot',
 	DELETE_SPOT_FULFILLED: 'deleteSpotFulfilled',
@@ -55,7 +57,7 @@ const getArea = (dispatch) => (endpoint, id) => {
 		type: actionDefinition.GET_AREA_PENDING,
 	});
 
-	return fetch(endpoint + '/' + id + `?p_auth=${window.Liferay.authToken}`)
+	return fetch(endpoint + '/' + id)
 		.then((response) => response.json())
 		.then((data) =>
 			dispatch({
@@ -76,10 +78,7 @@ const getProducts = (dispatch) => (endpoint, query) => {
 		type: actionDefinition.GET_PRODUCTS_PENDING,
 	});
 
-	return fetch(
-		endpoint +
-			(query ? `?p_auth=${window.Liferay.authToken}&q=${query}` : '')
-	)
+	return fetch(endpoint + (query ? `?q=${query}` : ''))
 		.then((response) => response.json())
 		.then((data) =>
 			dispatch({
@@ -133,16 +132,13 @@ const submitNewSpot = (dispatch) => (endpoint, areaId, formData) => {
 		type: actionDefinition.SUBMIT_NEW_SPOT_PENDING,
 	});
 
-	return fetch(
-		endpoint + '/' + areaId + `/spot?p_auth=${window.Liferay.authToken}`,
-		{
-			method: 'POST',
-			body: JSON.stringify(data),
-			headers: new Headers({
-				'Content-Type': 'application/json',
-			}),
-		}
-	)
+	return fetch(endpoint + '/' + areaId + '/spot', {
+		method: 'POST',
+		body: JSON.stringify(data),
+		headers: new Headers({
+			'Content-Type': 'application/json',
+		}),
+	})
 		.then(() => {
 			dispatch({
 				type: actionDefinition.SUBMIT_NEW_SPOT_FULFILLED,
@@ -163,17 +159,9 @@ const deleteSpot = (dispatch) => (endpoint, areaId, spotId) => {
 		type: actionDefinition.DELETE_SPOT_PENDING,
 	});
 
-	return fetch(
-		endpoint +
-			'/' +
-			areaId +
-			'/spot/' +
-			spotId +
-			`?p_auth=${window.Liferay.authToken}`,
-		{
-			method: 'DELETE',
-		}
-	)
+	return fetch(endpoint + '/' + areaId + '/spot/' + spotId, {
+		method: 'DELETE',
+	})
 		.then(() => {
 			dispatch({
 				type: actionDefinition.DELETE_SPOT_FULFILLED,
@@ -196,21 +184,13 @@ const submitSpotChanges = (dispatch) => (endpoint, areaId, formData) => {
 		type: actionDefinition.SUBMIT_SPOT_CHANGES_PENDING,
 	});
 
-	return fetch(
-		endpoint +
-			'/' +
-			areaId +
-			'/spot/' +
-			id +
-			`?p_auth=${window.Liferay.authToken}`,
-		{
-			method: 'PUT',
-			body: JSON.stringify(data),
-			headers: new Headers({
-				'Content-Type': 'application/json',
-			}),
-		}
-	)
+	return fetch(endpoint + '/' + areaId + '/spot/' + id, {
+		method: 'PUT',
+		body: JSON.stringify(data),
+		headers: new Headers({
+			'Content-Type': 'application/json',
+		}),
+	})
 		.then(() => {
 			dispatch({
 				type: actionDefinition.SUBMIT_SPOT_CHANGES_FULFILLED,

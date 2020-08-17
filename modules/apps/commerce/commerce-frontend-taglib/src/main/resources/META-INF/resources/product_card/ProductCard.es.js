@@ -14,6 +14,7 @@
 
 'use strict';
 
+import {fetch} from 'frontend-js-web';
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
@@ -71,13 +72,10 @@ class ProductCard extends Component {
 			this.compareContentNamespace + this.productId + 'Compare',
 			false
 		);
-		formData.append('p_auth', Liferay.authToken);
 
 		return fetch(this.editCompareProductActionURL, {
 			body: formData,
-			credentials: 'include',
-			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'post',
+			method: 'POST',
 		}).then(() => {
 			liferayNavigation(window.location.href);
 
@@ -105,10 +103,8 @@ class ProductCard extends Component {
 		formData.append('skuId', this.skuId ? this.skuId : 0);
 		formData.append('options', '[]');
 
-		fetch(this.wishlistAPI + `?p_auth=${window.Liferay.authToken}`, {
+		fetch(this.wishlistAPI, {
 			body: formData,
-			credentials: 'include',
-			headers: new Headers({'x-csrf-token': Liferay.authToken}),
 			method: 'POST',
 		})
 			.then((response) => response.json())

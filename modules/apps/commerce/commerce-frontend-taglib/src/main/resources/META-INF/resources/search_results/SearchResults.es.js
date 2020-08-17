@@ -12,6 +12,7 @@
  * details.
  */
 
+import {fetch} from 'frontend-js-web';
 import Component from 'metal-component';
 import debounce from 'metal-debounce';
 import Soy, {Config} from 'metal-soy';
@@ -98,17 +99,14 @@ class SearchResults extends Component {
 		this.lock = true;
 
 		fetch(
-			`${this.searchAPI}${themeDisplay.getPlid()}?commerceAccountId=${
-				this.commerceAccountId
-			}&
-				groupId=${themeDisplay.getScopeGroupId()}&p_auth=${Liferay.authToken}&q=${
+			this.searchAPI +
+				themeDisplay.getPlid() +
+				'?commerceAccountId=' +
+				this.commerceAccountId +
+				'&groupId=' +
+				themeDisplay.getScopeGroupId() +
+				'&q=' +
 				this.queryString
-			}`,
-			{
-				credentials: 'include',
-				headers: new Headers({'x-csrf-token': Liferay.authToken}),
-				method: 'GET',
-			}
 		)
 			.then((response) => response.json())
 			.then((results) => {

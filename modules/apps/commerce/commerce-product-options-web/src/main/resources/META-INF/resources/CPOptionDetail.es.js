@@ -12,6 +12,7 @@
  * details.
  */
 
+import {fetch} from 'frontend-js-web';
 import Component from 'metal-component';
 import {globalEval} from 'metal-dom';
 import Soy from 'metal-soy';
@@ -41,13 +42,8 @@ class CPOptionDetail extends Component {
 		var url = new URL(this.optionURL);
 
 		url.searchParams.append(this.namespace + 'cpOptionId', cpOptionId);
-		url.searchParams.set('p_auth', window.Liferay.authToken);
 
-		fetch(url, {
-			credentials: 'include',
-			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'GET',
-		})
+		fetch(url)
 			.then((response) => response.text())
 			.then((text) => {
 				optionDetail.innerHTML = text;
@@ -125,12 +121,8 @@ class CPOptionDetail extends Component {
 
 		var formData = new FormData(form);
 
-		formData.set('p_auth', Liferay.authToken);
-
 		fetch(form.action, {
 			body: formData,
-			credentials: 'include',
-			headers: new Headers({'x-csrf-token': Liferay.authToken}),
 			method: 'POST',
 		})
 			.then((response) => response.json())
@@ -144,12 +136,8 @@ class CPOptionDetail extends Component {
 
 		var formData = new FormData(form);
 
-		formData.set('p_auth', Liferay.authToken);
-
 		fetch(form.action, {
 			body: formData,
-			credentials: 'include',
-			headers: new Headers({'x-csrf-token': Liferay.authToken}),
 			method: 'POST',
 		})
 			.then((response) => response.json())

@@ -14,7 +14,7 @@
 
 'use strict';
 
-import {debounce} from 'frontend-js-web';
+import {debounce, fetch} from 'frontend-js-web';
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
@@ -110,15 +110,8 @@ class AddOrganizationModal extends Component {
 			this.organizationsAPI +
 				'?groupId=' +
 				themeDisplay.getScopeGroupId() +
-				'&p_auth=' +
-				Liferay.authToken +
 				'&q=' +
-				this.query,
-			{
-				credentials: 'include',
-				headers: new Headers({'x-csrf-token': Liferay.authToken}),
-				method: 'GET',
-			}
+				this.query
 		)
 			.then((response) => response.json())
 			.then((response) => {

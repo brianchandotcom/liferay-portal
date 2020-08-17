@@ -140,8 +140,7 @@ export function isPartOfCategory(id) {
 
 export function loadData(url) {
 	return parseData(
-		fetch(`${url}&p_auth=${window.Liferay.authToken}`, {
-			credentials: 'include',
+		fetch(url, {
 			headers,
 		}).then(responseToJson)
 	);

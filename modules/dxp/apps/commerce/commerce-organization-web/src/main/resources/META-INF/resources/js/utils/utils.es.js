@@ -9,6 +9,8 @@
  * distribution rights of the Software.
  */
 
+import {fetch} from 'frontend-js-web';
+
 import w from './window.es';
 
 function serializeParams(params) {
@@ -29,8 +31,6 @@ export function endpointBuilder({
 	if (!baseURL) {
 		throw new Error('No API baseURL provided.');
 	}
-
-	queryParams.p_auth = w.Liferay.authToken;
 
 	const collection = path ? `/${path}` : '';
 	const organizationId = `/${id}`;

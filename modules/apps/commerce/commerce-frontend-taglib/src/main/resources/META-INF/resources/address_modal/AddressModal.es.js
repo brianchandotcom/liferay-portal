@@ -14,6 +14,7 @@
 
 'use strict';
 
+import {fetch} from 'frontend-js-web';
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
@@ -131,11 +132,7 @@ class AddressModal extends Component {
 	}
 
 	fetchExistingAddress(id) {
-		fetch('/o/commerce-ui/address/' + id + '?p_auth=' + Liferay.authToken, {
-			credentials: 'include',
-			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'GET',
-		})
+		fetch('/o/commerce-ui/address/' + id)
 			.then((response) => response.json())
 			.then((jsonResponse) => {
 				const data = JSON.parse(jsonResponse);
@@ -158,11 +155,7 @@ class AddressModal extends Component {
 	}
 
 	_fetchCountries() {
-		return fetch(this.countriesAPI, {
-			credentials: 'include',
-			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'GET',
-		})
+		return fetch(this.countriesAPI)
 			.then((response) => response.json())
 			.then((countries) => {
 				this._countries = countries;
@@ -172,17 +165,7 @@ class AddressModal extends Component {
 	}
 
 	_fetchRegions() {
-		return fetch(
-			this.regionsAPI +
-				this._formData.country +
-				'?p_auth=' +
-				Liferay.authToken,
-			{
-				credentials: 'include',
-				headers: new Headers({'x-csrf-token': Liferay.authToken}),
-				method: 'GET',
-			}
-		)
+		return fetch(this.regionsAPI + this._formData.country)
 			.then((response) => response.json())
 			.then((regions) => {
 				this._regions = regions;

@@ -12,6 +12,7 @@
  * details.
  */
 
+import {fetch} from 'frontend-js-web';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
@@ -68,13 +69,10 @@ class AddToCart extends Component {
 		);
 		formData.append(this.portletNamespace + 'ddmFormValues', ddmFormValues);
 		formData.append(this.portletNamespace + 'quantity', _quantity);
-		formData.append('p_auth', Liferay.authToken);
 
-		fetch(this.uri + `&p_auth=${window.Liferay.authToken}`, {
+		fetch(this.uri, {
 			body: formData,
-			credentials: 'include',
-			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'post',
+			method: 'POST',
 		})
 			.then((response) => response.json())
 			.then((jsonresponse) => {

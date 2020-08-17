@@ -14,6 +14,7 @@
 
 'use strict';
 
+import {fetch} from 'frontend-js-web';
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
@@ -84,13 +85,10 @@ class ProductsCompare extends Component {
 
 		formData.append(this.portletNamespace + 'cpDefinitionId', id);
 		formData.append(this.portletNamespace + id + 'Compare', toogle);
-		formData.append('p_auth', Liferay.authToken);
 
 		return fetch(this.editCompareProductActionURL, {
 			body: formData,
-			credentials: 'include',
-			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'post',
+			method: 'POST',
 		});
 	}
 

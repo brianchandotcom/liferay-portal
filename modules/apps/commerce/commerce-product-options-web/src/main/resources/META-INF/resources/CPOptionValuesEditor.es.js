@@ -12,6 +12,7 @@
  * details.
  */
 
+import {fetch} from 'frontend-js-web';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
@@ -41,7 +42,7 @@ class CPOptionValuesEditor extends Component {
 	}
 
 	loadOptionValues() {
-		if (this.cpOptionId === undefined || this.cpOptionId == '0') {
+		if (!this.cpOptionId || this.cpOptionId === '0') {
 			this._newOptionValueName = '';
 			this._currentOptionValue = '0';
 
@@ -51,22 +52,14 @@ class CPOptionValuesEditor extends Component {
 		var url = new URL(this.optionValuesURL);
 
 		url.searchParams.append(this.namespace + 'cpOptionId', this.cpOptionId);
-		url.searchParams.set('p_auth', Liferay.authToken);
 
-		fetch(url, {
-			credentials: 'include',
-			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'GET',
-		})
+		fetch(url.toString())
 			.then((response) => response.json())
 			.then((jsonResponse) => {
 				this._optionValues = jsonResponse;
 
 				if (this._optionValues && this._optionValues.length > 0) {
-					if (
-						!this._currentOptionValue ||
-						this._currentOptionValue == null
-					) {
+					if (!this._currentOptionValue) {
 						this._currentOptionValue = this._optionValues[0].cpOptionValueId;
 					}
 				}

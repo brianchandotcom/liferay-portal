@@ -9,6 +9,8 @@
  * distribution rights of the Software.
  */
 
+import {fetch} from 'frontend-js-web';
+
 export const actionDefinition = {
 	GET_FOLDER_FULFILLED: 'getFolderFulfilled',
 	GET_FOLDER_PENDING: 'getFolderPending',
@@ -16,10 +18,7 @@ export const actionDefinition = {
 };
 
 const getFolder = (dispatch) => (endpoint, id) => {
-	const url =
-		endpoint +
-		(id ? `/${id}` : '/0') +
-		`?p_auth=${window.Liferay.authToken}`;
+	const url = endpoint + (id ? `/${id}` : '/0');
 
 	dispatch({
 		type: actionDefinition.GET_FOLDER_PENDING,

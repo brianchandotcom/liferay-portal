@@ -12,6 +12,8 @@
  * details.
  */
 
+import {fetch} from 'frontend-js-web';
+
 import createOdataFilter from './odata';
 
 export function getData(apiUrl, query) {
@@ -23,7 +25,6 @@ export function getData(apiUrl, query) {
 
 	return fetch(url, {
 		...fetchParams,
-		method: 'GET',
 	}).then((data) => data.json());
 }
 
@@ -113,11 +114,9 @@ export const fetchHeaders = new Headers({
 	Accept: 'application/json',
 	'Accept-Language': getAcceptLanguageHeaderParam(),
 	'Content-Type': 'application/json',
-	'x-csrf-token': Liferay.authToken,
 });
 
 export const fetchParams = {
-	credentials: 'include',
 	headers: Liferay.staticEnvHeaders || fetchHeaders,
 };
 

@@ -12,6 +12,7 @@
  * details.
  */
 
+import {fetch} from 'frontend-js-web';
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
@@ -70,10 +71,8 @@ function doSubmit() {
 		formData.append('orderId', this.orderId);
 	}
 
-	return fetch(this.cartAPI + `?p_auth=${window.Liferay.authToken}`, {
+	return fetch(this.cartAPI, {
 		body: formData,
-		credentials: 'include',
-		headers: new Headers({'x-csrf-token': Liferay.authToken}),
 		method: 'POST',
 	})
 		.then((response) => response.json())

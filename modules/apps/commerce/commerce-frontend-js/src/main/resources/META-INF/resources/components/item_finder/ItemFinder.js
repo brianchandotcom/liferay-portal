@@ -13,6 +13,7 @@
  */
 
 import {ClayIconSpriteContext} from '@clayui/icon';
+import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 

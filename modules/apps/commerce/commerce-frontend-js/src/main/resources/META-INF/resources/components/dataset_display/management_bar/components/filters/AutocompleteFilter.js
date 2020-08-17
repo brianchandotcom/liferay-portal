@@ -18,6 +18,7 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayCheckbox, ClayRadio, ClayToggle} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
@@ -32,11 +33,7 @@ function fetchData(apiUrl, searchParam, currentPage = 1) {
 			apiUrl.includes('?') ? '&' : '?'
 		}page=${currentPage}&pageSize=${DEFAULT_PAGE_SIZE}${
 			searchParam ? `&search=${encodeURIComponent(searchParam)}` : ''
-		}`,
-		{
-			...fetchParams,
-			method: 'GET',
-		}
+		}`
 	).then((response) => response.json());
 }
 

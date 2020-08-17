@@ -22,6 +22,7 @@ import './CPOptionValueDetail.es';
 
 import './CPOptionValueList.es';
 
+import {fetch} from 'frontend-js-web';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
@@ -47,19 +48,13 @@ class CPOptionsEditor extends Component {
 	loadOptions() {
 		var url = new URL(this.optionsURL);
 
-		url.searchParams.set('p_auth', window.Liferay.authToken);
-
-		fetch(url, {
-			credentials: 'include',
-			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'GET',
-		})
+		fetch(url)
 			.then((response) => response.json())
 			.then((jsonResponse) => {
 				this._options = jsonResponse;
 
 				if (this._options && this._options.length > 0) {
-					if (!this._currentOption || this._currentOption == null) {
+					if (!this._currentOption) {
 						this._currentOption = this._options[0].cpOptionId;
 					}
 				}

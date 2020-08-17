@@ -9,6 +9,8 @@
  * distribution rights of the Software.
  */
 
+import {fetch} from 'frontend-js-web';
+
 export const actionDefinition = {
 	GET_AREA_FULFILLED: 'getAreaFulfilled',
 	GET_AREA_PENDING: 'getAreaPending',
@@ -33,8 +35,7 @@ const select = (dispatch) => (id) =>
 	});
 
 const getArea = (dispatch) => (endpoint, id) => {
-	const url =
-		endpoint + (id ? `/${id}` : '') + `?p_auth=${window.Liferay.authToken}`;
+	const url = endpoint + (id ? `/${id}` : '');
 
 	dispatch({
 		type: actionDefinition.GET_AREA_PENDING,

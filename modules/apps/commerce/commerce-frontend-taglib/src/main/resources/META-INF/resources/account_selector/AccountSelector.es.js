@@ -14,6 +14,7 @@
 
 'use strict';
 
+import {fetch} from 'frontend-js-web';
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
@@ -136,13 +137,11 @@ class AccountSelector extends Component {
 
 		fetch(
 			this.accountsAPI +
-				'set-current-account?groupId=' +
-				themeDisplay.getScopeGroupId() +
-				`&p_auth=${window.Liferay.authToken}`,
+				'set-current-account' +
+				'?groupId=' +
+				themeDisplay.getScopeGroupId(),
 			{
 				body: formData,
-				credentials: 'include',
-				headers: new Headers({'x-csrf-token': Liferay.authToken}),
 				method: 'POST',
 			}
 		).then(() => {
@@ -177,14 +176,12 @@ class AccountSelector extends Component {
 	_fetchAccounts(query = '') {
 		return fetch(
 			this.accountsAPI +
-				'search-accounts?groupId=' +
+				'search-accounts' +
+				'?groupId=' +
 				themeDisplay.getScopeGroupId() +
-				`&p_auth=${window.Liferay.authToken}&page=1&pageSize=10&q=${query}`,
-			{
-				credentials: 'include',
-				headers: new Headers({'x-csrf-token': Liferay.authToken}),
-				method: 'GET',
-			}
+				'&q=' +
+				query +
+				'&page=1&pageSize=10'
 		)
 			.then((response) => response.json())
 			.then((response) => {
@@ -199,14 +196,12 @@ class AccountSelector extends Component {
 			this.accountsAPI +
 				'search-accounts/' +
 				this.currentAccount.accountId +
-				'/orders?groupId=' +
+				'/orders' +
+				'?groupId=' +
 				themeDisplay.getScopeGroupId() +
-				`&p_auth=${window.Liferay.authToken}&page=1&pageSize=10&q=${query}`,
-			{
-				credentials: 'include',
-				headers: new Headers({'x-csrf-token': Liferay.authToken}),
-				method: 'GET',
-			}
+				'&q=' +
+				query +
+				'&page=1&pageSize=10'
 		)
 			.then((response) => response.json())
 			.then((response) => response.orders);

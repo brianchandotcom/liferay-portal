@@ -12,6 +12,8 @@
  * details.
  */
 
+import {fetch} from 'frontend-js-web';
+
 import launcher from '../../../src/main/resources/META-INF/resources/components/item_finder/entry';
 import slugify from '../../../src/main/resources/META-INF/resources/utilities/slugify';
 
@@ -41,7 +43,6 @@ function selectItem(specification) {
 					[Liferay.ThemeDisplay.getLanguageId()]: name,
 				},
 			}),
-			credentials: 'include',
 			headers,
 			method: 'POST',
 		}
@@ -56,7 +57,6 @@ function addNewItem(name) {
 				[Liferay.ThemeDisplay.getLanguageId()]: name,
 			},
 		}),
-		credentials: 'include',
 		headers,
 		method: 'POST',
 	})

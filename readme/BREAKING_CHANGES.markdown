@@ -842,3 +842,25 @@ This change was made to enable image drag and drop handling in CKEditor, and
 have a common solution for both Alloy Editor and CKEditor.
 
 ---------------------------------------
+
+### Moving lexicon icons path
+- **Date:** 2020-Aug-17
+- **JIRA Ticket:** [LPS-115812](https://issues.liferay.com/browse/LPS-115812)
+
+### What changed?
+
+The path for the lexicon icons has been changed from `themeDisplay.getPathThemeImages() + "/lexicon/icons.svg` to `themeDisplay.getPathThemeImages() + "/clay/icons.svg`
+
+### Who is affected
+
+This affects custom solutions that use this path directly. The gradle task for building the icons on the `lexicon` path will be removed.
+
+### How should I update my code?
+
+Update the path to reference `clay` instead of `lexicon`
+
+#### Why was this change made?
+
+This change was made to unify references to the icon spritemap.
+
+---------------------------------------

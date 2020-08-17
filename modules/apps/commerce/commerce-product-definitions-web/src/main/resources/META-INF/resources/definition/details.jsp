@@ -201,7 +201,6 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 					var headers = new Headers({
 						Accept: 'application/json',
 						'Content-Type': 'application/json',
-						'x-csrf-token': Liferay.authToken,
 					});
 
 					var id = <%= cpDefinitionsDisplayContext.getCPDefinitionId() %>;
@@ -209,7 +208,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 
 					function selectItem(specification) {
 						debugger;
-						return fetch(
+						return Liferay.Util.fetch(
 							'/o/headless-commerce-admin-catalog/v1.0/products/' +
 								id +
 								'/productSpecifications/',
@@ -230,7 +229,6 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 											: {}
 									)
 								),
-								credentials: 'include',
 								headers: headers,
 								method: 'POST',
 							}
@@ -252,15 +250,17 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 							nameDefinition[themeDisplay.getDefaultLanguageId()] = name;
 						}
 
-						return fetch('/o/headless-commerce-admin-catalog/v1.0/specifications', {
-							body: JSON.stringify({
-								key: slugify.default(name),
-								title: nameDefinition,
-							}),
-							credentials: 'include',
-							headers: headers,
-							method: 'POST',
-						})
+						return Liferay.Util.fetch(
+							'/o/headless-commerce-admin-catalog/v1.0/specifications',
+							{
+								body: JSON.stringify({
+									key: slugify.default(name),
+									title: nameDefinition,
+								}),
+								headers: headers,
+								method: 'POST',
+							}
+						)
 							.then(function (response) {
 								if (response.ok) {
 									return response.json();

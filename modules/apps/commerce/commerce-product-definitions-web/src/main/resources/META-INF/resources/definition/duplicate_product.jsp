@@ -59,7 +59,6 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 						var headers = new Headers({
 							Accept: 'application/json',
 							'Content-Type': 'application/json',
-							'x-csrf-token': Liferay.authToken,
 						});
 
 						var formattedData = {
@@ -73,12 +72,11 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 							productType: <portlet:namespace/>product.productType,
 						};
 
-						fetch(
+						Liferay.Util.fetch(
 							'/o/headless-commerce-admin-catalog/v1.0/products/' +
 								payload.productId,
 							{
 								body: JSON.stringify(formattedData),
-								credentials: 'include',
 								headers: headers,
 								method: 'patch',
 							}

@@ -69,16 +69,14 @@ CommerceShipmentDisplayContext commerceShipmentDisplayContext = (CommerceShipmen
 		window,
 		'<portlet:namespace />updateAddressField',
 		function <portlet:namespace />updateAddressField(commerceAccountId) {
-			return fetch(
+			return Liferay.Util.fetch(
 				'/o/headless-commerce-admin-account/v1.0/accounts/' +
 					commerceAccountId +
 					'/accountAddresses/',
 				{
-					credentials: 'include',
 					headers: new Headers({
 						Accept: 'application/json',
 						'Content-Type': 'application/json',
-						'x-csrf-token': Liferay.authToken,
 					}),
 					method: 'GET',
 				}

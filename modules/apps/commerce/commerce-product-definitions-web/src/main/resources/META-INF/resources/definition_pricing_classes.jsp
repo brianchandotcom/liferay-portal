@@ -32,14 +32,13 @@ CProduct cProduct = cpDefinition.getCProduct();
 			var headers = new Headers({
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
-				'x-csrf-token': Liferay.authToken,
 			});
 
 			var productId = <%= cpDefinition.getCProductId() %>;
 			var productExternalReferenceCode = '<%= cProduct.getExternalReferenceCode() %>';
 
 			function selectItem(productPricingClass) {
-				return fetch(
+				return Liferay.Util.fetch(
 					'/o/headless-commerce-admin-catalog/v1.0/product-groups/' +
 						productPricingClass.id +
 						'/product-group-products/',
@@ -51,7 +50,6 @@ CProduct cProduct = cpDefinition.getCProduct();
 								productPricingClass.externalReferenceCode,
 							productGroupId: productPricingClass.id,
 						}),
-						credentials: 'include',
 						headers: headers,
 						method: 'POST',
 					}
@@ -78,14 +76,16 @@ CProduct cProduct = cpDefinition.getCProduct();
 					nameDefinition[themeDisplay.getDefaultLanguageId()] = name;
 				}
 
-				return fetch('/o/headless-commerce-admin-catalog/v1.0/product-groups', {
-					body: JSON.stringify({
-						title: nameDefinition,
-					}),
-					credentials: 'include',
-					headers: headers,
-					method: 'POST',
-				})
+				return Liferay.Util.fetch(
+					'/o/headless-commerce-admin-catalog/v1.0/product-groups',
+					{
+						body: JSON.stringify({
+							title: nameDefinition,
+						}),
+						headers: headers,
+						method: 'POST',
+					}
+				)
 					.then(function (response) {
 						if (response.ok) {
 							return response.json();

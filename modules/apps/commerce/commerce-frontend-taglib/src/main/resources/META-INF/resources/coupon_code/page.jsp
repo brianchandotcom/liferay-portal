@@ -57,9 +57,7 @@ if (commerceOrder != null) {
 					var actionURL =
 						'<%= PortalUtil.getPortalURL(request) + "/o/commerce-ui/order/" + commerceOrder.getCommerceOrderId() + "/coupon-code" %>';
 
-					fetch(actionURL, {
-						credentials: 'include',
-						headers: new Headers({'x-csrf-token': Liferay.authToken}),
+					Liferay.Util.fetch(actionURL, {
 						method: 'post',
 					})
 						.then(function (res) {
@@ -113,9 +111,7 @@ if (commerceOrder != null) {
 						window.document.querySelector('#<portlet:namespace />couponCode')
 							.value;
 
-					fetch(actionURL, {
-						credentials: 'include',
-						headers: new Headers({'x-csrf-token': Liferay.authToken}),
+					Liferay.Util.fetch(actionURL, {
 						method: 'post',
 					})
 						.then(function (res) {

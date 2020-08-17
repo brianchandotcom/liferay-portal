@@ -30,13 +30,12 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 			var headers = new Headers({
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
-				'x-csrf-token': Liferay.authToken,
 			});
 
 			var productId = <%= cpDefinition.getCProductId() %>;
 
 			function selectItem(option) {
-				return fetch(
+				return Liferay.Util.fetch(
 					'/o/headless-commerce-admin-catalog/v1.0/products/' +
 						productId +
 						'/productOptions/',
@@ -53,7 +52,6 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 								productOptionValues: [],
 							},
 						]),
-						credentials: 'include',
 						headers: headers,
 						method: 'POST',
 					}
@@ -85,16 +83,18 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 					nameDefinition[themeDisplay.getDefaultLanguageId()] = name;
 				}
 
-				return fetch('/o/headless-commerce-admin-catalog/v1.0/options', {
-					body: JSON.stringify({
-						fieldType: 'select',
-						key: slugify.default(name),
-						name: nameDefinition,
-					}),
-					credentials: 'include',
-					headers: headers,
-					method: 'POST',
-				})
+				return Liferay.Util.fetch(
+					'/o/headless-commerce-admin-catalog/v1.0/options',
+					{
+						body: JSON.stringify({
+							fieldType: 'select',
+							key: slugify.default(name),
+							name: nameDefinition,
+						}),
+						headers: headers,
+						method: 'POST',
+					}
+				)
 					.then(function (response) {
 						if (response.ok) {
 							return response.json();

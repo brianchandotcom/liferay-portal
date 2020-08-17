@@ -18,20 +18,13 @@ import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.base.BaseCTDisplayRenderer;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ThemeLocalService;
-import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -39,12 +32,10 @@ import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.util.Locale;
-import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -58,27 +49,18 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 
 	@Override
 	public String getEditURL(
-		HttpServletRequest httpServletRequest, Layout layout) {
+			HttpServletRequest httpServletRequest, Layout layout)
+		throws PortalException {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		try {
-			if (!_layoutPermission.contains(
-					themeDisplay.getPermissionChecker(), layout,
-					ActionKeys.UPDATE)) {
+		if (!_layoutPermission.contains(
+				themeDisplay.getPermissionChecker(), layout,
+				ActionKeys.UPDATE) ||
+			layout.isSystem()) {
 
-				return null;
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
-			}
-		}
-
-		if (layout.isSystem()) {
 			return null;
 		}
 
@@ -107,9 +89,7 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 	}
 
 	@Override
-	public String getTitle(Locale locale, Layout layout)
-		throws PortalException {
-
+	public String getTitle(Locale locale, Layout layout) {
 		return layout.getName(locale);
 	}
 
@@ -119,88 +99,92 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 	}
 
 	@Override
-	protected CTService<Layout> getCTService() {
-		return _layoutLocalService;
-	}
+	protected void buildDisplay(DisplayBuilder<Layout> displayBuilder) {
+		Layout layout = displayBuilder.getModel();
 
-	@Override
-	protected String[] getDisplayAttributeNames() {
-		return _DISPLAY_ATTRIBUTE_NAMES;
-	}
+		displayBuilder.display(
+			"name", layout.getName(displayBuilder.getLocale())
+		).display(
+			"created-by",
+			() -> {
+				String userName = layout.getUserName();
 
-	@Override
-	protected Map<String, Object> getDisplayAttributes(
-		Locale locale, Layout layout) {
+				if (Validator.isNotNull(userName)) {
+					return userName;
+				}
 
-		Map<String, Object> displayAttributes =
-			LinkedHashMapBuilder.<String, Object>put(
-				"name", layout.getName(locale)
-			).build();
-
-		String userName = layout.getUserName();
-
-		if (Validator.isNotNull(userName)) {
-			displayAttributes.put("created-by", userName);
-		}
-
-		displayAttributes.put("create-date", layout.getCreateDate());
-		displayAttributes.put("last-modified", layout.getModifiedDate());
-
-		Group group = layout.getGroup();
-
-		displayAttributes.put("site", group.getName(locale));
-
-		try {
-			Theme theme = layout.getTheme();
-
-			displayAttributes.put("theme", theme.getName());
-
-			ColorScheme colorScheme = layout.getColorScheme();
-
-			displayAttributes.put("color-scheme", colorScheme.getName());
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
+				return null;
 			}
-		}
+		).display(
+			"create-date", layout.getCreateDate()
+		).display(
+			"last-modified", layout.getModifiedDate()
+		).display(
+			"site",
+			() -> {
+				Group group = layout.getGroup();
 
-		try {
-			long styleBookEntryId = layout.getStyleBookEntryId();
-
-			if (styleBookEntryId > 0) {
-				StyleBookEntry styleBookEntry =
-					_styleBookEntryLocalService.getStyleBookEntry(
-						layout.getStyleBookEntryId());
-
-				displayAttributes.put("style-book", styleBookEntry.getName());
+				return group.getName(displayBuilder.getLocale());
 			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
+		).display(
+			"theme",
+			() -> {
+				Theme theme = layout.getTheme();
+
+				return theme.getName();
 			}
-		}
+		).display(
+			"color-scheme",
+			() -> {
+				ColorScheme colorScheme = layout.getColorScheme();
 
-		displayAttributes.putAll(super.getDisplayAttributes(locale, layout));
+				return colorScheme.getName();
+			}
+		).display(
+			"style-book",
+			() -> {
+				long styleBookEntryId = layout.getStyleBookEntryId();
 
-		return displayAttributes;
+				if (styleBookEntryId > 0) {
+					StyleBookEntry styleBookEntry =
+						_styleBookEntryLocalService.fetchStyleBookEntry(
+							layout.getStyleBookEntryId());
+
+					if (styleBookEntry != null) {
+						return styleBookEntry.getName();
+					}
+				}
+
+				return null;
+			}
+		).display(
+			"css", layout.getCss()
+		).display(
+			"description", layout.getDescription(displayBuilder.getLocale())
+		).display(
+			"friendlyURL", layout.getFriendlyURL()
+		).display(
+			"hidden", layout.isHidden()
+		).display(
+			"keywords", layout.getKeywords()
+		).display(
+			"lastPublishDate", layout.getLastPublishDate()
+		).display(
+			"priority", layout.getPriority()
+		).display(
+			"publishDate", layout.getPublishDate()
+		).display(
+			"robots", layout.getRobots()
+		).display(
+			"system", layout.isSystem()
+		).display(
+			"title", layout.getTitle()
+		).display(
+			"type", layout.getType()
+		).display(
+			"typeSettings", layout.getTypeSettings()
+		);
 	}
-
-	private static final String[] _DISPLAY_ATTRIBUTE_NAMES = {
-		"css", "description", "friendlyURL", "hidden", "keywords",
-		"lastPublishDate", "priority", "publishDate", "robots", "system",
-		"title", "type", "typeSettings"
-	};
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutCTDisplayRenderer.class);
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPermission _layoutPermission;
@@ -208,13 +192,7 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 	@Reference
 	private Portal _portal;
 
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)")
-	private ServletContext _servletContext;
-
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
-
-	@Reference
-	private ThemeLocalService _themeLocalService;
 
 }

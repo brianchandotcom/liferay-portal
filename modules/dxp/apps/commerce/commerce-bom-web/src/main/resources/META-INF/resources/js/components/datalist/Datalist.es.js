@@ -125,12 +125,7 @@ class Datalist extends Component {
 	render() {
 		const disabledState = this.getDisabledState();
 
-		const {
-			connectorSettings,
-			datasourceSettings,
-			disabled,
-			...baseProps
-		} = this.props;
+		const {...baseProps} = this.props;
 
 		return (
 			<BaseDatalist

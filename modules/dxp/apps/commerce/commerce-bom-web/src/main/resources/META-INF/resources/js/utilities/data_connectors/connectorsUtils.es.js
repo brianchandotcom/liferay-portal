@@ -82,8 +82,8 @@ export function getStore() {
 const dataConnectorOrchestrator = {
 	connectors,
 	getConnectorById,
-	subscribe,
 	getStore,
+	subscribe,
 };
 
 window.dataConnectorOrchestrator = dataConnectorOrchestrator;

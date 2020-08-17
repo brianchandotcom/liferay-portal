@@ -31,7 +31,7 @@ export function PartFinder(props) {
 	const [page, updatePage] = useState('base');
 	const {actions, state} = useContext(StoreContext);
 
-	const connector = useMemo(() => {
+	useMemo(() => {
 		if (props.connectorSettings) {
 			return new Connector(props.connectorSettings);
 		}
@@ -39,8 +39,9 @@ export function PartFinder(props) {
 		return null;
 	}, [props.connectorSettings]);
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const updateData = useCallback(() => {
-		const filteredUrl = /^.*(folderId|areaId)=([0-9a-zA-Z\-]+)/.exec(
+		const filteredUrl = /^.*(folderId|areaId)=([0-9a-zA-Z-]+)/.exec(
 			props.history.location.search
 		);
 		const id = filteredUrl ? filteredUrl[2] : null;
@@ -63,14 +64,14 @@ export function PartFinder(props) {
 	function initialize() {
 		actions.initialize({
 			areasEndpoint: props.areasEndpoint,
-			foldersEndpoint: props.foldersEndpoint,
-			spritemap: props.spritemap,
-			basename: props.basename || '/',
 			basePathUrl: props.basePathUrl,
+			basename: props.basename || '/',
+			foldersEndpoint: props.foldersEndpoint,
 			history: props.history,
+			spritemap: props.spritemap,
 		});
 
-		props.history.listen((e) => {
+		props.history.listen(() => {
 			updateData();
 		});
 

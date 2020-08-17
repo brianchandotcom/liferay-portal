@@ -37,9 +37,9 @@ describe('PaneHeader', () => {
 		});
 		expect(wrapper.children('PaneViewSelector').props()).toMatchObject({
 			listBy: inputProps.listBy,
+			onViewSelected: inputProps.onViewSelected,
 			totalAccounts: inputProps.totalAccounts,
 			totalUsers: inputProps.totalUsers,
-			onViewSelected: inputProps.onViewSelected,
 		});
 		expect(wrapper.children('PaneSearchBar').props()).toMatchObject({
 			onLookUp: inputProps.onLookUp,

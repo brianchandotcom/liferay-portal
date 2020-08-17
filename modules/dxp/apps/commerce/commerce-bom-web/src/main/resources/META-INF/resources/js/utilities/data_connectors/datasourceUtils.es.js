@@ -9,6 +9,8 @@
  * distribution rights of the Software.
  */
 
+/* eslint-disable sort-keys */
+
 export function createFilterObj(field, value = null, operations = 'contains') {
 	return {
 		field,

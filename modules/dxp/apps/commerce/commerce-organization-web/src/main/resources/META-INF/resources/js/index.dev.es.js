@@ -26,6 +26,6 @@ window.Liferay = {
 	},
 };
 
-export default function (id, props, context) {
+export default function (id) {
 	render(<Container />, document.getElementById(id));
 }

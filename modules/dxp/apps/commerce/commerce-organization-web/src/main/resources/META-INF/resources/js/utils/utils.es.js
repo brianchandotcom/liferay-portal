@@ -96,7 +96,7 @@ export function getColorHue(prevHue) {
 export function setupDataset(data) {
 	const sanitizedData = {...data};
 
-	sanitizedData.organizations.length &&
+	if (sanitizedData.organizations.length) {
 		sanitizedData.organizations.forEach((orgObject, index) => {
 			delete orgObject.organizations;
 
@@ -108,6 +108,7 @@ export function setupDataset(data) {
 				prevColor
 			)},75%,75%)`;
 		});
+	}
 
 	return sanitizedData;
 }

@@ -53,7 +53,8 @@ export default class Datasource {
 				{}
 			);
 		}
-		this.filters;
+
+		return this.filters;
 	}
 
 	setFilter(field, value, operations = 'eq') {

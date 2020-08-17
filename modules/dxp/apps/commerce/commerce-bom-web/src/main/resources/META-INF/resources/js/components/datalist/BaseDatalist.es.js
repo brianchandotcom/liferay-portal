@@ -130,7 +130,7 @@ export function BaseDatalist(props) {
 		);
 	}
 
-	function handleOpeningAnimationEnd(e) {
+	function handleOpeningAnimationEnd() {
 		setDropdownState('expanded');
 		window.addEventListener('click', handleOutsideClick, {once: true});
 	}
@@ -166,9 +166,9 @@ export function BaseDatalist(props) {
 		if (addedDataContainer.current) {
 			setTimeout(() => {
 				addedDataContainer.current.scrollTo({
-					top: 0,
-					left: Number.MAX_SAFE_INTEGER,
 					behaviour: 'smooth',
+					left: Number.MAX_SAFE_INTEGER,
+					top: 0,
 				});
 			}, 50);
 		}

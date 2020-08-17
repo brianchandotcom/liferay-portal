@@ -49,7 +49,7 @@ export function StoreProvider(props) {
 	);
 
 	return (
-		<StoreContext.Provider value={{state, actions}}>
+		<StoreContext.Provider value={{actions, state}}>
 			{props.children}
 		</StoreContext.Provider>
 	);

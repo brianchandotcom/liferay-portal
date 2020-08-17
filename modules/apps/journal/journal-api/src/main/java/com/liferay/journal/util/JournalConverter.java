@@ -31,6 +31,10 @@ public interface JournalConverter {
 	public String getContent(DDMStructure ddmStructure, Fields ddmFields)
 		throws Exception;
 
+	public String getContent(
+			DDMStructure ddmStructure, Fields ddmFields, long groupId)
+		throws Exception;
+
 	public Fields getDDMFields(DDMStructure ddmStructure, Document document)
 		throws PortalException;
 

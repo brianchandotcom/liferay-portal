@@ -101,7 +101,7 @@ describe('Edit number form', () => {
 		mount(<EditNumberForm />);
 	});
 
-	it('don't display a delete button if state !== "edit"', () => {
+	it('do not display a delete button if state !== "edit"', () => {
 		jest.spyOn(React, 'useContext').mockImplementation(() => {
 			const context = {
 				...mockedContext,

@@ -10,9 +10,8 @@
  */
 
 import MembersPane from 'components/MembersPane';
-import {mount, render, shallow} from 'enzyme';
+import {shallow} from 'enzyme';
 import React from 'react';
-import * as CONSTANTS from 'utils/constants.es';
 
 jest.mock('utils/utils.es', () => {
 	return {
@@ -54,9 +53,9 @@ describe('MembersPane', () => {
 	describe('Instantiation', () => {
 		it('has the correct initial state on render', () => {
 			const initialState = {
-				searchQuery: '',
-				listBy: 'user',
 				isLoading: false,
+				listBy: 'user',
+				searchQuery: '',
 			};
 
 			expect(wrapper.state()).toMatchObject(initialState);
@@ -73,7 +72,7 @@ describe('MembersPane', () => {
 
 			jest.spyOn(component, 'handleUpdate');
 
-			wrapper.setProps({id: 42, apiURL: 'http://someUrl.com'});
+			wrapper.setProps({apiURL: 'http://someUrl.com', id: 42});
 
 			return component.$didUpdate.then(() => {
 				expect(component.handleUpdate).toHaveBeenCalledWith(

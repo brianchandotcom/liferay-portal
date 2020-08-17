@@ -25,12 +25,22 @@ const mockedContext = {
 			spritemap: '/spritemap.test.svg',
 		},
 		area: {
-			name: 'test name',
-			imageUrl: '/testImg.jpg',
-			spotFormData: null,
 			highlightedDetail: {
 				number: 1,
 			},
+			imageUrl: '/testImg.jpg',
+			name: 'test name',
+			products: [
+				{
+					id: 'PR01',
+					name: 'Product 1',
+					price: '$ 12.99',
+					sku: 'sku01',
+					thumbnailUrl: '/test-product',
+					url: '/test-product',
+				},
+			],
+			spotFormData: null,
 			spots: [
 				{
 					id: 'SP01',
@@ -51,16 +61,6 @@ const mockedContext = {
 					productId: 'PR01',
 				},
 			],
-			products: [
-				{
-					id: 'PR01',
-					name: 'Product 1',
-					price: '$ 12.99',
-					sku: 'sku01',
-					url: '/test-product',
-					thumbnailUrl: '/test-product',
-				},
-			],
 		},
 	},
 };
@@ -72,7 +72,7 @@ describe('PictureBox', () => {
 		mount(<PictureBox />);
 	});
 
-	it('should display the picture', () => {
+	it('display the picture', () => {
 		const pictureBox = shallow(<PictureBox />);
 		expect(pictureBox.find('.picture-box__image').prop('src')).toEqual(
 			mockedContext.state.area.imageUrl
@@ -83,11 +83,11 @@ describe('PictureBox', () => {
 		const pictureBox = mount(<PictureBox />);
 		const partDetails = pictureBox.find(PartDetail);
 
-		it('should display the parts details', () => {
+		it('display the parts details', () => {
 			expect(partDetails.length).toEqual(2);
 		});
 
-		it('should receive the correct props', () => {
+		it('receive the correct props', () => {
 			const firstPartDetailProps = partDetails.first().props();
 
 			expect(firstPartDetailProps.id).toEqual('SP01');

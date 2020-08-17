@@ -10,7 +10,7 @@
  */
 
 import {mount, shallow} from 'enzyme';
-import React, {useContext} from 'react';
+import React from 'react';
 
 import DetailsBox, {
 	DetailsListElement,
@@ -22,6 +22,7 @@ const mockedContext = {
 			spritemap: '/spritemap.test.svg',
 		},
 		area: {
+			availableProducts: [],
 			highlightedDetail: {
 				number: 1,
 			},
@@ -63,7 +64,6 @@ const mockedContext = {
 					productId: 'PR03',
 				},
 			],
-			availableProducts: [],
 			mappedProducts: [
 				{
 					id: 'PR01',
@@ -95,12 +95,12 @@ describe('Details box', () => {
 		mount(<DetailsBox />);
 	});
 
-	it('Should correctly group the products', () => {
+	it('correctly group the products', () => {
 		const detailsBox = shallow(<DetailsBox />);
 		expect(detailsBox.find(DetailsListElement).length).toBe(3);
 	});
 
-	it('Should calculate correctly the products to be displayed', () => {
+	it('calculate correctly the products to be displayed', () => {
 		const detailsBox = shallow(<DetailsBox />);
 		const firstListElementProps = detailsBox
 			.find(DetailsListElement)

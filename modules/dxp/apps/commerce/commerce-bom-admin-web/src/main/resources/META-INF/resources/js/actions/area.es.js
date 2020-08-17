@@ -10,44 +10,44 @@
  */
 
 export const actionDefinition = {
+	CREATE_SPOT: 'createSpot',
+	DELETE_SPOT_FULFILLED: 'deleteSpotFulfilled',
+	DELETE_SPOT_PENDING: 'deleteSpotPending',
+	DELETE_SPOT_REJECTED: 'deleteSpotRejected',
+	GET_AREA_FULFILLED: 'getAreaFulfilled',
+	GET_AREA_PENDING: 'getAreaPending',
+	GET_AREA_REJECTED: 'getAreaRejected',
+	GET_PRODUCTS_FULFILLED: 'getProductsFulfilled',
+	GET_PRODUCTS_PENDING: 'getProductsPending',
+	GET_PRODUCTS_REJECTED: 'getProductsRejected',
 	HIGHLIGHT_DETAIL: 'highlightDetail',
 	SELECT_DETAIL: 'selectDetail',
+	RESET_FORM_DATA: 'resetFormData',
 	RESET_PRODUCTS: 'resetProducts',
 	SELECT_SPOT: 'selectSpot',
-	UNSELECT_SPOT: 'unselectSpot',
-	CREATE_SPOT: 'createSpot',
-	RESET_FORM_DATA: 'resetFormData',
-	UPDATE_FORM_VALUE: 'updateFormValue',
-	GET_AREA_FULFILLED: 'getAreaFulfilled',
-	GET_AREA_REJECTED: 'getAreaRejected',
-	GET_AREA_PENDING: 'getAreaPending',
-	GET_PRODUCTS_FULFILLED: 'getProductsFulfilled',
-	GET_PRODUCTS_REJECTED: 'getProductsRejected',
-	GET_PRODUCTS_PENDING: 'getProductsPending',
-	SUBMIT_NEW_SPOT_PENDING: 'submitNewSpotPending',
 	SUBMIT_NEW_SPOT_FULFILLED: 'submitNewSpotFulfilled',
+	SUBMIT_NEW_SPOT_PENDING: 'submitNewSpotPending',
 	SUBMIT_NEW_SPOT_REJECTED: 'submitNewSpotRejected',
-	SUBMIT_SPOT_CHANGES_PENDING: 'submitSpotChangesPending',
 	SUBMIT_SPOT_CHANGES_FULFILLED: 'submitSpotChangesFulfilled',
+	SUBMIT_SPOT_CHANGES_PENDING: 'submitSpotChangesPending',
 	SUBMIT_SPOT_CHANGES_REJECTED: 'submitSpotChangesRejected',
-	DELETE_SPOT_PENDING: 'deleteSpotPending',
-	DELETE_SPOT_FULFILLED: 'deleteSpotFulfilled',
-	DELETE_SPOT_REJECTED: 'deleteSpotRejected',
+	UNSELECT_SPOT: 'unselectSpot',
+	UPDATE_FORM_VALUE: 'updateFormValue',
 };
 
 const highlightDetail = (dispatch) => (number, showFirstResume = false) =>
 	dispatch({
-		type: actionDefinition.HIGHLIGHT_DETAIL,
 		payload: {
 			number,
 			showFirstResume,
 		},
+		type: actionDefinition.HIGHLIGHT_DETAIL,
 	});
 
 const select = (dispatch) => (id) =>
 	dispatch({
-		type: actionDefinition.SELECT_DETAIL,
 		payload: id,
+		type: actionDefinition.SELECT_DETAIL,
 	});
 
 const getArea = (dispatch) => (endpoint, id) => {
@@ -59,14 +59,14 @@ const getArea = (dispatch) => (endpoint, id) => {
 		.then((response) => response.json())
 		.then((data) =>
 			dispatch({
-				type: actionDefinition.GET_AREA_FULFILLED,
 				payload: data,
+				type: actionDefinition.GET_AREA_FULFILLED,
 			})
 		)
 		.catch((err) =>
 			dispatch({
-				type: actionDefinition.GET_AREA_REJECTED,
 				payload: err,
+				type: actionDefinition.GET_AREA_REJECTED,
 			})
 		);
 };
@@ -83,14 +83,14 @@ const getProducts = (dispatch) => (endpoint, query) => {
 		.then((response) => response.json())
 		.then((data) =>
 			dispatch({
-				type: actionDefinition.GET_PRODUCTS_FULFILLED,
 				payload: data && data.items,
+				type: actionDefinition.GET_PRODUCTS_FULFILLED,
 			})
 		)
 		.catch((err) =>
 			dispatch({
-				type: actionDefinition.GET_PRODUCTS_REJECTED,
 				payload: err,
+				type: actionDefinition.GET_PRODUCTS_REJECTED,
 			})
 		);
 };
@@ -102,14 +102,14 @@ const resetProducts = (dispatch) => () =>
 
 const createSpot = (dispatch) => (position) =>
 	dispatch({
-		type: actionDefinition.CREATE_SPOT,
 		payload: position,
+		type: actionDefinition.CREATE_SPOT,
 	});
 
 const selectSpot = (dispatch) => (spotId) =>
 	dispatch({
-		type: actionDefinition.SELECT_SPOT,
 		payload: spotId,
+		type: actionDefinition.SELECT_SPOT,
 	});
 
 const unselectSpot = (dispatch) => () =>
@@ -119,11 +119,11 @@ const unselectSpot = (dispatch) => () =>
 
 const updateFormValue = (dispatch) => (key, value) =>
 	dispatch({
-		type: actionDefinition.UPDATE_FORM_VALUE,
 		payload: {
 			key,
 			value,
 		},
+		type: actionDefinition.UPDATE_FORM_VALUE,
 	});
 
 const submitNewSpot = (dispatch) => (endpoint, areaId, formData) => {
@@ -152,8 +152,8 @@ const submitNewSpot = (dispatch) => (endpoint, areaId, formData) => {
 		})
 		.catch((err) =>
 			dispatch({
-				type: actionDefinition.SUBMIT_NEW_SPOT_REJECTED,
 				payload: err,
+				type: actionDefinition.SUBMIT_NEW_SPOT_REJECTED,
 			})
 		);
 };
@@ -183,8 +183,8 @@ const deleteSpot = (dispatch) => (endpoint, areaId, spotId) => {
 		})
 		.catch((err) =>
 			dispatch({
-				type: actionDefinition.DELETE_SPOT_REJECTED,
 				payload: err,
+				type: actionDefinition.DELETE_SPOT_REJECTED,
 			})
 		);
 };
@@ -220,25 +220,25 @@ const submitSpotChanges = (dispatch) => (endpoint, areaId, formData) => {
 		})
 		.catch((err) =>
 			dispatch({
-				type: actionDefinition.SUBMIT_SPOT_CHANGES_REJECTED,
 				payload: err,
+				type: actionDefinition.SUBMIT_SPOT_CHANGES_REJECTED,
 			})
 		);
 };
 
 export const actions = {
-	getArea,
-	highlightDetail,
-	select,
-	getProducts,
-	resetProducts,
 	createSpot,
+	deleteSpot,
+	getArea,
+	getProducts,
+	highlightDetail,
+	resetProducts,
+	select,
+	submitNewSpot,
 	selectSpot,
+	submitSpotChanges,
 	unselectSpot,
 	updateFormValue,
-	submitNewSpot,
-	deleteSpot,
-	submitSpotChanges,
 };
 
 export default actions;

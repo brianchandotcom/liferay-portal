@@ -16,23 +16,23 @@ import React from 'react';
 describe('PaneHeader', () => {
 	it('renders the pane header with the PaneOrgInfo, PaneViewSelector and PaneSearchBar components', () => {
 		const inputProps = {
-			orgName: 'Org name',
-			totalSubOrg: 1,
 			colorIdentifier: 'hsl(0,100%,100%)',
+			listBy: 'user',
 			onLookUp: expect.any(Function),
 			onViewSelected: expect.any(Function),
-			totalAccounts: 1,
-			totalUsers: 1,
+			orgName: 'Org name',
 			spritemap: expect.any(String),
-			listBy: 'user',
+			totalAccounts: 1,
+			totalSubOrg: 1,
+			totalUsers: 1,
 		};
 
 		const wrapper = shallow(<PaneHeader {...inputProps} />);
 
 		expect(wrapper.children('PaneOrgInfo').props()).toMatchObject({
-			orgName: inputProps.orgName,
 			childrenNo: inputProps.totalSubOrg,
 			colorIdentifier: inputProps.colorIdentifier,
+			orgName: inputProps.orgName,
 			showMenu: expect.any(Function),
 		});
 		expect(wrapper.children('PaneViewSelector').props()).toMatchObject({

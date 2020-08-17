@@ -69,16 +69,16 @@ describe('Utility functions', () => {
 			const outputPayload = {
 				organizations: [
 					{
-						name: 'org1',
 						colorIdentifier: expect.stringMatching(
 							expectedHSLPattern
 						),
+						name: 'org1',
 					},
 					{
-						name: 'org2',
 						colorIdentifier: expect.stringMatching(
 							expectedHSLPattern
 						),
+						name: 'org2',
 					},
 				],
 			};
@@ -97,7 +97,7 @@ describe('Utility functions', () => {
 				baseURL: 'http://someDomain.com',
 				id: '1',
 				path: 'users',
-				queryParams: {pageStart: 1, pageSize: 10, q: 'query'},
+				queryParams: {pageSize: 10, pageStart: 1, q: 'query'},
 			};
 		});
 

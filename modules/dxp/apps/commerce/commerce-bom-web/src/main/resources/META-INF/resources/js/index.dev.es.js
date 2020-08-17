@@ -29,13 +29,13 @@ window.themeDisplay = {
 };
 
 const props = {
-	spritemap: '/test-icons.svg',
-	modelSelectorMakerEndpoint: apiEndpointDefinitions.MAKER,
-	modelSelectorYearEndpoint: apiEndpointDefinitions.YEAR,
-	modelSelectorModelEndpoint: apiEndpointDefinitions.MODEL,
 	areasEndpoint: apiEndpointDefinitions.AREAS,
 	foldersEndpoint: apiEndpointDefinitions.FOLDERS,
+	modelSelectorMakerEndpoint: apiEndpointDefinitions.MAKER,
+	modelSelectorModelEndpoint: apiEndpointDefinitions.MODEL,
+	modelSelectorYearEndpoint: apiEndpointDefinitions.YEAR,
 	showFilters: false,
+	spritemap: '/test-icons.svg',
 };
 
 ReactDOM.render(

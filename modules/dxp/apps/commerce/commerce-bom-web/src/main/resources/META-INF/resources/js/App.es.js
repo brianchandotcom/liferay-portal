@@ -47,13 +47,8 @@ function App(props) {
 							id: 'carMakerDatalist',
 						}}
 						datasourceSettings={{
-							remote: {
-								read: props.modelSelectorMakerEndpoint,
-							},
 							labelField: 'name',
-							valueField: 'id',
 							on: {
-								parseResponse: (response) => response.data,
 								mapParameters: (data) => {
 									return `/${
 										data.filters && data.filters.length
@@ -63,7 +58,12 @@ function App(props) {
 											: ''
 									}`;
 								},
+								parseResponse: (response) => response.data,
 							},
+							remote: {
+								read: props.modelSelectorMakerEndpoint,
+							},
+							valueField: 'id',
 						}}
 						label={Liferay.Language.get('car-maker')}
 						multiselect={false}
@@ -74,8 +74,8 @@ function App(props) {
 					<Datalist
 						additionalClasses="mr-3"
 						connectorSettings={{
-							id: 'modelDatalist',
 							emitters: ['carMakerDatalist'],
+							id: 'modelDatalist',
 							on: {
 								notified: (values, setState, datasource) => {
 									const emittersHaveValuesSelected = Object.values(
@@ -96,8 +96,8 @@ function App(props) {
 										datasource.setFilter('car-maker', null);
 										datasource.setFilter('keyword', null);
 										setState({
-											disabled: true,
 											data: null,
+											disabled: true,
 											selected: null,
 										});
 									}
@@ -105,13 +105,8 @@ function App(props) {
 							},
 						}}
 						datasourceSettings={{
-							remote: {
-								read: props.modelSelectorModelEndpoint,
-							},
 							labelField: 'name',
-							valueField: 'id',
 							on: {
-								parseResponse: (response) => response.data,
 								mapParameters: (data) => {
 									return `/${
 										data.filters && data.filters.length
@@ -121,7 +116,12 @@ function App(props) {
 											: ''
 									}`;
 								},
+								parseResponse: (response) => response.data,
 							},
+							remote: {
+								read: props.modelSelectorModelEndpoint,
+							},
+							valueField: 'id',
 						}}
 						disabled={true}
 						label={Liferay.Language.get('model')}
@@ -132,8 +132,8 @@ function App(props) {
 
 					<Datalist
 						connectorSettings={{
-							id: 'yearDatalist',
 							emitters: ['carMakerDatalist', 'modelDatalist'],
+							id: 'yearDatalist',
 							on: {
 								notified: (values, setState, datasource) => {
 									const emittersHaveValuesSelected = Object.values(
@@ -159,8 +159,8 @@ function App(props) {
 										datasource.setFilter('car-maker', null);
 										datasource.setFilter('keyword', null);
 										setState({
-											disabled: true,
 											data: null,
+											disabled: true,
 											selected: null,
 										});
 									}
@@ -168,13 +168,8 @@ function App(props) {
 							},
 						}}
 						datasourceSettings={{
-							remote: {
-								read: props.modelSelectorYearEndpoint,
-							},
 							labelField: 'year',
-							valueField: 'year',
 							on: {
-								parseResponse: (response) => response.data,
 								mapParameters: (data) => {
 									return `/${
 										data.filters && data.filters.length
@@ -184,7 +179,12 @@ function App(props) {
 											: ''
 									}`;
 								},
+								parseResponse: (response) => response.data,
 							},
+							remote: {
+								read: props.modelSelectorYearEndpoint,
+							},
+							valueField: 'year',
 						}}
 						disabled={true}
 						label={Liferay.Language.get('year')}

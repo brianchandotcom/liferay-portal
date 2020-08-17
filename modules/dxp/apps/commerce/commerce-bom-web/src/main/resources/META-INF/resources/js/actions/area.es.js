@@ -10,26 +10,26 @@
  */
 
 export const actionDefinition = {
+	GET_AREA_FULFILLED: 'getAreaFulfilled',
+	GET_AREA_PENDING: 'getAreaPending',
+	GET_AREA_REJECTED: 'getAreaRejected',
 	HIGHLIGHT_DETAIL: 'highlightDetail',
 	SELECT_DETAIL: 'selectDetail',
-	GET_AREA_FULFILLED: 'getAreaFulfilled',
-	GET_AREA_REJECTED: 'getAreaRejected',
-	GET_AREA_PENDING: 'getAreaPending',
 };
 
 const highlightDetail = (dispatch) => (number, showFirstResume = false) =>
 	dispatch({
-		type: actionDefinition.HIGHLIGHT_DETAIL,
 		payload: {
 			number,
 			showFirstResume,
 		},
+		type: actionDefinition.HIGHLIGHT_DETAIL,
 	});
 
 const select = (dispatch) => (id) =>
 	dispatch({
-		type: actionDefinition.SELECT_DETAIL,
 		payload: id,
+		type: actionDefinition.SELECT_DETAIL,
 	});
 
 const getArea = (dispatch) => (endpoint, id) => {
@@ -44,14 +44,14 @@ const getArea = (dispatch) => (endpoint, id) => {
 		.then((response) => response.json())
 		.then((data) =>
 			dispatch({
-				type: actionDefinition.GET_AREA_FULFILLED,
 				payload: data,
+				type: actionDefinition.GET_AREA_FULFILLED,
 			})
 		)
 		.catch((err) =>
 			dispatch({
-				type: actionDefinition.GET_AREA_REJECTED,
 				payload: err,
+				type: actionDefinition.GET_AREA_REJECTED,
 			})
 		);
 };

@@ -26,12 +26,21 @@ const mockedContext = {
 			spritemap: '/spritemap.test.svg',
 		},
 		area: {
-			name: 'test name',
+			availableProducts: [],
 			imageUrl: '/testImg.jpg',
-			spotFormData: null,
 			highlightedDetail: {
 				number: 1,
 			},
+			mappedProducts: [
+				{
+					id: 'PR01',
+					name: 'Product 1',
+					price: '$ 12.99',
+					sku: 'sku01',
+				},
+			],
+			name: 'test name',
+			spotFormData: null,
 			spots: [
 				{
 					id: 'SP01',
@@ -52,15 +61,6 @@ const mockedContext = {
 					productId: 'PR01',
 				},
 			],
-			availableProducts: [],
-			mappedProducts: [
-				{
-					id: 'PR01',
-					name: 'Product 1',
-					price: '$ 12.99',
-					sku: 'sku01',
-				},
-			],
 		},
 	},
 };
@@ -72,7 +72,7 @@ describe('PictureBox', () => {
 		mount(<PictureBox />);
 	});
 
-	it('should display the picture', () => {
+	it('display the picture', () => {
 		const pictureBox = shallow(<PictureBox />);
 		expect(pictureBox.find('.picture-box__image').prop('src')).toEqual(
 			mockedContext.state.area.imageUrl
@@ -83,11 +83,11 @@ describe('PictureBox', () => {
 		const pictureBox = mount(<PictureBox />);
 		const partDetails = pictureBox.find(PartDetail);
 
-		it('should display the parts details', () => {
+		it('display the parts details', () => {
 			expect(partDetails.length).toEqual(2);
 		});
 
-		it('should receive the correct props', () => {
+		it('receive the correct props', () => {
 			const firstPartDetailProps = partDetails.first().props();
 
 			expect(firstPartDetailProps.id).toEqual('SP01');
@@ -104,12 +104,12 @@ describe('PictureBox', () => {
 			pictureBox.update();
 		});
 
-		it('should be invisible by default', () => {
+		it('be invisible by default', () => {
 			const cursorProps = pictureBox.find(CustomCursor).first().props();
 			expect(cursorProps.visible).toBe(false);
 		});
 
-		it('should be visible if mouse moves within the wrapper', () => {
+		it('be visible if mouse moves within the wrapper', () => {
 			const spotsWrapper = pictureBox
 				.find('.custom-cursor-wrapper')
 				.first();
@@ -119,7 +119,7 @@ describe('PictureBox', () => {
 			expect(cursorProps.visible).toBe(true);
 		});
 
-		it('should be correctly positioned', () => {
+		it('be correctly positioned', () => {
 			const spotsWrapper = pictureBox
 				.find('.custom-cursor-wrapper')
 				.first();

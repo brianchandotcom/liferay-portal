@@ -16,8 +16,8 @@ import React from 'react';
 describe('MembersList', () => {
 	it('renders the members list if there are members', () => {
 		const props = {
-				members: [{}, {}, {}],
 				isLoading: false,
+				members: [{}, {}, {}],
 			},
 			wrapper = shallow(<MembersList {...props} />);
 
@@ -27,8 +27,8 @@ describe('MembersList', () => {
 
 	it('renders NoMembers component if there are no members', () => {
 		const props = {
-				members: [],
 				isLoading: false,
+				members: [],
 			},
 			wrapper = shallow(<MembersList {...props} />);
 

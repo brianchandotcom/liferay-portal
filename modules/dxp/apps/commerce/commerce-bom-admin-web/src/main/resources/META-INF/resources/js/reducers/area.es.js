@@ -13,13 +13,13 @@ import {actionDefinition as appActionDefinition} from '../actions/app.es';
 import {actionDefinition} from '../actions/area.es';
 
 export const initialState = {
-	highlightedDetail: null,
-	spotFormData: null,
-	imageUrl: null,
-	name: null,
-	id: null,
-	mappedProducts: [],
 	availableProducts: [],
+	highlightedDetail: null,
+	id: null,
+	imageUrl: null,
+	mappedProducts: [],
+	name: null,
+	spotFormData: null,
 	spots: [],
 };
 
@@ -54,16 +54,16 @@ export default function reducer(state = initialState, action) {
 				id: action.payload,
 				number: spotData.number,
 				position: spotData.position,
-				query: relatedProduct.name,
 				productId: relatedProduct.id,
+				query: relatedProduct.name,
 			};
 
 			return {
 				...state,
 				spotFormData: {
-					state: 'edit',
 					changed: false,
 					originalData: spotFormData,
+					state: 'edit',
 					...spotFormData,
 				},
 			};
@@ -80,8 +80,8 @@ export default function reducer(state = initialState, action) {
 				...state,
 				spotFormData: {
 					...state.spotFormData,
-					[key]: value,
 					changed,
+					[key]: value,
 				},
 			};
 		case actionDefinition.UNSELECT_SPOT:

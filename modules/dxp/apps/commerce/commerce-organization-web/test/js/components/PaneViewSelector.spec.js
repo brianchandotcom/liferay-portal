@@ -16,16 +16,16 @@ import React from 'react';
 describe('PaneViewSelector', () => {
 	it('renders correctly with list-by USERS selected by default', () => {
 		const inputProps = {
-				onViewSelected: () => {},
-				totalUsers: 5,
-				totalAccounts: 4,
 				listBy: 'user',
+				onViewSelected: () => {},
+				totalAccounts: 4,
+				totalUsers: 5,
 			},
 			wrapper = mount(<PaneViewSelector {...inputProps} />);
 
 		expect(wrapper.find('span').get(0).props).toMatchObject({
-			className: 'selected-pane',
 			children: `${inputProps.listBy} (${inputProps.totalUsers})`,
+			className: 'selected-pane',
 			role: 'button',
 			tabIndex: '-1',
 		});
@@ -33,16 +33,16 @@ describe('PaneViewSelector', () => {
 
 	it('lists members by account if the related tab is selected', () => {
 		const inputProps = {
-				onViewSelected: () => {},
-				totalUsers: 5,
-				totalAccounts: 4,
 				listBy: 'account',
+				onViewSelected: () => {},
+				totalAccounts: 4,
+				totalUsers: 5,
 			},
 			wrapper = mount(<PaneViewSelector {...inputProps} />);
 
 		expect(wrapper.find('span').get(1).props).toMatchObject({
-			className: 'selected-pane',
 			children: `account (${inputProps.totalAccounts})`,
+			className: 'selected-pane',
 			role: 'button',
 			tabIndex: '-1',
 		});

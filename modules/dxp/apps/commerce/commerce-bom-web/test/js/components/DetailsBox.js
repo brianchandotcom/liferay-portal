@@ -25,6 +25,26 @@ const mockedContext = {
 			highlightedDetail: {
 				number: 1,
 			},
+			products: [
+				{
+					id: 'PR01',
+					name: 'Product 1',
+					price: '$ 12.99',
+					sku: 'sku01',
+				},
+				{
+					id: 'PR02',
+					name: 'Product 2',
+					price: '$ 12.99',
+					sku: 'sku02',
+				},
+				{
+					id: 'PR03',
+					name: 'Product 3',
+					price: '$ 12.99',
+					sku: 'sku03',
+				},
+			],
 			spots: [
 				{
 					id: 'SP01',
@@ -63,26 +83,6 @@ const mockedContext = {
 					productId: 'PR03',
 				},
 			],
-			products: [
-				{
-					id: 'PR01',
-					name: 'Product 1',
-					price: '$ 12.99',
-					sku: 'sku01',
-				},
-				{
-					id: 'PR02',
-					name: 'Product 2',
-					price: '$ 12.99',
-					sku: 'sku02',
-				},
-				{
-					id: 'PR03',
-					name: 'Product 3',
-					price: '$ 12.99',
-					sku: 'sku03',
-				},
-			],
 		},
 	},
 };
@@ -94,12 +94,12 @@ describe('Details box', () => {
 		mount(<DetailsBox />);
 	});
 
-	it('Should correctly group the products', () => {
+	it('group the products', () => {
 		const detailsBox = shallow(<DetailsBox />);
 		expect(detailsBox.find(DetailsListElement).length).toBe(3);
 	});
 
-	it('Should calculate correctly the products to be displayed', () => {
+	it('calculate correctly the products to be displayed', () => {
 		const detailsBox = shallow(<DetailsBox />);
 		const firstListElementProps = detailsBox
 			.find(DetailsListElement)

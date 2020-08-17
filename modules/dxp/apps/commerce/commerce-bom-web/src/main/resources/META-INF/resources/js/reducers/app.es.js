@@ -12,15 +12,15 @@
 import {actionDefinition} from '../actions/app.es';
 
 export const initialState = {
-	breadcrumbs: null,
-	loading: false,
-	error: null,
-	spritemap: null,
-	basename: '/',
-	basePathUrl: '/',
-	history: null,
 	areasEndpoint: null,
+	basePathUrl: '/',
+	basename: '/',
+	breadcrumbs: null,
+	error: null,
 	foldersEndpoint: null,
+	history: null,
+	loading: false,
+	spritemap: null,
 };
 
 export default function reducer(state = initialState, action) {
@@ -34,11 +34,11 @@ export default function reducer(state = initialState, action) {
 			return {
 				...state,
 				areasEndpoint: action.payload.areasEndpoint,
-				foldersEndpoint: action.payload.foldersEndpoint,
-				spritemap: action.payload.spritemap,
-				basename: action.payload.basename,
 				basePathUrl: action.payload.basePathUrl,
+				basename: action.payload.basename,
+				foldersEndpoint: action.payload.foldersEndpoint,
 				history: action.payload.history,
+				spritemap: action.payload.spritemap,
 			};
 		case actionDefinition.UPDATE_BREADCRUMBS:
 			return {

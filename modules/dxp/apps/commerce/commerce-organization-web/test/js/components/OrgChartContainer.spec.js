@@ -20,8 +20,8 @@ jest.mock('utils/utils.es', () => {
 	const payload = require('./fakeData/0.json');
 
 	return {
-		callApi: jest.fn(() => Promise.resolve(payload)),
 		bindAll: jest.fn(() => {}),
+		callApi: jest.fn(() => Promise.resolve(payload)),
 		setupDataset: jest.fn((payload) => payload),
 		truncateTextNode: jest.fn(),
 	};
@@ -74,8 +74,8 @@ describe('OrgChartContainer', () => {
 			component.setSelection(someId, colorIdentifier);
 
 			expect(wrapper.state()).toMatchObject({
-				selectedId: someId,
 				colorIdentifier: expect.any(String),
+				selectedId: someId,
 			});
 		});
 
@@ -86,8 +86,8 @@ describe('OrgChartContainer', () => {
 				wrapper.setState({selectedId: someId}, () => {
 					expect(wrapper.debug().includes('MembersPane')).toBe(true);
 					expect(wrapper.state()).toMatchObject({
-						selectedId: someId,
 						rootData: fakeJSON,
+						selectedId: someId,
 					});
 				});
 			});
@@ -111,8 +111,8 @@ describe('OrgChartContainer', () => {
 			component.handleNodeClick(someId);
 
 			expect(Utils.callApi).toHaveBeenCalledWith({
-				id: someId,
 				baseURL: someApiURL,
+				id: someId,
 			});
 		});
 	});

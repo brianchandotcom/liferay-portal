@@ -34,9 +34,9 @@ const spotFormDataEdit = {
 		x: 75,
 		y: 75,
 	},
-	state: 'edit',
 	productId: 'PR01',
 	query: 'Product 1',
+	state: 'edit',
 };
 
 const spotFormDataCreate = {
@@ -88,7 +88,7 @@ describe('Edit number form', () => {
 		mount(<EditNumberForm />);
 	});
 
-	it('should be empty if spotFormData has no values', () => {
+	it('is empty if spotFormData has no values', () => {
 		jest.spyOn(React, 'useContext').mockImplementation(() => {
 			const context = {
 				...mockedContext,
@@ -101,7 +101,7 @@ describe('Edit number form', () => {
 		mount(<EditNumberForm />);
 	});
 
-	it('should not display a delete button if state !== "edit"', () => {
+	it('don't display a delete button if state !== "edit"', () => {
 		jest.spyOn(React, 'useContext').mockImplementation(() => {
 			const context = {
 				...mockedContext,
@@ -115,7 +115,7 @@ describe('Edit number form', () => {
 		expect(form.find('.edit-number-form__delete-btn').length).toBe(0);
 	});
 
-	it('should display a delete button if state === "edit"', () => {
+	it('display a delete button if state === "edit"', () => {
 		jest.spyOn(React, 'useContext').mockImplementation(() => {
 			const context = {
 				...mockedContext,
@@ -129,7 +129,7 @@ describe('Edit number form', () => {
 		expect(form.find('.edit-number-form__delete-btn').length).toBe(1);
 	});
 
-	it('should be correctly positioned', () => {
+	it('be correctly positioned', () => {
 		const form = mount(<EditNumberForm />);
 		const formStyle = form.find('.edit-number-form-wrapper').getDOMNode()
 			.style;
@@ -141,11 +141,11 @@ describe('Edit number form', () => {
 		const form = mount(<EditNumberForm />);
 		const spot = form.find('.spot-number--placeholder');
 
-		it('should display a spot element', () => {
+		it('display a spot element', () => {
 			expect(spot.length).toBe(1);
 		});
 
-		it('should display the associated number', () => {
+		it('display the associated number', () => {
 			expect(spot.text()).toBe('1');
 		});
 	});

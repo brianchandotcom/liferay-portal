@@ -21,9 +21,9 @@ class Datalist extends Component {
 		const {connectorSettings, datasourceSettings} = props;
 
 		this.state = {
-			datasource: this.initializeDatasource(datasourceSettings),
 			connector: this.initializeConnector(connectorSettings),
 			data: null,
+			datasource: this.initializeDatasource(datasourceSettings),
 			selected: null,
 		};
 	}

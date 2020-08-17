@@ -496,7 +496,9 @@
 		<check name="JSPImportsCheck" />
 		<check name="JSPIncludeCheck" />
 		<check name="JSPIndentationCheck" />
-		<check name="JSPJavaParserCheck" />
+		<check name="JSPJavaParserCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JSPLanguageUtilCheck" />
 		<check name="JSPLineBreakCheck" />
 		<check name="JSPLogFileNameCheck" />

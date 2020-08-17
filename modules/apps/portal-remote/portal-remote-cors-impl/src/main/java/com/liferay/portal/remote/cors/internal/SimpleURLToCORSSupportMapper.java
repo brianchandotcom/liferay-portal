@@ -27,11 +27,11 @@ import java.util.Map;
  * @author Carlos Sierra Andrés
  * @author Brian Wing Shun Chan
  */
-public class URLToCORSSupportMapper {
+public class SimpleURLToCORSSupportMapper implements URLToCORSSupportMapper {
 
-	public URLToCORSSupportMapper(Map<String, CORSSupport> corsSupports) {
+	public SimpleURLToCORSSupportMapper(Map<String, CORSSupport> corsSupports) {
 		for (Map.Entry<String, CORSSupport> entry : corsSupports.entrySet()) {
-			_put(entry.getKey(), entry.getValue());
+			put(entry.getKey(), entry.getValue());
 		}
 	}
 
@@ -73,6 +73,30 @@ public class URLToCORSSupportMapper {
 
 		return _extensionURLPatternCORSSupports.get(
 			"*" + urlPath.substring(index));
+	}
+
+	public void put(String urlPattern, CORSSupport corsSupport)
+		throws IllegalArgumentException {
+
+		if (_isWildcardURLPattern(urlPattern)) {
+			if (!_wildcardURLPatternCORSSupports.containsKey(urlPattern)) {
+				_wildcardURLPatternCORSSupports.put(urlPattern, corsSupport);
+			}
+
+			return;
+		}
+
+		if (_isExtensionURLPattern(urlPattern)) {
+			if (!_extensionURLPatternCORSSupports.containsKey(urlPattern)) {
+				_extensionURLPatternCORSSupports.put(urlPattern, corsSupport);
+			}
+
+			return;
+		}
+
+		if (!_exactURLPatternCORSSupports.containsKey(urlPattern)) {
+			_exactURLPatternCORSSupports.put(urlPattern, corsSupport);
+		}
 	}
 
 	private boolean _isExtensionURLPattern(String urlPattern) {
@@ -126,30 +150,6 @@ public class URLToCORSSupportMapper {
 		}
 
 		return true;
-	}
-
-	private void _put(String urlPattern, CORSSupport corsSupport)
-		throws IllegalArgumentException {
-
-		if (_isWildcardURLPattern(urlPattern)) {
-			if (!_wildcardURLPatternCORSSupports.containsKey(urlPattern)) {
-				_wildcardURLPatternCORSSupports.put(urlPattern, corsSupport);
-			}
-
-			return;
-		}
-
-		if (_isExtensionURLPattern(urlPattern)) {
-			if (!_extensionURLPatternCORSSupports.containsKey(urlPattern)) {
-				_extensionURLPatternCORSSupports.put(urlPattern, corsSupport);
-			}
-
-			return;
-		}
-
-		if (!_exactURLPatternCORSSupports.containsKey(urlPattern)) {
-			_exactURLPatternCORSSupports.put(urlPattern, corsSupport);
-		}
 	}
 
 	private final Map<String, CORSSupport> _exactURLPatternCORSSupports =

@@ -58,7 +58,7 @@ public class CommerceOrderModelListener
 		catch (PortalException portalException) {
 			_log.error(
 				"Failed to update workflow status to Approved on punch out " +
-					"order (" + commerceOrder.getCommerceOrderId() + ")",
+					"order" + commerceOrder.getCommerceOrderId(),
 				portalException);
 		}
 	}

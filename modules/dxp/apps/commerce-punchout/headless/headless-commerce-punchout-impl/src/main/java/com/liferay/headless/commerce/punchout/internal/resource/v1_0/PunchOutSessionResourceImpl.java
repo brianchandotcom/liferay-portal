@@ -134,9 +134,8 @@ public class PunchOutSessionResourceImpl
 
 		if (businessCommerceAccount == null) {
 			_log.error(
-				"Business commrece account not found (external reference " +
-					"code: " + punchOutSession.getBuyerAccountReferenceCode() +
-						")");
+				"Business commerce account not found with external reference" +
+					"code: " + punchOutSession.getBuyerAccountReferenceCode());
 
 			throw new BadRequestException(
 				"Business commerce account not found");

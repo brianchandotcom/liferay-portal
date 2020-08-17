@@ -30,13 +30,13 @@ import com.liferay.commerce.punchout.service.PunchOutReturnService;
 import com.liferay.commerce.service.CommerceAddressLocalService;
 import com.liferay.commerce.service.CommerceCountryLocalService;
 import com.liferay.commerce.service.CommerceRegionLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.OutputStreamWriter;
@@ -194,9 +194,11 @@ public class PunchOut2GoReturnServiceImpl implements PunchOutReturnService {
 			String cartJSON = cartJSONObject.toString();
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"PunchOut2Go cart transfer request to " + url +
-						"; cart JSON: " + cartJSON);
+				String stringBundler = StringBundler.concat(
+					"PunchOut2Go cart transfer request to ", url,
+					"; cart JSON: ", cartJSON);
+
+				_log.debug(stringBundler);
 			}
 
 			URL urlObj = new URL(url);

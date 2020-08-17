@@ -72,7 +72,7 @@ public abstract class BaseAlloyEditorConfigContributor
 			StringUtil.replace(getLanguageId(themeDisplay), "iw_", "he_")
 		).put(
 			"removePlugins",
-			"contextmenu,elementspath,floatingspace,image,link,liststyle," +
+			"contextmenu,elementspath,floatingspace,image2,link,liststyle," +
 				"resize,table,tabletools,toolbar"
 		).put(
 			"skin", "moono-lisa"

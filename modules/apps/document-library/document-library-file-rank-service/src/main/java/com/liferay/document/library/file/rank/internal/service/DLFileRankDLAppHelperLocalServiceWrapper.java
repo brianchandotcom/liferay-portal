@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.internal.service;
+package com.liferay.document.library.file.rank.internal.service;
 
 import com.liferay.document.library.file.rank.service.DLFileRankLocalService;
 import com.liferay.document.library.kernel.model.DLFolder;

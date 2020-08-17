@@ -16,8 +16,6 @@ package com.liferay.portal.file.install.internal.properties;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.io.BufferedReader;
 import java.io.FilterWriter;
@@ -26,7 +24,6 @@ import java.io.Reader;
 import java.io.Writer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -413,88 +410,6 @@ public class TypedProperties {
 		}
 	}
 
-	private static String _escapeJava(String string) {
-		if (string == null) {
-			return null;
-		}
-
-		int length = string.length();
-
-		StringBundler sb = new StringBundler(length * 2);
-
-		for (int i = 0; i < length; i++) {
-			char c = string.charAt(i);
-
-			// handle unicode
-
-			if (c > 0xfff) {
-				sb.append("\\u");
-				sb.append(_hex(c));
-			}
-			else if (c > 0xff) {
-				sb.append("\\u0");
-				sb.append(_hex(c));
-			}
-			else if (c > 0x7f) {
-				sb.append("\\u00");
-				sb.append(_hex(c));
-			}
-			else if (c < 32) {
-				if (c == 'b') {
-					sb.append('\\');
-					sb.append('b');
-				}
-				else if (c == 'n') {
-					sb.append('\\');
-					sb.append('n');
-				}
-				else if (c == 't') {
-					sb.append('\\');
-					sb.append('t');
-				}
-				else if (c == 'f') {
-					sb.append('\\');
-					sb.append('f');
-				}
-				else if (c == 'r') {
-					sb.append('\\');
-					sb.append('r');
-				}
-				else {
-					if (c > 0xf) {
-						sb.append("\\u00");
-						sb.append(_hex(c));
-					}
-					else {
-						sb.append("\\u000");
-						sb.append(_hex(c));
-					}
-				}
-			}
-			else {
-				if (c == CharPool.QUOTE) {
-					sb.append('\\');
-					sb.append(CharPool.QUOTE);
-				}
-				else if (c == '\\') {
-					sb.append('\\');
-					sb.append('\\');
-				}
-				else {
-					sb.append(c);
-				}
-			}
-		}
-
-		return sb.toString();
-	}
-
-	private static String _hex(char ch) {
-		String hexString = Integer.toHexString(ch);
-
-		return hexString.toUpperCase(LocaleUtil.ENGLISH);
-	}
-
 	private static boolean _isCommentLine(String line) {
 		String string = line.trim();
 
@@ -645,76 +560,6 @@ public class TypedProperties {
 		return 0;
 	}
 
-	private List<String> _getComments(String key) {
-		Layout layout = _layoutMap.get(key);
-
-		if (layout != null) {
-			List<String> comments = layout.getComments();
-
-			if (comments != null) {
-				return new ArrayList<>(comments);
-			}
-		}
-
-		return new ArrayList<>();
-	}
-
-	private String _put(
-		String key, List<String> comments, List<String> values) {
-
-		comments = new ArrayList<>(comments);
-
-		values = new ArrayList<>(values);
-
-		StringBundler sb = new StringBundler();
-
-		if (values.isEmpty()) {
-			values.add(key + StringPool.EQUAL);
-
-			sb.append(key);
-			sb.append(StringPool.EQUAL);
-		}
-		else {
-			String value = values.get(0);
-
-			String realValue = value;
-
-			value = value.trim();
-
-			if (!value.startsWith(key)) {
-				values.set(0, key + " = " + realValue);
-
-				sb.append(key);
-				sb.append(" = ");
-				sb.append(realValue);
-			}
-			else {
-				values.set(0, realValue);
-				sb.append(realValue);
-			}
-		}
-
-		for (int i = 1; i < values.size(); i++) {
-			String value = values.get(i);
-
-			values.set(i, value);
-
-			while ((value.length() > 0) &&
-				   Character.isWhitespace(value.charAt(0))) {
-
-				value = value.substring(1);
-			}
-
-			sb.append(value);
-		}
-
-		String[] property = PropertiesReader._parseProperty(sb.toString());
-
-		_layoutMap.put(key, new Layout(comments, values));
-
-		return _storage.put(key, property[1]);
-	}
-
 	private String _put(String key, String value) {
 		String old = _storage.put(key, value);
 
@@ -794,14 +639,10 @@ public class TypedProperties {
 
 	private static final String _COMMENT_CHARS = "#!";
 
-	private static final int _HEX_RADIX = 16;
-
 	private static final String _LINE_SEPARATOR = System.getProperty(
 		"line.separator");
 
 	private static final char[] _SEPARATORS = {CharPool.EQUAL, CharPool.COLON};
-
-	private static final int _UNICODE_LEN = 4;
 
 	private static final char[] _WHITE_SPACE = {CharPool.SPACE, '\t', '\f'};
 

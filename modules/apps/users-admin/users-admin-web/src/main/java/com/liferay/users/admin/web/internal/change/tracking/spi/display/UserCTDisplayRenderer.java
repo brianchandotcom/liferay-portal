@@ -97,33 +97,33 @@ public class UserCTDisplayRenderer extends BaseCTDisplayRenderer<User> {
 		).display(
 			"email-address", user.getEmailAddress()
 		).display(
-			"comments", user.getComments()
-		).display(
 			"create-date", user.getCreateDate()
 		).display(
-			"facebook-id", user.getFacebookId()
-		).display(
-			"greeting", user.getGreeting()
-		).display(
-			"google-user-id", user.getGoogleUserId()
+			"last-modified", user.getModifiedDate()
 		).display(
 			"job-title", user.getJobTitle()
 		).display(
+			"greeting", user.getGreeting()
+		).display(
+			"comments", user.getComments()
+		).display(
+			"facebook-id", user.getFacebookId()
+		).display(
+			"google-user-id", user.getGoogleUserId()
+		).display(
+			"open-id", user.getOpenId()
+		).display(
 			"language-id", user.getLanguageId()
 		).display(
-			"last-login-date", user.getLastLoginDate()
-		).display(
-			"last-login-ip", user.getLastLoginIP()
+			"time-zone", user.getTimeZoneId()
 		).display(
 			"login-date", user.getLoginDate()
 		).display(
 			"login-ip", user.getLoginIP()
 		).display(
-			"modified-date", user.getModifiedDate()
+			"last-login-date", user.getLastLoginDate()
 		).display(
-			"open-id", user.getOpenId()
-		).display(
-			"time-zone-id", user.getTimeZoneId()
+			"last-login-ip", user.getLastLoginIP()
 		);
 	}
 

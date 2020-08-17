@@ -38,6 +38,32 @@ $theme-colors-cp: map-deep-merge(
 );
 
 :root {
+	// Aspect ratios
+
+	--aspect-ratio: 100%;
+	--aspect-ratio-4-to-3: 75%;
+	--aspect-ratio-8-to-3: 37.5%;
+	--aspect-ratio-16-to-9: 56.25%;
+
+	// Blockquotes
+
+	--blockquote-font-size: #{$font-size-base} * 1.25;
+	--blockquote-small-color: #{$gray-600};
+	--blockquote-small-font-size: #{$small-font-size};
+
+	// Body
+
+	--body-bg: $body-bg;
+	--body-color: $body-color;
+
+	// Border radius
+
+	--border-radius: #{$border-radius};
+	--border-radius-circle: 50%;
+	--border-radius-lg: #{$border-radius-lg};
+	--border-radius-sm: #{$border-radius-sm};
+	--rounded-pill: #{$rounded-pill};
+
 	// Colors
 
 	--black: #{$black};
@@ -71,44 +97,25 @@ $theme-colors-cp: map-deep-merge(
 	--warning-l1: #{$warning-l1};
 	--warning-l2: #{$warning-l2};
 
-	// Spacers
-
-	--spacer: 1;
-	@each $key, $value in $spacers {
-		--spacer-#{$key}: #{$value};
-	}
-
 	// Container max
 
 	@each $key, $value in $container-max-widths {
 		--container-max-#{$key}: #{$value};
 	}
 
-	// Aspect ratios
+	// Display
 
-	--aspect-ratio: 100%;
-	--aspect-ratio-4-to-3: 75%;
-	--aspect-ratio-8-to-3: 37.5%;
-	--aspect-ratio-16-to-9: 56.25%;
+	--display1-size: #{$display1-size};
+	--display2-size: #{$display2-size};
+	--display3-size: #{$display3-size};
+	--display4-size: #{$display4-size};
 
-	// Transitions
+	--display1-weight: #{$display1-weight};
+	--display2-weight: #{$display2-weight};
+	--display3-weight: #{$display3-weight};
+	--display4-weight: #{$display4-weight};
 
-	--transition-collapse: #{$transition-collapse};
-	--transition-fade: #{$transition-fade};
-
-	// Border radius
-
-	--border-radius: #{$border-radius};
-	--border-radius-circle: 50%;
-	--border-radius-lg: #{$border-radius-lg};
-	--border-radius-sm: #{$border-radius-sm};
-	--rounded-pill: #{$rounded-pill};
-
-	// Shadows
-
-	--box-shadow: #{$box-shadow};
-	--box-shadow-lg: #{$box-shadow-lg};
-	--box-shadow-sm: #{$box-shadow-sm};
+	--display-line-height: #{$display-line-height};
 
 	// Fonts
 
@@ -139,34 +146,10 @@ $theme-colors-cp: map-deep-merge(
 	--h5-font-size: #{$h5-font-size};
 	--h6-font-size: #{$h6-font-size};
 
-	// Display
-
-	--display1-size: #{$display1-size};
-	--display2-size: #{$display2-size};
-	--display3-size: #{$display3-size};
-	--display4-size: #{$display4-size};
-
-	--display1-weight: #{$display1-weight};
-	--display2-weight: #{$display2-weight};
-	--display3-weight: #{$display3-weight};
-	--display4-weight: #{$display4-weight};
-
-	--display-line-height: #{$display-line-height};
-
 	// Lead
 
 	--lead-font-size: #{$lead-font-size};
 	--lead-font-weight: #{$lead-font-weight};
-
-	// Text muted
-
-	--text-muted: #{$text-muted};
-
-	// Blockquotes
-
-	--blockquote-font-size: #{$font-size-base} * 1.25;
-	--blockquote-small-color: #{$gray-600};
-	--blockquote-small-font-size: #{$small-font-size};
 
 	// Separator
 
@@ -174,24 +157,25 @@ $theme-colors-cp: map-deep-merge(
 	--hr-border-width: #{$hr-border-width};
 	--hr-margin-y: #{$hr-margin-y};
 
-	// Body
+	// Shadows
 
-	--body-bg: $body-bg;
-	--body-color: $body-color;
+	--box-shadow: #{$box-shadow};
+	--box-shadow-lg: #{$box-shadow-lg};
+	--box-shadow-sm: #{$box-shadow-sm};
 
-	// Portlet vars
+	// Spacers
 
-	--portlet-bg: transparent;
-	--portlet-content-border-radius: 0;
-	--portlet-header-margin-bottom: calc(
-		var(--spacer) * #{$portlet-header-margin-bottom}
-	);
+	--spacer: 1;
+	@each $key, $value in $spacers {
+		--spacer-#{$key}: #{$value};
+	}
 
-	--portlet-topper-bg: var(--primary);
-	--portlet-topper-border: var(--portlet-topper-bg);
-	--portlet-topper-border-radius: var(--border-radius-sm)
-		var(--border-radius-sm) 0 0;
-	--portlet-topper-color: var(--white);
-	--portlet-topper-link-color: var(--portlet-topper-color);
-	--portlet-topper-link-hover-color: var(--portlet-topper-link-color);
+	// Text muted
+
+	--text-muted: #{$text-muted};
+
+	// Transitions
+
+	--transition-collapse: #{$transition-collapse};
+	--transition-fade: #{$transition-fade};
 }

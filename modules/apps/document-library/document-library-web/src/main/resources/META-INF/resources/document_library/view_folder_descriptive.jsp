@@ -27,15 +27,13 @@ Date modifiedDate = folder.getLastPostDate();
 
 String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 
-PortletURL rowURL = liferayPortletResponse.createRenderURL();
+FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayContext(request, liferayPortletResponse, dlTrashHelper);
 
-rowURL.setParameter("mvcRenderCommandName", "/document_library/view_folder");
-rowURL.setParameter("redirect", currentURL);
-rowURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
+String rowURL = folderActionDisplayContext.getRowURL(folder);
 %>
 
 <h2 class="h5">
-	<aui:a href="<%= rowURL.toString() %>">
+	<aui:a href="<%= rowURL %>">
 		<%= folder.getName() %>
 	</aui:a>
 </h2>

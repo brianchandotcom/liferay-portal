@@ -40,7 +40,9 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil;
@@ -64,9 +66,12 @@ import javax.servlet.http.HttpServletRequest;
 public class FolderActionDisplayContext {
 
 	public FolderActionDisplayContext(
-		HttpServletRequest httpServletRequest, DLTrashHelper dlTrashHelper) {
+		HttpServletRequest httpServletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		DLTrashHelper dlTrashHelper) {
 
 		_httpServletRequest = httpServletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
 		_dlTrashHelper = dlTrashHelper;
 
 		_dlRequestHelper = new DLRequestHelper(httpServletRequest);
@@ -337,6 +342,35 @@ public class FolderActionDisplayContext {
 		}
 
 		return _dlRequestHelper.getScopeGroupId();
+	}
+
+	public String getRowURL(Folder folder) throws PortalException {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!DLFolderPermission.contains(
+				themeDisplay.getPermissionChecker(), folder,
+				ActionKeys.ACCESS)) {
+
+			return StringPool.BLANK;
+		}
+
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
+
+		if (Validator.isNull(redirect)) {
+			redirect = themeDisplay.getURLCurrent();
+		}
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/document_library/view_folder");
+		portletURL.setParameter("redirect", redirect);
+		portletURL.setParameter(
+			"folderId", String.valueOf(folder.getFolderId()));
+
+		return portletURL.toString();
 	}
 
 	public String getViewSlideShowURL() throws WindowStateException {
@@ -856,6 +890,7 @@ public class FolderActionDisplayContext {
 	private final DLTrashHelper _dlTrashHelper;
 	private Folder _folder;
 	private final HttpServletRequest _httpServletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _randomNamespace;
 	private Long _repositoryId;
 	private Integer _status;

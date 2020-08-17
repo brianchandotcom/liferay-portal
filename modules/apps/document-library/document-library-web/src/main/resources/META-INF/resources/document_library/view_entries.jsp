@@ -62,6 +62,8 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 
 	renderResponse.setTitle(folder.getName());
 }
+
+FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayContext(request, liferayPortletResponse, dlTrashHelper);
 %>
 
 <div class="document-container" id="<portlet:namespace />entriesContainer">
@@ -419,11 +421,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 							<%
 							row.setCssClass("entry-card lfr-asset-folder");
 
-							PortletURL rowURL = liferayPortletResponse.createRenderURL();
-
-							rowURL.setParameter("mvcRenderCommandName", "/document_library/view_folder");
-							rowURL.setParameter("redirect", currentURL);
-							rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+							String rowURL = folderActionDisplayContext.getRowURL(curFolder);
 							%>
 
 							<liferay-ui:search-container-column-text
@@ -435,7 +433,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 									resultRow="<%= row %>"
 									rowChecker="<%= entriesChecker %>"
 									text="<%= curFolder.getName() %>"
-									url="<%= rowURL.toString() %>"
+									url="<%= rowURL %>"
 								>
 									<liferay-frontend:horizontal-card-col>
 										<liferay-frontend:horizontal-card-icon
@@ -456,11 +454,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 									<c:when test='<%= curEntryColumn.equals("name") %>'>
 
 										<%
-										PortletURL rowURL = liferayPortletResponse.createRenderURL();
-
-										rowURL.setParameter("mvcRenderCommandName", "/document_library/view_folder");
-										rowURL.setParameter("redirect", currentURL);
-										rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+										String rowURL = folderActionDisplayContext.getRowURL(curFolder);
 										%>
 
 										<liferay-ui:search-container-column-text
@@ -473,7 +467,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 												icon='<%= curFolder.isMountPoint() ? "repository" : "folder" %>'
 											/>
 
-											<aui:a href="<%= rowURL.toString() %>"><%= HtmlUtil.escape(curFolder.getName()) %></aui:a>
+											<aui:a href="<%= rowURL %>"><%= HtmlUtil.escape(curFolder.getName()) %></aui:a>
 										</liferay-ui:search-container-column-text>
 									</c:when>
 									<c:when test='<%= curEntryColumn.equals("description") %>'>

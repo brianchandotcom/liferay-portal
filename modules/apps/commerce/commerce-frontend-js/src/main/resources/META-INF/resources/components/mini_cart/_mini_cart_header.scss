@@ -51,7 +51,7 @@
 		animation: askConfirmation 500ms $ease-out-quart 1 forwards;
 		display: inline-block;
 		opacity: 0;
-		transform: getopeningtranslation(
+		transform: get-opening-translation(
 			right,
 			($minicart-width + $liferay-sidebars-width)
 		);
@@ -61,7 +61,7 @@
 		}
 
 		.rtl & {
-			transform: getopeningtranslation(
+			transform: get-opening-translation(
 				left,
 				($minicart-width + $liferay-sidebars-width)
 			);

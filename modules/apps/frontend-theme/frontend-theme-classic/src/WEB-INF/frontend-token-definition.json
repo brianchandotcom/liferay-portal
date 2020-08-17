@@ -975,23 +975,23 @@
 						{
 							"defaultValue": "#6C757D",
 							"editorType": "ColorPicker",
-							"label": "blockquote-font-small-color",
+							"label": "blockquote-small-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "blockquote-font-small-color"
+									"value": "blockquote-small-color"
 								}
 							],
-							"name": "blockquoteSmallFontColor",
+							"name": "blockquoteSmallColor",
 							"type": "String"
 						},
 						{
 							"defaultValue": "80%",
-							"label": "blockquote-font-small-size",
+							"label": "blockquote-small-font-size",
 							"mappings": [
 								{
 									"type": "cssVariable",
-									"value": "blockquote-font-small-size"
+									"value": "blockquote-small-font-size"
 								}
 							],
 							"name": "blockquoteSmallFontSize",
@@ -1000,38 +1000,38 @@
 						{
 							"defaultValue": "rgba(0, 0, 0, .1)",
 							"editorType": "ColorPicker",
-							"label": "separator-border-color",
+							"label": "hr-border-color",
 							"mappings": [
 								{
 									"type": "cssVariable",
 									"value": "hr-border-color"
 								}
 							],
-							"name": "separatorBorderColor",
+							"name": "hrBorderColor",
 							"type": "String"
 						},
 						{
 							"defaultValue": "1px",
-							"label": "separator-border-width",
+							"label": "hr-border-width",
 							"mappings": [
 								{
 									"type": "cssVariable",
 									"value": "hr-border-width"
 								}
 							],
-							"name": "separatorBorderWidth",
+							"name": "hrBorderWidth",
 							"type": "String"
 						},
 						{
 							"defaultValue": "1rem",
-							"label": "separator-border-margin-y",
+							"label": "hr-border-margin-y",
 							"mappings": [
 								{
 									"type": "cssVariable",
 									"value": "hr-border-margin-y"
 								}
 							],
-							"name": "separatorBorderMarginY",
+							"name": "hrBorderMarginY",
 							"type": "String"
 						}
 					],

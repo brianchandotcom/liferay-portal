@@ -177,8 +177,6 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 
 				enableFormFieldTypeSelectOptionValues(availableFieldTypeSelectOptions);
 
-				debugger;
-
 				if (priceTypeSelectValue != '') {
 					enableFormFieldTypeSelectOptionValues(
 						allowedPriceContributorFieldTypeSelectOptions

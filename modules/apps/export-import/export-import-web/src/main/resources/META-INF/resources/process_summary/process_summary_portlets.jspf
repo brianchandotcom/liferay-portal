@@ -172,7 +172,9 @@
 
 								String mainLabel = additionEntry.getKey();
 
-								if (mainLabel.equals("total"))continue;
+								if (mainLabel.equals("total"))
+
+									continue;
 
 								Long addition = additionEntry.getValue();
 

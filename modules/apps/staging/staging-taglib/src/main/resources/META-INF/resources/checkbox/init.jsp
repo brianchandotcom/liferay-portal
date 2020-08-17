@@ -45,7 +45,7 @@ String domId = liferayPortletResponse.getNamespace() + id;
 String domName = liferayPortletResponse.getNamespace() + name;
 String label = LanguageUtil.get(request, labelKey);
 String popoverName = name + "_popover";
-String popoverText = (Validator.isNull(popoverTextKey)) ? " " : LanguageUtil.get(request, popoverTextKey);
+String popoverText = Validator.isNull(popoverTextKey) ? " " : LanguageUtil.get(request, popoverTextKey);
 String suggestion = LanguageUtil.get(request, suggestionKey);
 String warning = LanguageUtil.get(request, warningKey);
 

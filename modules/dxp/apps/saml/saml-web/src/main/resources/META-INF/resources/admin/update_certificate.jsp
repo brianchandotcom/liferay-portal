@@ -50,8 +50,7 @@ X509Certificate x509Certificate = (X509Certificate)request.getAttribute(SamlWebK
 							navigationItem.setActive(cmd.equals("replace"));
 							navigationItem.setHref(portletURL.toString());
 							navigationItem.setLabel(LanguageUtil.get(request, "create-certificate"));
-						}
-					);
+						});
 
 					portletURL.setParameter(Constants.CMD, "import");
 
@@ -60,8 +59,7 @@ X509Certificate x509Certificate = (X509Certificate)request.getAttribute(SamlWebK
 							navigationItem.setActive(cmd.equals("import"));
 							navigationItem.setHref(portletURL.toString());
 							navigationItem.setLabel(LanguageUtil.get(request, "import-certificate"));
-						}
-					);
+						});
 				}
 			}
 		%>'

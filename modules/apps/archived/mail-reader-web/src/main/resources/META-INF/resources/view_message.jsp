@@ -39,7 +39,7 @@ MailManager mailManager = MailManager.getInstance(request);
 		mailManager.markAsRead(message.getAccountId(), folderId, message.getMessageId());
 	}
 
-	int pageNumber = (int)(Math.ceil(messageNumber / (double)messagesPerPage));
+	int pageNumber = (int)Math.ceil(messageNumber / (double)messagesPerPage);
 
 	Folder folder = FolderLocalServiceUtil.getFolder(folderId);
 

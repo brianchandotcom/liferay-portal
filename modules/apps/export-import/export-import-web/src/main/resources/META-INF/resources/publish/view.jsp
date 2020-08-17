@@ -142,15 +142,13 @@ simplePublishURL.setParameter("targetGroupId", String.valueOf(liveGroupId));
 										navigationItem.setActive(publishConfigurationButtons.equals("custom"));
 										navigationItem.setHref(customPublishURL.toString());
 										navigationItem.setLabel(LanguageUtil.get(request, "custom"));
-									}
-								);
+									});
 								add(
 									navigationItem -> {
 										navigationItem.setActive(publishConfigurationButtons.equals("saved"));
 										navigationItem.setHref(publishTemplatesURL.toString());
 										navigationItem.setLabel(LanguageUtil.get(request, "publish-templates"));
-									}
-								);
+									});
 							}
 						}
 					%>'

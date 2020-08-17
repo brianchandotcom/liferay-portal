@@ -48,7 +48,7 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 
 			List<String> fields = ufe.getFields();
 
-			StringBundler sb = new StringBundler(2 * fields.size() - 1);
+			StringBundler sb = new StringBundler((2 * fields.size()) - 1);
 
 			for (int i = 0; i < fields.size(); i++) {
 				String field = fields.get(i);

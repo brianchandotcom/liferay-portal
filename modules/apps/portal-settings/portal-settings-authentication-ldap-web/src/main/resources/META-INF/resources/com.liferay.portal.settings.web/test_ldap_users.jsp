@@ -29,7 +29,6 @@ if (credentials.equals(Portal.TEMP_OBFUSCATION_VALUE)) {
 	LDAPServerConfiguration ldapServerConfiguration = ldapServerConfigurationProvider.getConfiguration(themeDisplay.getCompanyId(), ldapServerId);
 
 	credentials = ldapServerConfiguration.securityCredential();
-
 }
 
 SafePortalLDAP safePortalLDAP = SafePortalLDAPUtil.getSafePortalLDAP();
@@ -69,15 +68,7 @@ if (!ldapFilterValidator.isValid(userFilter)) {
 	return;
 }
 
-String userMappingsParams =
-	"screenName=" + ParamUtil.getString(request, "userMappingScreenName") +
-	"\npassword=" + ParamUtil.getString(request, "userMappingPassword") +
-	"\nemailAddress=" + ParamUtil.getString(request, "userMappingEmailAddress") +
-	"\nfullName=" + ParamUtil.getString(request, "userMappingFullName") +
-	"\nfirstName=" + ParamUtil.getString(request, "userMappingFirstName") +
-	"\nlastName=" + ParamUtil.getString(request, "userMappingLastName") +
-	"\njobTitle=" + ParamUtil.getString(request, "userMappingJobTitle") +
-	"\ngroup=" + ParamUtil.getString(request, "userMappingGroup");
+String userMappingsParams = "screenName=" + ParamUtil.getString(request, "userMappingScreenName") + "\npassword=" + ParamUtil.getString(request, "userMappingPassword") + "\nemailAddress=" + ParamUtil.getString(request, "userMappingEmailAddress") + "\nfullName=" + ParamUtil.getString(request, "userMappingFullName") + "\nfirstName=" + ParamUtil.getString(request, "userMappingFirstName") + "\nlastName=" + ParamUtil.getString(request, "userMappingLastName") + "\njobTitle=" + ParamUtil.getString(request, "userMappingJobTitle") + "\ngroup=" + ParamUtil.getString(request, "userMappingGroup");
 
 Properties userMappings = PropertiesUtil.load(userMappingsParams);
 
@@ -89,7 +80,7 @@ if (Validator.isNotNull(userFilter) && !userFilter.equals(StringPool.STAR)) {
 	try {
 		safePortalLDAP.getUsers(themeDisplay.getCompanyId(), safeLdapContext, new byte[0], 20, SafeLdapNameFactory.fromUnsafe(baseDN), SafeLdapFilterFactory.fromUnsafeFilter(userFilter, ldapFilterValidator), attributeIds, searchResults);
 	}
-	catch (NameNotFoundException | InvalidNameException nnfe) {
+	catch (InvalidNameException | NameNotFoundException exception) {
 %>
 
 		<liferay-ui:message key="please-enter-a-valid-ldap-base-dn" />

@@ -39,8 +39,7 @@ page import="java.util.Map" %>
 <%
 CustomFilterDisplayContext customFilterDisplayContext = (CustomFilterDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT));
 
-CustomFilterPortletInstanceConfiguration
-	customFilterPortletInstanceConfiguration = customFilterDisplayContext.getCustomFilterPortletInstanceConfiguration();
+CustomFilterPortletInstanceConfiguration customFilterPortletInstanceConfiguration = customFilterDisplayContext.getCustomFilterPortletInstanceConfiguration();
 
 Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
 	"customFilterDisplayContext", customFilterDisplayContext

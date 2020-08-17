@@ -17,16 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String htmlAttributes =
-	"alt=" + iFramePortletInstanceConfiguration.alt() + "\n" +
-	"border=" + iFramePortletInstanceConfiguration.border() + "\n" +
-	"bordercolor=" + iFramePortletInstanceConfiguration.bordercolor() + "\n" +
-	"frameborder=" + iFramePortletInstanceConfiguration.frameborder() + "\n" +
-	"hspace=" + iFramePortletInstanceConfiguration.hspace() + "\n" +
-	"longdesc=" + iFramePortletInstanceConfiguration.longdesc() + "\n" +
-	"scrolling=" + iFramePortletInstanceConfiguration.scrolling() + "\n" +
-	"title=" + iFramePortletInstanceConfiguration.title() + "\n" +
-	"vspace=" + iFramePortletInstanceConfiguration.vspace() + "\n";
+String htmlAttributes = "alt=" + iFramePortletInstanceConfiguration.alt() + "\n" + "border=" + iFramePortletInstanceConfiguration.border() + "\n" + "bordercolor=" + iFramePortletInstanceConfiguration.bordercolor() + "\n" + "frameborder=" + iFramePortletInstanceConfiguration.frameborder() + "\n" + "hspace=" + iFramePortletInstanceConfiguration.hspace() + "\n" + "longdesc=" + iFramePortletInstanceConfiguration.longdesc() + "\n" + "scrolling=" + iFramePortletInstanceConfiguration.scrolling() + "\n" + "title=" + iFramePortletInstanceConfiguration.title() + "\n" + "vspace=" + iFramePortletInstanceConfiguration.vspace() + "\n";
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />

@@ -49,13 +49,13 @@ if (!ignoreRequestValue) {
 String checkedString = checked ? "checked" : "";
 String description = LanguageUtil.get(request, descriptionKey);
 String disabledString = disabled ? "disabled" : "";
-String dataQAID = (name.equals(id)) ? name : name + StringPool.UNDERLINE + id;
+String dataQAID = name.equals(id) ? name : name + StringPool.UNDERLINE + id;
 String domId = liferayPortletResponse.getNamespace() + id;
 String domName = liferayPortletResponse.getNamespace() + name;
 String inlineString = inline ? "custom-control-inline" : "";
 String label = LanguageUtil.get(request, labelKey);
 String popoverName = name + "_popover";
-String popoverText = (Validator.isNull(popoverTextKey)) ? StringPool.SPACE : LanguageUtil.get(request, popoverTextKey);
+String popoverText = Validator.isNull(popoverTextKey) ? StringPool.SPACE : LanguageUtil.get(request, popoverTextKey);
 
 String separator = Validator.isNotNull(description) ? ":" : "";
 %>

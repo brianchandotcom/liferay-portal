@@ -54,8 +54,7 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 		</liferay-frontend:fieldset-group>
 
 		<%
-		Map<LayoutPageTemplatesImporterResultEntry.Status, List<LayoutPageTemplatesImporterResultEntry>>
-			layoutPageTemplatesImporterResultEntryMap = importDisplayContext.getLayoutPageTemplatesImporterResultEntryMap();
+		Map<LayoutPageTemplatesImporterResultEntry.Status, List<LayoutPageTemplatesImporterResultEntry>> layoutPageTemplatesImporterResultEntryMap = importDisplayContext.getLayoutPageTemplatesImporterResultEntryMap();
 		%>
 
 		<c:if test="<%= MapUtil.isNotEmpty(layoutPageTemplatesImporterResultEntryMap) %>">
@@ -77,8 +76,7 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 					<c:if test="<%= MapUtil.isNotEmpty(importedLayoutPageTemplatesImporterResultEntriesMap) %>">
 
 						<%
-						for (Map.Entry <Integer, List<LayoutPageTemplatesImporterResultEntry>> entrySet :
-							importedLayoutPageTemplatesImporterResultEntriesMap.entrySet()) {
+						for (Map.Entry<Integer, List<LayoutPageTemplatesImporterResultEntry>> entrySet : importedLayoutPageTemplatesImporterResultEntriesMap.entrySet()) {
 						%>
 
 							<li>
@@ -141,8 +139,8 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 						total = notImportedLayoutPageTemplatesImporterResultEntries.size();
 						viewTotal = (total > 10) ? 10 : total;
 
-								for (int i = 0; i < viewTotal; i++) {
-									LayoutPageTemplatesImporterResultEntry layoutPageTemplatesImporterResultEntry = notImportedLayoutPageTemplatesImporterResultEntries.get(i);
+						for (int i = 0; i < viewTotal; i++) {
+							LayoutPageTemplatesImporterResultEntry layoutPageTemplatesImporterResultEntry = notImportedLayoutPageTemplatesImporterResultEntries.get(i);
 						%>
 
 							<li>

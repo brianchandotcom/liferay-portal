@@ -56,8 +56,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptor.getSearchCo
 
 			row.setData(
 				HashMapBuilder.<String, Object>put(
-					"value",
-					itemDescriptor.getPayload()
+					"value", itemDescriptor.getPayload()
 				).build());
 			%>
 

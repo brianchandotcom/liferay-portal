@@ -33,8 +33,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search-
 <portlet:renderURL var="viewURL" />
 
 <%
-AppManagerSearchResultsManagementToolbarDisplayContext
-	appManagerSearchResultsManagementToolbarDisplayContext = new AppManagerSearchResultsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
+AppManagerSearchResultsManagementToolbarDisplayContext appManagerSearchResultsManagementToolbarDisplayContext = new AppManagerSearchResultsManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 
 SearchContainer<Object> searchContainer = appManagerSearchResultsManagementToolbarDisplayContext.getSearchContainer();
 %>

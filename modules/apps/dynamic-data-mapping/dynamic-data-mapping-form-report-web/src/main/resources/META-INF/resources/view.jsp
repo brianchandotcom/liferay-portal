@@ -64,8 +64,7 @@ int totalItems = ddmFormReportDisplayContext.getTotalItems();
 						navigationItem -> {
 							navigationItem.setActive(true);
 							navigationItem.setLabel(LanguageUtil.get(request, "summary"));
-						}
-					);
+						});
 				}
 			}
 		%>'

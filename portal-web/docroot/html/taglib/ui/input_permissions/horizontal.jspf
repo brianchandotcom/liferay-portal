@@ -72,7 +72,7 @@ ServiceContext#deriveDefaultPermissions(long, String).
 							checked = guestPermissions.contains(action);
 						}
 						else {
-							checked = guestDefaultActions.contains(action) && (inputPermissionsViewRole.equals(RoleConstants.GUEST));
+							checked = guestDefaultActions.contains(action) && inputPermissionsViewRole.equals(RoleConstants.GUEST);
 						}
 					}
 					else if (roleName.equals(defaultGroupRole.getName())) {

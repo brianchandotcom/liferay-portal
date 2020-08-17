@@ -43,8 +43,7 @@ FragmentManagementToolbarDisplayContext fragmentManagementToolbarDisplayContext 
 			row.setData(
 				HashMapBuilder.<String, Object>put(
 					"actions", fragmentDisplayContext.getAvailableActions(object)
-				).build()
-			);
+				).build());
 
 			FragmentEntryVerticalCardFactory fragmentEntryVerticalCardFactory = FragmentEntryVerticalCardFactory.getInstance();
 			%>

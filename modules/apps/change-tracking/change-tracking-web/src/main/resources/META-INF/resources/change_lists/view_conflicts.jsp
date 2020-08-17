@@ -75,9 +75,9 @@ portletDisplay.setURLBack(backURL);
 
 						<tr class="table-divider"><td><liferay-ui:message key="automatically-resolved" /></td></tr>
 
-			<%
+					<%
 					}
-			%>
+					%>
 
 					<tr>
 						<td>
@@ -181,9 +181,9 @@ portletDisplay.setURLBack(backURL);
 
 						<tr class="table-divider"><td><liferay-ui:message key="needs-manual-resolution" /></td></tr>
 
-			<%
+					<%
 					}
-			%>
+					%>
 
 					<tr>
 						<td>

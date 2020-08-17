@@ -50,7 +50,10 @@ RedirectNotFoundEntriesManagementToolbarDisplayContext redirectNotFoundEntriesMa
 				>
 
 					<%
-					row.setData(HashMapBuilder.<String, Object>put("actions", redirectNotFoundEntriesManagementToolbarDisplayContext.getAvailableActions(redirectNotFoundEntry)).build());
+					row.setData(
+						HashMapBuilder.<String, Object>put(
+							"actions", redirectNotFoundEntriesManagementToolbarDisplayContext.getAvailableActions(redirectNotFoundEntry)
+						).build());
 					%>
 
 					<liferay-ui:search-container-column-text

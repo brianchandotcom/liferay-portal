@@ -178,8 +178,11 @@ else {
 	context='<%=
 		HashMapBuilder.<String, Object>put(
 			"getRedirectEntryChainCauseURL", getRedirectEntryChainCauseURL
-		).put("initialDestinationURL", destinationURL)
-		.put("initialIsPermanent", (redirectEntry != null) ? redirectEntry.isPermanent() : false).build()
+		).put(
+			"initialDestinationURL", destinationURL
+		).put(
+			"initialIsPermanent", (redirectEntry != null) ? redirectEntry.isPermanent() : false
+		).build()
 	%>'
 	module="js/editRedirectEntry"
 />

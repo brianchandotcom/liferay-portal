@@ -40,7 +40,6 @@ portletURL.setParameter("tabs1", tabs1);
 						navigationItem.setHref(renderResponse.createRenderURL(), "tabs1", "test");
 						navigationItem.setLabel(LanguageUtil.get(request, "test"));
 					});
-
 			}
 		}
 	%>'

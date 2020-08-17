@@ -32,7 +32,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs1), 
 		new JSPNavigationItemList(pageContext) {
 			{
 				if (selPortlet.getConfigurationActionInstance() != null) {
-				add(
+					add(
 						navigationItem -> {
 							navigationItem.setActive(tabs1.equals("setup"));
 							navigationItem.setHref(renderResponse.createRenderURL(), "mvcPath", "/edit_configuration.jsp", "redirect", redirect, "returnToFullPageURL", returnToFullPageURL, "portletConfiguration", Boolean.TRUE.toString(), "portletResource", portletResource);

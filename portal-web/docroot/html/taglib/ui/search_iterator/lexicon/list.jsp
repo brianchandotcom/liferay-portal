@@ -77,7 +77,7 @@ if (fixedHeader) {
 					}
 
 					if (Validator.isNotNull(normalizedHeaderName)) {
-						cssClass = (normalizedHeaderName.equals("rowChecker")) ? "lfr-checkbox-column" : "lfr-" + normalizedHeaderName + "-column";
+						cssClass = normalizedHeaderName.equals("rowChecker") ? "lfr-checkbox-column" : "lfr-" + normalizedHeaderName + "-column";
 					}
 					else {
 						normalizedHeaderName = String.valueOf(i + 1);
@@ -310,7 +310,7 @@ if (fixedHeader) {
 								normalizedColumnName = normalizedHeaderNames.get(j);
 
 								if (!Validator.isBlank(normalizedColumnName)) {
-									columnClassName += (normalizedColumnName.equals("rowChecker")) ? " lfr-checkbox-column" : " lfr-" + normalizedColumnName + "-column";
+									columnClassName += normalizedColumnName.equals("rowChecker") ? " lfr-checkbox-column" : " lfr-" + normalizedColumnName + "-column";
 								}
 							}
 

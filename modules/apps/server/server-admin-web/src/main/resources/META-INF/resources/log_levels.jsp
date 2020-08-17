@@ -72,15 +72,16 @@ PortletURL addLogCategoryURL = renderResponse.createRenderURL();
 addLogCategoryURL.setParameter("mvcRenderCommandName", "/server_admin/add_log_category");
 addLogCategoryURL.setParameter("redirect", currentURL);
 
-CreationMenu creationMenu = new CreationMenu() {
-	{
-		addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setHref(addLogCategoryURL);
-				dropdownItem.setLabel(LanguageUtil.get(request, "add-category"));
-			});
-	}
-};
+CreationMenu creationMenu =
+	new CreationMenu() {
+		{
+			addPrimaryDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(addLogCategoryURL);
+					dropdownItem.setLabel(LanguageUtil.get(request, "add-category"));
+				});
+		}
+	};
 %>
 
 <clay:management-toolbar

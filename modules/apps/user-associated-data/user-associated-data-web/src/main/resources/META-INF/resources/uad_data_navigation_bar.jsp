@@ -38,7 +38,6 @@ baseURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
 							reviewDataURL = PortletURLUtil.clone(baseURL, renderResponse);
 
 							reviewDataURL.setParameter("mvcRenderCommandName", "/review_uad_data");
-
 						}
 						catch (PortletException e) {
 							reviewDataURL = baseURL;
@@ -58,7 +57,6 @@ baseURL.setParameter("p_u_i_d", String.valueOf(selectedUser.getUserId()));
 							nonreviewableDataURL = PortletURLUtil.clone(baseURL, renderResponse);
 
 							nonreviewableDataURL.setParameter("mvcRenderCommandName", "/anonymize_nonreviewable_uad_data");
-
 						}
 						catch (PortletException e) {
 							nonreviewableDataURL = baseURL;

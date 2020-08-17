@@ -42,7 +42,7 @@
 			</div>
 
 			<%
-			StringBundler sb = new StringBundler((mapProviders.size() - 1) * 6 - 1);
+			StringBundler sb = new StringBundler(((mapProviders.size() - 1) * 6) - 1);
 
 			for (MapProvider curMapProvider : mapProviders) {
 				if (Objects.equals(mapProvider.getKey(), curMapProvider.getKey())) {

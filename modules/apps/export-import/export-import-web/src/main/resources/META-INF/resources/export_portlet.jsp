@@ -36,8 +36,7 @@ portletURL.setParameter("portletResource", portletResource);
 						navigationItem.setActive(tabs3.equals("new-export-process"));
 						navigationItem.setHref(portletURL.toString());
 						navigationItem.setLabel(LanguageUtil.get(request, "new-export-process"));
-					}
-				);
+					});
 
 				portletURL.setParameter("tabs3", "current-and-previous");
 
@@ -46,8 +45,7 @@ portletURL.setParameter("portletResource", portletResource);
 						navigationItem.setActive(tabs3.equals("current-and-previous"));
 						navigationItem.setHref(portletURL.toString());
 						navigationItem.setLabel(LanguageUtil.get(request, "current-and-previous"));
-					}
-				);
+					});
 			}
 		}
 	%>'

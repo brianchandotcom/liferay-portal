@@ -21,7 +21,7 @@ boolean anonymous = jsonObject.getBoolean("anonymous");
 
 long userNotificationEventUserId = jsonObject.getLong("userId");
 
-boolean notificationUnread = !actionRequired && !userNotificationEvent.isArchived() && ((userNotificationFeedEntry != null) && userNotificationFeedEntry.isApplicable());
+boolean notificationUnread = !actionRequired && !userNotificationEvent.isArchived() && (userNotificationFeedEntry != null) && userNotificationFeedEntry.isApplicable();
 
 if (notificationUnread) {
 	row.setCssClass("list-group-item-primary");

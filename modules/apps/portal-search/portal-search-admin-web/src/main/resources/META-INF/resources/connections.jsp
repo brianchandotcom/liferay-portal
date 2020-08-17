@@ -31,8 +31,7 @@ page import="com.liferay.portal.search.engine.NodeInformation" %>
 <%@ page import="java.util.List" %>
 
 <%
-SearchEngineDisplayContext
-	searchEngineDisplayContext = (SearchEngineDisplayContext)request.getAttribute(SearchAdminWebKeys.SEARCH_ENGINE_DISPLAY_CONTEXT);
+SearchEngineDisplayContext searchEngineDisplayContext = (SearchEngineDisplayContext)request.getAttribute(SearchAdminWebKeys.SEARCH_ENGINE_DISPLAY_CONTEXT);
 %>
 
 <clay:container-fluid

@@ -50,7 +50,7 @@ LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 										navigationItem.setActive((selectedScreenNavigationCategory != null) && Objects.equals(selectedScreenNavigationCategory.getCategoryKey(), screenNavigationCategory.getCategoryKey()));
 										navigationItem.setHref(screenNavigationCategoryURL, "screenNavigationCategoryKey", screenNavigationCategory.getCategoryKey(), "screenNavigationEntryKey", StringPool.BLANK);
 										navigationItem.setLabel(screenNavigationCategory.getLabel(themeDisplay.getLocale()));
-								});
+									});
 							}
 						}
 					}

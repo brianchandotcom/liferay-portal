@@ -107,7 +107,7 @@ portletDisplay.setURLBack(redirect);
 					String paramName = null;
 
 					if (deleteChoice && (i >= choiceName)) {
-						paramName = EditQuestionMVCActionCommand.CHOICE_DESCRIPTION_PREFIX + ((char)(c + 1));
+						paramName = EditQuestionMVCActionCommand.CHOICE_DESCRIPTION_PREFIX + (char)(c + 1);
 					}
 					else {
 						paramName = EditQuestionMVCActionCommand.CHOICE_DESCRIPTION_PREFIX + c;

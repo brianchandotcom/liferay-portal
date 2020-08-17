@@ -61,9 +61,9 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 					continue;
 				}
 
-						Map<String, Object> data = HashMapBuilder.<String, Object>put(
-							"displaystylegroupid", curDDMTemplate.getGroupId()
-						).build();
+				Map<String, Object> data = HashMapBuilder.<String, Object>put(
+					"displaystylegroupid", curDDMTemplate.getGroupId()
+				).build();
 			%>
 
 				<aui:option data="<%= data %>" label="<%= HtmlUtil.escape(curDDMTemplate.getName(locale)) %>" selected="<%= (portletDisplayDDMTemplate != null) && (curDDMTemplate.getTemplateId() == portletDisplayDDMTemplate.getTemplateId()) %>" value="<%= PortletDisplayTemplate.DISPLAY_STYLE_PREFIX + HtmlUtil.escape(curDDMTemplate.getTemplateKey()) %>" />

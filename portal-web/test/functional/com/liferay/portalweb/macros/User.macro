@@ -1332,9 +1332,14 @@ definition {
 			Type(
 				locator1 = "TextInput#SCREEN_NAME",
 				value1 = "${userScreenNameEdit}");
-		}
 
-		PortletEntry.save();
+			Button.clickSave();
+
+			User.confirmPassword(password = "${password}");
+		}
+		else {
+			PortletEntry.save();
+		}
 	}
 
 	macro editDetailsViaProfile {

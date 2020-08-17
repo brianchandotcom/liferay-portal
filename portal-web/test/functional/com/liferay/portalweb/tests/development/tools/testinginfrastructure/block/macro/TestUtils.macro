@@ -13,6 +13,19 @@ definition {
 		}
 	}
 
+	macro assertNotEquals {
+		echo("${expected}");
+
+		echo("${actual}");
+
+		if ("${expected}" != "${actual}") {
+			echo("PASSED");
+		}
+		else {
+			TestUtils.fail(message = "FAILED: &apos;${expected}&apos; equals &apos;${actual}&apos;");
+		}
+	}
+
 	macro fail {
 		if (!(isSet(message))) {
 			var message = "FAIL";

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderInputParametersSettings;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -40,7 +42,6 @@ import java.util.MissingResourceException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.TreeMap;
 
 /**
  * @author Marcellus Tavares
@@ -125,9 +126,17 @@ public class DDMFormFactoryHelper {
 	}
 
 	protected Collection<Method> getDDMFormFieldMethods() {
-		Map<String, Method> methodsMap = new TreeMap<>();
+		Map<String, Method> methodsMap = new LinkedHashMap<>();
 
 		collectDDMFormFieldMethodsMap(_clazz, methodsMap);
+
+		String className = _clazz.getName();
+
+		if (className.equals(
+				DDMDataProviderInputParametersSettings.class.getName())) {
+
+			moveInputParameterRequiredToLastPosition(methodsMap);
+		}
 
 		return methodsMap.values();
 	}
@@ -219,6 +228,17 @@ public class DDMFormFactoryHelper {
 		}
 
 		return "content.Language";
+	}
+
+	protected void moveInputParameterRequiredToLastPosition(
+		Map<String, Method> methodsMap) {
+
+		Method inputParameterRequiredMethod = methodsMap.get(
+			"inputParameterRequired");
+
+		methodsMap.remove("inputParameterRequired");
+
+		methodsMap.put("inputParameterRequired", inputParameterRequiredMethod);
 	}
 
 	private static final Class<? extends Annotation>

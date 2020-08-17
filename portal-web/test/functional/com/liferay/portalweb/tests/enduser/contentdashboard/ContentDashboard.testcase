@@ -72,6 +72,8 @@ definition {
 		AssertTextPresent(
 			locator1 = "ContentDashboard#INFO_PANEL_TITLE",
 			value1 = "Content Info");
+		
+		Click(locator1 = "ContentDashboard#CLOSE_INFO_PANEL_BUTTON");
 	}
 
 }

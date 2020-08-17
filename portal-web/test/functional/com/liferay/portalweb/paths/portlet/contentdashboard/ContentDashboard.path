@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>CLOSE_INFO_PANEL_BUTTON</td>
+	<td>//*[contains(@class, 'component-action btn btn-monospaced btn-unstyled')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_AND_ORDER_DROPDOWN</td>
 	<td>//*[contains(@class, 'dropdown-toggle btn nav-link btn-unstyled')]</td>
 	<td></td>

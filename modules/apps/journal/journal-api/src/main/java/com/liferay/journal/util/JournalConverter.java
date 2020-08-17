@@ -31,6 +31,11 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface JournalConverter {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getContent(DDMStructure, Fields, long)}
+	 */
+	@Deprecated
 	public String getContent(DDMStructure ddmStructure, Fields ddmFields)
 		throws Exception;
 

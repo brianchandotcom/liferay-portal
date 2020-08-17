@@ -158,6 +158,11 @@ public class JournalConverterImpl implements JournalConverter {
 		).build();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getContent(DDMStructure, Fields, long)}
+	 */
+	@Deprecated
 	@Override
 	public String getContent(DDMStructure ddmStructure, Fields ddmFields)
 		throws Exception {

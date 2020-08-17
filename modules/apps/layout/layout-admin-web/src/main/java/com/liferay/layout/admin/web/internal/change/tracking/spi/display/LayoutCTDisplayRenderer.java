@@ -105,6 +105,12 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 		displayBuilder.display(
 			"name", layout.getName(displayBuilder.getLocale())
 		).display(
+			"title", layout.getTitle()
+		).display(
+			"description", layout.getDescription(displayBuilder.getLocale())
+		).display(
+			"friendly-url", layout.getFriendlyURL()
+		).display(
 			"created-by",
 			() -> {
 				String userName = layout.getUserName();
@@ -158,31 +164,25 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 				return null;
 			}
 		).display(
+			"type", layout.getType()
+		).display(
+			"type-settings", layout.getTypeSettings()
+		).display(
 			"css", layout.getCss()
-		).display(
-			"description", layout.getDescription(displayBuilder.getLocale())
-		).display(
-			"friendlyURL", layout.getFriendlyURL()
-		).display(
-			"hidden", layout.isHidden()
 		).display(
 			"keywords", layout.getKeywords()
 		).display(
-			"lastPublishDate", layout.getLastPublishDate()
-		).display(
-			"priority", layout.getPriority()
-		).display(
-			"publishDate", layout.getPublishDate()
-		).display(
 			"robots", layout.getRobots()
+		).display(
+			"hidden", layout.isHidden()
 		).display(
 			"system", layout.isSystem()
 		).display(
-			"title", layout.getTitle()
+			"publish-date", layout.getPublishDate()
 		).display(
-			"type", layout.getType()
+			"last-publish-date", layout.getLastPublishDate()
 		).display(
-			"typeSettings", layout.getTypeSettings()
+			"priority", layout.getPriority()
 		);
 	}
 

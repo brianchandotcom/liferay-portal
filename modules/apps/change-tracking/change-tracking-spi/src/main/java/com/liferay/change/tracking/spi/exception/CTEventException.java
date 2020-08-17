@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Shuyang Zhou
+ * @see    com.liferay.change.tracking.spi.listener.CTEventListener
  */
 public class CTEventException extends PortalException {
 

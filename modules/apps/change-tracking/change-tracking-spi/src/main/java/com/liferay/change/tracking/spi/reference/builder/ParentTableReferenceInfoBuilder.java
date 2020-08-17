@@ -29,7 +29,11 @@ import java.util.function.Function;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
+ * Used to define parent relationships for a TableReferenceDefinition.
+ *
  * @author Preston Crary
+ * @see    TableReferenceDefinition#defineParentTableReferences(
+ *         ParentTableReferenceInfoBuilder)
  */
 @ProviderType
 public interface ParentTableReferenceInfoBuilder<T extends Table<T>> {

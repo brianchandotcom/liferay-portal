@@ -20,21 +20,59 @@ import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
+ * Used in automatically resolving constraint conflicts between the source and
+ * target models.
+ *
  * @author Preston Crary
+ * @see    com.liferay.change.tracking.spi.resolver.ConstraintResolver#resolveConflict(
+ *         ConstraintResolverContext)
  */
 @ProviderType
 public interface ConstraintResolverContext<T extends CTModel<T>> {
 
+	/**
+	 * Returns the result of the unsafe supplier from within the target CT
+	 * collection.
+	 *
+	 * @param  unsafeSupplier the unsafe supplier to call
+	 * @return the result from the unsafe supplier
+	 */
 	public <R, E extends Throwable> R getInTarget(
 			UnsafeSupplier<R, E> unsafeSupplier)
 		throws E;
 
+	/**
+	 * Returns the source CT model has a unique constraint conflict with the
+	 * target CT model.
+	 *
+	 * @return the source CT model
+	 */
 	public T getSourceCTModel();
 
+	/**
+	 * Returns the target CT model has a unique constraint conflict with the
+	 * source CT model.
+	 *
+	 * @return the target CT model
+	 */
 	public T getTargetCTModel();
 
+	/**
+	 * Returns if the CT model is from source.
+	 *
+	 * @param  ctModel the model
+	 * @return <code>true</code> if the model is from source; <code>false</code>
+	 *         otherwise
+	 */
 	public boolean isSourceCTModel(CTModel<?> ctModel);
 
+	/**
+	 * Returns if the CT model is from target.
+	 *
+	 * @param  ctModel the model
+	 * @return <code>true</code> if the model is from target; <code>false</code>
+	 *         otherwise
+	 */
 	public boolean isTargetCTModel(CTModel<?> ctModel);
 
 }

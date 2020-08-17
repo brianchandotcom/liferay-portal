@@ -17,23 +17,55 @@ package com.liferay.change.tracking.spi.listener;
 import com.liferay.change.tracking.spi.exception.CTEventException;
 
 /**
+ * CT event listeners are used for extending change tracking behavior into
+ * additional types of storage. Examples include: file system, message bus, and
+ * search index.
+ *
  * @author Preston Crary
  */
 public interface CTEventListener {
 
+	/**
+	 * Called after copying the source CTCollection into the target
+	 * CTCollection.
+	 *
+	 * @param  sourceCTCollectionId the ctCollectionId for the source
+	 *         CTCollection
+	 * @param  targetCTCollectionId the ctCollectionId for the target
+	 *         CTCollection
+	 * @throws CTEventException if a exception occurred
+	 */
 	public default void onAfterCopy(
 			long sourceCTCollectionId, long targetCTCollectionId)
 		throws CTEventException {
 	}
 
+	/**
+	 * Called after checking conflicts and publishing the CTCollection.
+	 *
+	 * @param  ctCollectionId belonging to the CTCollection being published
+	 * @throws CTEventException if a exception occurred
+	 */
 	public default void onAfterPublish(long ctCollectionId)
 		throws CTEventException {
 	}
 
+	/**
+	 * Called before checking conflicts and publishing the CTCollection.
+	 *
+	 * @param  ctCollectionId belonging to the CTCollection being published
+	 * @throws CTEventException if a exception occurred
+	 */
 	public default void onBeforePublish(long ctCollectionId)
 		throws CTEventException {
 	}
 
+	/**
+	 * Called before deleting a CTCollection.
+	 *
+	 * @param  ctCollectionId belonging to the CTCollection being deleted
+	 * @throws CTEventException if a exception occurred
+	 */
 	public default void onBeforeRemove(long ctCollectionId)
 		throws CTEventException {
 	}

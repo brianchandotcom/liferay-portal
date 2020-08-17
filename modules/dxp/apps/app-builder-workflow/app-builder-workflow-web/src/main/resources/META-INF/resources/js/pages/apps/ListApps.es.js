@@ -72,7 +72,7 @@ export default ({scope, ...props}) => {
 	];
 
 	const confirmDelete = ({id}) => {
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve) => {
 			const confirmed = confirm(
 				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
 			);
@@ -92,17 +92,19 @@ export default ({scope, ...props}) => {
 					}
 				)
 					.then(parseResponse)
-					.then(() => resolve(true))
-					.then(() =>
+					.then(() => {
 						successToast(
 							Liferay.Language.get(
 								'the-item-was-deleted-successfully'
 							)
-						)
-					)
+						);
+
+						resolve(true);
+					})
 					.catch(({errorMessage}) => {
 						errorToast(errorMessage);
-						reject(true);
+
+						resolve(false);
 					});
 			}
 			else {

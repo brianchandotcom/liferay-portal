@@ -159,6 +159,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>QUESTIONS_DETAILS_TITLE</td>
+	<td>//div[contains(@class,'questions-container')]//h1[contains(.,'${key_questionTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUESTIONS_TITLE</td>
 	<td>//a[contains(@class,'questions-title')]/h2[contains(.,'${key_questionTitle}')]</td>
 	<td></td>

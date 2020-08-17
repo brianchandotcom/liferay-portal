@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIRM_PASSWORD</td>
+	<td>//iframe[@title='Confirm Password']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_LIST_DIALOG</td>
 	<td>//iframe[contains(@class,'dialog-iframe-node') and contains(@id,'selectAssetList_iframe')]</td>
 	<td></td>

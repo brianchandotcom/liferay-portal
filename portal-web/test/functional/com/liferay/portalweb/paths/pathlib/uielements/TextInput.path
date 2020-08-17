@@ -419,6 +419,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PASSWORD_CONFIRM</td>
+	<td>//div[label[contains(.,'Your Password')]]/input[not(contains(@type,'hidden')) and not(contains(@class,'hide'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PASSWORD_TYPE</td>
 	<td>//input[@type='password']</td>
 	<td></td>

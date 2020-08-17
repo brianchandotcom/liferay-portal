@@ -21,7 +21,7 @@ import Overlay from './Overlay';
 import Thumbnails from './Thumbnails';
 
 function fetchImage(url) {
-	return new Promise(resolve => {
+	return new Promise((resolve) => {
 		const img = new Image();
 		img.src = url;
 		img.onload = () => resolve(url);
@@ -37,7 +37,7 @@ export default class Gallery extends React.Component {
 			images: this.props.images,
 			loaded: new Set(),
 			loading: false,
-			selected: 0
+			selected: 0,
 		};
 
 		this.fullscreenClose = this.fullscreenClose.bind(this);
@@ -62,7 +62,7 @@ export default class Gallery extends React.Component {
 		if (e.images) {
 			this.setState({
 				images: e.images,
-				selected: 0
+				selected: 0,
 			});
 		}
 	}
@@ -98,16 +98,17 @@ export default class Gallery extends React.Component {
 	}
 
 	imageLoad(imageUrl) {
-		return new Promise(resolve => {
+		return new Promise((resolve) => {
 			if (this.state.loaded.has(imageUrl)) {
 				resolve(imageUrl);
-			} else {
+			}
+			else {
 				this.setState({loading: true});
 				fetchImage(imageUrl).then(() => {
 					this.setState(
 						{
 							loaded: new Set(this.state.loaded).add(imageUrl),
-							loading: false
+							loading: false,
 						},
 						() => {
 							resolve(imageUrl);
@@ -172,7 +173,7 @@ Gallery.propTypes = {
 		PropTypes.shape({
 			thumbnailUrl: PropTypes.string.isRequired,
 			title: PropTypes.string.isRequired,
-			url: PropTypes.string.isRequired
+			url: PropTypes.string.isRequired,
 		})
-	)
+	),
 };

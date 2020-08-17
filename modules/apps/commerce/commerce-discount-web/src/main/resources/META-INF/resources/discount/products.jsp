@@ -117,7 +117,7 @@ SearchContainer<CommerceDiscountRel> cpDefinitionCommerceDiscountRelSearchContai
 </div>
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace />addCommerceDiscountRelMenuItem').on('click', function(
+	$('#<portlet:namespace />addCommerceDiscountRelMenuItem').on('click', function (
 		event
 	) {
 		event.preventDefault();
@@ -125,7 +125,7 @@ SearchContainer<CommerceDiscountRel> cpDefinitionCommerceDiscountRelSearchContai
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 			eventName: 'productDefinitionsSelectItem',
 			on: {
-				selectedItemChange: function(event) {
+				selectedItemChange: function (event) {
 					var selectedItems = event.newVal;
 
 					if (selectedItems) {
@@ -137,11 +137,11 @@ SearchContainer<CommerceDiscountRel> cpDefinitionCommerceDiscountRelSearchContai
 
 						submitForm(addCommerceDiscountRelFm);
 					}
-				}
+				},
 			},
 			title:
 				'<liferay-ui:message arguments="<%= commerceDiscount.getTitle() %>" key="add-new-product-to-x" />',
-			url: '<%= commerceDiscountRelDisplayContext.getItemSelectorUrl() %>'
+			url: '<%= commerceDiscountRelDisplayContext.getItemSelectorUrl() %>',
 		});
 
 		itemSelectorDialog.open();

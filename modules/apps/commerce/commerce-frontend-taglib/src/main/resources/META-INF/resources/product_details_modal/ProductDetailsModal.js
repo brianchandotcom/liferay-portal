@@ -17,7 +17,7 @@
 import Component from 'metal-component';
 import Soy, {Config} from 'metal-soy';
 
-import template from './ProductDetailsModal.soy.js';
+import template from './ProductDetailsModal.soy';
 
 import 'clay-modal';
 
@@ -30,6 +30,7 @@ class ProductDetailsModal extends Component {
 
 	_handleCloseModal(evt) {
 		evt.preventDefault();
+
 		return this.refs.modal.show();
 	}
 }
@@ -45,7 +46,7 @@ ProductDetailsModal.STATE = {
 	categories: Config.array(
 		Config.shapeOf({
 			link: Config.string().required(),
-			name: Config.string().required()
+			name: Config.string().required(),
 		})
 	).value([]),
 	description: Config.string(),
@@ -53,10 +54,10 @@ ProductDetailsModal.STATE = {
 	name: Config.string().required(),
 	pictureUrl: Config.string().required(),
 	settings: Config.shapeOf({
-		minQuantity: Config.number()
+		minQuantity: Config.number(),
 	}).value(),
 	sku: Config.string().required(),
-	spritemap: Config.string()
+	spritemap: Config.string(),
 };
 
 export {ProductDetailsModal};

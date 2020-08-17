@@ -107,17 +107,17 @@ portletURL.setParameter("userId", String.valueOf(selectedUser.getUserId()));
 		/>
 
 		<aui:script>
-			Liferay.provide(window, '<portlet:namespace />openUserRolesModal', function(
+			Liferay.provide(window, '<portlet:namespace />openUserRolesModal', function (
 				evt
 			) {
 				const userRolesModal = Liferay.component('userRolesModal');
 				userRolesModal.open();
 			});
 
-			Liferay.componentReady('userRolesModal').then(function(userRolesModal) {
-				userRolesModal.on('updateRoles', function(selectedRoles) {
+			Liferay.componentReady('userRolesModal').then(function (userRolesModal) {
+				userRolesModal.on('updateRoles', function (selectedRoles) {
 					let selectedRoleIds = selectedRoles
-						.map(function(role) {
+						.map(function (role) {
 							return role.id;
 						})
 						.join(',');

@@ -29,55 +29,59 @@ String runNowButton = "runNowButton" + row.getRowId();
 <aui:button cssClass="btn-lg" name="<%= runNowButton %>" type="cancel" value="run-now" />
 
 <aui:script use="aui-io-request,aui-parse-content,liferay-notification">
-	A.one('#<portlet:namespace /><%= runNowButton %>').on(
-		'click',
-		function(event) {
-			var data = {
-				'<portlet:namespace/><%= Constants.CMD %>': 'runProcess',
-				'<portlet:namespace/>commerceDataIntegrationProcessId': '<%= commerceDataIntegrationProcess.getCommerceDataIntegrationProcessId() %>'
-			};
+	A.one('#<portlet:namespace /><%= runNowButton %>').on('click', function (
+		event
+	) {
+		var data = {
+			<portlet:namespace/><%= Constants.CMD %>: 'runProcess',
+			<portlet:namespace/>commerceDataIntegrationProcessId:
+				'<%= commerceDataIntegrationProcess.getCommerceDataIntegrationProcessId() %>',
+		};
 
-			this.attr('disabled', true);
+		this.attr('disabled', true);
 
-			var iconSpinnerContainer = A.one('<%= ".commerce-data-integration-check-row-icon-spinner" + row.getRowId() %>');
+		var iconSpinnerContainer = A.one(
+			'<%= ".commerce-data-integration-check-row-icon-spinner" + row.getRowId() %>'
+		);
 
-			iconSpinnerContainer.removeClass('hide');
+		iconSpinnerContainer.removeClass('hide');
 
-			A.io.request(
-				'<liferay-portlet:actionURL name="editCommerceDataIntegrationProcess" portletName="<%= portletDisplay.getPortletName() %>" />',
-				{
-					data: data,
-					on: {
-						success: function(event, id, obj) {
-							var response = JSON.parse(obj.response);
+		A.io.request(
+			'<liferay-portlet:actionURL name="editCommerceDataIntegrationProcess" portletName="<%= portletDisplay.getPortletName() %>" />',
+			{
+				data: data,
+				on: {
+					success: function (event, id, obj) {
+						var response = JSON.parse(obj.response);
 
-							if (response.success) {
-								iconSpinnerContainer.addClass('hide');
-							}
-							else {
-								A.one('#<portlet:namespace /><%= runNowButton %>').attr('disabled', false);
-
-								iconSpinnerContainer.addClass('hide');
-
-								new Liferay.Notification(
-									{
-										closeable: true,
-										delay: {
-											hide: 5000,
-											show: 0
-										},
-										duration: 500,
-										message: '<liferay-ui:message key="an-unexpected-error-occurred" />',
-										render: true,
-										title: '<liferay-ui:message key="danger" />',
-										type: 'danger'
-									}
-								);
-							}
+						if (response.success) {
+							iconSpinnerContainer.addClass('hide');
 						}
-					}
-				}
-			);
-		}
-	);
+						else {
+							A.one('#<portlet:namespace /><%= runNowButton %>').attr(
+								'disabled',
+								false
+							);
+
+							iconSpinnerContainer.addClass('hide');
+
+							new Liferay.Notification({
+								closeable: true,
+								delay: {
+									hide: 5000,
+									show: 0,
+								},
+								duration: 500,
+								message:
+									'<liferay-ui:message key="an-unexpected-error-occurred" />',
+								render: true,
+								title: '<liferay-ui:message key="danger" />',
+								type: 'danger',
+							});
+						}
+					},
+				},
+			}
+		);
+	});
 </aui:script>

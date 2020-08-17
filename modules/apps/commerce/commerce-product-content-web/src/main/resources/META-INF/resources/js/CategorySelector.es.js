@@ -23,6 +23,7 @@ import templates from './CategorySelector.soy';
  * AUI module liferay-commerce-frontend-asset-categories-selector
  */
 class CategorySelector extends Component {
+
 	/**
 	 * Updates the calculated rule fields for `queryValues` and `categoryIdsTitles`
 	 * every time a new category entry is added or removed to the selection
@@ -31,7 +32,7 @@ class CategorySelector extends Component {
 
 	onEntriesChanged_() {
 		this.rule.categoryIdsTitles = this.categoriesSelector_.entries.values.map(
-			element => element.value
+			(element) => element.value
 		);
 		this.rule.queryValues = this.categoriesSelector_.entries.keys.join(',');
 	}
@@ -50,7 +51,7 @@ class CategorySelector extends Component {
 				groupIds: this.groupIds,
 				hiddenInput: `#${this.refs.hiddenInput.getAttribute('id')}`,
 				portletURL: this.categorySelectorURL,
-				vocabularyIds: this.vocabularyIds
+				vocabularyIds: this.vocabularyIds,
 			};
 
 			this.categoriesSelector_ = new Liferay.AssetTaglibCategoriesSelector(
@@ -69,6 +70,7 @@ class CategorySelector extends Component {
 }
 
 CategorySelector.STATE = {
+
 	/**
 	 * Portlet ID used for selecting categories.
 	 * For this component it's required because is the only way
@@ -126,7 +128,7 @@ CategorySelector.STATE = {
 	 * Vocabularies are super groups which group a set of categories.
 	 */
 
-	vocabularyIds: Config.string().value('')
+	vocabularyIds: Config.string().value(''),
 };
 
 Soy.register(CategorySelector, templates);

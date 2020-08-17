@@ -54,30 +54,30 @@ List<CommerceDiscountRuleType> commerceDiscountRuleTypes = commerceDiscountDispl
 			Liferay.provide(
 				window,
 				'<portlet:namespace/>apiSubmit',
-				function(form) {
+				function (form) {
 					var name = form.querySelector('#name').value;
 
 					var commerceDiscountRuleType = form.querySelector('#type').value;
 
 					var discountRuleData = {
 						name: name,
-						type: commerceDiscountRuleType
+						type: commerceDiscountRuleType,
 					};
 
 					return CommerceDiscountRuleResource.addDiscountRule(
 						'<%= commerceDiscountId %>',
 						discountRuleData
 					)
-						.then(function(payload) {
+						.then(function (payload) {
 							window.parent.Liferay.fire(events.CLOSE_MODAL, {
 								successNotification: {
 									message:
 										'<liferay-ui:message key="your-request-completed-successfully" />',
-									showSuccessNotification: true
-								}
+									showSuccessNotification: true,
+								},
 							});
 						})
-						.catch(function(error) {
+						.catch(function (error) {
 							return Promise.reject(error);
 						});
 				},

@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-commerce-frontend-asset-categories-selector',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var LString = Lang.String;
@@ -55,7 +55,7 @@ AUI.add(
 						return value;
 					},
 					validator: '_isValidEntries',
-					value: []
+					value: [],
 				},
 
 				categoryTitles: {
@@ -66,45 +66,45 @@ AUI.add(
 
 						return value;
 					},
-					value: []
+					value: [],
 				},
 
 				label: {
 					validator: '_isValidString',
-					value: Liferay.Language.get('select')
+					value: Liferay.Language.get('select'),
 				},
 
 				labelNode: {
 					setter(value) {
 						return A.one(value) || A.Attribute.INVALID_VALUE;
 					},
-					value: null
+					value: null,
 				},
 
 				maxEntries: {
 					validator: Lang.isNumber,
-					value: -1
+					value: -1,
 				},
 
 				moreResultsLabel: {
 					validator: '_isValidString',
-					value: Liferay.Language.get('load-more-results')
+					value: Liferay.Language.get('load-more-results'),
 				},
 
 				singleSelect: {
 					validator: Lang.isBoolean,
-					value: false
+					value: false,
 				},
 
 				title: {
 					validator: '_isValidString',
-					value: Liferay.Language.get('select-categories')
+					value: Liferay.Language.get('select-categories'),
 				},
 
 				vocabularyIds: {
 					validator: '_isValidString',
-					value: null
-				}
+					value: null,
+				},
 			},
 
 			EXTENDS: Liferay.AssetTaglibTagsSelector,
@@ -160,11 +160,11 @@ AUI.add(
 												: {};
 
 											instance._showSelectPopup(event);
-										}
+										},
 									},
-									title: instance.get('title')
-								}
-							]
+									title: instance.get('title'),
+								},
+							],
 						}).render(contentBox);
 					}
 
@@ -185,7 +185,7 @@ AUI.add(
 						{
 							selectedCategories: instance.get('categoryIds'),
 							singleSelect: instance.get('singleSelect'),
-							vocabularyIds: instance.get('vocabularyIds')
+							vocabularyIds: instance.get('vocabularyIds'),
 						}
 					);
 
@@ -199,7 +199,7 @@ AUI.add(
 									for (var key in data) {
 										var found = false;
 
-										instance.entries.each(item => {
+										instance.entries.each((item) => {
 											if (key === item.value) {
 												found = true;
 											}
@@ -226,11 +226,11 @@ AUI.add(
 								);
 
 								instance._updateInputHidden();
-							}
+							},
 						},
 						'strings.add': Liferay.Language.get('add'),
 						title: Liferay.Language.get('select-categories'),
-						url: uri
+						url: uri,
 					});
 
 					itemSelectorDialog.open();
@@ -279,7 +279,7 @@ AUI.add(
 						arguments
 					);
 
-					instance.entries.getKey = function(obj) {
+					instance.entries.getKey = function (obj) {
 						return obj.categoryId;
 					};
 
@@ -290,19 +290,19 @@ AUI.add(
 					categoryIds.forEach((item, index) => {
 						var entry = {
 							categoryId: item,
-							value: LString.unescapeHTML(categoryTitles[index])
+							value: LString.unescapeHTML(categoryTitles[index]),
 						};
 
 						instance.entries.add(entry);
 					});
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.AssetTaglibCategoriesSelector = AssetTaglibCategoriesSelector;
 	},
 	'',
 	{
-		requires: ['aui-tree', 'liferay-commerce-frontend-asset-tag-selector']
+		requires: ['aui-tree', 'liferay-commerce-frontend-asset-tag-selector'],
 	}
 );

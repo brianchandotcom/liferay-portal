@@ -17,15 +17,15 @@ import ClayIcon, {ClayIconSpriteContext} from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import debounce from '../../utilities/debounce';
 import {
-	OPEN_SIDE_PANEL,
 	CLOSE_SIDE_PANEL,
 	IFRAME_LOADED,
-	SIDE_PANEL_CLOSED
+	OPEN_SIDE_PANEL,
+	SIDE_PANEL_CLOSED,
 } from '../../utilities/eventsDefinitions';
 import {getIframeHandlerModalId, isPageInIframe} from '../../utilities/iframes';
 import {exposeSidePanel} from '../../utilities/sidePanels';
@@ -51,7 +51,7 @@ export default class SidePanel extends React.Component {
 			visible: !!props.visible,
 			wrapper:
 				document.querySelector(this.props.wrapperSelector) ||
-				document.querySelector('body')
+				document.querySelector('body'),
 		};
 		this.iframeHandlerModalId = getIframeHandlerModalId();
 		this.handleIframeClickOnSubmit = this.handleIframeClickOnSubmit.bind(
@@ -84,7 +84,8 @@ export default class SidePanel extends React.Component {
 			);
 			if (container) {
 				container.classList.add('with-side-panel');
-			} else {
+			}
+			else {
 				throw new Error(
 					`Container: "${this.props.containerSelector}" not found!`
 				);
@@ -100,7 +101,7 @@ export default class SidePanel extends React.Component {
 			activeMenuItem: this.state.active,
 			size: this.state.size,
 			url: this.state.currentUrl,
-			visible: this.state.visible
+			visible: this.state.visible,
 		}));
 	}
 
@@ -113,7 +114,7 @@ export default class SidePanel extends React.Component {
 
 		this.setState({
 			onAfterSubmit: e.onSubmit || null,
-			size: e.size || this.defaultSize
+			size: e.size || this.defaultSize,
 		});
 	}
 
@@ -127,8 +128,9 @@ export default class SidePanel extends React.Component {
 		if (
 			e.keyCode !== 27 ||
 			window.top.document.querySelector('.modal-content')
-		)
+		) {
 			return;
+		}
 
 		if (this.iframeRef.current && this.iframeRef.current.contentWindow) {
 			const nestedIframe = this.iframeRef.current.contentDocument.querySelector(
@@ -158,14 +160,16 @@ export default class SidePanel extends React.Component {
 	}
 
 	updateTop() {
-		if (!this._isMounted) return;
+		if (!this._isMounted) {
+			return;
+		}
 
 		const topAnchor = document.querySelector(this.props.topAnchorSelector);
 
 		if (topAnchor) {
 			const {height, top} = topAnchor.getBoundingClientRect();
 			this.setState({
-				topDistance: top + height + 'px'
+				topDistance: top + height + 'px',
 			});
 		}
 
@@ -175,17 +179,20 @@ export default class SidePanel extends React.Component {
 			const {top} = pageHeader.getBoundingClientRect();
 
 			this.setState({
-				menuCoverTopDistance: top + 'px'
+				menuCoverTopDistance: top + 'px',
 			});
-		} else if (isPageInIframe()) {
+		}
+		else if (isPageInIframe()) {
 			this.setState({
-				menuCoverTopDistance: SIDE_PANEL_TITLE_HEIGHT + 'px'
+				menuCoverTopDistance: SIDE_PANEL_TITLE_HEIGHT + 'px',
 			});
 		}
 	}
 
 	load(url, refreshPageAfterSubmit) {
-		if (!this._isMounted) return;
+		if (!this._isMounted) {
+			return;
+		}
 
 		this.setState(
 			{
@@ -193,7 +200,7 @@ export default class SidePanel extends React.Component {
 				loading: true,
 				onAfterSubmit: refreshPageAfterSubmit
 					? () => window.location.reload()
-					: null
+					: null,
 			},
 			() => {
 				if (
@@ -222,16 +229,18 @@ export default class SidePanel extends React.Component {
 
 	close() {
 		this.toggle(false).then(() => {
-			if (!this._isMounted) return;
+			if (!this._isMounted) {
+				return;
+			}
 
 			this.setState({
 				active: null,
 				closeButtonStyle: null,
 				currentUrl: null,
-				loading: true
+				loading: true,
 			});
 			Liferay.fire(SIDE_PANEL_CLOSED, {
-				id: this.props.id
+				id: this.props.id,
 			});
 		});
 	}
@@ -239,15 +248,18 @@ export default class SidePanel extends React.Component {
 	toggle(visible = !this.state.visible) {
 		if (visible) {
 			window.addEventListener('keyup', this.handleKeyupEvent);
-		} else {
+		}
+		else {
 			window.removeEventListener('keyup', this.handleKeyupEvent);
 			window.focus();
 		}
 
-		return new Promise(resolve => {
+		return new Promise((resolve) => {
 			this.setState({moving: true, visible});
 
-			if (!this.panel.current) return;
+			if (!this.panel.current) {
+				return;
+			}
 
 			this.panel.current.addEventListener(
 				'transitionend',
@@ -257,7 +269,7 @@ export default class SidePanel extends React.Component {
 					}
 				},
 				{
-					once: true
+					once: true,
 				}
 			);
 		});
@@ -285,25 +297,25 @@ export default class SidePanel extends React.Component {
 
 	handleContentLoaded() {
 		Liferay.fire(IFRAME_LOADED, {
-			id: this.props.id
+			id: this.props.id,
 		});
 
 		this.setState({
-			loading: false
+			loading: false,
 		});
 
 		try {
 			const iframeDocument = this.iframeRef.current.contentDocument;
 			const iframeWindow = this.iframeRef.current.contentWindow;
 
-			iframeWindow.addEventListener('keyup', e =>
+			iframeWindow.addEventListener('keyup', (e) =>
 				this.handleKeyupEvent(e)
 			);
 
 			if (iframeWindow.Liferay) {
 				iframeWindow.Liferay.on('endNavigate', () => {
 					this.handleIframeSubmit({id: this.props.id});
-					iframeWindow.addEventListener('keyup', e =>
+					iframeWindow.addEventListener('keyup', (e) =>
 						this.handleKeyupEvent(e)
 					);
 				});
@@ -313,14 +325,15 @@ export default class SidePanel extends React.Component {
 				'[type="submit"], .form-submitter'
 			);
 			if (submitters && submitters.length) {
-				submitters.forEach(submitter => {
+				submitters.forEach((submitter) => {
 					submitter.addEventListener(
 						'click',
 						this.handleIframeClickOnSubmit
 					);
 				});
 			}
-		} catch (error) {
+		}
+		catch (error) {
 			throw new Error(
 				`Cannot access to iframe body. Url: "${this.state.currentUrl}"`
 			);
@@ -435,11 +448,11 @@ SidePanel.propTypes = {
 	size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl', 'full']),
 	spritemap: PropTypes.string,
 	topAnchorSelector: PropTypes.any,
-	wrapperSelector: PropTypes.string
+	wrapperSelector: PropTypes.string,
 };
 
 SidePanel.defaultProps = {
 	size: 'lg',
 	topAnchorSelector: '.control-menu',
-	wrapperSelector: '.side-panel-wrapper'
+	wrapperSelector: '.side-panel-wrapper',
 };

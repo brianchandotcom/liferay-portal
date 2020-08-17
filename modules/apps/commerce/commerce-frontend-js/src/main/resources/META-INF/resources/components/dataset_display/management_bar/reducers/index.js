@@ -16,7 +16,7 @@ import {actionsDefinition} from '../actions/index';
 
 export const initialState = {
 	filters: [],
-	onFiltersChange: null
+	onFiltersChange: null,
 };
 
 function reducer(state = initialState, action) {
@@ -24,21 +24,21 @@ function reducer(state = initialState, action) {
 		case actionsDefinition.UPDATE_FILTER_STATE:
 			return {
 				...state,
-				filters: state.filters.map(el => ({
+				filters: state.filters.map((el) => ({
 					...el,
-					...(el.id === action.payload.id ? action.payload : {})
-				}))
+					...(el.id === action.payload.id ? action.payload : {}),
+				})),
 			};
 		case actionsDefinition.RESET_FILTERS_VALUE:
 			return {
 				...state,
-				filters: state.filters.map(el => ({
+				filters: state.filters.map((el) => ({
 					...el,
 					additionalData: null,
 					odataFilterString: null,
 					resumeCustomLabel: null,
-					value: null
-				}))
+					value: null,
+				})),
 			};
 		default:
 			return state;

@@ -207,7 +207,7 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 </aui:script>
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace />addDefinitionGroupedEntry').on('click', function(
+	$('#<portlet:namespace />addDefinitionGroupedEntry').on('click', function (
 		event
 	) {
 		event.preventDefault();
@@ -215,7 +215,7 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 			eventName: 'productDefinitionsSelectItem',
 			on: {
-				selectedItemChange: function(event) {
+				selectedItemChange: function (event) {
 					var <portlet:namespace />addCPDefinitionIds = [];
 
 					var selectedItems = event.newVal;
@@ -231,12 +231,12 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 
 						submitForm(addCPDefinitionGroupedEntryFm);
 					}
-				}
+				},
 			},
 			title:
 				'<liferay-ui:message arguments="<%= cpDefinition.getName(themeDisplay.getLanguageId()) %>" key="add-new-grouped-entry-to-x" />',
 			url:
-				'<%= cpDefinitionGroupedEntriesDisplayContext.getItemSelectorUrl() %>'
+				'<%= cpDefinitionGroupedEntriesDisplayContext.getItemSelectorUrl() %>',
 		});
 
 		itemSelectorDialog.open();

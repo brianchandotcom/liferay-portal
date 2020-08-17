@@ -43,23 +43,23 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 		var <portlet:namespace/>defaultLanguageId = null;
 		var <portlet:namespace />product = {
 			active: true,
-			productType: '<%= cpDefinition.getProductTypeName() %>'
+			productType: '<%= cpDefinition.getProductTypeName() %>',
 		};
 
 		Liferay.provide(
 			window,
 			'<portlet:namespace/>apiSubmit',
-			function(form) {
+			function (form) {
 				var API_URL =
 					'/o/headless-commerce-admin-catalog/v1.0/products/<%= cpDefinition.getCProductId() %>/clone?catalogId=' +
 					<portlet:namespace/>product.catalogId;
 
 				FormUtils.apiSubmit(form, API_URL)
-					.then(function(payload) {
+					.then(function (payload) {
 						var headers = new Headers({
 							Accept: 'application/json',
 							'Content-Type': 'application/json',
-							'x-csrf-token': Liferay.authToken
+							'x-csrf-token': Liferay.authToken,
 						});
 
 						var formattedData = {
@@ -68,9 +68,9 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 							name: {
 								[<portlet:namespace/>defaultLanguageId]: document.getElementById(
 									'<portlet:namespace/>name'
-								).value
+								).value,
 							},
-							productType: <portlet:namespace/>product.productType
+							productType: <portlet:namespace/>product.productType,
 						};
 
 						fetch(
@@ -80,9 +80,9 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 								body: JSON.stringify(formattedData),
 								credentials: 'include',
 								headers: headers,
-								method: 'patch'
+								method: 'patch',
 							}
-						).then(function() {
+						).then(function () {
 							var redirectURL = new Liferay.PortletURL.createURL(
 								'<%= editProductDefinitionURL %>'
 							);
@@ -98,28 +98,28 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 								successNotification: {
 									showSuccessNotification: true,
 									message:
-										'<liferay-ui:message key="your-request-completed-successfully" />'
-								}
+										'<liferay-ui:message key="your-request-completed-successfully" />',
+								},
 							});
 						});
 					})
-					.catch(function() {
+					.catch(function () {
 						window.parent.Liferay.fire(events.IS_LOADING_MODAL, {
-							isLoading: false
+							isLoading: false,
 						});
 
 						new Liferay.Notification({
 							closeable: true,
 							delay: {
 								hide: 5000,
-								show: 0
+								show: 0,
 							},
 							duration: 500,
 							message:
 								'<liferay-ui:message key="an-unexpected-error-occurred" />',
 							render: true,
 							title: '<liferay-ui:message key="danger" />',
-							type: 'danger'
+							type: 'danger',
 						});
 					});
 			},
@@ -132,14 +132,14 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 			inputName: '<%= liferayPortletResponse.getNamespace() %>catalogId',
 			itemsKey: 'id',
 			itemsLabel: 'name',
-			onValueUpdated: function(value, catalogData) {
+			onValueUpdated: function (value, catalogData) {
 				if (value) {
 					<portlet:namespace/>product.catalogId = catalogData.id;
 					<portlet:namespace/>defaultLanguageId =
 						catalogData.defaultLanguageId;
 				}
 			},
-			required: true
+			required: true,
 		});
 	</aui:script>
 </commerce-ui:modal-content>

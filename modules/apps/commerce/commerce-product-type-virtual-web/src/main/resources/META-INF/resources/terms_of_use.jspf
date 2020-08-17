@@ -83,7 +83,7 @@
 		'#<portlet:namespace />journalArticleNameInput'
 	);
 
-	$('#<portlet:namespace />selectArticle').on('click', function(event) {
+	$('#<portlet:namespace />selectArticle').on('click', function (event) {
 		event.preventDefault();
 
 		Liferay.Util.selectEntity(
@@ -91,15 +91,15 @@
 				dialog: {
 					constrain: true,
 					destroyOnHide: true,
-					modal: true
+					modal: true,
 				},
 				eventName: 'selectJournalArticle',
 				id: '',
 				title: '<liferay-ui:message key="select-web-content" />',
 				uri:
-					'<%= cpDefinitionVirtualSettingDisplayContext.getTermsOfUseJournalArticleBrowserURL() %>'
+					'<%= cpDefinitionVirtualSettingDisplayContext.getTermsOfUseJournalArticleBrowserURL() %>',
 			},
-			function(event) {
+			function (event) {
 				$(
 					'#<portlet:namespace />termsOfUseJournalArticleResourcePrimKey'
 				).val(event.assetclasspk);
@@ -111,7 +111,7 @@
 		);
 	});
 
-	$('#<portlet:namespace />journalArticleRemove').on('click', function(event) {
+	$('#<portlet:namespace />journalArticleRemove').on('click', function (event) {
 		event.preventDefault();
 
 		$('#<portlet:namespace />termsOfUseJournalArticleResourcePrimKey').val(0);

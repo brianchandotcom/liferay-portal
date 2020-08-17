@@ -30,11 +30,11 @@ String fixIssueButton = "fixIssueButton" + row.getRowId();
 	<aui:button disabled="<%= commerceHealthHttpStatus.isFixed(company.getCompanyId(), themeDisplay.getScopeGroupId()) %>" name="<%= fixIssueButton %>" value="fix-issue" />
 
 	<aui:script use="aui-io-request,aui-parse-content,liferay-notification">
-		A.one('#<portlet:namespace /><%= fixIssueButton %>').on('click', function(
+		A.one('#<portlet:namespace /><%= fixIssueButton %>').on('click', function (
 			event
 		) {
 			var data = {
-				<portlet:namespace/>key: '<%= commerceHealthHttpStatus.getKey() %>'
+				<portlet:namespace/>key: '<%= commerceHealthHttpStatus.getKey() %>',
 			};
 
 			this.attr('disabled', true);
@@ -58,14 +58,15 @@ String fixIssueButton = "fixIssueButton" + row.getRowId();
 				{
 					data: data,
 					on: {
-						success: function(event, id, obj) {
+						success: function (event, id, obj) {
 							var response = JSON.parse(obj.response);
 
 							if (response.success) {
 								iconCheckContainer.removeClass('hide');
 								iconSpinnerContainer.addClass('hide');
 								iconTimesContainer.addClass('hide');
-							} else {
+							}
+							else {
 								A.one(
 									'#<portlet:namespace /><%= fixIssueButton %>'
 								).attr('disabled', false);
@@ -78,18 +79,18 @@ String fixIssueButton = "fixIssueButton" + row.getRowId();
 									closeable: true,
 									delay: {
 										hide: 5000,
-										show: 0
+										show: 0,
 									},
 									duration: 500,
 									message:
 										'<liferay-ui:message key="an-unexpected-error-occurred" />',
 									render: true,
 									title: '<liferay-ui:message key="danger" />',
-									type: 'danger'
+									type: 'danger',
 								});
 							}
-						}
-					}
+						},
+					},
 				}
 			);
 		});

@@ -35,6 +35,7 @@ class AddressModal extends Component {
 	_handleFirstDotClick(e) {
 		e.preventDefault();
 		this._stage = 1;
+
 		return this._stage;
 	}
 
@@ -48,12 +49,14 @@ class AddressModal extends Component {
 		if (this._firstFormValid) {
 			this._stage = 2;
 		}
+
 		return e;
 	}
 
 	_handleCloseModal(e) {
 		e.preventDefault();
 		this._modalVisible = false;
+
 		return e;
 	}
 
@@ -62,11 +65,11 @@ class AddressModal extends Component {
 		if (e.target.name === 'commerceCountry') {
 			this._formData = {
 				...this._formData,
-				country: value
+				country: value,
 			};
 
 			const country = this._countries.filter(
-				country => country.id == value
+				(country) => country.id == value
 			);
 
 			if (country.length === 1) {
@@ -74,28 +77,33 @@ class AddressModal extends Component {
 				this._isShippingAllowed = country[0].shippingAllowed;
 
 				this._fetchRegions();
-			} else {
+			}
+			else {
 				this._regions = [];
 			}
-		} else if (e.target.name === 'addressType') {
+		}
+		else if (e.target.name === 'addressType') {
 			this._formData = {
 				...this._formData,
-				addressType: value
-			};
-		} else {
-			this._formData = {
-				...this._formData,
-				region: value
+				addressType: value,
 			};
 		}
+		else {
+			this._formData = {
+				...this._formData,
+				region: value,
+			};
+		}
+
 		return value;
 	}
 
 	_handleInputBox(evt) {
 		this._formData = {
 			...this._formData,
-			[evt.target.name]: evt.target.value
+			[evt.target.name]: evt.target.value,
 		};
+
 		return evt.target.value;
 	}
 
@@ -126,10 +134,10 @@ class AddressModal extends Component {
 		fetch('/o/commerce-ui/address/' + id + '?p_auth=' + Liferay.authToken, {
 			credentials: 'include',
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'GET'
+			method: 'GET',
 		})
-			.then(response => response.json())
-			.then(jsonResponse => {
+			.then((response) => response.json())
+			.then((jsonResponse) => {
 				const data = JSON.parse(jsonResponse);
 
 				this._formData = {
@@ -142,7 +150,7 @@ class AddressModal extends Component {
 					referent: data.name,
 					region: data.commerceRegionId,
 					telephone: data.phoneNumber,
-					zipCode: data.zip
+					zipCode: data.zip,
 				};
 
 				this._fetchRegions();
@@ -153,11 +161,12 @@ class AddressModal extends Component {
 		return fetch(this.countriesAPI, {
 			credentials: 'include',
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'GET'
+			method: 'GET',
 		})
-			.then(response => response.json())
-			.then(countries => {
+			.then((response) => response.json())
+			.then((countries) => {
 				this._countries = countries;
+
 				return this._countries;
 			});
 	}
@@ -171,12 +180,13 @@ class AddressModal extends Component {
 			{
 				credentials: 'include',
 				headers: new Headers({'x-csrf-token': Liferay.authToken}),
-				method: 'GET'
+				method: 'GET',
 			}
 		)
-			.then(response => response.json())
-			.then(regions => {
+			.then((response) => response.json())
+			.then((regions) => {
 				this._regions = regions;
+
 				return this._regions;
 			});
 	}
@@ -186,6 +196,7 @@ class AddressModal extends Component {
 		if (this._firstFormValid && this._secondFormValid) {
 			this._addAddress(e);
 		}
+
 		return e;
 	}
 
@@ -203,7 +214,7 @@ class AddressModal extends Component {
 			referent: null,
 			region: null,
 			telephone: null,
-			zipCode: null
+			zipCode: null,
 		};
 
 		this._stage = 1;
@@ -211,16 +222,19 @@ class AddressModal extends Component {
 
 	toggle() {
 		this._modalVisible = !this._modalVisible;
+
 		return this._modalVisible;
 	}
 
 	open() {
 		this._modalVisible = true;
+
 		return this._modalVisible;
 	}
 
 	close() {
 		this._modalVisible = false;
+
 		return this._modalVisible;
 	}
 }
@@ -233,7 +247,7 @@ AddressModal.STATE = {
 			billingAllowed: Config.bool().required(),
 			id: Config.number().required(),
 			name: Config.string().required(),
-			shippingAllowed: Config.bool().required()
+			shippingAllowed: Config.bool().required(),
 		})
 	).value([]),
 	_firstFormValid: Config.bool().value(false),
@@ -246,7 +260,7 @@ AddressModal.STATE = {
 		referent: Config.string(),
 		region: Config.oneOfType([Config.string(), Config.number()]),
 		telephone: Config.string(),
-		zipCode: Config.string()
+		zipCode: Config.string(),
 	}).value({
 		address: null,
 		addressType: 2,
@@ -256,24 +270,22 @@ AddressModal.STATE = {
 		referent: null,
 		region: null,
 		telephone: null,
-		zipCode: null
+		zipCode: null,
 	}),
 	_isBillingAllowed: Config.bool().value(true),
 	_isShippingAllowed: Config.bool().value(true),
-	_modalVisible: Config.bool()
-		.internal()
-		.value(false),
+	_modalVisible: Config.bool().internal().value(false),
 	_regions: Config.array(
 		Config.shapeOf({
 			id: Config.number().required(),
-			name: Config.string().required()
+			name: Config.string().required(),
 		})
 	).value([]),
 	_secondFormValid: Config.bool().value(false),
 	_stage: Config.number(Config.oneOf([1, 2])).value(1),
 	countriesAPI: Config.string().required(),
 	regionsAPI: Config.string().required(),
-	spritemap: Config.string()
+	spritemap: Config.string(),
 };
 
 export {AddressModal};

@@ -16,7 +16,7 @@ import getJsModule from '../../../utilities/modules';
 import {DISCOUNT_LEVEL_PREFIX, ORDER_UUID_PARAMETER} from './constants';
 
 export function isNonnull(...values) {
-	return !!values.find(value => parseFloat(value) > 0);
+	return !!values.find((value) => parseFloat(value) > 0);
 }
 
 export function collectDiscountLevels(price) {
@@ -34,7 +34,8 @@ export function parseOptions(stringifiedJSON) {
 
 	try {
 		options = JSON.parse(stringifiedJSON);
-	} catch (ignore) {
+	}
+	catch (ignore) {
 		options = '';
 	}
 
@@ -53,7 +54,7 @@ export function regenerateOrderDetailURL(orderDetailURL, orderUUID) {
 
 export function resolveView({component, contentRendererModuleUrl}) {
 	if (component) {
-		return Promise.resolve(props => component(props));
+		return Promise.resolve((props) => component(props));
 	}
 
 	return getJsModule(contentRendererModuleUrl);
@@ -67,26 +68,26 @@ export function summaryDataMapper(summary) {
 			case 'itemsQuantity':
 				values.push({
 					label: Liferay.Language.get('quantity'),
-					...summaryItem
+					...summaryItem,
 				});
 				break;
 			case 'subtotalFormatted':
 				values.push({
 					label: Liferay.Language.get('subtotal'),
-					...summaryItem
+					...summaryItem,
 				});
 				break;
 			case 'totalDiscountValueFormatted':
 				values.push({
 					label: Liferay.Language.get('order-discount'),
-					...summaryItem
+					...summaryItem,
 				});
 				break;
 			case 'totalFormatted':
 				values.push({
 					label: Liferay.Language.get('total'),
 					style: 'big',
-					...summaryItem
+					...summaryItem,
 				});
 				break;
 			default:

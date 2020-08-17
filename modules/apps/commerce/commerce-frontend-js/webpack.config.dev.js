@@ -38,14 +38,15 @@ module.exports = {
 		port: 9000,
 		proxy: {
 			'/o': {
-				target: 'http://localhost:8080/'
-			}
+				target: 'http://localhost:8080/',
+			},
 		},
-		publicPath: '/'
+		publicPath: '/',
 	},
 	devtool: 'inline-source-map',
 	entry: [...components, {entry: 'Menu'}].reduce((comp, current) => {
 		comp[current.entry] = getComponentPath(current.entry);
+
 		return comp;
 	}, {}),
 	mode: 'development',
@@ -56,37 +57,37 @@ module.exports = {
 				test: /\.(js|jsx)$/,
 				use: [
 					{
-						loader: 'babel-loader'
-					}
-				]
+						loader: 'babel-loader',
+					},
+				],
 			},
 			{
 				test: /\.(scss|css)$/,
 				use: [
 					{loader: 'style-loader'},
 					{loader: 'css-loader'},
-					{loader: 'sass-loader'}
-				]
+					{loader: 'sass-loader'},
+				],
 			},
 			{
 				exclude: /node_modules/,
 				test: /\.tsx?$/,
-				use: 'ts-loader'
-			}
-		]
+				use: 'ts-loader',
+			},
+		],
 	},
 	output: {
 		filename: '[name].js',
-		path: outputPath
+		path: outputPath,
 	},
 	plugins: [
 		new webpack.optimize.ModuleConcatenationPlugin(),
 		new HtmlWebpackPlugin({
 			inject: false,
-			template: path.resolve(__dirname, './test/dev/public/index.html')
-		})
+			template: path.resolve(__dirname, './test/dev/public/index.html'),
+		}),
 	],
 	resolve: {
-		extensions: ['.js', '.jsx']
-	}
+		extensions: ['.js', '.jsx'],
+	},
 };

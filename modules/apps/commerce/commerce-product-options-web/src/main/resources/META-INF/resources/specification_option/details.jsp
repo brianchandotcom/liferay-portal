@@ -66,7 +66,7 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 		var keyInput = form.querySelector('#<portlet:namespace />key');
 		var titleInput = form.querySelector('#<portlet:namespace />title');
 
-		var handleOnTitleInput = function() {
+		var handleOnTitleInput = function () {
 			keyInput.value = titleInput.value;
 		};
 

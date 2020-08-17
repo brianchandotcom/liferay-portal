@@ -39,13 +39,13 @@ export function resolveModalHeight(size) {
 export function openPermissionsModal(uri) {
 	Liferay.Util.openWindow({
 		dialog: {
-			destroyOnHide: true
+			destroyOnHide: true,
 		},
 		dialogIframe: {
-			bodyCssClass: 'dialog-with-footer'
+			bodyCssClass: 'dialog-with-footer',
 		},
 		title: Liferay.Language.get('permissions'),
-		uri
+		uri,
 	});
 }
 
@@ -57,8 +57,8 @@ export function closeAndRedirect(redirectURL) {
 			message: Liferay.Language.get(
 				'your-request-completed-successfully'
 			),
-			showSuccessNotification: true
-		}
+			showSuccessNotification: true,
+		},
 	};
 
 	if (redirectURL) {

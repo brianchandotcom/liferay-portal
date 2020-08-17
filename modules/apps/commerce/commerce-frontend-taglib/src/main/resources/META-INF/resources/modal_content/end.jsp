@@ -41,14 +41,14 @@
 			eventDetail.successNotification = {
 				message:
 					'<%= LanguageUtil.get(request, "your-request-completed-successfully") %>',
-				showSuccessNotification: true
+				showSuccessNotification: true,
 			};
 		}
 
 		window.top.Liferay.fire(events.CLOSE_MODAL, eventDetail);
 	}
 
-	window.addEventListener('keyup', function(event) {
+	window.addEventListener('keyup', function (event) {
 		event.preventDefault();
 
 		if (event.key === 'Escape') {
@@ -62,8 +62,8 @@
 
 	window.top.Liferay.fire(events.IS_LOADING_MODAL, {isLoading: false});
 
-	document.querySelectorAll('.modal-closer').forEach(function(trigger) {
-		trigger.addEventListener('click', function(e) {
+	document.querySelectorAll('.modal-closer').forEach(function (trigger) {
+		trigger.addEventListener('click', function (e) {
 			e.preventDefault();
 			window.top.Liferay.fire(events.CLOSE_MODAL);
 		});
@@ -76,7 +76,7 @@
 	if (iframeForm) {
 		iframeForm.appendChild(iframeFooter);
 
-		iframeForm.addEventListener('submit', function(e) {
+		iframeForm.addEventListener('submit', function (e) {
 			window.top.Liferay.fire(events.IS_LOADING_MODAL, {isLoading: true});
 
 			var form = Liferay.Form.get(iframeForm.id);
@@ -84,7 +84,7 @@
 			if (!form || !form.formValidator || !form.formValidator.validate) {
 				e.preventDefault();
 				return window.top.Liferay.fire(events.IS_LOADING_MODAL, {
-					isLoading: false
+					isLoading: false,
 				});
 			}
 
@@ -93,7 +93,7 @@
 			if (form.formValidator.hasErrors()) {
 				e.preventDefault();
 				return window.top.Liferay.fire(events.IS_LOADING_MODAL, {
-					isLoading: false
+					isLoading: false,
 				});
 			}
 

@@ -57,7 +57,8 @@ int selectedMonthlyMode = monthlyCPSubscriptionTypeDisplayContext.getSelectedMon
 					A.one('#<portlet:namespace />monthDayInputContainer').removeClass(
 						'hide'
 					);
-				} else {
+				}
+				else {
 					if (
 						!A.one('#<portlet:namespace />monthDayInputContainer').hasClass(
 							'hide'
@@ -105,7 +106,8 @@ int selectedMonthlyMode = monthlyCPSubscriptionTypeDisplayContext.getSelectedMon
 					A.one(
 						'#<portlet:namespace />deliveryMonthDayInputContainer'
 					).removeClass('hide');
-				} else {
+				}
+				else {
 					if (
 						!A.one(
 							'#<portlet:namespace />deliveryMonthDayInputContainer'

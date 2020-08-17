@@ -58,24 +58,22 @@ AccountsTable.STATE = {
 		Config.shapeOf({
 			accountId: Config.oneOfType([
 				Config.string(),
-				Config.number()
+				Config.number(),
 			]).required(),
 			name: Config.string(),
-			thumbnail: Config.string()
+			thumbnail: Config.string(),
 		})
 	),
 	createNewOrderLink: Config.string(),
 	currentAccount: Config.shapeOf({
 		accountId: Config.oneOfType([
 			Config.string(),
-			Config.number()
+			Config.number(),
 		]).required(),
 		name: Config.string(),
-		thumbnail: Config.string()
+		thumbnail: Config.string(),
 	}),
-	filterString: Config.string()
-		.value('')
-		.internal()
+	filterString: Config.string().value('').internal(),
 };
 
 export {AccountsTable};

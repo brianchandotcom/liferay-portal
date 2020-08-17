@@ -39,7 +39,7 @@ class OrganizationListItem extends Component {
 
 		return this.emit('toggleItem', {
 			id: this.id,
-			name: this.name
+			name: this.name,
 		});
 	}
 }
@@ -55,9 +55,9 @@ OrganizationListItem.STATE = {
 	selectedOrganizations: Config.array(
 		Config.shapeOf({
 			id: Config.oneOfType([Config.number(), Config.string()]),
-			name: Config.string()
+			name: Config.string(),
 		})
-	).value([])
+	).value([]),
 };
 
 export {OrganizationListItem};

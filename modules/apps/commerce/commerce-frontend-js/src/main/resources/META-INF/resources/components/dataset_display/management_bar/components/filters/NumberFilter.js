@@ -32,14 +32,14 @@ function NumberFilter(props) {
 					<div className="input-group">
 						<div
 							className={classNames('input-group-item', {
-								'input-group-prepend': props.inputText
+								'input-group-prepend': props.inputText,
 							})}
 						>
 							<input
 								className="form-control"
 								max={props.max}
 								min={props.min}
-								onChange={e => setValue(e.target.value)}
+								onChange={(e) => setValue(e.target.value)}
 								type="number"
 								value={value || ''}
 							/>
@@ -85,7 +85,7 @@ NumberFilter.propTypes = {
 	max: PropTypes.number,
 	min: PropTypes.number,
 	type: PropTypes.oneOf(['number']).isRequired,
-	value: PropTypes.number
+	value: PropTypes.number,
 };
 
 export default NumberFilter;

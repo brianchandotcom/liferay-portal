@@ -39,7 +39,7 @@ function Opener({openCart}) {
 }
 
 Opener.propTypes = {
-	openCart: PropTypes.func
+	openCart: PropTypes.func,
 };
 
 export default Opener;

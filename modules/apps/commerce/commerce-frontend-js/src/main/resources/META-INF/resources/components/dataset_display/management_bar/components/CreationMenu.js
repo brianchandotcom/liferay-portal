@@ -15,7 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import PropTypes from 'prop-types';
-import React, {useState, useContext} from 'react';
+import React, {useContext, useState} from 'react';
 
 import {triggerAction} from '../../../../utilities/actionItems/index';
 import DatasetDisplayContext from '../../DatasetDisplayContext';
@@ -39,7 +39,7 @@ function CreationMenu(props) {
 								{props.items.map((item, i) => (
 									<ClayDropDown.Item
 										key={i}
-										onClick={e => {
+										onClick={(e) => {
 											e.preventDefault();
 											setActive(false);
 											triggerAction(item, datasetContext);
@@ -69,9 +69,9 @@ CreationMenu.propTypes = {
 		PropTypes.shape({
 			href: PropTypes.string.isRequired,
 			label: PropTypes.string.isRequired,
-			target: PropTypes.oneOf(['modal', 'sidePanel', 'event', 'link'])
+			target: PropTypes.oneOf(['modal', 'sidePanel', 'event', 'link']),
 		})
-	).isRequired
+	).isRequired,
 };
 
 export default CreationMenu;

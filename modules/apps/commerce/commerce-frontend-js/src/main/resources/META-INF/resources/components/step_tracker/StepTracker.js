@@ -32,14 +32,14 @@ function Step(props) {
 
 Step.propTypes = {
 	label: PropTypes.string.isRequired,
-	state: PropTypes.oneOf(['completed', 'active', 'inactive'])
+	state: PropTypes.oneOf(['completed', 'active', 'inactive']),
 };
 
 function StepTracker(props) {
 	return (
 		<ClayIconSpriteContext.Provider value={props.spritemap}>
-			<div className="step-tracker rounded">
-				{props.steps.map(step => (
+			<div className="rounded step-tracker">
+				{props.steps.map((step) => (
 					<Step key={step.id} {...step} />
 				))}
 			</div>
@@ -49,7 +49,7 @@ function StepTracker(props) {
 
 StepTracker.propTypes = {
 	spritemap: PropTypes.string.isRequired,
-	steps: PropTypes.array.isRequired
+	steps: PropTypes.array.isRequired,
 };
 
 export default StepTracker;

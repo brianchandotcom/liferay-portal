@@ -74,17 +74,17 @@ ImageRenderer.propTypes = {
 		label: PropType.string,
 		labelKey: PropType.oneOfType([PropType.array, PropType.string]),
 		shape: PropType.string,
-		size: PropType.string
+		size: PropType.string,
 	}),
 	value: PropType.oneOfType([
 		PropType.shape({
 			alt: PropType.string,
 			shape: PropType.string,
 			size: PropType.string,
-			src: PropType.string.isRequired
+			src: PropType.string.isRequired,
 		}),
-		PropType.string
-	])
+		PropType.string,
+	]),
 };
 
 export default ImageRenderer;

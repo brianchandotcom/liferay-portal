@@ -20,7 +20,7 @@ import ServiceProvider from '../../ServiceProvider/index';
 import {
 	ADD_TO_ORDER,
 	CHANGE_ACCOUNT,
-	CHANGE_ORDER
+	CHANGE_ORDER,
 } from '../../utilities/eventsDefinitions';
 import {showErrorNotification} from '../../utilities/notifications';
 import CartItemsList from './CartItemsList';
@@ -35,7 +35,7 @@ function MiniCart({
 	cartView,
 	displayDiscountLevels,
 	orderId,
-	spritemap
+	spritemap,
 }) {
 	const AJAX = ServiceProvider.DeliveryCartAPI('v1');
 
@@ -48,13 +48,13 @@ function MiniCart({
 	const closeCart = () => setIsOpen(false),
 		openCart = () => setIsOpen(true),
 		resetCartState = useCallback(() => updateCartState({}), [
-			updateCartState
+			updateCartState,
 		]);
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const updateCartModel = ({orderId: cartId}) =>
 		AJAX.getCartByIdWithItems(cartId)
-			.then(model => {
+			.then((model) => {
 				if (model.id !== cartId) {
 					const {orderUUID} = model,
 						{checkoutURL, orderDetailURL} = actionURLs;
@@ -64,19 +64,19 @@ function MiniCart({
 						orderDetailURL: regenerateOrderDetailURL(
 							orderDetailURL,
 							orderUUID
-						)
+						),
 					});
 				}
 
 				updateCartState({...cartState, ...model});
 			})
-			.catch(error => {
+			.catch((error) => {
 				showErrorNotification(error);
 			});
 
 	useEffect(() => {
 		if (!CartView) {
-			resolveView(cartView).then(view => setCartView(() => view));
+			resolveView(cartView).then((view) => setCartView(() => view));
 		}
 	}, [CartView, cartView]);
 
@@ -118,7 +118,7 @@ function MiniCart({
 				setIsUpdating,
 				spritemap,
 				updateCartModel,
-				updateCartState
+				updateCartState,
 			}}
 		>
 			{!!CartView && (
@@ -139,30 +139,30 @@ function MiniCart({
 
 MiniCart.defaultProps = {
 	cartItemsListView: {
-		component: CartItemsList
+		component: CartItemsList,
 	},
 	cartView: {
-		component: Wrapper
+		component: Wrapper,
 	},
-	displayDiscountLevels: false
+	displayDiscountLevels: false,
 };
 
 MiniCart.propTypes = {
 	cartActionURLs: PropTypes.shape({
 		checkoutURL: PropTypes.string,
-		orderDetailURL: PropTypes.string
+		orderDetailURL: PropTypes.string,
 	}).isRequired,
 	cartItemsListView: PropTypes.shape({
 		component: PropTypes.func,
-		contentRendererModuleUrl: PropTypes.string
+		contentRendererModuleUrl: PropTypes.string,
 	}),
 	cartView: PropTypes.shape({
 		component: PropTypes.func,
-		contentRendererModuleUrl: PropTypes.string
+		contentRendererModuleUrl: PropTypes.string,
 	}),
 	displayDiscountLevels: PropTypes.bool,
 	orderId: PropTypes.number,
-	spritemap: PropTypes.string
+	spritemap: PropTypes.string,
 };
 
 export default MiniCart;

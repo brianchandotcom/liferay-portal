@@ -21,23 +21,23 @@ const props = {
 		{
 			href: '/side-panel/delete',
 			icon: 'plus',
-			label: 'Delete'
+			label: 'Delete',
 		},
 		{
 			href: '/side-panel/email',
 			icon: 'plus',
 			label: 'Add',
 			order: 20,
-			target: 'modal'
+			target: 'modal',
 		},
 		{
 			href: '/test',
 			icon: 'view',
 			label: 'View',
-			order: 1
-		}
+			order: 1,
+		},
 	],
-	spritemap: './assets/icons.svg'
+	spritemap: './assets/icons.svg',
 };
 
 launcher('dropdownId', 'dropdown-root-id', props);

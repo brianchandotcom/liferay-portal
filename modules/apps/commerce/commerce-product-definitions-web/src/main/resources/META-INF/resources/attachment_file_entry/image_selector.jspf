@@ -58,13 +58,13 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 </c:choose>
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace />selectFile').on('click', function(event) {
+	$('#<portlet:namespace />selectFile').on('click', function (event) {
 		event.preventDefault();
 
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 			eventName: 'addCPAttachmentFileEntry',
 			on: {
-				selectedItemChange: function(event) {
+				selectedItemChange: function (event) {
 					var selectedItem = event.newVal;
 
 					if (selectedItem) {
@@ -82,11 +82,11 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 
 						$('#<portlet:namespace />deleteFile').removeClass('hidden');
 					}
-				}
+				},
 			},
 			title: '<liferay-ui:message key="select-file" />',
 			url:
-				'<%= cpAttachmentFileEntriesDisplayContext.getAttachmentItemSelectorUrl() %>'
+				'<%= cpAttachmentFileEntriesDisplayContext.getAttachmentItemSelectorUrl() %>',
 		});
 
 		itemSelectorDialog.open();
@@ -94,7 +94,7 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 </aui:script>
 
 <aui:script>
-	$('#<portlet:namespace />deleteFile').on('click', function(event) {
+	$('#<portlet:namespace />deleteFile').on('click', function (event) {
 		event.preventDefault();
 
 		$('#<portlet:namespace />fileEntryId').val(0);

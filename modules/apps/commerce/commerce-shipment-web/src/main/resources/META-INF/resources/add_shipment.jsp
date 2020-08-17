@@ -78,18 +78,18 @@ CommerceShipmentDisplayContext commerceShipmentDisplayContext = (CommerceShipmen
 					headers: new Headers({
 						Accept: 'application/json',
 						'Content-Type': 'application/json',
-						'x-csrf-token': Liferay.authToken
+						'x-csrf-token': Liferay.authToken,
 					}),
-					method: 'GET'
+					method: 'GET',
 				}
 			)
-				.then(function(response) {
+				.then(function (response) {
 					return response.json();
 				})
-				.then(function(response) {
+				.then(function (response) {
 					var select = A.one('#<portlet:namespace />commerceAddressId');
 
-					response.items.forEach(function(item) {
+					response.items.forEach(function (item) {
 						var option = A.Node.create(
 							'<option id="<portlet:namespace />commerceAddressId-' +
 								item.id +
@@ -115,7 +115,7 @@ CommerceShipmentDisplayContext commerceShipmentDisplayContext = (CommerceShipmen
 	);
 
 	if (commerceAccount) {
-		commerceAccount.addEventListener('change', function() {
+		commerceAccount.addEventListener('change', function () {
 			if (commerceAccount.value) {
 				<portlet:namespace />updateAddressField(commerceAccount.value);
 			}

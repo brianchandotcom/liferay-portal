@@ -45,20 +45,20 @@ boolean hasPermission = commercePricingClassCPDefinitionDisplayContext.hasPermis
 						productExternalReferenceCode: product.externalReferenceCode,
 						productId: product.id,
 						productGroupExternalReferenceCode: pricingClassExternalReferenceCode,
-						productGroupId: id
+						productGroupId: id,
 					};
 
 					return CommerceProductGroupsResource.addProductToProductGroup(
 						id,
 						productData
 					)
-						.then(function() {
+						.then(function () {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 								id:
-									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRODUCT_DEFINITIONS %>'
+									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRODUCT_DEFINITIONS %>',
 							});
 						})
-						.catch(function(error) {
+						.catch(function (error) {
 							return Promise.reject(error);
 						});
 				}
@@ -74,7 +74,7 @@ boolean hasPermission = commercePricingClassCPDefinitionDisplayContext.hasPermis
 					inputPlaceholder: '<%= LanguageUtil.get(request, "find-a-product") %>',
 					itemSelectedMessage: '<%= LanguageUtil.get(request, "product-selected") %>',
 					linkedDatasetsId: [
-						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRODUCT_DEFINITIONS %>'
+						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRODUCT_DEFINITIONS %>',
 					],
 					itemCreation: false,
 					itemsKey: 'id',
@@ -84,17 +84,17 @@ boolean hasPermission = commercePricingClassCPDefinitionDisplayContext.hasPermis
 					portletId: '<%= portletDisplay.getRootPortletId() %>',
 					schema: [
 						{
-							fieldName: ['name', 'LANG']
+							fieldName: ['name', 'LANG'],
 						},
 						{
-							fieldName: 'productId'
+							fieldName: 'productId',
 						},
 						{
-							fieldName: ['catalog', 'name']
-						}
+							fieldName: ['catalog', 'name'],
+						},
 					],
 					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-					titleLabel: '<%= LanguageUtil.get(request, "add-existing-product") %>'
+					titleLabel: '<%= LanguageUtil.get(request, "add-existing-product") %>',
 				});
 			</aui:script>
 		</div>

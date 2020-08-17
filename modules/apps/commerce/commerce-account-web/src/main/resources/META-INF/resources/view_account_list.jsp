@@ -57,7 +57,7 @@ request.setAttribute("view.jsp-filterPerAccount", false);
 	/>
 
 	<aui:script>
-		Liferay.provide(window, '<portlet:namespace />openAddAccountModal', function(
+		Liferay.provide(window, '<portlet:namespace />openAddAccountModal', function (
 			evt
 		) {
 			const addAccountModal = Liferay.component('addAccountModal');
@@ -65,7 +65,7 @@ request.setAttribute("view.jsp-filterPerAccount", false);
 			addAccountModal.open();
 		});
 
-		Liferay.provide(window, 'setCurrentAccount', function(id) {
+		Liferay.provide(window, 'setCurrentAccount', function (id) {
 			document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value =
 				'setCurrentAccount';
 			document.querySelector(
@@ -75,7 +75,7 @@ request.setAttribute("view.jsp-filterPerAccount", false);
 			submitForm(document.<portlet:namespace />commerceAccountFm);
 		});
 
-		Liferay.provide(window, 'toggleActiveCommerceAccount', function(id) {
+		Liferay.provide(window, 'toggleActiveCommerceAccount', function (id) {
 			document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value =
 				'setActive';
 			document.querySelector(
@@ -85,22 +85,22 @@ request.setAttribute("view.jsp-filterPerAccount", false);
 			submitForm(document.<portlet:namespace />commerceAccountFm);
 		});
 
-		Liferay.componentReady('addAccountModal').then(function(addAccountModal) {
-			addAccountModal.on('AddAccountModalSave', function(event) {
+		Liferay.componentReady('addAccountModal').then(function (addAccountModal) {
+			addAccountModal.on('AddAccountModalSave', function (event) {
 				let existingUserIds = event.administratorsEmail
-					.filter(function(el) {
+					.filter(function (el) {
 						return el.userId;
 					})
-					.map(function(usr) {
+					.map(function (usr) {
 						return usr.userId;
 					})
 					.join(',');
 
 				let newUserEmails = event.administratorsEmail
-					.filter(function(el) {
+					.filter(function (el) {
 						return !el.userId;
 					})
-					.map(function(usr) {
+					.map(function (usr) {
 						return usr.email;
 					})
 					.join(',');

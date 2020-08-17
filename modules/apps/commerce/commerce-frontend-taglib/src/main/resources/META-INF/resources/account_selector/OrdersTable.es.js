@@ -37,11 +37,13 @@ class OrdersTable extends Component {
 
 	_handleFilterChange(evt) {
 		this.filterString = evt.target.value;
+
 		return this._getOrders();
 	}
 
 	_handleSubmitFilter(evt) {
 		evt.preventDefault();
+
 		return this._getOrders();
 	}
 }
@@ -52,20 +54,18 @@ OrdersTable.STATE = {
 	accountName: Config.string(),
 	createNewOrderLink: Config.string(),
 	currentOrderId: Config.oneOfType([Config.number(), Config.string()]),
-	filterString: Config.string()
-		.value('')
-		.internal(),
+	filterString: Config.string().value('').internal(),
 	orders: Config.arrayOf(
 		Config.shapeOf({
 			addOrderLink: Config.string(),
 			id: Config.oneOfType([Config.number(), Config.string()]).required(),
 			lastEdit: Config.string(),
-			status: Config.string()
+			status: Config.string(),
 		})
 	),
 	showBack: Config.bool().value(true),
 	spritemap: Config.string().required(),
-	viewAllOrdersLink: Config.string()
+	viewAllOrdersLink: Config.string(),
 };
 
 export {OrdersTable};

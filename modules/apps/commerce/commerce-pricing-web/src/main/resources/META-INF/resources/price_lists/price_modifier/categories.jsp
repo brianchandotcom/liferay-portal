@@ -42,20 +42,20 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 						categoryExternalReferenceCode: category.externalReferenceCode,
 						categoryId: category.id,
 						priceModifierExternalReferenceCode: priceModifierExternalReferenceCode,
-						priceModifierId: id
+						priceModifierId: id,
 					};
 
 					return CommercePriceModifierCategoriesResource.addPriceModifierCategory(
 						id,
 						categoryData
 					)
-						.then(function() {
+						.then(function () {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 								id:
-									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_CATEGORIES %>'
+									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_CATEGORIES %>',
 							});
 						})
-						.catch(function(error) {
+						.catch(function (error) {
 							return Promise.reject(error);
 						});
 				}
@@ -74,7 +74,7 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 					itemsKey: 'id',
 					itemCreation: false,
 					linkedDatasetsId: [
-						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_CATEGORIES %>'
+						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_CATEGORIES %>',
 					],
 					onItemSelected: selectItem,
 					pageSize: 10,
@@ -82,11 +82,11 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 					portletId: '<%= portletDisplay.getRootPortletId() %>',
 					schema: [
 						{
-							fieldName: ['name']
-						}
+							fieldName: ['name'],
+						},
 					],
 					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-					titleLabel: '<%= LanguageUtil.get(request, "add-existing-category") %>'
+					titleLabel: '<%= LanguageUtil.get(request, "add-existing-category") %>',
 				});
 			</aui:script>
 		</div>

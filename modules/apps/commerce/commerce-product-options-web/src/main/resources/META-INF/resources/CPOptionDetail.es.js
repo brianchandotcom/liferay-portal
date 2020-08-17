@@ -46,10 +46,10 @@ class CPOptionDetail extends Component {
 		fetch(url, {
 			credentials: 'include',
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'GET'
+			method: 'GET',
 		})
-			.then(response => response.text())
-			.then(text => {
+			.then((response) => response.text())
+			.then((text) => {
 				optionDetail.innerHTML = text;
 
 				globalEval.runScriptsInElement(optionDetail);
@@ -59,7 +59,7 @@ class CPOptionDetail extends Component {
 				);
 
 				if (name) {
-					name.addEventListener('keyup', event => {
+					name.addEventListener('keyup', (event) => {
 						var target = event.target;
 
 						instance.emit('nameChange', target.value);
@@ -75,7 +75,7 @@ class CPOptionDetail extends Component {
 	_handleSaveOption() {
 		var instance = this;
 
-		AUI().use('aui-base', 'aui-form-validator', 'liferay-form', A => {
+		AUI().use('aui-base', 'aui-form-validator', 'liferay-form', (A) => {
 			var hasErrors = false;
 
 			const form = instance.element.querySelector('.option-detail form');
@@ -131,10 +131,10 @@ class CPOptionDetail extends Component {
 			body: formData,
 			credentials: 'include',
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'POST'
+			method: 'POST',
 		})
-			.then(response => response.json())
-			.then(jsonResponse => {
+			.then((response) => response.json())
+			.then((jsonResponse) => {
 				this.emit('optionDeleted', jsonResponse);
 			});
 	}
@@ -150,10 +150,10 @@ class CPOptionDetail extends Component {
 			body: formData,
 			credentials: 'include',
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'POST'
+			method: 'POST',
 		})
-			.then(response => response.json())
-			.then(jsonResponse => {
+			.then((response) => response.json())
+			.then((jsonResponse) => {
 				this.emit('optionSaved', jsonResponse);
 			});
 	}
@@ -169,7 +169,7 @@ CPOptionDetail.STATE = {
 	cpOptionId: Config.string().required(),
 	namespace: Config.string().required(),
 	optionURL: Config.string().required(),
-	pathThemeImages: Config.string().required()
+	pathThemeImages: Config.string().required(),
 };
 
 // Register component

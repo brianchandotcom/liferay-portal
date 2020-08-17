@@ -29,7 +29,7 @@ function TimelineEntry(props) {
 						<div className="col">
 							<h4 className="mb-0">{props.title}</h4>
 						</div>
-						<div className=" col-auto">{props.description}</div>
+						<div className="col-auto">{props.description}</div>
 					</div>
 					<small>{props.date}</small>
 				</div>
@@ -41,7 +41,7 @@ function TimelineEntry(props) {
 TimelineEntry.propTypes = {
 	date: PropTypes.string.isRequired,
 	description: PropTypes.string.isRequired,
-	title: PropTypes.string.isRequired
+	title: PropTypes.string.isRequired,
 };
 
 TimelineEntry.defaultProps = {};
@@ -64,11 +64,11 @@ function Timeline(props) {
 Timeline.propTypes = {
 	dataRenderers: PropTypes.object,
 	datasetDisplayContext: PropTypes.any,
-	items: PropTypes.array
+	items: PropTypes.array,
 };
 
 Timeline.defaultProps = {
-	items: []
+	items: [],
 };
 
 export default Timeline;

@@ -65,7 +65,7 @@ request.setAttribute("view.jsp-showSearch", false);
 <aui:script>
 	document
 		.getElementById('<portlet:namespace />publishButton')
-		.addEventListener('click', function(e) {
+		.addEventListener('click', function (e) {
 			e.preventDefault();
 
 			var form = document.getElementById('<portlet:namespace />fm');

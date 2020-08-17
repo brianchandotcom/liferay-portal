@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-commerce-product-content',
-	A => {
+	(A) => {
 		var STR_DDM_FORM_EVENT = 'DDMForm:render';
 
 		var CP_CONTENT_WEB_PORTLET_KEY =
@@ -29,7 +29,7 @@ AUI.add(
 				productContentAuthToken: {},
 				productContentSelector: {},
 				thumbsContainerSelector: {},
-				viewAttachmentURL: {}
+				viewAttachmentURL: {},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],
@@ -222,7 +222,7 @@ AUI.add(
 						sampleFilesShow.show();
 					}
 
-					productContent.all('[data-cp-instance-id]').each(node => {
+					productContent.all('[data-cp-instance-id]').each((node) => {
 						node.setAttribute(
 							'data-cp-instance-id',
 							cpInstance.cpInstanceId
@@ -250,8 +250,8 @@ AUI.add(
 								var response = JSON.parse(obj.response);
 
 								instance._renderThumbsImages(response);
-							}
-						}
+							},
+						},
 					});
 				},
 				_renderThumbsImages(images) {
@@ -261,7 +261,7 @@ AUI.add(
 
 					thumbsContainer.setHTML('');
 
-					images.forEach(image => {
+					images.forEach((image) => {
 						var thumbContainer = A.Node.create(
 							'<div class="thumb" />'
 						);
@@ -292,12 +292,14 @@ AUI.add(
 
 					var productContent = instance.getProductContent();
 
-					productContent.all('[data-cp-definition-id]').each(node => {
-						node.setAttribute(
-							'data-cp-definition-id',
-							instance.get('cpDefinitionId')
-						);
-					});
+					productContent
+						.all('[data-cp-definition-id]')
+						.each((node) => {
+							node.setAttribute(
+								'data-cp-definition-id',
+								instance.get('cpDefinitionId')
+							);
+						});
 				},
 				checkCPInstance() {
 					var instance = this;
@@ -348,8 +350,8 @@ AUI.add(
 									cpDefinitionId + CP_INSTANCE_CHANGE_EVENT,
 									response
 								);
-							}
-						}
+							},
+						},
 					});
 				},
 				destructor() {
@@ -380,7 +382,7 @@ AUI.add(
 
 					var fieldValues = [];
 
-					fields.forEach(field => {
+					fields.forEach((field) => {
 						var fieldValue = {};
 
 						fieldValue.key = field.get('fieldName');
@@ -391,7 +393,8 @@ AUI.add(
 
 						if (Array.isArray(value)) {
 							arrValue = value;
-						} else {
+						}
+						else {
 							arrValue.push(value);
 						}
 
@@ -427,11 +430,12 @@ AUI.add(
 
 					if (!ddmForm) {
 						callback.call(instance, false);
-					} else {
+					}
+					else {
 						ddmForm.validate(callback);
 					}
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.Portlet.ProductContent = ProductContent;
@@ -443,7 +447,7 @@ AUI.add(
 			'aui-io-request',
 			'aui-parse-content',
 			'liferay-portlet-base',
-			'liferay-portlet-url'
-		]
+			'liferay-portlet-url',
+		],
 	}
 );

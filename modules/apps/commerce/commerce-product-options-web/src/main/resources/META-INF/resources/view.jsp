@@ -70,7 +70,7 @@ navigationItem.setLabel(LanguageUtil.get(request, "option-templates"));
 			optionsURL: '<%= cpOptionsURL %>',
 			pathThemeImages: '<%= themeDisplay.getPathThemeImages() %>',
 			successMessage:
-				'<liferay-ui:message key="your-request-completed-successfully" />'
+				'<liferay-ui:message key="your-request-completed-successfully" />',
 		},
 		'#<portlet:namespace />CPOptionsEditor'
 	);

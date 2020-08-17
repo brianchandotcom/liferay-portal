@@ -21,7 +21,7 @@ export default function Thumbnails({
 	background,
 	images,
 	onChange,
-	selected = false
+	selected = false,
 }) {
 	return (
 		<div className="gallery-thumbnails">
@@ -44,9 +44,9 @@ Thumbnails.propTypes = {
 	images: PropTypes.arrayOf(
 		PropTypes.shape({
 			thumbnailUrl: PropTypes.string.isRequired,
-			title: PropTypes.string.isRequired
+			title: PropTypes.string.isRequired,
 		})
 	),
 	onChange: PropTypes.func,
-	selected: PropTypes.number
+	selected: PropTypes.number,
 };

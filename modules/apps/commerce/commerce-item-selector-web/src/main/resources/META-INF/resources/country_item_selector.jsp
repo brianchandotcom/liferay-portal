@@ -113,14 +113,14 @@ PortletURL portletURL = commerceCountryItemSelectorViewDisplayContext.getPortlet
 		'<portlet:namespace />commerceCountries'
 	);
 
-	searchContainer.on('rowToggled', function(event) {
+	searchContainer.on('rowToggled', function (event) {
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 			{
 				data: Liferay.Util.listCheckedExcept(
 					commerceCountrySelectorWrapper,
 					'<portlet:namespace />allRowIds'
-				)
+				),
 			}
 		);
 	});

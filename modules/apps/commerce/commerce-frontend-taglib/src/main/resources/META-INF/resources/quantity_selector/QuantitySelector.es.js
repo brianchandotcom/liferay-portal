@@ -25,6 +25,7 @@ class QuantitySelector extends Component {
 				: this.minQuantity;
 			this._updateQuantity(this.quantity);
 		}
+
 		return !!this.quantity;
 	}
 
@@ -38,6 +39,7 @@ class QuantitySelector extends Component {
 
 	_handleSelectOption(e) {
 		const quantity = parseInt(e.target.value, 10);
+
 		return this.emit('updateQuantity', quantity);
 	}
 
@@ -66,6 +68,7 @@ class QuantitySelector extends Component {
 		e.preventDefault();
 		if (!this._prevAvailable) {
 			this.showError = true;
+
 			return false;
 		}
 
@@ -73,12 +76,14 @@ class QuantitySelector extends Component {
 
 		if (this.multipleQuantity) {
 			quantity -= this.multipleQuantity;
-		} else {
+		}
+		else {
 			quantity -= 1;
 		}
 
 		if (quantity < this.minQuantity) {
 			this.inputError = 'MaxAvailableReached';
+
 			return false;
 		}
 
@@ -89,6 +94,7 @@ class QuantitySelector extends Component {
 		e.preventDefault();
 		if (!this._nextAvailable) {
 			this.showError = true;
+
 			return false;
 		}
 
@@ -96,12 +102,14 @@ class QuantitySelector extends Component {
 
 		if (this.multipleQuantity) {
 			quantity += this.multipleQuantity;
-		} else {
+		}
+		else {
 			quantity += 1;
 		}
 
 		if (quantity > this.maxQuantity) {
 			this.inputError = 'MaxAvailableReached';
+
 			return false;
 		}
 
@@ -115,6 +123,7 @@ class QuantitySelector extends Component {
 		if (e.keyCode == 40) {
 			return this._handlePrevQuantityButtonPressed(e);
 		}
+
 		return e;
 	}
 
@@ -123,12 +132,14 @@ class QuantitySelector extends Component {
 			return null;
 		}
 		const quantity = parseInt(e.target.value, 10);
+
 		return this._submitQuantity(quantity);
 	}
 
 	_handleFormSubmit(e) {
 		e.preventDefault();
 		this.showError = true;
+
 		return this.emit('submitQuantity', this.quantity);
 	}
 
@@ -136,17 +147,20 @@ class QuantitySelector extends Component {
 		if (this.multipleQuantity) {
 			if (quantity % this.multipleQuantity) {
 				this.inputError = 'NotMultipleThan';
+
 				return this.inputError;
 			}
 		}
 
 		if (quantity < this.minQuantity) {
 			this.inputError = 'MinAvailableReached';
+
 			return this.inputError;
 		}
 
 		if (quantity > this.maxQuantity) {
 			this.inputError = 'MaxAvailableReached';
+
 			return this.inputError;
 		}
 
@@ -155,6 +169,7 @@ class QuantitySelector extends Component {
 
 	_updateQuantity(quantity) {
 		this.showError = false;
+
 		return this.emit('updateQuantity', quantity);
 	}
 }
@@ -169,7 +184,7 @@ QuantitySelector.STATE = {
 	minQuantity: Config.number().value(1),
 	multipleQuantity: Config.number(),
 	quantity: Config.number(),
-	showError: Config.bool().value(false)
+	showError: Config.bool().value(false),
 };
 
 Soy.register(QuantitySelector, template);

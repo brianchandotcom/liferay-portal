@@ -27,28 +27,28 @@ function resolveChannelsPath(basePath = '', channelId) {
 	return `${basePath}${VERSION}${CHANNELS_PATH}/${channelId}${CARTS_PATH}`;
 }
 
-export default basePath => ({
+export default (basePath) => ({
 	createCartByChannelId: (channelId, json) =>
 		AJAX.POST(resolveChannelsPath(basePath, channelId), json),
 
 	createCouponCodeByCartId: (cartId, json) =>
 		AJAX.POST(`${resolveCartsPath(basePath, cartId)}/coupon-code`, json),
 
-	deleteCartById: cartId => AJAX.DELETE(resolveCartsPath(basePath, cartId)),
+	deleteCartById: (cartId) => AJAX.DELETE(resolveCartsPath(basePath, cartId)),
 
-	getCartById: cartId => AJAX.GET(resolveCartsPath(basePath, cartId)),
+	getCartById: (cartId) => AJAX.GET(resolveCartsPath(basePath, cartId)),
 
-	getCartByIdWithItems: cartId =>
+	getCartByIdWithItems: (cartId) =>
 		AJAX.GET(
 			resolveCartsPath(basePath, cartId) + '?nestedFields=cartItems'
 		),
 
-	getCartsByChannelId: channelId =>
+	getCartsByChannelId: (channelId) =>
 		AJAX.GET(resolveChannelsPath(basePath, channelId)),
 
 	replaceCartById: (cartId, json) =>
 		AJAX.PUT(resolveCartsPath(basePath, cartId), json),
 
 	updateCartById: (cartId, jsonProps) =>
-		AJAX.PATCH(resolveCartsPath(basePath, cartId), jsonProps)
+		AJAX.PATCH(resolveCartsPath(basePath, cartId), jsonProps),
 });

@@ -53,10 +53,10 @@ class CPOptionValueDetail extends Component {
 		fetch(url, {
 			credentials: 'include',
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'GET'
+			method: 'GET',
 		})
-			.then(response => response.text())
-			.then(text => {
+			.then((response) => response.text())
+			.then((text) => {
 				optionValueDetail.innerHTML = text;
 
 				globalEval.runScriptsInElement(optionValueDetail);
@@ -66,7 +66,7 @@ class CPOptionValueDetail extends Component {
 				);
 
 				if (name) {
-					name.addEventListener('keyup', event => {
+					name.addEventListener('keyup', (event) => {
 						var target = event.target;
 
 						instance.emit('nameChange', target.value);
@@ -82,7 +82,7 @@ class CPOptionValueDetail extends Component {
 	_handleSaveOptionValue() {
 		var instance = this;
 
-		AUI().use('aui-base', 'aui-form-validator', 'liferay-form', A => {
+		AUI().use('aui-base', 'aui-form-validator', 'liferay-form', (A) => {
 			var hasErrors = false;
 
 			const form = instance.element.querySelector(
@@ -138,10 +138,10 @@ class CPOptionValueDetail extends Component {
 			body: formData,
 			credentials: 'include',
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'POST'
+			method: 'POST',
 		})
-			.then(response => response.json())
-			.then(jsonResponse => {
+			.then((response) => response.json())
+			.then((jsonResponse) => {
 				this.emit('optionValueDeleted', jsonResponse);
 			});
 	}
@@ -161,10 +161,10 @@ class CPOptionValueDetail extends Component {
 			body: formData,
 			credentials: 'include',
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'POST'
+			method: 'POST',
 		})
-			.then(response => response.json())
-			.then(jsonResponse => {
+			.then((response) => response.json())
+			.then((jsonResponse) => {
 				this.emit('optionValueSaved', jsonResponse);
 			});
 	}
@@ -181,7 +181,7 @@ CPOptionValueDetail.STATE = {
 	cpOptionValueId: Config.string().required(),
 	namespace: Config.string().required(),
 	optionValueURL: Config.string().required(),
-	pathThemeImages: Config.string().required()
+	pathThemeImages: Config.string().required(),
 };
 
 // Register component

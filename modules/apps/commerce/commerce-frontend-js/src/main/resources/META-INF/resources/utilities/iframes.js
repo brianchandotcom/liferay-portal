@@ -31,10 +31,10 @@ export function isPageInIframe() {
 }
 
 export function initializeIframeListeners() {
-	Liferay.on(OPEN_MODAL, payload => {
+	Liferay.on(OPEN_MODAL, (payload) => {
 		window.top.Liferay.fire(OPEN_MODAL, {
 			...payload,
-			id: iframeInitialHandlerModalId
+			id: iframeInitialHandlerModalId,
 		});
 	});
 }

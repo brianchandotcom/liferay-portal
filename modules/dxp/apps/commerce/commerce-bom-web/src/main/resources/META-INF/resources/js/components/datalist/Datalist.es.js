@@ -1,72 +1,83 @@
-import React, { Component } from 'react';
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
 
-import Datasource from '../../utilities/data_connectors/Datasource.es';
+import React, {Component} from 'react';
+
 import Connector from '../../utilities/data_connectors/Connector.es';
+import Datasource from '../../utilities/data_connectors/Datasource.es';
 import BaseDatalist from './BaseDatalist.es';
 
 class Datalist extends Component {
 	constructor(props) {
 		super(props);
-		const { connectorSettings, datasourceSettings } = props;
+		const {connectorSettings, datasourceSettings} = props;
 
 		this.state = {
 			datasource: this.initializeDatasource(datasourceSettings),
 			connector: this.initializeConnector(connectorSettings),
-            data: null,
-            selected: null
+			data: null,
+			selected: null,
 		};
 	}
 
 	initializeDatasource(datasourceSettings) {
-		const { on, ...settings } = datasourceSettings;
+		const {on, ...settings} = datasourceSettings;
+
 		return new Datasource({
 			...settings,
-			on: Object.assign(
-				{},
-				{
-					read: data => {
-						const formattedData = data.map(el => ({
-							label:
-								el[
-									this.props.datasourceSettings.labelField ||
-										'label'
-								],
-							value:
-								el[
-									this.props.datasourceSettings.valueField ||
-										'value'
-								]
-						}));
-						this.setState({
-							data: formattedData
-						});
-					}
+			on: {
+				read: (data) => {
+					const formattedData = data.map((el) => ({
+						label:
+							el[
+								this.props.datasourceSettings.labelField ||
+									'label'
+							],
+						value:
+							el[
+								this.props.datasourceSettings.valueField ||
+									'value'
+							],
+					}));
+					this.setState({
+						data: formattedData,
+					});
 				},
-				on || null
-			)
+				...(on || null),
+			},
 		});
 	}
 
 	initializeConnector(connectorSettings) {
-        const { on, ...settings } = connectorSettings;
-        const { notified, ...actions } = on || {};
+		const {on, ...settings} = connectorSettings;
+		const {notified, ...actions} = on || {};
 
 		return new Connector({
 			...settings,
-			on: Object.assign(
-				{},
-				{
-                    getValue: () => this.state.selected 
-                        ? this.state.selected.map(selected => selected.value) 
-                        : null,
-					notified: values => {
-                        if(notified) {
-                            notified(values, this.setState.bind(this), this.state.datasource)
-                        }
+			on: {
+				getValue: () =>
+					this.state.selected
+						? this.state.selected.map((selected) => selected.value)
+						: null,
+				notified: (values) => {
+					if (notified) {
+						notified(
+							values,
+							this.setState.bind(this),
+							this.state.datasource
+						);
 					}
 				},
-				actions || null
-			)
+				...(actions || null),
+			},
 		});
 	}
 
@@ -75,7 +86,7 @@ class Datalist extends Component {
 			case 'selectedValuesChanged':
 				this.setState(
 					{
-						selected: payload.length ? payload : null
+						selected: payload.length ? payload : null,
 					},
 					() => {
 						this.state.connector.notify();
@@ -92,41 +103,42 @@ class Datalist extends Component {
 			default:
 				break;
 		}
-    }
-    
-    getDisabledState() {
-        let disabled;
-        switch (true) {
-            case typeof this.state.disabled === 'boolean':
-                    disabled = this.state.disabled
-                break;
-            case typeof this.props.disabled === 'boolean':
-                    disabled = this.props.disabled
-                break;
-            default:
-                disabled = false
-                break;
-        }
-        return disabled;
-    }
+	}
+
+	getDisabledState() {
+		let disabled;
+		switch (true) {
+			case typeof this.state.disabled === 'boolean':
+				disabled = this.state.disabled;
+				break;
+			case typeof this.props.disabled === 'boolean':
+				disabled = this.props.disabled;
+				break;
+			default:
+				disabled = false;
+				break;
+		}
+
+		return disabled;
+	}
 
 	render() {
-        const disabledState = this.getDisabledState();
+		const disabledState = this.getDisabledState();
 
-        const { 
-            connectorSettings,
-            datasourceSettings,
-            disabled,
-            ...baseProps
-        } = this.props;
+		const {
+			connectorSettings,
+			datasourceSettings,
+			disabled,
+			...baseProps
+		} = this.props;
 
 		return (
 			<BaseDatalist
-				emit={(e, payload) => this.emit(e, payload)}
 				data={this.state.data || this.props.data || null}
-                disabled={disabledState}
-                value={this.state.selected}
-                {...baseProps}
+				disabled={disabledState}
+				emit={(e, payload) => this.emit(e, payload)}
+				value={this.state.selected}
+				{...baseProps}
 			/>
 		);
 	}

@@ -22,6 +22,6 @@
 	stepTracker.default('<%= stepTrackerId %>', '<%= stepTrackerId %>', {
 		portletId: '<%= portletDisplay.getRootPortletId() %>',
 		spritemap: '<%= spritemap %>',
-		steps: <%= jsonSerializer.serializeDeep(steps) %>
+		steps: <%= jsonSerializer.serializeDeep(steps) %>,
 	});
 </aui:script>

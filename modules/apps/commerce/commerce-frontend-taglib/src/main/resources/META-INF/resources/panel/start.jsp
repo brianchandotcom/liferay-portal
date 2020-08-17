@@ -32,10 +32,10 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 					var link = document.getElementById('<%= linkId %>');
 
 					if (link) {
-						link.addEventListener('click', function(e) {
+						link.addEventListener('click', function (e) {
 							e.preventDefault();
 							Liferay.fire(eventsDefinitions.OPEN_MODAL, {
-								id: '<%= actionTargetId %>'
+								id: '<%= actionTargetId %>',
 							});
 						});
 					}
@@ -60,7 +60,7 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 				</c:when>
 				<c:when test="<%= collapsible || Validator.isNotNull(collapseLabel) || Validator.isNotNull(collapseSwitchName) %>">
 					<aui:script>
-						(function() {
+						(function () {
 							var toggleSwitch = document.getElementById(
 								'<%= randomNamespace %>toggle-switch'
 							);
@@ -70,8 +70,8 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 							var toggleCheckbox = document.getElementById('<%= collapseSwitchId %>');
 							var collapseClickable = true;
 
-							[toggleSwitch, toggleLabel].forEach(function(el) {
-								el.addEventListener('click', function(e) {
+							[toggleSwitch, toggleLabel].forEach(function (el) {
+								el.addEventListener('click', function (e) {
 									e.preventDefault();
 
 									if (collapseClickable) {
@@ -81,7 +81,7 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 
 									collapseClickable = false;
 
-									setTimeout(function() {
+									setTimeout(function () {
 										collapseClickable = true;
 									}, 400);
 								});

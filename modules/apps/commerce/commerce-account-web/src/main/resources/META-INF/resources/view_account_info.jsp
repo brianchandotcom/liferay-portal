@@ -60,7 +60,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 		Liferay.provide(
 			window,
 			'<portlet:namespace />openAddOrganizationsModal',
-			function(evt) {
+			function (evt) {
 				const addOrganizationsModal = Liferay.component(
 					'addOrganizationsModal'
 				);
@@ -69,7 +69,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 			}
 		);
 
-		Liferay.provide(window, 'deleteCommerceAccountOrganization', function(id) {
+		Liferay.provide(window, 'deleteCommerceAccountOrganization', function (id) {
 			document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value =
 				'<%= Constants.REMOVE %>';
 			document.querySelector('#<portlet:namespace />organizationId').value = id;
@@ -77,12 +77,12 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 			submitForm(document.<portlet:namespace />commerceAccountOrganizationRelFm);
 		});
 
-		Liferay.componentReady('addOrganizationsModal').then(function(
+		Liferay.componentReady('addOrganizationsModal').then(function (
 			addOrganizationsModal
 		) {
-			addOrganizationsModal.on('addOrganization', function(event) {
+			addOrganizationsModal.on('addOrganization', function (event) {
 				let orgIds = event
-					.map(function(org) {
+					.map(function (org) {
 						return org.id;
 					})
 					.join(',');

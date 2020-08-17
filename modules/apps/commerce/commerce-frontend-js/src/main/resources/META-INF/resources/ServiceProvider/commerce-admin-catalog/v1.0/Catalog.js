@@ -22,7 +22,7 @@ function resolveCatalogPath(basePath = '', catalogId = '') {
 	return `${basePath}${VERSION}${CATALOG_PATH}/${catalogId}`;
 }
 
-export default basePath => ({
-	getCatalogById: catalogId =>
-		AJAX.GET(resolveCatalogPath(basePath, catalogId))
+export default (basePath) => ({
+	getCatalogById: (catalogId) =>
+		AJAX.GET(resolveCatalogPath(basePath, catalogId)),
 });

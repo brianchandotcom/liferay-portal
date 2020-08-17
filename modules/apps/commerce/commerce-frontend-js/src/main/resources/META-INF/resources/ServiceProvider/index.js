@@ -19,7 +19,7 @@ import DeliveryCartAPI from './commerce-delivery-cart/index';
 const ServiceProvider = {
 	AdminCatalogAPI,
 	AdminPricingAPI,
-	DeliveryCartAPI
+	DeliveryCartAPI,
 };
 
 export default ServiceProvider;

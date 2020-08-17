@@ -59,7 +59,7 @@ String editUserRoleId = "editUserRoles" + commerceAccountUser.getUserId();
 </liferay-ui:icon-menu>
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace /><%= editUserRoleId %>').on('click', function(event) {
+	$('#<portlet:namespace /><%= editUserRoleId %>').on('click', function (event) {
 		event.preventDefault();
 
 		var form = AUI.$(document.<portlet:namespace />fm);
@@ -71,13 +71,13 @@ String editUserRoleId = "editUserRoles" + commerceAccountUser.getUserId();
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 			eventName: 'userRoleItemSelector',
 			on: {
-				selectedItemChange: function(event) {
+				selectedItemChange: function (event) {
 					var <portlet:namespace />addUserRolesIds = [];
 
 					var selectedItems = event.newVal;
 
 					if (selectedItems) {
-						A.Array.each(selectedItems, function(
+						A.Array.each(selectedItems, function (
 							item,
 							index,
 							selectedItems
@@ -100,11 +100,11 @@ String editUserRoleId = "editUserRoles" + commerceAccountUser.getUserId();
 							'<portlet:actionURL name="editCommerceAccountUserRel" />'
 						);
 					}
-				}
+				},
 			},
 			title: '<liferay-ui:message key="edit-roles" />',
 			url:
-				'<%= commerceAccountUserRelAdminDisplayContext.getUserRoleItemSelectorUrl(commerceAccountUserRel) %>'
+				'<%= commerceAccountUserRelAdminDisplayContext.getUserRoleItemSelectorUrl(commerceAccountUserRel) %>',
 		});
 
 		itemSelectorDialog.open();

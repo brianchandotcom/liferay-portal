@@ -33,17 +33,17 @@
 						channelExternalReferenceCode: channel.externalReferenceCode,
 						channelId: channel.id,
 						discountExternalReferenceCode: discountExternalReferenceCode,
-						discountId: id
+						discountId: id,
 					};
 
 					return CommerceDiscountChannelsResource.addDiscountChannel(id, channelData)
-						.then(function() {
+						.then(function () {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 								id:
-									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_CHANNELS %>'
+									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_CHANNELS %>',
 							});
 						})
-						.catch(function(error) {
+						.catch(function (error) {
 							return Promise.reject(error);
 						});
 				}
@@ -58,7 +58,7 @@
 					inputPlaceholder: '<%= LanguageUtil.get(request, "find-a-channel") %>',
 					itemSelectedMessage: '<%= LanguageUtil.get(request, "channel-selected") %>',
 					linkedDatasetsId: [
-						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_CHANNELS %>'
+						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_CHANNELS %>',
 					],
 					itemCreation: false,
 					itemsKey: 'id',
@@ -68,11 +68,11 @@
 					portletId: '<%= portletDisplay.getRootPortletId() %>',
 					schema: [
 						{
-							fieldName: 'name'
-						}
+							fieldName: 'name',
+						},
 					],
 					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-					titleLabel: '<%= LanguageUtil.get(request, "add-existing-channel") %>'
+					titleLabel: '<%= LanguageUtil.get(request, "add-existing-channel") %>',
 				});
 			</aui:script>
 		</div>

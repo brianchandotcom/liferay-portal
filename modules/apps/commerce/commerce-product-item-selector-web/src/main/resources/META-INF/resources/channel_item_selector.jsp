@@ -103,25 +103,25 @@ PortletURL portletURL = commerceChannelItemSelectorViewDisplayContext.getPortlet
 		'<portlet:namespace />commerceChannels'
 	);
 
-	searchContainer.on('rowToggled', function(event) {
+	searchContainer.on('rowToggled', function (event) {
 		var allSelectedElements = event.elements.allSelectedElements;
 		var arr = [];
 
-		allSelectedElements.each(function() {
+		allSelectedElements.each(function () {
 			var row = this.ancestor('tr');
 
 			var data = row.getDOM().dataset;
 
 			arr.push({
 				commerceChannelId: data.commerceChannelId,
-				name: data.name
+				name: data.name,
 			});
 		});
 
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 			{
-				data: arr
+				data: arr,
 			}
 		);
 	});

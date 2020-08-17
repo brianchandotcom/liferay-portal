@@ -297,14 +297,14 @@ if (commerceOrder != null) {
 			dialog: {
 				centered: true,
 				destroyOnClose: true,
-				modal: true
+				modal: true,
 			},
 			dialogIframe: {
-				bodyCssClass: 'dialog'
+				bodyCssClass: 'dialog',
 			},
 			id: 'viewCommerceOrderShipmentsDialog',
 			title: '',
-			uri: uri
+			uri: uri,
 		});
 	}
 

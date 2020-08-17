@@ -242,6 +242,6 @@ if (shippingTaxCategory != null) {
 		inputName:
 			'<%= liferayPortletResponse.getNamespace() %>shippingTaxSettings--taxCategoryId--',
 		itemsKey: 'id',
-		itemsLabel: ['name', 'LANG']
+		itemsLabel: ['name', 'LANG'],
 	});
 </aui:script>

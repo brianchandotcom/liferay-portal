@@ -93,7 +93,7 @@ List<Long> cpDefinitionIds = CPCompareHelperUtil.getCPDefinitionIds(commerceCont
 				'#<portlet:namespace />compareProductsMiniContainer .lfr-compare-products-mini-content',
 			expanded: true,
 			header:
-				'#<portlet:namespace />compareProductsMiniContainer .lfr-compare-products-mini-header'
+				'#<portlet:namespace />compareProductsMiniContainer .lfr-compare-products-mini-header',
 		});
 	</aui:script>
 </c:if>

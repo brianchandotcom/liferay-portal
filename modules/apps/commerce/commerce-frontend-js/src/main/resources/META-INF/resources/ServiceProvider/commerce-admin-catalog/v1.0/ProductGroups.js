@@ -22,8 +22,8 @@ function resolvePath(basePath = '', productGroupId = '') {
 	return `${basePath}${VERSION}${PRODUCT_GROUPS_PATH}/${productGroupId}`;
 }
 
-export default basePath => ({
-	addProductGroup: json => AJAX.POST(`${resolvePath(basePath)}`, json),
+export default (basePath) => ({
+	addProductGroup: (json) => AJAX.POST(`${resolvePath(basePath)}`, json),
 	addProductToProductGroup: (id, json) =>
-		AJAX.POST(`${resolvePath(basePath, id)}/product-group-products`, json)
+		AJAX.POST(`${resolvePath(basePath, id)}/product-group-products`, json),
 });

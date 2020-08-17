@@ -274,8 +274,8 @@ String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId
 </div>
 
 <aui:script>
-	$(document).ready(function() {
-		$('.thumb').click(function() {
+	$(document).ready(function () {
+		$('.thumb').click(function () {
 			$('#<portlet:namespace />full-image').attr(
 				'src',
 				$(this).attr('data-url')
@@ -294,7 +294,7 @@ String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId
 			'#<portlet:namespace /><%= cpDefinitionId %>ProductContent',
 		thumbsContainerSelector: '#<portlet:namespace />thumbs-container',
 		viewAttachmentURL:
-			'<%= String.valueOf(cpContentHelper.getViewAttachmentURL(liferayPortletRequest, liferayPortletResponse)) %>'
+			'<%= String.valueOf(cpContentHelper.getViewAttachmentURL(liferayPortletRequest, liferayPortletResponse)) %>',
 	});
 
 	Liferay.component(

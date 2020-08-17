@@ -26,27 +26,28 @@ function TableHeadCell(props) {
 		props.sortingKey ||
 		(Array.isArray(props.fieldName) ? props.fieldName[0] : props.fieldName);
 
-	const sortingMatch = props.sorting.find(el => el.key === sortingKey);
+	const sortingMatch = props.sorting.find((el) => el.key === sortingKey);
 
 	function handleSortingCellClick(e) {
 		e.preventDefault();
 
 		if (sortingMatch) {
-			const updatedSortedElements = props.sorting.map(el =>
+			const updatedSortedElements = props.sorting.map((el) =>
 				el.key === sortingKey
 					? {
 							...el,
-							direction: el.direction === 'asc' ? 'desc' : 'asc'
+							direction: el.direction === 'asc' ? 'desc' : 'asc',
 					  }
 					: el
 			);
 			props.updateSorting(updatedSortedElements);
-		} else {
+		}
+		else {
 			props.updateSorting([
 				{
 					direction: 'asc',
-					key: sortingKey
-				}
+					key: sortingKey,
+				},
 			]);
 		}
 	}
@@ -65,7 +66,7 @@ function TableHeadCell(props) {
 		>
 			{props.sortable ? (
 				<a
-					className="inline-item text-truncate-inline text-nowrap"
+					className="inline-item text-nowrap text-truncate-inline"
 					data-senna-off
 					href="#"
 					onClick={handleSortingCellClick}
@@ -104,11 +105,12 @@ function TableHeadCell(props) {
 function TableHeadRow(props) {
 	const {actionLoading} = useContext(DatasetDisplayContext);
 
-	const getColumns = fields => {
+	const getColumns = (fields) => {
 		const expandableColumns = fields.reduce(
 			(expandable, field) => expandable || Boolean(field.expand),
 			false
 		);
+
 		return fields.map((field, i) => {
 			return (
 				<TableHeadCell
@@ -128,7 +130,7 @@ function TableHeadRow(props) {
 		}
 
 		return props.selectItems(
-			props.items.map(item => item[props.selectedItemsKey])
+			props.items.map((item) => item[props.selectedItemsKey])
 		);
 	}
 
@@ -169,13 +171,13 @@ TableHeadRow.propTypes = {
 				expand: PropTypes.bool,
 				fieldName: PropTypes.oneOfType([
 					PropTypes.string,
-					PropTypes.arrayOf(PropTypes.string)
+					PropTypes.arrayOf(PropTypes.string),
 				]),
 				label: PropTypes.string,
 				sortable: PropTypes.bool,
-				sortingKey: PropTypes.string
+				sortingKey: PropTypes.string,
 			}).isRequired
-		)
+		),
 	}),
 	selectedItemsValue: PropTypes.arrayOf(
 		PropTypes.oneOfType([PropTypes.string, PropTypes.number])
@@ -185,9 +187,9 @@ TableHeadRow.propTypes = {
 	sorting: PropTypes.arrayOf(
 		PropTypes.shape({
 			direction: PropTypes.oneOf(['asc', 'desc']).isRequired,
-			fieldName: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
+			fieldName: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 		})
-	)
+	),
 };
 
 export default TableHeadRow;

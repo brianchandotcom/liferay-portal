@@ -98,7 +98,7 @@ String itemSelectedEventName = simpleSiteItemSelectorViewDisplayContext.getItemS
 <aui:script use="aui-base">
 	A.one('#<portlet:namespace/>sites').delegate(
 		'click',
-		function(event) {
+		function (event) {
 			var row = this.ancestor('tr');
 
 			var data = row.getDOM().dataset;
@@ -106,7 +106,7 @@ String itemSelectedEventName = simpleSiteItemSelectorViewDisplayContext.getItemS
 			Liferay.Util.getOpener().Liferay.fire(
 				'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 				{
-					data: {id: data.id, name: data.name}
+					data: {id: data.id, name: data.name},
 				}
 			);
 

@@ -65,15 +65,15 @@ long commerceRegionId = BeanParamUtil.getLong(shippingAddress, request, "commerc
 	new Liferay.DynamicSelect([
 		{
 			select: '<portlet:namespace />commerceCountryId',
-			selectData: function(callback) {
+			selectData: function (callback) {
 				function injectCountryPlaceholder(list) {
 					callback([
 						{
 							commerceCountryId: '0',
 							nameCurrentValue:
-								'- <liferay-ui:message key="select-country" />'
+								'- <liferay-ui:message key="select-country" />',
 						},
-						...list
+						...list,
 					]);
 				}
 
@@ -82,7 +82,7 @@ long commerceRegionId = BeanParamUtil.getLong(shippingAddress, request, "commerc
 					{
 						active: true,
 						companyId: <%= company.getCompanyId() %>,
-						shippingAllowed: true
+						shippingAllowed: true,
 					},
 					injectCountryPlaceholder
 				);
@@ -91,18 +91,18 @@ long commerceRegionId = BeanParamUtil.getLong(shippingAddress, request, "commerc
 			selectId: 'commerceCountryId',
 			selectNullable: <%= false %>,
 			selectSort: '<%= true %>',
-			selectVal: '<%= commerceCountryId %>'
+			selectVal: '<%= commerceCountryId %>',
 		},
 		{
 			select: '<portlet:namespace />commerceRegionId',
-			selectData: function(callback, selectKey) {
+			selectData: function (callback, selectKey) {
 				function injectRegionPlaceholder(list) {
 					callback([
 						{
 							commerceRegionId: '0',
-							name: '- <liferay-ui:message key="select-region" />'
+							name: '- <liferay-ui:message key="select-region" />',
 						},
-						...list
+						...list,
 					]);
 				}
 
@@ -110,7 +110,7 @@ long commerceRegionId = BeanParamUtil.getLong(shippingAddress, request, "commerc
 					'/commerce.commerceregion/get-commerce-regions',
 					{
 						active: true,
-						commerceCountryId: Number(selectKey)
+						commerceCountryId: Number(selectKey),
 					},
 					injectRegionPlaceholder
 				);
@@ -118,7 +118,7 @@ long commerceRegionId = BeanParamUtil.getLong(shippingAddress, request, "commerc
 			selectDesc: 'name',
 			selectId: 'commerceRegionId',
 			selectNullable: <%= false %>,
-			selectVal: '<%= commerceRegionId %>'
-		}
+			selectVal: '<%= commerceRegionId %>',
+		},
 	]);
 </aui:script>

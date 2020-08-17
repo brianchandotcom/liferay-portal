@@ -16,17 +16,19 @@ import {fetchParams} from '../index';
 
 const BASE_OPTIONS = {
 	...fetchParams,
-	method: 'GET'
+	method: 'GET',
 };
 
 function _fetch(url, options = {}) {
 	return fetch(url, {...BASE_OPTIONS, ...options})
-		.then(response => {
+		.then((response) => {
 			if (!response.ok) {
 				return response
 					.json()
-					.catch(parseError => Promise.reject(new Error(parseError)))
-					.then(reason => Promise.reject(reason));
+					.catch((parseError) =>
+						Promise.reject(new Error(parseError))
+					)
+					.then((reason) => Promise.reject(reason));
 			}
 
 			if (response.status === 204) {
@@ -35,14 +37,14 @@ function _fetch(url, options = {}) {
 
 			return response.json();
 		})
-		.catch(error => Promise.reject(error));
+		.catch((error) => Promise.reject(error));
 }
 
 const AJAX = {
 	DELETE(apiUrl, customOptions = {}) {
 		const options = {
 			method: 'DELETE',
-			...customOptions
+			...customOptions,
 		};
 
 		return _fetch(apiUrl, options);
@@ -56,7 +58,7 @@ const AJAX = {
 		const options = {
 			body: JSON.stringify(jsonProps),
 			method: 'PATCH',
-			...customOptions
+			...customOptions,
 		};
 
 		return _fetch(apiUrl, options);
@@ -66,7 +68,7 @@ const AJAX = {
 		const options = {
 			body: JSON.stringify(json),
 			method: 'POST',
-			...customOptions
+			...customOptions,
 		};
 
 		return _fetch(apiUrl, options);
@@ -76,11 +78,11 @@ const AJAX = {
 		const options = {
 			body: JSON.stringify(json),
 			method: 'PUT',
-			...customOptions
+			...customOptions,
 		};
 
 		return _fetch(apiUrl, options);
-	}
+	},
 };
 
 export default AJAX;

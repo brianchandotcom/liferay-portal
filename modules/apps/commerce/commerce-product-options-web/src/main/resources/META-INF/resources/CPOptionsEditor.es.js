@@ -52,17 +52,18 @@ class CPOptionsEditor extends Component {
 		fetch(url, {
 			credentials: 'include',
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'GET'
+			method: 'GET',
 		})
-			.then(response => response.json())
-			.then(jsonResponse => {
+			.then((response) => response.json())
+			.then((jsonResponse) => {
 				this._options = jsonResponse;
 
 				if (this._options && this._options.length > 0) {
 					if (!this._currentOption || this._currentOption == null) {
 						this._currentOption = this._options[0].cpOptionId;
 					}
-				} else if (this._options && this._options.length == 0) {
+				}
+				else if (this._options && this._options.length == 0) {
 					this._newOptionName = '';
 					this._currentOption = '0';
 				}
@@ -80,7 +81,8 @@ class CPOptionsEditor extends Component {
 
 		if (event.success) {
 			this._showNotification(this.successMessage, 'success');
-		} else {
+		}
+		else {
 			this._showNotification(event.message, 'danger');
 		}
 	}
@@ -100,7 +102,8 @@ class CPOptionsEditor extends Component {
 	_handleNameChange(newName) {
 		if (this._currentOption == '0') {
 			this._newOptionName = newName;
-		} else {
+		}
+		else {
 			this._newOptionName = '';
 		}
 	}
@@ -130,13 +133,13 @@ class CPOptionsEditor extends Component {
 				closeable: true,
 				delay: {
 					hide: 5000,
-					show: 0
+					show: 0,
 				},
 				duration: 500,
 				message,
 				render: true,
 				title: '',
-				type
+				type,
 			});
 		});
 	}
@@ -157,7 +160,7 @@ CPOptionsEditor.STATE = {
 	optionValuesURL: Config.string().required(),
 	optionsURL: Config.string().required(),
 	pathThemeImages: Config.string().required(),
-	successMessage: Config.string().required()
+	successMessage: Config.string().required(),
 };
 
 // Register component

@@ -61,9 +61,11 @@ class UserRolesModal extends Component {
 	_handleInputBox(evt) {
 		if (evt.keyCode === 8 && !this.query.length) {
 			this.selectedRoles = this.selectedRoles.slice(0, -1);
-		} else {
+		}
+		else {
 			this.query = evt.target.value;
 		}
+
 		return evt;
 	}
 
@@ -78,7 +80,7 @@ class UserRolesModal extends Component {
 		);
 
 		this.selectedRoles = roleAlreadyAdded
-			? this.selectedRoles.filter(role => role.id !== item.id)
+			? this.selectedRoles.filter((role) => role.id !== item.id)
 			: [...this.selectedRoles, item];
 
 		return this.selectedRoles;
@@ -86,9 +88,10 @@ class UserRolesModal extends Component {
 
 	_filterRoles() {
 		this.filteredRoles = this.roles.filter(
-			role =>
+			(role) =>
 				role.name.toLowerCase().indexOf(this.query.toLowerCase()) > -1
 		);
+
 		return this.filteredRoles;
 	}
 
@@ -98,16 +101,19 @@ class UserRolesModal extends Component {
 
 	toggle() {
 		this._modalVisible = !this._modalVisible;
+
 		return this._modalVisible;
 	}
 
 	open() {
 		this._modalVisible = true;
+
 		return this._modalVisible;
 	}
 
 	close() {
 		this._modalVisible = false;
+
 		return this._modalVisible;
 	}
 }
@@ -116,18 +122,16 @@ Soy.register(UserRolesModal, template);
 
 const ROLE_SCHEMA = Config.shapeOf({
 	id: Config.oneOfType([Config.number(), Config.string()]).required(),
-	name: Config.string().required()
+	name: Config.string().required(),
 });
 
 UserRolesModal.STATE = {
-	_modalVisible: Config.bool()
-		.internal()
-		.value(false),
+	_modalVisible: Config.bool().internal().value(false),
 	filteredRoles: Config.array(ROLE_SCHEMA).value([]),
 	query: Config.string().value(''),
 	roles: Config.array(ROLE_SCHEMA).value([]),
 	selectedRoles: Config.array(ROLE_SCHEMA).value([]),
-	spritemap: Config.string()
+	spritemap: Config.string(),
 };
 
 export {UserRolesModal};

@@ -23,7 +23,7 @@ const {
 	MODAL_FULL_SCREEN,
 	MODAL_LARGE,
 	MODAL_SMALL,
-	SIDE_PANEL
+	SIDE_PANEL,
 } = ACTION_ITEM_TARGETS;
 
 export function triggerAction(item, context) {
@@ -39,14 +39,14 @@ export function triggerAction(item, context) {
 				id: modalId,
 				onClose: loadData,
 				size: resolveModalSize(actionTarget),
-				url: actionTargetURL
+				url: actionTargetURL,
 			});
 			break;
 		case SIDE_PANEL:
 			Liferay.fire(OPEN_SIDE_PANEL, {
 				id: sidePanelId,
 				onAfterSubmit: loadData,
-				url: actionTargetURL
+				url: actionTargetURL,
 			});
 			break;
 		case EVENT:

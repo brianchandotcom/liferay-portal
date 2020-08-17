@@ -17,7 +17,7 @@ import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import {OPEN_SIDE_PANEL} from '../../../../utilities/eventsDefinitions';
 import {getOpenedSidePanel} from '../../../../utilities/sidePanels';
@@ -46,15 +46,16 @@ function getRichPayload(payload, key, values = []) {
 		...payload,
 		url: `${payload.baseUrl}${
 			payload.baseUrl.includes('?') ? '&' : '?'
-		}${key}=${values.join(',')}`
+		}${key}=${values.join(',')}`,
 	};
+
 	return richPayload;
 }
 
 function BulkActions(props) {
 	const [
 		currentSidePanelActionPayload,
-		setCurrentSidePanelActionPayload
+		setCurrentSidePanelActionPayload,
 	] = useState(null);
 
 	const {
@@ -64,7 +65,7 @@ function BulkActions(props) {
 		formRef,
 		highlightItems,
 		loadData,
-		sidePanelId
+		sidePanelId,
 	} = useContext(DatasetDisplayContext);
 
 	function handleSidePanelAction(action) {
@@ -72,7 +73,7 @@ function BulkActions(props) {
 			baseUrl: action.href,
 			id: sidePanelId,
 			onAfterSubmit: () => loadData(),
-			slug: action.slug || null
+			slug: action.slug || null,
 		};
 
 		Liferay.fire(
@@ -157,7 +158,7 @@ function BulkActions(props) {
 							<ClayLink
 								className="ml-3"
 								href="#"
-								onClick={e => {
+								onClick={(e) => {
 									e.preventDefault();
 									props.selectAllItems();
 								}}
@@ -176,7 +177,7 @@ function BulkActions(props) {
 							)}
 							disabled={actionLoading}
 							key={action.label}
-							onClick={e => handleActionClick(e, action)}
+							onClick={(e) => handleActionClick(e, action)}
 							type="button"
 						>
 							{actionLoading ? (
@@ -199,7 +200,7 @@ BulkActions.propTypes = {
 				href: PropTypes.string.isRequired,
 				icon: PropTypes.string.isRequired,
 				label: PropTypes.string.isRequired,
-				target: PropTypes.oneOf(['sidePanel', 'link'])
+				target: PropTypes.oneOf(['sidePanel', 'link']),
 			}),
 			PropTypes.shape({
 				bodyKeys: PropTypes.arrayOf(PropTypes.string),
@@ -207,13 +208,13 @@ BulkActions.propTypes = {
 				icon: PropTypes.string.isRequired,
 				label: PropTypes.string.isRequired,
 				method: PropTypes.string,
-				target: PropTypes.oneOf(['async'])
-			})
+				target: PropTypes.oneOf(['async']),
+			}),
 		])
 	),
 	selectedItemsKey: PropTypes.string.isRequired,
 	selectedItemsValue: PropTypes.array.isRequired,
-	totalItemsCount: PropTypes.number.isRequired
+	totalItemsCount: PropTypes.number.isRequired,
 };
 
 export default BulkActions;

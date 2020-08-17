@@ -81,7 +81,7 @@ boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(
 				var keyInput = form.querySelector('#<portlet:namespace />key');
 				var nameInput = form.querySelector('#<portlet:namespace />optionValueName');
 
-				var handleOnNameInput = function() {
+				var handleOnNameInput = function () {
 					keyInput.value = slugify.default(nameInput.value);
 				};
 

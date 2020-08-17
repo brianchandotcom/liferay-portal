@@ -63,13 +63,13 @@
 	var fileEntryRemove = $('#<portlet:namespace />fileEntryRemove');
 	var fileEntryNameInput = $('#<portlet:namespace />fileEntryNameInput');
 
-	$('#<portlet:namespace />selectFile').on('click', function(event) {
+	$('#<portlet:namespace />selectFile').on('click', function (event) {
 		event.preventDefault();
 
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 			eventName: 'uploadCPDefinitionVirtualSetting',
 			on: {
-				selectedItemChange: function(event) {
+				selectedItemChange: function (event) {
 					var selectedItem = event.newVal;
 
 					if (selectedItem) {
@@ -89,17 +89,17 @@
 
 						fileEntryNameInput.html('<a>' + value.title + '</a>');
 					}
-				}
+				},
 			},
 			title: '<liferay-ui:message key="select-file" />',
 			url:
-				'<%= cpDefinitionVirtualSettingDisplayContext.getFileEntryItemSelectorURL() %>'
+				'<%= cpDefinitionVirtualSettingDisplayContext.getFileEntryItemSelectorURL() %>',
 		});
 
 		itemSelectorDialog.open();
 	});
 
-	$('#<portlet:namespace />fileEntryRemove').on('click', function(event) {
+	$('#<portlet:namespace />fileEntryRemove').on('click', function (event) {
 		event.preventDefault();
 
 		$('#<portlet:namespace />fileEntryId').val(0);

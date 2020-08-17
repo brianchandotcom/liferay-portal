@@ -201,7 +201,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 					var headers = new Headers({
 						Accept: 'application/json',
 						'Content-Type': 'application/json',
-						'x-csrf-token': Liferay.authToken
+						'x-csrf-token': Liferay.authToken,
 					});
 
 					var id = <%= cpDefinitionsDisplayContext.getCPDefinitionId() %>;
@@ -220,24 +220,24 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 											productId: productId,
 											specificationId: specification.id,
 											specificationKey: specification.key,
-											value: {}
+											value: {},
 										},
 										specification.optionCategory
 											? {
 													optionCategoryId:
-														specification.optionCategory.id
+														specification.optionCategory.id,
 											  }
 											: {}
 									)
 								),
 								credentials: 'include',
 								headers: headers,
-								method: 'POST'
+								method: 'POST',
 							}
-						).then(function() {
+						).then(function () {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 								id:
-									'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITION_SPECIFICATIONS %>'
+									'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITION_SPECIFICATIONS %>',
 							});
 							return null;
 						});
@@ -245,7 +245,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 
 					function addNewItem(name) {
 						var nameDefinition = {
-							[themeDisplay.getLanguageId()]: name
+							[themeDisplay.getLanguageId()]: name,
 						};
 
 						if (themeDisplay.getLanguageId() !== themeDisplay.getDefaultLanguageId()) {
@@ -255,18 +255,18 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 						return fetch('/o/headless-commerce-admin-catalog/v1.0/specifications', {
 							body: JSON.stringify({
 								key: slugify.default(name),
-								title: nameDefinition
+								title: nameDefinition,
 							}),
 							credentials: 'include',
 							headers: headers,
-							method: 'POST'
+							method: 'POST',
 						})
-							.then(function(response) {
+							.then(function (response) {
 								if (response.ok) {
 									return response.json();
 								}
 
-								return response.json().then(function(data) {
+								return response.json().then(function (data) {
 									return Promise.reject(data.errorDescription);
 								});
 							})
@@ -288,7 +288,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 							'<%= LanguageUtil.get(request, "specification-selected") %>',
 						itemsKey: 'id',
 						linkedDatasetsId: [
-							'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITION_SPECIFICATIONS %>'
+							'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITION_SPECIFICATIONS %>',
 						],
 						multiSelectableEntries: true,
 						itemsKey: 'id',
@@ -299,14 +299,15 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 						portletId: '<%= portletDisplay.getRootPortletId() %>',
 						schema: [
 							{
-								fieldName: ['title', 'LANG']
+								fieldName: ['title', 'LANG'],
 							},
 							{
-								fieldName: 'key'
-							}
+								fieldName: 'key',
+							},
 						],
 						spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-						titleLabel: '<%= LanguageUtil.get(request, "add-existing-specification") %>'
+						titleLabel:
+							'<%= LanguageUtil.get(request, "add-existing-specification") %>',
 					});
 				</aui:script>
 			</div>
@@ -350,7 +351,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 			'<portlet:namespace />urlTitleMapAsXML'
 		);
 
-		var handleOnNameInput = function() {
+		var handleOnNameInput = function () {
 			var slug = slugify.default(nameInput.value);
 			urlInput.value = slug;
 
@@ -363,7 +364,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 	<aui:script>
 		document
 			.getElementById('<portlet:namespace />commerceCatalogGroupId')
-			.addEventListener('change', function(event) {
+			.addEventListener('change', function (event) {
 				var languageId = event.target.querySelector(
 					'[value="' + event.target.value + '"]'
 				).dataset.languageid;

@@ -60,41 +60,43 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 		function handleAddOrganizationButtonClick(event) {
 			event.preventDefault();
 
-			modalCommands.openSimpleInputModal(
-				{
-					dialogTitle: '<liferay-ui:message key="add-organization" />',
-					formSubmitURL: '<%= editCommerceOrganizationActionURL %>',
-					mainFieldLabel: '<liferay-ui:message key="name" />',
-					mainFieldName: 'name',
-					mainFieldPlaceholder: '<liferay-ui:message key="name" />',
-					namespace: '<portlet:namespace />',
-					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-				}
-			);
+			modalCommands.openSimpleInputModal({
+				dialogTitle: '<liferay-ui:message key="add-organization" />',
+				formSubmitURL: '<%= editCommerceOrganizationActionURL %>',
+				mainFieldLabel: '<liferay-ui:message key="name" />',
+				mainFieldName: 'name',
+				mainFieldPlaceholder: '<liferay-ui:message key="name" />',
+				namespace: '<portlet:namespace />',
+				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
+			});
 		}
 
-		function handleDestroyPortlet () {
-			addOrganizationButton.removeEventListener('click', handleAddOrganizationButtonClick);
+		function handleDestroyPortlet() {
+			addOrganizationButton.removeEventListener(
+				'click',
+				handleAddOrganizationButtonClick
+			);
 
 			Liferay.detach('destroyPortlet', handleDestroyPortlet);
 		}
 
-		var addOrganizationButton = document.getElementById('<portlet:namespace />addOrganizationButton');
+		var addOrganizationButton = document.getElementById(
+			'<portlet:namespace />addOrganizationButton'
+		);
 
-		addOrganizationButton.addEventListener('click', handleAddOrganizationButtonClick);
+		addOrganizationButton.addEventListener(
+			'click',
+			handleAddOrganizationButtonClick
+		);
 
 		Liferay.on('destroyPortlet', handleDestroyPortlet);
 	</aui:script>
 
 	<aui:script>
-		Liferay.provide(
-			window,
-			'deleteCommerceOrganization',
-			function(id) {
-				document.querySelector('#<portlet:namespace />organizationId').value = id;
+		Liferay.provide(window, 'deleteCommerceOrganization', function (id) {
+			document.querySelector('#<portlet:namespace />organizationId').value = id;
 
-				submitForm(document.<portlet:namespace />organizationFm);
-			}
-		);
+			submitForm(document.<portlet:namespace />organizationFm);
+		});
 	</aui:script>
 </c:if>

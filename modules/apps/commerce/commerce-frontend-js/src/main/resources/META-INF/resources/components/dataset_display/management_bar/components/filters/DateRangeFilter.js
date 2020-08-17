@@ -19,10 +19,10 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import {
+	convertObjectDateToIsoString,
 	formatDateObject,
 	formatDateRangeObject,
 	getDateFromDateString,
-	convertObjectDateToIsoString
 } from '../../../utilities/dates';
 
 function getOdataString(value, key) {
@@ -89,7 +89,7 @@ function DateRangeFilter(props) {
 								(props.max && formatDateObject(props.max))
 							}
 							min={props.min && formatDateObject(props.min)}
-							onChange={e => setFromValue(e.target.value)}
+							onChange={(e) => setFromValue(e.target.value)}
 							pattern="\d{4}-\d{2}-\d{2}"
 							placeholder={props.placeholder || 'yyyy-mm-dd'}
 							type="date"
@@ -108,7 +108,7 @@ function DateRangeFilter(props) {
 								fromValue ||
 								(props.min && formatDateObject(props.min))
 							}
-							onChange={e => setToValue(e.target.value)}
+							onChange={(e) => setToValue(e.target.value)}
 							pattern="\d{4}-\d{2}-\d{2}"
 							placeholder={props.placeholder || 'yyyy-mm-dd'}
 							type="date"
@@ -124,14 +124,15 @@ function DateRangeFilter(props) {
 					onClick={() => {
 						if (actionType === 'delete') {
 							props.actions.updateFilterState(props.id);
-						} else {
+						}
+						else {
 							const newValue = {
 								from: fromValue
 									? getDateFromDateString(fromValue)
 									: null,
 								to: toValue
 									? getDateFromDateString(toValue)
-									: null
+									: null,
 							};
 							props.actions.updateFilterState(
 								props.id,
@@ -157,7 +158,7 @@ function DateRangeFilter(props) {
 const dateShape = PropTypes.shape({
 	day: PropTypes.number,
 	month: PropTypes.number,
-	year: PropTypes.number
+	year: PropTypes.number,
 });
 
 DateRangeFilter.propTypes = {
@@ -170,8 +171,8 @@ DateRangeFilter.propTypes = {
 	type: PropTypes.oneOf(['dateRange']).isRequired,
 	value: PropTypes.shape({
 		from: dateShape,
-		to: dateShape
-	})
+		to: dateShape,
+	}),
 };
 
 export default DateRangeFilter;

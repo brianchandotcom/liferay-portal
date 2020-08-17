@@ -24,7 +24,7 @@ import components from './index';
 function getCurrentPage() {
 	return (
 		window.location.hash &&
-		components.find(c => c.entry === window.location.hash.slice(1)).page
+		components.find((c) => c.entry === window.location.hash.slice(1)).page
 	);
 }
 
@@ -39,8 +39,8 @@ function Menu({spritemap}) {
 						<ClayList.Header>Components</ClayList.Header>
 
 						{components
-							.filter(c => c.page)
-							.map(component => (
+							.filter((c) => c.page)
+							.map((component) => (
 								<ClayList.Item flex key={component.entry}>
 									<ClayList.ItemField>
 										<ClaySticker
@@ -76,5 +76,5 @@ function Menu({spritemap}) {
 }
 
 launcher(Menu, 'menu', 'menu-root', {
-	spritemap: './assets/icons.svg'
+	spritemap: './assets/icons.svg',
 });

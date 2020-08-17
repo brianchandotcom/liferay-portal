@@ -160,7 +160,7 @@ PortletURL portletURL = commerceAccountUserRelAdminDisplayContext.getPortletURL(
 	</aui:script>
 
 	<aui:script use="liferay-item-selector-dialog">
-		$('#<portlet:namespace />addCommerceAccountUserRel').on('click', function(
+		$('#<portlet:namespace />addCommerceAccountUserRel').on('click', function (
 			event
 		) {
 			event.preventDefault();
@@ -168,13 +168,13 @@ PortletURL portletURL = commerceAccountUserRelAdminDisplayContext.getPortletURL(
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 				eventName: 'usersSelectItem',
 				on: {
-					selectedItemChange: function(event) {
+					selectedItemChange: function (event) {
 						var <portlet:namespace />addUserIds = [];
 
 						var selectedItems = event.newVal;
 
 						if (selectedItems) {
-							A.Array.each(selectedItems, function(
+							A.Array.each(selectedItems, function (
 								item,
 								index,
 								selectedItems
@@ -192,12 +192,12 @@ PortletURL portletURL = commerceAccountUserRelAdminDisplayContext.getPortletURL(
 
 							submitForm(addCommerceAccountUserRelFm);
 						}
-					}
+					},
 				},
 				title:
 					'<liferay-ui:message arguments="<%= HtmlUtil.escape(commerceAccount.getName()) %>" key="add-new-entry-to-x" />',
 				url:
-					'<%= commerceAccountUserRelAdminDisplayContext.getItemSelectorUrl() %>'
+					'<%= commerceAccountUserRelAdminDisplayContext.getItemSelectorUrl() %>',
 			});
 
 			itemSelectorDialog.open();

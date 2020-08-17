@@ -23,7 +23,7 @@ function Cards(props) {
 		selectable,
 		selectedItemsKey,
 		selectedItemsValue,
-		style
+		style,
 	} = useContext(props.datasetDisplayContext);
 
 	return (
@@ -34,7 +34,7 @@ function Cards(props) {
 			)}
 		>
 			<div className="row">
-				{props.items.map(item => {
+				{props.items.map((item) => {
 					return (
 						<div className="col-md-3" key={item[selectedItemsKey]}>
 							<ClayCardWithInfo
@@ -57,7 +57,7 @@ function Cards(props) {
 								selected={
 									selectable &&
 									!!selectedItemsValue.find(
-										el => el === item[selectedItemsKey]
+										(el) => el === item[selectedItemsKey]
 									)
 								}
 								stickerProps={
@@ -89,8 +89,8 @@ Cards.propTypes = {
 		imgProps: PropTypes.imgProps,
 		labels: PropTypes.arrayOf(PropTypes.string),
 		stickerProps: PropTypes.string,
-		title: PropTypes.string
-	}).isRequired
+		title: PropTypes.string,
+	}).isRequired,
 };
 
 export default Cards;

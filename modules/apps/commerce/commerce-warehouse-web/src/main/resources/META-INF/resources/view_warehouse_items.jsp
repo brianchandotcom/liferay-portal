@@ -108,7 +108,8 @@ if (Validator.isNotNull(backURL)) {
 
 			if (commerceInventoryWarehouseItemId > 0) {
 				form.fm('<%= Constants.CMD %>').val('<%= Constants.UPDATE %>');
-			} else {
+			}
+			else {
 				form.fm('<%= Constants.CMD %>').val('<%= Constants.ADD %>');
 			}
 
@@ -133,13 +134,11 @@ if (Validator.isNotNull(backURL)) {
 			'<portlet:namespace />commerceInventoryWarehouseItemQuantity';
 		var enterKeyCode = 13;
 
-		$('input[id^=' + quantityPrefix + ']').on('keypress', function(event) {
+		$('input[id^=' + quantityPrefix + ']').on('keypress', function (event) {
 			if (event.keyCode == enterKeyCode) {
 				event.preventDefault();
 
-				var curIndex = $(this)
-					.attr('id')
-					.split(quantityPrefix)[1];
+				var curIndex = $(this).attr('id').split(quantityPrefix)[1];
 				$('#<portlet:namespace/>saveButton' + curIndex).click();
 			}
 		});

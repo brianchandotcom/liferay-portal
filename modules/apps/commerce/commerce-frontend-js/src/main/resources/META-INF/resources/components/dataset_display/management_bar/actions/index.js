@@ -14,10 +14,10 @@
 
 export const actionsDefinition = {
 	RESET_FILTERS_VALUE: 'resetFiltersValue',
-	UPDATE_FILTER_STATE: 'updateFilterState'
+	UPDATE_FILTER_STATE: 'updateFilterState',
 };
 
-const updateFilterState = dispatch => (
+const updateFilterState = (dispatch) => (
 	id,
 	value = null,
 	formattedValue = null,
@@ -28,19 +28,19 @@ const updateFilterState = dispatch => (
 			formattedValue,
 			id,
 			odataFilterString,
-			value
+			value,
 		},
-		type: actionsDefinition.UPDATE_FILTER_STATE
+		type: actionsDefinition.UPDATE_FILTER_STATE,
 	});
 
-const resetFiltersValue = dispatch => () =>
+const resetFiltersValue = (dispatch) => () =>
 	dispatch({
-		type: actionsDefinition.RESET_FILTERS_VALUE
+		type: actionsDefinition.RESET_FILTERS_VALUE,
 	});
 
 export const actions = {
 	resetFiltersValue,
-	updateFilterState
+	updateFilterState,
 };
 
 export default actions;

@@ -33,20 +33,20 @@
 						accountGroupExternalReferenceCode: accountGroup.externalReferenceCode,
 						accountGroupId: accountGroup.id,
 						discountExternalReferenceCode: discountExternalReferenceCode,
-						discountId: id
+						discountId: id,
 					};
 
 					return CommerceDiscountAccountGroupsResource.addDiscountAccountGroup(
 						id,
 						accountGroupData
 					)
-						.then(function() {
+						.then(function () {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 								id:
-									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNT_GROUPS %>'
+									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNT_GROUPS %>',
 							});
 						})
-						.catch(function(error) {
+						.catch(function (error) {
 							return Promise.reject(error);
 						});
 				}
@@ -65,7 +65,7 @@
 						'<%= LanguageUtil.get(request, "account-group-selected") %>',
 					itemsKey: 'id',
 					linkedDatasetsId: [
-						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNT_GROUPS %>'
+						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNT_GROUPS %>',
 					],
 					onItemSelected: selectItem,
 					pageSize: 10,
@@ -73,11 +73,12 @@
 					portletId: '<%= portletDisplay.getRootPortletId() %>',
 					schema: [
 						{
-							fieldName: 'name'
-						}
+							fieldName: 'name',
+						},
 					],
 					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-					titleLabel: '<%= LanguageUtil.get(request, "add-existing-account-group") %>'
+					titleLabel:
+						'<%= LanguageUtil.get(request, "add-existing-account-group") %>',
 				});
 			</aui:script>
 		</div>

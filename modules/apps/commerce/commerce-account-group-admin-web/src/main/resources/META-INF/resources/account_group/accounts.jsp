@@ -150,19 +150,19 @@ PortletURL portletURL = commerceAccountGroupAdminDisplayContext.getPortletURL();
 	<aui:script use="liferay-item-selector-dialog">
 		$('#<portlet:namespace />addCommerceAccountGroupCommerceAccountRel').on(
 			'click',
-			function(event) {
+			function (event) {
 				event.preventDefault();
 
 				var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 					eventName: 'commerceAccountsSelectItem',
 					on: {
-						selectedItemChange: function(event) {
+						selectedItemChange: function (event) {
 							var <portlet:namespace />addCommerceAccountIds = [];
 
 							var selectedItems = event.newVal;
 
 							if (selectedItems) {
-								A.Array.each(selectedItems, function(
+								A.Array.each(selectedItems, function (
 									item,
 									index,
 									selectedItems
@@ -182,12 +182,12 @@ PortletURL portletURL = commerceAccountGroupAdminDisplayContext.getPortletURL();
 
 								submitForm(addCommerceAccountGroupCommerceAccountRelFm);
 							}
-						}
+						},
 					},
 					title:
 						'<liferay-ui:message arguments="<%= HtmlUtil.escape(commerceAccountGroup.getName()) %>" key="add-new-entry-to-x" />',
 					url:
-						'<%= commerceAccountGroupAdminDisplayContext.getItemSelectorUrl() %>'
+						'<%= commerceAccountGroupAdminDisplayContext.getItemSelectorUrl() %>',
 				});
 
 				itemSelectorDialog.open();

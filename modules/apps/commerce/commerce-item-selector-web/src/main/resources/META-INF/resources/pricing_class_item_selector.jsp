@@ -112,14 +112,14 @@ PortletURL portletURL = commercePricingClassItemSelectorViewDisplayContext.getPo
 		'<portlet:namespace />commercePricingClasses'
 	);
 
-	searchContainer.on('rowToggled', function(event) {
+	searchContainer.on('rowToggled', function (event) {
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 			{
 				data: Liferay.Util.listCheckedExcept(
 					commercePricingClassSelectorWrapper,
 					'<portlet:namespace />allRowIds'
-				)
+				),
 			}
 		);
 	});

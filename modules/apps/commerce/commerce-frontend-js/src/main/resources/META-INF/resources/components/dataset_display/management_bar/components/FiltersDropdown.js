@@ -15,7 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import Icon from '@clayui/icon';
-import React, {useState, useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import getAppContext from './Context';
 import {Filter} from './filters/index';
@@ -25,19 +25,19 @@ function FiltersDropdown() {
 	const [query, setQuery] = useState('');
 	const {state} = getAppContext();
 	const [visibleFilters, setVisibleFilter] = useState(
-		state.filters.filter(filter => !filter.invisible)
+		state.filters.filter((filter) => !filter.invisible)
 	);
 	const [activeFilterId, setActiveFilterId] = useState(null);
 	const activeFilter = useMemo(() => {
 		return (
 			activeFilterId &&
-			visibleFilters.find(filter => filter.id === activeFilterId)
+			visibleFilters.find((filter) => filter.id === activeFilterId)
 		);
 	}, [visibleFilters, activeFilterId]);
 	const {actions} = getAppContext();
 
 	useEffect(() => {
-		const results = state.filters.filter(filter => {
+		const results = state.filters.filter((filter) => {
 			switch (true) {
 				case !!filter.invisible:
 					return false;
@@ -62,7 +62,7 @@ function FiltersDropdown() {
 			onActiveChange={setActive}
 			trigger={
 				<button
-					className="filters-dropdown-button btn btn-unstyled dropdown-toggle"
+					className="btn btn-unstyled dropdown-toggle filters-dropdown-button"
 					type="button"
 				>
 					<span className="navbar-text-truncate">
@@ -96,13 +96,13 @@ function FiltersDropdown() {
 						{Liferay.Language.get('filters')}
 					</li>
 					<ClayDropDown.Search
-						onChange={e => setQuery(e.target.value)}
+						onChange={(e) => setQuery(e.target.value)}
 						value={query}
 					/>
 					<ClayDropDown.Divider className="m-0" />
 					{visibleFilters.length ? (
 						<ClayDropDown.ItemList>
-							{visibleFilters.map(item => (
+							{visibleFilters.map((item) => (
 								<ClayDropDown.Item
 									active={
 										item.value !== undefined &&

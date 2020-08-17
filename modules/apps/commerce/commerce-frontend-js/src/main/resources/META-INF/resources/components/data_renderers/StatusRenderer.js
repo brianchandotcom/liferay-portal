@@ -33,8 +33,8 @@ StatusRenderer.propTypes = {
 	value: PropTypes.shape({
 		code: PropTypes.number,
 		label: PropTypes.string,
-		label_i18n: PropTypes.string
-	})
+		label_i18n: PropTypes.string,
+	}),
 };
 
 export default StatusRenderer;

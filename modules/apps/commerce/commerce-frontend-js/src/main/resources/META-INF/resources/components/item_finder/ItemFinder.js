@@ -20,7 +20,7 @@ import {DATASET_ACTION_PERFORMED} from '../../utilities/eventsDefinitions';
 import {fetchParams} from '../../utilities/index';
 import {
 	showErrorNotification,
-	showNotification
+	showNotification,
 } from '../../utilities/notifications';
 import AddOrCreate from './AddOrCreate';
 
@@ -36,6 +36,7 @@ function ItemFinder(props) {
 		if (!textFilter) {
 			updateItems(null);
 			updateItemsCount(0);
+
 			return;
 		}
 
@@ -47,11 +48,11 @@ function ItemFinder(props) {
 			)}`,
 			{
 				...fetchParams,
-				method: 'GET'
+				method: 'GET',
 			}
 		)
-			.then(data => data.json())
-			.then(jsonResponse => {
+			.then((data) => data.json())
+			.then((jsonResponse) => {
 				updateItems(jsonResponse.items);
 				updateItemsCount(jsonResponse.totalCount);
 			})
@@ -62,7 +63,7 @@ function ItemFinder(props) {
 		textFilter,
 		updateItems,
 		updateItemsCount,
-		props.apiUrl
+		props.apiUrl,
 	]);
 
 	useEffect(() => {
@@ -88,15 +89,16 @@ function ItemFinder(props) {
 
 	function selectItem(itemId) {
 		const selectedItem = items.find(
-			item => item[props.itemsKey] === itemId
+			(item) => item[props.itemsKey] === itemId
 		);
 		props
 			.onItemSelected(selectedItem)
 			.then(() => {
 				if (props.multiSelectableEntries) {
 					showNotification(props.itemSelectedMessage);
-				} else {
-					updateSelectedItems(i => [...i, itemId]);
+				}
+				else {
+					updateSelectedItems((i) => [...i, itemId]);
 				}
 			})
 			.catch(showErrorNotification);
@@ -105,11 +107,11 @@ function ItemFinder(props) {
 	function createItem() {
 		props
 			.onItemCreated(textFilter)
-			.then(id => {
+			.then((id) => {
 				updateTextFilter('');
 
 				if (id) {
-					updateSelectedItems(i => [...i, id]);
+					updateSelectedItems((i) => [...i, id]);
 				}
 			})
 			.catch(showErrorNotification);
@@ -158,7 +160,7 @@ ItemFinder.propTypes = {
 	pageSize: PropTypes.number,
 	panelHeaderLabel: PropTypes.string,
 	schema: PropTypes.array.isRequired,
-	titleLabel: PropTypes.string
+	titleLabel: PropTypes.string,
 };
 
 ItemFinder.defaultProps = {
@@ -167,7 +169,7 @@ ItemFinder.defaultProps = {
 	itemSelectedMessage: Liferay.Language.get('item-selected'),
 	multiSelectableEntries: false,
 	pageSize: 5,
-	selectedItems: []
+	selectedItems: [],
 };
 
 export default ItemFinder;

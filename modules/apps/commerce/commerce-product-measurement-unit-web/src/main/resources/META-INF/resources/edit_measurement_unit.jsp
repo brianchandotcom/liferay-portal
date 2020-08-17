@@ -108,7 +108,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 		var keyInput = form.querySelector('#<portlet:namespace />key');
 		var nameInput = form.querySelector('#<portlet:namespace />name');
 
-		var handleOnNameInput = function() {
+		var handleOnNameInput = function () {
 			keyInput.value = slugify.default(nameInput.value);
 		};
 

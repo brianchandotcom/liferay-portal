@@ -32,7 +32,7 @@ CProduct cProduct = cpDefinition.getCProduct();
 			var headers = new Headers({
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
-				'x-csrf-token': Liferay.authToken
+				'x-csrf-token': Liferay.authToken,
 			});
 
 			var productId = <%= cpDefinition.getCProductId() %>;
@@ -49,21 +49,21 @@ CProduct cProduct = cpDefinition.getCProduct();
 							productId: productId,
 							productGroupExternalReferenceCode:
 								productPricingClass.externalReferenceCode,
-							productGroupId: productPricingClass.id
+							productGroupId: productPricingClass.id,
 						}),
 						credentials: 'include',
 						headers: headers,
-						method: 'POST'
+						method: 'POST',
 					}
-				).then(function(response) {
+				).then(function (response) {
 					if (!response.ok) {
-						return response.json().then(function(data) {
+						return response.json().then(function (data) {
 							return Promise.reject(data.errorDescription);
 						});
 					}
 					Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 						id:
-							'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_PRICING_CLASSES %>'
+							'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_PRICING_CLASSES %>',
 					});
 					return null;
 				});
@@ -71,7 +71,7 @@ CProduct cProduct = cpDefinition.getCProduct();
 
 			function addNewItem(name) {
 				var nameDefinition = {
-					[themeDisplay.getLanguageId()]: name
+					[themeDisplay.getLanguageId()]: name,
 				};
 
 				if (themeDisplay.getLanguageId() !== themeDisplay.getDefaultLanguageId()) {
@@ -80,18 +80,18 @@ CProduct cProduct = cpDefinition.getCProduct();
 
 				return fetch('/o/headless-commerce-admin-catalog/v1.0/product-groups', {
 					body: JSON.stringify({
-						title: nameDefinition
+						title: nameDefinition,
 					}),
 					credentials: 'include',
 					headers: headers,
-					method: 'POST'
+					method: 'POST',
 				})
-					.then(function(response) {
+					.then(function (response) {
 						if (response.ok) {
 							return response.json();
 						}
 
-						return response.json().then(function(data) {
+						return response.json().then(function (data) {
 							return Promise.reject(data.message);
 						});
 					})
@@ -112,7 +112,7 @@ CProduct cProduct = cpDefinition.getCProduct();
 					'<%= LanguageUtil.get(request, "product-group-selected") %>',
 				itemsKey: 'id',
 				linkedDatasetsId: [
-					'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_PRICING_CLASSES %>'
+					'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_PRICING_CLASSES %>',
 				],
 				onItemCreated: addNewItem,
 				onItemSelected: selectItem,
@@ -122,11 +122,12 @@ CProduct cProduct = cpDefinition.getCProduct();
 				portletId: '<%= portletDisplay.getRootPortletId() %>',
 				schema: [
 					{
-						fieldName: ['title', 'LANG']
-					}
+						fieldName: ['title', 'LANG'],
+					},
 				],
 				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-				titleLabel: '<%= LanguageUtil.get(request, "add-existing-product-group") %>'
+				titleLabel:
+					'<%= LanguageUtil.get(request, "add-existing-product-group") %>',
 			});
 		</aui:script>
 

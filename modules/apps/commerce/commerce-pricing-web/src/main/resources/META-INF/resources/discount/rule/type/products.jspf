@@ -50,17 +50,17 @@ String typeSettings = unicodeProperties.getProperty(commerceDiscountRule.getType
 			var ruleData = {
 				name: name,
 				type: commerceDiscountRuleType,
-				typeSettings: addProductDefinition(product.id)
+				typeSettings: addProductDefinition(product.id),
 			};
 
 			return CommerceDiscountRuleResource.updateDiscountRule(
 				'<%= commerceDiscountRule.getCommerceDiscountRuleId() %>',
 				ruleData
 			)
-				.then(function(payload) {
+				.then(function (payload) {
 					Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 						id:
-							'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_RULE_PRODUCT_DEFINITIONS %>'
+							'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_RULE_PRODUCT_DEFINITIONS %>',
 					});
 
 					typeSettings = payload.typeSettings
@@ -71,7 +71,7 @@ String typeSettings = unicodeProperties.getProperty(commerceDiscountRule.getType
 						'<portlet:namespace/>typeSettings'
 					).value = typeSettings;
 				})
-				.catch(function(error) {
+				.catch(function (error) {
 					return Promise.reject(error);
 				});
 		}
@@ -86,7 +86,7 @@ String typeSettings = unicodeProperties.getProperty(commerceDiscountRule.getType
 			getSelectedItems: getSelectedItems,
 			inputPlaceholder: '<%= LanguageUtil.get(request, "find-a-product") %>',
 			linkedDatasetsId: [
-				'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_RULE_PRODUCT_DEFINITIONS %>'
+				'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_RULE_PRODUCT_DEFINITIONS %>',
 			],
 			itemCreation: false,
 			itemSelectedMessage: '<%= LanguageUtil.get(request, "product-selected") %>',
@@ -97,17 +97,17 @@ String typeSettings = unicodeProperties.getProperty(commerceDiscountRule.getType
 			portletId: '<%= portletDisplay.getRootPortletId() %>',
 			schema: [
 				{
-					fieldName: ['name', 'LANG']
+					fieldName: ['name', 'LANG'],
 				},
 				{
-					fieldName: 'skuFormatted'
+					fieldName: 'skuFormatted',
 				},
 				{
-					fieldName: ['catalog', 'name']
-				}
+					fieldName: ['catalog', 'name'],
+				},
 			],
 			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-			titleLabel: '<%= LanguageUtil.get(request, "add-existing-product") %>'
+			titleLabel: '<%= LanguageUtil.get(request, "add-existing-product") %>',
 		});
 	</aui:script>
 </div>

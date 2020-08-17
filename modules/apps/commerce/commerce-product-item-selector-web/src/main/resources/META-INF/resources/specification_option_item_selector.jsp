@@ -100,14 +100,14 @@ PortletURL portletURL = cpSpecificationOptionItemSelectorViewDisplayContext.getP
 		'<portlet:namespace />cpSpecificationOptions'
 	);
 
-	searchContainer.on('rowToggled', function(event) {
+	searchContainer.on('rowToggled', function (event) {
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 			{
 				data: Liferay.Util.listCheckedExcept(
 					cpSpecificationOptionSelectorWrapper,
 					'<portlet:namespace />allRowIds'
-				)
+				),
 			}
 		);
 	});

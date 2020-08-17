@@ -31,6 +31,7 @@ function Item(props) {
 			{props.fields.map((field, i) => {
 				const value = getValueFromItem(props.itemData, field.fieldName);
 				const DataRenderer = getDataRendererById(field.contentRenderer);
+
 				return (
 					<ClayTable.Cell
 						expanded
@@ -69,13 +70,13 @@ class AddOrCreateBase extends Component {
 		super(props);
 		this.state = {
 			focus: false,
-			selected: 0
+			selected: 0,
 		};
 	}
 
 	focus() {
 		this.setState({
-			focus: true
+			focus: true,
 		});
 		if (this.props.onFocusIn) {
 			this.props.onFocusIn();
@@ -92,9 +93,9 @@ class AddOrCreateBase extends Component {
 				className={`card mb-0 add-or-create ${
 					this.state.focus ? 'has-focus' : ''
 				}`}
-				onFocus={e => this.handleFocusIn(e)}
+				onFocus={(e) => this.handleFocusIn(e)}
 			>
-				<h4 className="card-header align-items-center py-3">
+				<h4 className="align-items-center card-header py-3">
 					{this.props.panelHeaderLabel}
 				</h4>
 				<div className="card-body">
@@ -102,12 +103,12 @@ class AddOrCreateBase extends Component {
 						<div className="input-group-item">
 							<input
 								className="form-control input-group-inset input-group-inset-after"
-								onChange={e =>
+								onChange={(e) =>
 									this.props.onInputSearchChange(
 										e.target.value
 									)
 								}
-								onFocus={e => this.focus(e)}
+								onFocus={(e) => this.focus(e)}
 								placeholder={this.props.inputPlaceholder}
 								ref={this.input}
 								type="text"
@@ -117,7 +118,7 @@ class AddOrCreateBase extends Component {
 								{this.props.inputSearchValue && (
 									<button
 										className="btn btn-unstyled"
-										onClick={_e =>
+										onClick={(_e) =>
 											this.props.onInputSearchChange('')
 										}
 										type="button"
@@ -179,7 +180,7 @@ class AddOrCreateBase extends Component {
 								{this.props.items &&
 									this.props.items.length === 0 &&
 									!this.props.itemCreation && (
-										<ClayList.Header className="px-0 d-flex">
+										<ClayList.Header className="d-flex px-0">
 											{Liferay.Language.get(
 												'no-items-were-found'
 											)}
@@ -231,7 +232,7 @@ class AddOrCreateBase extends Component {
 										className="mt-3"
 										deltas={this.props.deltas}
 										ellipsisBuffer={3}
-										onDeltaChange={deltaVal => {
+										onDeltaChange={(deltaVal) => {
 											this.props.updateCurrentPage(1);
 											this.props.updatePageSize(deltaVal);
 										}}
@@ -255,7 +256,7 @@ AddOrCreateBase.propTypes = {
 	currentPage: PropTypes.number,
 	deltas: PropTypes.arrayOf(
 		PropTypes.shape({
-			label: PropTypes.number
+			label: PropTypes.number,
 		})
 	),
 	inputPlaceholder: PropTypes.string,
@@ -276,8 +277,8 @@ AddOrCreateBase.propTypes = {
 			contentRenderer: PropTypes.string,
 			fieldName: PropTypes.oneOfType([
 				PropTypes.string,
-				PropTypes.arrayOf(PropTypes.string)
-			]).isRequired
+				PropTypes.arrayOf(PropTypes.string),
+			]).isRequired,
 		})
 	),
 	selectedItems: PropTypes.arrayOf(
@@ -285,35 +286,35 @@ AddOrCreateBase.propTypes = {
 	),
 	titleLabel: PropTypes.string,
 	updateCurrentPage: PropTypes.func,
-	updatePageSize: PropTypes.func
+	updatePageSize: PropTypes.func,
 };
 
 AddOrCreateBase.defaultProps = {
 	createNewItemLabel: Liferay.Language.get('create-new-item'),
 	deltas: [
 		{
-			label: 5
+			label: 5,
 		},
 		{
-			label: 10
+			label: 10,
 		},
 		{
-			label: 20
+			label: 20,
 		},
 		{
-			label: 30
+			label: 30,
 		},
 		{
-			label: 50
+			label: 50,
 		},
 		{
-			label: 75
-		}
+			label: 75,
+		},
 	],
 	inputPlaceholder: Liferay.Language.get('find-an-option-or-create-one'),
 	inputSearchValue: '',
 	panelHeaderLabel: Liferay.Language.get('add-new'),
-	titleLabel: Liferay.Language.get('select-an-existing-one')
+	titleLabel: Liferay.Language.get('select-an-existing-one'),
 };
 
 export default React.forwardRef((props, ref) => {

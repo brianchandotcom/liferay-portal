@@ -22,7 +22,8 @@ import template from './ProductCard.soy';
 function liferayNavigation(url) {
 	if (Liferay.SPA) {
 		Liferay.SPA.app.navigate(url);
-	} else {
+	}
+	else {
 		window.location.href = url;
 	}
 }
@@ -53,8 +54,9 @@ class ProductCard extends Component {
 	_handleCheckboxCompareUpdate(newCompareState) {
 		this.compareState = {
 			checkboxVisible: this.compareState.checkboxVisible,
-			...newCompareState
+			...newCompareState,
 		};
+
 		return this.compareState;
 	}
 
@@ -75,9 +77,10 @@ class ProductCard extends Component {
 			body: formData,
 			credentials: 'include',
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'post'
+			method: 'post',
 		}).then(() => {
 			liferayNavigation(window.location.href);
+
 			return Liferay.SPA;
 		});
 	}
@@ -106,11 +109,12 @@ class ProductCard extends Component {
 			body: formData,
 			credentials: 'include',
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'POST'
+			method: 'POST',
 		})
-			.then(response => response.json())
-			.then(jsonresponse => {
+			.then((response) => response.json())
+			.then((jsonresponse) => {
 				this.addedToWishlist = jsonresponse.success;
+
 				return this.addedToWishlist;
 			});
 	}
@@ -126,24 +130,24 @@ ProductCard.STATE = {
 	availability: Config.string().oneOf([
 		'inStock',
 		'available',
-		'notAvailable'
+		'notAvailable',
 	]),
 	cartAPI: Config.string(),
 	categories: Config.array(
 		Config.shapeOf({
 			link: Config.string().required(),
-			name: Config.string().required()
+			name: Config.string().required(),
 		})
 	),
 	compareContentNamespace: Config.string(),
 	compareState: Config.shapeOf({
 		checkboxVisible: Config.bool(),
 		compareAvailable: Config.bool(),
-		inCompare: Config.bool()
+		inCompare: Config.bool(),
 	}).value({
 		checkboxVisible: true,
 		compareAvailable: true,
-		inCompare: false
+		inCompare: false,
 	}),
 	deleteButtonVisible: Config.bool(),
 	description: Config.string(),
@@ -155,19 +159,19 @@ ProductCard.STATE = {
 	pictureUrl: Config.string(),
 	price: Config.shapeOf({
 		formattedPrice: Config.string().required(),
-		formattedPromoPrice: Config.string()
+		formattedPromoPrice: Config.string(),
 	}),
 	productId: Config.oneOfType([Config.string(), Config.number()]).required(),
 	settings: Config.shapeOf({
 		allowedOptions: Config.array(Config.number()),
 		maxQuantity: Config.number(),
 		minQuantity: Config.number(),
-		multipleQuantity: Config.number()
+		multipleQuantity: Config.number(),
 	}).value({}),
 	sku: Config.string(),
 	skuId: Config.oneOfType([Config.string(), Config.number()]),
 	spritemap: Config.string(),
-	wishlistAPI: Config.string()
+	wishlistAPI: Config.string(),
 };
 
 export {ProductCard};

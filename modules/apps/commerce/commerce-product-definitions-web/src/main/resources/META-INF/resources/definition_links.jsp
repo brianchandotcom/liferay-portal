@@ -69,11 +69,11 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 
 			Liferay.on(
 				'<portlet:namespace />addCommerceProductDefinitionLink<%= type %>',
-				function() {
+				function () {
 					var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 						eventName: 'productDefinitionsSelectItem',
 						on: {
-							selectedItemChange: function(event) {
+							selectedItemChange: function (event) {
 								var selectedItems = event.newVal;
 
 								if (selectedItems) {
@@ -89,12 +89,12 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 
 									submitForm(addCPDefinitionLinkFm);
 								}
-							}
+							},
 						},
 						title:
 							'<liferay-ui:message arguments="<%= cpDefinition.getName(languageId) %>" key="add-new-product-to-x" />',
 						url:
-							'<%= cpDefinitionLinkDisplayContext.getItemSelectorUrl(type) %>'
+							'<%= cpDefinitionLinkDisplayContext.getItemSelectorUrl(type) %>',
 					});
 
 					itemSelectorDialog.open();

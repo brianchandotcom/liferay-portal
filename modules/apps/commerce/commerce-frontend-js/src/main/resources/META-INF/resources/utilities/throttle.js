@@ -23,7 +23,8 @@ export default function throttle(fn, limit) {
 			fn.apply(context, args);
 
 			lastRan = Date.now();
-		} else {
+		}
+		else {
 			clearTimeout(lastFunction);
 
 			lastFunction = setTimeout(() => {

@@ -88,13 +88,13 @@ CommerceAddress shippingAddress = commerceShipmentDisplayContext.getShippingAddr
 	new Liferay.DynamicSelect([
 		{
 			select: '<portlet:namespace />commerceCountryId',
-			selectData: function(callback) {
+			selectData: function (callback) {
 				Liferay.Service(
 					'/commerce.commercecountry/get-shipping-commerce-countries',
 					{
 						companyId: <%= company.getCompanyId() %>,
 						end: -1,
-						start: -1
+						start: -1,
 					},
 					callback
 				);
@@ -102,23 +102,23 @@ CommerceAddress shippingAddress = commerceShipmentDisplayContext.getShippingAddr
 			selectDesc: 'nameCurrentValue',
 			selectId: 'commerceCountryId',
 			selectSort: '<%= true %>',
-			selectVal: '<%= shippingAddress.getCommerceCountryId() %>'
+			selectVal: '<%= shippingAddress.getCommerceCountryId() %>',
 		},
 		{
 			select: '<portlet:namespace />commerceRegionId',
-			selectData: function(callback, selectKey) {
+			selectData: function (callback, selectKey) {
 				Liferay.Service(
 					'/commerce.commerceregion/get-commerce-regions',
 					{
 						active: true,
-						commerceCountryId: Number(selectKey)
+						commerceCountryId: Number(selectKey),
 					},
 					callback
 				);
 			},
 			selectDesc: 'name',
 			selectId: 'commerceRegionId',
-			selectVal: '<%= shippingAddress.getCommerceRegionId() %>'
-		}
+			selectVal: '<%= shippingAddress.getCommerceRegionId() %>',
+		},
 	]);
 </aui:script>

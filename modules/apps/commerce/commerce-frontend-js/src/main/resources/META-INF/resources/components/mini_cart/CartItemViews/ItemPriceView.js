@@ -24,7 +24,7 @@ function ItemPriceView({displayDiscountLevels, price}) {
 		finalPriceFormatted,
 		priceFormatted,
 		promoPrice,
-		promoPriceFormatted
+		promoPriceFormatted,
 	} = price;
 
 	const discountLevels = displayDiscountLevels
@@ -97,7 +97,7 @@ function ItemPriceView({displayDiscountLevels, price}) {
 }
 
 ItemPriceView.defaultProps = {
-	displayDiscountLevels: false
+	displayDiscountLevels: false,
 };
 
 ItemPriceView.propTypes = {
@@ -115,8 +115,8 @@ ItemPriceView.propTypes = {
 		price: PropTypes.number.isRequired,
 		priceFormatted: PropTypes.string.isRequired,
 		promoPrice: PropTypes.number,
-		promoPriceFormatted: PropTypes.string
-	}).isRequired
+		promoPriceFormatted: PropTypes.string,
+	}).isRequired,
 };
 
 export default ItemPriceView;

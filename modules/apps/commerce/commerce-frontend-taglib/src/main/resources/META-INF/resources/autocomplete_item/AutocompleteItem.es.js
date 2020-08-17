@@ -25,8 +25,9 @@ class AutocompleteItem extends Component {
 		const results = regex.exec(this.text);
 
 		if (results) {
-			this.updateHighlightedText(results.map(el => el.toString()));
-		} else {
+			this.updateHighlightedText(results.map((el) => el.toString()));
+		}
+		else {
 			this.reinitializeTextGroups();
 		}
 
@@ -65,7 +66,7 @@ AutocompleteItem.STATE = {
 	query: Config.string(),
 	secondGroup: Config.string().internal(),
 	text: Config.any(),
-	thirdGroup: Config.string().internal()
+	thirdGroup: Config.string().internal(),
 };
 
 export {AutocompleteItem};

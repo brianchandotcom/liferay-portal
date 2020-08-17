@@ -21,7 +21,7 @@ function CommentRenderer(props) {
 	return (
 		<ClayTooltipProvider>
 			<ClayButton
-				className="cell-comment text-warning px-1 my-n2 ml-2 inline-item"
+				className="cell-comment inline-item ml-2 my-n2 px-1 text-warning"
 				data-tooltip-align="top"
 				data-tooltip-delay={0}
 				displayType="link"

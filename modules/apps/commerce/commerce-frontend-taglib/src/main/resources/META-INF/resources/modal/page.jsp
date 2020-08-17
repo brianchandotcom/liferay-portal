@@ -26,7 +26,7 @@ String containerId = randomNamespace + "modal-root";
 	new Modal.default('<%= id %>', '<%= containerId %>', {
 		id: '<%= id %>',
 		onClose: <%= refreshPageOnClose %>
-			? function() {
+			? function () {
 					window.location.reload();
 			  }
 			: null,
@@ -34,6 +34,6 @@ String containerId = randomNamespace + "modal-root";
 		size: '<%= size %>',
 		spritemap: '<%= spritemap %>',
 		title: '<%= title %>',
-		url: '<%= url %>'
+		url: '<%= url %>',
 	});
 </aui:script>

@@ -16,11 +16,11 @@ import ClayAutocomplete from '@clayui/autocomplete';
 import ClayDropDown from '@clayui/drop-down';
 import {FocusScope} from '@clayui/shared';
 import PropTypes from 'prop-types';
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {debouncePromise} from '../../utilities/debounce';
 import {AUTOCOMPLETE_VALUE_UPDATED} from '../../utilities/eventsDefinitions';
-import {getValueFromItem, getData} from '../../utilities/index';
+import {getData, getValueFromItem} from '../../utilities/index';
 import {showErrorNotification} from '../../utilities/notifications';
 
 function Autocomplete({onValueUpdated, ...props}) {
@@ -55,7 +55,7 @@ function Autocomplete({onValueUpdated, ...props}) {
 		Liferay.fire(AUTOCOMPLETE_VALUE_UPDATED, {
 			id: props.id,
 			itemData: selectedItem,
-			value
+			value,
 		});
 
 		if (onValueUpdated) {
@@ -68,12 +68,14 @@ function Autocomplete({onValueUpdated, ...props}) {
 			setLoading(true);
 
 			debouncedGetItems(props.apiUrl, query)
-				.then(jsonResponse => {
+				.then((jsonResponse) => {
 					updateItems(jsonResponse.items);
 					setLoading(false);
-					if (!query) return;
+					if (!query) {
+						return;
+					}
 					const found = jsonResponse.items.find(
-						item =>
+						(item) =>
 							getValueFromItem(item, props.itemsLabel) === query
 					);
 					if (found) {
@@ -91,7 +93,7 @@ function Autocomplete({onValueUpdated, ...props}) {
 		props.apiUrl,
 		debouncedGetItems,
 		props.itemsLabel,
-		props.showErrorNotification
+		props.showErrorNotification,
 	]);
 
 	useEffect(() => {
@@ -138,20 +140,21 @@ function Autocomplete({onValueUpdated, ...props}) {
 					value={currentValue || ''}
 				/>
 				<ClayAutocomplete.Input
-					onChange={event => {
+					onChange={(event) => {
 						updateSelectedItem(null);
 						if (event.target.value !== query) {
 							setQuery(event.target.value);
 						}
 					}}
-					onFocus={_e => {
+					onFocus={(_e) => {
 						setActive(true);
 						setInitialised(true);
 					}}
-					onKeyUp={e => {
+					onKeyUp={(e) => {
 						if (e.keyCode === 27) {
 							setActive(false);
-						} else {
+						}
+						else {
 							setActive(true);
 						}
 					}}
@@ -172,7 +175,7 @@ function Autocomplete({onValueUpdated, ...props}) {
 							)}
 							{items &&
 								items.length > 0 &&
-								items.map(item => (
+								items.map((item) => (
 									<ClayAutocomplete.Item
 										key={String(item[props.itemsKey])}
 										onClick={() => {
@@ -211,10 +214,10 @@ Autocomplete.propTypes = {
 	itemsKey: PropTypes.string.isRequired,
 	itemsLabel: PropTypes.oneOfType([
 		PropTypes.string,
-		PropTypes.arrayOf(PropTypes.string)
+		PropTypes.arrayOf(PropTypes.string),
 	]).isRequired,
 	onValueUpdated: PropTypes.func,
-	required: PropTypes.bool
+	required: PropTypes.bool,
 };
 
 Autocomplete.defaultProps = {
@@ -222,7 +225,7 @@ Autocomplete.defaultProps = {
 	fetchDataDebounce: 200,
 	initialLabel: '',
 	initialValue: '',
-	inputPlaceholder: Liferay.Language.get('type-here')
+	inputPlaceholder: Liferay.Language.get('type-here'),
 };
 
 export default Autocomplete;

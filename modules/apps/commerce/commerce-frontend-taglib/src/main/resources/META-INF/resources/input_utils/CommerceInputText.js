@@ -31,7 +31,7 @@ CommerceInputText.STATE = {
 	pattern: Config.any(),
 	required: Config.bool(),
 	type: Config.string(),
-	value: Config.string()
+	value: Config.string(),
 };
 
 export {CommerceInputText};

@@ -21,7 +21,7 @@ import React, {useState} from 'react';
 function formatValue(itemValue, items, exclude) {
 	return (
 		(exclude ? `(${Liferay.Language.get('exclude')}) ` : '') +
-		items.find(item => item.value === itemValue).label
+		items.find((item) => item.value === itemValue).label
 	);
 }
 
@@ -68,12 +68,12 @@ function RadioFilter(props) {
 			</ClayDropDown.Caption>
 			<ClayDropDown.Divider />
 			<ClayDropDown.Caption>
-				<div className="inline-scroller mx-n2 px-2 mb-n2">
+				<div className="inline-scroller mb-n2 mx-n2 px-2">
 					<ClayRadioGroup
 						onSelectedValueChange={setItemValue}
 						selectedValue={itemValue || ''}
 					>
-						{props.items.map(item => (
+						{props.items.map((item) => (
 							<ClayRadio
 								key={item.value}
 								label={item.label}
@@ -93,7 +93,7 @@ function RadioFilter(props) {
 									props.id,
 									{
 										exclude,
-										itemValue
+										itemValue,
 									},
 									formatValue(
 										itemValue,
@@ -121,15 +121,15 @@ RadioFilter.propTypes = {
 	items: PropTypes.arrayOf(
 		PropTypes.shape({
 			label: PropTypes.string,
-			value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+			value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 		})
 	),
 	label: PropTypes.string.isRequired,
 	type: PropTypes.oneOf(['radio']).isRequired,
 	value: PropTypes.shape({
 		exclude: PropTypes.bool,
-		itemValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-	})
+		itemValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	}),
 };
 
 export default RadioFilter;

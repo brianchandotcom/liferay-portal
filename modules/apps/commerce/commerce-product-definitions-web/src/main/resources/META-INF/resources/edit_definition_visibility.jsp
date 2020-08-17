@@ -78,11 +78,11 @@ contextParams.put("cpDefinitionId", String.valueOf(cpDefinitionId));
 </aui:form>
 
 <aui:script use="liferay-item-selector-dialog">
-	Liferay.on('<portlet:namespace />selectCommerceAccountGroup', function() {
+	Liferay.on('<portlet:namespace />selectCommerceAccountGroup', function () {
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 			eventName: 'accountGroupSelectItem',
 			on: {
-				selectedItemChange: function(event) {
+				selectedItemChange: function (event) {
 					var <portlet:namespace />addCommerceAccountGroupIds = [];
 
 					var selectedItems = event.newVal;
@@ -90,7 +90,7 @@ contextParams.put("cpDefinitionId", String.valueOf(cpDefinitionId));
 					if (selectedItems) {
 						var A = AUI();
 
-						A.Array.each(selectedItems, function(
+						A.Array.each(selectedItems, function (
 							item,
 							index,
 							selectedItems
@@ -108,21 +108,21 @@ contextParams.put("cpDefinitionId", String.valueOf(cpDefinitionId));
 
 						submitForm(form);
 					}
-				}
+				},
 			},
 			title: '<liferay-ui:message key="select-account-group" />',
 			url:
-				'<%= cpDefinitionsDisplayContext.getAccountGroupItemSelectorUrl() %>'
+				'<%= cpDefinitionsDisplayContext.getAccountGroupItemSelectorUrl() %>',
 		});
 
 		itemSelectorDialog.open();
 	});
 
-	Liferay.on('<portlet:namespace />selectCommerceChannel', function() {
+	Liferay.on('<portlet:namespace />selectCommerceChannel', function () {
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 			eventName: 'channelSelectItem',
 			on: {
-				selectedItemChange: function(event) {
+				selectedItemChange: function (event) {
 					var <portlet:namespace />addCommerceChannelIds = [];
 
 					var selectedItems = event.newVal;
@@ -130,7 +130,7 @@ contextParams.put("cpDefinitionId", String.valueOf(cpDefinitionId));
 					if (selectedItems) {
 						var A = AUI();
 
-						A.Array.each(selectedItems, function(
+						A.Array.each(selectedItems, function (
 							item,
 							index,
 							selectedItems
@@ -148,10 +148,10 @@ contextParams.put("cpDefinitionId", String.valueOf(cpDefinitionId));
 
 						submitForm(form);
 					}
-				}
+				},
 			},
 			title: '<liferay-ui:message key="select-channel" />',
-			url: '<%= cpDefinitionsDisplayContext.getChannelItemSelectorUrl() %>'
+			url: '<%= cpDefinitionsDisplayContext.getChannelItemSelectorUrl() %>',
 		});
 
 		itemSelectorDialog.open();

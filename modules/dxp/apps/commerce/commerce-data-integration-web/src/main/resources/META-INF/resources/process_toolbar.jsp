@@ -82,14 +82,26 @@ CommerceDataIntegrationProcessDisplayContext commerceDataIntegrationProcessDispl
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceDataIntegrationProcesses() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-processes" />')) {
+		if (
+			confirm(
+				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-processes" />'
+			)
+		) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-			form.fm('deleteCDataIntegrationProcessIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+			form.fm('deleteCDataIntegrationProcessIds').val(
+				Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				)
+			);
 
-			submitForm(form, '<portlet:actionURL name="editCommerceDataIntegrationProcess" />');
+			submitForm(
+				form,
+				'<portlet:actionURL name="editCommerceDataIntegrationProcess" />'
+			);
 		}
 	}
 </aui:script>

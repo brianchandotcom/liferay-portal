@@ -26,19 +26,20 @@ function DateRenderer(props) {
 		minute: 'numeric',
 		month: 'short',
 		second: 'numeric',
-		year: 'numeric'
+		year: 'numeric',
 	};
 	const formattedDate = new Intl.DateTimeFormat(locale, dateOptions).format(
 		new Date(props.value)
 	);
+
 	return formattedDate;
 }
 
 DateRenderer.propTypes = {
 	options: PropType.shape({
-		format: PropType.object
+		format: PropType.object,
 	}),
-	value: PropType.string.isRequired
+	value: PropType.string.isRequired,
 };
 
 export default DateRenderer;

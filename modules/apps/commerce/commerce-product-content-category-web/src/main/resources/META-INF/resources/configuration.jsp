@@ -70,7 +70,7 @@ CPCategoryContentDisplayContext cpCategoryContentDisplayContext = (CPCategoryCon
 		header:
 			'#<portlet:namespace />assetCategoryContainer .lfr-use-asset-category-header',
 		on: {
-			animatingChange: function(event) {
+			animatingChange: function (event) {
 				var instance = this;
 
 				var expanded = !instance.get('expanded');
@@ -85,13 +85,14 @@ CPCategoryContentDisplayContext cpCategoryContentDisplayContext = (CPCategoryCon
 						'disabled',
 						false
 					);
-				} else {
+				}
+				else {
 					A.one('#<portlet:namespace />preferencesAssetCategoryId').attr(
 						'disabled',
 						true
 					);
 				}
-			}
-		}
+			},
+		},
 	});
 </aui:script>

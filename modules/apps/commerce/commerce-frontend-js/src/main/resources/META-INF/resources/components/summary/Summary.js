@@ -14,7 +14,7 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import PropTypes from 'prop-types';
-import React, {useCallback, useState, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import AJAX from '../../utilities/AJAX/index';
 import {DATASET_DISPLAY_UPDATED} from '../../utilities/eventsDefinitions';
@@ -29,7 +29,7 @@ function SummaryItemDividerVariant() {
 
 const baseItemDefaultProps = {
 	label: PropTypes.string,
-	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 function SummaryItemBase(props) {
@@ -51,10 +51,10 @@ function SummaryItemBigVariant(props) {
 	return (
 		<>
 			<div className="col-6 col-md-9">
-				<h4 className="summary-table-item-big my-2">{props.label}</h4>
+				<h4 className="my-2 summary-table-item-big">{props.label}</h4>
 			</div>
 			<div className="col-6 col-md-3">
-				<h4 className="summary-table-item-big my-2">{props.value}</h4>
+				<h4 className="my-2 summary-table-item-big">{props.value}</h4>
 			</div>
 		</>
 	);
@@ -101,7 +101,7 @@ function SummaryItem(props) {
 }
 
 SummaryItem.propTypes = {
-	style: PropTypes.string
+	style: PropTypes.string,
 };
 
 function Summary({
@@ -115,14 +115,14 @@ function Summary({
 	const [items, updateItems] = useState(props.items);
 
 	const mapDataToLayout = useCallback(
-			data =>
+			(data) =>
 				typeof dataMapper === 'function' ? dataMapper(data) : data,
 			[dataMapper]
 		),
 		refreshData = useCallback(
 			({id = null}) => {
 				if (!id || datasetDisplayId !== id) {
-					return AJAX.GET(apiUrl).then(data =>
+					return AJAX.GET(apiUrl).then((data) =>
 						updateItems(mapDataToLayout(data))
 					);
 				}
@@ -138,6 +138,7 @@ function Summary({
 
 			return () => Liferay.detach(DATASET_DISPLAY_UPDATED, refreshData);
 		}
+
 		return () => {};
 	}, [apiUrl, datasetDisplayId, refreshData]);
 
@@ -170,52 +171,52 @@ Summary.propTypes = {
 	datasetDisplayId: PropTypes.string,
 	isLoading: PropTypes.bool,
 	items: PropTypes.array,
-	summaryData: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
+	summaryData: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };
 
 Summary.defaultProps = {
-	dataMapper: jsonData => {
+	dataMapper: (jsonData) => {
 		return [
 			{
 				label: Liferay.Language.get('subtotal'),
-				value: jsonData.subtotalFormatted
+				value: jsonData.subtotalFormatted,
 			},
 			{
 				label: Liferay.Language.get('line-item-discount'),
-				value: jsonData.subtotalDiscountValueFormatted
+				value: jsonData.subtotalDiscountValueFormatted,
 			},
 			{
 				label: Liferay.Language.get('order-discount'),
-				value: jsonData.totalDiscountValueFormatted
+				value: jsonData.totalDiscountValueFormatted,
 			},
 			{
 				label: Liferay.Language.get('promotion-code'),
-				value: jsonData.couponCode || '--'
+				value: jsonData.couponCode || '--',
 			},
 			{
 				label: Liferay.Language.get('tax'),
-				value: jsonData.taxValueFormatted
+				value: jsonData.taxValueFormatted,
 			},
 			{
 				label: Liferay.Language.get('shipping-and-handling'),
-				value: jsonData.shippingValueFormatted
+				value: jsonData.shippingValueFormatted,
 			},
 			{
 				label: Liferay.Language.get('shipping-and-handling-discount'),
-				value: jsonData.shippingDiscountValueFormatted
+				value: jsonData.shippingDiscountValueFormatted,
 			},
 			{
-				style: 'divider'
+				style: 'divider',
 			},
 			{
 				label: Liferay.Language.get('grand-total'),
 				style: 'big',
-				value: jsonData.totalFormatted
-			}
+				value: jsonData.totalFormatted,
+			},
 		];
 	},
 	isLoading: false,
-	items: []
+	items: [],
 };
 
 export default Summary;

@@ -31,8 +31,8 @@ function LinkRenderer(props) {
 LinkRenderer.propTypes = {
 	value: PropTypes.shape({
 		href: PropTypes.string,
-		label: PropTypes.string
-	})
+		label: PropTypes.string,
+	}),
 };
 
 export default LinkRenderer;

@@ -1,16 +1,24 @@
-import React, { createContext, useReducer } from 'react';
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
 
-import { combineReducers } from 'redux';
+import React, {createContext, useReducer} from 'react';
+import {combineReducers} from 'redux';
 
+import {actions as appActions} from '../actions/app.es';
+import {actions as areaActions} from '../actions/area.es';
 import applyMiddleware from '../middleware/index.es';
-
-import appReducer, { initialState as initialAppState } from '../reducers/app.es';
+import appReducer, {initialState as initialAppState} from '../reducers/app.es';
 import areaReducer, {
-	initialState as initialAreaState
+	initialState as initialAreaState,
 } from '../reducers/area.es';
-
-import { actions as appActions } from '../actions/app.es';
-import { actions as areaActions } from '../actions/area.es';
 
 export const StoreContext = createContext();
 
@@ -18,7 +26,7 @@ export function initializeActions(actions, dispatch) {
 	return Object.keys(actions).reduce(
 		(curriedActions, actionName) => ({
 			...curriedActions,
-			[actionName]: actions[actionName](dispatch)
+			[actionName]: actions[actionName](dispatch),
 		}),
 		{}
 	);
@@ -26,28 +34,22 @@ export function initializeActions(actions, dispatch) {
 
 const reducers = combineReducers({
 	app: appReducer,
-	area: areaReducer
+	area: areaReducer,
 });
 
 export function StoreProvider(props) {
-	const [state, dispatch] = useReducer(
-		reducers,
-		Object.assign(
-			{},
-			{
-				app: initialAppState,
-				area: initialAreaState
-			}
-		)
-	);
+	const [state, dispatch] = useReducer(reducers, {
+		app: initialAppState,
+		area: initialAreaState,
+	});
 
 	const actions = initializeActions(
-		Object.assign({}, appActions, areaActions),
+		{...appActions, ...areaActions},
 		applyMiddleware(dispatch)
 	);
 
 	return (
-		<StoreContext.Provider value={{ state, actions }}>
+		<StoreContext.Provider value={{state, actions}}>
 			{props.children}
 		</StoreContext.Provider>
 	);

@@ -99,11 +99,8 @@
 		transform: translate3d(-50%, 50%, 0);
 		transform-origin: 50%;
 		z-index: 1;
-		transition: 
-			color 0.1s ease-in, 
-			background-color 0.1s ease-in,
-			transform 0.1s ease-in, 
-			opacity 0.1s ease-in;
+		transition: color 0.1s ease-in, background-color 0.1s ease-in,
+			transform 0.1s ease-in, opacity 0.1s ease-in;
 
 		&--placeholder,
 		&--highlighted {
@@ -152,7 +149,7 @@
 		}
 
 		.d-table-cell {
-			padding: 10px 10px;
+			padding: 10px;
 		}
 	}
 
@@ -203,7 +200,7 @@
 		}
 
 		&__close {
-			padding: 0.9375rem 0.9375rem;
+			padding: 0.9375rem;
 			position: absolute;
 			right: 0;
 			top: 0;

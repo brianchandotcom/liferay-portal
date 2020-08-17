@@ -45,15 +45,15 @@ function TooltipTextRenderer({value}) {
 TooltipTextRenderer.defaultProps = {
 	value: {
 		iconSymbol: 'info-circle',
-		text: 'This is a sample text'
-	}
+		text: 'This is a sample text',
+	},
 };
 
 TooltipTextRenderer.propTypes = {
 	value: Proptypes.shape({
 		iconSymbol: Proptypes.string,
-		text: Proptypes.string
-	})
+		text: Proptypes.string,
+	}),
 };
 
 export default TooltipTextRenderer;

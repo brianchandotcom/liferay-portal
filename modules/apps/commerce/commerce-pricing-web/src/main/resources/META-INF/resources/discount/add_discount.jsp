@@ -68,7 +68,7 @@ CommerceDiscount commerceDiscount = commerceDiscountDisplayContext.getCommerceDi
 			Liferay.provide(
 				window,
 				'<portlet:namespace/>apiSubmit',
-				function(form) {
+				function (form) {
 					var commerceDiscountTarget = form.querySelector(
 						'#commerceDiscountTarget'
 					).value;
@@ -84,11 +84,11 @@ CommerceDiscount commerceDiscount = commerceDiscountDisplayContext.getCommerceDi
 							'<%= CommerceDiscountConstants.LIMITATION_TYPE_UNLIMITED %>',
 						target: commerceDiscountTarget,
 						title: title,
-						usePercentage: commerceDiscountType
+						usePercentage: commerceDiscountType,
 					};
 
 					return CommerceDiscountResource.addDiscount(discountData)
-						.then(function(payload) {
+						.then(function (payload) {
 							var redirectURL = new Liferay.PortletURL.createURL(
 								'<%= editDiscountPortletURL.toString() %>'
 							);
@@ -105,11 +105,11 @@ CommerceDiscount commerceDiscount = commerceDiscountDisplayContext.getCommerceDi
 								successNotification: {
 									showSuccessNotification: true,
 									message:
-										'<liferay-ui:message key="your-request-completed-successfully" />'
-								}
+										'<liferay-ui:message key="your-request-completed-successfully" />',
+								},
 							});
 						})
-						.catch(function(error) {
+						.catch(function (error) {
 							return Promise.reject(error);
 						});
 				},

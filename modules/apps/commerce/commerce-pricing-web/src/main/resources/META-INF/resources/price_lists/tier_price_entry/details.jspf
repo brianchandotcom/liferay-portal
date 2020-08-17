@@ -68,7 +68,7 @@ boolean discountDiscovery = BeanParamUtil.getBoolean(commerceTierPriceEntry, req
 
 <c:if test="<%= commercePriceEntry.isBulkPricing() %>">
 	<aui:script use="aui-base">
-		A.one('#<portlet:namespace />overrideDiscount').on('change', function(event) {
+		A.one('#<portlet:namespace />overrideDiscount').on('change', function (event) {
 			if (this.attr('checked')) {
 				A.one('#<portlet:namespace />discountLevels').show();
 
@@ -83,7 +83,8 @@ boolean discountDiscovery = BeanParamUtil.getBoolean(commerceTierPriceEntry, req
 
 				A.one('#<portlet:namespace />discountLevel4').attr('disabled', false);
 				A.one('#<portlet:namespace />discountLevel4').removeClass('disabled');
-			} else {
+			}
+			else {
 				A.one('#<portlet:namespace />discountLevels').hide();
 
 				A.one('#<portlet:namespace />discountLevel1').attr('disabled', true);

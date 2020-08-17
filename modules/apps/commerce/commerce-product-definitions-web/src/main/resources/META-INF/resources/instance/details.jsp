@@ -222,21 +222,21 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 
 		var renderer = Object.values(metalJsForm.refs)[0];
 
-		return Object.values(renderer.refs).map(function(option) {
+		return Object.values(renderer.refs).map(function (option) {
 			return {
 				key: option.fieldName,
-				value: option.value
+				value: option.value,
 			};
 		});
 	}
 
 	Liferay.componentReady(
 		'ProductOptions<%= cpDefinition.getCPDefinitionId() %>'
-	).then(function(ddmForm) {
+	).then(function (ddmForm) {
 		if (!ddmForm.on) {
 			return;
 		}
-		ddmForm.on('fieldEdited', function() {
+		ddmForm.on('fieldEdited', function () {
 			var fieldValues = getMetalJsFormData(ddmForm);
 
 			var form = AUI.$(document.<portlet:namespace />fm);
@@ -256,7 +256,7 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 
 			var fieldValues = [];
 
-			fields.forEach(function(field) {
+			fields.forEach(function (field) {
 				var fieldValue = {};
 
 				fieldValue.key = field.get('fieldName');
@@ -267,7 +267,8 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 
 				if (Array.isArray(value)) {
 					arrValue = value;
-				} else {
+				}
+				else {
 					arrValue.push(value);
 				}
 
@@ -288,7 +289,7 @@ if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
 
 	var publishButton = form.one('#<portlet:namespace />publishButton');
 
-	publishButton.on('click', function() {
+	publishButton.on('click', function () {
 		var workflowActionInput = form.one('#<portlet:namespace />workflowAction');
 
 		if (workflowActionInput) {

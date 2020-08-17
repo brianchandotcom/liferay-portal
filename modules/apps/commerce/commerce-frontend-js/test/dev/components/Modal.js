@@ -23,8 +23,8 @@ import '../../../src/main/resources/META-INF/resources/styles/main.scss';
 const props = {
 	actions: [
 		{
-			definition: 'save'
-		}
+			definition: 'save',
+		},
 	],
 	closeOnSubmit: true,
 	id: 'test-modal-id',
@@ -33,7 +33,7 @@ const props = {
 	spritemap: './assets/icons.svg',
 	submitLabel: 'Create',
 	title: 'Title',
-	url: 'http://localhost:9000/modal-content.html'
+	url: 'http://localhost:9000/modal-content.html',
 };
 
 modalLauncher('modal', 'modal-root', props);

@@ -30,7 +30,7 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 			var headers = new Headers({
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
-				'x-csrf-token': Liferay.authToken
+				'x-csrf-token': Liferay.authToken,
 			});
 
 			var productId = <%= cpDefinition.getCProductId() %>;
@@ -50,27 +50,27 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 								optionId: option.id,
 								required: option.required,
 								skuContributor: option.skuContributor,
-								productOptionValues: []
-							}
+								productOptionValues: [],
+							},
 						]),
 						credentials: 'include',
 						headers: headers,
-						method: 'POST'
+						method: 'POST',
 					}
 				)
-					.then(function(response) {
+					.then(function (response) {
 						if (response.ok) {
 							return response.json();
 						}
 
-						return response.json().then(function(data) {
+						return response.json().then(function (data) {
 							return Promise.reject(data.errorDescription);
 						});
 					})
-					.then(function(e) {
+					.then(function (e) {
 						Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 							id:
-								'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS %>'
+								'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS %>',
 						});
 						return null;
 					});
@@ -78,7 +78,7 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 
 			function addNewItem(name) {
 				var nameDefinition = {
-					[themeDisplay.getLanguageId()]: name
+					[themeDisplay.getLanguageId()]: name,
 				};
 
 				if (themeDisplay.getLanguageId() !== themeDisplay.getDefaultLanguageId()) {
@@ -89,18 +89,18 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 					body: JSON.stringify({
 						fieldType: 'select',
 						key: slugify.default(name),
-						name: nameDefinition
+						name: nameDefinition,
 					}),
 					credentials: 'include',
 					headers: headers,
-					method: 'POST'
+					method: 'POST',
 				})
-					.then(function(response) {
+					.then(function (response) {
 						if (response.ok) {
 							return response.json();
 						}
 
-						return response.json().then(function(data) {
+						return response.json().then(function (data) {
 							return Promise.reject(data.errorDescription);
 						});
 					})
@@ -120,7 +120,7 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 				itemSelectedMessage: '<%= LanguageUtil.get(request, "option-selected") %>',
 				itemsKey: 'id',
 				linkedDatasetsId: [
-					'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS %>'
+					'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS %>',
 				],
 				multiSelectableEntries: true,
 				onItemCreated: addNewItem,
@@ -130,11 +130,11 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 				portletId: '<%= portletDisplay.getRootPortletId() %>',
 				schema: [
 					{
-						fieldName: ['name', 'LANG']
-					}
+						fieldName: ['name', 'LANG'],
+					},
 				],
 				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-				titleLabel: '<%= LanguageUtil.get(request, "add-existing-option") %>'
+				titleLabel: '<%= LanguageUtil.get(request, "add-existing-option") %>',
 			});
 		</aui:script>
 

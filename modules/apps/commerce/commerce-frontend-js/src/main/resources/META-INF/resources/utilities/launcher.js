@@ -12,8 +12,8 @@
  * details.
  */
 
-import ReactDOM from 'react-dom';
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 export default function launcher(
 	Component,
@@ -31,11 +31,11 @@ export default function launcher(
 			{
 				destroy: () => {
 					ReactDOM.unmountComponentAtNode(container);
-				}
+				},
 			},
 			{
 				destroyOnNavigate,
-				portletId
+				portletId,
 			}
 		);
 	}

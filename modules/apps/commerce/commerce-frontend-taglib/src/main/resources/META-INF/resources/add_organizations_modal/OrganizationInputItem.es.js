@@ -24,7 +24,7 @@ class OrganizationInputItem extends Component {
 		e.preventDefault();
 
 		return this.emit('removeItem', {
-			id: this.id
+			id: this.id,
 		});
 	}
 }
@@ -34,7 +34,7 @@ Soy.register(OrganizationInputItem, template);
 OrganizationInputItem.STATE = {
 	id: Config.oneOfType([Config.number(), Config.string()]).required(),
 	name: Config.string().required(),
-	spritemap: Config.string()
+	spritemap: Config.string(),
 };
 
 export {OrganizationInputItem};

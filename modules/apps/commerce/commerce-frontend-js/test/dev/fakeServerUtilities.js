@@ -22,14 +22,14 @@ function defineServerResponses(app) {
 							href: '/view/url',
 							icon: 'view',
 							id: 'view',
-							label: 'View'
+							label: 'View',
 						},
 						{
 							href: '/select/url',
 							icon: 'message-boards',
 							id: 'select',
 							label: 'Select',
-							target: 'modal'
+							target: 'modal',
 						},
 						{
 							href: '/delete/url',
@@ -37,43 +37,43 @@ function defineServerResponses(app) {
 							id: 'delete',
 							label: 'Delete',
 							method: 'delete',
-							target: 'async'
+							target: 'async',
 						},
 						{
 							href: '/edit/url',
 							icon: 'pencil',
 							id: 'edit',
 							label: 'Edit',
-							target: 'sidePanel'
+							target: 'sidePanel',
 						},
 						{
 							icon: 'warning-full',
 							id: 'alert',
 							label: 'Alert',
-							onClick: 'alert("asd")'
-						}
+							onClick: 'alert("asd")',
+						},
 					],
 					id: 'asd',
 					img: {
-						src: '//via.placeholder.com/250x250'
+						src: '//via.placeholder.com/250x250',
 					},
 					name: 'ABS Sensor',
 					price: {
 						final: {
-							value: '12 Gazillions'
-						}
+							value: '12 Gazillions',
+						},
 					},
 					productPage: '/test/link/1',
 					skuId: 7654,
 					testLink: {
 						href: '/test/link/1',
-						label: 'Test 1'
+						label: 'Test 1',
 					},
 					testQuantity: {
 						allowedQuantities: [3, 6, 7, 100],
 						disabled: false,
 						inputName: 'asd-quantity',
-						quantity: 6
+						quantity: 6,
 					},
 					testSubItems: [
 						{
@@ -82,14 +82,14 @@ function defineServerResponses(app) {
 									href: '/view/url',
 									icon: 'view',
 									id: 'view',
-									label: 'View'
+									label: 'View',
 								},
 								{
 									href: '/select/url',
 									icon: 'message-boards',
 									id: 'select',
 									label: 'Select',
-									target: 'modal'
+									target: 'modal',
 								},
 								{
 									href: '/delete/url',
@@ -97,38 +97,38 @@ function defineServerResponses(app) {
 									id: 'delete',
 									label: 'Delete',
 									method: 'delete',
-									target: 'async'
+									target: 'async',
 								},
 								{
 									href: '/edit/url',
 									icon: 'pencil',
 									id: 'edit',
 									label: 'Edit',
-									target: 'sidePanel'
+									target: 'sidePanel',
 								},
 								{
 									icon: 'warning-full',
 									id: 'alert',
 									label: 'Alert',
-									onClick: 'alert("asd")'
-								}
+									onClick: 'alert("asd")',
+								},
 							],
 							id: '111',
 							img: {
-								src: '//via.placeholder.com/250x250'
+								src: '//via.placeholder.com/250x250',
 							},
 							name: 'Sub item 1',
 							price: {
 								final: {
-									value: '12 Gazillions'
-								}
+									value: '12 Gazillions',
+								},
 							},
 							productPage: '/test/link/1',
 							skuId: 35663,
 							testLink: {
 								href: '/test/link/1',
-								label: 'Test 1'
-							}
+								label: 'Test 1',
+							},
 						},
 						{
 							actionItems: [
@@ -136,14 +136,14 @@ function defineServerResponses(app) {
 									href: '/view/url',
 									icon: 'view',
 									id: 'view',
-									label: 'View'
+									label: 'View',
 								},
 								{
 									href: '/select/url',
 									icon: 'message-boards',
 									id: 'select',
 									label: 'Select',
-									target: 'modal'
+									target: 'modal',
 								},
 								{
 									href: '/delete/url',
@@ -151,76 +151,76 @@ function defineServerResponses(app) {
 									id: 'delete',
 									label: 'Delete',
 									method: 'delete',
-									target: 'async'
+									target: 'async',
 								},
 								{
 									href: '/edit/url',
 									icon: 'pencil',
 									id: 'edit',
 									label: 'Edit',
-									target: 'sidePanel'
+									target: 'sidePanel',
 								},
 								{
 									icon: 'warning-full',
 									id: 'alert',
 									label: 'Alert',
-									onClick: 'alert("asd")'
-								}
+									onClick: 'alert("asd")',
+								},
 							],
 							id: '112',
 							img: {
-								src: '//via.placeholder.com/250x250'
+								src: '//via.placeholder.com/250x250',
 							},
 							name: 'Sub item 2',
 							price: {
 								final: {
-									value: '12 Gazillions'
-								}
+									value: '12 Gazillions',
+								},
 							},
 							productPage: '/test/link/1',
 							skuId: 356637,
 							testLink: {
 								href: '/test/link/1',
-								label: 'Test 1'
-							}
+								label: 'Test 1',
+							},
 						},
 						{
 							id: '113',
 							img: {
-								src: '//via.placeholder.com/250x250'
+								src: '//via.placeholder.com/250x250',
 							},
 							name: 'Sub item 3',
 							price: {
 								final: {
-									value: '12 Gazillions'
-								}
+									value: '12 Gazillions',
+								},
 							},
 							productPage: '/test/link/1',
 							skuId: 356638,
 							testLink: {
 								href: '/test/link/1',
-								label: 'Test 1'
-							}
+								label: 'Test 1',
+							},
 						},
 						{
 							id: '114',
 							img: {
-								src: '//via.placeholder.com/250x250'
+								src: '//via.placeholder.com/250x250',
 							},
 							name: 'Sub item 4',
 							price: {
 								final: {
-									value: '12 Gazillions'
-								}
+									value: '12 Gazillions',
+								},
 							},
 							productPage: '/test/link/1',
 							skuId: 3566312,
 							testLink: {
 								href: '/test/link/1',
-								label: 'Test 1'
-							}
-						}
-					]
+								label: 'Test 1',
+							},
+						},
+					],
 				},
 				{
 					actionItems: [
@@ -228,14 +228,14 @@ function defineServerResponses(app) {
 							href: '/view/url',
 							icon: 'view',
 							id: 'view',
-							label: 'View'
+							label: 'View',
 						},
 						{
 							href: '/select/url',
 							icon: 'message-boards',
 							id: 'select',
 							label: 'Select',
-							target: 'modal'
+							target: 'modal',
 						},
 						{
 							href: '/delete/url',
@@ -243,71 +243,71 @@ function defineServerResponses(app) {
 							id: 'delete',
 							label: 'Delete',
 							method: 'delete',
-							target: 'async'
+							target: 'async',
 						},
 						{
 							href: '/edit/url',
 							icon: 'pencil',
 							id: 'edit',
 							label: 'Edit',
-							target: 'sidePanel'
+							target: 'sidePanel',
 						},
 						{
 							icon: 'warning-full',
 							id: 'alert',
 							label: 'Alert',
-							onClick: 'alert("asd")'
-						}
+							onClick: 'alert("asd")',
+						},
 					],
 					id: 'sdf',
 					img: {
-						src: '//via.placeholder.com/500x500'
+						src: '//via.placeholder.com/500x500',
 					},
 					name: 'SBA Sensor',
 					price: {
 						details: [
 							{
 								label: 'Catalog price',
-								value: '$ 15'
+								value: '$ 15',
 							},
 							{
 								label: 'Final price',
-								value: '$ 31.123'
+								value: '$ 31.123',
 							},
 							{
 								label: 'Promo price',
-								value: '$ 15.600'
+								value: '$ 15.600',
 							},
 							{
 								label: 'Discounts',
-								value: [40, 30, 20, 10]
-							}
+								value: [40, 30, 20, 10],
+							},
 						],
 						final: {
 							label: 'Final price',
-							value: '12.000 $'
-						}
+							value: '12.000 $',
+						},
 					},
 					productPage: '/test/link/1',
 					skuId: 345345,
 					testLink: {
 						href: '/test/link/1',
-						label: 'Test 1'
+						label: 'Test 1',
 					},
 					testQuantity: {
 						inputName: 'sdf-quantity',
 						maxQuantity: 1000,
 						minQuantity: 2,
 						multipleQuantity: 2,
-						quantity: 6
+						quantity: 6,
 					},
 					type: {
 						content: 'DOC',
-						displayType: 'danger'
-					}
-				}
+						displayType: 'danger',
+					},
+				},
 			],
-			totalItems: 50
+			totalItems: 50,
 		});
 	});
 
@@ -321,19 +321,19 @@ function defineServerResponses(app) {
 						{
 							label: 'Money Order',
 							name: 'autorizeDotNet',
-							value: false
+							value: false,
 						},
 						{
 							label: 'Money Order',
 							name: 'moneyOrder',
-							value: false
+							value: false,
 						},
 						{
 							label: 'PayPal',
 							name: 'payPal',
-							value: false
-						}
-					]
+							value: false,
+						},
+					],
 				},
 				{
 					countryId: '002',
@@ -342,19 +342,19 @@ function defineServerResponses(app) {
 						{
 							label: 'Money Order',
 							name: 'autorizeDotNet',
-							value: true
+							value: true,
 						},
 						{
 							label: 'Money Order',
 							name: 'moneyOrder',
-							value: false
+							value: false,
 						},
 						{
 							label: 'PayPal',
 							name: 'payPal',
-							value: false
-						}
-					]
+							value: false,
+						},
+					],
 				},
 				{
 					countryId: '003',
@@ -363,19 +363,19 @@ function defineServerResponses(app) {
 						{
 							label: 'Money Order',
 							name: 'autorizeDotNet',
-							value: false
+							value: false,
 						},
 						{
 							label: 'Money Order',
 							name: 'moneyOrder',
-							value: true
+							value: true,
 						},
 						{
 							label: 'PayPal',
 							name: 'payPal',
-							value: false
-						}
-					]
+							value: false,
+						},
+					],
 				},
 				{
 					countryId: '004',
@@ -384,19 +384,19 @@ function defineServerResponses(app) {
 						{
 							label: 'Money Order',
 							name: 'autorizeDotNet',
-							value: false
+							value: false,
 						},
 						{
 							label: 'Money Order',
 							name: 'moneyOrder',
-							value: false
+							value: false,
 						},
 						{
 							label: 'PayPal',
 							name: 'payPal',
-							value: false
-						}
-					]
+							value: false,
+						},
+					],
 				},
 				{
 					countryId: '005',
@@ -405,22 +405,22 @@ function defineServerResponses(app) {
 						{
 							label: 'Money Order',
 							name: 'autorizeDotNet',
-							value: true
+							value: true,
 						},
 						{
 							label: 'Money Order',
 							name: 'moneyOrder',
-							value: false
+							value: false,
 						},
 						{
 							label: 'PayPal',
 							name: 'payPal',
-							value: true
-						}
-					]
-				}
+							value: true,
+						},
+					],
+				},
 			],
-			totalItems: 5
+			totalItems: 5,
 		});
 	});
 
@@ -432,51 +432,51 @@ function defineServerResponses(app) {
 						{
 							href: '/delete/action/url',
 							icon: 'trash',
-							label: 'Delete'
-						}
+							label: 'Delete',
+						},
 					],
 					author: {
 						avatarSrc: 'https://via.placeholder.com/150',
 						email: 'john.doe@gmail.com',
-						name: 'John Doe'
+						name: 'John Doe',
 					},
 					date: '1 day ago',
 					href: '/side-panel/email.html',
 					status: {
 						displayStyle: 'danger',
-						label: 'Order not placed'
+						label: 'Order not placed',
 					},
 					subject:
 						'Mauris blandit aliquet elit, eget tincidunt nibh pulvinar.',
 					summary:
-						'Pellentesque in ipsum id orci porta dapibus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Nulla quis lorem ut libero malesuada feugiat. Pellentesque in ipsum id orci porta dapibus...'
+						'Pellentesque in ipsum id orci porta dapibus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Nulla quis lorem ut libero malesuada feugiat. Pellentesque in ipsum id orci porta dapibus...',
 				},
 				{
 					actionItems: [
 						{
 							href: '/delete/action/url',
 							icon: 'trash',
-							label: 'Delete'
-						}
+							label: 'Delete',
+						},
 					],
 					author: {
 						avatarSrc: 'https://via.placeholder.com/150',
 						email: 'john.doe@gmail.com',
-						name: 'John Doe'
+						name: 'John Doe',
 					},
 					date: '14th April 2018',
 					href: '/side-panel/email.html',
 					status: {
 						displayStyle: 'success',
-						label: 'Order placed'
+						label: 'Order placed',
 					},
 					subject:
 						'Curabitur aliquet quam id dui posuere blandit. Proin eget tortor risus.',
 					summary:
-						'Cras ultricies ligula sed magna dictum porta. Donec rutrum congue leo eget malesuada. Proin eget tortor risus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Quisque velit nisi, pretium ut lacinia in, elementum id enim...'
-				}
+						'Cras ultricies ligula sed magna dictum porta. Donec rutrum congue leo eget malesuada. Proin eget tortor risus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Quisque velit nisi, pretium ut lacinia in, elementum id enim...',
+				},
 			],
-			totalItems: 2
+			totalItems: 2,
 		});
 	});
 
@@ -501,7 +501,7 @@ function defineServerResponses(app) {
 			errorMessage: '',
 			executeStatus: 'INITIAL',
 			id: 110,
-			operation: 'DELETE'
+			operation: 'DELETE',
 		});
 	});
 
@@ -518,7 +518,7 @@ function defineServerResponses(app) {
 				executeStatus: success ? 'COMPLETED' : 'FAILED',
 				id: req.params.id,
 				operation: 'DELETE',
-				startTime: '2020-06-08T15:08:01Z'
+				startTime: '2020-06-08T15:08:01Z',
 			});
 		}
 
@@ -531,11 +531,11 @@ function defineServerResponses(app) {
 			executeStatus: 'STARTED',
 			id: req.params.id,
 			operation: 'DELETE',
-			startTime: '2020-06-08T15:13:34Z'
+			startTime: '2020-06-08T15:13:34Z',
 		});
 	});
 }
 
 module.exports = {
-	defineServerResponses
+	defineServerResponses,
 };

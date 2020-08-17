@@ -19,7 +19,7 @@ function LocalizedFieldRenderer(props) {
 }
 
 LocalizedFieldRenderer.propTypes = {
-	value: PropTypes.string
+	value: PropTypes.string,
 };
 
 export default LocalizedFieldRenderer;

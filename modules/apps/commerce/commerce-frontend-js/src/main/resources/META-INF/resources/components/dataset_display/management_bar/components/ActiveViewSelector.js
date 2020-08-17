@@ -37,7 +37,7 @@ function ActiveViewSelector(props) {
 					<ClayDropDown.Item
 						href="#"
 						key={i}
-						onClick={e => {
+						onClick={(e) => {
 							e.preventDefault();
 							props.setActiveView(i);
 						}}
@@ -57,9 +57,9 @@ ActiveViewSelector.propTypes = {
 	views: PropTypes.arrayOf(
 		PropTypes.shape({
 			icon: PropTypes.string.isRequired,
-			label: PropTypes.string.isRequired
+			label: PropTypes.string.isRequired,
 		})
-	)
+	),
 };
 
 export default ActiveViewSelector;

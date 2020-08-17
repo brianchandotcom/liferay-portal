@@ -19,9 +19,9 @@ import {ClayCheckbox, ClayRadio, ClayToggle} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import PropTypes from 'prop-types';
-import React, {useState, useEffect, useCallback, useRef} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import {getValueFromItem, fetchParams} from '../../../../../utilities/index';
+import {fetchParams, getValueFromItem} from '../../../../../utilities/index';
 import {isValuesArrayChanged} from '../../../utilities/filters';
 
 const DEFAULT_PAGE_SIZE = 10;
@@ -35,13 +35,14 @@ function fetchData(apiUrl, searchParam, currentPage = 1) {
 		}`,
 		{
 			...fetchParams,
-			method: 'GET'
+			method: 'GET',
 		}
-	).then(response => response.json());
+	).then((response) => response.json());
 }
 
 function Item(props) {
 	const Input = props.selectionType === 'single' ? ClayRadio : ClayCheckbox;
+
 	return (
 		<li>
 			<Input
@@ -59,19 +60,22 @@ Item.propTypes = {
 	onChange: PropTypes.func.isRequired,
 	selected: PropTypes.bool.isRequired,
 	selectionType: PropTypes.oneOf(['single', 'multiple']).isRequired,
-	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 const formatValue = (value, exclude) =>
 	(exclude ? `(${Liferay.Language.get('exclude')}) ` : '') +
-	value.map(el => el.label).join(', ');
+	value.map((el) => el.label).join(', ');
 
 function getOdataString(value, key, selectionType, exclude) {
-	if (!value || !value.length) return null;
+	if (!value || !value.length) {
+		return null;
+	}
+
 	return selectionType === 'multiple'
 		? `${key}/any(x:${value
 				.map(
-					v =>
+					(v) =>
 						`(x ${exclude ? 'ne' : 'eq'} ${
 							typeof v.value === 'string'
 								? `'${v.value}'`
@@ -110,7 +114,9 @@ function AutocompleteFilter(props) {
 	}, [props.value]);
 
 	useEffect(() => {
-		if (query === search) return;
+		if (query === search) {
+			return;
+		}
 		setCurrentPage(1);
 		setSearch(query);
 	}, [query, search]);
@@ -118,27 +124,28 @@ function AutocompleteFilter(props) {
 	useEffect(() => {
 		setLoading(true);
 		fetchData(props.apiUrl, search, currentPage)
-			.then(data => {
+			.then((data) => {
 				setLoading(false);
 				if (currentPage === 1) {
 					updateItems(data.items);
-				} else {
-					updateItems(items => [...items, ...data.items]);
+				}
+				else {
+					updateItems((items) => [...items, ...data.items]);
 				}
 				updateTotalItems(data.totalCount);
 			})
-			.catch(e => {
+			.catch((e) => {
 				console.error(e);
 				setLoading(false);
 			});
 	}, [currentPage, props.apiUrl, search]);
 
-	const setScrollingArea = useCallback(node => {
+	const setScrollingArea = useCallback((node) => {
 		scrollingArea.current = node;
 		setScrollingAreaRendered(true);
 	}, []);
 
-	const setInfiniteLoader = useCallback(node => {
+	const setInfiniteLoader = useCallback((node) => {
 		infiniteLoader.current = node;
 		setInfiniteLoaderRendered(true);
 	}, []);
@@ -151,7 +158,7 @@ function AutocompleteFilter(props) {
 		scrollingAreaRendered,
 		infiniteLoaderRendered,
 		loaderVisible,
-		setObserver
+		setObserver,
 	]);
 
 	const setObserver = useCallback(() => {
@@ -159,18 +166,21 @@ function AutocompleteFilter(props) {
 			!scrollingArea.current ||
 			!infiniteLoader.current ||
 			!IntersectionObserver
-		)
+		) {
 			return;
+		}
 
 		const options = {
 			root: scrollingArea.current,
 			rootMargin: '0px',
-			threshold: 1.0
+			threshold: 1.0,
 		};
 
-		const observer = new IntersectionObserver(entries => {
-			if (entries[0].intersectionRatio <= 0) return;
-			setCurrentPage(page => page + 1);
+		const observer = new IntersectionObserver((entries) => {
+			if (entries[0].intersectionRatio <= 0) {
+				return;
+			}
+			setCurrentPage((page) => page + 1);
 		}, options);
 
 		observer.observe(infiniteLoader.current);
@@ -203,24 +213,24 @@ function AutocompleteFilter(props) {
 			<ClayDropDown.Caption>
 				<ClayAutocomplete>
 					<ClayAutocomplete.Input
-						onChange={event => setQuery(event.target.value)}
+						onChange={(event) => setQuery(event.target.value)}
 						placeholder={props.inputPlaceholder}
 					/>
 					{loading && <ClayAutocomplete.LoadingIndicator />}
 				</ClayAutocomplete>
 				{selectedItems.length ? (
-					<div className="selected-elements-wrapper mt-2">
-						{selectedItems.map(selectedItem => (
+					<div className="mt-2 selected-elements-wrapper">
+						{selectedItems.map((selectedItem) => (
 							<ClayLabel
 								closeButtonProps={{
 									onClick: () =>
-										setSelectedItems(items =>
+										setSelectedItems((items) =>
 											items.filter(
-												item =>
+												(item) =>
 													item.value !==
 													selectedItem.value
 											)
-										)
+										),
 								}}
 								key={selectedItem.value}
 							>
@@ -255,7 +265,7 @@ function AutocompleteFilter(props) {
 							className="inline-scroller mb-n2 mx-n2 px-2"
 							ref={setScrollingArea}
 						>
-							{items.map(item => {
+							{items.map((item) => {
 								const itemValue = item[props.itemKey];
 								const itemLabel = getValueFromItem(
 									item,
@@ -263,7 +273,7 @@ function AutocompleteFilter(props) {
 								);
 								const newValue = {
 									label: itemLabel,
-									value: itemValue
+									value: itemValue,
 								};
 
 								return (
@@ -273,10 +283,11 @@ function AutocompleteFilter(props) {
 										onChange={() => {
 											setSelectedItems(
 												selectedItems.find(
-													el => el.value === itemValue
+													(el) =>
+														el.value === itemValue
 												)
 													? selectedItems.filter(
-															el =>
+															(el) =>
 																el.value !==
 																itemValue
 													  )
@@ -284,14 +295,14 @@ function AutocompleteFilter(props) {
 													  'multiple'
 													? [
 															...selectedItems,
-															newValue
+															newValue,
 													  ]
 													: [newValue]
 											);
 										}}
 										selected={Boolean(
 											selectedItems.find(
-												el => el.value === itemValue
+												(el) => el.value === itemValue
 											)
 										)}
 										selectionType={props.selectionType}
@@ -307,7 +318,7 @@ function AutocompleteFilter(props) {
 							)}
 						</ul>
 					) : (
-						<div className="text-muted p-2 mt-2">
+						<div className="mt-2 p-2 text-muted">
 							{Liferay.Language.get('no-items-were-found')}
 						</div>
 					)}
@@ -323,7 +334,7 @@ function AutocompleteFilter(props) {
 									props.id,
 									{
 										exclude,
-										items: selectedItems
+										items: selectedItems,
 									},
 									formatValue(selectedItems, exclude),
 									getOdataString(
@@ -363,16 +374,19 @@ AutocompleteFilter.propTypes = {
 			PropTypes.shape({
 				label: PropTypes.oneOfType([
 					PropTypes.string,
-					PropTypes.number
+					PropTypes.number,
 				]),
-				value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+				value: PropTypes.oneOfType([
+					PropTypes.string,
+					PropTypes.number,
+				]),
 			})
-		)
-	})
+		),
+	}),
 };
 
 AutocompleteFilter.defaultProps = {
-	selectionType: 'multiple'
+	selectionType: 'multiple',
 };
 
 export default AutocompleteFilter;

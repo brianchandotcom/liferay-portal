@@ -24,7 +24,7 @@ class UserInputItem extends Component {
 		evt.preventDefault();
 
 		return this.emit('removeItem', {
-			email: this.email
+			email: this.email,
 		});
 	}
 }
@@ -35,7 +35,7 @@ UserInputItem.STATE = {
 	email: Config.string().required(),
 	name: Config.string(),
 	spritemap: Config.string(),
-	thumbnail: Config.string()
+	thumbnail: Config.string(),
 };
 
 export {UserInputItem};

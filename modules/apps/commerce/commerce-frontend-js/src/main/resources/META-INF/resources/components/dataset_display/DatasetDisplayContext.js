@@ -40,7 +40,7 @@ const DatasetDisplayContext = React.createContext({
 	style: null,
 	updateDatasetItems: () => {},
 	updateSearchParam: () => {},
-	updateSorting: () => {}
+	updateSorting: () => {},
 });
 
 export default DatasetDisplayContext;

@@ -28,20 +28,20 @@ function resolveCartItemsPath(basePath = '', itemId) {
 	return `${basePath}${VERSION}${CART_ITEMS_PATH}/${itemId}`;
 }
 
-export default basePath => ({
+export default (basePath) => ({
 	createItemsByCartId: (cartId, json) =>
 		AJAX.POST(resolveItemsPath(basePath, cartId), json),
 
-	deleteItemById: itemId =>
+	deleteItemById: (itemId) =>
 		AJAX.DELETE(resolveCartItemsPath(basePath, itemId)),
 
-	getItemById: itemId => AJAX.GET(resolveCartItemsPath(basePath, itemId)),
+	getItemById: (itemId) => AJAX.GET(resolveCartItemsPath(basePath, itemId)),
 
-	getItemsByCartId: cartId => AJAX.GET(resolveItemsPath(basePath, cartId)),
+	getItemsByCartId: (cartId) => AJAX.GET(resolveItemsPath(basePath, cartId)),
 
 	replaceItemById: (itemId, json) =>
 		AJAX.PUT(resolveCartItemsPath(basePath, itemId), json),
 
 	updateItemById: (itemId, jsonProps) =>
-		AJAX.PATCH(resolveCartItemsPath(basePath, itemId), jsonProps)
+		AJAX.PATCH(resolveCartItemsPath(basePath, itemId), jsonProps),
 });

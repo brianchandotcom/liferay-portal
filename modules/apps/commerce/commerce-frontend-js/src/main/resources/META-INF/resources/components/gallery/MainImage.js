@@ -25,7 +25,7 @@ export default function MainImage({
 	onPrev,
 	onZoom,
 	src,
-	title
+	title,
 }) {
 	return (
 		<div className="card main-image" onClick={onZoom} style={{background}}>
@@ -49,5 +49,5 @@ MainImage.propTypes = {
 	onPrev: PropTypes.func,
 	onZoom: PropTypes.func,
 	src: PropTypes.string.isRequired,
-	title: PropTypes.string.isRequired
+	title: PropTypes.string.isRequired,
 };

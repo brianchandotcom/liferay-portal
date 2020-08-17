@@ -30,13 +30,13 @@ function showNotification(message, type) {
 				closeable: true,
 				delay: {
 					hide: 5000,
-					show: 0
+					show: 0,
 				},
 				duration: 500,
 				message,
 				render: true,
 				title: '',
-				type
+				type,
 			});
 		});
 	}
@@ -74,10 +74,10 @@ function doSubmit() {
 		body: formData,
 		credentials: 'include',
 		headers: new Headers({'x-csrf-token': Liferay.authToken}),
-		method: 'POST'
+		method: 'POST',
 	})
-		.then(response => response.json())
-		.then(jsonresponse => {
+		.then((response) => response.json())
+		.then((jsonresponse) => {
 			if (jsonresponse.success) {
 				if (jsonresponse.products) {
 					Liferay.fire('refreshCartUsingData', {
@@ -85,13 +85,13 @@ function doSubmit() {
 						orderId: jsonresponse.orderId,
 						products: jsonresponse.products,
 						summary: jsonresponse.summary,
-						valid: jsonresponse.valid
+						valid: jsonresponse.valid,
 					});
 				}
 
 				if (this.orderId !== jsonresponse.orderId) {
 					Liferay.fire('orderChanged', {
-						orderId: jsonresponse.orderId
+						orderId: jsonresponse.orderId,
 					});
 					this.orderId = jsonresponse.orderId;
 				}
@@ -99,21 +99,24 @@ function doSubmit() {
 				this._animateMarker(this.quantity);
 				this.quantity = this.inputQuantity;
 				resetInputQuantity.call(this);
-			} else if (jsonresponse.errorMessages) {
+			}
+			else if (jsonresponse.errorMessages) {
 				showNotification(jsonresponse.errorMessages[0], 'danger');
-			} else {
+			}
+			else {
 				const validatorErrors = jsonresponse.validatorErrors;
 
 				if (validatorErrors) {
-					validatorErrors.forEach(validatorError => {
+					validatorErrors.forEach((validatorError) => {
 						showNotification(validatorError.message, 'danger');
 					});
-				} else {
+				}
+				else {
 					showNotification(jsonresponse.error, 'danger');
 				}
 			}
 		})
-		.catch(_weShouldHandleErrors => {});
+		.catch((_weShouldHandleErrors) => {});
 }
 
 class AddToCartButton extends Component {
@@ -126,7 +129,8 @@ class AddToCartButton extends Component {
 	_animateMarker(prevQuantity) {
 		if (prevQuantity === 0) {
 			this.updatingTransition = 'adding';
-		} else {
+		}
+		else {
 			this.updatingTransition = 'incrementing';
 		}
 
@@ -196,14 +200,17 @@ class AddToCartButton extends Component {
 
 	_handleCurrentProductStatusChange(e) {
 		if (this.id) {
-			if (this.id !== e.addToCartId) return;
+			if (this.id !== e.addToCartId) {
+				return;
+			}
 			if (e.productId) {
 				this.productId = e.productId;
 				this.options = e.options;
 				this.quantity = e.quantity;
 				this.settings = e.settings;
 				this.disabled = false;
-			} else {
+			}
+			else {
 				this.disabled = true;
 			}
 		}
@@ -259,10 +266,10 @@ AddToCartButton.STATE = {
 		allowedQuantity: Config.array(Config.number()),
 		maxQuantity: Config.number(),
 		minQuantity: Config.number(),
-		multipleQuantity: Config.number()
+		multipleQuantity: Config.number(),
 	}).value({}),
 	textContent: Config.string(),
-	updatingTransition: Config.oneOf(['adding', 'incrementing'])
+	updatingTransition: Config.oneOf(['adding', 'incrementing']),
 };
 
 export {AddToCartButton};

@@ -111,18 +111,20 @@ if ((commercePriceList != null) && (commercePriceList.getExpirationDate() != nul
 						initialValue:
 							'<%= (parentCommercePriceList == null) ? 0 : parentCommercePriceList.getCommercePriceListId() %>',
 						inputId: 'parentCommercePriceListId',
-						inputName: '<%= liferayPortletResponse.getNamespace() %>parentCommercePriceListId',
+						inputName:
+							'<%= liferayPortletResponse.getNamespace() %>parentCommercePriceListId',
 						itemsKey: 'id',
 						itemsLabel: 'name',
-						onValueUpdated: function(value, priceListData) {
+						onValueUpdated: function (value, priceListData) {
 							if (value) {
 								$('#<portlet:namespace />parentCommercePriceListId').val(
 									priceListData.id
 								);
-							} else {
+							}
+							else {
 								$('#<portlet:namespace />parentCommercePriceListId').val(0);
 							}
-						}
+						},
 					});
 				</aui:script>
 

@@ -27,6 +27,7 @@ class RoleListItem extends Component {
 			(itemSelected, item) => itemSelected || item.id === this.id,
 			false
 		);
+
 		return this._selected;
 	}
 
@@ -35,7 +36,7 @@ class RoleListItem extends Component {
 
 		return this.emit('toggleItem', {
 			id: this.id,
-			name: this.name
+			name: this.name,
 		});
 	}
 }
@@ -50,9 +51,9 @@ RoleListItem.STATE = {
 	selectedRoles: Config.array(
 		Config.shapeOf({
 			id: Config.oneOfType([Config.number(), Config.string()]),
-			name: Config.string()
+			name: Config.string(),
 		})
-	).value([])
+	).value([]),
 };
 
 export {RoleListItem};

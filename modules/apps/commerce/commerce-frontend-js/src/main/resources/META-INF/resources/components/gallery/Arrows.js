@@ -26,5 +26,5 @@ export default function Arrows({onNext, onPrev}) {
 
 Arrows.propTypes = {
 	onNext: PropTypes.func,
-	onPrev: PropTypes.func
+	onPrev: PropTypes.func,
 };

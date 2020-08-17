@@ -27,13 +27,13 @@ export function showNotification(
 			closeable,
 			delay: {
 				hide: 5000,
-				show: 0
+				show: 0,
 			},
 			duration,
 			message,
 			render: true,
 			title: Liferay.Language.get(type),
-			type
+			type,
 		});
 	});
 }

@@ -18,7 +18,7 @@ import * as v1 from './v1.0/index';
 const BASE_ENDPOINT = '/o/headless-commerce-admin-catalog/';
 
 const APIs = {
-	v1
+	v1,
 };
 
-export default version => composeAPI(version, APIs, BASE_ENDPOINT);
+export default (version) => composeAPI(version, APIs, BASE_ENDPOINT);

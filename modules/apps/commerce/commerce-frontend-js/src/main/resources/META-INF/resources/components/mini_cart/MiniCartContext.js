@@ -25,7 +25,7 @@ const MiniCartContext = React.createContext({
 	setIsUpdating: () => {},
 	spritemap: '',
 	updateCartModel: () => {},
-	updateCartState: () => {}
+	updateCartState: () => {},
 });
 
 export default MiniCartContext;

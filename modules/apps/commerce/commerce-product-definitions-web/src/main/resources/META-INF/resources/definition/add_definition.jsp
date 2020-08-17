@@ -35,7 +35,7 @@
 		var <portlet:namespace/>defaultLanguageId = null;
 		var <portlet:namespace/>productData = {
 			active: true,
-			productType: '<%= ParamUtil.getString(request, "productTypeName") %>'
+			productType: '<%= ParamUtil.getString(request, "productTypeName") %>',
 		};
 
 		const AdminCatalogResource = ServiceProvider.default.AdminCatalogAPI('v1');
@@ -43,7 +43,7 @@
 		Liferay.provide(
 			window,
 			'<portlet:namespace/>apiSubmit',
-			function() {
+			function () {
 				ModalUtils.isSubmitting();
 
 				const formattedData = Object.assign(
@@ -54,13 +54,13 @@
 						name: {
 							[<portlet:namespace/>defaultLanguageId]: document.getElementById(
 								'<portlet:namespace/>name'
-							).value
-						}
+							).value,
+						},
 					}
 				);
 
 				AdminCatalogResource.createProduct(formattedData)
-					.then(function(cpDefinition) {
+					.then(function (cpDefinition) {
 						const redirectURL = new Liferay.PortletURL.createURL(
 							'<%= editProductDefinitionURL %>'
 						);
@@ -85,14 +85,14 @@
 			inputName: '<%= liferayPortletResponse.getNamespace() %>catalogId',
 			itemsKey: 'id',
 			itemsLabel: 'name',
-			onValueUpdated: function(value, catalogData) {
+			onValueUpdated: function (value, catalogData) {
 				if (value) {
 					<portlet:namespace/>productData.catalogId = catalogData.id;
 					<portlet:namespace/>defaultLanguageId =
 						catalogData.defaultLanguageId;
 				}
 			},
-			required: true
+			required: true,
 		});
 	</aui:script>
 </commerce-ui:modal-content>

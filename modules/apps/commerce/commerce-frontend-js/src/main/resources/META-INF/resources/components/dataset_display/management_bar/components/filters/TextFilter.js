@@ -42,13 +42,13 @@ function TextFilter(props) {
 					<div className="input-group">
 						<div
 							className={classNames('input-group-item', {
-								'input-group-prepend': props.inputText
+								'input-group-prepend': props.inputText,
 							})}
 						>
 							<input
 								aria-label={props.label}
 								className="form-control"
-								onChange={e => setValue(e.target.value)}
+								onChange={(e) => setValue(e.target.value)}
 								type="text"
 								value={value || ''}
 							/>
@@ -94,7 +94,7 @@ TextFilter.propTypes = {
 	invisible: PropTypes.bool,
 	label: PropTypes.string.isRequired,
 	type: PropTypes.oneOf(['text']).isRequired,
-	value: PropTypes.string
+	value: PropTypes.string,
 };
 
 export default TextFilter;

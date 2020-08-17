@@ -14,7 +14,7 @@
 
 AUI.add(
 	'liferay-commerce-frontend-asset-tag-selector',
-	A => {
+	(A) => {
 		var Lang = A.Lang;
 
 		var AArray = A.Array;
@@ -45,7 +45,7 @@ AUI.add(
 			'{',
 			'|',
 			'}',
-			'~'
+			'~',
 		]);
 
 		var TPL_DUPLICATE_ALERT =
@@ -65,15 +65,15 @@ AUI.add(
 		var AssetTaglibTagsSelector = A.Component.create({
 			ATTRS: {
 				allowAddEntry: {
-					value: true
+					value: true,
 				},
 
 				allowAnyEntry: {
-					value: true
+					value: true,
 				},
 
 				autoHighlight: {
-					value: false
+					value: false,
 				},
 
 				dataSource: {
@@ -81,20 +81,20 @@ AUI.add(
 						var instance = this;
 
 						return instance._getTagsDataSource();
-					}
+					},
 				},
 
 				eventName: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				groupIds: {
 					setter: '_setGroupIds',
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				guid: {
-					value: ''
+					value: '',
 				},
 
 				hiddenInput: {
@@ -102,25 +102,25 @@ AUI.add(
 						var instance = this;
 
 						return A.one(value + instance.get('guid'));
-					}
+					},
 				},
 
 				matchKey: {
-					value: 'value'
+					value: 'value',
 				},
 
 				maxLength: {
-					value: 75
+					value: 75,
 				},
 
 				portletURL: {
-					validator: Lang.isString
+					validator: Lang.isString,
 				},
 
 				schema: {
 					value: {
-						resultFields: ['text', 'value']
-					}
+						resultFields: ['text', 'value'],
+					},
 				},
 
 				tagNames: {
@@ -131,8 +131,8 @@ AUI.add(
 
 						return value;
 					},
-					value: ''
-				}
+					value: '',
+				},
 			},
 
 			EXTENDS: A.TextboxList,
@@ -151,10 +151,11 @@ AUI.add(
 						if (text.indexOf(',') > -1) {
 							var items = text.split(',');
 
-							items.forEach(item => {
+							items.forEach((item) => {
 								instance.entries.add(item, {});
 							});
-						} else {
+						}
+						else {
 							instance.entries.add(text, {});
 						}
 					}
@@ -195,7 +196,7 @@ AUI.add(
 					var message = Lang.sub(TPL_DUPLICATE_ALERT, {
 						duplicate: Liferay.Language.get('duplicate'),
 						tag: Liferay.Language.get('tag'),
-						tagName: tag
+						tagName: tag,
 					});
 
 					instance._showError(message);
@@ -218,7 +219,7 @@ AUI.add(
 								'please-enter-no-more-than-x-characters'
 							),
 							[maxLength]
-						)
+						),
 					});
 
 					instance._showError(message);
@@ -256,18 +257,18 @@ AUI.add(
 										groupIds: instance.get('groupIds'),
 										name: '%' + term + '%',
 										start: 0,
-										tagProperties: ''
+										tagProperties: '',
 									};
 
 									serviceQueryCache[key] = serviceQueryObj;
 								}
 
 								event.request = serviceQueryObj;
-							}
+							},
 						},
-						source: AssetTagSearch
+						source: AssetTagSearch,
 					}).plug(A.Plugin.DataSourceCache, {
-						max: 500
+						max: 500,
 					});
 
 					return dataSource;
@@ -291,7 +292,8 @@ AUI.add(
 							event.preventDefault();
 
 							instance._addEntries();
-						} else if (
+						}
+						else if (
 							MAP_INVALID_CHARACTERS[
 								String.fromCharCode(charCode)
 							]
@@ -326,9 +328,9 @@ AUI.add(
 						buttonGroup.unshift({
 							label: Liferay.Language.get('select'),
 							on: {
-								click: A.bind('_showSelectPopup', instance)
+								click: A.bind('_showSelectPopup', instance),
 							},
-							title: Liferay.Language.get('select-tags')
+							title: Liferay.Language.get('select-tags'),
 						});
 					}
 
@@ -336,14 +338,14 @@ AUI.add(
 						buttonGroup.unshift({
 							label: Liferay.Language.get('add'),
 							on: {
-								click: A.bind('_onAddEntryClick', instance)
+								click: A.bind('_onAddEntryClick', instance),
 							},
-							title: Liferay.Language.get('add-tags')
+							title: Liferay.Language.get('add-tags'),
 						});
 					}
 
 					instance.icons = new A.Toolbar({
-						children: [buttonGroup]
+						children: [buttonGroup],
 					}).render(contentBox);
 
 					var iconsBoundingBox = instance.icons.get('boundingBox');
@@ -387,7 +389,7 @@ AUI.add(
 					var uri = Lang.sub(
 						decodeURIComponent(instance.get('portletURL')),
 						{
-							selectedTagNames: instance.entries.keys.join()
+							selectedTagNames: instance.entries.keys.join(),
 						}
 					);
 
@@ -398,22 +400,22 @@ AUI.add(
 								var selectedItem = event.newVal;
 
 								if (selectedItem) {
-									instance.entries.each(item => {
+									instance.entries.each((item) => {
 										instance.entries.remove(item);
 									});
 
 									AArray.each(
 										selectedItem.items.split(','),
-										value => {
+										(value) => {
 											instance.add(value);
 										}
 									);
 								}
-							}
+							},
 						},
 						'strings.add': Liferay.Language.get('done'),
 						title: Liferay.Language.get('tags'),
-						url: uri
+						url: uri,
 					});
 
 					itemSelectorDialog.open();
@@ -492,8 +494,8 @@ AUI.add(
 					var tagNames = instance.get('tagNames');
 
 					tagNames.forEach(instance.add, instance);
-				}
-			}
+				},
+			},
 		});
 
 		Liferay.AssetTaglibTagsSelector = AssetTaglibTagsSelector;
@@ -507,7 +509,7 @@ AUI.add(
 			'aui-textboxlist-deprecated',
 			'datasource-cache',
 			'liferay-item-selector-dialog',
-			'liferay-service-datasource'
-		]
+			'liferay-service-datasource',
+		],
 	}
 );

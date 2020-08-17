@@ -54,16 +54,28 @@ CommerceDataIntegrationProcessLogDisplayContext commerceDataIntegrationProcessLo
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceDataIntegrationProcessLogs() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-logs" />')) {
+		if (
+			confirm(
+				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-logs" />'
+			)
+		) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');
 
 			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
 			form.fm('redirect').val('<%= currentURL %>');
-			form.fm('deleteCDataIntegrationProcessLogIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+			form.fm('deleteCDataIntegrationProcessLogIds').val(
+				Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				)
+			);
 
-			submitForm(form, '<portlet:actionURL name="editCommerceDataIntegrationProcessLog" />');
+			submitForm(
+				form,
+				'<portlet:actionURL name="editCommerceDataIntegrationProcessLog" />'
+			);
 		}
 	}
 </aui:script>

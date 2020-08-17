@@ -26,6 +26,4 @@ export {default as priceListAccountGroupAPI} from './PriceListAccountGroup';
 export {default as priceListChannelAPI} from './PriceListChannel';
 export {default as priceModifierCategoryAPI} from './PriceModifierCategory';
 export {default as priceModifierProductAPI} from './PriceModifierProduct';
-export {
-	default as priceModifierProductGroupAPI
-} from './PriceModifierProductGroup';
+export {default as priceModifierProductGroupAPI} from './PriceModifierProductGroup';

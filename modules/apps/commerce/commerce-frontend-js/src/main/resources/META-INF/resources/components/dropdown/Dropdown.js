@@ -35,7 +35,7 @@ function Dropdown(props) {
 				id: dropdownSupportModalId,
 				size: resolveModalSize(target),
 				title,
-				url
+				url,
 			});
 		}
 
@@ -70,21 +70,23 @@ function Dropdown(props) {
 						const dropdownProps =
 							item.target === 'modal' || item.onClick
 								? {
-										onClick: e => {
+										onClick: (e) => {
 											e.preventDefault();
 											setActive(false);
+
 											return handleAction({
 												onClick: item.onClick,
 												target: item.target,
 												title: item.title,
-												url: item.href
+												url: item.href,
 											});
-										}
+										},
 								  }
 								: {
 										'data-senna-off': true,
-										href: item.href
+										href: item.href,
 								  };
+
 						return (
 							<ClayDropDown.Item key={i} {...dropdownProps}>
 								{item.icon && (
@@ -112,10 +114,10 @@ Dropdown.propTypes = {
 			icon: PropTypes.string,
 			label: PropTypes.string.isRequired,
 			order: PropTypes.number,
-			target: PropTypes.oneOf(['link', 'modal'])
+			target: PropTypes.oneOf(['link', 'modal']),
 		})
 	),
-	spritemap: PropTypes.string.isRequired
+	spritemap: PropTypes.string.isRequired,
 };
 
 export default Dropdown;

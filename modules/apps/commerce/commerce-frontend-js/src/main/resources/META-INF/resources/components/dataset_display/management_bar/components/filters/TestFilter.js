@@ -31,13 +31,13 @@ function TestFilter(props) {
 				<div className="input-group">
 					<div
 						className={classNames('input-group-item', {
-							'input-group-prepend': props.inputText
+							'input-group-prepend': props.inputText,
 						})}
 					>
 						<input
 							aria-label={props.label}
 							className="form-control"
-							onChange={e => setValue(e.target.value)}
+							onChange={(e) => setValue(e.target.value)}
 							type="text"
 							value={value || ''}
 						/>
@@ -76,7 +76,7 @@ TestFilter.propTypes = {
 	id: PropTypes.string.isRequired,
 	invisible: PropTypes.bool,
 	label: PropTypes.string.isRequired,
-	value: PropTypes.string
+	value: PropTypes.string,
 };
 
 export default TestFilter;

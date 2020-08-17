@@ -29,15 +29,15 @@ NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
 </div>
 
 <aui:script require='<%= npmResolver.resolveModuleName("commerce-bom-web/js/index.es") + " as CarPartsFinder" %>'>
-	CarPartsFinder.default(
-		'partFinder',
-		'<%= carPartsFinderRootElementId %>',
-		{
-			basename: window.location.pathname,
-			basePathUrl: '<%= PortalUtil.getGroupFriendlyURL(layout.getLayoutSet(), themeDisplay, locale) %>',
-			areasEndpoint: '<%= PortalUtil.getPortalURL(request) + "/o/commerce-bom/1.0/areas" %>',
-			foldersEndpoint: '<%= PortalUtil.getPortalURL(request) + "/o/commerce-bom/1.0/folders" %>',
-			spritemap: '<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>'
-		}
-	);
+	CarPartsFinder.default('partFinder', '<%= carPartsFinderRootElementId %>', {
+		basename: window.location.pathname,
+		basePathUrl:
+			'<%= PortalUtil.getGroupFriendlyURL(layout.getLayoutSet(), themeDisplay, locale) %>',
+		areasEndpoint:
+			'<%= PortalUtil.getPortalURL(request) + "/o/commerce-bom/1.0/areas" %>',
+		foldersEndpoint:
+			'<%= PortalUtil.getPortalURL(request) + "/o/commerce-bom/1.0/folders" %>',
+		spritemap:
+			'<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>',
+	});
 </aui:script>

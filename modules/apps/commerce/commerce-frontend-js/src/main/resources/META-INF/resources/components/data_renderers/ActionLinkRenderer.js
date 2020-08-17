@@ -29,7 +29,7 @@ function ActionLinkRenderer(props) {
 		executeAsyncItemAction,
 		highlightItems,
 		openModal,
-		openSidePanel
+		openSidePanel,
 	} = useContext(DatasetDisplayContext);
 
 	if (!props.actions || !props.actions.length) {
@@ -38,7 +38,9 @@ function ActionLinkRenderer(props) {
 
 	let currentAction =
 		props.options && props.options.actionId
-			? props.actions.find(action => action.id === props.options.actionId)
+			? props.actions.find(
+					(action) => action.id === props.options.actionId
+			  )
 			: props.actions[0];
 
 	if (!currentAction) {
@@ -50,10 +52,11 @@ function ActionLinkRenderer(props) {
 			if (currentAction.target === 'headless') {
 				currentAction = {
 					...currentAction,
-					...props.itemData.actions[currentAction.id]
+					...props.itemData.actions[currentAction.id],
 				};
 			}
-		} else {
+		}
+		else {
 			return props.value ? <DefaultContent value={props.value} /> : null;
 		}
 	}
@@ -69,7 +72,7 @@ function ActionLinkRenderer(props) {
 			openModal({
 				size: currentAction.size || 'lg',
 				title: currentAction.title,
-				url: formattedHref
+				url: formattedHref,
 			});
 		}
 
@@ -78,7 +81,7 @@ function ActionLinkRenderer(props) {
 			openSidePanel({
 				size: currentAction.size || 'lg',
 				title: currentAction.title,
-				url: formattedHref
+				url: formattedHref,
 			});
 		}
 
@@ -140,17 +143,17 @@ ActionLinkRenderer.propTypes = {
 				'sidePanel',
 				'link',
 				'async',
-				'headless'
+				'headless',
 			]),
-			title: PropTypes.string
+			title: PropTypes.string,
 		})
 	),
 	itemData: PropTypes.object,
 	itemId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	options: PropTypes.shape({
-		actionId: PropTypes.string
+		actionId: PropTypes.string,
 	}),
-	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default ActionLinkRenderer;

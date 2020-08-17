@@ -16,19 +16,16 @@ window.Liferay = {
 	Language: {
 		get(v) {
 			const charZero = v.charAt(0).toUpperCase(),
-				rest = v
-					.substring(1, v.length)
-					.split('-')
-					.join(' ');
+				rest = v.substring(1, v.length).split('-').join(' ');
 
 			return `${charZero}${rest}`;
-		}
+		},
 	},
 	ThemeDisplay: {
 		getCanonicalURL: () => '/',
 		getDefaultLanguageId: () => 'en_US',
 		getLanguageId: () => 'it_IT',
-		getPathThemeImages: () => '/assets'
+		getPathThemeImages: () => '/assets',
 	},
 	component: () => {},
 	detach: (name, fn) => {
@@ -38,7 +35,7 @@ window.Liferay = {
 		var e = document.createEvent('CustomEvent');
 		e.initCustomEvent(name);
 		if (payload) {
-			Object.keys(payload).forEach(key => {
+			Object.keys(payload).forEach((key) => {
 				e[key] = payload[key];
 			});
 		}
@@ -50,6 +47,6 @@ window.Liferay = {
 	staticEnvHeaders: new Headers({
 		Accept: 'application/json',
 		Authorization: `Basic ${window.btoa('test@liferay.com:test')}`,
-		'Content-Type': 'application/json'
-	})
+		'Content-Type': 'application/json',
+	}),
 };

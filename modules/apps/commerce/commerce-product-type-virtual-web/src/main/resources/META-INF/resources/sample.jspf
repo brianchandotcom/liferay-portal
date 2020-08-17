@@ -67,13 +67,13 @@
 		'#<portlet:namespace />sampleFileEntryNameInput'
 	);
 
-	$('#<portlet:namespace />selectSampleFile').on('click', function(event) {
+	$('#<portlet:namespace />selectSampleFile').on('click', function (event) {
 		event.preventDefault();
 
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 			eventName: 'uploadCPDefinitionVirtualSetting',
 			on: {
-				selectedItemChange: function(event) {
+				selectedItemChange: function (event) {
 					var selectedItem = event.newVal;
 
 					if (selectedItem) {
@@ -93,17 +93,17 @@
 
 						sampleFileEntryNameInput.html('<a>' + value.title + '</a>');
 					}
-				}
+				},
 			},
 			title: '<liferay-ui:message key="select-file" />',
 			url:
-				'<%= cpDefinitionVirtualSettingDisplayContext.getFileEntryItemSelectorURL() %>'
+				'<%= cpDefinitionVirtualSettingDisplayContext.getFileEntryItemSelectorURL() %>',
 		});
 
 		itemSelectorDialog.open();
 	});
 
-	$('#<portlet:namespace />sampleFileEntryRemove').on('click', function(event) {
+	$('#<portlet:namespace />sampleFileEntryRemove').on('click', function (event) {
 		event.preventDefault();
 
 		var useSampleCheckbox = A.one('#<portlet:namespace />useSample');
@@ -123,10 +123,10 @@
 </aui:script>
 
 <aui:script>
-	AUI().ready('node', 'event', function(A) {
+	AUI().ready('node', 'event', function (A) {
 		selectSampleFileType(A);
 
-		A.one('#<portlet:namespace />useSample').on('click', function(b) {
+		A.one('#<portlet:namespace />useSample').on('click', function (b) {
 			selectSampleFileType(A);
 		});
 	});
@@ -144,7 +144,8 @@
 				isSampleFileSelected
 			);
 			A.one('#<portlet:namespace />selectSampleFile').attr('disabled', false);
-		} else {
+		}
+		else {
 			A.one('#<portlet:namespace />sampleUrl').attr('disabled', true);
 			A.one('#<portlet:namespace />selectSampleFile').attr('disabled', true);
 		}

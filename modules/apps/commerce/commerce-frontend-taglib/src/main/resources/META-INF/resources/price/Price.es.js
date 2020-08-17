@@ -44,8 +44,8 @@ Price.STATE = {
 		discountPercentages: Config.array().value(null),
 		finalPrice: Config.string(),
 		price: Config.string().required(),
-		promoPrice: Config.string()
-	})
+		promoPrice: Config.string(),
+	}),
 };
 
 Soy.register(Price, template);

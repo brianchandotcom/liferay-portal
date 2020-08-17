@@ -69,7 +69,7 @@ ItemInfoView.propTypes = {
 	childItems: PropTypes.array,
 	name: PropTypes.string.isRequired,
 	options: PropTypes.string,
-	sku: PropTypes.string.isRequired
+	sku: PropTypes.string.isRequired,
 };
 
 export default ItemInfoView;

@@ -26,12 +26,12 @@ const props = {
 		'photo-1503328427499-d92d1ac3d174',
 		'photo-1505740420928-5e560c06d30e',
 		'photo-1526434426615-1abe81efcb0b',
-		'photo-1518131672697-613becd4fab5'
-	].map(img => ({
+		'photo-1518131672697-613becd4fab5',
+	].map((img) => ({
 		thumbnailUrl: getImgUrl(img, 100),
 		title: img,
-		url: getImgUrl(img, 800)
-	}))
+		url: getImgUrl(img, 800),
+	})),
 };
 
 launcher('galleryId', 'gallery-root-id', props);

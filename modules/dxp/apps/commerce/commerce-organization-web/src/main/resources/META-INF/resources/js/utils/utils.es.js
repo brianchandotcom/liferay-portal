@@ -1,13 +1,31 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
+
 import w from './window.es';
 
 function serializeParams(params) {
-	return Object.keys(params).map(
-		key =>
-			`${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
-	).join('&');
+	return Object.keys(params)
+		.map(
+			(key) =>
+				`${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
+		)
+		.join('&');
 }
 
-export function endpointBuilder({baseURL, id = '0', path = '', queryParams = {}}) {
+export function endpointBuilder({
+	baseURL,
+	id = '0',
+	path = '',
+	queryParams = {},
+}) {
 	if (!baseURL) {
 		throw new Error('No API baseURL provided.');
 	}
@@ -24,18 +42,15 @@ export function endpointBuilder({baseURL, id = '0', path = '', queryParams = {}}
 
 export function callApi(parameters) {
 	return fetch(endpointBuilder(parameters))
-		.then(response => response.json())
-		.catch(e => {
-
-		});
+		.then((response) => response.json())
+		.catch((e) => {});
 }
 
-export const noop = () => {
-};
+export const noop = () => {};
 
-export const isNumber = value => typeof value === 'number';
+export const isNumber = (value) => typeof value === 'number';
 
-export const isArray = value => value instanceof Array;
+export const isArray = (value) => Array.isArray(value);
 
 export function truncateTextNode() {
 	let text = this.innerHTML;
@@ -69,23 +84,29 @@ function isInRange(value, lower, upper) {
 export function getColorHue(prevHue) {
 	const hue = Math.random() * 360;
 
-	return !prevHue ?
-		hue : isInRange(hue, (prevHue - 2), (prevHue + 3)) ?
-			((hue + 15) > 360) ? hue - 15 : hue + 15 : hue;
+	return !prevHue
+		? hue
+		: isInRange(hue, prevHue - 2, prevHue + 3)
+		? hue + 15 > 360
+			? hue - 15
+			: hue + 15
+		: hue;
 }
 
 export function setupDataset(data) {
-	const sanitizedData = Object.assign({}, data);
+	const sanitizedData = {...data};
 
 	sanitizedData.organizations.length &&
-	sanitizedData.organizations.forEach(
-		(orgObject, index) => {
+		sanitizedData.organizations.forEach((orgObject, index) => {
 			delete orgObject.organizations;
 
-			const prevColor = index ?
-				sanitizedData.organizations[index - 1] : null;
+			const prevColor = index
+				? sanitizedData.organizations[index - 1]
+				: null;
 
-			orgObject.colorIdentifier = `hsl(${getColorHue(prevColor)},75%,75%)`;
+			orgObject.colorIdentifier = `hsl(${getColorHue(
+				prevColor
+			)},75%,75%)`;
 		});
 
 	return sanitizedData;
@@ -97,6 +118,7 @@ export function getLocalizedText(string) {
 	}
 	catch (error) {
 		console.log(error);
+
 		return string;
 	}
 }

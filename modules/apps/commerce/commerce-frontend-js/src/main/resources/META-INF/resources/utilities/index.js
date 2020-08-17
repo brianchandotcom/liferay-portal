@@ -23,14 +23,15 @@ export function getData(apiUrl, query) {
 
 	return fetch(url, {
 		...fetchParams,
-		method: 'GET'
-	}).then(data => data.json());
+		method: 'GET',
+	}).then((data) => data.json());
 }
 
 export function liferayNavigate(url) {
 	if (Liferay.SPA) {
 		Liferay.SPA.app.navigate(url);
-	} else {
+	}
+	else {
 		window.location.href = url;
 	}
 }
@@ -47,30 +48,34 @@ export function getValueFromItem(item, fieldName) {
 					acc[Liferay.ThemeDisplay.getDefaultLanguageId()]
 				);
 			}
+
 			return acc[key];
 		}, item);
 	}
+
 	return item[fieldName];
 }
 
 export function excludeFromList(matchingList, againstList) {
 	const matcher = JSON.stringify(matchingList);
 
-	return againstList.filter(item => !matcher.includes(JSON.stringify(item)));
+	return againstList.filter(
+		(item) => !matcher.includes(JSON.stringify(item))
+	);
 }
 
 export function executeAsyncAction(url, method = 'GET', body = null) {
 	return fetch(url, {
 		...fetchParams,
 		body,
-		method
+		method,
 	});
 }
 
 export function formatActionUrl(url, item) {
 	var regex = new RegExp('{(.*?)}', 'mg');
 
-	var replacedUrl = url.replace(regex, matched =>
+	var replacedUrl = url.replace(regex, (matched) =>
 		getValueFromItem(
 			item,
 			matched.substring(1, matched.length - 1).split('.')
@@ -79,7 +84,7 @@ export function formatActionUrl(url, item) {
 
 	regex = new RegExp('(%7B.*?%7D)', 'mg');
 
-	replacedUrl = replacedUrl.replace(regex, matched =>
+	replacedUrl = replacedUrl.replace(regex, (matched) =>
 		getValueFromItem(
 			item,
 			matched.substring(3, matched.length - 3).split('.')
@@ -90,9 +95,7 @@ export function formatActionUrl(url, item) {
 }
 
 export function getRandomId() {
-	return Math.random()
-		.toString(36)
-		.substr(2, 9);
+	return Math.random().toString(36).substr(2, 9);
 }
 
 export function getAcceptLanguageHeaderParam() {
@@ -110,19 +113,21 @@ export const fetchHeaders = new Headers({
 	Accept: 'application/json',
 	'Accept-Language': getAcceptLanguageHeaderParam(),
 	'Content-Type': 'application/json',
-	'x-csrf-token': Liferay.authToken
+	'x-csrf-token': Liferay.authToken,
 });
 
 export const fetchParams = {
 	credentials: 'include',
-	headers: Liferay.staticEnvHeaders || fetchHeaders
+	headers: Liferay.staticEnvHeaders || fetchHeaders,
 };
 
 export function createSortingString(values) {
-	if (!values.length) return null;
+	if (!values.length) {
+		return null;
+	}
 
 	return values
-		.map(value => {
+		.map((value) => {
 			return `${
 				Array.isArray(value.fieldName)
 					? value.fieldName[0]
@@ -173,14 +178,15 @@ export function loadData(
 	const searchParam = searchQuery ? `&search=${searchQuery}` : '';
 	const sortingParam = sorting.length
 		? `&sort=${sorting
-				.map(item => `${item.key}:${item.direction}`)
+				.map((item) => `${item.key}:${item.direction}`)
 				.join(',')}`
 		: ``;
 
 	const regex = new RegExp('[?|&]filter=(.*)[&.+]?', 'mg');
 
-	formattedUrl = formattedUrl.replace(regex, matched => {
+	formattedUrl = formattedUrl.replace(regex, (matched) => {
 		providedFilters = matched.replace(/[?|&]filter=/, '');
+
 		return '';
 	});
 
@@ -190,7 +196,7 @@ export function loadData(
 		formattedUrl.indexOf('?') > -1 ? '&' : '?'
 	}${authParam}${currentUrlParam}${pageSizeParam}${pageParam}${sortingParam}${searchParam}${filtersParam}`;
 
-	return executeAsyncAction(url, 'GET').then(response => response.json());
+	return executeAsyncAction(url, 'GET').then((response) => response.json());
 }
 
 export function serializeParameters(parameters) {
@@ -205,25 +211,26 @@ export function sortByKey(items, keyName) {
 					...data,
 					sorted: {
 						...data.sorted,
-						[item[keyName]]: item
-					}
+						[item[keyName]]: item,
+					},
 				};
-			} else {
+			}
+			else {
 				return {
 					...data,
-					unsortable: data.unsortable.concat(item)
+					unsortable: data.unsortable.concat(item),
 				};
 			}
 		},
 		{
 			sorted: {},
-			unsortable: []
+			unsortable: [],
 		}
 	);
 
 	const sortedItems = [
 		...Object.values(arrangedItems.sorted),
-		...arrangedItems.unsortable
+		...arrangedItems.unsortable,
 	];
 
 	return sortedItems;

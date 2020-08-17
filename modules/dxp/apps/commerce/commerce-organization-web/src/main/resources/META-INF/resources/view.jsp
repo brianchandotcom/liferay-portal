@@ -102,9 +102,11 @@ wrapperCssClass = viewMode + " " + wrapperCssClass;
 				{
 					assetsPath: '<%= PortalUtil.getPathContext(request) + "/assets" %>',
 					namespace: '<portlet:namespace/>',
-					spritemap: '<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>',
+					spritemap:
+						'<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>',
 					imagesPath: '<%= themeDisplay.getPathThemeImages() %>',
-					apiURL : '<%= PortalUtil.getPortalURL(request) + "/o/commerce-organization" %>'
+					apiURL:
+						'<%= PortalUtil.getPortalURL(request) + "/o/commerce-organization" %>',
 				}
 			);
 		</aui:script>
@@ -129,52 +131,64 @@ wrapperCssClass = viewMode + " " + wrapperCssClass;
 		Liferay.provide(
 			window,
 			'handleAddOrganizationButtonClick',
-			function(event) {
+			function (event) {
 				event.preventDefault();
 
-				var organizationId = event.detail && event.detail.organizationId ? event.detail.organizationId : 0;
-				var command = event.detail && event.detail.action ? event.detail.action : 'add';
-				var portletURL = new Liferay.PortletURL.createURL('<%= editCommerceOrganizationActionURL %>');
+				var organizationId =
+					event.detail && event.detail.organizationId
+						? event.detail.organizationId
+						: 0;
+				var command =
+					event.detail && event.detail.action ? event.detail.action : 'add';
+				var portletURL = new Liferay.PortletURL.createURL(
+					'<%= editCommerceOrganizationActionURL %>'
+				);
 
 				portletURL.setParameter('cmd', command);
 				portletURL.setParameter('organizationId', organizationId);
 
-				modalCommands.openSimpleInputModal(
-					{
-						dialogTitle: '<liferay-ui:message key="add-organization" />',
-						formSubmitURL: portletURL.toString(),
-						mainFieldLabel: '<liferay-ui:message key="name" />',
-						mainFieldName: 'name',
-						mainFieldPlaceholder: '<liferay-ui:message key="name" />',
-						namespace: '<portlet:namespace />',
-						spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-					}
-				);
-		}, ['liferay-portlet-url'])
+				modalCommands.openSimpleInputModal({
+					dialogTitle: '<liferay-ui:message key="add-organization" />',
+					formSubmitURL: portletURL.toString(),
+					mainFieldLabel: '<liferay-ui:message key="name" />',
+					mainFieldName: 'name',
+					mainFieldPlaceholder: '<liferay-ui:message key="name" />',
+					namespace: '<portlet:namespace />',
+					spritemap:
+						'<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
+				});
+			},
+			['liferay-portlet-url']
+		);
 
 		function handleDestroyPortlet() {
-			addOrganizationButton.removeEventListener('click', handleAddOrganizationButtonClick);
+			addOrganizationButton.removeEventListener(
+				'click',
+				handleAddOrganizationButtonClick
+			);
 
 			Liferay.detach('destroyPortlet', handleDestroyPortlet);
 		}
 
-		var addOrganizationButton = document.getElementById('<portlet:namespace />addOrganizationButton');
+		var addOrganizationButton = document.getElementById(
+			'<portlet:namespace />addOrganizationButton'
+		);
 
-		addOrganizationButton.addEventListener('click', handleAddOrganizationButtonClick);
+		addOrganizationButton.addEventListener(
+			'click',
+			handleAddOrganizationButtonClick
+		);
 
 		Liferay.on('destroyPortlet', handleDestroyPortlet);
 	</aui:script>
 
 	<aui:script>
-		Liferay.provide(
-			window,
-			'deleteCommerceOrganization',
-			function(id) {
-				document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value = '<%= Constants.DELETE %>';
-				document.querySelector('#<portlet:namespace />organizationId').value = id;
+		Liferay.provide(window, 'deleteCommerceOrganization', function (id) {
+			document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value =
+				'<%= Constants.DELETE %>';
+			document.querySelector('#<portlet:namespace />organizationId').value = id;
 
-				submitForm(document.<portlet:namespace />organizationFm);
-			}
-		);
+			submitForm(document.<portlet:namespace />organizationFm);
+		});
 	</aui:script>
 </c:if>

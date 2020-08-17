@@ -26,7 +26,7 @@ launcher('autocomplete', 'autocomplete-root', {
 	itemsLabel: 'externalReferenceCode',
 	onUpdate: (value, itemData) =>
 		// eslint-disable-next-line no-console
-		console.log(`Value: ${value}`, `Data: ${JSON.stringify(itemData)}`)
+		console.log(`Value: ${value}`, `Data: ${JSON.stringify(itemData)}`),
 });
 
 launcher('autocomplete-2', 'autocomplete-root-2', {
@@ -41,5 +41,5 @@ launcher('autocomplete-2', 'autocomplete-root-2', {
 	itemsLabel: 'externalReferenceCode',
 	onUpdate: (value, itemData) =>
 		// eslint-disable-next-line no-console
-		console.log(`Value: ${value}`, `Data: ${JSON.stringify(itemData)}`)
+		console.log(`Value: ${value}`, `Data: ${JSON.stringify(itemData)}`),
 });

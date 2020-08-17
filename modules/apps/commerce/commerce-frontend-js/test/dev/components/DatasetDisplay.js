@@ -27,21 +27,21 @@ const fluidDataSetDisplayProps = {
 			href: '/side-panel/edit.html',
 			icon: 'plus',
 			label: 'Add',
-			target: 'sidePanel'
+			target: 'sidePanel',
 		},
 		{
 			href: '/delete',
 			icon: 'trash',
 			label: 'Delete',
-			method: 'delete'
-		}
+			method: 'delete',
+		},
 	],
 	creationMenuItems: [
 		{
 			href: 'modal/url',
 			label: 'Add',
-			target: 'modal'
-		}
+			target: 'modal',
+		},
 	],
 	filters: [
 		{
@@ -52,7 +52,7 @@ const fluidDataSetDisplayProps = {
 			min: 20,
 			operator: 'eq',
 			type: 'number',
-			value: 123
+			value: 123,
 		},
 		{
 			id: 'order-date',
@@ -60,12 +60,12 @@ const fluidDataSetDisplayProps = {
 			max: {
 				day: 2,
 				month: 9,
-				year: 2026
+				year: 2026,
 			},
 			min: {
 				day: 14,
 				month: 6,
-				year: 2020
+				year: 2020,
 			},
 			placeholder: 'dd/mm/yyyy',
 			type: 'dateRange',
@@ -73,15 +73,15 @@ const fluidDataSetDisplayProps = {
 				from: {
 					day: 18,
 					month: 7,
-					year: 2020
+					year: 2020,
 				},
 				to: {
 					day: 18,
 					month: 7,
-					year: 2025
-				}
-			}
-		}
+					year: 2025,
+				},
+			},
+		},
 	],
 	id: 'tableTest',
 	nestedItemsKey: 'skuId',
@@ -90,29 +90,29 @@ const fluidDataSetDisplayProps = {
 	pagination: {
 		deltas: [
 			{
-				label: 5
+				label: 5,
 			},
 			{
-				label: 10
+				label: 10,
 			},
 			{
-				label: 20
+				label: 20,
 			},
 			{
-				label: 30
+				label: 30,
 			},
 			{
-				label: 50
+				label: 50,
 			},
 			{
 				href:
 					'http://localhost:8080/group/test-1/pending-orders?p_p_id=com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&_com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet_delta=75',
-				label: 75
-			}
+				label: 75,
+			},
 		],
 		initialDelta: 10,
 		initialPageNumber: 1,
-		initialTotalItems: 40
+		initialTotalItems: 40,
 	},
 	showPagination: true,
 	sidePanelId: 'sidePanelTestId',
@@ -129,19 +129,19 @@ const fluidDataSetDisplayProps = {
 				imgProps: 'img',
 				labels: 'status',
 				stickerProps: 'type',
-				title: 'skuId'
-			}
+				title: 'skuId',
+			},
 		},
 		{
-			component: props => {
+			component: (props) => {
 				return (
 					<>
-						<h4 className="p-3 mb-0 bg-dark text-center text-white">
+						<h4 className="bg-dark mb-0 p-3 text-center text-white">
 							Hey, I&apos;m a custom template from the outside
 						</h4>
-						{props.items.map(item => (
+						{props.items.map((item) => (
 							<div
-								className="p-3 text-center bg-white"
+								className="bg-white p-3 text-center"
 								key={item.skuId}
 							>
 								<strong className="mr-3">{item.skuId}</strong>
@@ -154,7 +154,7 @@ const fluidDataSetDisplayProps = {
 			icon: 'merge',
 			id: 'custom-table',
 			label: "Hey you don't know me",
-			schema: {}
+			schema: {},
 		},
 		{
 			contentRenderer: 'table',
@@ -165,44 +165,44 @@ const fluidDataSetDisplayProps = {
 					{
 						contentRenderer: 'image',
 						fieldName: 'img',
-						label: ''
+						label: '',
 					},
 					{
 						contentRenderer: 'actionLink',
 						fieldName: 'name',
 						label: 'Name',
-						sortable: true
+						sortable: true,
 					},
 					{
 						actionId: 'edit',
-						contentRenderer: 'actionLink'
+						contentRenderer: 'actionLink',
 					},
 					{
 						actionId: 'delete',
-						contentRenderer: 'actionLink'
+						contentRenderer: 'actionLink',
 					},
 					{
 						actionId: 'alert',
-						contentRenderer: 'actionLink'
+						contentRenderer: 'actionLink',
 					},
 					{
 						actionId: 'select',
-						contentRenderer: 'actionLink'
+						contentRenderer: 'actionLink',
 					},
 					{
 						contentRenderer: 'tooltipPrice',
 						fieldName: 'price',
-						label: 'Price'
+						label: 'Price',
 					},
 					{
 						contentRenderer: 'quantitySelector',
 						fieldName: 'testQuantity',
-						label: 'Qt. Selector'
-					}
-				]
-			}
-		}
-	]
+						label: 'Qt. Selector',
+					},
+				],
+			},
+		},
+	],
 };
 
 const emailsDataSetDisplayProps = {
@@ -210,40 +210,40 @@ const emailsDataSetDisplayProps = {
 	creationMenuItems: [
 		{
 			href: '/standard/edit',
-			label: 'Add'
+			label: 'Add',
 		},
 		{
 			href: 'modal/url',
 			label: 'Add via modal',
-			target: 'modal'
-		}
+			target: 'modal',
+		},
 	],
 	id: 'emailsDatasetDIsplay',
 	pageSize: 5,
 	pagination: {
 		deltas: [
 			{
-				label: 5
+				label: 5,
 			},
 			{
-				label: 10
+				label: 10,
 			},
 			{
-				label: 20
+				label: 20,
 			},
 			{
-				label: 30
+				label: 30,
 			},
 			{
-				label: 50
+				label: 50,
 			},
 			{
 				href:
 					'http://localhost:8080/group/test-1/pending-orders?p_p_id=com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&_com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet_delta=75',
-				label: 75
-			}
+				label: 75,
+			},
 		],
-		initialDelta: 10
+		initialDelta: 10,
 	},
 	showPagination: true,
 	sidePanelId: 'sidePanelTestId',
@@ -253,9 +253,9 @@ const emailsDataSetDisplayProps = {
 		{
 			contentRenderer: 'emailsList',
 			icon: 'email',
-			label: 'Email'
-		}
-	]
+			label: 'Email',
+		},
+	],
 };
 
 const selectableTableProps = {
@@ -266,27 +266,27 @@ const selectableTableProps = {
 	pagination: {
 		deltas: [
 			{
-				label: 5
+				label: 5,
 			},
 			{
-				label: 10
+				label: 10,
 			},
 			{
-				label: 20
+				label: 20,
 			},
 			{
-				label: 30
+				label: 30,
 			},
 			{
-				label: 50
+				label: 50,
 			},
 			{
 				href:
 					'http://localhost:8080/group/test-1/pending-orders?p_p_id=com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&_com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet_delta=75',
-				label: 75
-			}
+				label: 75,
+			},
 		],
-		initialDelta: 10
+		initialDelta: 10,
 	},
 	selectedItemsKey: 'countryId',
 	showPagination: true,
@@ -299,10 +299,10 @@ const selectableTableProps = {
 			label: 'Table',
 			schema: {
 				firstColumnLabel: 'Country',
-				firstColumnName: 'countryName'
-			}
-		}
-	]
+				firstColumnName: 'countryName',
+			},
+		},
+	],
 };
 
 const today = new Date();
@@ -318,15 +318,15 @@ const ordersDataSetDisplayProps = {
 			icon: 'trash',
 			label: 'Delete',
 			method: 'delete',
-			target: 'async'
-		}
+			target: 'async',
+		},
 	],
 	creationMenuItems: [
 		{
 			href: 'modal/url',
 			label: 'Add',
-			target: 'modal'
-		}
+			target: 'modal',
+		},
 	],
 	filters: [
 		{
@@ -337,7 +337,7 @@ const ordersDataSetDisplayProps = {
 			itemLabel: 'name',
 			label: 'Account',
 			selectionType: 'single',
-			type: 'autocomplete'
+			type: 'autocomplete',
 		},
 		{
 			apiUrl: '/o/headless-commerce-admin-channel/v1.0/channels',
@@ -347,7 +347,7 @@ const ordersDataSetDisplayProps = {
 			itemLabel: 'name',
 			label: 'Channel',
 			selectionType: 'single',
-			type: 'autocomplete'
+			type: 'autocomplete',
 		},
 		{
 			id: 'createDate',
@@ -355,32 +355,32 @@ const ordersDataSetDisplayProps = {
 			max: {
 				day: today.getDate(),
 				month: today.getMonth() + 1,
-				year: today.getFullYear()
+				year: today.getFullYear(),
 			},
 			min: {
 				day: today.getDate(),
 				month: today.getMonth() + 1,
-				year: today.getFullYear() - 1
+				year: today.getFullYear() - 1,
 			},
 			placeholder: 'dd/mm/yyyy',
-			type: 'dateRange'
+			type: 'dateRange',
 		},
 		{
 			id: 'orderStatus',
 			items: [
 				{
 					label: 'Completed',
-					value: 1
+					value: 1,
 				},
 				{
 					label: 'Not-completed',
-					value: 999
-				}
+					value: 999,
+				},
 			],
 			label: 'Status',
 			operator: 'eq',
-			type: 'radio'
-		}
+			type: 'radio',
+		},
 	],
 	id: 'tableTest',
 	itemsActions: [
@@ -388,7 +388,7 @@ const ordersDataSetDisplayProps = {
 			href: '/view/{id}',
 			icon: 'view',
 			id: 'view',
-			label: 'View'
+			label: 'View',
 		},
 		{
 			href: '/o/headless-commerce-admin-order/v1.0/orders/{id}',
@@ -396,34 +396,34 @@ const ordersDataSetDisplayProps = {
 			id: 'delete',
 			label: 'Delete',
 			method: 'delete',
-			target: 'async'
-		}
+			target: 'async',
+		},
 	],
 	pageSize: 5,
 	pagination: {
 		deltas: [
 			{
-				label: 5
+				label: 5,
 			},
 			{
-				label: 10
+				label: 10,
 			},
 			{
-				label: 20
+				label: 20,
 			},
 			{
-				label: 30
+				label: 30,
 			},
 			{
-				label: 50
+				label: 50,
 			},
 			{
 				href:
 					'http://localhost:8080/group/test-1/pending-orders?p_p_id=com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&_com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet_delta=75',
-				label: 75
-			}
+				label: 75,
+			},
 		],
-		initialDelta: 10
+		initialDelta: 10,
 	},
 	selectedItemsKey: 'id',
 	showPagination: true,
@@ -431,8 +431,8 @@ const ordersDataSetDisplayProps = {
 	sorting: [
 		{
 			direction: 'desc',
-			key: 'createDate'
-		}
+			key: 'createDate',
+		},
 	],
 	spritemap: './assets/icons.svg',
 	views: [
@@ -446,46 +446,46 @@ const ordersDataSetDisplayProps = {
 						actionId: 'view',
 						contentRenderer: 'actionLink',
 						fieldName: 'id',
-						label: 'order-id'
+						label: 'order-id',
 					},
 					{
 						fieldName: ['account', 'name'],
-						label: 'account'
+						label: 'account',
 					},
 					{
 						fieldName: ['channel', 'name'],
-						label: 'channel'
+						label: 'channel',
 					},
 					{
 						fieldName: 'totalFormatted',
-						label: 'amount'
+						label: 'amount',
 					},
 					{
 						contentRenderer: 'date',
 						fieldName: 'createDate',
 						label: 'Creation Date',
-						sortable: true
+						sortable: true,
 					},
 					{
 						contentRenderer: 'date',
 						fieldName: 'modifiedDate',
 						label: 'Modification Date',
-						sortable: true
+						sortable: true,
 					},
 					{
 						contentRenderer: 'status',
 						fieldName: 'orderStatusInfo',
-						label: 'Status'
+						label: 'Status',
 					},
 					{
 						contentRenderer: 'status',
 						fieldName: 'workflowStatusInfo',
-						label: 'Workflow Status'
-					}
-				]
-			}
-		}
-	]
+						label: 'Workflow Status',
+					},
+				],
+			},
+		},
+	],
 };
 
 const productsDataSetDisplayProps = {
@@ -496,21 +496,21 @@ const productsDataSetDisplayProps = {
 			href: '/delete',
 			icon: 'trash',
 			label: 'Delete',
-			method: 'delete'
-		}
+			method: 'delete',
+		},
 	],
 	creationMenuItems: [
 		{
 			href: 'modal/url',
 			label: 'Add Product',
-			target: 'modal'
-		}
+			target: 'modal',
+		},
 	],
 	filters: [
 		{
 			id: 'blbl',
 			label: 'Custom Filter',
-			moduleUrl: '/blblasd/asd/basdkj'
+			moduleUrl: '/blblasd/asd/basdkj',
 		},
 		{
 			id: 'createDate',
@@ -518,15 +518,15 @@ const productsDataSetDisplayProps = {
 			max: {
 				day: today.getDate(),
 				month: today.getMonth() + 1,
-				year: today.getFullYear()
+				year: today.getFullYear(),
 			},
 			min: {
 				day: today.getDate(),
 				month: today.getMonth() + 1,
-				year: today.getFullYear() - 10
+				year: today.getFullYear() - 10,
 			},
 			placeholder: 'dd/mm/yyyy',
-			type: 'dateRange'
+			type: 'dateRange',
 		},
 		{
 			apiUrl:
@@ -536,7 +536,7 @@ const productsDataSetDisplayProps = {
 			itemKey: 'id',
 			itemLabel: 'name',
 			label: 'Category',
-			type: 'autocomplete'
+			type: 'autocomplete',
 		},
 		{
 			apiUrl: '/o/headless-commerce-admin-catalog/v1.0/catalogs',
@@ -546,24 +546,24 @@ const productsDataSetDisplayProps = {
 			itemLabel: 'name',
 			label: 'Catalog',
 			selectionType: 'single',
-			type: 'autocomplete'
+			type: 'autocomplete',
 		},
 		{
 			id: 'productType',
 			items: [
 				{
 					label: 'Simple',
-					value: 'simple'
+					value: 'simple',
 				},
 				{
 					label: 'Multiple',
-					value: 'multiple'
-				}
+					value: 'multiple',
+				},
 			],
 			label: 'Product Type',
 			operator: 'eq',
-			type: 'radio'
-		}
+			type: 'radio',
+		},
 	],
 	id: 'tableTest',
 	itemsActions: [
@@ -572,7 +572,7 @@ const productsDataSetDisplayProps = {
 			icon: 'view',
 			id: 'view',
 			label: 'View',
-			permissionKey: 'get'
+			permissionKey: 'get',
 		},
 		{
 			href:
@@ -582,34 +582,34 @@ const productsDataSetDisplayProps = {
 			label: 'Delete',
 			method: 'delete',
 			permissionKey: 'delete',
-			target: 'async'
-		}
+			target: 'async',
+		},
 	],
 	pageSize: 5,
 	pagination: {
 		deltas: [
 			{
-				label: 5
+				label: 5,
 			},
 			{
-				label: 10
+				label: 10,
 			},
 			{
-				label: 20
+				label: 20,
 			},
 			{
-				label: 30
+				label: 30,
 			},
 			{
-				label: 50
+				label: 50,
 			},
 			{
 				href:
 					'http://localhost:8080/group/test-1/pending-orders?p_p_id=com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&_com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet_delta=75',
-				label: 75
-			}
+				label: 75,
+			},
 		],
-		initialDelta: 10
+		initialDelta: 10,
 	},
 	selectedItemsKey: 'id',
 	showPagination: true,
@@ -617,8 +617,8 @@ const productsDataSetDisplayProps = {
 	sorting: [
 		{
 			direction: 'desc',
-			key: 'modifiedDate'
-		}
+			key: 'modifiedDate',
+		},
 	],
 	spritemap: './assets/icons.svg',
 	views: [
@@ -631,56 +631,56 @@ const productsDataSetDisplayProps = {
 					{
 						contentRenderer: 'image',
 						fieldName: 'thumbnail',
-						labelKey: ['name', 'LANG']
+						labelKey: ['name', 'LANG'],
 					},
 					{
 						actionId: 'view',
 						contentRenderer: 'actionLink',
 						fieldName: ['name', 'LANG'],
 						label: 'Name',
-						sortable: true
+						sortable: true,
 					},
 					{
 						fieldName: 'productType',
-						label: 'Product Type'
+						label: 'Product Type',
 					},
 					{
 						contentRenderer: 'list',
 						fieldName: 'skus',
 						label: 'Sku',
 						labelKey: 'sku',
-						multipleItemsLabel: 'Multiple-skus'
+						multipleItemsLabel: 'Multiple-skus',
 					},
 					{
 						fieldName: ['catalog', 'name'],
-						label: 'Catalog'
+						label: 'Catalog',
 					},
 					{
 						contentRenderer: 'date',
 						fieldName: 'createDate',
 						label: 'Created Date',
-						sortable: true
+						sortable: true,
 					},
 					{
 						contentRenderer: 'date',
 						fieldName: 'modifiedDate',
 						label: 'Modified Date',
-						sortable: true
+						sortable: true,
 					},
 					{
 						contentRenderer: 'status',
 						fieldName: 'workflowStatusInfo',
-						label: 'Status'
+						label: 'Status',
 					},
 					{
 						contentRenderer: 'boolean',
 						fieldName: 'active',
-						label: 'Active'
-					}
-				]
-			}
-		}
-	]
+						label: 'Active',
+					},
+				],
+			},
+		},
+	],
 };
 
 datasetDisplayLauncher(
@@ -720,20 +720,20 @@ sidePanelLauncher('sidePanel', 'side-panel-root', {
 		{
 			href: '/side-panel/comments.html',
 			icon: 'comments',
-			slug: 'comments'
+			slug: 'comments',
 		},
 		{
 			href: '/side-panel/edit.html',
 			icon: 'pencil',
-			slug: 'edit'
+			slug: 'edit',
 		},
 		{
 			href: '/side-panel/changelog.html',
 			icon: 'restore',
-			slug: 'changelog'
-		}
+			slug: 'changelog',
+		},
 	],
 	size: 'md',
 	spritemap: './assets/icons.svg',
-	topAnchorSelector: '.top-anchor'
+	topAnchorSelector: '.top-anchor',
 });

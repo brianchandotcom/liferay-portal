@@ -73,6 +73,6 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 
 <aui:script use="aui-tabview">
 	new A.TabView({
-		srcNode: '#<portlet:namespace/>configuration-tabs'
+		srcNode: '#<portlet:namespace/>configuration-tabs',
 	}).render();
 </aui:script>

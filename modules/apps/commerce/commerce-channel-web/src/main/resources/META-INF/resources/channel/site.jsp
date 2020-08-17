@@ -111,17 +111,18 @@ if (commerceChannel != null) {
 </aui:form>
 
 <aui:script use="aui-base,liferay-item-selector-dialog">
-	$('#<portlet:namespace />selectSite').on('click', function(event) {
+	$('#<portlet:namespace />selectSite').on('click', function (event) {
 		event.preventDefault();
 
 		Liferay.Util.selectEntity({
 			dialog: {
 				constrain: true,
-				modal: true
+				modal: true,
 			},
 			eventName: 'sitesSelectItem',
 			title: '<liferay-ui:message arguments="site" key="select-x" />',
-			uri: '<%= siteCommerceChannelTypeDisplayContext.getItemSelectorUrl() %>'
+			uri:
+				'<%= siteCommerceChannelTypeDisplayContext.getItemSelectorUrl() %>',
 		});
 	});
 </aui:script>
@@ -135,7 +136,7 @@ if (commerceChannel != null) {
 
 	searchContainerContentBox.delegate(
 		'click',
-		function(event) {
+		function (event) {
 			var link = event.currentTarget;
 
 			var rowId = link.attr('data-rowId');
@@ -149,7 +150,7 @@ if (commerceChannel != null) {
 		'.modify-link'
 	);
 
-	var sitesSelectItemHandle = Liferay.on('sitesSelectItem', function(event) {
+	var sitesSelectItemHandle = Liferay.on('sitesSelectItem', function (event) {
 		var item = event.data;
 
 		if (item) {
@@ -184,7 +185,7 @@ if (commerceChannel != null) {
 		}
 	});
 
-	Liferay.on('beforeNavigate', function(event) {
+	Liferay.on('beforeNavigate', function (event) {
 		sitesSelectItemHandle.detach();
 	});
 </aui:script>

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ClayRadio, ClayCheckbox} from '@clayui/form';
+import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import ClayList from '@clayui/list';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -25,7 +25,7 @@ function List(props) {
 		selectItems,
 		selectedItemsKey,
 		selectedItemsValue,
-		selectionType
+		selectionType,
 	} = useContext(props.datasetDisplayContext);
 
 	return (
@@ -44,7 +44,7 @@ function List(props) {
 						{selectionType === 'single' ? (
 							<ClayRadio
 								checked={selectedItemsValue
-									.map(el => String(el))
+									.map((el) => String(el))
 									.includes(String(item[selectedItemsKey]))}
 								onChange={() =>
 									selectItems(item[selectedItemsKey])
@@ -53,7 +53,7 @@ function List(props) {
 						) : (
 							<ClayCheckbox
 								checked={selectedItemsValue
-									.map(el => String(el))
+									.map((el) => String(el))
 									.includes(String(item[selectedItemsKey]))}
 								onChange={() =>
 									selectItems(item[selectedItemsKey])
@@ -94,19 +94,19 @@ List.propTypes = {
 	items: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-				.isRequired
+				.isRequired,
 		})
 	),
 	schema: PropTypes.shape({
 		description: PropTypes.string,
 		selectedItemValue: PropTypes.string,
 		thumbnail: PropTypes.string,
-		title: PropTypes.string
-	})
+		title: PropTypes.string,
+	}),
 };
 
 List.defaultTypes = {
-	activeItemValue: ''
+	activeItemValue: '',
 };
 
 export default List;

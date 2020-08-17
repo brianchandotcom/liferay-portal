@@ -18,6 +18,7 @@ function BooleanRenderer(props) {
 	if (typeof props.value !== 'boolean') {
 		return null;
 	}
+
 	return props.value
 		? props.options.trueLabel || Liferay.Language.get('yes')
 		: props.options.falseLabel || Liferay.Language.get('no');
@@ -26,9 +27,9 @@ function BooleanRenderer(props) {
 BooleanRenderer.propTypes = {
 	options: PropTypes.shape({
 		falseLabel: PropTypes.string,
-		trueLabel: PropTypes.string
+		trueLabel: PropTypes.string,
 	}),
-	value: PropTypes.bool
+	value: PropTypes.bool,
 };
 
 export default BooleanRenderer;

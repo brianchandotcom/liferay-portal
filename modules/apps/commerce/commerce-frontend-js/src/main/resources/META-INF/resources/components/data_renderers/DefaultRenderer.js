@@ -44,16 +44,16 @@ DefaultRenderer.propTypes = {
 		PropTypes.string,
 		PropTypes.number,
 		PropTypes.shape({
-			label: PropTypes.string
+			label: PropTypes.string,
 		}),
 		PropTypes.shape({
-			icon: PropTypes.string
+			icon: PropTypes.string,
 		}),
 		PropTypes.shape({
 			iconSymbol: PropTypes.string,
-			text: PropTypes.string
-		})
-	])
+			text: PropTypes.string,
+		}),
+	]),
 };
 
 export default DefaultRenderer;

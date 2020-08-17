@@ -32,12 +32,12 @@ LabelRenderer.propTypes = {
 				'info',
 				'secondary',
 				'warning',
-				'danger'
+				'danger',
 			]),
-			label: PropTypes.string
+			label: PropTypes.string,
 		}),
-		PropTypes.string
-	])
+		PropTypes.string,
+	]),
 };
 
 export default LabelRenderer;

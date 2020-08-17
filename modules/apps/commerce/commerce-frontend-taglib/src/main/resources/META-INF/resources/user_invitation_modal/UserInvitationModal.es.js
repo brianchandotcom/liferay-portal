@@ -54,6 +54,7 @@ class UserInvitationModal extends Component {
 
 	syncQuery() {
 		this._loading = true;
+
 		return this._debouncedFetchUser();
 	}
 
@@ -63,25 +64,29 @@ class UserInvitationModal extends Component {
 			this.addedUsers = [
 				...this.addedUsers,
 				{
-					email: this.query
-				}
+					email: this.query,
+				},
 			];
 			this.query = '';
 		}
+
 		return this.query;
 	}
 
 	_handleInputBox(evt) {
 		if (evt.keyCode === 8 && !this.query.length) {
 			this.addedUsers = this.addedUsers.slice(0, -1);
-		} else {
+		}
+		else {
 			this.query = evt.target.value;
 		}
+
 		return evt;
 	}
 
 	_handleInputName(evt) {
 		this.accountName = evt.target.value;
+
 		return evt;
 	}
 
@@ -98,7 +103,7 @@ class UserInvitationModal extends Component {
 
 		this.addedUsers = userAlreadyAdded
 			? this.addedUsers.filter(
-					user => user.email !== userToBeToggled.email
+					(user) => user.email !== userToBeToggled.email
 			  )
 			: [...this.addedUsers, userToBeToggled];
 
@@ -117,13 +122,14 @@ class UserInvitationModal extends Component {
 			{
 				credentials: 'include',
 				headers: new Headers({'x-csrf-token': Liferay.authToken}),
-				method: 'GET'
+				method: 'GET',
 			}
 		)
-			.then(response => response.json())
-			.then(response => {
+			.then((response) => response.json())
+			.then((response) => {
 				this._loading = false;
 				this.users = response.users;
+
 				return this.users;
 			});
 	}
@@ -132,21 +138,25 @@ class UserInvitationModal extends Component {
 		if (this.addedUsers.length) {
 			this.emit('inviteUserToAccount', this.addedUsers);
 		}
+
 		return this.addedUsers;
 	}
 
 	toggle() {
 		this._modalVisible = !this._modalVisible;
+
 		return this._modalVisible;
 	}
 
 	open() {
 		this._modalVisible = true;
+
 		return this._modalVisible;
 	}
 
 	close() {
 		this._modalVisible = false;
+
 		return this._modalVisible;
 	}
 }
@@ -157,21 +167,17 @@ const USER_SCHEMA = Config.shapeOf({
 	email: Config.string().required(),
 	name: Config.string().required(),
 	thumbnail: Config.string().required(),
-	userId: Config.oneOfType([Config.string(), Config.number()]).required()
+	userId: Config.oneOfType([Config.string(), Config.number()]).required(),
 });
 
 UserInvitationModal.STATE = {
-	_loading: Config.bool()
-		.internal()
-		.value(false),
-	_modalVisible: Config.bool()
-		.internal()
-		.value(false),
+	_loading: Config.bool().internal().value(false),
+	_modalVisible: Config.bool().internal().value(false),
 	addedUsers: Config.array(USER_SCHEMA).value([]),
 	query: Config.string().value(''),
 	spritemap: Config.string(),
 	users: Config.array(USER_SCHEMA).value([]),
-	usersAPI: Config.string().value('')
+	usersAPI: Config.string().value(''),
 };
 
 export {UserInvitationModal};

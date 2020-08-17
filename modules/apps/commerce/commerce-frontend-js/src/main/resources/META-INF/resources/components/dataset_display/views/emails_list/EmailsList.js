@@ -29,7 +29,7 @@ function Email(props) {
 
 		openSidePanel({
 			slug: 'email',
-			url: props.href
+			url: props.href,
 		});
 	}
 
@@ -109,21 +109,21 @@ Email.propTypes = {
 	author: PropTypes.shape({
 		avatarSrc: PropTypes.string,
 		email: PropTypes.string.isRequired,
-		name: PropTypes.string.isRequired
+		name: PropTypes.string.isRequired,
 	}).isRequired,
 	borderBottom: PropTypes.bool,
 	date: PropTypes.string.isRequired,
 	href: PropTypes.string,
 	status: PropTypes.shape({
 		displayStyle: PropTypes.string,
-		label: PropTypes.string.isRequired
+		label: PropTypes.string.isRequired,
 	}),
 	subject: PropTypes.string.isRequired,
-	summary: PropTypes.string.isRequired
+	summary: PropTypes.string.isRequired,
 };
 
 Email.defaultProps = {
-	actionItems: []
+	actionItems: [],
 };
 
 function EmailsList(props) {
@@ -151,11 +151,11 @@ function EmailsList(props) {
 EmailsList.propTypes = {
 	dataRenderers: PropTypes.object,
 	datasetDisplayContext: PropTypes.any,
-	items: PropTypes.array
+	items: PropTypes.array,
 };
 
 EmailsList.defaultProps = {
-	items: []
+	items: [],
 };
 
 export default EmailsList;

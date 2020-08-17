@@ -123,13 +123,13 @@ CommerceAccount commerceAccount = commerceAddressDisplayContext.getCommerceAccou
 	new Liferay.DynamicSelect([
 		{
 			select: '<portlet:namespace />commerceCountryId',
-			selectData: function(callback) {
+			selectData: function (callback) {
 				Liferay.Service(
 					'/commerce.commercecountry/get-billing-commerce-countries-by-channel-id',
 					{
 						commerceChannelId: <%= commerceContext.getCommerceChannelId() %>,
 						end: -1,
-						start: -1
+						start: -1,
 					},
 					callback
 				);
@@ -137,23 +137,23 @@ CommerceAccount commerceAccount = commerceAddressDisplayContext.getCommerceAccou
 			selectDesc: 'nameCurrentValue',
 			selectId: 'commerceCountryId',
 			selectSort: '<%= true %>',
-			selectVal: '<%= commerceCountryId %>'
+			selectVal: '<%= commerceCountryId %>',
 		},
 		{
 			select: '<portlet:namespace />commerceRegionId',
-			selectData: function(callback, selectKey) {
+			selectData: function (callback, selectKey) {
 				Liferay.Service(
 					'/commerce.commerceregion/get-commerce-regions',
 					{
 						active: true,
-						commerceCountryId: Number(selectKey)
+						commerceCountryId: Number(selectKey),
 					},
 					callback
 				);
 			},
 			selectDesc: 'name',
 			selectId: 'commerceRegionId',
-			selectVal: '<%= commerceRegionId %>'
-		}
+			selectVal: '<%= commerceRegionId %>',
+		},
 	]);
 </aui:script>

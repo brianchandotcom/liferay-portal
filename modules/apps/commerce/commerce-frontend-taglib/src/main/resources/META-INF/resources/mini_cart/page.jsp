@@ -22,10 +22,10 @@
 	Cart.default('<%= miniCartId %>', '<%= miniCartId %>', {
 		cartActionURLs: {
 			checkoutURL: '<%= checkoutURL %>',
-			orderDetailURL: '<%= orderDetailURL %>'
+			orderDetailURL: '<%= orderDetailURL %>',
 		},
 		displayDiscountLevels: <%= displayDiscountLevels %>,
 		orderId: <%= orderId %>,
-		spritemap: '<%= spritemap %>'
+		spritemap: '<%= spritemap %>',
 	});
 </aui:script>

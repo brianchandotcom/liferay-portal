@@ -18,14 +18,14 @@ export function getLiferayJsModule(moduleUrl) {
 	return new Promise((resolve, reject) => {
 		Liferay.Loader.require(
 			moduleUrl,
-			jsModule => resolve(jsModule.default || jsModule),
-			err => reject(err)
+			(jsModule) => resolve(jsModule.default || jsModule),
+			(err) => reject(err)
 		);
 	});
 }
 
 export function getFakeJsModule() {
-	return new Promise(resolve => {
+	return new Promise((resolve) => {
 		setTimeout(
 			() =>
 				resolve(() => (
@@ -47,16 +47,18 @@ export const fetchedJsModules = [];
 
 export function getComponentByModuleUrl(url) {
 	return new Promise((resolve, reject) => {
-		const foundModule = fetchedJsModules.find(cr => cr.url === url);
+		const foundModule = fetchedJsModules.find((cr) => cr.url === url);
 		if (foundModule) {
 			resolve(foundModule.component);
 		}
+
 		return getJsModule(url)
-			.then(fetchedComponent => {
+			.then((fetchedComponent) => {
 				fetchedJsModules.push({
 					component: fetchedComponent,
-					url
+					url,
 				});
+
 				return resolve(fetchedComponent);
 			})
 			.catch(reject);

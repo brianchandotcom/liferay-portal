@@ -41,7 +41,7 @@ class ProductsCompare extends Component {
 	_handleToggleProductToCompare(data) {
 		const toggledProduct = {
 			id: data.id,
-			thumbnail: data.thumbnail
+			thumbnail: data.thumbnail,
 		};
 
 		const included = this.products.reduce((acc, el) => {
@@ -57,7 +57,7 @@ class ProductsCompare extends Component {
 		this.products = this.products.concat({
 			id: product.id,
 			thumbnail: product.thumbnail,
-			visibility: 'hidden'
+			visibility: 'hidden',
 		});
 
 		return this._updateProductVisibility(product.id, 'visible');
@@ -66,12 +66,14 @@ class ProductsCompare extends Component {
 	_removeProduct(product) {
 		this._updateProductVisibility(product.id, 'hidden');
 		this._toogleRemoteStatus(product.id, false);
-		return new Promise(resolve => {
+
+		return new Promise((resolve) => {
 			return setTimeout(() => {
 				this.products = this.products.filter(
-					el => el.id !== product.id
+					(el) => el.id !== product.id
 				);
 				Liferay.fire('productRemovedFromCompare', product);
+
 				return resolve(this.products);
 			}, 500);
 		});
@@ -88,7 +90,7 @@ class ProductsCompare extends Component {
 			body: formData,
 			credentials: 'include',
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'post'
+			method: 'post',
 		});
 	}
 
@@ -111,31 +113,35 @@ class ProductsCompare extends Component {
 	}
 
 	_updateProductVisibility(id, toState = 'visible') {
-		return new Promise(resolve => {
+		return new Promise((resolve) => {
 			setTimeout(() => {
-				this.products = this.products.map(el => {
+				this.products = this.products.map((el) => {
 					return el.id === id
 						? {
 								id: el.id,
 								thumbnail: el.thumbnail,
 								visibility:
-									toState === 'visible' ? 'showing' : 'hiding'
+									toState === 'visible'
+										? 'showing'
+										: 'hiding',
 						  }
 						: el;
 				});
 
 				return this.products;
 			}, 100);
+
 			return setTimeout(() => {
-				this.products = this.products.map(el => {
+				this.products = this.products.map((el) => {
 					return el.id === id
 						? {
 								id: el.id,
 								thumbnail: el.thumbnail,
-								visibility: toState
+								visibility: toState,
 						  }
 						: el;
 				});
+
 				return resolve(this.products);
 			}, 400);
 		});
@@ -144,7 +150,8 @@ class ProductsCompare extends Component {
 	_submitCompare() {
 		if (Liferay.SPA) {
 			Liferay.SPA.app.navigate(this.compareProductsURL);
-		} else {
+		}
+		else {
 			window.location.href = this.compareProductsURL;
 		}
 	}
@@ -158,7 +165,7 @@ ProductsCompare.STATE = {
 	limit: Config.number().required(),
 	portletNamespace: Config.string().required(),
 	products: Config.array(Config.object()).value([]),
-	spritemap: Config.string()
+	spritemap: Config.string(),
 };
 
 export {ProductsCompare};

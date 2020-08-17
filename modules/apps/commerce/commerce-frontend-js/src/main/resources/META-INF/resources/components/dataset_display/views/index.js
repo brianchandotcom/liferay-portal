@@ -22,34 +22,36 @@ import Timeline from './timeline/Timeline';
 const views = [
 	{
 		component: Table,
-		id: 'table'
+		id: 'table',
 	},
 	{
 		component: SelectableTable,
-		id: 'selectableTable'
+		id: 'selectableTable',
 	},
 	{
 		component: Timeline,
-		id: 'timeline'
+		id: 'timeline',
 	},
 	{
 		component: EmailsList,
-		id: 'emailsList'
+		id: 'emailsList',
 	},
 	{
 		component: List,
-		id: 'list'
+		id: 'list',
 	},
 	{
 		component: Cards,
-		id: 'cards'
-	}
+		id: 'cards',
+	},
 ];
 
 export function getViewById(requestedContentRendererId) {
-	return new Promise(resolve => {
-		views.forEach(view => {
-			if (view.id === requestedContentRendererId) resolve(view.component);
+	return new Promise((resolve) => {
+		views.forEach((view) => {
+			if (view.id === requestedContentRendererId) {
+				resolve(view.component);
+			}
 		});
 		throw new Error(
 			`No content renderer found with the ID: "${requestedContentRendererId}"`

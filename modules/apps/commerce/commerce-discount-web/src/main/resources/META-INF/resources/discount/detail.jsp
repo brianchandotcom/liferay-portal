@@ -153,7 +153,7 @@ if ((commerceDiscount != null) && (commerceDiscount.getExpirationDate() != null)
 <aui:script use="aui-base,event-input">
 	var publishButton = A.one('#<portlet:namespace />publishButton');
 
-	publishButton.on('click', function() {
+	publishButton.on('click', function () {
 		var workflowActionInput = A.one('#<portlet:namespace />workflowAction');
 
 		if (workflowActionInput) {

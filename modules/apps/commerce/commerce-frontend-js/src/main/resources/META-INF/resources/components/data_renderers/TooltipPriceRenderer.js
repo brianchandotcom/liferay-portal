@@ -50,7 +50,9 @@ function TooltipTable(props) {
 }
 
 function TooltipPriceRenderer(props) {
-	if (!props.value) return null;
+	if (!props.value) {
+		return null;
+	}
 
 	return (
 		<>
@@ -80,25 +82,25 @@ TooltipPriceRenderer.propTypes = {
 					label: Proptypes.string,
 					value: Proptypes.oneOfType([
 						Proptypes.number,
-						Proptypes.string
-					])
+						Proptypes.string,
+					]),
 				}),
 				Proptypes.shape({
 					label: Proptypes.string,
 					value: Proptypes.arrayOf(
 						Proptypes.oneOfType([
 							Proptypes.string,
-							Proptypes.number
+							Proptypes.number,
 						])
-					)
-				})
+					),
+				}),
 			])
 		),
 		final: Proptypes.shape({
 			label: Proptypes.string,
-			value: Proptypes.string.isRequired
-		}).isRequired
-	})
+			value: Proptypes.string.isRequired,
+		}).isRequired,
+	}),
 };
 
 export default TooltipPriceRenderer;

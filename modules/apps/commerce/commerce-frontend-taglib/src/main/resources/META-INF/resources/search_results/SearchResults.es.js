@@ -38,26 +38,27 @@ class SearchResults extends Component {
 	}
 
 	getFirstSuggestion() {
-		const selectables = this.results.filter(i => i.type !== 'label');
+		const selectables = this.results.filter((i) => i.type !== 'label');
 
 		return selectables.length ? selectables[0].pos : -1;
 	}
 
 	getLastSuggestion() {
 		const selectables = this.results
-			.filter(i => i.type !== 'label')
+			.filter((i) => i.type !== 'label')
 			.reverse();
 
 		return selectables.length ? selectables[0].pos : -1;
 	}
 
 	goToSelected() {
-		const selected = this.results.filter(i => i.selected);
+		const selected = this.results.filter((i) => i.selected);
 
 		if (selected.length && selected[0].url) {
 			if (Liferay.SPA) {
 				Liferay.SPA.app.navigate(selected[0].url);
-			} else {
+			}
+			else {
 				window.location.href = selected[0].url;
 			}
 		}
@@ -66,7 +67,8 @@ class SearchResults extends Component {
 	handleKeyDown(e) {
 		if (e.key === 'ArrowDown') {
 			this.selectNext();
-		} else if (e.key === 'ArrowUp') {
+		}
+		else if (e.key === 'ArrowUp') {
 			this.selectPrevious();
 		}
 	}
@@ -83,7 +85,7 @@ class SearchResults extends Component {
 		if (this.refs && this.refs.selected) {
 			this.refs.selected.scrollIntoView({
 				behavior: 'smooth',
-				block: 'nearest'
+				block: 'nearest',
 			});
 		}
 	}
@@ -105,11 +107,11 @@ class SearchResults extends Component {
 			{
 				credentials: 'include',
 				headers: new Headers({'x-csrf-token': Liferay.authToken}),
-				method: 'GET'
+				method: 'GET',
 			}
 		)
-			.then(response => response.json())
-			.then(results => {
+			.then((response) => response.json())
+			.then((results) => {
 				this.loading = false;
 				this.lock = false;
 				this.queryValue = this.queryString;
@@ -121,7 +123,7 @@ class SearchResults extends Component {
 
 	selectNext() {
 		const nexts = this.results.filter(
-			i => i.pos > this.selectedIndex && i.type !== 'label'
+			(i) => i.pos > this.selectedIndex && i.type !== 'label'
 		);
 
 		this.selectedIndex = nexts.length
@@ -131,7 +133,7 @@ class SearchResults extends Component {
 
 	selectPrevious() {
 		const prevs = this.results
-			.filter(i => i.pos < this.selectedIndex && i.type !== 'label')
+			.filter((i) => i.pos < this.selectedIndex && i.type !== 'label')
 			.reverse();
 
 		this.selectedIndex = prevs.length
@@ -147,7 +149,7 @@ class SearchResults extends Component {
 		this.results = this.results.map((item, i) => ({
 			...item,
 			pos: i,
-			selected: i === sel
+			selected: i === sel,
 		}));
 
 		return sel;
@@ -165,7 +167,8 @@ class SearchResults extends Component {
 		if (visible) {
 			if (visible.newVal) {
 				document.addEventListener('keydown', this.handleKeyDown);
-			} else {
+			}
+			else {
 				document.removeEventListener('keydown', this.handleKeyDown);
 			}
 		}
@@ -184,15 +187,15 @@ SearchResults.STATE = {
 	queryString: Config.string().value(''),
 	queryValue: Config.string().value(''),
 	results: {
-		value: []
+		value: [],
 	},
 	searchAPI: Config.string().required(),
 	selectedIndex: {
 		setter: 'setSelected',
-		value: -1
+		value: -1,
 	},
 	spritemap: Config.string().required(),
-	visible: Config.bool().value(false)
+	visible: Config.bool().value(false),
 };
 
 export {SearchResults};

@@ -55,6 +55,7 @@ class AddOrganizationModal extends Component {
 
 	syncQuery() {
 		this._loading = true;
+
 		return this._debouncedFetchOrganizations();
 	}
 
@@ -75,9 +76,11 @@ class AddOrganizationModal extends Component {
 				0,
 				-1
 			);
+
 			return false;
 		}
 		this.query = e.target.value;
+
 		return this.query;
 	}
 
@@ -94,7 +97,7 @@ class AddOrganizationModal extends Component {
 
 		this.selectedOrganizations = organizationAlreadyAdded
 			? this.selectedOrganizations.filter(
-					organization =>
+					(organization) =>
 						organization.id !== organizationToBeToggled.id
 			  )
 			: [...this.selectedOrganizations, organizationToBeToggled];
@@ -114,23 +117,24 @@ class AddOrganizationModal extends Component {
 			{
 				credentials: 'include',
 				headers: new Headers({'x-csrf-token': Liferay.authToken}),
-				method: 'GET'
+				method: 'GET',
 			}
 		)
-			.then(response => response.json())
-			.then(response => {
+			.then((response) => response.json())
+			.then((response) => {
 				this._loading = false;
 				this.organizations = this.addColorToOrganizations(
 					response.organizations
 				);
+
 				return this.organizations;
 			});
 	}
 
 	addColorToOrganizations(organizations) {
-		return organizations.map(organization => ({
+		return organizations.map((organization) => ({
 			colorId: Math.floor(Math.random() * 6) + 1,
-			...organization
+			...organization,
 		}));
 	}
 
@@ -144,16 +148,19 @@ class AddOrganizationModal extends Component {
 
 	toggle() {
 		this._modalVisible = !this._modalVisible;
+
 		return this._modalVisible;
 	}
 
 	open() {
 		this._modalVisible = true;
+
 		return this._modalVisible;
 	}
 
 	close() {
 		this._modalVisible = false;
+
 		return this._modalVisible;
 	}
 }
@@ -163,21 +170,17 @@ Soy.register(AddOrganizationModal, template);
 const ORGANIZATION_SCHEMA = Config.shapeOf({
 	colorId: Config.number(),
 	id: Config.oneOfType([Config.number(), Config.string()]).required(),
-	name: Config.string().required()
+	name: Config.string().required(),
 });
 
 AddOrganizationModal.STATE = {
-	_loading: Config.bool()
-		.internal()
-		.value(false),
-	_modalVisible: Config.bool()
-		.internal()
-		.value(false),
+	_loading: Config.bool().internal().value(false),
+	_modalVisible: Config.bool().internal().value(false),
 	organizations: Config.array(ORGANIZATION_SCHEMA).value([]),
 	organizationsAPI: Config.string().value(''),
 	query: Config.string().value(''),
 	selectedOrganizations: Config.array(ORGANIZATION_SCHEMA).value([]),
-	spritemap: Config.string()
+	spritemap: Config.string(),
 };
 
 export {AddOrganizationModal};

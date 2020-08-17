@@ -24,7 +24,7 @@ import {ACTION_ITEM_TARGETS} from '../../utilities/actionItems/constants';
 import {formatActionUrl} from '../../utilities/index';
 import {
 	openPermissionsModal,
-	resolveModalSize
+	resolveModalSize,
 } from '../../utilities/modals/index';
 import DatasetDisplayContext from '../dataset_display/DatasetDisplayContext';
 
@@ -44,7 +44,7 @@ function ActionItem(props) {
 			size: props.size || 'lg',
 			target: props.target,
 			title: props.title,
-			url: props.href
+			url: props.href,
 		});
 
 		props.closeMenu();
@@ -76,7 +76,7 @@ function ActionsDropdownRenderer(props) {
 		executeAsyncItemAction,
 		highlightItems,
 		openModal,
-		openSidePanel
+		openSidePanel,
 	} = useContext(DatasetDisplayContext);
 
 	const [active, setActive] = useState(false);
@@ -87,7 +87,7 @@ function ActionsDropdownRenderer(props) {
 		size = '',
 		target = '',
 		title = '',
-		url = ''
+		url = '',
 	}) {
 		if (!!target && target.includes('modal')) {
 			switch (target) {
@@ -98,7 +98,7 @@ function ActionsDropdownRenderer(props) {
 					openModal({
 						size: resolveModalSize(target),
 						title,
-						url
+						url,
 					});
 					break;
 			}
@@ -109,7 +109,7 @@ function ActionsDropdownRenderer(props) {
 			openSidePanel({
 				size: size || 'lg',
 				title,
-				url
+				url,
 			});
 		}
 
@@ -133,15 +133,18 @@ function ActionsDropdownRenderer(props) {
 									...action,
 									...props.itemData.actions[
 										action.permissionKey
-									]
-								}
+									],
+								},
 							];
-						} else {
+						}
+						else {
 							return [...actions, action];
 						}
 					}
+
 					return actions;
 				}
+
 				return [...actions, action];
 		  }, [])
 		: [];
@@ -182,15 +185,16 @@ function ActionsDropdownRenderer(props) {
 			<ClayButton
 				displayType="secondary"
 				monospaced={Boolean(action.icon)}
-				onClick={e => {
+				onClick={(e) => {
 					e.preventDefault();
+
 					return handleAction({
 						method: action.method,
 						onClick: action.onClick,
 						size: action.size,
 						target: action.target,
 						title: action.title,
-						url: formattedHref
+						url: formattedHref,
 					});
 				}}
 				small
@@ -265,12 +269,12 @@ ActionsDropdownRenderer.propTypes = {
 				'sidePanel',
 				'link',
 				'async',
-				'headless'
-			])
+				'headless',
+			]),
 		})
 	),
 	itemData: PropTypes.object,
-	itemId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+	itemId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default ActionsDropdownRenderer;

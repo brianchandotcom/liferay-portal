@@ -111,11 +111,11 @@ if (cpDisplayLayout != null) {
 	var displayPageNameInput = $('#<portlet:namespace />displayPageNameInput');
 	var pagesContainerInput = $('#<portlet:namespace />pagesContainerInput');
 
-	$('#<portlet:namespace />chooseDisplayPage').on('click', function(event) {
+	$('#<portlet:namespace />chooseDisplayPage').on('click', function (event) {
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 			eventName: 'selectDisplayPage',
 			on: {
-				selectedItemChange: function(event) {
+				selectedItemChange: function (event) {
 					var selectedItem = event.newVal;
 
 					if (selectedItem) {
@@ -125,18 +125,18 @@ if (cpDisplayLayout != null) {
 
 						displayPageItemRemove.removeClass('hide');
 					}
-				}
+				},
 			},
 			'strings.add': '<liferay-ui:message key="done" />',
 			title: '<liferay-ui:message key="select-category-display-page" />',
 			url:
-				'<%= categoryCPDisplayLayoutDisplayContext.getItemSelectorUrl(renderRequest) %>'
+				'<%= categoryCPDisplayLayoutDisplayContext.getItemSelectorUrl(renderRequest) %>',
 		});
 
 		itemSelectorDialog.open();
 	});
 
-	displayPageItemRemove.on('click', function(event) {
+	displayPageItemRemove.on('click', function (event) {
 		displayPageNameInput.html('<liferay-ui:message key="none" />');
 
 		pagesContainerInput.val('');

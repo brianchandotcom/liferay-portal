@@ -26,7 +26,7 @@ class AccountsTableItem extends Component {
 		this.emit('selectAccount', {
 			accountId: this.accountId,
 			name: this.name,
-			thumbnail: this.thumbnail
+			thumbnail: this.thumbnail,
 		});
 	}
 }
@@ -37,7 +37,7 @@ AccountsTableItem.STATE = {
 	accountId: Config.oneOfType([Config.number(), Config.string()]).required(),
 	name: Config.string(),
 	query: Config.string(),
-	thumbnail: Config.string()
+	thumbnail: Config.string(),
 };
 
 export {AccountsTableItem};

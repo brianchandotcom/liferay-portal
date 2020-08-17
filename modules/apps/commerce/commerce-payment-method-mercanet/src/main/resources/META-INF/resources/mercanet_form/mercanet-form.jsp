@@ -37,7 +37,7 @@ String seal = URLDecoder.decode(sealAttribute, "UTF-8");
 </form>
 
 <script>
-	window.onload = function() {
+	window.onload = function () {
 		document.querySelector('form').submit();
 	};
 </script>

@@ -72,7 +72,8 @@ int selectedYearlyMode = yearlyCPSubscriptionTypeDisplayContext.getSelectedYearl
 					A.one('#<portlet:namespace />exactDayOfYearInputContainer').removeClass(
 						'hide'
 					);
-				} else {
+				}
+				else {
 					if (
 						!A.one(
 							'#<portlet:namespace />exactDayOfYearInputContainer'
@@ -134,7 +135,8 @@ int selectedYearlyMode = yearlyCPSubscriptionTypeDisplayContext.getSelectedYearl
 					A.one(
 						'#<portlet:namespace />deliveryExactDayOfYearInputContainer'
 					).removeClass('hide');
-				} else {
+				}
+				else {
 					if (
 						!A.one(
 							'#<portlet:namespace />deliveryExactDayOfYearInputContainer'

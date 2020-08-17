@@ -53,40 +53,41 @@ if (commerceOrder != null) {
 
 			couponCodeIconRemove.addEventListener(
 				'click',
-				function(event) {
+				function (event) {
 					var actionURL =
 						'<%= PortalUtil.getPortalURL(request) + "/o/commerce-ui/order/" + commerceOrder.getCommerceOrderId() + "/coupon-code" %>';
 
 					fetch(actionURL, {
 						credentials: 'include',
 						headers: new Headers({'x-csrf-token': Liferay.authToken}),
-						method: 'post'
+						method: 'post',
 					})
-						.then(function(res) {
+						.then(function (res) {
 							return res.json();
 						})
-						.then(function(payload) {
+						.then(function (payload) {
 							if (payload.success) {
 								window.location.reload();
-							} else {
+							}
+							else {
 								new Liferay.Notification({
 									closeable: true,
 									delay: {
 										hide: 5000,
-										show: 0
+										show: 0,
 									},
 									duration: 500,
 									message:
 										'<liferay-ui:message key="please-enter-a-valid-coupon-code" />',
 									render: true,
 									title: '<liferay-ui:message key="danger" />',
-									type: 'danger'
+									type: 'danger',
 								});
 							}
 						});
 				},
 				{
-					once: true
+					once: true,
 				}
 			);
 		</aui:script>
@@ -103,7 +104,7 @@ if (commerceOrder != null) {
 
 			applyCouponCodeButton.addEventListener(
 				'click',
-				function(event) {
+				function (event) {
 					var actionURL =
 						'<%= PortalUtil.getPortalURL(request) + "/o/commerce-ui/order/" + commerceOrder.getCommerceOrderId() + "/coupon-code/" %>';
 
@@ -115,33 +116,34 @@ if (commerceOrder != null) {
 					fetch(actionURL, {
 						credentials: 'include',
 						headers: new Headers({'x-csrf-token': Liferay.authToken}),
-						method: 'post'
+						method: 'post',
 					})
-						.then(function(res) {
+						.then(function (res) {
 							return res.json();
 						})
-						.then(function(payload) {
+						.then(function (payload) {
 							if (payload.success) {
 								window.location.reload();
-							} else {
+							}
+							else {
 								new Liferay.Notification({
 									closeable: true,
 									delay: {
 										hide: 5000,
-										show: 0
+										show: 0,
 									},
 									duration: 500,
 									message:
 										'<liferay-ui:message key="please-enter-a-valid-coupon-code" />',
 									render: true,
 									title: '<liferay-ui:message key="danger" />',
-									type: 'danger'
+									type: 'danger',
 								});
 							}
 						});
 				},
 				{
-					once: true
+					once: true,
 				}
 			);
 		</aui:script>

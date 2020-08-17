@@ -15,7 +15,7 @@
 import {ClayIconSpriteContext} from '@clayui/icon';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import PropTypes from 'prop-types';
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {listenToBulkActionStatus} from '../../utilities/actionItems/bulkActions';
 import {closest} from '../../utilities/closest';
@@ -25,13 +25,13 @@ import {
 	OPEN_MODAL,
 	OPEN_SIDE_PANEL,
 	SIDE_PANEL_CLOSED,
-	UPDATE_DATASET_DISPLAY
+	UPDATE_DATASET_DISPLAY,
 } from '../../utilities/eventsDefinitions';
-import {getRandomId, executeAsyncAction, loadData} from '../../utilities/index';
+import {executeAsyncAction, getRandomId, loadData} from '../../utilities/index';
 import getJsModule from '../../utilities/modules';
 import {
+	showErrorNotification,
 	showNotification,
-	showErrorNotification
 } from '../../utilities/notifications';
 import Modal from '../modal/Modal';
 import SidePanel from '../side_panel/SidePanel';
@@ -89,20 +89,20 @@ function DatasetDisplay(props) {
 				? getViewById(contentRenderer)
 				: getJsModule(currentViewModuleUrl)
 			)
-				.then(component => {
-					updateViews(views =>
+				.then((component) => {
+					updateViews((views) =>
 						views.map((view, i) =>
 							i === activeView
 								? {
 										...view,
-										component
+										component,
 								  }
 								: view
 						)
 					);
 					setLoading(false);
 				})
-				.catch(err => {
+				.catch((err) => {
 					showNotification(
 						Liferay.Language.get('unexpected-error'),
 						'danger'
@@ -120,7 +120,7 @@ function DatasetDisplay(props) {
 		views,
 		currentViewModuleUrl,
 		CurrentViewComponent,
-		setLoading
+		setLoading,
 	]);
 
 	const formRef = useRef(null);
@@ -141,6 +141,7 @@ function DatasetDisplay(props) {
 		successNotification = {}
 	) {
 		setLoading(true);
+
 		return loadData(
 			apiUrl,
 			currentUrl,
@@ -164,7 +165,7 @@ function DatasetDisplay(props) {
 				setLoading(false);
 				Liferay.fire(DATASET_DISPLAY_UPDATED, {id: props.id});
 			})
-			.catch(e => {
+			.catch((e) => {
 				console.error(e);
 				setLoading(false);
 
@@ -181,7 +182,7 @@ function DatasetDisplay(props) {
 				props.apiUrl,
 				props.currentUrl,
 				delta,
-				filters.filter(e => !!e.value),
+				filters.filter((e) => !!e.value),
 				pageNumber,
 				searchParam,
 				sorting,
@@ -197,7 +198,7 @@ function DatasetDisplay(props) {
 		delta,
 		pageNumber,
 		sorting,
-		refreshData
+		refreshData,
 	]);
 
 	useEffect(() => {
@@ -221,11 +222,14 @@ function DatasetDisplay(props) {
 			return setSelectedItemsValue([val]);
 		}
 
-		const itemAdded = selectedItemsValue.find(item => item === val);
+		const itemAdded = selectedItemsValue.find((item) => item === val);
 
 		if (itemAdded) {
-			setSelectedItemsValue(selectedItemsValue.filter(el => el !== val));
-		} else {
+			setSelectedItemsValue(
+				selectedItemsValue.filter((el) => el !== val)
+			);
+		}
+		else {
 			setSelectedItemsValue(selectedItemsValue.concat(val));
 		}
 	}
@@ -235,7 +239,7 @@ function DatasetDisplay(props) {
 			return setHighlightedItemsValue(val);
 		}
 
-		const itemAdded = highlightedItemsValue.find(item => item === val);
+		const itemAdded = highlightedItemsValue.find((item) => item === val);
 
 		if (!itemAdded) {
 			setHighlightedItemsValue(highlightedItemsValue.concat(val));
@@ -243,12 +247,12 @@ function DatasetDisplay(props) {
 	}
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const refreshData = successNotification =>
+	const refreshData = (successNotification) =>
 		getData(
 			props.apiUrl,
 			props.currentUrl,
 			delta,
-			filters.filter(e => !!e.value),
+			filters.filter((e) => !!e.value),
 			pageNumber,
 			searchParam,
 			sorting,
@@ -304,10 +308,12 @@ function DatasetDisplay(props) {
 				filters={filters}
 				fluid={props.style === 'fluid'}
 				onFiltersChange={updateFilters}
-				selectAllItems={() =>
-					selectItems(items.map(item => item[props.selectedItemsKey]))
-				}
 				selectable={selectable}
+				selectAllItems={() =>
+					selectItems(
+						items.map((item) => item[props.selectedItemsKey])
+					)
+				}
 				selectedItemsKey={props.selectedItemsKey}
 				selectedItemsValue={selectedItemsValue}
 				selectionType={props.selectionType}
@@ -364,9 +370,9 @@ function DatasetDisplay(props) {
 						perPageItems: Liferay.Language.get('x-items-per-page'),
 						selectPerPageItems: Liferay.Language.get(
 							'x-items-per-page'
-						)
+						),
 					}}
-					onDeltaChange={deltaVal => {
+					onDeltaChange={(deltaVal) => {
 						setPageNumber(1);
 						setDelta(deltaVal);
 					}}
@@ -380,7 +386,7 @@ function DatasetDisplay(props) {
 	function handleCompletedAction(e = null) {
 		refreshData();
 		Liferay.fire(DATASET_ACTION_PERFORMED, {
-			id: props.id
+			id: props.id,
 		});
 		setActionLoading(false);
 		if (e) {
@@ -402,16 +408,17 @@ function DatasetDisplay(props) {
 					bodyKeys.reduce(
 						(keys, key) => ({...keys, [key]: item[key]}),
 						{}
-					)
+					),
 				];
 			}
+
 			return foundData;
 		}, []);
 		setActionLoading(true);
 
 		return executeAsyncAction(url, method, JSON.stringify(bodyContent))
-			.then(response => response.json())
-			.then(jsonResponse =>
+			.then((response) => response.json())
+			.then((jsonResponse) =>
 				listenToBulkActionStatus(
 					jsonResponse.id,
 					props.batchTasksStatusApiUrl
@@ -423,8 +430,9 @@ function DatasetDisplay(props) {
 
 	function executeAsyncItemAction(url, method) {
 		setActionLoading(true);
+
 		return executeAsyncAction(url, method)
-			.then(_ => handleCompletedAction())
+			.then((_) => handleCompletedAction())
 			.catch(handleFailedAction);
 	}
 
@@ -432,7 +440,7 @@ function DatasetDisplay(props) {
 		return Liferay.fire(OPEN_SIDE_PANEL, {
 			id: datasetDisplaySupportSidePanelId,
 			onSubmit: refreshData,
-			...config
+			...config,
 		});
 	}
 
@@ -440,7 +448,7 @@ function DatasetDisplay(props) {
 		return Liferay.fire(OPEN_MODAL, {
 			id: datasetDisplaySupportModalId,
 			onSubmit: refreshData,
-			...config
+			...config,
 		});
 	}
 
@@ -473,7 +481,7 @@ function DatasetDisplay(props) {
 				style: props.style,
 				updateDatasetItems,
 				updateSearchParam,
-				updateSorting
+				updateSorting,
 			}}
 		>
 			<ClayIconSpriteContext.Provider value={props.spritemap}>
@@ -537,10 +545,10 @@ DatasetDisplay.propTypes = {
 		deltas: PropTypes.arrayOf(
 			PropTypes.shape({
 				href: PropTypes.string,
-				label: PropTypes.number.isRequired
+				label: PropTypes.number.isRequired,
 			}).isRequired
 		),
-		initialDelta: PropTypes.number.isRequired
+		initialDelta: PropTypes.number.isRequired,
 	}),
 	selectedItems: PropTypes.array,
 	selectedItemsKey: PropTypes.string,
@@ -552,7 +560,7 @@ DatasetDisplay.propTypes = {
 	sorting: PropTypes.arrayOf(
 		PropTypes.shape({
 			direction: PropTypes.oneOf(['asc', 'desc']),
-			key: PropTypes.string
+			key: PropTypes.string,
 		})
 	),
 	spritemap: PropTypes.string.isRequired,
@@ -564,9 +572,9 @@ DatasetDisplay.propTypes = {
 			contentRendererModuleUrl: PropTypes.string,
 			icon: PropTypes.string,
 			label: PropTypes.string,
-			schema: PropTypes.object
+			schema: PropTypes.object,
 		})
-	).isRequired
+	).isRequired,
 };
 
 DatasetDisplay.defaultProps = {
@@ -575,7 +583,7 @@ DatasetDisplay.defaultProps = {
 	items: null,
 	itemsActions: null,
 	pagination: {
-		initialDelta: 10
+		initialDelta: 10,
 	},
 	selectedItemsKey: 'id',
 	selectionType: 'multiple',
@@ -583,7 +591,7 @@ DatasetDisplay.defaultProps = {
 	showPagination: true,
 	showSearch: true,
 	sorting: [],
-	style: 'default'
+	style: 'default',
 };
 
 export default DatasetDisplay;

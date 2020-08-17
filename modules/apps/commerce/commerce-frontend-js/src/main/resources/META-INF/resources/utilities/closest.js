@@ -20,5 +20,6 @@ export function closest(element, selector) {
 		// eslint-disable-next-line no-empty
 		while (--i >= 0 && matches.item(i) !== element) {}
 	} while (i < 0 && (element = element.parentElement));
+
 	return element;
 }

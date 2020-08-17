@@ -24,7 +24,7 @@ class RoleInputItem extends Component {
 		evt.preventDefault();
 
 		return this.emit('removeItem', {
-			id: this.id
+			id: this.id,
 		});
 	}
 }
@@ -34,7 +34,7 @@ Soy.register(RoleInputItem, template);
 RoleInputItem.STATE = {
 	id: Config.oneOfType([Config.number(), Config.string()]).required(),
 	name: Config.string().required(),
-	spritemap: Config.string()
+	spritemap: Config.string(),
 };
 
 export {RoleInputItem};

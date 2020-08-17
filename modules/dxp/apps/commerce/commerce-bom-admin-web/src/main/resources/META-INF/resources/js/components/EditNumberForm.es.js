@@ -1,8 +1,19 @@
-import React, { useState, useContext, useMemo } from 'react';
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ */
 
-import { StoreContext } from './StoreContext.es';
-import Icon from './utilities/Icon.es';
+import React, {useContext, useMemo, useState} from 'react';
+
+import {StoreContext} from './StoreContext.es';
 import HighlightedText from './utilities/HighlightedText.es';
+import Icon from './utilities/Icon.es';
 
 export function DropdownItem(props) {
 	return (
@@ -10,12 +21,12 @@ export function DropdownItem(props) {
 			<a
 				className="dropdown-item"
 				href={`#${props.value}`}
-				onClick={e => props.handleClickFn(e, props.value)}
+				onClick={(e) => props.handleClickFn(e, props.value)}
 			>
 				<HighlightedText
-					text={props.label}
-					query={props.query}
 					inverted={false}
+					query={props.query}
+					text={props.label}
 				/>
 			</a>
 		</li>
@@ -26,14 +37,14 @@ export function DropdownInput(props) {
 	return (
 		<div className="dropdown-full input-group-item">
 			<input
-				id={props.inputId || null}
+				autoComplete="off"
 				className="form-control input-group-inset input-group-inset-after"
+				disabled={props.disabled}
+				id={props.inputId || null}
+				onChange={props.handleChangeFn}
 				placeholder={props.inputPlaceholder}
 				type="text"
 				value={props.query || ''}
-				autoComplete="off"
-				onChange={props.handleChangeFn}
-				disabled={props.disabled}
 			/>
 			{!props.disabled && (
 				<span className="input-group-inset-item input-group-inset-item-after">
@@ -54,8 +65,8 @@ export function DropdownInput(props) {
 									? ` ${props.resetAdditionalCssClasses}`
 									: ''
 							}`}
-							type="button"
 							onClick={props.handleResetFn}
+							type="button"
 						>
 							{props.resetIcon}
 						</button>
@@ -66,11 +77,11 @@ export function DropdownInput(props) {
 				<ul className="dropdown-menu show">
 					{props.elements.map((el, i) => (
 						<DropdownItem
-							key={i}
-							query={props.query}
-							label={el.label}
-							value={el.value}
 							handleClickFn={props.handleClickOnItem}
+							key={i}
+							label={el.label}
+							query={props.query}
+							value={el.value}
 						/>
 					))}
 				</ul>
@@ -80,11 +91,13 @@ export function DropdownInput(props) {
 }
 
 const EditNumberForm = React.memo((props) => {
-	const { state, actions } = React.useContext(StoreContext);
+	const {actions, state} = React.useContext(StoreContext);
 	const formData = state.area.spotFormData || {};
 	const position = formData.position || {};
 	const [dropdownDisabled, disableDropdown] = useState(false);
-	const inputPlaceholder = Liferay.Language.get('search-for-product-name-or-sku');
+	const inputPlaceholder = Liferay.Language.get(
+		'search-for-product-name-or-sku'
+	);
 
 	function isNumberAlreadyAdded(number) {
 		return state.area.spots.reduce(
@@ -101,7 +114,7 @@ const EditNumberForm = React.memo((props) => {
 					: 'edit-number-form--top',
 				position.x > 50
 					? 'edit-number-form--left'
-					: 'edit-number-form--right'
+					: 'edit-number-form--right',
 			].join(' '),
 		[position.x, position.y]
 	);
@@ -120,6 +133,7 @@ const EditNumberForm = React.memo((props) => {
 						null
 					);
 				}
+
 				return null;
 			}, null)
 		);
@@ -137,7 +151,8 @@ const EditNumberForm = React.memo((props) => {
 			const productToBeMapped = getProductByNumber(number);
 			selectProduct(productToBeMapped);
 			disableDropdown(true);
-		} else {
+		}
+		else {
 			disableDropdown(false);
 		}
 	}
@@ -148,7 +163,8 @@ const EditNumberForm = React.memo((props) => {
 
 		if (query) {
 			actions.getProducts(state.app.productApiUrl, query);
-		} else {
+		}
+		else {
 			actions.resetProducts();
 		}
 	}
@@ -185,8 +201,9 @@ const EditNumberForm = React.memo((props) => {
 		const params = [
 			state.app.areaApiUrl,
 			state.area.id,
-			state.area.spotFormData
+			state.area.spotFormData,
 		];
+
 		return formData.state === 'create'
 			? actions.submitNewSpot.apply(null, params)
 			: actions.submitSpotChanges.apply(null, params);
@@ -207,30 +224,29 @@ const EditNumberForm = React.memo((props) => {
 				position
 					? {
 							left: position.x + '%',
-							bottom: position.y + '%'
+							bottom: position.y + '%',
 					  }
 					: null
 			}
 		>
-			{
-				typeof position.x === 'number' && 
+			{typeof position.x === 'number' &&
 				typeof position.y === 'number' && (
-				<span
-					className={`spot-number spot-number--placeholder${
-						position ? ` spot-number--placeholder--visible` : ''
-					}`}
-				>
-					{formData.number}
-				</span>
-			)}
+					<span
+						className={`spot-number spot-number--placeholder${
+							position ? ` spot-number--placeholder--visible` : ''
+						}`}
+					>
+						{formData.number}
+					</span>
+				)}
 			{formData.state && (
 				<div
 					className={`edit-number-form panel panel-secondary ${orientationClasses}`}
 				>
 					<button
-						className="edit-number-form__close btn btn-outline-borderless"
-						type="button"
+						className="btn btn-outline-borderless edit-number-form__close"
 						onClick={closeEditForm}
+						type="button"
 					>
 						<Icon
 							spritemap={state.app.spritemap}
@@ -243,14 +259,16 @@ const EditNumberForm = React.memo((props) => {
 								{Liferay.Language.get('number')}
 							</label>
 							<input
+								autoComplete="off"
 								className="form-control"
 								id="edit-number-form__input-number"
-								placeholder={Liferay.Language.get('select-number')}
-								type="number"
-								autoComplete="off"
 								min="1"
-								value={formData.number || ''}
 								onChange={handleNumberChange}
+								placeholder={Liferay.Language.get(
+									'select-number'
+								)}
+								type="number"
+								value={formData.number || ''}
 							/>
 						</div>
 						<div className="form-group">
@@ -259,44 +277,46 @@ const EditNumberForm = React.memo((props) => {
 							</label>
 							<div className="input-group">
 								<DropdownInput
+									disabled={dropdownDisabled}
+									elements={state.area.availableProducts.map(
+										(el) => ({label: el.name, value: el.id})
+									)}
+									handleChangeFn={handleProductInputChange}
+									handleClickOnItem={
+										handleClickOnDropdownItem
+									}
+									handleResetFn={resetProducts}
 									inputClassName={
 										'edit-number-form__input-number'
 									}
 									inputId={'edit-number-form__input-number'}
+									inputPlaceholder={inputPlaceholder}
 									query={formData.query}
+									resetAdditionalCssClasses="edit-number-form__reset"
+									resetIcon={
+										props.resetIcon || (
+											<Icon
+												spritemap={state.app.spritemap}
+												symbol={'times-circle'}
+											/>
+										)
+									}
+									searchAdditionalCssClasses="edit-number-form__search"
+									searchIcon={
+										props.searchIcon || (
+											<Icon
+												spritemap={state.app.spritemap}
+												symbol={'search'}
+											/>
+										)
+									}
 									selectedElement={
 										formData.productId
 											? {
 													value: formData.productId,
-													label: formData.query
+													label: formData.query,
 											  }
 											: null
-									}
-									disabled={dropdownDisabled}
-									elements={state.area.availableProducts.map(
-										el => ({ label: el.name, value: el.id })
-									)}
-									inputPlaceholder={inputPlaceholder}
-									resetIcon={
-										props.resetIcon || 
-										<Icon
-											spritemap={state.app.spritemap}
-											symbol={'times-circle'}
-										/>
-									}
-									searchIcon={
-										props.searchIcon || 
-										<Icon
-											spritemap={state.app.spritemap}
-											symbol={'search'}
-										/>
-									}
-									resetAdditionalCssClasses="edit-number-form__reset"
-									searchAdditionalCssClasses="edit-number-form__search"
-									handleResetFn={resetProducts}
-									handleChangeFn={handleProductInputChange}
-									handleClickOnItem={
-										handleClickOnDropdownItem
 									}
 								/>
 							</div>
@@ -307,9 +327,9 @@ const EditNumberForm = React.memo((props) => {
 									<div className="col-auto">
 										<div className="btn-group-item">
 											<button
-												className="edit-number-form__delete-btn btn btn-outline-primary btn-outline-borderless"
-												type="button"
+												className="btn btn-outline-borderless btn-outline-primary edit-number-form__delete-btn"
 												onClick={handleClickOnDelete}
+												type="button"
 											>
 												{Liferay.Language.get('delete')}
 											</button>
@@ -320,8 +340,8 @@ const EditNumberForm = React.memo((props) => {
 									<div className="btn-group-item">
 										<button
 											className="btn btn-secondary"
-											type="button"
 											onClick={closeEditForm}
+											type="button"
 										>
 											{Liferay.Language.get('cancel')}
 										</button>
@@ -329,15 +349,15 @@ const EditNumberForm = React.memo((props) => {
 									<div className="btn-group-item">
 										<button
 											className="btn btn-primary"
-											type="submit"
-											onClick={submitForm}
 											disabled={
 												!(
-													formData.productId && 
+													formData.productId &&
 													formData.number &&
 													formData.changed
 												)
 											}
+											onClick={submitForm}
+											type="submit"
 										>
 											{Liferay.Language.get('save')}
 										</button>

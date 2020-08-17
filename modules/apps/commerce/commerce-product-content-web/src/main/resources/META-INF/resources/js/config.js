@@ -12,7 +12,7 @@
  * details.
  */
 
-(function() {
+(function () {
 	AUI().applyConfig({
 		groups: {
 			productcontent: {
@@ -26,12 +26,12 @@
 							'aui-io-request',
 							'aui-parse-content',
 							'liferay-portlet-base',
-							'liferay-portlet-url'
-						]
-					}
+							'liferay-portlet-url',
+						],
+					},
 				},
-				root: MODULE_PATH + '/js/'
-			}
-		}
+				root: MODULE_PATH + '/js/',
+			},
+		},
 	});
 })();

@@ -19,13 +19,13 @@ export const CLAY_MODAL_SIZES_MAP = {
 	DEFAULT: null,
 	FULL_SCREEN: 'full-screen',
 	[LARGE]: 'lg',
-	[SMALL]: 'sm'
+	[SMALL]: 'sm',
 };
 
 export const MODAL_HEIGHT_MAP = {
 	INITIAL: '450px',
 	[LARGE]: '450px',
-	[SMALL]: '350px'
+	[SMALL]: '350px',
 };
 
 export const INITIAL_MODAL_SIZE = LARGE;

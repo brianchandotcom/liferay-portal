@@ -21,15 +21,8 @@ CommerceOrganizationDisplayContext commerceOrganizationDisplayContext = (Commerc
 %>
 
 <div class="commerce-organization-container" id="<portlet:namespace />entriesContainer">
-
-	<%
-	Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-		"organizationId", String.valueOf(commerceOrganizationDisplayContext.getOrganizationId())
-	).build();
-	%>
-
 	<commerce-ui:dataset-display
-		contextParams="<%= contextParams %>"
+		contextParams='<%= HashMapBuilder.<String, String>put("organizationId", String.valueOf(commerceOrganizationDisplayContext.getOrganizationId())).build() %>'
 		dataProviderKey="<%= CommerceOrganizationAccountClayTableDataSetDisplayView.NAME %>"
 		id="<%= CommerceOrganizationAccountClayTableDataSetDisplayView.NAME %>"
 		itemsPerPage="<%= 10 %>"
@@ -50,15 +43,12 @@ CommerceOrganizationDisplayContext commerceOrganizationDisplayContext = (Commerc
 	</aui:form>
 
 	<aui:script>
-		Liferay.provide(
-		window,
-		'deleteCommerceOrganizationAccount',
-			function(id) {
-				document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value = '<%= Constants.REMOVE %>';
-				document.querySelector('#<portlet:namespace />organizationId').value = id;
+		Liferay.provide(window, 'deleteCommerceOrganizationAccount', function (id) {
+			document.querySelector('#<portlet:namespace /><%= Constants.CMD %>').value =
+				'<%= Constants.REMOVE %>';
+			document.querySelector('#<portlet:namespace />organizationId').value = id;
 
-				submitForm(document.<portlet:namespace />commerceAccountOrganizationRelFm);
-			}
-		);
+			submitForm(document.<portlet:namespace />commerceAccountOrganizationRelFm);
+		});
 	</aui:script>
 </c:if>

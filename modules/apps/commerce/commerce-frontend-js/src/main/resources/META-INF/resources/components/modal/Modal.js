@@ -15,12 +15,12 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
 	CLOSE_MODAL,
 	IS_LOADING_MODAL,
-	OPEN_MODAL
+	OPEN_MODAL,
 } from '../../utilities/eventsDefinitions';
 import {isPageInIframe} from '../../utilities/iframes';
 import {liferayNavigate} from '../../utilities/index';
@@ -36,14 +36,14 @@ function Modal(props) {
 	const [size, setSize] = useState(INITIAL_MODAL_SIZE);
 
 	const {observer, onClose: close} = useModal({
-		onClose: notification => {
+		onClose: (notification) => {
 			if (onClose) {
 				onClose(notification);
 			}
 
 			setLoading(false);
 			setVisible(false);
-		}
+		},
 	});
 
 	useEffect(() => {
@@ -79,13 +79,16 @@ function Modal(props) {
 
 		function handleCloseModal({
 			redirectURL = '',
-			successNotification = {}
+			successNotification = {},
 		}) {
-			if (!visible) return;
+			if (!visible) {
+				return;
+			}
 
 			if (redirectURL) {
 				liferayNavigate(redirectURL);
-			} else {
+			}
+			else {
 				close(successNotification);
 			}
 		}
@@ -132,7 +135,7 @@ function Modal(props) {
 						className="modal-body modal-body-iframe"
 						style={{
 							height: resolveModalHeight(size),
-							maxHeight: '100%'
+							maxHeight: '100%',
 						}}
 					>
 						<iframe src={url} title={title} />
@@ -157,7 +160,7 @@ Modal.propTypes = {
 	spritemap: PropTypes.string,
 	status: PropTypes.string,
 	title: PropTypes.string,
-	url: PropTypes.string
+	url: PropTypes.string,
 };
 
 export default Modal;

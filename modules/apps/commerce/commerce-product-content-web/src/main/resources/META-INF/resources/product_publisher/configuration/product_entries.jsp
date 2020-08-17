@@ -137,7 +137,7 @@ List<CPCatalogEntry> catalogEntries = cpPublisherConfigurationDisplayContext.get
 </aui:script>
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace />addCommerceProductDefinition').on('click', function(
+	$('#<portlet:namespace />addCommerceProductDefinition').on('click', function (
 		event
 	) {
 		event.preventDefault();
@@ -145,7 +145,7 @@ List<CPCatalogEntry> catalogEntries = cpPublisherConfigurationDisplayContext.get
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 			eventName: 'productDefinitionsSelectItem',
 			on: {
-				selectedItemChange: function(event) {
+				selectedItemChange: function (event) {
 					var <portlet:namespace />addCPDefinitionIds = [];
 
 					var selectedItems = event.newVal;
@@ -159,11 +159,11 @@ List<CPCatalogEntry> catalogEntries = cpPublisherConfigurationDisplayContext.get
 
 						submitForm(document.<portlet:namespace />fm);
 					}
-				}
+				},
 			},
 			title: 'add-new-product-to-x',
 			url:
-				'<%= cpPublisherConfigurationDisplayContext.getItemSelectorUrl() %>'
+				'<%= cpPublisherConfigurationDisplayContext.getItemSelectorUrl() %>',
 		});
 
 		itemSelectorDialog.open();

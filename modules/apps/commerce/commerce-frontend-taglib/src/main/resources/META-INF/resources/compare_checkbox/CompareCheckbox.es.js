@@ -46,11 +46,13 @@ class CompareCheckbox extends Component {
 
 	_enableCompare() {
 		this.compareAvailable = true;
+
 		return this._emitUpdates();
 	}
 
 	_disableCompare() {
 		this.compareAvailable = false;
+
 		return this._emitUpdates();
 	}
 
@@ -58,22 +60,24 @@ class CompareCheckbox extends Component {
 		if (data.id === this.productId) {
 			this.inCompare = false;
 		}
+
 		return this._emitUpdates();
 	}
 
 	_emitUpdates() {
 		this.emit('checkboxCompareUpdated', {
 			compareAvailable: this.compareAvailable,
-			inCompare: this.inCompare
+			inCompare: this.inCompare,
 		});
 	}
 
 	_handleCompareCheckbox(evt) {
 		evt.preventDefault();
 		this.inCompare = !this.inCompare;
+
 		return Liferay.fire('toggleProductToCompare', {
 			id: this.productId,
-			thumbnail: this.pictureUrl || null
+			thumbnail: this.pictureUrl || null,
 		});
 	}
 }
@@ -86,7 +90,7 @@ CompareCheckbox.STATE = {
 	inCompare: Config.bool(),
 	labelVisible: Config.bool(),
 	pictureUrl: Config.string(),
-	productId: Config.oneOfType([Config.number(), Config.string()]).required()
+	productId: Config.oneOfType([Config.number(), Config.string()]).required(),
 };
 
 export {CompareCheckbox};

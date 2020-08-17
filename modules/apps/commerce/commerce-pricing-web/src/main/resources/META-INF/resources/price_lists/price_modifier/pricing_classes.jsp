@@ -42,20 +42,20 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 						productGroupExternalReferenceCode: productGroup.externalReferenceCode,
 						productGroupId: productGroup.id,
 						priceModifierExternalReferenceCode: priceModifierExternalReferenceCode,
-						priceModifierId: id
+						priceModifierId: id,
 					};
 
 					return CommercePriceModifierProductGroupsResource.addPriceModifierProductGroup(
 						id,
 						productGroupData
 					)
-						.then(function() {
+						.then(function () {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 								id:
-									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_PRICING_CLASSES %>'
+									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_PRICING_CLASSES %>',
 							});
 						})
-						.catch(function(error) {
+						.catch(function (error) {
 							return Promise.reject(error);
 						});
 				}
@@ -74,7 +74,7 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 					itemsKey: 'id',
 					itemCreation: false,
 					linkedDatasetsId: [
-						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_PRICING_CLASSES %>'
+						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_PRICING_CLASSES %>',
 					],
 					onItemSelected: selectItem,
 					pageSize: 10,
@@ -83,11 +83,12 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 					portletId: '<%= portletDisplay.getRootPortletId() %>',
 					schema: [
 						{
-							fieldName: ['title', 'LANG']
-						}
+							fieldName: ['title', 'LANG'],
+						},
 					],
 					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-					titleLabel: '<%= LanguageUtil.get(request, "add-existing-product-group") %>'
+					titleLabel:
+						'<%= LanguageUtil.get(request, "add-existing-product-group") %>',
 				});
 			</aui:script>
 		</div>

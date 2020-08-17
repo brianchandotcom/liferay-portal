@@ -42,20 +42,20 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 						productExternalReferenceCode: product.externalReferenceCode,
 						productId: product.id,
 						priceModifierExternalReferenceCode: priceModifierExternalReferenceCode,
-						priceModifierId: id
+						priceModifierId: id,
 					};
 
 					return CommercePriceModifierProductsResource.addPriceModifierProduct(
 						id,
 						productData
 					)
-						.then(function() {
+						.then(function () {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 								id:
-									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_PRODUCT_DEFINITIONS %>'
+									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_PRODUCT_DEFINITIONS %>',
 							});
 						})
-						.catch(function(error) {
+						.catch(function (error) {
 							return Promise.reject(error);
 						});
 				}
@@ -71,7 +71,7 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 					inputPlaceholder: '<%= LanguageUtil.get(request, "find-a-product") %>',
 					itemSelectedMessage: '<%= LanguageUtil.get(request, "product-selected") %>',
 					linkedDatasetsId: [
-						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_PRODUCT_DEFINITIONS %>'
+						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_PRODUCT_DEFINITIONS %>',
 					],
 					itemCreation: false,
 					itemsKey: 'id',
@@ -81,14 +81,14 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 					portletId: '<%= portletDisplay.getRootPortletId() %>',
 					schema: [
 						{
-							fieldName: ['name', 'LANG']
+							fieldName: ['name', 'LANG'],
 						},
 						{
-							fieldName: 'productId'
-						}
+							fieldName: 'productId',
+						},
 					],
 					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-					titleLabel: '<%= LanguageUtil.get(request, "add-existing-product") %>'
+					titleLabel: '<%= LanguageUtil.get(request, "add-existing-product") %>',
 				});
 			</aui:script>
 		</div>

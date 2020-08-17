@@ -394,7 +394,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectSubscriptionType',
-		function() {
+		function () {
 			var A = AUI();
 
 			var subscriptionLength = A.one(
@@ -423,7 +423,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectDeliverySubscriptionType',
-		function() {
+		function () {
 			var A = AUI();
 
 			var deliverySubscriptionLength = A.one(
@@ -460,14 +460,14 @@ if (deliveryMaxSubscriptionCycles > 0) {
 </aui:script>
 
 <aui:script use="liferay-form">
-	A.one('#<portlet:namespace />neverEnds').on('change', function(event) {
+	A.one('#<portlet:namespace />neverEnds').on('change', function (event) {
 		var formValidator = Liferay.Form.get('<portlet:namespace />fm')
 			.formValidator;
 
 		formValidator.validateField('<portlet:namespace />maxSubscriptionCycles');
 	});
 
-	A.one('#<portlet:namespace />deliveryNeverEnds').on('change', function(event) {
+	A.one('#<portlet:namespace />deliveryNeverEnds').on('change', function (event) {
 		var formValidator = Liferay.Form.get('<portlet:namespace />fm')
 			.formValidator;
 
@@ -484,7 +484,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 		expanded: <%= ending %>,
 		header: '#<portlet:namespace />neverEnds',
 		on: {
-			animatingChange: function(event) {
+			animatingChange: function (event) {
 				var instance = this;
 
 				if (!instance.get('expanded')) {
@@ -492,14 +492,15 @@ if (deliveryMaxSubscriptionCycles > 0) {
 						'disabled',
 						false
 					);
-				} else {
+				}
+				else {
 					A.one('#<portlet:namespace />maxSubscriptionCycles').attr(
 						'disabled',
 						true
 					);
 				}
-			}
-		}
+			},
+		},
 	});
 
 	new A.Toggler({
@@ -508,19 +509,20 @@ if (deliveryMaxSubscriptionCycles > 0) {
 		expanded: <%= deliveryEnding %>,
 		header: '#<portlet:namespace />deliveryNeverEnds',
 		on: {
-			animatingChange: function(event) {
+			animatingChange: function (event) {
 				var instance = this;
 
 				if (!instance.get('expanded')) {
 					A.one(
 						'#<portlet:namespace />deliveryMaxSubscriptionCycles'
 					).attr('disabled', false);
-				} else {
+				}
+				else {
 					A.one(
 						'#<portlet:namespace />deliveryMaxSubscriptionCycles'
 					).attr('disabled', true);
 				}
-			}
-		}
+			},
+		},
 	});
 </aui:script>

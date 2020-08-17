@@ -70,11 +70,11 @@ productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
 </div>
 
 <aui:script use="liferay-item-selector-dialog">
-	Liferay.on('<portlet:namespace />addCommercePriceEntry', function() {
+	Liferay.on('<portlet:namespace />addCommercePriceEntry', function () {
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 			eventName: 'priceListsSelectItem',
 			on: {
-				selectedItemChange: function(event) {
+				selectedItemChange: function (event) {
 					var selectedItems = event.newVal;
 
 					if (selectedItems) {
@@ -88,12 +88,12 @@ productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
 
 						submitForm(addCommercePriceEntryFm);
 					}
-				}
+				},
 			},
 			title:
 				'<liferay-ui:message arguments="<%= HtmlUtil.escape(cpInstance.getSku()) %>" key="add-x-to-price-list" />',
 			url:
-				'<%= cpInstanceCommercePriceEntryDisplayContext.getItemSelectorUrl() %>'
+				'<%= cpInstanceCommercePriceEntryDisplayContext.getItemSelectorUrl() %>',
 		});
 
 		itemSelectorDialog.open();

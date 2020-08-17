@@ -36,7 +36,7 @@ function FilterResume(props) {
 			closeButtonProps={{
 				className: 'filter-resume-close',
 				disabled: props.disabled,
-				onClick: () => actions.updateFilterState(props.id)
+				onClick: () => actions.updateFilterState(props.id),
 			}}
 			role="button"
 		>
@@ -71,7 +71,7 @@ FilterResume.propTypes = {
 	disabled: PropTypes.bool,
 	formattedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	id: PropTypes.string,
-	label: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+	label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default FilterResume;

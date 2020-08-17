@@ -33,17 +33,17 @@
 						discountExternalReferenceCode: discountExternalReferenceCode,
 						discountId: id,
 						productExternalReferenceCode: product.externalReferenceCode,
-						productId: product.id
+						productId: product.id,
 					};
 
 					return CommerceDiscountProductsResource.addDiscountProduct(id, productData)
-						.then(function() {
+						.then(function () {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 								id:
-									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_PRODUCT_DEFINITIONS %>'
+									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_PRODUCT_DEFINITIONS %>',
 							});
 						})
-						.catch(function(error) {
+						.catch(function (error) {
 							return Promise.reject(error);
 						});
 				}
@@ -61,7 +61,7 @@
 					itemSelectedMessage: '<%= LanguageUtil.get(request, "product-selected") %>',
 					itemsKey: 'id',
 					linkedDatasetsId: [
-						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_PRODUCT_DEFINITIONS %>'
+						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_PRODUCT_DEFINITIONS %>',
 					],
 					onItemSelected: selectItem,
 					pageSize: 10,
@@ -69,17 +69,17 @@
 					portletId: '<%= portletDisplay.getRootPortletId() %>',
 					schema: [
 						{
-							fieldName: ['name', 'LANG']
+							fieldName: ['name', 'LANG'],
 						},
 						{
-							fieldName: 'productId'
+							fieldName: 'productId',
 						},
 						{
-							fieldName: ['catalog', 'name']
-						}
+							fieldName: ['catalog', 'name'],
+						},
 					],
 					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-					titleLabel: '<%= LanguageUtil.get(request, "add-existing-product") %>'
+					titleLabel: '<%= LanguageUtil.get(request, "add-existing-product") %>',
 				});
 			</aui:script>
 		</div>

@@ -13,7 +13,7 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {getComponentByModuleUrl} from '../../../../../utilities/modules';
 import AutocompleteFilter from './AutocompleteFilter';
@@ -29,7 +29,7 @@ export const filterIdToComponentMap = {
 	dateRange: DateRangeFilter,
 	number: NumberFilter,
 	radio: RadioFilter,
-	text: TextFilter
+	text: TextFilter,
 };
 
 export function Filter(props) {
@@ -42,14 +42,15 @@ export function Filter(props) {
 			}
 
 			return Matched;
-		} else {
+		}
+		else {
 			return null;
 		}
 	});
 
 	useEffect(() => {
 		if (props.moduleUrl) {
-			getComponentByModuleUrl(props.moduleUrl).then(FetchedComponent =>
+			getComponentByModuleUrl(props.moduleUrl).then((FetchedComponent) =>
 				updateComponent(() => FetchedComponent)
 			);
 		}

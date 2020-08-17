@@ -21,7 +21,7 @@ export default function Thumbnail({
 	background,
 	onClick,
 	src,
-	title
+	title,
 }) {
 	const cardClasses = classNames(
 		'card',
@@ -47,5 +47,5 @@ Thumbnail.propTypes = {
 	active: PropTypes.bool,
 	onClick: PropTypes.func,
 	src: PropTypes.string.isRequired,
-	title: PropTypes.string.isRequired
+	title: PropTypes.string.isRequired,
 };

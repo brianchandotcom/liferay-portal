@@ -20,66 +20,67 @@
 			<div id="item-finder-root"></div>
 
 			<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-const CommerceDiscountProductGroupsResource = ServiceProvider.default.AdminPricingAPI(
-	'v2'
-);
+				const CommerceDiscountProductGroupsResource = ServiceProvider.default.AdminPricingAPI(
+					'v2'
+				);
 
-var id = <%= commerceDiscountId %>;
-var discountExternalReferenceCode =
-	'<%= commerceDiscount.getExternalReferenceCode() %>';
+				var id = <%= commerceDiscountId %>;
+				var discountExternalReferenceCode =
+					'<%= commerceDiscount.getExternalReferenceCode() %>';
 
-function selectItem(productGroup) {
-	var productGroupData = {
-		discountExternalReferenceCode: discountExternalReferenceCode,
-		discountId: id,
-		productGroupExternalReferenceCode: productGroup.externalReferenceCode,
-		productGroupId: productGroup.id
-	};
+				function selectItem(productGroup) {
+					var productGroupData = {
+						discountExternalReferenceCode: discountExternalReferenceCode,
+						discountId: id,
+						productGroupExternalReferenceCode: productGroup.externalReferenceCode,
+						productGroupId: productGroup.id,
+					};
 
-	return CommerceDiscountProductGroupsResource.addDiscountProductGroup(
-		id,
-		productGroupData
-	)
-		.then(function() {
-			Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
-				id:
-					'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_PRICING_CLASSES %>'
-			});
-		})
-		.catch(function(error) {
-			return Promise.reject(error);
-		});
-}
+					return CommerceDiscountProductGroupsResource.addDiscountProductGroup(
+						id,
+						productGroupData
+					)
+						.then(function () {
+							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+								id:
+									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_PRICING_CLASSES %>',
+							});
+						})
+						.catch(function (error) {
+							return Promise.reject(error);
+						});
+				}
 
-function getSelectedItems() {
-	return Promise.resolve([]);
-}
+				function getSelectedItems() {
+					return Promise.resolve([]);
+				}
 
-itemFinder.default('itemFinder', 'item-finder-root', {
-	apiUrl: '/o/headless-commerce-admin-catalog/v1.0/product-groups',
-	getSelectedItems: getSelectedItems,
-	inputPlaceholder:
-		'<%= LanguageUtil.get(request, "find-a-product-group") %>',
-	itemCreation: false,
-	itemSelectedMessage:
-		'<%= LanguageUtil.get(request, "product-group-selected") %>',
-	itemsKey: 'id',
-	linkedDatasetsId: [
-		'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_PRICING_CLASSES %>'
-	],
-	onItemSelected: selectItem,
-	pageSize: 10,
-	panelHeaderLabel:
-		'<%= LanguageUtil.get(request, "select-product-group") %>',
-	portletId: '<%= portletDisplay.getRootPortletId() %>',
-	schema: [
-		{
-			fieldName: ['title', 'LANG']
-		}
-	],
-	spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-	titleLabel: '<%= LanguageUtil.get(request, "add-existing-product-group") %>'
-});
+				itemFinder.default('itemFinder', 'item-finder-root', {
+					apiUrl: '/o/headless-commerce-admin-catalog/v1.0/product-groups',
+					getSelectedItems: getSelectedItems,
+					inputPlaceholder:
+						'<%= LanguageUtil.get(request, "find-a-product-group") %>',
+					itemCreation: false,
+					itemSelectedMessage:
+						'<%= LanguageUtil.get(request, "product-group-selected") %>',
+					itemsKey: 'id',
+					linkedDatasetsId: [
+						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_PRICING_CLASSES %>',
+					],
+					onItemSelected: selectItem,
+					pageSize: 10,
+					panelHeaderLabel:
+						'<%= LanguageUtil.get(request, "select-product-group") %>',
+					portletId: '<%= portletDisplay.getRootPortletId() %>',
+					schema: [
+						{
+							fieldName: ['title', 'LANG'],
+						},
+					],
+					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
+					titleLabel:
+						'<%= LanguageUtil.get(request, "add-existing-product-group") %>',
+				});
 			</aui:script>
 		</div>
 

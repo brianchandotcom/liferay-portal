@@ -93,32 +93,34 @@ PortletURL portletURL = commerceApplicationModelItemSelectorViewDisplayContext.g
 </div>
 
 <aui:script use="liferay-search-container">
-	var commerceApplicationModelSelectorWrapper = A.one("#<portlet:namespace />commerceApplicationModelSelectorWrapper");
-
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />commerceApplicationModels');
-
-	searchContainer.on(
-		'rowToggled',
-		function(event) {
-			var allSelectedElements = event.elements.allSelectedElements
-			var arr = [];
-
-			allSelectedElements.each(
-				function() {
-					var row = this.ancestor('tr');
-
-					var data = row.getDOM().dataset;
-
-					arr.push({commerceApplicationModelId : data.commerceApplicationModelId, name : data.name});
-				}
-			);
-
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
-				{
-					data: arr
-				}
-			);
-		}
+	var commerceApplicationModelSelectorWrapper = A.one(
+		'#<portlet:namespace />commerceApplicationModelSelectorWrapper'
 	);
+
+	var searchContainer = Liferay.SearchContainer.get(
+		'<portlet:namespace />commerceApplicationModels'
+	);
+
+	searchContainer.on('rowToggled', function (event) {
+		var allSelectedElements = event.elements.allSelectedElements;
+		var arr = [];
+
+		allSelectedElements.each(function () {
+			var row = this.ancestor('tr');
+
+			var data = row.getDOM().dataset;
+
+			arr.push({
+				commerceApplicationModelId: data.commerceApplicationModelId,
+				name: data.name,
+			});
+		});
+
+		Liferay.Util.getOpener().Liferay.fire(
+			'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
+			{
+				data: arr,
+			}
+		);
+	});
 </aui:script>

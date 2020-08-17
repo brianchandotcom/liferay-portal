@@ -24,6 +24,7 @@ import templates from './TagSelector.soy';
  */
 
 class TagSelector extends Component {
+
 	/**
 	 * Focuses the input field (tagInput ref) used for adding new tags.
 	 * @private
@@ -59,7 +60,7 @@ class TagSelector extends Component {
 				hiddenInput: `#${this.refs.hiddenInput.getAttribute('id')}`,
 				input: `#${this.refs.tagInput.getAttribute('id')}`,
 				portletURL: this.tagSelectorURL,
-				tagNames: this.rule.queryValues || ''
+				tagNames: this.rule.queryValues || '',
 			};
 
 			this.tagsSelector_ = new Liferay.AssetTaglibTagsSelector(config);
@@ -76,6 +77,7 @@ class TagSelector extends Component {
 }
 
 TagSelector.STATE = {
+
 	/**
 	 * Name of the event that will be fired when the tag selector dialog
 	 * request being closed
@@ -125,7 +127,7 @@ TagSelector.STATE = {
 	 * the select button will not appear.
 	 */
 
-	tagSelectorURL: Config.string().value('')
+	tagSelectorURL: Config.string().value(''),
 };
 
 Soy.register(TagSelector, templates);

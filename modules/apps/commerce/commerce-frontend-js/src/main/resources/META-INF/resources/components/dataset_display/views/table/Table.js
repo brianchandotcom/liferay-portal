@@ -15,7 +15,7 @@
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import {getValueFromItem} from '../../../../utilities/index';
 import ActionsDropdownRenderer from '../../../data_renderers/ActionsDropdownRenderer';
@@ -24,7 +24,7 @@ import CommentRenderer from '../../../data_renderers/CommentRenderer';
 import RadioRenderer from '../../../data_renderers/RadioRenderer';
 import {
 	getDataRendererById,
-	getDataRendererByUrl
+	getDataRendererByUrl,
 } from '../../../data_renderers/index';
 import DatasetDisplayContext from '../../DatasetDisplayContext';
 import TableHeadRow from './TableHeadRow';
@@ -35,7 +35,7 @@ function CustomTableCell(props) {
 		...view,
 		Component: view.contentRendererModuleUrl
 			? null
-			: getDataRendererById(view.contentRenderer)
+			: getDataRendererById(view.contentRenderer),
 	});
 	const [loading, setLoading] = useState(false);
 
@@ -46,10 +46,10 @@ function CustomTableCell(props) {
 		if (currentView.contentRendererModuleUrl) {
 			setLoading(true);
 			getDataRendererByUrl(currentView.contentRendererModuleUrl).then(
-				Component => {
+				(Component) => {
 					updateCurrentView({
 						...currentView,
-						Component
+						Component,
 					});
 					setLoading(false);
 				}
@@ -89,6 +89,7 @@ function getItemFields(item, fields, itemId, itemsActions) {
 			? field.mapData(rawValue)
 			: rawValue;
 		const comment = comments ? comments[field.fieldName] : null;
+
 		return (
 			<CustomTableCell
 				actions={itemsActions || actionItems}
@@ -100,7 +101,7 @@ function getItemFields(item, fields, itemId, itemsActions) {
 				value={formattedValue}
 				view={{
 					contentRenderer: field.contentRenderer,
-					contentRendererModuleUrl: field.contentRendererModuleUrl
+					contentRendererModuleUrl: field.contentRendererModuleUrl,
 				}}
 			/>
 		);
@@ -119,12 +120,12 @@ function Table(props) {
 		selectedItemsValue,
 		selectionType,
 		sorting,
-		updateSorting
+		updateSorting,
 	} = useContext(DatasetDisplayContext);
 
 	const showActionItems = Boolean(
 		(props.itemsActions && props.itemsActions.length) ||
-			props.items.find(el => el.actionItems)
+			props.items.find((el) => el.actionItems)
 	);
 
 	const SelectionComponent =
@@ -136,11 +137,11 @@ function Table(props) {
 				<TableHeadRow
 					items={props.items}
 					schema={props.schema}
-					selectItems={selectItems}
 					selectable={selectable}
 					selectedItemsKey={selectedItemsKey}
 					selectedItemsValue={selectedItemsValue}
 					selectionType={selectionType}
+					selectItems={selectItems}
 					showActionItems={showActionItems}
 					sorting={sorting}
 					updateSorting={updateSorting}
@@ -174,7 +175,7 @@ function Table(props) {
 											<SelectionComponent
 												checked={
 													!!selectedItemsValue.find(
-														el =>
+														(el) =>
 															String(el) ===
 															String(itemId)
 													)
@@ -254,17 +255,17 @@ Table.propTypes = {
 			PropTypes.shape({
 				fieldName: PropTypes.oneOfType([
 					PropTypes.string,
-					PropTypes.array
+					PropTypes.array,
 				]),
-				mapData: PropTypes.func
+				mapData: PropTypes.func,
 			})
-		).isRequired
+		).isRequired,
 	}).isRequired,
-	style: PropTypes.string.isRequired
+	style: PropTypes.string.isRequired,
 };
 
 Table.defaultProps = {
-	items: []
+	items: [],
 };
 
 export default Table;

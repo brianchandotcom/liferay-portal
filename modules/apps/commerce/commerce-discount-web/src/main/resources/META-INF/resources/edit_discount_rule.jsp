@@ -107,7 +107,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectType',
-		function() {
+		function () {
 			var A = AUI();
 
 			var type = A.one('#<portlet:namespace />type').val();

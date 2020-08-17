@@ -35,7 +35,7 @@ function CartItemsList({items}) {
 			{numberOfItems > 0 ? (
 				<>
 					<div className={'mini-cart-cart-items'}>
-						{items.map(item => (
+						{items.map((item) => (
 							<CartItem item={item} key={item.id} />
 						))}
 					</div>
@@ -69,7 +69,7 @@ function CartItemsList({items}) {
 }
 
 CartItemsList.propTypes = {
-	items: PropTypes.array
+	items: PropTypes.array,
 };
 
 export default CartItemsList;

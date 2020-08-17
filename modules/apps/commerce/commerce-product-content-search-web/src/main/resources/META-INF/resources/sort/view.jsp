@@ -61,7 +61,7 @@ String orderByCol = cpSearchResultsDisplayContext.getOrderByCol();
 				<aui:script>
 					document
 						.querySelector('#<%= liferayPortletResponse.getNamespace() + sortOption %>')
-						.addEventListener('click', function(e) {
+						.addEventListener('click', function (e) {
 							e.preventDefault();
 							<%= liferayPortletResponse.getNamespace() + "changeOrderBy('" + sortOption + "');" %>;
 						});
@@ -79,7 +79,7 @@ String orderByCol = cpSearchResultsDisplayContext.getOrderByCol();
 	Liferay.provide(
 		window,
 		'<portlet:namespace />changeOrderBy',
-		function(orderBy) {
+		function (orderBy) {
 			var portletURL = new Liferay.PortletURL.createURL(
 				'<%= themeDisplay.getURLCurrent() %>'
 			);

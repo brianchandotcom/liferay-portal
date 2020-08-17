@@ -269,7 +269,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		if (orderTransition) {
 			orderTransition.delegate(
 				'click',
-				function(event) {
+				function (event) {
 					<portlet:namespace />transition(event);
 				},
 				'.transition-link'
@@ -278,7 +278,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	</aui:script>
 
 	<aui:script>
-		Liferay.after('commerce:productAddedToCart', function(event) {
+		Liferay.after('commerce:productAddedToCart', function (event) {
 			Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
 		});
 	</aui:script>

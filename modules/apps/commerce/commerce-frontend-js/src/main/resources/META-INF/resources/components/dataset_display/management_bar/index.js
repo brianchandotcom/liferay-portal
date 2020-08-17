@@ -76,13 +76,13 @@ Wrapper.propTypes = {
 	selectionType: PropTypes.oneOf(['single', 'multiple']).isRequired,
 	setActiveView: PropTypes.func.isRequired,
 	showSearch: PropTypes.bool,
-	views: PropTypes.array.isRequired
+	views: PropTypes.array.isRequired,
 };
 
 Wrapper.defaultProps = {
 	filters: [],
 	fluid: false,
-	showSearch: true
+	showSearch: true,
 };
 
 export default Wrapper;

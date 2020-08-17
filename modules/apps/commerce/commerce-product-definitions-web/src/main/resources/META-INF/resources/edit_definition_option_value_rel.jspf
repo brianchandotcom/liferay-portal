@@ -115,25 +115,27 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 				inputName: '<%= liferayPortletResponse.getNamespace() %>cpInstanceId',
 				itemsKey: 'id',
 				itemsLabel: 'sku',
-				onValueUpdated: function(value) {
+				onValueUpdated: function (value) {
 					if (value) {
 						quantityInput.disabled = false;
 						deleteButton.disabled = false;
-					} else {
+					}
+					else {
 						quantityInput.disabled = true;
 						deleteButton.disabled = true;
 					}
-				}
+				},
 			});
 
-			Liferay.provide(window, '<portlet:namespace />removeSku', function() {
+			Liferay.provide(window, '<portlet:namespace />removeSku', function () {
 				var url = new URL(
 					'<%= cpDefinitionOptionValueRelDisplayContext.getRemoveSkuUrl(currentURL) %>'
 				);
 
 				if (Liferay.SPA) {
 					Liferay.SPA.app.navigate(url.toString());
-				} else {
+				}
+				else {
 					window.location.href = url.toString();
 				}
 			});
@@ -150,7 +152,7 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 		var keyInput = form.querySelector('#<portlet:namespace />key');
 		var nameInput = form.querySelector('#<portlet:namespace />optionValueName');
 
-		var handleOnNameInput = function() {
+		var handleOnNameInput = function () {
 			keyInput.value = slugify.default(nameInput.value);
 		};
 

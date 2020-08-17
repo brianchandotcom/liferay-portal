@@ -15,7 +15,7 @@
 import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import PropTypes from 'prop-types';
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import DatasetDisplayContext from '../../DatasetDisplayContext';
 
@@ -30,23 +30,24 @@ function SelectableTable(props) {
 	}, [props.items]);
 
 	function handleCheckboxChange(itemField, itemId, value) {
-		const updatedItems = items.map(item => {
+		const updatedItems = items.map((item) => {
 			const currentItemId = item[selectedItemsKey];
 			if (!itemId || currentItemId === itemId) {
 				return {
 					...item,
-					fields: item.fields.map(currentField => {
-						if (itemField !== currentField.name)
+					fields: item.fields.map((currentField) => {
+						if (itemField !== currentField.name) {
 							return currentField;
+						}
 
 						return {
 							...currentField,
 							value:
 								typeof value === 'boolean'
 									? value
-									: !currentField.value
+									: !currentField.value,
 						};
-					})
+					}),
 				};
 			}
 
@@ -68,11 +69,11 @@ function SelectableTable(props) {
 						>
 							{props.schema.firstColumnLabel}
 						</ClayTable.Cell>
-						{items[0].fields.map(columnField => {
+						{items[0].fields.map((columnField) => {
 							const checkedItems = items.reduce(
 								(checked, item) => {
 									const field = item.fields.find(
-										itemField =>
+										(itemField) =>
 											itemField.name === columnField.name
 									);
 
@@ -121,7 +122,7 @@ function SelectableTable(props) {
 								<ClayTable.Cell>
 									{item[props.schema.firstColumnName]}
 								</ClayTable.Cell>
-								{item.fields.map(field => {
+								{item.fields.map((field) => {
 									return (
 										<ClayTable.Cell key={field.name}>
 											<ClayCheckbox
@@ -152,13 +153,13 @@ SelectableTable.propTypes = {
 	itemsActions: PropTypes.array,
 	schema: PropTypes.shape({
 		firstColumnLabel: PropTypes.string.isRequired,
-		firstColumnName: PropTypes.string.isRequired
+		firstColumnName: PropTypes.string.isRequired,
 	}).isRequired,
-	style: PropTypes.string.isRequired
+	style: PropTypes.string.isRequired,
 };
 
 SelectableTable.defaultProps = {
-	items: []
+	items: [],
 };
 
 export default SelectableTable;

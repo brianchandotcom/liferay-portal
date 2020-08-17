@@ -158,7 +158,7 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 		<aui:script use="aui-base">
 			A.one('#<portlet:namespace/>cpDefinitions').delegate(
 				'click',
-				function(event) {
+				function (event) {
 					var row = this.ancestor('tr');
 
 					var data = row.getDOM().dataset;
@@ -166,7 +166,7 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 					Liferay.Util.getOpener().Liferay.fire(
 						'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 						{
-							data: {id: data.cpDefinitionId, name: data.name}
+							data: {id: data.cpDefinitionId, name: data.name},
 						}
 					);
 
@@ -190,14 +190,14 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 				'<portlet:namespace />cpDefinitions'
 			);
 
-			searchContainer.on('rowToggled', function(event) {
+			searchContainer.on('rowToggled', function (event) {
 				Liferay.Util.getOpener().Liferay.fire(
 					'<%= HtmlUtil.escapeJS(itemSelectedEventName) %>',
 					{
 						data: Liferay.Util.listCheckedExcept(
 							cpDefinitionSelectorWrapper,
 							'<portlet:namespace />allRowIds'
-						)
+						),
 					}
 				);
 			});

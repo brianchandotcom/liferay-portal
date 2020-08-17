@@ -115,7 +115,7 @@ if (assetVocabulary != null) {
 </aui:form>
 
 <aui:script use="aui-base,event-input">
-	A.one('#<portlet:namespace />submitButton').on('click', function() {
+	A.one('#<portlet:namespace />submitButton').on('click', function () {
 		if (
 			A.one('#<portlet:namespace />preferencesUseRootCategory').attr(
 				'checked'
@@ -138,7 +138,7 @@ if (assetVocabulary != null) {
 
 	A.one('#<portlet:namespace />preferencesUseRootCategory').on(
 		'change',
-		function() {
+		function () {
 			if (this.attr('checked')) {
 				A.one('#<portlet:namespace />assetVocabularyContainer').addClass(
 					'hide'
@@ -146,7 +146,8 @@ if (assetVocabulary != null) {
 				A.one(
 					'#<portlet:namespace />rootAssetCategoryContainer'
 				).removeClass('hide');
-			} else {
+			}
+			else {
 				A.one('#<portlet:namespace />rootAssetCategoryContainer').addClass(
 					'hide'
 				);
@@ -159,12 +160,13 @@ if (assetVocabulary != null) {
 
 	A.one('#<portlet:namespace />preferencesUseCategoryFromRequest').on(
 		'change',
-		function() {
+		function () {
 			if (this.attr('checked')) {
 				A.one(
 					'#<portlet:namespace />rootAssetCategoryIdInputContainer'
 				).addClass('hide');
-			} else {
+			}
+			else {
 				A.one(
 					'#<portlet:namespace />rootAssetCategoryIdInputContainer'
 				).removeClass('hide');

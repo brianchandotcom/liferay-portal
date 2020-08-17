@@ -56,10 +56,10 @@ class CPOptionValuesEditor extends Component {
 		fetch(url, {
 			credentials: 'include',
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'GET'
+			method: 'GET',
 		})
-			.then(response => response.json())
-			.then(jsonResponse => {
+			.then((response) => response.json())
+			.then((jsonResponse) => {
 				this._optionValues = jsonResponse;
 
 				if (this._optionValues && this._optionValues.length > 0) {
@@ -69,7 +69,8 @@ class CPOptionValuesEditor extends Component {
 					) {
 						this._currentOptionValue = this._optionValues[0].cpOptionValueId;
 					}
-				} else if (
+				}
+				else if (
 					this._optionValues &&
 					this._optionValues.length == 0
 				) {
@@ -94,7 +95,8 @@ class CPOptionValuesEditor extends Component {
 
 		if (event.success) {
 			this._showNotification(this.successMessage, 'success');
-		} else {
+		}
+		else {
 			this._showNotification(event.message, 'danger');
 		}
 	}
@@ -114,7 +116,8 @@ class CPOptionValuesEditor extends Component {
 	_handleNameChange(newName) {
 		if (this._currentOptionValue == '0') {
 			this._newOptionValueName = newName;
-		} else {
+		}
+		else {
 			this._newOptionValueName = '';
 		}
 	}
@@ -125,13 +128,13 @@ class CPOptionValuesEditor extends Component {
 				closeable: true,
 				delay: {
 					hide: 5000,
-					show: 0
+					show: 0,
 				},
 				duration: 500,
 				message,
 				render: true,
 				title: '',
-				type
+				type,
 			});
 		});
 	}
@@ -152,7 +155,7 @@ CPOptionValuesEditor.STATE = {
 	optionValuesURL: Config.string().required(),
 	pathThemeImages: Config.string().required(),
 	show: Config.bool().value(false),
-	successMessage: Config.string().required()
+	successMessage: Config.string().required(),
 };
 
 // Register component

@@ -19,8 +19,8 @@ import React from 'react';
 
 export default function SideMenu(props) {
 	return (
-		<ul className="nav side-menu bg-dark" role="tablist">
-			{props.items.map(item => (
+		<ul className="bg-dark nav side-menu" role="tablist">
+			{props.items.map((item) => (
 				<li className="nav-item" key={item.slug}>
 					<ClayButton
 						className={classNames(
@@ -29,7 +29,7 @@ export default function SideMenu(props) {
 						)}
 						displayType="unstyled"
 						monospaced
-						onClick={e => {
+						onClick={(e) => {
 							e.preventDefault();
 							props.open(item.href, item.slug);
 						}}

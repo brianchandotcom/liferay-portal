@@ -33,10 +33,10 @@ String linkId = PortalUtil.generateRandomKey(request, "info-box") + StringPool.U
 					const link = document.getElementById('<%= linkId %>');
 
 					if (link) {
-						link.addEventListener('click', function(e) {
+						link.addEventListener('click', function (e) {
 							e.preventDefault();
 							Liferay.fire(eventsDefinitions.OPEN_MODAL, {
-								id: '<%= actionTargetId %>'
+								id: '<%= actionTargetId %>',
 							});
 						});
 					}

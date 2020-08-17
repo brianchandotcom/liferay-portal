@@ -25,8 +25,8 @@ export function listenToBulkActionStatus(
 		new Promise((resolve, reject) => {
 			interval = setInterval(function getBulkActionStatus() {
 				return fetch(`${batchTasksStatusApiUrl}/${id}`, fetchParams)
-					.then(response => response.json())
-					.then(jsonResponse => {
+					.then((response) => response.json())
+					.then((jsonResponse) => {
 						if (jsonResponse.executeStatus === 'COMPLETED') {
 							clearInterval(interval);
 							resolve('success');
@@ -43,6 +43,6 @@ export function listenToBulkActionStatus(
 				clearInterval(interval);
 				reject(Liferay.Language.get('request-timeout'));
 			}, timeout)
-		)
+		),
 	]);
 }

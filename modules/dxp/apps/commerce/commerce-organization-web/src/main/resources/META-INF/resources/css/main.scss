@@ -1,4 +1,4 @@
-@import "mixins";
+@import 'mixins';
 
 $black: #000;
 $primary: #233240;
@@ -7,7 +7,8 @@ $miniumSidebarWidth: 70px;
 $portalControlMenuHeight: 56px;
 $miniumTopbar: 70px;
 
-ul, li {
+ul,
+li {
 	margin: 0;
 	padding: 0;
 }
@@ -42,7 +43,7 @@ ul, li {
 
 @mixin paneBlocks() {
 	align-items: center;
-	border-bottom: 1px solid #F2F2F2;
+	border-bottom: 1px solid #f2f2f2;
 	box-sizing: border-box;
 	display: flex;
 	width: 100%;
@@ -52,7 +53,7 @@ ul, li {
 	box-sizing: border-box;
 	margin-bottom: 12px;
 	padding-left: calc(100% - 185px);
-	
+
 	&.chart {
 		padding-left: calc(100% - #{$membersPaneWidth} - 185px);
 	}
@@ -76,7 +77,7 @@ ul, li {
 	position: relative;
 	user-select: none;
 
-	/* ---------- BEGIN boilerplate css ---------- */
+	// ---------- BEGIN boilerplate css ----------
 
 	button {
 		background: none;
@@ -85,7 +86,7 @@ ul, li {
 		padding: 0;
 	}
 
-	/* ---------- END boilerplate css ---------- */
+	// ---------- END boilerplate css ----------
 
 	.org-chart-container {
 		min-height: 100%;
@@ -97,18 +98,18 @@ ul, li {
 
 			path.link {
 				fill: transparent;
-				stroke: #B3CBF5;
+				stroke: #b3cbf5;
 			}
 
 			.node {
-				fill: #FFF;
+				fill: #fff;
 				rx: 8px;
 				ry: 8px;
 				stroke: transparent;
 
 				&.selected {
 					filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
-					stroke: #D4E1F9;
+					stroke: #d4e1f9;
 					stroke-width: 4px;
 				}
 
@@ -129,18 +130,18 @@ ul, li {
 
 					&:hover {
 						* {
-							fill: #B3CBF5;
+							fill: #b3cbf5;
 						}
 
 						text {
-							fill: #FFF;
+							fill: #fff;
 						}
 					}
 				}
 
 				text {
 					&.name {
-						fill: #5C5E5E;
+						fill: #5c5e5e;
 						font-size: 14px;
 					}
 
@@ -162,12 +163,12 @@ ul, li {
 			width: 100%;
 
 			.zoom {
-				@include themeRectangleProperties(true, #FFF);
+				@include themeRectangleProperties(true, #fff);
 				align-items: center;
-				background: #FFF;
+				background: #fff;
 				bottom: 70px;
 				box-shadow: 0 15px 20px -12px rgba(0, 0, 0, 0.15);
-				color: #6E6E6E;
+				color: #6e6e6e;
 				display: flex;
 				font-size: 20px;
 				height: 56px;
@@ -192,26 +193,26 @@ ul, li {
 					}
 
 					&:hover {
-						background-color: #EEE;
+						background-color: #eee;
 						transition: background-color 0.2s ease-in;
 					}
 				}
 
 				&-percentage {
-					color: #5C5E5E;
+					color: #5c5e5e;
 					font-size: 14px;
 					font-weight: bold;
 				}
 			}
 
 			.add-organization {
-				@include themeRectangleProperties(true, #4C84FF);
+				@include themeRectangleProperties(true, #4c84ff);
 				align-items: center;
 
 				display: flex;
 
 				button {
-					color: #FFF;
+					color: #fff;
 					font-weight: bold;
 					height: 60px;
 					letter-spacing: 1px;
@@ -226,7 +227,7 @@ ul, li {
 	.pane {
 		$openClose: transform 0.5s cubic-bezier(0, 0.92, 0.86, 0.98);
 
-		background-color: #FFF;
+		background-color: #fff;
 
 		height: 100%;
 
@@ -245,10 +246,12 @@ ul, li {
 		&-open {
 			transform: translate3d(0, 0, 0);
 			transition: $openClose;
-		} /* ---------- translate3d ---------- */
+		}
+
+		// ---------- translate3d ----------
 
 		&-header {
-			background-color: #FFF;
+			background-color: #fff;
 			position: sticky;
 			top: 0;
 			z-index: 1;
@@ -262,12 +265,12 @@ ul, li {
 
 		&-org-info {
 			display: grid;
-			grid-template-areas: "label data actions";
+			grid-template-areas: 'label data actions';
 			grid-template-columns: 5px 92% 1fr;
 			padding: 10px;
 
 			.org-color-identifier {
-				background-color: #B3CBF5;
+				background-color: #b3cbf5;
 				grid-area: label;
 				height: 100%;
 				width: 100%;
@@ -309,7 +312,7 @@ ul, li {
 
 			&-actions-menu {
 				animation: openMenu 0.2s ease 1;
-				background-color: #FFF;
+				background-color: #fff;
 				box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
 				position: absolute;
 				right: 7px;
@@ -340,7 +343,7 @@ ul, li {
 						}
 
 						&:hover {
-							background-color: #B3CBF5;
+							background-color: #b3cbf5;
 						}
 					}
 				}
@@ -374,7 +377,7 @@ ul, li {
 
 				&:hover:before,
 				&.selected-pane:before {
-					border-bottom: 2px solid #4C84FF;
+					border-bottom: 2px solid #4c84ff;
 					content: '';
 					height: 48px;
 					position: absolute;
@@ -399,7 +402,7 @@ ul, li {
 		}
 
 		&-search-bar {
-			background-color: #FFF;
+			background-color: #fff;
 			padding: 5px;
 			z-index: 1;
 
@@ -407,7 +410,7 @@ ul, li {
 				align-items: center;
 				display: grid;
 				grid-auto-flow: column;
-				grid-template-areas: "input button";
+				grid-template-areas: 'input button';
 				grid-template-columns: 85% 15%;
 				height: 50px;
 				padding: 0;
@@ -427,7 +430,7 @@ ul, li {
 
 			button {
 				box-sizing: border-box;
-				color: #5C5E5E;
+				color: #5c5e5e;
 				font-size: 20px;
 				grid-area: button;
 				height: 46px;
@@ -453,7 +456,7 @@ ul, li {
 
 				.spinner {
 					animation: spin 1s ease infinite forwards;
-					color: #B3CBF5;
+					color: #b3cbf5;
 					font-size: 2em;
 				}
 
@@ -496,7 +499,7 @@ ul, li {
 				box-sizing: border-box;
 				display: grid;
 				grid-auto-flow: column;
-				grid-template-areas: "picture data";
+				grid-template-areas: 'picture data';
 				grid-template-columns: 50px 1fr;
 				opacity: 0;
 				padding: 10px;
@@ -537,7 +540,7 @@ ul, li {
 					}
 
 					&-name {
-						color: #5C5E5E;
+						color: #5c5e5e;
 					}
 
 					&-role,

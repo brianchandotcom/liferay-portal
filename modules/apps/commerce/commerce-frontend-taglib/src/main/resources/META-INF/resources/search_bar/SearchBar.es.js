@@ -33,7 +33,7 @@ class SearchBar extends Component {
 
 	_addOpenButtonListener() {
 		return Array.from(document.querySelectorAll('.js-toggle-search')).map(
-			el => {
+			(el) => {
 				return el.addEventListener('click', this.toggle);
 			}
 		);
@@ -41,7 +41,7 @@ class SearchBar extends Component {
 
 	_removeOpenButtonListener() {
 		return Array.from(document.querySelectorAll('.js-toggle-search')).map(
-			el => {
+			(el) => {
 				return el.removeEventListener('click', this.toggle);
 			}
 		);
@@ -97,7 +97,7 @@ class SearchBar extends Component {
 		evt.preventDefault();
 
 		window.Liferay.fire('search-term-submit', {
-			term: this.query
+			term: this.query,
 		});
 	}
 
@@ -108,7 +108,7 @@ class SearchBar extends Component {
 			this.query = query;
 
 			window.Liferay.fire('search-term-update', {
-				term: query
+				term: query,
 			});
 		}
 	}
@@ -120,7 +120,8 @@ class SearchBar extends Component {
 				this._removeOpenButtonListener();
 				this.refs.searchInput.focus();
 			}, 0);
-		} else {
+		}
+		else {
 			window.removeEventListener('click', this._handleClickOutside);
 			setTimeout(() => {
 				this._addOpenButtonListener();
@@ -148,7 +149,7 @@ Soy.register(SearchBar, template);
 SearchBar.STATE = {
 	active: Config.bool(),
 	placeholder: Config.value(''),
-	query: Config.string()
+	query: Config.string(),
 };
 
 export {SearchBar};

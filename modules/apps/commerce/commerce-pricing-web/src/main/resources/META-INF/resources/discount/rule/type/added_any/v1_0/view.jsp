@@ -69,13 +69,13 @@ List<CPDefinition> cpDefinitions = addedAnyCommerceDiscountRuleDisplayContext.ge
 <aui:script use="liferay-item-selector-dialog">
 	$('#<portlet:namespace />selectCommerceDiscountCPDefinition').on(
 		'click',
-		function(event) {
+		function (event) {
 			event.preventDefault();
 
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 				eventName: 'productDefinitionsSelectItem',
 				on: {
-					selectedItemChange: function(event) {
+					selectedItemChange: function (event) {
 						var selectedItems = event.newVal;
 
 						if (selectedItems) {
@@ -87,11 +87,11 @@ List<CPDefinition> cpDefinitions = addedAnyCommerceDiscountRuleDisplayContext.ge
 
 							submitForm(fm);
 						}
-					}
+					},
 				},
 				title: '<liferay-ui:message arguments="product" key="select-x" />',
 				url:
-					'<%= addedAnyCommerceDiscountRuleDisplayContext.getItemSelectorUrl() %>'
+					'<%= addedAnyCommerceDiscountRuleDisplayContext.getItemSelectorUrl() %>',
 			});
 
 			itemSelectorDialog.open();
@@ -137,7 +137,7 @@ List<CPDefinition> cpDefinitions = addedAnyCommerceDiscountRuleDisplayContext.ge
 
 	searchContainerContentBox.delegate(
 		'click',
-		function(event) {
+		function (event) {
 			var link = event.currentTarget;
 
 			var rowId = link.attr('data-rowId');

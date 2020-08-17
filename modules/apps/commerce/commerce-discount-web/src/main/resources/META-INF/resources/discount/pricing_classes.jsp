@@ -117,7 +117,7 @@ SearchContainer<CommerceDiscountRel> commercePricingClassCommerceDiscountRelSear
 </div>
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace />addCommerceDiscountRelMenuItem').on('click', function(
+	$('#<portlet:namespace />addCommerceDiscountRelMenuItem').on('click', function (
 		event
 	) {
 		event.preventDefault();
@@ -125,7 +125,7 @@ SearchContainer<CommerceDiscountRel> commercePricingClassCommerceDiscountRelSear
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 			eventName: 'pricingClassSelectItem',
 			on: {
-				selectedItemChange: function(event) {
+				selectedItemChange: function (event) {
 					var selectedItems = event.newVal;
 
 					if (selectedItems) {
@@ -137,12 +137,12 @@ SearchContainer<CommerceDiscountRel> commercePricingClassCommerceDiscountRelSear
 
 						submitForm(addCommerceDiscountRelFm);
 					}
-				}
+				},
 			},
 			title:
 				'<liferay-ui:message arguments="<%= commerceDiscount.getTitle() %>" key="add-new-product-group-to-x" />',
 			url:
-				'<%= commerceDiscountRelDisplayContext.getPricingClassItemSelectorUrl() %>'
+				'<%= commerceDiscountRelDisplayContext.getPricingClassItemSelectorUrl() %>',
 		});
 
 		itemSelectorDialog.open();

@@ -34,7 +34,7 @@ function ActiveFiltersBar(props) {
 					<ul className="tbar-nav">
 						<li className="p-0 tbar-item tbar-item-expand">
 							<div className="tbar-section">
-								{filtersActive.map(id => {
+								{filtersActive.map((id) => {
 									const filter = state.filters.reduce(
 										(found, filter) =>
 											found ||

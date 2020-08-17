@@ -174,7 +174,7 @@ if (!usePercentage) {
 
 	var A = AUI();
 
-	A.one('#<portlet:namespace />usePercentage').on('change', function(event) {
+	A.one('#<portlet:namespace />usePercentage').on('change', function (event) {
 		if (this.attr('checked')) {
 			A.one('#<portlet:namespace />maximumDiscountAmount').attr(
 				'disabled',
@@ -197,7 +197,8 @@ if (!usePercentage) {
 			A.all(
 				'#<portlet:namespace />levelsContainer .input-group-item-shrink'
 			).removeClass('hide');
-		} else {
+		}
+		else {
 			A.one('#<portlet:namespace />maximumDiscountAmount').attr(
 				'disabled',
 				true
@@ -232,7 +233,7 @@ if (!usePercentage) {
 		}
 	});
 
-	A.one('#<portlet:namespace />level1PlusButton').on('click', function() {
+	A.one('#<portlet:namespace />level1PlusButton').on('click', function () {
 		A.one('#<portlet:namespace />level2').attr('disabled', false);
 
 		A.one('#<portlet:namespace />level1MinusButton').removeClass('hide');
@@ -241,7 +242,7 @@ if (!usePercentage) {
 		);
 	});
 
-	A.one('#<portlet:namespace />level1MinusButton').on('click', function() {
+	A.one('#<portlet:namespace />level1MinusButton').on('click', function () {
 		A.one('#<portlet:namespace />levelsContainer .level2Container').addClass(
 			'hide'
 		);
@@ -276,7 +277,7 @@ if (!usePercentage) {
 		}
 	});
 
-	A.one('#<portlet:namespace />level2PlusButton').on('click', function() {
+	A.one('#<portlet:namespace />level2PlusButton').on('click', function () {
 		A.one('#<portlet:namespace />level3').attr('disabled', false);
 
 		A.one('#<portlet:namespace />level2MinusButton').removeClass('hide');
@@ -285,7 +286,7 @@ if (!usePercentage) {
 		);
 	});
 
-	A.one('#<portlet:namespace />level2MinusButton').on('click', function() {
+	A.one('#<portlet:namespace />level2MinusButton').on('click', function () {
 		A.one('#<portlet:namespace />levelsContainer .level3Container').addClass(
 			'hide'
 		);
@@ -307,7 +308,7 @@ if (!usePercentage) {
 		}
 	});
 
-	A.one('#<portlet:namespace />level3PlusButton').on('click', function() {
+	A.one('#<portlet:namespace />level3PlusButton').on('click', function () {
 		A.one('#<portlet:namespace />level4').attr('disabled', false);
 
 		A.one('#<portlet:namespace />level3MinusButton').removeClass('hide');
@@ -316,7 +317,7 @@ if (!usePercentage) {
 		);
 	});
 
-	A.one('#<portlet:namespace />level3MinusButton').on('click', function() {
+	A.one('#<portlet:namespace />level3MinusButton').on('click', function () {
 		A.one('#<portlet:namespace />levelsContainer .level4Container').addClass(
 			'hide'
 		);

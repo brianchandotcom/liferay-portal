@@ -33,7 +33,7 @@ function QuantitySelectorRenderer(props) {
 }
 
 QuantitySelectorRenderer.propTypes = {
-	value: PropType.object
+	value: PropType.object,
 };
 
 export default QuantitySelectorRenderer;

@@ -40,7 +40,7 @@ class AccountSelector extends Component {
 	}
 
 	_refreshOrderState({orderId}) {
-		this._getOrders().then(orders => {
+		this._getOrders().then((orders) => {
 			this.orders = orders;
 			if (orderId) {
 				this.currentOrder = Array.isArray(this.orders)
@@ -85,7 +85,7 @@ class AccountSelector extends Component {
 
 		if (this.currentAccount && !this.orders) {
 			this.currentView = 'orders';
-			this._getOrders().then(orders => {
+			this._getOrders().then((orders) => {
 				this.orders = orders;
 			});
 
@@ -123,6 +123,7 @@ class AccountSelector extends Component {
 		if (this.currentAccount) {
 			if (selectedAccount.accountId === this.currentAccount.accountId) {
 				this.currentView = 'orders';
+
 				return this.currentView;
 			}
 			this.orders = null;
@@ -142,7 +143,7 @@ class AccountSelector extends Component {
 				body: formData,
 				credentials: 'include',
 				headers: new Headers({'x-csrf-token': Liferay.authToken}),
-				method: 'POST'
+				method: 'POST',
 			}
 		).then(() => {
 			this.currentOrder = null;
@@ -151,7 +152,8 @@ class AccountSelector extends Component {
 		});
 
 		this.currentView = 'orders';
-		return this._getOrders().then(orders => {
+
+		return this._getOrders().then((orders) => {
 			this.orders = orders;
 		});
 	}
@@ -162,11 +164,12 @@ class AccountSelector extends Component {
 
 	_handleOrderSelected(selectedOrder) {
 		this.currentOrder = selectedOrder;
+
 		return this.toggleAccountSelector();
 	}
 
 	_handleGetOrders(query = '') {
-		return this._getOrders(query).then(orders => {
+		return this._getOrders(query).then((orders) => {
 			this.orders = orders;
 		});
 	}
@@ -180,12 +183,13 @@ class AccountSelector extends Component {
 			{
 				credentials: 'include',
 				headers: new Headers({'x-csrf-token': Liferay.authToken}),
-				method: 'GET'
+				method: 'GET',
 			}
 		)
-			.then(response => response.json())
-			.then(response => {
+			.then((response) => response.json())
+			.then((response) => {
 				this.accounts = response.accounts;
+
 				return this.accounts;
 			});
 	}
@@ -201,11 +205,11 @@ class AccountSelector extends Component {
 			{
 				credentials: 'include',
 				headers: new Headers({'x-csrf-token': Liferay.authToken}),
-				method: 'GET'
+				method: 'GET',
 			}
 		)
-			.then(response => response.json())
-			.then(response => response.orders);
+			.then((response) => response.json())
+			.then((response) => response.orders);
 	}
 }
 
@@ -216,10 +220,10 @@ AccountSelector.STATE = {
 		Config.shapeOf({
 			accountId: Config.oneOfType([
 				Config.string(),
-				Config.number()
+				Config.number(),
 			]).required(),
 			name: Config.string(),
-			thumbnail: Config.string()
+			thumbnail: Config.string(),
 		})
 	),
 	accountsAPI: Config.string().required(),
@@ -236,12 +240,12 @@ AccountSelector.STATE = {
 			addOrderLink: Config.string(),
 			id: Config.oneOfType([Config.string(), Config.number()]).required(),
 			lastEdit: Config.string(),
-			status: Config.string()
+			status: Config.string(),
 		})
 	),
 	spritemap: Config.string().required(),
 	viewAllAccountsLink: Config.string().required(),
-	viewAllOrdersLink: Config.string().required()
+	viewAllOrdersLink: Config.string().required(),
 };
 
 export {AccountSelector};

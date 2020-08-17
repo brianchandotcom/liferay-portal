@@ -53,6 +53,7 @@ class UserInvitation extends Component {
 		if (contentWrapper.scrollTo) {
 			contentWrapper.scrollTo(0, contentWrapper.offsetHeight);
 		}
+
 		return this.emit('updateUsers', this.addedUsers);
 	}
 
@@ -69,8 +70,8 @@ class UserInvitation extends Component {
 			this.addedUsers = [
 				...this.addedUsers,
 				{
-					email: this.query
-				}
+					email: this.query,
+				},
 			];
 
 			this.query = '';
@@ -115,7 +116,7 @@ class UserInvitation extends Component {
 
 		this.addedUsers = userAlreadyAdded
 			? this.addedUsers.filter(
-					user => user.email !== userToBeToggled.email
+					(user) => user.email !== userToBeToggled.email
 			  )
 			: [...this.addedUsers, userToBeToggled];
 
@@ -130,11 +131,11 @@ class UserInvitation extends Component {
 			{
 				credentials: 'include',
 				headers: new Headers({'x-csrf-token': Liferay.authToken}),
-				method: 'GET'
+				method: 'GET',
 			}
 		)
-			.then(response => response.json())
-			.then(response => {
+			.then((response) => response.json())
+			.then((response) => {
 				this._loading = false;
 
 				this.users = response.users;
@@ -150,18 +151,16 @@ const USER_SCHEMA = Config.shapeOf({
 	email: Config.string().required(),
 	name: Config.string().required(),
 	thumbnail: Config.string().required(),
-	userId: Config.oneOfType([Config.number(), Config.string()]).required()
+	userId: Config.oneOfType([Config.number(), Config.string()]).required(),
 });
 
 UserInvitation.STATE = {
-	_loading: Config.bool()
-		.internal()
-		.value(false),
+	_loading: Config.bool().internal().value(false),
 	addedUsers: Config.array(USER_SCHEMA).value([]),
 	query: Config.string().value(''),
 	spritemap: Config.string(),
 	users: Config.array(USER_SCHEMA).value([]),
-	usersAPI: Config.string().value('')
+	usersAPI: Config.string().value(''),
 };
 
 export {UserInvitation};

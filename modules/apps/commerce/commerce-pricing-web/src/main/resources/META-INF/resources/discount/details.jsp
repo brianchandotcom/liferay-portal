@@ -178,7 +178,7 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 	Liferay.provide(
 		window,
 		'<portlet:namespace/>selectType',
-		function() {
+		function () {
 			var A = AUI();
 
 			var type = A.one('#<portlet:namespace/>usePercentage').val();
@@ -197,7 +197,7 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 	Liferay.provide(
 		window,
 		'<portlet:namespace/>selectTarget',
-		function() {
+		function () {
 			var A = AUI();
 
 			var type = A.one('#<portlet:namespace/>target').val();

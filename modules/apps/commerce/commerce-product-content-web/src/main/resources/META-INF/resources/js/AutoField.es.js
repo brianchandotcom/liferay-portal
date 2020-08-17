@@ -23,7 +23,7 @@ import templates from './AutoField.soy';
 
 const DEFAULT_RULE = {
 	queryContains: true,
-	type: 'assetTags'
+	type: 'assetTags',
 };
 
 /**
@@ -32,6 +32,7 @@ const DEFAULT_RULE = {
  */
 
 class AutoField extends Component {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -63,7 +64,7 @@ class AutoField extends Component {
 		rules[itemIndex] = {
 			queryAndOperator: 'all',
 			queryContains: true,
-			type: event.target.value
+			type: event.target.value,
 		};
 
 		this.rules = rules;
@@ -98,6 +99,7 @@ class AutoField extends Component {
 }
 
 AutoField.STATE = {
+
 	/**
 	 * Array of group (sites) ids where the information is going
 	 * to be fetched. This parementer is passed by to the child
@@ -105,7 +107,7 @@ AutoField.STATE = {
 	 */
 
 	groupIds: {
-		value: []
+		value: [],
 	},
 
 	/**
@@ -114,7 +116,7 @@ AutoField.STATE = {
 	 */
 
 	queryLogicIndexes: {
-		value: '0'
+		value: '0',
 	},
 
 	/**
@@ -125,8 +127,8 @@ AutoField.STATE = {
 	 */
 
 	rules: {
-		value: [DEFAULT_RULE]
-	}
+		value: [DEFAULT_RULE],
+	},
 };
 
 Soy.register(AutoField, templates);

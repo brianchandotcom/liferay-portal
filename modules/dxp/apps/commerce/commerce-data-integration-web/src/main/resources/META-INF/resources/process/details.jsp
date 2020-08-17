@@ -78,14 +78,16 @@ if (commerceDataIntegrationProcess != null) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />selectType',
-		function() {
+		function () {
 			var A = AUI();
 
 			var processType = A.one(<portlet:namespace />type).val();
 
-			var portletURL = new Liferay.PortletURL.createURL('<%= currentURLObj %>');
+			var portletURL = new Liferay.PortletURL.createURL(
+				'<%= currentURLObj %>'
+			);
 
-			portletURL.setParameter("type", processType);
+			portletURL.setParameter('type', processType);
 
 			window.location.replace(portletURL.toString());
 		},
@@ -96,15 +98,13 @@ if (commerceDataIntegrationProcess != null) {
 <aui:script use="aui-ace-editor,liferay-xml-formatter">
 	var STR_VALUE = 'value';
 
-	var contentEditor = new A.AceEditor(
-		{
-			boundingBox: '#<portlet:namespace />typeSettingsEditor',
-			height: 600,
-			mode: 'xml',
-			tabSize: 4,
-			width: '100%'
-		}
-	).render();
+	var contentEditor = new A.AceEditor({
+		boundingBox: '#<portlet:namespace />typeSettingsEditor',
+		height: 600,
+		mode: 'xml',
+		tabSize: 4,
+		width: '100%',
+	}).render();
 
 	var xmlFormatter = new Liferay.XMLFormatter();
 
@@ -116,14 +116,11 @@ if (commerceDataIntegrationProcess != null) {
 
 	contentEditor.set(STR_VALUE, content);
 
-	Liferay.on(
-		'<portlet:namespace />saveProcess',
-		function(event) {
-			var form = AUI.$('#<portlet:namespace />fm');
+	Liferay.on('<portlet:namespace />saveProcess', function (event) {
+		var form = AUI.$('#<portlet:namespace />fm');
 
-			form.fm('typeSettings').val(contentEditor.get(STR_VALUE));
+		form.fm('typeSettings').val(contentEditor.get(STR_VALUE));
 
-			submitForm(form);
-		}
-	);
+		submitForm(form);
+	});
 </aui:script>

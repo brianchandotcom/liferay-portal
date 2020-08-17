@@ -23,7 +23,7 @@ export function serializeActions(actions, dispatch) {
 	return Object.keys(actions).reduce(
 		(curriedActions, actionName) => ({
 			...curriedActions,
-			[actionName]: actions[actionName](dispatch)
+			[actionName]: actions[actionName](dispatch),
 		}),
 		{}
 	);
@@ -32,7 +32,7 @@ export function serializeActions(actions, dispatch) {
 export function StoreProvider({children, ...stateProps}) {
 	const [state, dispatch] = useReducer(reducer, {
 		...initialState,
-		...stateProps
+		...stateProps,
 	});
 
 	const serializedActions = serializeActions(actions, dispatch);

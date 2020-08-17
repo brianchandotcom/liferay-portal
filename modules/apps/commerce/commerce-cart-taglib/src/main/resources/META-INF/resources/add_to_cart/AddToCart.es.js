@@ -74,10 +74,10 @@ class AddToCart extends Component {
 			body: formData,
 			credentials: 'include',
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'post'
+			method: 'post',
 		})
-			.then(response => response.json())
-			.then(jsonresponse => {
+			.then((response) => response.json())
+			.then((jsonresponse) => {
 				if (jsonresponse.success) {
 					Liferay.fire('commerce:productAddedToCart', jsonresponse);
 
@@ -85,17 +85,19 @@ class AddToCart extends Component {
 						jsonresponse.successMessage,
 						'success'
 					);
-				} else {
+				}
+				else {
 					var validatorErrors = jsonresponse.validatorErrors;
 
 					if (validatorErrors) {
-						validatorErrors.forEach(validatorError => {
+						validatorErrors.forEach((validatorError) => {
 							instance._showNotification(
 								validatorError.message,
 								'danger'
 							);
 						});
-					} else {
+					}
+					else {
 						instance._showNotification(
 							jsonresponse.error,
 							'danger'
@@ -115,12 +117,13 @@ class AddToCart extends Component {
 		var productContent = this._getProductContent();
 
 		if (productContent) {
-			productContent.validateProduct(hasError => {
+			productContent.validateProduct((hasError) => {
 				if (!hasError) {
 					instance._addToCart();
 				}
 			});
-		} else {
+		}
+		else {
 			this._addToCart();
 		}
 	}
@@ -137,13 +140,13 @@ class AddToCart extends Component {
 				closeable: true,
 				delay: {
 					hide: 5000,
-					show: 0
+					show: 0,
 				},
 				duration: 500,
 				message,
 				render: true,
 				title: '',
-				type
+				type,
 			});
 		});
 	}
@@ -157,6 +160,7 @@ class AddToCart extends Component {
  */
 
 AddToCart.STATE = {
+
 	/**
 	 * CPDefinitionId.
 	 * @instance
@@ -250,7 +254,7 @@ AddToCart.STATE = {
 	 * @type {String}
 	 */
 
-	uri: Config.string().required()
+	uri: Config.string().required(),
 };
 
 // Register component

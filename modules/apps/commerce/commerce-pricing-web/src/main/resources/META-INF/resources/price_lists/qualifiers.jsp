@@ -95,7 +95,7 @@ boolean hasPermission = commercePriceListQualifiersDisplayContext.hasPermission(
 	Liferay.provide(
 		window,
 		'<portlet:namespace/>chooseAccountQualifiers',
-		function(value) {
+		function (value) {
 			var portletURL = new Liferay.PortletURL.createURL(
 				'<%= currentURLObj %>'
 			);
@@ -110,7 +110,7 @@ boolean hasPermission = commercePriceListQualifiersDisplayContext.hasPermission(
 	Liferay.provide(
 		window,
 		'<portlet:namespace/>chooseChannelQualifiers',
-		function(value) {
+		function (value) {
 			var portletURL = new Liferay.PortletURL.createURL(
 				'<%= currentURLObj %>'
 			);

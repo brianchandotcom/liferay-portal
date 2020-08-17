@@ -197,7 +197,8 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 				if (commerceAddressVal === '0') {
 					<portlet:namespace />clearAddressFields();
 					<portlet:namespace />toggleAddressFields(false);
-				} else {
+				}
+				else {
 					<portlet:namespace />updateAddressFields(
 						commerceAddress.get('selectedIndex')
 					);
@@ -314,15 +315,15 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 		new Liferay.DynamicSelect([
 			{
 				select: '<portlet:namespace />commerceCountryId',
-				selectData: function(callback) {
+				selectData: function (callback) {
 					function injectCountryPlaceholder(list) {
 						callback([
 							{
 								commerceCountryId: '0',
 								nameCurrentValue:
-									'- <liferay-ui:message key="select-country" />'
+									'- <liferay-ui:message key="select-country" />',
 							},
-							...list
+							...list,
 						]);
 					}
 
@@ -331,7 +332,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 						{
 							commerceChannelId: <%= commerceContext.getCommerceChannelId() %>,
 							start: -1,
-							end: -1
+							end: -1,
 						},
 						injectCountryPlaceholder
 					);
@@ -340,18 +341,19 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 				selectId: 'commerceCountryId',
 				selectNullable: <%= false %>,
 				selectSort: '<%= true %>',
-				selectVal: '<%= commerceCountryId %>'
+				selectVal: '<%= commerceCountryId %>',
 			},
 			{
 				select: '<portlet:namespace />commerceRegionId',
-				selectData: function(callback, selectKey) {
+				selectData: function (callback, selectKey) {
 					function injectRegionPlaceholder(list) {
 						callback([
 							{
 								commerceRegionId: '0',
-								name: '- <liferay-ui:message key="select-region" />'
+								name:
+									'- <liferay-ui:message key="select-region" />',
 							},
-							...list
+							...list,
 						]);
 					}
 
@@ -359,7 +361,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 						'/commerce.commerceregion/get-commerce-regions',
 						{
 							commerceCountryId: Number(selectKey),
-							active: true
+							active: true,
 						},
 						injectRegionPlaceholder
 					);
@@ -367,8 +369,8 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 				selectDesc: 'name',
 				selectId: 'commerceRegionId',
 				selectNullable: <%= false %>,
-				selectVal: '<%= commerceRegionId %>'
-			}
+				selectVal: '<%= commerceRegionId %>',
+			},
 		])
 	);
 </aui:script>

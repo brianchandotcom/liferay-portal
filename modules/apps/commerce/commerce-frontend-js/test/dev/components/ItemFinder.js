@@ -21,7 +21,7 @@ import {showErrorNotification} from '../../../src/main/resources/META-INF/resour
 const headers = new Headers({
 	Accept: 'application/json',
 	Authorization: 'Basic ' + btoa('test@liferay.com' + ':' + 'test'),
-	'Content-Type': 'application/json'
+	'Content-Type': 'application/json',
 });
 
 const id = 40077;
@@ -38,12 +38,12 @@ function selectItem(specification) {
 				specificationId: specification.id,
 				specificationKey: specification.key,
 				value: {
-					[Liferay.ThemeDisplay.getLanguageId()]: name
-				}
+					[Liferay.ThemeDisplay.getLanguageId()]: name,
+				},
 			}),
 			credentials: 'include',
 			headers,
-			method: 'POST'
+			method: 'POST',
 		}
 	).then(() => specification.id);
 }
@@ -53,14 +53,14 @@ function addNewItem(name) {
 		body: JSON.stringify({
 			key: slugify(name),
 			title: {
-				[Liferay.ThemeDisplay.getLanguageId()]: name
-			}
+				[Liferay.ThemeDisplay.getLanguageId()]: name,
+			},
 		}),
 		credentials: 'include',
 		headers,
-		method: 'POST'
+		method: 'POST',
 	})
-		.then(response => {
+		.then((response) => {
 			return response.json();
 		})
 		.then(selectItem);
@@ -73,16 +73,17 @@ function getSelectedItems() {
 			'/productSpecifications/',
 		{
 			credentials: 'include',
-			headers
+			headers,
 		}
 	)
-		.then(response => response.json())
-		.then(jsonResponse => {
+		.then((response) => response.json())
+		.then((jsonResponse) => {
 			if (!jsonResponse.items && jsonResponse.title) {
 				return showErrorNotification(jsonResponse.title);
 			}
+
 			return jsonResponse.items.map(
-				specification => specification.specificationId
+				(specification) => specification.specificationId
 			);
 		});
 }
@@ -100,15 +101,15 @@ launcher('itemFinder', 'item-finder-root-id', {
 	panelHeaderLabel: 'Add new specification',
 	schema: [
 		{
-			fieldName: ['title', 'LANG']
+			fieldName: ['title', 'LANG'],
 		},
 		{
-			fieldName: 'id'
+			fieldName: 'id',
 		},
 		{
-			fieldName: 'key'
-		}
+			fieldName: 'key',
+		},
 	],
 	spritemap: './assets/icons.svg',
-	titleLabel: 'Select an existing specification'
+	titleLabel: 'Select an existing specification',
 });

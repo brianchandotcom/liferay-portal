@@ -16,51 +16,51 @@ module.exports = [
 	{
 		entry: 'DatasetDisplay',
 		name: 'Dataset display',
-		page: 'dataset-display.html'
+		page: 'dataset-display.html',
 	},
 	{
 		entry: 'Autocomplete',
 		name: 'Autocomplete',
-		page: 'autocomplete.html'
+		page: 'autocomplete.html',
 	},
 	{
 		entry: 'ItemFinder',
 		name: 'Item finder',
-		page: 'item-finder.html'
+		page: 'item-finder.html',
 	},
 	{
 		entry: 'Summary',
 		name: 'Summary',
-		page: 'summary.html'
+		page: 'summary.html',
 	},
 	{
 		entry: 'Dropdown',
 		name: 'Dropdown',
-		page: 'dropdown.html'
+		page: 'dropdown.html',
 	},
 	{
 		entry: 'Gallery',
 		name: 'Gallery',
-		page: 'gallery.html'
+		page: 'gallery.html',
 	},
 	{
 		entry: 'Modal',
 		name: 'Modal',
-		page: 'modal.html'
+		page: 'modal.html',
 	},
 	{
 		entry: 'MiniCart',
 		name: 'Mini Cart',
-		page: 'mini-cart.html'
+		page: 'mini-cart.html',
 	},
 	{
 		entry: 'SidePanel',
 		name: 'Side panel',
-		page: 'side-panel.html'
+		page: 'side-panel.html',
 	},
 	{
 		entry: 'StepTracker',
 		name: 'Step tracker',
-		page: 'step-tracker.html'
-	}
+		page: 'step-tracker.html',
+	},
 ];

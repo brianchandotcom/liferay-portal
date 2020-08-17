@@ -49,16 +49,16 @@ if (CommercePriceListConstants.TYPE_PROMOTION.equals(commercePriceEntryDisplayCo
 						priceListExternalReferenceCode: priceListExternalReferenceCode,
 						priceListId: id,
 						skuExternalReferenceCode: sku.externalReferenceCode,
-						skuId: sku.id
+						skuId: sku.id,
 					};
 
 					return CommercePriceEntriesResource.addPriceEntry(id, priceEntryData)
-						.then(function() {
+						.then(function () {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
-								id: '<%= datasetId %>'
+								id: '<%= datasetId %>',
 							});
 						})
-						.catch(function(error) {
+						.catch(function (error) {
 							return Promise.reject(error);
 						});
 				}
@@ -82,14 +82,14 @@ if (CommercePriceListConstants.TYPE_PROMOTION.equals(commercePriceEntryDisplayCo
 					portletId: '<%= portletDisplay.getRootPortletId() %>',
 					schema: [
 						{
-							fieldName: 'sku'
+							fieldName: 'sku',
 						},
 						{
-							fieldName: ['productName', 'LANG']
-						}
+							fieldName: ['productName', 'LANG'],
+						},
 					],
 					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-					titleLabel: '<%= LanguageUtil.get(request, "add-existing-sku") %>'
+					titleLabel: '<%= LanguageUtil.get(request, "add-existing-sku") %>',
 				});
 			</aui:script>
 		</div>

@@ -113,7 +113,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 											<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events">
 												document
 													.querySelector('#erc-edit-modal-opener')
-													.addEventListener('click', function(e) {
+													.addEventListener('click', function (e) {
 														e.preventDefault();
 														Liferay.fire(events.OPEN_MODAL, {id: 'erc-edit-modal'});
 													});
@@ -204,20 +204,20 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 										<aui:script>
 											document
 												.querySelector('#<portlet:namespace />assign-to-me-modal-opener')
-												.addEventListener('click', function(e) {
+												.addEventListener('click', function (e) {
 													Liferay.Util.openWindow({
 														dialog: {
 															destroyOnHide: true,
 															height: 430,
 															resizable: false,
-															width: 896
+															width: 896,
 														},
 														dialogIframe: {
-															bodyCssClass: 'dialog-with-footer task-dialog'
+															bodyCssClass: 'dialog-with-footer task-dialog',
 														},
 														id: '<%= myWorkflowTasksPortletNamespace %>assignToDialog',
 														title: '<liferay-ui:message key="assign-to-me" />',
-														uri: '<%= assignToMeURL %>'
+														uri: '<%= assignToMeURL %>',
 													});
 												});
 										</aui:script>
@@ -240,20 +240,20 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 									<aui:script>
 										document
 											.querySelector('#<portlet:namespace />assign-to-modal-opener')
-											.addEventListener('click', function(e) {
+											.addEventListener('click', function (e) {
 												Liferay.Util.openWindow({
 													dialog: {
 														destroyOnHide: true,
 														height: 430,
 														resizable: false,
-														width: 896
+														width: 896,
 													},
 													dialogIframe: {
-														bodyCssClass: 'dialog-with-footer task-dialog'
+														bodyCssClass: 'dialog-with-footer task-dialog',
 													},
 													id: '<%= myWorkflowTasksPortletNamespace %>assignToDialog',
 													title: '<liferay-ui:message key="assign-to-..." />',
-													uri: '<%= assignToURL %>'
+													uri: '<%= assignToURL %>',
 												});
 											});
 
@@ -299,7 +299,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 									<aui:script>
 										document
 											.getElementById('<%= actionId %>')
-											.addEventListener('click', function(e) {
+											.addEventListener('click', function (e) {
 												e.preventDefault();
 												var form = document.getElementById('<%= action.getFormId() %>');
 												if (!form) {
@@ -335,7 +335,8 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 								<aui:script require="commerce-frontend-js/components/dropdown/entry as dropdown">
 									dropdown.default('dropdown-header', 'dropdown-header-container', {
 										items: <%= jsonSerializer.serializeDeep(dropdownItems) %>,
-										spritemap: '<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>'
+										spritemap:
+											'<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>',
 									});
 								</aui:script>
 							</c:if>

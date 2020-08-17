@@ -33,20 +33,20 @@
 						accountGroupExternalReferenceCode: accountGroup.externalReferenceCode,
 						accountGroupId: accountGroup.id,
 						priceListExternalReferenceCode: priceListExternalReferenceCode,
-						priceListId: id
+						priceListId: id,
 					};
 
 					return CommercePriceListAccountGroupsResource.addPriceListAccountGroup(
 						id,
 						accountGroupData
 					)
-						.then(function() {
+						.then(function () {
 							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
 								id:
-									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LIST_QUALIFIER_ACCOUNT_GROUPS %>'
+									'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LIST_QUALIFIER_ACCOUNT_GROUPS %>',
 							});
 						})
-						.catch(function(error) {
+						.catch(function (error) {
 							return Promise.reject(error);
 						});
 				}
@@ -63,7 +63,7 @@
 					itemSelectedMessage:
 						'<%= LanguageUtil.get(request, "account-group-selected") %>',
 					linkedDatasetsId: [
-						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LIST_QUALIFIER_ACCOUNT_GROUPS %>'
+						'<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LIST_QUALIFIER_ACCOUNT_GROUPS %>',
 					],
 					itemCreation: false,
 					itemsKey: 'id',
@@ -73,11 +73,12 @@
 					portletId: '<%= portletDisplay.getRootPortletId() %>',
 					schema: [
 						{
-							fieldName: 'name'
-						}
+							fieldName: 'name',
+						},
 					],
 					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
-					titleLabel: '<%= LanguageUtil.get(request, "add-existing-account-group") %>'
+					titleLabel:
+						'<%= LanguageUtil.get(request, "add-existing-account-group") %>',
 				});
 			</aui:script>
 		</div>

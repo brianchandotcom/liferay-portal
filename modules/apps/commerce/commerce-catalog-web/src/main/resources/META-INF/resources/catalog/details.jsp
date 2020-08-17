@@ -103,19 +103,21 @@ boolean isViewOnly = !commerceCatalogDisplayContext.hasPermission(commerceCatalo
 								initialValue:
 									'<%= (baseCommercePriceList == null) ? 0 : baseCommercePriceList.getCommercePriceListId() %>',
 								inputId: 'baseCommercePriceListId',
-								inputName: '<%= liferayPortletResponse.getNamespace() %>baseCommercePriceListId',
+								inputName:
+									'<%= liferayPortletResponse.getNamespace() %>baseCommercePriceListId',
 								itemsKey: 'id',
 								itemsLabel: 'name',
-								onValueUpdated: function(value, priceListData) {
+								onValueUpdated: function (value, priceListData) {
 									if (value) {
 										$('#<portlet:namespace />baseCommercePriceListId').val(
 											priceListData.id
 										);
-									} else {
+									}
+									else {
 										$('#<portlet:namespace />baseCommercePriceListId').val(0);
 									}
 								},
-								required: true
+								required: true,
 							});
 						</aui:script>
 
@@ -136,16 +138,17 @@ boolean isViewOnly = !commerceCatalogDisplayContext.hasPermission(commerceCatalo
 									'<%= liferayPortletResponse.getNamespace() %>basePromotionCommercePriceListId',
 								itemsKey: 'id',
 								itemsLabel: 'name',
-								onValueUpdated: function(value, priceListData) {
+								onValueUpdated: function (value, priceListData) {
 									if (value) {
 										$('#<portlet:namespace />basePromotionCommercePriceListId').val(
 											priceListData.id
 										);
-									} else {
+									}
+									else {
 										$('#<portlet:namespace />basePromotionCommercePriceListId').val(0);
 									}
 								},
-								required: true
+								required: true,
 							});
 						</aui:script>
 					</c:if>

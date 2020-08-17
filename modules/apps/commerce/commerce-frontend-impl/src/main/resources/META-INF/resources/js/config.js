@@ -12,7 +12,7 @@
  * details.
  */
 
-(function() {
+(function () {
 	AUI().applyConfig({
 		groups: {
 			commercefrontend: {
@@ -24,8 +24,8 @@
 							'liferay_commerce_frontend_asset_categories_selector.js',
 						requires: [
 							'aui-tree',
-							'liferay-commerce-frontend-asset-tag-selector'
-						]
+							'liferay-commerce-frontend-asset-tag-selector',
+						],
 					},
 					'liferay-commerce-frontend-asset-tag-selector': {
 						path: 'liferay_commerce_frontend_asset_tag_selector.js',
@@ -36,19 +36,19 @@
 							'aui-textboxlist-deprecated',
 							'datasource-cache',
 							'liferay-item-selector-dialog',
-							'liferay-service-datasource'
-						]
+							'liferay-service-datasource',
+						],
 					},
 					'liferay-commerce-frontend-management-bar-state': {
 						condition: {
-							trigger: 'liferay-management-bar'
+							trigger: 'liferay-management-bar',
 						},
 						path: 'management_bar_state.js',
-						requires: ['liferay-management-bar']
-					}
+						requires: ['liferay-management-bar'],
+					},
 				},
-				root: MODULE_PATH + '/js/'
-			}
-		}
+				root: MODULE_PATH + '/js/',
+			},
+		},
 	});
 })();

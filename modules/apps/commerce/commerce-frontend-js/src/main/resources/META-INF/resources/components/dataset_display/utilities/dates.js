@@ -24,7 +24,7 @@ export function getDateFromDateString(dateString) {
 	return {
 		day: Number(day),
 		month: Number(month),
-		year: Number(year)
+		year: Number(year),
 	};
 }
 
@@ -64,5 +64,6 @@ export function convertObjectDateToIsoString(objDate, direction) {
 		objDate.day,
 		...time
 	);
+
 	return date.toISOString();
 }

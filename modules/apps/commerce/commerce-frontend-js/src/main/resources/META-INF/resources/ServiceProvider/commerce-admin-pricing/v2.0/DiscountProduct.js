@@ -24,7 +24,7 @@ function resolvePath(basePath = '', discountId = '', discountProductId = '') {
 	return `${basePath}${VERSION}${DISCOUNTS_PATH}/${discountId}/${DISCOUNT_RULES_PATH}/${discountProductId}`;
 }
 
-export default basePath => ({
+export default (basePath) => ({
 	addDiscountProduct: (discountId, json) =>
-		AJAX.POST(resolvePath(basePath, discountId), json)
+		AJAX.POST(resolvePath(basePath, discountId), json),
 });

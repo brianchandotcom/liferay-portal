@@ -55,7 +55,7 @@
 		pagination: {
 			deltas: <%= jsonSerializer.serializeDeep(paginationEntries) %>,
 			initialDelta: <%= itemsPerPage %>,
-			initialPageNumber: <%= pageNumber %>
+			initialPageNumber: <%= pageNumber %>,
 		},
 		portletId: '<%= portletDisplay.getRootPortletId() %>',
 		namespace: '<%= namespace %>',
@@ -64,10 +64,10 @@
 		selectedItemsKey: '<%= selectedItemsKey %>',
 		selectionType: '<%= selectionType %>',
 		spritemap: '<%= spritemap %>',
-		style: '<%= style %>'
+		style: '<%= style %>',
 	});
 
-	document.querySelectorAll('form').forEach(function(form) {
+	document.querySelectorAll('form').forEach(function (form) {
 		form.setAttribute('data-senna-off', true);
 	});
 </aui:script>

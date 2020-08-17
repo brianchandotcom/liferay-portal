@@ -56,12 +56,12 @@ String commerceRegionCode = BeanParamUtil.getString(commerceInventoryWarehouse, 
 	new Liferay.DynamicSelect([
 		{
 			select: '<portlet:namespace />countryTwoLettersISOCode',
-			selectData: function(callback) {
+			selectData: function (callback) {
 				Liferay.Service(
 					'/commerce.commercecountry/get-commerce-countries',
 					{
 						companyId: <%= company.getCompanyId() %>,
-						active: true
+						active: true,
 					},
 					callback
 				);
@@ -69,24 +69,24 @@ String commerceRegionCode = BeanParamUtil.getString(commerceInventoryWarehouse, 
 			selectDesc: 'nameCurrentValue',
 			selectId: 'twoLettersISOCode',
 			selectSort: '<%= true %>',
-			selectVal: '<%= HtmlUtil.escape(countryTwoLettersISOCode) %>'
+			selectVal: '<%= HtmlUtil.escape(countryTwoLettersISOCode) %>',
 		},
 		{
 			select: '<portlet:namespace />commerceRegionCode',
-			selectData: function(callback, selectKey) {
+			selectData: function (callback, selectKey) {
 				Liferay.Service(
 					'/commerce.commerceregion/get-commerce-regions',
 					{
 						companyId: <%= company.getCompanyId() %>,
 						countryTwoLettersISOCode: selectKey,
-						active: true
+						active: true,
 					},
 					callback
 				);
 			},
 			selectDesc: 'name',
 			selectId: 'code',
-			selectVal: '<%= HtmlUtil.escape(commerceRegionCode) %>'
-		}
+			selectVal: '<%= HtmlUtil.escape(commerceRegionCode) %>',
+		},
 	]);
 </aui:script>

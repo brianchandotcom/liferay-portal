@@ -226,19 +226,19 @@ if (parentCommercePriceList != null) {
 <aui:script use="liferay-item-selector-dialog">
 	$('#<portlet:namespace />selectCommercePriceListAccountRel').on(
 		'click',
-		function(event) {
+		function (event) {
 			event.preventDefault();
 
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 				eventName: 'accountsSelectItem',
 				on: {
-					selectedItemChange: function(event) {
+					selectedItemChange: function (event) {
 						var selectedItems = event.newVal;
 
 						if (selectedItems) {
 							var A = AUI();
 
-							A.Array.each(selectedItems, function(
+							A.Array.each(selectedItems, function (
 								item,
 								index,
 								selectedItems
@@ -248,12 +248,12 @@ if (parentCommercePriceList != null) {
 								);
 							});
 						}
-					}
+					},
 				},
 				title:
 					'<liferay-ui:message arguments="criterion" key="select-x" />',
 				url:
-					'<%= commercePriceListDisplayContext.getCommerceAccountSelectorUrl() %>'
+					'<%= commercePriceListDisplayContext.getCommerceAccountSelectorUrl() %>',
 			});
 
 			itemSelectorDialog.open();
@@ -262,19 +262,19 @@ if (parentCommercePriceList != null) {
 
 	$('#<portlet:namespace />selectCommercePriceListCommerceAccountGroupRel').on(
 		'click',
-		function(event) {
+		function (event) {
 			event.preventDefault();
 
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 				eventName: 'accountGroupsSelectItem',
 				on: {
-					selectedItemChange: function(event) {
+					selectedItemChange: function (event) {
 						var selectedItems = event.newVal;
 
 						if (selectedItems) {
 							var A = AUI();
 
-							A.Array.each(selectedItems, function(
+							A.Array.each(selectedItems, function (
 								item,
 								index,
 								selectedItems
@@ -284,19 +284,19 @@ if (parentCommercePriceList != null) {
 								);
 							});
 						}
-					}
+					},
 				},
 				title:
 					'<liferay-ui:message arguments="criterion" key="select-x" />',
 				url:
-					'<%= commercePriceListDisplayContext.getCommerceAccountGroupSelectorUrl() %>'
+					'<%= commercePriceListDisplayContext.getCommerceAccountGroupSelectorUrl() %>',
 			});
 
 			itemSelectorDialog.open();
 		}
 	);
 
-	$('#<portlet:namespace />setParentCommercePriceList').on('click', function(
+	$('#<portlet:namespace />setParentCommercePriceList').on('click', function (
 		event
 	) {
 		event.preventDefault();
@@ -304,7 +304,7 @@ if (parentCommercePriceList != null) {
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 			eventName: 'priceListsSelectItem',
 			on: {
-				selectedItemChange: function(event) {
+				selectedItemChange: function (event) {
 					var selectedItems = event.newVal;
 
 					if (selectedItems) {
@@ -317,11 +317,11 @@ if (parentCommercePriceList != null) {
 							parentCommercePriceListId
 						);
 					}
-				}
+				},
 			},
 			title: '<liferay-ui:message key="set-parent-price-list" />',
 			url:
-				'<%= commercePriceListDisplayContext.getPriceListItemSelectorUrl() %>'
+				'<%= commercePriceListDisplayContext.getPriceListItemSelectorUrl() %>',
 		});
 
 		itemSelectorDialog.open();
@@ -460,9 +460,9 @@ if (parentCommercePriceList != null) {
 		Liferay.Service(
 			'/commerce.commercepricelist/fetch-commerce-price-list',
 			{
-				commercePriceListId: parentCommercePriceListId
+				commercePriceListId: parentCommercePriceListId,
 			},
-			function(commercePriceList) {
+			function (commercePriceList) {
 				var searchContainer = Liferay.SearchContainer.get(
 					'<portlet:namespace />parentCommercePriceListSearchContainer'
 				);
@@ -497,7 +497,7 @@ if (parentCommercePriceList != null) {
 
 	parentSearchContainerContentBox.delegate(
 		'click',
-		function(event) {
+		function (event) {
 			var link = event.currentTarget;
 
 			var tr = link.ancestor('tr');
@@ -518,7 +518,7 @@ if (parentCommercePriceList != null) {
 
 	relSearchContainerContentBox.delegate(
 		'click',
-		function(event) {
+		function (event) {
 			var link = event.currentTarget;
 
 			var tr = link.ancestor('tr');
@@ -543,7 +543,7 @@ if (parentCommercePriceList != null) {
 
 	accountRelSearchContainerContentBox.delegate(
 		'click',
-		function(event) {
+		function (event) {
 			var link = event.currentTarget;
 
 			var tr = link.ancestor('tr');

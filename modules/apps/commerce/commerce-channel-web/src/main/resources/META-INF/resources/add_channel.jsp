@@ -84,15 +84,15 @@ PortletURL editCommerceChannelRenderURL = commerceChannelDisplayContext.getEditC
 		Liferay.provide(
 			window,
 			'<portlet:namespace/>apiSubmit',
-			function(form) {
+			function (form) {
 				var API_URL = '/o/headless-commerce-admin-channel/v1.0/channels';
 
 				window.parent.Liferay.fire(events.IS_LOADING_MODAL, {
-					isLoading: true
+					isLoading: true,
 				});
 
 				FormUtils.apiSubmit(form, API_URL)
-					.then(function(payload) {
+					.then(function (payload) {
 						var redirectURL = new Liferay.PortletURL.createURL(
 							'<%= editCommerceChannelRenderURL.toString() %>'
 						);
@@ -105,27 +105,27 @@ PortletURL editCommerceChannelRenderURL = commerceChannelDisplayContext.getEditC
 							successNotification: {
 								showSuccessNotification: true,
 								message:
-									'<liferay-ui:message key="your-request-completed-successfully" />'
-							}
+									'<liferay-ui:message key="your-request-completed-successfully" />',
+							},
 						});
 					})
-					.catch(function() {
+					.catch(function () {
 						window.parent.Liferay.fire(events.IS_LOADING_MODAL, {
-							isLoading: false
+							isLoading: false,
 						});
 
 						new Liferay.Notification({
 							closeable: true,
 							delay: {
 								hide: 5000,
-								show: 0
+								show: 0,
 							},
 							duration: 500,
 							message:
 								'<liferay-ui:message key="an-unexpected-error-occurred" />',
 							render: true,
 							title: '<liferay-ui:message key="danger" />',
-							type: 'danger'
+							type: 'danger',
 						});
 					});
 			},

@@ -31,7 +31,7 @@ function CartItemsListActions({numberOfItems}) {
 			actionURLs,
 			cartState,
 			setIsUpdating,
-			updateCartModel
+			updateCartModel,
 		} = useContext(MiniCartContext),
 		{id: orderId} = cartState,
 		{orderDetailURL} = actionURLs;
@@ -52,7 +52,7 @@ function CartItemsListActions({numberOfItems}) {
 					setIsUpdating(false);
 
 					Liferay.fire(PRODUCT_REMOVED, {
-						skuId: 'all'
+						skuId: 'all',
 					});
 				});
 		};
@@ -103,14 +103,14 @@ function CartItemsListActions({numberOfItems}) {
 
 						<span>
 							<button
-								className={'btn btn-sm btn-outline-success'}
+								className={'btn btn-outline-success btn-sm'}
 								onClick={flushCart}
 								type={'button'}
 							>
 								{Liferay.Language.get('yes')}
 							</button>
 							<button
-								className={'btn btn-sm btn-outline-danger'}
+								className={'btn btn-outline-danger btn-sm'}
 								onClick={cancel}
 								type={'button'}
 							>
@@ -125,7 +125,7 @@ function CartItemsListActions({numberOfItems}) {
 }
 
 CartItemsListActions.propTypes = {
-	numberOfItems: PropTypes.number
+	numberOfItems: PropTypes.number,
 };
 
 export default CartItemsListActions;

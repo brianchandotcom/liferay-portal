@@ -23,7 +23,7 @@ export default function Overlay({
 	onNext,
 	onPrev,
 	src,
-	title
+	title,
 }) {
 	return (
 		<div className="gallery-overlay" onClick={onClose} style={{background}}>
@@ -38,5 +38,5 @@ Overlay.propTypes = {
 	onNext: PropTypes.func,
 	onPrev: PropTypes.func,
 	src: PropTypes.string,
-	title: PropTypes.string
+	title: PropTypes.string,
 };

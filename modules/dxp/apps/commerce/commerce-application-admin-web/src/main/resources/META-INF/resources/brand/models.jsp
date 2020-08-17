@@ -128,10 +128,19 @@ CommerceApplicationAdminDisplayContext commerceApplicationAdminDisplayContext = 
 
 <aui:script>
 	function <portlet:namespace />deleteCommerceApplicationModels() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-models" />')) {
+		if (
+			confirm(
+				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-models" />'
+			)
+		) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
-			form.fm('deleteCommerceApplicationModelIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+			form.fm('deleteCommerceApplicationModelIds').val(
+				Liferay.Util.listCheckedExcept(
+					form,
+					'<portlet:namespace />allRowIds'
+				)
+			);
 
 			submitForm(form);
 		}

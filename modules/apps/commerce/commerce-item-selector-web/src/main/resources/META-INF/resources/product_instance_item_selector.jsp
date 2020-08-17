@@ -108,14 +108,14 @@ PortletURL portletURL = commerceProductInstanceItemSelectorViewDisplayContext.ge
 		'<portlet:namespace />cpInstances'
 	);
 
-	searchContainer.on('rowToggled', function(event) {
+	searchContainer.on('rowToggled', function (event) {
 		Liferay.Util.getOpener().Liferay.fire(
 			'<%= HtmlUtil.escapeJS(commerceProductInstanceItemSelectorViewDisplayContext.getItemSelectedEventName()) %>',
 			{
 				data: Liferay.Util.listCheckedExcept(
 					cpInstanceSelectorWrapper,
 					'<portlet:namespace />allRowIds'
-				)
+				),
 			}
 		);
 	});

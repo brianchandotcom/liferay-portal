@@ -216,13 +216,13 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 	</aui:script>
 
 	<aui:script use="liferay-item-selector-dialog">
-		$('#<portlet:namespace />addCommercePriceEntry').on('click', function(event) {
+		$('#<portlet:namespace />addCommercePriceEntry').on('click', function (event) {
 			event.preventDefault();
 
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 				eventName: 'productInstancesSelectItem',
 				on: {
-					selectedItemChange: function(event) {
+					selectedItemChange: function (event) {
 						var selectedItems = event.newVal;
 
 						if (selectedItems) {
@@ -234,11 +234,11 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 
 							submitForm(addCommercePriceEntryFm);
 						}
-					}
+					},
 				},
 				title:
 					'<liferay-ui:message arguments="<%= HtmlUtil.escape(commercePriceList.getName()) %>" key="add-new-entry-to-x" />',
-				url: '<%= commercePriceEntryDisplayContext.getItemSelectorUrl() %>'
+				url: '<%= commercePriceEntryDisplayContext.getItemSelectorUrl() %>',
 			});
 
 			itemSelectorDialog.open();

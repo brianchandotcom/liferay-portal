@@ -27,7 +27,7 @@ export function getOpenedSidePanel() {
 		if (data.visible) {
 			openedSidePanel = {
 				id,
-				...data
+				...data,
 			};
 		}
 	});

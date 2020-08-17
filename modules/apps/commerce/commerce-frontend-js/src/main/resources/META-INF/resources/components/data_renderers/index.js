@@ -42,7 +42,7 @@ const dataRenderers = {
 	localizedField: LocalizedFieldRenderer,
 	quantitySelector: QuantitySelectorRenderer,
 	status: StatusRenderer,
-	tooltipPrice: TooltipPriceRenderer
+	tooltipPrice: TooltipPriceRenderer,
 };
 
 export function getDataRendererById(id) {
@@ -54,17 +54,19 @@ export const fetchedContentRenderers = [];
 export function getDataRendererByUrl(url) {
 	return new Promise((resolve, reject) => {
 		const addedDataRenderer = fetchedContentRenderers.find(
-			cr => cr.url === url
+			(cr) => cr.url === url
 		);
 		if (addedDataRenderer) {
 			resolve(addedDataRenderer.component);
 		}
+
 		return getJsModule(url)
-			.then(fetchedComponent => {
+			.then((fetchedComponent) => {
 				fetchedContentRenderers.push({
 					component: fetchedComponent,
-					url
+					url,
 				});
+
 				return resolve(fetchedComponent);
 			})
 			.catch(reject);

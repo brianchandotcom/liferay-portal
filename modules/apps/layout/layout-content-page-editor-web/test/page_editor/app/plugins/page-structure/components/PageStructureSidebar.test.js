@@ -183,7 +183,7 @@ describe('PageStructureSidebar', () => {
 	it('has a sidebar panel title', () => {
 		const {getByText} = renderComponent();
 
-		expect(getByText('page-structure')).toBeInTheDocument();
+		expect(getByText('selection')).toBeInTheDocument();
 	});
 
 	it('has a warning message when there is no content', () => {

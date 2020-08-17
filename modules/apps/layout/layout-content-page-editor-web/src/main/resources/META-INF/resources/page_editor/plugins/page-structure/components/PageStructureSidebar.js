@@ -22,7 +22,7 @@ export default function PageStructureSidebar() {
 	return (
 		<div className="page-editor__page-structure">
 			<SidebarPanelHeader>
-				{Liferay.Language.get('page-structure')}
+				{Liferay.Language.get('selection')}
 			</SidebarPanelHeader>
 
 			<div className="page-editor__page-structure__content">

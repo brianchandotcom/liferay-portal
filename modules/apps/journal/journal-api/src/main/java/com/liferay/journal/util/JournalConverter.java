@@ -22,10 +22,13 @@ import com.liferay.portal.kernel.xml.Document;
 
 import java.util.Locale;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Marcellus Tavares
  * @author Bruno Basto
  */
+@ProviderType
 public interface JournalConverter {
 
 	public String getContent(DDMStructure ddmStructure, Fields ddmFields)

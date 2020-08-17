@@ -1886,7 +1886,7 @@ definition {
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
-		PageEditor.gotoTab(tabName = "Page Structure");
+		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertElementPresent(locator1 = "PageEditor#CONFIGURATION_PANEL_HANDLE");
 
@@ -2295,7 +2295,7 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
-		PageEditor.gotoTab(tabName = "Page Structure");
+		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertClick(
 			key_navItem = "Configuration",
@@ -2375,7 +2375,7 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
-		PageEditor.gotoTab(tabName = "Page Structure");
+		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertClick(
 			key_navItem = "Configuration",
@@ -2714,7 +2714,7 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
-		PageEditor.gotoTab(tabName = "Page Structure");
+		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertClick(
 			key_navItem = "Configuration",
@@ -2835,7 +2835,7 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Content Display");
 
-		PageEditor.gotoTab(tabName = "Page Structure");
+		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertClick(
 			key_navItem = "Configuration",

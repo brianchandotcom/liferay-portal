@@ -155,8 +155,8 @@ definition {
 				value1 = "Content Edition");
 		}
 
-		task ("Assert only Page Structure, Contents and Comments are shown in sidebar") {
-			for (var tabName : list "Page Structure,Contents,Comments") {
+		task ("Assert only Selection, Contents and Comments are shown in sidebar") {
+			for (var tabName : list "Selection,Contents,Comments") {
 				AssertVisible(
 					key_tabName = "${tabName}",
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TAB_BUTTON");
@@ -199,7 +199,7 @@ definition {
 				key_fragmentName = "paragraph",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_WITHOUT_TOPPER");
 
-			PageEditor.gotoTab(tabName = "Page Structure");
+			PageEditor.gotoTab(tabName = "Selection");
 
 			var key_navItem = "Mapping";
 

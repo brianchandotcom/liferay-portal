@@ -291,7 +291,7 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
 
-		PageEditor.gotoTab(tabName = "Page Structure");
+		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertTextEquals(
 			key_fieldLabel = "Collection",
@@ -325,7 +325,7 @@ definition {
 
 		PageEditor.clickConfigurableField(fragmentName = "Collection Display");
 
-		PageEditor.gotoTab(tabName = "Page Structure");
+		PageEditor.gotoTab(tabName = "Selection");
 
 		AssertTextEquals(
 			key_fieldLabel = "Collection",

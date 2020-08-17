@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration;
 import com.liferay.portal.remote.cors.internal.CORSSupport;
+import com.liferay.portal.remote.cors.internal.SimpleURLToCORSSupportMapper;
 import com.liferay.portal.remote.cors.internal.URLToCORSSupportMapper;
 import com.liferay.portal.remote.cors.internal.configuration.persistence.listener.PortalCORSConfigurationModelListener;
 
@@ -258,7 +259,7 @@ public class PortalCORSServletFilter
 			ConfigurableUtil.createConfigurable(
 				PortalCORSConfiguration.class, new HashMapDictionary<>()));
 
-		return new URLToCORSSupportMapper(corsSupports);
+		return new SimpleURLToCORSSupportMapper(corsSupports);
 	}
 
 	private String _getURI(HttpServletRequest httpServletRequest) {
@@ -329,7 +330,8 @@ public class PortalCORSServletFilter
 		_mergeCORSConfiguration(corsSupports, CompanyConstants.SYSTEM);
 
 		_urlToCORSSupportMappers.put(
-			CompanyConstants.SYSTEM, new URLToCORSSupportMapper(corsSupports));
+			CompanyConstants.SYSTEM,
+			new SimpleURLToCORSSupportMapper(corsSupports));
 
 		for (long companyId : _urlToCORSSupportMappers.keySet()) {
 			if (companyId != CompanyConstants.SYSTEM) {
@@ -352,7 +354,7 @@ public class PortalCORSServletFilter
 		_mergeCORSConfiguration(corsSupports, CompanyConstants.SYSTEM);
 
 		_urlToCORSSupportMappers.put(
-			companyId, new URLToCORSSupportMapper(corsSupports));
+			companyId, new SimpleURLToCORSSupportMapper(corsSupports));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

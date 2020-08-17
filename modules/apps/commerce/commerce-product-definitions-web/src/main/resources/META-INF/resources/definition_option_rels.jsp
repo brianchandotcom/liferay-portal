@@ -143,15 +143,12 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 			elementClasses="mt-4"
 			title='<%= LanguageUtil.get(request, "options") %>'
 		>
-
-			<%
-			Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-				"cpDefinitionId", String.valueOf(cpDefinitionOptionRelDisplayContext.getCPDefinitionId())
-			).build();
-			%>
-
 			<commerce-ui:dataset-display
-				contextParams="<%= contextParams %>"
+				contextParams='<%=
+					HashMapBuilder.<String, String>put(
+						"cpDefinitionId", String.valueOf(cpDefinitionOptionRelDisplayContext.getCPDefinitionId())
+					).build()
+				%>'
 				dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS %>"
 				id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS %>"
 				itemsPerPage="<%= 10 %>"

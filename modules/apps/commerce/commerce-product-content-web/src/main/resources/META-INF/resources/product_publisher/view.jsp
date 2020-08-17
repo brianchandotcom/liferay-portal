@@ -19,10 +19,6 @@
 <%
 CPPublisherDisplayContext cpPublisherDisplayContext = (CPPublisherDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
-	"cpPublisherDisplayContext", cpPublisherDisplayContext
-).build();
-
 SearchContainer<CPCatalogEntry> searchContainer = cpPublisherDisplayContext.getSearchContainer();
 
 List<CPCatalogEntry> results = searchContainer.getResults();
@@ -32,7 +28,11 @@ List<CPCatalogEntry> results = searchContainer.getResults();
 	<c:when test="<%= cpPublisherDisplayContext.isRenderSelectionADT() %>">
 		<liferay-ddm:template-renderer
 			className="<%= CPPublisherPortlet.class.getName() %>"
-			contextObjects="<%= contextObjects %>"
+			contextObjects='<%=
+				HashMapBuilder.<String, Object>put(
+					"cpPublisherDisplayContext", cpPublisherDisplayContext
+				).build()
+			%>'
 			displayStyle="<%= cpPublisherDisplayContext.getDisplayStyle() %>"
 			displayStyleGroupId="<%= cpPublisherDisplayContext.getDisplayStyleGroupId() %>"
 			entries="<%= results %>"

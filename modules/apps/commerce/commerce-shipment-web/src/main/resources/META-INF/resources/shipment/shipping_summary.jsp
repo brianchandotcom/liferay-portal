@@ -188,16 +188,13 @@ Format dateFormat = FastDateFormatFactoryUtil.getDate(DateFormat.MEDIUM, locale,
 	bodyClasses="p-0"
 	title='<%= LanguageUtil.get(request, "products") %>'
 >
-
-	<%
-	Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-		"commerceShipmentId", String.valueOf(commerceShipment.getCommerceShipmentId())
-	).build();
-	%>
-
 	<commerce-ui:dataset-display
 		clayCreationMenu="<%= commerceShipmentDisplayContext.getShipmentItemClayCreationMenu() %>"
-		contextParams="<%= contextParams %>"
+		contextParams='<%=
+			HashMapBuilder.<String, String>put(
+				"commerceShipmentId", String.valueOf(commerceShipment.getCommerceShipmentId())
+			).build()
+		%>'
 		dataProviderKey="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPMENT_ITEMS %>"
 		id="<%= commerceShipmentDisplayContext.getDatasetView() %>"
 		itemsPerPage="<%= 10 %>"

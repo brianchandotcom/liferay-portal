@@ -18,15 +18,15 @@
 
 <%
 CPDefinitionDisplayLayoutDisplayContext cpDefinitionDisplayLayoutDisplayContext = (CPDefinitionDisplayLayoutDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-	"commerceChannelId", String.valueOf(cpDefinitionDisplayLayoutDisplayContext.getCommerceChannelId())
-).build();
 %>
 
 <commerce-ui:dataset-display
 	clayCreationMenu="<%= cpDefinitionDisplayLayoutDisplayContext.getClayCreationMenu() %>"
-	contextParams="<%= contextParams %>"
+	contextParams='<%=
+		HashMapBuilder.<String, String>put(
+			"commerceChannelId", String.valueOf(cpDefinitionDisplayLayoutDisplayContext.getCommerceChannelId())
+		).build()
+	%>'
 	dataProviderKey="<%= CommerceProductDisplayPageClayTable.NAME %>"
 	id="<%= CommerceProductDisplayPageClayTable.NAME %>"
 	itemsPerPage="<%= 10 %>"

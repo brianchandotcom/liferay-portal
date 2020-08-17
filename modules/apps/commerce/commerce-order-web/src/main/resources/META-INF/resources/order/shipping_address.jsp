@@ -33,15 +33,13 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
 
-		<%
-		Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-			"commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId())
-		).build();
-		%>
-
 		<commerce-ui:dataset-display
 			clayCreationMenu='<%= commerceOrderEditDisplayContext.getCommerceAddressClayCreationMenu("editCommerceOrderShippingAddress") %>'
-			contextParams="<%= contextParams %>"
+			contextParams='<%=
+				HashMapBuilder.<String, String>put(
+					"commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId())
+				).build()
+			%>'
 			dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPPING_ADDRESSES %>"
 			formId="fm"
 			id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPPING_ADDRESSES %>"

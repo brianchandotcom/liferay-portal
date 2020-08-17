@@ -40,15 +40,13 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-			<%
-			Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-				"cpDefinitionId", String.valueOf(cpDefinitionLinkDisplayContext.getCPDefinitionId())
-			).build();
-			%>
-
 			<commerce-ui:dataset-display
 				clayCreationMenu="<%= cpDefinitionLinkDisplayContext.getClayCreationMenu() %>"
-				contextParams="<%= contextParams %>"
+				contextParams='<%=
+					HashMapBuilder.<String, String>put(
+						"cpDefinitionId", String.valueOf(cpDefinitionLinkDisplayContext.getCPDefinitionId())
+					).build()
+				%>'
 				dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_LINKS %>"
 				formId="fm"
 				id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_LINKS %>"

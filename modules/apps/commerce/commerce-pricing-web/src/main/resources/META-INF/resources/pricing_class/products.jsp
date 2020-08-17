@@ -104,15 +104,12 @@ boolean hasPermission = commercePricingClassCPDefinitionDisplayContext.hasPermis
 				bodyClasses="p-0"
 				title='<%= LanguageUtil.get(request, "products") %>'
 			>
-
-				<%
-				Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-					"commercePricingClassId", String.valueOf(commercePricingClassId)
-				).build();
-				%>
-
 				<commerce-ui:dataset-display
-					contextParams="<%= contextParams %>"
+					contextParams='<%=
+						HashMapBuilder.<String, String>put(
+							"commercePricingClassId", String.valueOf(commercePricingClassId)
+						).build()
+					%>'
 					dataProviderKey="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRODUCT_DEFINITIONS %>"
 					formId="fm"
 					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRODUCT_DEFINITIONS %>"

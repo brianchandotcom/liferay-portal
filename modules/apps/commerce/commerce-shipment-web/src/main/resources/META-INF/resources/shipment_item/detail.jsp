@@ -56,18 +56,16 @@ portletDisplay.setURLBack(redirect);
 
 		<hr class="mt-0" />
 
-		<%
-		Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-			"commerceOrderItemId", String.valueOf(commerceOrderItem.getCommerceOrderItemId())
-		).put(
-			"commerceShipmentId", String.valueOf(commerceShipmentItem.getCommerceShipmentId())
-		).put(
-			"commerceShipmentItemId", String.valueOf(commerceShipmentItem.getCommerceShipmentItemId())
-		).build();
-		%>
-
 		<commerce-ui:dataset-display
-			contextParams="<%= contextParams %>"
+			contextParams='<%=
+				HashMapBuilder.<String, String>put(
+					"commerceOrderItemId", String.valueOf(commerceOrderItem.getCommerceOrderItemId())
+				).put(
+					"commerceShipmentId", String.valueOf(commerceShipmentItem.getCommerceShipmentId())
+				).put(
+					"commerceShipmentItemId", String.valueOf(commerceShipmentItem.getCommerceShipmentItemId())
+				).build()
+			%>'
 			dataProviderKey="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_WAREHOUSE_ITEM %>"
 			formId="fm"
 			id="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_WAREHOUSE_ITEM %>"

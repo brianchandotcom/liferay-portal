@@ -24,14 +24,14 @@ CommerceNotificationQueueEntriesDisplayContext commerceNotificationQueueEntriesD
 PortletURL portletURL = commerceNotificationQueueEntriesDisplayContext.getPortletURL();
 
 portletURL.setParameter("notificationNavigationItem", notificationNavigationItem);
-
-Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-	"commerceChannelId", String.valueOf(commerceNotificationQueueEntriesDisplayContext.getCommerceChannelId())
-).build();
 %>
 
 <commerce-ui:dataset-display
-	contextParams="<%= contextParams %>"
+	contextParams='<%=
+		HashMapBuilder.<String, String>put(
+			"commerceChannelId", String.valueOf(commerceNotificationQueueEntriesDisplayContext.getCommerceChannelId())
+		).build()
+	%>'
 	dataProviderKey="<%= CommerceNotificationEntryClayTable.NAME %>"
 	id="<%= CommerceNotificationEntryClayTable.NAME %>"
 	itemsPerPage="<%= 10 %>"

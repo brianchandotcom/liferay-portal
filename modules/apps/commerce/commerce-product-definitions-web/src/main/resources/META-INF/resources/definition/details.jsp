@@ -316,15 +316,12 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 					bodyClasses="p-0"
 					title='<%= LanguageUtil.get(request, "specifications") %>'
 				>
-
-					<%
-					Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-						"cpDefinitionId", String.valueOf(cpDefinitionId)
-					).build();
-					%>
-
 					<commerce-ui:dataset-display
-						contextParams="<%= contextParams %>"
+						contextParams='<%=
+							HashMapBuilder.<String, String>put(
+								"cpDefinitionId", String.valueOf(cpDefinitionId)
+							).build()
+						%>'
 						dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITION_SPECIFICATIONS %>"
 						formId="fm"
 						id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITION_SPECIFICATIONS %>"

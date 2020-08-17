@@ -45,28 +45,26 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 
 <div id="<portlet:namespace />ConditionForm"></div>
 
-<%
-Map<String, Object> context = HashMapBuilder.<String, Object>put(
-	"categorySelectorURL", cpPublisherConfigurationDisplayContext.getCategorySelectorURL()
-).put(
-	"groupIds", String.valueOf(company.getGroupId())
-).put(
-	"id", "autofield"
-).put(
-	"namespace", liferayPortletResponse.getNamespace()
-).put(
-	"pathThemeImages", themeDisplay.getPathThemeImages()
-).put(
-	"rules", cpPublisherConfigurationDisplayContext.getAutoFieldRulesJSONArray()
-).put(
-	"tagSelectorURL", cpPublisherConfigurationDisplayContext.getTagSelectorURL()
-).put(
-	"vocabularyIds", cpPublisherConfigurationDisplayContext.getVocabularyIds()
-).build();
-%>
-
 <soy:template-renderer
-	context="<%= context %>"
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"categorySelectorURL", cpPublisherConfigurationDisplayContext.getCategorySelectorURL()
+		).put(
+			"groupIds", String.valueOf(company.getGroupId())
+		).put(
+			"id", "autofield"
+		).put(
+			"namespace", liferayPortletResponse.getNamespace()
+		).put(
+			"pathThemeImages", themeDisplay.getPathThemeImages()
+		).put(
+			"rules", cpPublisherConfigurationDisplayContext.getAutoFieldRulesJSONArray()
+		).put(
+			"tagSelectorURL", cpPublisherConfigurationDisplayContext.getTagSelectorURL()
+		).put(
+			"vocabularyIds", cpPublisherConfigurationDisplayContext.getVocabularyIds()
+		).build()
+	%>'
 	module="js/AutoField.es"
 	templateNamespace="com.liferay.commerce.product.content.web.AutoField.render"
 />

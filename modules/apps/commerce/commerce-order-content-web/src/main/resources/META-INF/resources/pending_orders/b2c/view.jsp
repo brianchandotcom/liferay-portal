@@ -18,15 +18,15 @@
 
 <%
 CommerceOrderContentDisplayContext commerceOrderContentDisplayContext = (CommerceOrderContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
-	"commerceOrderContentDisplayContext", commerceOrderContentDisplayContext
-).build();
 %>
 
 <liferay-ddm:template-renderer
 	className="<%= CommerceOpenOrderContentPortlet.class.getName() %>"
-	contextObjects="<%= contextObjects %>"
+	contextObjects='<%=
+		HashMapBuilder.<String, Object>put(
+			"commerceOrderContentDisplayContext", commerceOrderContentDisplayContext
+		).build()
+	%>'
 	displayStyle="<%= commerceOrderContentDisplayContext.getDisplayStyle(CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT) %>"
 	displayStyleGroupId="<%= commerceOrderContentDisplayContext.getDisplayStyleGroupId(CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT) %>"
 	entries="<%= commerceOrderContentDisplayContext.getCommerceOrders() %>"

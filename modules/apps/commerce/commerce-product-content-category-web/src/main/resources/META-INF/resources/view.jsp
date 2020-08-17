@@ -24,15 +24,15 @@ AssetCategory assetCategory = cpCategoryContentDisplayContext.getAssetCategory()
 List<AssetCategory> assetCategoryList = new ArrayList<>();
 
 assetCategoryList.add(assetCategory);
-
-Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
-	"cpCategoryContentDisplayContext", cpCategoryContentDisplayContext
-).build();
 %>
 
 <liferay-ddm:template-renderer
 	className="<%= CPCategoryContentPortlet.class.getName() %>"
-	contextObjects="<%= contextObjects %>"
+	contextObjects='<%=
+		HashMapBuilder.<String, Object>put(
+			"cpCategoryContentDisplayContext", cpCategoryContentDisplayContext
+		).build()
+	%>'
 	displayStyle="<%= cpCategoryContentDisplayContext.getDisplayStyle() %>"
 	displayStyleGroupId="<%= cpCategoryContentDisplayContext.getDisplayStyleGroupId() %>"
 	entries="<%= assetCategoryList %>"

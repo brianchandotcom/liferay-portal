@@ -29,14 +29,14 @@ PortletURL portletURL = commerceOrderEditDisplayContext.getCommerceShipmentsPort
 
 <%
 CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder();
-
-Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-	"commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId())
-).build();
 %>
 
 <commerce-ui:dataset-display
-	contextParams="<%= contextParams %>"
+	contextParams='<%=
+		HashMapBuilder.<String, String>put(
+			"commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId())
+		).build()
+	%>'
 	dataProviderKey="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPMENTS %>"
 	id="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_SHIPMENTS %>"
 	itemsPerPage="<%= 10 %>"

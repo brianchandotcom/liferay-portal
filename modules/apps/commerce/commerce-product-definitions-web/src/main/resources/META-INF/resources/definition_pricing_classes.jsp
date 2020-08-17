@@ -136,15 +136,12 @@ CProduct cProduct = cpDefinition.getCProduct();
 			elementClasses="mt-4"
 			title='<%= LanguageUtil.get(request, "product-groups") %>'
 		>
-
-			<%
-			Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-				"cpDefinitionId", String.valueOf(cpDefinitionPricingClassDisplayContext.getCPDefinitionId())
-			).build();
-			%>
-
 			<commerce-ui:dataset-display
-				contextParams="<%= contextParams %>"
+				contextParams='<%=
+					HashMapBuilder.<String, String>put(
+						"cpDefinitionId", String.valueOf(cpDefinitionPricingClassDisplayContext.getCPDefinitionId())
+					).build()
+				%>'
 				dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_PRICING_CLASSES %>"
 				id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_PRICING_CLASSES %>"
 				itemsPerPage="<%= 10 %>"

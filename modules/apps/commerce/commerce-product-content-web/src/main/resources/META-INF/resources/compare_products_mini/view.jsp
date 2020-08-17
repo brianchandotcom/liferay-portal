@@ -29,16 +29,13 @@ CPDataSourceResult cpDataSourceResult = cpCompareContentMiniDisplayContext.getCP
 		</div>
 	</c:when>
 	<c:when test="<%= cpCompareContentMiniDisplayContext.isSelectionStyleADT() %>">
-
-		<%
-		Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
-			"cpCompareContentMiniDisplayContext", cpCompareContentMiniDisplayContext
-		).build();
-		%>
-
 		<liferay-ddm:template-renderer
 			className="<%= CPCompareContentMiniPortlet.class.getName() %>"
-			contextObjects="<%= contextObjects %>"
+			contextObjects='<%=
+				HashMapBuilder.<String, Object>put(
+					"cpCompareContentMiniDisplayContext", cpCompareContentMiniDisplayContext
+				).build()
+			%>'
 			displayStyle="<%= cpCompareContentMiniDisplayContext.getDisplayStyle() %>"
 			displayStyleGroupId="<%= cpCompareContentMiniDisplayContext.getDisplayStyleGroupId() %>"
 			entries="<%= cpDataSourceResult.getCPCatalogEntries() %>"

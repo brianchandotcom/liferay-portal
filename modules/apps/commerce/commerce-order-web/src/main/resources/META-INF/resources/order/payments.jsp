@@ -114,15 +114,12 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 			elementClasses="flex-fill"
 			title='<%= LanguageUtil.get(request, "transaction-history") %>'
 		>
-
-			<%
-			Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-				"commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId())
-			).build();
-			%>
-
 			<commerce-ui:dataset-display
-				contextParams="<%= contextParams %>"
+				contextParams='<%=
+					HashMapBuilder.<String, String>put(
+						"commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId())
+					).build()
+				%>'
 				dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PAYMENTS %>"
 				id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PAYMENTS %>"
 				itemsPerPage="<%= 10 %>"

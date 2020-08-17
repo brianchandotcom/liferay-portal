@@ -408,10 +408,10 @@ public class MiniumSiteInitializer implements SiteInitializer {
 		CommerceShippingMethod commerceShippingMethod =
 			_commerceShippingMethodLocalService.addCommerceShippingMethod(
 				serviceContext.getUserId(), groupId,
-				HashMapBuilder.<Locale, String>put(
+				HashMapBuilder.put(
 					locale, commerceShippingEngine.getName(locale)
 				).build(),
-				HashMapBuilder.<Locale, String>put(
+				HashMapBuilder.put(
 					locale, commerceShippingEngine.getDescription(locale)
 				).build(),
 				null, shippingMethod, 0, true);
@@ -433,12 +433,13 @@ public class MiniumSiteInitializer implements SiteInitializer {
 		_commerceShippingFixedOptionLocalService.addCommerceShippingFixedOption(
 			serviceContext.getUserId(), commerceShippingMethod.getGroupId(),
 			commerceShippingMethod.getCommerceShippingMethodId(),
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				serviceContext.getLocale(), name
 			).build(),
-			HashMapBuilder.<Locale, String>put(
+			HashMapBuilder.put(
 				serviceContext.getLocale(), description
-			).build(), price, 0);
+			).build(),
+			price, 0);
 	}
 
 	protected void setDefaultCatalogImage(

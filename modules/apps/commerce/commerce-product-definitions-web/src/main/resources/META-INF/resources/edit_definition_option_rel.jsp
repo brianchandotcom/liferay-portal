@@ -120,15 +120,15 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 				if (cpDefinitionOptionRel.isPriceTypeStatic()) {
 					datasetDisplayId = CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTION_VALUES_STATIC;
 				}
-
-				Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-					"cpDefinitionOptionRelId", String.valueOf(cpDefinitionOptionRelId)
-				).build();
 				%>
 
 				<commerce-ui:dataset-display
 					clayCreationMenu="<%= cpDefinitionOptionRelDisplayContext.getClayCreationMenu() %>"
-					contextParams="<%= contextParams %>"
+					contextParams='<%=
+						HashMapBuilder.<String, String>put(
+							"cpDefinitionOptionRelId", String.valueOf(cpDefinitionOptionRelId)
+						).build()
+					%>'
 					dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTION_VALUES %>"
 					id="<%= datasetDisplayId %>"
 					itemsPerPage="<%= 10 %>"

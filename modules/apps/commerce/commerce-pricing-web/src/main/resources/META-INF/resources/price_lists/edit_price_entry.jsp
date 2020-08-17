@@ -68,15 +68,13 @@ if ((commercePriceEntry != null) && (commercePriceEntry.getExpirationDate() != n
 						</div>
 					</div>
 
-					<%
-					Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-						"commercePriceEntryId", String.valueOf(commercePriceEntryId)
-					).build();
-					%>
-
 					<commerce-ui:dataset-display
 						clayCreationMenu="<%= commercePriceEntryDisplayContext.getClayCreationMenu() %>"
-						contextParams="<%= contextParams %>"
+						contextParams='<%=
+							HashMapBuilder.<String, String>put(
+								"commercePriceEntryId", String.valueOf(commercePriceEntryId)
+							).build()
+						%>'
 						dataProviderKey="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_TIER_PRICE_ENTRIES %>"
 						formId="fm"
 						id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_TIER_PRICE_ENTRIES %>"

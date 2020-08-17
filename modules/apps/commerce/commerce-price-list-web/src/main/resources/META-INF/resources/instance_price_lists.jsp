@@ -48,15 +48,13 @@ productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
 
 		<liferay-ui:error exception="<%= DuplicateCommercePriceEntryException.class %>" message="one-or-more-selected-entries-already-exist" />
 
-		<%
-		Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-			"cpInstanceId", String.valueOf(cpInstanceId)
-		).build();
-		%>
-
 		<commerce-ui:dataset-display
 			clayCreationMenu="<%= cpInstanceCommercePriceEntryDisplayContext.getClayCreationMenu() %>"
-			contextParams="<%= contextParams %>"
+			contextParams='<%=
+				HashMapBuilder.<String, String>put(
+					"cpInstanceId", String.valueOf(cpInstanceId)
+				).build()
+			%>'
 			dataProviderKey="<%= CommercePriceListDataSetConstants.COMMERCE_DATA_SET_KEY_INSTANCE_PRICE_ENTRIES %>"
 			formId="fm"
 			id="<%= CommercePriceListDataSetConstants.COMMERCE_DATA_SET_KEY_INSTANCE_PRICE_ENTRIES %>"

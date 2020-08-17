@@ -18,15 +18,15 @@
 
 <%
 CommerceShippingFixedOptionsDisplayContext commerceShippingFixedOptionsDisplayContext = (CommerceShippingFixedOptionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-	"commerceShippingMethodId", String.valueOf(commerceShippingFixedOptionsDisplayContext.getCommerceShippingMethodId())
-).build();
 %>
 
 <commerce-ui:dataset-display
 	clayCreationMenu="<%= commerceShippingFixedOptionsDisplayContext.getClayCreationMenu() %>"
-	contextParams="<%= contextParams %>"
+	contextParams='<%=
+		HashMapBuilder.<String, String>put(
+			"commerceShippingMethodId", String.valueOf(commerceShippingFixedOptionsDisplayContext.getCommerceShippingMethodId())
+		).build()
+	%>'
 	dataProviderKey="<%= CommerceShippingFixedOptionClayTable.NAME %>"
 	id="<%= CommerceShippingFixedOptionClayTable.NAME %>"
 	itemsPerPage="<%= 10 %>"

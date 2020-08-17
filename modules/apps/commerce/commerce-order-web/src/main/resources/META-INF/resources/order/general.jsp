@@ -264,15 +264,12 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 			bodyClasses="p-0"
 			title='<%= LanguageUtil.get(request, "items") %>'
 		>
-
-			<%
-			Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-				"commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId())
-			).build();
-			%>
-
 			<commerce-ui:dataset-display
-				contextParams="<%= contextParams %>"
+				contextParams='<%=
+					HashMapBuilder.<String, String>put(
+						"commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId())
+					).build()
+				%>'
 				dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_ITEMS %>"
 				id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_ITEMS %>"
 				itemsPerPage="<%= 10 %>"

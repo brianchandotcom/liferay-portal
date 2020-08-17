@@ -24,15 +24,12 @@ CommerceOrderEditDisplayContext commerceOrderEditDisplayContext = (CommerceOrder
 	bodyClasses="p-0"
 	title='<%= LanguageUtil.get(request, "emails") %>'
 >
-
-	<%
-	Map<String, String> contextParams = HashMapBuilder.<String, String>put(
-			"commerceOrderId", String.valueOf(commerceOrderEditDisplayContext.getCommerceOrderId())
-		).build();
-	%>
-
 	<commerce-ui:dataset-display
-		contextParams="<%= contextParams %>"
+		contextParams='<%=
+			HashMapBuilder.<String, String>put(
+				"commerceOrderId", String.valueOf(commerceOrderEditDisplayContext.getCommerceOrderId())
+			).build()
+		%>'
 		dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_NOTIFICATIONS %>"
 		id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_NOTIFICATIONS %>"
 		itemsPerPage="<%= 10 %>"

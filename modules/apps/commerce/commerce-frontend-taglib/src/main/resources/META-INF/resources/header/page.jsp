@@ -135,11 +135,11 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 					<div class="col-auto d-lg-none">
 						<clay:button
 							data='<%=
-							HashMapBuilder.<String, String>put(
-								"target", "#navbarNavAltMarkup"
-							).put(
-								"toggle", "collapse"
-							).build()
+								HashMapBuilder.<String, String>put(
+									"target", "#navbarNavAltMarkup"
+								).put(
+									"toggle", "collapse"
+								).build()
 							%>'
 							elementClasses="navbar-toggler p-3"
 							icon="bars"

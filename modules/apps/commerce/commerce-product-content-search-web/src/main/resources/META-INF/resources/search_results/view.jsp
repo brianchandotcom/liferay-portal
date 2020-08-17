@@ -31,18 +31,15 @@ List<CPCatalogEntry> results = cpCatalogEntrySearchContainer.getResults();
 		</div>
 	</c:when>
 	<c:when test="<%= cpSearchResultsDisplayContext.isSelectionStyleADT() %>">
-
-		<%
-		Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
-			"cpContentHelper", request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER)
-		).put(
-			"cpSearchResultsDisplayContext", cpSearchResultsDisplayContext
-		).build();
-		%>
-
 		<liferay-ddm:template-renderer
 			className="<%= CPSearchResultsPortlet.class.getName() %>"
-			contextObjects="<%= contextObjects %>"
+			contextObjects='<%=
+				HashMapBuilder.<String, Object>put(
+					"cpContentHelper", request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER)
+				).put(
+					"cpSearchResultsDisplayContext", cpSearchResultsDisplayContext
+				).build()
+			%>'
 			displayStyle="<%= cpSearchResultsDisplayContext.getDisplayStyle() %>"
 			displayStyleGroupId="<%= cpSearchResultsDisplayContext.getDisplayStyleGroupId() %>"
 			entries="<%= results %>"

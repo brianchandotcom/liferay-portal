@@ -44,7 +44,8 @@ public class UserGroupRoleModelListener
 		UserGroupRoleModelImpl userGroupRoleModelImpl =
 			(UserGroupRoleModelImpl)userGroupRole;
 
-		long originalUserId = userGroupRoleModelImpl.getOriginalUserId();
+		long originalUserId = userGroupRoleModelImpl.getColumnOriginalValue(
+			"userId");
 
 		if (originalUserId != userGroupRoleModelImpl.getUserId()) {
 			PermissionCacheUtil.clearCache(originalUserId);

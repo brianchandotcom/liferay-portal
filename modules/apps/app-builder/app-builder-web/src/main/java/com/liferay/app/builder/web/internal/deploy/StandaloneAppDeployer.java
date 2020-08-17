@@ -87,7 +87,7 @@ public class StandaloneAppDeployer extends BaseAppDeployer {
 							).build()),
 						_deployLayoutTypeController(
 							appBuilderApp.getCompanyId(), appId, appName,
-							portletName),
+							appBuilderApp.getNameMap(), portletName),
 						_deployLayoutTypeAccessPolicy(portletName)
 					};
 				}
@@ -175,7 +175,8 @@ public class StandaloneAppDeployer extends BaseAppDeployer {
 	}
 
 	private ServiceRegistration<?> _deployLayoutTypeController(
-			long companyId, long appId, String appName, String portletName)
+			long companyId, long appId, String appName,
+			Map<Locale, String> appNameMap, String portletName)
 		throws PortalException {
 
 		Group group = _groupLocalService.fetchFriendlyURLGroup(
@@ -199,7 +200,7 @@ public class StandaloneAppDeployer extends BaseAppDeployer {
 
 		return deployLayoutTypeController(
 			new AppPortletLayoutTypeController(
-				_servletContext, appName, portletName),
+				_servletContext, appName, appNameMap, portletName),
 			new HashMapDictionary<String, Object>() {
 				{
 					put("layout.type", portletName);

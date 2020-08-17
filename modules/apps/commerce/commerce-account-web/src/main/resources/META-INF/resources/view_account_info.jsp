@@ -57,9 +57,7 @@ CommerceAccount commerceAccount = commerceAccountDisplayContext.getCurrentCommer
 			window,
 			'<portlet:namespace />openAddOrganizationsModal',
 			function (evt) {
-				const addOrganizationsModal = Liferay.component(
-					'addOrganizationsModal'
-				);
+				var addOrganizationsModal = Liferay.component('addOrganizationsModal');
 
 				addOrganizationsModal.open();
 			}

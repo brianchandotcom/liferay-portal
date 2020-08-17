@@ -35,7 +35,7 @@ if (CommercePriceListConstants.TYPE_PROMOTION.equals(commercePriceEntryDisplayCo
 			<div id="item-finder-root"></div>
 
 			<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-				const CommercePriceEntriesResource = ServiceProvider.default.AdminPricingAPI(
+				var CommercePriceEntriesResource = ServiceProvider.default.AdminPricingAPI(
 					'v2'
 				);
 

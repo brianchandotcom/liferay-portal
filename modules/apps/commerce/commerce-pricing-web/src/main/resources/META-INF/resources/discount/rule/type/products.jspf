@@ -26,7 +26,7 @@ String typeSettings = unicodeProperties.getProperty(commerceDiscountRule.getType
 	<aui:input id="typeSettings" name="typeSettings" type="hidden" value="<%= (typeSettings == null) ? StringPool.BLANK : typeSettings %>" />
 
 	<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-		const CommerceDiscountRuleResource = ServiceProvider.default.AdminPricingAPI(
+		var CommerceDiscountRuleResource = ServiceProvider.default.AdminPricingAPI(
 			'v2'
 		);
 

@@ -38,7 +38,7 @@
 			productType: '<%= ParamUtil.getString(request, "productTypeName") %>',
 		};
 
-		const AdminCatalogResource = ServiceProvider.default.AdminCatalogAPI('v1');
+		var AdminCatalogResource = ServiceProvider.default.AdminCatalogAPI('v1');
 
 		Liferay.provide(
 			window,
@@ -46,22 +46,18 @@
 			function () {
 				ModalUtils.isSubmitting();
 
-				const formattedData = Object.assign(
-					{},
-					<portlet:namespace/>productData,
-					{
-						defaultSku: '<%= CPInstanceConstants.DEFAULT_SKU %>',
-						name: {
-							[<portlet:namespace/>defaultLanguageId]: document.getElementById(
-								'<portlet:namespace/>name'
-							).value,
-						},
-					}
-				);
+				var formattedData = Object.assign({}, <portlet:namespace/>productData, {
+					defaultSku: '<%= CPInstanceConstants.DEFAULT_SKU %>',
+					name: {
+						[<portlet:namespace/>defaultLanguageId]: document.getElementById(
+							'<portlet:namespace/>name'
+						).value,
+					},
+				});
 
 				AdminCatalogResource.createProduct(formattedData)
 					.then(function (cpDefinition) {
-						const redirectURL = new Liferay.PortletURL.createURL(
+						var redirectURL = new Liferay.PortletURL.createURL(
 							'<%= editProductDefinitionURL %>'
 						);
 

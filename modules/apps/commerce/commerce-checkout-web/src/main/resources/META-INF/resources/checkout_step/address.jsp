@@ -143,10 +143,10 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 		window,
 		'<portlet:namespace />addStreetAddress',
 		function <portlet:namespace />addStreetAddress() {
-			const A = AUI();
+			var A = AUI();
 
-			const addStreetFields = A.one('.add-street-fields');
-			const addStreetLink = A.one('.add-street-link');
+			var addStreetFields = A.one('.add-street-fields');
+			var addStreetLink = A.one('.add-street-link');
 
 			if (addStreetFields) {
 				addStreetFields.show();
@@ -162,7 +162,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 		window,
 		'<portlet:namespace />clearAddressFields',
 		function <portlet:namespace />clearAddressFields() {
-			const A = AUI();
+			var A = AUI();
 
 			A.all('.address-fields select').set('selectedIndex', 0);
 			A.all('.address-fields input').val('');
@@ -183,16 +183,16 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 		window,
 		'<portlet:namespace />selectAddress',
 		function <portlet:namespace />selectAddress() {
-			const A = AUI();
+			var A = AUI();
 
-			const commerceAddress = A.one('#<portlet:namespace />commerceAddress');
-			const commerceAddressParamName = A.one(
+			var commerceAddress = A.one('#<portlet:namespace />commerceAddress');
+			var commerceAddressParamName = A.one(
 				'#<%= liferayPortletResponse.getNamespace() + paramName %>'
 			);
-			const newAddress = A.one('#<portlet:namespace />newAddress');
+			var newAddress = A.one('#<portlet:namespace />newAddress');
 
 			if (newAddress && commerceAddress && commerceAddressParamName) {
-				const commerceAddressVal = commerceAddress.val();
+				var commerceAddressVal = commerceAddress.val();
 
 				if (commerceAddressVal === '0') {
 					<portlet:namespace />clearAddressFields();
@@ -218,7 +218,7 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 		window,
 		'<portlet:namespace />toggleAddressFields',
 		function <portlet:namespace />toggleAddressFields(state) {
-			const A = AUI();
+			var A = AUI();
 
 			Liferay.Util.toggleDisabled(A.all('.address-fields input'), state);
 			Liferay.Util.toggleDisabled(A.all('.address-fields select'), state);
@@ -234,27 +234,27 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 				return;
 			}
 
-			const A = AUI();
+			var A = AUI();
 
-			const commerceAddress = A.one('#<portlet:namespace />commerceAddress');
+			var commerceAddress = A.one('#<portlet:namespace />commerceAddress');
 
 			if (commerceAddress) {
 				<portlet:namespace />addStreetAddress();
 				<portlet:namespace />toggleAddressFields(true);
 
-				const city = A.one('#<portlet:namespace />city');
-				const commerceCountryId = A.one(
+				var city = A.one('#<portlet:namespace />city');
+				var commerceCountryId = A.one(
 					'#<portlet:namespace />commerceCountryId'
 				);
-				const commerceRegionId = A.one(
+				var commerceRegionId = A.one(
 					'#<portlet:namespace />commerceRegionId'
 				);
-				const name = A.one('#<portlet:namespace />name');
-				const phoneNumber = A.one('#<portlet:namespace />phoneNumber');
-				const street1 = A.one('#<portlet:namespace />street1');
-				const street2 = A.one('#<portlet:namespace />street2');
-				const street3 = A.one('#<portlet:namespace />street3');
-				const zip = A.one('#<portlet:namespace />zip');
+				var name = A.one('#<portlet:namespace />name');
+				var phoneNumber = A.one('#<portlet:namespace />phoneNumber');
+				var street1 = A.one('#<portlet:namespace />street1');
+				var street2 = A.one('#<portlet:namespace />street2');
+				var street3 = A.one('#<portlet:namespace />street3');
+				var zip = A.one('#<portlet:namespace />zip');
 
 				if (
 					city &&
@@ -267,10 +267,10 @@ long commerceRegionId = BeanParamUtil.getLong(currentCommerceAddress, request, "
 					street3 &&
 					zip
 				) {
-					const originalFn = Liferay.component(
+					var originalFn = Liferay.component(
 						'<portlet:namespace />countrySelects'
 					).array[1].selectData;
-					const selectedOption = commerceAddress
+					var selectedOption = commerceAddress
 						.get('options')
 						.item(selectedVal);
 

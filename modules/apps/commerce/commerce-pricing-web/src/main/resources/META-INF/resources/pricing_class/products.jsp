@@ -32,7 +32,7 @@ boolean hasPermission = commercePricingClassCPDefinitionDisplayContext.hasPermis
 			<div id="item-finder-root"></div>
 
 			<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-				const CommerceProductGroupsResource = ServiceProvider.default.AdminCatalogAPI(
+				var CommerceProductGroupsResource = ServiceProvider.default.AdminCatalogAPI(
 					'v1'
 				);
 

@@ -60,7 +60,7 @@ request.setAttribute("view.jsp-filterPerAccount", false);
 		Liferay.provide(window, '<portlet:namespace />openAddAccountModal', function (
 			evt
 		) {
-			const addAccountModal = Liferay.component('addAccountModal');
+			var addAccountModal = Liferay.component('addAccountModal');
 
 			addAccountModal.open();
 		});

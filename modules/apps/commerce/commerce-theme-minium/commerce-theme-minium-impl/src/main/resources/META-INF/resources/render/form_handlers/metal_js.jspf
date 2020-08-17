@@ -21,11 +21,11 @@
 
 <aui:script require="commerce-frontend-js/utilities/eventsDefinitions as eventsDefinitions">
 
-	const cpDefinitionId = <%= cpDefinitionId %>;
-	const CP_CONTENT_WEB_PORTLET_KEY = 'com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet';
+	var cpDefinitionId = <%= cpDefinitionId %>;
+	var CP_CONTENT_WEB_PORTLET_KEY = 'com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet';
 
 	function initialiseOrderDetails() {
-		const addToCartButton = Liferay.component('<%= addToCartId %>');
+		var addToCartButton = Liferay.component('<%= addToCartId %>');
 
 		if (addToCartButton) {
 			addToCartButton.disabled = true
@@ -33,8 +33,8 @@
 	}
 
 	function checkCPInstance(portletURL) {
-		const formData = JSON.stringify(getFormData())
-		const requestBody = new FormData();
+		var formData = JSON.stringify(getFormData())
+		var requestBody = new FormData();
 
 		requestBody.append(
 			'_' + CP_CONTENT_WEB_PORTLET_KEY + '_ddmFormValues',
@@ -62,13 +62,13 @@
 	}
 
 	function getFormData() {
-		const form = Liferay.component('ProductOptions' + cpDefinitionId);
+		var form = Liferay.component('ProductOptions' + cpDefinitionId);
 
 		if (!form) {
 			return []
 		}
 
-		const renderer = Object.values(form.refs)[0];
+		var renderer = Object.values(form.refs)[0];
 
 		return Object.values(renderer.refs)
 			.map(
@@ -104,7 +104,7 @@
 	}
 
 	function updateGallery(productsData) {
-		const formData = new FormData();
+		var formData = new FormData();
 		formData.append('<portlet:namespace />ddmFormValues', productsData.formData);
 		formData.append('groupId', themeDisplay.getScopeGroupId());
 
@@ -122,7 +122,7 @@
 			}
 		).then(
 			function(response) {
-				const images = response.map(
+				var images = response.map(
 					function(image) {
 						return {
 							thumbnailUrl: image.url,
@@ -142,9 +142,9 @@
 		document.querySelector('[data-text-cp-instance-sku]').innerHTML = Liferay.Util.escape(productData.sku) || '';
 		document.querySelector('[data-text-cp-instance-manufacturer-part-number]').innerHTML = Liferay.Util.escape(productData.manufacturerPartNumber) || '';
 		document.querySelector('[data-text-cp-instance-gtin]').innerHTML = Liferay.Util.escape(productData.gtin) || '';
-		const availabilityEstimateContainer = document.querySelector('[data-text-cp-instance-availability-estimate]');
-		const availabilityContainer = document.querySelector('[data-text-cp-instance-availability]')
-		const stockQuantityContainer = document.querySelector('[data-text-cp-instance-stock-quantity]')
+		var availabilityEstimateContainer = document.querySelector('[data-text-cp-instance-availability-estimate]');
+		var availabilityContainer = document.querySelector('[data-text-cp-instance-availability]')
+		var stockQuantityContainer = document.querySelector('[data-text-cp-instance-stock-quantity]')
 
 		if (availabilityEstimateContainer && availabilityContainer && stockQuantityContainer) {
 			availabilityContainer.innerHTML = productData.availability || '';

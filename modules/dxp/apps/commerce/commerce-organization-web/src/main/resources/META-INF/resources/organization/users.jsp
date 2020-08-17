@@ -60,7 +60,7 @@ portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backUR
 			window,
 			'<portlet:namespace />openUserInvitationModal',
 			function (evt) {
-				const userInvitationModal = Liferay.component('userInvitationModal');
+				var userInvitationModal = Liferay.component('userInvitationModal');
 				userInvitationModal.open();
 			}
 		);

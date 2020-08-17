@@ -20,7 +20,7 @@ String token = AuthTokenUtil.getToken(request, plid, CPPortletKeys.CP_CONTENT_WE
 
 <script>
 window.Liferay.on('ProductOptions<%= cpDefinitionId %>DDMForm:render', function() {
-const eventsDefinitions = {
+var eventsDefinitions = {
 	CURRENT_PRODUCT_STATUS_CHANGED: 'current-product-status-changed',
 	PRODUCT_OPTIONS_CHANGED: 'product-options-changed',
 }

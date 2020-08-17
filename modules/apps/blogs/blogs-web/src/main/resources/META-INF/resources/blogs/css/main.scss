@@ -318,8 +318,13 @@
 		margin-bottom: 1.25rem;
 	}
 
-	.widget-mode-card .card-footer {
-		padding: 0;
+	.widget-mode-card {
+		.card-footer {
+			padding: 0;
+		}
+		.widget-resume {
+			margin-bottom: 0.75rem;
+		}
 	}
 
 	.widget-mode-detail {

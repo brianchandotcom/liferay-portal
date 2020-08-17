@@ -180,39 +180,41 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 	<portlet:param name="mvcPath" value="/user/password_verification.jsp" />
 </portlet:renderURL>
 
-<aui:script use="liferay-form">
-	Liferay.once('<portlet:namespace/>formReady', function () {
-		var form = Liferay.Form.get('<portlet:namespace/>fm');
+<c:if test="<%= selUser != null %>">
+	<aui:script use="liferay-form">
+		Liferay.once('<portlet:namespace/>formReady', function () {
+			var form = Liferay.Form.get('<portlet:namespace/>fm');
 
-		form.set('onSubmit', function (event) {
-			event.preventDefault();
+			form.set('onSubmit', function (event) {
+				event.preventDefault();
 
-			var emailAddressInput = document.getElementById(
-				'<portlet:namespace/>emailAddress'
-			);
-			var screenNameInput = document.getElementById(
-				'<portlet:namespace/>screenName'
-			);
+				var emailAddressInput = document.getElementById(
+					'<portlet:namespace/>emailAddress'
+				);
+				var screenNameInput = document.getElementById(
+					'<portlet:namespace/>screenName'
+				);
 
-			if (
-				emailAddressInput.value != '<%= selUser.getEmailAddress() %>' ||
-				screenNameInput.value != '<%= selUser.getScreenName() %>'
-			) {
-				Liferay.Util.openModal({
-					height: '320px',
-					id: 'password-verification-dialog',
-					onSelect: function () {
-						submitForm(form.form);
-					},
-					selectEventName: '<portlet:namespace/>verifyPassword',
-					size: 'md',
-					title: '<%= LanguageUtil.get(request, "confirm-password") %>',
-					url: '<%= verifyPasswordURL %>',
-				});
-			}
-			else {
-				submitForm(form.form);
-			}
+				if (
+					emailAddressInput.value != '<%= selUser.getEmailAddress() %>' ||
+					screenNameInput.value != '<%= selUser.getScreenName() %>'
+				) {
+					Liferay.Util.openModal({
+						height: '320px',
+						id: 'password-verification-dialog',
+						onSelect: function () {
+							submitForm(form.form);
+						},
+						selectEventName: '<portlet:namespace/>verifyPassword',
+						size: 'md',
+						title: '<%= LanguageUtil.get(request, "confirm-password") %>',
+						url: '<%= verifyPasswordURL %>',
+					});
+				}
+				else {
+					submitForm(form.form);
+				}
+			});
 		});
-	});
-</aui:script>
+	</aui:script>
+</c:if>

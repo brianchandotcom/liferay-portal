@@ -206,7 +206,9 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 					continue;
 				}
 
-				line = formatIncorrectSyntax(line, "\t ", "\t", false);
+				if (!javaSource) {
+					line = formatIncorrectSyntax(line, "\t ", "\t", false);
+				}
 
 				line = _formatWhitespace(line, javaSource);
 

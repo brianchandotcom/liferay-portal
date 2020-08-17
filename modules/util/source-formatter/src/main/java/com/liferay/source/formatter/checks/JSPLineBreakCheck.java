@@ -84,8 +84,6 @@ public class JSPLineBreakCheck extends BaseLineBreakCheck {
 
 		content = matcher.replaceAll("$1\n$3");
 
-		content = _fixRedundantLineBreaks(content);
-
 		return _fixRedundantCommaInsideArray(content);
 	}
 
@@ -103,69 +101,9 @@ public class JSPLineBreakCheck extends BaseLineBreakCheck {
 		return content;
 	}
 
-	private String _fixRedundantLineBreaks(String content) {
-		Matcher matcher = _redundantLineBreakPattern1.matcher(content);
-
-		while (matcher.find()) {
-			if (!JSPSourceUtil.isJavaSource(content, matcher.start(1))) {
-				continue;
-			}
-
-			int x = matcher.start(1);
-
-			while (true) {
-				x = content.indexOf(StringPool.CLOSE_PARENTHESIS, x + 1);
-
-				if (x == -1) {
-					break;
-				}
-
-				String codeBlock = content.substring(matcher.start(1), x + 1);
-
-				if (codeBlock.contains("{\n")) {
-					break;
-				}
-
-				if (getLevel(codeBlock) != 0) {
-					continue;
-				}
-
-				String lastLine = StringUtil.trim(
-					getLine(content, getLineNumber(content, x)));
-
-				if (lastLine.startsWith(StringPool.CLOSE_PARENTHESIS)) {
-					break;
-				}
-
-				String codeSingleLine = StringUtil.replace(
-					codeBlock, new String[] {StringPool.TAB, ",\n", "\n"},
-					new String[] {StringPool.BLANK, ", ", StringPool.BLANK});
-
-				return StringUtil.replaceFirst(
-					content, codeBlock, codeSingleLine, matcher.start(1));
-			}
-		}
-
-		matcher = _redundantLineBreakPattern2.matcher(content);
-
-		while (matcher.find()) {
-			if (JSPSourceUtil.isJavaSource(content, matcher.start())) {
-				return StringUtil.replaceFirst(
-					content, matcher.group(1), StringPool.SPACE,
-					matcher.start());
-			}
-		}
-
-		return content;
-	}
-
 	private static final Pattern _missingLineBreakPattern = Pattern.compile(
 		"([\n\t]((?!<%)[^\n\t])+?) *(%>[\"']\n)");
 	private static final Pattern _redundantCommaPattern = Pattern.compile(
 		",\n\t*\\}");
-	private static final Pattern _redundantLineBreakPattern1 = Pattern.compile(
-		"[\n\t][^/\n\t].*(\\(\n)");
-	private static final Pattern _redundantLineBreakPattern2 = Pattern.compile(
-		"[\n\t][^/\n\t].*[|&](\n[\t ]*)");
 
 }

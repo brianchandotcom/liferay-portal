@@ -1656,16 +1656,16 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntryMetadataPersistence.fetchByFileEntryId_Last(
 					fileEntryId, null);
 
-			long classNameId = classNameLocalService.getClassNameId(
-				DLFileEntryMetadata.class);
-
 			DDMStructure ddmStructure = DDMStructureManagerUtil.fetchStructure(
-				dlFileEntry.getGroupId(), classNameId,
-				DLUtil.getDDMStructureKey(dlFileEntry.getDLFileEntryType()));
+				dlFileEntryMetadata.getDDMStructureId());
 
-			DDMStructureLinkManagerUtil.deleteStructureLink(
-				classNameId, dlFileEntryMetadata.getFileEntryMetadataId(),
-				ddmStructure.getStructureId());
+			if (ddmStructure != null) {
+				DDMStructureLinkManagerUtil.deleteStructureLink(
+					classNameLocalService.getClassNameId(
+						DLFileEntryMetadata.class),
+					dlFileEntryMetadata.getFileEntryMetadataId(),
+					ddmStructure.getStructureId());
+			}
 		}
 
 		return updateFileEntry(

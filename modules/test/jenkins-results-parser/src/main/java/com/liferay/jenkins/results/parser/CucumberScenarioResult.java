@@ -105,7 +105,9 @@ public class CucumberScenarioResult implements Serializable {
 	}
 
 	public String getScenarioName() {
-		return "Scenario: " + _getName(_getScenarioDocument());
+		return JenkinsResultsParserUtil.combine(
+			_getKeyword(_getScenarioDocument()), ": ",
+			_getName(_getScenarioDocument()));
 	}
 
 	public String getScenarioStatus() {
@@ -311,6 +313,25 @@ public class CucumberScenarioResult implements Serializable {
 		}
 
 		return _getDurationFromString(element.getTextTrim());
+	}
+
+	private String _getKeyword(Document document) {
+		if (document == null) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("//div[@class='element']/span/div[contains(@class,'brief')]");
+		sb.append("/span[contains(@class,'keyword')]");
+
+		Node node = Dom4JUtil.getNodeByXPath(document, sb.toString());
+
+		if (node == null) {
+			return null;
+		}
+
+		return node.getText();
 	}
 
 	private String _getName(Document document) {

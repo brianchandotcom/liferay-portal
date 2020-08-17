@@ -570,12 +570,14 @@ public class CommerceInventoryEngineTest {
 		skuList.add(_cpInstance1.getSku());
 		skuList.add(_cpInstance2.getSku());
 
-		Map stockQuantities = _commerceInventoryEngine.getStockQuantities(
-			_company.getCompanyId(), _commerceChannel.getGroupId(), skuList);
+		Map<String, Integer> stockQuantities =
+			_commerceInventoryEngine.getStockQuantities(
+				_company.getCompanyId(), _commerceChannel.getGroupId(),
+				skuList);
 
-		Set set = stockQuantities.keySet();
+		Set<String> set = stockQuantities.keySet();
 
-		Iterator iterator = set.iterator();
+		Iterator<String> iterator = set.iterator();
 
 		while (iterator.hasNext()) {
 			String sku = (String)iterator.next();

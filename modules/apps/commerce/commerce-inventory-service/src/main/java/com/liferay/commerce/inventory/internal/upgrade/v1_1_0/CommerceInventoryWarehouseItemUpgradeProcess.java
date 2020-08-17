@@ -35,7 +35,7 @@ public class CommerceInventoryWarehouseItemUpgradeProcess
 	}
 
 	private void _addColumn(
-			Class entityClass, String tableName, String columnName,
+			Class<?> entityClass, String tableName, String columnName,
 			String columnType)
 		throws Exception {
 

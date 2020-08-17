@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 public class BaseCommerceOrderUpgradeProcess extends UpgradeProcess {
 
 	public BaseCommerceOrderUpgradeProcess(
-		Class entityClass, String tableName, String columnName,
+		Class<?> entityClass, String tableName, String columnName,
 		String columnType) {
 
 		_entityClass = entityClass;
@@ -67,7 +67,7 @@ public class BaseCommerceOrderUpgradeProcess extends UpgradeProcess {
 
 	private final String _columnName;
 	private final String _columnType;
-	private final Class _entityClass;
+	private final Class<?> _entityClass;
 	private final String _tableName;
 
 }

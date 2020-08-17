@@ -46,7 +46,7 @@ public class CommerceInventoryAuditUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _addColumn(
-			Class entityClass, String tableName, String columnName,
+			Class<?> entityClass, String tableName, String columnName,
 			String columnType)
 		throws Exception {
 

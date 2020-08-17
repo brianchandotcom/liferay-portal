@@ -52,7 +52,8 @@ public class CommerceWishListModelResourcePermissionRegistrar {
 		properties.put("model.class.name", CommerceWishList.class.getName());
 
 		_serviceRegistration = bundleContext.registerService(
-			ModelResourcePermission.class,
+			(Class<ModelResourcePermission<CommerceWishList>>)
+				(Class<?>)ModelResourcePermission.class,
 			ModelResourcePermissionFactory.create(
 				CommerceWishList.class, CommerceWishList::getCommerceWishListId,
 				_commerceWishListLocalService::getCommerceWishList,
@@ -75,7 +76,8 @@ public class CommerceWishListModelResourcePermissionRegistrar {
 	)
 	private PortletResourcePermission _portletResourcePermission;
 
-	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;
+	private ServiceRegistration<ModelResourcePermission<CommerceWishList>>
+		_serviceRegistration;
 
 	private class CommerceWishListModelResourcePermissionLogic
 		implements ModelResourcePermissionLogic<CommerceWishList> {

@@ -224,7 +224,7 @@ public class OrderResourceImpl
 
 	private Map<String, String> _addAction(
 			String actionId, long commerceOrderId, UriInfo uriInfo,
-			String methodName, Class clazz)
+			String methodName, Class<?> clazz)
 		throws NoSuchMethodException, PortalException {
 
 		if (!_commerceOrderModelResourcePermission.contains(
@@ -233,10 +233,6 @@ public class OrderResourceImpl
 
 			return null;
 		}
-
-		Method method = _getMethod(clazz, methodName);
-
-		String httpMethodName = _getHttpMethodName(clazz, method);
 
 		return HashMapBuilder.put(
 			"href",
@@ -250,7 +246,7 @@ public class OrderResourceImpl
 				).toTemplate();
 			}
 		).put(
-			"method", httpMethodName
+			"method", _getHttpMethodName(clazz, _getMethod(clazz, methodName))
 		).build();
 	}
 
@@ -276,7 +272,7 @@ public class OrderResourceImpl
 		).build();
 	}
 
-	private String _getHttpMethodName(Class clazz, Method method)
+	private String _getHttpMethodName(Class<?> clazz, Method method)
 		throws NoSuchMethodException {
 
 		Class<?> superClass = clazz.getSuperclass();
@@ -301,7 +297,7 @@ public class OrderResourceImpl
 		return null;
 	}
 
-	private Method _getMethod(Class clazz, String methodName) {
+	private Method _getMethod(Class<?> clazz, String methodName) {
 		for (Method method : clazz.getMethods()) {
 			if (!methodName.equals(method.getName())) {
 				continue;

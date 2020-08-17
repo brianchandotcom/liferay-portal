@@ -49,7 +49,8 @@ public class CommerceVirtualOrderItemModelResourcePermissionRegistrar {
 			"model.class.name", CommerceVirtualOrderItem.class.getName());
 
 		_serviceRegistration = bundleContext.registerService(
-			ModelResourcePermission.class,
+			(Class<ModelResourcePermission<CommerceVirtualOrderItem>>)
+				(Class<?>)ModelResourcePermission.class,
 			ModelResourcePermissionFactory.create(
 				CommerceVirtualOrderItem.class,
 				CommerceVirtualOrderItem::getCommerceVirtualOrderItemId,
@@ -83,6 +84,8 @@ public class CommerceVirtualOrderItemModelResourcePermissionRegistrar {
 	)
 	private PortletResourcePermission _portletResourcePermission;
 
-	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;
+	private ServiceRegistration
+		<ModelResourcePermission<CommerceVirtualOrderItem>>
+			_serviceRegistration;
 
 }

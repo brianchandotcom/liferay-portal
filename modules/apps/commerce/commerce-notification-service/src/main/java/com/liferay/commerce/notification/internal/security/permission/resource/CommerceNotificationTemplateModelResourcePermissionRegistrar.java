@@ -52,7 +52,8 @@ public class CommerceNotificationTemplateModelResourcePermissionRegistrar {
 			"model.class.name", CommerceNotificationTemplate.class.getName());
 
 		_serviceRegistration = bundleContext.registerService(
-			ModelResourcePermission.class,
+			(Class<ModelResourcePermission<CommerceNotificationTemplate>>)
+				(Class<?>)ModelResourcePermission.class,
 			ModelResourcePermissionFactory.create(
 				CommerceNotificationTemplate.class,
 				CommerceNotificationTemplate::getCommerceNotificationTemplateId,
@@ -82,7 +83,9 @@ public class CommerceNotificationTemplateModelResourcePermissionRegistrar {
 	)
 	private PortletResourcePermission _portletResourcePermission;
 
-	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;
+	private ServiceRegistration
+		<ModelResourcePermission<CommerceNotificationTemplate>>
+			_serviceRegistration;
 
 	@Reference
 	private StagingPermission _stagingPermission;

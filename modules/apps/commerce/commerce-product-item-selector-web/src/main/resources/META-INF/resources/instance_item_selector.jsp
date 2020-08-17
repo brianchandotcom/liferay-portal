@@ -19,7 +19,7 @@
 <%
 CPInstanceItemSelectorViewDisplayContext cpInstanceItemSelectorViewDisplayContext = (CPInstanceItemSelectorViewDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-SearchContainer cpInstanceSearchContainer = cpInstanceItemSelectorViewDisplayContext.getSearchContainer();
+SearchContainer<CPInstance> cpInstanceSearchContainer = cpInstanceItemSelectorViewDisplayContext.getSearchContainer();
 
 String displayStyle = cpInstanceItemSelectorViewDisplayContext.getDisplayStyle();
 

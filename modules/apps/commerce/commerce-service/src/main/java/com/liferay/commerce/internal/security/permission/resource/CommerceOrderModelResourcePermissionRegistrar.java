@@ -51,7 +51,8 @@ public class CommerceOrderModelResourcePermissionRegistrar {
 		properties.put("model.class.name", CommerceOrder.class.getName());
 
 		_serviceRegistration = bundleContext.registerService(
-			ModelResourcePermission.class,
+			(Class<ModelResourcePermission<CommerceOrder>>)
+				(Class<?>)ModelResourcePermission.class,
 			ModelResourcePermissionFactory.create(
 				CommerceOrder.class, CommerceOrder::getCommerceOrderId,
 				_commerceOrderLocalService::getCommerceOrder,
@@ -90,7 +91,8 @@ public class CommerceOrderModelResourcePermissionRegistrar {
 	)
 	private PortletResourcePermission _portletResourcePermission;
 
-	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;
+	private ServiceRegistration<ModelResourcePermission<CommerceOrder>>
+		_serviceRegistration;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

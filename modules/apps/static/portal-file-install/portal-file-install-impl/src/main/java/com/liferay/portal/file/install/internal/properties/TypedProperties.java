@@ -69,7 +69,7 @@ public class TypedProperties {
 		_header = propertiesReader.getComment();
 	}
 
-	public Object put(String key, Object value) {
+	public void put(String key, Object value) {
 		String old = _storage.put(key, _convertToString(value));
 
 		if ((old == null) || !old.equals(value)) {
@@ -79,12 +79,6 @@ public class TypedProperties {
 				layout.clearValue();
 			}
 		}
-
-		if (old == null) {
-			return null;
-		}
-
-		return _convertFromString(old);
 	}
 
 	public String remove(String key) {

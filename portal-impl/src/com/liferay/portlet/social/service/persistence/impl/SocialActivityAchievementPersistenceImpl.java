@@ -3565,14 +3565,9 @@ public class SocialActivityAchievementPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(socialActivityAchievement)) {
 				if (!isNew) {
-					SocialActivityAchievement oldSocialActivityAchievement =
-						(SocialActivityAchievement)session.get(
-							SocialActivityAchievementImpl.class,
-							socialActivityAchievement.getPrimaryKeyObj());
-
-					if (oldSocialActivityAchievement != null) {
-						session.evict(oldSocialActivityAchievement);
-					}
+					session.evict(
+						SocialActivityAchievementImpl.class,
+						socialActivityAchievement.getPrimaryKeyObj());
 				}
 
 				session.save(socialActivityAchievement);

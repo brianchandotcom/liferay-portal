@@ -1735,14 +1735,9 @@ public class DDMStructureLinkPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(ddmStructureLink)) {
 				if (!isNew) {
-					DDMStructureLink oldDDMStructureLink =
-						(DDMStructureLink)session.get(
-							DDMStructureLinkImpl.class,
-							ddmStructureLink.getPrimaryKeyObj());
-
-					if (oldDDMStructureLink != null) {
-						session.evict(oldDDMStructureLink);
-					}
+					session.evict(
+						DDMStructureLinkImpl.class,
+						ddmStructureLink.getPrimaryKeyObj());
 				}
 
 				session.save(ddmStructureLink);

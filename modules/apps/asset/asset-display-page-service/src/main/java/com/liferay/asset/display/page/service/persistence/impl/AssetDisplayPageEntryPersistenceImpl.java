@@ -3256,14 +3256,9 @@ public class AssetDisplayPageEntryPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(assetDisplayPageEntry)) {
 				if (!isNew) {
-					AssetDisplayPageEntry oldAssetDisplayPageEntry =
-						(AssetDisplayPageEntry)session.get(
-							AssetDisplayPageEntryImpl.class,
-							assetDisplayPageEntry.getPrimaryKeyObj());
-
-					if (oldAssetDisplayPageEntry != null) {
-						session.evict(oldAssetDisplayPageEntry);
-					}
+					session.evict(
+						AssetDisplayPageEntryImpl.class,
+						assetDisplayPageEntry.getPrimaryKeyObj());
 				}
 
 				session.save(assetDisplayPageEntry);

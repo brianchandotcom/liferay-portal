@@ -4445,14 +4445,9 @@ public class AssetEntryUsagePersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(assetEntryUsage)) {
 				if (!isNew) {
-					AssetEntryUsage oldAssetEntryUsage =
-						(AssetEntryUsage)session.get(
-							AssetEntryUsageImpl.class,
-							assetEntryUsage.getPrimaryKeyObj());
-
-					if (oldAssetEntryUsage != null) {
-						session.evict(oldAssetEntryUsage);
-					}
+					session.evict(
+						AssetEntryUsageImpl.class,
+						assetEntryUsage.getPrimaryKeyObj());
 				}
 
 				session.save(assetEntryUsage);

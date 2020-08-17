@@ -1226,14 +1226,9 @@ public class SegmentsExperimentRelPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(segmentsExperimentRel)) {
 				if (!isNew) {
-					SegmentsExperimentRel oldSegmentsExperimentRel =
-						(SegmentsExperimentRel)session.get(
-							SegmentsExperimentRelImpl.class,
-							segmentsExperimentRel.getPrimaryKeyObj());
-
-					if (oldSegmentsExperimentRel != null) {
-						session.evict(oldSegmentsExperimentRel);
-					}
+					session.evict(
+						SegmentsExperimentRelImpl.class,
+						segmentsExperimentRel.getPrimaryKeyObj());
 				}
 
 				session.save(segmentsExperimentRel);

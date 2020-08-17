@@ -3274,13 +3274,9 @@ public class UserGroupRolePersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(userGroupRole)) {
 				if (!isNew) {
-					UserGroupRole oldUserGroupRole = (UserGroupRole)session.get(
+					session.evict(
 						UserGroupRoleImpl.class,
 						userGroupRole.getPrimaryKeyObj());
-
-					if (oldUserGroupRole != null) {
-						session.evict(oldUserGroupRole);
-					}
 				}
 
 				session.save(userGroupRole);

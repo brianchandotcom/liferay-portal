@@ -5713,14 +5713,9 @@ public class FragmentCompositionPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(fragmentComposition)) {
 				if (!isNew) {
-					FragmentComposition oldFragmentComposition =
-						(FragmentComposition)session.get(
-							FragmentCompositionImpl.class,
-							fragmentComposition.getPrimaryKeyObj());
-
-					if (oldFragmentComposition != null) {
-						session.evict(oldFragmentComposition);
-					}
+					session.evict(
+						FragmentCompositionImpl.class,
+						fragmentComposition.getPrimaryKeyObj());
 				}
 
 				session.save(fragmentComposition);

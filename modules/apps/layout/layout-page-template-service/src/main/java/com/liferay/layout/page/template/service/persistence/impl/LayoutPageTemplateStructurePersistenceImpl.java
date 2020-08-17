@@ -2750,14 +2750,9 @@ public class LayoutPageTemplateStructurePersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(layoutPageTemplateStructure)) {
 				if (!isNew) {
-					LayoutPageTemplateStructure oldLayoutPageTemplateStructure =
-						(LayoutPageTemplateStructure)session.get(
-							LayoutPageTemplateStructureImpl.class,
-							layoutPageTemplateStructure.getPrimaryKeyObj());
-
-					if (oldLayoutPageTemplateStructure != null) {
-						session.evict(oldLayoutPageTemplateStructure);
-					}
+					session.evict(
+						LayoutPageTemplateStructureImpl.class,
+						layoutPageTemplateStructure.getPrimaryKeyObj());
 				}
 
 				session.save(layoutPageTemplateStructure);

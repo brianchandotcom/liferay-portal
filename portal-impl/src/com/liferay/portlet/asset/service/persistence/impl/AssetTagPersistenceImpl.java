@@ -4619,12 +4619,8 @@ public class AssetTagPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(assetTag)) {
 				if (!isNew) {
-					AssetTag oldAssetTag = (AssetTag)session.get(
+					session.evict(
 						AssetTagImpl.class, assetTag.getPrimaryKeyObj());
-
-					if (oldAssetTag != null) {
-						session.evict(oldAssetTag);
-					}
 				}
 
 				session.save(assetTag);

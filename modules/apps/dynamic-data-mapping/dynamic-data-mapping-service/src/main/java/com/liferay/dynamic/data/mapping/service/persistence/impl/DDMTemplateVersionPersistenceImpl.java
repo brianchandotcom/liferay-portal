@@ -1743,14 +1743,9 @@ public class DDMTemplateVersionPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(ddmTemplateVersion)) {
 				if (!isNew) {
-					DDMTemplateVersion oldDDMTemplateVersion =
-						(DDMTemplateVersion)session.get(
-							DDMTemplateVersionImpl.class,
-							ddmTemplateVersion.getPrimaryKeyObj());
-
-					if (oldDDMTemplateVersion != null) {
-						session.evict(oldDDMTemplateVersion);
-					}
+					session.evict(
+						DDMTemplateVersionImpl.class,
+						ddmTemplateVersion.getPrimaryKeyObj());
 				}
 
 				session.save(ddmTemplateVersion);

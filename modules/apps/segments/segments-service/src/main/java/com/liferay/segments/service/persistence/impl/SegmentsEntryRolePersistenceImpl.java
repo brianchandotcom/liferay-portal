@@ -1700,14 +1700,9 @@ public class SegmentsEntryRolePersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(segmentsEntryRole)) {
 				if (!isNew) {
-					SegmentsEntryRole oldSegmentsEntryRole =
-						(SegmentsEntryRole)session.get(
-							SegmentsEntryRoleImpl.class,
-							segmentsEntryRole.getPrimaryKeyObj());
-
-					if (oldSegmentsEntryRole != null) {
-						session.evict(oldSegmentsEntryRole);
-					}
+					session.evict(
+						SegmentsEntryRoleImpl.class,
+						segmentsEntryRole.getPrimaryKeyObj());
 				}
 
 				session.save(segmentsEntryRole);

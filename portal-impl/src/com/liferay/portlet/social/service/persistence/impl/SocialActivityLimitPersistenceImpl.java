@@ -2373,14 +2373,9 @@ public class SocialActivityLimitPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(socialActivityLimit)) {
 				if (!isNew) {
-					SocialActivityLimit oldSocialActivityLimit =
-						(SocialActivityLimit)session.get(
-							SocialActivityLimitImpl.class,
-							socialActivityLimit.getPrimaryKeyObj());
-
-					if (oldSocialActivityLimit != null) {
-						session.evict(oldSocialActivityLimit);
-					}
+					session.evict(
+						SocialActivityLimitImpl.class,
+						socialActivityLimit.getPrimaryKeyObj());
 				}
 
 				session.save(socialActivityLimit);

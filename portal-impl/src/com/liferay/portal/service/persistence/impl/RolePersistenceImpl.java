@@ -10330,12 +10330,7 @@ public class RolePersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(role)) {
 				if (!isNew) {
-					Role oldRole = (Role)session.get(
-						RoleImpl.class, role.getPrimaryKeyObj());
-
-					if (oldRole != null) {
-						session.evict(oldRole);
-					}
+					session.evict(RoleImpl.class, role.getPrimaryKeyObj());
 				}
 
 				session.save(role);

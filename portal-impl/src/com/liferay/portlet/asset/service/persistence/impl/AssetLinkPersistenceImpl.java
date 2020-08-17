@@ -3302,12 +3302,8 @@ public class AssetLinkPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(assetLink)) {
 				if (!isNew) {
-					AssetLink oldAssetLink = (AssetLink)session.get(
+					session.evict(
 						AssetLinkImpl.class, assetLink.getPrimaryKeyObj());
-
-					if (oldAssetLink != null) {
-						session.evict(oldAssetLink);
-					}
 				}
 
 				session.save(assetLink);

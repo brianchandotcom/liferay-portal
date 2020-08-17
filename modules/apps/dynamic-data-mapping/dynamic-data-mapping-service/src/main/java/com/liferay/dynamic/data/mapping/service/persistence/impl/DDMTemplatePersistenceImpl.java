@@ -12536,12 +12536,8 @@ public class DDMTemplatePersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(ddmTemplate)) {
 				if (!isNew) {
-					DDMTemplate oldDDMTemplate = (DDMTemplate)session.get(
+					session.evict(
 						DDMTemplateImpl.class, ddmTemplate.getPrimaryKeyObj());
-
-					if (oldDDMTemplate != null) {
-						session.evict(oldDDMTemplate);
-					}
 				}
 
 				session.save(ddmTemplate);

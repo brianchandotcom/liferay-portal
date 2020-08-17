@@ -1751,14 +1751,9 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(assetEntryAssetCategoryRel)) {
 				if (!isNew) {
-					AssetEntryAssetCategoryRel oldAssetEntryAssetCategoryRel =
-						(AssetEntryAssetCategoryRel)session.get(
-							AssetEntryAssetCategoryRelImpl.class,
-							assetEntryAssetCategoryRel.getPrimaryKeyObj());
-
-					if (oldAssetEntryAssetCategoryRel != null) {
-						session.evict(oldAssetEntryAssetCategoryRel);
-					}
+					session.evict(
+						AssetEntryAssetCategoryRelImpl.class,
+						assetEntryAssetCategoryRel.getPrimaryKeyObj());
 				}
 
 				session.save(assetEntryAssetCategoryRel);

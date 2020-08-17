@@ -3215,14 +3215,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(workflowDefinitionLink)) {
 				if (!isNew) {
-					WorkflowDefinitionLink oldWorkflowDefinitionLink =
-						(WorkflowDefinitionLink)session.get(
-							WorkflowDefinitionLinkImpl.class,
-							workflowDefinitionLink.getPrimaryKeyObj());
-
-					if (oldWorkflowDefinitionLink != null) {
-						session.evict(oldWorkflowDefinitionLink);
-					}
+					session.evict(
+						WorkflowDefinitionLinkImpl.class,
+						workflowDefinitionLink.getPrimaryKeyObj());
 				}
 
 				session.save(workflowDefinitionLink);

@@ -21510,12 +21510,8 @@ public class MBMessagePersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(mbMessage)) {
 				if (!isNew) {
-					MBMessage oldMBMessage = (MBMessage)session.get(
+					session.evict(
 						MBMessageImpl.class, mbMessage.getPrimaryKeyObj());
-
-					if (oldMBMessage != null) {
-						session.evict(oldMBMessage);
-					}
 				}
 
 				session.save(mbMessage);

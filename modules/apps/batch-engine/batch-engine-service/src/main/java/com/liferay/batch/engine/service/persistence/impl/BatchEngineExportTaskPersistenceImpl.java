@@ -2068,7 +2068,10 @@ public class BatchEngineExportTaskPersistenceImpl
 				batchEngineExportTask.setNew(false);
 			}
 			else {
-				session.evict(batchEngineExportTask);
+				session.evict(
+					BatchEngineExportTaskImpl.class,
+					batchEngineExportTask.getPrimaryKeyObj());
+
 				session.saveOrUpdate(batchEngineExportTask);
 			}
 

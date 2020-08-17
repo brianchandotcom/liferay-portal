@@ -5291,13 +5291,9 @@ public class ExpandoValuePersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(expandoValue)) {
 				if (!isNew) {
-					ExpandoValue oldExpandoValue = (ExpandoValue)session.get(
+					session.evict(
 						ExpandoValueImpl.class,
 						expandoValue.getPrimaryKeyObj());
-
-					if (oldExpandoValue != null) {
-						session.evict(oldExpandoValue);
-					}
 				}
 
 				session.save(expandoValue);

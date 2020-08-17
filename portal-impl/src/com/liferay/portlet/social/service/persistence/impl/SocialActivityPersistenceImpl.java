@@ -6091,14 +6091,9 @@ public class SocialActivityPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(socialActivity)) {
 				if (!isNew) {
-					SocialActivity oldSocialActivity =
-						(SocialActivity)session.get(
-							SocialActivityImpl.class,
-							socialActivity.getPrimaryKeyObj());
-
-					if (oldSocialActivity != null) {
-						session.evict(oldSocialActivity);
-					}
+					session.evict(
+						SocialActivityImpl.class,
+						socialActivity.getPrimaryKeyObj());
 				}
 
 				session.save(socialActivity);

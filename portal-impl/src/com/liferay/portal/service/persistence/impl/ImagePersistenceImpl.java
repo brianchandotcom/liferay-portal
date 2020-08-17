@@ -796,12 +796,7 @@ public class ImagePersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(image)) {
 				if (!isNew) {
-					Image oldImage = (Image)session.get(
-						ImageImpl.class, image.getPrimaryKeyObj());
-
-					if (oldImage != null) {
-						session.evict(oldImage);
-					}
+					session.evict(ImageImpl.class, image.getPrimaryKeyObj());
 				}
 
 				session.save(image);

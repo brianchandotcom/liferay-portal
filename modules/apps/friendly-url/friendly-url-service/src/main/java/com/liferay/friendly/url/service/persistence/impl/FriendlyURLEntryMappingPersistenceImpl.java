@@ -655,14 +655,9 @@ public class FriendlyURLEntryMappingPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(friendlyURLEntryMapping)) {
 				if (!isNew) {
-					FriendlyURLEntryMapping oldFriendlyURLEntryMapping =
-						(FriendlyURLEntryMapping)session.get(
-							FriendlyURLEntryMappingImpl.class,
-							friendlyURLEntryMapping.getPrimaryKeyObj());
-
-					if (oldFriendlyURLEntryMapping != null) {
-						session.evict(oldFriendlyURLEntryMapping);
-					}
+					session.evict(
+						FriendlyURLEntryMappingImpl.class,
+						friendlyURLEntryMapping.getPrimaryKeyObj());
 				}
 
 				session.save(friendlyURLEntryMapping);

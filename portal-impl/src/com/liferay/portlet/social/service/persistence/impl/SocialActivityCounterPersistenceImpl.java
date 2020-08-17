@@ -2934,14 +2934,9 @@ public class SocialActivityCounterPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(socialActivityCounter)) {
 				if (!isNew) {
-					SocialActivityCounter oldSocialActivityCounter =
-						(SocialActivityCounter)session.get(
-							SocialActivityCounterImpl.class,
-							socialActivityCounter.getPrimaryKeyObj());
-
-					if (oldSocialActivityCounter != null) {
-						session.evict(oldSocialActivityCounter);
-					}
+					session.evict(
+						SocialActivityCounterImpl.class,
+						socialActivityCounter.getPrimaryKeyObj());
 				}
 
 				session.save(socialActivityCounter);

@@ -6129,13 +6129,9 @@ public class DLFileVersionPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(dlFileVersion)) {
 				if (!isNew) {
-					DLFileVersion oldDLFileVersion = (DLFileVersion)session.get(
+					session.evict(
 						DLFileVersionImpl.class,
 						dlFileVersion.getPrimaryKeyObj());
-
-					if (oldDLFileVersion != null) {
-						session.evict(oldDLFileVersion);
-					}
 				}
 
 				session.save(dlFileVersion);

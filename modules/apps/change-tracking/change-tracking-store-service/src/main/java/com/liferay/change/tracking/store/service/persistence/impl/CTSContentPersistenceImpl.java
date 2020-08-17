@@ -2864,12 +2864,8 @@ public class CTSContentPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(ctsContent)) {
 				if (!isNew) {
-					CTSContent oldCTSContent = (CTSContent)session.get(
+					session.evict(
 						CTSContentImpl.class, ctsContent.getPrimaryKeyObj());
-
-					if (oldCTSContent != null) {
-						session.evict(oldCTSContent);
-					}
 				}
 
 				session.save(ctsContent);
@@ -2877,7 +2873,9 @@ public class CTSContentPersistenceImpl
 				ctsContent.setNew(false);
 			}
 			else {
-				session.evict(ctsContent);
+				session.evict(
+					CTSContentImpl.class, ctsContent.getPrimaryKeyObj());
+
 				session.saveOrUpdate(ctsContent);
 			}
 

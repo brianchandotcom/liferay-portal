@@ -9580,13 +9580,9 @@ public class OrganizationPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(organization)) {
 				if (!isNew) {
-					Organization oldOrganization = (Organization)session.get(
+					session.evict(
 						OrganizationImpl.class,
 						organization.getPrimaryKeyObj());
-
-					if (oldOrganization != null) {
-						session.evict(oldOrganization);
-					}
 				}
 
 				session.save(organization);

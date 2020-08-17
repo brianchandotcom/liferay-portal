@@ -14701,13 +14701,9 @@ public class FragmentEntryPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(fragmentEntry)) {
 				if (!isNew) {
-					FragmentEntry oldFragmentEntry = (FragmentEntry)session.get(
+					session.evict(
 						FragmentEntryImpl.class,
 						fragmentEntry.getPrimaryKeyObj());
-
-					if (oldFragmentEntry != null) {
-						session.evict(oldFragmentEntry);
-					}
 				}
 
 				session.save(fragmentEntry);

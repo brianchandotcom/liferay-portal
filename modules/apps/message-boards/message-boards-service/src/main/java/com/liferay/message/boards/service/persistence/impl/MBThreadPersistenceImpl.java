@@ -13611,12 +13611,8 @@ public class MBThreadPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(mbThread)) {
 				if (!isNew) {
-					MBThread oldMBThread = (MBThread)session.get(
+					session.evict(
 						MBThreadImpl.class, mbThread.getPrimaryKeyObj());
-
-					if (oldMBThread != null) {
-						session.evict(oldMBThread);
-					}
 				}
 
 				session.save(mbThread);

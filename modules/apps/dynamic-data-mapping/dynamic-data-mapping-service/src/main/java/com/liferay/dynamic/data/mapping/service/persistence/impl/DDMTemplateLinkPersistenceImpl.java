@@ -1145,14 +1145,9 @@ public class DDMTemplateLinkPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(ddmTemplateLink)) {
 				if (!isNew) {
-					DDMTemplateLink oldDDMTemplateLink =
-						(DDMTemplateLink)session.get(
-							DDMTemplateLinkImpl.class,
-							ddmTemplateLink.getPrimaryKeyObj());
-
-					if (oldDDMTemplateLink != null) {
-						session.evict(oldDDMTemplateLink);
-					}
+					session.evict(
+						DDMTemplateLinkImpl.class,
+						ddmTemplateLink.getPrimaryKeyObj());
 				}
 
 				session.save(ddmTemplateLink);

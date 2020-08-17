@@ -15471,14 +15471,9 @@ public class FragmentEntryVersionPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(fragmentEntryVersion)) {
 				if (!isNew) {
-					FragmentEntryVersion oldFragmentEntryVersion =
-						(FragmentEntryVersion)session.get(
-							FragmentEntryVersionImpl.class,
-							fragmentEntryVersion.getPrimaryKeyObj());
-
-					if (oldFragmentEntryVersion != null) {
-						session.evict(oldFragmentEntryVersion);
-					}
+					session.evict(
+						FragmentEntryVersionImpl.class,
+						fragmentEntryVersion.getPrimaryKeyObj());
 				}
 
 				session.save(fragmentEntryVersion);

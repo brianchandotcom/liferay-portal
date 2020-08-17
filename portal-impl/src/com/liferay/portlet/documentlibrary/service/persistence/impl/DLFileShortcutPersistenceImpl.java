@@ -6471,14 +6471,9 @@ public class DLFileShortcutPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(dlFileShortcut)) {
 				if (!isNew) {
-					DLFileShortcut oldDLFileShortcut =
-						(DLFileShortcut)session.get(
-							DLFileShortcutImpl.class,
-							dlFileShortcut.getPrimaryKeyObj());
-
-					if (oldDLFileShortcut != null) {
-						session.evict(oldDLFileShortcut);
-					}
+					session.evict(
+						DLFileShortcutImpl.class,
+						dlFileShortcut.getPrimaryKeyObj());
 				}
 
 				session.save(dlFileShortcut);

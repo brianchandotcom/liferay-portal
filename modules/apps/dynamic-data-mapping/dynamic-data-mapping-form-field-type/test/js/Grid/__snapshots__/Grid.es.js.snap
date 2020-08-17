@@ -6,7 +6,9 @@ exports[`Grid has a label 1`] = `
     class="form-group hide"
   >
     <p
+      aria-labelledby="undefined_fieldDetails"
       class="ddm-label"
+      tabindex="0"
     >
       label
     </p>
@@ -14,7 +16,7 @@ exports[`Grid has a label 1`] = `
       class="table-responsive"
     >
       <input
-        aria-label="grid_hidden"
+        aria-hidden="true"
         class="form-control"
         type="hidden"
         value=""
@@ -57,81 +59,7 @@ exports[`Grid has a label 1`] = `
                 >
                   <label>
                     <input
-                      aria-label="grid_0_0"
-                      class="custom-control-input form-builder-grid-field"
-                      name="jehf"
-                      role="radio"
-                      type="radio"
-                      value="fieldId"
-                    />
-                    <span
-                      class="custom-control-label"
-                    />
-                  </label>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Grid has a tip 1`] = `
-<div>
-  <div
-    class="form-group hide"
-  >
-    <div
-      class="table-responsive"
-    >
-      <input
-        aria-label="grid_hidden"
-        class="form-control"
-        type="hidden"
-        value=""
-      />
-      <div
-        class="table-responsive"
-      >
-        <table
-          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
-        >
-          <thead>
-            <tr
-              class=""
-            >
-              <th
-                class=""
-              />
-              <th
-                class=""
-              >
-                col1
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              class=""
-              name="jehf"
-            >
-              <td
-                class=""
-              >
-                row
-              </td>
-              <td
-                class=""
-              >
-                <div
-                  class="custom-control custom-radio"
-                >
-                  <label>
-                    <input
-                      aria-label="grid_0_0"
+                      aria-label="row: row, column: col1"
                       class="custom-control-input form-builder-grid-field"
                       name="jehf"
                       role="radio"
@@ -150,24 +78,29 @@ exports[`Grid has a tip 1`] = `
       </div>
     </div>
     <span
-      class="form-text"
+      aria-hidden="false"
+      hidden=""
+      id="undefined_fieldDetails"
     >
-      Type something
+      label
+      <br />
     </span>
   </div>
 </div>
 `;
 
-exports[`Grid has an id 1`] = `
+exports[`Grid has a tip 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <div
       class="table-responsive"
     >
       <input
-        aria-label="grid_hidden"
+        aria-hidden="true"
         class="form-control"
         type="hidden"
         value=""
@@ -210,7 +143,7 @@ exports[`Grid has an id 1`] = `
                 >
                   <label>
                     <input
-                      aria-label="grid_0_0"
+                      aria-label="row: row, column: col1"
                       class="custom-control-input form-builder-grid-field"
                       name="jehf"
                       role="radio"
@@ -228,6 +161,97 @@ exports[`Grid has an id 1`] = `
         </table>
       </div>
     </div>
+    <span
+      aria-hidden="true"
+      class="form-text"
+    >
+      Type something
+    </span>
+    <span
+      aria-hidden="false"
+      hidden=""
+      id="undefined_fieldDetails"
+    >
+      Type something
+      <br />
+    </span>
+  </div>
+</div>
+`;
+
+exports[`Grid has an id 1`] = `
+<div>
+  <div
+    aria-labelledby="undefined_fieldDetails"
+    class="form-group hide"
+    tabindex="0"
+  >
+    <div
+      class="table-responsive"
+    >
+      <input
+        aria-hidden="true"
+        class="form-control"
+        type="hidden"
+        value=""
+      />
+      <div
+        class="table-responsive"
+      >
+        <table
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+        >
+          <thead>
+            <tr
+              class=""
+            >
+              <th
+                class=""
+              />
+              <th
+                class=""
+              >
+                col1
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class=""
+              name="jehf"
+            >
+              <td
+                class=""
+              >
+                row
+              </td>
+              <td
+                class=""
+              >
+                <div
+                  class="custom-control custom-radio"
+                >
+                  <label>
+                    <input
+                      aria-label="row: row, column: col1"
+                      class="custom-control-input form-builder-grid-field"
+                      name="jehf"
+                      role="radio"
+                      type="radio"
+                      value="fieldId"
+                    />
+                    <span
+                      class="custom-control-label"
+                    />
+                  </label>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
   </div>
 </div>
 `;
@@ -235,7 +259,9 @@ exports[`Grid has an id 1`] = `
 exports[`Grid is not editable 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <div
       class="table-responsive"
@@ -278,7 +304,7 @@ exports[`Grid is not editable 1`] = `
                 >
                   <label>
                     <input
-                      aria-label="grid_0_0"
+                      aria-label="row: row, column: col1"
                       class="custom-control-input form-builder-grid-field"
                       disabled=""
                       name="jehf"
@@ -297,6 +323,7 @@ exports[`Grid is not editable 1`] = `
         </table>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -304,13 +331,15 @@ exports[`Grid is not editable 1`] = `
 exports[`Grid is not required 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <div
       class="table-responsive"
     >
       <input
-        aria-label="grid_hidden"
+        aria-hidden="true"
         class="form-control"
         type="hidden"
         value=""
@@ -353,7 +382,7 @@ exports[`Grid is not required 1`] = `
                 >
                   <label>
                     <input
-                      aria-label="grid_0_0"
+                      aria-label="row: row, column: col1"
                       class="custom-control-input form-builder-grid-field"
                       name="jehf"
                       role="radio"
@@ -371,6 +400,7 @@ exports[`Grid is not required 1`] = `
         </table>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -381,7 +411,9 @@ exports[`Grid renders Label if showLabel is true 1`] = `
     class="form-group hide"
   >
     <p
+      aria-labelledby="undefined_fieldDetails"
       class="ddm-label"
+      tabindex="0"
     >
       text
     </p>
@@ -389,7 +421,7 @@ exports[`Grid renders Label if showLabel is true 1`] = `
       class="table-responsive"
     >
       <input
-        aria-label="grid_hidden"
+        aria-hidden="true"
         class="form-control"
         type="hidden"
         value=""
@@ -432,7 +464,7 @@ exports[`Grid renders Label if showLabel is true 1`] = `
                 >
                   <label>
                     <input
-                      aria-label="grid_0_0"
+                      aria-label="row: row, column: col1"
                       class="custom-control-input form-builder-grid-field"
                       name="jehf"
                       role="radio"
@@ -450,6 +482,14 @@ exports[`Grid renders Label if showLabel is true 1`] = `
         </table>
       </div>
     </div>
+    <span
+      aria-hidden="false"
+      hidden=""
+      id="undefined_fieldDetails"
+    >
+      text
+      <br />
+    </span>
   </div>
 </div>
 `;
@@ -457,13 +497,15 @@ exports[`Grid renders Label if showLabel is true 1`] = `
 exports[`Grid renders columns 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <div
       class="table-responsive"
     >
       <input
-        aria-label="grid_hidden"
+        aria-hidden="true"
         class="form-control"
         type="hidden"
         value=""
@@ -511,7 +553,7 @@ exports[`Grid renders columns 1`] = `
                 >
                   <label>
                     <input
-                      aria-label="grid_0_0"
+                      aria-label="row: row, column: col1"
                       class="custom-control-input form-builder-grid-field"
                       name="jehf"
                       role="radio"
@@ -532,7 +574,7 @@ exports[`Grid renders columns 1`] = `
                 >
                   <label>
                     <input
-                      aria-label="grid_0_1"
+                      aria-label="row: row, column: col2"
                       class="custom-control-input form-builder-grid-field"
                       name="jehf"
                       role="radio"
@@ -550,6 +592,7 @@ exports[`Grid renders columns 1`] = `
         </table>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -557,13 +600,15 @@ exports[`Grid renders columns 1`] = `
 exports[`Grid renders no columns when columns comes empty 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <div
       class="table-responsive"
     >
       <input
-        aria-label="grid_hidden"
+        aria-hidden="true"
         class="form-control"
         type="hidden"
         value=""
@@ -598,6 +643,7 @@ exports[`Grid renders no columns when columns comes empty 1`] = `
         </table>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -605,7 +651,9 @@ exports[`Grid renders no columns when columns comes empty 1`] = `
 exports[`Grid renders no rows when row comes empty 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <div
       class="table-responsive"
@@ -634,6 +682,7 @@ exports[`Grid renders no rows when row comes empty 1`] = `
         </table>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -641,19 +690,21 @@ exports[`Grid renders no rows when row comes empty 1`] = `
 exports[`Grid renders rows 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <div
       class="table-responsive"
     >
       <input
-        aria-label="grid_hidden"
+        aria-hidden="true"
         class="form-control"
         type="hidden"
         value=""
       />
       <input
-        aria-label="grid_hidden"
+        aria-hidden="true"
         class="form-control"
         type="hidden"
         value=""
@@ -696,7 +747,7 @@ exports[`Grid renders rows 1`] = `
                 >
                   <label>
                     <input
-                      aria-label="grid_0_0"
+                      aria-label="row: row1, column: col1"
                       class="custom-control-input form-builder-grid-field"
                       name="fieldId"
                       role="radio"
@@ -727,7 +778,7 @@ exports[`Grid renders rows 1`] = `
                 >
                   <label>
                     <input
-                      aria-label="grid_1_0"
+                      aria-label="row: row2, column: col1"
                       class="custom-control-input form-builder-grid-field"
                       name="fieldId"
                       role="radio"
@@ -745,6 +796,7 @@ exports[`Grid renders rows 1`] = `
         </table>
       </div>
     </div>
+    
   </div>
 </div>
 `;

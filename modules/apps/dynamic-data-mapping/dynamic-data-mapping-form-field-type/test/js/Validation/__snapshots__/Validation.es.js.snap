@@ -6,8 +6,10 @@ exports[`Validation renders checkbox to enable Validation 1`] = `
     class="form-group lfr-ddm-form-field-validation"
   >
     <div
+      aria-labelledby="enableValidation_fieldDetails"
       class="form-group hide"
       data-field-name="enableValidation"
+      tabindex="0"
     >
       <label
         class="ddm-toggle-switch toggle-switch"
@@ -32,6 +34,7 @@ exports[`Validation renders checkbox to enable Validation 1`] = `
           </span>
         </span>
       </label>
+      
     </div>
   </div>
 </div>

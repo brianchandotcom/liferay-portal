@@ -3,10 +3,12 @@
 exports[`Select calls onChange callback when an item is selected using multiselect 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <select
-      aria-label="select"
+      aria-hidden="true"
       class="form-control form-control"
       hidden=""
       multiple=""
@@ -298,6 +300,7 @@ exports[`Select calls onChange callback when an item is selected using multisele
         </ul>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -305,10 +308,12 @@ exports[`Select calls onChange callback when an item is selected using multisele
 exports[`Select filters according to the input and calls onChange callback when an item is selected using search 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <select
-      aria-label="select"
+      aria-hidden="true"
       class="form-control form-control"
       hidden=""
       multiple=""
@@ -550,6 +555,7 @@ exports[`Select filters according to the input and calls onChange callback when 
         </ul>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -557,10 +563,12 @@ exports[`Select filters according to the input and calls onChange callback when 
 exports[`Select has a help text 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <select
-      aria-label="select"
+      aria-hidden="true"
       class="form-control form-control"
       hidden=""
       multiple=""
@@ -618,9 +626,18 @@ exports[`Select has a help text 1`] = `
       </div>
     </div>
     <span
+      aria-hidden="true"
       class="form-text"
     >
       Type something
+    </span>
+    <span
+      aria-hidden="false"
+      hidden=""
+      id="undefined_fieldDetails"
+    >
+      Type something
+      <br />
     </span>
   </div>
 </div>
@@ -629,10 +646,12 @@ exports[`Select has a help text 1`] = `
 exports[`Select has a key 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <select
-      aria-label="select"
+      aria-hidden="true"
       class="form-control form-control"
       hidden=""
       multiple=""
@@ -689,6 +708,7 @@ exports[`Select has a key 1`] = `
         </ul>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -699,12 +719,14 @@ exports[`Select has a label 1`] = `
     class="form-group hide"
   >
     <p
+      aria-labelledby="undefined_fieldDetails"
       class="ddm-label"
+      tabindex="0"
     >
       label
     </p>
     <select
-      aria-label="select"
+      aria-hidden="true"
       class="form-control form-control"
       hidden=""
       multiple=""
@@ -761,6 +783,14 @@ exports[`Select has a label 1`] = `
         </ul>
       </div>
     </div>
+    <span
+      aria-hidden="false"
+      hidden=""
+      id="undefined_fieldDetails"
+    >
+      label
+      <br />
+    </span>
   </div>
 </div>
 `;
@@ -768,10 +798,12 @@ exports[`Select has a label 1`] = `
 exports[`Select has a placeholder 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <select
-      aria-label="select"
+      aria-hidden="true"
       class="form-control form-control"
       hidden=""
       multiple=""
@@ -828,6 +860,7 @@ exports[`Select has a placeholder 1`] = `
         </ul>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -835,10 +868,12 @@ exports[`Select has a placeholder 1`] = `
 exports[`Select has a predefinedValue 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <select
-      aria-label="select"
+      aria-hidden="true"
       class="form-control form-control"
       hidden=""
       multiple=""
@@ -895,6 +930,7 @@ exports[`Select has a predefinedValue 1`] = `
         </ul>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -902,10 +938,12 @@ exports[`Select has a predefinedValue 1`] = `
 exports[`Select has a value 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <select
-      aria-label="select"
+      aria-hidden="true"
       class="form-control form-control"
       hidden=""
       multiple=""
@@ -962,6 +1000,7 @@ exports[`Select has a value 1`] = `
         </ul>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -969,10 +1008,12 @@ exports[`Select has a value 1`] = `
 exports[`Select has an id 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <select
-      aria-label="select"
+      aria-hidden="true"
       class="form-control form-control"
       hidden=""
       multiple=""
@@ -1030,6 +1071,7 @@ exports[`Select has an id 1`] = `
         </ul>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -1037,10 +1079,12 @@ exports[`Select has an id 1`] = `
 exports[`Select has class dropdown-opened when it's opened 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <select
-      aria-label="select"
+      aria-hidden="true"
       class="form-control form-control"
       hidden=""
       multiple=""
@@ -1097,6 +1141,7 @@ exports[`Select has class dropdown-opened when it's opened 1`] = `
         </ul>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -1104,10 +1149,12 @@ exports[`Select has class dropdown-opened when it's opened 1`] = `
 exports[`Select is closed by default 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <select
-      aria-label="select"
+      aria-hidden="true"
       class="form-control form-control"
       hidden=""
       multiple=""
@@ -1164,6 +1211,7 @@ exports[`Select is closed by default 1`] = `
         </ul>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -1171,10 +1219,12 @@ exports[`Select is closed by default 1`] = `
 exports[`Select is not required 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <select
-      aria-label="select"
+      aria-hidden="true"
       class="form-control form-control"
       hidden=""
       multiple=""
@@ -1231,6 +1281,7 @@ exports[`Select is not required 1`] = `
         </ul>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -1241,7 +1292,9 @@ exports[`Select puts an asterisk when field is required 1`] = `
     class="form-group hide"
   >
     <p
+      aria-labelledby="undefined_fieldDetails"
       class="ddm-label"
+      tabindex="0"
     >
       This is the label
       <span
@@ -1258,7 +1311,7 @@ exports[`Select puts an asterisk when field is required 1`] = `
       </span>
     </p>
     <select
-      aria-label="select"
+      aria-hidden="true"
       class="form-control form-control"
       hidden=""
       multiple=""
@@ -1315,6 +1368,15 @@ exports[`Select puts an asterisk when field is required 1`] = `
         </ul>
       </div>
     </div>
+    <span
+      aria-hidden="false"
+      hidden=""
+      id="undefined_fieldDetails"
+    >
+      This is the label
+      <br />
+      required
+    </span>
   </div>
 </div>
 `;
@@ -1325,12 +1387,14 @@ exports[`Select renders Label if showLabel is true 1`] = `
     class="form-group hide"
   >
     <p
+      aria-labelledby="undefined_fieldDetails"
       class="ddm-label"
+      tabindex="0"
     >
       text
     </p>
     <select
-      aria-label="select"
+      aria-hidden="true"
       class="form-control form-control"
       hidden=""
       multiple=""
@@ -1387,6 +1451,14 @@ exports[`Select renders Label if showLabel is true 1`] = `
         </ul>
       </div>
     </div>
+    <span
+      aria-hidden="false"
+      hidden=""
+      id="undefined_fieldDetails"
+    >
+      text
+      <br />
+    </span>
   </div>
 </div>
 `;
@@ -1394,10 +1466,12 @@ exports[`Select renders Label if showLabel is true 1`] = `
 exports[`Select renders no options when options come empty 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <select
-      aria-label="select"
+      aria-hidden="true"
       class="form-control form-control"
       hidden=""
       multiple=""
@@ -1454,6 +1528,7 @@ exports[`Select renders no options when options come empty 1`] = `
         </ul>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -1461,10 +1536,12 @@ exports[`Select renders no options when options come empty 1`] = `
 exports[`Select renders options 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <select
-      aria-label="select"
+      aria-hidden="true"
       class="form-control form-control"
       hidden=""
       multiple=""
@@ -1532,6 +1609,7 @@ exports[`Select renders options 1`] = `
         </ul>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -1539,10 +1617,12 @@ exports[`Select renders options 1`] = `
 exports[`Select shows a search input when the number of options is more than the maximum allowed 1`] = `
 <div>
   <div
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
+    tabindex="0"
   >
     <select
-      aria-label="select"
+      aria-hidden="true"
       class="form-control form-control"
       hidden=""
       multiple=""
@@ -2032,6 +2112,7 @@ exports[`Select shows a search input when the number of options is more than the
         </ul>
       </div>
     </div>
+    
   </div>
 </div>
 `;

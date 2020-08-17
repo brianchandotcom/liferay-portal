@@ -3,8 +3,10 @@
 exports[`Field Radio has a helptext 1`] = `
 <div>
   <div
+    aria-labelledby="radioField_fieldDetails"
     class="form-group hide"
     data-field-name="radioField"
+    tabindex="0"
   >
     <div
       class="ddm-radio"
@@ -55,9 +57,18 @@ exports[`Field Radio has a helptext 1`] = `
       </div>
     </div>
     <span
+      aria-hidden="true"
       class="form-text"
     >
       Type something
+    </span>
+    <span
+      aria-hidden="false"
+      hidden=""
+      id="radioField_fieldDetails"
+    >
+      Type something
+      <br />
     </span>
   </div>
 </div>
@@ -70,7 +81,9 @@ exports[`Field Radio has a label 1`] = `
     data-field-name="radioField"
   >
     <p
+      aria-labelledby="radioField_fieldDetails"
       class="ddm-label"
+      tabindex="0"
     >
       label
     </p>
@@ -122,6 +135,14 @@ exports[`Field Radio has a label 1`] = `
         </label>
       </div>
     </div>
+    <span
+      aria-hidden="false"
+      hidden=""
+      id="radioField_fieldDetails"
+    >
+      label
+      <br />
+    </span>
   </div>
 </div>
 `;
@@ -129,8 +150,10 @@ exports[`Field Radio has a label 1`] = `
 exports[`Field Radio has a placeholder 1`] = `
 <div>
   <div
+    aria-labelledby="radioField_fieldDetails"
     class="form-group hide"
     data-field-name="radioField"
+    tabindex="0"
   >
     <div
       class="ddm-radio"
@@ -180,6 +203,7 @@ exports[`Field Radio has a placeholder 1`] = `
         </label>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -187,8 +211,10 @@ exports[`Field Radio has a placeholder 1`] = `
 exports[`Field Radio has a value 1`] = `
 <div>
   <div
+    aria-labelledby="radioField_fieldDetails"
     class="form-group hide"
     data-field-name="radioField"
+    tabindex="0"
   >
     <div
       class="ddm-radio"
@@ -238,6 +264,7 @@ exports[`Field Radio has a value 1`] = `
         </label>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -245,8 +272,10 @@ exports[`Field Radio has a value 1`] = `
 exports[`Field Radio has an id 1`] = `
 <div>
   <div
+    aria-labelledby="radioField_fieldDetails"
     class="form-group hide"
     data-field-name="radioField"
+    tabindex="0"
   >
     <div
       class="ddm-radio"
@@ -296,6 +325,7 @@ exports[`Field Radio has an id 1`] = `
         </label>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -303,8 +333,10 @@ exports[`Field Radio has an id 1`] = `
 exports[`Field Radio is not editable 1`] = `
 <div>
   <div
+    aria-labelledby="radioField_fieldDetails"
     class="form-group hide"
     data-field-name="radioField"
+    tabindex="0"
   >
     <div
       class="ddm-radio"
@@ -356,6 +388,7 @@ exports[`Field Radio is not editable 1`] = `
         </label>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -363,8 +396,10 @@ exports[`Field Radio is not editable 1`] = `
 exports[`Field Radio is not required 1`] = `
 <div>
   <div
+    aria-labelledby="radioField_fieldDetails"
     class="form-group hide"
     data-field-name="radioField"
+    tabindex="0"
   >
     <div
       class="ddm-radio"
@@ -414,6 +449,7 @@ exports[`Field Radio is not required 1`] = `
         </label>
       </div>
     </div>
+    
   </div>
 </div>
 `;
@@ -425,7 +461,9 @@ exports[`Field Radio renders Label if showLabel is true 1`] = `
     data-field-name="radioField"
   >
     <p
+      aria-labelledby="radioField_fieldDetails"
       class="ddm-label"
+      tabindex="0"
     >
       text
     </p>
@@ -477,6 +515,14 @@ exports[`Field Radio renders Label if showLabel is true 1`] = `
         </label>
       </div>
     </div>
+    <span
+      aria-hidden="false"
+      hidden=""
+      id="radioField_fieldDetails"
+    >
+      text
+      <br />
+    </span>
   </div>
 </div>
 `;
@@ -484,12 +530,15 @@ exports[`Field Radio renders Label if showLabel is true 1`] = `
 exports[`Field Radio renders no options when options is empty 1`] = `
 <div>
   <div
+    aria-labelledby="radioField_fieldDetails"
     class="form-group hide"
     data-field-name="radioField"
+    tabindex="0"
   >
     <div
       class="ddm-radio"
     />
+    
   </div>
 </div>
 `;
@@ -497,8 +546,10 @@ exports[`Field Radio renders no options when options is empty 1`] = `
 exports[`Field Radio renders options 1`] = `
 <div>
   <div
+    aria-labelledby="radioField_fieldDetails"
     class="form-group hide"
     data-field-name="radioField"
+    tabindex="0"
   >
     <div
       class="ddm-radio"
@@ -548,6 +599,7 @@ exports[`Field Radio renders options 1`] = `
         </label>
       </div>
     </div>
+    
   </div>
 </div>
 `;

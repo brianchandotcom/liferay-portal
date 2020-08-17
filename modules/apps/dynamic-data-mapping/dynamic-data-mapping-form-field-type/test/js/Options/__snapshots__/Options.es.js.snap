@@ -3,8 +3,10 @@
 exports[`Options shows the options 1`] = `
 <div>
   <div
+    aria-labelledby="options_fieldDetails"
     class="form-group hide"
     data-field-name="options"
+    tabindex="0"
   >
     <div
       class="ddm-field-options-container"
@@ -32,21 +34,25 @@ exports[`Options shows the options 1`] = `
           class="ddm-option-entry"
         >
           <div
+            aria-labelledby="option0_fieldDetails"
             class="form-group hide"
             data-field-name="option0"
+            tabindex="0"
           >
             <div
+              aria-labelledby="keyValueLabeloption0_fieldDetails"
               class="form-group hide"
               data-field-name="keyValueLabeloption0"
+              tabindex="0"
             >
               <input
-                aria-label="text"
                 class="form-control ddm-field-text"
                 name="keyValueLabeloption0"
                 placeholder="enter-an-option"
                 type="text"
                 value="Option 1"
               />
+              
             </div>
             <div
               class="active form-text key-value-editor"
@@ -64,6 +70,7 @@ exports[`Options shows the options 1`] = `
                 value="Option1"
               />
             </div>
+            
           </div>
           <button
             class="close close-modal"
@@ -103,21 +110,25 @@ exports[`Options shows the options 1`] = `
           class="ddm-option-entry"
         >
           <div
+            aria-labelledby="option1_fieldDetails"
             class="form-group hide"
             data-field-name="option1"
+            tabindex="0"
           >
             <div
+              aria-labelledby="keyValueLabeloption1_fieldDetails"
               class="form-group hide"
               data-field-name="keyValueLabeloption1"
+              tabindex="0"
             >
               <input
-                aria-label="text"
                 class="form-control ddm-field-text"
                 name="keyValueLabeloption1"
                 placeholder="enter-an-option"
                 type="text"
                 value="Option 2"
               />
+              
             </div>
             <div
               class="active form-text key-value-editor"
@@ -135,6 +146,7 @@ exports[`Options shows the options 1`] = `
                 value="Option2"
               />
             </div>
+            
           </div>
           <button
             class="close close-modal"
@@ -174,21 +186,25 @@ exports[`Options shows the options 1`] = `
           class="ddm-option-entry"
         >
           <div
+            aria-labelledby="option2_fieldDetails"
             class="form-group hide"
             data-field-name="option2"
+            tabindex="0"
           >
             <div
+              aria-labelledby="keyValueLabeloption2_fieldDetails"
               class="form-group hide"
               data-field-name="keyValueLabeloption2"
+              tabindex="0"
             >
               <input
-                aria-label="text"
                 class="form-control ddm-field-text"
                 name="keyValueLabeloption2"
                 placeholder="enter-an-option"
                 type="text"
                 value=""
               />
+              
             </div>
             <div
               class="active form-text key-value-editor"
@@ -206,10 +222,12 @@ exports[`Options shows the options 1`] = `
                 value="Any<String>"
               />
             </div>
+            
           </div>
         </div>
       </div>
     </div>
+    
   </div>
 </div>
 `;

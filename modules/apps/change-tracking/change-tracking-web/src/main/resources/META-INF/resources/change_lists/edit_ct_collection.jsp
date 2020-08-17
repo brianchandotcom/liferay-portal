@@ -147,7 +147,7 @@ portletDisplay.setShowBackIcon(true);
 			</c:if>
 
 			<aui:button-row>
-				<aui:button disabled="<%= true %>" id="saveButton" type="submit" value="<%= LanguageUtil.get(request, saveButtonLabel) %>" />
+				<aui:button disabled="<%= revert %>" id="saveButton" type="submit" value="<%= LanguageUtil.get(request, saveButtonLabel) %>" />
 
 				<aui:button href="<%= redirect %>" type="cancel" />
 			</aui:button-row>

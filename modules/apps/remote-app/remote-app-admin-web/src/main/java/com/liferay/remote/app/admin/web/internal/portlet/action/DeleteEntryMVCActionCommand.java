@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + RemoteAppAdminPortletKeys.REMOTE_APP_ADMIN,
-		"mvc.command.name=/delete_entry"
+		"mvc.command.name=/delete_remote_app_entry"
 	},
 	service = MVCActionCommand.class
 )

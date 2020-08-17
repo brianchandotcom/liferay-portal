@@ -7,7 +7,7 @@
 
 		<!-- PK fields -->
 
-		<column container-model="true" name="entryId" primary="true" type="long" />
+		<column container-model="true" name="remoteAppEntryId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 

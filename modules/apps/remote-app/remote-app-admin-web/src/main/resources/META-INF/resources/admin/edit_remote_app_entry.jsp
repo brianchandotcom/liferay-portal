@@ -21,7 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 RemoteAppEntry remoteAppEntry = (RemoteAppEntry)request.getAttribute(RemoteAppAdminWebKeys.REMOTE_APP_ENTRY);
 
-long remoteAppEntryId = BeanParamUtil.getLong(remoteAppEntry, request, "entryId");
+long remoteAppEntryId = BeanParamUtil.getLong(remoteAppEntry, request, "remoteAppEntryId");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -29,10 +29,10 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "new-remote-app") : remoteAppEntry.getName(locale));
 %>
 
-<portlet:actionURL name="/edit_entry" var="editEntryURL" />
+<portlet:actionURL name="/edit_remote_app_entry" var="editRemoteAppEntryURL" />
 
 <clay:container-fluid>
-	<aui:form action="<%= editEntryURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveEntry();" %>'>
+	<aui:form action="<%= editRemoteAppEntryURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveEntry();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="remoteAppEntryId" type="hidden" value="<%= remoteAppEntryId %>" />

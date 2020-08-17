@@ -45,7 +45,8 @@ public class RemoteAppAdminDataSetDisplayContext {
 			dropdownItem -> {
 				PortletURL addEntryURL = _renderResponse.createRenderURL();
 
-				addEntryURL.setParameter("mvcRenderCommandName", "/edit_entry");
+				addEntryURL.setParameter(
+					"mvcRenderCommandName", "/edit_remote_app_entry");
 				addEntryURL.setParameter("redirect", _getRedirect());
 
 				dropdownItem.setHref(addEntryURL);

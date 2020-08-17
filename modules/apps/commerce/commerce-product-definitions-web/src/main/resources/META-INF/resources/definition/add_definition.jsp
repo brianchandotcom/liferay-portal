@@ -48,12 +48,12 @@
 
 				var formattedData = Object.assign({}, <portlet:namespace/>productData, {
 					defaultSku: '<%= CPInstanceConstants.DEFAULT_SKU %>',
-					name: {
-						[<portlet:namespace/>defaultLanguageId]: document.getElementById(
-							'<portlet:namespace/>name'
-						).value,
-					},
+					name: {},
 				});
+
+				formattedData.name[
+					<portlet:namespace/>defaultLanguageId
+				] = document.getElementById('<portlet:namespace/>name').value;
 
 				AdminCatalogResource.createProduct(formattedData)
 					.then(function (cpDefinition) {

@@ -64,13 +64,13 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 						var formattedData = {
 							active: false,
 							catalogId: <portlet:namespace/>product.catalogId,
-							name: {
-								[<portlet:namespace/>defaultLanguageId]: document.getElementById(
-									'<portlet:namespace/>name'
-								).value,
-							},
+							name: {},
 							productType: <portlet:namespace/>product.productType,
 						};
+
+						formattedData.name[
+							<portlet:namespace/>defaultLanguageId
+						] = document.getElementById('<portlet:namespace/>name').value;
 
 						Liferay.Util.fetch(
 							'/o/headless-commerce-admin-catalog/v1.0/products/' +

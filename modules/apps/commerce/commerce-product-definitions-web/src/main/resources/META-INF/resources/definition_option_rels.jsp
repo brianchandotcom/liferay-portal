@@ -75,9 +75,9 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 			}
 
 			function addNewItem(name) {
-				var nameDefinition = {
-					[themeDisplay.getLanguageId()]: name,
-				};
+				var nameDefinition = {};
+
+				nameDefinition[themeDisplay.getLanguageId()] = name;
 
 				if (themeDisplay.getLanguageId() !== themeDisplay.getDefaultLanguageId()) {
 					nameDefinition[themeDisplay.getDefaultLanguageId()] = name;

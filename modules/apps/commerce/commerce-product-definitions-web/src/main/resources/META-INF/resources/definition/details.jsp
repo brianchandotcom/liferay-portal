@@ -207,7 +207,6 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 					var productId = <%= cpDefinition.getCProductId() %>;
 
 					function selectItem(specification) {
-						debugger;
 						return Liferay.Util.fetch(
 							'/o/headless-commerce-admin-catalog/v1.0/products/' +
 								id +

@@ -85,8 +85,6 @@ public class CommerceOrganizationAccountClayTableDataSetDisplayView
 
 		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
 
-		Account account = (Account)model;
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -97,6 +95,8 @@ public class CommerceOrganizationAccountClayTableDataSetDisplayView
 		if (OrganizationPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), organizationId,
 				ActionKeys.UPDATE)) {
+
+			Account account = (Account)model;
 
 			StringBundler sb = new StringBundler(7);
 

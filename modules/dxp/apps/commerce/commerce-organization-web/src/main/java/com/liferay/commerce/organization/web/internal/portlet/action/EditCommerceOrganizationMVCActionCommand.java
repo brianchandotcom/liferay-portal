@@ -91,10 +91,10 @@ public class EditCommerceOrganizationMVCActionCommand
 				Callable<Organization> organizationCallable =
 					new OrganizationCallable(actionRequest);
 
-				Organization organization = TransactionInvokerUtil.invoke(
-					_transactionConfig, organizationCallable);
-
 				if (cmd.equals(Constants.ADD)) {
+					Organization organization = TransactionInvokerUtil.invoke(
+						_transactionConfig, organizationCallable);
+
 					String redirect = getSaveAndContinueRedirect(
 						actionRequest, organization);
 
@@ -162,7 +162,6 @@ public class EditCommerceOrganizationMVCActionCommand
 			actionRequest, "organizationId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
-		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
 
 		byte[] logoBytes = null;
 
@@ -182,6 +181,9 @@ public class EditCommerceOrganizationMVCActionCommand
 		if (cmd.equals(Constants.UPDATE) && (organizationId > 0)) {
 			Organization oldOrganization = _organizationService.getOrganization(
 				organizationId);
+
+			boolean deleteLogo = ParamUtil.getBoolean(
+				actionRequest, "deleteLogo");
 
 			organization = _organizationService.updateOrganization(
 				organizationId, oldOrganization.getParentOrganizationId(), name,

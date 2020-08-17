@@ -103,12 +103,12 @@ public class CommerceDataIntegrationMessageListener implements MessageListener {
 
 		ScheduledTaskExecutorService scheduledTaskExecutorService = null;
 
-		CommerceDataIntegrationProcess commerceDataIntegrationProcess =
-			_commerceDataIntegrationProcessLocalService.
-				getCommerceDataIntegrationProcess(
-					commerceDataIntegrationProcessId);
-
 		if (_scheduledTaskExecutorServiceTrackerMap != null) {
+			CommerceDataIntegrationProcess commerceDataIntegrationProcess =
+				_commerceDataIntegrationProcessLocalService.
+					getCommerceDataIntegrationProcess(
+						commerceDataIntegrationProcessId);
+
 			for (String key :
 					_scheduledTaskExecutorServiceTrackerMap.keySet()) {
 

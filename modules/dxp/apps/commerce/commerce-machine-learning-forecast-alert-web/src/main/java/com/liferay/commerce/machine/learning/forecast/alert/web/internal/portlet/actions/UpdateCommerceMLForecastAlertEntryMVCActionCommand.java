@@ -58,13 +58,13 @@ public class UpdateCommerceMLForecastAlertEntryMVCActionCommand
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			long commerceMLForecastAlertEntryId = ParamUtil.getLong(
-				actionRequest, "commerceMLForecastAlertEntryId");
-
-			int status = ParamUtil.getInteger(actionRequest, "status");
-
 			if (cmd.equals(
 					CommerceMLForecastAlertActionKeys.MANAGE_ALERT_STATUS)) {
+
+				long commerceMLForecastAlertEntryId = ParamUtil.getLong(
+					actionRequest, "commerceMLForecastAlertEntryId");
+
+				int status = ParamUtil.getInteger(actionRequest, "status");
 
 				_commerceMLForecastAlertEntryService.updateStatus(
 					serviceContext.getUserId(), commerceMLForecastAlertEntryId,

@@ -77,7 +77,7 @@ export default function CommentsSidebar() {
 		layoutData,
 	});
 
-	if (highlightMessageId) {
+	if (highlightMessageId && activeFragmentEntryLink) {
 		const activeItem = Object.values(layoutData.items).find(
 			(item) =>
 				item.config.fragmentEntryLinkId ===

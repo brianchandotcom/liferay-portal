@@ -15,10 +15,16 @@
 package com.liferay.portal.remote.cors.internal;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Jdk14LogImpl;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.util.KeyValuePair;
+
+import java.io.InputStream;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import org.junit.Assert;
 import org.junit.ComparisonFailure;
@@ -118,12 +124,49 @@ public class URLToCORSSupportMapperTest {
 					comparisonFailure.getActual());
 			}
 		}
+
+		long start = System.currentTimeMillis();
+
+		for (int i = 0; i < 100000; i++) {
+			for (KeyValuePair keyValuePair : keyValuePairs) {
+				urlToCORSSupportMapper.get(keyValuePair.getKey());
+			}
+		}
+
+		long end = System.currentTimeMillis();
+
+		long delta = end - start;
+
+		Log log = _getLog();
+
+		if (log.isInfoEnabled()) {
+			log.info("Iterated 100 thousand times in " + delta + " ms");
+		}
+
+		Assert.assertTrue(delta < 1000);
 	}
 
 	protected URLToCORSSupportMapper createURLToCORSSupportMapper(
 		Map<String, CORSSupport> corsSupports) {
 
 		return new URLToCORSSupportMapper(corsSupports);
+	}
+
+	private Log _getLog() throws Exception {
+		try (InputStream inputStream =
+				URLToCORSSupportMapperTest.class.getResourceAsStream(
+					"/com/liferay/portal/remote/cors/internal" +
+						"/URLToCORSSupportMapperTest/logging.properties")) {
+
+			if (inputStream != null) {
+				LogManager logManager = LogManager.getLogManager();
+
+				logManager.readConfiguration(inputStream);
+			}
+		}
+
+		return new Jdk14LogImpl(
+			Logger.getLogger(URLToCORSSupportMapperTest.class.getName()));
 	}
 
 }

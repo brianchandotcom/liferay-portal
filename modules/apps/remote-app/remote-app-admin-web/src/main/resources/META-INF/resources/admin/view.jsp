@@ -16,6 +16,10 @@
 
 <%@ include file="/admin/init.jsp" %>
 
+<%
+RemoteAppAdminDataSetDisplayContext remoteAppAdminDataSetDisplayContext = (RemoteAppAdminDataSetDisplayContext)renderRequest.getAttribute("remoteAppAdminDataSetDisplayContext");
+%>
+
 <clay:data-set-display
 	actionParameterName="remoteAppEntryId"
 	creationMenu="<%= remoteAppAdminDataSetDisplayContext.getCreationMenu() %>"
@@ -25,7 +29,7 @@
 	itemsPerPage="<%= 10 %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pageNumber="<%= 1 %>"
-	portletURL="<%= currentPortletURL %>"
+	portletURL="<%= remoteAppAdminDataSetDisplayContext.getCurrentPortletURL() %>"
 	selectedItemsKey="remoteAppEntryId"
 	selectionType="multiple"
 	style="fluid"

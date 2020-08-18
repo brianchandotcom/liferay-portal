@@ -24,9 +24,3 @@ page import="com.liferay.remote.app.admin.web.internal.constants.RemoteAppAdminC
 page import="com.liferay.remote.app.admin.web.internal.constants.RemoteAppAdminWebKeys" %><%@
 page import="com.liferay.remote.app.admin.web.internal.display.context.RemoteAppAdminDataSetDisplayContext" %><%@
 page import="com.liferay.remote.app.exception.DuplicateRemoteAppEntryURLException" %>
-
-<%
-RemoteAppAdminDataSetDisplayContext remoteAppAdminDataSetDisplayContext = (RemoteAppAdminDataSetDisplayContext)renderRequest.getAttribute("remoteAppAdminDataSetDisplayContext");
-
-PortletURL currentPortletURL = remoteAppAdminDataSetDisplayContext.getCurrentPortletURL();
-%>

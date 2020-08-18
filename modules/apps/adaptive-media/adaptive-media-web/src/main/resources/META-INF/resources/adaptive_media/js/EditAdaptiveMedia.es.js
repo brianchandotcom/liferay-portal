@@ -22,8 +22,17 @@ import {HelpMessage, RequiredMark} from './utils/formComponents.es';
 import Input from './utils/input.es';
 import { alphanumeric, required, validate } from "./utils/formValidations.es";
 
-const EditAdaptiveMedia = ({namespace}) => {
-	const [automaticUuid, setAutomaticUuid] = useState(true);
+const EditAdaptiveMedia = ({
+	automaticUuid,
+	configurationEntryEditable,
+	configurationEntryUuid,
+	description,
+	maxHeight,
+	maxWidth,
+	name,
+	namespace,
+}) => {
+	const [automaticId, setAutomaticId] = useState(automaticUuid);
 	const [addHighResolution, setAddHighResolution] = useState(false);
 
 	const nameId = `${namespace}name`;
@@ -36,8 +45,12 @@ const EditAdaptiveMedia = ({namespace}) => {
 
 	const formik = useFormik({
 		initialValues: {
-			[nameId]: '',
-			description: '',
+			[nameId]: name,
+			[descriptionId]: description,
+			[maxWidthId]: maxWidth,
+			[maxHeightId]: maxHeight,
+			[highResolutionId]: addHighResolution,
+			[newUuidId]: configurationEntryUuid,
 		},
 		validate: (values) =>
 			validate(
@@ -129,8 +142,8 @@ const EditAdaptiveMedia = ({namespace}) => {
 
 				<ClayRadioGroup
 					name={automaticRadioId}
-					onSelectedValueChange={setAutomaticUuid}
-					selectedValue={automaticUuid}
+					onSelectedValueChange={setAutomaticId}
+					selectedValue={automaticId}
 				>
 					<ClayRadio
 						label={Liferay.Language.get('automatic')}
@@ -150,8 +163,8 @@ const EditAdaptiveMedia = ({namespace}) => {
 				</ClayRadioGroup>
 
 				<Input
-					disabled={automaticUuid}
-					error={!automaticUuid && errors[newUuidId]}
+					disabled={automaticId}
+					error={!automaticId && errors[newUuidId]}
 					label={Liferay.Language.get('id')}
 					name={newUuidId}
 					onChange={handleChange}

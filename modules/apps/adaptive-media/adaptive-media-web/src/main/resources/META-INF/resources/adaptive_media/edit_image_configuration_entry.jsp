@@ -37,6 +37,41 @@ if (amImageConfigurationEntry != null) {
 %>
 
 <div class="sheet sheet-lg">
+
+	<%
+	String maxWidth = StringPool.BLANK;
+
+	if (properties != null) {
+		String curMaxWidth = properties.get("max-width");
+
+		if (!curMaxWidth.equals("0")) {
+			maxWidth = curMaxWidth;
+		}
+	}
+
+	String maxHeight = StringPool.BLANK;
+
+	if (properties != null) {
+		String curMaxHeight = properties.get("max-height");
+
+		if (!curMaxHeight.equals("0")) {
+			maxHeight = curMaxHeight;
+		}
+	}
+
+	boolean automaticUuid;
+
+	if (amImageConfigurationEntry == null) {
+		automaticUuid = Validator.isNull(configurationEntryUuid);
+	}
+	else {
+		automaticUuid = configurationEntryUuid.equals(FriendlyURLNormalizerUtil.normalize(amImageConfigurationEntry.getName()));
+	}
+
+	automaticUuid = ParamUtil.getBoolean(request, "automaticUuid", automaticUuid);
+
+	%>
+
 	<react:component
 		module="adaptive_media/js/EditAdaptiveMedia.es"
 		props='<%=
@@ -47,9 +82,17 @@ if (amImageConfigurationEntry != null) {
 			).put(
 				"name", (amImageConfigurationEntry != null) ? amImageConfigurationEntry.getName() : StringPool.BLANK
 			).put(
+				"description", (amImageConfigurationEntry != null) ? amImageConfigurationEntry.getDescription() : StringPool.BLANK
+			).put(
+				"maxWidth", maxWidth
+			).put(
+				"maxHeight", maxHeight
+			).put(
 				"namespace", liferayPortletResponse.getNamespace()
 			).put(
 				"redirect", redirect
+			).put(
+				"automaticUuid", automaticUuid
 			).build()
 		%>'
 	/>

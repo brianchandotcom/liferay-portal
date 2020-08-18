@@ -523,11 +523,11 @@
 				"store": true,
 				"type": "keyword"
 			},
-			"assetPublicCategoryId": {
+			"assetInternalCategoryId": {
 				"store": true,
 				"type": "keyword"
 			},
-			"assetPublicCategoryIds": {
+			"assetInternalCategoryIds": {
 				"store": true,
 				"type": "keyword"
 			},

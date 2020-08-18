@@ -50,6 +50,50 @@ body {
 
 // Buttons
 
+.btn-link:not(.dropdown-item) {
+	@include button-cp(
+		var(--transparent),
+		var(--transparent),
+		var(--primary),
+		var(--transparent),
+		var(--transparent),
+		var(--primary-d1)
+	);
+}
+
+.btn-outline-light {
+	@include button-cp(
+		var(--transparent),
+		var(--white),
+		var(--white),
+		var(--white),
+		var(--white),
+		var(--dark)
+	);
+}
+
+.btn-outline-primary {
+	@include button-cp(
+		var(--transparent),
+		var(--primary),
+		var(--primary),
+		var(--primary-d1),
+		var(--primary-d1),
+		var(--white)
+	);
+}
+
+.btn-outline-secondary {
+	@include button-cp(
+		var(--transparent),
+		var(--gray-400),
+		var(--secondary),
+		var(--gray-200),
+		var(--transparent),
+		var(--dark)
+	);
+}
+
 .btn-primary {
 	@include button-cp(
 		var(--primary),
@@ -78,50 +122,6 @@ body {
 		var(--white),
 		var(--success-d1),
 		var(--success-d1)
-	);
-}
-
-.btn-outline-primary {
-	@include button-cp(
-		var(--transparent),
-		var(--primary),
-		var(--primary),
-		var(--primary-d1),
-		var(--primary-d1),
-		var(--white)
-	);
-}
-
-.btn-outline-secondary {
-	@include button-cp(
-		var(--transparent),
-		var(--gray-400),
-		var(--secondary),
-		var(--gray-200),
-		var(--transparent),
-		var(--dark)
-	);
-}
-
-.btn-outline-light {
-	@include button-cp(
-		var(--transparent),
-		var(--white),
-		var(--white),
-		var(--white),
-		var(--white),
-		var(--dark)
-	);
-}
-
-.btn-link:not(.dropdown-item) {
-	@include button-cp(
-		var(--transparent),
-		var(--transparent),
-		var(--primary),
-		var(--transparent),
-		var(--transparent),
-		var(--primary-d1)
 	);
 }
 
@@ -239,24 +239,24 @@ h6,
 
 // Rounded
 
-.rounded-sm {
-	border-radius: var(--border-radius-sm) !important;
-}
-
 .rounded {
 	border-radius: var(--border-radius) !important;
-}
-
-.rounded-lg {
-	border-radius: var(--border-radius-lg) !important;
 }
 
 .rounded-circle {
 	border-radius: var(--border-radius-circle) !important;
 }
 
+.rounded-lg {
+	border-radius: var(--border-radius-lg) !important;
+}
+
 .rounded-pill {
 	border-radius: var(--rounded-pill) !important;
+}
+
+.rounded-sm {
+	border-radius: var(--border-radius-sm) !important;
 }
 
 // Separator
@@ -269,12 +269,12 @@ hr {
 
 // Shadows
 
-.shadow-sm {
-	box-shadow: var(--box-shadow-sm) !important;
-}
-
 .shadow {
 	box-shadow: var(--box-shadow) !important;
+}
+
+.shadow-sm {
+	box-shadow: var(--box-shadow-sm) !important;
 }
 
 .shadow-lg {
@@ -339,6 +339,14 @@ hr {
 
 // Text format
 
+.font-weight-bold {
+	font-weight: var(--font-weight-bold) !important;
+}
+
+.font-weight-bolder {
+	font-weight: var(--font-weight-bolder) !important;
+}
+
 .font-weight-light {
 	font-weight: var(--font-weight-light) !important;
 }
@@ -353,14 +361,6 @@ hr {
 
 .font-weight-semi-bold {
 	font-weight: var(--font-weight-semi-bold) !important;
-}
-
-.font-weight-bold {
-	font-weight: var(--font-weight-bold) !important;
-}
-
-.font-weight-bolder {
-	font-weight: var(--font-weight-bolder) !important;
 }
 
 // Text muted

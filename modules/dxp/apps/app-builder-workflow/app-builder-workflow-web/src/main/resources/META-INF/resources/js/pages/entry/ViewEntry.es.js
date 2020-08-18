@@ -9,6 +9,8 @@
  * distribution rights of the Software.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {AppContext} from 'app-builder-web/js/AppContext.es';
 import ControlMenu from 'app-builder-web/js/components/control-menu/ControlMenu.es';
 import {Loading} from 'app-builder-web/js/components/loading/Loading.es';
@@ -25,6 +27,7 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import WorkflowInfoBar from '../../components/workflow-info-bar/WorkflowInfoBar.es';
 import useDataLayouts from '../../hooks/useDataLayouts.es';
+import ReassignEntryModal from './ReassignEntryModal.es';
 
 export default function ViewEntry({
 	history,
@@ -36,6 +39,7 @@ export default function ViewEntry({
 		AppContext
 	);
 	const [dataLayoutIds, setDataLayoutIds] = useState([]);
+	const [isModalVisible, setModalVisible] = useState(false);
 
 	const getDataLayoutIds = ({completed, taskNames = [], tasks}) => {
 		const initialIds = [];
@@ -88,6 +92,14 @@ export default function ViewEntry({
 	const previousIndex = usePrevious(entryIndex);
 
 	const doFetch = () => {
+		setState({
+			dataRecord: {},
+			isFetching: true,
+			page: 1,
+			totalCount: 0,
+			workflowInfo: null,
+		});
+
 		getItem(
 			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-records`,
 			{...query, dataListViewId, page: entryIndex, pageSize: 1}
@@ -122,9 +134,21 @@ export default function ViewEntry({
 									{classPKs: dataRecordIds}
 								).then(({items}) => {
 									if (items.length > 0) {
+										const {id, ...instance} = items.pop();
+
+										const [assignee] = instance.assignees;
+
+										const assignedToUser =
+											Number(themeDisplay.getUserId()) ===
+											assignee?.id;
+
 										state.workflowInfo = {
-											...items.pop(),
+											...instance,
 											appVersion,
+											canReassign:
+												assignedToUser ||
+												assignee?.reviewer,
+											instanceId: id,
 											tasks,
 										};
 
@@ -166,6 +190,14 @@ export default function ViewEntry({
 			});
 	};
 
+	const onCloseModal = (isRefetch) => {
+		setModalVisible(false);
+
+		if (isRefetch) {
+			doFetch();
+		}
+	};
+
 	useEffect(() => {
 		if (!isEqualObjects(query, previousQuery) || !previousIndex) {
 			doFetch();
@@ -185,6 +217,22 @@ export default function ViewEntry({
 			/>
 
 			<ViewEntryUpperToolbar
+				additionalButtons={
+					workflowInfo?.canReassign && (
+						<ClayTooltipProvider>
+							<ClayButtonWithIcon
+								className="mr-2"
+								data-tooltip-align="bottom"
+								data-tooltip-delay="200"
+								displayType="secondary"
+								onClick={() => setModalVisible(true)}
+								small
+								symbol="change"
+								title={Liferay.Language.get('assign-to')}
+							/>
+						</ClayTooltipProvider>
+					)
+				}
 				dataRecordId={dataRecordId}
 				page={page}
 				showButtons={showButtons}
@@ -236,6 +284,13 @@ export default function ViewEntry({
 					</div>
 				</div>
 			</Loading>
+
+			{isModalVisible && (
+				<ReassignEntryModal
+					entry={workflowInfo}
+					onCloseModal={onCloseModal}
+				/>
+			)}
 		</div>
 	);
 }

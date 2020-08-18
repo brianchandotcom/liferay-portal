@@ -9,7 +9,8 @@
  * distribution rights of the Software.
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {AppContext} from 'app-builder-web/js/AppContext.es';
 import {ControlMenuBase} from 'app-builder-web/js/components/control-menu/ControlMenu.es';
 import {Loading} from 'app-builder-web/js/components/loading/Loading.es';
@@ -29,8 +30,9 @@ import WorkflowInfoBar from '../../components/workflow-info-bar/WorkflowInfoBar.
 import useAppWorkflow from '../../hooks/useAppWorkflow.es';
 import useDDMForms from '../../hooks/useDDMForms.es';
 import useDataRecordApps from '../../hooks/useDataRecordApps.es';
+import ReassignEntryModal from './ReassignEntryModal.es';
 
-const createWorkflowInfoPortal = (props) => {
+const WorkflowInfoPortal = ({children}) => {
 	const portalElementId = 'workflowInfoBar';
 	const targetElement = document.getElementById('edit-app-content');
 
@@ -45,15 +47,11 @@ const createWorkflowInfoPortal = (props) => {
 	}
 
 	portalElement = document.createElement('div');
-	portalElement.className = 'border-bottom py-4';
 	portalElement.id = portalElementId;
 
 	portalContainer.insertBefore(portalElement, targetElement);
 
-	return createPortal(
-		<WorkflowInfoBar {...props} hideColumns={['step']} />,
-		portalElement
-	);
+	return createPortal(children, portalElement);
 };
 
 export default function EditEntry({dataRecordId, redirect}) {
@@ -82,6 +80,7 @@ export default function EditEntry({dataRecordId, redirect}) {
 	const {appWorkflowTransitions: [transition = {}] = []} = initialState;
 
 	const [isLoading, setLoading] = useState(true);
+	const [isModalVisible, setModalVisible] = useState(false);
 	const [transitioning, setTransitioning] = useState(false);
 	const [workflowInfo, setWorkflowInfo] = useState();
 
@@ -91,6 +90,47 @@ export default function EditEntry({dataRecordId, redirect}) {
 		dataRecordId !== '0'
 			? Liferay.Language.get('edit-entry')
 			: Liferay.Language.get('add-entry');
+
+	const doFetch = useCallback(() => {
+		setLoading(true);
+
+		if (appWorkflowDefinitionId) {
+			if (isEdit) {
+				getItem(
+					`/o/portal-workflow-metrics/v1.0/processes/${appWorkflowDefinitionId}/instances`,
+					{classPKs: [dataRecordId]}
+				).then(({items}) => {
+					setLoading(false);
+
+					if (items.length > 0) {
+						const {id, ...instance} = items.pop();
+
+						const [assignee] = instance.assignees;
+
+						const assignedToUser =
+							Number(themeDisplay.getUserId()) === assignee?.id;
+
+						setWorkflowInfo({
+							...instance,
+							appVersion,
+							canReassign: assignedToUser || assignee?.reviewer,
+							instanceId: id,
+							tasks: appWorkflowTasks,
+						});
+					}
+				});
+			}
+			else {
+				setLoading(false);
+			}
+		}
+	}, [
+		appVersion,
+		appWorkflowDefinitionId,
+		appWorkflowTasks,
+		dataRecordId,
+		isEdit,
+	]);
 
 	const onCancel = useCallback(() => {
 		setTransitioning(false);
@@ -102,6 +142,14 @@ export default function EditEntry({dataRecordId, redirect}) {
 			Liferay.Util.navigate(basePortletURL);
 		}
 	}, [basePortletURL, redirect]);
+
+	const onCloseModal = (isRefetch) => {
+		setModalVisible(false);
+
+		if (isRefetch) {
+			doFetch();
+		}
+	};
 
 	const onSubmit = useDDMForms(
 		dataLayoutIds.map(
@@ -170,36 +218,8 @@ export default function EditEntry({dataRecordId, redirect}) {
 	);
 
 	useEffect(() => {
-		setLoading(true);
-
-		if (appWorkflowDefinitionId) {
-			if (isEdit) {
-				getItem(
-					`/o/portal-workflow-metrics/v1.0/processes/${appWorkflowDefinitionId}/instances`,
-					{classPKs: [dataRecordId]}
-				).then(({items, totalCount}) => {
-					setLoading(false);
-
-					if (totalCount > 0) {
-						setWorkflowInfo({
-							...items.pop(),
-							appVersion,
-							tasks: appWorkflowTasks,
-						});
-					}
-				});
-			}
-			else {
-				setLoading(false);
-			}
-		}
-	}, [
-		appVersion,
-		appWorkflowDefinitionId,
-		appWorkflowTasks,
-		dataRecordId,
-		isEdit,
-	]);
+		doFetch();
+	}, [doFetch]);
 
 	if (workflowInfo) {
 		const {
@@ -261,7 +281,33 @@ export default function EditEntry({dataRecordId, redirect}) {
 			/>
 
 			<Loading isLoading={isLoading}>
-				{workflowInfo && createWorkflowInfoPortal(workflowInfo)}
+				{workflowInfo && (
+					<WorkflowInfoPortal>
+						<div className="d-flex justify-content-center mt-4">
+							<WorkflowInfoBar
+								{...workflowInfo}
+								hideColumns={['step']}
+							/>
+
+							{workflowInfo?.canReassign && (
+								<ClayTooltipProvider>
+									<ClayButtonWithIcon
+										className="ml-2"
+										data-tooltip-align="bottom"
+										data-tooltip-delay="200"
+										displayType="secondary"
+										onClick={() => setModalVisible(true)}
+										small
+										symbol="change"
+										title={Liferay.Language.get(
+											'assign-to'
+										)}
+									/>
+								</ClayTooltipProvider>
+							)}
+						</div>
+					</WorkflowInfoPortal>
+				)}
 
 				<ClayButton.Group className="app-builder-form-buttons" spaced>
 					{actionButtons}
@@ -275,6 +321,13 @@ export default function EditEntry({dataRecordId, redirect}) {
 					</ClayButton>
 				</ClayButton.Group>
 			</Loading>
+
+			{isModalVisible && (
+				<ReassignEntryModal
+					entry={workflowInfo}
+					onCloseModal={onCloseModal}
+				/>
+			)}
 		</>
 	);
 }

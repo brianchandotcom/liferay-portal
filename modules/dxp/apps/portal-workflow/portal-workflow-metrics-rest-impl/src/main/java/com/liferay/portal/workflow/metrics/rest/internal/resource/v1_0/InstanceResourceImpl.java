@@ -716,15 +716,9 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		overdueFilterAggregation.addChildAggregation(
 			_resourceHelper.createOverdueScriptedMetricAggregation());
 
-		TermsAggregation taskNameTermsAggregation = _aggregations.terms(
-			"name", "name");
-
-		taskNameTermsAggregation.setSize(10000);
-
 		termsAggregation.addChildrenAggregations(
 			instancesIndexFilterAggregation, onTimeFilterAggregation,
-			overdueFilterAggregation, taskNameTermsAggregation,
-			_aggregations.topHits("topHits"),
+			overdueFilterAggregation, _aggregations.topHits("topHits"),
 			_resourceHelper.creatInstanceCountScriptedMetricAggregation(
 				ListUtil.fromArray(assigneeIds), completed, dateEnd, dateStart,
 				ListUtil.fromArray(slaStatuses),
@@ -782,12 +776,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			).map(
 				this::_createInstance
 			).map(
-				instance -> {
-					_setSLAStatus(bucket, instance);
-					_setTaskNames(bucket, instance);
-
-					return instance;
-				}
+				instance -> _setSLAStatus(bucket, instance)
 			).orElseGet(
 				Instance::new
 			)
@@ -796,7 +785,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			(map, instance) -> map.put(instance.getId(), instance), Map::putAll
 		);
 
-		_populateAssignees(assigneeIds, instances, processId);
+		_populateWithTasks(assigneeIds, instances, processId);
 
 		return instances.values();
 	}
@@ -1012,7 +1001,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		}
 	}
 
-	private void _populateAssignees(
+	private void _populateWithTasks(
 		Long[] assigneeIds, Map<Long, Instance> instances, Long processId) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
@@ -1041,7 +1030,13 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		tasksIndexFilterAggregation.addChildAggregation(
 			assigneeTypeTermsAggregation);
 
-		termsAggregation.addChildrenAggregations(tasksIndexFilterAggregation);
+		TermsAggregation taskNameTermsAggregation = _aggregations.terms(
+			"name", "name");
+
+		taskNameTermsAggregation.setSize(instances.size());
+
+		termsAggregation.addChildrenAggregations(
+			tasksIndexFilterAggregation, taskNameTermsAggregation);
 
 		termsAggregation.setSize(instances.size());
 
@@ -1088,6 +1083,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 					GetterUtil.getLong(bucket.getKey()));
 
 				_setAssignees(bucket, instance);
+				_setTaskNames(bucket, instance);
 				_setTransitions(instance);
 			}
 		);
@@ -1135,7 +1131,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			));
 	}
 
-	private void _setSLAStatus(Bucket bucket, Instance instance) {
+	private Instance _setSLAStatus(Bucket bucket, Instance instance) {
 		if (_isOverdue(bucket)) {
 			instance.setSLAStatus(Instance.SLAStatus.OVERDUE);
 		}
@@ -1145,6 +1141,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		else {
 			instance.setSLAStatus(Instance.SLAStatus.UNTRACKED);
 		}
+
+		return instance;
 	}
 
 	private void _setTaskNames(Bucket bucket, Instance instance) {

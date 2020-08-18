@@ -55,14 +55,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.Stack;
-import java.util.TreeSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
@@ -3187,25 +3185,15 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		int i = 0;
 
-		Set<Integer> specialCharIndexes = getSpecialCharIndexes(value);
+		Matcher matcher = _tabPattern.matcher(value);
 
-		for (int specialCharIndex : specialCharIndexes) {
-			webElement.sendKeys(value.substring(i, specialCharIndex));
+		while (matcher.find()) {
+			webElement.sendKeys(
+				value.substring(matcher.start(), matcher.end() - 1));
 
-			String specialChar = String.valueOf(value.charAt(specialCharIndex));
+			webElement.sendKeys(Keys.TAB);
 
-			if (specialChar.equals("-")) {
-				webElement.sendKeys(Keys.SUBTRACT);
-			}
-			else if (specialChar.equals("\t")) {
-				webElement.sendKeys(Keys.TAB);
-			}
-			else {
-				webElement.sendKeys(
-					Keys.SHIFT, _keysSpecialChars.get(specialChar));
-			}
-
-			i = specialCharIndex + 1;
+			i = matcher.end();
 		}
 
 		webElement.sendKeys(value.substring(i));
@@ -4258,27 +4246,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		};
 	}
 
-	protected Set<Integer> getSpecialCharIndexes(String value) {
-		Set<Integer> specialCharIndexes = new TreeSet<>();
-
-		Set<String> specialChars = new TreeSet<>();
-
-		specialChars.addAll(_keysSpecialChars.keySet());
-
-		specialChars.add("-");
-		specialChars.add("\t");
-
-		for (String specialChar : specialChars) {
-			while (value.contains(specialChar)) {
-				specialCharIndexes.add(value.indexOf(specialChar));
-
-				value = StringUtil.replaceFirst(value, specialChar, " ");
-			}
-		}
-
-		return specialCharIndexes;
-	}
-
 	protected Condition getTextCaseInsensitiveCondition(
 		String locator, String value) {
 
@@ -4739,20 +4706,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 				put("SHIFT", Integer.valueOf(KeyEvent.VK_SHIFT));
 			}
 		};
-	private static final Map<String, String> _keysSpecialChars =
-		new HashMap<String, String>() {
-			{
-				put("!", "1");
-				put("#", "3");
-				put("$", "4");
-				put("%", "5");
-				put("&", "7");
-				put("(", "9");
-				put(")", "0");
-				put("<", ",");
-				put(">", ".");
-			}
-		};
+	private static final Pattern _tabPattern = Pattern.compile(
+		".*?(\\t).*?", Pattern.DOTALL);
 
 	static {
 		String testDependenciesDirName = PropsValues.TEST_DEPENDENCIES_DIR_NAME;

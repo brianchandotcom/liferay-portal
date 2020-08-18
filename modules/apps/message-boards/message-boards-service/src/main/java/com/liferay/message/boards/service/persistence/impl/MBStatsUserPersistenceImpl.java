@@ -2212,12 +2212,8 @@ public class MBStatsUserPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(mbStatsUser)) {
 				if (!isNew) {
-					MBStatsUser oldMBStatsUser = (MBStatsUser)session.get(
+					session.evict(
 						MBStatsUserImpl.class, mbStatsUser.getPrimaryKeyObj());
-
-					if (oldMBStatsUser != null) {
-						session.evict(oldMBStatsUser);
-					}
 				}
 
 				session.save(mbStatsUser);

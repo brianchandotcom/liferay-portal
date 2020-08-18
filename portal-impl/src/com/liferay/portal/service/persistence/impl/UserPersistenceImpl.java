@@ -8834,12 +8834,7 @@ public class UserPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(user)) {
 				if (!isNew) {
-					User oldUser = (User)session.get(
-						UserImpl.class, user.getPrimaryKeyObj());
-
-					if (oldUser != null) {
-						session.evict(oldUser);
-					}
+					session.evict(UserImpl.class, user.getPrimaryKeyObj());
 				}
 
 				session.save(user);

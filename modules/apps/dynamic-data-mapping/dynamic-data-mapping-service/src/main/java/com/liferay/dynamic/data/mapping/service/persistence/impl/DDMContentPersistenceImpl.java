@@ -2844,12 +2844,8 @@ public class DDMContentPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(ddmContent)) {
 				if (!isNew) {
-					DDMContent oldDDMContent = (DDMContent)session.get(
+					session.evict(
 						DDMContentImpl.class, ddmContent.getPrimaryKeyObj());
-
-					if (oldDDMContent != null) {
-						session.evict(oldDDMContent);
-					}
 				}
 
 				session.save(ddmContent);

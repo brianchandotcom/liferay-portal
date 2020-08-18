@@ -8276,14 +8276,9 @@ public class FragmentEntryLinkPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(fragmentEntryLink)) {
 				if (!isNew) {
-					FragmentEntryLink oldFragmentEntryLink =
-						(FragmentEntryLink)session.get(
-							FragmentEntryLinkImpl.class,
-							fragmentEntryLink.getPrimaryKeyObj());
-
-					if (oldFragmentEntryLink != null) {
-						session.evict(oldFragmentEntryLink);
-					}
+					session.evict(
+						FragmentEntryLinkImpl.class,
+						fragmentEntryLink.getPrimaryKeyObj());
 				}
 
 				session.save(fragmentEntryLink);

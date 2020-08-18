@@ -13940,14 +13940,9 @@ public class AssetListEntryPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(assetListEntry)) {
 				if (!isNew) {
-					AssetListEntry oldAssetListEntry =
-						(AssetListEntry)session.get(
-							AssetListEntryImpl.class,
-							assetListEntry.getPrimaryKeyObj());
-
-					if (oldAssetListEntry != null) {
-						session.evict(oldAssetListEntry);
-					}
+					session.evict(
+						AssetListEntryImpl.class,
+						assetListEntry.getPrimaryKeyObj());
 				}
 
 				session.save(assetListEntry);

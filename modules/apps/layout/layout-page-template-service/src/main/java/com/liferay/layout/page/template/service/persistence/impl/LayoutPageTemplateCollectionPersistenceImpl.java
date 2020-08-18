@@ -4528,16 +4528,9 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(layoutPageTemplateCollection)) {
 				if (!isNew) {
-					LayoutPageTemplateCollection
-						oldLayoutPageTemplateCollection =
-							(LayoutPageTemplateCollection)session.get(
-								LayoutPageTemplateCollectionImpl.class,
-								layoutPageTemplateCollection.
-									getPrimaryKeyObj());
-
-					if (oldLayoutPageTemplateCollection != null) {
-						session.evict(oldLayoutPageTemplateCollection);
-					}
+					session.evict(
+						LayoutPageTemplateCollectionImpl.class,
+						layoutPageTemplateCollection.getPrimaryKeyObj());
 				}
 
 				session.save(layoutPageTemplateCollection);

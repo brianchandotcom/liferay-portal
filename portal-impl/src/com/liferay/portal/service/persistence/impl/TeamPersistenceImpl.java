@@ -2987,12 +2987,7 @@ public class TeamPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(team)) {
 				if (!isNew) {
-					Team oldTeam = (Team)session.get(
-						TeamImpl.class, team.getPrimaryKeyObj());
-
-					if (oldTeam != null) {
-						session.evict(oldTeam);
-					}
+					session.evict(TeamImpl.class, team.getPrimaryKeyObj());
 				}
 
 				session.save(team);

@@ -675,14 +675,9 @@ public class DDMFormInstanceReportPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(ddmFormInstanceReport)) {
 				if (!isNew) {
-					DDMFormInstanceReport oldDDMFormInstanceReport =
-						(DDMFormInstanceReport)session.get(
-							DDMFormInstanceReportImpl.class,
-							ddmFormInstanceReport.getPrimaryKeyObj());
-
-					if (oldDDMFormInstanceReport != null) {
-						session.evict(oldDDMFormInstanceReport);
-					}
+					session.evict(
+						DDMFormInstanceReportImpl.class,
+						ddmFormInstanceReport.getPrimaryKeyObj());
 				}
 
 				session.save(ddmFormInstanceReport);

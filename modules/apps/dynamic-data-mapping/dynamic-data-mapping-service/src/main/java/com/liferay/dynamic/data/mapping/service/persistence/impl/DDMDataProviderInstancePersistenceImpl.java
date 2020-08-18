@@ -3796,14 +3796,9 @@ public class DDMDataProviderInstancePersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(ddmDataProviderInstance)) {
 				if (!isNew) {
-					DDMDataProviderInstance oldDDMDataProviderInstance =
-						(DDMDataProviderInstance)session.get(
-							DDMDataProviderInstanceImpl.class,
-							ddmDataProviderInstance.getPrimaryKeyObj());
-
-					if (oldDDMDataProviderInstance != null) {
-						session.evict(oldDDMDataProviderInstance);
-					}
+					session.evict(
+						DDMDataProviderInstanceImpl.class,
+						ddmDataProviderInstance.getPrimaryKeyObj());
 				}
 
 				session.save(ddmDataProviderInstance);

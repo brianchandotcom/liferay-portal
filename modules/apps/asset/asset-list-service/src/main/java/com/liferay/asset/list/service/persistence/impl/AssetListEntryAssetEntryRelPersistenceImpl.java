@@ -4249,14 +4249,9 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(assetListEntryAssetEntryRel)) {
 				if (!isNew) {
-					AssetListEntryAssetEntryRel oldAssetListEntryAssetEntryRel =
-						(AssetListEntryAssetEntryRel)session.get(
-							AssetListEntryAssetEntryRelImpl.class,
-							assetListEntryAssetEntryRel.getPrimaryKeyObj());
-
-					if (oldAssetListEntryAssetEntryRel != null) {
-						session.evict(oldAssetListEntryAssetEntryRel);
-					}
+					session.evict(
+						AssetListEntryAssetEntryRelImpl.class,
+						assetListEntryAssetEntryRel.getPrimaryKeyObj());
 				}
 
 				session.save(assetListEntryAssetEntryRel);

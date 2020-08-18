@@ -5543,14 +5543,9 @@ public class JournalContentSearchPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(journalContentSearch)) {
 				if (!isNew) {
-					JournalContentSearch oldJournalContentSearch =
-						(JournalContentSearch)session.get(
-							JournalContentSearchImpl.class,
-							journalContentSearch.getPrimaryKeyObj());
-
-					if (oldJournalContentSearch != null) {
-						session.evict(oldJournalContentSearch);
-					}
+					session.evict(
+						JournalContentSearchImpl.class,
+						journalContentSearch.getPrimaryKeyObj());
 				}
 
 				session.save(journalContentSearch);

@@ -1755,14 +1755,9 @@ public class DDMStructureVersionPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(ddmStructureVersion)) {
 				if (!isNew) {
-					DDMStructureVersion oldDDMStructureVersion =
-						(DDMStructureVersion)session.get(
-							DDMStructureVersionImpl.class,
-							ddmStructureVersion.getPrimaryKeyObj());
-
-					if (oldDDMStructureVersion != null) {
-						session.evict(oldDDMStructureVersion);
-					}
+					session.evict(
+						DDMStructureVersionImpl.class,
+						ddmStructureVersion.getPrimaryKeyObj());
 				}
 
 				session.save(ddmStructureVersion);

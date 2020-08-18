@@ -5739,14 +5739,9 @@ public class LayoutFriendlyURLPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(layoutFriendlyURL)) {
 				if (!isNew) {
-					LayoutFriendlyURL oldLayoutFriendlyURL =
-						(LayoutFriendlyURL)session.get(
-							LayoutFriendlyURLImpl.class,
-							layoutFriendlyURL.getPrimaryKeyObj());
-
-					if (oldLayoutFriendlyURL != null) {
-						session.evict(oldLayoutFriendlyURL);
-					}
+					session.evict(
+						LayoutFriendlyURLImpl.class,
+						layoutFriendlyURL.getPrimaryKeyObj());
 				}
 
 				session.save(layoutFriendlyURL);

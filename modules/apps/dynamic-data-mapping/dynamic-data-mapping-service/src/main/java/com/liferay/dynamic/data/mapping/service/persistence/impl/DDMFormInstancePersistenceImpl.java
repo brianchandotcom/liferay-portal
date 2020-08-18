@@ -3215,14 +3215,9 @@ public class DDMFormInstancePersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(ddmFormInstance)) {
 				if (!isNew) {
-					DDMFormInstance oldDDMFormInstance =
-						(DDMFormInstance)session.get(
-							DDMFormInstanceImpl.class,
-							ddmFormInstance.getPrimaryKeyObj());
-
-					if (oldDDMFormInstance != null) {
-						session.evict(oldDDMFormInstance);
-					}
+					session.evict(
+						DDMFormInstanceImpl.class,
+						ddmFormInstance.getPrimaryKeyObj());
 				}
 
 				session.save(ddmFormInstance);

@@ -6046,14 +6046,9 @@ public class PortletPreferencesPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(portletPreferences)) {
 				if (!isNew) {
-					PortletPreferences oldPortletPreferences =
-						(PortletPreferences)session.get(
-							PortletPreferencesImpl.class,
-							portletPreferences.getPrimaryKeyObj());
-
-					if (oldPortletPreferences != null) {
-						session.evict(oldPortletPreferences);
-					}
+					session.evict(
+						PortletPreferencesImpl.class,
+						portletPreferences.getPrimaryKeyObj());
 				}
 
 				session.save(portletPreferences);

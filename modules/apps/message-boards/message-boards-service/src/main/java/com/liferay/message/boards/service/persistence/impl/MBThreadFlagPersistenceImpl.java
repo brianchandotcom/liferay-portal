@@ -3121,13 +3121,9 @@ public class MBThreadFlagPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(mbThreadFlag)) {
 				if (!isNew) {
-					MBThreadFlag oldMBThreadFlag = (MBThreadFlag)session.get(
+					session.evict(
 						MBThreadFlagImpl.class,
 						mbThreadFlag.getPrimaryKeyObj());
-
-					if (oldMBThreadFlag != null) {
-						session.evict(oldMBThreadFlag);
-					}
 				}
 
 				session.save(mbThreadFlag);

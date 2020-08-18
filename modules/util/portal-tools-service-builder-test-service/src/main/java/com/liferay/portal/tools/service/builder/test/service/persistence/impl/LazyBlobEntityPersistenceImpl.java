@@ -1161,7 +1161,10 @@ public class LazyBlobEntityPersistenceImpl
 				lazyBlobEntity.setNew(false);
 			}
 			else {
-				session.evict(lazyBlobEntity);
+				session.evict(
+					LazyBlobEntityImpl.class,
+					lazyBlobEntity.getPrimaryKeyObj());
+
 				session.saveOrUpdate(lazyBlobEntity);
 			}
 

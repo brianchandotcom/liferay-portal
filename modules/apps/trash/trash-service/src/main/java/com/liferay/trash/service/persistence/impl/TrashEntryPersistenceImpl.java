@@ -2768,12 +2768,8 @@ public class TrashEntryPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(trashEntry)) {
 				if (!isNew) {
-					TrashEntry oldTrashEntry = (TrashEntry)session.get(
+					session.evict(
 						TrashEntryImpl.class, trashEntry.getPrimaryKeyObj());
-
-					if (oldTrashEntry != null) {
-						session.evict(oldTrashEntry);
-					}
 				}
 
 				session.save(trashEntry);

@@ -24165,14 +24165,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(layoutPageTemplateEntry)) {
 				if (!isNew) {
-					LayoutPageTemplateEntry oldLayoutPageTemplateEntry =
-						(LayoutPageTemplateEntry)session.get(
-							LayoutPageTemplateEntryImpl.class,
-							layoutPageTemplateEntry.getPrimaryKeyObj());
-
-					if (oldLayoutPageTemplateEntry != null) {
-						session.evict(oldLayoutPageTemplateEntry);
-					}
+					session.evict(
+						LayoutPageTemplateEntryImpl.class,
+						layoutPageTemplateEntry.getPrimaryKeyObj());
 				}
 
 				session.save(layoutPageTemplateEntry);

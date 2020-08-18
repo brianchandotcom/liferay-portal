@@ -13110,12 +13110,7 @@ public class GroupPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(group)) {
 				if (!isNew) {
-					Group oldGroup = (Group)session.get(
-						GroupImpl.class, group.getPrimaryKeyObj());
-
-					if (oldGroup != null) {
-						session.evict(oldGroup);
-					}
+					session.evict(GroupImpl.class, group.getPrimaryKeyObj());
 				}
 
 				session.save(group);

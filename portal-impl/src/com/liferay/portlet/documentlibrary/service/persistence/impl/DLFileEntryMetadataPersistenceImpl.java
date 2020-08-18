@@ -2859,14 +2859,9 @@ public class DLFileEntryMetadataPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(dlFileEntryMetadata)) {
 				if (!isNew) {
-					DLFileEntryMetadata oldDLFileEntryMetadata =
-						(DLFileEntryMetadata)session.get(
-							DLFileEntryMetadataImpl.class,
-							dlFileEntryMetadata.getPrimaryKeyObj());
-
-					if (oldDLFileEntryMetadata != null) {
-						session.evict(oldDLFileEntryMetadata);
-					}
+					session.evict(
+						DLFileEntryMetadataImpl.class,
+						dlFileEntryMetadata.getPrimaryKeyObj());
 				}
 
 				session.save(dlFileEntryMetadata);

@@ -3861,14 +3861,9 @@ public class FragmentCollectionPersistenceImpl
 
 			if (ctPersistenceHelper.isInsert(fragmentCollection)) {
 				if (!isNew) {
-					FragmentCollection oldFragmentCollection =
-						(FragmentCollection)session.get(
-							FragmentCollectionImpl.class,
-							fragmentCollection.getPrimaryKeyObj());
-
-					if (oldFragmentCollection != null) {
-						session.evict(oldFragmentCollection);
-					}
+					session.evict(
+						FragmentCollectionImpl.class,
+						fragmentCollection.getPrimaryKeyObj());
 				}
 
 				session.save(fragmentCollection);

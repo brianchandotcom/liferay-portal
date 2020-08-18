@@ -6736,13 +6736,9 @@ public class SocialRequestPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(socialRequest)) {
 				if (!isNew) {
-					SocialRequest oldSocialRequest = (SocialRequest)session.get(
+					session.evict(
 						SocialRequestImpl.class,
 						socialRequest.getPrimaryKeyObj());
-
-					if (oldSocialRequest != null) {
-						session.evict(oldSocialRequest);
-					}
 				}
 
 				session.save(socialRequest);

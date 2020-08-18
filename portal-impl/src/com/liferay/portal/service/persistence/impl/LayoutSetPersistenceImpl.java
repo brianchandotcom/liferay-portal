@@ -2614,12 +2614,8 @@ public class LayoutSetPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(layoutSet)) {
 				if (!isNew) {
-					LayoutSet oldLayoutSet = (LayoutSet)session.get(
+					session.evict(
 						LayoutSetImpl.class, layoutSet.getPrimaryKeyObj());
-
-					if (oldLayoutSet != null) {
-						session.evict(oldLayoutSet);
-					}
 				}
 
 				session.save(layoutSet);

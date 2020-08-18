@@ -822,7 +822,10 @@ public class AnalyticsMessagePersistenceImpl
 				analyticsMessage.setNew(false);
 			}
 			else {
-				session.evict(analyticsMessage);
+				session.evict(
+					AnalyticsMessageImpl.class,
+					analyticsMessage.getPrimaryKeyObj());
+
 				session.saveOrUpdate(analyticsMessage);
 			}
 

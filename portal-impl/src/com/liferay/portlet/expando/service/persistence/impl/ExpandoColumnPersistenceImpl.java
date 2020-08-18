@@ -2025,13 +2025,9 @@ public class ExpandoColumnPersistenceImpl
 
 			if (CTPersistenceHelperUtil.isInsert(expandoColumn)) {
 				if (!isNew) {
-					ExpandoColumn oldExpandoColumn = (ExpandoColumn)session.get(
+					session.evict(
 						ExpandoColumnImpl.class,
 						expandoColumn.getPrimaryKeyObj());
-
-					if (oldExpandoColumn != null) {
-						session.evict(oldExpandoColumn);
-					}
 				}
 
 				session.save(expandoColumn);

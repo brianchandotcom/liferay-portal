@@ -47,7 +47,6 @@ CKEDITOR.on('dialogDefinition', (event) => {
 			infoTab.remove('cmbWidthType');
 			infoTab.remove('cmbWidthType');
 			infoTab.remove('htmlHeightType');
-			infoTab.remove('txtBorder');
 			infoTab.remove('txtCellPad');
 			infoTab.remove('txtCellSpace');
 			infoTab.remove('txtHeight');

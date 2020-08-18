@@ -38,14 +38,41 @@ definition {
 		property test.name.skip.portal.instance = "SitesUsecase#AddChildSiteFromImportedSiteTemplate";
 		property testray.component.names = "Training";
 
+		JSONOrganization.addOrganization(organizationName = "Space Program Academy of Continuing Education");
+
+		User.openUsersAdmin();
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Suborganization.addCP(
+			orgName = "Space Program Academy of Continuing Education",
+			suborgName = "College of Agricultural Science");
+
+		User.openUsersAdmin();
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		LAR.exportPortlet(larFileName = "organizations.lar");
+
+		Suborganization.removeCP(
+			orgName = "Space Program Academy of Continuing Education",
+			subOrgName = "College of Agricultural Science");
+
+		User.openUsersAdmin();
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.deleteCP(orgName = "Space Program Academy of Continuing Education");
+
+		Organization.deleteCP(orgName = "College of Agricultural Science");
+
 		User.openUsersAdmin();
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
 		LAR.importPortlet(
-			larFileName = "organizations-7.0.lar",
-			portletName = "Users and Organizations",
-			uploadFrom = "dependencies");
+			larFileName = "organizations.lar",
+			portletName = "Users and Organizations");
 
 		UsersAndOrganizationsNavigator.gotoOrganizations();
 
@@ -59,12 +86,27 @@ definition {
 
 		SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
-		LAR.importPortlet(
-			larFileName = "class-site-template-7.2.lar",
-			portletName = "Site Templates",
-			uploadFrom = "dependencies");
+		SiteTemplates.addCP(siteTemplateName = "Digital Class Room");
 
-		SiteTemplates.viewCP(siteTemplateName = "Digital Class Room");
+		for (var pageName : list "Courses,Student Boards,Materials") {
+
+			SiteTemplates.addSitePageViaSiteTemplateCP(
+				pageName = "${pageName}",
+				siteTemplateName = "Digital Class Room");
+		}
+
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+		LAR.exportPortlet(larFileName = "class-site-template.lar");
+
+		SiteTemplates.deleteCP(siteTemplateName = "Digital Class Room");
+
+		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+
+		LAR.importPortlet(
+			larFileName = "class-site-template.lar",
+			portletName = "Site Templates",
+			siteTemplateName = "Digital Class Room");
 
 		Site.openSitesAdmin();
 

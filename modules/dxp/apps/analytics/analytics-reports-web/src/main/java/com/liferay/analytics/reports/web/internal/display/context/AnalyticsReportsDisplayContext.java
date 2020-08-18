@@ -212,6 +212,8 @@ public class AnalyticsReportsDisplayContext<T> {
 			_analyticsReportsInfoItem.getAuthorUserId(
 				_analyticsReportsInfoItemObject)
 		).put(
+			"canonicalURL", _canonicalURL
+		).put(
 			"publishDate",
 			() -> _analyticsReportsInfoItem.getPublishDate(
 				_analyticsReportsInfoItemObject)

@@ -2370,6 +2370,43 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Deletes the structured content by its key and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteSiteStructuredContent(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("structuredContentKey") String structuredContentKey)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.deleteSiteStructuredContent(
+					Long.valueOf(siteKey), structuredContentKey));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Replaces the structured content by its key with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
+	public StructuredContent updateSiteStructuredContent(
+			@GraphQLName("siteKey") @NotEmpty String siteKey,
+			@GraphQLName("structuredContentKey") String structuredContentKey,
+			@GraphQLName("structuredContent") StructuredContent
+				structuredContent)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource ->
+				structuredContentResource.putSiteStructuredContent(
+					Long.valueOf(siteKey), structuredContentKey,
+					structuredContent));
+	}
+
+	@GraphQLField(
 		description = "Creates a new structured content in the folder."
 	)
 	public StructuredContent createStructuredContentFolderStructuredContent(

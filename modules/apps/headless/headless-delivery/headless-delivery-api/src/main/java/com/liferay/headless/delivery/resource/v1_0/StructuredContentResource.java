@@ -104,6 +104,19 @@ public interface StructuredContentResource {
 			com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
+	public void deleteSiteStructuredContent(
+			Long siteId, String structuredContentKey)
+		throws Exception;
+
+	public StructuredContent getSiteStructuredContent(
+			Long siteId, String structuredContentKey)
+		throws Exception;
+
+	public StructuredContent putSiteStructuredContent(
+			Long siteId, String structuredContentKey,
+			StructuredContent structuredContent)
+		throws Exception;
+
 	public Page<StructuredContent>
 			getStructuredContentFolderStructuredContentsPage(
 				Long structuredContentFolderId, Boolean flatten, String search,

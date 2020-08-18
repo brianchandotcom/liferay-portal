@@ -19,6 +19,7 @@ import com.github.yuchi.semver.Version;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
 import com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details;
+import com.liferay.frontend.js.loader.modules.extender.internal.npm.dynamic.DynamicJSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundle;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleProcessor;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleTracker;
@@ -27,6 +28,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.JavaScriptAwarePortalWebResources;
+import com.liferay.frontend.js.loader.modules.extender.npm.ModifiableJSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
@@ -212,6 +214,33 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 
 		return moduleName;
+	}
+
+	@Override
+	public JSModule registerJSModule(
+		JSPackage jsPackage, String moduleName, Collection<String> dependencies,
+		String js) {
+
+		if (!(jsPackage instanceof ModifiableJSPackage)) {
+			throw new IllegalArgumentException(
+				"Invalid JSPackage type " + jsPackage.getClass());
+		}
+
+		ModifiableJSPackage modifiableJSPackage =
+			(ModifiableJSPackage)jsPackage;
+
+		JSModule jsModule = new DynamicJSModule(
+			modifiableJSPackage, moduleName, dependencies, js);
+
+		modifiableJSPackage.addJSModule(jsModule);
+
+		Map<Bundle, JSBundle> tracked = _bundleTracker.getTracked();
+
+		Collection<JSBundle> jsBundles = new ArrayList<>(tracked.values());
+
+		_refreshJSModuleCaches(jsBundles);
+
+		return jsModule;
 	}
 
 	/**

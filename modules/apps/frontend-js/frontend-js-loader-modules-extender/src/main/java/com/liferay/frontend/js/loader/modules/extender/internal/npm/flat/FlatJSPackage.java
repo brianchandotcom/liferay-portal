@@ -14,11 +14,10 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal.npm.flat;
 
-import com.liferay.frontend.js.loader.modules.extender.npm.JSBundle;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
-import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
+import com.liferay.frontend.js.loader.modules.extender.npm.ModifiableJSPackage;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
@@ -35,7 +34,7 @@ import java.util.Map;
  *
  * @author Iván Zaera
  */
-public class FlatJSPackage implements JSPackage {
+public class FlatJSPackage implements ModifiableJSPackage {
 
 	/**
 	 * Constructs a <code>FlatJSPackage</code> with the package's bundle, name,
@@ -65,6 +64,7 @@ public class FlatJSPackage implements JSPackage {
 	 *
 	 * @param jsModule the NPM module
 	 */
+	@Override
 	public void addJSModule(JSModule jsModule) {
 		_jsModules.put(jsModule.getName(), jsModule);
 	}
@@ -137,10 +137,7 @@ public class FlatJSPackage implements JSPackage {
 		return StringBundler.concat(_name, StringPool.AT, _version);
 	}
 
-	@Override
 	public URL getResourceURL(String location) {
-		JSBundle jsBundle = getJSBundle();
-
 		String path = "META-INF/resources/";
 
 		if (_root) {
@@ -166,7 +163,7 @@ public class FlatJSPackage implements JSPackage {
 			path = sb.toString();
 		}
 
-		return jsBundle.getResourceURL(path);
+		return _flatJSBundle.getResourceURL(path);
 	}
 
 	@Override

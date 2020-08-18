@@ -26,6 +26,7 @@ import {sub} from '../../utils/lang.es';
 import {navigateToEditPage} from './utils.es';
 
 function ViewEntryUpperToolbar({
+	additionalButtons,
 	children,
 	dataRecordId,
 	history,
@@ -127,7 +128,7 @@ function ViewEntryUpperToolbar({
 					{permissions.delete && showDeleteButton && (
 						<ClayTooltipProvider>
 							<ClayButtonWithIcon
-								className="ml-2"
+								className="mr-2"
 								data-tooltip-align="bottom"
 								data-tooltip-delay="200"
 								displayType="secondary"
@@ -142,7 +143,7 @@ function ViewEntryUpperToolbar({
 					{permissions.update && showUpdateButton && (
 						<ClayTooltipProvider>
 							<ClayButtonWithIcon
-								className="mx-2"
+								className="mr-2"
 								data-tooltip-align="bottom"
 								data-tooltip-delay="200"
 								displayType="secondary"
@@ -153,6 +154,8 @@ function ViewEntryUpperToolbar({
 							/>
 						</ClayTooltipProvider>
 					)}
+
+					{additionalButtons}
 				</UpperToolbar.Group>
 			)}
 		</UpperToolbar>

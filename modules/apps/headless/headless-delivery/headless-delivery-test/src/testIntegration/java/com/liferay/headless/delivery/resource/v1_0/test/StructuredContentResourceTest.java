@@ -339,6 +339,45 @@ public class StructuredContentResourceTest
 	}
 
 	@Override
+	@Test
+	public void testPutSiteStructuredContent() throws Exception {
+		String randomKey = RandomTestUtil.randomString();
+		StructuredContent insertStructuredContent = randomStructuredContent();
+
+		StructuredContent putSiteStructuredContent =
+			structuredContentResource.putSiteStructuredContent(
+				insertStructuredContent.getSiteId(), randomKey,
+				insertStructuredContent);
+
+		assertEquals(insertStructuredContent, putSiteStructuredContent);
+		assertValid(putSiteStructuredContent);
+
+		StructuredContent getStructuredContent =
+			structuredContentResource.getSiteStructuredContent(
+				putSiteStructuredContent.getSiteId(), randomKey);
+
+		assertEquals(insertStructuredContent, getStructuredContent);
+		assertValid(getStructuredContent);
+
+		StructuredContent updateStructuredContent = randomStructuredContent();
+
+		putSiteStructuredContent =
+			structuredContentResource.putSiteStructuredContent(
+				insertStructuredContent.getSiteId(), randomKey,
+				updateStructuredContent);
+
+		assertEquals(updateStructuredContent, putSiteStructuredContent);
+		assertValid(putSiteStructuredContent);
+
+		getStructuredContent =
+			structuredContentResource.getSiteStructuredContent(
+				putSiteStructuredContent.getSiteId(), randomKey);
+
+		assertEquals(updateStructuredContent, getStructuredContent);
+		assertValid(getStructuredContent);
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"contentStructureId", "description", "title"};
 	}

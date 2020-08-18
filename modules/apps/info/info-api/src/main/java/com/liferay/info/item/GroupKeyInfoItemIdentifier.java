@@ -14,6 +14,10 @@
 
 package com.liferay.info.item;
 
+import com.liferay.petra.string.StringBundler;
+
+import java.util.Objects;
+
 /**
  * @author Jorge Ferrer
  */
@@ -24,12 +28,54 @@ public class GroupKeyInfoItemIdentifier extends BaseInfoItemIdentifier {
 		_key = key;
 	}
 
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof GroupKeyInfoItemIdentifier)) {
+			return false;
+		}
+
+		GroupKeyInfoItemIdentifier groupKeyInfoItemIdentifier =
+			(GroupKeyInfoItemIdentifier)object;
+
+		if (Objects.equals(_groupId, groupKeyInfoItemIdentifier._groupId) &&
+			Objects.equals(_key, groupKeyInfoItemIdentifier._key)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public long getGroupId() {
 		return _groupId;
 	}
 
 	public String getKey() {
 		return _key;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(_groupId, _key);
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("{className=");
+		sb.append(GroupKeyInfoItemIdentifier.class.getName());
+		sb.append(", _groupId=");
+		sb.append(_groupId);
+		sb.append(", _key=");
+		sb.append(_key);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private final long _groupId;

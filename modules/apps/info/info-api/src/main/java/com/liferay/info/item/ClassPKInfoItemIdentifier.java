@@ -16,6 +16,8 @@ package com.liferay.info.item;
 
 import com.liferay.petra.string.StringBundler;
 
+import java.util.Objects;
+
 /**
  * @author Jorge Ferrer
  */
@@ -25,8 +27,29 @@ public class ClassPKInfoItemIdentifier extends BaseInfoItemIdentifier {
 		_classPK = classPK;
 	}
 
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof ClassPKInfoItemIdentifier)) {
+			return false;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)object;
+
+		return Objects.equals(_classPK, classPKInfoItemIdentifier._classPK);
+	}
+
 	public long getClassPK() {
 		return _classPK;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(_classPK);
 	}
 
 	@Override

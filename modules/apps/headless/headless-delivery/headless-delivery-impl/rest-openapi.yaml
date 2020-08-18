@@ -8442,6 +8442,7 @@ paths:
             tags: ["StructuredContent"]
     "/sites/{siteId}/structured-contents/{structuredContentKey}":
         delete:
+            # @review
             description:
                 Deletes the structured content by its key and returns a 204 if the operation succeeds.
             operationId: deleteSiteStructuredContent
@@ -8499,6 +8500,7 @@ paths:
                         ""
             tags: ["StructuredContent"]
         put:
+            # @review
             description:
                 Replaces the structured content by its key with the information sent in the request body.
                 Any missing fields are deleted, unless they are required.

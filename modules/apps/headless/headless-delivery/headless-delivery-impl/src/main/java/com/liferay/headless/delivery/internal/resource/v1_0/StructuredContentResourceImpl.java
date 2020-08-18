@@ -124,15 +124,24 @@ public class StructuredContentResourceImpl
 	extends BaseStructuredContentResourceImpl implements EntityModelResource {
 
 	@Override
+	public void deleteSiteStructuredContent(
+			Long siteId, String structuredContentKey)
+		throws Exception {
+
+		JournalArticle journalArticle = _journalArticleService.getArticle(
+			siteId, structuredContentKey);
+
+		_deleteStructuredContent(journalArticle);
+	}
+
+	@Override
 	public void deleteStructuredContent(Long structuredContentId)
 		throws Exception {
 
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
 			structuredContentId);
 
-		_journalArticleService.deleteArticle(
-			journalArticle.getGroupId(), journalArticle.getArticleId(),
-			journalArticle.getArticleResourceUuid(), new ServiceContext());
+		_deleteStructuredContent(journalArticle);
 	}
 
 	@Override
@@ -213,14 +222,19 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
+	public StructuredContent getSiteStructuredContent(
+			Long siteId, String structuredContentKey)
+		throws Exception {
+
+		return _getStructuredContent(siteId, structuredContentKey);
+	}
+
+	@Override
 	public StructuredContent getSiteStructuredContentByKey(
 			Long siteId, String key)
 		throws Exception {
 
-		JournalArticle journalArticle = _journalArticleService.getArticle(
-			siteId, key);
-
-		return _getStructuredContent(journalArticle);
+		return _getStructuredContent(siteId, key);
 	}
 
 	@Override
@@ -436,7 +450,7 @@ public class StructuredContentResourceImpl
 		throws Exception {
 
 		return _addStructuredContent(
-			siteId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, siteId,
 			structuredContent);
 	}
 
@@ -449,7 +463,7 @@ public class StructuredContentResourceImpl
 			structuredContentFolderId);
 
 		return _addStructuredContent(
-			journalFolder.getGroupId(), structuredContentFolderId,
+			structuredContentFolderId, journalFolder.getGroupId(),
 			structuredContent);
 	}
 
@@ -465,6 +479,25 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
+	public StructuredContent putSiteStructuredContent(
+			Long siteId, String structuredContentKey,
+			StructuredContent structuredContent)
+		throws Exception {
+
+		JournalArticle journalArticle = _journalArticleService.fetchArticle(
+			siteId, structuredContentKey);
+
+		if (journalArticle != null) {
+			return _replaceStructuredContent(journalArticle, structuredContent);
+		}
+
+		return _addStructuredContent(
+			structuredContentKey,
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, siteId,
+			structuredContent);
+	}
+
+	@Override
 	public StructuredContent putStructuredContent(
 			Long structuredContentId, StructuredContent structuredContent)
 		throws Exception {
@@ -472,63 +505,7 @@ public class StructuredContentResourceImpl
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
 			structuredContentId);
 
-		DDMStructure ddmStructure = journalArticle.getDDMStructure();
-
-		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
-			contextAcceptLanguage.getPreferredLocale(),
-			structuredContent.getTitle(), structuredContent.getTitle_i18n(),
-			journalArticle.getTitleMap());
-
-		Map<Locale, String> descriptionMap = LocalizedMapUtil.getLocalizedMap(
-			contextAcceptLanguage.getPreferredLocale(),
-			structuredContent.getDescription(),
-			structuredContent.getDescription_i18n(),
-			journalArticle.getDescriptionMap());
-
-		Set<Locale> notFoundLocales = new HashSet<>(descriptionMap.keySet());
-
-		Map<Locale, String> friendlyUrlMap = LocalizedMapUtil.getLocalizedMap(
-			contextAcceptLanguage.getPreferredLocale(),
-			structuredContent.getFriendlyUrlPath(),
-			structuredContent.getFriendlyUrlPath_i18n(),
-			journalArticle.getFriendlyURLMap());
-
-		notFoundLocales.addAll(friendlyUrlMap.keySet());
-
-		LocalizedMapUtil.validateI18n(
-			false, LocaleUtil.getSiteDefault(), "Structured content", titleMap,
-			notFoundLocales);
-
-		_validateContentFields(
-			structuredContent.getContentFields(), ddmStructure);
-
-		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
-			structuredContent.getDatePublished(),
-			journalArticle.getDisplayDate());
-
-		return _toStructuredContent(
-			_journalArticleService.updateArticle(
-				journalArticle.getGroupId(), journalArticle.getFolderId(),
-				journalArticle.getArticleId(), journalArticle.getVersion(),
-				titleMap, descriptionMap, friendlyUrlMap,
-				_journalConverter.getContent(
-					ddmStructure,
-					_toFields(
-						structuredContent.getContentFields(), journalArticle)),
-				journalArticle.getDDMStructureKey(),
-				_getDDMTemplateKey(ddmStructure),
-				journalArticle.getLayoutUuid(),
-				localDateTime.getMonthValue() - 1,
-				localDateTime.getDayOfMonth(), localDateTime.getYear(),
-				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
-				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
-				null,
-				ServiceContextRequestUtil.createServiceContext(
-					structuredContent.getTaxonomyCategoryIds(),
-					structuredContent.getKeywords(),
-					_getExpandoBridgeAttributes(structuredContent),
-					journalArticle.getGroupId(), contextHttpServletRequest,
-					structuredContent.getViewableByAsString())));
+		return _replaceStructuredContent(journalArticle, structuredContent);
 	}
 
 	@Override
@@ -583,7 +560,16 @@ public class StructuredContentResourceImpl
 	}
 
 	private StructuredContent _addStructuredContent(
-			Long siteId, Long parentStructuredContentFolderId,
+			Long parentStructuredContentFolderId, Long siteId,
+			StructuredContent structuredContent)
+		throws Exception {
+
+		return _addStructuredContent(
+			null, parentStructuredContentFolderId, siteId, structuredContent);
+	}
+
+	private StructuredContent _addStructuredContent(
+			String key, Long parentStructuredContentFolderId, Long siteId,
 			StructuredContent structuredContent)
 		throws Exception {
 
@@ -620,7 +606,7 @@ public class StructuredContentResourceImpl
 
 		return _toStructuredContent(
 			_journalArticleService.addArticle(
-				siteId, parentStructuredContentFolderId, 0, 0, null, true,
+				siteId, parentStructuredContentFolderId, 0, 0, key, key == null,
 				titleMap, descriptionMap, friendlyUrlMap,
 				_createJournalArticleContent(
 					DDMFormValuesUtil.toDDMFormValues(
@@ -698,6 +684,14 @@ public class StructuredContentResourceImpl
 		finally {
 			LocaleThreadLocal.setSiteDefaultLocale(originalSiteDefaultLocale);
 		}
+	}
+
+	private void _deleteStructuredContent(JournalArticle journalArticle)
+		throws Exception {
+
+		_journalArticleService.deleteArticle(
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			journalArticle.getArticleResourceUuid(), new ServiceContext());
 	}
 
 	private DDMFormField _getDDMFormField(
@@ -803,6 +797,15 @@ public class StructuredContentResourceImpl
 		return _toStructuredContent(journalArticle);
 	}
 
+	private StructuredContent _getStructuredContent(Long siteId, String key)
+		throws Exception {
+
+		JournalArticle journalArticle = _journalArticleService.getArticle(
+			siteId, key);
+
+		return _getStructuredContent(journalArticle);
+	}
+
 	private Page<StructuredContent> _getStructuredContentsPage(
 			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
@@ -838,6 +841,69 @@ public class StructuredContentResourceImpl
 					document.get(
 						com.liferay.portal.kernel.search.Field.ARTICLE_ID),
 					WorkflowConstants.STATUS_APPROVED)));
+	}
+
+	private StructuredContent _replaceStructuredContent(
+			JournalArticle journalArticle, StructuredContent structuredContent)
+		throws Exception {
+
+		DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+		Map<Locale, String> titleMap = LocalizedMapUtil.getLocalizedMap(
+			contextAcceptLanguage.getPreferredLocale(),
+			structuredContent.getTitle(), structuredContent.getTitle_i18n(),
+			journalArticle.getTitleMap());
+
+		Map<Locale, String> descriptionMap = LocalizedMapUtil.getLocalizedMap(
+			contextAcceptLanguage.getPreferredLocale(),
+			structuredContent.getDescription(),
+			structuredContent.getDescription_i18n(),
+			journalArticle.getDescriptionMap());
+
+		Set<Locale> notFoundLocales = new HashSet<>(descriptionMap.keySet());
+
+		Map<Locale, String> friendlyUrlMap = LocalizedMapUtil.getLocalizedMap(
+			contextAcceptLanguage.getPreferredLocale(),
+			structuredContent.getFriendlyUrlPath(),
+			structuredContent.getFriendlyUrlPath_i18n(),
+			journalArticle.getFriendlyURLMap());
+
+		notFoundLocales.addAll(friendlyUrlMap.keySet());
+
+		LocalizedMapUtil.validateI18n(
+			false, LocaleUtil.getSiteDefault(), "Structured content", titleMap,
+			notFoundLocales);
+
+		_validateContentFields(
+			structuredContent.getContentFields(), ddmStructure);
+
+		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
+			structuredContent.getDatePublished(),
+			journalArticle.getDisplayDate());
+
+		return _toStructuredContent(
+			_journalArticleService.updateArticle(
+				journalArticle.getGroupId(), journalArticle.getFolderId(),
+				journalArticle.getArticleId(), journalArticle.getVersion(),
+				titleMap, descriptionMap, friendlyUrlMap,
+				_journalConverter.getContent(
+					ddmStructure,
+					_toFields(
+						structuredContent.getContentFields(), journalArticle)),
+				journalArticle.getDDMStructureKey(),
+				_getDDMTemplateKey(ddmStructure),
+				journalArticle.getLayoutUuid(),
+				localDateTime.getMonthValue() - 1,
+				localDateTime.getDayOfMonth(), localDateTime.getYear(),
+				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
+				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
+				null,
+				ServiceContextRequestUtil.createServiceContext(
+					structuredContent.getTaxonomyCategoryIds(),
+					structuredContent.getKeywords(),
+					_getExpandoBridgeAttributes(structuredContent),
+					journalArticle.getGroupId(), contextHttpServletRequest,
+					structuredContent.getViewableByAsString())));
 	}
 
 	private Fields _toFields(

@@ -193,8 +193,8 @@ definition {
 			"//script[contains(@src,'/o/frontend-js-aui-web/liferay/menu_toggle.js')]"
 		);
 
-		if (selenium.isElementPresent("//iframe[not(contains(@class,'hidden'))]")) {
-			selenium.selectFrame("//iframe[not(contains(@class,'hidden'))]");
+		if (selenium.isElementPresent("//*[contains(@class,'modal-body')]/iframe[not(contains(@class,'hidden'))]")) {
+			selenium.selectFrame("//*[contains(@class,'modal-body')]/iframe[not(contains(@class,'hidden'))]");
 		}
 
 		selenium.pause("3000");

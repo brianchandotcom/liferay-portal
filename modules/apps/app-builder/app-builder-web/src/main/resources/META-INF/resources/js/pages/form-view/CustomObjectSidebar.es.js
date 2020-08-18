@@ -206,6 +206,8 @@ export default () => {
 			if (
 				isClickOutside(
 					target,
+					'.app-builder-upper-toolbar',
+					'button.close',
 					'.data-layout-builder-sidebar',
 					'.dropdown-menu',
 					'.nav-underline',

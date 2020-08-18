@@ -181,10 +181,10 @@ public class ConfigurationPersistenceManager
 
 	public void start() {
 		try {
-			createConfigurationTable();
+			populateDictionaries();
 		}
 		catch (IOException | SQLException exception) {
-			populateDictionaries();
+			createConfigurationTable();
 		}
 	}
 
@@ -258,7 +258,7 @@ public class ConfigurationPersistenceManager
 		}
 	}
 
-	protected void createConfigurationTable() throws IOException, SQLException {
+	protected void createConfigurationTable() {
 		try (Connection connection = _dataSource.getConnection();
 			Statement statement = connection.createStatement()) {
 
@@ -266,6 +266,9 @@ public class ConfigurationPersistenceManager
 				_db.buildSQL(
 					"create table Configuration_ (configurationId " +
 						"VARCHAR(255) not null primary key, dictionary TEXT)"));
+		}
+		catch (IOException | SQLException exception) {
+			ReflectionUtil.throwException(exception);
 		}
 	}
 
@@ -334,7 +337,7 @@ public class ConfigurationPersistenceManager
 		}
 	}
 
-	protected void populateDictionaries() {
+	protected void populateDictionaries() throws IOException, SQLException {
 		try (Connection connection = _dataSource.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				_db.buildSQL(
@@ -352,9 +355,6 @@ public class ConfigurationPersistenceManager
 					_dictionaries.putIfAbsent(pid, dictionary);
 				}
 			}
-		}
-		catch (IOException | SQLException exception) {
-			ReflectionUtil.throwException(exception);
 		}
 	}
 

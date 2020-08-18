@@ -584,14 +584,14 @@ public class CommerceInventoryEngineTest {
 
 			if (Objects.equals(sku, _cpInstance1.getSku())) {
 				Assert.assertEquals(
-					_commerceInventoryWarehouseItem1.getQuantity(),
-					stockQuantities.get(sku));
+					(int)_commerceInventoryWarehouseItem1.getQuantity(),
+					(int)stockQuantities.get(sku));
 			}
 
 			if (Objects.equals(sku, _cpInstance2.getSku())) {
 				Assert.assertEquals(
-					_commerceInventoryWarehouseItem2.getQuantity(),
-					stockQuantities.get(sku));
+					(int)_commerceInventoryWarehouseItem2.getQuantity(),
+					(int)stockQuantities.get(sku));
 			}
 		}
 	}

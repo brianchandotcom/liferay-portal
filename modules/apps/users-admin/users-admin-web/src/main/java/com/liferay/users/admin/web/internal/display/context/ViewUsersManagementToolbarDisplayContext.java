@@ -14,7 +14,6 @@
 
 package com.liferay.users.admin.web.internal.display.context;
 
-import com.liferay.account.constants.AccountConstants;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -165,23 +164,6 @@ public class ViewUsersManagementToolbarDisplayContext {
 
 	public List<LabelItem> getFilterLabelItems() {
 		return LabelItemListBuilder.add(
-			() -> _domain.equals("account-users"),
-			labelItem -> {
-				PortletURL removeLabelURL = getPortletURL();
-
-				removeLabelURL.setParameter("domain", (String)null);
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
-
-				labelItem.setCloseable(true);
-
-				String label = String.format(
-					"%s: %s", LanguageUtil.get(_httpServletRequest, "domain"),
-					LanguageUtil.get(_httpServletRequest, _domain));
-
-				labelItem.setLabel(label);
-			}
-		).add(
 			() -> _domain.equals("all"),
 			labelItem -> {
 				PortletURL removeLabelURL = getPortletURL();
@@ -286,15 +268,6 @@ public class ViewUsersManagementToolbarDisplayContext {
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
-		if (_domain.equals("company-users")) {
-			params.put("accountEntryIds", new Long[0]);
-		}
-		else if (_domain.equals("account-users")) {
-			params.put(
-				"accountEntryIds",
-				new Long[] {AccountConstants.ACCOUNT_ENTRY_ID_ANY});
-		}
-
 		int total = UserLocalServiceUtil.searchCount(
 			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 			searchTerms.getStatus(), params);
@@ -372,9 +345,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 	private List<DropdownItem> _getFilterDomainDropdownItems() {
 		DropdownItemList domainDropdownitems = new DropdownItemList();
 
-		for (String domain :
-				new String[] {"all", "company-users", "account-users"}) {
-
+		for (String domain : new String[] {"all", "company-users"}) {
 			domainDropdownitems.add(
 				dropdownItem -> {
 					dropdownItem.setActive(domain.equals(_domain));

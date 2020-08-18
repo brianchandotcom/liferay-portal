@@ -17,9 +17,11 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -69,9 +71,23 @@ public class UpdateGlobalChangeListsConfigurationMVCActionCommand
 			actionRequest, "enableChangeLists");
 
 		if (enableChangeLists) {
-			List<Group> groups = _groupLocalService.getCompanyGroups(
-				themeDisplay.getCompanyId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+			List<Group> groups = _groupLocalService.dslQuery(
+				DSLQueryFactoryUtil.select(
+					GroupTable.INSTANCE
+				).from(
+					GroupTable.INSTANCE
+				).where(
+					GroupTable.INSTANCE.companyId.eq(
+						themeDisplay.getCompanyId()
+					).and(
+						GroupTable.INSTANCE.liveGroupId.neq(
+							GroupConstants.DEFAULT_LIVE_GROUP_ID
+						).or(
+							GroupTable.INSTANCE.typeSettings.like(
+								"%staged=true%")
+						).withParentheses()
+					)
+				));
 
 			for (Group group : groups) {
 				if (group.isStagingGroup() || group.isStaged()) {

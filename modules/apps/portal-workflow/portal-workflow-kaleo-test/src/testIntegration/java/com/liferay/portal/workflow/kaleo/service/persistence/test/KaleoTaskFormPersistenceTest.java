@@ -575,11 +575,13 @@ public class KaleoTaskFormPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(kaleoTaskForm.getKaleoTaskId()),
 			ReflectionTestUtil.<Long>invoke(
-				kaleoTaskForm, "getOriginalKaleoTaskId", new Class<?>[0]));
+				kaleoTaskForm, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "kaleoTaskId"));
 		Assert.assertEquals(
 			kaleoTaskForm.getFormUuid(),
 			ReflectionTestUtil.invoke(
-				kaleoTaskForm, "getOriginalFormUuid", new Class<?>[0]));
+				kaleoTaskForm, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "formUuid"));
 	}
 
 	protected KaleoTaskForm addKaleoTaskForm() throws Exception {

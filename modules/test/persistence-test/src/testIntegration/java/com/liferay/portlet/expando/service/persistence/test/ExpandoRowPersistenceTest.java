@@ -468,11 +468,13 @@ public class ExpandoRowPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(expandoRow.getTableId()),
 			ReflectionTestUtil.<Long>invoke(
-				expandoRow, "getOriginalTableId", new Class<?>[0]));
+				expandoRow, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "tableId"));
 		Assert.assertEquals(
 			Long.valueOf(expandoRow.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				expandoRow, "getOriginalClassPK", new Class<?>[0]));
+				expandoRow, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 	}
 
 	protected ExpandoRow addExpandoRow() throws Exception {

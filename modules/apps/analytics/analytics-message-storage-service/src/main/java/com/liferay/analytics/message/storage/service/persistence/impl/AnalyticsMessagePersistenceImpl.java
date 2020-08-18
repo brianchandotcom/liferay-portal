@@ -855,7 +855,8 @@ public class AnalyticsMessagePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					analyticsMessageModelImpl.getOriginalCompanyId()
+					analyticsMessageModelImpl.getColumnOriginalValue(
+						"companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -1160,7 +1161,7 @@ public class AnalyticsMessagePersistenceImpl
 			AnalyticsMessageImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
-			AnalyticsMessageModelImpl.COMPANYID_COLUMN_BITMASK);
+			AnalyticsMessageModelImpl.getColumnBitmask("companyId"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

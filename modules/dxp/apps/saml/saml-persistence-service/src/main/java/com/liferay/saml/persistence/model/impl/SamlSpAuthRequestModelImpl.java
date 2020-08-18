@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.saml.persistence.model.SamlSpAuthRequest;
 import com.liferay.saml.persistence.model.SamlSpAuthRequestModel;
@@ -97,12 +96,32 @@ public class SamlSpAuthRequestModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long SAMLIDPENTITYID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long SAMLSPAUTHREQUESTKEY_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long SAMLSPAUTHNREQUESTID_COLUMN_BITMASK = 8L;
 
 	/**
@@ -290,6 +309,14 @@ public class SamlSpAuthRequestModelImpl
 
 	@Override
 	public void setSamlSpAuthnRequestId(long samlSpAuthnRequestId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("samlSpAuthnRequestId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_samlSpAuthnRequestId = samlSpAuthnRequestId;
 	}
 
@@ -300,6 +327,14 @@ public class SamlSpAuthRequestModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_companyId = companyId;
 	}
 
@@ -310,17 +345,24 @@ public class SamlSpAuthRequestModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask |= CREATEDATE_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
 
-		if (_originalCreateDate == null) {
-			_originalCreateDate = _createDate;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_createDate = createDate;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public Date getOriginalCreateDate() {
-		return _originalCreateDate;
+		return getColumnOriginalValue("createDate");
 	}
 
 	@Override
@@ -335,17 +377,24 @@ public class SamlSpAuthRequestModelImpl
 
 	@Override
 	public void setSamlIdpEntityId(String samlIdpEntityId) {
-		_columnBitmask |= SAMLIDPENTITYID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("samlIdpEntityId");
 
-		if (_originalSamlIdpEntityId == null) {
-			_originalSamlIdpEntityId = _samlIdpEntityId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_samlIdpEntityId = samlIdpEntityId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalSamlIdpEntityId() {
-		return GetterUtil.getString(_originalSamlIdpEntityId);
+		return getColumnOriginalValue("samlIdpEntityId");
 	}
 
 	@Override
@@ -360,17 +409,24 @@ public class SamlSpAuthRequestModelImpl
 
 	@Override
 	public void setSamlSpAuthRequestKey(String samlSpAuthRequestKey) {
-		_columnBitmask |= SAMLSPAUTHREQUESTKEY_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("samlSpAuthRequestKey");
 
-		if (_originalSamlSpAuthRequestKey == null) {
-			_originalSamlSpAuthRequestKey = _samlSpAuthRequestKey;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_samlSpAuthRequestKey = samlSpAuthRequestKey;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalSamlSpAuthRequestKey() {
-		return GetterUtil.getString(_originalSamlSpAuthRequestKey);
+		return getColumnOriginalValue("samlSpAuthRequestKey");
 	}
 
 	public long getColumnBitmask() {
@@ -485,18 +541,9 @@ public class SamlSpAuthRequestModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		SamlSpAuthRequestModelImpl samlSpAuthRequestModelImpl = this;
+		_columnOriginalValues = Collections.emptyMap();
 
-		samlSpAuthRequestModelImpl._originalCreateDate =
-			samlSpAuthRequestModelImpl._createDate;
-
-		samlSpAuthRequestModelImpl._originalSamlIdpEntityId =
-			samlSpAuthRequestModelImpl._samlIdpEntityId;
-
-		samlSpAuthRequestModelImpl._originalSamlSpAuthRequestKey =
-			samlSpAuthRequestModelImpl._samlSpAuthRequestKey;
-
-		samlSpAuthRequestModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -611,14 +658,58 @@ public class SamlSpAuthRequestModelImpl
 
 	}
 
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put(
+			"samlSpAuthnRequestId", _samlSpAuthnRequestId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("samlIdpEntityId", _samlIdpEntityId);
+		_columnOriginalValues.put(
+			"samlSpAuthRequestKey", _samlSpAuthRequestKey);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("samlSpAuthnRequestId", 1L);
+
+		columnBitmasks.put("companyId", 2L);
+
+		columnBitmasks.put("createDate", 4L);
+
+		columnBitmasks.put("samlIdpEntityId", 8L);
+
+		columnBitmasks.put("samlSpAuthRequestKey", 16L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _samlSpAuthnRequestId;
 	private long _companyId;
 	private Date _createDate;
-	private Date _originalCreateDate;
 	private String _samlIdpEntityId;
-	private String _originalSamlIdpEntityId;
 	private String _samlSpAuthRequestKey;
-	private String _originalSamlSpAuthRequestKey;
 	private long _columnBitmask;
 	private SamlSpAuthRequest _escapedModel;
 

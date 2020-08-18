@@ -537,13 +537,13 @@ public class DDMDataProviderInstanceLinkPersistenceTest {
 			Long.valueOf(
 				ddmDataProviderInstanceLink.getDataProviderInstanceId()),
 			ReflectionTestUtil.<Long>invoke(
-				ddmDataProviderInstanceLink,
-				"getOriginalDataProviderInstanceId", new Class<?>[0]));
+				ddmDataProviderInstanceLink, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "dataProviderInstanceId"));
 		Assert.assertEquals(
 			Long.valueOf(ddmDataProviderInstanceLink.getStructureId()),
 			ReflectionTestUtil.<Long>invoke(
-				ddmDataProviderInstanceLink, "getOriginalStructureId",
-				new Class<?>[0]));
+				ddmDataProviderInstanceLink, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "structureId"));
 	}
 
 	protected DDMDataProviderInstanceLink addDDMDataProviderInstanceLink()

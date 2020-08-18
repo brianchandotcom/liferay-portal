@@ -4648,8 +4648,8 @@ public class WikiNodePersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				wikiNodeModelImpl.getOriginalUuid(),
-				wikiNodeModelImpl.getOriginalGroupId()
+				wikiNodeModelImpl.getColumnOriginalValue("uuid_"),
+				wikiNodeModelImpl.getColumnOriginalValue("groupId")
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -4669,8 +4669,8 @@ public class WikiNodePersistenceImpl
 			 _finderPathFetchByG_N.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				wikiNodeModelImpl.getOriginalGroupId(),
-				wikiNodeModelImpl.getOriginalName()
+				wikiNodeModelImpl.getColumnOriginalValue("groupId"),
+				wikiNodeModelImpl.getColumnOriginalValue("name")
 			};
 
 			finderCache.removeResult(_finderPathCountByG_N, args);
@@ -4908,7 +4908,7 @@ public class WikiNodePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiNodeModelImpl.getOriginalUuid()
+					wikiNodeModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -4927,8 +4927,8 @@ public class WikiNodePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiNodeModelImpl.getOriginalUuid(),
-					wikiNodeModelImpl.getOriginalCompanyId()
+					wikiNodeModelImpl.getColumnOriginalValue("uuid_"),
+					wikiNodeModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -4950,7 +4950,7 @@ public class WikiNodePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					wikiNodeModelImpl.getOriginalGroupId()
+					wikiNodeModelImpl.getColumnOriginalValue("groupId")
 				};
 
 				finderCache.removeResult(_finderPathCountByGroupId, args);
@@ -4969,7 +4969,7 @@ public class WikiNodePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					wikiNodeModelImpl.getOriginalCompanyId()
+					wikiNodeModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -4988,8 +4988,8 @@ public class WikiNodePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiNodeModelImpl.getOriginalGroupId(),
-					wikiNodeModelImpl.getOriginalStatus()
+					wikiNodeModelImpl.getColumnOriginalValue("groupId"),
+					wikiNodeModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_S, args);
@@ -5011,8 +5011,8 @@ public class WikiNodePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiNodeModelImpl.getOriginalCompanyId(),
-					wikiNodeModelImpl.getOriginalStatus()
+					wikiNodeModelImpl.getColumnOriginalValue("companyId"),
+					wikiNodeModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_S, args);
@@ -5321,8 +5321,8 @@ public class WikiNodePersistenceImpl
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			WikiNodeImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid", new String[] {String.class.getName()},
-			WikiNodeModelImpl.UUID_COLUMN_BITMASK |
-			WikiNodeModelImpl.NAME_COLUMN_BITMASK);
+			WikiNodeModelImpl.getColumnBitmask("uuid_") |
+			WikiNodeModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5331,8 +5331,8 @@ public class WikiNodePersistenceImpl
 		_finderPathFetchByUUID_G = new FinderPath(
 			WikiNodeImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			WikiNodeModelImpl.UUID_COLUMN_BITMASK |
-			WikiNodeModelImpl.GROUPID_COLUMN_BITMASK);
+			WikiNodeModelImpl.getColumnBitmask("uuid_") |
+			WikiNodeModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5352,9 +5352,9 @@ public class WikiNodePersistenceImpl
 			WikiNodeImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			WikiNodeModelImpl.UUID_COLUMN_BITMASK |
-			WikiNodeModelImpl.COMPANYID_COLUMN_BITMASK |
-			WikiNodeModelImpl.NAME_COLUMN_BITMASK);
+			WikiNodeModelImpl.getColumnBitmask("uuid_") |
+			WikiNodeModelImpl.getColumnBitmask("companyId") |
+			WikiNodeModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5372,8 +5372,8 @@ public class WikiNodePersistenceImpl
 		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
 			WikiNodeImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByGroupId", new String[] {Long.class.getName()},
-			WikiNodeModelImpl.GROUPID_COLUMN_BITMASK |
-			WikiNodeModelImpl.NAME_COLUMN_BITMASK);
+			WikiNodeModelImpl.getColumnBitmask("groupId") |
+			WikiNodeModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5390,8 +5390,8 @@ public class WikiNodePersistenceImpl
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
 			WikiNodeImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCompanyId", new String[] {Long.class.getName()},
-			WikiNodeModelImpl.COMPANYID_COLUMN_BITMASK |
-			WikiNodeModelImpl.NAME_COLUMN_BITMASK);
+			WikiNodeModelImpl.getColumnBitmask("companyId") |
+			WikiNodeModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5400,8 +5400,8 @@ public class WikiNodePersistenceImpl
 		_finderPathFetchByG_N = new FinderPath(
 			WikiNodeImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			WikiNodeModelImpl.GROUPID_COLUMN_BITMASK |
-			WikiNodeModelImpl.NAME_COLUMN_BITMASK);
+			WikiNodeModelImpl.getColumnBitmask("groupId") |
+			WikiNodeModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByG_N = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
@@ -5420,9 +5420,9 @@ public class WikiNodePersistenceImpl
 			WikiNodeImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByG_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			WikiNodeModelImpl.GROUPID_COLUMN_BITMASK |
-			WikiNodeModelImpl.STATUS_COLUMN_BITMASK |
-			WikiNodeModelImpl.NAME_COLUMN_BITMASK);
+			WikiNodeModelImpl.getColumnBitmask("groupId") |
+			WikiNodeModelImpl.getColumnBitmask("status") |
+			WikiNodeModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByG_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
@@ -5441,9 +5441,9 @@ public class WikiNodePersistenceImpl
 			WikiNodeImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByC_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			WikiNodeModelImpl.COMPANYID_COLUMN_BITMASK |
-			WikiNodeModelImpl.STATUS_COLUMN_BITMASK |
-			WikiNodeModelImpl.NAME_COLUMN_BITMASK);
+			WikiNodeModelImpl.getColumnBitmask("companyId") |
+			WikiNodeModelImpl.getColumnBitmask("status") |
+			WikiNodeModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByC_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",

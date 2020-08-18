@@ -21830,8 +21830,8 @@ public class WikiPagePersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				wikiPageModelImpl.getOriginalUuid(),
-				wikiPageModelImpl.getOriginalGroupId()
+				wikiPageModelImpl.getColumnOriginalValue("uuid_"),
+				wikiPageModelImpl.getColumnOriginalValue("groupId")
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -21852,9 +21852,9 @@ public class WikiPagePersistenceImpl
 			 _finderPathFetchByR_N_V.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				wikiPageModelImpl.getOriginalResourcePrimKey(),
-				wikiPageModelImpl.getOriginalNodeId(),
-				wikiPageModelImpl.getOriginalVersion()
+				wikiPageModelImpl.getColumnOriginalValue("resourcePrimKey"),
+				wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+				wikiPageModelImpl.getColumnOriginalValue("version")
 			};
 
 			finderCache.removeResult(_finderPathCountByR_N_V, args);
@@ -21875,9 +21875,9 @@ public class WikiPagePersistenceImpl
 			 _finderPathFetchByN_T_V.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				wikiPageModelImpl.getOriginalNodeId(),
-				wikiPageModelImpl.getOriginalTitle(),
-				wikiPageModelImpl.getOriginalVersion()
+				wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+				wikiPageModelImpl.getColumnOriginalValue("title"),
+				wikiPageModelImpl.getColumnOriginalValue("version")
 			};
 
 			finderCache.removeResult(_finderPathCountByN_T_V, args);
@@ -22339,7 +22339,7 @@ public class WikiPagePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalResourcePrimKey()
+					wikiPageModelImpl.getColumnOriginalValue("resourcePrimKey")
 				};
 
 				finderCache.removeResult(
@@ -22360,7 +22360,7 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalUuid()
+					wikiPageModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -22379,8 +22379,8 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalUuid(),
-					wikiPageModelImpl.getOriginalCompanyId()
+					wikiPageModelImpl.getColumnOriginalValue("uuid_"),
+					wikiPageModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -22402,7 +22402,7 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalNodeId()
+					wikiPageModelImpl.getColumnOriginalValue("nodeId")
 				};
 
 				finderCache.removeResult(_finderPathCountByNodeId, args);
@@ -22421,7 +22421,7 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalFormat()
+					wikiPageModelImpl.getColumnOriginalValue("format")
 				};
 
 				finderCache.removeResult(_finderPathCountByFormat, args);
@@ -22440,8 +22440,8 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalResourcePrimKey(),
-					wikiPageModelImpl.getOriginalNodeId()
+					wikiPageModelImpl.getColumnOriginalValue("resourcePrimKey"),
+					wikiPageModelImpl.getColumnOriginalValue("nodeId")
 				};
 
 				finderCache.removeResult(_finderPathCountByR_N, args);
@@ -22463,8 +22463,8 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalResourcePrimKey(),
-					wikiPageModelImpl.getOriginalStatus()
+					wikiPageModelImpl.getColumnOriginalValue("resourcePrimKey"),
+					wikiPageModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByR_S, args);
@@ -22486,8 +22486,8 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalTitle()
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("title")
 				};
 
 				finderCache.removeResult(_finderPathCountByN_T, args);
@@ -22508,8 +22508,8 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalHead()
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("head")
 				};
 
 				finderCache.removeResult(_finderPathCountByN_H, args);
@@ -22530,8 +22530,8 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalParentTitle()
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("parentTitle")
 				};
 
 				finderCache.removeResult(_finderPathCountByN_P, args);
@@ -22553,8 +22553,8 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalRedirectTitle()
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("redirectTitle")
 				};
 
 				finderCache.removeResult(_finderPathCountByN_R, args);
@@ -22576,8 +22576,8 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalStatus()
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByN_S, args);
@@ -22598,9 +22598,9 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalResourcePrimKey(),
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalHead()
+					wikiPageModelImpl.getColumnOriginalValue("resourcePrimKey"),
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("head")
 				};
 
 				finderCache.removeResult(_finderPathCountByR_N_H, args);
@@ -22622,9 +22622,9 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalResourcePrimKey(),
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalStatus()
+					wikiPageModelImpl.getColumnOriginalValue("resourcePrimKey"),
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByR_N_S, args);
@@ -22646,9 +22646,9 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalGroupId(),
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalHead()
+					wikiPageModelImpl.getColumnOriginalValue("groupId"),
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("head")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_N_H, args);
@@ -22670,9 +22670,9 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalGroupId(),
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalStatus()
+					wikiPageModelImpl.getColumnOriginalValue("groupId"),
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_N_S, args);
@@ -22694,9 +22694,9 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalUserId(),
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalStatus()
+					wikiPageModelImpl.getColumnOriginalValue("userId"),
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByU_N_S, args);
@@ -22718,9 +22718,9 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalTitle(),
-					wikiPageModelImpl.getOriginalHead()
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("title"),
+					wikiPageModelImpl.getColumnOriginalValue("head")
 				};
 
 				finderCache.removeResult(_finderPathCountByN_T_H, args);
@@ -22742,9 +22742,9 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalTitle(),
-					wikiPageModelImpl.getOriginalStatus()
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("title"),
+					wikiPageModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByN_T_S, args);
@@ -22766,9 +22766,9 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalHead(),
-					wikiPageModelImpl.getOriginalParentTitle()
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("head"),
+					wikiPageModelImpl.getColumnOriginalValue("parentTitle")
 				};
 
 				finderCache.removeResult(_finderPathCountByN_H_P, args);
@@ -22790,9 +22790,9 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalHead(),
-					wikiPageModelImpl.getOriginalRedirectTitle()
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("head"),
+					wikiPageModelImpl.getColumnOriginalValue("redirectTitle")
 				};
 
 				finderCache.removeResult(_finderPathCountByN_H_R, args);
@@ -22814,9 +22814,9 @@ public class WikiPagePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalHead(),
-					wikiPageModelImpl.getOriginalStatus()
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("head"),
+					wikiPageModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByN_H_S, args);
@@ -22838,10 +22838,10 @@ public class WikiPagePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalGroupId(),
-					wikiPageModelImpl.getOriginalUserId(),
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalStatus()
+					wikiPageModelImpl.getColumnOriginalValue("groupId"),
+					wikiPageModelImpl.getColumnOriginalValue("userId"),
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_U_N_S, args);
@@ -22864,10 +22864,10 @@ public class WikiPagePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalGroupId(),
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalTitle(),
-					wikiPageModelImpl.getOriginalHead()
+					wikiPageModelImpl.getColumnOriginalValue("groupId"),
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("title"),
+					wikiPageModelImpl.getColumnOriginalValue("head")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_N_T_H, args);
@@ -22890,10 +22890,10 @@ public class WikiPagePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalGroupId(),
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalHead(),
-					wikiPageModelImpl.getOriginalStatus()
+					wikiPageModelImpl.getColumnOriginalValue("groupId"),
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("head"),
+					wikiPageModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_N_H_S, args);
@@ -22916,10 +22916,10 @@ public class WikiPagePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalHead(),
-					wikiPageModelImpl.getOriginalParentTitle(),
-					wikiPageModelImpl.getOriginalStatus()
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("head"),
+					wikiPageModelImpl.getColumnOriginalValue("parentTitle"),
+					wikiPageModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByN_H_P_S, args);
@@ -22942,10 +22942,10 @@ public class WikiPagePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalHead(),
-					wikiPageModelImpl.getOriginalRedirectTitle(),
-					wikiPageModelImpl.getOriginalStatus()
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("head"),
+					wikiPageModelImpl.getColumnOriginalValue("redirectTitle"),
+					wikiPageModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByN_H_R_S, args);
@@ -22968,11 +22968,11 @@ public class WikiPagePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					wikiPageModelImpl.getOriginalGroupId(),
-					wikiPageModelImpl.getOriginalNodeId(),
-					wikiPageModelImpl.getOriginalHead(),
-					wikiPageModelImpl.getOriginalParentTitle(),
-					wikiPageModelImpl.getOriginalStatus()
+					wikiPageModelImpl.getColumnOriginalValue("groupId"),
+					wikiPageModelImpl.getColumnOriginalValue("nodeId"),
+					wikiPageModelImpl.getColumnOriginalValue("head"),
+					wikiPageModelImpl.getColumnOriginalValue("parentTitle"),
+					wikiPageModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_N_H_P_S, args);
@@ -23283,10 +23283,10 @@ public class WikiPagePersistenceImpl
 		_finderPathWithoutPaginationFindByResourcePrimKey = new FinderPath(
 			WikiPageImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByResourcePrimKey", new String[] {Long.class.getName()},
-			WikiPageModelImpl.RESOURCEPRIMKEY_COLUMN_BITMASK |
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("resourcePrimKey") |
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByResourcePrimKey = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23303,10 +23303,10 @@ public class WikiPagePersistenceImpl
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			WikiPageImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid", new String[] {String.class.getName()},
-			WikiPageModelImpl.UUID_COLUMN_BITMASK |
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("uuid_") |
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23315,8 +23315,8 @@ public class WikiPagePersistenceImpl
 		_finderPathFetchByUUID_G = new FinderPath(
 			WikiPageImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			WikiPageModelImpl.UUID_COLUMN_BITMASK |
-			WikiPageModelImpl.GROUPID_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("uuid_") |
+			WikiPageModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23336,11 +23336,11 @@ public class WikiPagePersistenceImpl
 			WikiPageImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			WikiPageModelImpl.UUID_COLUMN_BITMASK |
-			WikiPageModelImpl.COMPANYID_COLUMN_BITMASK |
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("uuid_") |
+			WikiPageModelImpl.getColumnBitmask("companyId") |
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23358,9 +23358,9 @@ public class WikiPagePersistenceImpl
 		_finderPathWithoutPaginationFindByNodeId = new FinderPath(
 			WikiPageImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByNodeId", new String[] {Long.class.getName()},
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByNodeId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23377,10 +23377,10 @@ public class WikiPagePersistenceImpl
 		_finderPathWithoutPaginationFindByFormat = new FinderPath(
 			WikiPageImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByFormat", new String[] {String.class.getName()},
-			WikiPageModelImpl.FORMAT_COLUMN_BITMASK |
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("format") |
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByFormat = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23399,10 +23399,10 @@ public class WikiPagePersistenceImpl
 			WikiPageImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByR_N",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			WikiPageModelImpl.RESOURCEPRIMKEY_COLUMN_BITMASK |
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("resourcePrimKey") |
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByR_N = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_N",
@@ -23421,11 +23421,11 @@ public class WikiPagePersistenceImpl
 			WikiPageImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByR_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			WikiPageModelImpl.RESOURCEPRIMKEY_COLUMN_BITMASK |
-			WikiPageModelImpl.STATUS_COLUMN_BITMASK |
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("resourcePrimKey") |
+			WikiPageModelImpl.getColumnBitmask("status") |
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByR_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_S",
@@ -23444,9 +23444,9 @@ public class WikiPagePersistenceImpl
 			WikiPageImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByN_T",
 			new String[] {Long.class.getName(), String.class.getName()},
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByN_T = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_T",
@@ -23465,10 +23465,10 @@ public class WikiPagePersistenceImpl
 			WikiPageImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByN_H",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.HEAD_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("head") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByN_H = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_H",
@@ -23487,10 +23487,10 @@ public class WikiPagePersistenceImpl
 			WikiPageImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByN_P",
 			new String[] {Long.class.getName(), String.class.getName()},
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.PARENTTITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("parentTitle") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByN_P = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_P",
@@ -23509,10 +23509,10 @@ public class WikiPagePersistenceImpl
 			WikiPageImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByN_R",
 			new String[] {Long.class.getName(), String.class.getName()},
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.REDIRECTTITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("redirectTitle") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByN_R = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_R",
@@ -23531,10 +23531,10 @@ public class WikiPagePersistenceImpl
 			WikiPageImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByN_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.STATUS_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("status") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByN_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_S",
@@ -23546,9 +23546,9 @@ public class WikiPagePersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Double.class.getName()
 			},
-			WikiPageModelImpl.RESOURCEPRIMKEY_COLUMN_BITMASK |
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("resourcePrimKey") |
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByR_N_V = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23574,11 +23574,11 @@ public class WikiPagePersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
 			},
-			WikiPageModelImpl.RESOURCEPRIMKEY_COLUMN_BITMASK |
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.HEAD_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("resourcePrimKey") |
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("head") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByR_N_H = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23604,11 +23604,11 @@ public class WikiPagePersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			WikiPageModelImpl.RESOURCEPRIMKEY_COLUMN_BITMASK |
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.STATUS_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("resourcePrimKey") |
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("status") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByR_N_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23634,11 +23634,11 @@ public class WikiPagePersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
 			},
-			WikiPageModelImpl.GROUPID_COLUMN_BITMASK |
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.HEAD_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("groupId") |
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("head") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByG_N_H = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23664,11 +23664,11 @@ public class WikiPagePersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			WikiPageModelImpl.GROUPID_COLUMN_BITMASK |
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.STATUS_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("groupId") |
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("status") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByG_N_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23694,11 +23694,11 @@ public class WikiPagePersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			WikiPageModelImpl.USERID_COLUMN_BITMASK |
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.STATUS_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("userId") |
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("status") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByU_N_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23714,9 +23714,9 @@ public class WikiPagePersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Double.class.getName()
 			},
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByN_T_V = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23742,10 +23742,10 @@ public class WikiPagePersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName()
 			},
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.HEAD_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("head") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByN_T_H = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23771,10 +23771,10 @@ public class WikiPagePersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
 			},
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.STATUS_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("status") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByN_T_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23800,11 +23800,11 @@ public class WikiPagePersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.HEAD_COLUMN_BITMASK |
-			WikiPageModelImpl.PARENTTITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("head") |
+			WikiPageModelImpl.getColumnBitmask("parentTitle") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByN_H_P = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23830,11 +23830,11 @@ public class WikiPagePersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.HEAD_COLUMN_BITMASK |
-			WikiPageModelImpl.REDIRECTTITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("head") |
+			WikiPageModelImpl.getColumnBitmask("redirectTitle") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByN_H_R = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23860,11 +23860,11 @@ public class WikiPagePersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				Integer.class.getName()
 			},
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.HEAD_COLUMN_BITMASK |
-			WikiPageModelImpl.STATUS_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("head") |
+			WikiPageModelImpl.getColumnBitmask("status") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByN_H_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23908,12 +23908,12 @@ public class WikiPagePersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Integer.class.getName()
 			},
-			WikiPageModelImpl.GROUPID_COLUMN_BITMASK |
-			WikiPageModelImpl.USERID_COLUMN_BITMASK |
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.STATUS_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("groupId") |
+			WikiPageModelImpl.getColumnBitmask("userId") |
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("status") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByG_U_N_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23940,11 +23940,11 @@ public class WikiPagePersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), Boolean.class.getName()
 			},
-			WikiPageModelImpl.GROUPID_COLUMN_BITMASK |
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.HEAD_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("groupId") |
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("head") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByG_N_T_H = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -23971,12 +23971,12 @@ public class WikiPagePersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Boolean.class.getName(), Integer.class.getName()
 			},
-			WikiPageModelImpl.GROUPID_COLUMN_BITMASK |
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.HEAD_COLUMN_BITMASK |
-			WikiPageModelImpl.STATUS_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("groupId") |
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("head") |
+			WikiPageModelImpl.getColumnBitmask("status") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByG_N_H_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -24003,12 +24003,12 @@ public class WikiPagePersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName(), Integer.class.getName()
 			},
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.HEAD_COLUMN_BITMASK |
-			WikiPageModelImpl.PARENTTITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.STATUS_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("head") |
+			WikiPageModelImpl.getColumnBitmask("parentTitle") |
+			WikiPageModelImpl.getColumnBitmask("status") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByN_H_P_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -24053,12 +24053,12 @@ public class WikiPagePersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName(), Integer.class.getName()
 			},
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.HEAD_COLUMN_BITMASK |
-			WikiPageModelImpl.REDIRECTTITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.STATUS_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("head") |
+			WikiPageModelImpl.getColumnBitmask("redirectTitle") |
+			WikiPageModelImpl.getColumnBitmask("status") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByN_H_R_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -24104,13 +24104,13 @@ public class WikiPagePersistenceImpl
 				Boolean.class.getName(), String.class.getName(),
 				Integer.class.getName()
 			},
-			WikiPageModelImpl.GROUPID_COLUMN_BITMASK |
-			WikiPageModelImpl.NODEID_COLUMN_BITMASK |
-			WikiPageModelImpl.HEAD_COLUMN_BITMASK |
-			WikiPageModelImpl.PARENTTITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.STATUS_COLUMN_BITMASK |
-			WikiPageModelImpl.TITLE_COLUMN_BITMASK |
-			WikiPageModelImpl.VERSION_COLUMN_BITMASK);
+			WikiPageModelImpl.getColumnBitmask("groupId") |
+			WikiPageModelImpl.getColumnBitmask("nodeId") |
+			WikiPageModelImpl.getColumnBitmask("head") |
+			WikiPageModelImpl.getColumnBitmask("parentTitle") |
+			WikiPageModelImpl.getColumnBitmask("status") |
+			WikiPageModelImpl.getColumnBitmask("title") |
+			WikiPageModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByG_N_H_P_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

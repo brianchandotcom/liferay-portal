@@ -517,23 +517,24 @@ public class DepotAppCustomizationPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(depotAppCustomization.getDepotEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				depotAppCustomization, "getOriginalDepotEntryId",
-				new Class<?>[0]));
+				depotAppCustomization, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "depotEntryId"));
 		Assert.assertEquals(
 			Boolean.valueOf(depotAppCustomization.getEnabled()),
 			ReflectionTestUtil.<Boolean>invoke(
-				depotAppCustomization, "getOriginalEnabled", new Class<?>[0]));
+				depotAppCustomization, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "enabled"));
 
 		Assert.assertEquals(
 			Long.valueOf(depotAppCustomization.getDepotEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				depotAppCustomization, "getOriginalDepotEntryId",
-				new Class<?>[0]));
+				depotAppCustomization, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "depotEntryId"));
 		Assert.assertEquals(
 			depotAppCustomization.getPortletId(),
 			ReflectionTestUtil.invoke(
-				depotAppCustomization, "getOriginalPortletId",
-				new Class<?>[0]));
+				depotAppCustomization, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "portletId"));
 	}
 
 	protected DepotAppCustomization addDepotAppCustomization()

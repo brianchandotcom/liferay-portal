@@ -479,11 +479,13 @@ public class PasswordPolicyRelPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(passwordPolicyRel.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				passwordPolicyRel, "getOriginalClassNameId", new Class<?>[0]));
+				passwordPolicyRel, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(passwordPolicyRel.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				passwordPolicyRel, "getOriginalClassPK", new Class<?>[0]));
+				passwordPolicyRel, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 	}
 
 	protected PasswordPolicyRel addPasswordPolicyRel() throws Exception {

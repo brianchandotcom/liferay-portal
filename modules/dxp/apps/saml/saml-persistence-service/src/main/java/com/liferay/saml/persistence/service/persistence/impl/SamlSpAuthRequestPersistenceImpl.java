@@ -1071,8 +1071,10 @@ public class SamlSpAuthRequestPersistenceImpl
 			 _finderPathFetchBySIEI_SSARK.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				samlSpAuthRequestModelImpl.getOriginalSamlIdpEntityId(),
-				samlSpAuthRequestModelImpl.getOriginalSamlSpAuthRequestKey()
+				samlSpAuthRequestModelImpl.getColumnOriginalValue(
+					"samlIdpEntityId"),
+				samlSpAuthRequestModelImpl.getColumnOriginalValue(
+					"samlSpAuthRequestKey")
 			};
 
 			finderCache.removeResult(_finderPathCountBySIEI_SSARK, args);
@@ -1538,8 +1540,9 @@ public class SamlSpAuthRequestPersistenceImpl
 			SamlSpAuthRequestImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchBySIEI_SSARK",
 			new String[] {String.class.getName(), String.class.getName()},
-			SamlSpAuthRequestModelImpl.SAMLIDPENTITYID_COLUMN_BITMASK |
-			SamlSpAuthRequestModelImpl.SAMLSPAUTHREQUESTKEY_COLUMN_BITMASK);
+			SamlSpAuthRequestModelImpl.getColumnBitmask("samlIdpEntityId") |
+			SamlSpAuthRequestModelImpl.getColumnBitmask(
+				"samlSpAuthRequestKey"));
 
 		_finderPathCountBySIEI_SSARK = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

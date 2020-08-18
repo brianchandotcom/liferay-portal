@@ -534,25 +534,30 @@ public class MBDiscussionPersistenceTest {
 		Assert.assertEquals(
 			mbDiscussion.getUuid(),
 			ReflectionTestUtil.invoke(
-				mbDiscussion, "getOriginalUuid", new Class<?>[0]));
+				mbDiscussion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(mbDiscussion.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				mbDiscussion, "getOriginalGroupId", new Class<?>[0]));
+				mbDiscussion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(mbDiscussion.getThreadId()),
 			ReflectionTestUtil.<Long>invoke(
-				mbDiscussion, "getOriginalThreadId", new Class<?>[0]));
+				mbDiscussion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "threadId"));
 
 		Assert.assertEquals(
 			Long.valueOf(mbDiscussion.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				mbDiscussion, "getOriginalClassNameId", new Class<?>[0]));
+				mbDiscussion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(mbDiscussion.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				mbDiscussion, "getOriginalClassPK", new Class<?>[0]));
+				mbDiscussion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 	}
 
 	protected MBDiscussion addMBDiscussion() throws Exception {

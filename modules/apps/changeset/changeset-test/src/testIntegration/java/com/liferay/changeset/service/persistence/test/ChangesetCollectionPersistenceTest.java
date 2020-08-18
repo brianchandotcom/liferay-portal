@@ -534,11 +534,13 @@ public class ChangesetCollectionPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(changesetCollection.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				changesetCollection, "getOriginalGroupId", new Class<?>[0]));
+				changesetCollection, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			changesetCollection.getName(),
 			ReflectionTestUtil.invoke(
-				changesetCollection, "getOriginalName", new Class<?>[0]));
+				changesetCollection, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 	}
 
 	protected ChangesetCollection addChangesetCollection() throws Exception {

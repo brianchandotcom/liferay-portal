@@ -729,7 +729,8 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 			 _finderPathFetchByFileEntryId.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				dlOpenerFileEntryReferenceModelImpl.getOriginalFileEntryId()
+				dlOpenerFileEntryReferenceModelImpl.getColumnOriginalValue(
+					"fileEntryId")
 			};
 
 			finderCache.removeResult(_finderPathCountByFileEntryId, args);
@@ -750,8 +751,10 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 			 _finderPathFetchByR_F.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				dlOpenerFileEntryReferenceModelImpl.getOriginalReferenceType(),
-				dlOpenerFileEntryReferenceModelImpl.getOriginalFileEntryId()
+				dlOpenerFileEntryReferenceModelImpl.getColumnOriginalValue(
+					"referenceType"),
+				dlOpenerFileEntryReferenceModelImpl.getColumnOriginalValue(
+					"fileEntryId")
 			};
 
 			finderCache.removeResult(_finderPathCountByR_F, args);
@@ -1254,7 +1257,8 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 		_finderPathFetchByFileEntryId = new FinderPath(
 			DLOpenerFileEntryReferenceImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByFileEntryId", new String[] {Long.class.getName()},
-			DLOpenerFileEntryReferenceModelImpl.FILEENTRYID_COLUMN_BITMASK);
+			DLOpenerFileEntryReferenceModelImpl.getColumnBitmask(
+				"fileEntryId"));
 
 		_finderPathCountByFileEntryId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1264,8 +1268,10 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 			DLOpenerFileEntryReferenceImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByR_F",
 			new String[] {String.class.getName(), Long.class.getName()},
-			DLOpenerFileEntryReferenceModelImpl.REFERENCETYPE_COLUMN_BITMASK |
-			DLOpenerFileEntryReferenceModelImpl.FILEENTRYID_COLUMN_BITMASK);
+			DLOpenerFileEntryReferenceModelImpl.getColumnBitmask(
+				"referenceType") |
+			DLOpenerFileEntryReferenceModelImpl.getColumnBitmask(
+				"fileEntryId"));
 
 		_finderPathCountByR_F = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_F",

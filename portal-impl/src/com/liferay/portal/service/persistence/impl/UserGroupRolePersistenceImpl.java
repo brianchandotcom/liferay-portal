@@ -3117,9 +3117,9 @@ public class UserGroupRolePersistenceImpl
 			 _finderPathFetchByU_G_R.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				userGroupRoleModelImpl.getOriginalUserId(),
-				userGroupRoleModelImpl.getOriginalGroupId(),
-				userGroupRoleModelImpl.getOriginalRoleId()
+				userGroupRoleModelImpl.getColumnOriginalValue("userId"),
+				userGroupRoleModelImpl.getColumnOriginalValue("groupId"),
+				userGroupRoleModelImpl.getColumnOriginalValue("roleId")
 			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByU_G_R, args);
@@ -3341,7 +3341,7 @@ public class UserGroupRolePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					userGroupRoleModelImpl.getOriginalUserId()
+					userGroupRoleModelImpl.getColumnOriginalValue("userId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByUserId, args);
@@ -3360,7 +3360,7 @@ public class UserGroupRolePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					userGroupRoleModelImpl.getOriginalGroupId()
+					userGroupRoleModelImpl.getColumnOriginalValue("groupId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByGroupId, args);
@@ -3379,7 +3379,7 @@ public class UserGroupRolePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					userGroupRoleModelImpl.getOriginalRoleId()
+					userGroupRoleModelImpl.getColumnOriginalValue("roleId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByRoleId, args);
@@ -3398,8 +3398,8 @@ public class UserGroupRolePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					userGroupRoleModelImpl.getOriginalUserId(),
-					userGroupRoleModelImpl.getOriginalGroupId()
+					userGroupRoleModelImpl.getColumnOriginalValue("userId"),
+					userGroupRoleModelImpl.getColumnOriginalValue("groupId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByU_G, args);
@@ -3421,8 +3421,8 @@ public class UserGroupRolePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					userGroupRoleModelImpl.getOriginalGroupId(),
-					userGroupRoleModelImpl.getOriginalRoleId()
+					userGroupRoleModelImpl.getColumnOriginalValue("groupId"),
+					userGroupRoleModelImpl.getColumnOriginalValue("roleId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByG_R, args);
@@ -3908,7 +3908,7 @@ public class UserGroupRolePersistenceImpl
 		_finderPathWithoutPaginationFindByUserId = new FinderPath(
 			UserGroupRoleImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUserId", new String[] {Long.class.getName()},
-			UserGroupRoleModelImpl.USERID_COLUMN_BITMASK);
+			UserGroupRoleModelImpl.getColumnBitmask("userId"));
 
 		_finderPathCountByUserId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3925,7 +3925,7 @@ public class UserGroupRolePersistenceImpl
 		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
 			UserGroupRoleImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByGroupId", new String[] {Long.class.getName()},
-			UserGroupRoleModelImpl.GROUPID_COLUMN_BITMASK);
+			UserGroupRoleModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3942,7 +3942,7 @@ public class UserGroupRolePersistenceImpl
 		_finderPathWithoutPaginationFindByRoleId = new FinderPath(
 			UserGroupRoleImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByRoleId", new String[] {Long.class.getName()},
-			UserGroupRoleModelImpl.ROLEID_COLUMN_BITMASK);
+			UserGroupRoleModelImpl.getColumnBitmask("roleId"));
 
 		_finderPathCountByRoleId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3961,8 +3961,8 @@ public class UserGroupRolePersistenceImpl
 			UserGroupRoleImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByU_G",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			UserGroupRoleModelImpl.USERID_COLUMN_BITMASK |
-			UserGroupRoleModelImpl.GROUPID_COLUMN_BITMASK);
+			UserGroupRoleModelImpl.getColumnBitmask("userId") |
+			UserGroupRoleModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByU_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_G",
@@ -3981,8 +3981,8 @@ public class UserGroupRolePersistenceImpl
 			UserGroupRoleImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByG_R",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			UserGroupRoleModelImpl.GROUPID_COLUMN_BITMASK |
-			UserGroupRoleModelImpl.ROLEID_COLUMN_BITMASK);
+			UserGroupRoleModelImpl.getColumnBitmask("groupId") |
+			UserGroupRoleModelImpl.getColumnBitmask("roleId"));
 
 		_finderPathCountByG_R = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_R",
@@ -3993,9 +3993,9 @@ public class UserGroupRolePersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			UserGroupRoleModelImpl.USERID_COLUMN_BITMASK |
-			UserGroupRoleModelImpl.GROUPID_COLUMN_BITMASK |
-			UserGroupRoleModelImpl.ROLEID_COLUMN_BITMASK);
+			UserGroupRoleModelImpl.getColumnBitmask("userId") |
+			UserGroupRoleModelImpl.getColumnBitmask("groupId") |
+			UserGroupRoleModelImpl.getColumnBitmask("roleId"));
 
 		_finderPathCountByU_G_R = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

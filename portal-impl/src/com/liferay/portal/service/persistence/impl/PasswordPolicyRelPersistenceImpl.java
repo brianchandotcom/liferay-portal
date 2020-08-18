@@ -948,8 +948,9 @@ public class PasswordPolicyRelPersistenceImpl
 			 _finderPathFetchByC_C.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				passwordPolicyRelModelImpl.getOriginalClassNameId(),
-				passwordPolicyRelModelImpl.getOriginalClassPK()
+				passwordPolicyRelModelImpl.getColumnOriginalValue(
+					"classNameId"),
+				passwordPolicyRelModelImpl.getColumnOriginalValue("classPK")
 			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
@@ -1133,7 +1134,8 @@ public class PasswordPolicyRelPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					passwordPolicyRelModelImpl.getOriginalPasswordPolicyId()
+					passwordPolicyRelModelImpl.getColumnOriginalValue(
+						"passwordPolicyId")
 				};
 
 				FinderCacheUtil.removeResult(
@@ -1444,7 +1446,7 @@ public class PasswordPolicyRelPersistenceImpl
 			PasswordPolicyRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPasswordPolicyId",
 			new String[] {Long.class.getName()},
-			PasswordPolicyRelModelImpl.PASSWORDPOLICYID_COLUMN_BITMASK);
+			PasswordPolicyRelModelImpl.getColumnBitmask("passwordPolicyId"));
 
 		_finderPathCountByPasswordPolicyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1453,8 +1455,8 @@ public class PasswordPolicyRelPersistenceImpl
 		_finderPathFetchByC_C = new FinderPath(
 			PasswordPolicyRelImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			PasswordPolicyRelModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			PasswordPolicyRelModelImpl.CLASSPK_COLUMN_BITMASK);
+			PasswordPolicyRelModelImpl.getColumnBitmask("classNameId") |
+			PasswordPolicyRelModelImpl.getColumnBitmask("classPK"));
 
 		_finderPathCountByC_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",

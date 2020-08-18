@@ -1073,11 +1073,16 @@ public class UserNotificationDeliveryPersistenceImpl
 			 _finderPathFetchByU_P_C_N_D.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				userNotificationDeliveryModelImpl.getOriginalUserId(),
-				userNotificationDeliveryModelImpl.getOriginalPortletId(),
-				userNotificationDeliveryModelImpl.getOriginalClassNameId(),
-				userNotificationDeliveryModelImpl.getOriginalNotificationType(),
-				userNotificationDeliveryModelImpl.getOriginalDeliveryType()
+				userNotificationDeliveryModelImpl.getColumnOriginalValue(
+					"userId"),
+				userNotificationDeliveryModelImpl.getColumnOriginalValue(
+					"portletId"),
+				userNotificationDeliveryModelImpl.getColumnOriginalValue(
+					"classNameId"),
+				userNotificationDeliveryModelImpl.getColumnOriginalValue(
+					"notificationType"),
+				userNotificationDeliveryModelImpl.getColumnOriginalValue(
+					"deliveryType")
 			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByU_P_C_N_D, args);
@@ -1268,7 +1273,8 @@ public class UserNotificationDeliveryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					userNotificationDeliveryModelImpl.getOriginalUserId()
+					userNotificationDeliveryModelImpl.getColumnOriginalValue(
+						"userId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByUserId, args);
@@ -1584,7 +1590,7 @@ public class UserNotificationDeliveryPersistenceImpl
 			UserNotificationDeliveryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
 			new String[] {Long.class.getName()},
-			UserNotificationDeliveryModelImpl.USERID_COLUMN_BITMASK);
+			UserNotificationDeliveryModelImpl.getColumnBitmask("userId"));
 
 		_finderPathCountByUserId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1598,11 +1604,12 @@ public class UserNotificationDeliveryPersistenceImpl
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName()
 			},
-			UserNotificationDeliveryModelImpl.USERID_COLUMN_BITMASK |
-			UserNotificationDeliveryModelImpl.PORTLETID_COLUMN_BITMASK |
-			UserNotificationDeliveryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			UserNotificationDeliveryModelImpl.NOTIFICATIONTYPE_COLUMN_BITMASK |
-			UserNotificationDeliveryModelImpl.DELIVERYTYPE_COLUMN_BITMASK);
+			UserNotificationDeliveryModelImpl.getColumnBitmask("userId") |
+			UserNotificationDeliveryModelImpl.getColumnBitmask("portletId") |
+			UserNotificationDeliveryModelImpl.getColumnBitmask("classNameId") |
+			UserNotificationDeliveryModelImpl.getColumnBitmask(
+				"notificationType") |
+			UserNotificationDeliveryModelImpl.getColumnBitmask("deliveryType"));
 
 		_finderPathCountByU_P_C_N_D = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

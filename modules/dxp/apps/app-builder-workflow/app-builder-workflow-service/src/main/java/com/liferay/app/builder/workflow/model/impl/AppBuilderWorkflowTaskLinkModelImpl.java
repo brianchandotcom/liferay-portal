@@ -104,14 +104,39 @@ public class AppBuilderWorkflowTaskLinkModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long APPBUILDERAPPID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long APPBUILDERAPPVERSIONID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long DDMSTRUCTURELAYOUTID_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long WORKFLOWTASKNAME_COLUMN_BITMASK = 8L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long APPBUILDERWORKFLOWTASKLINKID_COLUMN_BITMASK = 16L;
 
 	/**
@@ -326,6 +351,14 @@ public class AppBuilderWorkflowTaskLinkModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("mvccVersion");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_mvccVersion = mvccVersion;
 	}
 
@@ -338,7 +371,14 @@ public class AppBuilderWorkflowTaskLinkModelImpl
 	public void setAppBuilderWorkflowTaskLinkId(
 		long appBuilderWorkflowTaskLinkId) {
 
-		_columnBitmask = -1L;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get(
+				"appBuilderWorkflowTaskLinkId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
 
 		_appBuilderWorkflowTaskLinkId = appBuilderWorkflowTaskLinkId;
 	}
@@ -350,6 +390,14 @@ public class AppBuilderWorkflowTaskLinkModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_companyId = companyId;
 	}
 
@@ -360,19 +408,24 @@ public class AppBuilderWorkflowTaskLinkModelImpl
 
 	@Override
 	public void setAppBuilderAppId(long appBuilderAppId) {
-		_columnBitmask |= APPBUILDERAPPID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("appBuilderAppId");
 
-		if (!_setOriginalAppBuilderAppId) {
-			_setOriginalAppBuilderAppId = true;
-
-			_originalAppBuilderAppId = _appBuilderAppId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_appBuilderAppId = appBuilderAppId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalAppBuilderAppId() {
-		return _originalAppBuilderAppId;
+		return GetterUtil.getLong(getColumnOriginalValue("appBuilderAppId"));
 	}
 
 	@Override
@@ -382,19 +435,25 @@ public class AppBuilderWorkflowTaskLinkModelImpl
 
 	@Override
 	public void setAppBuilderAppVersionId(long appBuilderAppVersionId) {
-		_columnBitmask |= APPBUILDERAPPVERSIONID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("appBuilderAppVersionId");
 
-		if (!_setOriginalAppBuilderAppVersionId) {
-			_setOriginalAppBuilderAppVersionId = true;
-
-			_originalAppBuilderAppVersionId = _appBuilderAppVersionId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_appBuilderAppVersionId = appBuilderAppVersionId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalAppBuilderAppVersionId() {
-		return _originalAppBuilderAppVersionId;
+		return GetterUtil.getLong(
+			getColumnOriginalValue("appBuilderAppVersionId"));
 	}
 
 	@Override
@@ -404,19 +463,25 @@ public class AppBuilderWorkflowTaskLinkModelImpl
 
 	@Override
 	public void setDdmStructureLayoutId(long ddmStructureLayoutId) {
-		_columnBitmask |= DDMSTRUCTURELAYOUTID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("ddmStructureLayoutId");
 
-		if (!_setOriginalDdmStructureLayoutId) {
-			_setOriginalDdmStructureLayoutId = true;
-
-			_originalDdmStructureLayoutId = _ddmStructureLayoutId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_ddmStructureLayoutId = ddmStructureLayoutId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalDdmStructureLayoutId() {
-		return _originalDdmStructureLayoutId;
+		return GetterUtil.getLong(
+			getColumnOriginalValue("ddmStructureLayoutId"));
 	}
 
 	@Override
@@ -431,6 +496,14 @@ public class AppBuilderWorkflowTaskLinkModelImpl
 
 	@Override
 	public void setReadOnly(boolean readOnly) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("readOnly");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_readOnly = readOnly;
 	}
 
@@ -446,17 +519,24 @@ public class AppBuilderWorkflowTaskLinkModelImpl
 
 	@Override
 	public void setWorkflowTaskName(String workflowTaskName) {
-		_columnBitmask |= WORKFLOWTASKNAME_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("workflowTaskName");
 
-		if (_originalWorkflowTaskName == null) {
-			_originalWorkflowTaskName = _workflowTaskName;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_workflowTaskName = workflowTaskName;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalWorkflowTaskName() {
-		return GetterUtil.getString(_originalWorkflowTaskName);
+		return getColumnOriginalValue("workflowTaskName");
 	}
 
 	public long getColumnBitmask() {
@@ -591,30 +671,9 @@ public class AppBuilderWorkflowTaskLinkModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		AppBuilderWorkflowTaskLinkModelImpl
-			appBuilderWorkflowTaskLinkModelImpl = this;
+		_columnOriginalValues = Collections.emptyMap();
 
-		appBuilderWorkflowTaskLinkModelImpl._originalAppBuilderAppId =
-			appBuilderWorkflowTaskLinkModelImpl._appBuilderAppId;
-
-		appBuilderWorkflowTaskLinkModelImpl._setOriginalAppBuilderAppId = false;
-
-		appBuilderWorkflowTaskLinkModelImpl._originalAppBuilderAppVersionId =
-			appBuilderWorkflowTaskLinkModelImpl._appBuilderAppVersionId;
-
-		appBuilderWorkflowTaskLinkModelImpl._setOriginalAppBuilderAppVersionId =
-			false;
-
-		appBuilderWorkflowTaskLinkModelImpl._originalDdmStructureLayoutId =
-			appBuilderWorkflowTaskLinkModelImpl._ddmStructureLayoutId;
-
-		appBuilderWorkflowTaskLinkModelImpl._setOriginalDdmStructureLayoutId =
-			false;
-
-		appBuilderWorkflowTaskLinkModelImpl._originalWorkflowTaskName =
-			appBuilderWorkflowTaskLinkModelImpl._workflowTaskName;
-
-		appBuilderWorkflowTaskLinkModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -730,21 +789,71 @@ public class AppBuilderWorkflowTaskLinkModelImpl
 
 	}
 
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put(
+			"appBuilderWorkflowTaskLinkId", _appBuilderWorkflowTaskLinkId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("appBuilderAppId", _appBuilderAppId);
+		_columnOriginalValues.put(
+			"appBuilderAppVersionId", _appBuilderAppVersionId);
+		_columnOriginalValues.put(
+			"ddmStructureLayoutId", _ddmStructureLayoutId);
+		_columnOriginalValues.put("readOnly", _readOnly);
+		_columnOriginalValues.put("workflowTaskName", _workflowTaskName);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("mvccVersion", 1L);
+
+		columnBitmasks.put("appBuilderWorkflowTaskLinkId", 2L);
+
+		columnBitmasks.put("companyId", 4L);
+
+		columnBitmasks.put("appBuilderAppId", 8L);
+
+		columnBitmasks.put("appBuilderAppVersionId", 16L);
+
+		columnBitmasks.put("ddmStructureLayoutId", 32L);
+
+		columnBitmasks.put("readOnly", 64L);
+
+		columnBitmasks.put("workflowTaskName", 128L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _mvccVersion;
 	private long _appBuilderWorkflowTaskLinkId;
 	private long _companyId;
 	private long _appBuilderAppId;
-	private long _originalAppBuilderAppId;
-	private boolean _setOriginalAppBuilderAppId;
 	private long _appBuilderAppVersionId;
-	private long _originalAppBuilderAppVersionId;
-	private boolean _setOriginalAppBuilderAppVersionId;
 	private long _ddmStructureLayoutId;
-	private long _originalDdmStructureLayoutId;
-	private boolean _setOriginalDdmStructureLayoutId;
 	private boolean _readOnly;
 	private String _workflowTaskName;
-	private String _originalWorkflowTaskName;
 	private long _columnBitmask;
 	private AppBuilderWorkflowTaskLink _escapedModel;
 

@@ -3385,8 +3385,8 @@ public class MBBanPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				mbBanModelImpl.getOriginalUuid(),
-				mbBanModelImpl.getOriginalGroupId()
+				mbBanModelImpl.getColumnOriginalValue("uuid_"),
+				mbBanModelImpl.getColumnOriginalValue("groupId")
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -3406,8 +3406,8 @@ public class MBBanPersistenceImpl
 			 _finderPathFetchByG_B.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				mbBanModelImpl.getOriginalGroupId(),
-				mbBanModelImpl.getOriginalBanUserId()
+				mbBanModelImpl.getColumnOriginalValue("groupId"),
+				mbBanModelImpl.getColumnOriginalValue("banUserId")
 			};
 
 			finderCache.removeResult(_finderPathCountByG_B, args);
@@ -3647,7 +3647,9 @@ public class MBBanPersistenceImpl
 				 _finderPathWithoutPaginationFindByUuid.getColumnBitmask()) !=
 					 0) {
 
-				Object[] args = new Object[] {mbBanModelImpl.getOriginalUuid()};
+				Object[] args = new Object[] {
+					mbBanModelImpl.getColumnOriginalValue("uuid_")
+				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
 				finderCache.removeResult(
@@ -3665,8 +3667,8 @@ public class MBBanPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					mbBanModelImpl.getOriginalUuid(),
-					mbBanModelImpl.getOriginalCompanyId()
+					mbBanModelImpl.getColumnOriginalValue("uuid_"),
+					mbBanModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -3687,7 +3689,7 @@ public class MBBanPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					mbBanModelImpl.getOriginalGroupId()
+					mbBanModelImpl.getColumnOriginalValue("groupId")
 				};
 
 				finderCache.removeResult(_finderPathCountByGroupId, args);
@@ -3706,7 +3708,7 @@ public class MBBanPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					mbBanModelImpl.getOriginalUserId()
+					mbBanModelImpl.getColumnOriginalValue("userId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUserId, args);
@@ -3725,7 +3727,7 @@ public class MBBanPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					mbBanModelImpl.getOriginalBanUserId()
+					mbBanModelImpl.getColumnOriginalValue("banUserId")
 				};
 
 				finderCache.removeResult(_finderPathCountByBanUserId, args);
@@ -4211,7 +4213,7 @@ public class MBBanPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			MBBanImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid", new String[] {String.class.getName()},
-			MBBanModelImpl.UUID_COLUMN_BITMASK);
+			MBBanModelImpl.getColumnBitmask("uuid_"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4220,8 +4222,8 @@ public class MBBanPersistenceImpl
 		_finderPathFetchByUUID_G = new FinderPath(
 			MBBanImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			MBBanModelImpl.UUID_COLUMN_BITMASK |
-			MBBanModelImpl.GROUPID_COLUMN_BITMASK);
+			MBBanModelImpl.getColumnBitmask("uuid_") |
+			MBBanModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4241,8 +4243,8 @@ public class MBBanPersistenceImpl
 			MBBanImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			MBBanModelImpl.UUID_COLUMN_BITMASK |
-			MBBanModelImpl.COMPANYID_COLUMN_BITMASK);
+			MBBanModelImpl.getColumnBitmask("uuid_") |
+			MBBanModelImpl.getColumnBitmask("companyId"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4260,7 +4262,7 @@ public class MBBanPersistenceImpl
 		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
 			MBBanImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByGroupId", new String[] {Long.class.getName()},
-			MBBanModelImpl.GROUPID_COLUMN_BITMASK);
+			MBBanModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4277,7 +4279,7 @@ public class MBBanPersistenceImpl
 		_finderPathWithoutPaginationFindByUserId = new FinderPath(
 			MBBanImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUserId", new String[] {Long.class.getName()},
-			MBBanModelImpl.USERID_COLUMN_BITMASK);
+			MBBanModelImpl.getColumnBitmask("userId"));
 
 		_finderPathCountByUserId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4294,7 +4296,7 @@ public class MBBanPersistenceImpl
 		_finderPathWithoutPaginationFindByBanUserId = new FinderPath(
 			MBBanImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByBanUserId", new String[] {Long.class.getName()},
-			MBBanModelImpl.BANUSERID_COLUMN_BITMASK);
+			MBBanModelImpl.getColumnBitmask("banUserId"));
 
 		_finderPathCountByBanUserId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4303,8 +4305,8 @@ public class MBBanPersistenceImpl
 		_finderPathFetchByG_B = new FinderPath(
 			MBBanImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_B",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			MBBanModelImpl.GROUPID_COLUMN_BITMASK |
-			MBBanModelImpl.BANUSERID_COLUMN_BITMASK);
+			MBBanModelImpl.getColumnBitmask("groupId") |
+			MBBanModelImpl.getColumnBitmask("banUserId"));
 
 		_finderPathCountByG_B = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_B",

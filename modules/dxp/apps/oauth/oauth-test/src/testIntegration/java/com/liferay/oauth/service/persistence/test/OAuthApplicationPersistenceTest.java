@@ -550,7 +550,8 @@ public class OAuthApplicationPersistenceTest {
 		Assert.assertEquals(
 			oAuthApplication.getConsumerKey(),
 			ReflectionTestUtil.invoke(
-				oAuthApplication, "getOriginalConsumerKey", new Class<?>[0]));
+				oAuthApplication, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "consumerKey"));
 	}
 
 	protected OAuthApplication addOAuthApplication() throws Exception {

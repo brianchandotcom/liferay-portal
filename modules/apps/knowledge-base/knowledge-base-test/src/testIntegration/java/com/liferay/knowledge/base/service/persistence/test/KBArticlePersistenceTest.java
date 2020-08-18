@@ -977,33 +977,40 @@ public class KBArticlePersistenceTest {
 		Assert.assertEquals(
 			kbArticle.getUuid(),
 			ReflectionTestUtil.invoke(
-				kbArticle, "getOriginalUuid", new Class<?>[0]));
+				kbArticle, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(kbArticle.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				kbArticle, "getOriginalGroupId", new Class<?>[0]));
+				kbArticle, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(kbArticle.getResourcePrimKey()),
 			ReflectionTestUtil.<Long>invoke(
-				kbArticle, "getOriginalResourcePrimKey", new Class<?>[0]));
+				kbArticle, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "resourcePrimKey"));
 		Assert.assertEquals(
 			Integer.valueOf(kbArticle.getVersion()),
 			ReflectionTestUtil.<Integer>invoke(
-				kbArticle, "getOriginalVersion", new Class<?>[0]));
+				kbArticle, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "version"));
 
 		Assert.assertEquals(
 			Long.valueOf(kbArticle.getResourcePrimKey()),
 			ReflectionTestUtil.<Long>invoke(
-				kbArticle, "getOriginalResourcePrimKey", new Class<?>[0]));
+				kbArticle, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "resourcePrimKey"));
 		Assert.assertEquals(
 			Long.valueOf(kbArticle.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				kbArticle, "getOriginalGroupId", new Class<?>[0]));
+				kbArticle, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			Integer.valueOf(kbArticle.getVersion()),
 			ReflectionTestUtil.<Integer>invoke(
-				kbArticle, "getOriginalVersion", new Class<?>[0]));
+				kbArticle, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "version"));
 	}
 
 	protected KBArticle addKBArticle() throws Exception {

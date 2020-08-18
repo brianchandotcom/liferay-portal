@@ -586,12 +586,13 @@ public class DDMFormInstanceVersionPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(ddmFormInstanceVersion.getFormInstanceId()),
 			ReflectionTestUtil.<Long>invoke(
-				ddmFormInstanceVersion, "getOriginalFormInstanceId",
-				new Class<?>[0]));
+				ddmFormInstanceVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "formInstanceId"));
 		Assert.assertEquals(
 			ddmFormInstanceVersion.getVersion(),
 			ReflectionTestUtil.invoke(
-				ddmFormInstanceVersion, "getOriginalVersion", new Class<?>[0]));
+				ddmFormInstanceVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "version"));
 	}
 
 	protected DDMFormInstanceVersion addDDMFormInstanceVersion()

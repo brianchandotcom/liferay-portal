@@ -6282,8 +6282,8 @@ public class UserGroupPersistenceImpl
 			 _finderPathFetchByC_N.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				userGroupModelImpl.getOriginalCompanyId(),
-				userGroupModelImpl.getOriginalName()
+				userGroupModelImpl.getColumnOriginalValue("companyId"),
+				userGroupModelImpl.getColumnOriginalValue("name")
 			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByC_N, args);
@@ -6304,8 +6304,9 @@ public class UserGroupPersistenceImpl
 			 _finderPathFetchByC_ERC.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				userGroupModelImpl.getOriginalCompanyId(),
-				userGroupModelImpl.getOriginalExternalReferenceCode()
+				userGroupModelImpl.getColumnOriginalValue("companyId"),
+				userGroupModelImpl.getColumnOriginalValue(
+					"externalReferenceCode")
 			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByC_ERC, args);
@@ -6557,7 +6558,7 @@ public class UserGroupPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					userGroupModelImpl.getOriginalUuid()
+					userGroupModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByUuid, args);
@@ -6576,8 +6577,8 @@ public class UserGroupPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					userGroupModelImpl.getOriginalUuid(),
-					userGroupModelImpl.getOriginalCompanyId()
+					userGroupModelImpl.getColumnOriginalValue("uuid_"),
+					userGroupModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
@@ -6599,7 +6600,7 @@ public class UserGroupPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					userGroupModelImpl.getOriginalCompanyId()
+					userGroupModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
@@ -6618,8 +6619,9 @@ public class UserGroupPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					userGroupModelImpl.getOriginalCompanyId(),
-					userGroupModelImpl.getOriginalParentUserGroupId()
+					userGroupModelImpl.getColumnOriginalValue("companyId"),
+					userGroupModelImpl.getColumnOriginalValue(
+						"parentUserGroupId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByC_P, args);
@@ -8052,8 +8054,8 @@ public class UserGroupPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			UserGroupImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid", new String[] {String.class.getName()},
-			UserGroupModelImpl.UUID_COLUMN_BITMASK |
-			UserGroupModelImpl.NAME_COLUMN_BITMASK);
+			UserGroupModelImpl.getColumnBitmask("uuid_") |
+			UserGroupModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -8072,9 +8074,9 @@ public class UserGroupPersistenceImpl
 			UserGroupImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			UserGroupModelImpl.UUID_COLUMN_BITMASK |
-			UserGroupModelImpl.COMPANYID_COLUMN_BITMASK |
-			UserGroupModelImpl.NAME_COLUMN_BITMASK);
+			UserGroupModelImpl.getColumnBitmask("uuid_") |
+			UserGroupModelImpl.getColumnBitmask("companyId") |
+			UserGroupModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -8092,8 +8094,8 @@ public class UserGroupPersistenceImpl
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
 			UserGroupImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCompanyId", new String[] {Long.class.getName()},
-			UserGroupModelImpl.COMPANYID_COLUMN_BITMASK |
-			UserGroupModelImpl.NAME_COLUMN_BITMASK);
+			UserGroupModelImpl.getColumnBitmask("companyId") |
+			UserGroupModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -8112,9 +8114,9 @@ public class UserGroupPersistenceImpl
 			UserGroupImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByC_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			UserGroupModelImpl.COMPANYID_COLUMN_BITMASK |
-			UserGroupModelImpl.PARENTUSERGROUPID_COLUMN_BITMASK |
-			UserGroupModelImpl.NAME_COLUMN_BITMASK);
+			UserGroupModelImpl.getColumnBitmask("companyId") |
+			UserGroupModelImpl.getColumnBitmask("parentUserGroupId") |
+			UserGroupModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByC_P = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
@@ -8123,8 +8125,8 @@ public class UserGroupPersistenceImpl
 		_finderPathFetchByC_N = new FinderPath(
 			UserGroupImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			UserGroupModelImpl.COMPANYID_COLUMN_BITMASK |
-			UserGroupModelImpl.NAME_COLUMN_BITMASK);
+			UserGroupModelImpl.getColumnBitmask("companyId") |
+			UserGroupModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByC_N = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
@@ -8162,8 +8164,8 @@ public class UserGroupPersistenceImpl
 		_finderPathFetchByC_ERC = new FinderPath(
 			UserGroupImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
-			UserGroupModelImpl.COMPANYID_COLUMN_BITMASK |
-			UserGroupModelImpl.EXTERNALREFERENCECODE_COLUMN_BITMASK);
+			UserGroupModelImpl.getColumnBitmask("companyId") |
+			UserGroupModelImpl.getColumnBitmask("externalReferenceCode"));
 
 		_finderPathCountByC_ERC = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

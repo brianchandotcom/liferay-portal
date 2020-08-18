@@ -170,14 +170,39 @@ public class PasswordPolicyModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long DEFAULTPOLICY_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long NAME_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long UUID_COLUMN_BITMASK = 8L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long PASSWORDPOLICYID_COLUMN_BITMASK = 16L;
 
 	/**
@@ -579,6 +604,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("mvccVersion");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_mvccVersion = mvccVersion;
 	}
 
@@ -595,17 +628,24 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("uuid_");
 
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_uuid = uuid;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		return getColumnOriginalValue("uuid_");
 	}
 
 	@JSON
@@ -616,6 +656,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setPasswordPolicyId(long passwordPolicyId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("passwordPolicyId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_passwordPolicyId = passwordPolicyId;
 	}
 
@@ -627,19 +675,24 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
 
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_companyId = companyId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -650,6 +703,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -682,6 +743,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -693,6 +762,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -709,6 +786,14 @@ public class PasswordPolicyModelImpl
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
+
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
 
 		_modifiedDate = modifiedDate;
 	}
@@ -727,19 +812,24 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setDefaultPolicy(boolean defaultPolicy) {
-		_columnBitmask |= DEFAULTPOLICY_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("defaultPolicy");
 
-		if (!_setOriginalDefaultPolicy) {
-			_setOriginalDefaultPolicy = true;
-
-			_originalDefaultPolicy = _defaultPolicy;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_defaultPolicy = defaultPolicy;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public boolean getOriginalDefaultPolicy() {
-		return _originalDefaultPolicy;
+		return GetterUtil.getBoolean(getColumnOriginalValue("defaultPolicy"));
 	}
 
 	@JSON
@@ -755,17 +845,24 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask |= NAME_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("name");
 
-		if (_originalName == null) {
-			_originalName = _name;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_name = name;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		return getColumnOriginalValue("name");
 	}
 
 	@JSON
@@ -781,6 +878,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setDescription(String description) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("description");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_description = description;
 	}
 
@@ -798,6 +903,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setChangeable(boolean changeable) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("changeable");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_changeable = changeable;
 	}
 
@@ -815,6 +928,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setChangeRequired(boolean changeRequired) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("changeRequired");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_changeRequired = changeRequired;
 	}
 
@@ -826,6 +947,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setMinAge(long minAge) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("minAge");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_minAge = minAge;
 	}
 
@@ -843,6 +972,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setCheckSyntax(boolean checkSyntax) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("checkSyntax");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_checkSyntax = checkSyntax;
 	}
 
@@ -860,6 +997,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setAllowDictionaryWords(boolean allowDictionaryWords) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("allowDictionaryWords");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_allowDictionaryWords = allowDictionaryWords;
 	}
 
@@ -871,6 +1016,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setMinAlphanumeric(int minAlphanumeric) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("minAlphanumeric");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_minAlphanumeric = minAlphanumeric;
 	}
 
@@ -882,6 +1035,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setMinLength(int minLength) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("minLength");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_minLength = minLength;
 	}
 
@@ -893,6 +1054,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setMinLowerCase(int minLowerCase) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("minLowerCase");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_minLowerCase = minLowerCase;
 	}
 
@@ -904,6 +1073,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setMinNumbers(int minNumbers) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("minNumbers");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_minNumbers = minNumbers;
 	}
 
@@ -915,6 +1092,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setMinSymbols(int minSymbols) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("minSymbols");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_minSymbols = minSymbols;
 	}
 
@@ -926,6 +1111,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setMinUpperCase(int minUpperCase) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("minUpperCase");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_minUpperCase = minUpperCase;
 	}
 
@@ -942,6 +1135,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setRegex(String regex) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("regex");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_regex = regex;
 	}
 
@@ -959,6 +1160,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setHistory(boolean history) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("history");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_history = history;
 	}
 
@@ -970,6 +1179,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setHistoryCount(int historyCount) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("historyCount");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_historyCount = historyCount;
 	}
 
@@ -987,6 +1204,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setExpireable(boolean expireable) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("expireable");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_expireable = expireable;
 	}
 
@@ -998,6 +1223,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setMaxAge(long maxAge) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("maxAge");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_maxAge = maxAge;
 	}
 
@@ -1009,6 +1242,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setWarningTime(long warningTime) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("warningTime");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_warningTime = warningTime;
 	}
 
@@ -1020,6 +1261,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setGraceLimit(int graceLimit) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("graceLimit");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_graceLimit = graceLimit;
 	}
 
@@ -1037,6 +1286,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setLockout(boolean lockout) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("lockout");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_lockout = lockout;
 	}
 
@@ -1048,6 +1305,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setMaxFailure(int maxFailure) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("maxFailure");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_maxFailure = maxFailure;
 	}
 
@@ -1059,6 +1324,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setLockoutDuration(long lockoutDuration) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("lockoutDuration");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_lockoutDuration = lockoutDuration;
 	}
 
@@ -1076,6 +1349,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setRequireUnlock(boolean requireUnlock) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("requireUnlock");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_requireUnlock = requireUnlock;
 	}
 
@@ -1087,6 +1368,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setResetFailureCount(long resetFailureCount) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("resetFailureCount");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_resetFailureCount = resetFailureCount;
 	}
 
@@ -1098,6 +1387,14 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void setResetTicketMaxAge(long resetTicketMaxAge) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("resetTicketMaxAge");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_resetTicketMaxAge = resetTicketMaxAge;
 	}
 
@@ -1246,25 +1543,11 @@ public class PasswordPolicyModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		PasswordPolicyModelImpl passwordPolicyModelImpl = this;
+		_columnOriginalValues = Collections.emptyMap();
 
-		passwordPolicyModelImpl._originalUuid = passwordPolicyModelImpl._uuid;
+		_setModifiedDate = false;
 
-		passwordPolicyModelImpl._originalCompanyId =
-			passwordPolicyModelImpl._companyId;
-
-		passwordPolicyModelImpl._setOriginalCompanyId = false;
-
-		passwordPolicyModelImpl._setModifiedDate = false;
-
-		passwordPolicyModelImpl._originalDefaultPolicy =
-			passwordPolicyModelImpl._defaultPolicy;
-
-		passwordPolicyModelImpl._setOriginalDefaultPolicy = false;
-
-		passwordPolicyModelImpl._originalName = passwordPolicyModelImpl._name;
-
-		passwordPolicyModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -1460,23 +1743,153 @@ public class PasswordPolicyModelImpl
 
 	}
 
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put("passwordPolicyId", _passwordPolicyId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("defaultPolicy", _defaultPolicy);
+		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("description", _description);
+		_columnOriginalValues.put("changeable", _changeable);
+		_columnOriginalValues.put("changeRequired", _changeRequired);
+		_columnOriginalValues.put("minAge", _minAge);
+		_columnOriginalValues.put("checkSyntax", _checkSyntax);
+		_columnOriginalValues.put(
+			"allowDictionaryWords", _allowDictionaryWords);
+		_columnOriginalValues.put("minAlphanumeric", _minAlphanumeric);
+		_columnOriginalValues.put("minLength", _minLength);
+		_columnOriginalValues.put("minLowerCase", _minLowerCase);
+		_columnOriginalValues.put("minNumbers", _minNumbers);
+		_columnOriginalValues.put("minSymbols", _minSymbols);
+		_columnOriginalValues.put("minUpperCase", _minUpperCase);
+		_columnOriginalValues.put("regex", _regex);
+		_columnOriginalValues.put("history", _history);
+		_columnOriginalValues.put("historyCount", _historyCount);
+		_columnOriginalValues.put("expireable", _expireable);
+		_columnOriginalValues.put("maxAge", _maxAge);
+		_columnOriginalValues.put("warningTime", _warningTime);
+		_columnOriginalValues.put("graceLimit", _graceLimit);
+		_columnOriginalValues.put("lockout", _lockout);
+		_columnOriginalValues.put("maxFailure", _maxFailure);
+		_columnOriginalValues.put("lockoutDuration", _lockoutDuration);
+		_columnOriginalValues.put("requireUnlock", _requireUnlock);
+		_columnOriginalValues.put("resetFailureCount", _resetFailureCount);
+		_columnOriginalValues.put("resetTicketMaxAge", _resetTicketMaxAge);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("mvccVersion", 1L);
+
+		columnBitmasks.put("uuid_", 2L);
+
+		columnBitmasks.put("passwordPolicyId", 4L);
+
+		columnBitmasks.put("companyId", 8L);
+
+		columnBitmasks.put("userId", 16L);
+
+		columnBitmasks.put("userName", 32L);
+
+		columnBitmasks.put("createDate", 64L);
+
+		columnBitmasks.put("modifiedDate", 128L);
+
+		columnBitmasks.put("defaultPolicy", 256L);
+
+		columnBitmasks.put("name", 512L);
+
+		columnBitmasks.put("description", 1024L);
+
+		columnBitmasks.put("changeable", 2048L);
+
+		columnBitmasks.put("changeRequired", 4096L);
+
+		columnBitmasks.put("minAge", 8192L);
+
+		columnBitmasks.put("checkSyntax", 16384L);
+
+		columnBitmasks.put("allowDictionaryWords", 32768L);
+
+		columnBitmasks.put("minAlphanumeric", 65536L);
+
+		columnBitmasks.put("minLength", 131072L);
+
+		columnBitmasks.put("minLowerCase", 262144L);
+
+		columnBitmasks.put("minNumbers", 524288L);
+
+		columnBitmasks.put("minSymbols", 1048576L);
+
+		columnBitmasks.put("minUpperCase", 2097152L);
+
+		columnBitmasks.put("regex", 4194304L);
+
+		columnBitmasks.put("history", 8388608L);
+
+		columnBitmasks.put("historyCount", 16777216L);
+
+		columnBitmasks.put("expireable", 33554432L);
+
+		columnBitmasks.put("maxAge", 67108864L);
+
+		columnBitmasks.put("warningTime", 134217728L);
+
+		columnBitmasks.put("graceLimit", 268435456L);
+
+		columnBitmasks.put("lockout", 536870912L);
+
+		columnBitmasks.put("maxFailure", 1073741824L);
+
+		columnBitmasks.put("lockoutDuration", 2147483648L);
+
+		columnBitmasks.put("requireUnlock", 4294967296L);
+
+		columnBitmasks.put("resetFailureCount", 8589934592L);
+
+		columnBitmasks.put("resetTicketMaxAge", 17179869184L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _mvccVersion;
 	private String _uuid;
-	private String _originalUuid;
 	private long _passwordPolicyId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private boolean _defaultPolicy;
-	private boolean _originalDefaultPolicy;
-	private boolean _setOriginalDefaultPolicy;
 	private String _name;
-	private String _originalName;
 	private String _description;
 	private boolean _changeable;
 	private boolean _changeRequired;

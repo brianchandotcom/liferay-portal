@@ -7237,8 +7237,8 @@ public class AppBuilderAppPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				appBuilderAppModelImpl.getOriginalUuid(),
-				appBuilderAppModelImpl.getOriginalGroupId()
+				appBuilderAppModelImpl.getColumnOriginalValue("uuid_"),
+				appBuilderAppModelImpl.getColumnOriginalValue("groupId")
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -7521,7 +7521,7 @@ public class AppBuilderAppPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					appBuilderAppModelImpl.getOriginalUuid()
+					appBuilderAppModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -7540,8 +7540,8 @@ public class AppBuilderAppPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					appBuilderAppModelImpl.getOriginalUuid(),
-					appBuilderAppModelImpl.getOriginalCompanyId()
+					appBuilderAppModelImpl.getColumnOriginalValue("uuid_"),
+					appBuilderAppModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -7563,7 +7563,7 @@ public class AppBuilderAppPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					appBuilderAppModelImpl.getOriginalGroupId()
+					appBuilderAppModelImpl.getColumnOriginalValue("groupId")
 				};
 
 				finderCache.removeResult(_finderPathCountByGroupId, args);
@@ -7582,7 +7582,7 @@ public class AppBuilderAppPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					appBuilderAppModelImpl.getOriginalCompanyId()
+					appBuilderAppModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -7601,7 +7601,8 @@ public class AppBuilderAppPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					appBuilderAppModelImpl.getOriginalDdmStructureId()
+					appBuilderAppModelImpl.getColumnOriginalValue(
+						"ddmStructureId")
 				};
 
 				finderCache.removeResult(
@@ -7624,8 +7625,8 @@ public class AppBuilderAppPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					appBuilderAppModelImpl.getOriginalGroupId(),
-					appBuilderAppModelImpl.getOriginalScope()
+					appBuilderAppModelImpl.getColumnOriginalValue("groupId"),
+					appBuilderAppModelImpl.getColumnOriginalValue("scope")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_S, args);
@@ -7647,8 +7648,8 @@ public class AppBuilderAppPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					appBuilderAppModelImpl.getOriginalCompanyId(),
-					appBuilderAppModelImpl.getOriginalActive()
+					appBuilderAppModelImpl.getColumnOriginalValue("companyId"),
+					appBuilderAppModelImpl.getColumnOriginalValue("active_")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_A, args);
@@ -7670,8 +7671,8 @@ public class AppBuilderAppPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					appBuilderAppModelImpl.getOriginalCompanyId(),
-					appBuilderAppModelImpl.getOriginalScope()
+					appBuilderAppModelImpl.getColumnOriginalValue("companyId"),
+					appBuilderAppModelImpl.getColumnOriginalValue("scope")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_S, args);
@@ -7693,9 +7694,10 @@ public class AppBuilderAppPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					appBuilderAppModelImpl.getOriginalGroupId(),
-					appBuilderAppModelImpl.getOriginalCompanyId(),
-					appBuilderAppModelImpl.getOriginalDdmStructureId()
+					appBuilderAppModelImpl.getColumnOriginalValue("groupId"),
+					appBuilderAppModelImpl.getColumnOriginalValue("companyId"),
+					appBuilderAppModelImpl.getColumnOriginalValue(
+						"ddmStructureId")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_C_D, args);
@@ -7718,9 +7720,9 @@ public class AppBuilderAppPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					appBuilderAppModelImpl.getOriginalCompanyId(),
-					appBuilderAppModelImpl.getOriginalActive(),
-					appBuilderAppModelImpl.getOriginalScope()
+					appBuilderAppModelImpl.getColumnOriginalValue("companyId"),
+					appBuilderAppModelImpl.getColumnOriginalValue("active_"),
+					appBuilderAppModelImpl.getColumnOriginalValue("scope")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_A_S, args);
@@ -8034,7 +8036,7 @@ public class AppBuilderAppPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			AppBuilderAppImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid", new String[] {String.class.getName()},
-			AppBuilderAppModelImpl.UUID_COLUMN_BITMASK);
+			AppBuilderAppModelImpl.getColumnBitmask("uuid_"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -8043,8 +8045,8 @@ public class AppBuilderAppPersistenceImpl
 		_finderPathFetchByUUID_G = new FinderPath(
 			AppBuilderAppImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			AppBuilderAppModelImpl.UUID_COLUMN_BITMASK |
-			AppBuilderAppModelImpl.GROUPID_COLUMN_BITMASK);
+			AppBuilderAppModelImpl.getColumnBitmask("uuid_") |
+			AppBuilderAppModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -8064,8 +8066,8 @@ public class AppBuilderAppPersistenceImpl
 			AppBuilderAppImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			AppBuilderAppModelImpl.UUID_COLUMN_BITMASK |
-			AppBuilderAppModelImpl.COMPANYID_COLUMN_BITMASK);
+			AppBuilderAppModelImpl.getColumnBitmask("uuid_") |
+			AppBuilderAppModelImpl.getColumnBitmask("companyId"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -8083,7 +8085,7 @@ public class AppBuilderAppPersistenceImpl
 		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
 			AppBuilderAppImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByGroupId", new String[] {Long.class.getName()},
-			AppBuilderAppModelImpl.GROUPID_COLUMN_BITMASK);
+			AppBuilderAppModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -8100,7 +8102,7 @@ public class AppBuilderAppPersistenceImpl
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
 			AppBuilderAppImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCompanyId", new String[] {Long.class.getName()},
-			AppBuilderAppModelImpl.COMPANYID_COLUMN_BITMASK);
+			AppBuilderAppModelImpl.getColumnBitmask("companyId"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -8117,7 +8119,7 @@ public class AppBuilderAppPersistenceImpl
 		_finderPathWithoutPaginationFindByDDMStructureId = new FinderPath(
 			AppBuilderAppImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByDDMStructureId", new String[] {Long.class.getName()},
-			AppBuilderAppModelImpl.DDMSTRUCTUREID_COLUMN_BITMASK);
+			AppBuilderAppModelImpl.getColumnBitmask("ddmStructureId"));
 
 		_finderPathCountByDDMStructureId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -8136,8 +8138,8 @@ public class AppBuilderAppPersistenceImpl
 			AppBuilderAppImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByG_S",
 			new String[] {Long.class.getName(), String.class.getName()},
-			AppBuilderAppModelImpl.GROUPID_COLUMN_BITMASK |
-			AppBuilderAppModelImpl.SCOPE_COLUMN_BITMASK);
+			AppBuilderAppModelImpl.getColumnBitmask("groupId") |
+			AppBuilderAppModelImpl.getColumnBitmask("scope"));
 
 		_finderPathCountByG_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
@@ -8156,8 +8158,8 @@ public class AppBuilderAppPersistenceImpl
 			AppBuilderAppImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByC_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			AppBuilderAppModelImpl.COMPANYID_COLUMN_BITMASK |
-			AppBuilderAppModelImpl.ACTIVE_COLUMN_BITMASK);
+			AppBuilderAppModelImpl.getColumnBitmask("companyId") |
+			AppBuilderAppModelImpl.getColumnBitmask("active_"));
 
 		_finderPathCountByC_A = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
@@ -8176,8 +8178,8 @@ public class AppBuilderAppPersistenceImpl
 			AppBuilderAppImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByC_S",
 			new String[] {Long.class.getName(), String.class.getName()},
-			AppBuilderAppModelImpl.COMPANYID_COLUMN_BITMASK |
-			AppBuilderAppModelImpl.SCOPE_COLUMN_BITMASK);
+			AppBuilderAppModelImpl.getColumnBitmask("companyId") |
+			AppBuilderAppModelImpl.getColumnBitmask("scope"));
 
 		_finderPathCountByC_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
@@ -8198,9 +8200,9 @@ public class AppBuilderAppPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			AppBuilderAppModelImpl.GROUPID_COLUMN_BITMASK |
-			AppBuilderAppModelImpl.COMPANYID_COLUMN_BITMASK |
-			AppBuilderAppModelImpl.DDMSTRUCTUREID_COLUMN_BITMASK);
+			AppBuilderAppModelImpl.getColumnBitmask("groupId") |
+			AppBuilderAppModelImpl.getColumnBitmask("companyId") |
+			AppBuilderAppModelImpl.getColumnBitmask("ddmStructureId"));
 
 		_finderPathCountByG_C_D = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -8225,9 +8227,9 @@ public class AppBuilderAppPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			AppBuilderAppModelImpl.COMPANYID_COLUMN_BITMASK |
-			AppBuilderAppModelImpl.ACTIVE_COLUMN_BITMASK |
-			AppBuilderAppModelImpl.SCOPE_COLUMN_BITMASK);
+			AppBuilderAppModelImpl.getColumnBitmask("companyId") |
+			AppBuilderAppModelImpl.getColumnBitmask("active_") |
+			AppBuilderAppModelImpl.getColumnBitmask("scope"));
 
 		_finderPathCountByC_A_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

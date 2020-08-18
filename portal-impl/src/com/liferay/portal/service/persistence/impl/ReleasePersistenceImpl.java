@@ -449,7 +449,7 @@ public class ReleasePersistenceImpl
 			 _finderPathFetchByServletContextName.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				releaseModelImpl.getOriginalServletContextName()
+				releaseModelImpl.getColumnOriginalValue("servletContextName")
 			};
 
 			FinderCacheUtil.removeResult(
@@ -917,7 +917,7 @@ public class ReleasePersistenceImpl
 		_finderPathFetchByServletContextName = new FinderPath(
 			ReleaseImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByServletContextName", new String[] {String.class.getName()},
-			ReleaseModelImpl.SERVLETCONTEXTNAME_COLUMN_BITMASK);
+			ReleaseModelImpl.getColumnBitmask("servletContextName"));
 
 		_finderPathCountByServletContextName = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

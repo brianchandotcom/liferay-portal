@@ -140,24 +140,74 @@ public class SocialActivityModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long ACTIVITYSETID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CLASSPK_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 8L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 32L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long MIRRORACTIVITYID_COLUMN_BITMASK = 64L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long RECEIVERUSERID_COLUMN_BITMASK = 128L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long TYPE_COLUMN_BITMASK = 256L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long USERID_COLUMN_BITMASK = 512L;
 
 	/**
@@ -441,6 +491,14 @@ public class SocialActivityModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("mvccVersion");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_mvccVersion = mvccVersion;
 	}
 
@@ -452,6 +510,14 @@ public class SocialActivityModelImpl
 
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("ctCollectionId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_ctCollectionId = ctCollectionId;
 	}
 
@@ -463,6 +529,14 @@ public class SocialActivityModelImpl
 
 	@Override
 	public void setActivityId(long activityId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("activityId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_activityId = activityId;
 	}
 
@@ -474,19 +548,24 @@ public class SocialActivityModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("groupId");
 
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_groupId = groupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -497,19 +576,24 @@ public class SocialActivityModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
 
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_companyId = companyId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -520,12 +604,12 @@ public class SocialActivityModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
 
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_userId = userId;
@@ -547,8 +631,13 @@ public class SocialActivityModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalUserId() {
-		return _originalUserId;
+		return GetterUtil.getLong(getColumnOriginalValue("userId"));
 	}
 
 	@JSON
@@ -559,19 +648,24 @@ public class SocialActivityModelImpl
 
 	@Override
 	public void setCreateDate(long createDate) {
-		_columnBitmask = -1L;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
 
-		if (!_setOriginalCreateDate) {
-			_setOriginalCreateDate = true;
-
-			_originalCreateDate = _createDate;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_createDate = createDate;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCreateDate() {
-		return _originalCreateDate;
+		return GetterUtil.getLong(getColumnOriginalValue("createDate"));
 	}
 
 	@JSON
@@ -582,19 +676,24 @@ public class SocialActivityModelImpl
 
 	@Override
 	public void setActivitySetId(long activitySetId) {
-		_columnBitmask |= ACTIVITYSETID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("activitySetId");
 
-		if (!_setOriginalActivitySetId) {
-			_setOriginalActivitySetId = true;
-
-			_originalActivitySetId = _activitySetId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_activitySetId = activitySetId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalActivitySetId() {
-		return _originalActivitySetId;
+		return GetterUtil.getLong(getColumnOriginalValue("activitySetId"));
 	}
 
 	@JSON
@@ -605,19 +704,24 @@ public class SocialActivityModelImpl
 
 	@Override
 	public void setMirrorActivityId(long mirrorActivityId) {
-		_columnBitmask |= MIRRORACTIVITYID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("mirrorActivityId");
 
-		if (!_setOriginalMirrorActivityId) {
-			_setOriginalMirrorActivityId = true;
-
-			_originalMirrorActivityId = _mirrorActivityId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_mirrorActivityId = mirrorActivityId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalMirrorActivityId() {
-		return _originalMirrorActivityId;
+		return GetterUtil.getLong(getColumnOriginalValue("mirrorActivityId"));
 	}
 
 	@Override
@@ -648,19 +752,24 @@ public class SocialActivityModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("classNameId");
 
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_classNameId = classNameId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
 	}
 
 	@JSON
@@ -671,19 +780,24 @@ public class SocialActivityModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("classPK");
 
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_classPK = classPK;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		return GetterUtil.getLong(getColumnOriginalValue("classPK"));
 	}
 
 	@JSON
@@ -694,6 +808,14 @@ public class SocialActivityModelImpl
 
 	@Override
 	public void setParentClassNameId(long parentClassNameId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("parentClassNameId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_parentClassNameId = parentClassNameId;
 	}
 
@@ -705,6 +827,14 @@ public class SocialActivityModelImpl
 
 	@Override
 	public void setParentClassPK(long parentClassPK) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("parentClassPK");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_parentClassPK = parentClassPK;
 	}
 
@@ -716,19 +846,24 @@ public class SocialActivityModelImpl
 
 	@Override
 	public void setType(int type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("type_");
 
-		if (!_setOriginalType) {
-			_setOriginalType = true;
-
-			_originalType = _type;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_type = type;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public int getOriginalType() {
-		return _originalType;
+		return GetterUtil.getInteger(getColumnOriginalValue("type_"));
 	}
 
 	@JSON
@@ -744,6 +879,14 @@ public class SocialActivityModelImpl
 
 	@Override
 	public void setExtraData(String extraData) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("extraData");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_extraData = extraData;
 	}
 
@@ -755,12 +898,12 @@ public class SocialActivityModelImpl
 
 	@Override
 	public void setReceiverUserId(long receiverUserId) {
-		_columnBitmask |= RECEIVERUSERID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("receiverUserId");
 
-		if (!_setOriginalReceiverUserId) {
-			_setOriginalReceiverUserId = true;
-
-			_originalReceiverUserId = _receiverUserId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_receiverUserId = receiverUserId;
@@ -782,8 +925,13 @@ public class SocialActivityModelImpl
 	public void setReceiverUserUuid(String receiverUserUuid) {
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalReceiverUserId() {
-		return _originalReceiverUserId;
+		return GetterUtil.getLong(getColumnOriginalValue("receiverUserId"));
 	}
 
 	public long getColumnBitmask() {
@@ -914,58 +1062,9 @@ public class SocialActivityModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		SocialActivityModelImpl socialActivityModelImpl = this;
+		_columnOriginalValues = Collections.emptyMap();
 
-		socialActivityModelImpl._originalGroupId =
-			socialActivityModelImpl._groupId;
-
-		socialActivityModelImpl._setOriginalGroupId = false;
-
-		socialActivityModelImpl._originalCompanyId =
-			socialActivityModelImpl._companyId;
-
-		socialActivityModelImpl._setOriginalCompanyId = false;
-
-		socialActivityModelImpl._originalUserId =
-			socialActivityModelImpl._userId;
-
-		socialActivityModelImpl._setOriginalUserId = false;
-
-		socialActivityModelImpl._originalCreateDate =
-			socialActivityModelImpl._createDate;
-
-		socialActivityModelImpl._setOriginalCreateDate = false;
-
-		socialActivityModelImpl._originalActivitySetId =
-			socialActivityModelImpl._activitySetId;
-
-		socialActivityModelImpl._setOriginalActivitySetId = false;
-
-		socialActivityModelImpl._originalMirrorActivityId =
-			socialActivityModelImpl._mirrorActivityId;
-
-		socialActivityModelImpl._setOriginalMirrorActivityId = false;
-
-		socialActivityModelImpl._originalClassNameId =
-			socialActivityModelImpl._classNameId;
-
-		socialActivityModelImpl._setOriginalClassNameId = false;
-
-		socialActivityModelImpl._originalClassPK =
-			socialActivityModelImpl._classPK;
-
-		socialActivityModelImpl._setOriginalClassPK = false;
-
-		socialActivityModelImpl._originalType = socialActivityModelImpl._type;
-
-		socialActivityModelImpl._setOriginalType = false;
-
-		socialActivityModelImpl._originalReceiverUserId =
-			socialActivityModelImpl._receiverUserId;
-
-		socialActivityModelImpl._setOriginalReceiverUserId = false;
-
-		socialActivityModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -1084,42 +1183,100 @@ public class SocialActivityModelImpl
 
 	}
 
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
+		_columnOriginalValues.put("activityId", _activityId);
+		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("activitySetId", _activitySetId);
+		_columnOriginalValues.put("mirrorActivityId", _mirrorActivityId);
+		_columnOriginalValues.put("classNameId", _classNameId);
+		_columnOriginalValues.put("classPK", _classPK);
+		_columnOriginalValues.put("parentClassNameId", _parentClassNameId);
+		_columnOriginalValues.put("parentClassPK", _parentClassPK);
+		_columnOriginalValues.put("type_", _type);
+		_columnOriginalValues.put("extraData", _extraData);
+		_columnOriginalValues.put("receiverUserId", _receiverUserId);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("mvccVersion", 1L);
+
+		columnBitmasks.put("ctCollectionId", 2L);
+
+		columnBitmasks.put("activityId", 4L);
+
+		columnBitmasks.put("groupId", 8L);
+
+		columnBitmasks.put("companyId", 16L);
+
+		columnBitmasks.put("userId", 32L);
+
+		columnBitmasks.put("createDate", 64L);
+
+		columnBitmasks.put("activitySetId", 128L);
+
+		columnBitmasks.put("mirrorActivityId", 256L);
+
+		columnBitmasks.put("classNameId", 512L);
+
+		columnBitmasks.put("classPK", 1024L);
+
+		columnBitmasks.put("parentClassNameId", 2048L);
+
+		columnBitmasks.put("parentClassPK", 4096L);
+
+		columnBitmasks.put("type_", 8192L);
+
+		columnBitmasks.put("extraData", 16384L);
+
+		columnBitmasks.put("receiverUserId", 32768L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private long _activityId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private long _createDate;
-	private long _originalCreateDate;
-	private boolean _setOriginalCreateDate;
 	private long _activitySetId;
-	private long _originalActivitySetId;
-	private boolean _setOriginalActivitySetId;
 	private long _mirrorActivityId;
-	private long _originalMirrorActivityId;
-	private boolean _setOriginalMirrorActivityId;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private long _parentClassNameId;
 	private long _parentClassPK;
 	private int _type;
-	private int _originalType;
-	private boolean _setOriginalType;
 	private String _extraData;
 	private long _receiverUserId;
-	private long _originalReceiverUserId;
-	private boolean _setOriginalReceiverUserId;
 	private long _columnBitmask;
 	private SocialActivity _escapedModel;
 

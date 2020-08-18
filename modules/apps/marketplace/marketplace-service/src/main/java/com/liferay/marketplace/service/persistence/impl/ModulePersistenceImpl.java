@@ -3504,8 +3504,8 @@ public class ModulePersistenceImpl
 			 _finderPathFetchByA_CN.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				moduleModelImpl.getOriginalAppId(),
-				moduleModelImpl.getOriginalContextName()
+				moduleModelImpl.getColumnOriginalValue("appId"),
+				moduleModelImpl.getColumnOriginalValue("contextName")
 			};
 
 			finderCache.removeResult(_finderPathCountByA_CN, args);
@@ -3527,9 +3527,9 @@ public class ModulePersistenceImpl
 			 _finderPathFetchByA_BSN_BV.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				moduleModelImpl.getOriginalAppId(),
-				moduleModelImpl.getOriginalBundleSymbolicName(),
-				moduleModelImpl.getOriginalBundleVersion()
+				moduleModelImpl.getColumnOriginalValue("appId"),
+				moduleModelImpl.getColumnOriginalValue("bundleSymbolicName"),
+				moduleModelImpl.getColumnOriginalValue("bundleVersion")
 			};
 
 			finderCache.removeResult(_finderPathCountByA_BSN_BV, args);
@@ -3734,7 +3734,7 @@ public class ModulePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					moduleModelImpl.getOriginalUuid()
+					moduleModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -3753,8 +3753,8 @@ public class ModulePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					moduleModelImpl.getOriginalUuid(),
-					moduleModelImpl.getOriginalCompanyId()
+					moduleModelImpl.getColumnOriginalValue("uuid_"),
+					moduleModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -3775,7 +3775,7 @@ public class ModulePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					moduleModelImpl.getOriginalAppId()
+					moduleModelImpl.getColumnOriginalValue("appId")
 				};
 
 				finderCache.removeResult(_finderPathCountByAppId, args);
@@ -3794,7 +3794,7 @@ public class ModulePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					moduleModelImpl.getOriginalBundleSymbolicName()
+					moduleModelImpl.getColumnOriginalValue("bundleSymbolicName")
 				};
 
 				finderCache.removeResult(
@@ -3815,7 +3815,7 @@ public class ModulePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					moduleModelImpl.getOriginalContextName()
+					moduleModelImpl.getColumnOriginalValue("contextName")
 				};
 
 				finderCache.removeResult(_finderPathCountByContextName, args);
@@ -4121,7 +4121,7 @@ public class ModulePersistenceImpl
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			ModuleImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid", new String[] {String.class.getName()},
-			ModuleModelImpl.UUID_COLUMN_BITMASK);
+			ModuleModelImpl.getColumnBitmask("uuid_"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4140,8 +4140,8 @@ public class ModulePersistenceImpl
 			ModuleImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			ModuleModelImpl.UUID_COLUMN_BITMASK |
-			ModuleModelImpl.COMPANYID_COLUMN_BITMASK);
+			ModuleModelImpl.getColumnBitmask("uuid_") |
+			ModuleModelImpl.getColumnBitmask("companyId"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4159,7 +4159,7 @@ public class ModulePersistenceImpl
 		_finderPathWithoutPaginationFindByAppId = new FinderPath(
 			ModuleImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByAppId", new String[] {Long.class.getName()},
-			ModuleModelImpl.APPID_COLUMN_BITMASK);
+			ModuleModelImpl.getColumnBitmask("appId"));
 
 		_finderPathCountByAppId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4176,7 +4176,7 @@ public class ModulePersistenceImpl
 		_finderPathWithoutPaginationFindByBundleSymbolicName = new FinderPath(
 			ModuleImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByBundleSymbolicName", new String[] {String.class.getName()},
-			ModuleModelImpl.BUNDLESYMBOLICNAME_COLUMN_BITMASK);
+			ModuleModelImpl.getColumnBitmask("bundleSymbolicName"));
 
 		_finderPathCountByBundleSymbolicName = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4193,7 +4193,7 @@ public class ModulePersistenceImpl
 		_finderPathWithoutPaginationFindByContextName = new FinderPath(
 			ModuleImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByContextName", new String[] {String.class.getName()},
-			ModuleModelImpl.CONTEXTNAME_COLUMN_BITMASK);
+			ModuleModelImpl.getColumnBitmask("contextName"));
 
 		_finderPathCountByContextName = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4202,8 +4202,8 @@ public class ModulePersistenceImpl
 		_finderPathFetchByA_CN = new FinderPath(
 			ModuleImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByA_CN",
 			new String[] {Long.class.getName(), String.class.getName()},
-			ModuleModelImpl.APPID_COLUMN_BITMASK |
-			ModuleModelImpl.CONTEXTNAME_COLUMN_BITMASK);
+			ModuleModelImpl.getColumnBitmask("appId") |
+			ModuleModelImpl.getColumnBitmask("contextName"));
 
 		_finderPathCountByA_CN = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4216,9 +4216,9 @@ public class ModulePersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			ModuleModelImpl.APPID_COLUMN_BITMASK |
-			ModuleModelImpl.BUNDLESYMBOLICNAME_COLUMN_BITMASK |
-			ModuleModelImpl.BUNDLEVERSION_COLUMN_BITMASK);
+			ModuleModelImpl.getColumnBitmask("appId") |
+			ModuleModelImpl.getColumnBitmask("bundleSymbolicName") |
+			ModuleModelImpl.getColumnBitmask("bundleVersion"));
 
 		_finderPathCountByA_BSN_BV = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

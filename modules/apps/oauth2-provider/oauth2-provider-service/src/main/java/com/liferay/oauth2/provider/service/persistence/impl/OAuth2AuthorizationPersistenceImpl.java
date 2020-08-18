@@ -2545,7 +2545,8 @@ public class OAuth2AuthorizationPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					oAuth2AuthorizationModelImpl.getOriginalUserId()
+					oAuth2AuthorizationModelImpl.getColumnOriginalValue(
+						"userId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUserId, args);
@@ -2564,8 +2565,8 @@ public class OAuth2AuthorizationPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					oAuth2AuthorizationModelImpl.
-						getOriginalOAuth2ApplicationId()
+					oAuth2AuthorizationModelImpl.getColumnOriginalValue(
+						"oAuth2ApplicationId")
 				};
 
 				finderCache.removeResult(
@@ -2590,9 +2591,10 @@ public class OAuth2AuthorizationPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					oAuth2AuthorizationModelImpl.getOriginalCompanyId(),
-					oAuth2AuthorizationModelImpl.
-						getOriginalAccessTokenContentHash()
+					oAuth2AuthorizationModelImpl.getColumnOriginalValue(
+						"companyId"),
+					oAuth2AuthorizationModelImpl.getColumnOriginalValue(
+						"accessTokenContentHash")
 				};
 
 				finderCache.removeResult(
@@ -2618,9 +2620,10 @@ public class OAuth2AuthorizationPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					oAuth2AuthorizationModelImpl.getOriginalCompanyId(),
-					oAuth2AuthorizationModelImpl.
-						getOriginalRefreshTokenContentHash()
+					oAuth2AuthorizationModelImpl.getColumnOriginalValue(
+						"companyId"),
+					oAuth2AuthorizationModelImpl.getColumnOriginalValue(
+						"refreshTokenContentHash")
 				};
 
 				finderCache.removeResult(
@@ -3273,7 +3276,7 @@ public class OAuth2AuthorizationPersistenceImpl
 			OAuth2AuthorizationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
 			new String[] {Long.class.getName()},
-			OAuth2AuthorizationModelImpl.USERID_COLUMN_BITMASK);
+			OAuth2AuthorizationModelImpl.getColumnBitmask("userId"));
 
 		_finderPathCountByUserId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3291,7 +3294,8 @@ public class OAuth2AuthorizationPersistenceImpl
 			OAuth2AuthorizationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByOAuth2ApplicationId", new String[] {Long.class.getName()},
-			OAuth2AuthorizationModelImpl.OAUTH2APPLICATIONID_COLUMN_BITMASK);
+			OAuth2AuthorizationModelImpl.getColumnBitmask(
+				"oAuth2ApplicationId"));
 
 		_finderPathCountByOAuth2ApplicationId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3313,9 +3317,9 @@ public class OAuth2AuthorizationPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByAccessTokenContentHash",
 				new String[] {Long.class.getName(), Long.class.getName()},
-				OAuth2AuthorizationModelImpl.COMPANYID_COLUMN_BITMASK |
-				OAuth2AuthorizationModelImpl.
-					ACCESSTOKENCONTENTHASH_COLUMN_BITMASK);
+				OAuth2AuthorizationModelImpl.getColumnBitmask("companyId") |
+				OAuth2AuthorizationModelImpl.getColumnBitmask(
+					"accessTokenContentHash"));
 
 		_finderPathCountByAccessTokenContentHash = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3338,9 +3342,9 @@ public class OAuth2AuthorizationPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByRefreshTokenContentHash",
 				new String[] {Long.class.getName(), Long.class.getName()},
-				OAuth2AuthorizationModelImpl.COMPANYID_COLUMN_BITMASK |
-				OAuth2AuthorizationModelImpl.
-					REFRESHTOKENCONTENTHASH_COLUMN_BITMASK);
+				OAuth2AuthorizationModelImpl.getColumnBitmask("companyId") |
+				OAuth2AuthorizationModelImpl.getColumnBitmask(
+					"refreshTokenContentHash"));
 
 		_finderPathCountByRefreshTokenContentHash = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

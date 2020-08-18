@@ -1463,9 +1463,9 @@ public class AnnouncementsFlagPersistenceImpl
 			 _finderPathFetchByU_E_V.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				announcementsFlagModelImpl.getOriginalUserId(),
-				announcementsFlagModelImpl.getOriginalEntryId(),
-				announcementsFlagModelImpl.getOriginalValue()
+				announcementsFlagModelImpl.getColumnOriginalValue("userId"),
+				announcementsFlagModelImpl.getColumnOriginalValue("entryId"),
+				announcementsFlagModelImpl.getColumnOriginalValue("value")
 			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByU_E_V, args);
@@ -1652,7 +1652,8 @@ public class AnnouncementsFlagPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					announcementsFlagModelImpl.getOriginalCompanyId()
+					announcementsFlagModelImpl.getColumnOriginalValue(
+						"companyId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
@@ -1671,7 +1672,7 @@ public class AnnouncementsFlagPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					announcementsFlagModelImpl.getOriginalEntryId()
+					announcementsFlagModelImpl.getColumnOriginalValue("entryId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByEntryId, args);
@@ -1978,9 +1979,9 @@ public class AnnouncementsFlagPersistenceImpl
 			AnnouncementsFlagImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
-			AnnouncementsFlagModelImpl.COMPANYID_COLUMN_BITMASK |
-			AnnouncementsFlagModelImpl.USERID_COLUMN_BITMASK |
-			AnnouncementsFlagModelImpl.CREATEDATE_COLUMN_BITMASK);
+			AnnouncementsFlagModelImpl.getColumnBitmask("companyId") |
+			AnnouncementsFlagModelImpl.getColumnBitmask("userId") |
+			AnnouncementsFlagModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1998,9 +1999,9 @@ public class AnnouncementsFlagPersistenceImpl
 			AnnouncementsFlagImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEntryId",
 			new String[] {Long.class.getName()},
-			AnnouncementsFlagModelImpl.ENTRYID_COLUMN_BITMASK |
-			AnnouncementsFlagModelImpl.USERID_COLUMN_BITMASK |
-			AnnouncementsFlagModelImpl.CREATEDATE_COLUMN_BITMASK);
+			AnnouncementsFlagModelImpl.getColumnBitmask("entryId") |
+			AnnouncementsFlagModelImpl.getColumnBitmask("userId") |
+			AnnouncementsFlagModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByEntryId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2013,9 +2014,9 @@ public class AnnouncementsFlagPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			AnnouncementsFlagModelImpl.USERID_COLUMN_BITMASK |
-			AnnouncementsFlagModelImpl.ENTRYID_COLUMN_BITMASK |
-			AnnouncementsFlagModelImpl.VALUE_COLUMN_BITMASK);
+			AnnouncementsFlagModelImpl.getColumnBitmask("userId") |
+			AnnouncementsFlagModelImpl.getColumnBitmask("entryId") |
+			AnnouncementsFlagModelImpl.getColumnBitmask("value"));
 
 		_finderPathCountByU_E_V = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

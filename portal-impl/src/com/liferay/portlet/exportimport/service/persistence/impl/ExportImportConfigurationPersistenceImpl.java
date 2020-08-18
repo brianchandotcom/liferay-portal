@@ -3129,7 +3129,8 @@ public class ExportImportConfigurationPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					exportImportConfigurationModelImpl.getOriginalGroupId()
+					exportImportConfigurationModelImpl.getColumnOriginalValue(
+						"groupId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByGroupId, args);
@@ -3150,7 +3151,8 @@ public class ExportImportConfigurationPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					exportImportConfigurationModelImpl.getOriginalCompanyId()
+					exportImportConfigurationModelImpl.getColumnOriginalValue(
+						"companyId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
@@ -3171,8 +3173,10 @@ public class ExportImportConfigurationPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					exportImportConfigurationModelImpl.getOriginalGroupId(),
-					exportImportConfigurationModelImpl.getOriginalType()
+					exportImportConfigurationModelImpl.getColumnOriginalValue(
+						"groupId"),
+					exportImportConfigurationModelImpl.getColumnOriginalValue(
+						"type_")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByG_T, args);
@@ -3194,8 +3198,10 @@ public class ExportImportConfigurationPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					exportImportConfigurationModelImpl.getOriginalGroupId(),
-					exportImportConfigurationModelImpl.getOriginalStatus()
+					exportImportConfigurationModelImpl.getColumnOriginalValue(
+						"groupId"),
+					exportImportConfigurationModelImpl.getColumnOriginalValue(
+						"status")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByG_S, args);
@@ -3217,9 +3223,12 @@ public class ExportImportConfigurationPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					exportImportConfigurationModelImpl.getOriginalGroupId(),
-					exportImportConfigurationModelImpl.getOriginalType(),
-					exportImportConfigurationModelImpl.getOriginalStatus()
+					exportImportConfigurationModelImpl.getColumnOriginalValue(
+						"groupId"),
+					exportImportConfigurationModelImpl.getColumnOriginalValue(
+						"type_"),
+					exportImportConfigurationModelImpl.getColumnOriginalValue(
+						"status")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByG_T_S, args);
@@ -3539,8 +3548,8 @@ public class ExportImportConfigurationPersistenceImpl
 			ExportImportConfigurationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()},
-			ExportImportConfigurationModelImpl.GROUPID_COLUMN_BITMASK |
-			ExportImportConfigurationModelImpl.CREATEDATE_COLUMN_BITMASK);
+			ExportImportConfigurationModelImpl.getColumnBitmask("groupId") |
+			ExportImportConfigurationModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3558,8 +3567,8 @@ public class ExportImportConfigurationPersistenceImpl
 			ExportImportConfigurationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
-			ExportImportConfigurationModelImpl.COMPANYID_COLUMN_BITMASK |
-			ExportImportConfigurationModelImpl.CREATEDATE_COLUMN_BITMASK);
+			ExportImportConfigurationModelImpl.getColumnBitmask("companyId") |
+			ExportImportConfigurationModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3578,9 +3587,9 @@ public class ExportImportConfigurationPersistenceImpl
 			ExportImportConfigurationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			ExportImportConfigurationModelImpl.GROUPID_COLUMN_BITMASK |
-			ExportImportConfigurationModelImpl.TYPE_COLUMN_BITMASK |
-			ExportImportConfigurationModelImpl.CREATEDATE_COLUMN_BITMASK);
+			ExportImportConfigurationModelImpl.getColumnBitmask("groupId") |
+			ExportImportConfigurationModelImpl.getColumnBitmask("type_") |
+			ExportImportConfigurationModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByG_T = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T",
@@ -3599,9 +3608,9 @@ public class ExportImportConfigurationPersistenceImpl
 			ExportImportConfigurationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			ExportImportConfigurationModelImpl.GROUPID_COLUMN_BITMASK |
-			ExportImportConfigurationModelImpl.STATUS_COLUMN_BITMASK |
-			ExportImportConfigurationModelImpl.CREATEDATE_COLUMN_BITMASK);
+			ExportImportConfigurationModelImpl.getColumnBitmask("groupId") |
+			ExportImportConfigurationModelImpl.getColumnBitmask("status") |
+			ExportImportConfigurationModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByG_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
@@ -3623,10 +3632,10 @@ public class ExportImportConfigurationPersistenceImpl
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName()
 			},
-			ExportImportConfigurationModelImpl.GROUPID_COLUMN_BITMASK |
-			ExportImportConfigurationModelImpl.TYPE_COLUMN_BITMASK |
-			ExportImportConfigurationModelImpl.STATUS_COLUMN_BITMASK |
-			ExportImportConfigurationModelImpl.CREATEDATE_COLUMN_BITMASK);
+			ExportImportConfigurationModelImpl.getColumnBitmask("groupId") |
+			ExportImportConfigurationModelImpl.getColumnBitmask("type_") |
+			ExportImportConfigurationModelImpl.getColumnBitmask("status") |
+			ExportImportConfigurationModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByG_T_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

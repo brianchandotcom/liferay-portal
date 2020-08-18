@@ -664,11 +664,13 @@ public class BookmarksEntryPersistenceTest {
 		Assert.assertEquals(
 			bookmarksEntry.getUuid(),
 			ReflectionTestUtil.invoke(
-				bookmarksEntry, "getOriginalUuid", new Class<?>[0]));
+				bookmarksEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(bookmarksEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				bookmarksEntry, "getOriginalGroupId", new Class<?>[0]));
+				bookmarksEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected BookmarksEntry addBookmarksEntry() throws Exception {

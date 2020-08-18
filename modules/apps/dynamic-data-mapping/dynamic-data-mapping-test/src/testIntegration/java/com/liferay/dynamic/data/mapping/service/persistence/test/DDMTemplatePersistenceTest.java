@@ -717,29 +717,35 @@ public class DDMTemplatePersistenceTest {
 		Assert.assertEquals(
 			ddmTemplate.getUuid(),
 			ReflectionTestUtil.invoke(
-				ddmTemplate, "getOriginalUuid", new Class<?>[0]));
+				ddmTemplate, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(ddmTemplate.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				ddmTemplate, "getOriginalGroupId", new Class<?>[0]));
+				ddmTemplate, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(ddmTemplate.getSmallImageId()),
 			ReflectionTestUtil.<Long>invoke(
-				ddmTemplate, "getOriginalSmallImageId", new Class<?>[0]));
+				ddmTemplate, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "smallImageId"));
 
 		Assert.assertEquals(
 			Long.valueOf(ddmTemplate.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				ddmTemplate, "getOriginalGroupId", new Class<?>[0]));
+				ddmTemplate, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			Long.valueOf(ddmTemplate.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				ddmTemplate, "getOriginalClassNameId", new Class<?>[0]));
+				ddmTemplate, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			ddmTemplate.getTemplateKey(),
 			ReflectionTestUtil.invoke(
-				ddmTemplate, "getOriginalTemplateKey", new Class<?>[0]));
+				ddmTemplate, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "templateKey"));
 	}
 
 	protected DDMTemplate addDDMTemplate() throws Exception {

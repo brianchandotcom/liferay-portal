@@ -601,11 +601,13 @@ public class DLFileShortcutPersistenceTest {
 		Assert.assertEquals(
 			dlFileShortcut.getUuid(),
 			ReflectionTestUtil.invoke(
-				dlFileShortcut, "getOriginalUuid", new Class<?>[0]));
+				dlFileShortcut, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(dlFileShortcut.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				dlFileShortcut, "getOriginalGroupId", new Class<?>[0]));
+				dlFileShortcut, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected DLFileShortcut addDLFileShortcut() throws Exception {

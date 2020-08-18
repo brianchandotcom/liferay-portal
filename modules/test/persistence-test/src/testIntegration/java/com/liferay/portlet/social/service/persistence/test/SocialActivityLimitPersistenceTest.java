@@ -532,30 +532,33 @@ public class SocialActivityLimitPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(socialActivityLimit.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				socialActivityLimit, "getOriginalGroupId", new Class<?>[0]));
+				socialActivityLimit, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			Long.valueOf(socialActivityLimit.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				socialActivityLimit, "getOriginalUserId", new Class<?>[0]));
+				socialActivityLimit, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "userId"));
 		Assert.assertEquals(
 			Long.valueOf(socialActivityLimit.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				socialActivityLimit, "getOriginalClassNameId",
-				new Class<?>[0]));
+				socialActivityLimit, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(socialActivityLimit.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				socialActivityLimit, "getOriginalClassPK", new Class<?>[0]));
+				socialActivityLimit, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 		Assert.assertEquals(
 			Integer.valueOf(socialActivityLimit.getActivityType()),
 			ReflectionTestUtil.<Integer>invoke(
-				socialActivityLimit, "getOriginalActivityType",
-				new Class<?>[0]));
+				socialActivityLimit, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "activityType"));
 		Assert.assertEquals(
 			socialActivityLimit.getActivityCounterName(),
 			ReflectionTestUtil.invoke(
-				socialActivityLimit, "getOriginalActivityCounterName",
-				new Class<?>[0]));
+				socialActivityLimit, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "activityCounterName"));
 	}
 
 	protected SocialActivityLimit addSocialActivityLimit() throws Exception {

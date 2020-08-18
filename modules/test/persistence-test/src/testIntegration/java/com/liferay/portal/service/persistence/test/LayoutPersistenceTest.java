@@ -809,78 +809,94 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(
 			layout.getUuid(),
 			ReflectionTestUtil.invoke(
-				layout, "getOriginalUuid", new Class<?>[0]));
+				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(layout.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				layout, "getOriginalGroupId", new Class<?>[0]));
+				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"groupId"));
 		Assert.assertEquals(
 			Boolean.valueOf(layout.getPrivateLayout()),
 			ReflectionTestUtil.<Boolean>invoke(
-				layout, "getOriginalPrivateLayout", new Class<?>[0]));
+				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"privateLayout"));
 
 		Assert.assertEquals(
 			Long.valueOf(layout.getIconImageId()),
 			ReflectionTestUtil.<Long>invoke(
-				layout, "getOriginalIconImageId", new Class<?>[0]));
+				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"iconImageId"));
 
 		Assert.assertEquals(
 			Boolean.valueOf(layout.getPrivateLayout()),
 			ReflectionTestUtil.<Boolean>invoke(
-				layout, "getOriginalPrivateLayout", new Class<?>[0]));
+				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"privateLayout"));
 		Assert.assertEquals(
 			Long.valueOf(layout.getIconImageId()),
 			ReflectionTestUtil.<Long>invoke(
-				layout, "getOriginalIconImageId", new Class<?>[0]));
+				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"iconImageId"));
 
 		Assert.assertEquals(
 			Long.valueOf(layout.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				layout, "getOriginalClassNameId", new Class<?>[0]));
+				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(layout.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				layout, "getOriginalClassPK", new Class<?>[0]));
+				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"classPK"));
 
 		Assert.assertEquals(
 			Long.valueOf(layout.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				layout, "getOriginalGroupId", new Class<?>[0]));
+				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"groupId"));
 		Assert.assertEquals(
 			Boolean.valueOf(layout.getPrivateLayout()),
 			ReflectionTestUtil.<Boolean>invoke(
-				layout, "getOriginalPrivateLayout", new Class<?>[0]));
+				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"privateLayout"));
 		Assert.assertEquals(
 			Long.valueOf(layout.getLayoutId()),
 			ReflectionTestUtil.<Long>invoke(
-				layout, "getOriginalLayoutId", new Class<?>[0]));
+				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"layoutId"));
 
 		Assert.assertEquals(
 			Long.valueOf(layout.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				layout, "getOriginalGroupId", new Class<?>[0]));
+				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"groupId"));
 		Assert.assertEquals(
 			Boolean.valueOf(layout.getPrivateLayout()),
 			ReflectionTestUtil.<Boolean>invoke(
-				layout, "getOriginalPrivateLayout", new Class<?>[0]));
+				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"privateLayout"));
 		Assert.assertEquals(
 			layout.getFriendlyURL(),
 			ReflectionTestUtil.invoke(
-				layout, "getOriginalFriendlyURL", new Class<?>[0]));
+				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"friendlyURL"));
 
 		Assert.assertEquals(
 			Long.valueOf(layout.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				layout, "getOriginalGroupId", new Class<?>[0]));
+				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"groupId"));
 		Assert.assertEquals(
 			Boolean.valueOf(layout.getPrivateLayout()),
 			ReflectionTestUtil.<Boolean>invoke(
-				layout, "getOriginalPrivateLayout", new Class<?>[0]));
+				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"privateLayout"));
 		Assert.assertEquals(
 			layout.getSourcePrototypeLayoutUuid(),
 			ReflectionTestUtil.invoke(
-				layout, "getOriginalSourcePrototypeLayoutUuid",
-				new Class<?>[0]));
+				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"sourcePrototypeLayoutUuid"));
 	}
 
 	protected Layout addLayout() throws Exception {

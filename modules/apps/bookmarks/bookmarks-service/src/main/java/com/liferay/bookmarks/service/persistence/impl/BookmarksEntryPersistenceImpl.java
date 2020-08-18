@@ -12592,8 +12592,8 @@ public class BookmarksEntryPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				bookmarksEntryModelImpl.getOriginalUuid(),
-				bookmarksEntryModelImpl.getOriginalGroupId()
+				bookmarksEntryModelImpl.getColumnOriginalValue("uuid_"),
+				bookmarksEntryModelImpl.getColumnOriginalValue("groupId")
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -12865,7 +12865,7 @@ public class BookmarksEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					bookmarksEntryModelImpl.getOriginalUuid()
+					bookmarksEntryModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -12884,8 +12884,8 @@ public class BookmarksEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					bookmarksEntryModelImpl.getOriginalUuid(),
-					bookmarksEntryModelImpl.getOriginalCompanyId()
+					bookmarksEntryModelImpl.getColumnOriginalValue("uuid_"),
+					bookmarksEntryModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -12907,7 +12907,7 @@ public class BookmarksEntryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					bookmarksEntryModelImpl.getOriginalCompanyId()
+					bookmarksEntryModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -12926,8 +12926,8 @@ public class BookmarksEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					bookmarksEntryModelImpl.getOriginalGroupId(),
-					bookmarksEntryModelImpl.getOriginalFolderId()
+					bookmarksEntryModelImpl.getColumnOriginalValue("groupId"),
+					bookmarksEntryModelImpl.getColumnOriginalValue("folderId")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_F, args);
@@ -12949,8 +12949,8 @@ public class BookmarksEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					bookmarksEntryModelImpl.getOriginalGroupId(),
-					bookmarksEntryModelImpl.getOriginalStatus()
+					bookmarksEntryModelImpl.getColumnOriginalValue("groupId"),
+					bookmarksEntryModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_S, args);
@@ -12972,9 +12972,9 @@ public class BookmarksEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					bookmarksEntryModelImpl.getOriginalGroupId(),
-					bookmarksEntryModelImpl.getOriginalUserId(),
-					bookmarksEntryModelImpl.getOriginalStatus()
+					bookmarksEntryModelImpl.getColumnOriginalValue("groupId"),
+					bookmarksEntryModelImpl.getColumnOriginalValue("userId"),
+					bookmarksEntryModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_U_S, args);
@@ -12997,9 +12997,9 @@ public class BookmarksEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					bookmarksEntryModelImpl.getOriginalGroupId(),
-					bookmarksEntryModelImpl.getOriginalFolderId(),
-					bookmarksEntryModelImpl.getOriginalStatus()
+					bookmarksEntryModelImpl.getColumnOriginalValue("groupId"),
+					bookmarksEntryModelImpl.getColumnOriginalValue("folderId"),
+					bookmarksEntryModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_F_S, args);
@@ -13022,10 +13022,10 @@ public class BookmarksEntryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					bookmarksEntryModelImpl.getOriginalGroupId(),
-					bookmarksEntryModelImpl.getOriginalUserId(),
-					bookmarksEntryModelImpl.getOriginalFolderId(),
-					bookmarksEntryModelImpl.getOriginalStatus()
+					bookmarksEntryModelImpl.getColumnOriginalValue("groupId"),
+					bookmarksEntryModelImpl.getColumnOriginalValue("userId"),
+					bookmarksEntryModelImpl.getColumnOriginalValue("folderId"),
+					bookmarksEntryModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_U_F_S, args);
@@ -13340,9 +13340,9 @@ public class BookmarksEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			BookmarksEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid", new String[] {String.class.getName()},
-			BookmarksEntryModelImpl.UUID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.FOLDERID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.NAME_COLUMN_BITMASK);
+			BookmarksEntryModelImpl.getColumnBitmask("uuid_") |
+			BookmarksEntryModelImpl.getColumnBitmask("folderId") |
+			BookmarksEntryModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -13351,8 +13351,8 @@ public class BookmarksEntryPersistenceImpl
 		_finderPathFetchByUUID_G = new FinderPath(
 			BookmarksEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			BookmarksEntryModelImpl.UUID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.GROUPID_COLUMN_BITMASK);
+			BookmarksEntryModelImpl.getColumnBitmask("uuid_") |
+			BookmarksEntryModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -13372,10 +13372,10 @@ public class BookmarksEntryPersistenceImpl
 			BookmarksEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			BookmarksEntryModelImpl.UUID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.FOLDERID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.NAME_COLUMN_BITMASK);
+			BookmarksEntryModelImpl.getColumnBitmask("uuid_") |
+			BookmarksEntryModelImpl.getColumnBitmask("companyId") |
+			BookmarksEntryModelImpl.getColumnBitmask("folderId") |
+			BookmarksEntryModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -13393,9 +13393,9 @@ public class BookmarksEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
 			BookmarksEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCompanyId", new String[] {Long.class.getName()},
-			BookmarksEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.FOLDERID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.NAME_COLUMN_BITMASK);
+			BookmarksEntryModelImpl.getColumnBitmask("companyId") |
+			BookmarksEntryModelImpl.getColumnBitmask("folderId") |
+			BookmarksEntryModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -13414,9 +13414,9 @@ public class BookmarksEntryPersistenceImpl
 			BookmarksEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByG_F",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			BookmarksEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.FOLDERID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.NAME_COLUMN_BITMASK);
+			BookmarksEntryModelImpl.getColumnBitmask("groupId") |
+			BookmarksEntryModelImpl.getColumnBitmask("folderId") |
+			BookmarksEntryModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByG_F = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F",
@@ -13439,10 +13439,10 @@ public class BookmarksEntryPersistenceImpl
 			BookmarksEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByG_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			BookmarksEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.STATUS_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.FOLDERID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.NAME_COLUMN_BITMASK);
+			BookmarksEntryModelImpl.getColumnBitmask("groupId") |
+			BookmarksEntryModelImpl.getColumnBitmask("status") |
+			BookmarksEntryModelImpl.getColumnBitmask("folderId") |
+			BookmarksEntryModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByG_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
@@ -13490,11 +13490,11 @@ public class BookmarksEntryPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			BookmarksEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.USERID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.STATUS_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.FOLDERID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.NAME_COLUMN_BITMASK);
+			BookmarksEntryModelImpl.getColumnBitmask("groupId") |
+			BookmarksEntryModelImpl.getColumnBitmask("userId") |
+			BookmarksEntryModelImpl.getColumnBitmask("status") |
+			BookmarksEntryModelImpl.getColumnBitmask("folderId") |
+			BookmarksEntryModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByG_U_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -13537,10 +13537,10 @@ public class BookmarksEntryPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			BookmarksEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.FOLDERID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.STATUS_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.NAME_COLUMN_BITMASK);
+			BookmarksEntryModelImpl.getColumnBitmask("groupId") |
+			BookmarksEntryModelImpl.getColumnBitmask("folderId") |
+			BookmarksEntryModelImpl.getColumnBitmask("status") |
+			BookmarksEntryModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByG_F_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -13591,11 +13591,11 @@ public class BookmarksEntryPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Integer.class.getName()
 			},
-			BookmarksEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.USERID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.FOLDERID_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.STATUS_COLUMN_BITMASK |
-			BookmarksEntryModelImpl.NAME_COLUMN_BITMASK);
+			BookmarksEntryModelImpl.getColumnBitmask("groupId") |
+			BookmarksEntryModelImpl.getColumnBitmask("userId") |
+			BookmarksEntryModelImpl.getColumnBitmask("folderId") |
+			BookmarksEntryModelImpl.getColumnBitmask("status") |
+			BookmarksEntryModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByG_U_F_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

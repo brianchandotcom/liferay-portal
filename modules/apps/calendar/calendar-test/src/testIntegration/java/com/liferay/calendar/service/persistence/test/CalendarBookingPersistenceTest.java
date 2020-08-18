@@ -682,30 +682,35 @@ public class CalendarBookingPersistenceTest {
 		Assert.assertEquals(
 			calendarBooking.getUuid(),
 			ReflectionTestUtil.invoke(
-				calendarBooking, "getOriginalUuid", new Class<?>[0]));
+				calendarBooking, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(calendarBooking.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				calendarBooking, "getOriginalGroupId", new Class<?>[0]));
+				calendarBooking, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(calendarBooking.getCalendarId()),
 			ReflectionTestUtil.<Long>invoke(
-				calendarBooking, "getOriginalCalendarId", new Class<?>[0]));
+				calendarBooking, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "calendarId"));
 		Assert.assertEquals(
 			Long.valueOf(calendarBooking.getParentCalendarBookingId()),
 			ReflectionTestUtil.<Long>invoke(
-				calendarBooking, "getOriginalParentCalendarBookingId",
-				new Class<?>[0]));
+				calendarBooking, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "parentCalendarBookingId"));
 
 		Assert.assertEquals(
 			Long.valueOf(calendarBooking.getCalendarId()),
 			ReflectionTestUtil.<Long>invoke(
-				calendarBooking, "getOriginalCalendarId", new Class<?>[0]));
+				calendarBooking, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "calendarId"));
 		Assert.assertEquals(
 			calendarBooking.getVEventUid(),
 			ReflectionTestUtil.invoke(
-				calendarBooking, "getOriginalVEventUid", new Class<?>[0]));
+				calendarBooking, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "vEventUid"));
 	}
 
 	protected CalendarBooking addCalendarBooking() throws Exception {

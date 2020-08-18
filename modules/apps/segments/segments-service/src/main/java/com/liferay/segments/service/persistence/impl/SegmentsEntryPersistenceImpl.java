@@ -10072,8 +10072,8 @@ public class SegmentsEntryPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				segmentsEntryModelImpl.getOriginalUuid(),
-				segmentsEntryModelImpl.getOriginalGroupId()
+				segmentsEntryModelImpl.getColumnOriginalValue("uuid_"),
+				segmentsEntryModelImpl.getColumnOriginalValue("groupId")
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -10094,8 +10094,9 @@ public class SegmentsEntryPersistenceImpl
 			 _finderPathFetchByG_S.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				segmentsEntryModelImpl.getOriginalGroupId(),
-				segmentsEntryModelImpl.getOriginalSegmentsEntryKey()
+				segmentsEntryModelImpl.getColumnOriginalValue("groupId"),
+				segmentsEntryModelImpl.getColumnOriginalValue(
+					"segmentsEntryKey")
 			};
 
 			finderCache.removeResult(_finderPathCountByG_S, args);
@@ -10386,7 +10387,7 @@ public class SegmentsEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					segmentsEntryModelImpl.getOriginalUuid()
+					segmentsEntryModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -10405,8 +10406,8 @@ public class SegmentsEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					segmentsEntryModelImpl.getOriginalUuid(),
-					segmentsEntryModelImpl.getOriginalCompanyId()
+					segmentsEntryModelImpl.getColumnOriginalValue("uuid_"),
+					segmentsEntryModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -10428,7 +10429,7 @@ public class SegmentsEntryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					segmentsEntryModelImpl.getOriginalGroupId()
+					segmentsEntryModelImpl.getColumnOriginalValue("groupId")
 				};
 
 				finderCache.removeResult(_finderPathCountByGroupId, args);
@@ -10447,7 +10448,7 @@ public class SegmentsEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					segmentsEntryModelImpl.getOriginalSource()
+					segmentsEntryModelImpl.getColumnOriginalValue("source")
 				};
 
 				finderCache.removeResult(_finderPathCountBySource, args);
@@ -10466,7 +10467,7 @@ public class SegmentsEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					segmentsEntryModelImpl.getOriginalType()
+					segmentsEntryModelImpl.getColumnOriginalValue("type_")
 				};
 
 				finderCache.removeResult(_finderPathCountByType, args);
@@ -10485,8 +10486,8 @@ public class SegmentsEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					segmentsEntryModelImpl.getOriginalGroupId(),
-					segmentsEntryModelImpl.getOriginalActive()
+					segmentsEntryModelImpl.getColumnOriginalValue("groupId"),
+					segmentsEntryModelImpl.getColumnOriginalValue("active_")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_A, args);
@@ -10508,8 +10509,8 @@ public class SegmentsEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					segmentsEntryModelImpl.getOriginalActive(),
-					segmentsEntryModelImpl.getOriginalType()
+					segmentsEntryModelImpl.getColumnOriginalValue("active_"),
+					segmentsEntryModelImpl.getColumnOriginalValue("type_")
 				};
 
 				finderCache.removeResult(_finderPathCountByA_T, args);
@@ -10531,9 +10532,9 @@ public class SegmentsEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					segmentsEntryModelImpl.getOriginalGroupId(),
-					segmentsEntryModelImpl.getOriginalActive(),
-					segmentsEntryModelImpl.getOriginalType()
+					segmentsEntryModelImpl.getColumnOriginalValue("groupId"),
+					segmentsEntryModelImpl.getColumnOriginalValue("active_"),
+					segmentsEntryModelImpl.getColumnOriginalValue("type_")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_A_T, args);
@@ -10556,10 +10557,10 @@ public class SegmentsEntryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					segmentsEntryModelImpl.getOriginalGroupId(),
-					segmentsEntryModelImpl.getOriginalActive(),
-					segmentsEntryModelImpl.getOriginalSource(),
-					segmentsEntryModelImpl.getOriginalType()
+					segmentsEntryModelImpl.getColumnOriginalValue("groupId"),
+					segmentsEntryModelImpl.getColumnOriginalValue("active_"),
+					segmentsEntryModelImpl.getColumnOriginalValue("source"),
+					segmentsEntryModelImpl.getColumnOriginalValue("type_")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_A_S_T, args);
@@ -11066,8 +11067,8 @@ public class SegmentsEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid", new String[] {String.class.getName()},
-			SegmentsEntryModelImpl.UUID_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+			SegmentsEntryModelImpl.getColumnBitmask("uuid_") |
+			SegmentsEntryModelImpl.getColumnBitmask("modifiedDate"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -11076,8 +11077,8 @@ public class SegmentsEntryPersistenceImpl
 		_finderPathFetchByUUID_G = new FinderPath(
 			SegmentsEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			SegmentsEntryModelImpl.UUID_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.GROUPID_COLUMN_BITMASK);
+			SegmentsEntryModelImpl.getColumnBitmask("uuid_") |
+			SegmentsEntryModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -11097,9 +11098,9 @@ public class SegmentsEntryPersistenceImpl
 			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			SegmentsEntryModelImpl.UUID_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+			SegmentsEntryModelImpl.getColumnBitmask("uuid_") |
+			SegmentsEntryModelImpl.getColumnBitmask("companyId") |
+			SegmentsEntryModelImpl.getColumnBitmask("modifiedDate"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -11117,8 +11118,8 @@ public class SegmentsEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
 			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByGroupId", new String[] {Long.class.getName()},
-			SegmentsEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+			SegmentsEntryModelImpl.getColumnBitmask("groupId") |
+			SegmentsEntryModelImpl.getColumnBitmask("modifiedDate"));
 
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -11139,8 +11140,8 @@ public class SegmentsEntryPersistenceImpl
 		_finderPathWithoutPaginationFindBySource = new FinderPath(
 			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findBySource", new String[] {String.class.getName()},
-			SegmentsEntryModelImpl.SOURCE_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+			SegmentsEntryModelImpl.getColumnBitmask("source") |
+			SegmentsEntryModelImpl.getColumnBitmask("modifiedDate"));
 
 		_finderPathCountBySource = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -11157,8 +11158,8 @@ public class SegmentsEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByType = new FinderPath(
 			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByType", new String[] {String.class.getName()},
-			SegmentsEntryModelImpl.TYPE_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+			SegmentsEntryModelImpl.getColumnBitmask("type_") |
+			SegmentsEntryModelImpl.getColumnBitmask("modifiedDate"));
 
 		_finderPathCountByType = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -11167,8 +11168,8 @@ public class SegmentsEntryPersistenceImpl
 		_finderPathFetchByG_S = new FinderPath(
 			SegmentsEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_S",
 			new String[] {Long.class.getName(), String.class.getName()},
-			SegmentsEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.SEGMENTSENTRYKEY_COLUMN_BITMASK);
+			SegmentsEntryModelImpl.getColumnBitmask("groupId") |
+			SegmentsEntryModelImpl.getColumnBitmask("segmentsEntryKey"));
 
 		_finderPathCountByG_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
@@ -11187,9 +11188,9 @@ public class SegmentsEntryPersistenceImpl
 			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByG_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			SegmentsEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.ACTIVE_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+			SegmentsEntryModelImpl.getColumnBitmask("groupId") |
+			SegmentsEntryModelImpl.getColumnBitmask("active_") |
+			SegmentsEntryModelImpl.getColumnBitmask("modifiedDate"));
 
 		_finderPathCountByG_A = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
@@ -11212,9 +11213,9 @@ public class SegmentsEntryPersistenceImpl
 			SegmentsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByA_T",
 			new String[] {Boolean.class.getName(), String.class.getName()},
-			SegmentsEntryModelImpl.ACTIVE_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.TYPE_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+			SegmentsEntryModelImpl.getColumnBitmask("active_") |
+			SegmentsEntryModelImpl.getColumnBitmask("type_") |
+			SegmentsEntryModelImpl.getColumnBitmask("modifiedDate"));
 
 		_finderPathCountByA_T = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_T",
@@ -11236,10 +11237,10 @@ public class SegmentsEntryPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			SegmentsEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.ACTIVE_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.TYPE_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+			SegmentsEntryModelImpl.getColumnBitmask("groupId") |
+			SegmentsEntryModelImpl.getColumnBitmask("active_") |
+			SegmentsEntryModelImpl.getColumnBitmask("type_") |
+			SegmentsEntryModelImpl.getColumnBitmask("modifiedDate"));
 
 		_finderPathCountByG_A_T = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -11273,11 +11274,11 @@ public class SegmentsEntryPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName(), String.class.getName()
 			},
-			SegmentsEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.ACTIVE_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.SOURCE_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.TYPE_COLUMN_BITMASK |
-			SegmentsEntryModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+			SegmentsEntryModelImpl.getColumnBitmask("groupId") |
+			SegmentsEntryModelImpl.getColumnBitmask("active_") |
+			SegmentsEntryModelImpl.getColumnBitmask("source") |
+			SegmentsEntryModelImpl.getColumnBitmask("type_") |
+			SegmentsEntryModelImpl.getColumnBitmask("modifiedDate"));
 
 		_finderPathCountByG_A_S_T = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

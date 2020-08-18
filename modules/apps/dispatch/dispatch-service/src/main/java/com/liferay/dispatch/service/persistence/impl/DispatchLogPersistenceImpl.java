@@ -1434,7 +1434,8 @@ public class DispatchLogPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					dispatchLogModelImpl.getOriginalDispatchTriggerId()
+					dispatchLogModelImpl.getColumnOriginalValue(
+						"dispatchTriggerId")
 				};
 
 				finderCache.removeResult(
@@ -1457,8 +1458,9 @@ public class DispatchLogPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					dispatchLogModelImpl.getOriginalDispatchTriggerId(),
-					dispatchLogModelImpl.getOriginalStatus()
+					dispatchLogModelImpl.getColumnOriginalValue(
+						"dispatchTriggerId"),
+					dispatchLogModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByDTI_S, args);
@@ -1767,8 +1769,8 @@ public class DispatchLogPersistenceImpl
 		_finderPathWithoutPaginationFindByDispatchTriggerId = new FinderPath(
 			DispatchLogImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByDispatchTriggerId", new String[] {Long.class.getName()},
-			DispatchLogModelImpl.DISPATCHTRIGGERID_COLUMN_BITMASK |
-			DispatchLogModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+			DispatchLogModelImpl.getColumnBitmask("dispatchTriggerId") |
+			DispatchLogModelImpl.getColumnBitmask("modifiedDate"));
 
 		_finderPathCountByDispatchTriggerId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1787,9 +1789,9 @@ public class DispatchLogPersistenceImpl
 			DispatchLogImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByDTI_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			DispatchLogModelImpl.DISPATCHTRIGGERID_COLUMN_BITMASK |
-			DispatchLogModelImpl.STATUS_COLUMN_BITMASK |
-			DispatchLogModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+			DispatchLogModelImpl.getColumnBitmask("dispatchTriggerId") |
+			DispatchLogModelImpl.getColumnBitmask("status") |
+			DispatchLogModelImpl.getColumnBitmask("modifiedDate"));
 
 		_finderPathCountByDTI_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

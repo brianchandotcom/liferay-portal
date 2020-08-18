@@ -537,13 +537,13 @@ public class AssetEntryAssetCategoryRelPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(assetEntryAssetCategoryRel.getAssetEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				assetEntryAssetCategoryRel, "getOriginalAssetEntryId",
-				new Class<?>[0]));
+				assetEntryAssetCategoryRel, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "assetEntryId"));
 		Assert.assertEquals(
 			Long.valueOf(assetEntryAssetCategoryRel.getAssetCategoryId()),
 			ReflectionTestUtil.<Long>invoke(
-				assetEntryAssetCategoryRel, "getOriginalAssetCategoryId",
-				new Class<?>[0]));
+				assetEntryAssetCategoryRel, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "assetCategoryId"));
 	}
 
 	protected AssetEntryAssetCategoryRel addAssetEntryAssetCategoryRel()

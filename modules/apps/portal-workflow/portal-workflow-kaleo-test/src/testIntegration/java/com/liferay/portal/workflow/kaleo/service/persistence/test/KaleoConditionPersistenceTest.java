@@ -521,7 +521,8 @@ public class KaleoConditionPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(kaleoCondition.getKaleoNodeId()),
 			ReflectionTestUtil.<Long>invoke(
-				kaleoCondition, "getOriginalKaleoNodeId", new Class<?>[0]));
+				kaleoCondition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "kaleoNodeId"));
 	}
 
 	protected KaleoCondition addKaleoCondition() throws Exception {

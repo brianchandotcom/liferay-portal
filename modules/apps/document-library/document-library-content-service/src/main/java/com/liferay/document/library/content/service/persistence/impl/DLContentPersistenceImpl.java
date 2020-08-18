@@ -2397,10 +2397,10 @@ public class DLContentPersistenceImpl
 			 _finderPathFetchByC_R_P_V.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				dlContentModelImpl.getOriginalCompanyId(),
-				dlContentModelImpl.getOriginalRepositoryId(),
-				dlContentModelImpl.getOriginalPath(),
-				dlContentModelImpl.getOriginalVersion()
+				dlContentModelImpl.getColumnOriginalValue("companyId"),
+				dlContentModelImpl.getColumnOriginalValue("repositoryId"),
+				dlContentModelImpl.getColumnOriginalValue("path_"),
+				dlContentModelImpl.getColumnOriginalValue("version")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_R_P_V, args);
@@ -2605,8 +2605,8 @@ public class DLContentPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					dlContentModelImpl.getOriginalCompanyId(),
-					dlContentModelImpl.getOriginalRepositoryId()
+					dlContentModelImpl.getColumnOriginalValue("companyId"),
+					dlContentModelImpl.getColumnOriginalValue("repositoryId")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_R, args);
@@ -2628,9 +2628,9 @@ public class DLContentPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					dlContentModelImpl.getOriginalCompanyId(),
-					dlContentModelImpl.getOriginalRepositoryId(),
-					dlContentModelImpl.getOriginalPath()
+					dlContentModelImpl.getColumnOriginalValue("companyId"),
+					dlContentModelImpl.getColumnOriginalValue("repositoryId"),
+					dlContentModelImpl.getColumnOriginalValue("path_")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_R_P, args);
@@ -3122,9 +3122,9 @@ public class DLContentPersistenceImpl
 			DLContentImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByC_R",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			DLContentModelImpl.COMPANYID_COLUMN_BITMASK |
-			DLContentModelImpl.REPOSITORYID_COLUMN_BITMASK |
-			DLContentModelImpl.VERSION_COLUMN_BITMASK);
+			DLContentModelImpl.getColumnBitmask("companyId") |
+			DLContentModelImpl.getColumnBitmask("repositoryId") |
+			DLContentModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByC_R = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
@@ -3146,10 +3146,10 @@ public class DLContentPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			DLContentModelImpl.COMPANYID_COLUMN_BITMASK |
-			DLContentModelImpl.REPOSITORYID_COLUMN_BITMASK |
-			DLContentModelImpl.PATH_COLUMN_BITMASK |
-			DLContentModelImpl.VERSION_COLUMN_BITMASK);
+			DLContentModelImpl.getColumnBitmask("companyId") |
+			DLContentModelImpl.getColumnBitmask("repositoryId") |
+			DLContentModelImpl.getColumnBitmask("path_") |
+			DLContentModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByC_R_P = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3182,10 +3182,10 @@ public class DLContentPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName()
 			},
-			DLContentModelImpl.COMPANYID_COLUMN_BITMASK |
-			DLContentModelImpl.REPOSITORYID_COLUMN_BITMASK |
-			DLContentModelImpl.PATH_COLUMN_BITMASK |
-			DLContentModelImpl.VERSION_COLUMN_BITMASK);
+			DLContentModelImpl.getColumnBitmask("companyId") |
+			DLContentModelImpl.getColumnBitmask("repositoryId") |
+			DLContentModelImpl.getColumnBitmask("path_") |
+			DLContentModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByC_R_P_V = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

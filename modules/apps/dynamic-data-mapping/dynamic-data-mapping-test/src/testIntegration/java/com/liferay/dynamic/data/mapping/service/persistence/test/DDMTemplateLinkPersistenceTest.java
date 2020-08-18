@@ -477,11 +477,13 @@ public class DDMTemplateLinkPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(ddmTemplateLink.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				ddmTemplateLink, "getOriginalClassNameId", new Class<?>[0]));
+				ddmTemplateLink, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(ddmTemplateLink.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				ddmTemplateLink, "getOriginalClassPK", new Class<?>[0]));
+				ddmTemplateLink, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 	}
 
 	protected DDMTemplateLink addDDMTemplateLink() throws Exception {

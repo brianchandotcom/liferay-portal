@@ -455,7 +455,8 @@ public class BrowserTrackerPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(browserTracker.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				browserTracker, "getOriginalUserId", new Class<?>[0]));
+				browserTracker, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "userId"));
 	}
 
 	protected BrowserTracker addBrowserTracker() throws Exception {

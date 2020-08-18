@@ -507,12 +507,13 @@ public class AppBuilderAppDeploymentPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(appBuilderAppDeployment.getAppBuilderAppId()),
 			ReflectionTestUtil.<Long>invoke(
-				appBuilderAppDeployment, "getOriginalAppBuilderAppId",
-				new Class<?>[0]));
+				appBuilderAppDeployment, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "appBuilderAppId"));
 		Assert.assertEquals(
 			appBuilderAppDeployment.getType(),
 			ReflectionTestUtil.invoke(
-				appBuilderAppDeployment, "getOriginalType", new Class<?>[0]));
+				appBuilderAppDeployment, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "type_"));
 	}
 
 	protected AppBuilderAppDeployment addAppBuilderAppDeployment()

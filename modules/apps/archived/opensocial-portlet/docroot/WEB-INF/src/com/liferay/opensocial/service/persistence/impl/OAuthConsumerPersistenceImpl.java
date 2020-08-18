@@ -1048,8 +1048,8 @@ public class OAuthConsumerPersistenceImpl
 			 _finderPathFetchByG_S.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				oAuthConsumerModelImpl.getOriginalGadgetKey(),
-				oAuthConsumerModelImpl.getOriginalServiceName()
+				oAuthConsumerModelImpl.getColumnOriginalValue("gadgetKey"),
+				oAuthConsumerModelImpl.getColumnOriginalValue("serviceName")
 			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByG_S, args);
@@ -1251,7 +1251,7 @@ public class OAuthConsumerPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					oAuthConsumerModelImpl.getOriginalGadgetKey()
+					oAuthConsumerModelImpl.getColumnOriginalValue("gadgetKey")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByGadgetKey, args);
@@ -1555,8 +1555,8 @@ public class OAuthConsumerPersistenceImpl
 		_finderPathWithoutPaginationFindByGadgetKey = new FinderPath(
 			OAuthConsumerImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByGadgetKey", new String[] {String.class.getName()},
-			OAuthConsumerModelImpl.GADGETKEY_COLUMN_BITMASK |
-			OAuthConsumerModelImpl.SERVICENAME_COLUMN_BITMASK);
+			OAuthConsumerModelImpl.getColumnBitmask("gadgetKey") |
+			OAuthConsumerModelImpl.getColumnBitmask("serviceName"));
 
 		_finderPathCountByGadgetKey = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1565,8 +1565,8 @@ public class OAuthConsumerPersistenceImpl
 		_finderPathFetchByG_S = new FinderPath(
 			OAuthConsumerImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_S",
 			new String[] {String.class.getName(), String.class.getName()},
-			OAuthConsumerModelImpl.GADGETKEY_COLUMN_BITMASK |
-			OAuthConsumerModelImpl.SERVICENAME_COLUMN_BITMASK);
+			OAuthConsumerModelImpl.getColumnBitmask("gadgetKey") |
+			OAuthConsumerModelImpl.getColumnBitmask("serviceName"));
 
 		_finderPathCountByG_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",

@@ -3766,8 +3766,8 @@ public class RedirectEntryPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				redirectEntryModelImpl.getOriginalUuid(),
-				redirectEntryModelImpl.getOriginalGroupId()
+				redirectEntryModelImpl.getColumnOriginalValue("uuid_"),
+				redirectEntryModelImpl.getColumnOriginalValue("groupId")
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -3788,8 +3788,8 @@ public class RedirectEntryPersistenceImpl
 			 _finderPathFetchByG_S.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				redirectEntryModelImpl.getOriginalGroupId(),
-				redirectEntryModelImpl.getOriginalSourceURL()
+				redirectEntryModelImpl.getColumnOriginalValue("groupId"),
+				redirectEntryModelImpl.getColumnOriginalValue("sourceURL")
 			};
 
 			finderCache.removeResult(_finderPathCountByG_S, args);
@@ -4055,7 +4055,7 @@ public class RedirectEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					redirectEntryModelImpl.getOriginalUuid()
+					redirectEntryModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -4074,8 +4074,8 @@ public class RedirectEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					redirectEntryModelImpl.getOriginalUuid(),
-					redirectEntryModelImpl.getOriginalCompanyId()
+					redirectEntryModelImpl.getColumnOriginalValue("uuid_"),
+					redirectEntryModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -4097,7 +4097,7 @@ public class RedirectEntryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					redirectEntryModelImpl.getOriginalGroupId()
+					redirectEntryModelImpl.getColumnOriginalValue("groupId")
 				};
 
 				finderCache.removeResult(_finderPathCountByGroupId, args);
@@ -4116,8 +4116,9 @@ public class RedirectEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					redirectEntryModelImpl.getOriginalGroupId(),
-					redirectEntryModelImpl.getOriginalDestinationURL()
+					redirectEntryModelImpl.getColumnOriginalValue("groupId"),
+					redirectEntryModelImpl.getColumnOriginalValue(
+						"destinationURL")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_D, args);
@@ -4430,7 +4431,7 @@ public class RedirectEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			RedirectEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid", new String[] {String.class.getName()},
-			RedirectEntryModelImpl.UUID_COLUMN_BITMASK);
+			RedirectEntryModelImpl.getColumnBitmask("uuid_"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4439,8 +4440,8 @@ public class RedirectEntryPersistenceImpl
 		_finderPathFetchByUUID_G = new FinderPath(
 			RedirectEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			RedirectEntryModelImpl.UUID_COLUMN_BITMASK |
-			RedirectEntryModelImpl.GROUPID_COLUMN_BITMASK);
+			RedirectEntryModelImpl.getColumnBitmask("uuid_") |
+			RedirectEntryModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4460,8 +4461,8 @@ public class RedirectEntryPersistenceImpl
 			RedirectEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			RedirectEntryModelImpl.UUID_COLUMN_BITMASK |
-			RedirectEntryModelImpl.COMPANYID_COLUMN_BITMASK);
+			RedirectEntryModelImpl.getColumnBitmask("uuid_") |
+			RedirectEntryModelImpl.getColumnBitmask("companyId"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4479,7 +4480,7 @@ public class RedirectEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
 			RedirectEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByGroupId", new String[] {Long.class.getName()},
-			RedirectEntryModelImpl.GROUPID_COLUMN_BITMASK);
+			RedirectEntryModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4498,8 +4499,8 @@ public class RedirectEntryPersistenceImpl
 			RedirectEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByG_D",
 			new String[] {Long.class.getName(), String.class.getName()},
-			RedirectEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			RedirectEntryModelImpl.DESTINATIONURL_COLUMN_BITMASK);
+			RedirectEntryModelImpl.getColumnBitmask("groupId") |
+			RedirectEntryModelImpl.getColumnBitmask("destinationURL"));
 
 		_finderPathCountByG_D = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D",
@@ -4508,8 +4509,8 @@ public class RedirectEntryPersistenceImpl
 		_finderPathFetchByG_S = new FinderPath(
 			RedirectEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_S",
 			new String[] {Long.class.getName(), String.class.getName()},
-			RedirectEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			RedirectEntryModelImpl.SOURCEURL_COLUMN_BITMASK);
+			RedirectEntryModelImpl.getColumnBitmask("groupId") |
+			RedirectEntryModelImpl.getColumnBitmask("sourceURL"));
 
 		_finderPathCountByG_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",

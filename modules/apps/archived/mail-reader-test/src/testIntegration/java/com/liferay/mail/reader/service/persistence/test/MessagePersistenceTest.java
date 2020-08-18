@@ -516,11 +516,13 @@ public class MessagePersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(message.getFolderId()),
 			ReflectionTestUtil.<Long>invoke(
-				message, "getOriginalFolderId", new Class<?>[0]));
+				message, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "folderId"));
 		Assert.assertEquals(
 			Long.valueOf(message.getRemoteMessageId()),
 			ReflectionTestUtil.<Long>invoke(
-				message, "getOriginalRemoteMessageId", new Class<?>[0]));
+				message, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "remoteMessageId"));
 	}
 
 	protected Message addMessage() throws Exception {

@@ -1616,8 +1616,10 @@ public class DDMFormInstanceVersionPersistenceImpl
 			 _finderPathFetchByF_V.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				ddmFormInstanceVersionModelImpl.getOriginalFormInstanceId(),
-				ddmFormInstanceVersionModelImpl.getOriginalVersion()
+				ddmFormInstanceVersionModelImpl.getColumnOriginalValue(
+					"formInstanceId"),
+				ddmFormInstanceVersionModelImpl.getColumnOriginalValue(
+					"version")
 			};
 
 			finderCache.removeResult(_finderPathCountByF_V, args);
@@ -1829,7 +1831,8 @@ public class DDMFormInstanceVersionPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					ddmFormInstanceVersionModelImpl.getOriginalFormInstanceId()
+					ddmFormInstanceVersionModelImpl.getColumnOriginalValue(
+						"formInstanceId")
 				};
 
 				finderCache.removeResult(
@@ -1852,8 +1855,10 @@ public class DDMFormInstanceVersionPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					ddmFormInstanceVersionModelImpl.getOriginalFormInstanceId(),
-					ddmFormInstanceVersionModelImpl.getOriginalStatus()
+					ddmFormInstanceVersionModelImpl.getColumnOriginalValue(
+						"formInstanceId"),
+					ddmFormInstanceVersionModelImpl.getColumnOriginalValue(
+						"status")
 				};
 
 				finderCache.removeResult(_finderPathCountByF_S, args);
@@ -2370,7 +2375,7 @@ public class DDMFormInstanceVersionPersistenceImpl
 			DDMFormInstanceVersionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFormInstanceId",
 			new String[] {Long.class.getName()},
-			DDMFormInstanceVersionModelImpl.FORMINSTANCEID_COLUMN_BITMASK);
+			DDMFormInstanceVersionModelImpl.getColumnBitmask("formInstanceId"));
 
 		_finderPathCountByFormInstanceId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2380,8 +2385,8 @@ public class DDMFormInstanceVersionPersistenceImpl
 			DDMFormInstanceVersionImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByF_V",
 			new String[] {Long.class.getName(), String.class.getName()},
-			DDMFormInstanceVersionModelImpl.FORMINSTANCEID_COLUMN_BITMASK |
-			DDMFormInstanceVersionModelImpl.VERSION_COLUMN_BITMASK);
+			DDMFormInstanceVersionModelImpl.getColumnBitmask("formInstanceId") |
+			DDMFormInstanceVersionModelImpl.getColumnBitmask("version"));
 
 		_finderPathCountByF_V = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_V",
@@ -2400,8 +2405,8 @@ public class DDMFormInstanceVersionPersistenceImpl
 			DDMFormInstanceVersionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByF_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			DDMFormInstanceVersionModelImpl.FORMINSTANCEID_COLUMN_BITMASK |
-			DDMFormInstanceVersionModelImpl.STATUS_COLUMN_BITMASK);
+			DDMFormInstanceVersionModelImpl.getColumnBitmask("formInstanceId") |
+			DDMFormInstanceVersionModelImpl.getColumnBitmask("status"));
 
 		_finderPathCountByF_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_S",

@@ -582,41 +582,50 @@ public class RolePersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(role.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				role, "getOriginalCompanyId", new Class<?>[0]));
+				role, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"companyId"));
 		Assert.assertEquals(
 			role.getName(),
 			ReflectionTestUtil.invoke(
-				role, "getOriginalName", new Class<?>[0]));
+				role, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"name"));
 
 		Assert.assertEquals(
 			Long.valueOf(role.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				role, "getOriginalCompanyId", new Class<?>[0]));
+				role, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"companyId"));
 		Assert.assertEquals(
 			Long.valueOf(role.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				role, "getOriginalClassNameId", new Class<?>[0]));
+				role, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(role.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				role, "getOriginalClassPK", new Class<?>[0]));
+				role, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"classPK"));
 
 		Assert.assertEquals(
 			Long.valueOf(role.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				role, "getOriginalCompanyId", new Class<?>[0]));
+				role, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"companyId"));
 		Assert.assertEquals(
 			Long.valueOf(role.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				role, "getOriginalClassNameId", new Class<?>[0]));
+				role, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(role.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				role, "getOriginalClassPK", new Class<?>[0]));
+				role, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"classPK"));
 		Assert.assertEquals(
 			Integer.valueOf(role.getType()),
 			ReflectionTestUtil.<Integer>invoke(
-				role, "getOriginalType", new Class<?>[0]));
+				role, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"type_"));
 	}
 
 	protected Role addRole() throws Exception {

@@ -1596,8 +1596,8 @@ public class RemoteAppEntryPersistenceImpl
 			 _finderPathFetchByC_U.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				remoteAppEntryModelImpl.getOriginalCompanyId(),
-				remoteAppEntryModelImpl.getOriginalUrl()
+				remoteAppEntryModelImpl.getColumnOriginalValue("companyId"),
+				remoteAppEntryModelImpl.getColumnOriginalValue("url")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_U, args);
@@ -1816,7 +1816,7 @@ public class RemoteAppEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					remoteAppEntryModelImpl.getOriginalUuid()
+					remoteAppEntryModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -1835,8 +1835,8 @@ public class RemoteAppEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					remoteAppEntryModelImpl.getOriginalUuid(),
-					remoteAppEntryModelImpl.getOriginalCompanyId()
+					remoteAppEntryModelImpl.getColumnOriginalValue("uuid_"),
+					remoteAppEntryModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -2149,8 +2149,8 @@ public class RemoteAppEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			RemoteAppEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid", new String[] {String.class.getName()},
-			RemoteAppEntryModelImpl.UUID_COLUMN_BITMASK |
-			RemoteAppEntryModelImpl.NAME_COLUMN_BITMASK);
+			RemoteAppEntryModelImpl.getColumnBitmask("uuid_") |
+			RemoteAppEntryModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2169,9 +2169,9 @@ public class RemoteAppEntryPersistenceImpl
 			RemoteAppEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			RemoteAppEntryModelImpl.UUID_COLUMN_BITMASK |
-			RemoteAppEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			RemoteAppEntryModelImpl.NAME_COLUMN_BITMASK);
+			RemoteAppEntryModelImpl.getColumnBitmask("uuid_") |
+			RemoteAppEntryModelImpl.getColumnBitmask("companyId") |
+			RemoteAppEntryModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2181,8 +2181,8 @@ public class RemoteAppEntryPersistenceImpl
 		_finderPathFetchByC_U = new FinderPath(
 			RemoteAppEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_U",
 			new String[] {Long.class.getName(), String.class.getName()},
-			RemoteAppEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			RemoteAppEntryModelImpl.URL_COLUMN_BITMASK);
+			RemoteAppEntryModelImpl.getColumnBitmask("companyId") |
+			RemoteAppEntryModelImpl.getColumnBitmask("url"));
 
 		_finderPathCountByC_U = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",

@@ -508,15 +508,18 @@ public class LayoutBranchPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(layoutBranch.getLayoutSetBranchId()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutBranch, "getOriginalLayoutSetBranchId", new Class<?>[0]));
+				layoutBranch, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "layoutSetBranchId"));
 		Assert.assertEquals(
 			Long.valueOf(layoutBranch.getPlid()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutBranch, "getOriginalPlid", new Class<?>[0]));
+				layoutBranch, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "plid"));
 		Assert.assertEquals(
 			layoutBranch.getName(),
 			ReflectionTestUtil.invoke(
-				layoutBranch, "getOriginalName", new Class<?>[0]));
+				layoutBranch, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 	}
 
 	protected LayoutBranch addLayoutBranch() throws Exception {

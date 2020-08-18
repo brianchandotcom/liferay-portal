@@ -964,8 +964,8 @@ public class EntryPersistenceImpl
 			 _finderPathFetchByU_EA.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				entryModelImpl.getOriginalUserId(),
-				entryModelImpl.getOriginalEmailAddress()
+				entryModelImpl.getColumnOriginalValue("userId"),
+				entryModelImpl.getColumnOriginalValue("emailAddress")
 			};
 
 			finderCache.removeResult(_finderPathCountByU_EA, args);
@@ -1156,7 +1156,7 @@ public class EntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					entryModelImpl.getOriginalUserId()
+					entryModelImpl.getColumnOriginalValue("userId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUserId, args);
@@ -1457,8 +1457,8 @@ public class EntryPersistenceImpl
 		_finderPathWithoutPaginationFindByUserId = new FinderPath(
 			EntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUserId", new String[] {Long.class.getName()},
-			EntryModelImpl.USERID_COLUMN_BITMASK |
-			EntryModelImpl.FULLNAME_COLUMN_BITMASK);
+			EntryModelImpl.getColumnBitmask("userId") |
+			EntryModelImpl.getColumnBitmask("fullName"));
 
 		_finderPathCountByUserId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1467,8 +1467,8 @@ public class EntryPersistenceImpl
 		_finderPathFetchByU_EA = new FinderPath(
 			EntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByU_EA",
 			new String[] {Long.class.getName(), String.class.getName()},
-			EntryModelImpl.USERID_COLUMN_BITMASK |
-			EntryModelImpl.EMAILADDRESS_COLUMN_BITMASK);
+			EntryModelImpl.getColumnBitmask("userId") |
+			EntryModelImpl.getColumnBitmask("emailAddress"));
 
 		_finderPathCountByU_EA = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

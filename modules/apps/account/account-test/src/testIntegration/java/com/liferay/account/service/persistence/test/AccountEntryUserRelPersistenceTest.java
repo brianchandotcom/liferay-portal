@@ -493,13 +493,13 @@ public class AccountEntryUserRelPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(accountEntryUserRel.getAccountEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				accountEntryUserRel, "getOriginalAccountEntryId",
-				new Class<?>[0]));
+				accountEntryUserRel, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "accountEntryId"));
 		Assert.assertEquals(
 			Long.valueOf(accountEntryUserRel.getAccountUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				accountEntryUserRel, "getOriginalAccountUserId",
-				new Class<?>[0]));
+				accountEntryUserRel, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "accountUserId"));
 	}
 
 	protected AccountEntryUserRel addAccountEntryUserRel() throws Exception {

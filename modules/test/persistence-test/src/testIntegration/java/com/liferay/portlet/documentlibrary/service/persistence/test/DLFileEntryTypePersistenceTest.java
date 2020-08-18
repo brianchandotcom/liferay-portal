@@ -556,21 +556,24 @@ public class DLFileEntryTypePersistenceTest {
 		Assert.assertEquals(
 			dlFileEntryType.getUuid(),
 			ReflectionTestUtil.invoke(
-				dlFileEntryType, "getOriginalUuid", new Class<?>[0]));
+				dlFileEntryType, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(dlFileEntryType.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				dlFileEntryType, "getOriginalGroupId", new Class<?>[0]));
+				dlFileEntryType, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(dlFileEntryType.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				dlFileEntryType, "getOriginalGroupId", new Class<?>[0]));
+				dlFileEntryType, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			dlFileEntryType.getFileEntryTypeKey(),
 			ReflectionTestUtil.invoke(
-				dlFileEntryType, "getOriginalFileEntryTypeKey",
-				new Class<?>[0]));
+				dlFileEntryType, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "fileEntryTypeKey"));
 	}
 
 	protected DLFileEntryType addDLFileEntryType() throws Exception {

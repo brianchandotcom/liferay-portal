@@ -517,7 +517,8 @@ public class DDMStorageLinkPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(ddmStorageLink.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				ddmStorageLink, "getOriginalClassPK", new Class<?>[0]));
+				ddmStorageLink, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 	}
 
 	protected DDMStorageLink addDDMStorageLink() throws Exception {

@@ -492,9 +492,9 @@ public class HtmlPreviewEntryPersistenceImpl
 			 _finderPathFetchByG_C_C.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				htmlPreviewEntryModelImpl.getOriginalGroupId(),
-				htmlPreviewEntryModelImpl.getOriginalClassNameId(),
-				htmlPreviewEntryModelImpl.getOriginalClassPK()
+				htmlPreviewEntryModelImpl.getColumnOriginalValue("groupId"),
+				htmlPreviewEntryModelImpl.getColumnOriginalValue("classNameId"),
+				htmlPreviewEntryModelImpl.getColumnOriginalValue("classPK")
 			};
 
 			finderCache.removeResult(_finderPathCountByG_C_C, args);
@@ -972,9 +972,9 @@ public class HtmlPreviewEntryPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			HtmlPreviewEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			HtmlPreviewEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			HtmlPreviewEntryModelImpl.CLASSPK_COLUMN_BITMASK);
+			HtmlPreviewEntryModelImpl.getColumnBitmask("groupId") |
+			HtmlPreviewEntryModelImpl.getColumnBitmask("classNameId") |
+			HtmlPreviewEntryModelImpl.getColumnBitmask("classPK"));
 
 		_finderPathCountByG_C_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

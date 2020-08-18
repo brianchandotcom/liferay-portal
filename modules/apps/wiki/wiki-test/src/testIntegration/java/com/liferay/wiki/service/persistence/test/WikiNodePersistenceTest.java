@@ -561,20 +561,24 @@ public class WikiNodePersistenceTest {
 		Assert.assertEquals(
 			wikiNode.getUuid(),
 			ReflectionTestUtil.invoke(
-				wikiNode, "getOriginalUuid", new Class<?>[0]));
+				wikiNode, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(wikiNode.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				wikiNode, "getOriginalGroupId", new Class<?>[0]));
+				wikiNode, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(wikiNode.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				wikiNode, "getOriginalGroupId", new Class<?>[0]));
+				wikiNode, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			wikiNode.getName(),
 			ReflectionTestUtil.invoke(
-				wikiNode, "getOriginalName", new Class<?>[0]));
+				wikiNode, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 	}
 
 	protected WikiNode addWikiNode() throws Exception {

@@ -450,17 +450,20 @@ public class CountryPersistenceTest {
 		Assert.assertEquals(
 			country.getName(),
 			ReflectionTestUtil.invoke(
-				country, "getOriginalName", new Class<?>[0]));
+				country, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 
 		Assert.assertEquals(
 			country.getA2(),
 			ReflectionTestUtil.invoke(
-				country, "getOriginalA2", new Class<?>[0]));
+				country, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "a2"));
 
 		Assert.assertEquals(
 			country.getA3(),
 			ReflectionTestUtil.invoke(
-				country, "getOriginalA3", new Class<?>[0]));
+				country, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "a3"));
 	}
 
 	protected Country addCountry() throws Exception {

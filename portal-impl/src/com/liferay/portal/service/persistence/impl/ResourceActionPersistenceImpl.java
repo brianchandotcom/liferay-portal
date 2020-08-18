@@ -1019,8 +1019,8 @@ public class ResourceActionPersistenceImpl
 			 _finderPathFetchByN_A.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				resourceActionModelImpl.getOriginalName(),
-				resourceActionModelImpl.getOriginalActionId()
+				resourceActionModelImpl.getColumnOriginalValue("name"),
+				resourceActionModelImpl.getColumnOriginalValue("actionId")
 			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByN_A, args);
@@ -1195,7 +1195,7 @@ public class ResourceActionPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					resourceActionModelImpl.getOriginalName()
+					resourceActionModelImpl.getColumnOriginalValue("name")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByName, args);
@@ -1499,8 +1499,8 @@ public class ResourceActionPersistenceImpl
 		_finderPathWithoutPaginationFindByName = new FinderPath(
 			ResourceActionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByName", new String[] {String.class.getName()},
-			ResourceActionModelImpl.NAME_COLUMN_BITMASK |
-			ResourceActionModelImpl.BITWISEVALUE_COLUMN_BITMASK);
+			ResourceActionModelImpl.getColumnBitmask("name") |
+			ResourceActionModelImpl.getColumnBitmask("bitwiseValue"));
 
 		_finderPathCountByName = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1509,8 +1509,8 @@ public class ResourceActionPersistenceImpl
 		_finderPathFetchByN_A = new FinderPath(
 			ResourceActionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByN_A",
 			new String[] {String.class.getName(), String.class.getName()},
-			ResourceActionModelImpl.NAME_COLUMN_BITMASK |
-			ResourceActionModelImpl.ACTIONID_COLUMN_BITMASK);
+			ResourceActionModelImpl.getColumnBitmask("name") |
+			ResourceActionModelImpl.getColumnBitmask("actionId"));
 
 		_finderPathCountByN_A = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_A",

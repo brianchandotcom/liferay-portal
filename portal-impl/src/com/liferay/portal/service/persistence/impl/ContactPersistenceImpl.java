@@ -1890,7 +1890,7 @@ public class ContactPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					contactModelImpl.getOriginalCompanyId()
+					contactModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
@@ -1909,7 +1909,7 @@ public class ContactPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					contactModelImpl.getOriginalAccountId()
+					contactModelImpl.getColumnOriginalValue("accountId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByAccountId, args);
@@ -1928,8 +1928,8 @@ public class ContactPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					contactModelImpl.getOriginalClassNameId(),
-					contactModelImpl.getOriginalClassPK()
+					contactModelImpl.getColumnOriginalValue("classNameId"),
+					contactModelImpl.getColumnOriginalValue("classPK")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
@@ -2231,7 +2231,7 @@ public class ContactPersistenceImpl
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
 			ContactImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCompanyId", new String[] {Long.class.getName()},
-			ContactModelImpl.COMPANYID_COLUMN_BITMASK);
+			ContactModelImpl.getColumnBitmask("companyId"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2248,7 +2248,7 @@ public class ContactPersistenceImpl
 		_finderPathWithoutPaginationFindByAccountId = new FinderPath(
 			ContactImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByAccountId", new String[] {Long.class.getName()},
-			ContactModelImpl.ACCOUNTID_COLUMN_BITMASK);
+			ContactModelImpl.getColumnBitmask("accountId"));
 
 		_finderPathCountByAccountId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2267,8 +2267,8 @@ public class ContactPersistenceImpl
 			ContactImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			ContactModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			ContactModelImpl.CLASSPK_COLUMN_BITMASK);
+			ContactModelImpl.getColumnBitmask("classNameId") |
+			ContactModelImpl.getColumnBitmask("classPK"));
 
 		_finderPathCountByC_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",

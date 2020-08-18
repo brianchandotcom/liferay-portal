@@ -546,29 +546,29 @@ public class FriendlyURLEntryLocalizationPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(friendlyURLEntryLocalization.getFriendlyURLEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				friendlyURLEntryLocalization, "getOriginalFriendlyURLEntryId",
-				new Class<?>[0]));
+				friendlyURLEntryLocalization, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "friendlyURLEntryId"));
 		Assert.assertEquals(
 			friendlyURLEntryLocalization.getLanguageId(),
 			ReflectionTestUtil.invoke(
-				friendlyURLEntryLocalization, "getOriginalLanguageId",
-				new Class<?>[0]));
+				friendlyURLEntryLocalization, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "languageId"));
 
 		Assert.assertEquals(
 			Long.valueOf(friendlyURLEntryLocalization.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				friendlyURLEntryLocalization, "getOriginalGroupId",
-				new Class<?>[0]));
+				friendlyURLEntryLocalization, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			Long.valueOf(friendlyURLEntryLocalization.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				friendlyURLEntryLocalization, "getOriginalClassNameId",
-				new Class<?>[0]));
+				friendlyURLEntryLocalization, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			friendlyURLEntryLocalization.getUrlTitle(),
 			ReflectionTestUtil.invoke(
-				friendlyURLEntryLocalization, "getOriginalUrlTitle",
-				new Class<?>[0]));
+				friendlyURLEntryLocalization, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "urlTitle"));
 	}
 
 	protected FriendlyURLEntryLocalization addFriendlyURLEntryLocalization()

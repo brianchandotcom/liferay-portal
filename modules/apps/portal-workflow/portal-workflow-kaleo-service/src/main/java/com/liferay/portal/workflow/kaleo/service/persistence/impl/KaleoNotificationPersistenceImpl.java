@@ -2705,7 +2705,8 @@ public class KaleoNotificationPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					kaleoNotificationModelImpl.getOriginalCompanyId()
+					kaleoNotificationModelImpl.getColumnOriginalValue(
+						"companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -2724,8 +2725,8 @@ public class KaleoNotificationPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					kaleoNotificationModelImpl.
-						getOriginalKaleoDefinitionVersionId()
+					kaleoNotificationModelImpl.getColumnOriginalValue(
+						"kaleoDefinitionVersionId")
 				};
 
 				finderCache.removeResult(
@@ -2750,8 +2751,10 @@ public class KaleoNotificationPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					kaleoNotificationModelImpl.getOriginalKaleoClassName(),
-					kaleoNotificationModelImpl.getOriginalKaleoClassPK()
+					kaleoNotificationModelImpl.getColumnOriginalValue(
+						"kaleoClassName"),
+					kaleoNotificationModelImpl.getColumnOriginalValue(
+						"kaleoClassPK")
 				};
 
 				finderCache.removeResult(_finderPathCountByKCN_KCPK, args);
@@ -2773,9 +2776,12 @@ public class KaleoNotificationPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					kaleoNotificationModelImpl.getOriginalKaleoClassName(),
-					kaleoNotificationModelImpl.getOriginalKaleoClassPK(),
-					kaleoNotificationModelImpl.getOriginalExecutionType()
+					kaleoNotificationModelImpl.getColumnOriginalValue(
+						"kaleoClassName"),
+					kaleoNotificationModelImpl.getColumnOriginalValue(
+						"kaleoClassPK"),
+					kaleoNotificationModelImpl.getColumnOriginalValue(
+						"executionType")
 				};
 
 				finderCache.removeResult(_finderPathCountByKCN_KCPK_ET, args);
@@ -3084,7 +3090,7 @@ public class KaleoNotificationPersistenceImpl
 			KaleoNotificationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
-			KaleoNotificationModelImpl.COMPANYID_COLUMN_BITMASK);
+			KaleoNotificationModelImpl.getColumnBitmask("companyId"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3106,8 +3112,8 @@ public class KaleoNotificationPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByKaleoDefinitionVersionId",
 				new String[] {Long.class.getName()},
-				KaleoNotificationModelImpl.
-					KALEODEFINITIONVERSIONID_COLUMN_BITMASK);
+				KaleoNotificationModelImpl.getColumnBitmask(
+					"kaleoDefinitionVersionId"));
 
 		_finderPathCountByKaleoDefinitionVersionId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3127,8 +3133,8 @@ public class KaleoNotificationPersistenceImpl
 			KaleoNotificationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKCN_KCPK",
 			new String[] {String.class.getName(), Long.class.getName()},
-			KaleoNotificationModelImpl.KALEOCLASSNAME_COLUMN_BITMASK |
-			KaleoNotificationModelImpl.KALEOCLASSPK_COLUMN_BITMASK);
+			KaleoNotificationModelImpl.getColumnBitmask("kaleoClassName") |
+			KaleoNotificationModelImpl.getColumnBitmask("kaleoClassPK"));
 
 		_finderPathCountByKCN_KCPK = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3151,9 +3157,9 @@ public class KaleoNotificationPersistenceImpl
 				String.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			KaleoNotificationModelImpl.KALEOCLASSNAME_COLUMN_BITMASK |
-			KaleoNotificationModelImpl.KALEOCLASSPK_COLUMN_BITMASK |
-			KaleoNotificationModelImpl.EXECUTIONTYPE_COLUMN_BITMASK);
+			KaleoNotificationModelImpl.getColumnBitmask("kaleoClassName") |
+			KaleoNotificationModelImpl.getColumnBitmask("kaleoClassPK") |
+			KaleoNotificationModelImpl.getColumnBitmask("executionType"));
 
 		_finderPathCountByKCN_KCPK_ET = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

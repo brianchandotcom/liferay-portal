@@ -1515,8 +1515,9 @@ public class SegmentsEntryRolePersistenceImpl
 			 _finderPathFetchByS_R.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				segmentsEntryRoleModelImpl.getOriginalSegmentsEntryId(),
-				segmentsEntryRoleModelImpl.getOriginalRoleId()
+				segmentsEntryRoleModelImpl.getColumnOriginalValue(
+					"segmentsEntryId"),
+				segmentsEntryRoleModelImpl.getColumnOriginalValue("roleId")
 			};
 
 			finderCache.removeResult(_finderPathCountByS_R, args);
@@ -1745,7 +1746,8 @@ public class SegmentsEntryRolePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					segmentsEntryRoleModelImpl.getOriginalSegmentsEntryId()
+					segmentsEntryRoleModelImpl.getColumnOriginalValue(
+						"segmentsEntryId")
 				};
 
 				finderCache.removeResult(
@@ -1768,7 +1770,7 @@ public class SegmentsEntryRolePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					segmentsEntryRoleModelImpl.getOriginalRoleId()
+					segmentsEntryRoleModelImpl.getColumnOriginalValue("roleId")
 				};
 
 				finderCache.removeResult(_finderPathCountByRoleId, args);
@@ -2258,7 +2260,7 @@ public class SegmentsEntryRolePersistenceImpl
 			SegmentsEntryRoleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySegmentsEntryId",
 			new String[] {Long.class.getName()},
-			SegmentsEntryRoleModelImpl.SEGMENTSENTRYID_COLUMN_BITMASK);
+			SegmentsEntryRoleModelImpl.getColumnBitmask("segmentsEntryId"));
 
 		_finderPathCountBySegmentsEntryId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2276,7 +2278,7 @@ public class SegmentsEntryRolePersistenceImpl
 			SegmentsEntryRoleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRoleId",
 			new String[] {Long.class.getName()},
-			SegmentsEntryRoleModelImpl.ROLEID_COLUMN_BITMASK);
+			SegmentsEntryRoleModelImpl.getColumnBitmask("roleId"));
 
 		_finderPathCountByRoleId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2285,8 +2287,8 @@ public class SegmentsEntryRolePersistenceImpl
 		_finderPathFetchByS_R = new FinderPath(
 			SegmentsEntryRoleImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByS_R",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			SegmentsEntryRoleModelImpl.SEGMENTSENTRYID_COLUMN_BITMASK |
-			SegmentsEntryRoleModelImpl.ROLEID_COLUMN_BITMASK);
+			SegmentsEntryRoleModelImpl.getColumnBitmask("segmentsEntryId") |
+			SegmentsEntryRoleModelImpl.getColumnBitmask("roleId"));
 
 		_finderPathCountByS_R = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_R",

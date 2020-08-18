@@ -592,30 +592,35 @@ public class AssetVocabularyPersistenceTest {
 		Assert.assertEquals(
 			assetVocabulary.getUuid(),
 			ReflectionTestUtil.invoke(
-				assetVocabulary, "getOriginalUuid", new Class<?>[0]));
+				assetVocabulary, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(assetVocabulary.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				assetVocabulary, "getOriginalGroupId", new Class<?>[0]));
+				assetVocabulary, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(assetVocabulary.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				assetVocabulary, "getOriginalGroupId", new Class<?>[0]));
+				assetVocabulary, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			assetVocabulary.getName(),
 			ReflectionTestUtil.invoke(
-				assetVocabulary, "getOriginalName", new Class<?>[0]));
+				assetVocabulary, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 
 		Assert.assertEquals(
 			Long.valueOf(assetVocabulary.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				assetVocabulary, "getOriginalCompanyId", new Class<?>[0]));
+				assetVocabulary, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
 			assetVocabulary.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
-				assetVocabulary, "getOriginalExternalReferenceCode",
-				new Class<?>[0]));
+				assetVocabulary, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected AssetVocabulary addAssetVocabulary() throws Exception {

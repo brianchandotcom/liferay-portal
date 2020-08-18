@@ -514,11 +514,13 @@ public class SAPEntryPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(sapEntry.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				sapEntry, "getOriginalCompanyId", new Class<?>[0]));
+				sapEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
 			sapEntry.getName(),
 			ReflectionTestUtil.invoke(
-				sapEntry, "getOriginalName", new Class<?>[0]));
+				sapEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 	}
 
 	protected SAPEntry addSAPEntry() throws Exception {

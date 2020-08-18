@@ -466,15 +466,18 @@ public class ExpandoTablePersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(expandoTable.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				expandoTable, "getOriginalCompanyId", new Class<?>[0]));
+				expandoTable, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
 			Long.valueOf(expandoTable.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				expandoTable, "getOriginalClassNameId", new Class<?>[0]));
+				expandoTable, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			expandoTable.getName(),
 			ReflectionTestUtil.invoke(
-				expandoTable, "getOriginalName", new Class<?>[0]));
+				expandoTable, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 	}
 
 	protected ExpandoTable addExpandoTable() throws Exception {

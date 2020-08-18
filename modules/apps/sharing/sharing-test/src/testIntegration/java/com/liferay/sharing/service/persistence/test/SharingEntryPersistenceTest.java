@@ -579,24 +579,29 @@ public class SharingEntryPersistenceTest {
 		Assert.assertEquals(
 			sharingEntry.getUuid(),
 			ReflectionTestUtil.invoke(
-				sharingEntry, "getOriginalUuid", new Class<?>[0]));
+				sharingEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(sharingEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				sharingEntry, "getOriginalGroupId", new Class<?>[0]));
+				sharingEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(sharingEntry.getToUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				sharingEntry, "getOriginalToUserId", new Class<?>[0]));
+				sharingEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "toUserId"));
 		Assert.assertEquals(
 			Long.valueOf(sharingEntry.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				sharingEntry, "getOriginalClassNameId", new Class<?>[0]));
+				sharingEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(sharingEntry.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				sharingEntry, "getOriginalClassPK", new Class<?>[0]));
+				sharingEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 	}
 
 	protected SharingEntry addSharingEntry() throws Exception {

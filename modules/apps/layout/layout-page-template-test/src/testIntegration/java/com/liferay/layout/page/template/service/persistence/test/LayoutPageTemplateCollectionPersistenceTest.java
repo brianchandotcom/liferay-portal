@@ -639,35 +639,35 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 		Assert.assertEquals(
 			layoutPageTemplateCollection.getUuid(),
 			ReflectionTestUtil.invoke(
-				layoutPageTemplateCollection, "getOriginalUuid",
-				new Class<?>[0]));
+				layoutPageTemplateCollection, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(layoutPageTemplateCollection.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutPageTemplateCollection, "getOriginalGroupId",
-				new Class<?>[0]));
+				layoutPageTemplateCollection, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(layoutPageTemplateCollection.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutPageTemplateCollection, "getOriginalGroupId",
-				new Class<?>[0]));
+				layoutPageTemplateCollection, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionKey(),
 			ReflectionTestUtil.invoke(
-				layoutPageTemplateCollection,
-				"getOriginalLayoutPageTemplateCollectionKey", new Class<?>[0]));
+				layoutPageTemplateCollection, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "lptCollectionKey"));
 
 		Assert.assertEquals(
 			Long.valueOf(layoutPageTemplateCollection.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutPageTemplateCollection, "getOriginalGroupId",
-				new Class<?>[0]));
+				layoutPageTemplateCollection, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			layoutPageTemplateCollection.getName(),
 			ReflectionTestUtil.invoke(
-				layoutPageTemplateCollection, "getOriginalName",
-				new Class<?>[0]));
+				layoutPageTemplateCollection, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 	}
 
 	protected LayoutPageTemplateCollection addLayoutPageTemplateCollection()

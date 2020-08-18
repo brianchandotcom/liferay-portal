@@ -421,7 +421,7 @@ public class ClassNamePersistenceImpl
 			 _finderPathFetchByValue.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				classNameModelImpl.getOriginalValue()
+				classNameModelImpl.getColumnOriginalValue("value")
 			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByValue, args);
@@ -859,7 +859,7 @@ public class ClassNamePersistenceImpl
 		_finderPathFetchByValue = new FinderPath(
 			ClassNameImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByValue",
 			new String[] {String.class.getName()},
-			ClassNameModelImpl.VALUE_COLUMN_BITMASK);
+			ClassNameModelImpl.getColumnBitmask("value"));
 
 		_finderPathCountByValue = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

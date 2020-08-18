@@ -598,11 +598,13 @@ public class AppBuilderAppPersistenceTest {
 		Assert.assertEquals(
 			appBuilderApp.getUuid(),
 			ReflectionTestUtil.invoke(
-				appBuilderApp, "getOriginalUuid", new Class<?>[0]));
+				appBuilderApp, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(appBuilderApp.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				appBuilderApp, "getOriginalGroupId", new Class<?>[0]));
+				appBuilderApp, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected AppBuilderApp addAppBuilderApp() throws Exception {

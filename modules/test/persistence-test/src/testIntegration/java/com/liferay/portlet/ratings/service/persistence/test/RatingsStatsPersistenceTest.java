@@ -491,11 +491,13 @@ public class RatingsStatsPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(ratingsStats.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				ratingsStats, "getOriginalClassNameId", new Class<?>[0]));
+				ratingsStats, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(ratingsStats.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				ratingsStats, "getOriginalClassPK", new Class<?>[0]));
+				ratingsStats, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 	}
 
 	protected RatingsStats addRatingsStats() throws Exception {

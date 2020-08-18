@@ -697,33 +697,40 @@ public class DLFolderPersistenceTest {
 		Assert.assertEquals(
 			dlFolder.getUuid(),
 			ReflectionTestUtil.invoke(
-				dlFolder, "getOriginalUuid", new Class<?>[0]));
+				dlFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(dlFolder.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				dlFolder, "getOriginalGroupId", new Class<?>[0]));
+				dlFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(dlFolder.getRepositoryId()),
 			ReflectionTestUtil.<Long>invoke(
-				dlFolder, "getOriginalRepositoryId", new Class<?>[0]));
+				dlFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "repositoryId"));
 		Assert.assertEquals(
 			Boolean.valueOf(dlFolder.getMountPoint()),
 			ReflectionTestUtil.<Boolean>invoke(
-				dlFolder, "getOriginalMountPoint", new Class<?>[0]));
+				dlFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "mountPoint"));
 
 		Assert.assertEquals(
 			Long.valueOf(dlFolder.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				dlFolder, "getOriginalGroupId", new Class<?>[0]));
+				dlFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			Long.valueOf(dlFolder.getParentFolderId()),
 			ReflectionTestUtil.<Long>invoke(
-				dlFolder, "getOriginalParentFolderId", new Class<?>[0]));
+				dlFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "parentFolderId"));
 		Assert.assertEquals(
 			dlFolder.getName(),
 			ReflectionTestUtil.invoke(
-				dlFolder, "getOriginalName", new Class<?>[0]));
+				dlFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 	}
 
 	protected DLFolder addDLFolder() throws Exception {

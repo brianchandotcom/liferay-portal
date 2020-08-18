@@ -1746,8 +1746,10 @@ public class DLFileVersionPreviewPersistenceImpl
 			 _finderPathFetchByF_F.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				dlFileVersionPreviewModelImpl.getOriginalFileEntryId(),
-				dlFileVersionPreviewModelImpl.getOriginalFileVersionId()
+				dlFileVersionPreviewModelImpl.getColumnOriginalValue(
+					"fileEntryId"),
+				dlFileVersionPreviewModelImpl.getColumnOriginalValue(
+					"fileVersionId")
 			};
 
 			finderCache.removeResult(_finderPathCountByF_F, args);
@@ -1769,9 +1771,12 @@ public class DLFileVersionPreviewPersistenceImpl
 			 _finderPathFetchByF_F_P.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				dlFileVersionPreviewModelImpl.getOriginalFileEntryId(),
-				dlFileVersionPreviewModelImpl.getOriginalFileVersionId(),
-				dlFileVersionPreviewModelImpl.getOriginalPreviewStatus()
+				dlFileVersionPreviewModelImpl.getColumnOriginalValue(
+					"fileEntryId"),
+				dlFileVersionPreviewModelImpl.getColumnOriginalValue(
+					"fileVersionId"),
+				dlFileVersionPreviewModelImpl.getColumnOriginalValue(
+					"previewStatus")
 			};
 
 			finderCache.removeResult(_finderPathCountByF_F_P, args);
@@ -1964,7 +1969,8 @@ public class DLFileVersionPreviewPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					dlFileVersionPreviewModelImpl.getOriginalFileEntryId()
+					dlFileVersionPreviewModelImpl.getColumnOriginalValue(
+						"fileEntryId")
 				};
 
 				finderCache.removeResult(_finderPathCountByFileEntryId, args);
@@ -1985,7 +1991,8 @@ public class DLFileVersionPreviewPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					dlFileVersionPreviewModelImpl.getOriginalFileVersionId()
+					dlFileVersionPreviewModelImpl.getColumnOriginalValue(
+						"fileVersionId")
 				};
 
 				finderCache.removeResult(_finderPathCountByFileVersionId, args);
@@ -2297,7 +2304,7 @@ public class DLFileVersionPreviewPersistenceImpl
 			DLFileVersionPreviewImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFileEntryId",
 			new String[] {Long.class.getName()},
-			DLFileVersionPreviewModelImpl.FILEENTRYID_COLUMN_BITMASK);
+			DLFileVersionPreviewModelImpl.getColumnBitmask("fileEntryId"));
 
 		_finderPathCountByFileEntryId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2315,7 +2322,7 @@ public class DLFileVersionPreviewPersistenceImpl
 			DLFileVersionPreviewImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFileVersionId",
 			new String[] {Long.class.getName()},
-			DLFileVersionPreviewModelImpl.FILEVERSIONID_COLUMN_BITMASK);
+			DLFileVersionPreviewModelImpl.getColumnBitmask("fileVersionId"));
 
 		_finderPathCountByFileVersionId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2325,8 +2332,8 @@ public class DLFileVersionPreviewPersistenceImpl
 			DLFileVersionPreviewImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByF_F",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			DLFileVersionPreviewModelImpl.FILEENTRYID_COLUMN_BITMASK |
-			DLFileVersionPreviewModelImpl.FILEVERSIONID_COLUMN_BITMASK);
+			DLFileVersionPreviewModelImpl.getColumnBitmask("fileEntryId") |
+			DLFileVersionPreviewModelImpl.getColumnBitmask("fileVersionId"));
 
 		_finderPathCountByF_F = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_F",
@@ -2339,9 +2346,9 @@ public class DLFileVersionPreviewPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			DLFileVersionPreviewModelImpl.FILEENTRYID_COLUMN_BITMASK |
-			DLFileVersionPreviewModelImpl.FILEVERSIONID_COLUMN_BITMASK |
-			DLFileVersionPreviewModelImpl.PREVIEWSTATUS_COLUMN_BITMASK);
+			DLFileVersionPreviewModelImpl.getColumnBitmask("fileEntryId") |
+			DLFileVersionPreviewModelImpl.getColumnBitmask("fileVersionId") |
+			DLFileVersionPreviewModelImpl.getColumnBitmask("previewStatus"));
 
 		_finderPathCountByF_F_P = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

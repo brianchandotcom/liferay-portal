@@ -855,37 +855,45 @@ public class WikiPagePersistenceTest {
 		Assert.assertEquals(
 			wikiPage.getUuid(),
 			ReflectionTestUtil.invoke(
-				wikiPage, "getOriginalUuid", new Class<?>[0]));
+				wikiPage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(wikiPage.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				wikiPage, "getOriginalGroupId", new Class<?>[0]));
+				wikiPage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(wikiPage.getResourcePrimKey()),
 			ReflectionTestUtil.<Long>invoke(
-				wikiPage, "getOriginalResourcePrimKey", new Class<?>[0]));
+				wikiPage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "resourcePrimKey"));
 		Assert.assertEquals(
 			Long.valueOf(wikiPage.getNodeId()),
 			ReflectionTestUtil.<Long>invoke(
-				wikiPage, "getOriginalNodeId", new Class<?>[0]));
+				wikiPage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "nodeId"));
 		AssertUtils.assertEquals(
 			wikiPage.getVersion(),
 			ReflectionTestUtil.<Double>invoke(
-				wikiPage, "getOriginalVersion", new Class<?>[0]));
+				wikiPage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "version"));
 
 		Assert.assertEquals(
 			Long.valueOf(wikiPage.getNodeId()),
 			ReflectionTestUtil.<Long>invoke(
-				wikiPage, "getOriginalNodeId", new Class<?>[0]));
+				wikiPage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "nodeId"));
 		Assert.assertEquals(
 			wikiPage.getTitle(),
 			ReflectionTestUtil.invoke(
-				wikiPage, "getOriginalTitle", new Class<?>[0]));
+				wikiPage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "title"));
 		AssertUtils.assertEquals(
 			wikiPage.getVersion(),
 			ReflectionTestUtil.<Double>invoke(
-				wikiPage, "getOriginalVersion", new Class<?>[0]));
+				wikiPage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "version"));
 	}
 
 	protected WikiPage addWikiPage() throws Exception {

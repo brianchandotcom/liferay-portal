@@ -564,21 +564,24 @@ public class KaleoTransitionPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(kaleoTransition.getKaleoNodeId()),
 			ReflectionTestUtil.<Long>invoke(
-				kaleoTransition, "getOriginalKaleoNodeId", new Class<?>[0]));
+				kaleoTransition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "kaleoNodeId"));
 		Assert.assertEquals(
 			kaleoTransition.getName(),
 			ReflectionTestUtil.invoke(
-				kaleoTransition, "getOriginalName", new Class<?>[0]));
+				kaleoTransition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 
 		Assert.assertEquals(
 			Long.valueOf(kaleoTransition.getKaleoNodeId()),
 			ReflectionTestUtil.<Long>invoke(
-				kaleoTransition, "getOriginalKaleoNodeId", new Class<?>[0]));
+				kaleoTransition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "kaleoNodeId"));
 		Assert.assertEquals(
 			Boolean.valueOf(kaleoTransition.getDefaultTransition()),
 			ReflectionTestUtil.<Boolean>invoke(
-				kaleoTransition, "getOriginalDefaultTransition",
-				new Class<?>[0]));
+				kaleoTransition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "defaultTransition"));
 	}
 
 	protected KaleoTransition addKaleoTransition() throws Exception {

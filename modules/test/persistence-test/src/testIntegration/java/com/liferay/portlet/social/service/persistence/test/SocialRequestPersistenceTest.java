@@ -594,32 +594,39 @@ public class SocialRequestPersistenceTest {
 		Assert.assertEquals(
 			socialRequest.getUuid(),
 			ReflectionTestUtil.invoke(
-				socialRequest, "getOriginalUuid", new Class<?>[0]));
+				socialRequest, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(socialRequest.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				socialRequest, "getOriginalGroupId", new Class<?>[0]));
+				socialRequest, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(socialRequest.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				socialRequest, "getOriginalUserId", new Class<?>[0]));
+				socialRequest, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "userId"));
 		Assert.assertEquals(
 			Long.valueOf(socialRequest.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				socialRequest, "getOriginalClassNameId", new Class<?>[0]));
+				socialRequest, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(socialRequest.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				socialRequest, "getOriginalClassPK", new Class<?>[0]));
+				socialRequest, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 		Assert.assertEquals(
 			Integer.valueOf(socialRequest.getType()),
 			ReflectionTestUtil.<Integer>invoke(
-				socialRequest, "getOriginalType", new Class<?>[0]));
+				socialRequest, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "type_"));
 		Assert.assertEquals(
 			Long.valueOf(socialRequest.getReceiverUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				socialRequest, "getOriginalReceiverUserId", new Class<?>[0]));
+				socialRequest, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "receiverUserId"));
 	}
 
 	protected SocialRequest addSocialRequest() throws Exception {

@@ -587,15 +587,18 @@ public class KaleoInstancePersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(kaleoInstance.getKaleoInstanceId()),
 			ReflectionTestUtil.<Long>invoke(
-				kaleoInstance, "getOriginalKaleoInstanceId", new Class<?>[0]));
+				kaleoInstance, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "kaleoInstanceId"));
 		Assert.assertEquals(
 			Long.valueOf(kaleoInstance.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				kaleoInstance, "getOriginalCompanyId", new Class<?>[0]));
+				kaleoInstance, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
 			Long.valueOf(kaleoInstance.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				kaleoInstance, "getOriginalUserId", new Class<?>[0]));
+				kaleoInstance, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "userId"));
 	}
 
 	protected KaleoInstance addKaleoInstance() throws Exception {

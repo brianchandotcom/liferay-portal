@@ -555,15 +555,18 @@ public class SocialRelationPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(socialRelation.getUserId1()),
 			ReflectionTestUtil.<Long>invoke(
-				socialRelation, "getOriginalUserId1", new Class<?>[0]));
+				socialRelation, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "userId1"));
 		Assert.assertEquals(
 			Long.valueOf(socialRelation.getUserId2()),
 			ReflectionTestUtil.<Long>invoke(
-				socialRelation, "getOriginalUserId2", new Class<?>[0]));
+				socialRelation, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "userId2"));
 		Assert.assertEquals(
 			Integer.valueOf(socialRelation.getType()),
 			ReflectionTestUtil.<Integer>invoke(
-				socialRelation, "getOriginalType", new Class<?>[0]));
+				socialRelation, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "type_"));
 	}
 
 	protected SocialRelation addSocialRelation() throws Exception {

@@ -161,14 +161,39 @@ public class ContactModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long ACCOUNTID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CLASSPK_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 8L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CONTACTID_COLUMN_BITMASK = 16L;
 
 	/**
@@ -479,6 +504,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("mvccVersion");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_mvccVersion = mvccVersion;
 	}
 
@@ -490,7 +523,13 @@ public class ContactModelImpl
 
 	@Override
 	public void setContactId(long contactId) {
-		_columnBitmask = -1L;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("contactId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
 
 		_contactId = contactId;
 	}
@@ -503,19 +542,24 @@ public class ContactModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
 
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_companyId = companyId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -526,6 +570,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -558,6 +610,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -569,6 +629,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -585,6 +653,14 @@ public class ContactModelImpl
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
+
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
 
 		_modifiedDate = modifiedDate;
 	}
@@ -617,19 +693,24 @@ public class ContactModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("classNameId");
 
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_classNameId = classNameId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
 	}
 
 	@JSON
@@ -640,19 +721,24 @@ public class ContactModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("classPK");
 
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_classPK = classPK;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		return GetterUtil.getLong(getColumnOriginalValue("classPK"));
 	}
 
 	@JSON
@@ -663,19 +749,24 @@ public class ContactModelImpl
 
 	@Override
 	public void setAccountId(long accountId) {
-		_columnBitmask |= ACCOUNTID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("accountId");
 
-		if (!_setOriginalAccountId) {
-			_setOriginalAccountId = true;
-
-			_originalAccountId = _accountId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_accountId = accountId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalAccountId() {
-		return _originalAccountId;
+		return GetterUtil.getLong(getColumnOriginalValue("accountId"));
 	}
 
 	@JSON
@@ -686,6 +777,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setParentContactId(long parentContactId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("parentContactId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_parentContactId = parentContactId;
 	}
 
@@ -702,6 +801,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setEmailAddress(String emailAddress) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("emailAddress");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_emailAddress = emailAddress;
 	}
 
@@ -718,6 +825,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setFirstName(String firstName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("firstName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_firstName = firstName;
 	}
 
@@ -734,6 +849,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setMiddleName(String middleName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("middleName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_middleName = middleName;
 	}
 
@@ -750,6 +873,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setLastName(String lastName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("lastName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_lastName = lastName;
 	}
 
@@ -761,6 +892,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setPrefixId(long prefixId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("prefixId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_prefixId = prefixId;
 	}
 
@@ -772,6 +911,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setSuffixId(long suffixId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("suffixId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_suffixId = suffixId;
 	}
 
@@ -789,6 +936,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setMale(boolean male) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("male");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_male = male;
 	}
 
@@ -800,6 +955,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setBirthday(Date birthday) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("birthday");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_birthday = birthday;
 	}
 
@@ -816,6 +979,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setSmsSn(String smsSn) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("smsSn");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_smsSn = smsSn;
 	}
 
@@ -832,6 +1003,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setFacebookSn(String facebookSn) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("facebookSn");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_facebookSn = facebookSn;
 	}
 
@@ -848,6 +1027,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setJabberSn(String jabberSn) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("jabberSn");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_jabberSn = jabberSn;
 	}
 
@@ -864,6 +1051,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setSkypeSn(String skypeSn) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("skypeSn");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_skypeSn = skypeSn;
 	}
 
@@ -880,6 +1075,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setTwitterSn(String twitterSn) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("twitterSn");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_twitterSn = twitterSn;
 	}
 
@@ -896,6 +1099,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setEmployeeStatusId(String employeeStatusId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("employeeStatusId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_employeeStatusId = employeeStatusId;
 	}
 
@@ -912,6 +1123,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setEmployeeNumber(String employeeNumber) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("employeeNumber");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_employeeNumber = employeeNumber;
 	}
 
@@ -928,6 +1147,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setJobTitle(String jobTitle) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("jobTitle");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_jobTitle = jobTitle;
 	}
 
@@ -944,6 +1171,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setJobClass(String jobClass) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("jobClass");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_jobClass = jobClass;
 	}
 
@@ -960,6 +1195,14 @@ public class ContactModelImpl
 
 	@Override
 	public void setHoursOfOperation(String hoursOfOperation) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("hoursOfOperation");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_hoursOfOperation = hoursOfOperation;
 	}
 
@@ -1102,27 +1345,11 @@ public class ContactModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		ContactModelImpl contactModelImpl = this;
+		_columnOriginalValues = Collections.emptyMap();
 
-		contactModelImpl._originalCompanyId = contactModelImpl._companyId;
+		_setModifiedDate = false;
 
-		contactModelImpl._setOriginalCompanyId = false;
-
-		contactModelImpl._setModifiedDate = false;
-
-		contactModelImpl._originalClassNameId = contactModelImpl._classNameId;
-
-		contactModelImpl._setOriginalClassNameId = false;
-
-		contactModelImpl._originalClassPK = contactModelImpl._classPK;
-
-		contactModelImpl._setOriginalClassPK = false;
-
-		contactModelImpl._originalAccountId = contactModelImpl._accountId;
-
-		contactModelImpl._setOriginalAccountId = false;
-
-		contactModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -1371,25 +1598,134 @@ public class ContactModelImpl
 
 	}
 
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("contactId", _contactId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("classNameId", _classNameId);
+		_columnOriginalValues.put("classPK", _classPK);
+		_columnOriginalValues.put("accountId", _accountId);
+		_columnOriginalValues.put("parentContactId", _parentContactId);
+		_columnOriginalValues.put("emailAddress", _emailAddress);
+		_columnOriginalValues.put("firstName", _firstName);
+		_columnOriginalValues.put("middleName", _middleName);
+		_columnOriginalValues.put("lastName", _lastName);
+		_columnOriginalValues.put("prefixId", _prefixId);
+		_columnOriginalValues.put("suffixId", _suffixId);
+		_columnOriginalValues.put("male", _male);
+		_columnOriginalValues.put("birthday", _birthday);
+		_columnOriginalValues.put("smsSn", _smsSn);
+		_columnOriginalValues.put("facebookSn", _facebookSn);
+		_columnOriginalValues.put("jabberSn", _jabberSn);
+		_columnOriginalValues.put("skypeSn", _skypeSn);
+		_columnOriginalValues.put("twitterSn", _twitterSn);
+		_columnOriginalValues.put("employeeStatusId", _employeeStatusId);
+		_columnOriginalValues.put("employeeNumber", _employeeNumber);
+		_columnOriginalValues.put("jobTitle", _jobTitle);
+		_columnOriginalValues.put("jobClass", _jobClass);
+		_columnOriginalValues.put("hoursOfOperation", _hoursOfOperation);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("mvccVersion", 1L);
+
+		columnBitmasks.put("contactId", 2L);
+
+		columnBitmasks.put("companyId", 4L);
+
+		columnBitmasks.put("userId", 8L);
+
+		columnBitmasks.put("userName", 16L);
+
+		columnBitmasks.put("createDate", 32L);
+
+		columnBitmasks.put("modifiedDate", 64L);
+
+		columnBitmasks.put("classNameId", 128L);
+
+		columnBitmasks.put("classPK", 256L);
+
+		columnBitmasks.put("accountId", 512L);
+
+		columnBitmasks.put("parentContactId", 1024L);
+
+		columnBitmasks.put("emailAddress", 2048L);
+
+		columnBitmasks.put("firstName", 4096L);
+
+		columnBitmasks.put("middleName", 8192L);
+
+		columnBitmasks.put("lastName", 16384L);
+
+		columnBitmasks.put("prefixId", 32768L);
+
+		columnBitmasks.put("suffixId", 65536L);
+
+		columnBitmasks.put("male", 131072L);
+
+		columnBitmasks.put("birthday", 262144L);
+
+		columnBitmasks.put("smsSn", 524288L);
+
+		columnBitmasks.put("facebookSn", 1048576L);
+
+		columnBitmasks.put("jabberSn", 2097152L);
+
+		columnBitmasks.put("skypeSn", 4194304L);
+
+		columnBitmasks.put("twitterSn", 8388608L);
+
+		columnBitmasks.put("employeeStatusId", 16777216L);
+
+		columnBitmasks.put("employeeNumber", 33554432L);
+
+		columnBitmasks.put("jobTitle", 67108864L);
+
+		columnBitmasks.put("jobClass", 134217728L);
+
+		columnBitmasks.put("hoursOfOperation", 268435456L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _mvccVersion;
 	private long _contactId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private long _accountId;
-	private long _originalAccountId;
-	private boolean _setOriginalAccountId;
 	private long _parentContactId;
 	private String _emailAddress;
 	private String _firstName;

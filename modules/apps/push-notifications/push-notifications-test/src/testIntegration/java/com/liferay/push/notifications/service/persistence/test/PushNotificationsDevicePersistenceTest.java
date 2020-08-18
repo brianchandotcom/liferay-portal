@@ -524,7 +524,8 @@ public class PushNotificationsDevicePersistenceTest {
 		Assert.assertEquals(
 			pushNotificationsDevice.getToken(),
 			ReflectionTestUtil.invoke(
-				pushNotificationsDevice, "getOriginalToken", new Class<?>[0]));
+				pushNotificationsDevice, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "token"));
 	}
 
 	protected PushNotificationsDevice addPushNotificationsDevice()

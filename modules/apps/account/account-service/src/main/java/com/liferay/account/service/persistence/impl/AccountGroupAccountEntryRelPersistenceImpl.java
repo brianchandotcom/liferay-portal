@@ -1525,9 +1525,10 @@ public class AccountGroupAccountEntryRelPersistenceImpl
 			 _finderPathFetchByAGI_AEI.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				accountGroupAccountEntryRelModelImpl.
-					getOriginalAccountGroupId(),
-				accountGroupAccountEntryRelModelImpl.getOriginalAccountEntryId()
+				accountGroupAccountEntryRelModelImpl.getColumnOriginalValue(
+					"accountGroupId"),
+				accountGroupAccountEntryRelModelImpl.getColumnOriginalValue(
+					"accountEntryId")
 			};
 
 			finderCache.removeResult(_finderPathCountByAGI_AEI, args);
@@ -1733,8 +1734,8 @@ public class AccountGroupAccountEntryRelPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					accountGroupAccountEntryRelModelImpl.
-						getOriginalAccountGroupId()
+					accountGroupAccountEntryRelModelImpl.getColumnOriginalValue(
+						"accountGroupId")
 				};
 
 				finderCache.removeResult(
@@ -1757,8 +1758,8 @@ public class AccountGroupAccountEntryRelPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					accountGroupAccountEntryRelModelImpl.
-						getOriginalAccountEntryId()
+					accountGroupAccountEntryRelModelImpl.getColumnOriginalValue(
+						"accountEntryId")
 				};
 
 				finderCache.removeResult(
@@ -2079,7 +2080,8 @@ public class AccountGroupAccountEntryRelPersistenceImpl
 			AccountGroupAccountEntryRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAccountGroupId",
 			new String[] {Long.class.getName()},
-			AccountGroupAccountEntryRelModelImpl.ACCOUNTGROUPID_COLUMN_BITMASK);
+			AccountGroupAccountEntryRelModelImpl.getColumnBitmask(
+				"accountGroupId"));
 
 		_finderPathCountByAccountGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2097,7 +2099,8 @@ public class AccountGroupAccountEntryRelPersistenceImpl
 			AccountGroupAccountEntryRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAccountEntryId",
 			new String[] {Long.class.getName()},
-			AccountGroupAccountEntryRelModelImpl.ACCOUNTENTRYID_COLUMN_BITMASK);
+			AccountGroupAccountEntryRelModelImpl.getColumnBitmask(
+				"accountEntryId"));
 
 		_finderPathCountByAccountEntryId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2107,8 +2110,10 @@ public class AccountGroupAccountEntryRelPersistenceImpl
 			AccountGroupAccountEntryRelImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByAGI_AEI",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			AccountGroupAccountEntryRelModelImpl.ACCOUNTGROUPID_COLUMN_BITMASK |
-			AccountGroupAccountEntryRelModelImpl.ACCOUNTENTRYID_COLUMN_BITMASK);
+			AccountGroupAccountEntryRelModelImpl.getColumnBitmask(
+				"accountGroupId") |
+			AccountGroupAccountEntryRelModelImpl.getColumnBitmask(
+				"accountEntryId"));
 
 		_finderPathCountByAGI_AEI = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

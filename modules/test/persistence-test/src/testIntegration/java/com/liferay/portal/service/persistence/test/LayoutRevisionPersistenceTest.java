@@ -693,34 +693,39 @@ public class LayoutRevisionPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(layoutRevision.getLayoutSetBranchId()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutRevision, "getOriginalLayoutSetBranchId",
-				new Class<?>[0]));
+				layoutRevision, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "layoutSetBranchId"));
 		Assert.assertEquals(
 			Boolean.valueOf(layoutRevision.getHead()),
 			ReflectionTestUtil.<Boolean>invoke(
-				layoutRevision, "getOriginalHead", new Class<?>[0]));
+				layoutRevision, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "head"));
 		Assert.assertEquals(
 			Long.valueOf(layoutRevision.getPlid()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutRevision, "getOriginalPlid", new Class<?>[0]));
+				layoutRevision, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "plid"));
 
 		Assert.assertEquals(
 			Long.valueOf(layoutRevision.getLayoutSetBranchId()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutRevision, "getOriginalLayoutSetBranchId",
-				new Class<?>[0]));
+				layoutRevision, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "layoutSetBranchId"));
 		Assert.assertEquals(
 			Long.valueOf(layoutRevision.getLayoutBranchId()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutRevision, "getOriginalLayoutBranchId", new Class<?>[0]));
+				layoutRevision, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "layoutBranchId"));
 		Assert.assertEquals(
 			Boolean.valueOf(layoutRevision.getHead()),
 			ReflectionTestUtil.<Boolean>invoke(
-				layoutRevision, "getOriginalHead", new Class<?>[0]));
+				layoutRevision, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "head"));
 		Assert.assertEquals(
 			Long.valueOf(layoutRevision.getPlid()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutRevision, "getOriginalPlid", new Class<?>[0]));
+				layoutRevision, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "plid"));
 	}
 
 	protected LayoutRevision addLayoutRevision() throws Exception {

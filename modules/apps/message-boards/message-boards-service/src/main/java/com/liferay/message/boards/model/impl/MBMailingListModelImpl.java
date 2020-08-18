@@ -136,16 +136,46 @@ public class MBMailingListModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CATEGORYID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long UUID_COLUMN_BITMASK = 16L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long MAILINGLISTID_COLUMN_BITMASK = 32L;
 
 	/**
@@ -434,6 +464,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("mvccVersion");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_mvccVersion = mvccVersion;
 	}
 
@@ -444,6 +482,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("ctCollectionId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_ctCollectionId = ctCollectionId;
 	}
 
@@ -459,17 +505,24 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("uuid_");
 
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_uuid = uuid;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		return getColumnOriginalValue("uuid_");
 	}
 
 	@Override
@@ -479,6 +532,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setMailingListId(long mailingListId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("mailingListId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_mailingListId = mailingListId;
 	}
 
@@ -489,19 +550,24 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("groupId");
 
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_groupId = groupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -511,19 +577,24 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
 
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_companyId = companyId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -533,6 +604,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -564,6 +643,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -574,6 +661,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -590,6 +685,14 @@ public class MBMailingListModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -600,19 +703,24 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setCategoryId(long categoryId) {
-		_columnBitmask |= CATEGORYID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("categoryId");
 
-		if (!_setOriginalCategoryId) {
-			_setOriginalCategoryId = true;
-
-			_originalCategoryId = _categoryId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_categoryId = categoryId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCategoryId() {
-		return _originalCategoryId;
+		return GetterUtil.getLong(getColumnOriginalValue("categoryId"));
 	}
 
 	@Override
@@ -627,6 +735,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setEmailAddress(String emailAddress) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("emailAddress");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_emailAddress = emailAddress;
 	}
 
@@ -642,6 +758,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setInProtocol(String inProtocol) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("inProtocol");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_inProtocol = inProtocol;
 	}
 
@@ -657,6 +781,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setInServerName(String inServerName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("inServerName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_inServerName = inServerName;
 	}
 
@@ -667,6 +799,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setInServerPort(int inServerPort) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("inServerPort");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_inServerPort = inServerPort;
 	}
 
@@ -682,6 +822,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setInUseSSL(boolean inUseSSL) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("inUseSSL");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_inUseSSL = inUseSSL;
 	}
 
@@ -697,6 +845,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setInUserName(String inUserName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("inUserName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_inUserName = inUserName;
 	}
 
@@ -712,6 +868,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setInPassword(String inPassword) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("inPassword");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_inPassword = inPassword;
 	}
 
@@ -722,6 +886,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setInReadInterval(int inReadInterval) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("inReadInterval");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_inReadInterval = inReadInterval;
 	}
 
@@ -737,6 +909,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setOutEmailAddress(String outEmailAddress) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("outEmailAddress");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_outEmailAddress = outEmailAddress;
 	}
 
@@ -752,6 +932,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setOutCustom(boolean outCustom) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("outCustom");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_outCustom = outCustom;
 	}
 
@@ -767,6 +955,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setOutServerName(String outServerName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("outServerName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_outServerName = outServerName;
 	}
 
@@ -777,6 +973,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setOutServerPort(int outServerPort) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("outServerPort");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_outServerPort = outServerPort;
 	}
 
@@ -792,6 +996,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setOutUseSSL(boolean outUseSSL) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("outUseSSL");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_outUseSSL = outUseSSL;
 	}
 
@@ -807,6 +1019,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setOutUserName(String outUserName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("outUserName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_outUserName = outUserName;
 	}
 
@@ -822,6 +1042,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setOutPassword(String outPassword) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("outPassword");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_outPassword = outPassword;
 	}
 
@@ -837,6 +1065,14 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setAllowAnonymous(boolean allowAnonymous) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("allowAnonymous");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_allowAnonymous = allowAnonymous;
 	}
 
@@ -852,19 +1088,24 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void setActive(boolean active) {
-		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("active_");
 
-		if (!_setOriginalActive) {
-			_setOriginalActive = true;
-
-			_originalActive = _active;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_active = active;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public boolean getOriginalActive() {
-		return _originalActive;
+		return GetterUtil.getBoolean(getColumnOriginalValue("active_"));
 	}
 
 	@Override
@@ -1005,32 +1246,11 @@ public class MBMailingListModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		MBMailingListModelImpl mbMailingListModelImpl = this;
+		_columnOriginalValues = Collections.emptyMap();
 
-		mbMailingListModelImpl._originalUuid = mbMailingListModelImpl._uuid;
+		_setModifiedDate = false;
 
-		mbMailingListModelImpl._originalGroupId =
-			mbMailingListModelImpl._groupId;
-
-		mbMailingListModelImpl._setOriginalGroupId = false;
-
-		mbMailingListModelImpl._originalCompanyId =
-			mbMailingListModelImpl._companyId;
-
-		mbMailingListModelImpl._setOriginalCompanyId = false;
-
-		mbMailingListModelImpl._setModifiedDate = false;
-
-		mbMailingListModelImpl._originalCategoryId =
-			mbMailingListModelImpl._categoryId;
-
-		mbMailingListModelImpl._setOriginalCategoryId = false;
-
-		mbMailingListModelImpl._originalActive = mbMailingListModelImpl._active;
-
-		mbMailingListModelImpl._setOriginalActive = false;
-
-		mbMailingListModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -1247,25 +1467,132 @@ public class MBMailingListModelImpl
 
 	}
 
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
+		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put("mailingListId", _mailingListId);
+		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("categoryId", _categoryId);
+		_columnOriginalValues.put("emailAddress", _emailAddress);
+		_columnOriginalValues.put("inProtocol", _inProtocol);
+		_columnOriginalValues.put("inServerName", _inServerName);
+		_columnOriginalValues.put("inServerPort", _inServerPort);
+		_columnOriginalValues.put("inUseSSL", _inUseSSL);
+		_columnOriginalValues.put("inUserName", _inUserName);
+		_columnOriginalValues.put("inPassword", _inPassword);
+		_columnOriginalValues.put("inReadInterval", _inReadInterval);
+		_columnOriginalValues.put("outEmailAddress", _outEmailAddress);
+		_columnOriginalValues.put("outCustom", _outCustom);
+		_columnOriginalValues.put("outServerName", _outServerName);
+		_columnOriginalValues.put("outServerPort", _outServerPort);
+		_columnOriginalValues.put("outUseSSL", _outUseSSL);
+		_columnOriginalValues.put("outUserName", _outUserName);
+		_columnOriginalValues.put("outPassword", _outPassword);
+		_columnOriginalValues.put("allowAnonymous", _allowAnonymous);
+		_columnOriginalValues.put("active_", _active);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("mvccVersion", 1L);
+
+		columnBitmasks.put("ctCollectionId", 2L);
+
+		columnBitmasks.put("uuid_", 4L);
+
+		columnBitmasks.put("mailingListId", 8L);
+
+		columnBitmasks.put("groupId", 16L);
+
+		columnBitmasks.put("companyId", 32L);
+
+		columnBitmasks.put("userId", 64L);
+
+		columnBitmasks.put("userName", 128L);
+
+		columnBitmasks.put("createDate", 256L);
+
+		columnBitmasks.put("modifiedDate", 512L);
+
+		columnBitmasks.put("categoryId", 1024L);
+
+		columnBitmasks.put("emailAddress", 2048L);
+
+		columnBitmasks.put("inProtocol", 4096L);
+
+		columnBitmasks.put("inServerName", 8192L);
+
+		columnBitmasks.put("inServerPort", 16384L);
+
+		columnBitmasks.put("inUseSSL", 32768L);
+
+		columnBitmasks.put("inUserName", 65536L);
+
+		columnBitmasks.put("inPassword", 131072L);
+
+		columnBitmasks.put("inReadInterval", 262144L);
+
+		columnBitmasks.put("outEmailAddress", 524288L);
+
+		columnBitmasks.put("outCustom", 1048576L);
+
+		columnBitmasks.put("outServerName", 2097152L);
+
+		columnBitmasks.put("outServerPort", 4194304L);
+
+		columnBitmasks.put("outUseSSL", 8388608L);
+
+		columnBitmasks.put("outUserName", 16777216L);
+
+		columnBitmasks.put("outPassword", 33554432L);
+
+		columnBitmasks.put("allowAnonymous", 67108864L);
+
+		columnBitmasks.put("active_", 134217728L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _mvccVersion;
 	private long _ctCollectionId;
 	private String _uuid;
-	private String _originalUuid;
 	private long _mailingListId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _categoryId;
-	private long _originalCategoryId;
-	private boolean _setOriginalCategoryId;
 	private String _emailAddress;
 	private String _inProtocol;
 	private String _inServerName;
@@ -1283,8 +1610,6 @@ public class MBMailingListModelImpl
 	private String _outPassword;
 	private boolean _allowAnonymous;
 	private boolean _active;
-	private boolean _originalActive;
-	private boolean _setOriginalActive;
 	private long _columnBitmask;
 	private MBMailingList _escapedModel;
 

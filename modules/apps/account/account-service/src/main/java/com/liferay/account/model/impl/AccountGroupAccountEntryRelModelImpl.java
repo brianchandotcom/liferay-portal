@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -103,10 +104,25 @@ public class AccountGroupAccountEntryRelModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long ACCOUNTENTRYID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long ACCOUNTGROUPID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long ACCOUNTGROUPACCOUNTENTRYRELID_COLUMN_BITMASK = 4L;
 
 	/**
@@ -354,6 +370,14 @@ public class AccountGroupAccountEntryRelModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("mvccVersion");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_mvccVersion = mvccVersion;
 	}
 
@@ -367,6 +391,15 @@ public class AccountGroupAccountEntryRelModelImpl
 	public void setAccountGroupAccountEntryRelId(
 		long AccountGroupAccountEntryRelId) {
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get(
+				"AccountGroupAccountEntryRelId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_AccountGroupAccountEntryRelId = AccountGroupAccountEntryRelId;
 	}
 
@@ -378,6 +411,14 @@ public class AccountGroupAccountEntryRelModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_companyId = companyId;
 	}
 
@@ -389,19 +430,24 @@ public class AccountGroupAccountEntryRelModelImpl
 
 	@Override
 	public void setAccountGroupId(long accountGroupId) {
-		_columnBitmask |= ACCOUNTGROUPID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("accountGroupId");
 
-		if (!_setOriginalAccountGroupId) {
-			_setOriginalAccountGroupId = true;
-
-			_originalAccountGroupId = _accountGroupId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_accountGroupId = accountGroupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalAccountGroupId() {
-		return _originalAccountGroupId;
+		return GetterUtil.getLong(getColumnOriginalValue("accountGroupId"));
 	}
 
 	@JSON
@@ -412,19 +458,24 @@ public class AccountGroupAccountEntryRelModelImpl
 
 	@Override
 	public void setAccountEntryId(long accountEntryId) {
-		_columnBitmask |= ACCOUNTENTRYID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("accountEntryId");
 
-		if (!_setOriginalAccountEntryId) {
-			_setOriginalAccountEntryId = true;
-
-			_originalAccountEntryId = _accountEntryId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_accountEntryId = accountEntryId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalAccountEntryId() {
-		return _originalAccountEntryId;
+		return GetterUtil.getLong(getColumnOriginalValue("accountEntryId"));
 	}
 
 	public long getColumnBitmask() {
@@ -542,20 +593,9 @@ public class AccountGroupAccountEntryRelModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		AccountGroupAccountEntryRelModelImpl
-			accountGroupAccountEntryRelModelImpl = this;
+		_columnOriginalValues = Collections.emptyMap();
 
-		accountGroupAccountEntryRelModelImpl._originalAccountGroupId =
-			accountGroupAccountEntryRelModelImpl._accountGroupId;
-
-		accountGroupAccountEntryRelModelImpl._setOriginalAccountGroupId = false;
-
-		accountGroupAccountEntryRelModelImpl._originalAccountEntryId =
-			accountGroupAccountEntryRelModelImpl._accountEntryId;
-
-		accountGroupAccountEntryRelModelImpl._setOriginalAccountEntryId = false;
-
-		accountGroupAccountEntryRelModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -656,15 +696,57 @@ public class AccountGroupAccountEntryRelModelImpl
 
 	}
 
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put(
+			"AccountGroupAccountEntryRelId", _AccountGroupAccountEntryRelId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("accountGroupId", _accountGroupId);
+		_columnOriginalValues.put("accountEntryId", _accountEntryId);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("mvccVersion", 1L);
+
+		columnBitmasks.put("AccountGroupAccountEntryRelId", 2L);
+
+		columnBitmasks.put("companyId", 4L);
+
+		columnBitmasks.put("accountGroupId", 8L);
+
+		columnBitmasks.put("accountEntryId", 16L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _mvccVersion;
 	private long _AccountGroupAccountEntryRelId;
 	private long _companyId;
 	private long _accountGroupId;
-	private long _originalAccountGroupId;
-	private boolean _setOriginalAccountGroupId;
 	private long _accountEntryId;
-	private long _originalAccountEntryId;
-	private boolean _setOriginalAccountEntryId;
 	private long _columnBitmask;
 	private AccountGroupAccountEntryRel _escapedModel;
 

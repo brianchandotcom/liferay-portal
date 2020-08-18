@@ -468,7 +468,8 @@ public class StatusPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(status.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				status, "getOriginalUserId", new Class<?>[0]));
+				status, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"userId"));
 	}
 
 	protected Status addStatus() throws Exception {

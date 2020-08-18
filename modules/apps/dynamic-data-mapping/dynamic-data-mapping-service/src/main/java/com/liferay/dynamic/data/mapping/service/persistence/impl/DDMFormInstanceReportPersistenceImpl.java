@@ -486,7 +486,8 @@ public class DDMFormInstanceReportPersistenceImpl
 			 _finderPathFetchByFormInstanceId.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				ddmFormInstanceReportModelImpl.getOriginalFormInstanceId()
+				ddmFormInstanceReportModelImpl.getColumnOriginalValue(
+					"formInstanceId")
 			};
 
 			finderCache.removeResult(_finderPathCountByFormInstanceId, args);
@@ -1174,7 +1175,7 @@ public class DDMFormInstanceReportPersistenceImpl
 		_finderPathFetchByFormInstanceId = new FinderPath(
 			DDMFormInstanceReportImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByFormInstanceId", new String[] {Long.class.getName()},
-			DDMFormInstanceReportModelImpl.FORMINSTANCEID_COLUMN_BITMASK);
+			DDMFormInstanceReportModelImpl.getColumnBitmask("formInstanceId"));
 
 		_finderPathCountByFormInstanceId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

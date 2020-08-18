@@ -548,20 +548,24 @@ public class AssetTagPersistenceTest {
 		Assert.assertEquals(
 			assetTag.getUuid(),
 			ReflectionTestUtil.invoke(
-				assetTag, "getOriginalUuid", new Class<?>[0]));
+				assetTag, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(assetTag.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				assetTag, "getOriginalGroupId", new Class<?>[0]));
+				assetTag, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(assetTag.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				assetTag, "getOriginalGroupId", new Class<?>[0]));
+				assetTag, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			assetTag.getName(),
 			ReflectionTestUtil.invoke(
-				assetTag, "getOriginalName", new Class<?>[0]));
+				assetTag, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 	}
 
 	protected AssetTag addAssetTag() throws Exception {

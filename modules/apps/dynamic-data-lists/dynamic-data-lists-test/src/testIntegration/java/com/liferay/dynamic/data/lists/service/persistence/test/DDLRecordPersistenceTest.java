@@ -571,11 +571,13 @@ public class DDLRecordPersistenceTest {
 		Assert.assertEquals(
 			ddlRecord.getUuid(),
 			ReflectionTestUtil.invoke(
-				ddlRecord, "getOriginalUuid", new Class<?>[0]));
+				ddlRecord, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(ddlRecord.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				ddlRecord, "getOriginalGroupId", new Class<?>[0]));
+				ddlRecord, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected DDLRecord addDDLRecord() throws Exception {

@@ -4879,7 +4879,7 @@ public class AddressPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					addressModelImpl.getOriginalUuid()
+					addressModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByUuid, args);
@@ -4898,8 +4898,8 @@ public class AddressPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					addressModelImpl.getOriginalUuid(),
-					addressModelImpl.getOriginalCompanyId()
+					addressModelImpl.getColumnOriginalValue("uuid_"),
+					addressModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
@@ -4920,7 +4920,7 @@ public class AddressPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					addressModelImpl.getOriginalCompanyId()
+					addressModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
@@ -4939,7 +4939,7 @@ public class AddressPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					addressModelImpl.getOriginalUserId()
+					addressModelImpl.getColumnOriginalValue("userId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByUserId, args);
@@ -4958,8 +4958,8 @@ public class AddressPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					addressModelImpl.getOriginalCompanyId(),
-					addressModelImpl.getOriginalClassNameId()
+					addressModelImpl.getColumnOriginalValue("companyId"),
+					addressModelImpl.getColumnOriginalValue("classNameId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
@@ -4981,9 +4981,9 @@ public class AddressPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					addressModelImpl.getOriginalCompanyId(),
-					addressModelImpl.getOriginalClassNameId(),
-					addressModelImpl.getOriginalClassPK()
+					addressModelImpl.getColumnOriginalValue("companyId"),
+					addressModelImpl.getColumnOriginalValue("classNameId"),
+					addressModelImpl.getColumnOriginalValue("classPK")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByC_C_C, args);
@@ -5006,10 +5006,10 @@ public class AddressPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					addressModelImpl.getOriginalCompanyId(),
-					addressModelImpl.getOriginalClassNameId(),
-					addressModelImpl.getOriginalClassPK(),
-					addressModelImpl.getOriginalMailing()
+					addressModelImpl.getColumnOriginalValue("companyId"),
+					addressModelImpl.getColumnOriginalValue("classNameId"),
+					addressModelImpl.getColumnOriginalValue("classPK"),
+					addressModelImpl.getColumnOriginalValue("mailing")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByC_C_C_M, args);
@@ -5032,10 +5032,10 @@ public class AddressPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					addressModelImpl.getOriginalCompanyId(),
-					addressModelImpl.getOriginalClassNameId(),
-					addressModelImpl.getOriginalClassPK(),
-					addressModelImpl.getOriginalPrimary()
+					addressModelImpl.getColumnOriginalValue("companyId"),
+					addressModelImpl.getColumnOriginalValue("classNameId"),
+					addressModelImpl.getColumnOriginalValue("classPK"),
+					addressModelImpl.getColumnOriginalValue("primary_")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByC_C_C_P, args);
@@ -5343,8 +5343,8 @@ public class AddressPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			AddressImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid", new String[] {String.class.getName()},
-			AddressModelImpl.UUID_COLUMN_BITMASK |
-			AddressModelImpl.CREATEDATE_COLUMN_BITMASK);
+			AddressModelImpl.getColumnBitmask("uuid_") |
+			AddressModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5363,9 +5363,9 @@ public class AddressPersistenceImpl
 			AddressImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			AddressModelImpl.UUID_COLUMN_BITMASK |
-			AddressModelImpl.COMPANYID_COLUMN_BITMASK |
-			AddressModelImpl.CREATEDATE_COLUMN_BITMASK);
+			AddressModelImpl.getColumnBitmask("uuid_") |
+			AddressModelImpl.getColumnBitmask("companyId") |
+			AddressModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5383,8 +5383,8 @@ public class AddressPersistenceImpl
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
 			AddressImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCompanyId", new String[] {Long.class.getName()},
-			AddressModelImpl.COMPANYID_COLUMN_BITMASK |
-			AddressModelImpl.CREATEDATE_COLUMN_BITMASK);
+			AddressModelImpl.getColumnBitmask("companyId") |
+			AddressModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5401,8 +5401,8 @@ public class AddressPersistenceImpl
 		_finderPathWithoutPaginationFindByUserId = new FinderPath(
 			AddressImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUserId", new String[] {Long.class.getName()},
-			AddressModelImpl.USERID_COLUMN_BITMASK |
-			AddressModelImpl.CREATEDATE_COLUMN_BITMASK);
+			AddressModelImpl.getColumnBitmask("userId") |
+			AddressModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByUserId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5421,9 +5421,9 @@ public class AddressPersistenceImpl
 			AddressImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			AddressModelImpl.COMPANYID_COLUMN_BITMASK |
-			AddressModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			AddressModelImpl.CREATEDATE_COLUMN_BITMASK);
+			AddressModelImpl.getColumnBitmask("companyId") |
+			AddressModelImpl.getColumnBitmask("classNameId") |
+			AddressModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByC_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
@@ -5444,10 +5444,10 @@ public class AddressPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			AddressModelImpl.COMPANYID_COLUMN_BITMASK |
-			AddressModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			AddressModelImpl.CLASSPK_COLUMN_BITMASK |
-			AddressModelImpl.CREATEDATE_COLUMN_BITMASK);
+			AddressModelImpl.getColumnBitmask("companyId") |
+			AddressModelImpl.getColumnBitmask("classNameId") |
+			AddressModelImpl.getColumnBitmask("classPK") |
+			AddressModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByC_C_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5473,11 +5473,11 @@ public class AddressPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Boolean.class.getName()
 			},
-			AddressModelImpl.COMPANYID_COLUMN_BITMASK |
-			AddressModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			AddressModelImpl.CLASSPK_COLUMN_BITMASK |
-			AddressModelImpl.MAILING_COLUMN_BITMASK |
-			AddressModelImpl.CREATEDATE_COLUMN_BITMASK);
+			AddressModelImpl.getColumnBitmask("companyId") |
+			AddressModelImpl.getColumnBitmask("classNameId") |
+			AddressModelImpl.getColumnBitmask("classPK") |
+			AddressModelImpl.getColumnBitmask("mailing") |
+			AddressModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByC_C_C_M = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5504,11 +5504,11 @@ public class AddressPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Boolean.class.getName()
 			},
-			AddressModelImpl.COMPANYID_COLUMN_BITMASK |
-			AddressModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			AddressModelImpl.CLASSPK_COLUMN_BITMASK |
-			AddressModelImpl.PRIMARY_COLUMN_BITMASK |
-			AddressModelImpl.CREATEDATE_COLUMN_BITMASK);
+			AddressModelImpl.getColumnBitmask("companyId") |
+			AddressModelImpl.getColumnBitmask("classNameId") |
+			AddressModelImpl.getColumnBitmask("classPK") |
+			AddressModelImpl.getColumnBitmask("primary_") |
+			AddressModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByC_C_C_P = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

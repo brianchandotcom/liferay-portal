@@ -484,15 +484,18 @@ public class AnnouncementsFlagPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(announcementsFlag.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				announcementsFlag, "getOriginalUserId", new Class<?>[0]));
+				announcementsFlag, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "userId"));
 		Assert.assertEquals(
 			Long.valueOf(announcementsFlag.getEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				announcementsFlag, "getOriginalEntryId", new Class<?>[0]));
+				announcementsFlag, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "entryId"));
 		Assert.assertEquals(
 			Integer.valueOf(announcementsFlag.getValue()),
 			ReflectionTestUtil.<Integer>invoke(
-				announcementsFlag, "getOriginalValue", new Class<?>[0]));
+				announcementsFlag, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "value"));
 	}
 
 	protected AnnouncementsFlag addAnnouncementsFlag() throws Exception {

@@ -115,10 +115,25 @@ public class VersionedEntryVersionModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long VERSION_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long VERSIONEDENTRYID_COLUMN_BITMASK = 4L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
@@ -321,6 +336,14 @@ public class VersionedEntryVersionModelImpl
 
 	@Override
 	public void setVersionedEntryVersionId(long versionedEntryVersionId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("versionedEntryVersionId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_versionedEntryVersionId = versionedEntryVersionId;
 	}
 
@@ -331,19 +354,24 @@ public class VersionedEntryVersionModelImpl
 
 	@Override
 	public void setVersion(int version) {
-		_columnBitmask = -1L;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("version");
 
-		if (!_setOriginalVersion) {
-			_setOriginalVersion = true;
-
-			_originalVersion = _version;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_version = version;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public int getOriginalVersion() {
-		return _originalVersion;
+		return GetterUtil.getInteger(getColumnOriginalValue("version"));
 	}
 
 	@Override
@@ -353,19 +381,24 @@ public class VersionedEntryVersionModelImpl
 
 	@Override
 	public void setVersionedEntryId(long versionedEntryId) {
-		_columnBitmask |= VERSIONEDENTRYID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("versionedEntryId");
 
-		if (!_setOriginalVersionedEntryId) {
-			_setOriginalVersionedEntryId = true;
-
-			_originalVersionedEntryId = _versionedEntryId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_versionedEntryId = versionedEntryId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalVersionedEntryId() {
-		return _originalVersionedEntryId;
+		return GetterUtil.getLong(getColumnOriginalValue("versionedEntryId"));
 	}
 
 	@Override
@@ -375,19 +408,24 @@ public class VersionedEntryVersionModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("groupId");
 
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_groupId = groupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
 	}
 
 	public long getColumnBitmask() {
@@ -509,24 +547,9 @@ public class VersionedEntryVersionModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		VersionedEntryVersionModelImpl versionedEntryVersionModelImpl = this;
+		_columnOriginalValues = Collections.emptyMap();
 
-		versionedEntryVersionModelImpl._originalVersion =
-			versionedEntryVersionModelImpl._version;
-
-		versionedEntryVersionModelImpl._setOriginalVersion = false;
-
-		versionedEntryVersionModelImpl._originalVersionedEntryId =
-			versionedEntryVersionModelImpl._versionedEntryId;
-
-		versionedEntryVersionModelImpl._setOriginalVersionedEntryId = false;
-
-		versionedEntryVersionModelImpl._originalGroupId =
-			versionedEntryVersionModelImpl._groupId;
-
-		versionedEntryVersionModelImpl._setOriginalGroupId = false;
-
-		versionedEntryVersionModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -619,16 +642,53 @@ public class VersionedEntryVersionModelImpl
 
 	}
 
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put(
+			"versionedEntryVersionId", _versionedEntryVersionId);
+		_columnOriginalValues.put("version", _version);
+		_columnOriginalValues.put("versionedEntryId", _versionedEntryId);
+		_columnOriginalValues.put("groupId", _groupId);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("versionedEntryVersionId", 1L);
+
+		columnBitmasks.put("version", 2L);
+
+		columnBitmasks.put("versionedEntryId", 4L);
+
+		columnBitmasks.put("groupId", 8L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _versionedEntryVersionId;
 	private int _version;
-	private int _originalVersion;
-	private boolean _setOriginalVersion;
 	private long _versionedEntryId;
-	private long _originalVersionedEntryId;
-	private boolean _setOriginalVersionedEntryId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _columnBitmask;
 	private VersionedEntryVersion _escapedModel;
 

@@ -1980,7 +1980,8 @@ public class BigDecimalEntryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					bigDecimalEntryModelImpl.getOriginalBigDecimalValue()
+					bigDecimalEntryModelImpl.getColumnOriginalValue(
+						"bigDecimalValue")
 				};
 
 				finderCache.removeResult(
@@ -2625,7 +2626,7 @@ public class BigDecimalEntryPersistenceImpl
 			BigDecimalEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByBigDecimalValue",
 			new String[] {BigDecimal.class.getName()},
-			BigDecimalEntryModelImpl.BIGDECIMALVALUE_COLUMN_BITMASK);
+			BigDecimalEntryModelImpl.getColumnBitmask("bigDecimalValue"));
 
 		_finderPathCountByBigDecimalValue = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

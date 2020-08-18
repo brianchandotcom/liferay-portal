@@ -2391,9 +2391,9 @@ public class CTEntryPersistenceImpl
 			 _finderPathFetchByC_MCNI_MCPK.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				ctEntryModelImpl.getOriginalCtCollectionId(),
-				ctEntryModelImpl.getOriginalModelClassNameId(),
-				ctEntryModelImpl.getOriginalModelClassPK()
+				ctEntryModelImpl.getColumnOriginalValue("ctCollectionId"),
+				ctEntryModelImpl.getColumnOriginalValue("modelClassNameId"),
+				ctEntryModelImpl.getColumnOriginalValue("modelClassPK")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_MCNI_MCPK, args);
@@ -2594,7 +2594,7 @@ public class CTEntryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					ctEntryModelImpl.getOriginalCtCollectionId()
+					ctEntryModelImpl.getColumnOriginalValue("ctCollectionId")
 				};
 
 				finderCache.removeResult(
@@ -2615,8 +2615,8 @@ public class CTEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					ctEntryModelImpl.getOriginalCtCollectionId(),
-					ctEntryModelImpl.getOriginalModelClassNameId()
+					ctEntryModelImpl.getColumnOriginalValue("ctCollectionId"),
+					ctEntryModelImpl.getColumnOriginalValue("modelClassNameId")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_MCNI, args);
@@ -2922,7 +2922,7 @@ public class CTEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByCTCollectionId = new FinderPath(
 			CTEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCTCollectionId", new String[] {Long.class.getName()},
-			CTEntryModelImpl.CTCOLLECTIONID_COLUMN_BITMASK);
+			CTEntryModelImpl.getColumnBitmask("ctCollectionId"));
 
 		_finderPathCountByCTCollectionId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2941,8 +2941,8 @@ public class CTEntryPersistenceImpl
 			CTEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByC_MCNI",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CTEntryModelImpl.CTCOLLECTIONID_COLUMN_BITMASK |
-			CTEntryModelImpl.MODELCLASSNAMEID_COLUMN_BITMASK);
+			CTEntryModelImpl.getColumnBitmask("ctCollectionId") |
+			CTEntryModelImpl.getColumnBitmask("modelClassNameId"));
 
 		_finderPathCountByC_MCNI = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2954,9 +2954,9 @@ public class CTEntryPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			CTEntryModelImpl.CTCOLLECTIONID_COLUMN_BITMASK |
-			CTEntryModelImpl.MODELCLASSNAMEID_COLUMN_BITMASK |
-			CTEntryModelImpl.MODELCLASSPK_COLUMN_BITMASK);
+			CTEntryModelImpl.getColumnBitmask("ctCollectionId") |
+			CTEntryModelImpl.getColumnBitmask("modelClassNameId") |
+			CTEntryModelImpl.getColumnBitmask("modelClassPK"));
 
 		_finderPathCountByC_MCNI_MCPK = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

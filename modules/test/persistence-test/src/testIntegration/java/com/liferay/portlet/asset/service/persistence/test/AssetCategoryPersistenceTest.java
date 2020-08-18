@@ -672,34 +672,40 @@ public class AssetCategoryPersistenceTest {
 		Assert.assertEquals(
 			assetCategory.getUuid(),
 			ReflectionTestUtil.invoke(
-				assetCategory, "getOriginalUuid", new Class<?>[0]));
+				assetCategory, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(assetCategory.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				assetCategory, "getOriginalGroupId", new Class<?>[0]));
+				assetCategory, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(assetCategory.getParentCategoryId()),
 			ReflectionTestUtil.<Long>invoke(
-				assetCategory, "getOriginalParentCategoryId", new Class<?>[0]));
+				assetCategory, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "parentCategoryId"));
 		Assert.assertEquals(
 			assetCategory.getName(),
 			ReflectionTestUtil.invoke(
-				assetCategory, "getOriginalName", new Class<?>[0]));
+				assetCategory, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 		Assert.assertEquals(
 			Long.valueOf(assetCategory.getVocabularyId()),
 			ReflectionTestUtil.<Long>invoke(
-				assetCategory, "getOriginalVocabularyId", new Class<?>[0]));
+				assetCategory, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "vocabularyId"));
 
 		Assert.assertEquals(
 			Long.valueOf(assetCategory.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				assetCategory, "getOriginalCompanyId", new Class<?>[0]));
+				assetCategory, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
 			assetCategory.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
-				assetCategory, "getOriginalExternalReferenceCode",
-				new Class<?>[0]));
+				assetCategory, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected AssetCategory addAssetCategory() throws Exception {

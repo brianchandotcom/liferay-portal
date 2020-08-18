@@ -617,11 +617,13 @@ public class DDMFormInstanceRecordPersistenceTest {
 		Assert.assertEquals(
 			ddmFormInstanceRecord.getUuid(),
 			ReflectionTestUtil.invoke(
-				ddmFormInstanceRecord, "getOriginalUuid", new Class<?>[0]));
+				ddmFormInstanceRecord, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(ddmFormInstanceRecord.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				ddmFormInstanceRecord, "getOriginalGroupId", new Class<?>[0]));
+				ddmFormInstanceRecord, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected DDMFormInstanceRecord addDDMFormInstanceRecord()

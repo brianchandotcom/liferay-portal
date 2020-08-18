@@ -1459,8 +1459,8 @@ public class CTPreferencesPersistenceImpl
 			 _finderPathFetchByC_U.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				ctPreferencesModelImpl.getOriginalCompanyId(),
-				ctPreferencesModelImpl.getOriginalUserId()
+				ctPreferencesModelImpl.getColumnOriginalValue("companyId"),
+				ctPreferencesModelImpl.getColumnOriginalValue("userId")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_U, args);
@@ -1646,7 +1646,8 @@ public class CTPreferencesPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					ctPreferencesModelImpl.getOriginalCtCollectionId()
+					ctPreferencesModelImpl.getColumnOriginalValue(
+						"ctCollectionId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCollectionId, args);
@@ -1667,7 +1668,8 @@ public class CTPreferencesPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					ctPreferencesModelImpl.getOriginalPreviousCtCollectionId()
+					ctPreferencesModelImpl.getColumnOriginalValue(
+						"previousCtCollectionId")
 				};
 
 				finderCache.removeResult(
@@ -1978,7 +1980,7 @@ public class CTPreferencesPersistenceImpl
 		_finderPathWithoutPaginationFindByCollectionId = new FinderPath(
 			CTPreferencesImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCollectionId", new String[] {Long.class.getName()},
-			CTPreferencesModelImpl.CTCOLLECTIONID_COLUMN_BITMASK);
+			CTPreferencesModelImpl.getColumnBitmask("ctCollectionId"));
 
 		_finderPathCountByCollectionId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1995,7 +1997,7 @@ public class CTPreferencesPersistenceImpl
 		_finderPathWithoutPaginationFindByPreviousCollectionId = new FinderPath(
 			CTPreferencesImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByPreviousCollectionId", new String[] {Long.class.getName()},
-			CTPreferencesModelImpl.PREVIOUSCTCOLLECTIONID_COLUMN_BITMASK);
+			CTPreferencesModelImpl.getColumnBitmask("previousCtCollectionId"));
 
 		_finderPathCountByPreviousCollectionId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2004,8 +2006,8 @@ public class CTPreferencesPersistenceImpl
 		_finderPathFetchByC_U = new FinderPath(
 			CTPreferencesImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_U",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CTPreferencesModelImpl.COMPANYID_COLUMN_BITMASK |
-			CTPreferencesModelImpl.USERID_COLUMN_BITMASK);
+			CTPreferencesModelImpl.getColumnBitmask("companyId") |
+			CTPreferencesModelImpl.getColumnBitmask("userId"));
 
 		_finderPathCountByC_U = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",

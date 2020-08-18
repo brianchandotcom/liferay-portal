@@ -125,12 +125,32 @@ public class AkismetEntryModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long MODIFIEDDATE_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long AKISMETENTRYID_COLUMN_BITMASK = 8L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
@@ -317,6 +337,14 @@ public class AkismetEntryModelImpl
 
 	@Override
 	public void setAkismetEntryId(long akismetEntryId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("akismetEntryId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_akismetEntryId = akismetEntryId;
 	}
 
@@ -327,17 +355,24 @@ public class AkismetEntryModelImpl
 
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
-		_columnBitmask |= MODIFIEDDATE_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
 
-		if (_originalModifiedDate == null) {
-			_originalModifiedDate = _modifiedDate;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_modifiedDate = modifiedDate;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public Date getOriginalModifiedDate() {
-		return _originalModifiedDate;
+		return getColumnOriginalValue("modifiedDate");
 	}
 
 	@Override
@@ -367,19 +402,24 @@ public class AkismetEntryModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("classNameId");
 
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_classNameId = classNameId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
 	}
 
 	@Override
@@ -389,19 +429,24 @@ public class AkismetEntryModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("classPK");
 
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_classPK = classPK;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		return GetterUtil.getLong(getColumnOriginalValue("classPK"));
 	}
 
 	@Override
@@ -416,6 +461,14 @@ public class AkismetEntryModelImpl
 
 	@Override
 	public void setType(String type) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("type_");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_type = type;
 	}
 
@@ -431,6 +484,14 @@ public class AkismetEntryModelImpl
 
 	@Override
 	public void setPermalink(String permalink) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("permalink");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_permalink = permalink;
 	}
 
@@ -446,6 +507,14 @@ public class AkismetEntryModelImpl
 
 	@Override
 	public void setReferrer(String referrer) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("referrer");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_referrer = referrer;
 	}
 
@@ -461,6 +530,14 @@ public class AkismetEntryModelImpl
 
 	@Override
 	public void setUserAgent(String userAgent) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userAgent");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userAgent = userAgent;
 	}
 
@@ -476,6 +553,14 @@ public class AkismetEntryModelImpl
 
 	@Override
 	public void setUserIP(String userIP) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userIP");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userIP = userIP;
 	}
 
@@ -491,6 +576,14 @@ public class AkismetEntryModelImpl
 
 	@Override
 	public void setUserURL(String userURL) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userURL");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userURL = userURL;
 	}
 
@@ -608,21 +701,9 @@ public class AkismetEntryModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		AkismetEntryModelImpl akismetEntryModelImpl = this;
+		_columnOriginalValues = Collections.emptyMap();
 
-		akismetEntryModelImpl._originalModifiedDate =
-			akismetEntryModelImpl._modifiedDate;
-
-		akismetEntryModelImpl._originalClassNameId =
-			akismetEntryModelImpl._classNameId;
-
-		akismetEntryModelImpl._setOriginalClassNameId = false;
-
-		akismetEntryModelImpl._originalClassPK = akismetEntryModelImpl._classPK;
-
-		akismetEntryModelImpl._setOriginalClassPK = false;
-
-		akismetEntryModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -766,15 +847,70 @@ public class AkismetEntryModelImpl
 
 	}
 
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("akismetEntryId", _akismetEntryId);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("classNameId", _classNameId);
+		_columnOriginalValues.put("classPK", _classPK);
+		_columnOriginalValues.put("type_", _type);
+		_columnOriginalValues.put("permalink", _permalink);
+		_columnOriginalValues.put("referrer", _referrer);
+		_columnOriginalValues.put("userAgent", _userAgent);
+		_columnOriginalValues.put("userIP", _userIP);
+		_columnOriginalValues.put("userURL", _userURL);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("akismetEntryId", 1L);
+
+		columnBitmasks.put("modifiedDate", 2L);
+
+		columnBitmasks.put("classNameId", 4L);
+
+		columnBitmasks.put("classPK", 8L);
+
+		columnBitmasks.put("type_", 16L);
+
+		columnBitmasks.put("permalink", 32L);
+
+		columnBitmasks.put("referrer", 64L);
+
+		columnBitmasks.put("userAgent", 128L);
+
+		columnBitmasks.put("userIP", 256L);
+
+		columnBitmasks.put("userURL", 512L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _akismetEntryId;
 	private Date _modifiedDate;
-	private Date _originalModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private String _type;
 	private String _permalink;
 	private String _referrer;

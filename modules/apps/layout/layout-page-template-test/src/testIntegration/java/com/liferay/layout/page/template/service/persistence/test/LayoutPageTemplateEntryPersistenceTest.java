@@ -861,42 +861,46 @@ public class LayoutPageTemplateEntryPersistenceTest {
 		Assert.assertEquals(
 			layoutPageTemplateEntry.getUuid(),
 			ReflectionTestUtil.invoke(
-				layoutPageTemplateEntry, "getOriginalUuid", new Class<?>[0]));
+				layoutPageTemplateEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(layoutPageTemplateEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutPageTemplateEntry, "getOriginalGroupId",
-				new Class<?>[0]));
+				layoutPageTemplateEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(layoutPageTemplateEntry.getPlid()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutPageTemplateEntry, "getOriginalPlid", new Class<?>[0]));
+				layoutPageTemplateEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "plid"));
 
 		Assert.assertEquals(
 			Long.valueOf(layoutPageTemplateEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutPageTemplateEntry, "getOriginalGroupId",
-				new Class<?>[0]));
+				layoutPageTemplateEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryKey(),
 			ReflectionTestUtil.invoke(
-				layoutPageTemplateEntry,
-				"getOriginalLayoutPageTemplateEntryKey", new Class<?>[0]));
+				layoutPageTemplateEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "layoutPageTemplateEntryKey"));
 
 		Assert.assertEquals(
 			Long.valueOf(layoutPageTemplateEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutPageTemplateEntry, "getOriginalGroupId",
-				new Class<?>[0]));
+				layoutPageTemplateEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			layoutPageTemplateEntry.getName(),
 			ReflectionTestUtil.invoke(
-				layoutPageTemplateEntry, "getOriginalName", new Class<?>[0]));
+				layoutPageTemplateEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 		Assert.assertEquals(
 			Integer.valueOf(layoutPageTemplateEntry.getType()),
 			ReflectionTestUtil.<Integer>invoke(
-				layoutPageTemplateEntry, "getOriginalType", new Class<?>[0]));
+				layoutPageTemplateEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "type_"));
 	}
 
 	protected LayoutPageTemplateEntry addLayoutPageTemplateEntry()

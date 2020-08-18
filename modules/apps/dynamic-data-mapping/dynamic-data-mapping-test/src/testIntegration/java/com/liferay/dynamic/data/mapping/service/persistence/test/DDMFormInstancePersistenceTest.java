@@ -565,11 +565,13 @@ public class DDMFormInstancePersistenceTest {
 		Assert.assertEquals(
 			ddmFormInstance.getUuid(),
 			ReflectionTestUtil.invoke(
-				ddmFormInstance, "getOriginalUuid", new Class<?>[0]));
+				ddmFormInstance, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(ddmFormInstance.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				ddmFormInstance, "getOriginalGroupId", new Class<?>[0]));
+				ddmFormInstance, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected DDMFormInstance addDDMFormInstance() throws Exception {

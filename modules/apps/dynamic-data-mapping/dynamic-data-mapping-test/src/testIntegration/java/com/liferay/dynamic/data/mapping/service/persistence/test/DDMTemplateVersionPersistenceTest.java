@@ -567,11 +567,13 @@ public class DDMTemplateVersionPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(ddmTemplateVersion.getTemplateId()),
 			ReflectionTestUtil.<Long>invoke(
-				ddmTemplateVersion, "getOriginalTemplateId", new Class<?>[0]));
+				ddmTemplateVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "templateId"));
 		Assert.assertEquals(
 			ddmTemplateVersion.getVersion(),
 			ReflectionTestUtil.invoke(
-				ddmTemplateVersion, "getOriginalVersion", new Class<?>[0]));
+				ddmTemplateVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "version"));
 	}
 
 	protected DDMTemplateVersion addDDMTemplateVersion() throws Exception {

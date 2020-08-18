@@ -2116,9 +2116,10 @@ public class LayoutBranchPersistenceImpl
 			 _finderPathFetchByL_P_N.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				layoutBranchModelImpl.getOriginalLayoutSetBranchId(),
-				layoutBranchModelImpl.getOriginalPlid(),
-				layoutBranchModelImpl.getOriginalName()
+				layoutBranchModelImpl.getColumnOriginalValue(
+					"layoutSetBranchId"),
+				layoutBranchModelImpl.getColumnOriginalValue("plid"),
+				layoutBranchModelImpl.getColumnOriginalValue("name")
 			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByL_P_N, args);
@@ -2316,7 +2317,8 @@ public class LayoutBranchPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					layoutBranchModelImpl.getOriginalLayoutSetBranchId()
+					layoutBranchModelImpl.getColumnOriginalValue(
+						"layoutSetBranchId")
 				};
 
 				FinderCacheUtil.removeResult(
@@ -2339,8 +2341,9 @@ public class LayoutBranchPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					layoutBranchModelImpl.getOriginalLayoutSetBranchId(),
-					layoutBranchModelImpl.getOriginalPlid()
+					layoutBranchModelImpl.getColumnOriginalValue(
+						"layoutSetBranchId"),
+					layoutBranchModelImpl.getColumnOriginalValue("plid")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByL_P, args);
@@ -2362,9 +2365,10 @@ public class LayoutBranchPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					layoutBranchModelImpl.getOriginalLayoutSetBranchId(),
-					layoutBranchModelImpl.getOriginalPlid(),
-					layoutBranchModelImpl.getOriginalMaster()
+					layoutBranchModelImpl.getColumnOriginalValue(
+						"layoutSetBranchId"),
+					layoutBranchModelImpl.getColumnOriginalValue("plid"),
+					layoutBranchModelImpl.getColumnOriginalValue("master")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByL_P_M, args);
@@ -2671,7 +2675,7 @@ public class LayoutBranchPersistenceImpl
 		_finderPathWithoutPaginationFindByLayoutSetBranchId = new FinderPath(
 			LayoutBranchImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByLayoutSetBranchId", new String[] {Long.class.getName()},
-			LayoutBranchModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK);
+			LayoutBranchModelImpl.getColumnBitmask("layoutSetBranchId"));
 
 		_finderPathCountByLayoutSetBranchId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2690,8 +2694,8 @@ public class LayoutBranchPersistenceImpl
 			LayoutBranchImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByL_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			LayoutBranchModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
-			LayoutBranchModelImpl.PLID_COLUMN_BITMASK);
+			LayoutBranchModelImpl.getColumnBitmask("layoutSetBranchId") |
+			LayoutBranchModelImpl.getColumnBitmask("plid"));
 
 		_finderPathCountByL_P = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_P",
@@ -2703,9 +2707,9 @@ public class LayoutBranchPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			LayoutBranchModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
-			LayoutBranchModelImpl.PLID_COLUMN_BITMASK |
-			LayoutBranchModelImpl.NAME_COLUMN_BITMASK);
+			LayoutBranchModelImpl.getColumnBitmask("layoutSetBranchId") |
+			LayoutBranchModelImpl.getColumnBitmask("plid") |
+			LayoutBranchModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByL_P_N = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2731,9 +2735,9 @@ public class LayoutBranchPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
 			},
-			LayoutBranchModelImpl.LAYOUTSETBRANCHID_COLUMN_BITMASK |
-			LayoutBranchModelImpl.PLID_COLUMN_BITMASK |
-			LayoutBranchModelImpl.MASTER_COLUMN_BITMASK);
+			LayoutBranchModelImpl.getColumnBitmask("layoutSetBranchId") |
+			LayoutBranchModelImpl.getColumnBitmask("plid") |
+			LayoutBranchModelImpl.getColumnBitmask("master"));
 
 		_finderPathCountByL_P_M = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

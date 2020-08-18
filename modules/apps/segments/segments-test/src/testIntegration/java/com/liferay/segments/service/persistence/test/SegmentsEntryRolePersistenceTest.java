@@ -509,12 +509,13 @@ public class SegmentsEntryRolePersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(segmentsEntryRole.getSegmentsEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				segmentsEntryRole, "getOriginalSegmentsEntryId",
-				new Class<?>[0]));
+				segmentsEntryRole, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "segmentsEntryId"));
 		Assert.assertEquals(
 			Long.valueOf(segmentsEntryRole.getRoleId()),
 			ReflectionTestUtil.<Long>invoke(
-				segmentsEntryRole, "getOriginalRoleId", new Class<?>[0]));
+				segmentsEntryRole, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "roleId"));
 	}
 
 	protected SegmentsEntryRole addSegmentsEntryRole() throws Exception {

@@ -4242,7 +4242,7 @@ public class OAuthApplicationPersistenceImpl
 			 _finderPathFetchByConsumerKey.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				oAuthApplicationModelImpl.getOriginalConsumerKey()
+				oAuthApplicationModelImpl.getColumnOriginalValue("consumerKey")
 			};
 
 			finderCache.removeResult(_finderPathCountByConsumerKey, args);
@@ -4452,7 +4452,8 @@ public class OAuthApplicationPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					oAuthApplicationModelImpl.getOriginalCompanyId()
+					oAuthApplicationModelImpl.getColumnOriginalValue(
+						"companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -4471,7 +4472,7 @@ public class OAuthApplicationPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					oAuthApplicationModelImpl.getOriginalUserId()
+					oAuthApplicationModelImpl.getColumnOriginalValue("userId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUserId, args);
@@ -4779,7 +4780,7 @@ public class OAuthApplicationPersistenceImpl
 			OAuthApplicationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
-			OAuthApplicationModelImpl.COMPANYID_COLUMN_BITMASK);
+			OAuthApplicationModelImpl.getColumnBitmask("companyId"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4797,7 +4798,7 @@ public class OAuthApplicationPersistenceImpl
 			OAuthApplicationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
 			new String[] {Long.class.getName()},
-			OAuthApplicationModelImpl.USERID_COLUMN_BITMASK);
+			OAuthApplicationModelImpl.getColumnBitmask("userId"));
 
 		_finderPathCountByUserId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4806,7 +4807,7 @@ public class OAuthApplicationPersistenceImpl
 		_finderPathFetchByConsumerKey = new FinderPath(
 			OAuthApplicationImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByConsumerKey", new String[] {String.class.getName()},
-			OAuthApplicationModelImpl.CONSUMERKEY_COLUMN_BITMASK);
+			OAuthApplicationModelImpl.getColumnBitmask("consumerKey"));
 
 		_finderPathCountByConsumerKey = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

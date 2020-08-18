@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -117,10 +118,25 @@ public class DispatchLogModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long DISPATCHTRIGGERID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long STATUS_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long MODIFIEDDATE_COLUMN_BITMASK = 4L;
 
 	/**
@@ -382,6 +398,14 @@ public class DispatchLogModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("mvccVersion");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_mvccVersion = mvccVersion;
 	}
 
@@ -393,6 +417,14 @@ public class DispatchLogModelImpl
 
 	@Override
 	public void setDispatchLogId(long dispatchLogId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("dispatchLogId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_dispatchLogId = dispatchLogId;
 	}
 
@@ -404,6 +436,14 @@ public class DispatchLogModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_companyId = companyId;
 	}
 
@@ -415,6 +455,14 @@ public class DispatchLogModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -447,6 +495,14 @@ public class DispatchLogModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -458,6 +514,14 @@ public class DispatchLogModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -475,7 +539,13 @@ public class DispatchLogModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		_columnBitmask = -1L;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
 
 		_modifiedDate = modifiedDate;
 	}
@@ -488,19 +558,24 @@ public class DispatchLogModelImpl
 
 	@Override
 	public void setDispatchTriggerId(long dispatchTriggerId) {
-		_columnBitmask |= DISPATCHTRIGGERID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("dispatchTriggerId");
 
-		if (!_setOriginalDispatchTriggerId) {
-			_setOriginalDispatchTriggerId = true;
-
-			_originalDispatchTriggerId = _dispatchTriggerId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_dispatchTriggerId = dispatchTriggerId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalDispatchTriggerId() {
-		return _originalDispatchTriggerId;
+		return GetterUtil.getLong(getColumnOriginalValue("dispatchTriggerId"));
 	}
 
 	@JSON
@@ -511,6 +586,14 @@ public class DispatchLogModelImpl
 
 	@Override
 	public void setEndDate(Date endDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("endDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_endDate = endDate;
 	}
 
@@ -527,6 +610,14 @@ public class DispatchLogModelImpl
 
 	@Override
 	public void setError(String error) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("error");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_error = error;
 	}
 
@@ -543,6 +634,14 @@ public class DispatchLogModelImpl
 
 	@Override
 	public void setOutput(String output) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("output_");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_output = output;
 	}
 
@@ -554,6 +653,14 @@ public class DispatchLogModelImpl
 
 	@Override
 	public void setStartDate(Date startDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("startDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_startDate = startDate;
 	}
 
@@ -565,19 +672,24 @@ public class DispatchLogModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("status");
 
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_status = status;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public int getOriginalStatus() {
-		return _originalStatus;
+		return GetterUtil.getInteger(getColumnOriginalValue("status"));
 	}
 
 	public long getColumnBitmask() {
@@ -698,20 +810,11 @@ public class DispatchLogModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		DispatchLogModelImpl dispatchLogModelImpl = this;
+		_columnOriginalValues = Collections.emptyMap();
 
-		dispatchLogModelImpl._setModifiedDate = false;
+		_setModifiedDate = false;
 
-		dispatchLogModelImpl._originalDispatchTriggerId =
-			dispatchLogModelImpl._dispatchTriggerId;
-
-		dispatchLogModelImpl._setOriginalDispatchTriggerId = false;
-
-		dispatchLogModelImpl._originalStatus = dispatchLogModelImpl._status;
-
-		dispatchLogModelImpl._setOriginalStatus = false;
-
-		dispatchLogModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -864,6 +967,75 @@ public class DispatchLogModelImpl
 
 	}
 
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("dispatchLogId", _dispatchLogId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("dispatchTriggerId", _dispatchTriggerId);
+		_columnOriginalValues.put("endDate", _endDate);
+		_columnOriginalValues.put("error", _error);
+		_columnOriginalValues.put("output_", _output);
+		_columnOriginalValues.put("startDate", _startDate);
+		_columnOriginalValues.put("status", _status);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("mvccVersion", 1L);
+
+		columnBitmasks.put("dispatchLogId", 2L);
+
+		columnBitmasks.put("companyId", 4L);
+
+		columnBitmasks.put("userId", 8L);
+
+		columnBitmasks.put("userName", 16L);
+
+		columnBitmasks.put("createDate", 32L);
+
+		columnBitmasks.put("modifiedDate", 64L);
+
+		columnBitmasks.put("dispatchTriggerId", 128L);
+
+		columnBitmasks.put("endDate", 256L);
+
+		columnBitmasks.put("error", 512L);
+
+		columnBitmasks.put("output_", 1024L);
+
+		columnBitmasks.put("startDate", 2048L);
+
+		columnBitmasks.put("status", 4096L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _mvccVersion;
 	private long _dispatchLogId;
 	private long _companyId;
@@ -873,15 +1045,11 @@ public class DispatchLogModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _dispatchTriggerId;
-	private long _originalDispatchTriggerId;
-	private boolean _setOriginalDispatchTriggerId;
 	private Date _endDate;
 	private String _error;
 	private String _output;
 	private Date _startDate;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _columnBitmask;
 	private DispatchLog _escapedModel;
 

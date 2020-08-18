@@ -504,15 +504,18 @@ public class CTEntryPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(ctEntry.getCtCollectionId()),
 			ReflectionTestUtil.<Long>invoke(
-				ctEntry, "getOriginalCtCollectionId", new Class<?>[0]));
+				ctEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "ctCollectionId"));
 		Assert.assertEquals(
 			Long.valueOf(ctEntry.getModelClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				ctEntry, "getOriginalModelClassNameId", new Class<?>[0]));
+				ctEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "modelClassNameId"));
 		Assert.assertEquals(
 			Long.valueOf(ctEntry.getModelClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				ctEntry, "getOriginalModelClassPK", new Class<?>[0]));
+				ctEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "modelClassPK"));
 	}
 
 	protected CTEntry addCTEntry() throws Exception {

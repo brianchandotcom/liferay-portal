@@ -531,20 +531,24 @@ public class MBThreadFlagPersistenceTest {
 		Assert.assertEquals(
 			mbThreadFlag.getUuid(),
 			ReflectionTestUtil.invoke(
-				mbThreadFlag, "getOriginalUuid", new Class<?>[0]));
+				mbThreadFlag, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(mbThreadFlag.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				mbThreadFlag, "getOriginalGroupId", new Class<?>[0]));
+				mbThreadFlag, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(mbThreadFlag.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				mbThreadFlag, "getOriginalUserId", new Class<?>[0]));
+				mbThreadFlag, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "userId"));
 		Assert.assertEquals(
 			Long.valueOf(mbThreadFlag.getThreadId()),
 			ReflectionTestUtil.<Long>invoke(
-				mbThreadFlag, "getOriginalThreadId", new Class<?>[0]));
+				mbThreadFlag, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "threadId"));
 	}
 
 	protected MBThreadFlag addMBThreadFlag() throws Exception {

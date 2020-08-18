@@ -829,7 +829,7 @@ public class OrgLaborPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					orgLaborModelImpl.getOriginalOrganizationId()
+					orgLaborModelImpl.getColumnOriginalValue("organizationId")
 				};
 
 				FinderCacheUtil.removeResult(
@@ -1130,8 +1130,8 @@ public class OrgLaborPersistenceImpl
 		_finderPathWithoutPaginationFindByOrganizationId = new FinderPath(
 			OrgLaborImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByOrganizationId", new String[] {Long.class.getName()},
-			OrgLaborModelImpl.ORGANIZATIONID_COLUMN_BITMASK |
-			OrgLaborModelImpl.TYPEID_COLUMN_BITMASK);
+			OrgLaborModelImpl.getColumnBitmask("organizationId") |
+			OrgLaborModelImpl.getColumnBitmask("typeId"));
 
 		_finderPathCountByOrganizationId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

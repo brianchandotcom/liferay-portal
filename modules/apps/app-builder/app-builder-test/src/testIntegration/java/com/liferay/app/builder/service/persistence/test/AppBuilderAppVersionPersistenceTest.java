@@ -588,21 +588,24 @@ public class AppBuilderAppVersionPersistenceTest {
 		Assert.assertEquals(
 			appBuilderAppVersion.getUuid(),
 			ReflectionTestUtil.invoke(
-				appBuilderAppVersion, "getOriginalUuid", new Class<?>[0]));
+				appBuilderAppVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(appBuilderAppVersion.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				appBuilderAppVersion, "getOriginalGroupId", new Class<?>[0]));
+				appBuilderAppVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(appBuilderAppVersion.getAppBuilderAppId()),
 			ReflectionTestUtil.<Long>invoke(
-				appBuilderAppVersion, "getOriginalAppBuilderAppId",
-				new Class<?>[0]));
+				appBuilderAppVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "appBuilderAppId"));
 		Assert.assertEquals(
 			appBuilderAppVersion.getVersion(),
 			ReflectionTestUtil.invoke(
-				appBuilderAppVersion, "getOriginalVersion", new Class<?>[0]));
+				appBuilderAppVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "version"));
 	}
 
 	protected AppBuilderAppVersion addAppBuilderAppVersion() throws Exception {

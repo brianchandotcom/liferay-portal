@@ -1031,8 +1031,9 @@ public class ServiceComponentPersistenceImpl
 			 _finderPathFetchByBNS_BNU.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				serviceComponentModelImpl.getOriginalBuildNamespace(),
-				serviceComponentModelImpl.getOriginalBuildNumber()
+				serviceComponentModelImpl.getColumnOriginalValue(
+					"buildNamespace"),
+				serviceComponentModelImpl.getColumnOriginalValue("buildNumber")
 			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByBNS_BNU, args);
@@ -1211,7 +1212,8 @@ public class ServiceComponentPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					serviceComponentModelImpl.getOriginalBuildNamespace()
+					serviceComponentModelImpl.getColumnOriginalValue(
+						"buildNamespace")
 				};
 
 				FinderCacheUtil.removeResult(
@@ -1527,8 +1529,8 @@ public class ServiceComponentPersistenceImpl
 			ServiceComponentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByBuildNamespace",
 			new String[] {String.class.getName()},
-			ServiceComponentModelImpl.BUILDNAMESPACE_COLUMN_BITMASK |
-			ServiceComponentModelImpl.BUILDNUMBER_COLUMN_BITMASK);
+			ServiceComponentModelImpl.getColumnBitmask("buildNamespace") |
+			ServiceComponentModelImpl.getColumnBitmask("buildNumber"));
 
 		_finderPathCountByBuildNamespace = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1538,8 +1540,8 @@ public class ServiceComponentPersistenceImpl
 			ServiceComponentImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByBNS_BNU",
 			new String[] {String.class.getName(), Long.class.getName()},
-			ServiceComponentModelImpl.BUILDNAMESPACE_COLUMN_BITMASK |
-			ServiceComponentModelImpl.BUILDNUMBER_COLUMN_BITMASK);
+			ServiceComponentModelImpl.getColumnBitmask("buildNamespace") |
+			ServiceComponentModelImpl.getColumnBitmask("buildNumber"));
 
 		_finderPathCountByBNS_BNU = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

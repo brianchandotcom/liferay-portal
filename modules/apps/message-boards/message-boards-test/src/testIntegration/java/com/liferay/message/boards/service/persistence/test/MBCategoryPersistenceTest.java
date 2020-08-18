@@ -660,11 +660,13 @@ public class MBCategoryPersistenceTest {
 		Assert.assertEquals(
 			mbCategory.getUuid(),
 			ReflectionTestUtil.invoke(
-				mbCategory, "getOriginalUuid", new Class<?>[0]));
+				mbCategory, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(mbCategory.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				mbCategory, "getOriginalGroupId", new Class<?>[0]));
+				mbCategory, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected MBCategory addMBCategory() throws Exception {

@@ -533,16 +533,19 @@ public class KaleoProcessPersistenceTest {
 		Assert.assertEquals(
 			kaleoProcess.getUuid(),
 			ReflectionTestUtil.invoke(
-				kaleoProcess, "getOriginalUuid", new Class<?>[0]));
+				kaleoProcess, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(kaleoProcess.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				kaleoProcess, "getOriginalGroupId", new Class<?>[0]));
+				kaleoProcess, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(kaleoProcess.getDDLRecordSetId()),
 			ReflectionTestUtil.<Long>invoke(
-				kaleoProcess, "getOriginalDDLRecordSetId", new Class<?>[0]));
+				kaleoProcess, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "DDLRecordSetId"));
 	}
 
 	protected KaleoProcess addKaleoProcess() throws Exception {

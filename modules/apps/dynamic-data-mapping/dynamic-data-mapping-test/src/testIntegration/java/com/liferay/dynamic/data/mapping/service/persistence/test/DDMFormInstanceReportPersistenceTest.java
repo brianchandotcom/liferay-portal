@@ -520,8 +520,8 @@ public class DDMFormInstanceReportPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(ddmFormInstanceReport.getFormInstanceId()),
 			ReflectionTestUtil.<Long>invoke(
-				ddmFormInstanceReport, "getOriginalFormInstanceId",
-				new Class<?>[0]));
+				ddmFormInstanceReport, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "formInstanceId"));
 	}
 
 	protected DDMFormInstanceReport addDDMFormInstanceReport()

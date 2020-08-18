@@ -133,25 +133,75 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long NAME_COLUMN_BITMASK = 8L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long PROCESSID_COLUMN_BITMASK = 16L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long PROCESSVERSION_COLUMN_BITMASK = 32L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long STATUS_COLUMN_BITMASK = 64L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long UUID_COLUMN_BITMASK = 128L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long WORKFLOWMETRICSSLADEFINITIONID_COLUMN_BITMASK =
 		256L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long MODIFIEDDATE_COLUMN_BITMASK = 512L;
 
 	/**
@@ -461,6 +511,14 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("mvccVersion");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_mvccVersion = mvccVersion;
 	}
 
@@ -476,17 +534,24 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("uuid_");
 
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_uuid = uuid;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		return getColumnOriginalValue("uuid_");
 	}
 
 	@Override
@@ -498,20 +563,24 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	public void setWorkflowMetricsSLADefinitionId(
 		long workflowMetricsSLADefinitionId) {
 
-		_columnBitmask |= WORKFLOWMETRICSSLADEFINITIONID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("wmSLADefinitionId");
 
-		if (!_setOriginalWorkflowMetricsSLADefinitionId) {
-			_setOriginalWorkflowMetricsSLADefinitionId = true;
-
-			_originalWorkflowMetricsSLADefinitionId =
-				_workflowMetricsSLADefinitionId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_workflowMetricsSLADefinitionId = workflowMetricsSLADefinitionId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalWorkflowMetricsSLADefinitionId() {
-		return _originalWorkflowMetricsSLADefinitionId;
+		return GetterUtil.getLong(getColumnOriginalValue("wmSLADefinitionId"));
 	}
 
 	@Override
@@ -521,19 +590,24 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("groupId");
 
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_groupId = groupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -543,19 +617,24 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
 
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_companyId = companyId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -565,6 +644,14 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -596,6 +683,14 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -606,6 +701,14 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -622,7 +725,13 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		_columnBitmask = -1L;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
 
 		_modifiedDate = modifiedDate;
 	}
@@ -639,19 +748,24 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setActive(boolean active) {
-		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("active_");
 
-		if (!_setOriginalActive) {
-			_setOriginalActive = true;
-
-			_originalActive = _active;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_active = active;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public boolean getOriginalActive() {
-		return _originalActive;
+		return GetterUtil.getBoolean(getColumnOriginalValue("active_"));
 	}
 
 	@Override
@@ -666,6 +780,14 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setCalendarKey(String calendarKey) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("calendarKey");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_calendarKey = calendarKey;
 	}
 
@@ -681,6 +803,14 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setDescription(String description) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("description");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_description = description;
 	}
 
@@ -691,6 +821,14 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setDuration(long duration) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("duration");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_duration = duration;
 	}
 
@@ -706,17 +844,24 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask |= NAME_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("name");
 
-		if (_originalName == null) {
-			_originalName = _name;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_name = name;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalName() {
-		return GetterUtil.getString(_originalName);
+		return getColumnOriginalValue("name");
 	}
 
 	@Override
@@ -731,6 +876,14 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setPauseNodeKeys(String pauseNodeKeys) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("pauseNodeKeys");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_pauseNodeKeys = pauseNodeKeys;
 	}
 
@@ -741,19 +894,24 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setProcessId(long processId) {
-		_columnBitmask |= PROCESSID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("processId");
 
-		if (!_setOriginalProcessId) {
-			_setOriginalProcessId = true;
-
-			_originalProcessId = _processId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_processId = processId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalProcessId() {
-		return _originalProcessId;
+		return GetterUtil.getLong(getColumnOriginalValue("processId"));
 	}
 
 	@Override
@@ -768,17 +926,24 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setProcessVersion(String processVersion) {
-		_columnBitmask |= PROCESSVERSION_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("processVersion");
 
-		if (_originalProcessVersion == null) {
-			_originalProcessVersion = _processVersion;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_processVersion = processVersion;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalProcessVersion() {
-		return GetterUtil.getString(_originalProcessVersion);
+		return getColumnOriginalValue("processVersion");
 	}
 
 	@Override
@@ -793,6 +958,14 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setStartNodeKeys(String startNodeKeys) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("startNodeKeys");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_startNodeKeys = startNodeKeys;
 	}
 
@@ -808,6 +981,14 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setStopNodeKeys(String stopNodeKeys) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("stopNodeKeys");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_stopNodeKeys = stopNodeKeys;
 	}
 
@@ -823,6 +1004,14 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setVersion(String version) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("version");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_version = version;
 	}
 
@@ -833,19 +1022,24 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("status");
 
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_status = status;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public int getOriginalStatus() {
-		return _originalStatus;
+		return GetterUtil.getInteger(getColumnOriginalValue("status"));
 	}
 
 	@Override
@@ -855,6 +1049,14 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("statusByUserId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_statusByUserId = statusByUserId;
 	}
 
@@ -886,6 +1088,14 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("statusByUserName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_statusByUserName = statusByUserName;
 	}
 
@@ -896,6 +1106,14 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void setStatusDate(Date statusDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("statusDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_statusDate = statusDate;
 	}
 
@@ -1122,54 +1340,11 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		WorkflowMetricsSLADefinitionModelImpl
-			workflowMetricsSLADefinitionModelImpl = this;
+		_columnOriginalValues = Collections.emptyMap();
 
-		workflowMetricsSLADefinitionModelImpl._originalUuid =
-			workflowMetricsSLADefinitionModelImpl._uuid;
+		_setModifiedDate = false;
 
-		workflowMetricsSLADefinitionModelImpl.
-			_originalWorkflowMetricsSLADefinitionId =
-				workflowMetricsSLADefinitionModelImpl.
-					_workflowMetricsSLADefinitionId;
-
-		workflowMetricsSLADefinitionModelImpl.
-			_setOriginalWorkflowMetricsSLADefinitionId = false;
-
-		workflowMetricsSLADefinitionModelImpl._originalGroupId =
-			workflowMetricsSLADefinitionModelImpl._groupId;
-
-		workflowMetricsSLADefinitionModelImpl._setOriginalGroupId = false;
-
-		workflowMetricsSLADefinitionModelImpl._originalCompanyId =
-			workflowMetricsSLADefinitionModelImpl._companyId;
-
-		workflowMetricsSLADefinitionModelImpl._setOriginalCompanyId = false;
-
-		workflowMetricsSLADefinitionModelImpl._setModifiedDate = false;
-
-		workflowMetricsSLADefinitionModelImpl._originalActive =
-			workflowMetricsSLADefinitionModelImpl._active;
-
-		workflowMetricsSLADefinitionModelImpl._setOriginalActive = false;
-
-		workflowMetricsSLADefinitionModelImpl._originalName =
-			workflowMetricsSLADefinitionModelImpl._name;
-
-		workflowMetricsSLADefinitionModelImpl._originalProcessId =
-			workflowMetricsSLADefinitionModelImpl._processId;
-
-		workflowMetricsSLADefinitionModelImpl._setOriginalProcessId = false;
-
-		workflowMetricsSLADefinitionModelImpl._originalProcessVersion =
-			workflowMetricsSLADefinitionModelImpl._processVersion;
-
-		workflowMetricsSLADefinitionModelImpl._originalStatus =
-			workflowMetricsSLADefinitionModelImpl._status;
-
-		workflowMetricsSLADefinitionModelImpl._setOriginalStatus = false;
-
-		workflowMetricsSLADefinitionModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -1407,43 +1582,131 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	}
 
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"wmSLADefinitionId", _workflowMetricsSLADefinitionId);
+		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("active_", _active);
+		_columnOriginalValues.put("calendarKey", _calendarKey);
+		_columnOriginalValues.put("description", _description);
+		_columnOriginalValues.put("duration", _duration);
+		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("pauseNodeKeys", _pauseNodeKeys);
+		_columnOriginalValues.put("processId", _processId);
+		_columnOriginalValues.put("processVersion", _processVersion);
+		_columnOriginalValues.put("startNodeKeys", _startNodeKeys);
+		_columnOriginalValues.put("stopNodeKeys", _stopNodeKeys);
+		_columnOriginalValues.put("version", _version);
+		_columnOriginalValues.put("status", _status);
+		_columnOriginalValues.put("statusByUserId", _statusByUserId);
+		_columnOriginalValues.put("statusByUserName", _statusByUserName);
+		_columnOriginalValues.put("statusDate", _statusDate);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("mvccVersion", 1L);
+
+		columnBitmasks.put("uuid_", 2L);
+
+		columnBitmasks.put("wmSLADefinitionId", 4L);
+
+		columnBitmasks.put("groupId", 8L);
+
+		columnBitmasks.put("companyId", 16L);
+
+		columnBitmasks.put("userId", 32L);
+
+		columnBitmasks.put("userName", 64L);
+
+		columnBitmasks.put("createDate", 128L);
+
+		columnBitmasks.put("modifiedDate", 256L);
+
+		columnBitmasks.put("active_", 512L);
+
+		columnBitmasks.put("calendarKey", 1024L);
+
+		columnBitmasks.put("description", 2048L);
+
+		columnBitmasks.put("duration", 4096L);
+
+		columnBitmasks.put("name", 8192L);
+
+		columnBitmasks.put("pauseNodeKeys", 16384L);
+
+		columnBitmasks.put("processId", 32768L);
+
+		columnBitmasks.put("processVersion", 65536L);
+
+		columnBitmasks.put("startNodeKeys", 131072L);
+
+		columnBitmasks.put("stopNodeKeys", 262144L);
+
+		columnBitmasks.put("version", 524288L);
+
+		columnBitmasks.put("status", 1048576L);
+
+		columnBitmasks.put("statusByUserId", 2097152L);
+
+		columnBitmasks.put("statusByUserName", 4194304L);
+
+		columnBitmasks.put("statusDate", 8388608L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _mvccVersion;
 	private String _uuid;
-	private String _originalUuid;
 	private long _workflowMetricsSLADefinitionId;
-	private long _originalWorkflowMetricsSLADefinitionId;
-	private boolean _setOriginalWorkflowMetricsSLADefinitionId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private boolean _active;
-	private boolean _originalActive;
-	private boolean _setOriginalActive;
 	private String _calendarKey;
 	private String _description;
 	private long _duration;
 	private String _name;
-	private String _originalName;
 	private String _pauseNodeKeys;
 	private long _processId;
-	private long _originalProcessId;
-	private boolean _setOriginalProcessId;
 	private String _processVersion;
-	private String _originalProcessVersion;
 	private String _startNodeKeys;
 	private String _stopNodeKeys;
 	private String _version;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;

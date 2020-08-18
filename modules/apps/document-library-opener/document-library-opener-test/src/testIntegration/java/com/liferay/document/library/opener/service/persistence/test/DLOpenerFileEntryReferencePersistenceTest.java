@@ -559,19 +559,19 @@ public class DLOpenerFileEntryReferencePersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(dlOpenerFileEntryReference.getFileEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				dlOpenerFileEntryReference, "getOriginalFileEntryId",
-				new Class<?>[0]));
+				dlOpenerFileEntryReference, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "fileEntryId"));
 
 		Assert.assertEquals(
 			dlOpenerFileEntryReference.getReferenceType(),
 			ReflectionTestUtil.invoke(
-				dlOpenerFileEntryReference, "getOriginalReferenceType",
-				new Class<?>[0]));
+				dlOpenerFileEntryReference, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "referenceType"));
 		Assert.assertEquals(
 			Long.valueOf(dlOpenerFileEntryReference.getFileEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				dlOpenerFileEntryReference, "getOriginalFileEntryId",
-				new Class<?>[0]));
+				dlOpenerFileEntryReference, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "fileEntryId"));
 	}
 
 	protected DLOpenerFileEntryReference addDLOpenerFileEntryReference()

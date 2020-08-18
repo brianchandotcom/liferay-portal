@@ -597,25 +597,29 @@ public class AssetDisplayPageEntryPersistenceTest {
 		Assert.assertEquals(
 			assetDisplayPageEntry.getUuid(),
 			ReflectionTestUtil.invoke(
-				assetDisplayPageEntry, "getOriginalUuid", new Class<?>[0]));
+				assetDisplayPageEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(assetDisplayPageEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				assetDisplayPageEntry, "getOriginalGroupId", new Class<?>[0]));
+				assetDisplayPageEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(assetDisplayPageEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				assetDisplayPageEntry, "getOriginalGroupId", new Class<?>[0]));
+				assetDisplayPageEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			Long.valueOf(assetDisplayPageEntry.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				assetDisplayPageEntry, "getOriginalClassNameId",
-				new Class<?>[0]));
+				assetDisplayPageEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(assetDisplayPageEntry.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				assetDisplayPageEntry, "getOriginalClassPK", new Class<?>[0]));
+				assetDisplayPageEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 	}
 
 	protected AssetDisplayPageEntry addAssetDisplayPageEntry()

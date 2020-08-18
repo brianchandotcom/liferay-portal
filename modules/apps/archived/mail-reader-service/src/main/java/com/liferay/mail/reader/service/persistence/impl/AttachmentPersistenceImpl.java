@@ -844,7 +844,7 @@ public class AttachmentPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					attachmentModelImpl.getOriginalMessageId()
+					attachmentModelImpl.getColumnOriginalValue("messageId")
 				};
 
 				finderCache.removeResult(_finderPathCountByMessageId, args);
@@ -1150,7 +1150,7 @@ public class AttachmentPersistenceImpl
 		_finderPathWithoutPaginationFindByMessageId = new FinderPath(
 			AttachmentImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByMessageId", new String[] {Long.class.getName()},
-			AttachmentModelImpl.MESSAGEID_COLUMN_BITMASK);
+			AttachmentModelImpl.getColumnBitmask("messageId"));
 
 		_finderPathCountByMessageId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

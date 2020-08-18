@@ -837,7 +837,7 @@ public class CTMessagePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					ctMessageModelImpl.getOriginalCtCollectionId()
+					ctMessageModelImpl.getColumnOriginalValue("ctCollectionId")
 				};
 
 				finderCache.removeResult(
@@ -1139,7 +1139,7 @@ public class CTMessagePersistenceImpl
 		_finderPathWithoutPaginationFindByCTCollectionId = new FinderPath(
 			CTMessageImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCTCollectionId", new String[] {Long.class.getName()},
-			CTMessageModelImpl.CTCOLLECTIONID_COLUMN_BITMASK);
+			CTMessageModelImpl.getColumnBitmask("ctCollectionId"));
 
 		_finderPathCountByCTCollectionId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

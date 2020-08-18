@@ -3105,9 +3105,9 @@ public class RatingsEntryPersistenceImpl
 			 _finderPathFetchByU_C_C.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				ratingsEntryModelImpl.getOriginalUserId(),
-				ratingsEntryModelImpl.getOriginalClassNameId(),
-				ratingsEntryModelImpl.getOriginalClassPK()
+				ratingsEntryModelImpl.getColumnOriginalValue("userId"),
+				ratingsEntryModelImpl.getColumnOriginalValue("classNameId"),
+				ratingsEntryModelImpl.getColumnOriginalValue("classPK")
 			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByU_C_C, args);
@@ -3369,7 +3369,7 @@ public class RatingsEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					ratingsEntryModelImpl.getOriginalUuid()
+					ratingsEntryModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByUuid, args);
@@ -3388,8 +3388,8 @@ public class RatingsEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					ratingsEntryModelImpl.getOriginalUuid(),
-					ratingsEntryModelImpl.getOriginalCompanyId()
+					ratingsEntryModelImpl.getColumnOriginalValue("uuid_"),
+					ratingsEntryModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
@@ -3411,8 +3411,8 @@ public class RatingsEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					ratingsEntryModelImpl.getOriginalClassNameId(),
-					ratingsEntryModelImpl.getOriginalClassPK()
+					ratingsEntryModelImpl.getColumnOriginalValue("classNameId"),
+					ratingsEntryModelImpl.getColumnOriginalValue("classPK")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
@@ -3434,9 +3434,9 @@ public class RatingsEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					ratingsEntryModelImpl.getOriginalUserId(),
-					ratingsEntryModelImpl.getOriginalClassNameId(),
-					ratingsEntryModelImpl.getOriginalClassPK()
+					ratingsEntryModelImpl.getColumnOriginalValue("userId"),
+					ratingsEntryModelImpl.getColumnOriginalValue("classNameId"),
+					ratingsEntryModelImpl.getColumnOriginalValue("classPK")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByU_C_C, args);
@@ -3459,9 +3459,9 @@ public class RatingsEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					ratingsEntryModelImpl.getOriginalClassNameId(),
-					ratingsEntryModelImpl.getOriginalClassPK(),
-					ratingsEntryModelImpl.getOriginalScore()
+					ratingsEntryModelImpl.getColumnOriginalValue("classNameId"),
+					ratingsEntryModelImpl.getColumnOriginalValue("classPK"),
+					ratingsEntryModelImpl.getColumnOriginalValue("score")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByC_C_S, args);
@@ -3954,7 +3954,7 @@ public class RatingsEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			RatingsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid", new String[] {String.class.getName()},
-			RatingsEntryModelImpl.UUID_COLUMN_BITMASK);
+			RatingsEntryModelImpl.getColumnBitmask("uuid_"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3973,8 +3973,8 @@ public class RatingsEntryPersistenceImpl
 			RatingsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			RatingsEntryModelImpl.UUID_COLUMN_BITMASK |
-			RatingsEntryModelImpl.COMPANYID_COLUMN_BITMASK);
+			RatingsEntryModelImpl.getColumnBitmask("uuid_") |
+			RatingsEntryModelImpl.getColumnBitmask("companyId"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3994,8 +3994,8 @@ public class RatingsEntryPersistenceImpl
 			RatingsEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			RatingsEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			RatingsEntryModelImpl.CLASSPK_COLUMN_BITMASK);
+			RatingsEntryModelImpl.getColumnBitmask("classNameId") |
+			RatingsEntryModelImpl.getColumnBitmask("classPK"));
 
 		_finderPathCountByC_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
@@ -4016,18 +4016,18 @@ public class RatingsEntryPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			RatingsEntryModelImpl.USERID_COLUMN_BITMASK |
-			RatingsEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			RatingsEntryModelImpl.CLASSPK_COLUMN_BITMASK);
+			RatingsEntryModelImpl.getColumnBitmask("userId") |
+			RatingsEntryModelImpl.getColumnBitmask("classNameId") |
+			RatingsEntryModelImpl.getColumnBitmask("classPK"));
 
 		_finderPathFetchByU_C_C = new FinderPath(
 			RatingsEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByU_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			RatingsEntryModelImpl.USERID_COLUMN_BITMASK |
-			RatingsEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			RatingsEntryModelImpl.CLASSPK_COLUMN_BITMASK);
+			RatingsEntryModelImpl.getColumnBitmask("userId") |
+			RatingsEntryModelImpl.getColumnBitmask("classNameId") |
+			RatingsEntryModelImpl.getColumnBitmask("classPK"));
 
 		_finderPathCountByU_C_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4058,9 +4058,9 @@ public class RatingsEntryPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Double.class.getName()
 			},
-			RatingsEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			RatingsEntryModelImpl.CLASSPK_COLUMN_BITMASK |
-			RatingsEntryModelImpl.SCORE_COLUMN_BITMASK);
+			RatingsEntryModelImpl.getColumnBitmask("classNameId") |
+			RatingsEntryModelImpl.getColumnBitmask("classPK") |
+			RatingsEntryModelImpl.getColumnBitmask("score"));
 
 		_finderPathCountByC_C_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

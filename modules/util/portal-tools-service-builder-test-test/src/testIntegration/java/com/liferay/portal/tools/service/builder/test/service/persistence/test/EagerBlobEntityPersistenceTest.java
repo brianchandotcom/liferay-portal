@@ -485,11 +485,13 @@ public class EagerBlobEntityPersistenceTest {
 		Assert.assertEquals(
 			eagerBlobEntity.getUuid(),
 			ReflectionTestUtil.invoke(
-				eagerBlobEntity, "getOriginalUuid", new Class<?>[0]));
+				eagerBlobEntity, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(eagerBlobEntity.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				eagerBlobEntity, "getOriginalGroupId", new Class<?>[0]));
+				eagerBlobEntity, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected EagerBlobEntity addEagerBlobEntity() throws Exception {

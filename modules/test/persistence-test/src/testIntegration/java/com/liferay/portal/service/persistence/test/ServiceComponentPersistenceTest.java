@@ -475,12 +475,13 @@ public class ServiceComponentPersistenceTest {
 		Assert.assertEquals(
 			serviceComponent.getBuildNamespace(),
 			ReflectionTestUtil.invoke(
-				serviceComponent, "getOriginalBuildNamespace",
-				new Class<?>[0]));
+				serviceComponent, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "buildNamespace"));
 		Assert.assertEquals(
 			Long.valueOf(serviceComponent.getBuildNumber()),
 			ReflectionTestUtil.<Long>invoke(
-				serviceComponent, "getOriginalBuildNumber", new Class<?>[0]));
+				serviceComponent, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "buildNumber"));
 	}
 
 	protected ServiceComponent addServiceComponent() throws Exception {

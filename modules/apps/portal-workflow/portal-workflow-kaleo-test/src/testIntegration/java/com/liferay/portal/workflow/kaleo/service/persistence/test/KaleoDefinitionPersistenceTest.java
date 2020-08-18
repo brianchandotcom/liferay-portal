@@ -548,37 +548,45 @@ public class KaleoDefinitionPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(kaleoDefinition.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				kaleoDefinition, "getOriginalCompanyId", new Class<?>[0]));
+				kaleoDefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
 			kaleoDefinition.getName(),
 			ReflectionTestUtil.invoke(
-				kaleoDefinition, "getOriginalName", new Class<?>[0]));
+				kaleoDefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 
 		Assert.assertEquals(
 			Long.valueOf(kaleoDefinition.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				kaleoDefinition, "getOriginalCompanyId", new Class<?>[0]));
+				kaleoDefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
 			kaleoDefinition.getName(),
 			ReflectionTestUtil.invoke(
-				kaleoDefinition, "getOriginalName", new Class<?>[0]));
+				kaleoDefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 		Assert.assertEquals(
 			Integer.valueOf(kaleoDefinition.getVersion()),
 			ReflectionTestUtil.<Integer>invoke(
-				kaleoDefinition, "getOriginalVersion", new Class<?>[0]));
+				kaleoDefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "version"));
 
 		Assert.assertEquals(
 			Long.valueOf(kaleoDefinition.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				kaleoDefinition, "getOriginalCompanyId", new Class<?>[0]));
+				kaleoDefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
 			kaleoDefinition.getName(),
 			ReflectionTestUtil.invoke(
-				kaleoDefinition, "getOriginalName", new Class<?>[0]));
+				kaleoDefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 		Assert.assertEquals(
 			Boolean.valueOf(kaleoDefinition.getActive()),
 			ReflectionTestUtil.<Boolean>invoke(
-				kaleoDefinition, "getOriginalActive", new Class<?>[0]));
+				kaleoDefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "active_"));
 	}
 
 	protected KaleoDefinition addKaleoDefinition() throws Exception {

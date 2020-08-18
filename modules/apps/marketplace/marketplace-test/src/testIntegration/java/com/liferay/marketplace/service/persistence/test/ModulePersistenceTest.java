@@ -498,24 +498,29 @@ public class ModulePersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(module.getAppId()),
 			ReflectionTestUtil.<Long>invoke(
-				module, "getOriginalAppId", new Class<?>[0]));
+				module, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"appId"));
 		Assert.assertEquals(
 			module.getContextName(),
 			ReflectionTestUtil.invoke(
-				module, "getOriginalContextName", new Class<?>[0]));
+				module, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"contextName"));
 
 		Assert.assertEquals(
 			Long.valueOf(module.getAppId()),
 			ReflectionTestUtil.<Long>invoke(
-				module, "getOriginalAppId", new Class<?>[0]));
+				module, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"appId"));
 		Assert.assertEquals(
 			module.getBundleSymbolicName(),
 			ReflectionTestUtil.invoke(
-				module, "getOriginalBundleSymbolicName", new Class<?>[0]));
+				module, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"bundleSymbolicName"));
 		Assert.assertEquals(
 			module.getBundleVersion(),
 			ReflectionTestUtil.invoke(
-				module, "getOriginalBundleVersion", new Class<?>[0]));
+				module, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"bundleVersion"));
 	}
 
 	protected Module addModule() throws Exception {

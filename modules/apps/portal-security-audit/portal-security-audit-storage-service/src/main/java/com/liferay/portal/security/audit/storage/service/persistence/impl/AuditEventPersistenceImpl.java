@@ -834,7 +834,7 @@ public class AuditEventPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					auditEventModelImpl.getOriginalCompanyId()
+					auditEventModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -1135,8 +1135,8 @@ public class AuditEventPersistenceImpl
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
 			AuditEventImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCompanyId", new String[] {Long.class.getName()},
-			AuditEventModelImpl.COMPANYID_COLUMN_BITMASK |
-			AuditEventModelImpl.CREATEDATE_COLUMN_BITMASK);
+			AuditEventModelImpl.getColumnBitmask("companyId") |
+			AuditEventModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

@@ -444,7 +444,8 @@ public class CompanyInfoPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(companyInfo.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				companyInfo, "getOriginalCompanyId", new Class<?>[0]));
+				companyInfo, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 	}
 
 	protected CompanyInfo addCompanyInfo() throws Exception {

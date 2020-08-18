@@ -591,26 +591,29 @@ public class StyleBookEntryVersionPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(styleBookEntryVersion.getStyleBookEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				styleBookEntryVersion, "getOriginalStyleBookEntryId",
-				new Class<?>[0]));
+				styleBookEntryVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "styleBookEntryId"));
 		Assert.assertEquals(
 			Integer.valueOf(styleBookEntryVersion.getVersion()),
 			ReflectionTestUtil.<Integer>invoke(
-				styleBookEntryVersion, "getOriginalVersion", new Class<?>[0]));
+				styleBookEntryVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "version"));
 
 		Assert.assertEquals(
 			Long.valueOf(styleBookEntryVersion.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				styleBookEntryVersion, "getOriginalGroupId", new Class<?>[0]));
+				styleBookEntryVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			styleBookEntryVersion.getStyleBookEntryKey(),
 			ReflectionTestUtil.invoke(
-				styleBookEntryVersion, "getOriginalStyleBookEntryKey",
-				new Class<?>[0]));
+				styleBookEntryVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "styleBookEntryKey"));
 		Assert.assertEquals(
 			Integer.valueOf(styleBookEntryVersion.getVersion()),
 			ReflectionTestUtil.<Integer>invoke(
-				styleBookEntryVersion, "getOriginalVersion", new Class<?>[0]));
+				styleBookEntryVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "version"));
 	}
 
 	protected StyleBookEntryVersion addStyleBookEntryVersion()

@@ -2190,7 +2190,7 @@ public class CTCollectionPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					ctCollectionModelImpl.getOriginalCompanyId()
+					ctCollectionModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -2209,8 +2209,8 @@ public class CTCollectionPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					ctCollectionModelImpl.getOriginalCompanyId(),
-					ctCollectionModelImpl.getOriginalStatus()
+					ctCollectionModelImpl.getColumnOriginalValue("companyId"),
+					ctCollectionModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_S, args);
@@ -2514,8 +2514,8 @@ public class CTCollectionPersistenceImpl
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
 			CTCollectionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCompanyId", new String[] {Long.class.getName()},
-			CTCollectionModelImpl.COMPANYID_COLUMN_BITMASK |
-			CTCollectionModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CTCollectionModelImpl.getColumnBitmask("companyId") |
+			CTCollectionModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2534,9 +2534,9 @@ public class CTCollectionPersistenceImpl
 			CTCollectionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByC_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			CTCollectionModelImpl.COMPANYID_COLUMN_BITMASK |
-			CTCollectionModelImpl.STATUS_COLUMN_BITMASK |
-			CTCollectionModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CTCollectionModelImpl.getColumnBitmask("companyId") |
+			CTCollectionModelImpl.getColumnBitmask("status") |
+			CTCollectionModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByC_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",

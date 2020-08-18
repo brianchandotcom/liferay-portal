@@ -448,11 +448,13 @@ public class ListTypePersistenceTest {
 		Assert.assertEquals(
 			listType.getName(),
 			ReflectionTestUtil.invoke(
-				listType, "getOriginalName", new Class<?>[0]));
+				listType, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 		Assert.assertEquals(
 			listType.getType(),
 			ReflectionTestUtil.invoke(
-				listType, "getOriginalType", new Class<?>[0]));
+				listType, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "type_"));
 	}
 
 	protected ListType addListType() throws Exception {

@@ -502,7 +502,8 @@ public class KaleoTaskPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(kaleoTask.getKaleoNodeId()),
 			ReflectionTestUtil.<Long>invoke(
-				kaleoTask, "getOriginalKaleoNodeId", new Class<?>[0]));
+				kaleoTask, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "kaleoNodeId"));
 	}
 
 	protected KaleoTask addKaleoTask() throws Exception {

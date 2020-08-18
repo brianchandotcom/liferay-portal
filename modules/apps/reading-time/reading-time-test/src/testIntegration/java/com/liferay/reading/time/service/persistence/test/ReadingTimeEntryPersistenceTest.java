@@ -512,24 +512,29 @@ public class ReadingTimeEntryPersistenceTest {
 		Assert.assertEquals(
 			readingTimeEntry.getUuid(),
 			ReflectionTestUtil.invoke(
-				readingTimeEntry, "getOriginalUuid", new Class<?>[0]));
+				readingTimeEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(readingTimeEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				readingTimeEntry, "getOriginalGroupId", new Class<?>[0]));
+				readingTimeEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(readingTimeEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				readingTimeEntry, "getOriginalGroupId", new Class<?>[0]));
+				readingTimeEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			Long.valueOf(readingTimeEntry.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				readingTimeEntry, "getOriginalClassNameId", new Class<?>[0]));
+				readingTimeEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(readingTimeEntry.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				readingTimeEntry, "getOriginalClassPK", new Class<?>[0]));
+				readingTimeEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 	}
 
 	protected ReadingTimeEntry addReadingTimeEntry() throws Exception {

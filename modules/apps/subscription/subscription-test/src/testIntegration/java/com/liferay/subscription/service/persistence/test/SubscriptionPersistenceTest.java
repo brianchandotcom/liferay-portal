@@ -540,19 +540,23 @@ public class SubscriptionPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(subscription.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				subscription, "getOriginalCompanyId", new Class<?>[0]));
+				subscription, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
 			Long.valueOf(subscription.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				subscription, "getOriginalUserId", new Class<?>[0]));
+				subscription, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "userId"));
 		Assert.assertEquals(
 			Long.valueOf(subscription.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				subscription, "getOriginalClassNameId", new Class<?>[0]));
+				subscription, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(subscription.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				subscription, "getOriginalClassPK", new Class<?>[0]));
+				subscription, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 	}
 
 	protected Subscription addSubscription() throws Exception {

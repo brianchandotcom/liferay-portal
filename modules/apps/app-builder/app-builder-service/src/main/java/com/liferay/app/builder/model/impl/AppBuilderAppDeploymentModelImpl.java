@@ -98,10 +98,25 @@ public class AppBuilderAppDeploymentModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long APPBUILDERAPPID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long TYPE_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long APPBUILDERAPPDEPLOYMENTID_COLUMN_BITMASK = 4L;
 
 	/**
@@ -292,6 +307,14 @@ public class AppBuilderAppDeploymentModelImpl
 
 	@Override
 	public void setAppBuilderAppDeploymentId(long appBuilderAppDeploymentId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("appBuilderAppDeploymentId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_appBuilderAppDeploymentId = appBuilderAppDeploymentId;
 	}
 
@@ -302,6 +325,14 @@ public class AppBuilderAppDeploymentModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_companyId = companyId;
 	}
 
@@ -312,19 +343,24 @@ public class AppBuilderAppDeploymentModelImpl
 
 	@Override
 	public void setAppBuilderAppId(long appBuilderAppId) {
-		_columnBitmask |= APPBUILDERAPPID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("appBuilderAppId");
 
-		if (!_setOriginalAppBuilderAppId) {
-			_setOriginalAppBuilderAppId = true;
-
-			_originalAppBuilderAppId = _appBuilderAppId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_appBuilderAppId = appBuilderAppId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalAppBuilderAppId() {
-		return _originalAppBuilderAppId;
+		return GetterUtil.getLong(getColumnOriginalValue("appBuilderAppId"));
 	}
 
 	@Override
@@ -339,6 +375,14 @@ public class AppBuilderAppDeploymentModelImpl
 
 	@Override
 	public void setSettings(String settings) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("settings_");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_settings = settings;
 	}
 
@@ -354,17 +398,24 @@ public class AppBuilderAppDeploymentModelImpl
 
 	@Override
 	public void setType(String type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("type_");
 
-		if (_originalType == null) {
-			_originalType = _type;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_type = type;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalType() {
-		return GetterUtil.getString(_originalType);
+		return getColumnOriginalValue("type_");
 	}
 
 	public long getColumnBitmask() {
@@ -480,18 +531,9 @@ public class AppBuilderAppDeploymentModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		AppBuilderAppDeploymentModelImpl appBuilderAppDeploymentModelImpl =
-			this;
+		_columnOriginalValues = Collections.emptyMap();
 
-		appBuilderAppDeploymentModelImpl._originalAppBuilderAppId =
-			appBuilderAppDeploymentModelImpl._appBuilderAppId;
-
-		appBuilderAppDeploymentModelImpl._setOriginalAppBuilderAppId = false;
-
-		appBuilderAppDeploymentModelImpl._originalType =
-			appBuilderAppDeploymentModelImpl._type;
-
-		appBuilderAppDeploymentModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -600,14 +642,57 @@ public class AppBuilderAppDeploymentModelImpl
 
 	}
 
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put(
+			"appBuilderAppDeploymentId", _appBuilderAppDeploymentId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("appBuilderAppId", _appBuilderAppId);
+		_columnOriginalValues.put("settings_", _settings);
+		_columnOriginalValues.put("type_", _type);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("appBuilderAppDeploymentId", 1L);
+
+		columnBitmasks.put("companyId", 2L);
+
+		columnBitmasks.put("appBuilderAppId", 4L);
+
+		columnBitmasks.put("settings_", 8L);
+
+		columnBitmasks.put("type_", 16L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _appBuilderAppDeploymentId;
 	private long _companyId;
 	private long _appBuilderAppId;
-	private long _originalAppBuilderAppId;
-	private boolean _setOriginalAppBuilderAppId;
 	private String _settings;
 	private String _type;
-	private String _originalType;
 	private long _columnBitmask;
 	private AppBuilderAppDeployment _escapedModel;
 

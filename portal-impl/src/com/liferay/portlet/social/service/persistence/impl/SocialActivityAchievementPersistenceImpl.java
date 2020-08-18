@@ -3397,9 +3397,12 @@ public class SocialActivityAchievementPersistenceImpl
 			 _finderPathFetchByG_U_N.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				socialActivityAchievementModelImpl.getOriginalGroupId(),
-				socialActivityAchievementModelImpl.getOriginalUserId(),
-				socialActivityAchievementModelImpl.getOriginalName()
+				socialActivityAchievementModelImpl.getColumnOriginalValue(
+					"groupId"),
+				socialActivityAchievementModelImpl.getColumnOriginalValue(
+					"userId"),
+				socialActivityAchievementModelImpl.getColumnOriginalValue(
+					"name")
 			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByG_U_N, args);
@@ -3643,7 +3646,8 @@ public class SocialActivityAchievementPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					socialActivityAchievementModelImpl.getOriginalGroupId()
+					socialActivityAchievementModelImpl.getColumnOriginalValue(
+						"groupId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByGroupId, args);
@@ -3664,8 +3668,10 @@ public class SocialActivityAchievementPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					socialActivityAchievementModelImpl.getOriginalGroupId(),
-					socialActivityAchievementModelImpl.getOriginalUserId()
+					socialActivityAchievementModelImpl.getColumnOriginalValue(
+						"groupId"),
+					socialActivityAchievementModelImpl.getColumnOriginalValue(
+						"userId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByG_U, args);
@@ -3687,8 +3693,10 @@ public class SocialActivityAchievementPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					socialActivityAchievementModelImpl.getOriginalGroupId(),
-					socialActivityAchievementModelImpl.getOriginalName()
+					socialActivityAchievementModelImpl.getColumnOriginalValue(
+						"groupId"),
+					socialActivityAchievementModelImpl.getColumnOriginalValue(
+						"name")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByG_N, args);
@@ -3710,8 +3718,10 @@ public class SocialActivityAchievementPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					socialActivityAchievementModelImpl.getOriginalGroupId(),
-					socialActivityAchievementModelImpl.getOriginalFirstInGroup()
+					socialActivityAchievementModelImpl.getColumnOriginalValue(
+						"groupId"),
+					socialActivityAchievementModelImpl.getColumnOriginalValue(
+						"firstInGroup")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByG_F, args);
@@ -3733,9 +3743,12 @@ public class SocialActivityAchievementPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					socialActivityAchievementModelImpl.getOriginalGroupId(),
-					socialActivityAchievementModelImpl.getOriginalUserId(),
-					socialActivityAchievementModelImpl.getOriginalFirstInGroup()
+					socialActivityAchievementModelImpl.getColumnOriginalValue(
+						"groupId"),
+					socialActivityAchievementModelImpl.getColumnOriginalValue(
+						"userId"),
+					socialActivityAchievementModelImpl.getColumnOriginalValue(
+						"firstInGroup")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByG_U_F, args);
@@ -4242,7 +4255,7 @@ public class SocialActivityAchievementPersistenceImpl
 			SocialActivityAchievementImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()},
-			SocialActivityAchievementModelImpl.GROUPID_COLUMN_BITMASK);
+			SocialActivityAchievementModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4261,8 +4274,8 @@ public class SocialActivityAchievementPersistenceImpl
 			SocialActivityAchievementImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_U",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			SocialActivityAchievementModelImpl.GROUPID_COLUMN_BITMASK |
-			SocialActivityAchievementModelImpl.USERID_COLUMN_BITMASK);
+			SocialActivityAchievementModelImpl.getColumnBitmask("groupId") |
+			SocialActivityAchievementModelImpl.getColumnBitmask("userId"));
 
 		_finderPathCountByG_U = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_U",
@@ -4281,8 +4294,8 @@ public class SocialActivityAchievementPersistenceImpl
 			SocialActivityAchievementImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			SocialActivityAchievementModelImpl.GROUPID_COLUMN_BITMASK |
-			SocialActivityAchievementModelImpl.NAME_COLUMN_BITMASK);
+			SocialActivityAchievementModelImpl.getColumnBitmask("groupId") |
+			SocialActivityAchievementModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByG_N = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
@@ -4301,8 +4314,9 @@ public class SocialActivityAchievementPersistenceImpl
 			SocialActivityAchievementImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_F",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			SocialActivityAchievementModelImpl.GROUPID_COLUMN_BITMASK |
-			SocialActivityAchievementModelImpl.FIRSTINGROUP_COLUMN_BITMASK);
+			SocialActivityAchievementModelImpl.getColumnBitmask("groupId") |
+			SocialActivityAchievementModelImpl.getColumnBitmask(
+				"firstInGroup"));
 
 		_finderPathCountByG_F = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F",
@@ -4315,9 +4329,9 @@ public class SocialActivityAchievementPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			SocialActivityAchievementModelImpl.GROUPID_COLUMN_BITMASK |
-			SocialActivityAchievementModelImpl.USERID_COLUMN_BITMASK |
-			SocialActivityAchievementModelImpl.NAME_COLUMN_BITMASK);
+			SocialActivityAchievementModelImpl.getColumnBitmask("groupId") |
+			SocialActivityAchievementModelImpl.getColumnBitmask("userId") |
+			SocialActivityAchievementModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByG_U_N = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4343,9 +4357,10 @@ public class SocialActivityAchievementPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
 			},
-			SocialActivityAchievementModelImpl.GROUPID_COLUMN_BITMASK |
-			SocialActivityAchievementModelImpl.USERID_COLUMN_BITMASK |
-			SocialActivityAchievementModelImpl.FIRSTINGROUP_COLUMN_BITMASK);
+			SocialActivityAchievementModelImpl.getColumnBitmask("groupId") |
+			SocialActivityAchievementModelImpl.getColumnBitmask("userId") |
+			SocialActivityAchievementModelImpl.getColumnBitmask(
+				"firstInGroup"));
 
 		_finderPathCountByG_U_F = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

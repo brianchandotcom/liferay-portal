@@ -716,26 +716,26 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 		Assert.assertEquals(
 			workflowMetricsSLADefinition.getUuid(),
 			ReflectionTestUtil.invoke(
-				workflowMetricsSLADefinition, "getOriginalUuid",
-				new Class<?>[0]));
+				workflowMetricsSLADefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(workflowMetricsSLADefinition.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				workflowMetricsSLADefinition, "getOriginalGroupId",
-				new Class<?>[0]));
+				workflowMetricsSLADefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(
 				workflowMetricsSLADefinition.
 					getWorkflowMetricsSLADefinitionId()),
 			ReflectionTestUtil.<Long>invoke(
-				workflowMetricsSLADefinition,
-				"getOriginalWorkflowMetricsSLADefinitionId", new Class<?>[0]));
+				workflowMetricsSLADefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "wmSLADefinitionId"));
 		Assert.assertEquals(
 			Boolean.valueOf(workflowMetricsSLADefinition.getActive()),
 			ReflectionTestUtil.<Boolean>invoke(
-				workflowMetricsSLADefinition, "getOriginalActive",
-				new Class<?>[0]));
+				workflowMetricsSLADefinition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "active_"));
 	}
 
 	protected WorkflowMetricsSLADefinition addWorkflowMetricsSLADefinition()

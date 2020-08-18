@@ -1236,11 +1236,11 @@ public class OAuthTokenPersistenceImpl
 			 _finderPathFetchByU_G_S_M_T.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				oAuthTokenModelImpl.getOriginalUserId(),
-				oAuthTokenModelImpl.getOriginalGadgetKey(),
-				oAuthTokenModelImpl.getOriginalServiceName(),
-				oAuthTokenModelImpl.getOriginalModuleId(),
-				oAuthTokenModelImpl.getOriginalTokenName()
+				oAuthTokenModelImpl.getColumnOriginalValue("userId"),
+				oAuthTokenModelImpl.getColumnOriginalValue("gadgetKey"),
+				oAuthTokenModelImpl.getColumnOriginalValue("serviceName"),
+				oAuthTokenModelImpl.getColumnOriginalValue("moduleId"),
+				oAuthTokenModelImpl.getColumnOriginalValue("tokenName")
 			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByU_G_S_M_T, args);
@@ -1441,8 +1441,8 @@ public class OAuthTokenPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					oAuthTokenModelImpl.getOriginalGadgetKey(),
-					oAuthTokenModelImpl.getOriginalServiceName()
+					oAuthTokenModelImpl.getColumnOriginalValue("gadgetKey"),
+					oAuthTokenModelImpl.getColumnOriginalValue("serviceName")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByG_S, args);
@@ -1750,8 +1750,8 @@ public class OAuthTokenPersistenceImpl
 			OAuthTokenImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByG_S",
 			new String[] {String.class.getName(), String.class.getName()},
-			OAuthTokenModelImpl.GADGETKEY_COLUMN_BITMASK |
-			OAuthTokenModelImpl.SERVICENAME_COLUMN_BITMASK);
+			OAuthTokenModelImpl.getColumnBitmask("gadgetKey") |
+			OAuthTokenModelImpl.getColumnBitmask("serviceName"));
 
 		_finderPathCountByG_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
@@ -1764,11 +1764,11 @@ public class OAuthTokenPersistenceImpl
 				String.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			OAuthTokenModelImpl.USERID_COLUMN_BITMASK |
-			OAuthTokenModelImpl.GADGETKEY_COLUMN_BITMASK |
-			OAuthTokenModelImpl.SERVICENAME_COLUMN_BITMASK |
-			OAuthTokenModelImpl.MODULEID_COLUMN_BITMASK |
-			OAuthTokenModelImpl.TOKENNAME_COLUMN_BITMASK);
+			OAuthTokenModelImpl.getColumnBitmask("userId") |
+			OAuthTokenModelImpl.getColumnBitmask("gadgetKey") |
+			OAuthTokenModelImpl.getColumnBitmask("serviceName") |
+			OAuthTokenModelImpl.getColumnBitmask("moduleId") |
+			OAuthTokenModelImpl.getColumnBitmask("tokenName"));
 
 		_finderPathCountByU_G_S_M_T = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

@@ -571,12 +571,13 @@ public class SamlIdpSpConnectionPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(samlIdpSpConnection.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				samlIdpSpConnection, "getOriginalCompanyId", new Class<?>[0]));
+				samlIdpSpConnection, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
 			samlIdpSpConnection.getSamlSpEntityId(),
 			ReflectionTestUtil.invoke(
-				samlIdpSpConnection, "getOriginalSamlSpEntityId",
-				new Class<?>[0]));
+				samlIdpSpConnection, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "samlSpEntityId"));
 	}
 
 	protected SamlIdpSpConnection addSamlIdpSpConnection() throws Exception {

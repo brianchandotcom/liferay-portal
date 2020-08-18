@@ -534,11 +534,13 @@ public class DefinitionPersistenceTest {
 		Assert.assertEquals(
 			definition.getUuid(),
 			ReflectionTestUtil.invoke(
-				definition, "getOriginalUuid", new Class<?>[0]));
+				definition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(definition.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				definition, "getOriginalGroupId", new Class<?>[0]));
+				definition, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected Definition addDefinition() throws Exception {

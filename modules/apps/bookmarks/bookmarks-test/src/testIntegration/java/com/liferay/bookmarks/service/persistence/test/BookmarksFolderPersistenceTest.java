@@ -606,11 +606,13 @@ public class BookmarksFolderPersistenceTest {
 		Assert.assertEquals(
 			bookmarksFolder.getUuid(),
 			ReflectionTestUtil.invoke(
-				bookmarksFolder, "getOriginalUuid", new Class<?>[0]));
+				bookmarksFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(bookmarksFolder.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				bookmarksFolder, "getOriginalGroupId", new Class<?>[0]));
+				bookmarksFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected BookmarksFolder addBookmarksFolder() throws Exception {

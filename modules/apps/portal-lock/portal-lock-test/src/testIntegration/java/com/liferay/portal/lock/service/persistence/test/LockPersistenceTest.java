@@ -497,10 +497,13 @@ public class LockPersistenceTest {
 		Assert.assertEquals(
 			lock.getClassName(),
 			ReflectionTestUtil.invoke(
-				lock, "getOriginalClassName", new Class<?>[0]));
+				lock, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"className"));
 		Assert.assertEquals(
 			lock.getKey(),
-			ReflectionTestUtil.invoke(lock, "getOriginalKey", new Class<?>[0]));
+			ReflectionTestUtil.invoke(
+				lock, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"key_"));
 	}
 
 	protected Lock addLock() throws Exception {

@@ -574,12 +574,13 @@ public class DDMStructureVersionPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(ddmStructureVersion.getStructureId()),
 			ReflectionTestUtil.<Long>invoke(
-				ddmStructureVersion, "getOriginalStructureId",
-				new Class<?>[0]));
+				ddmStructureVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "structureId"));
 		Assert.assertEquals(
 			ddmStructureVersion.getVersion(),
 			ReflectionTestUtil.invoke(
-				ddmStructureVersion, "getOriginalVersion", new Class<?>[0]));
+				ddmStructureVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "version"));
 	}
 
 	protected DDMStructureVersion addDDMStructureVersion() throws Exception {

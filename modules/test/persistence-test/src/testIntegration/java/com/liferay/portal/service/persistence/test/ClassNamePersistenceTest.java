@@ -440,7 +440,8 @@ public class ClassNamePersistenceTest {
 		Assert.assertEquals(
 			className.getValue(),
 			ReflectionTestUtil.invoke(
-				className, "getOriginalValue", new Class<?>[0]));
+				className, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "value"));
 	}
 
 	protected ClassName addClassName() throws Exception {

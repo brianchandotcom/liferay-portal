@@ -543,11 +543,13 @@ public class AccountPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(account.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				account, "getOriginalUserId", new Class<?>[0]));
+				account, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "userId"));
 		Assert.assertEquals(
 			account.getAddress(),
 			ReflectionTestUtil.invoke(
-				account, "getOriginalAddress", new Class<?>[0]));
+				account, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "address"));
 	}
 
 	protected Account addAccount() throws Exception {

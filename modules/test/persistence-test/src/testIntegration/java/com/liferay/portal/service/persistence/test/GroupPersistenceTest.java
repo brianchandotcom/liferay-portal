@@ -738,77 +738,94 @@ public class GroupPersistenceTest {
 		Assert.assertEquals(
 			group.getUuid(),
 			ReflectionTestUtil.invoke(
-				group, "getOriginalUuid", new Class<?>[0]));
+				group, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(group.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				group, "getOriginalGroupId", new Class<?>[0]));
+				group, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(group.getLiveGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				group, "getOriginalLiveGroupId", new Class<?>[0]));
+				group, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"liveGroupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(group.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				group, "getOriginalCompanyId", new Class<?>[0]));
+				group, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"companyId"));
 		Assert.assertEquals(
 			group.getGroupKey(),
 			ReflectionTestUtil.invoke(
-				group, "getOriginalGroupKey", new Class<?>[0]));
+				group, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"groupKey"));
 
 		Assert.assertEquals(
 			Long.valueOf(group.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				group, "getOriginalCompanyId", new Class<?>[0]));
+				group, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"companyId"));
 		Assert.assertEquals(
 			group.getFriendlyURL(),
 			ReflectionTestUtil.invoke(
-				group, "getOriginalFriendlyURL", new Class<?>[0]));
+				group, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"friendlyURL"));
 
 		Assert.assertEquals(
 			Long.valueOf(group.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				group, "getOriginalCompanyId", new Class<?>[0]));
+				group, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"companyId"));
 		Assert.assertEquals(
 			Long.valueOf(group.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				group, "getOriginalClassNameId", new Class<?>[0]));
+				group, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(group.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				group, "getOriginalClassPK", new Class<?>[0]));
+				group, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"classPK"));
 
 		Assert.assertEquals(
 			Long.valueOf(group.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				group, "getOriginalCompanyId", new Class<?>[0]));
+				group, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"companyId"));
 		Assert.assertEquals(
 			Long.valueOf(group.getLiveGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				group, "getOriginalLiveGroupId", new Class<?>[0]));
+				group, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"liveGroupId"));
 		Assert.assertEquals(
 			group.getGroupKey(),
 			ReflectionTestUtil.invoke(
-				group, "getOriginalGroupKey", new Class<?>[0]));
+				group, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"groupKey"));
 
 		Assert.assertEquals(
 			Long.valueOf(group.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				group, "getOriginalCompanyId", new Class<?>[0]));
+				group, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"companyId"));
 		Assert.assertEquals(
 			Long.valueOf(group.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				group, "getOriginalClassNameId", new Class<?>[0]));
+				group, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(group.getLiveGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				group, "getOriginalLiveGroupId", new Class<?>[0]));
+				group, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"liveGroupId"));
 		Assert.assertEquals(
 			group.getGroupKey(),
 			ReflectionTestUtil.invoke(
-				group, "getOriginalGroupKey", new Class<?>[0]));
+				group, "getColumnOriginalValue", new Class<?>[] {String.class},
+				"groupKey"));
 	}
 
 	protected Group addGroup() throws Exception {

@@ -982,8 +982,8 @@ public class AkismetEntryPersistenceImpl
 			 _finderPathFetchByC_C.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				akismetEntryModelImpl.getOriginalClassNameId(),
-				akismetEntryModelImpl.getOriginalClassPK()
+				akismetEntryModelImpl.getColumnOriginalValue("classNameId"),
+				akismetEntryModelImpl.getColumnOriginalValue("classPK")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_C, args);
@@ -1442,8 +1442,8 @@ public class AkismetEntryPersistenceImpl
 		_finderPathFetchByC_C = new FinderPath(
 			AkismetEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			AkismetEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			AkismetEntryModelImpl.CLASSPK_COLUMN_BITMASK);
+			AkismetEntryModelImpl.getColumnBitmask("classNameId") |
+			AkismetEntryModelImpl.getColumnBitmask("classPK"));
 
 		_finderPathCountByC_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",

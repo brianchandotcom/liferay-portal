@@ -6115,9 +6115,9 @@ public class LVEntryPersistenceImpl
 			 _finderPathFetchByUUID_G_Head.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				lvEntryModelImpl.getOriginalUuid(),
-				lvEntryModelImpl.getOriginalGroupId(),
-				lvEntryModelImpl.getOriginalHead()
+				lvEntryModelImpl.getColumnOriginalValue("uuid_"),
+				lvEntryModelImpl.getColumnOriginalValue("groupId"),
+				lvEntryModelImpl.getColumnOriginalValue("head")
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G_Head, args);
@@ -6138,9 +6138,9 @@ public class LVEntryPersistenceImpl
 			 _finderPathFetchByG_UGK_Head.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				lvEntryModelImpl.getOriginalGroupId(),
-				lvEntryModelImpl.getOriginalUniqueGroupKey(),
-				lvEntryModelImpl.getOriginalHead()
+				lvEntryModelImpl.getColumnOriginalValue("groupId"),
+				lvEntryModelImpl.getColumnOriginalValue("uniqueGroupKey"),
+				lvEntryModelImpl.getColumnOriginalValue("head")
 			};
 
 			finderCache.removeResult(_finderPathCountByG_UGK_Head, args);
@@ -6157,7 +6157,9 @@ public class LVEntryPersistenceImpl
 		if ((lvEntryModelImpl.getColumnBitmask() &
 			 _finderPathFetchByHeadId.getColumnBitmask()) != 0) {
 
-			Object[] args = new Object[] {lvEntryModelImpl.getOriginalHeadId()};
+			Object[] args = new Object[] {
+				lvEntryModelImpl.getColumnOriginalValue("headId")
+			};
 
 			finderCache.removeResult(_finderPathCountByHeadId, args);
 			finderCache.removeResult(_finderPathFetchByHeadId, args);
@@ -6396,7 +6398,7 @@ public class LVEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					lvEntryModelImpl.getOriginalUuid()
+					lvEntryModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -6415,8 +6417,8 @@ public class LVEntryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					lvEntryModelImpl.getOriginalUuid(),
-					lvEntryModelImpl.getOriginalHead()
+					lvEntryModelImpl.getColumnOriginalValue("uuid_"),
+					lvEntryModelImpl.getColumnOriginalValue("head")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_Head, args);
@@ -6437,8 +6439,8 @@ public class LVEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					lvEntryModelImpl.getOriginalUuid(),
-					lvEntryModelImpl.getOriginalGroupId()
+					lvEntryModelImpl.getColumnOriginalValue("uuid_"),
+					lvEntryModelImpl.getColumnOriginalValue("groupId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -6459,8 +6461,8 @@ public class LVEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					lvEntryModelImpl.getOriginalUuid(),
-					lvEntryModelImpl.getOriginalCompanyId()
+					lvEntryModelImpl.getColumnOriginalValue("uuid_"),
+					lvEntryModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -6481,9 +6483,9 @@ public class LVEntryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					lvEntryModelImpl.getOriginalUuid(),
-					lvEntryModelImpl.getOriginalCompanyId(),
-					lvEntryModelImpl.getOriginalHead()
+					lvEntryModelImpl.getColumnOriginalValue("uuid_"),
+					lvEntryModelImpl.getColumnOriginalValue("companyId"),
+					lvEntryModelImpl.getColumnOriginalValue("head")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C_Head, args);
@@ -6505,7 +6507,7 @@ public class LVEntryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					lvEntryModelImpl.getOriginalGroupId()
+					lvEntryModelImpl.getColumnOriginalValue("groupId")
 				};
 
 				finderCache.removeResult(_finderPathCountByGroupId, args);
@@ -6524,8 +6526,8 @@ public class LVEntryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					lvEntryModelImpl.getOriginalGroupId(),
-					lvEntryModelImpl.getOriginalHead()
+					lvEntryModelImpl.getColumnOriginalValue("groupId"),
+					lvEntryModelImpl.getColumnOriginalValue("head")
 				};
 
 				finderCache.removeResult(_finderPathCountByGroupId_Head, args);
@@ -6546,8 +6548,8 @@ public class LVEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					lvEntryModelImpl.getOriginalGroupId(),
-					lvEntryModelImpl.getOriginalUniqueGroupKey()
+					lvEntryModelImpl.getColumnOriginalValue("groupId"),
+					lvEntryModelImpl.getColumnOriginalValue("uniqueGroupKey")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_UGK, args);
@@ -7207,7 +7209,7 @@ public class LVEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			LVEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid", new String[] {String.class.getName()},
-			LVEntryModelImpl.UUID_COLUMN_BITMASK);
+			LVEntryModelImpl.getColumnBitmask("uuid_"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -7226,8 +7228,8 @@ public class LVEntryPersistenceImpl
 			LVEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_Head",
 			new String[] {String.class.getName(), Boolean.class.getName()},
-			LVEntryModelImpl.UUID_COLUMN_BITMASK |
-			LVEntryModelImpl.HEAD_COLUMN_BITMASK);
+			LVEntryModelImpl.getColumnBitmask("uuid_") |
+			LVEntryModelImpl.getColumnBitmask("head"));
 
 		_finderPathCountByUuid_Head = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -7247,8 +7249,8 @@ public class LVEntryPersistenceImpl
 			LVEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			LVEntryModelImpl.UUID_COLUMN_BITMASK |
-			LVEntryModelImpl.GROUPID_COLUMN_BITMASK);
+			LVEntryModelImpl.getColumnBitmask("uuid_") |
+			LVEntryModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -7261,9 +7263,9 @@ public class LVEntryPersistenceImpl
 				String.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
 			},
-			LVEntryModelImpl.UUID_COLUMN_BITMASK |
-			LVEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			LVEntryModelImpl.HEAD_COLUMN_BITMASK);
+			LVEntryModelImpl.getColumnBitmask("uuid_") |
+			LVEntryModelImpl.getColumnBitmask("groupId") |
+			LVEntryModelImpl.getColumnBitmask("head"));
 
 		_finderPathCountByUUID_G_Head = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -7286,8 +7288,8 @@ public class LVEntryPersistenceImpl
 			LVEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			LVEntryModelImpl.UUID_COLUMN_BITMASK |
-			LVEntryModelImpl.COMPANYID_COLUMN_BITMASK);
+			LVEntryModelImpl.getColumnBitmask("uuid_") |
+			LVEntryModelImpl.getColumnBitmask("companyId"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -7310,9 +7312,9 @@ public class LVEntryPersistenceImpl
 				String.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
 			},
-			LVEntryModelImpl.UUID_COLUMN_BITMASK |
-			LVEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			LVEntryModelImpl.HEAD_COLUMN_BITMASK);
+			LVEntryModelImpl.getColumnBitmask("uuid_") |
+			LVEntryModelImpl.getColumnBitmask("companyId") |
+			LVEntryModelImpl.getColumnBitmask("head"));
 
 		_finderPathCountByUuid_C_Head = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -7333,7 +7335,7 @@ public class LVEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
 			LVEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByGroupId", new String[] {Long.class.getName()},
-			LVEntryModelImpl.GROUPID_COLUMN_BITMASK);
+			LVEntryModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -7356,8 +7358,8 @@ public class LVEntryPersistenceImpl
 			LVEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByGroupId_Head",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			LVEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			LVEntryModelImpl.HEAD_COLUMN_BITMASK);
+			LVEntryModelImpl.getColumnBitmask("groupId") |
+			LVEntryModelImpl.getColumnBitmask("head"));
 
 		_finderPathCountByGroupId_Head = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -7382,8 +7384,8 @@ public class LVEntryPersistenceImpl
 			LVEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByG_UGK",
 			new String[] {Long.class.getName(), String.class.getName()},
-			LVEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			LVEntryModelImpl.UNIQUEGROUPKEY_COLUMN_BITMASK);
+			LVEntryModelImpl.getColumnBitmask("groupId") |
+			LVEntryModelImpl.getColumnBitmask("uniqueGroupKey"));
 
 		_finderPathCountByG_UGK = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -7396,9 +7398,9 @@ public class LVEntryPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName()
 			},
-			LVEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			LVEntryModelImpl.UNIQUEGROUPKEY_COLUMN_BITMASK |
-			LVEntryModelImpl.HEAD_COLUMN_BITMASK);
+			LVEntryModelImpl.getColumnBitmask("groupId") |
+			LVEntryModelImpl.getColumnBitmask("uniqueGroupKey") |
+			LVEntryModelImpl.getColumnBitmask("head"));
 
 		_finderPathCountByG_UGK_Head = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -7411,7 +7413,7 @@ public class LVEntryPersistenceImpl
 		_finderPathFetchByHeadId = new FinderPath(
 			LVEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",
 			new String[] {Long.class.getName()},
-			LVEntryModelImpl.HEADID_COLUMN_BITMASK);
+			LVEntryModelImpl.getColumnBitmask("headId"));
 
 		_finderPathCountByHeadId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

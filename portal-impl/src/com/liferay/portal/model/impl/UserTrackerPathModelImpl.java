@@ -116,8 +116,18 @@ public class UserTrackerPathModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long USERTRACKERID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long USERTRACKERPATHID_COLUMN_BITMASK = 2L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
@@ -293,6 +303,14 @@ public class UserTrackerPathModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("mvccVersion");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_mvccVersion = mvccVersion;
 	}
 
@@ -303,6 +321,14 @@ public class UserTrackerPathModelImpl
 
 	@Override
 	public void setUserTrackerPathId(long userTrackerPathId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userTrackerPathId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userTrackerPathId = userTrackerPathId;
 	}
 
@@ -313,6 +339,14 @@ public class UserTrackerPathModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_companyId = companyId;
 	}
 
@@ -323,19 +357,24 @@ public class UserTrackerPathModelImpl
 
 	@Override
 	public void setUserTrackerId(long userTrackerId) {
-		_columnBitmask |= USERTRACKERID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userTrackerId");
 
-		if (!_setOriginalUserTrackerId) {
-			_setOriginalUserTrackerId = true;
-
-			_originalUserTrackerId = _userTrackerId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_userTrackerId = userTrackerId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalUserTrackerId() {
-		return _originalUserTrackerId;
+		return GetterUtil.getLong(getColumnOriginalValue("userTrackerId"));
 	}
 
 	@Override
@@ -350,6 +389,14 @@ public class UserTrackerPathModelImpl
 
 	@Override
 	public void setPath(String path) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("path_");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_path = path;
 	}
 
@@ -360,6 +407,14 @@ public class UserTrackerPathModelImpl
 
 	@Override
 	public void setPathDate(Date pathDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("pathDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_pathDate = pathDate;
 	}
 
@@ -473,14 +528,9 @@ public class UserTrackerPathModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		UserTrackerPathModelImpl userTrackerPathModelImpl = this;
+		_columnOriginalValues = Collections.emptyMap();
 
-		userTrackerPathModelImpl._originalUserTrackerId =
-			userTrackerPathModelImpl._userTrackerId;
-
-		userTrackerPathModelImpl._setOriginalUserTrackerId = false;
-
-		userTrackerPathModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -586,12 +636,58 @@ public class UserTrackerPathModelImpl
 
 	}
 
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("userTrackerPathId", _userTrackerPathId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userTrackerId", _userTrackerId);
+		_columnOriginalValues.put("path_", _path);
+		_columnOriginalValues.put("pathDate", _pathDate);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("mvccVersion", 1L);
+
+		columnBitmasks.put("userTrackerPathId", 2L);
+
+		columnBitmasks.put("companyId", 4L);
+
+		columnBitmasks.put("userTrackerId", 8L);
+
+		columnBitmasks.put("path_", 16L);
+
+		columnBitmasks.put("pathDate", 32L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _mvccVersion;
 	private long _userTrackerPathId;
 	private long _companyId;
 	private long _userTrackerId;
-	private long _originalUserTrackerId;
-	private boolean _setOriginalUserTrackerId;
 	private String _path;
 	private Date _pathDate;
 	private long _columnBitmask;

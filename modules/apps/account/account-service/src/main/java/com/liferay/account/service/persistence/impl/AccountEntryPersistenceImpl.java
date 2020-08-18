@@ -2317,8 +2317,9 @@ public class AccountEntryPersistenceImpl
 			 _finderPathFetchByC_ERC.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				accountEntryModelImpl.getOriginalCompanyId(),
-				accountEntryModelImpl.getOriginalExternalReferenceCode()
+				accountEntryModelImpl.getColumnOriginalValue("companyId"),
+				accountEntryModelImpl.getColumnOriginalValue(
+					"externalReferenceCode")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_ERC, args);
@@ -2526,7 +2527,7 @@ public class AccountEntryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					accountEntryModelImpl.getOriginalCompanyId()
+					accountEntryModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -2545,8 +2546,8 @@ public class AccountEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					accountEntryModelImpl.getOriginalCompanyId(),
-					accountEntryModelImpl.getOriginalStatus()
+					accountEntryModelImpl.getColumnOriginalValue("companyId"),
+					accountEntryModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_S, args);
@@ -2858,8 +2859,8 @@ public class AccountEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
 			AccountEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCompanyId", new String[] {Long.class.getName()},
-			AccountEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			AccountEntryModelImpl.NAME_COLUMN_BITMASK);
+			AccountEntryModelImpl.getColumnBitmask("companyId") |
+			AccountEntryModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2878,9 +2879,9 @@ public class AccountEntryPersistenceImpl
 			AccountEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByC_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			AccountEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			AccountEntryModelImpl.STATUS_COLUMN_BITMASK |
-			AccountEntryModelImpl.NAME_COLUMN_BITMASK);
+			AccountEntryModelImpl.getColumnBitmask("companyId") |
+			AccountEntryModelImpl.getColumnBitmask("status") |
+			AccountEntryModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByC_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
@@ -2889,8 +2890,8 @@ public class AccountEntryPersistenceImpl
 		_finderPathFetchByC_ERC = new FinderPath(
 			AccountEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
-			AccountEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			AccountEntryModelImpl.EXTERNALREFERENCECODE_COLUMN_BITMASK);
+			AccountEntryModelImpl.getColumnBitmask("companyId") |
+			AccountEntryModelImpl.getColumnBitmask("externalReferenceCode"));
 
 		_finderPathCountByC_ERC = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

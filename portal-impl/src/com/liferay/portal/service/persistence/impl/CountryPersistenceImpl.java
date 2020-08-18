@@ -1374,7 +1374,9 @@ public class CountryPersistenceImpl
 		if ((countryModelImpl.getColumnBitmask() &
 			 _finderPathFetchByName.getColumnBitmask()) != 0) {
 
-			Object[] args = new Object[] {countryModelImpl.getOriginalName()};
+			Object[] args = new Object[] {
+				countryModelImpl.getColumnOriginalValue("name")
+			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByName, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByName, args);
@@ -1390,7 +1392,9 @@ public class CountryPersistenceImpl
 		if ((countryModelImpl.getColumnBitmask() &
 			 _finderPathFetchByA2.getColumnBitmask()) != 0) {
 
-			Object[] args = new Object[] {countryModelImpl.getOriginalA2()};
+			Object[] args = new Object[] {
+				countryModelImpl.getColumnOriginalValue("a2")
+			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByA2, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByA2, args);
@@ -1406,7 +1410,9 @@ public class CountryPersistenceImpl
 		if ((countryModelImpl.getColumnBitmask() &
 			 _finderPathFetchByA3.getColumnBitmask()) != 0) {
 
-			Object[] args = new Object[] {countryModelImpl.getOriginalA3()};
+			Object[] args = new Object[] {
+				countryModelImpl.getColumnOriginalValue("a3")
+			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByA3, args);
 			FinderCacheUtil.removeResult(_finderPathFetchByA3, args);
@@ -1575,7 +1581,7 @@ public class CountryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					countryModelImpl.getOriginalActive()
+					countryModelImpl.getColumnOriginalValue("active_")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByActive, args);
@@ -1874,7 +1880,7 @@ public class CountryPersistenceImpl
 		_finderPathFetchByName = new FinderPath(
 			CountryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByName",
 			new String[] {String.class.getName()},
-			CountryModelImpl.NAME_COLUMN_BITMASK);
+			CountryModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByName = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1883,7 +1889,7 @@ public class CountryPersistenceImpl
 		_finderPathFetchByA2 = new FinderPath(
 			CountryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByA2",
 			new String[] {String.class.getName()},
-			CountryModelImpl.A2_COLUMN_BITMASK);
+			CountryModelImpl.getColumnBitmask("a2"));
 
 		_finderPathCountByA2 = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA2",
@@ -1892,7 +1898,7 @@ public class CountryPersistenceImpl
 		_finderPathFetchByA3 = new FinderPath(
 			CountryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByA3",
 			new String[] {String.class.getName()},
-			CountryModelImpl.A3_COLUMN_BITMASK);
+			CountryModelImpl.getColumnBitmask("a3"));
 
 		_finderPathCountByA3 = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA3",
@@ -1909,8 +1915,8 @@ public class CountryPersistenceImpl
 		_finderPathWithoutPaginationFindByActive = new FinderPath(
 			CountryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByActive", new String[] {Boolean.class.getName()},
-			CountryModelImpl.ACTIVE_COLUMN_BITMASK |
-			CountryModelImpl.NAME_COLUMN_BITMASK);
+			CountryModelImpl.getColumnBitmask("active_") |
+			CountryModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByActive = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

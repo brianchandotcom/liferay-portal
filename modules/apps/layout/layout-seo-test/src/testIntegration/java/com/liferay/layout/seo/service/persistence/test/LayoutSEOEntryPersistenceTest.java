@@ -577,24 +577,29 @@ public class LayoutSEOEntryPersistenceTest {
 		Assert.assertEquals(
 			layoutSEOEntry.getUuid(),
 			ReflectionTestUtil.invoke(
-				layoutSEOEntry, "getOriginalUuid", new Class<?>[0]));
+				layoutSEOEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(layoutSEOEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutSEOEntry, "getOriginalGroupId", new Class<?>[0]));
+				layoutSEOEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(layoutSEOEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutSEOEntry, "getOriginalGroupId", new Class<?>[0]));
+				layoutSEOEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			Boolean.valueOf(layoutSEOEntry.getPrivateLayout()),
 			ReflectionTestUtil.<Boolean>invoke(
-				layoutSEOEntry, "getOriginalPrivateLayout", new Class<?>[0]));
+				layoutSEOEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "privateLayout"));
 		Assert.assertEquals(
 			Long.valueOf(layoutSEOEntry.getLayoutId()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutSEOEntry, "getOriginalLayoutId", new Class<?>[0]));
+				layoutSEOEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "layoutId"));
 	}
 
 	protected LayoutSEOEntry addLayoutSEOEntry() throws Exception {

@@ -624,37 +624,39 @@ public class LayoutClassedModelUsagePersistenceTest {
 		Assert.assertEquals(
 			layoutClassedModelUsage.getUuid(),
 			ReflectionTestUtil.invoke(
-				layoutClassedModelUsage, "getOriginalUuid", new Class<?>[0]));
+				layoutClassedModelUsage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(layoutClassedModelUsage.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutClassedModelUsage, "getOriginalGroupId",
-				new Class<?>[0]));
+				layoutClassedModelUsage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(layoutClassedModelUsage.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutClassedModelUsage, "getOriginalClassNameId",
-				new Class<?>[0]));
+				layoutClassedModelUsage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(layoutClassedModelUsage.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutClassedModelUsage, "getOriginalClassPK",
-				new Class<?>[0]));
+				layoutClassedModelUsage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 		Assert.assertEquals(
 			layoutClassedModelUsage.getContainerKey(),
 			ReflectionTestUtil.invoke(
-				layoutClassedModelUsage, "getOriginalContainerKey",
-				new Class<?>[0]));
+				layoutClassedModelUsage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "containerKey"));
 		Assert.assertEquals(
 			Long.valueOf(layoutClassedModelUsage.getContainerType()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutClassedModelUsage, "getOriginalContainerType",
-				new Class<?>[0]));
+				layoutClassedModelUsage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "containerType"));
 		Assert.assertEquals(
 			Long.valueOf(layoutClassedModelUsage.getPlid()),
 			ReflectionTestUtil.<Long>invoke(
-				layoutClassedModelUsage, "getOriginalPlid", new Class<?>[0]));
+				layoutClassedModelUsage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "plid"));
 	}
 
 	protected LayoutClassedModelUsage addLayoutClassedModelUsage()

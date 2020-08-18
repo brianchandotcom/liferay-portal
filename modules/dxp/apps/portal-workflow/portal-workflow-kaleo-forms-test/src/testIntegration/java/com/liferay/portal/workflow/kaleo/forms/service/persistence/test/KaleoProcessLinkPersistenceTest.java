@@ -472,13 +472,13 @@ public class KaleoProcessLinkPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(kaleoProcessLink.getKaleoProcessId()),
 			ReflectionTestUtil.<Long>invoke(
-				kaleoProcessLink, "getOriginalKaleoProcessId",
-				new Class<?>[0]));
+				kaleoProcessLink, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "kaleoProcessId"));
 		Assert.assertEquals(
 			kaleoProcessLink.getWorkflowTaskName(),
 			ReflectionTestUtil.invoke(
-				kaleoProcessLink, "getOriginalWorkflowTaskName",
-				new Class<?>[0]));
+				kaleoProcessLink, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "workflowTaskName"));
 	}
 
 	protected KaleoProcessLink addKaleoProcessLink() throws Exception {

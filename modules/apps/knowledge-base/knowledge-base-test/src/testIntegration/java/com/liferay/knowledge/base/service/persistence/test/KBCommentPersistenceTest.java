@@ -570,11 +570,13 @@ public class KBCommentPersistenceTest {
 		Assert.assertEquals(
 			kbComment.getUuid(),
 			ReflectionTestUtil.invoke(
-				kbComment, "getOriginalUuid", new Class<?>[0]));
+				kbComment, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(kbComment.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				kbComment, "getOriginalGroupId", new Class<?>[0]));
+				kbComment, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected KBComment addKBComment() throws Exception {

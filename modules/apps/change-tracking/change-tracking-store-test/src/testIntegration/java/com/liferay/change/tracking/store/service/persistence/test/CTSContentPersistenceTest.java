@@ -522,23 +522,28 @@ public class CTSContentPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(ctsContent.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				ctsContent, "getOriginalCompanyId", new Class<?>[0]));
+				ctsContent, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
 			Long.valueOf(ctsContent.getRepositoryId()),
 			ReflectionTestUtil.<Long>invoke(
-				ctsContent, "getOriginalRepositoryId", new Class<?>[0]));
+				ctsContent, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "repositoryId"));
 		Assert.assertEquals(
 			ctsContent.getPath(),
 			ReflectionTestUtil.invoke(
-				ctsContent, "getOriginalPath", new Class<?>[0]));
+				ctsContent, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "path_"));
 		Assert.assertEquals(
 			ctsContent.getVersion(),
 			ReflectionTestUtil.invoke(
-				ctsContent, "getOriginalVersion", new Class<?>[0]));
+				ctsContent, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "version"));
 		Assert.assertEquals(
 			ctsContent.getStoreType(),
 			ReflectionTestUtil.invoke(
-				ctsContent, "getOriginalStoreType", new Class<?>[0]));
+				ctsContent, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "storeType"));
 	}
 
 	protected CTSContent addCTSContent() throws Exception {

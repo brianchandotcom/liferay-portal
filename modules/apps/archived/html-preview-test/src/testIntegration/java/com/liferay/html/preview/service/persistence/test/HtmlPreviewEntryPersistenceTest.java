@@ -491,15 +491,18 @@ public class HtmlPreviewEntryPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(htmlPreviewEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				htmlPreviewEntry, "getOriginalGroupId", new Class<?>[0]));
+				htmlPreviewEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			Long.valueOf(htmlPreviewEntry.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				htmlPreviewEntry, "getOriginalClassNameId", new Class<?>[0]));
+				htmlPreviewEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(htmlPreviewEntry.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				htmlPreviewEntry, "getOriginalClassPK", new Class<?>[0]));
+				htmlPreviewEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 	}
 
 	protected HtmlPreviewEntry addHtmlPreviewEntry() throws Exception {

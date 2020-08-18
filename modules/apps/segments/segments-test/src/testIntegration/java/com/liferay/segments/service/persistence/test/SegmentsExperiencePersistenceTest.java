@@ -659,38 +659,45 @@ public class SegmentsExperiencePersistenceTest {
 		Assert.assertEquals(
 			segmentsExperience.getUuid(),
 			ReflectionTestUtil.invoke(
-				segmentsExperience, "getOriginalUuid", new Class<?>[0]));
+				segmentsExperience, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(segmentsExperience.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				segmentsExperience, "getOriginalGroupId", new Class<?>[0]));
+				segmentsExperience, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(segmentsExperience.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				segmentsExperience, "getOriginalGroupId", new Class<?>[0]));
+				segmentsExperience, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			segmentsExperience.getSegmentsExperienceKey(),
 			ReflectionTestUtil.invoke(
-				segmentsExperience, "getOriginalSegmentsExperienceKey",
-				new Class<?>[0]));
+				segmentsExperience, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "segmentsExperienceKey"));
 
 		Assert.assertEquals(
 			Long.valueOf(segmentsExperience.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				segmentsExperience, "getOriginalGroupId", new Class<?>[0]));
+				segmentsExperience, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			Long.valueOf(segmentsExperience.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				segmentsExperience, "getOriginalClassNameId", new Class<?>[0]));
+				segmentsExperience, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(segmentsExperience.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				segmentsExperience, "getOriginalClassPK", new Class<?>[0]));
+				segmentsExperience, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 		Assert.assertEquals(
 			Integer.valueOf(segmentsExperience.getPriority()),
 			ReflectionTestUtil.<Integer>invoke(
-				segmentsExperience, "getOriginalPriority", new Class<?>[0]));
+				segmentsExperience, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "priority"));
 	}
 
 	protected SegmentsExperience addSegmentsExperience() throws Exception {

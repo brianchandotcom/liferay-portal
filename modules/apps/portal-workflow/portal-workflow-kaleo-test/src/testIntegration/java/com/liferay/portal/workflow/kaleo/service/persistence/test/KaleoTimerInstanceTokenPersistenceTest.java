@@ -631,13 +631,13 @@ public class KaleoTimerInstanceTokenPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(kaleoTimerInstanceToken.getKaleoInstanceTokenId()),
 			ReflectionTestUtil.<Long>invoke(
-				kaleoTimerInstanceToken, "getOriginalKaleoInstanceTokenId",
-				new Class<?>[0]));
+				kaleoTimerInstanceToken, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "kaleoInstanceTokenId"));
 		Assert.assertEquals(
 			Long.valueOf(kaleoTimerInstanceToken.getKaleoTimerId()),
 			ReflectionTestUtil.<Long>invoke(
-				kaleoTimerInstanceToken, "getOriginalKaleoTimerId",
-				new Class<?>[0]));
+				kaleoTimerInstanceToken, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "kaleoTimerId"));
 	}
 
 	protected KaleoTimerInstanceToken addKaleoTimerInstanceToken()

@@ -833,20 +833,24 @@ public class MBMessagePersistenceTest {
 		Assert.assertEquals(
 			mbMessage.getUuid(),
 			ReflectionTestUtil.invoke(
-				mbMessage, "getOriginalUuid", new Class<?>[0]));
+				mbMessage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(mbMessage.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				mbMessage, "getOriginalGroupId", new Class<?>[0]));
+				mbMessage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(mbMessage.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				mbMessage, "getOriginalGroupId", new Class<?>[0]));
+				mbMessage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			mbMessage.getUrlSubject(),
 			ReflectionTestUtil.invoke(
-				mbMessage, "getOriginalUrlSubject", new Class<?>[0]));
+				mbMessage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "urlSubject"));
 	}
 
 	protected MBMessage addMBMessage() throws Exception {

@@ -663,24 +663,29 @@ public class DDMStructurePersistenceTest {
 		Assert.assertEquals(
 			ddmStructure.getUuid(),
 			ReflectionTestUtil.invoke(
-				ddmStructure, "getOriginalUuid", new Class<?>[0]));
+				ddmStructure, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(ddmStructure.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				ddmStructure, "getOriginalGroupId", new Class<?>[0]));
+				ddmStructure, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(ddmStructure.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				ddmStructure, "getOriginalGroupId", new Class<?>[0]));
+				ddmStructure, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			Long.valueOf(ddmStructure.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				ddmStructure, "getOriginalClassNameId", new Class<?>[0]));
+				ddmStructure, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			ddmStructure.getStructureKey(),
 			ReflectionTestUtil.invoke(
-				ddmStructure, "getOriginalStructureKey", new Class<?>[0]));
+				ddmStructure, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "structureKey"));
 	}
 
 	protected DDMStructure addDDMStructure() throws Exception {

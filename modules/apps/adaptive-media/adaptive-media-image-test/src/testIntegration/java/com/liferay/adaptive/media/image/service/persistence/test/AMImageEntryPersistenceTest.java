@@ -552,20 +552,24 @@ public class AMImageEntryPersistenceTest {
 		Assert.assertEquals(
 			amImageEntry.getUuid(),
 			ReflectionTestUtil.invoke(
-				amImageEntry, "getOriginalUuid", new Class<?>[0]));
+				amImageEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(amImageEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				amImageEntry, "getOriginalGroupId", new Class<?>[0]));
+				amImageEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			amImageEntry.getConfigurationUuid(),
 			ReflectionTestUtil.invoke(
-				amImageEntry, "getOriginalConfigurationUuid", new Class<?>[0]));
+				amImageEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "configurationUuid"));
 		Assert.assertEquals(
 			Long.valueOf(amImageEntry.getFileVersionId()),
 			ReflectionTestUtil.<Long>invoke(
-				amImageEntry, "getOriginalFileVersionId", new Class<?>[0]));
+				amImageEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "fileVersionId"));
 	}
 
 	protected AMImageEntry addAMImageEntry() throws Exception {

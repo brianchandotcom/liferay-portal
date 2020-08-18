@@ -821,39 +821,45 @@ public class FragmentEntryVersionPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(fragmentEntryVersion.getFragmentEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				fragmentEntryVersion, "getOriginalFragmentEntryId",
-				new Class<?>[0]));
+				fragmentEntryVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "fragmentEntryId"));
 		Assert.assertEquals(
 			Integer.valueOf(fragmentEntryVersion.getVersion()),
 			ReflectionTestUtil.<Integer>invoke(
-				fragmentEntryVersion, "getOriginalVersion", new Class<?>[0]));
+				fragmentEntryVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "version"));
 
 		Assert.assertEquals(
 			fragmentEntryVersion.getUuid(),
 			ReflectionTestUtil.invoke(
-				fragmentEntryVersion, "getOriginalUuid", new Class<?>[0]));
+				fragmentEntryVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(fragmentEntryVersion.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				fragmentEntryVersion, "getOriginalGroupId", new Class<?>[0]));
+				fragmentEntryVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			Integer.valueOf(fragmentEntryVersion.getVersion()),
 			ReflectionTestUtil.<Integer>invoke(
-				fragmentEntryVersion, "getOriginalVersion", new Class<?>[0]));
+				fragmentEntryVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "version"));
 
 		Assert.assertEquals(
 			Long.valueOf(fragmentEntryVersion.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				fragmentEntryVersion, "getOriginalGroupId", new Class<?>[0]));
+				fragmentEntryVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			fragmentEntryVersion.getFragmentEntryKey(),
 			ReflectionTestUtil.invoke(
-				fragmentEntryVersion, "getOriginalFragmentEntryKey",
-				new Class<?>[0]));
+				fragmentEntryVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "fragmentEntryKey"));
 		Assert.assertEquals(
 			Integer.valueOf(fragmentEntryVersion.getVersion()),
 			ReflectionTestUtil.<Integer>invoke(
-				fragmentEntryVersion, "getOriginalVersion", new Class<?>[0]));
+				fragmentEntryVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "version"));
 	}
 
 	protected FragmentEntryVersion addFragmentEntryVersion() throws Exception {

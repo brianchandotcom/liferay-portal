@@ -1599,8 +1599,9 @@ public class KaleoTimerPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					kaleoTimerModelImpl.getOriginalKaleoClassName(),
-					kaleoTimerModelImpl.getOriginalKaleoClassPK()
+					kaleoTimerModelImpl.getColumnOriginalValue(
+						"kaleoClassName"),
+					kaleoTimerModelImpl.getColumnOriginalValue("kaleoClassPK")
 				};
 
 				finderCache.removeResult(_finderPathCountByKCN_KCPK, args);
@@ -1622,9 +1623,10 @@ public class KaleoTimerPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					kaleoTimerModelImpl.getOriginalKaleoClassName(),
-					kaleoTimerModelImpl.getOriginalKaleoClassPK(),
-					kaleoTimerModelImpl.getOriginalBlocking()
+					kaleoTimerModelImpl.getColumnOriginalValue(
+						"kaleoClassName"),
+					kaleoTimerModelImpl.getColumnOriginalValue("kaleoClassPK"),
+					kaleoTimerModelImpl.getColumnOriginalValue("blocking")
 				};
 
 				finderCache.removeResult(
@@ -1933,8 +1935,8 @@ public class KaleoTimerPersistenceImpl
 			KaleoTimerImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByKCN_KCPK",
 			new String[] {String.class.getName(), Long.class.getName()},
-			KaleoTimerModelImpl.KALEOCLASSNAME_COLUMN_BITMASK |
-			KaleoTimerModelImpl.KALEOCLASSPK_COLUMN_BITMASK);
+			KaleoTimerModelImpl.getColumnBitmask("kaleoClassName") |
+			KaleoTimerModelImpl.getColumnBitmask("kaleoClassPK"));
 
 		_finderPathCountByKCN_KCPK = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1957,9 +1959,9 @@ public class KaleoTimerPersistenceImpl
 				String.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
 			},
-			KaleoTimerModelImpl.KALEOCLASSNAME_COLUMN_BITMASK |
-			KaleoTimerModelImpl.KALEOCLASSPK_COLUMN_BITMASK |
-			KaleoTimerModelImpl.BLOCKING_COLUMN_BITMASK);
+			KaleoTimerModelImpl.getColumnBitmask("kaleoClassName") |
+			KaleoTimerModelImpl.getColumnBitmask("kaleoClassPK") |
+			KaleoTimerModelImpl.getColumnBitmask("blocking"));
 
 		_finderPathCountByKCN_KCPK_Blocking = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

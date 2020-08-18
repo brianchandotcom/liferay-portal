@@ -854,7 +854,8 @@ public class UserTrackerPathPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					userTrackerPathModelImpl.getOriginalUserTrackerId()
+					userTrackerPathModelImpl.getColumnOriginalValue(
+						"userTrackerId")
 				};
 
 				FinderCacheUtil.removeResult(
@@ -1167,7 +1168,7 @@ public class UserTrackerPathPersistenceImpl
 			UserTrackerPathImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserTrackerId",
 			new String[] {Long.class.getName()},
-			UserTrackerPathModelImpl.USERTRACKERID_COLUMN_BITMASK);
+			UserTrackerPathModelImpl.getColumnBitmask("userTrackerId"));
 
 		_finderPathCountByUserTrackerId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

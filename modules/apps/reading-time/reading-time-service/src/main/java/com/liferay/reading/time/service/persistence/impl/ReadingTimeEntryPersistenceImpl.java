@@ -1865,8 +1865,8 @@ public class ReadingTimeEntryPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				readingTimeEntryModelImpl.getOriginalUuid(),
-				readingTimeEntryModelImpl.getOriginalGroupId()
+				readingTimeEntryModelImpl.getColumnOriginalValue("uuid_"),
+				readingTimeEntryModelImpl.getColumnOriginalValue("groupId")
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -1888,9 +1888,9 @@ public class ReadingTimeEntryPersistenceImpl
 			 _finderPathFetchByG_C_C.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				readingTimeEntryModelImpl.getOriginalGroupId(),
-				readingTimeEntryModelImpl.getOriginalClassNameId(),
-				readingTimeEntryModelImpl.getOriginalClassPK()
+				readingTimeEntryModelImpl.getColumnOriginalValue("groupId"),
+				readingTimeEntryModelImpl.getColumnOriginalValue("classNameId"),
+				readingTimeEntryModelImpl.getColumnOriginalValue("classPK")
 			};
 
 			finderCache.removeResult(_finderPathCountByG_C_C, args);
@@ -2111,7 +2111,7 @@ public class ReadingTimeEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					readingTimeEntryModelImpl.getOriginalUuid()
+					readingTimeEntryModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -2130,8 +2130,9 @@ public class ReadingTimeEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					readingTimeEntryModelImpl.getOriginalUuid(),
-					readingTimeEntryModelImpl.getOriginalCompanyId()
+					readingTimeEntryModelImpl.getColumnOriginalValue("uuid_"),
+					readingTimeEntryModelImpl.getColumnOriginalValue(
+						"companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -2447,8 +2448,8 @@ public class ReadingTimeEntryPersistenceImpl
 			ReadingTimeEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			ReadingTimeEntryModelImpl.UUID_COLUMN_BITMASK |
-			ReadingTimeEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
+			ReadingTimeEntryModelImpl.getColumnBitmask("uuid_") |
+			ReadingTimeEntryModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2458,8 +2459,8 @@ public class ReadingTimeEntryPersistenceImpl
 			ReadingTimeEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			ReadingTimeEntryModelImpl.UUID_COLUMN_BITMASK |
-			ReadingTimeEntryModelImpl.GROUPID_COLUMN_BITMASK);
+			ReadingTimeEntryModelImpl.getColumnBitmask("uuid_") |
+			ReadingTimeEntryModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2479,9 +2480,9 @@ public class ReadingTimeEntryPersistenceImpl
 			ReadingTimeEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			ReadingTimeEntryModelImpl.UUID_COLUMN_BITMASK |
-			ReadingTimeEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			ReadingTimeEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
+			ReadingTimeEntryModelImpl.getColumnBitmask("uuid_") |
+			ReadingTimeEntryModelImpl.getColumnBitmask("companyId") |
+			ReadingTimeEntryModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2494,9 +2495,9 @@ public class ReadingTimeEntryPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			ReadingTimeEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			ReadingTimeEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			ReadingTimeEntryModelImpl.CLASSPK_COLUMN_BITMASK);
+			ReadingTimeEntryModelImpl.getColumnBitmask("groupId") |
+			ReadingTimeEntryModelImpl.getColumnBitmask("classNameId") |
+			ReadingTimeEntryModelImpl.getColumnBitmask("classPK"));
 
 		_finderPathCountByG_C_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

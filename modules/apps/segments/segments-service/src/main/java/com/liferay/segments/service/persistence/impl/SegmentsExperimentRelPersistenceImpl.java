@@ -1035,9 +1035,10 @@ public class SegmentsExperimentRelPersistenceImpl
 			 _finderPathFetchByS_S.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				segmentsExperimentRelModelImpl.
-					getOriginalSegmentsExperimentId(),
-				segmentsExperimentRelModelImpl.getOriginalSegmentsExperienceId()
+				segmentsExperimentRelModelImpl.getColumnOriginalValue(
+					"segmentsExperimentId"),
+				segmentsExperimentRelModelImpl.getColumnOriginalValue(
+					"segmentsExperienceId")
 			};
 
 			finderCache.removeResult(_finderPathCountByS_S, args);
@@ -1266,8 +1267,8 @@ public class SegmentsExperimentRelPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					segmentsExperimentRelModelImpl.
-						getOriginalSegmentsExperimentId()
+					segmentsExperimentRelModelImpl.getColumnOriginalValue(
+						"segmentsExperimentId")
 				};
 
 				finderCache.removeResult(
@@ -1774,7 +1775,8 @@ public class SegmentsExperimentRelPersistenceImpl
 			SegmentsExperimentRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findBySegmentsExperimentId", new String[] {Long.class.getName()},
-			SegmentsExperimentRelModelImpl.SEGMENTSEXPERIMENTID_COLUMN_BITMASK);
+			SegmentsExperimentRelModelImpl.getColumnBitmask(
+				"segmentsExperimentId"));
 
 		_finderPathCountBySegmentsExperimentId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1784,8 +1786,10 @@ public class SegmentsExperimentRelPersistenceImpl
 			SegmentsExperimentRelImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByS_S",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			SegmentsExperimentRelModelImpl.SEGMENTSEXPERIMENTID_COLUMN_BITMASK |
-			SegmentsExperimentRelModelImpl.SEGMENTSEXPERIENCEID_COLUMN_BITMASK);
+			SegmentsExperimentRelModelImpl.getColumnBitmask(
+				"segmentsExperimentId") |
+			SegmentsExperimentRelModelImpl.getColumnBitmask(
+				"segmentsExperienceId"));
 
 		_finderPathCountByS_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S",

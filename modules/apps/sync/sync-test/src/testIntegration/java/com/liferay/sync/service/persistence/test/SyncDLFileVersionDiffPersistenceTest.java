@@ -532,18 +532,18 @@ public class SyncDLFileVersionDiffPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(syncDLFileVersionDiff.getFileEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				syncDLFileVersionDiff, "getOriginalFileEntryId",
-				new Class<?>[0]));
+				syncDLFileVersionDiff, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "fileEntryId"));
 		Assert.assertEquals(
 			Long.valueOf(syncDLFileVersionDiff.getSourceFileVersionId()),
 			ReflectionTestUtil.<Long>invoke(
-				syncDLFileVersionDiff, "getOriginalSourceFileVersionId",
-				new Class<?>[0]));
+				syncDLFileVersionDiff, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "sourceFileVersionId"));
 		Assert.assertEquals(
 			Long.valueOf(syncDLFileVersionDiff.getTargetFileVersionId()),
 			ReflectionTestUtil.<Long>invoke(
-				syncDLFileVersionDiff, "getOriginalTargetFileVersionId",
-				new Class<?>[0]));
+				syncDLFileVersionDiff, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "targetFileVersionId"));
 	}
 
 	protected SyncDLFileVersionDiff addSyncDLFileVersionDiff()

@@ -546,13 +546,13 @@ public class SegmentsExperimentRelPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(segmentsExperimentRel.getSegmentsExperimentId()),
 			ReflectionTestUtil.<Long>invoke(
-				segmentsExperimentRel, "getOriginalSegmentsExperimentId",
-				new Class<?>[0]));
+				segmentsExperimentRel, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "segmentsExperimentId"));
 		Assert.assertEquals(
 			Long.valueOf(segmentsExperimentRel.getSegmentsExperienceId()),
 			ReflectionTestUtil.<Long>invoke(
-				segmentsExperimentRel, "getOriginalSegmentsExperienceId",
-				new Class<?>[0]));
+				segmentsExperimentRel, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "segmentsExperienceId"));
 	}
 
 	protected SegmentsExperimentRel addSegmentsExperimentRel()

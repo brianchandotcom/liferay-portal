@@ -604,12 +604,13 @@ public class DDMDataProviderInstancePersistenceTest {
 		Assert.assertEquals(
 			ddmDataProviderInstance.getUuid(),
 			ReflectionTestUtil.invoke(
-				ddmDataProviderInstance, "getOriginalUuid", new Class<?>[0]));
+				ddmDataProviderInstance, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(ddmDataProviderInstance.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				ddmDataProviderInstance, "getOriginalGroupId",
-				new Class<?>[0]));
+				ddmDataProviderInstance, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected DDMDataProviderInstance addDDMDataProviderInstance()

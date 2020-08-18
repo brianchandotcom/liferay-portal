@@ -480,13 +480,13 @@ public class FriendlyURLEntryMappingPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(friendlyURLEntryMapping.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				friendlyURLEntryMapping, "getOriginalClassNameId",
-				new Class<?>[0]));
+				friendlyURLEntryMapping, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(friendlyURLEntryMapping.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				friendlyURLEntryMapping, "getOriginalClassPK",
-				new Class<?>[0]));
+				friendlyURLEntryMapping, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 	}
 
 	protected FriendlyURLEntryMapping addFriendlyURLEntryMapping()

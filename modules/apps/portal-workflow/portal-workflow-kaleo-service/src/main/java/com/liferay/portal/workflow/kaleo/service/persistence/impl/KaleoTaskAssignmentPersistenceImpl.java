@@ -2715,7 +2715,8 @@ public class KaleoTaskAssignmentPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					kaleoTaskAssignmentModelImpl.getOriginalCompanyId()
+					kaleoTaskAssignmentModelImpl.getColumnOriginalValue(
+						"companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -2736,8 +2737,8 @@ public class KaleoTaskAssignmentPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					kaleoTaskAssignmentModelImpl.
-						getOriginalKaleoDefinitionVersionId()
+					kaleoTaskAssignmentModelImpl.getColumnOriginalValue(
+						"kaleoDefinitionVersionId")
 				};
 
 				finderCache.removeResult(
@@ -2762,8 +2763,10 @@ public class KaleoTaskAssignmentPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					kaleoTaskAssignmentModelImpl.getOriginalKaleoClassName(),
-					kaleoTaskAssignmentModelImpl.getOriginalKaleoClassPK()
+					kaleoTaskAssignmentModelImpl.getColumnOriginalValue(
+						"kaleoClassName"),
+					kaleoTaskAssignmentModelImpl.getColumnOriginalValue(
+						"kaleoClassPK")
 				};
 
 				finderCache.removeResult(_finderPathCountByKCN_KCPK, args);
@@ -2785,9 +2788,12 @@ public class KaleoTaskAssignmentPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					kaleoTaskAssignmentModelImpl.getOriginalKaleoClassName(),
-					kaleoTaskAssignmentModelImpl.getOriginalKaleoClassPK(),
-					kaleoTaskAssignmentModelImpl.getOriginalAssigneeClassName()
+					kaleoTaskAssignmentModelImpl.getColumnOriginalValue(
+						"kaleoClassName"),
+					kaleoTaskAssignmentModelImpl.getColumnOriginalValue(
+						"kaleoClassPK"),
+					kaleoTaskAssignmentModelImpl.getColumnOriginalValue(
+						"assigneeClassName")
 				};
 
 				finderCache.removeResult(_finderPathCountByKCN_KCPK_ACN, args);
@@ -3097,7 +3103,7 @@ public class KaleoTaskAssignmentPersistenceImpl
 			KaleoTaskAssignmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
-			KaleoTaskAssignmentModelImpl.COMPANYID_COLUMN_BITMASK);
+			KaleoTaskAssignmentModelImpl.getColumnBitmask("companyId"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3119,8 +3125,8 @@ public class KaleoTaskAssignmentPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByKaleoDefinitionVersionId",
 				new String[] {Long.class.getName()},
-				KaleoTaskAssignmentModelImpl.
-					KALEODEFINITIONVERSIONID_COLUMN_BITMASK);
+				KaleoTaskAssignmentModelImpl.getColumnBitmask(
+					"kaleoDefinitionVersionId"));
 
 		_finderPathCountByKaleoDefinitionVersionId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3140,8 +3146,8 @@ public class KaleoTaskAssignmentPersistenceImpl
 			KaleoTaskAssignmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKCN_KCPK",
 			new String[] {String.class.getName(), Long.class.getName()},
-			KaleoTaskAssignmentModelImpl.KALEOCLASSNAME_COLUMN_BITMASK |
-			KaleoTaskAssignmentModelImpl.KALEOCLASSPK_COLUMN_BITMASK);
+			KaleoTaskAssignmentModelImpl.getColumnBitmask("kaleoClassName") |
+			KaleoTaskAssignmentModelImpl.getColumnBitmask("kaleoClassPK"));
 
 		_finderPathCountByKCN_KCPK = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3164,9 +3170,9 @@ public class KaleoTaskAssignmentPersistenceImpl
 				String.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			KaleoTaskAssignmentModelImpl.KALEOCLASSNAME_COLUMN_BITMASK |
-			KaleoTaskAssignmentModelImpl.KALEOCLASSPK_COLUMN_BITMASK |
-			KaleoTaskAssignmentModelImpl.ASSIGNEECLASSNAME_COLUMN_BITMASK);
+			KaleoTaskAssignmentModelImpl.getColumnBitmask("kaleoClassName") |
+			KaleoTaskAssignmentModelImpl.getColumnBitmask("kaleoClassPK") |
+			KaleoTaskAssignmentModelImpl.getColumnBitmask("assigneeClassName"));
 
 		_finderPathCountByKCN_KCPK_ACN = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

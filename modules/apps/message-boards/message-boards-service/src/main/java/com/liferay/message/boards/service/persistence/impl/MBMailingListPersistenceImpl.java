@@ -2414,8 +2414,8 @@ public class MBMailingListPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				mbMailingListModelImpl.getOriginalUuid(),
-				mbMailingListModelImpl.getOriginalGroupId()
+				mbMailingListModelImpl.getColumnOriginalValue("uuid_"),
+				mbMailingListModelImpl.getColumnOriginalValue("groupId")
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -2436,8 +2436,8 @@ public class MBMailingListPersistenceImpl
 			 _finderPathFetchByG_C.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				mbMailingListModelImpl.getOriginalGroupId(),
-				mbMailingListModelImpl.getOriginalCategoryId()
+				mbMailingListModelImpl.getColumnOriginalValue("groupId"),
+				mbMailingListModelImpl.getColumnOriginalValue("categoryId")
 			};
 
 			finderCache.removeResult(_finderPathCountByG_C, args);
@@ -2677,7 +2677,7 @@ public class MBMailingListPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					mbMailingListModelImpl.getOriginalUuid()
+					mbMailingListModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -2696,8 +2696,8 @@ public class MBMailingListPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					mbMailingListModelImpl.getOriginalUuid(),
-					mbMailingListModelImpl.getOriginalCompanyId()
+					mbMailingListModelImpl.getColumnOriginalValue("uuid_"),
+					mbMailingListModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -2719,7 +2719,7 @@ public class MBMailingListPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					mbMailingListModelImpl.getOriginalActive()
+					mbMailingListModelImpl.getColumnOriginalValue("active_")
 				};
 
 				finderCache.removeResult(_finderPathCountByActive, args);
@@ -3229,7 +3229,7 @@ public class MBMailingListPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			MBMailingListImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid", new String[] {String.class.getName()},
-			MBMailingListModelImpl.UUID_COLUMN_BITMASK);
+			MBMailingListModelImpl.getColumnBitmask("uuid_"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3238,8 +3238,8 @@ public class MBMailingListPersistenceImpl
 		_finderPathFetchByUUID_G = new FinderPath(
 			MBMailingListImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			MBMailingListModelImpl.UUID_COLUMN_BITMASK |
-			MBMailingListModelImpl.GROUPID_COLUMN_BITMASK);
+			MBMailingListModelImpl.getColumnBitmask("uuid_") |
+			MBMailingListModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3259,8 +3259,8 @@ public class MBMailingListPersistenceImpl
 			MBMailingListImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			MBMailingListModelImpl.UUID_COLUMN_BITMASK |
-			MBMailingListModelImpl.COMPANYID_COLUMN_BITMASK);
+			MBMailingListModelImpl.getColumnBitmask("uuid_") |
+			MBMailingListModelImpl.getColumnBitmask("companyId"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3278,7 +3278,7 @@ public class MBMailingListPersistenceImpl
 		_finderPathWithoutPaginationFindByActive = new FinderPath(
 			MBMailingListImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByActive", new String[] {Boolean.class.getName()},
-			MBMailingListModelImpl.ACTIVE_COLUMN_BITMASK);
+			MBMailingListModelImpl.getColumnBitmask("active_"));
 
 		_finderPathCountByActive = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3287,8 +3287,8 @@ public class MBMailingListPersistenceImpl
 		_finderPathFetchByG_C = new FinderPath(
 			MBMailingListImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			MBMailingListModelImpl.GROUPID_COLUMN_BITMASK |
-			MBMailingListModelImpl.CATEGORYID_COLUMN_BITMASK);
+			MBMailingListModelImpl.getColumnBitmask("groupId") |
+			MBMailingListModelImpl.getColumnBitmask("categoryId"));
 
 		_finderPathCountByG_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",

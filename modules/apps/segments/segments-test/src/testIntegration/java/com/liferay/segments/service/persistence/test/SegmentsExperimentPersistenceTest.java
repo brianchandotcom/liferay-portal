@@ -636,21 +636,24 @@ public class SegmentsExperimentPersistenceTest {
 		Assert.assertEquals(
 			segmentsExperiment.getUuid(),
 			ReflectionTestUtil.invoke(
-				segmentsExperiment, "getOriginalUuid", new Class<?>[0]));
+				segmentsExperiment, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(segmentsExperiment.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				segmentsExperiment, "getOriginalGroupId", new Class<?>[0]));
+				segmentsExperiment, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(segmentsExperiment.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				segmentsExperiment, "getOriginalGroupId", new Class<?>[0]));
+				segmentsExperiment, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			segmentsExperiment.getSegmentsExperimentKey(),
 			ReflectionTestUtil.invoke(
-				segmentsExperiment, "getOriginalSegmentsExperimentKey",
-				new Class<?>[0]));
+				segmentsExperiment, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "segmentsExperimentKey"));
 	}
 
 	protected SegmentsExperiment addSegmentsExperiment() throws Exception {

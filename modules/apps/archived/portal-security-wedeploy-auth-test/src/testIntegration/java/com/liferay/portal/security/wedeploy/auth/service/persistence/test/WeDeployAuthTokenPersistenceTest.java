@@ -501,24 +501,29 @@ public class WeDeployAuthTokenPersistenceTest {
 		Assert.assertEquals(
 			weDeployAuthToken.getToken(),
 			ReflectionTestUtil.invoke(
-				weDeployAuthToken, "getOriginalToken", new Class<?>[0]));
+				weDeployAuthToken, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "token"));
 		Assert.assertEquals(
 			Integer.valueOf(weDeployAuthToken.getType()),
 			ReflectionTestUtil.<Integer>invoke(
-				weDeployAuthToken, "getOriginalType", new Class<?>[0]));
+				weDeployAuthToken, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "type_"));
 
 		Assert.assertEquals(
 			weDeployAuthToken.getClientId(),
 			ReflectionTestUtil.invoke(
-				weDeployAuthToken, "getOriginalClientId", new Class<?>[0]));
+				weDeployAuthToken, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "clientId"));
 		Assert.assertEquals(
 			weDeployAuthToken.getToken(),
 			ReflectionTestUtil.invoke(
-				weDeployAuthToken, "getOriginalToken", new Class<?>[0]));
+				weDeployAuthToken, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "token"));
 		Assert.assertEquals(
 			Integer.valueOf(weDeployAuthToken.getType()),
 			ReflectionTestUtil.<Integer>invoke(
-				weDeployAuthToken, "getOriginalType", new Class<?>[0]));
+				weDeployAuthToken, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "type_"));
 	}
 
 	protected WeDeployAuthToken addWeDeployAuthToken() throws Exception {

@@ -480,16 +480,19 @@ public class LVEntryLocalizationPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(lvEntryLocalization.getLvEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				lvEntryLocalization, "getOriginalLvEntryId", new Class<?>[0]));
+				lvEntryLocalization, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "lvEntryId"));
 		Assert.assertEquals(
 			lvEntryLocalization.getLanguageId(),
 			ReflectionTestUtil.invoke(
-				lvEntryLocalization, "getOriginalLanguageId", new Class<?>[0]));
+				lvEntryLocalization, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "languageId"));
 
 		Assert.assertEquals(
 			Long.valueOf(lvEntryLocalization.getHeadId()),
 			ReflectionTestUtil.<Long>invoke(
-				lvEntryLocalization, "getOriginalHeadId", new Class<?>[0]));
+				lvEntryLocalization, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "headId"));
 	}
 
 	protected LVEntryLocalization addLVEntryLocalization() throws Exception {

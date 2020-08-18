@@ -517,20 +517,24 @@ public class MemberRequestPersistenceTest {
 		Assert.assertEquals(
 			memberRequest.getKey(),
 			ReflectionTestUtil.invoke(
-				memberRequest, "getOriginalKey", new Class<?>[0]));
+				memberRequest, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "key_"));
 
 		Assert.assertEquals(
 			Long.valueOf(memberRequest.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				memberRequest, "getOriginalGroupId", new Class<?>[0]));
+				memberRequest, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			Long.valueOf(memberRequest.getReceiverUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				memberRequest, "getOriginalReceiverUserId", new Class<?>[0]));
+				memberRequest, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "receiverUserId"));
 		Assert.assertEquals(
 			Integer.valueOf(memberRequest.getStatus()),
 			ReflectionTestUtil.<Integer>invoke(
-				memberRequest, "getOriginalStatus", new Class<?>[0]));
+				memberRequest, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "status"));
 	}
 
 	protected MemberRequest addMemberRequest() throws Exception {

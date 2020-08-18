@@ -630,33 +630,40 @@ public class JournalFolderPersistenceTest {
 		Assert.assertEquals(
 			journalFolder.getUuid(),
 			ReflectionTestUtil.invoke(
-				journalFolder, "getOriginalUuid", new Class<?>[0]));
+				journalFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(journalFolder.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				journalFolder, "getOriginalGroupId", new Class<?>[0]));
+				journalFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(journalFolder.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				journalFolder, "getOriginalGroupId", new Class<?>[0]));
+				journalFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			journalFolder.getName(),
 			ReflectionTestUtil.invoke(
-				journalFolder, "getOriginalName", new Class<?>[0]));
+				journalFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 
 		Assert.assertEquals(
 			Long.valueOf(journalFolder.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				journalFolder, "getOriginalGroupId", new Class<?>[0]));
+				journalFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			Long.valueOf(journalFolder.getParentFolderId()),
 			ReflectionTestUtil.<Long>invoke(
-				journalFolder, "getOriginalParentFolderId", new Class<?>[0]));
+				journalFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "parentFolderId"));
 		Assert.assertEquals(
 			journalFolder.getName(),
 			ReflectionTestUtil.invoke(
-				journalFolder, "getOriginalName", new Class<?>[0]));
+				journalFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 	}
 
 	protected JournalFolder addJournalFolder() throws Exception {

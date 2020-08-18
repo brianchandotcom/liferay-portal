@@ -624,20 +624,24 @@ public class AssetEntryPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(assetEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				assetEntry, "getOriginalGroupId", new Class<?>[0]));
+				assetEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			assetEntry.getClassUuid(),
 			ReflectionTestUtil.invoke(
-				assetEntry, "getOriginalClassUuid", new Class<?>[0]));
+				assetEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classUuid"));
 
 		Assert.assertEquals(
 			Long.valueOf(assetEntry.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				assetEntry, "getOriginalClassNameId", new Class<?>[0]));
+				assetEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(assetEntry.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				assetEntry, "getOriginalClassPK", new Class<?>[0]));
+				assetEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 	}
 
 	protected AssetEntry addAssetEntry() throws Exception {

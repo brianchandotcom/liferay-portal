@@ -1025,9 +1025,9 @@ public class PluginSettingPersistenceImpl
 			 _finderPathFetchByC_I_T.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				pluginSettingModelImpl.getOriginalCompanyId(),
-				pluginSettingModelImpl.getOriginalPluginId(),
-				pluginSettingModelImpl.getOriginalPluginType()
+				pluginSettingModelImpl.getColumnOriginalValue("companyId"),
+				pluginSettingModelImpl.getColumnOriginalValue("pluginId"),
+				pluginSettingModelImpl.getColumnOriginalValue("pluginType")
 			};
 
 			FinderCacheUtil.removeResult(_finderPathCountByC_I_T, args);
@@ -1205,7 +1205,7 @@ public class PluginSettingPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					pluginSettingModelImpl.getOriginalCompanyId()
+					pluginSettingModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
@@ -1514,7 +1514,7 @@ public class PluginSettingPersistenceImpl
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
 			PluginSettingImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCompanyId", new String[] {Long.class.getName()},
-			PluginSettingModelImpl.COMPANYID_COLUMN_BITMASK);
+			PluginSettingModelImpl.getColumnBitmask("companyId"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1526,9 +1526,9 @@ public class PluginSettingPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			PluginSettingModelImpl.COMPANYID_COLUMN_BITMASK |
-			PluginSettingModelImpl.PLUGINID_COLUMN_BITMASK |
-			PluginSettingModelImpl.PLUGINTYPE_COLUMN_BITMASK);
+			PluginSettingModelImpl.getColumnBitmask("companyId") |
+			PluginSettingModelImpl.getColumnBitmask("pluginId") |
+			PluginSettingModelImpl.getColumnBitmask("pluginType"));
 
 		_finderPathCountByC_I_T = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

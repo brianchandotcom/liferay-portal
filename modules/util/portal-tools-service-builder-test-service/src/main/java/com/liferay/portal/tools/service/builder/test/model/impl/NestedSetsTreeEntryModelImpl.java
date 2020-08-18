@@ -115,7 +115,14 @@ public class NestedSetsTreeEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
+	public static final long NESTEDSETSTREEENTRYID_COLUMN_BITMASK = 1L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.tools.service.builder.test.service.util.ServiceProps.
@@ -297,6 +304,14 @@ public class NestedSetsTreeEntryModelImpl
 
 	@Override
 	public void setNestedSetsTreeEntryId(long nestedSetsTreeEntryId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("nestedSetsTreeEntryId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_nestedSetsTreeEntryId = nestedSetsTreeEntryId;
 	}
 
@@ -307,6 +322,14 @@ public class NestedSetsTreeEntryModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("groupId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_groupId = groupId;
 	}
 
@@ -319,17 +342,26 @@ public class NestedSetsTreeEntryModelImpl
 	public void setParentNestedSetsTreeEntryId(
 		long parentNestedSetsTreeEntryId) {
 
-		if (!_setOriginalParentNestedSetsTreeEntryId) {
-			_setOriginalParentNestedSetsTreeEntryId = true;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get(
+				"parentNestedSetsTreeEntryId");
 
-			_originalParentNestedSetsTreeEntryId = _parentNestedSetsTreeEntryId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_parentNestedSetsTreeEntryId = parentNestedSetsTreeEntryId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalParentNestedSetsTreeEntryId() {
-		return _originalParentNestedSetsTreeEntryId;
+		return GetterUtil.getLong(
+			getColumnOriginalValue("parentNestedSetsTreeEntryId"));
 	}
 
 	@Override
@@ -339,6 +371,14 @@ public class NestedSetsTreeEntryModelImpl
 
 	@Override
 	public void setLeftNestedSetsTreeEntryId(long leftNestedSetsTreeEntryId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("leftNestedSetsTreeEntryId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_leftNestedSetsTreeEntryId = leftNestedSetsTreeEntryId;
 	}
 
@@ -349,6 +389,14 @@ public class NestedSetsTreeEntryModelImpl
 
 	@Override
 	public void setRightNestedSetsTreeEntryId(long rightNestedSetsTreeEntryId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("rightNestedSetsTreeEntryId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_rightNestedSetsTreeEntryId = rightNestedSetsTreeEntryId;
 	}
 
@@ -370,6 +418,10 @@ public class NestedSetsTreeEntryModelImpl
 
 	public void setNestedSetsTreeNodeRight(long nestedSetsTreeNodeRight) {
 		_rightNestedSetsTreeEntryId = nestedSetsTreeNodeRight;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -482,13 +534,9 @@ public class NestedSetsTreeEntryModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		NestedSetsTreeEntryModelImpl nestedSetsTreeEntryModelImpl = this;
+		_columnOriginalValues = Collections.emptyMap();
 
-		nestedSetsTreeEntryModelImpl._originalParentNestedSetsTreeEntryId =
-			nestedSetsTreeEntryModelImpl._parentNestedSetsTreeEntryId;
-
-		nestedSetsTreeEntryModelImpl._setOriginalParentNestedSetsTreeEntryId =
-			false;
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -583,13 +631,61 @@ public class NestedSetsTreeEntryModelImpl
 
 	}
 
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put(
+			"nestedSetsTreeEntryId", _nestedSetsTreeEntryId);
+		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put(
+			"parentNestedSetsTreeEntryId", _parentNestedSetsTreeEntryId);
+		_columnOriginalValues.put(
+			"leftNestedSetsTreeEntryId", _leftNestedSetsTreeEntryId);
+		_columnOriginalValues.put(
+			"rightNestedSetsTreeEntryId", _rightNestedSetsTreeEntryId);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("nestedSetsTreeEntryId", 1L);
+
+		columnBitmasks.put("groupId", 2L);
+
+		columnBitmasks.put("parentNestedSetsTreeEntryId", 4L);
+
+		columnBitmasks.put("leftNestedSetsTreeEntryId", 8L);
+
+		columnBitmasks.put("rightNestedSetsTreeEntryId", 16L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _nestedSetsTreeEntryId;
 	private long _groupId;
 	private long _parentNestedSetsTreeEntryId;
-	private long _originalParentNestedSetsTreeEntryId;
-	private boolean _setOriginalParentNestedSetsTreeEntryId;
 	private long _leftNestedSetsTreeEntryId;
 	private long _rightNestedSetsTreeEntryId;
+	private long _columnBitmask;
 	private NestedSetsTreeEntry _escapedModel;
 
 }

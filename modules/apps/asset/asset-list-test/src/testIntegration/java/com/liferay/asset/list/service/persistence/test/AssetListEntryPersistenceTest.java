@@ -665,30 +665,35 @@ public class AssetListEntryPersistenceTest {
 		Assert.assertEquals(
 			assetListEntry.getUuid(),
 			ReflectionTestUtil.invoke(
-				assetListEntry, "getOriginalUuid", new Class<?>[0]));
+				assetListEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(assetListEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				assetListEntry, "getOriginalGroupId", new Class<?>[0]));
+				assetListEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(assetListEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				assetListEntry, "getOriginalGroupId", new Class<?>[0]));
+				assetListEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			assetListEntry.getAssetListEntryKey(),
 			ReflectionTestUtil.invoke(
-				assetListEntry, "getOriginalAssetListEntryKey",
-				new Class<?>[0]));
+				assetListEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "assetListEntryKey"));
 
 		Assert.assertEquals(
 			Long.valueOf(assetListEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				assetListEntry, "getOriginalGroupId", new Class<?>[0]));
+				assetListEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			assetListEntry.getTitle(),
 			ReflectionTestUtil.invoke(
-				assetListEntry, "getOriginalTitle", new Class<?>[0]));
+				assetListEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "title"));
 	}
 
 	protected AssetListEntry addAssetListEntry() throws Exception {

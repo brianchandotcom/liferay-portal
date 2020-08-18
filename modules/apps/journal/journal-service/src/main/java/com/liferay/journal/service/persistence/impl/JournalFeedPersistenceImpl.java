@@ -2806,8 +2806,8 @@ public class JournalFeedPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				journalFeedModelImpl.getOriginalUuid(),
-				journalFeedModelImpl.getOriginalGroupId()
+				journalFeedModelImpl.getColumnOriginalValue("uuid_"),
+				journalFeedModelImpl.getColumnOriginalValue("groupId")
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -2828,8 +2828,8 @@ public class JournalFeedPersistenceImpl
 			 _finderPathFetchByG_F.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				journalFeedModelImpl.getOriginalGroupId(),
-				journalFeedModelImpl.getOriginalFeedId()
+				journalFeedModelImpl.getColumnOriginalValue("groupId"),
+				journalFeedModelImpl.getColumnOriginalValue("feedId")
 			};
 
 			finderCache.removeResult(_finderPathCountByG_F, args);
@@ -3065,7 +3065,7 @@ public class JournalFeedPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					journalFeedModelImpl.getOriginalUuid()
+					journalFeedModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -3084,8 +3084,8 @@ public class JournalFeedPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					journalFeedModelImpl.getOriginalUuid(),
-					journalFeedModelImpl.getOriginalCompanyId()
+					journalFeedModelImpl.getColumnOriginalValue("uuid_"),
+					journalFeedModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -3107,7 +3107,7 @@ public class JournalFeedPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					journalFeedModelImpl.getOriginalGroupId()
+					journalFeedModelImpl.getColumnOriginalValue("groupId")
 				};
 
 				finderCache.removeResult(_finderPathCountByGroupId, args);
@@ -3609,8 +3609,8 @@ public class JournalFeedPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			JournalFeedImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid", new String[] {String.class.getName()},
-			JournalFeedModelImpl.UUID_COLUMN_BITMASK |
-			JournalFeedModelImpl.FEEDID_COLUMN_BITMASK);
+			JournalFeedModelImpl.getColumnBitmask("uuid_") |
+			JournalFeedModelImpl.getColumnBitmask("feedId"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3619,8 +3619,8 @@ public class JournalFeedPersistenceImpl
 		_finderPathFetchByUUID_G = new FinderPath(
 			JournalFeedImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			JournalFeedModelImpl.UUID_COLUMN_BITMASK |
-			JournalFeedModelImpl.GROUPID_COLUMN_BITMASK);
+			JournalFeedModelImpl.getColumnBitmask("uuid_") |
+			JournalFeedModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3640,9 +3640,9 @@ public class JournalFeedPersistenceImpl
 			JournalFeedImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			JournalFeedModelImpl.UUID_COLUMN_BITMASK |
-			JournalFeedModelImpl.COMPANYID_COLUMN_BITMASK |
-			JournalFeedModelImpl.FEEDID_COLUMN_BITMASK);
+			JournalFeedModelImpl.getColumnBitmask("uuid_") |
+			JournalFeedModelImpl.getColumnBitmask("companyId") |
+			JournalFeedModelImpl.getColumnBitmask("feedId"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3660,8 +3660,8 @@ public class JournalFeedPersistenceImpl
 		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
 			JournalFeedImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByGroupId", new String[] {Long.class.getName()},
-			JournalFeedModelImpl.GROUPID_COLUMN_BITMASK |
-			JournalFeedModelImpl.FEEDID_COLUMN_BITMASK);
+			JournalFeedModelImpl.getColumnBitmask("groupId") |
+			JournalFeedModelImpl.getColumnBitmask("feedId"));
 
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3670,8 +3670,8 @@ public class JournalFeedPersistenceImpl
 		_finderPathFetchByG_F = new FinderPath(
 			JournalFeedImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_F",
 			new String[] {Long.class.getName(), String.class.getName()},
-			JournalFeedModelImpl.GROUPID_COLUMN_BITMASK |
-			JournalFeedModelImpl.FEEDID_COLUMN_BITMASK);
+			JournalFeedModelImpl.getColumnBitmask("groupId") |
+			JournalFeedModelImpl.getColumnBitmask("feedId"));
 
 		_finderPathCountByG_F = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F",

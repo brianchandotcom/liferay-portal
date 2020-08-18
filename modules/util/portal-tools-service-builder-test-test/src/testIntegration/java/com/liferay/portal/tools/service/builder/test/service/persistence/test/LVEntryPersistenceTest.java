@@ -563,25 +563,30 @@ public class LVEntryPersistenceTest {
 		Assert.assertEquals(
 			lvEntry.getUuid(),
 			ReflectionTestUtil.invoke(
-				lvEntry, "getOriginalUuid", new Class<?>[0]));
+				lvEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(lvEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				lvEntry, "getOriginalGroupId", new Class<?>[0]));
+				lvEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(lvEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				lvEntry, "getOriginalGroupId", new Class<?>[0]));
+				lvEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 		Assert.assertEquals(
 			lvEntry.getUniqueGroupKey(),
 			ReflectionTestUtil.invoke(
-				lvEntry, "getOriginalUniqueGroupKey", new Class<?>[0]));
+				lvEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uniqueGroupKey"));
 
 		Assert.assertEquals(
 			Long.valueOf(lvEntry.getHeadId()),
 			ReflectionTestUtil.<Long>invoke(
-				lvEntry, "getOriginalHeadId", new Class<?>[0]));
+				lvEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "headId"));
 	}
 
 	protected LVEntry addLVEntry() throws Exception {

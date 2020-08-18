@@ -487,11 +487,13 @@ public class TrashVersionPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(trashVersion.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				trashVersion, "getOriginalClassNameId", new Class<?>[0]));
+				trashVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(trashVersion.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				trashVersion, "getOriginalClassPK", new Class<?>[0]));
+				trashVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 	}
 
 	protected TrashVersion addTrashVersion() throws Exception {

@@ -520,20 +520,24 @@ public class PollsChoicePersistenceTest {
 		Assert.assertEquals(
 			pollsChoice.getUuid(),
 			ReflectionTestUtil.invoke(
-				pollsChoice, "getOriginalUuid", new Class<?>[0]));
+				pollsChoice, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(pollsChoice.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				pollsChoice, "getOriginalGroupId", new Class<?>[0]));
+				pollsChoice, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(pollsChoice.getQuestionId()),
 			ReflectionTestUtil.<Long>invoke(
-				pollsChoice, "getOriginalQuestionId", new Class<?>[0]));
+				pollsChoice, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "questionId"));
 		Assert.assertEquals(
 			pollsChoice.getName(),
 			ReflectionTestUtil.invoke(
-				pollsChoice, "getOriginalName", new Class<?>[0]));
+				pollsChoice, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
 	}
 
 	protected PollsChoice addPollsChoice() throws Exception {

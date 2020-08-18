@@ -509,15 +509,18 @@ public class AssetLinkPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(assetLink.getEntryId1()),
 			ReflectionTestUtil.<Long>invoke(
-				assetLink, "getOriginalEntryId1", new Class<?>[0]));
+				assetLink, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "entryId1"));
 		Assert.assertEquals(
 			Long.valueOf(assetLink.getEntryId2()),
 			ReflectionTestUtil.<Long>invoke(
-				assetLink, "getOriginalEntryId2", new Class<?>[0]));
+				assetLink, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "entryId2"));
 		Assert.assertEquals(
 			Integer.valueOf(assetLink.getType()),
 			ReflectionTestUtil.<Integer>invoke(
-				assetLink, "getOriginalType", new Class<?>[0]));
+				assetLink, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "type_"));
 	}
 
 	protected AssetLink addAssetLink() throws Exception {

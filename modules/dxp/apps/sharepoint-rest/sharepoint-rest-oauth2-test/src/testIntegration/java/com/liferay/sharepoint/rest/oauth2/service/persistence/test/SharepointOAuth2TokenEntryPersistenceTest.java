@@ -549,13 +549,13 @@ public class SharepointOAuth2TokenEntryPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(sharepointOAuth2TokenEntry.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				sharepointOAuth2TokenEntry, "getOriginalUserId",
-				new Class<?>[0]));
+				sharepointOAuth2TokenEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "userId"));
 		Assert.assertEquals(
 			sharepointOAuth2TokenEntry.getConfigurationPid(),
 			ReflectionTestUtil.invoke(
-				sharepointOAuth2TokenEntry, "getOriginalConfigurationPid",
-				new Class<?>[0]));
+				sharepointOAuth2TokenEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "configurationPid"));
 	}
 
 	protected SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry()

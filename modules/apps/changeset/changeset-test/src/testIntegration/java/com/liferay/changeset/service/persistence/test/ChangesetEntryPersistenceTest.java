@@ -523,16 +523,18 @@ public class ChangesetEntryPersistenceTest {
 		Assert.assertEquals(
 			Long.valueOf(changesetEntry.getChangesetCollectionId()),
 			ReflectionTestUtil.<Long>invoke(
-				changesetEntry, "getOriginalChangesetCollectionId",
-				new Class<?>[0]));
+				changesetEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "changesetCollectionId"));
 		Assert.assertEquals(
 			Long.valueOf(changesetEntry.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				changesetEntry, "getOriginalClassNameId", new Class<?>[0]));
+				changesetEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
 			Long.valueOf(changesetEntry.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				changesetEntry, "getOriginalClassPK", new Class<?>[0]));
+				changesetEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 	}
 
 	protected ChangesetEntry addChangesetEntry() throws Exception {

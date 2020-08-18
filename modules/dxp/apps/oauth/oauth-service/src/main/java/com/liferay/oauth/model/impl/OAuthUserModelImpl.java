@@ -111,12 +111,32 @@ public class OAuthUserModelImpl
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long ACCESSTOKEN_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long OAUTHAPPLICATIONID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long USERID_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long OAUTHUSERID_COLUMN_BITMASK = 8L;
 
 	/**
@@ -357,6 +377,14 @@ public class OAuthUserModelImpl
 
 	@Override
 	public void setOAuthUserId(long oAuthUserId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("oAuthUserId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_oAuthUserId = oAuthUserId;
 	}
 
@@ -384,6 +412,14 @@ public class OAuthUserModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_companyId = companyId;
 	}
 
@@ -395,12 +431,12 @@ public class OAuthUserModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		_columnBitmask |= USERID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
 
-		if (!_setOriginalUserId) {
-			_setOriginalUserId = true;
-
-			_originalUserId = _userId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_userId = userId;
@@ -422,8 +458,13 @@ public class OAuthUserModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalUserId() {
-		return _originalUserId;
+		return GetterUtil.getLong(getColumnOriginalValue("userId"));
 	}
 
 	@JSON
@@ -439,6 +480,14 @@ public class OAuthUserModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -450,6 +499,14 @@ public class OAuthUserModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -467,6 +524,14 @@ public class OAuthUserModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -478,19 +543,24 @@ public class OAuthUserModelImpl
 
 	@Override
 	public void setOAuthApplicationId(long oAuthApplicationId) {
-		_columnBitmask |= OAUTHAPPLICATIONID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("oAuthApplicationId");
 
-		if (!_setOriginalOAuthApplicationId) {
-			_setOriginalOAuthApplicationId = true;
-
-			_originalOAuthApplicationId = _oAuthApplicationId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_oAuthApplicationId = oAuthApplicationId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalOAuthApplicationId() {
-		return _originalOAuthApplicationId;
+		return GetterUtil.getLong(getColumnOriginalValue("oAuthApplicationId"));
 	}
 
 	@JSON
@@ -506,17 +576,24 @@ public class OAuthUserModelImpl
 
 	@Override
 	public void setAccessToken(String accessToken) {
-		_columnBitmask |= ACCESSTOKEN_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("accessToken");
 
-		if (_originalAccessToken == null) {
-			_originalAccessToken = _accessToken;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_accessToken = accessToken;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalAccessToken() {
-		return GetterUtil.getString(_originalAccessToken);
+		return getColumnOriginalValue("accessToken");
 	}
 
 	@JSON
@@ -532,6 +609,14 @@ public class OAuthUserModelImpl
 
 	@Override
 	public void setAccessSecret(String accessSecret) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("accessSecret");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_accessSecret = accessSecret;
 	}
 
@@ -648,23 +733,11 @@ public class OAuthUserModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		OAuthUserModelImpl oAuthUserModelImpl = this;
+		_columnOriginalValues = Collections.emptyMap();
 
-		oAuthUserModelImpl._originalUserId = oAuthUserModelImpl._userId;
+		_setModifiedDate = false;
 
-		oAuthUserModelImpl._setOriginalUserId = false;
-
-		oAuthUserModelImpl._setModifiedDate = false;
-
-		oAuthUserModelImpl._originalOAuthApplicationId =
-			oAuthUserModelImpl._oAuthApplicationId;
-
-		oAuthUserModelImpl._setOriginalOAuthApplicationId = false;
-
-		oAuthUserModelImpl._originalAccessToken =
-			oAuthUserModelImpl._accessToken;
-
-		oAuthUserModelImpl._columnBitmask = 0;
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -794,20 +867,72 @@ public class OAuthUserModelImpl
 
 	}
 
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("oAuthUserId", _oAuthUserId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("oAuthApplicationId", _oAuthApplicationId);
+		_columnOriginalValues.put("accessToken", _accessToken);
+		_columnOriginalValues.put("accessSecret", _accessSecret);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("oAuthUserId", 1L);
+
+		columnBitmasks.put("companyId", 2L);
+
+		columnBitmasks.put("userId", 4L);
+
+		columnBitmasks.put("userName", 8L);
+
+		columnBitmasks.put("createDate", 16L);
+
+		columnBitmasks.put("modifiedDate", 32L);
+
+		columnBitmasks.put("oAuthApplicationId", 64L);
+
+		columnBitmasks.put("accessToken", 128L);
+
+		columnBitmasks.put("accessSecret", 256L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _oAuthUserId;
 	private long _companyId;
 	private long _userId;
-	private long _originalUserId;
-	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _oAuthApplicationId;
-	private long _originalOAuthApplicationId;
-	private boolean _setOriginalOAuthApplicationId;
 	private String _accessToken;
-	private String _originalAccessToken;
 	private String _accessSecret;
 	private long _columnBitmask;
 	private OAuthUser _escapedModel;

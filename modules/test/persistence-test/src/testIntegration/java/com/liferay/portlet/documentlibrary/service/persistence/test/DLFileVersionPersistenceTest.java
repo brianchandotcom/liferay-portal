@@ -669,20 +669,24 @@ public class DLFileVersionPersistenceTest {
 		Assert.assertEquals(
 			dlFileVersion.getUuid(),
 			ReflectionTestUtil.invoke(
-				dlFileVersion, "getOriginalUuid", new Class<?>[0]));
+				dlFileVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
 			Long.valueOf(dlFileVersion.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				dlFileVersion, "getOriginalGroupId", new Class<?>[0]));
+				dlFileVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
 			Long.valueOf(dlFileVersion.getFileEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				dlFileVersion, "getOriginalFileEntryId", new Class<?>[0]));
+				dlFileVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "fileEntryId"));
 		Assert.assertEquals(
 			dlFileVersion.getVersion(),
 			ReflectionTestUtil.invoke(
-				dlFileVersion, "getOriginalVersion", new Class<?>[0]));
+				dlFileVersion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "version"));
 	}
 
 	protected DLFileVersion addDLFileVersion() throws Exception {

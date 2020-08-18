@@ -5533,8 +5533,8 @@ public class CalendarBookingPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				calendarBookingModelImpl.getOriginalUuid(),
-				calendarBookingModelImpl.getOriginalGroupId()
+				calendarBookingModelImpl.getColumnOriginalValue("uuid_"),
+				calendarBookingModelImpl.getColumnOriginalValue("groupId")
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -5555,8 +5555,9 @@ public class CalendarBookingPersistenceImpl
 			 _finderPathFetchByC_P.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				calendarBookingModelImpl.getOriginalCalendarId(),
-				calendarBookingModelImpl.getOriginalParentCalendarBookingId()
+				calendarBookingModelImpl.getColumnOriginalValue("calendarId"),
+				calendarBookingModelImpl.getColumnOriginalValue(
+					"parentCalendarBookingId")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_P, args);
@@ -5577,8 +5578,8 @@ public class CalendarBookingPersistenceImpl
 			 _finderPathFetchByC_V.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				calendarBookingModelImpl.getOriginalCalendarId(),
-				calendarBookingModelImpl.getOriginalVEventUid()
+				calendarBookingModelImpl.getColumnOriginalValue("calendarId"),
+				calendarBookingModelImpl.getColumnOriginalValue("vEventUid")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_V, args);
@@ -5852,7 +5853,7 @@ public class CalendarBookingPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					calendarBookingModelImpl.getOriginalUuid()
+					calendarBookingModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -5871,8 +5872,8 @@ public class CalendarBookingPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					calendarBookingModelImpl.getOriginalUuid(),
-					calendarBookingModelImpl.getOriginalCompanyId()
+					calendarBookingModelImpl.getColumnOriginalValue("uuid_"),
+					calendarBookingModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -5894,7 +5895,8 @@ public class CalendarBookingPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					calendarBookingModelImpl.getOriginalCalendarId()
+					calendarBookingModelImpl.getColumnOriginalValue(
+						"calendarId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCalendarId, args);
@@ -5913,7 +5915,8 @@ public class CalendarBookingPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					calendarBookingModelImpl.getOriginalCalendarResourceId()
+					calendarBookingModelImpl.getColumnOriginalValue(
+						"calendarResourceId")
 				};
 
 				finderCache.removeResult(
@@ -5936,8 +5939,8 @@ public class CalendarBookingPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					calendarBookingModelImpl.
-						getOriginalParentCalendarBookingId()
+					calendarBookingModelImpl.getColumnOriginalValue(
+						"parentCalendarBookingId")
 				};
 
 				finderCache.removeResult(
@@ -5962,8 +5965,8 @@ public class CalendarBookingPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					calendarBookingModelImpl.
-						getOriginalRecurringCalendarBookingId()
+					calendarBookingModelImpl.getColumnOriginalValue(
+						"recurringCalendarBookingId")
 				};
 
 				finderCache.removeResult(
@@ -5988,8 +5991,9 @@ public class CalendarBookingPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					calendarBookingModelImpl.getOriginalCalendarId(),
-					calendarBookingModelImpl.getOriginalStatus()
+					calendarBookingModelImpl.getColumnOriginalValue(
+						"calendarId"),
+					calendarBookingModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_S, args);
@@ -6011,9 +6015,9 @@ public class CalendarBookingPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					calendarBookingModelImpl.
-						getOriginalParentCalendarBookingId(),
-					calendarBookingModelImpl.getOriginalStatus()
+					calendarBookingModelImpl.getColumnOriginalValue(
+						"parentCalendarBookingId"),
+					calendarBookingModelImpl.getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByP_S, args);
@@ -6329,9 +6333,9 @@ public class CalendarBookingPersistenceImpl
 			CalendarBookingImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			CalendarBookingModelImpl.UUID_COLUMN_BITMASK |
-			CalendarBookingModelImpl.STARTTIME_COLUMN_BITMASK |
-			CalendarBookingModelImpl.TITLE_COLUMN_BITMASK);
+			CalendarBookingModelImpl.getColumnBitmask("uuid_") |
+			CalendarBookingModelImpl.getColumnBitmask("startTime") |
+			CalendarBookingModelImpl.getColumnBitmask("title"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -6341,8 +6345,8 @@ public class CalendarBookingPersistenceImpl
 			CalendarBookingImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CalendarBookingModelImpl.UUID_COLUMN_BITMASK |
-			CalendarBookingModelImpl.GROUPID_COLUMN_BITMASK);
+			CalendarBookingModelImpl.getColumnBitmask("uuid_") |
+			CalendarBookingModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -6362,10 +6366,10 @@ public class CalendarBookingPersistenceImpl
 			CalendarBookingImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CalendarBookingModelImpl.UUID_COLUMN_BITMASK |
-			CalendarBookingModelImpl.COMPANYID_COLUMN_BITMASK |
-			CalendarBookingModelImpl.STARTTIME_COLUMN_BITMASK |
-			CalendarBookingModelImpl.TITLE_COLUMN_BITMASK);
+			CalendarBookingModelImpl.getColumnBitmask("uuid_") |
+			CalendarBookingModelImpl.getColumnBitmask("companyId") |
+			CalendarBookingModelImpl.getColumnBitmask("startTime") |
+			CalendarBookingModelImpl.getColumnBitmask("title"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -6384,9 +6388,9 @@ public class CalendarBookingPersistenceImpl
 			CalendarBookingImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCalendarId",
 			new String[] {Long.class.getName()},
-			CalendarBookingModelImpl.CALENDARID_COLUMN_BITMASK |
-			CalendarBookingModelImpl.STARTTIME_COLUMN_BITMASK |
-			CalendarBookingModelImpl.TITLE_COLUMN_BITMASK);
+			CalendarBookingModelImpl.getColumnBitmask("calendarId") |
+			CalendarBookingModelImpl.getColumnBitmask("startTime") |
+			CalendarBookingModelImpl.getColumnBitmask("title"));
 
 		_finderPathCountByCalendarId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -6404,9 +6408,9 @@ public class CalendarBookingPersistenceImpl
 			CalendarBookingImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCalendarResourceId", new String[] {Long.class.getName()},
-			CalendarBookingModelImpl.CALENDARRESOURCEID_COLUMN_BITMASK |
-			CalendarBookingModelImpl.STARTTIME_COLUMN_BITMASK |
-			CalendarBookingModelImpl.TITLE_COLUMN_BITMASK);
+			CalendarBookingModelImpl.getColumnBitmask("calendarResourceId") |
+			CalendarBookingModelImpl.getColumnBitmask("startTime") |
+			CalendarBookingModelImpl.getColumnBitmask("title"));
 
 		_finderPathCountByCalendarResourceId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -6426,10 +6430,10 @@ public class CalendarBookingPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByParentCalendarBookingId",
 				new String[] {Long.class.getName()},
-				CalendarBookingModelImpl.
-					PARENTCALENDARBOOKINGID_COLUMN_BITMASK |
-				CalendarBookingModelImpl.STARTTIME_COLUMN_BITMASK |
-				CalendarBookingModelImpl.TITLE_COLUMN_BITMASK);
+				CalendarBookingModelImpl.getColumnBitmask(
+					"parentCalendarBookingId") |
+				CalendarBookingModelImpl.getColumnBitmask("startTime") |
+				CalendarBookingModelImpl.getColumnBitmask("title"));
 
 		_finderPathCountByParentCalendarBookingId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -6452,10 +6456,10 @@ public class CalendarBookingPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByRecurringCalendarBookingId",
 				new String[] {Long.class.getName()},
-				CalendarBookingModelImpl.
-					RECURRINGCALENDARBOOKINGID_COLUMN_BITMASK |
-				CalendarBookingModelImpl.STARTTIME_COLUMN_BITMASK |
-				CalendarBookingModelImpl.TITLE_COLUMN_BITMASK);
+				CalendarBookingModelImpl.getColumnBitmask(
+					"recurringCalendarBookingId") |
+				CalendarBookingModelImpl.getColumnBitmask("startTime") |
+				CalendarBookingModelImpl.getColumnBitmask("title"));
 
 		_finderPathCountByRecurringCalendarBookingId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -6465,8 +6469,9 @@ public class CalendarBookingPersistenceImpl
 		_finderPathFetchByC_P = new FinderPath(
 			CalendarBookingImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CalendarBookingModelImpl.CALENDARID_COLUMN_BITMASK |
-			CalendarBookingModelImpl.PARENTCALENDARBOOKINGID_COLUMN_BITMASK);
+			CalendarBookingModelImpl.getColumnBitmask("calendarId") |
+			CalendarBookingModelImpl.getColumnBitmask(
+				"parentCalendarBookingId"));
 
 		_finderPathCountByC_P = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
@@ -6475,8 +6480,8 @@ public class CalendarBookingPersistenceImpl
 		_finderPathFetchByC_V = new FinderPath(
 			CalendarBookingImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_V",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CalendarBookingModelImpl.CALENDARID_COLUMN_BITMASK |
-			CalendarBookingModelImpl.VEVENTUID_COLUMN_BITMASK);
+			CalendarBookingModelImpl.getColumnBitmask("calendarId") |
+			CalendarBookingModelImpl.getColumnBitmask("vEventUid"));
 
 		_finderPathCountByC_V = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_V",
@@ -6495,10 +6500,10 @@ public class CalendarBookingPersistenceImpl
 			CalendarBookingImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			CalendarBookingModelImpl.CALENDARID_COLUMN_BITMASK |
-			CalendarBookingModelImpl.STATUS_COLUMN_BITMASK |
-			CalendarBookingModelImpl.STARTTIME_COLUMN_BITMASK |
-			CalendarBookingModelImpl.TITLE_COLUMN_BITMASK);
+			CalendarBookingModelImpl.getColumnBitmask("calendarId") |
+			CalendarBookingModelImpl.getColumnBitmask("status") |
+			CalendarBookingModelImpl.getColumnBitmask("startTime") |
+			CalendarBookingModelImpl.getColumnBitmask("title"));
 
 		_finderPathCountByC_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
@@ -6521,10 +6526,11 @@ public class CalendarBookingPersistenceImpl
 			CalendarBookingImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			CalendarBookingModelImpl.PARENTCALENDARBOOKINGID_COLUMN_BITMASK |
-			CalendarBookingModelImpl.STATUS_COLUMN_BITMASK |
-			CalendarBookingModelImpl.STARTTIME_COLUMN_BITMASK |
-			CalendarBookingModelImpl.TITLE_COLUMN_BITMASK);
+			CalendarBookingModelImpl.getColumnBitmask(
+				"parentCalendarBookingId") |
+			CalendarBookingModelImpl.getColumnBitmask("status") |
+			CalendarBookingModelImpl.getColumnBitmask("startTime") |
+			CalendarBookingModelImpl.getColumnBitmask("title"));
 
 		_finderPathCountByP_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_S",

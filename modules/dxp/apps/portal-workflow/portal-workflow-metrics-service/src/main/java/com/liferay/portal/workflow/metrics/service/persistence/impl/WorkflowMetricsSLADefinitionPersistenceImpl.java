@@ -5083,8 +5083,10 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				workflowMetricsSLADefinitionModelImpl.getOriginalUuid(),
-				workflowMetricsSLADefinitionModelImpl.getOriginalGroupId()
+				workflowMetricsSLADefinitionModelImpl.getColumnOriginalValue(
+					"uuid_"),
+				workflowMetricsSLADefinitionModelImpl.getColumnOriginalValue(
+					"groupId")
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -5106,9 +5108,10 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			 _finderPathFetchByWMSLAD_A.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				workflowMetricsSLADefinitionModelImpl.
-					getOriginalWorkflowMetricsSLADefinitionId(),
-				workflowMetricsSLADefinitionModelImpl.getOriginalActive()
+				workflowMetricsSLADefinitionModelImpl.getColumnOriginalValue(
+					"wmSLADefinitionId"),
+				workflowMetricsSLADefinitionModelImpl.getColumnOriginalValue(
+					"active_")
 			};
 
 			finderCache.removeResult(_finderPathCountByWMSLAD_A, args);
@@ -5391,7 +5394,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					workflowMetricsSLADefinitionModelImpl.getOriginalUuid()
+					workflowMetricsSLADefinitionModelImpl.
+						getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -5412,8 +5416,10 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					workflowMetricsSLADefinitionModelImpl.getOriginalUuid(),
-					workflowMetricsSLADefinitionModelImpl.getOriginalCompanyId()
+					workflowMetricsSLADefinitionModelImpl.
+						getColumnOriginalValue("uuid_"),
+					workflowMetricsSLADefinitionModelImpl.
+						getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -5436,8 +5442,9 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 				Object[] args = new Object[] {
 					workflowMetricsSLADefinitionModelImpl.
-						getOriginalCompanyId(),
-					workflowMetricsSLADefinitionModelImpl.getOriginalStatus()
+						getColumnOriginalValue("companyId"),
+					workflowMetricsSLADefinitionModelImpl.
+						getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_S, args);
@@ -5460,9 +5467,11 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 				Object[] args = new Object[] {
 					workflowMetricsSLADefinitionModelImpl.
-						getOriginalCompanyId(),
-					workflowMetricsSLADefinitionModelImpl.getOriginalActive(),
-					workflowMetricsSLADefinitionModelImpl.getOriginalProcessId()
+						getColumnOriginalValue("companyId"),
+					workflowMetricsSLADefinitionModelImpl.
+						getColumnOriginalValue("active_"),
+					workflowMetricsSLADefinitionModelImpl.
+						getColumnOriginalValue("processId")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_A_P, args);
@@ -5486,10 +5495,13 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 				Object[] args = new Object[] {
 					workflowMetricsSLADefinitionModelImpl.
-						getOriginalCompanyId(),
-					workflowMetricsSLADefinitionModelImpl.getOriginalActive(),
-					workflowMetricsSLADefinitionModelImpl.getOriginalName(),
-					workflowMetricsSLADefinitionModelImpl.getOriginalProcessId()
+						getColumnOriginalValue("companyId"),
+					workflowMetricsSLADefinitionModelImpl.
+						getColumnOriginalValue("active_"),
+					workflowMetricsSLADefinitionModelImpl.
+						getColumnOriginalValue("name"),
+					workflowMetricsSLADefinitionModelImpl.
+						getColumnOriginalValue("processId")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_A_N_P, args);
@@ -5514,11 +5526,13 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 				Object[] args = new Object[] {
 					workflowMetricsSLADefinitionModelImpl.
-						getOriginalCompanyId(),
-					workflowMetricsSLADefinitionModelImpl.getOriginalActive(),
+						getColumnOriginalValue("companyId"),
 					workflowMetricsSLADefinitionModelImpl.
-						getOriginalProcessId(),
-					workflowMetricsSLADefinitionModelImpl.getOriginalStatus()
+						getColumnOriginalValue("active_"),
+					workflowMetricsSLADefinitionModelImpl.
+						getColumnOriginalValue("processId"),
+					workflowMetricsSLADefinitionModelImpl.
+						getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_A_P_S, args);
@@ -5846,8 +5860,9 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			WorkflowMetricsSLADefinitionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			WorkflowMetricsSLADefinitionModelImpl.UUID_COLUMN_BITMASK |
-			WorkflowMetricsSLADefinitionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask("uuid_") |
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask(
+				"modifiedDate"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5857,8 +5872,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			WorkflowMetricsSLADefinitionImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			WorkflowMetricsSLADefinitionModelImpl.UUID_COLUMN_BITMASK |
-			WorkflowMetricsSLADefinitionModelImpl.GROUPID_COLUMN_BITMASK);
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask("uuid_") |
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5878,9 +5893,11 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			WorkflowMetricsSLADefinitionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			WorkflowMetricsSLADefinitionModelImpl.UUID_COLUMN_BITMASK |
-			WorkflowMetricsSLADefinitionModelImpl.COMPANYID_COLUMN_BITMASK |
-			WorkflowMetricsSLADefinitionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask("uuid_") |
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask(
+				"companyId") |
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask(
+				"modifiedDate"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5891,9 +5908,9 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			WorkflowMetricsSLADefinitionImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByWMSLAD_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			WorkflowMetricsSLADefinitionModelImpl.
-				WORKFLOWMETRICSSLADEFINITIONID_COLUMN_BITMASK |
-			WorkflowMetricsSLADefinitionModelImpl.ACTIVE_COLUMN_BITMASK);
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask(
+				"wmSLADefinitionId") |
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask("active_"));
 
 		_finderPathCountByWMSLAD_A = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5913,9 +5930,11 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			WorkflowMetricsSLADefinitionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			WorkflowMetricsSLADefinitionModelImpl.COMPANYID_COLUMN_BITMASK |
-			WorkflowMetricsSLADefinitionModelImpl.STATUS_COLUMN_BITMASK |
-			WorkflowMetricsSLADefinitionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask(
+				"companyId") |
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask("status") |
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask(
+				"modifiedDate"));
 
 		_finderPathCountByC_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
@@ -5937,10 +5956,13 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				Long.class.getName()
 			},
-			WorkflowMetricsSLADefinitionModelImpl.COMPANYID_COLUMN_BITMASK |
-			WorkflowMetricsSLADefinitionModelImpl.ACTIVE_COLUMN_BITMASK |
-			WorkflowMetricsSLADefinitionModelImpl.PROCESSID_COLUMN_BITMASK |
-			WorkflowMetricsSLADefinitionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask(
+				"companyId") |
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask("active_") |
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask(
+				"processId") |
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask(
+				"modifiedDate"));
 
 		_finderPathCountByC_A_P = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5967,11 +5989,14 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName(), Long.class.getName()
 			},
-			WorkflowMetricsSLADefinitionModelImpl.COMPANYID_COLUMN_BITMASK |
-			WorkflowMetricsSLADefinitionModelImpl.ACTIVE_COLUMN_BITMASK |
-			WorkflowMetricsSLADefinitionModelImpl.NAME_COLUMN_BITMASK |
-			WorkflowMetricsSLADefinitionModelImpl.PROCESSID_COLUMN_BITMASK |
-			WorkflowMetricsSLADefinitionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask(
+				"companyId") |
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask("active_") |
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask("name") |
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask(
+				"processId") |
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask(
+				"modifiedDate"));
 
 		_finderPathCountByC_A_N_P = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5998,11 +6023,14 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				Long.class.getName(), Integer.class.getName()
 			},
-			WorkflowMetricsSLADefinitionModelImpl.COMPANYID_COLUMN_BITMASK |
-			WorkflowMetricsSLADefinitionModelImpl.ACTIVE_COLUMN_BITMASK |
-			WorkflowMetricsSLADefinitionModelImpl.PROCESSID_COLUMN_BITMASK |
-			WorkflowMetricsSLADefinitionModelImpl.STATUS_COLUMN_BITMASK |
-			WorkflowMetricsSLADefinitionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask(
+				"companyId") |
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask("active_") |
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask(
+				"processId") |
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask("status") |
+			WorkflowMetricsSLADefinitionModelImpl.getColumnBitmask(
+				"modifiedDate"));
 
 		_finderPathCountByC_A_P_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

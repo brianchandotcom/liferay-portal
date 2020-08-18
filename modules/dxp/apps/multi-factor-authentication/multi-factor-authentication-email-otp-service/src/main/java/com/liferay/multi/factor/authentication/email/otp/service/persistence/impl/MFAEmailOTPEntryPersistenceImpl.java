@@ -414,7 +414,7 @@ public class MFAEmailOTPEntryPersistenceImpl
 			 _finderPathFetchByUserId.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				mfaEmailOTPEntryModelImpl.getOriginalUserId()
+				mfaEmailOTPEntryModelImpl.getColumnOriginalValue("userId")
 			};
 
 			finderCache.removeResult(_finderPathCountByUserId, args);
@@ -889,7 +889,7 @@ public class MFAEmailOTPEntryPersistenceImpl
 		_finderPathFetchByUserId = new FinderPath(
 			MFAEmailOTPEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUserId", new String[] {Long.class.getName()},
-			MFAEmailOTPEntryModelImpl.USERID_COLUMN_BITMASK);
+			MFAEmailOTPEntryModelImpl.getColumnBitmask("userId"));
 
 		_finderPathCountByUserId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

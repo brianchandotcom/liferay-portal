@@ -14,17 +14,21 @@
 
 package com.liferay.product.navigation.applications.menu.web.internal.product.navigation.control.menu;
 
+import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
@@ -45,12 +49,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.USER,
+		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.SITES,
 		"product.navigation.control.menu.entry.order:Integer=600"
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class ApplicationsMenuProductNavigationControlMenuEntry
+public class ApplicationsMenuApplicationMenuProductNavigationControlMenuEntry
 	extends BaseJSPProductNavigationControlMenuEntry {
 
 	@Override
@@ -66,25 +70,12 @@ public class ApplicationsMenuProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		try {
-			ApplicationsMenuInstanceConfiguration
-				applicationsMenuInstanceConfiguration =
-					_configurationProvider.getCompanyConfiguration(
-						ApplicationsMenuInstanceConfiguration.class,
-						themeDisplay.getCompanyId());
-
-			if (!applicationsMenuInstanceConfiguration.
-					enableApplicationsMenu()) {
-
-				return false;
-			}
+		if (!_isEnableApplicationsMenu(themeDisplay.getCompanyId())) {
+			return false;
 		}
-		catch (ConfigurationException configurationException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to get applications menu instance configuration",
-					configurationException);
-			}
+
+		if (!_isApplicationsMenuApp(themeDisplay)) {
+			return false;
 		}
 
 		String layoutMode = ParamUtil.getString(
@@ -130,11 +121,61 @@ public class ApplicationsMenuProductNavigationControlMenuEntry
 		super.setServletContext(servletContext);
 	}
 
+	private boolean _isApplicationsMenuApp(ThemeDisplay themeDisplay) {
+		if (Validator.isNull(themeDisplay.getPpid())) {
+			return false;
+		}
+
+		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
+			_panelAppRegistry, _panelCategoryRegistry);
+
+		if (!panelCategoryHelper.isApplicationsMenuApp(
+				themeDisplay.getPpid())) {
+
+			return false;
+		}
+
+		Layout layout = themeDisplay.getLayout();
+
+		if ((layout != null) && !layout.isTypeControlPanel()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _isEnableApplicationsMenu(long companyId) {
+		try {
+			ApplicationsMenuInstanceConfiguration
+				applicationsMenuInstanceConfiguration =
+					_configurationProvider.getCompanyConfiguration(
+						ApplicationsMenuInstanceConfiguration.class, companyId);
+
+			if (applicationsMenuInstanceConfiguration.
+					enableApplicationsMenu()) {
+
+				return true;
+			}
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to get applications menu instance configuration",
+					configurationException);
+			}
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		ApplicationsMenuProductNavigationControlMenuEntry.class);
+		ApplicationsMenuApplicationMenuProductNavigationControlMenuEntry.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private PanelAppRegistry _panelAppRegistry;
 
 	@Reference
 	private PanelCategoryRegistry _panelCategoryRegistry;

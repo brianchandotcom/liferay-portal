@@ -149,7 +149,7 @@ public class AnalyticsReportsDisplayContext<T> {
 		).put(
 			"languageTag",
 			() -> {
-				Locale locale = _getLocale();
+				Locale locale = _themeDisplay.getLocale();
 
 				return locale.toLanguageTag();
 			}
@@ -318,7 +318,8 @@ public class AnalyticsReportsDisplayContext<T> {
 					).findFirst(
 					).map(
 						trafficSource -> trafficSource.toJSONObject(
-							helpMessageMap.get(name), _getLocale(), title)
+							helpMessageMap.get(name), _themeDisplay.getLocale(),
+							title)
 					).orElse(
 						JSONUtil.put(
 							"helpMessage", helpMessageMap.get(name)

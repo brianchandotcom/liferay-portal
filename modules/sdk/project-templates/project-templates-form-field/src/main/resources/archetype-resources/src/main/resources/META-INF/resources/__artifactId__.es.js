@@ -14,9 +14,6 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 #end
 
-/**
- * ${className} Component
- */
 #if (${liferayVersion.startsWith("7.3")} && ${reactTemplate.equals("true")})
 const ${className} = ({name, onChange, predefinedValue, readOnly, value}) =>
 		<input
@@ -59,6 +56,9 @@ export default Main;
 #elseif (!(${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")}))
 import templates from './${artifactId}.soy';
 
+/**
+ * ${className} Component
+ */
 class ${className} extends Component {}
 
 // Register component
@@ -72,6 +72,9 @@ if (!window.DDM${className}) {
 
 window.DDM${className}.render = ${className};
 #else
+/**
+ * ${className} Component
+ */
 class ${className} extends Component {
 
 	dispatchEvent(event, name, value) {

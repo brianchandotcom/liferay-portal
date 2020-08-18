@@ -96,13 +96,11 @@ public abstract class BasePortalWorkspace
 				WorkspaceUtil.getDependencyWorkspaceGitRepository(
 					CompanionPortalWorkspaceGitRepository.TYPE,
 					_primaryPortalWorkspaceGitRepository);
+
+			_companionPortalWorkspaceGitRepository.setUp();
 		}
 		else {
 			_companionPortalWorkspaceGitRepository = null;
-		}
-
-		if (_companionPortalWorkspaceGitRepository != null) {
-			_companionPortalWorkspaceGitRepository.setUp();
 		}
 
 		workspaceGitRepository = WorkspaceUtil.getWorkspaceGitRepository(

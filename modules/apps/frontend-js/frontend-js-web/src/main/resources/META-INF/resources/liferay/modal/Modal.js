@@ -136,7 +136,7 @@ const openSelectionModal = ({
 					},
 			  ]
 			: null,
-		id,
+		id: id || selectEventName,
 		onClose: () => {
 			eventHandlers.forEach((eventHandler) => {
 				eventHandler.detach();

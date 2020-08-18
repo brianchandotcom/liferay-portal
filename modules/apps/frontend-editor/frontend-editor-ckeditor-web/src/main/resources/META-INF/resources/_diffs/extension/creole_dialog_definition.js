@@ -16,9 +16,49 @@ CKEDITOR.on(
 	'dialogDefinition',
 	(event) => {
 		if (event.editor === ckEditor) {
+			var boundingWindow = event.editor.window;
+
 			var dialogName = event.data.name;
 
 			var dialogDefinition = event.data.definition;
+
+			var dialog = event.data.dialog;
+
+			var onShow = dialogDefinition.onShow;
+
+			dialogDefinition.onShow = function () {
+				if (typeof onShow === 'function') {
+					onShow.apply(this, arguments);
+				}
+
+				centerDialog();
+			};
+
+			var centerDialog = function () {
+				var dialogSize = dialog.getSize();
+
+				var x = window.innerWidth / 2 - dialogSize.width / 2;
+				var y = window.innerHeight / 2 - dialogSize.height / 2;
+
+				dialog.move(x, y, false);
+			};
+
+			var debounce = function (fn, delay) {
+				return function debounced() {
+					var args = arguments;
+					clearTimeout(debounced.id);
+					debounced.id = setTimeout(() => {
+						fn.apply(null, args);
+					}, delay);
+				};
+			};
+
+			boundingWindow.on(
+				'resize',
+				debounce(() => {
+					centerDialog();
+				}, 250)
+			);
 
 			var infoTab;
 

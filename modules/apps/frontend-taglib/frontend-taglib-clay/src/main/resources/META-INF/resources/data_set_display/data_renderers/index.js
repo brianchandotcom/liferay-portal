@@ -47,7 +47,7 @@ export function getDataRendererById(id) {
 
 export const fetchedContentRenderers = [];
 
-export function getDataRendererByUrl(url) {
+export function getDataRendererByURL(url) {
 	return new Promise((resolve, reject) => {
 		const addedDataRenderer = fetchedContentRenderers.find(
 			(cr) => cr.url === url

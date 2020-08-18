@@ -42,7 +42,7 @@ function DataSetDisplay({
 	actionParameterName,
 	bulkActions,
 	creationMenu,
-	currentUrl,
+	currentURL,
 	filters: filtersProp,
 	formId,
 	id,
@@ -90,7 +90,7 @@ function DataSetDisplay({
 	const {
 		component: CurrentViewComponent,
 		contentRenderer,
-		contentRendererModuleUrl,
+		contentRendererModuleURL,
 		name: activeViewName,
 		...currentViewProps
 	} = activeView;
@@ -100,12 +100,12 @@ function DataSetDisplay({
 	useEffect(() => {
 		if (
 			!CurrentViewComponent &&
-			(contentRendererModuleUrl || contentRenderer)
+			(contentRendererModuleURL || contentRenderer)
 		) {
 			setLoading(true);
 			(contentRenderer
 				? getViewContentRenderer(contentRenderer)
-				: getJsModule(contentRendererModuleUrl)
+				: getJsModule(contentRendererModuleURL)
 			)
 				.then((component) => {
 					dispatch(updateViewComponent(activeViewName, component));
@@ -113,7 +113,7 @@ function DataSetDisplay({
 				})
 				.catch((error) => {
 					logError(
-						`Requested module: ${contentRendererModuleUrl} not available`,
+						`Requested module: ${contentRendererModuleURL} not available`,
 						error
 					);
 					openToast({
@@ -126,7 +126,7 @@ function DataSetDisplay({
 	}, [
 		contentRenderer,
 		CurrentViewComponent,
-		contentRendererModuleUrl,
+		contentRendererModuleURL,
 		setLoading,
 		dispatch,
 		activeViewName,
@@ -141,7 +141,7 @@ function DataSetDisplay({
 
 	function getData(
 		apiURL,
-		currentUrl,
+		currentURL,
 		filters,
 		searchParam,
 		delta,
@@ -153,7 +153,7 @@ function DataSetDisplay({
 
 		return loadData(
 			apiURL,
-			currentUrl,
+			currentURL,
 			filters,
 			searchParam,
 			delta,
@@ -192,7 +192,7 @@ function DataSetDisplay({
 		if (apiURL) {
 			getData(
 				apiURL,
-				currentUrl,
+				currentURL,
 				filters.filter((filter) => filter.value),
 				searchParam,
 				delta,
@@ -204,7 +204,7 @@ function DataSetDisplay({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
 		apiURL,
-		currentUrl,
+		currentURL,
 		filters,
 		searchParam,
 		delta,
@@ -258,7 +258,7 @@ function DataSetDisplay({
 	const refreshData = (successNotification) =>
 		getData(
 			apiURL,
-			currentUrl,
+			currentURL,
 			filters.filter((filter) => filter.value),
 			searchParam,
 			delta,
@@ -490,7 +490,7 @@ DataSetDisplay.propTypes = {
 		primaryItems: PropTypes.array,
 		secondaryItems: PropTypes.array,
 	}),
-	currentUrl: PropTypes.string,
+	currentURL: PropTypes.string,
 	filters: PropTypes.array,
 	formId: PropTypes.string,
 	id: PropTypes.string.isRequired,
@@ -527,7 +527,7 @@ DataSetDisplay.propTypes = {
 		PropTypes.shape({
 			component: PropTypes.any,
 			contentRenderer: PropTypes.string,
-			contentRendererModuleUrl: PropTypes.string,
+			contentRendererModuleURL: PropTypes.string,
 			label: PropTypes.string,
 			schema: PropTypes.object,
 			thumbnail: PropTypes.string,

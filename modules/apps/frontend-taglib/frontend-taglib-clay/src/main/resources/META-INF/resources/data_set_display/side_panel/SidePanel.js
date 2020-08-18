@@ -42,7 +42,7 @@ export default class SidePanel extends React.Component {
 		this.state = {
 			active: null,
 			closeButtonStyle: null,
-			currentUrl: props.url || null,
+			currentURL: props.url || null,
 			loading: true,
 			menuCoverTopDistance: 0,
 			moving: false,
@@ -99,7 +99,7 @@ export default class SidePanel extends React.Component {
 		exposeSidePanel(this.props.id, () => ({
 			activeMenuItem: this.state.active,
 			size: this.state.size,
-			url: this.state.currentUrl,
+			url: this.state.currentURL,
 			visible: this.state.visible,
 		}));
 	}
@@ -193,7 +193,7 @@ export default class SidePanel extends React.Component {
 
 		this.setState(
 			{
-				currentUrl: url,
+				currentURL: url,
 				loading: true,
 				onAfterSubmit: refreshPageAfterSubmit
 					? () => window.location.reload()
@@ -201,13 +201,13 @@ export default class SidePanel extends React.Component {
 			},
 			() => {
 				if (this.iframeRef.current?.contentWindow) {
-					this.iframeRef.current.contentWindow.location = this.state.currentUrl;
+					this.iframeRef.current.contentWindow.location = this.state.currentURL;
 				}
 			}
 		);
 	}
 
-	open(url = this.state.currentUrl, active = null) {
+	open(url = this.state.currentURL, active = null) {
 		this.setState({active, closeButtonStyle: null});
 
 		if (!this.state.visible) {
@@ -215,7 +215,7 @@ export default class SidePanel extends React.Component {
 				this.load(url);
 			});
 		}
-		else if (url !== this.state.currentUrl) {
+		else if (url !== this.state.currentURL) {
 			this.load(url);
 		}
 	}
@@ -229,7 +229,7 @@ export default class SidePanel extends React.Component {
 			this.setState({
 				active: null,
 				closeButtonStyle: null,
-				currentUrl: null,
+				currentURL: null,
 				loading: true,
 			});
 			Liferay.fire(SIDE_PANEL_CLOSED, {
@@ -327,7 +327,7 @@ export default class SidePanel extends React.Component {
 		}
 		catch (error) {
 			logError(
-				`Cannot access to iframe body. Url: "${this.state.currentUrl}"`
+				`Cannot access to iframe body. URL: "${this.state.currentURL}"`
 			);
 		}
 	}
@@ -409,7 +409,7 @@ export default class SidePanel extends React.Component {
 									frameBorder="0"
 									onLoad={this.handleContentLoaded}
 									ref={this.iframeRef}
-									src={this.state.currentUrl}
+									src={this.state.currentURL}
 								></iframe>
 							)}
 						</div>

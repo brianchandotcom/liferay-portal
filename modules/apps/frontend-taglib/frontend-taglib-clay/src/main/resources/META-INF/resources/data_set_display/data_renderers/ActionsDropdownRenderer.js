@@ -22,7 +22,7 @@ import React, {useContext, useState} from 'react';
 
 import DataSetDisplayContext from '../DataSetDisplayContext';
 import {ACTION_ITEM_TARGETS} from '../utilities/actionItems/constants';
-import {formatActionUrl} from '../utilities/index';
+import {formatActionURL} from '../utilities/index';
 import {
 	openPermissionsModal,
 	resolveModalSize,
@@ -183,7 +183,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 			return null;
 		}
 
-		const formattedHref = formatActionUrl(action.href, itemData);
+		const formattedHref = formatActionURL(action.href, itemData);
 
 		if (loading) {
 			return (
@@ -261,7 +261,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 					{...item}
 					closeMenu={() => setActive(false)}
 					handleAction={handleAction}
-					href={item.href && formatActionUrl(item.href, itemData)}
+					href={item.href && formatActionURL(item.href, itemData)}
 					key={i}
 				/>
 			);

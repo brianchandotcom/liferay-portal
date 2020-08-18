@@ -14,10 +14,10 @@
 
 import React from 'react';
 
-export function getLiferayJsModule(moduleUrl) {
+export function getLiferayJsModule(moduleURL) {
 	return new Promise((resolve, reject) => {
 		Liferay.Loader.require(
-			moduleUrl,
+			moduleURL,
 			(jsModule) => resolve(jsModule.default || jsModule),
 			(error) => reject(error)
 		);
@@ -44,7 +44,7 @@ export const getJsModule = Liferay.Loader?.require
 
 export const fetchedJsModules = [];
 
-export function getComponentByModuleUrl(url) {
+export function getComponentByModuleURL(url) {
 	return new Promise((resolve, reject) => {
 		const foundModule = fetchedJsModules.find((cr) => cr.url === url);
 		if (foundModule) {

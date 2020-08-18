@@ -19,8 +19,6 @@ definition {
 	macro autocompleteFragmentHTML {
 		FragmentsEditor.typeHtmlEditor(content = "");
 
-		var htmlSnippet = '''<lfr-''';
-
 		Type.sendKeysAceEditor(
 			locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
 			value1 = "${htmlSnippet}");

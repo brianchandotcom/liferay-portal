@@ -115,7 +115,7 @@ public class SelectDDMFormFieldTypeSettingsTest
 
 		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
 
-		Assert.assertEquals(ddmFormRules.toString(), 2, ddmFormRules.size());
+		Assert.assertEquals(ddmFormRules.toString(), 3, ddmFormRules.size());
 
 		DDMFormRule ddmFormRule0 = ddmFormRules.get(0);
 
@@ -188,6 +188,20 @@ public class SelectDDMFormFieldTypeSettingsTest
 		Assert.assertTrue(
 			actions.toString(),
 			actions.contains("setVisible('validation', false)"));
+
+		DDMFormRule ddmFormRule3 = ddmFormRules.get(2);
+
+		Assert.assertEquals(
+			"not(equals(getValue('dataSourceType'), \"data-provider\"))",
+			ddmFormRule3.getCondition());
+
+		actions = ddmFormRule3.getActions();
+
+		Assert.assertEquals(actions.toString(), 2, actions.size());
+		Assert.assertEquals(
+			"setValue('ddmDataProviderInstanceId', '')", actions.get(0));
+		Assert.assertEquals(
+			"setValue('ddmDataProviderInstanceOutput', '')", actions.get(1));
 	}
 
 	@Override

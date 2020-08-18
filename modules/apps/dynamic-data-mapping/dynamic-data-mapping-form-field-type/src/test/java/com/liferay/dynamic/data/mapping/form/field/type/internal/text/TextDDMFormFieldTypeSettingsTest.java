@@ -157,7 +157,7 @@ public class TextDDMFormFieldTypeSettingsTest
 
 		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
 
-		Assert.assertEquals(ddmFormRules.toString(), 3, ddmFormRules.size());
+		Assert.assertEquals(ddmFormRules.toString(), 4, ddmFormRules.size());
 
 		DDMFormRule ddmFormRule0 = ddmFormRules.get(0);
 
@@ -236,6 +236,21 @@ public class TextDDMFormFieldTypeSettingsTest
 			actions.contains(
 				"setVisible('options', contains(getValue('dataSourceType'), " +
 					"\"manual\") and getValue('autocomplete'))"));
+
+		DDMFormRule ddmFormRule3 = ddmFormRules.get(3);
+
+		Assert.assertEquals(
+			"not(equals(getValue('dataSourceType'), \"data-provider\")) or " +
+				"not(getValue('autocomplete'))",
+			ddmFormRule3.getCondition());
+
+		actions = ddmFormRule3.getActions();
+
+		Assert.assertEquals(actions.toString(), 2, actions.size());
+		Assert.assertEquals(
+			"setValue('ddmDataProviderInstanceId', '')", actions.get(0));
+		Assert.assertEquals(
+			"setValue('ddmDataProviderInstanceOutput', '')", actions.get(1));
 	}
 
 	@Override

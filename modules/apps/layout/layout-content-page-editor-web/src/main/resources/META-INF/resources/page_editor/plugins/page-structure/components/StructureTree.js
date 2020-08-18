@@ -214,6 +214,13 @@ function visit(
 			const childItem = items[childId];
 
 			if (
+				item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
+				!item.config.collection
+			) {
+				return;
+			}
+
+			if (
 				!isMasterPage &&
 				childItem.type === LAYOUT_DATA_ITEM_TYPES.dropZone
 			) {
@@ -256,7 +263,7 @@ function visit(
 			canUpdateItemConfiguration,
 		children,
 		disabled: !isMasterPage && itemInMasterLayout,
-		draggable: true,
+		draggable: item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone,
 		expanded: item.itemId === activeItemId,
 		icon,
 		id: item.itemId,

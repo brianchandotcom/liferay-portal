@@ -16,6 +16,18 @@ definition {
 			value1 = "${suborgName}");
 	}
 
+	macro removeCP {
+		var key_orgName = "${orgName}";
+
+		AssertClick(
+			locator1 = "UsersAndOrganizations#ORGANIZATION_TABLE_NAME",
+			value1 = "${orgName}");
+
+		LexiconEntry.openEntryMenu(rowEntry = "${subOrgName}");
+
+		MenuItem.click(menuItem = "Remove");
+	}
+
 	macro tearDownCP {
 		Organization.tearDownCP(orgName = "Suborganization*");
 	}

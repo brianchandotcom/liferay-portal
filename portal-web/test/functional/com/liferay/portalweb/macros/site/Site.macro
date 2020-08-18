@@ -104,7 +104,7 @@ definition {
 
 			var key_parentSiteName = "${parentSiteName}";
 
-			SelectFrame(locator1 = "SitesSelectSite#SELECT_SITE_IFRAME");
+			SelectFrame.selectFrameNoLoading(locator1 = "SitesSelectSite#SELECT_SITE_IFRAME");
 
 			Search.searchCP(searchTerm = "${parentSiteName}");
 

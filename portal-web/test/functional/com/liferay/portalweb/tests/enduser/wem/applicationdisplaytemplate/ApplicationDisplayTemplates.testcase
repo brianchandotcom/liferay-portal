@@ -1,0 +1,96 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content and Application Templates";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a use case for LPS-116076. The New button should be hidden when disable template creation in Dynamic Data Mapping. The user is able to save changes in existing template when disable template creation in Dynamic Data Mapping."
+	@priority = "5"
+	test CannotAddTemplateButCanSaveChangesInExistingTemplateWhenDisableTemplateCreation {
+		property test.name.skip.portal.instance = "ApplicationDisplayTemplates#CannotAddTemplateButCanSaveChangesInExistingTemplateWhenDisableTemplateCreation";
+
+		task ("Add a widget template for Asset Publisher") {
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+
+			ApplicationDisplayTemplates.addCP(
+				adtFile = "adt_asset_publisher_rich_summary.ftl",
+				adtType = "Asset Publisher");
+		}
+
+		task ("Disable Template Creation in Dynamic Data Mapping") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Dynamic Data Mapping",
+				configurationName = "Dynamic Data Mapping Web",
+				configurationScope = "System Scope");
+
+			FormFields.disableCheckbox(fieldName = "Enable Template Creation");
+
+			if (IsElementPresent(locator1 = "Button#UPDATE")) {
+				PortletEntry.update();
+			}
+			else if (IsElementPresent(locator1 = "Button#SAVE")) {
+				PortletEntry.save();
+			}
+		}
+
+		task ("Assert the New button doesn't present") {
+			ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
+
+			var browserType = PropsUtil.get("browser.type");
+
+			if ("${browserType}" == "chrome") {
+				MetalComponent.waitForManagementBar();
+			}
+
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+		}
+
+		task ("Assert can save changes in existing template") {
+			ApplicationDisplayTemplates.gotoWidgetTemplatesEllipsisItem(
+				item = "Edit",
+				widgetTemplateName = "Asset Publisher Test ADT");
+
+			ApplicationDisplayTemplates.editWidgetTemplate(
+				newWidgetTemplateName = "New Asset Publisher Test ADT",
+				oldWidgetTemplateName = "Asset Publisher Test ADT");
+
+			ApplicationDisplayTemplates.viewTemplate(adtType = "New Asset Publisher");
+		}
+
+		task ("Enable Template Creation") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Dynamic Data Mapping",
+				configurationName = "Dynamic Data Mapping Web",
+				configurationScope = "System Scope");
+
+			FormFields.enableCheckbox(fieldName = "Enable Template Creation");
+
+			PortletEntry.update();
+		}
+	}
+
+}

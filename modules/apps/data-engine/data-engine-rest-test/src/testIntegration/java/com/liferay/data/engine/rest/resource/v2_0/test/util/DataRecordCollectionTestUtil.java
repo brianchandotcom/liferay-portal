@@ -14,6 +14,7 @@
 
 package com.liferay.data.engine.rest.resource.v2_0.test.util;
 
+import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinition;
 import com.liferay.dynamic.data.lists.constants.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
@@ -38,17 +39,17 @@ import java.util.Map;
 public class DataRecordCollectionTestUtil {
 
 	public static DDLRecordSet addRecordSet(
-			DDMStructure ddmStructure, Group group,
+			DataDefinition dataDefinition, Group group,
 			ResourceLocalService resourceLocalService)
 		throws Exception {
 
 		return addRecordSet(
-			ddmStructure, group, resourceLocalService,
+			dataDefinition, group, resourceLocalService,
 			DDLRecordSetConstants.SCOPE_DATA_ENGINE);
 	}
 
 	public static DDLRecordSet addRecordSet(
-			DDMStructure ddmStructure, Group group,
+			DataDefinition dataDefinition, Group group,
 			ResourceLocalService resourceLocalService, int scope)
 		throws Exception {
 
@@ -61,12 +62,12 @@ public class DataRecordCollectionTestUtil {
 
 		DDLRecordSet ddlRecordSet = DDLRecordSetLocalServiceUtil.addRecordSet(
 			TestPropsValues.getUserId(), group.getGroupId(),
-			ddmStructure.getStructureId(), ddmStructure.getStructureKey(),
+			dataDefinition.getId(), dataDefinition.getDataDefinitionKey(),
 			nameMap, null, DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT,
 			scope, serviceContext);
 
 		resourceLocalService.addModelResources(
-			TestPropsValues.getCompanyId(), ddmStructure.getGroupId(),
+			TestPropsValues.getCompanyId(), dataDefinition.getSiteId(),
 			TestPropsValues.getUserId(), _getResourceName(ddlRecordSet),
 			ddlRecordSet.getRecordSetId(),
 			serviceContext.getModelPermissions());

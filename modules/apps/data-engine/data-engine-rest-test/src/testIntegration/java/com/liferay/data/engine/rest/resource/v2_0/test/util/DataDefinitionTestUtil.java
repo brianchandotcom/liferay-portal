@@ -35,7 +35,8 @@ import java.io.InputStream;
  */
 public class DataDefinitionTestUtil {
 
-	public static DataDefinition addDataDefinition(long groupId)
+	public static DataDefinition addDataDefinition(
+			DataDefinition dataDefinition, Long groupId)
 		throws Exception {
 
 		DataDefinitionResource.Builder builder =
@@ -48,7 +49,13 @@ public class DataDefinitionTestUtil {
 		).build();
 
 		return dataDefinitionResource.postSiteDataDefinitionByContentType(
-			groupId, "app-builder", _randomDataDefinition(groupId));
+			groupId, "app-builder", dataDefinition);
+	}
+
+	public static DataDefinition addDataDefinition(long groupId)
+		throws Exception {
+
+		return addDataDefinition(_randomDataDefinition(groupId), groupId);
 	}
 
 	public static DDMStructure addDDMStructure(Group group) throws Exception {

@@ -14,6 +14,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BOOLEAN_CHECKBOX</td>
+	<td>//div[@class='showcase-example-usage']/label[contains(.,'${checkboxName}')]/following-sibling::input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOLEAN_CHECKBOX_2</td>
+	<td>xpath=(//div[@class='showcase-example-usage']/label[contains(.,'${checkboxName}')]/following-sibling::input[@type='checkbox'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOLEAN_CHECKBOX_3</td>
+	<td>//div[@class='showcase-example-usage']/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONVERSION_CORRECT_MESSAGE</td>
 	<td>//li[contains(text(),'Correct!')]</td>
 	<td></td>
@@ -99,6 +114,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENERAL_SELECT_2</td>
+	<td>xpath=(//select[contains(@id,':select')]//option[contains(.,'${key_opt}')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GENERAL_TEXT_INPUT_2</td>
 	<td>xpath=(//div[label[contains(.,'${key_text}')]]//input[@type='text'])[2]</td>
 	<td></td>
@@ -130,7 +150,7 @@
 </tr>
 <tr>
 	<td>MODEL_VALUE_2</td>
-	<td>//div[@class='showcase-example' and contains(.,'2')]/following-sibling::div[@class='showcase-results']//span[contains(@id,':modelValue') and contains(.,'${key_attribute}')]</td>
+	<td>xpath=(//span[contains(@id,':modelValue') and contains(.,'${key_attribute}')])[2]</td>
 	<td></td>
 </tr>
 <tr>

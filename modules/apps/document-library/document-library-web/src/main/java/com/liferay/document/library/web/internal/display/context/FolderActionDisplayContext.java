@@ -66,13 +66,12 @@ import javax.servlet.http.HttpServletRequest;
 public class FolderActionDisplayContext {
 
 	public FolderActionDisplayContext(
-		HttpServletRequest httpServletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		DLTrashHelper dlTrashHelper) {
+		DLTrashHelper dlTrashHelper, HttpServletRequest httpServletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
+		_dlTrashHelper = dlTrashHelper;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_dlTrashHelper = dlTrashHelper;
 
 		_dlRequestHelper = new DLRequestHelper(httpServletRequest);
 	}

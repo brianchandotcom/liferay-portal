@@ -63,7 +63,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 	renderResponse.setTitle(folder.getName());
 }
 
-FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayContext(request, liferayPortletResponse, dlTrashHelper);
+FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayContext(dlTrashHelper, request, liferayPortletResponse);
 %>
 
 <div class="document-container" id="<portlet:namespace />entriesContainer">
@@ -420,8 +420,6 @@ FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayC
 
 							<%
 							row.setCssClass("entry-card lfr-asset-folder");
-
-							String rowURL = folderActionDisplayContext.getRowURL(curFolder);
 							%>
 
 							<liferay-ui:search-container-column-text
@@ -433,7 +431,7 @@ FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayC
 									resultRow="<%= row %>"
 									rowChecker="<%= entriesChecker %>"
 									text="<%= curFolder.getName() %>"
-									url="<%= rowURL %>"
+									url="<%= folderActionDisplayContext.getRowURL(curFolder) %>"
 								>
 									<liferay-frontend:horizontal-card-col>
 										<liferay-frontend:horizontal-card-icon
@@ -452,11 +450,6 @@ FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayC
 
 								<c:choose>
 									<c:when test='<%= curEntryColumn.equals("name") %>'>
-
-										<%
-										String rowURL = folderActionDisplayContext.getRowURL(curFolder);
-										%>
-
 										<liferay-ui:search-container-column-text
 											cssClass="table-cell-expand table-cell-minw-200 table-title"
 											name="name"
@@ -467,7 +460,7 @@ FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayC
 												icon='<%= curFolder.isMountPoint() ? "repository" : "folder" %>'
 											/>
 
-											<aui:a href="<%= rowURL %>"><%= HtmlUtil.escape(curFolder.getName()) %></aui:a>
+											<aui:a href="<%= folderActionDisplayContext.getRowURL(curFolder) %>"><%= HtmlUtil.escape(curFolder.getName()) %></aui:a>
 										</liferay-ui:search-container-column-text>
 									</c:when>
 									<c:when test='<%= curEntryColumn.equals("description") %>'>

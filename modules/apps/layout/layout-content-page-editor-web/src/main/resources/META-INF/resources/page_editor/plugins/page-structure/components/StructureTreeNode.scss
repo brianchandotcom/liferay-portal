@@ -4,12 +4,9 @@
 	align-items: center;
 	display: flex;
 	font-size: 12px;
-	height: 28px;
 	justify-content: space-between;
-	line-height: 28px;
-	margin-left: 4px;
-	padding-left: 8px;
-	padding-right: 8px;
+	padding: 4px 4px 4px 0;
+	position: relative;
 	white-space: nowrap;
 
 	&.drag-over-bottom {
@@ -27,10 +24,14 @@
 	&__mask {
 		height: 100%;
 		left: 0;
-		margin-left: 12px;
 		position: absolute;
 		top: 0;
-		width: calc(100% - 12px);
+		width: 100%;
+		z-index: 1;
+	}
+
+	&--activable {
+		font-weight: 600;
 	}
 
 	&--active,
@@ -39,38 +40,28 @@
 		border-radius: 4px;
 	}
 
-	&--bold {
-		font-weight: 600;
-	}
-
-	&__remove-button {
-		color: $secondary;
-		font-size: 12px;
-		opacity: 0;
-
-		.lexicon-icon {
-			transform: translateY(1px);
-		}
-
-		&--visible {
-			opacity: 1;
-		}
-	}
-
 	&__name {
 		color: $dark;
-		font-size: 12px;
-		line-height: 20px;
+		margin-left: 4px;
+
+		.lexicon-icon {
+			margin-right: 8px;
+		}
 
 		&--disabled {
 			color: $gray-900;
 			cursor: not-allowed;
-			opacity: 0.4;
 		}
+	}
 
-		.lexicon-icon {
-			margin-right: 8px;
-			margin-top: -1px;
+	&__remove-button {
+		color: $secondary;
+		margin-left: 8px;
+		opacity: 0;
+		transform: translateY(1px);
+
+		&--visible {
+			opacity: 1;
 		}
 	}
 }

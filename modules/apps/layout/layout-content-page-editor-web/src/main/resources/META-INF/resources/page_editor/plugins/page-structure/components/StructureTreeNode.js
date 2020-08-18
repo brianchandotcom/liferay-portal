@@ -125,9 +125,9 @@ export default function StructureTreeNode({node}) {
 					isOverTarget && targetPosition === TARGET_POSITION.MIDDLE,
 				'drag-over-top':
 					isOverTarget && targetPosition === TARGET_POSITION.TOP,
-				'page-editor__page-structure__tree-node--active': isActive,
-				'page-editor__page-structure__tree-node--bold':
+				'page-editor__page-structure__tree-node--activable':
 					node.activable && node.itemType !== ITEM_TYPES.editable,
+				'page-editor__page-structure__tree-node--active': isActive,
 				'page-editor__page-structure__tree-node--hovered': nodeIsHovered(
 					node.id,
 					hoveredItemId

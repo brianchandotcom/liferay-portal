@@ -102,7 +102,7 @@ export default function PageStructureSidebar() {
 
 	return (
 		<PageStructureSidebarSection>
-			<div className="page-editor__page-structure__structure-tree px-3">
+			<div className="page-editor__page-structure__structure-tree">
 				{!nodes.length && (
 					<ClayAlert
 						displayType="info"

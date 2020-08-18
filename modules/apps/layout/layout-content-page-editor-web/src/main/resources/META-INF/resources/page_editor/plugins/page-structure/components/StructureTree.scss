@@ -1,40 +1,47 @@
 @import 'atlas-variables';
 
 .page-editor__page-structure__structure-tree {
-	overflow: auto;
-	padding-left: 20px;
-	padding-right: 16px;
+	padding: 0 16px;
 
-	.lfr-treeview {
-		&-node-list {
-			border-color: transparent;
-			margin-left: 8px;
+	.lfr-treeview-node-list {
+		border-left: none;
 
-			&-item {
-				margin: 4px 0;
-				outline: none;
-				padding-left: 8px;
+		& .lfr-treeview-node-list {
+			border-left: none;
+			margin-left: 10px;
+		}
 
-				&__button {
-					cursor: pointer;
+		&-item {
+			display: flex;
+			outline: none;
+			padding: 0;
 
-					&-icon {
-						background-color: $white;
-						color: $secondary;
-						height: 16px;
-						margin-top: -2px;
-						padding: 4px;
-						width: 16px;
+			&,
+			&:not(:first-child) {
+				margin: 0;
+			}
 
-						&:hover {
-							color: $dark;
-						}
+			&__button {
+				background-color: transparent;
+				cursor: pointer;
+				margin: 0;
+				position: static;
+
+				&-icon {
+					background-color: transparent;
+					color: $secondary;
+					height: 16px;
+					padding: 5px 4px 4px;
+					width: 16px;
+
+					&:hover {
+						color: $dark;
 					}
 				}
+			}
 
-				&__children {
-					padding-left: 16px;
-				}
+			&__children {
+				padding-left: 8px !important;
 			}
 		}
 	}

@@ -333,23 +333,33 @@ export const DragAndDropContextProvider = ({children}) => {
 	);
 };
 
+function getSiblingPosition(state, parentItem) {
+	const dropItemPosition = parentItem.children.indexOf(state.dropItem.itemId);
+	const siblingPosition = parentItem.children.indexOf(
+		state.dropTargetItem.itemId
+	);
+
+	if (state.targetPositionWithoutMiddle === TARGET_POSITION.BOTTOM) {
+		return siblingPosition + 1;
+	}
+	else if (dropItemPosition < siblingPosition && siblingPosition > 0) {
+		return siblingPosition - 1;
+	}
+
+	return siblingPosition;
+}
+
 function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
 	if (state.droppable && state.dropItem && state.dropTargetItem) {
 		if (state.elevate) {
 			const parentItem =
 				layoutDataRef.current.items[state.dropTargetItem.parentId];
 
-			const siblingPosition = parentItem.children.indexOf(
-				state.dropTargetItem.itemId
-			);
-
 			const position = Math.min(
 				parentItem.children.includes(state.dropItem.itemId)
 					? parentItem.children.length - 1
 					: parentItem.children.length,
-				state.targetPositionWithoutMiddle === TARGET_POSITION.BOTTOM
-					? siblingPosition + 1
-					: siblingPosition
+				getSiblingPosition(state, parentItem)
 			);
 
 			onDragEnd(parentItem.itemId, position);

@@ -57,11 +57,7 @@ public interface ContentDashboardItem<T> {
 
 	public Locale getDefaultLocale();
 
-	public Date getExpirationDate();
-
 	public Date getModifiedDate();
-
-	public Date getPublishDate();
 
 	public String getScopeName(Locale locale);
 

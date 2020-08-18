@@ -250,18 +250,9 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				return LocaleUtil.US;
 			}
 
-			@Override
-			public Date getExpirationDate() {
-				return new Date();
-			}
 
 			@Override
 			public Date getModifiedDate() {
-				return new Date();
-			}
-
-			@Override
-			public Date getPublishDate() {
 				return new Date();
 			}
 

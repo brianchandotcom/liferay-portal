@@ -160,20 +160,6 @@ public class JournalArticleContentDashboardItemTest {
 	}
 
 	@Test
-	public void testGetExpirationDate() {
-		JournalArticle journalArticle = _getJournalArticle();
-
-		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
-			new JournalArticleContentDashboardItem(
-				null, null, null, null, null, null, journalArticle, null, null,
-				null, null);
-
-		Assert.assertEquals(
-			journalArticle.getExpirationDate(),
-			journalArticleContentDashboardItem.getExpirationDate());
-	}
-
-	@Test
 	public void testGetModifiedDate() {
 		JournalArticle journalArticle = _getJournalArticle();
 
@@ -185,20 +171,6 @@ public class JournalArticleContentDashboardItemTest {
 		Assert.assertEquals(
 			journalArticle.getModifiedDate(),
 			journalArticleContentDashboardItem.getModifiedDate());
-	}
-
-	@Test
-	public void testGetPublishDate() {
-		JournalArticle journalArticle = _getJournalArticle();
-
-		JournalArticleContentDashboardItem journalArticleContentDashboardItem =
-			new JournalArticleContentDashboardItem(
-				null, null, null, null, null, null, journalArticle, null, null,
-				null, null);
-
-		Assert.assertEquals(
-			journalArticle.getDisplayDate(),
-			journalArticleContentDashboardItem.getPublishDate());
 	}
 
 	@Test

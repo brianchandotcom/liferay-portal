@@ -218,18 +218,8 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
-	public Date getExpirationDate() {
-		return _journalArticle.getExpirationDate();
-	}
-
-	@Override
 	public Date getModifiedDate() {
 		return _journalArticle.getModifiedDate();
-	}
-
-	@Override
-	public Date getPublishDate() {
-		return _journalArticle.getDisplayDate();
 	}
 
 	@Override

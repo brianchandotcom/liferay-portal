@@ -257,6 +257,16 @@ renderResponse.setTitle(headerTitle);
 							assetRenderer="<%= assetRenderer %>"
 							template="<%= AssetRenderer.TEMPLATE_ABSTRACT %>"
 						/>
+
+						<%
+						String[] metadataFields = {"author", "categories", "tags"};
+						%>
+
+						<liferay-asset:asset-metadata
+							className="<%= assetEntry.getClassName() %>"
+							classPK="<%= assetEntry.getClassPK() %>"
+							metadataFields="<%= metadataFields %>"
+						/>
 					</liferay-ui:panel>
 
 					<c:if test="<%= assetEntry != null %>">

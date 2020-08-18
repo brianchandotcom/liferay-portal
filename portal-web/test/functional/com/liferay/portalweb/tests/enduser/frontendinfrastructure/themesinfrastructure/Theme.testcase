@@ -8,8 +8,6 @@ definition {
 
 	setUp {
 		TestCase.setUpPortalInstance();
-
-		User.firstLoginPG();
 	}
 
 	tearDown {
@@ -33,6 +31,8 @@ definition {
 	@priority = "5"
 	test ApplyThemeToSinglePage {
 		property test.name.skip.portal.instance = "Theme#ApplyThemeToSinglePage";
+
+		User.firstLoginPG();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -62,6 +62,8 @@ definition {
 	test DeactivateAndReactivateTheme {
 		property test.name.skip.portal.instance = "Theme#DeactivateAndReactivateTheme";
 		var appName = "test-theme";
+
+		User.firstLoginPG();
 
 		Theme.deployThemeWar(themeName = "${appName}");
 
@@ -133,9 +135,30 @@ definition {
 	}
 
 	@priority = "5"
+	test StartPortalWithoutClassicTheme {
+		property liferay.dependency.jars = "test-theme.war";
+		property skip.start-app-server = "true";
+		property test.name.skip.portal.instance = "Theme#StartPortalWithoutClassicTheme";
+
+		FileInstall.deleteWarOffline(liferayDependencyWars = "classic-theme.war");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		Navigator.openURL();
+
+		AssertConsoleTextPresent(value1 = "No theme found for specified theme id classic_WAR_classictheme. Returning the default theme.");
+
+		SikuliAssertElementPresent(locator1 = "Theme#TEST_THEME_7_3_HOME_PAGE_PNG");
+
+		takeScreenshot();
+	}
+
+	@priority = "5"
 	test UninstallAndRedeployTheme {
 		property test.name.skip.portal.instance = "Theme#UninstallAndRedeployTheme";
 		var appName = "test-theme";
+
+		User.firstLoginPG();
 
 		Theme.deployThemeWar(themeName = "${appName}");
 

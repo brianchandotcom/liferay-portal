@@ -60,6 +60,10 @@ export default function AuditBarChart({rtl, vocabularies}) {
 
 		const data = vocabularies.map((category) => {
 			if (!category.categories) {
+				if (Number(category.value) > maxValue) {
+					maxValue = Number(category.value);
+				}
+
 				return category;
 			}
 

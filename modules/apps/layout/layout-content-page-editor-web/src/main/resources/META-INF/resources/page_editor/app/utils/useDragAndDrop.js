@@ -28,7 +28,6 @@ import {useCollectionItemIndex} from '../components/CollectionItemContext';
 import {useSelectItem} from '../components/Controls';
 import {getToControlsId} from '../components/layout-data-items/Collection';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {ORIGIN_TYPES} from '../config/constants/originTypes';
 import {useSelector} from '../store/index';
 
 export const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
@@ -260,6 +259,9 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 	const [, setDropTargetRef] = useDrop({
 		accept: Object.values(LAYOUT_DATA_ITEM_TYPES),
 		hover({getSourceItem}, monitor) {
+			if (getSourceItem().origin !== targetItem.origin) {
+				return;
+			}
 			computeHover({
 				dispatch,
 				layoutDataRef,
@@ -394,13 +396,6 @@ function defaultComputeHover({
 	// items are being dragged over nested children
 
 	if (!monitor.isOver({shallow: true})) {
-		return;
-	}
-
-	if (
-		(sourceItem.origin === ORIGIN_TYPES.treeview && !targetItem.origin) ||
-		(!sourceItem.origin && targetItem.origin === ORIGIN_TYPES.treeview)
-	) {
 		return;
 	}
 
@@ -544,9 +539,7 @@ function defaultComputeHover({
 				monitor,
 				siblingItem,
 				sourceItem,
-				targetItem: targetItem.origin
-					? {...elevatedTargetItem, origin: targetItem.origin}
-					: elevatedTargetItem,
+				targetItem: elevatedTargetItem,
 				targetRefs,
 			});
 		}

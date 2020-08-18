@@ -30,7 +30,6 @@ import {fromControlsId} from '../../../app/components/layout-data-items/Collecti
 import {ITEM_ACTIVATION_ORIGINS} from '../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
-import {ORIGIN_TYPES} from '../../../app/config/constants/originTypes';
 import selectCanUpdatePageStructure from '../../../app/selectors/selectCanUpdatePageStructure';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import deleteItem from '../../../app/thunks/deleteItem';
@@ -74,20 +73,27 @@ export default function StructureTreeNode({node}) {
 
 	const isActive = node.activable && nodeIsSelected(node.id, activeItemId);
 
-	const {
-		canDropOverTarget,
-		isOverTarget,
-		sourceItem,
-		targetPosition,
-		targetRef,
-	} = useDropTarget({...node, parentId: node.parentItemId}, computeHover);
+	const item = {
+		children: node.children,
+		icon: node.icon,
+		itemId: node.id,
+		name: node.name,
+		origin: ITEM_ACTIVATION_ORIGINS.structureTree,
+		parentId: node.parentItemId,
+		type: node.type,
+	};
+
+	const {isOverTarget, targetPosition, targetRef} = useDropTarget(
+		item,
+		computeHover
+	);
 
 	const {handlerRef, isDraggingSource} = useDragItem(
-		{...node, parentId: node.parentItemId},
+		item,
 		(parentItemId, position) =>
 			dispatch(
 				moveItem({
-					itemId: node.itemId,
+					itemId: node.id,
 					parentItemId,
 					position,
 					segmentsExperienceId,
@@ -121,7 +127,7 @@ export default function StructureTreeNode({node}) {
 					isOverTarget && targetPosition === TARGET_POSITION.TOP,
 				'page-editor__page-structure__tree-node--active': isActive,
 				'page-editor__page-structure__tree-node--bold':
-					node.activable && node.type !== ITEM_TYPES.editable,
+					node.activable && node.itemType !== ITEM_TYPES.editable,
 				'page-editor__page-structure__tree-node--hovered': nodeIsHovered(
 					node.id,
 					hoveredItemId
@@ -162,7 +168,7 @@ export default function StructureTreeNode({node}) {
 
 					if (node.activable) {
 						selectItem(toControlsId(node.id), {
-							itemType: node.type,
+							itemType: node.itemType,
 							origin: ITEM_ACTIVATION_ORIGINS.structureTree,
 						});
 					}

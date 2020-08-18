@@ -23,7 +23,6 @@ import {EDITABLE_TYPES} from '../../../app/config/constants/editableTypes';
 import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {LAYOUT_TYPES} from '../../../app/config/constants/layoutTypes';
-import {ORIGIN_TYPES} from '../../../app/config/constants/originTypes';
 import {config} from '../../../app/config/index';
 import selectCanUpdateEditables from '../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemConfiguration from '../../../app/selectors/selectCanUpdateItemConfiguration';
@@ -185,7 +184,6 @@ function visit(
 				icon: EDITABLE_TYPE_ICONS[type],
 				id: childId,
 				name: EDITABLE_TYPE_LABELS[type],
-				origin: ORIGIN_TYPES.treeview,
 				parentId: item.parentId,
 				removable: false,
 				type: ITEM_TYPES.editable,
@@ -267,10 +265,8 @@ function visit(
 		expanded: item.itemId === activeItemId,
 		icon,
 		id: item.itemId,
-		itemId: item.itemId,
 		itemType: ITEM_TYPES.layoutDataItem,
 		name: getLayoutDataItemLabel(item, fragmentEntryLinks),
-		origin: ORIGIN_TYPES.treeview,
 		parentItemId: item.parentId,
 		removable: !itemInMasterLayout && isRemovable(item, layoutData),
 		type: item.type,

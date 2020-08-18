@@ -223,8 +223,8 @@ public class UserDisplayContext {
 				navigationItem.setActive(toolbarItem.equals("view-all-users"));
 				navigationItem.setHref(
 					_renderResponse.createRenderURL(), "toolbarItem",
-					"view-all-users", "saveUsersListView", true,
-					"usersListView", UserConstants.LIST_VIEW_FLAT_USERS);
+					"view-all-users", "usersListView",
+					UserConstants.LIST_VIEW_FLAT_USERS);
 				navigationItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "users"));
 			}
@@ -234,8 +234,7 @@ public class UserDisplayContext {
 					toolbarItem.equals("view-all-organizations"));
 				navigationItem.setHref(
 					_renderResponse.createRenderURL(), "toolbarItem",
-					"view-all-organizations", "saveUsersListView", true,
-					"usersListView",
+					"view-all-organizations", "usersListView",
 					UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS);
 				navigationItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "organizations"));

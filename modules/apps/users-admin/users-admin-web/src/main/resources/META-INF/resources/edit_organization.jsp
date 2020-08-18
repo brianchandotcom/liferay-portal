@@ -39,7 +39,6 @@ if (Validator.isNull(backURL)) {
 	PortletURL viewOrganizationsURL = liferayPortletResponse.createRenderURL();
 
 	viewOrganizationsURL.setParameter("toolbarItem", "view-all-organizations");
-	viewOrganizationsURL.setParameter("saveUsersListView", Boolean.TRUE.toString());
 	viewOrganizationsURL.setParameter("usersListView", UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS);
 
 	backURL = viewOrganizationsURL.toString();

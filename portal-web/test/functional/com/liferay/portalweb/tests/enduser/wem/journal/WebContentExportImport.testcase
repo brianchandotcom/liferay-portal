@@ -32,6 +32,31 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
+		JSONGroup.addGroup(groupName = "Site Name 2");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			templateDescription = "Content List Display Description",
+			templateFile = "content-list-display-template.txt",
+			templateName = "Content List Display");
+
+		WebContentTemplates.addCP(
+			templateDescription = "Thumbnail Display Description",
+			templateFile = "thumbnail-display-template.txt",
+			templateName = "Thumbnail Display");
+
+		WebContentTemplates.addCP(
+			templateDescription = "Carousel Display Description",
+			templateFile = "carousel-display-template.txt",
+			templateName = "Carousel Display");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		LAR.exportPortlet(larFileName = "content-display-templates.lar");
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -53,9 +78,7 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		LAR.importPortlet(
-			larFileName = "content-display-templates.lar",
-			uploadFrom = "dependencies");
+		LAR.importPortlet(larFileName = "content-display-templates.lar");
 
 		Refresh();
 
@@ -89,11 +112,147 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
+		JSONGroup.addGroup(groupName = "Site Name 2");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "3 Columns with Images Description",
+			structureName = "3 Columns with Images");
+
+		DynamicDataMapping.addField(
+			field = "Text Box",
+			fieldFieldLabel = "Heading",
+			fieldName = "ColumnHeading");
+
+		for (var position : list "Left,Middle,Right") {
+			DynamicDataMapping.addField(
+				field = "Image",
+				fieldFieldLabel = "${position} Image",
+				fieldName = "${position}Image");
+
+			DynamicDataMapping.addField(
+				field = "Text Box",
+				fieldFieldLabel = "${position} Subheading",
+				fieldName = "${position}Subheading");
+
+			DynamicDataMapping.addField(
+				field = "Text Box",
+				fieldFieldLabel = "${position} Content",
+				fieldName = "${position}content");
+		}
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Footer Content Description",
+			structureName = "Footer Content");
+
+		DynamicDataMapping.addField(
+			field = "Image",
+			fieldFieldLabel = "Main Image",
+			fieldName = "FooterMainImage");
+
+		DynamicDataMapping.addField(
+			field = "Text Box",
+			fieldFieldLabel = "Heading",
+			fieldName = "FooterHeading");
+
+		DynamicDataMapping.addField(
+			field = "Text Box",
+			fieldFieldLabel = "Text",
+			fieldName = "FooterText");
+
+		DynamicDataMapping.addField(
+			field = "Image",
+			fieldFieldLabel = "Background Image",
+			fieldName = "FooterBgImage");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "1 Column Banner Description",
+			structureName = "1 Column Banner");
+
+		DynamicDataMapping.addField(
+			field = "Text Box",
+			fieldFieldLabel = "Title",
+			fieldName = "BannerTitle");
+
+		DynamicDataMapping.addField(
+			field = "Text Box",
+			fieldFieldLabel = "Heading",
+			fieldName = "BannerHeading");
+
+		DynamicDataMapping.addField(
+			field = "Text Box",
+			fieldFieldLabel = "Content",
+			fieldName = "BannerContent");
+
+		DynamicDataMapping.addField(
+			field = "Image",
+			fieldFieldLabel = "Banner Image",
+			fieldName = "BannerImage");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		LAR.exportPortlet(larFileName = "frontPage-structures.lar");
+
+		JSONGroup.addGroup(groupName = "Site Name 3");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-3");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "3 Columns with Images",
+			templateDescription = "3 Columns with Images Template Description",
+			templateFile = "3-columns-with-images-template.txt",
+			templateName = "3 Columns with Images Template");
+
+		WebContentTemplates.addCP(
+			structureName = "Footer Content",
+			templateDescription = "Footer Content Template Description",
+			templateFile = "footer-content-template.txt",
+			templateName = "Footer Content Template");
+
+		WebContentTemplates.addCP(
+			structureName = "1 Column Banner",
+			templateDescription = "1 Column Banner Template Description",
+			templateFile = "1-column-banner-template.txt",
+			templateName = "1 Column Banner Template");
+
+		WebContentTemplates.addCP(
+			structureName = "News",
+			templateDescription = "News Description",
+			templateFile = "news-template.txt",
+			templateName = "News");
+
+		WebContentTemplates.addCP(
+			structureName = "Events",
+			templateDescription = "News Description",
+			templateFile = "events-template.txt",
+			templateName = "Events");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		LAR.exportPortlet(larFileName = "space-templates.lar");
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		LAR.importPortlet(
-			larFileName = "frontPage-structures.lar",
-			uploadFrom = "dependencies");
+		LAR.importPortlet(larFileName = "frontPage-structures.lar");
 
 		Refresh();
 
@@ -105,9 +264,7 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		LAR.importPortlet(
-			larFileName = "space-templates.lar",
-			uploadFrom = "dependencies");
+		LAR.importPortlet(larFileName = "space-templates.lar");
 
 		for (var templateName : list "3 Columns with Images Template,Footer Content Template,1 Column Banner Template,News,Events") {
 			Navigator.gotoNavItem(navItem = "Templates");
@@ -271,11 +428,56 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "3 Column with Images Description",
+			structureName = "3 Column with Images");
+
+		DynamicDataMapping.addField(
+			field = "Text Box",
+			fieldFieldLabel = "Title",
+			fieldName = "title");
+
+		for (var count : list "1,2,3") {
+			DynamicDataMapping.addField(
+				field = "Image",
+				fieldFieldLabel = "Image ${count}",
+				fieldName = "image${count}");
+
+			DynamicDataMapping.addField(
+				field = "Text Box",
+				fieldFieldLabel = "Heading ${count}1",
+				fieldName = "heading${count}");
+
+			DynamicDataMapping.addField(
+				field = "Text Box",
+				fieldFieldLabel = "Content ${count}",
+				fieldName = "content${count}");
+		}
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			siteURLKey = "test-site-name",
+			structureName = "3 Column with Images",
+			templateDescription = "Frontpage 3 Column with Images Template Description",
+			templateFile = "Frontpage 3 Column with Images Template.txt",
+			templateName = "Frontpage 3 Column with Images Template");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		LAR.exportPortlet(larFileName = "structure-templates.lar");
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 
-		LAR.importPortlet(
-			larFileName = "structure-templates.lar",
-			uploadFrom = "dependencies");
+		LAR.importPortlet(larFileName = "structure-templates.lar");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -477,6 +679,164 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training,Web Content Administration";
 
+		JSONGroup.addGroup(groupName = "Site Name 2");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "News Description",
+			structureName = "News");
+
+		DynamicDataMapping.addField(
+			field = "Image",
+			fieldFieldLabel = "Cover Image",
+			fieldName = "NewsCoverImage");
+
+		DynamicDataMapping.addField(
+			field = "Text Box",
+			fieldFieldLabel = "Content",
+			fieldName = "NewsContent");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Events Description",
+			structureName = "Events");
+
+		DynamicDataMapping.addField(
+			field = "Image",
+			fieldFieldLabel = "Cover Image",
+			fieldName = "EventCoverImage");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Headline",
+			fieldName = "EventHeadline");
+
+		DynamicDataMapping.addField(
+			field = "Date",
+			fieldFieldLabel = "EventDate",
+			fieldName = "EventDate");
+
+		DynamicDataMapping.addField(
+			field = "Text Box",
+			fieldFieldLabel = "Lead Text",
+			fieldName = "EventLeadText");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "News",
+			templateDescription = "News Template Description",
+			templateFile = "news-template.txt",
+			templateName = "News");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "Events",
+			templateDescription = "Events Template Description",
+			templateFile = "events-template.txt",
+			templateName = "Events");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "News");
+
+		WebContent.addWithStructureCP(
+			fieldName = "Content",
+			structureName = "News",
+			templateName = "News",
+			webContentTextBox = "As the 96th anniversary of Apollo 11’s historic landing on the moon approaches, Dr. Peter Vance and Dr. Alessandro Mancelli of the Astronautics Department discuss the profound impact the vision of Apollo 11 and NASA had on both the world and on the foundation of The Space Program itself.",
+			webContentTitle = "When It All Began...");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "News");
+
+		WebContent.addWithStructureCP(
+			fieldName = "Content",
+			structureName = "News",
+			templateName = "News",
+			webContentTextBox = "A new study shows a correlation between the mathematics of music and planetary rings. “It’s possible,” says lead researcher Dr. Agatha Saylor, “that this evidence could help us understand some of space’s greatest mysteries.”",
+			webContentTitle = "Stravinksy in Space?");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "News");
+
+		WebContent.addWithStructureCP(
+			fieldName = "Content",
+			structureName = "News",
+			templateName = "News",
+			webContentTextBox = "Omar Qasim, ’68, dishes on what it was like to grow up as the son of an astronaut, how a Chemistry class saved his life, and the one weird thing he does to keep himself focused.",
+			webContentTitle = "Student Spotlight");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Events");
+
+		WebContent.addWithStructureCP(
+			fieldName = "LeadText",
+			key_fieldName = "EventDate",
+			structureName = "Events",
+			templateName = "Events",
+			webContentDate = "05/12/2065",
+			webContentTextBox = "S.P.A.C.E. Board of Governors member Antony Carelli and president Dr. Asmund Grey will hold a press conference Tuesday, July 9th to address recent security questions and put to rest faculty hiring rumors.",
+			webContentTitle = "Upcoming Press Conference");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Events");
+
+		WebContent.addWithStructureCP(
+			fieldName = "LeadText",
+			key_fieldName = "EventDate",
+			structureName = "Events",
+			templateName = "Events",
+			webContentDate = "05/31/2065",
+			webContentTextBox = "Attention, incoming students: New Student Orientation begins at 2:00 P.M. Monday, August 17th in the Carelli Auditorium on South Campus. Please check your emails for more information.",
+			webContentTitle = "New Student Orientation");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Events");
+
+		WebContent.addWithStructureCP(
+			fieldName = "LeadText",
+			key_fieldName = "EventDate",
+			structureName = "Events",
+			templateName = "Events",
+			webContentDate = "05/31/2065",
+			webContentTextBox = "Dr. Josiah Andrews, retired former director of ISRI, will be speaking in Allen Hall as part of our Special Speakers lineup. At 7:00 P.M. from Wednesday, August 26-Friday, August 28, Dr. Andrews will discuss the current landscape of planet-discovering technology.",
+			webContentTitle = "Fall Special Speaker Series");
+
+		PortletEntry.publish();
+
+		LAR.exportPortlet(larFileName = "space-web-content.lar");
+
 		JSONWebcontent.addFolder(
 			folderDescription = "News Folder Description",
 			folderName = "News",
@@ -489,9 +849,7 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		LAR.importPortlet(
-			larFileName = "space-web-content.lar",
-			uploadFrom = "dependencies");
+		LAR.importPortlet(larFileName = "space-web-content.lar");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

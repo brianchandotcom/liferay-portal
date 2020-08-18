@@ -89,7 +89,7 @@ public class TableClayDataSetContentRendererContextContributor
 			).put(
 				"contentRenderer", clayTableSchemaField.getContentRenderer()
 			).put(
-				"contentRendererModuleUrl",
+				"contentRendererModuleURL",
 				clayTableSchemaField.getContentRendererModuleURL()
 			).put(
 				"expand", clayTableSchemaField.isExpand()

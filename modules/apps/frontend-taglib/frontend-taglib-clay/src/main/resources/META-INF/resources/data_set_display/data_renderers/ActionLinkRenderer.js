@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import DataSetDisplayContext from '../DataSetDisplayContext';
-import {formatActionUrl} from '../utilities/index';
+import {formatActionURL} from '../utilities/index';
 import DefaultContent from './DefaultRenderer';
 
 function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
@@ -56,7 +56,7 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 	}
 
 	const formattedHref =
-		currentAction.href && formatActionUrl(currentAction.href, itemData);
+		currentAction.href && formatActionURL(currentAction.href, itemData);
 
 	function handleClickOnLink(event) {
 		if (currentAction.target === 'modal') {

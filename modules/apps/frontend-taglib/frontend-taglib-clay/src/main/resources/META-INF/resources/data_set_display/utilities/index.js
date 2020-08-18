@@ -63,15 +63,15 @@ export function executeAsyncAction(url, method = 'GET') {
 	});
 }
 
-export function formatActionUrl(url, item) {
-	const replacedUrl = url.replace(new RegExp('{(.*?)}', 'mg'), (matched) =>
+export function formatActionURL(url, item) {
+	const replacedURL = url.replace(new RegExp('{(.*?)}', 'mg'), (matched) =>
 		getValueFromItem(
 			item,
 			matched.substring(1, matched.length - 1).split('|')
 		)
 	);
 
-	return replacedUrl.replace(new RegExp('(%7B.*?%7D)', 'mg'), (matched) =>
+	return replacedURL.replace(new RegExp('(%7B.*?%7D)', 'mg'), (matched) =>
 		getValueFromItem(
 			item,
 			matched.substring(3, matched.length - 3).split('|')
@@ -101,7 +101,7 @@ export function createSortingString(values) {
 
 export function loadData(
 	apiURL,
-	currentUrl,
+	currentURL,
 	filters,
 	searchParam,
 	delta,
@@ -110,7 +110,7 @@ export function loadData(
 ) {
 	const url = new URL(apiURL, themeDisplay.getPortalURL());
 
-	url.searchParams.append('currentUrl', currentUrl);
+	url.searchParams.append('currentURL', currentURL);
 
 	if (filters.length) {
 		url.searchParams.append('filter', createOdataFilter(filters));

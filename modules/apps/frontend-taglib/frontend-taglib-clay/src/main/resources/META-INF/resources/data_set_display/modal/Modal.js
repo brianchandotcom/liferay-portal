@@ -38,7 +38,7 @@ function Modal({
 	const [loading, setLoading] = useState(false);
 	const [onClose, setOnClose] = useState(null);
 	const [title, setTitle] = useState(titleProp);
-	const [url, setUrl] = useState(urlProp);
+	const [url, setURL] = useState(urlProp);
 	const [size, setSize] = useState(INITIAL_MODAL_SIZE);
 
 	const doClose = useCallback(
@@ -70,7 +70,7 @@ function Modal({
 			setVisible(true);
 
 			if (data.url) {
-				setUrl(data.url);
+				setURL(data.url);
 			}
 
 			if (data.onClose) {

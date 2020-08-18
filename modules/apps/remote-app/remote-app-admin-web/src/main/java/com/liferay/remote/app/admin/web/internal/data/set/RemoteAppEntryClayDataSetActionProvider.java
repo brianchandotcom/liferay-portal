@@ -100,7 +100,7 @@ public class RemoteAppEntryClayDataSetActionProvider
 			String.valueOf(remoteAppClayDataSetEntry.getRemoteAppEntryId()));
 
 		String currentURL = ParamUtil.getString(
-			httpServletRequest, "currentUrl",
+			httpServletRequest, "currentURL",
 			_portal.getCurrentURL(httpServletRequest));
 
 		editRemoteAppEntryURL.setParameter("redirect", currentURL);

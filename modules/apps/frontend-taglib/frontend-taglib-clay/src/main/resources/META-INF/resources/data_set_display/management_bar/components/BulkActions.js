@@ -45,7 +45,7 @@ function getQueryString(key, values = []) {
 function getRichPayload(payload, key, values = []) {
 	const richPayload = {
 		...payload,
-		url: payload.baseUrl + getQueryString(key, values),
+		url: payload.baseURL + getQueryString(key, values),
 	};
 
 	return richPayload;
@@ -76,7 +76,7 @@ function BulkActions({
 
 		if (target === 'sidePanel') {
 			const sidePanelActionPayload = {
-				baseUrl: href,
+				baseURL: href,
 				id: sidePanelId,
 				onAfterSubmit: () => loadData(),
 				slug: slug ?? null,
@@ -120,7 +120,7 @@ function BulkActions({
 				currentOpenedSidePanel?.id ===
 					currentSidePanelActionPayload.id &&
 				currentOpenedSidePanel.url.indexOf(
-					currentSidePanelActionPayload.baseUrl
+					currentSidePanelActionPayload.baseURL
 				) > -1
 			) {
 				Liferay.fire(

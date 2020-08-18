@@ -15,7 +15,7 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useEffect, useState} from 'react';
 
-import {getComponentByModuleUrl} from '../../../utilities/modules';
+import {getComponentByModuleURL} from '../../../utilities/modules';
 import AutocompleteFilter from './AutocompleteFilter';
 import CheckboxesFilter from './CheckboxesFilter';
 import DateRangeFilter from './DateRangeFilter';
@@ -33,10 +33,10 @@ export const filterIdToComponentMap = {
 };
 
 export function Filter(props) {
-	const {moduleUrl, type} = props;
+	const {moduleURL, type} = props;
 
 	const [Component, updateComponent] = useState(() => {
-		if (!moduleUrl) {
+		if (!moduleURL) {
 			const Matched = filterIdToComponentMap[type];
 
 			if (!Matched) {
@@ -51,12 +51,12 @@ export function Filter(props) {
 	});
 
 	useEffect(() => {
-		if (moduleUrl) {
-			getComponentByModuleUrl(moduleUrl).then((FetchedComponent) =>
+		if (moduleURL) {
+			getComponentByModuleURL(moduleURL).then((FetchedComponent) =>
 				updateComponent(() => FetchedComponent)
 			);
 		}
-	}, [moduleUrl]);
+	}, [moduleURL]);
 
 	return Component ? (
 		<div className="data-set-filter test">

@@ -58,7 +58,7 @@ public class ClayDataSetDisplayViewSerializerImpl
 			JSONObject jsonObject = JSONUtil.put(
 				"contentRenderer", clayDataSetDisplayView.getContentRenderer()
 			).put(
-				"contentRendererModuleUrl",
+				"contentRendererModuleURL",
 				clayDataSetDisplayView.getContentRendererModuleURL()
 			).put(
 				"label",

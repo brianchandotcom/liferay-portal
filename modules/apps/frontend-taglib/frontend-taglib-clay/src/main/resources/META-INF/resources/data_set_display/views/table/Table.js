@@ -24,7 +24,7 @@ import CommentRenderer from '../../data_renderers/CommentRenderer';
 import RadioRenderer from '../../data_renderers/RadioRenderer';
 import {
 	getDataRendererById,
-	getDataRendererByUrl,
+	getDataRendererByURL,
 } from '../../data_renderers/index';
 import {getValueFromItem} from '../../utilities/index';
 import ViewsContext from '../ViewsContext';
@@ -41,7 +41,7 @@ function CustomTableCell({
 }) {
 	const [currentView, updateCurrentView] = useState({
 		...view,
-		Component: view.contentRendererModuleUrl
+		Component: view.contentRendererModuleURL
 			? null
 			: getDataRendererById(view.contentRenderer),
 	});
@@ -51,9 +51,9 @@ function CustomTableCell({
 		if (loading) {
 			return;
 		}
-		if (currentView.contentRendererModuleUrl) {
+		if (currentView.contentRendererModuleURL) {
 			setLoading(true);
-			getDataRendererByUrl(currentView.contentRendererModuleUrl).then(
+			getDataRendererByURL(currentView.contentRendererModuleURL).then(
 				(Component) => {
 					updateCurrentView({
 						...currentView,
@@ -107,7 +107,7 @@ function getItemFields(item, fields, itemId, itemsActions) {
 				value={formattedValue}
 				view={{
 					contentRenderer: field.contentRenderer,
-					contentRendererModuleUrl: field.contentRendererModuleUrl,
+					contentRendererModuleURL: field.contentRendererModuleURL,
 				}}
 			/>
 		);

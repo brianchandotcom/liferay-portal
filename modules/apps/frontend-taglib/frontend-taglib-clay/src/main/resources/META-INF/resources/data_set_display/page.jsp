@@ -34,7 +34,7 @@
 			bulkActions: <%= jsonSerializer.serializeDeep(bulkActionDropdownItems) %>,
 			componentId: '<%= containerId %>',
 			creationMenu: <%= jsonSerializer.serializeDeep(creationMenu) %>,
-			currentUrl: '<%= PortalUtil.getCurrentURL(request) %>',
+			currentURL: '<%= PortalUtil.getCurrentURL(request) %>',
 			dataProviderKey: '<%= dataProviderKey %>',
 			formId: '<%= formId %>',
 			id: '<%= id %>',

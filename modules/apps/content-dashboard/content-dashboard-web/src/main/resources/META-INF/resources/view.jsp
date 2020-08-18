@@ -70,10 +70,13 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 							className="com.liferay.content.dashboard.web.internal.item.ContentDashboardItem"
 							keyProperty="id"
 							modelVar="contentDashboardItem"
-							rowIdProperty="classPK"
 						>
 
 							<%
+							InfoItemReference infoItemReference = contentDashboardItem.getInfoItemReference();
+
+							row.setRowId(String.valueOf(infoItemReference.getClassPK()));
+
 							row.setData(HashMapBuilder.<String, Object>put(
 								"rowId", row.getRowId()
 							).build());

@@ -18,6 +18,7 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -87,11 +88,16 @@ public class ContentDashboardDropdownItemsProvider {
 					resourceURL.setParameter(
 						"backURL",
 						_portal.getCurrentURL(_liferayPortletRequest));
+
+					InfoItemReference infoItemReference =
+						contentDashboardItem.getInfoItemReference();
+
 					resourceURL.setParameter(
-						"className", contentDashboardItem.getClassName());
+						"className", infoItemReference.getClassName());
 					resourceURL.setParameter(
 						"classPK",
-						String.valueOf(contentDashboardItem.getClassPK()));
+						String.valueOf(infoItemReference.getClassPK()));
+
 					resourceURL.setResourceID(
 						"/content_dashboard/get_content_dashboard_item_info");
 
@@ -99,9 +105,9 @@ public class ContentDashboardDropdownItemsProvider {
 						HashMapBuilder.<String, Object>put(
 							"action", "showInfo"
 						).put(
-							"className", contentDashboardItem.getClassName()
+							"className", infoItemReference.getClassName()
 						).put(
-							"classPK", contentDashboardItem.getClassPK()
+							"classPK", infoItemReference.getClassPK()
 						).put(
 							"fetchURL", String.valueOf(resourceURL)
 						).build());
@@ -159,16 +165,20 @@ public class ContentDashboardDropdownItemsProvider {
 
 		DropdownItem dropdownItem = new DropdownItem();
 
+		InfoItemReference infoItemReference =
+			contentDashboardItem.getInfoItemReference();
+
 		dropdownItem.setData(
 			HashMapBuilder.<String, Object>put(
 				"action", "showMetrics"
 			).put(
-				"className", contentDashboardItem.getClassName()
+				"className", infoItemReference.getClassName()
 			).put(
-				"classPK", contentDashboardItem.getClassPK()
+				"classPK", infoItemReference.getClassPK()
 			).put(
 				"fetchURL", contentDashboardItemAction.getURL(locale)
 			).build());
+
 		dropdownItem.setIcon(contentDashboardItemAction.getIcon());
 		dropdownItem.setLabel(contentDashboardItemAction.getLabel(locale));
 		dropdownItem.setQuickAction(true);

@@ -22,6 +22,7 @@ import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -114,9 +115,9 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					"categories",
 					_getAssetCategoriesJSONArray(contentDashboardItem, locale)
 				).put(
-					"className", contentDashboardItem.getClassName()
+					"className", _getClassName(contentDashboardItem)
 				).put(
-					"classPK", contentDashboardItem.getClassPK()
+					"classPK", _getClassPK(contentDashboardItem)
 				).put(
 					"createDate",
 					_toString(contentDashboardItem.getCreateDate())
@@ -199,6 +200,20 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 			stream.map(
 				AssetTag::getName
 			).toArray());
+	}
+
+	private String _getClassName(ContentDashboardItem<?> contentDashboardItem) {
+		InfoItemReference infoItemReference =
+			contentDashboardItem.getInfoItemReference();
+
+		return infoItemReference.getClassName();
+	}
+
+	private long _getClassPK(ContentDashboardItem<?> contentDashboardItem) {
+		InfoItemReference infoItemReference =
+			contentDashboardItem.getInfoItemReference();
+
+		return infoItemReference.getClassPK();
 	}
 
 	private JSONObject _getDataJSONObject(

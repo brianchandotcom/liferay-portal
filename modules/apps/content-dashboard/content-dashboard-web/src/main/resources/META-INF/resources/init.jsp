@@ -36,6 +36,7 @@ page import="com.liferay.content.dashboard.web.internal.display.context.ContentD
 page import="com.liferay.content.dashboard.web.internal.display.context.ContentDashboardItemTypeItemSelectorViewManagementToolbarDisplayContext" %><%@
 page import="com.liferay.content.dashboard.web.internal.item.ContentDashboardItem" %><%@
 page import="com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType" %><%@
+page import="com.liferay.info.item.InfoItemReference" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@

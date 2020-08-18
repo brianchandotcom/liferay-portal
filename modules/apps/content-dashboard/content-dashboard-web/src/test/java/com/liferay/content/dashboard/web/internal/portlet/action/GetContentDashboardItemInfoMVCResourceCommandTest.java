@@ -21,6 +21,7 @@ import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -92,10 +93,13 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 		mockLiferayResourceRequest.setAttribute(WebKeys.LOCALE, LocaleUtil.US);
 
+		InfoItemReference infoItemReference =
+			contentDashboardItem.getInfoItemReference();
+
 		mockLiferayResourceRequest.addParameter(
-			"className", contentDashboardItem.getClassName());
+			"className", infoItemReference.getClassName());
 		mockLiferayResourceRequest.addParameter(
-			"classPK", String.valueOf(contentDashboardItem.getClassPK()));
+			"classPK", String.valueOf(infoItemReference.getClassPK()));
 
 		MockLiferayResourceResponse mockLiferayResourceResponse =
 			new MockLiferayResourceResponse();
@@ -119,11 +123,10 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			categoriesJSONArray.toString());
 
 		Assert.assertEquals(
-			contentDashboardItem.getClassName(),
+			infoItemReference.getClassName(),
 			jsonObject.getString("className"));
 		Assert.assertEquals(
-			contentDashboardItem.getClassPK(), jsonObject.getLong("classPK"),
-			0);
+			infoItemReference.getClassPK(), jsonObject.getLong("classPK"), 0);
 
 		JSONArray tagsJSONArray = jsonObject.getJSONArray("tags");
 
@@ -203,16 +206,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			}
 
 			@Override
-			public String getClassName() {
-				return className;
-			}
-
-			@Override
-			public Long getClassPK() {
-				return classPK;
-			}
-
-			@Override
 			public List<ContentDashboardItemAction>
 				getContentDashboardItemActions(
 					HttpServletRequest httpServletRequest,
@@ -248,6 +241,11 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			@Override
 			public Locale getDefaultLocale() {
 				return LocaleUtil.US;
+			}
+
+			@Override
+			public InfoItemReference getInfoItemReference() {
+				return new InfoItemReference(className, classPK);
 			}
 
 			@Override
@@ -312,12 +310,14 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 					return Optional.ofNullable(
 						classPK -> {
+							InfoItemReference infoItemReference =
+								contentDashboardItem.getInfoItemReference();
+
 							if (Objects.equals(
 									className,
-									contentDashboardItem.getClassName()) &&
+									infoItemReference.getClassName()) &&
 								Objects.equals(
-									classPK,
-									contentDashboardItem.getClassPK())) {
+									classPK, infoItemReference.getClassPK())) {
 
 								return contentDashboardItem;
 							}

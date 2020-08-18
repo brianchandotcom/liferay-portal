@@ -14,9 +14,13 @@
 
 package com.liferay.content.dashboard.web.internal.servlet.taglib.util;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
+import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -25,6 +29,7 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -37,10 +42,12 @@ import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PortalImpl;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,8 +55,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author Cristina González
@@ -102,19 +107,10 @@ public class ContentDashboardDropdownItemsProviderTest {
 					_http, _language, mockLiferayPortletRenderRequest,
 					new MockLiferayPortletRenderResponse(), new PortalImpl());
 
-		ContentDashboardItem contentDashboardItem = Mockito.mock(
-			ContentDashboardItem.class);
-
-		Mockito.when(
-			contentDashboardItem.getContentDashboardItemActions(
-				Mockito.any(HttpServletRequest.class),
-				Mockito.eq(ContentDashboardItemAction.Type.VIEW),
-				Mockito.eq(ContentDashboardItemAction.Type.EDIT))
-		).thenReturn(
+		ContentDashboardItem contentDashboardItem = _getContentDashboardItem(
 			Collections.singletonList(
 				_getContentDashboardItemAction(
-					"edit", ContentDashboardItemAction.Type.EDIT, "validURL"))
-		);
+					"edit", ContentDashboardItemAction.Type.EDIT, "validURL")));
 
 		List<DropdownItem> dropdownItems =
 			contentDashboardDropdownItemsProvider.getDropdownItems(
@@ -153,19 +149,10 @@ public class ContentDashboardDropdownItemsProviderTest {
 					_http, _language, mockLiferayPortletRenderRequest,
 					new MockLiferayPortletRenderResponse(), new PortalImpl());
 
-		ContentDashboardItem contentDashboardItem = Mockito.mock(
-			ContentDashboardItem.class);
-
-		Mockito.when(
-			contentDashboardItem.getContentDashboardItemActions(
-				Mockito.any(HttpServletRequest.class),
-				Mockito.eq(ContentDashboardItemAction.Type.VIEW),
-				Mockito.eq(ContentDashboardItemAction.Type.EDIT))
-		).thenReturn(
+		ContentDashboardItem contentDashboardItem = _getContentDashboardItem(
 			Collections.singletonList(
 				_getContentDashboardItemAction(
-					"view", ContentDashboardItemAction.Type.VIEW, "validURL"))
-		);
+					"view", ContentDashboardItemAction.Type.VIEW, "validURL")));
 
 		List<DropdownItem> dropdownItems =
 			contentDashboardDropdownItemsProvider.getDropdownItems(
@@ -206,19 +193,10 @@ public class ContentDashboardDropdownItemsProviderTest {
 					_http, _language, mockLiferayPortletRenderRequest,
 					new MockLiferayPortletRenderResponse(), new PortalImpl());
 
-		ContentDashboardItem contentDashboardItem = Mockito.mock(
-			ContentDashboardItem.class);
-
-		Mockito.when(
-			contentDashboardItem.getContentDashboardItemActions(
-				Mockito.any(HttpServletRequest.class),
-				Mockito.eq(ContentDashboardItemAction.Type.VIEW),
-				Mockito.eq(ContentDashboardItemAction.Type.EDIT))
-		).thenReturn(
+		ContentDashboardItem contentDashboardItem = _getContentDashboardItem(
 			Collections.singletonList(
 				_getContentDashboardItemAction(
-					"view", ContentDashboardItemAction.Type.VIEW, "validURL"))
-		);
+					"view", ContentDashboardItemAction.Type.VIEW, "validURL")));
 
 		List<DropdownItem> dropdownItems =
 			contentDashboardDropdownItemsProvider.getDropdownItems(
@@ -261,19 +239,12 @@ public class ContentDashboardDropdownItemsProviderTest {
 					_http, _language, mockLiferayPortletRenderRequest,
 					new MockLiferayPortletRenderResponse(), new PortalImpl());
 
-		ContentDashboardItem contentDashboardItem = Mockito.mock(
-			ContentDashboardItem.class);
-
-		Mockito.when(
-			contentDashboardItem.getContentDashboardItemActions(
-				Mockito.any(HttpServletRequest.class),
-				Mockito.eq(ContentDashboardItemAction.Type.VIEW_IN_PANEL))
-		).thenReturn(
+		ContentDashboardItem contentDashboardItem = _getContentDashboardItem(
 			Collections.singletonList(
 				_getContentDashboardItemAction(
 					"viewInPanel",
-					ContentDashboardItemAction.Type.VIEW_IN_PANEL, "validURL"))
-		);
+					ContentDashboardItemAction.Type.VIEW_IN_PANEL,
+					"validURL")));
 
 		List<DropdownItem> dropdownItems =
 			contentDashboardDropdownItemsProvider.getDropdownItems(
@@ -317,19 +288,10 @@ public class ContentDashboardDropdownItemsProviderTest {
 					_http, _language, mockLiferayPortletRenderRequest,
 					new MockLiferayPortletRenderResponse(), new PortalImpl());
 
-		ContentDashboardItem contentDashboardItem = Mockito.mock(
-			ContentDashboardItem.class);
-
-		Mockito.when(
-			contentDashboardItem.getContentDashboardItemActions(
-				Mockito.any(HttpServletRequest.class),
-				Mockito.eq(ContentDashboardItemAction.Type.VIEW),
-				Mockito.eq(ContentDashboardItemAction.Type.EDIT))
-		).thenReturn(
+		ContentDashboardItem contentDashboardItem = _getContentDashboardItem(
 			Collections.singletonList(
 				_getContentDashboardItemAction(
-					"view", ContentDashboardItemAction.Type.VIEW, "validURL"))
-		);
+					"view", ContentDashboardItemAction.Type.VIEW, "validURL")));
 
 		List<DropdownItem> dropdownItems =
 			contentDashboardDropdownItemsProvider.getDropdownItems(
@@ -348,6 +310,119 @@ public class ContentDashboardDropdownItemsProviderTest {
 		Assert.assertEquals(
 			"validURL",
 			_http.getPath(String.valueOf(viewDropdownItem.get("href"))));
+	}
+
+	private ContentDashboardItem _getContentDashboardItem(
+		List<ContentDashboardItemAction> contentDashboardItemActions) {
+
+		return new ContentDashboardItem() {
+
+			@Override
+			public List<AssetCategory> getAssetCategories() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<AssetCategory> getAssetCategories(long vocabularyId) {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<AssetTag> getAssetTags() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<Locale> getAvailableLocales() {
+				return null;
+			}
+
+			@Override
+			public List<ContentDashboardItemAction>
+				getContentDashboardItemActions(
+					HttpServletRequest httpServletRequest,
+					ContentDashboardItemAction.Type... types) {
+
+				Stream<ContentDashboardItemAction> stream =
+					contentDashboardItemActions.stream();
+
+				return stream.filter(
+					contentDashboardItemAction -> ArrayUtil.contains(
+						types, contentDashboardItemAction.getType())
+				).collect(
+					Collectors.toList()
+				);
+			}
+
+			@Override
+			public ContentDashboardItemType getContentDashboardItemType() {
+				return null;
+			}
+
+			@Override
+			public Date getCreateDate() {
+				return null;
+			}
+
+			@Override
+			public Map<String, Object> getData(Locale locale) {
+				return null;
+			}
+
+			@Override
+			public Locale getDefaultLocale() {
+				return null;
+			}
+
+			@Override
+			public InfoItemReference getInfoItemReference() {
+				return new InfoItemReference(
+					RandomTestUtil.randomString(), RandomTestUtil.randomLong());
+			}
+
+			@Override
+			public Date getModifiedDate() {
+				return null;
+			}
+
+			@Override
+			public String getScopeName(Locale locale) {
+				return null;
+			}
+
+			@Override
+			public String getTitle(Locale locale) {
+				return null;
+			}
+
+			@Override
+			public long getUserId() {
+				return 0;
+			}
+
+			@Override
+			public String getUserName() {
+				return null;
+			}
+
+			@Override
+			public String getUserPortraitURL(
+				HttpServletRequest httpServletRequest) {
+
+				return null;
+			}
+
+			@Override
+			public List<Version> getVersions(Locale locale) {
+				return null;
+			}
+
+			@Override
+			public boolean isViewable(HttpServletRequest httpServletRequest) {
+				return false;
+			}
+
+		};
 	}
 
 	private ContentDashboardItemAction _getContentDashboardItemAction(

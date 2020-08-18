@@ -21,6 +21,7 @@ import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemA
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -127,16 +128,6 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
-	public String getClassName() {
-		return JournalArticle.class.getName();
-	}
-
-	@Override
-	public Long getClassPK() {
-		return _journalArticle.getResourcePrimKey();
-	}
-
-	@Override
 	public List<ContentDashboardItemAction> getContentDashboardItemActions(
 		HttpServletRequest httpServletRequest,
 		ContentDashboardItemAction.Type... types) {
@@ -208,6 +199,13 @@ public class JournalArticleContentDashboardItem
 	public Locale getDefaultLocale() {
 		return LocaleUtil.fromLanguageId(
 			_journalArticle.getDefaultLanguageId());
+	}
+
+	@Override
+	public InfoItemReference getInfoItemReference() {
+		return new InfoItemReference(
+			JournalArticle.class.getName(),
+			_journalArticle.getResourcePrimKey());
 	}
 
 	@Override

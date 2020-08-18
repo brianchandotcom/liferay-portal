@@ -29,7 +29,7 @@ const context = {
 const instances = {
 	items: [
 		{
-			assignees: [{id: -1, name: 'Unassigned'}],
+			assignees: [{id: -1, name: 'Unassigned', reviewer: true}],
 			classPK: 0,
 			completed: false,
 			taskNames: ['Review'],
@@ -46,7 +46,7 @@ describe('ViewEntry', () => {
 		fetch.mockResponseOnce(JSON.stringify(instances));
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_LAYOUT));
 
-		const {container} = render(
+		const {container, getAllByRole} = render(
 			<AppContextProviderWrapper appContext={context}>
 				<ViewEntry match={{params: {entryIndex: 1}}} />
 			</AppContextProviderWrapper>,
@@ -68,5 +68,14 @@ describe('ViewEntry', () => {
 		expect(infoItems[1]).toHaveTextContent('step: Review');
 		expect(infoItems[2]).toHaveTextContent('assignee: Administrator');
 		expect(infoItems[3]).toHaveTextContent('version: 1.0');
+
+		const buttons = getAllByRole('button');
+
+		expect(buttons.length).toBe(5);
+		expect(buttons[0].title).toBe('previous-entry');
+		expect(buttons[1].title).toBe('next-entry');
+		expect(buttons[2].title).toBe('delete');
+		expect(buttons[3].title).toBe('edit');
+		expect(buttons[4].title).toBe('assign-to');
 	});
 });

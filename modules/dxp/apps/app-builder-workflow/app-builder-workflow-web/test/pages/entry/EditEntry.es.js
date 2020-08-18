@@ -207,14 +207,15 @@ describe('EditEntry', () => {
 
 		const buttons = queryAllByRole('button');
 
-		expect(buttons.length).toBe(2);
-		expect(buttons[0]).toHaveTextContent('Close');
-		expect(buttons[1]).toHaveTextContent('cancel');
+		expect(buttons.length).toBe(3);
+		expect(buttons[0].title).toBe('assign-to');
+		expect(buttons[1]).toHaveTextContent('Close');
+		expect(buttons[2]).toHaveTextContent('cancel');
 
 		await waitForElement(() => document.getElementById('workflowInfoBar'));
 
 		await act(async () => {
-			await fireEvent.click(buttons[0]);
+			await fireEvent.click(buttons[1]);
 		});
 
 		expect(mockFetch).toHaveBeenCalledWith(

@@ -22,12 +22,14 @@ import FiltersDropdown from './FiltersDropdown';
 import MainSearch from './MainSearch';
 
 function NavBar({creationMenu, showSearch, views}) {
-	const {state} = useAppState();
+	const {
+		state: {filters},
+	} = useAppState();
 
 	return (
 		<nav className="management-bar management-bar-light navbar navbar-expand-md">
 			<div className="container-fluid container-fluid-max-xl">
-				{state.filters.length && (
+				{!!filters.length && (
 					<div className="mr-2 navbar-nav">
 						<FiltersDropdown />
 					</div>

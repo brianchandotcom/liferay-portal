@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.analytics.reports.journal.internal.item.action.provider.test;
+package com.liferay.analytics.reports.journal.internal.content.dashboard.item.action.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
@@ -257,7 +257,7 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 	private CompanyLocalService _companyLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.analytics.reports.journal.internal.item.action.provider.ViewInPanelJournalArticleContentDashboardItemActionProvider"
+		filter = "component.name=com.liferay.analytics.reports.journal.internal.content.dashboard.item.action.provider.ViewInPanelJournalArticleContentDashboardItemActionProvider"
 	)
 	private ContentDashboardItemActionProvider
 		_contentDashboardItemActionProvider;

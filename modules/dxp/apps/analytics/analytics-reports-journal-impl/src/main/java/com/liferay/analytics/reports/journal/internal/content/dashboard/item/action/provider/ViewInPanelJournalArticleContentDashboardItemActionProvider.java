@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.analytics.reports.journal.internal.item.action.provider;
+package com.liferay.analytics.reports.journal.internal.content.dashboard.item.action.provider;
 
 import com.liferay.analytics.reports.info.action.provider.AnalyticsReportsContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;

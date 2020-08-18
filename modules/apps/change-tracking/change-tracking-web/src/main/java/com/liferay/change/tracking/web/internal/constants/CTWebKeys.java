@@ -25,6 +25,8 @@ public interface CTWebKeys {
 	public static final String CHANGE_LISTS_DISPLAY_CONTEXT =
 		"CHANGE_LISTS_DISPLAY_CONTEXT";
 
+	public static final String CHANGES_SESSION_STATE = "CHANGES_SESSION_STATE";
+
 	public static final String CONFLICT_INFO_MAP = "CONFLICT_INFO_MAP";
 
 	public static final String CT_COLLECTION = "CT_COLLECTION";

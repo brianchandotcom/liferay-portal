@@ -22,6 +22,7 @@ import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
+import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTClosureUtil;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
@@ -65,6 +66,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
+import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -259,6 +261,8 @@ public class ViewChangesDisplayContext {
 				ctClosure, modelInfoMap, rootClassNameIds,
 				contextViewJSONObject)
 		).put(
+			"ctCollectionId", _ctCollection.getCtCollectionId()
+		).put(
 			"discardURL",
 			() -> {
 				RenderURL discardURL = _renderResponse.createRenderURL();
@@ -329,6 +333,26 @@ public class ViewChangesDisplayContext {
 				}
 
 				return rootDisplayClassesJSONArray;
+			}
+		).put(
+			"saveSessionStateURL",
+			() -> {
+				ResourceURL saveSessionStateURL =
+					_renderResponse.createResourceURL();
+
+				saveSessionStateURL.setResourceID(
+					"/change_lists/save_session_state");
+
+				return saveSessionStateURL.toString();
+			}
+		).put(
+			"sessionState",
+			() -> {
+				PortletSession portletSession =
+					_renderRequest.getPortletSession();
+
+				return portletSession.getAttribute(
+					CTWebKeys.CHANGES_SESSION_STATE);
 			}
 		).put(
 			"siteNames",

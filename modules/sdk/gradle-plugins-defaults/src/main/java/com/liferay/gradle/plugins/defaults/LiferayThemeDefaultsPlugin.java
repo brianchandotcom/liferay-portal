@@ -25,8 +25,6 @@ import com.liferay.gradle.plugins.defaults.internal.util.IncrementVersionClosure
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.gulp.ExecuteGulpTask;
-import com.liferay.gradle.plugins.lang.merger.LangMergerPlugin;
-import com.liferay.gradle.plugins.lang.merger.tasks.MergePropertiesTask;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
@@ -74,12 +72,6 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 	public static final String PUBLISH_NODE_MODULE_TASK_NAME =
 		"publishNodeModule";
-
-	public static final String RESTORE_MERGE_LANG_DESTINATION_DIR_TASK_NAME =
-		"restoreMergeLangDestinationDir";
-
-	public static final String SAVE_MERGE_LANG_DESTINATION_DIR_TASK_NAME =
-		"saveMergeLangDestinationDir";
 
 	public static final String WRITE_PARENT_THEMES_DIGEST_TASK_NAME =
 		"writeParentThemesDigest";
@@ -141,17 +133,6 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			project, LiferayOSGiDefaultsPlugin.SNAPSHOT_IF_STALE_PROPERTY_NAME,
 			true, MavenPlugin.INSTALL_TASK_NAME,
 			BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
-
-		GradleUtil.withPlugin(
-			project, LangMergerPlugin.class,
-			new Action<LangMergerPlugin>() {
-
-				@Override
-				public void execute(LangMergerPlugin langMergerPlugin) {
-					_configureLangMerger(project);
-				}
-
-			});
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -287,107 +268,6 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		publishNodeModuleTask.setGroup(BasePlugin.UPLOAD_GROUP);
 
 		return publishNodeModuleTask;
-	}
-
-	private Copy _addTaskRestoreMergeLangDestinationDir(
-		final MergePropertiesTask mergePropertiesTask,
-		final Copy saveMergeLangDestinationDirTask) {
-
-		Copy copy = GradleUtil.addTask(
-			mergePropertiesTask.getProject(),
-			RESTORE_MERGE_LANG_DESTINATION_DIR_TASK_NAME, Copy.class);
-
-		copy.doFirst(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					Copy copy = (Copy)task;
-
-					Project project = copy.getProject();
-
-					project.delete(copy.getDestinationDir());
-				}
-
-			});
-
-		copy.from(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return saveMergeLangDestinationDirTask.getDestinationDir();
-				}
-
-			});
-
-		copy.into(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return mergePropertiesTask.getDestinationDir();
-				}
-
-			});
-
-		copy.setDescription(
-			"Restore the destination directory of " + mergePropertiesTask +
-				".");
-
-		return copy;
-	}
-
-	private Copy _addTaskSaveMergeLangDestinationDir(
-		final MergePropertiesTask mergePropertiesTask) {
-
-		Copy copy = GradleUtil.addTask(
-			mergePropertiesTask.getProject(),
-			SAVE_MERGE_LANG_DESTINATION_DIR_TASK_NAME, Copy.class);
-
-		copy.doFirst(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					Copy copy = (Copy)task;
-
-					Project project = copy.getProject();
-
-					project.delete(copy.getDestinationDir());
-				}
-
-			});
-
-		copy.from(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return mergePropertiesTask.getDestinationDir();
-				}
-
-			});
-
-		copy.into(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					Project project = mergePropertiesTask.getProject();
-
-					return new File(
-						project.getBuildDir(),
-						"backup-" + mergePropertiesTask.getName());
-				}
-
-			});
-
-		copy.setDescription(
-			"Saves the destination directory of " + mergePropertiesTask +
-				" into a temporary location.");
-
-		return copy;
 	}
 
 	private ReplaceRegexTask _addTaskUpdateVersion(
@@ -565,38 +445,6 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 				});
 		}
-	}
-
-	private void _configureLangMerger(Project project) {
-		final MergePropertiesTask mergePropertiesTask =
-			(MergePropertiesTask)GradleUtil.getTask(
-				project, LangMergerPlugin.MERGE_LANG_TASK_NAME);
-
-		mergePropertiesTask.setDestinationDir("src/WEB-INF/src/content");
-
-		Copy saveMergeLangDestinationDirTask =
-			_addTaskSaveMergeLangDestinationDir(mergePropertiesTask);
-
-		mergePropertiesTask.dependsOn(saveMergeLangDestinationDirTask);
-
-		final Copy restoreMergeLangDestinationDirTask =
-			_addTaskRestoreMergeLangDestinationDir(
-				mergePropertiesTask, saveMergeLangDestinationDirTask);
-
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			ExecuteGulpTask.class,
-			new Action<ExecuteGulpTask>() {
-
-				@Override
-				public void execute(ExecuteGulpTask executeGulpTask) {
-					executeGulpTask.dependsOn(mergePropertiesTask);
-					executeGulpTask.finalizedBy(
-						restoreMergeLangDestinationDirTask);
-				}
-
-			});
 	}
 
 	private void _configureProject(Project project) {

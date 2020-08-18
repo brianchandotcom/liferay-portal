@@ -22,6 +22,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.item.selector.taglib.servlet.taglib.RepositoryEntryBrowserTag;
 import com.liferay.item.selector.taglib.servlet.taglib.util.RepositoryEntryBrowserTagUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -71,6 +72,14 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			liferayPortletRequest);
+	}
+
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = _getPortletURL();
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {

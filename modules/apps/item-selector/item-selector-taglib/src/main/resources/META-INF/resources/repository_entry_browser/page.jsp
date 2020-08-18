@@ -57,7 +57,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 %>
 
 <clay:management-toolbar
-	clearResultsURL="<%= String.valueOf(itemSelectorRepositoryEntryManagementToolbarDisplayContext.getSearchURL()) %>"
+	clearResultsURL="<%= String.valueOf(itemSelectorRepositoryEntryManagementToolbarDisplayContext.getClearResultsURL()) %>"
 	disabled="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	filterLabelItems="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getFilterLabelItems() %>"

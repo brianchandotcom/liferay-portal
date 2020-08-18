@@ -17,9 +17,40 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String portletTitle = (String)request.getAttribute(ProductNavigationControlMenuWebKeys.PORTLET_TITLE);
+PortletHeaderDisplayContext portletHeaderDisplayContext = new PortletHeaderDisplayContext(request);
 %>
 
 <li class="control-menu-nav-item control-menu-nav-item-content">
-	<span class="control-menu-level-1-heading text-truncate" data-qa-id="headerTitle"><%= HtmlUtil.escape(portletTitle) %></span>
+	<c:choose>
+		<c:when test="<%= portletHeaderDisplayContext.isShowApplicationsMenuAppSelector() %>">
+
+			<%
+			PanelCategory curPanelCategory = portletHeaderDisplayContext.getCurPanelCategory();
+
+			List<PanelApp> panelApps = portletHeaderDisplayContext.getPanelApps();
+			%>
+
+			<div class="control-menu-level-3-heading"><%= curPanelCategory.getLabel(locale) %></div>
+
+			<div class="control-menu-level-1-heading">
+				<span class="inline-item inline-item-before text-truncate" data-qa-id="headerTitle"><%= HtmlUtil.escape(portletHeaderDisplayContext.getPortletTitle()) %></span>
+
+				<c:if test="<%= panelApps.size() > 1 %>">
+					<clay:icon
+						symbol="caret-double-l"
+					/>
+				</c:if>
+			</div>
+
+			<c:if test="<%= panelApps.size() > 1 %>">
+				<react:component
+					module="js/PortletHeader"
+					props="<%= portletHeaderDisplayContext.getProps() %>"
+				/>
+			</c:if>
+		</c:when>
+		<c:otherwise>
+			<span class="control-menu-level-1-heading text-truncate" data-qa-id="headerTitle"><%= HtmlUtil.escape(portletHeaderDisplayContext.getPortletTitle()) %></span>
+		</c:otherwise>
+	</c:choose>
 </li>

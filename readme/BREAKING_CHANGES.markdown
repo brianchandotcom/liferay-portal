@@ -842,3 +842,314 @@ This change was made to enable image drag and drop handling in CKEditor, and
 have a common solution for both Alloy Editor and CKEditor.
 
 ---------------------------------------
+
+### Removed com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPersistence Methods
+- **Date:** 2020-Aug-18
+- **JIRA Ticket:** [LPS-108525](https://issues.liferay.com/browse/LPS-108525)
+
+### What changed?
+
+The following methods were removed:
+
+	findByClassNameId(long classNameId)
+
+	findByClassNameId(long classNameId, int start, int end)
+
+	findByClassNameId(long classNameId, int start, int end, OrderByComparator<DDMStructureLink> orderByComparator)
+
+	findByClassNameId(long classNameId, int start, int end, OrderByComparator<DDMStructureLink> orderByComparator,
+	boolean useFinderCache)
+
+	findByClassNameId_First(long classNameId, OrderByComparator<DDMStructureLink> orderByComparator)
+
+	fetchByClassNameId_First(long classNameId, OrderByComparator<DDMStructureLink> orderByComparator)
+
+	findByClassNameId_Last(long classNameId, OrderByComparator<DDMStructureLink> orderByComparator)
+
+	fetchByClassNameId_Last(long classNameId, OrderByComparator<DDMStructureLink> orderByComparator)
+
+	findByClassNameId_PrevAndNext(long structureLinkId, long classNameId,
+	OrderByComparator<DDMStructureLink> orderByComparator)
+
+	removeByClassNameId(long classNameId)
+
+	countByClassNameId(long classNameId)
+
+### Who is affected
+
+This affects anyone who uses one of these methods.
+
+### How should I update my code?
+
+You can use the other finder and counter methods existing in the class instead
+of the removed methods.
+
+#### Why was this change made?
+
+These methods were removed as part of the solution for
+https://issues.liferay.com/browse/LPS-108525.
+
+---------------------------------------
+
+### Removed com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkUtil Methods
+- **Date:** 2020-Aug-18
+- **JIRA Ticket:** [LPS-108525](https://issues.liferay.com/browse/LPS-108525)
+
+### What changed?
+
+The following methods were removed:
+
+	findByClassNameId(long classNameId)
+
+	findByClassNameId(long classNameId, int start, int end)
+
+	findByClassNameId(long classNameId, int start, int end, OrderByComparator<DDMStructureLink> orderByComparator)
+
+	findByClassNameId(long classNameId, int start, int end, OrderByComparator<DDMStructureLink> orderByComparator,
+	boolean useFinderCache)
+
+	findByClassNameId_First(long classNameId, OrderByComparator<DDMStructureLink> orderByComparator)
+
+	fetchByClassNameId_First(long classNameId, OrderByComparator<DDMStructureLink> orderByComparator)
+
+	findByClassNameId_Last(long classNameId, OrderByComparator<DDMStructureLink> orderByComparator)
+
+	fetchByClassNameId_Last(long classNameId, OrderByComparator<DDMStructureLink> orderByComparator)
+
+	findByClassNameId_PrevAndNext(long structureLinkId, long classNameId,
+	OrderByComparator<DDMStructureLink> orderByComparator)
+
+	removeByClassNameId(long classNameId)
+
+	countByClassNameId(long classNameId)
+
+### Who is affected
+
+This affects anyone who uses one of these methods.
+
+### How should I update my code?
+
+You can use the other finder and counter methods existing in the class instead
+of the removed methods.
+
+#### Why was this change made?
+
+These methods were removed as part of the solution for
+this https://issues.liferay.com/browse/LPS-108525.
+
+---------------------------------------
+
+### Removed com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersistence Methods
+- **Date:** 2020-Aug-18
+- **JIRA Ticket:** [LPS-108525](https://issues.liferay.com/browse/LPS-108525)
+
+### What changed?
+
+The following methods were removed:
+
+	findByClassNameId(long classNameId)
+
+	findByClassNameId(long classNameId, int start, int end)
+
+	findByClassNameId(long classNameId, int start, int end, OrderByComparator<DDMStructure> orderByComparator)
+
+	findByClassNameId(long classNameId, int start, int end, OrderByComparator<DDMStructure> orderByComparator,
+	boolean useFinderCache)
+
+	findByClassNameId_First(long classNameId, OrderByComparator<DDMStructure> orderByComparator)
+
+	fetchByClassNameId_First(long classNameId, OrderByComparator<DDMStructure> orderByComparator)
+
+	findByClassNameId_Last(long classNameId, OrderByComparator<DDMStructure> orderByComparator)
+
+	fetchByClassNameId_Last(long classNameId, OrderByComparator<DDMStructure> orderByComparator)
+
+	findByClassNameId_PrevAndNext(long structureId, long classNameId,
+	OrderByComparator<DDMStructure> orderByComparator)
+
+	removeByClassNameId(long classNameId)
+
+	countByClassNameId(long classNameId)
+
+### Who is affected
+
+This affects anyone who uses one of these methods.
+
+### How should I update my code?
+
+You can use the other finder and counter methods existing in the class instead
+of the removed methods.
+
+#### Why was this change made?
+
+These methods were removed as part of the solution for
+https://issues.liferay.com/browse/LPS-108525.
+
+---------------------------------------
+
+### Removed com.liferay.dynamic.data.mapping.service.persistence.DDMStructureUtil Methods
+- **Date:** 2020-Aug-18
+- **JIRA Ticket:** [LPS-108525](https://issues.liferay.com/browse/LPS-108525)
+
+### What changed?
+
+The following methods were removed:
+
+	findByClassNameId(long classNameId)
+
+	findByClassNameId(long classNameId, int start, int end)
+
+	findByClassNameId(long classNameId, int start, int end, OrderByComparator<DDMStructure> orderByComparator)
+
+	findByClassNameId(long classNameId, int start, int end, OrderByComparator<DDMStructure> orderByComparator,
+	boolean useFinderCache)
+
+	findByClassNameId_First(long classNameId, OrderByComparator<DDMStructure> orderByComparator)
+
+	fetchByClassNameId_First(long classNameId, OrderByComparator<DDMStructure> orderByComparator)
+
+	findByClassNameId_Last(long classNameId, OrderByComparator<DDMStructure> orderByComparator)
+
+	fetchByClassNameId_Last(long classNameId, OrderByComparator<DDMStructure> orderByComparator)
+
+	findByClassNameId_PrevAndNext(long structureId, long classNameId,
+	OrderByComparator<DDMStructure> orderByComparator)
+
+	removeByClassNameId(long classNameId)
+
+	countByClassNameId(long classNameId)
+
+### Who is affected
+
+This affects anyone who uses one of these methods.
+
+### How should I update my code?
+
+You can use the other finder and counter methods existing in the class instead
+of the removed methods.
+
+#### Why was this change made?
+
+These methods were removed as part of the solution for
+https://issues.liferay.com/browse/LPS-108525.
+
+---------------------------------------
+
+### Removed com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkPersistence Methods
+- **Date:** 2020-Aug-18
+- **JIRA Ticket:** [LPS-108525](https://issues.liferay.com/browse/LPS-108525)
+
+### What changed?
+
+The following methods were removed:
+
+	findByClassNameId(long classNameId)
+
+	findByClassNameId(long classNameId, int start, int end)
+
+	findByClassNameId(long classNameId, int start, int end, OrderByComparator<DDMTemplateLink> orderByComparator)
+
+	findByClassNameId(long classNameId, int start, int end, OrderByComparator<DDMTemplateLink> orderByComparator,
+	boolean useFinderCache)
+
+	findByClassNameId_First(long classNameId, OrderByComparator<DDMTemplateLink> orderByComparator)
+
+	fetchByClassNameId_First(long classNameId, OrderByComparator<DDMTemplateLink> orderByComparator)
+
+	findByClassNameId_Last(long classNameId, OrderByComparator<DDMTemplateLink> orderByComparator)
+
+	fetchByClassNameId_Last(long classNameId, OrderByComparator<DDMTemplateLink> orderByComparator)
+
+	findByClassNameId_PrevAndNext(long templateLinkId, long classNameId,
+	OrderByComparator<DDMTemplateLink> orderByComparator)
+
+	removeByClassNameId(long classNameId)
+
+	countByClassNameId(long classNameId)
+
+### Who is affected
+
+This affects anyone who uses one of these methods.
+
+### How should I update my code?
+
+You can use the other finder and counter methods existing in the class instead
+of the removed methods.
+
+#### Why was this change made?
+
+These methods were removed as part of the solution for
+https://issues.liferay.com/browse/LPS-108525.
+
+---------------------------------------
+
+### Removed com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkUtil Methods
+- **Date:** 2020-Aug-18
+- **JIRA Ticket:** [LPS-108525](https://issues.liferay.com/browse/LPS-108525)
+
+### What changed?
+
+The following methods were removed:
+
+	findByClassNameId(long classNameId)
+
+	findByClassNameId(long classNameId, int start, int end)
+
+	findByClassNameId(long classNameId, int start, int end, OrderByComparator<DDMTemplateLink> orderByComparator)
+
+	findByClassNameId(long classNameId, int start, int end, OrderByComparator<DDMTemplateLink> orderByComparator,
+	boolean useFinderCache)
+
+	findByClassNameId_First(long classNameId, OrderByComparator<DDMTemplateLink> orderByComparator)
+
+	fetchByClassNameId_First(long classNameId, OrderByComparator<DDMTemplateLink> orderByComparator)
+
+	findByClassNameId_Last(long classNameId, OrderByComparator<DDMTemplateLink> orderByComparator)
+
+	fetchByClassNameId_Last(long classNameId, OrderByComparator<DDMTemplateLink> orderByComparator)
+
+	findByClassNameId_PrevAndNext(long templateLinkId, long classNameId,
+	OrderByComparator<DDMTemplateLink> orderByComparator)
+
+	removeByClassNameId(long classNameId)
+
+	countByClassNameId(long classNameId)
+
+### Who is affected
+
+This affects anyone who uses one of these methods.
+
+### How should I update my code?
+
+You can use the other finder and counter methods existing in the class instead
+of the removed methods.
+
+#### Why was this change made?
+
+These methods were removed as part of the solution for
+https://issues.liferay.com/browse/LPS-108525.
+
+---------------------------------------
+
+### Removed com.liferay.dynamic.data.mapping.util.BaseDDMDisplay Method
+- **Date:** 2020-Aug-18
+- **JIRA Ticket:** [LPS-103549](https://issues.liferay.com/browse/LPS-103549)
+
+### What changed?
+
+The `isShowAddStructureButton` method was removed.
+
+### Who is affected
+
+This affects anyone who uses one of these methods.
+
+### How should I update my code?
+
+You can use `isShowAddButton(Group scopeGroup)` method instead of this method.
+
+#### Why was this change made?
+
+This method was removed as part of a clean up refactor. See more in
+https://issues.liferay.com/browse/LPS-103549.
+
+---------------------------------------

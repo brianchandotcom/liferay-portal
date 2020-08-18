@@ -106,16 +106,16 @@ public class EditCommerceBOMDefinitionMVCActionCommand
 			}
 		}
 		catch (Throwable throwable) {
-			if ((throwable instanceof NoSuchBOMDefinitionException) ||
-				(t instanceof PrincipalException)) {
+			if (throwable instanceof NoSuchBOMDefinitionException ||
+				throwable instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, throwable.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if ((throwable instanceof
-						DuplicateCPAttachmentFileEntryException) ||
-					 (t instanceof NoSuchFileEntryException)) {
+			else if (throwable instanceof
+						DuplicateCPAttachmentFileEntryException ||
+					 throwable instanceof NoSuchFileEntryException) {
 
 				hideDefaultErrorMessage(actionRequest);
 

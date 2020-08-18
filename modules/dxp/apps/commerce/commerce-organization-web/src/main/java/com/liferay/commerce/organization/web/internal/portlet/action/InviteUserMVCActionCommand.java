@@ -98,8 +98,8 @@ public class InviteUserMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Throwable throwable) {
-			if ((throwable instanceof NoSuchAccountUserRelException) ||
-				(t instanceof PrincipalException)) {
+			if (throwable instanceof NoSuchAccountUserRelException ||
+				throwable instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, throwable.getClass());
 

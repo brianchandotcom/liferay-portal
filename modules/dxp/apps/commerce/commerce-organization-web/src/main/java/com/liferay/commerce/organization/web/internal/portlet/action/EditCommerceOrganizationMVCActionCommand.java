@@ -110,15 +110,15 @@ public class EditCommerceOrganizationMVCActionCommand
 			}
 		}
 		catch (Throwable throwable) {
-			if ((throwable instanceof NoSuchOrganizationException) ||
-				(t instanceof PrincipalException)) {
+			if (throwable instanceof NoSuchOrganizationException ||
+				throwable instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, throwable.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if ((throwable instanceof DuplicateOrganizationException) ||
-					 (t instanceof OrganizationNameException)) {
+			else if (throwable instanceof DuplicateOrganizationException ||
+					 throwable instanceof OrganizationNameException) {
 
 				hideDefaultErrorMessage(actionRequest);
 

@@ -28,7 +28,11 @@ import QuestionRow from '../../components/QuestionRow.es';
 import ResultsMessage from '../../components/ResultsMessage.es';
 import SectionSubscription from '../../components/SectionSubscription.es';
 import useQueryParams from '../../hooks/useQueryParams.es';
-import {getQuestionThreads, getSections} from '../../utils/client.es';
+import {
+	getQuestionThreads,
+	getSectionByRootSection,
+	getSectionBySectionTitle,
+} from '../../utils/client.es';
 import {
 	getBasePath,
 	historyPushWithSlug,
@@ -202,10 +206,14 @@ export default withRouter(
 		}, 500);
 
 		useEffect(() => {
-			if (sectionTitle) {
-				getSections(slugToText(sectionTitle), context.siteKey).then(
-					setSection
-				);
+			if (sectionTitle && sectionTitle !== '0') {
+				getSectionBySectionTitle(
+					context.siteKey,
+					slugToText(sectionTitle)
+				).then(setSection);
+			}
+			else if (sectionTitle === '0') {
+				getSectionByRootSection(context.siteKey).then(setSection);
 			}
 		}, [sectionTitle, context.siteKey]);
 

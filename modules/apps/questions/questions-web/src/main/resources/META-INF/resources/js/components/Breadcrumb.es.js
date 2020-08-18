@@ -14,16 +14,21 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
-import {client, getSectionsByIdQuery} from '../utils/client.es';
+import {AppContext} from '../AppContext.es';
+import {client, getSectionQuery} from '../utils/client.es';
 import {historyPushWithSlug, stringToSlug} from '../utils/utils.es';
 import BreadcrumbDropdown from './BreadcrumbDropdown.es';
 import Link from './Link.es';
 import NewTopicModal from './NewTopicModal.es';
 
 export default withRouter(({history, section}) => {
+	const context = useContext(AppContext);
+
+	const rootSection = context.rootTopic;
+
 	const MAX_SECTIONS_IN_BREADCRUMB = 3;
 	const historyPushParser = historyPushWithSlug(history.push);
 	const [breadcrumbNodes, setBreadcrumbNodes] = useState([]);
@@ -48,44 +53,52 @@ export default withRouter(({history, section}) => {
 	const findParent = (messageBoardSectionId) =>
 		client
 			.query({
-				query: getSectionsByIdQuery,
+				query: getSectionQuery,
 				variables: {messageBoardSectionId},
 			})
 			.then(({data}) => data.messageBoardSection);
 
-	const buildBreadcrumbNodesData = useCallback((section, acc = []) => {
-		acc.push({
-			subCategories: getSubSections(section),
-			title: section.title,
-		});
+	const buildBreadcrumbNodesData = useCallback(
+		(rootSection, section, acc = []) => {
+			if (rootSection !== section.title) {
+				acc.push({
+					subCategories: getSubSections(section),
+					title: section.title || 'Home',
+				});
 
-		if (section.parentMessageBoardSectionId) {
-			if (section.parentMessageBoardSection) {
-				return Promise.resolve(
-					buildBreadcrumbNodesData(
-						section.parentMessageBoardSection,
-						acc
-					)
-				);
+				if (section.parentMessageBoardSectionId) {
+					if (section.parentMessageBoardSection) {
+						return Promise.resolve(
+							buildBreadcrumbNodesData(
+								rootSection,
+								section.parentMessageBoardSection,
+								acc
+							)
+						);
+					}
+
+					return findParent(
+						section.parentMessageBoardSectionId
+					).then((section) =>
+						buildBreadcrumbNodesData(rootSection, section, acc)
+					);
+				}
 			}
 
-			return findParent(
-				section.parentMessageBoardSectionId
-			).then((section) => buildBreadcrumbNodesData(section, acc));
-		}
-
-		return Promise.resolve(acc.reverse());
-	}, []);
+			return Promise.resolve(acc.reverse());
+		},
+		[]
+	);
 
 	useEffect(() => {
 		if (!section) {
 			return;
 		}
 
-		buildBreadcrumbNodesData(section).then((acc) =>
+		buildBreadcrumbNodesData(rootSection, section).then((acc) =>
 			setBreadcrumbNodes(acc)
 		);
-	}, [buildBreadcrumbNodesData, section]);
+	}, [buildBreadcrumbNodesData, rootSection, section]);
 
 	return (
 		<section className="align-items-center d-flex mb-0 questions-breadcrumb">
@@ -172,7 +185,7 @@ export default withRouter(({history, section}) => {
 				key={i}
 			>
 				{section.subCategories.length <= 0 ? (
-					section.title
+					section.title || 'Home'
 				) : (
 					<BreadcrumbDropdown
 						className="breadcrumb-item breadcrumb-text-truncate"

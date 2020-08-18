@@ -12,19 +12,23 @@
  * details.
  */
 
-package com.liferay.questions.web.internal.constants;
+package com.liferay.questions.web.internal.settings.definition;
+
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.questions.web.internal.configuration.QuestionsConfiguration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Luis Miguel Barcos
+ * @author Javier Gamarra
  */
-public class QuestionsWebKeys {
+@Component(service = ConfigurationBeanDeclaration.class)
+public class QuestionsPortletInstanceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
-	public static final String DEFAULT_RANK = "DEFAULT_RANK";
-
-	public static final String IMAGE_BROWSE_URL = "IMAGE_BROWSE_URL";
-
-	public static final String ROOT_TOPIC = "ROOT_TOPIC";
-
-	public static final String TAG_SELECTOR_URL = "TAG_SELECTOR_URL";
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return QuestionsConfiguration.class;
+	}
 
 }

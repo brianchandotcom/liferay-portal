@@ -25,7 +25,7 @@ String questionsRootElementId = liferayPortletResponse.getNamespace() + "-questi
 <div id="<%= questionsRootElementId %>">
 
 	<%
-	QuestionsConfiguration questionsConfiguration = (QuestionsConfiguration)request.getAttribute(QuestionsConfiguration.class.getName());
+	QuestionsConfiguration questionsConfiguration = portletDisplay.getPortletInstanceConfiguration(QuestionsConfiguration.class);
 	%>
 
 	<react:component
@@ -41,6 +41,10 @@ String questionsRootElementId = liferayPortletResponse.getNamespace() + "-questi
 				"isOmniAdmin", permissionChecker.isOmniadmin()
 			).put(
 				"redirectToLogin", questionsConfiguration.enableRedirectToLogin()
+			).put(
+				"rootTopic", questionsConfiguration.rootTopic()
+			).put(
+				"showSectionLanding", questionsConfiguration.showSectionLanding()
 			).put(
 				"siteKey", String.valueOf(themeDisplay.getScopeGroupId())
 			).put(

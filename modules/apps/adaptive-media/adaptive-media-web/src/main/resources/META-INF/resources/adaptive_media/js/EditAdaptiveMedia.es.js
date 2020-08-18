@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useFormik} from 'formik';
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import {HelpMessage, RequiredMark} from './utils/formComponents.es';
 import Input from './utils/input.es';
@@ -31,6 +31,7 @@ const EditAdaptiveMedia = ({
 	maxWidth,
 	name,
 	namespace,
+	redirect,
 }) => {
 	const [automaticId, setAutomaticId] = useState(automaticUuid);
 	const [addHighResolution, setAddHighResolution] = useState(false);
@@ -64,6 +65,12 @@ const EditAdaptiveMedia = ({
 			console.log(values);
 		},
 	});
+
+	const onCancel = useCallback(() => {
+		if (redirect) {
+			Liferay.Util.navigate(redirect);
+		}
+	}, [redirect]);
 
 	const {errors, handleChange, values} = formik;
 
@@ -172,11 +179,21 @@ const EditAdaptiveMedia = ({
 				/>
 			</div>
 
-			<ClayButton.Group spaced>
-				<ClayButton name="submitBtn" type="submit">
-					Save
-				</ClayButton>
-			</ClayButton.Group>
+			<div className="sheet-footer">
+				<ClayButton.Group spaced>
+					<ClayButton type="submit">
+						{Liferay.Language.get('save')}
+					</ClayButton>
+
+					<ClayButton
+						displayType="secondary"
+						onClick={onCancel}
+						type="cancel"
+					>
+						{Liferay.Language.get('cancel')}
+					</ClayButton>
+				</ClayButton.Group>
+			</div>
 		</ClayForm>
 	);
 };

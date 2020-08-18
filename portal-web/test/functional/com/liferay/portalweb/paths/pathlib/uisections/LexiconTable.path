@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_ELLIPSIS_LINK</td>
+	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//a[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_HEADER</td>
 	<td>//th[contains(.,'${key_tableHeader}')]</td>
 	<td></td>

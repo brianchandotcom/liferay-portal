@@ -28,6 +28,7 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -37,6 +38,7 @@ import java.io.Serializable;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
@@ -136,11 +138,16 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 				importedLocaleContentMap, targetLocale);
 		}
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		serviceContext.setFormDate(new Date());
+
 		return _journalArticleService.updateArticle(
 			article.getUserId(), article.getGroupId(), article.getFolderId(),
 			article.getArticleId(), article.getVersion(), titleMap,
 			descriptionMap, translatedContent, article.getLayoutUuid(),
-			ServiceContextThreadLocal.getServiceContext());
+			serviceContext);
 	}
 
 	private Optional<InfoLocalizedValue<Object>> _getInfoLocalizedValueOptional(

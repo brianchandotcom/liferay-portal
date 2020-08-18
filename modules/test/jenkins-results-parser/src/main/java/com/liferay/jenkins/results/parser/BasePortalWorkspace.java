@@ -91,10 +91,15 @@ public abstract class BasePortalWorkspace
 
 		_primaryPortalWorkspaceGitRepository.setUp();
 
-		_companionPortalWorkspaceGitRepository =
-			WorkspaceUtil.getDependencyWorkspaceGitRepository(
-				CompanionPortalWorkspaceGitRepository.TYPE,
-				_primaryPortalWorkspaceGitRepository);
+		if (portalUpstreamBranchName.endsWith("private")) {
+			_companionPortalWorkspaceGitRepository =
+				WorkspaceUtil.getDependencyWorkspaceGitRepository(
+					CompanionPortalWorkspaceGitRepository.TYPE,
+					_primaryPortalWorkspaceGitRepository);
+		}
+		else {
+			_companionPortalWorkspaceGitRepository = null;
+		}
 
 		if (_companionPortalWorkspaceGitRepository != null) {
 			_companionPortalWorkspaceGitRepository.setUp();

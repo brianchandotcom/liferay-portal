@@ -29,6 +29,7 @@ import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgrade
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.UpgradeCTModel;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.kernel.upgrade.UpgradeViewCount;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -87,7 +88,8 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 					return new String[] {"DLFileVersionPreview"};
 				}
 
-			});
+			},
+			new UpgradeCTModel("DLFileVersionPreview"));
 	}
 
 	@Reference

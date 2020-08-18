@@ -44,6 +44,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 
 	searchContext.setAttribute("paginationType", "regular");
 	searchContext.setEnd(searchContainer.getEnd());
+	searchContext.setIncludeInternalAssetCategories(true);
 	searchContext.setKeywords(keywords);
 	searchContext.setStart(searchContainer.getStart());
 	searchContext.setSorts(KBUtil.getKBArticleSorts(orderByCol, orderByType));

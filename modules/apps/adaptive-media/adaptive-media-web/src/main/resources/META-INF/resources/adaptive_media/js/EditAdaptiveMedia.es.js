@@ -26,16 +26,24 @@ const EditAdaptiveMedia = ({namespace}) => {
 	const [automaticUuid, setAutomaticUuid] = useState(true);
 	const [addHighResolution, setAddHighResolution] = useState(false);
 
+	const nameId = `${namespace}name`;
+	const descriptionId = `${namespace}description`;
+	const maxWidthId = `${namespace}maxWidth`;
+	const maxHeightId = `${namespace}maxHeight`;
+	const highResolutionId = `${namespace}addHighResolution`;
+	const newUuidId = `${namespace}newUuid`;
+	const automaticRadioId = `${namespace}automaticUuid`;
+
 	const formik = useFormik({
 		initialValues: {
-			name: '',
+			[nameId]: '',
 			description: '',
 		},
 		validate: (values) =>
 			validate(
 				{
-					name: [required],
-					newUuid: [alphanumeric],
+					[nameId]: [required],
+					[newUuidId]: [alphanumeric],
 				},
 				values
 			),
@@ -44,25 +52,25 @@ const EditAdaptiveMedia = ({namespace}) => {
 		},
 	});
 
-	const {errors, handleChange, touched, values} = formik;
+	const {errors, handleChange, values} = formik;
 
 	return (
 		<ClayForm onSubmit={formik.handleSubmit}>
 			<Input
-				error={touched.name && errors.name}
+				error={errors[nameId]}
 				label={Liferay.Language.get('name')}
-				name="name"
+				name={nameId}
 				onChange={handleChange}
 				required
-				value={values.name}
+				value={values[nameId]}
 			/>
 
 			<Input
 				label={Liferay.Language.get('description')}
-				name="description"
+				name={descriptionId}
 				onChange={handleChange}
 				type="textarea"
-				value={values.description}
+				value={values[descriptionId]}
 			/>
 
 			<div className="sheet-section">
@@ -87,19 +95,19 @@ const EditAdaptiveMedia = ({namespace}) => {
 					<ClayLayout.Col md="3">
 						<Input
 							label={Liferay.Language.get('max-width-px')}
-							name="maxWidth"
+							name={maxWidthId}
 							onChange={handleChange}
 							type="number"
-							value={values.maxWidth}
+							value={values[maxWidthId]}
 						/>
 					</ClayLayout.Col>
 					<ClayLayout.Col md="3">
 						<Input
 							label={Liferay.Language.get('max-height-px')}
-							name="maxHeight"
+							name={maxHeightId}
 							onChange={handleChange}
 							type="number"
-							value={values.maxHeight}
+							value={values[maxHeightId]}
 						/>
 					</ClayLayout.Col>
 				</ClayLayout.Row>
@@ -109,6 +117,7 @@ const EditAdaptiveMedia = ({namespace}) => {
 					label={Liferay.Language.get(
 						'add-a-resolution-for-high-density-displays'
 					)}
+					name={highResolutionId}
 					onChange={() => setAddHighResolution(!addHighResolution)}
 				/>
 			</div>
@@ -119,7 +128,7 @@ const EditAdaptiveMedia = ({namespace}) => {
 				</h3>
 
 				<ClayRadioGroup
-					name="automaticUuid"
+					name={automaticRadioId}
 					onSelectedValueChange={setAutomaticUuid}
 					selectedValue={automaticUuid}
 				>
@@ -142,11 +151,11 @@ const EditAdaptiveMedia = ({namespace}) => {
 
 				<Input
 					disabled={automaticUuid}
-					error={!automaticUuid && touched.newUuid && errors.newUuid}
+					error={!automaticUuid && errors[newUuidId]}
 					label={Liferay.Language.get('id')}
-					name="newUuid"
+					name={newUuidId}
 					onChange={handleChange}
-					value={values.id}
+					value={values[newUuidId]}
 				/>
 			</div>
 

@@ -26,7 +26,7 @@ page import="com.liferay.remote.app.admin.web.internal.display.context.RemoteApp
 page import="com.liferay.remote.app.exception.DuplicateRemoteAppEntryURLException" %>
 
 <%
-	RemoteAppAdminDataSetDisplayContext remoteAppAdminDataSetDisplayContext = (RemoteAppAdminDataSetDisplayContext)renderRequest.getAttribute("remoteAppAdminDataSetDisplayContext");
+RemoteAppAdminDataSetDisplayContext remoteAppAdminDataSetDisplayContext = (RemoteAppAdminDataSetDisplayContext)renderRequest.getAttribute("remoteAppAdminDataSetDisplayContext");
 
-	PortletURL currentPortletURL = remoteAppAdminDataSetDisplayContext.getCurrentPortletURL();
+PortletURL currentPortletURL = remoteAppAdminDataSetDisplayContext.getCurrentPortletURL();
 %>

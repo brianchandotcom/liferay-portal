@@ -268,6 +268,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 						<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
 								${schemaVarName}.getId()
+							<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Key")>
+								${schemaVarName}.getKey()
 							<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName)>
 								${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
 							<#else>
@@ -290,6 +292,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 						<#list getJavaMethodSignature.javaMethodParameters as javaMethodParameter>
 							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
 								${schemaVarName}.getId()
+							<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Key")>
+								${schemaVarName}.getKey()
 							<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
 								${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
 							<#else>
@@ -315,6 +319,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 								<#else>
 									null
 								</#if>
+							<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Key")>
+								"-"
 							<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
 								${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
 							<#else>
@@ -921,6 +927,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 								post${schemaName}.getId()
 							<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName)>
 								post${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
+							<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Key")>
+								post${schemaName}.getKey()
 							<#else>
 								null
 							</#if>
@@ -1133,6 +1141,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 						<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
 							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
 								put${schemaName}.getId()
+							<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Key")>
+								put${schemaName}.getKey()
 							<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
 								put${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
 							</#if>
@@ -1408,6 +1418,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 																<#else>
 																	${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
 																</#if>
+															);
+														<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Key")>
+															put("${javaMethodParameter.parameterName}", "\"" + ${schemaVarName}.getKey() + "\""
 															);
 														<#else>
 															put("${javaMethodParameter.parameterName}", null);

@@ -67,7 +67,9 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 			TokenTypes.IDENT);
 
 		List<DetailAST> dependentIdentDetailASTList =
-			getDependentIdentDetailASTList(variableDefinitionDetailAST);
+			getDependentIdentDetailASTList(
+				variableDefinitionDetailAST,
+				variableDefinitionDetailAST.getLineNo());
 
 		if (dependentIdentDetailASTList.isEmpty()) {
 			return;

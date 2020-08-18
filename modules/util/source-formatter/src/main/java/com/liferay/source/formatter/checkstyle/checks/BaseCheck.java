@@ -152,58 +152,16 @@ public abstract class BaseCheck extends AbstractCheck {
 	}
 
 	protected List<DetailAST> getDependentIdentDetailASTList(
-		DetailAST variableDefinitionDetailAST) {
+		DetailAST variableDefinitionDetailAST, int lineNumber) {
 
-		List<Variable> variables = new ArrayList<>();
+		List<Variable> variables = _getVariables(variableDefinitionDetailAST);
 
-		List<DetailAST> identDetailASTList = getAllChildTokens(
-			variableDefinitionDetailAST, true, TokenTypes.IDENT);
+		List<DetailAST> dependentIdentDetailASTList = new ArrayList<>();
 
-		for (DetailAST identDetailAST : identDetailASTList) {
-			if (_isMethodNameDetailAST(identDetailAST)) {
-				continue;
-			}
-
-			String name = identDetailAST.getText();
-
-			if (Character.isUpperCase(name.charAt(0))) {
-				continue;
-			}
-
-			String typeName = getVariableTypeName(identDetailAST, name, false);
-
-			if (equals(
-					variableDefinitionDetailAST, identDetailAST.getParent()) ||
-				(!typeName.equals("ActionRequest") &&
-				 !typeName.equals("PortletRequest") &&
-				 !typeName.equals("ResourceRequest"))) {
-
-				variables.add(
-					new Variable(
-						name,
-						_hasPossibleValueChangeOperation(identDetailAST)));
-			}
-		}
-
-		List<DetailAST> followingIdentDetailASTList = new ArrayList<>();
-
-		DetailAST nextSiblingDetailAST =
-			variableDefinitionDetailAST.getNextSibling();
-
-		while (true) {
-			if (nextSiblingDetailAST == null) {
-				break;
-			}
-
-			followingIdentDetailASTList.addAll(
-				getAllChildTokens(
-					nextSiblingDetailAST, true, TokenTypes.IDENT));
-
-			nextSiblingDetailAST = nextSiblingDetailAST.getNextSibling();
-		}
-
-		return _getDependentIdentDetailASTList(
-			variables, followingIdentDetailASTList);
+		return _addDependentIdentDetailASTList(
+			dependentIdentDetailASTList,
+			variableDefinitionDetailAST.getNextSibling(), variables,
+			lineNumber);
 	}
 
 	protected int getEndLineNumber(DetailAST detailAST) {
@@ -956,13 +914,23 @@ public abstract class BaseCheck extends AbstractCheck {
 		TokenTypes.POST_INC, TokenTypes.UNARY_MINUS, TokenTypes.UNARY_PLUS
 	};
 
-	private List<DetailAST> _getDependentIdentDetailASTList(
-		List<Variable> variables, List<DetailAST> followingIdentDetailASTList) {
+	private List<DetailAST> _addDependentIdentDetailASTList(
+		List<DetailAST> dependentIdentDetailASTList, DetailAST detailAST,
+		List<Variable> variables, int lineNumber) {
 
-		List<DetailAST> dependentIdentDetailASTList = new ArrayList<>();
+		if (detailAST == null) {
+			return dependentIdentDetailASTList;
+		}
 
-		for (DetailAST identDetailAST : followingIdentDetailASTList) {
-			if (_isMethodNameDetailAST(identDetailAST)) {
+		int count = dependentIdentDetailASTList.size();
+
+		List<DetailAST> identDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.IDENT);
+
+		for (DetailAST identDetailAST : identDetailASTList) {
+			if (_isMethodNameDetailAST(identDetailAST) ||
+				dependentIdentDetailASTList.contains(identDetailAST)) {
+
 				continue;
 			}
 
@@ -977,11 +945,21 @@ public abstract class BaseCheck extends AbstractCheck {
 					variable.hasPossibleValueChangeOperation()) {
 
 					dependentIdentDetailASTList.add(identDetailAST);
+
+					break;
 				}
+			}
+
+			if ((detailAST.getLineNo() < lineNumber) &&
+				(count != dependentIdentDetailASTList.size())) {
+
+				variables.addAll(_getVariables(detailAST));
 			}
 		}
 
-		return dependentIdentDetailASTList;
+		return _addDependentIdentDetailASTList(
+			dependentIdentDetailASTList, detailAST.getNextSibling(), variables,
+			lineNumber);
 	}
 
 	private List<String> _getJSPImportNames(String directoryName) {
@@ -1027,14 +1005,39 @@ public abstract class BaseCheck extends AbstractCheck {
 		return nameDetailAST.getText();
 	}
 
-	private boolean _hasPossibleValueChangeOperation(DetailAST detailAST) {
-		DetailAST parentDetailAST = detailAST.getParent();
+	private List<Variable> _getVariables(DetailAST detailAST) {
+		List<Variable> variables = new ArrayList<>();
+
+		List<DetailAST> identDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.IDENT);
+
+		for (DetailAST identDetailAST : identDetailASTList) {
+			if (_isMethodNameDetailAST(identDetailAST)) {
+				continue;
+			}
+
+			String name = identDetailAST.getText();
+
+			if (!Character.isUpperCase(name.charAt(0))) {
+				variables.add(
+					new Variable(
+						name,
+						_hasPossibleValueChangeOperation(identDetailAST)));
+			}
+		}
+
+		return variables;
+	}
+
+	private boolean _hasPossibleValueChangeOperation(DetailAST identDetailAST) {
+		DetailAST parentDetailAST = identDetailAST.getParent();
 
 		if (parentDetailAST.getType() == TokenTypes.DOT) {
 			DetailAST grandParentDetailAST = parentDetailAST.getParent();
 
 			if (grandParentDetailAST.getType() == TokenTypes.METHOD_CALL) {
-				DetailAST nextSiblingDetailAST = detailAST.getNextSibling();
+				DetailAST nextSiblingDetailAST =
+					identDetailAST.getNextSibling();
 
 				if (nextSiblingDetailAST == null) {
 					return false;
@@ -1058,6 +1061,20 @@ public abstract class BaseCheck extends AbstractCheck {
 			}
 
 			parentDetailAST = parentDetailAST.getParent();
+		}
+
+		if (parentDetailAST.getType() == TokenTypes.ELIST) {
+			String typeName = getVariableTypeName(
+				identDetailAST, identDetailAST.getText(), false);
+
+			if (typeName.equals("ActionRequest") ||
+				typeName.equals("PortletRequest") ||
+				typeName.equals("ResourceRequest")) {
+
+				return false;
+			}
+
+			return true;
 		}
 
 		if (ArrayUtil.contains(

@@ -119,9 +119,11 @@ definition {
 
 		PortletEntry.inputTitle(title = "Web Content Title");
 
-		Click(
-			key_editor = "content",
-			locator1 = "AlloyEditor#EDITOR");
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "content",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+		Click(locator1 = "CKEditor#BODY");
 
 		var browserType = PropsUtil.get("browser.type");
 
@@ -149,6 +151,8 @@ definition {
 		Pause(locator1 = "5000");
 
 		takeScreenshot();
+
+		SelectFrame(value1 = "relative=top");
 
 		PortletEntry.publish();
 

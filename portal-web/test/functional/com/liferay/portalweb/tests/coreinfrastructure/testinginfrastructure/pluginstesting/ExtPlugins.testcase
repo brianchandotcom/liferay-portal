@@ -43,7 +43,7 @@ definition {
 
 		Pause(locator1 = "120000");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
 			value1 = "Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page.");
 

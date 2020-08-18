@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.service.builder.test;
+package com.liferay.portal.tools.service.builder.test.service.base.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.SystemException;

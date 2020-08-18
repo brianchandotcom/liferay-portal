@@ -534,9 +534,6 @@ public class ProjectTemplatesFormFieldTest
 			"--liferay-version", liferayVersion, "--js-framework", jsFramework);
 
 		testContains(
-			gradleProjectDir, "bnd.bnd", "Provide-Capability:", "soy;",
-			"type:String=\"LiferayFormField\"");
-		testContains(
 			gradleProjectDir, "build.gradle",
 			"compileOnly group: \"com.liferay\", name: " +
 				"\"com.liferay.dynamic.data.mapping.api\"",
@@ -573,21 +570,6 @@ public class ProjectTemplatesFormFieldTest
 		testNotContains(
 			gradleProjectDir, "build.gradle", true, "^repositories \\{.*");
 		testNotContains(gradleProjectDir, "build.gradle", "version: \"[0-9].*");
-
-		if (isBuildProjects()) {
-			executeGradle(
-				workspaceDir, _gradleDistribution,
-				":modules:" + name + GRADLE_TASK_PATH_BUILD);
-
-			File gradleOutputDir = new File(gradleProjectDir, "build/libs");
-
-			Path gradleOutputPath = FileTestUtil.getFile(
-				gradleOutputDir.toPath(), OUTPUT_FILE_NAME_GLOB_REGEX, 1);
-
-			Assert.assertNotNull(gradleOutputPath);
-
-			Assert.assertTrue(Files.exists(gradleOutputPath));
-		}
 	}
 
 	@Rule

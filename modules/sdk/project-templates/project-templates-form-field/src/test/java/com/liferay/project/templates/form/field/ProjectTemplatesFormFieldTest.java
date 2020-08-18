@@ -523,9 +523,9 @@ public class ProjectTemplatesFormFieldTest
 	public void testBuildTemplateFormField73WithReactFramework()
 		throws Exception {
 
+		String jsFramework = "react";
 		String liferayVersion = "7.3.3";
 		String name = "foobar";
-		String jsFramework = "react";
 
 		File workspaceDir = buildWorkspace(temporaryFolder, liferayVersion);
 

@@ -101,8 +101,9 @@ public class AnalyticsReportsDisplayContext<T> {
 		return _data;
 	}
 
-	public String getLiferayAnalyticsURL(long companyId) {
-		return PrefsPropsUtil.getString(companyId, "liferayAnalyticsURL");
+	public String getLiferayAnalyticsURL() {
+		return PrefsPropsUtil.getString(
+			_themeDisplay.getCompanyId(), "liferayAnalyticsURL");
 	}
 
 	private Map<String, Object> _getContext() {

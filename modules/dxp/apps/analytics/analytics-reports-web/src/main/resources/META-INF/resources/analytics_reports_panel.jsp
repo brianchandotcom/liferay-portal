@@ -53,7 +53,7 @@ AnalyticsReportsDisplayContext analyticsReportsDisplayContext = (AnalyticsReport
 							markupView="lexicon"
 							message="open-analytics-cloud"
 							target="_blank"
-							url="<%= analyticsReportsDisplayContext.getLiferayAnalyticsURL(themeDisplay.getCompanyId()) %>"
+							url="<%= analyticsReportsDisplayContext.getLiferayAnalyticsURL() %>"
 						/>
 					</c:when>
 					<c:otherwise>

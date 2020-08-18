@@ -69,11 +69,10 @@ public class CommerceOrderPaymentModelImpl
 	public static final String TABLE_NAME = "CommerceOrderPayment";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"commerceOrderPaymentId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"commerceOrderId", Types.BIGINT},
+		{"commerceOrderPaymentId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"commerceOrderId", Types.BIGINT},
 		{"commercePaymentMethodKey", Types.VARCHAR}, {"content", Types.CLOB},
 		{"status", Types.INTEGER}
 	};
@@ -82,7 +81,6 @@ public class CommerceOrderPaymentModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceOrderPaymentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -97,7 +95,7 @@ public class CommerceOrderPaymentModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrderPayment (mvccVersion LONG default 0 not null,commerceOrderPaymentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,commercePaymentMethodKey VARCHAR(75) null,content TEXT null,status INTEGER)";
+		"create table CommerceOrderPayment (commerceOrderPaymentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,commercePaymentMethodKey VARCHAR(75) null,content TEXT null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceOrderPayment";
@@ -269,12 +267,6 @@ public class CommerceOrderPaymentModelImpl
 					<String, BiConsumer<CommerceOrderPayment, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceOrderPayment::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceOrderPayment, Long>)
-				CommerceOrderPayment::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceOrderPaymentId",
 			CommerceOrderPayment::getCommerceOrderPaymentId);
 		attributeSetterBiConsumers.put(
@@ -345,16 +337,6 @@ public class CommerceOrderPaymentModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -554,7 +536,6 @@ public class CommerceOrderPaymentModelImpl
 		CommerceOrderPaymentImpl commerceOrderPaymentImpl =
 			new CommerceOrderPaymentImpl();
 
-		commerceOrderPaymentImpl.setMvccVersion(getMvccVersion());
 		commerceOrderPaymentImpl.setCommerceOrderPaymentId(
 			getCommerceOrderPaymentId());
 		commerceOrderPaymentImpl.setGroupId(getGroupId());
@@ -650,8 +631,6 @@ public class CommerceOrderPaymentModelImpl
 	public CacheModel<CommerceOrderPayment> toCacheModel() {
 		CommerceOrderPaymentCacheModel commerceOrderPaymentCacheModel =
 			new CommerceOrderPaymentCacheModel();
-
-		commerceOrderPaymentCacheModel.mvccVersion = getMvccVersion();
 
 		commerceOrderPaymentCacheModel.commerceOrderPaymentId =
 			getCommerceOrderPaymentId();
@@ -788,7 +767,6 @@ public class CommerceOrderPaymentModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceOrderPaymentId;
 	private long _groupId;
 	private long _companyId;

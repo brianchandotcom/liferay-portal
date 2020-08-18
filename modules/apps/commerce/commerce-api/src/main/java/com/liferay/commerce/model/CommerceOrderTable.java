@@ -35,8 +35,6 @@ public class CommerceOrderTable extends BaseTable<CommerceOrderTable> {
 
 	public static final CommerceOrderTable INSTANCE = new CommerceOrderTable();
 
-	public final Column<CommerceOrderTable, Long> mvccVersion = createColumn(
-		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceOrderTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderTable, String> externalReferenceCode =

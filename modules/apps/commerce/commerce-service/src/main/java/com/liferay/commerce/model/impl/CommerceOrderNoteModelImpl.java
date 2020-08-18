@@ -73,7 +73,7 @@ public class CommerceOrderNoteModelImpl
 	public static final String TABLE_NAME = "CommerceOrderNote";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"commerceOrderNoteId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -85,7 +85,6 @@ public class CommerceOrderNoteModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceOrderNoteId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -100,7 +99,7 @@ public class CommerceOrderNoteModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrderNote (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceOrderNoteId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,content STRING null,restricted BOOLEAN)";
+		"create table CommerceOrderNote (externalReferenceCode VARCHAR(75) null,commerceOrderNoteId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,content STRING null,restricted BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderNote";
 
@@ -149,7 +148,9 @@ public class CommerceOrderNoteModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceOrderNote toModel(CommerceOrderNoteSoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -157,7 +158,6 @@ public class CommerceOrderNoteModelImpl
 
 		CommerceOrderNote model = new CommerceOrderNoteImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCommerceOrderNoteId(soapModel.getCommerceOrderNoteId());
 		model.setGroupId(soapModel.getGroupId());
@@ -178,7 +178,9 @@ public class CommerceOrderNoteModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceOrderNote> toModels(
 		CommerceOrderNoteSoap[] soapModels) {
 
@@ -328,12 +330,6 @@ public class CommerceOrderNoteModelImpl
 				new LinkedHashMap<String, BiConsumer<CommerceOrderNote, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceOrderNote::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceOrderNote, Long>)
-				CommerceOrderNote::setMvccVersion);
-		attributeGetterFunctions.put(
 			"externalReferenceCode",
 			CommerceOrderNote::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
@@ -400,17 +396,6 @@ public class CommerceOrderNoteModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -660,7 +645,6 @@ public class CommerceOrderNoteModelImpl
 		CommerceOrderNoteImpl commerceOrderNoteImpl =
 			new CommerceOrderNoteImpl();
 
-		commerceOrderNoteImpl.setMvccVersion(getMvccVersion());
 		commerceOrderNoteImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
 		commerceOrderNoteImpl.setCommerceOrderNoteId(getCommerceOrderNoteId());
@@ -764,8 +748,6 @@ public class CommerceOrderNoteModelImpl
 	public CacheModel<CommerceOrderNote> toCacheModel() {
 		CommerceOrderNoteCacheModel commerceOrderNoteCacheModel =
 			new CommerceOrderNoteCacheModel();
-
-		commerceOrderNoteCacheModel.mvccVersion = getMvccVersion();
 
 		commerceOrderNoteCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -899,7 +881,6 @@ public class CommerceOrderNoteModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private String _originalExternalReferenceCode;
 	private long _commerceOrderNoteId;

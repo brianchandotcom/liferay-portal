@@ -34,9 +34,6 @@ public class CommerceAccountOrganizationRelTable
 	public static final CommerceAccountOrganizationRelTable INSTANCE =
 		new CommerceAccountOrganizationRelTable();
 
-	public final Column<CommerceAccountOrganizationRelTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceAccountOrganizationRelTable, Long>
 		commerceAccountId = createColumn(
 			"commerceAccountId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

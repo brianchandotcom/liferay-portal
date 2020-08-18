@@ -61,8 +61,10 @@ import java.util.Map;
  *
  * @author Marco Leo
  * @see CPDefinitionOptionRelServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CPDefinitionOptionRelServiceSoap {
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRelSoap

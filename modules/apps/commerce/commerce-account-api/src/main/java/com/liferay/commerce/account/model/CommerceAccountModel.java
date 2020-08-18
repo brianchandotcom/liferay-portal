@@ -17,7 +17,6 @@ package com.liferay.commerce.account.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 
@@ -38,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceAccountModel
-	extends AuditedModel, BaseModel<CommerceAccount>, MVCCModel, ShardedModel,
+	extends AuditedModel, BaseModel<CommerceAccount>, ShardedModel,
 			WorkflowedModel {
 
 	/*
@@ -60,22 +59,6 @@ public interface CommerceAccountModel
 	 * @param primaryKey the primary key of this commerce account
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this commerce account.
-	 *
-	 * @return the mvcc version of this commerce account
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this commerce account.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce account
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the external reference code of this commerce account.

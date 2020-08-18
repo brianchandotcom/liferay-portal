@@ -18,7 +18,6 @@ import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -37,7 +36,7 @@ import java.util.Date;
  */
 @Deprecated
 public class CPFriendlyURLEntryCacheModel
-	implements CacheModel<CPFriendlyURLEntry>, Externalizable, MVCCModel {
+	implements CacheModel<CPFriendlyURLEntry>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -52,9 +51,8 @@ public class CPFriendlyURLEntryCacheModel
 		CPFriendlyURLEntryCacheModel cpFriendlyURLEntryCacheModel =
 			(CPFriendlyURLEntryCacheModel)object;
 
-		if ((CPFriendlyURLEntryId ==
-				cpFriendlyURLEntryCacheModel.CPFriendlyURLEntryId) &&
-			(mvccVersion == cpFriendlyURLEntryCacheModel.mvccVersion)) {
+		if (CPFriendlyURLEntryId ==
+				cpFriendlyURLEntryCacheModel.CPFriendlyURLEntryId) {
 
 			return true;
 		}
@@ -64,28 +62,14 @@ public class CPFriendlyURLEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, CPFriendlyURLEntryId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, CPFriendlyURLEntryId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(27);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", uuid=");
+		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", CPFriendlyURLEntryId=");
 		sb.append(CPFriendlyURLEntryId);
@@ -120,8 +104,6 @@ public class CPFriendlyURLEntryCacheModel
 	public CPFriendlyURLEntry toEntityModel() {
 		CPFriendlyURLEntryImpl cpFriendlyURLEntryImpl =
 			new CPFriendlyURLEntryImpl();
-
-		cpFriendlyURLEntryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			cpFriendlyURLEntryImpl.setUuid("");
@@ -182,7 +164,6 @@ public class CPFriendlyURLEntryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		CPFriendlyURLEntryId = objectInput.readLong();
@@ -207,8 +188,6 @@ public class CPFriendlyURLEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -255,7 +234,6 @@ public class CPFriendlyURLEntryCacheModel
 		objectOutput.writeBoolean(main);
 	}
 
-	public long mvccVersion;
 	public String uuid;
 	public long CPFriendlyURLEntryId;
 	public long groupId;

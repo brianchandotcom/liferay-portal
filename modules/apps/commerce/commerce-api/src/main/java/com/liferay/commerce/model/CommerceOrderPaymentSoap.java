@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services.
  *
  * @author Alessio Antonio Rendina
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceOrderPaymentSoap implements Serializable {
 
 	public static CommerceOrderPaymentSoap toSoapModel(
@@ -33,7 +35,6 @@ public class CommerceOrderPaymentSoap implements Serializable {
 
 		CommerceOrderPaymentSoap soapModel = new CommerceOrderPaymentSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceOrderPaymentId(model.getCommerceOrderPaymentId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -106,14 +107,6 @@ public class CommerceOrderPaymentSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceOrderPaymentId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceOrderPaymentId() {
@@ -204,7 +197,6 @@ public class CommerceOrderPaymentSoap implements Serializable {
 		_status = status;
 	}
 
-	private long _mvccVersion;
 	private long _commerceOrderPaymentId;
 	private long _groupId;
 	private long _companyId;

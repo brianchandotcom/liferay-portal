@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceRegionServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceRegionServiceSoap {
 
 	public static com.liferay.commerce.model.CommerceRegionSoap

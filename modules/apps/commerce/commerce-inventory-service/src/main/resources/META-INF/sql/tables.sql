@@ -1,5 +1,4 @@
 create table CIAudit (
-	mvccVersion LONG default 0 not null,
 	CIAuditId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

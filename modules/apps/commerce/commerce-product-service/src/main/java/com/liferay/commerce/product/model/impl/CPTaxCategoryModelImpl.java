@@ -80,18 +80,16 @@ public class CPTaxCategoryModelImpl
 	public static final String TABLE_NAME = "CPTaxCategory";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"CPTaxCategoryId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}
+		{"CPTaxCategoryId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"name", Types.VARCHAR}, {"description", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPTaxCategoryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -103,7 +101,7 @@ public class CPTaxCategoryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPTaxCategory (mvccVersion LONG default 0 not null,CPTaxCategoryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null)";
+		"create table CPTaxCategory (CPTaxCategoryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CPTaxCategory";
 
@@ -146,7 +144,9 @@ public class CPTaxCategoryModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CPTaxCategory toModel(CPTaxCategorySoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -154,7 +154,6 @@ public class CPTaxCategoryModelImpl
 
 		CPTaxCategory model = new CPTaxCategoryImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCPTaxCategoryId(soapModel.getCPTaxCategoryId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -172,7 +171,9 @@ public class CPTaxCategoryModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CPTaxCategory> toModels(CPTaxCategorySoap[] soapModels) {
 		if (soapModels == null) {
 			return null;
@@ -317,11 +318,6 @@ public class CPTaxCategoryModelImpl
 			new LinkedHashMap<String, BiConsumer<CPTaxCategory, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CPTaxCategory::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CPTaxCategory, Long>)CPTaxCategory::setMvccVersion);
-		attributeGetterFunctions.put(
 			"CPTaxCategoryId", CPTaxCategory::getCPTaxCategoryId);
 		attributeSetterBiConsumers.put(
 			"CPTaxCategoryId",
@@ -361,17 +357,6 @@ public class CPTaxCategoryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -814,7 +799,6 @@ public class CPTaxCategoryModelImpl
 	public Object clone() {
 		CPTaxCategoryImpl cpTaxCategoryImpl = new CPTaxCategoryImpl();
 
-		cpTaxCategoryImpl.setMvccVersion(getMvccVersion());
 		cpTaxCategoryImpl.setCPTaxCategoryId(getCPTaxCategoryId());
 		cpTaxCategoryImpl.setCompanyId(getCompanyId());
 		cpTaxCategoryImpl.setUserId(getUserId());
@@ -905,8 +889,6 @@ public class CPTaxCategoryModelImpl
 	public CacheModel<CPTaxCategory> toCacheModel() {
 		CPTaxCategoryCacheModel cpTaxCategoryCacheModel =
 			new CPTaxCategoryCacheModel();
-
-		cpTaxCategoryCacheModel.mvccVersion = getMvccVersion();
 
 		cpTaxCategoryCacheModel.CPTaxCategoryId = getCPTaxCategoryId();
 
@@ -1029,7 +1011,6 @@ public class CPTaxCategoryModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _CPTaxCategoryId;
 	private long _companyId;
 	private long _originalCompanyId;

@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceVirtualOrderItemServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceVirtualOrderItemServiceSoap {
 
 	public static com.liferay.commerce.product.type.virtual.order.model.

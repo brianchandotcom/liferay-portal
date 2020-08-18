@@ -83,13 +83,13 @@ public class CommerceCurrencyModelImpl
 	public static final String TABLE_NAME = "CommerceCurrency";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"commerceCurrencyId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"code_", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"symbol", Types.VARCHAR}, {"rate", Types.DECIMAL},
-		{"formatPattern", Types.VARCHAR}, {"maxFractionDigits", Types.INTEGER},
+		{"uuid_", Types.VARCHAR}, {"commerceCurrencyId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"code_", Types.VARCHAR},
+		{"name", Types.VARCHAR}, {"symbol", Types.VARCHAR},
+		{"rate", Types.DECIMAL}, {"formatPattern", Types.VARCHAR},
+		{"maxFractionDigits", Types.INTEGER},
 		{"minFractionDigits", Types.INTEGER}, {"roundingMode", Types.VARCHAR},
 		{"primary_", Types.BOOLEAN}, {"priority", Types.DOUBLE},
 		{"active_", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP}
@@ -99,7 +99,6 @@ public class CommerceCurrencyModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceCurrencyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -122,7 +121,7 @@ public class CommerceCurrencyModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceCurrency (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceCurrencyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,code_ VARCHAR(75) null,name STRING null,symbol VARCHAR(75) null,rate DECIMAL(30, 16) null,formatPattern STRING null,maxFractionDigits INTEGER,minFractionDigits INTEGER,roundingMode VARCHAR(75) null,primary_ BOOLEAN,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
+		"create table CommerceCurrency (uuid_ VARCHAR(75) null,commerceCurrencyId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,code_ VARCHAR(75) null,name STRING null,symbol VARCHAR(75) null,rate DECIMAL(30, 16) null,formatPattern STRING null,maxFractionDigits INTEGER,minFractionDigits INTEGER,roundingMode VARCHAR(75) null,primary_ BOOLEAN,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceCurrency";
 
@@ -173,7 +172,9 @@ public class CommerceCurrencyModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceCurrency toModel(CommerceCurrencySoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -181,7 +182,6 @@ public class CommerceCurrencyModelImpl
 
 		CommerceCurrency model = new CommerceCurrencyImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceCurrencyId(soapModel.getCommerceCurrencyId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -210,7 +210,9 @@ public class CommerceCurrencyModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceCurrency> toModels(
 		CommerceCurrencySoap[] soapModels) {
 
@@ -358,12 +360,6 @@ public class CommerceCurrencyModelImpl
 			attributeSetterBiConsumers =
 				new LinkedHashMap<String, BiConsumer<CommerceCurrency, ?>>();
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommerceCurrency::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceCurrency, Long>)
-				CommerceCurrency::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CommerceCurrency::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -466,17 +462,6 @@ public class CommerceCurrencyModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1122,7 +1107,6 @@ public class CommerceCurrencyModelImpl
 	public Object clone() {
 		CommerceCurrencyImpl commerceCurrencyImpl = new CommerceCurrencyImpl();
 
-		commerceCurrencyImpl.setMvccVersion(getMvccVersion());
 		commerceCurrencyImpl.setUuid(getUuid());
 		commerceCurrencyImpl.setCommerceCurrencyId(getCommerceCurrencyId());
 		commerceCurrencyImpl.setCompanyId(getCompanyId());
@@ -1240,8 +1224,6 @@ public class CommerceCurrencyModelImpl
 	public CacheModel<CommerceCurrency> toCacheModel() {
 		CommerceCurrencyCacheModel commerceCurrencyCacheModel =
 			new CommerceCurrencyCacheModel();
-
-		commerceCurrencyCacheModel.mvccVersion = getMvccVersion();
 
 		commerceCurrencyCacheModel.uuid = getUuid();
 
@@ -1418,7 +1400,6 @@ public class CommerceCurrencyModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _commerceCurrencyId;

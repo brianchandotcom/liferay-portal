@@ -74,7 +74,6 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 	public static final String TABLE_NAME = "CommerceTaxFixedRateAddressRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT},
 		{"CTaxFixedRateAddressRelId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -89,7 +88,6 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CTaxFixedRateAddressRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -106,7 +104,7 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceTaxFixedRateAddressRel (mvccVersion LONG default 0 not null,CTaxFixedRateAddressRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceTaxMethodId LONG,CPTaxCategoryId LONG,commerceCountryId LONG,commerceRegionId LONG,zip VARCHAR(75) null,rate DOUBLE)";
+		"create table CommerceTaxFixedRateAddressRel (CTaxFixedRateAddressRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceTaxMethodId LONG,CPTaxCategoryId LONG,commerceCountryId LONG,commerceRegionId LONG,zip VARCHAR(75) null,rate DOUBLE)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceTaxFixedRateAddressRel";
@@ -154,7 +152,9 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceTaxFixedRateAddressRel toModel(
 		CommerceTaxFixedRateAddressRelSoap soapModel) {
 
@@ -165,7 +165,6 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 		CommerceTaxFixedRateAddressRel model =
 			new CommerceTaxFixedRateAddressRelImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceTaxFixedRateAddressRelId(
 			soapModel.getCommerceTaxFixedRateAddressRelId());
 		model.setGroupId(soapModel.getGroupId());
@@ -189,7 +188,9 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceTaxFixedRateAddressRel> toModels(
 		CommerceTaxFixedRateAddressRelSoap[] soapModels) {
 
@@ -345,12 +346,6 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 					<String, BiConsumer<CommerceTaxFixedRateAddressRel, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceTaxFixedRateAddressRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceTaxFixedRateAddressRel, Long>)
-				CommerceTaxFixedRateAddressRel::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceTaxFixedRateAddressRelId",
 			CommerceTaxFixedRateAddressRel::
 				getCommerceTaxFixedRateAddressRelId);
@@ -440,17 +435,6 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -704,7 +688,6 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 		CommerceTaxFixedRateAddressRelImpl commerceTaxFixedRateAddressRelImpl =
 			new CommerceTaxFixedRateAddressRelImpl();
 
-		commerceTaxFixedRateAddressRelImpl.setMvccVersion(getMvccVersion());
 		commerceTaxFixedRateAddressRelImpl.setCommerceTaxFixedRateAddressRelId(
 			getCommerceTaxFixedRateAddressRelId());
 		commerceTaxFixedRateAddressRelImpl.setGroupId(getGroupId());
@@ -816,8 +799,6 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 		CommerceTaxFixedRateAddressRelCacheModel
 			commerceTaxFixedRateAddressRelCacheModel =
 				new CommerceTaxFixedRateAddressRelCacheModel();
-
-		commerceTaxFixedRateAddressRelCacheModel.mvccVersion = getMvccVersion();
 
 		commerceTaxFixedRateAddressRelCacheModel.
 			commerceTaxFixedRateAddressRelId =
@@ -960,7 +941,6 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceTaxFixedRateAddressRelId;
 	private long _groupId;
 	private long _companyId;

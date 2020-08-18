@@ -1,5 +1,4 @@
 create table CPDefinitionVirtualSetting (
-	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	CPDefinitionVirtualSettingId LONG not null primary key,
 	groupId LONG,

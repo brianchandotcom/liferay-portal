@@ -33,8 +33,6 @@ public class CPDefinitionLinkTable extends BaseTable<CPDefinitionLinkTable> {
 	public static final CPDefinitionLinkTable INSTANCE =
 		new CPDefinitionLinkTable();
 
-	public final Column<CPDefinitionLinkTable, Long> mvccVersion = createColumn(
-		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CPDefinitionLinkTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionLinkTable, Long> CPDefinitionLinkId =

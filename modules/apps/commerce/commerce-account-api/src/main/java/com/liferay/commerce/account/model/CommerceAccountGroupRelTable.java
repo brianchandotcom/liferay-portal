@@ -34,9 +34,6 @@ public class CommerceAccountGroupRelTable
 	public static final CommerceAccountGroupRelTable INSTANCE =
 		new CommerceAccountGroupRelTable();
 
-	public final Column<CommerceAccountGroupRelTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceAccountGroupRelTable, Long>
 		commerceAccountGroupRelId = createColumn(
 			"commerceAccountGroupRelId", Long.class, Types.BIGINT,

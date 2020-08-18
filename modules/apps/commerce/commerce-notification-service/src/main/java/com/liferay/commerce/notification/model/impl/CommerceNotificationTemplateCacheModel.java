@@ -18,7 +18,6 @@ import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,8 +33,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceNotificationTemplateCacheModel
-	implements CacheModel<CommerceNotificationTemplate>, Externalizable,
-			   MVCCModel {
+	implements CacheModel<CommerceNotificationTemplate>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -51,11 +49,9 @@ public class CommerceNotificationTemplateCacheModel
 			commerceNotificationTemplateCacheModel =
 				(CommerceNotificationTemplateCacheModel)object;
 
-		if ((commerceNotificationTemplateId ==
+		if (commerceNotificationTemplateId ==
 				commerceNotificationTemplateCacheModel.
-					commerceNotificationTemplateId) &&
-			(mvccVersion ==
-				commerceNotificationTemplateCacheModel.mvccVersion)) {
+					commerceNotificationTemplateId) {
 
 			return true;
 		}
@@ -65,28 +61,14 @@ public class CommerceNotificationTemplateCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, commerceNotificationTemplateId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, commerceNotificationTemplateId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(39);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", uuid=");
+		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", commerceNotificationTemplateId=");
 		sb.append(commerceNotificationTemplateId);
@@ -133,8 +115,6 @@ public class CommerceNotificationTemplateCacheModel
 	public CommerceNotificationTemplate toEntityModel() {
 		CommerceNotificationTemplateImpl commerceNotificationTemplateImpl =
 			new CommerceNotificationTemplateImpl();
-
-		commerceNotificationTemplateImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			commerceNotificationTemplateImpl.setUuid("");
@@ -253,7 +233,6 @@ public class CommerceNotificationTemplateCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
-		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		commerceNotificationTemplateId = objectInput.readLong();
@@ -282,8 +261,6 @@ public class CommerceNotificationTemplateCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -382,7 +359,6 @@ public class CommerceNotificationTemplateCacheModel
 		}
 	}
 
-	public long mvccVersion;
 	public String uuid;
 	public long commerceNotificationTemplateId;
 	public long groupId;

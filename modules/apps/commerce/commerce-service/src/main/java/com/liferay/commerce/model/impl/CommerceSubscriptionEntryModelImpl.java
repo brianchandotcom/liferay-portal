@@ -76,8 +76,7 @@ public class CommerceSubscriptionEntryModelImpl
 	public static final String TABLE_NAME = "CommerceSubscriptionEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"commerceSubscriptionEntryId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"commerceSubscriptionEntryId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -105,7 +104,6 @@ public class CommerceSubscriptionEntryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceSubscriptionEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -138,7 +136,7 @@ public class CommerceSubscriptionEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceSubscriptionEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceSubscriptionEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPInstanceUuid VARCHAR(75) null,CProductId LONG,commerceOrderItemId LONG,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings TEXT null,currentCycle LONG,maxSubscriptionCycles LONG,subscriptionStatus INTEGER,lastIterationDate DATE null,nextIterationDate DATE null,startDate DATE null,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,deliveryCurrentCycle LONG,deliveryMaxSubscriptionCycles LONG,deliverySubscriptionStatus INTEGER,deliveryLastIterationDate DATE null,deliveryNextIterationDate DATE null,deliveryStartDate DATE null)";
+		"create table CommerceSubscriptionEntry (uuid_ VARCHAR(75) null,commerceSubscriptionEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPInstanceUuid VARCHAR(75) null,CProductId LONG,commerceOrderItemId LONG,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings TEXT null,currentCycle LONG,maxSubscriptionCycles LONG,subscriptionStatus INTEGER,lastIterationDate DATE null,nextIterationDate DATE null,startDate DATE null,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,deliveryCurrentCycle LONG,deliveryMaxSubscriptionCycles LONG,deliverySubscriptionStatus INTEGER,deliveryLastIterationDate DATE null,deliveryNextIterationDate DATE null,deliveryStartDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceSubscriptionEntry";
@@ -196,7 +194,9 @@ public class CommerceSubscriptionEntryModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceSubscriptionEntry toModel(
 		CommerceSubscriptionEntrySoap soapModel) {
 
@@ -206,7 +206,6 @@ public class CommerceSubscriptionEntryModelImpl
 
 		CommerceSubscriptionEntry model = new CommerceSubscriptionEntryImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceSubscriptionEntryId(
 			soapModel.getCommerceSubscriptionEntryId());
@@ -254,7 +253,9 @@ public class CommerceSubscriptionEntryModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceSubscriptionEntry> toModels(
 		CommerceSubscriptionEntrySoap[] soapModels) {
 
@@ -407,12 +408,6 @@ public class CommerceSubscriptionEntryModelImpl
 				new LinkedHashMap
 					<String, BiConsumer<CommerceSubscriptionEntry, ?>>();
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommerceSubscriptionEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceSubscriptionEntry, Long>)
-				CommerceSubscriptionEntry::setMvccVersion);
 		attributeGetterFunctions.put(
 			"uuid", CommerceSubscriptionEntry::getUuid);
 		attributeSetterBiConsumers.put(
@@ -609,17 +604,6 @@ public class CommerceSubscriptionEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1141,7 +1125,6 @@ public class CommerceSubscriptionEntryModelImpl
 		CommerceSubscriptionEntryImpl commerceSubscriptionEntryImpl =
 			new CommerceSubscriptionEntryImpl();
 
-		commerceSubscriptionEntryImpl.setMvccVersion(getMvccVersion());
 		commerceSubscriptionEntryImpl.setUuid(getUuid());
 		commerceSubscriptionEntryImpl.setCommerceSubscriptionEntryId(
 			getCommerceSubscriptionEntryId());
@@ -1296,8 +1279,6 @@ public class CommerceSubscriptionEntryModelImpl
 		CommerceSubscriptionEntryCacheModel
 			commerceSubscriptionEntryCacheModel =
 				new CommerceSubscriptionEntryCacheModel();
-
-		commerceSubscriptionEntryCacheModel.mvccVersion = getMvccVersion();
 
 		commerceSubscriptionEntryCacheModel.uuid = getUuid();
 
@@ -1571,7 +1552,6 @@ public class CommerceSubscriptionEntryModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _commerceSubscriptionEntryId;

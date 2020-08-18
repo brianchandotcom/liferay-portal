@@ -1,5 +1,4 @@
 create table CommerceCurrency (
-	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	commerceCurrencyId LONG not null primary key,
 	companyId LONG,

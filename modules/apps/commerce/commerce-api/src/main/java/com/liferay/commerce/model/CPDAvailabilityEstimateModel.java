@@ -16,7 +16,6 @@ package com.liferay.commerce.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 
@@ -37,7 +36,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CPDAvailabilityEstimateModel
-	extends BaseModel<CPDAvailabilityEstimate>, MVCCModel, ShardedModel,
+	extends BaseModel<CPDAvailabilityEstimate>, ShardedModel,
 			StagedAuditedModel {
 
 	/*
@@ -59,22 +58,6 @@ public interface CPDAvailabilityEstimateModel
 	 * @param primaryKey the primary key of this cpd availability estimate
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this cpd availability estimate.
-	 *
-	 * @return the mvcc version of this cpd availability estimate
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this cpd availability estimate.
-	 *
-	 * @param mvccVersion the mvcc version of this cpd availability estimate
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this cpd availability estimate.

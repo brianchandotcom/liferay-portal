@@ -61,8 +61,10 @@ import java.util.Map;
  *
  * @author Andrea Di Giorgi
  * @see CommerceCurrencyServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceCurrencyServiceSoap {
 
 	public static com.liferay.commerce.currency.model.CommerceCurrencySoap

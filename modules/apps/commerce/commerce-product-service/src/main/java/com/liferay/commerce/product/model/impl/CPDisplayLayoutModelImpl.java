@@ -75,19 +75,18 @@ public class CPDisplayLayoutModelImpl
 	public static final String TABLE_NAME = "CPDisplayLayout";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"CPDisplayLayoutId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"layoutUuid", Types.VARCHAR}
+		{"uuid_", Types.VARCHAR}, {"CPDisplayLayoutId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"layoutUuid", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPDisplayLayoutId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -102,7 +101,7 @@ public class CPDisplayLayoutModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDisplayLayout (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPDisplayLayoutId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,layoutUuid VARCHAR(75) null)";
+		"create table CPDisplayLayout (uuid_ VARCHAR(75) null,CPDisplayLayoutId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,layoutUuid VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CPDisplayLayout";
 
@@ -155,7 +154,9 @@ public class CPDisplayLayoutModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CPDisplayLayout toModel(CPDisplayLayoutSoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -163,7 +164,6 @@ public class CPDisplayLayoutModelImpl
 
 		CPDisplayLayout model = new CPDisplayLayoutImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCPDisplayLayoutId(soapModel.getCPDisplayLayoutId());
 		model.setGroupId(soapModel.getGroupId());
@@ -184,7 +184,9 @@ public class CPDisplayLayoutModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CPDisplayLayout> toModels(
 		CPDisplayLayoutSoap[] soapModels) {
 
@@ -331,11 +333,6 @@ public class CPDisplayLayoutModelImpl
 		Map<String, BiConsumer<CPDisplayLayout, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<CPDisplayLayout, ?>>();
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CPDisplayLayout::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CPDisplayLayout, Long>)CPDisplayLayout::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CPDisplayLayout::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -394,17 +391,6 @@ public class CPDisplayLayoutModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -696,7 +682,6 @@ public class CPDisplayLayoutModelImpl
 	public Object clone() {
 		CPDisplayLayoutImpl cpDisplayLayoutImpl = new CPDisplayLayoutImpl();
 
-		cpDisplayLayoutImpl.setMvccVersion(getMvccVersion());
 		cpDisplayLayoutImpl.setUuid(getUuid());
 		cpDisplayLayoutImpl.setCPDisplayLayoutId(getCPDisplayLayoutId());
 		cpDisplayLayoutImpl.setGroupId(getGroupId());
@@ -804,8 +789,6 @@ public class CPDisplayLayoutModelImpl
 	public CacheModel<CPDisplayLayout> toCacheModel() {
 		CPDisplayLayoutCacheModel cpDisplayLayoutCacheModel =
 			new CPDisplayLayoutCacheModel();
-
-		cpDisplayLayoutCacheModel.mvccVersion = getMvccVersion();
 
 		cpDisplayLayoutCacheModel.uuid = getUuid();
 
@@ -934,7 +917,6 @@ public class CPDisplayLayoutModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _CPDisplayLayoutId;

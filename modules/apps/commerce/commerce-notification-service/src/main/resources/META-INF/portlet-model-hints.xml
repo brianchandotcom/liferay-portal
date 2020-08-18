@@ -2,7 +2,6 @@
 
 <model-hints>
 	<model name="com.liferay.commerce.notification.model.CommerceNotificationAttachment">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="commerceNotificationAttachmentId" type="long" />
 		<field name="groupId" type="long" />
@@ -16,7 +15,6 @@
 		<field name="deleteOnSend" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.notification.model.CommerceNotificationQueueEntry">
-		<field name="mvccVersion" type="long" />
 		<field name="commerceNotificationQueueEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -48,7 +46,6 @@
 		<field name="sentDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.notification.model.CommerceNotificationTemplate">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="commerceNotificationTemplateId" type="long" />
 		<field name="groupId" type="long" />
@@ -88,7 +85,6 @@
 		</field>
 	</model>
 	<model name="com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRel">
-		<field name="mvccVersion" type="long" />
 		<field name="commerceNotificationTemplateCommerceAccountGroupRelId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

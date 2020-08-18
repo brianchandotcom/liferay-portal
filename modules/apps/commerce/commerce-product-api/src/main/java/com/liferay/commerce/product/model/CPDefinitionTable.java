@@ -33,8 +33,6 @@ public class CPDefinitionTable extends BaseTable<CPDefinitionTable> {
 
 	public static final CPDefinitionTable INSTANCE = new CPDefinitionTable();
 
-	public final Column<CPDefinitionTable, Long> mvccVersion = createColumn(
-		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CPDefinitionTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionTable, String> defaultLanguageId =

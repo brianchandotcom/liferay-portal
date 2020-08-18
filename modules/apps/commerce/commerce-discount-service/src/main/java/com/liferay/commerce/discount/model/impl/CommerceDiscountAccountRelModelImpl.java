@@ -75,7 +75,7 @@ public class CommerceDiscountAccountRelModelImpl
 	public static final String TABLE_NAME = "CommerceDiscountAccountRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"uuid_", Types.VARCHAR},
 		{"commerceDiscountAccountRelId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -88,7 +88,6 @@ public class CommerceDiscountAccountRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceDiscountAccountRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -103,7 +102,7 @@ public class CommerceDiscountAccountRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceDiscountAccountRel (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceDiscountAccountRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,commerceDiscountId LONG,order_ INTEGER,lastPublishDate DATE null)";
+		"create table CommerceDiscountAccountRel (uuid_ VARCHAR(75) null,commerceDiscountAccountRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,commerceDiscountId LONG,order_ INTEGER,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceDiscountAccountRel";
@@ -153,7 +152,9 @@ public class CommerceDiscountAccountRelModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceDiscountAccountRel toModel(
 		CommerceDiscountAccountRelSoap soapModel) {
 
@@ -163,7 +164,6 @@ public class CommerceDiscountAccountRelModelImpl
 
 		CommerceDiscountAccountRel model = new CommerceDiscountAccountRelImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceDiscountAccountRelId(
 			soapModel.getCommerceDiscountAccountRelId());
@@ -185,7 +185,9 @@ public class CommerceDiscountAccountRelModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceDiscountAccountRel> toModels(
 		CommerceDiscountAccountRelSoap[] soapModels) {
 
@@ -340,12 +342,6 @@ public class CommerceDiscountAccountRelModelImpl
 					<String, BiConsumer<CommerceDiscountAccountRel, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceDiscountAccountRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceDiscountAccountRel, Long>)
-				CommerceDiscountAccountRel::setMvccVersion);
-		attributeGetterFunctions.put(
 			"uuid", CommerceDiscountAccountRel::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -419,17 +415,6 @@ public class CommerceDiscountAccountRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -678,7 +663,6 @@ public class CommerceDiscountAccountRelModelImpl
 		CommerceDiscountAccountRelImpl commerceDiscountAccountRelImpl =
 			new CommerceDiscountAccountRelImpl();
 
-		commerceDiscountAccountRelImpl.setMvccVersion(getMvccVersion());
 		commerceDiscountAccountRelImpl.setUuid(getUuid());
 		commerceDiscountAccountRelImpl.setCommerceDiscountAccountRelId(
 			getCommerceDiscountAccountRelId());
@@ -793,8 +777,6 @@ public class CommerceDiscountAccountRelModelImpl
 		CommerceDiscountAccountRelCacheModel
 			commerceDiscountAccountRelCacheModel =
 				new CommerceDiscountAccountRelCacheModel();
-
-		commerceDiscountAccountRelCacheModel.mvccVersion = getMvccVersion();
 
 		commerceDiscountAccountRelCacheModel.uuid = getUuid();
 
@@ -937,7 +919,6 @@ public class CommerceDiscountAccountRelModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _commerceDiscountAccountRelId;

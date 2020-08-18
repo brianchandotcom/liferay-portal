@@ -36,9 +36,6 @@ public class CommerceOrderItemTable extends BaseTable<CommerceOrderItemTable> {
 	public static final CommerceOrderItemTable INSTANCE =
 		new CommerceOrderItemTable();
 
-	public final Column<CommerceOrderItemTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceOrderItemTable, String> externalReferenceCode =
 		createColumn(
 			"externalReferenceCode", String.class, Types.VARCHAR,

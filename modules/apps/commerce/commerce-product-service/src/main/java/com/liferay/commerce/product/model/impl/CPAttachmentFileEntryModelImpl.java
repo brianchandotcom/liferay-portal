@@ -83,8 +83,7 @@ public class CPAttachmentFileEntryModelImpl
 	public static final String TABLE_NAME = "CPAttachmentFileEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"externalReferenceCode", Types.VARCHAR},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
 		{"CPAttachmentFileEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -102,7 +101,6 @@ public class CPAttachmentFileEntryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPAttachmentFileEntryId", Types.BIGINT);
@@ -129,7 +127,7 @@ public class CPAttachmentFileEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPAttachmentFileEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPAttachmentFileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,displayDate DATE null,expirationDate DATE null,title STRING null,json TEXT null,priority DOUBLE,type_ INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CPAttachmentFileEntry (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPAttachmentFileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,displayDate DATE null,expirationDate DATE null,title STRING null,json TEXT null,priority DOUBLE,type_ INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPAttachmentFileEntry";
@@ -191,7 +189,9 @@ public class CPAttachmentFileEntryModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CPAttachmentFileEntry toModel(
 		CPAttachmentFileEntrySoap soapModel) {
 
@@ -201,7 +201,6 @@ public class CPAttachmentFileEntryModelImpl
 
 		CPAttachmentFileEntry model = new CPAttachmentFileEntryImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCPAttachmentFileEntryId(
@@ -235,7 +234,9 @@ public class CPAttachmentFileEntryModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CPAttachmentFileEntry> toModels(
 		CPAttachmentFileEntrySoap[] soapModels) {
 
@@ -386,12 +387,6 @@ public class CPAttachmentFileEntryModelImpl
 				new LinkedHashMap
 					<String, BiConsumer<CPAttachmentFileEntry, ?>>();
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CPAttachmentFileEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CPAttachmentFileEntry, Long>)
-				CPAttachmentFileEntry::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CPAttachmentFileEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -533,17 +528,6 @@ public class CPAttachmentFileEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1281,7 +1265,6 @@ public class CPAttachmentFileEntryModelImpl
 		CPAttachmentFileEntryImpl cpAttachmentFileEntryImpl =
 			new CPAttachmentFileEntryImpl();
 
-		cpAttachmentFileEntryImpl.setMvccVersion(getMvccVersion());
 		cpAttachmentFileEntryImpl.setUuid(getUuid());
 		cpAttachmentFileEntryImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
@@ -1424,8 +1407,6 @@ public class CPAttachmentFileEntryModelImpl
 	public CacheModel<CPAttachmentFileEntry> toCacheModel() {
 		CPAttachmentFileEntryCacheModel cpAttachmentFileEntryCacheModel =
 			new CPAttachmentFileEntryCacheModel();
-
-		cpAttachmentFileEntryCacheModel.mvccVersion = getMvccVersion();
 
 		cpAttachmentFileEntryCacheModel.uuid = getUuid();
 
@@ -1636,7 +1617,6 @@ public class CPAttachmentFileEntryModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private String _externalReferenceCode;

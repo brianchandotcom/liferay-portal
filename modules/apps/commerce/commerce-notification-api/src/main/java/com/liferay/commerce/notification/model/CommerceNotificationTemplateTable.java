@@ -35,9 +35,6 @@ public class CommerceNotificationTemplateTable
 	public static final CommerceNotificationTemplateTable INSTANCE =
 		new CommerceNotificationTemplateTable();
 
-	public final Column<CommerceNotificationTemplateTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceNotificationTemplateTable, String> uuid =
 		createColumn("uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceNotificationTemplateTable, Long>

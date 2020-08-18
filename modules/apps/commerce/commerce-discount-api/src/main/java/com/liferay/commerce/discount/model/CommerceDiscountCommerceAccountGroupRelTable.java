@@ -35,9 +35,6 @@ public class CommerceDiscountCommerceAccountGroupRelTable
 		new CommerceDiscountCommerceAccountGroupRelTable();
 
 	public final Column<CommerceDiscountCommerceAccountGroupRelTable, Long>
-		mvccVersion = createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<CommerceDiscountCommerceAccountGroupRelTable, Long>
 		commerceDiscountCommerceAccountGroupRelId = createColumn(
 			"CDiscountCAccountGroupRelId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);

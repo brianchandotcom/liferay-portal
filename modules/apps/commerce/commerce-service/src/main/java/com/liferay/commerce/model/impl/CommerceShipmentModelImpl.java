@@ -73,11 +73,10 @@ public class CommerceShipmentModelImpl
 	public static final String TABLE_NAME = "CommerceShipment";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"commerceShipmentId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"commerceAccountId", Types.BIGINT},
+		{"commerceShipmentId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"commerceAccountId", Types.BIGINT},
 		{"commerceAddressId", Types.BIGINT},
 		{"commerceShippingMethodId", Types.BIGINT},
 		{"shippingOptionName", Types.CLOB}, {"carrier", Types.VARCHAR},
@@ -89,7 +88,6 @@ public class CommerceShipmentModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceShipmentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -109,7 +107,7 @@ public class CommerceShipmentModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceShipment (mvccVersion LONG default 0 not null,commerceShipmentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,commerceAddressId LONG,commerceShippingMethodId LONG,shippingOptionName TEXT null,carrier VARCHAR(75) null,trackingNumber VARCHAR(75) null,shippingDate DATE null,expectedDate DATE null,status INTEGER)";
+		"create table CommerceShipment (commerceShipmentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,commerceAddressId LONG,commerceShippingMethodId LONG,shippingOptionName TEXT null,carrier VARCHAR(75) null,trackingNumber VARCHAR(75) null,shippingDate DATE null,expectedDate DATE null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceShipment";
 
@@ -156,7 +154,9 @@ public class CommerceShipmentModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceShipment toModel(CommerceShipmentSoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -164,7 +164,6 @@ public class CommerceShipmentModelImpl
 
 		CommerceShipment model = new CommerceShipmentImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceShipmentId(soapModel.getCommerceShipmentId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -191,7 +190,9 @@ public class CommerceShipmentModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceShipment> toModels(
 		CommerceShipmentSoap[] soapModels) {
 
@@ -340,12 +341,6 @@ public class CommerceShipmentModelImpl
 				new LinkedHashMap<String, BiConsumer<CommerceShipment, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceShipment::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceShipment, Long>)
-				CommerceShipment::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceShipmentId", CommerceShipment::getCommerceShipmentId);
 		attributeSetterBiConsumers.put(
 			"commerceShipmentId",
@@ -437,17 +432,6 @@ public class CommerceShipmentModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -740,7 +724,6 @@ public class CommerceShipmentModelImpl
 	public Object clone() {
 		CommerceShipmentImpl commerceShipmentImpl = new CommerceShipmentImpl();
 
-		commerceShipmentImpl.setMvccVersion(getMvccVersion());
 		commerceShipmentImpl.setCommerceShipmentId(getCommerceShipmentId());
 		commerceShipmentImpl.setGroupId(getGroupId());
 		commerceShipmentImpl.setCompanyId(getCompanyId());
@@ -848,8 +831,6 @@ public class CommerceShipmentModelImpl
 	public CacheModel<CommerceShipment> toCacheModel() {
 		CommerceShipmentCacheModel commerceShipmentCacheModel =
 			new CommerceShipmentCacheModel();
-
-		commerceShipmentCacheModel.mvccVersion = getMvccVersion();
 
 		commerceShipmentCacheModel.commerceShipmentId = getCommerceShipmentId();
 
@@ -1012,7 +993,6 @@ public class CommerceShipmentModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceShipmentId;
 	private long _groupId;
 	private long _originalGroupId;

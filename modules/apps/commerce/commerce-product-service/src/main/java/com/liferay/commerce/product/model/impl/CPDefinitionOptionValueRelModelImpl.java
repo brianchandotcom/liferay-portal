@@ -84,7 +84,7 @@ public class CPDefinitionOptionValueRelModelImpl
 	public static final String TABLE_NAME = "CPDefinitionOptionValueRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"uuid_", Types.VARCHAR},
 		{"CPDefinitionOptionValueRelId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -100,7 +100,6 @@ public class CPDefinitionOptionValueRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPDefinitionOptionValueRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -121,7 +120,7 @@ public class CPDefinitionOptionValueRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDefinitionOptionValueRel (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPDefinitionOptionValueRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionOptionRelId LONG,CPInstanceUuid VARCHAR(75) null,CProductId LONG,name STRING null,priority DOUBLE,key_ VARCHAR(75) null,quantity INTEGER,preselected BOOLEAN,price DECIMAL(30, 16) null)";
+		"create table CPDefinitionOptionValueRel (uuid_ VARCHAR(75) null,CPDefinitionOptionValueRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionOptionRelId LONG,CPInstanceUuid VARCHAR(75) null,CProductId LONG,name STRING null,priority DOUBLE,key_ VARCHAR(75) null,quantity INTEGER,preselected BOOLEAN,price DECIMAL(30, 16) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionOptionValueRel";
@@ -177,7 +176,9 @@ public class CPDefinitionOptionValueRelModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CPDefinitionOptionValueRel toModel(
 		CPDefinitionOptionValueRelSoap soapModel) {
 
@@ -187,7 +188,6 @@ public class CPDefinitionOptionValueRelModelImpl
 
 		CPDefinitionOptionValueRel model = new CPDefinitionOptionValueRelImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCPDefinitionOptionValueRelId(
 			soapModel.getCPDefinitionOptionValueRelId());
@@ -216,7 +216,9 @@ public class CPDefinitionOptionValueRelModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CPDefinitionOptionValueRel> toModels(
 		CPDefinitionOptionValueRelSoap[] soapModels) {
 
@@ -371,12 +373,6 @@ public class CPDefinitionOptionValueRelModelImpl
 					<String, BiConsumer<CPDefinitionOptionValueRel, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CPDefinitionOptionValueRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CPDefinitionOptionValueRel, Long>)
-				CPDefinitionOptionValueRel::setMvccVersion);
-		attributeGetterFunctions.put(
 			"uuid", CPDefinitionOptionValueRel::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -484,17 +480,6 @@ public class CPDefinitionOptionValueRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1015,7 +1000,6 @@ public class CPDefinitionOptionValueRelModelImpl
 		CPDefinitionOptionValueRelImpl cpDefinitionOptionValueRelImpl =
 			new CPDefinitionOptionValueRelImpl();
 
-		cpDefinitionOptionValueRelImpl.setMvccVersion(getMvccVersion());
 		cpDefinitionOptionValueRelImpl.setUuid(getUuid());
 		cpDefinitionOptionValueRelImpl.setCPDefinitionOptionValueRelId(
 			getCPDefinitionOptionValueRelId());
@@ -1143,8 +1127,6 @@ public class CPDefinitionOptionValueRelModelImpl
 		CPDefinitionOptionValueRelCacheModel
 			cpDefinitionOptionValueRelCacheModel =
 				new CPDefinitionOptionValueRelCacheModel();
-
-		cpDefinitionOptionValueRelCacheModel.mvccVersion = getMvccVersion();
 
 		cpDefinitionOptionValueRelCacheModel.uuid = getUuid();
 
@@ -1309,7 +1291,6 @@ public class CPDefinitionOptionValueRelModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _CPDefinitionOptionValueRelId;

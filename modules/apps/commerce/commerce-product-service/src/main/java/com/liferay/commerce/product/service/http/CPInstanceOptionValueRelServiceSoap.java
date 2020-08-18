@@ -51,7 +51,9 @@ package com.liferay.commerce.product.service.http;
  *
  * @author Marco Leo
  * @see CPInstanceOptionValueRelServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CPInstanceOptionValueRelServiceSoap {
 }

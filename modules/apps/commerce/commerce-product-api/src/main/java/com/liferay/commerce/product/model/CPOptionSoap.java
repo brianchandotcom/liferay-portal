@@ -24,14 +24,15 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.product.service.http.CPOptionServiceSoap}.
  *
  * @author Marco Leo
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CPOptionSoap implements Serializable {
 
 	public static CPOptionSoap toSoapModel(CPOption model) {
 		CPOptionSoap soapModel = new CPOptionSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setCPOptionId(model.getCPOptionId());
@@ -99,14 +100,6 @@ public class CPOptionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCPOptionId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -249,7 +242,6 @@ public class CPOptionSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _CPOptionId;

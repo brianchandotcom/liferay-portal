@@ -16,7 +16,6 @@ package com.liferay.commerce.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 
@@ -37,8 +36,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceRegionModel
-	extends BaseModel<CommerceRegion>, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends BaseModel<CommerceRegion>, ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -59,22 +57,6 @@ public interface CommerceRegionModel
 	 * @param primaryKey the primary key of this commerce region
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this commerce region.
-	 *
-	 * @return the mvcc version of this commerce region
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this commerce region.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce region
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this commerce region.

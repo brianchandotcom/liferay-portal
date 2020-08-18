@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.payment.service.http.CommercePaymentMethodGroupRelServiceSoap}.
  *
  * @author Luca Pellizzon
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommercePaymentMethodGroupRelSoap implements Serializable {
 
 	public static CommercePaymentMethodGroupRelSoap toSoapModel(
@@ -34,7 +36,6 @@ public class CommercePaymentMethodGroupRelSoap implements Serializable {
 		CommercePaymentMethodGroupRelSoap soapModel =
 			new CommercePaymentMethodGroupRelSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommercePaymentMethodGroupRelId(
 			model.getCommercePaymentMethodGroupRelId());
 		soapModel.setGroupId(model.getGroupId());
@@ -109,14 +110,6 @@ public class CommercePaymentMethodGroupRelSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommercePaymentMethodGroupRelId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommercePaymentMethodGroupRelId() {
@@ -229,7 +222,6 @@ public class CommercePaymentMethodGroupRelSoap implements Serializable {
 		_active = active;
 	}
 
-	private long _mvccVersion;
 	private long _commercePaymentMethodGroupRelId;
 	private long _groupId;
 	private long _companyId;

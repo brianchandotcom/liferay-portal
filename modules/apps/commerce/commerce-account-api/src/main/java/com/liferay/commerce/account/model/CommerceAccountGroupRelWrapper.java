@@ -44,7 +44,6 @@ public class CommerceAccountGroupRelWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceAccountGroupRelId", getCommerceAccountGroupRelId());
 		attributes.put("companyId", getCompanyId());
@@ -61,12 +60,6 @@ public class CommerceAccountGroupRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
 		Long commerceAccountGroupRelId = (Long)attributes.get(
 			"commerceAccountGroupRelId");
 
@@ -212,16 +205,6 @@ public class CommerceAccountGroupRelWrapper
 	}
 
 	/**
-	 * Returns the mvcc version of this commerce account group rel.
-	 *
-	 * @return the mvcc version of this commerce account group rel
-	 */
-	@Override
-	public long getMvccVersion() {
-		return model.getMvccVersion();
-	}
-
-	/**
 	 * Returns the primary key of this commerce account group rel.
 	 *
 	 * @return the primary key of this commerce account group rel
@@ -339,16 +322,6 @@ public class CommerceAccountGroupRelWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	 * Sets the mvcc version of this commerce account group rel.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce account group rel
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

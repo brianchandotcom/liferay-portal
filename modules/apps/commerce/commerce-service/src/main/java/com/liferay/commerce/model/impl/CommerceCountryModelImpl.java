@@ -81,12 +81,11 @@ public class CommerceCountryModelImpl
 	public static final String TABLE_NAME = "CommerceCountry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"commerceCountryId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"billingAllowed", Types.BOOLEAN},
-		{"shippingAllowed", Types.BOOLEAN},
+		{"uuid_", Types.VARCHAR}, {"commerceCountryId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
+		{"billingAllowed", Types.BOOLEAN}, {"shippingAllowed", Types.BOOLEAN},
 		{"twoLettersISOCode", Types.VARCHAR},
 		{"threeLettersISOCode", Types.VARCHAR},
 		{"numericISOCode", Types.INTEGER}, {"subjectToVAT", Types.BOOLEAN},
@@ -99,7 +98,6 @@ public class CommerceCountryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceCountryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -121,7 +119,7 @@ public class CommerceCountryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceCountry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceCountryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,billingAllowed BOOLEAN,shippingAllowed BOOLEAN,twoLettersISOCode VARCHAR(75) null,threeLettersISOCode VARCHAR(75) null,numericISOCode INTEGER,subjectToVAT BOOLEAN,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null,channelFilterEnabled BOOLEAN)";
+		"create table CommerceCountry (uuid_ VARCHAR(75) null,commerceCountryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,billingAllowed BOOLEAN,shippingAllowed BOOLEAN,twoLettersISOCode VARCHAR(75) null,threeLettersISOCode VARCHAR(75) null,numericISOCode INTEGER,subjectToVAT BOOLEAN,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null,channelFilterEnabled BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceCountry";
 
@@ -176,7 +174,9 @@ public class CommerceCountryModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceCountry toModel(CommerceCountrySoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -184,7 +184,6 @@ public class CommerceCountryModelImpl
 
 		CommerceCountry model = new CommerceCountryImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceCountryId(soapModel.getCommerceCountryId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -212,7 +211,9 @@ public class CommerceCountryModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceCountry> toModels(
 		CommerceCountrySoap[] soapModels) {
 
@@ -359,11 +360,6 @@ public class CommerceCountryModelImpl
 		Map<String, BiConsumer<CommerceCountry, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<CommerceCountry, ?>>();
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommerceCountry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceCountry, Long>)CommerceCountry::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CommerceCountry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -463,17 +459,6 @@ public class CommerceCountryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1026,7 +1011,6 @@ public class CommerceCountryModelImpl
 	public Object clone() {
 		CommerceCountryImpl commerceCountryImpl = new CommerceCountryImpl();
 
-		commerceCountryImpl.setMvccVersion(getMvccVersion());
 		commerceCountryImpl.setUuid(getUuid());
 		commerceCountryImpl.setCommerceCountryId(getCommerceCountryId());
 		commerceCountryImpl.setCompanyId(getCompanyId());
@@ -1152,8 +1136,6 @@ public class CommerceCountryModelImpl
 	public CacheModel<CommerceCountry> toCacheModel() {
 		CommerceCountryCacheModel commerceCountryCacheModel =
 			new CommerceCountryCacheModel();
-
-		commerceCountryCacheModel.mvccVersion = getMvccVersion();
 
 		commerceCountryCacheModel.uuid = getUuid();
 
@@ -1321,7 +1303,6 @@ public class CommerceCountryModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _commerceCountryId;

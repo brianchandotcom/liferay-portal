@@ -79,13 +79,12 @@ public class CPDefinitionModelImpl
 	public static final String TABLE_NAME = "CPDefinition";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"defaultLanguageId", Types.VARCHAR}, {"CPDefinitionId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"CProductId", Types.BIGINT}, {"CPTaxCategoryId", Types.BIGINT},
-		{"productTypeName", Types.VARCHAR},
+		{"uuid_", Types.VARCHAR}, {"defaultLanguageId", Types.VARCHAR},
+		{"CPDefinitionId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"CProductId", Types.BIGINT},
+		{"CPTaxCategoryId", Types.BIGINT}, {"productTypeName", Types.VARCHAR},
 		{"availableIndividually", Types.BOOLEAN},
 		{"ignoreSKUCombinations", Types.BOOLEAN}, {"shippable", Types.BOOLEAN},
 		{"freeShipping", Types.BOOLEAN}, {"shipSeparately", Types.BOOLEAN},
@@ -116,7 +115,6 @@ public class CPDefinitionModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPDefinitionId", Types.BIGINT);
@@ -166,7 +164,7 @@ public class CPDefinitionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CProductId LONG,CPTaxCategoryId LONG,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,ignoreSKUCombinations BOOLEAN,shippable BOOLEAN,freeShipping BOOLEAN,shipSeparately BOOLEAN,shippingExtraPrice DOUBLE,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,taxExempt BOOLEAN,telcoOrElectronics BOOLEAN,DDMStructureKey VARCHAR(75) null,published BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,subscriptionEnabled BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings TEXT null,maxSubscriptionCycles LONG,deliverySubscriptionEnabled BOOLEAN,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,accountGroupFilterEnabled BOOLEAN,channelFilterEnabled BOOLEAN,version INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CPDefinition (uuid_ VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CProductId LONG,CPTaxCategoryId LONG,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,ignoreSKUCombinations BOOLEAN,shippable BOOLEAN,freeShipping BOOLEAN,shipSeparately BOOLEAN,shippingExtraPrice DOUBLE,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,taxExempt BOOLEAN,telcoOrElectronics BOOLEAN,DDMStructureKey VARCHAR(75) null,published BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,subscriptionEnabled BOOLEAN,subscriptionLength INTEGER,subscriptionType VARCHAR(75) null,subscriptionTypeSettings TEXT null,maxSubscriptionCycles LONG,deliverySubscriptionEnabled BOOLEAN,deliverySubscriptionLength INTEGER,deliverySubscriptionType VARCHAR(75) null,deliverySubTypeSettings VARCHAR(75) null,deliveryMaxSubscriptionCycles LONG,accountGroupFilterEnabled BOOLEAN,channelFilterEnabled BOOLEAN,version INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CPDefinition";
 
@@ -225,7 +223,9 @@ public class CPDefinitionModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CPDefinition toModel(CPDefinitionSoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -233,7 +233,6 @@ public class CPDefinitionModelImpl
 
 		CPDefinition model = new CPDefinitionImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setDefaultLanguageId(soapModel.getDefaultLanguageId());
 		model.setCPDefinitionId(soapModel.getCPDefinitionId());
@@ -296,7 +295,9 @@ public class CPDefinitionModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CPDefinition> toModels(CPDefinitionSoap[] soapModels) {
 		if (soapModels == null) {
 			return null;
@@ -440,11 +441,6 @@ public class CPDefinitionModelImpl
 		Map<String, BiConsumer<CPDefinition, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<CPDefinition, ?>>();
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CPDefinition::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CPDefinition, Long>)CPDefinition::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CPDefinition::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<CPDefinition, String>)CPDefinition::setUuid);
@@ -1102,17 +1098,6 @@ public class CPDefinitionModelImpl
 		}
 
 		return cpDefinitionLocalization.getMetaKeywords();
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -2015,7 +2000,6 @@ public class CPDefinitionModelImpl
 	public Object clone() {
 		CPDefinitionImpl cpDefinitionImpl = new CPDefinitionImpl();
 
-		cpDefinitionImpl.setMvccVersion(getMvccVersion());
 		cpDefinitionImpl.setUuid(getUuid());
 		cpDefinitionImpl.setDefaultLanguageId(getDefaultLanguageId());
 		cpDefinitionImpl.setCPDefinitionId(getCPDefinitionId());
@@ -2187,8 +2171,6 @@ public class CPDefinitionModelImpl
 	public CacheModel<CPDefinition> toCacheModel() {
 		CPDefinitionCacheModel cpDefinitionCacheModel =
 			new CPDefinitionCacheModel();
-
-		cpDefinitionCacheModel.mvccVersion = getMvccVersion();
 
 		cpDefinitionCacheModel.uuid = getUuid();
 
@@ -2476,7 +2458,6 @@ public class CPDefinitionModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private String _defaultLanguageId;

@@ -34,9 +34,6 @@ public class CPDefinitionInventoryTable
 	public static final CPDefinitionInventoryTable INSTANCE =
 		new CPDefinitionInventoryTable();
 
-	public final Column<CPDefinitionInventoryTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CPDefinitionInventoryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionInventoryTable, Long>

@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.service.http.CommerceSubscriptionEntryServiceSoap}.
  *
  * @author Alessio Antonio Rendina
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceSubscriptionEntrySoap implements Serializable {
 
 	public static CommerceSubscriptionEntrySoap toSoapModel(
@@ -34,7 +36,6 @@ public class CommerceSubscriptionEntrySoap implements Serializable {
 		CommerceSubscriptionEntrySoap soapModel =
 			new CommerceSubscriptionEntrySoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCommerceSubscriptionEntryId(
 			model.getCommerceSubscriptionEntryId());
@@ -134,14 +135,6 @@ public class CommerceSubscriptionEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceSubscriptionEntryId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -382,7 +375,6 @@ public class CommerceSubscriptionEntrySoap implements Serializable {
 		_deliveryStartDate = deliveryStartDate;
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private long _commerceSubscriptionEntryId;
 	private long _groupId;

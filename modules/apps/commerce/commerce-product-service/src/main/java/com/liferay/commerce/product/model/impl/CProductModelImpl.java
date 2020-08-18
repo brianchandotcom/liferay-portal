@@ -70,11 +70,11 @@ public class CProductModelImpl
 	public static final String TABLE_NAME = "CProduct";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"externalReferenceCode", Types.VARCHAR}, {"CProductId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"CProductId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP},
 		{"publishedCPDefinitionId", Types.BIGINT},
 		{"latestVersion", Types.INTEGER}
 	};
@@ -83,7 +83,6 @@ public class CProductModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CProductId", Types.BIGINT);
@@ -98,7 +97,7 @@ public class CProductModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CProduct (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CProductId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,publishedCPDefinitionId LONG,latestVersion INTEGER)";
+		"create table CProduct (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CProductId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,publishedCPDefinitionId LONG,latestVersion INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table CProduct";
 
@@ -269,10 +268,6 @@ public class CProductModelImpl
 		Map<String, BiConsumer<CProduct, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<CProduct, ?>>();
 
-		attributeGetterFunctions.put("mvccVersion", CProduct::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CProduct, Long>)CProduct::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CProduct::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<CProduct, String>)CProduct::setUuid);
@@ -318,16 +313,6 @@ public class CProductModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -563,7 +548,6 @@ public class CProductModelImpl
 	public Object clone() {
 		CProductImpl cProductImpl = new CProductImpl();
 
-		cProductImpl.setMvccVersion(getMvccVersion());
 		cProductImpl.setUuid(getUuid());
 		cProductImpl.setExternalReferenceCode(getExternalReferenceCode());
 		cProductImpl.setCProductId(getCProductId());
@@ -663,8 +647,6 @@ public class CProductModelImpl
 	@Override
 	public CacheModel<CProduct> toCacheModel() {
 		CProductCacheModel cProductCacheModel = new CProductCacheModel();
-
-		cProductCacheModel.mvccVersion = getMvccVersion();
 
 		cProductCacheModel.uuid = getUuid();
 
@@ -796,7 +778,6 @@ public class CProductModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private String _externalReferenceCode;

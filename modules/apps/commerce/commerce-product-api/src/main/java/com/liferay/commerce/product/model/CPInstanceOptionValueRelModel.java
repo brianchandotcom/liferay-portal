@@ -17,7 +17,6 @@ package com.liferay.commerce.product.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 
@@ -38,8 +37,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CPInstanceOptionValueRelModel
-	extends BaseModel<CPInstanceOptionValueRel>, GroupedModel, MVCCModel,
-			ShardedModel, StagedAuditedModel {
+	extends BaseModel<CPInstanceOptionValueRel>, GroupedModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -60,22 +59,6 @@ public interface CPInstanceOptionValueRelModel
 	 * @param primaryKey the primary key of this cp instance option value rel
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this cp instance option value rel.
-	 *
-	 * @return the mvcc version of this cp instance option value rel
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this cp instance option value rel.
-	 *
-	 * @param mvccVersion the mvcc version of this cp instance option value rel
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this cp instance option value rel.

@@ -34,9 +34,6 @@ public class CommerceAccountGroupTable
 	public static final CommerceAccountGroupTable INSTANCE =
 		new CommerceAccountGroupTable();
 
-	public final Column<CommerceAccountGroupTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceAccountGroupTable, String>
 		externalReferenceCode = createColumn(
 			"externalReferenceCode", String.class, Types.VARCHAR,

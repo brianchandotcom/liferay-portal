@@ -74,19 +74,17 @@ public class CommerceInventoryAuditModelImpl
 	public static final String TABLE_NAME = "CIAudit";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"CIAuditId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"sku", Types.VARCHAR},
-		{"logType", Types.VARCHAR}, {"logTypeSettings", Types.CLOB},
-		{"quantity", Types.INTEGER}
+		{"CIAuditId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"sku", Types.VARCHAR}, {"logType", Types.VARCHAR},
+		{"logTypeSettings", Types.CLOB}, {"quantity", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CIAuditId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -100,7 +98,7 @@ public class CommerceInventoryAuditModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CIAudit (mvccVersion LONG default 0 not null,CIAuditId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,sku VARCHAR(75) null,logType VARCHAR(75) null,logTypeSettings TEXT null,quantity INTEGER)";
+		"create table CIAudit (CIAuditId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,sku VARCHAR(75) null,logType VARCHAR(75) null,logTypeSettings TEXT null,quantity INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table CIAudit";
 
@@ -145,7 +143,9 @@ public class CommerceInventoryAuditModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceInventoryAudit toModel(
 		CommerceInventoryAuditSoap soapModel) {
 
@@ -155,7 +155,6 @@ public class CommerceInventoryAuditModelImpl
 
 		CommerceInventoryAudit model = new CommerceInventoryAuditImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceInventoryAuditId(
 			soapModel.getCommerceInventoryAuditId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -176,7 +175,9 @@ public class CommerceInventoryAuditModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceInventoryAudit> toModels(
 		CommerceInventoryAuditSoap[] soapModels) {
 
@@ -328,12 +329,6 @@ public class CommerceInventoryAuditModelImpl
 					<String, BiConsumer<CommerceInventoryAudit, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceInventoryAudit::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceInventoryAudit, Long>)
-				CommerceInventoryAudit::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceInventoryAuditId",
 			CommerceInventoryAudit::getCommerceInventoryAuditId);
 		attributeSetterBiConsumers.put(
@@ -398,17 +393,6 @@ public class CommerceInventoryAuditModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -633,7 +617,6 @@ public class CommerceInventoryAuditModelImpl
 		CommerceInventoryAuditImpl commerceInventoryAuditImpl =
 			new CommerceInventoryAuditImpl();
 
-		commerceInventoryAuditImpl.setMvccVersion(getMvccVersion());
 		commerceInventoryAuditImpl.setCommerceInventoryAuditId(
 			getCommerceInventoryAuditId());
 		commerceInventoryAuditImpl.setCompanyId(getCompanyId());
@@ -731,8 +714,6 @@ public class CommerceInventoryAuditModelImpl
 	public CacheModel<CommerceInventoryAudit> toCacheModel() {
 		CommerceInventoryAuditCacheModel commerceInventoryAuditCacheModel =
 			new CommerceInventoryAuditCacheModel();
-
-		commerceInventoryAuditCacheModel.mvccVersion = getMvccVersion();
 
 		commerceInventoryAuditCacheModel.commerceInventoryAuditId =
 			getCommerceInventoryAuditId();
@@ -870,7 +851,6 @@ public class CommerceInventoryAuditModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceInventoryAuditId;
 	private long _companyId;
 	private long _originalCompanyId;

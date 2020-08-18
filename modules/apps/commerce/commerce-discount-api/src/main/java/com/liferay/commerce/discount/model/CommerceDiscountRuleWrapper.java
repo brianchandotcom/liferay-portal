@@ -44,7 +44,6 @@ public class CommerceDiscountRuleWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceDiscountRuleId", getCommerceDiscountRuleId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -61,12 +60,6 @@ public class CommerceDiscountRuleWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
 		Long commerceDiscountRuleId = (Long)attributes.get(
 			"commerceDiscountRuleId");
 
@@ -177,16 +170,6 @@ public class CommerceDiscountRuleWrapper
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
-	}
-
-	/**
-	 * Returns the mvcc version of this commerce discount rule.
-	 *
-	 * @return the mvcc version of this commerce discount rule
-	 */
-	@Override
-	public long getMvccVersion() {
-		return model.getMvccVersion();
 	}
 
 	/**
@@ -324,16 +307,6 @@ public class CommerceDiscountRuleWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	 * Sets the mvcc version of this commerce discount rule.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce discount rule
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

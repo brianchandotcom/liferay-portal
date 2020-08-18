@@ -47,7 +47,6 @@ public class CommercePriceModifierWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("commercePriceModifierId", getCommercePriceModifierId());
@@ -77,12 +76,6 @@ public class CommercePriceModifierWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -353,16 +346,6 @@ public class CommercePriceModifierWrapper
 	@Override
 	public String getModifierType() {
 		return model.getModifierType();
-	}
-
-	/**
-	 * Returns the mvcc version of this commerce price modifier.
-	 *
-	 * @return the mvcc version of this commerce price modifier
-	 */
-	@Override
-	public long getMvccVersion() {
-		return model.getMvccVersion();
 	}
 
 	/**
@@ -718,16 +701,6 @@ public class CommercePriceModifierWrapper
 	@Override
 	public void setModifierType(String modifierType) {
 		model.setModifierType(modifierType);
-	}
-
-	/**
-	 * Sets the mvcc version of this commerce price modifier.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce price modifier
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

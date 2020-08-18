@@ -26,8 +26,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.product.service.http.CPDefinitionOptionValueRelServiceSoap}.
  *
  * @author Marco Leo
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CPDefinitionOptionValueRelSoap implements Serializable {
 
 	public static CPDefinitionOptionValueRelSoap toSoapModel(
@@ -36,7 +38,6 @@ public class CPDefinitionOptionValueRelSoap implements Serializable {
 		CPDefinitionOptionValueRelSoap soapModel =
 			new CPDefinitionOptionValueRelSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCPDefinitionOptionValueRelId(
 			model.getCPDefinitionOptionValueRelId());
@@ -117,14 +118,6 @@ public class CPDefinitionOptionValueRelSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCPDefinitionOptionValueRelId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -269,7 +262,6 @@ public class CPDefinitionOptionValueRelSoap implements Serializable {
 		_price = price;
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private long _CPDefinitionOptionValueRelId;
 	private long _groupId;

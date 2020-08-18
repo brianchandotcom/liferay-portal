@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.wish.list.service.http.CommerceWishListItemServiceSoap}.
  *
  * @author Andrea Di Giorgi
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceWishListItemSoap implements Serializable {
 
 	public static CommerceWishListItemSoap toSoapModel(
@@ -33,7 +35,6 @@ public class CommerceWishListItemSoap implements Serializable {
 
 		CommerceWishListItemSoap soapModel = new CommerceWishListItemSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceWishListItemId(model.getCommerceWishListItemId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -105,14 +106,6 @@ public class CommerceWishListItemSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceWishListItemId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceWishListItemId() {
@@ -203,7 +196,6 @@ public class CommerceWishListItemSoap implements Serializable {
 		_json = json;
 	}
 
-	private long _mvccVersion;
 	private long _commerceWishListItemId;
 	private long _groupId;
 	private long _companyId;

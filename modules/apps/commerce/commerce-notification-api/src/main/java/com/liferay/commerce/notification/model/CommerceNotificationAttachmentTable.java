@@ -34,9 +34,6 @@ public class CommerceNotificationAttachmentTable
 	public static final CommerceNotificationAttachmentTable INSTANCE =
 		new CommerceNotificationAttachmentTable();
 
-	public final Column<CommerceNotificationAttachmentTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceNotificationAttachmentTable, String> uuid =
 		createColumn("uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceNotificationAttachmentTable, Long>

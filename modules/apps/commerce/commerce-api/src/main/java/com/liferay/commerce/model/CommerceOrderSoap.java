@@ -26,14 +26,15 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.service.http.CommerceOrderServiceSoap}.
  *
  * @author Alessio Antonio Rendina
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceOrderSoap implements Serializable {
 
 	public static CommerceOrderSoap toSoapModel(CommerceOrder model) {
 		CommerceOrderSoap soapModel = new CommerceOrderSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setCommerceOrderId(model.getCommerceOrderId());
@@ -182,14 +183,6 @@ public class CommerceOrderSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceOrderId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -806,7 +799,6 @@ public class CommerceOrderSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _commerceOrderId;

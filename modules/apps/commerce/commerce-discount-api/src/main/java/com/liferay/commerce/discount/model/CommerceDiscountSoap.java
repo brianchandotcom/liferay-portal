@@ -26,14 +26,15 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.discount.service.http.CommerceDiscountServiceSoap}.
  *
  * @author Marco Leo
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceDiscountSoap implements Serializable {
 
 	public static CommerceDiscountSoap toSoapModel(CommerceDiscount model) {
 		CommerceDiscountSoap soapModel = new CommerceDiscountSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setCommerceDiscountId(model.getCommerceDiscountId());
@@ -126,14 +127,6 @@ public class CommerceDiscountSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceDiscountId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -408,7 +401,6 @@ public class CommerceDiscountSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _commerceDiscountId;

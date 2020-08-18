@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.math.BigDecimal;
@@ -44,7 +43,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CommerceOrderItemModel
 	extends BaseModel<CommerceOrderItem>, GroupedModel, LocalizedModel,
-			MVCCModel, ShardedModel {
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -65,22 +64,6 @@ public interface CommerceOrderItemModel
 	 * @param primaryKey the primary key of this commerce order item
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this commerce order item.
-	 *
-	 * @return the mvcc version of this commerce order item
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this commerce order item.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce order item
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the external reference code of this commerce order item.

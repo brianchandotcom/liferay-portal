@@ -18,7 +18,6 @@ import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +33,7 @@ import java.util.Date;
  * @generated
  */
 public class CPOptionValueCacheModel
-	implements CacheModel<CPOptionValue>, Externalizable, MVCCModel {
+	implements CacheModel<CPOptionValue>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -49,9 +48,7 @@ public class CPOptionValueCacheModel
 		CPOptionValueCacheModel cpOptionValueCacheModel =
 			(CPOptionValueCacheModel)object;
 
-		if ((CPOptionValueId == cpOptionValueCacheModel.CPOptionValueId) &&
-			(mvccVersion == cpOptionValueCacheModel.mvccVersion)) {
-
+		if (CPOptionValueId == cpOptionValueCacheModel.CPOptionValueId) {
 			return true;
 		}
 
@@ -60,28 +57,14 @@ public class CPOptionValueCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, CPOptionValueId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, CPOptionValueId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(27);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", uuid=");
+		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
 		sb.append(externalReferenceCode);
@@ -115,8 +98,6 @@ public class CPOptionValueCacheModel
 	@Override
 	public CPOptionValue toEntityModel() {
 		CPOptionValueImpl cpOptionValueImpl = new CPOptionValueImpl();
-
-		cpOptionValueImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			cpOptionValueImpl.setUuid("");
@@ -189,7 +170,6 @@ public class CPOptionValueCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -212,8 +192,6 @@ public class CPOptionValueCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -265,7 +243,6 @@ public class CPOptionValueCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
-	public long mvccVersion;
 	public String uuid;
 	public String externalReferenceCode;
 	public long CPOptionValueId;

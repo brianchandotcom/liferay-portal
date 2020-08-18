@@ -18,7 +18,6 @@ import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOpt
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -36,8 +35,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceShippingFixedOptionCacheModel
-	implements CacheModel<CommerceShippingFixedOption>, Externalizable,
-			   MVCCModel {
+	implements CacheModel<CommerceShippingFixedOption>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -53,11 +51,9 @@ public class CommerceShippingFixedOptionCacheModel
 			commerceShippingFixedOptionCacheModel =
 				(CommerceShippingFixedOptionCacheModel)object;
 
-		if ((commerceShippingFixedOptionId ==
+		if (commerceShippingFixedOptionId ==
 				commerceShippingFixedOptionCacheModel.
-					commerceShippingFixedOptionId) &&
-			(mvccVersion ==
-				commerceShippingFixedOptionCacheModel.mvccVersion)) {
+					commerceShippingFixedOptionId) {
 
 			return true;
 		}
@@ -67,28 +63,14 @@ public class CommerceShippingFixedOptionCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, commerceShippingFixedOptionId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, commerceShippingFixedOptionId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", commerceShippingFixedOptionId=");
+		sb.append("{commerceShippingFixedOptionId=");
 		sb.append(commerceShippingFixedOptionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -122,7 +104,6 @@ public class CommerceShippingFixedOptionCacheModel
 		CommerceShippingFixedOptionImpl commerceShippingFixedOptionImpl =
 			new CommerceShippingFixedOptionImpl();
 
-		commerceShippingFixedOptionImpl.setMvccVersion(mvccVersion);
 		commerceShippingFixedOptionImpl.setCommerceShippingFixedOptionId(
 			commerceShippingFixedOptionId);
 		commerceShippingFixedOptionImpl.setGroupId(groupId);
@@ -180,8 +161,6 @@ public class CommerceShippingFixedOptionCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
-		mvccVersion = objectInput.readLong();
-
 		commerceShippingFixedOptionId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -203,8 +182,6 @@ public class CommerceShippingFixedOptionCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		objectOutput.writeLong(commerceShippingFixedOptionId);
 
 		objectOutput.writeLong(groupId);
@@ -244,7 +221,6 @@ public class CommerceShippingFixedOptionCacheModel
 		objectOutput.writeDouble(priority);
 	}
 
-	public long mvccVersion;
 	public long commerceShippingFixedOptionId;
 	public long groupId;
 	public long companyId;

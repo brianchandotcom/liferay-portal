@@ -24,14 +24,15 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.tax.service.http.CommerceTaxMethodServiceSoap}.
  *
  * @author Marco Leo
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceTaxMethodSoap implements Serializable {
 
 	public static CommerceTaxMethodSoap toSoapModel(CommerceTaxMethod model) {
 		CommerceTaxMethodSoap soapModel = new CommerceTaxMethodSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceTaxMethodId(model.getCommerceTaxMethodId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -103,14 +104,6 @@ public class CommerceTaxMethodSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceTaxMethodId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceTaxMethodId() {
@@ -217,7 +210,6 @@ public class CommerceTaxMethodSoap implements Serializable {
 		_active = active;
 	}
 
-	private long _mvccVersion;
 	private long _commerceTaxMethodId;
 	private long _groupId;
 	private long _companyId;

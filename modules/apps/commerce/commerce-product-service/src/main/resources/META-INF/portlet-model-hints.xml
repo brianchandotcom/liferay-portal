@@ -2,7 +2,6 @@
 
 <model-hints>
 	<model name="com.liferay.commerce.product.model.CommerceCatalog">
-		<field name="mvccVersion" type="long" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="commerceCatalogId" type="long" />
 		<field name="companyId" type="long" />
@@ -16,7 +15,6 @@
 		<field name="system" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CommerceChannel">
-		<field name="mvccVersion" type="long" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="commerceChannelId" type="long" />
 		<field name="companyId" type="long" />
@@ -39,7 +37,6 @@
 		<field name="discountsTargetNetPrice" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CommerceChannelRel">
-		<field name="mvccVersion" type="long" />
 		<field name="commerceChannelRelId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -51,7 +48,6 @@
 		<field name="commerceChannelId" type="long" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPAttachmentFileEntry">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="CPAttachmentFileEntryId" type="long" />
@@ -81,7 +77,6 @@
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinition">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="defaultLanguageId" type="String" />
 		<field name="CPDefinitionId" type="long" />
@@ -144,7 +139,6 @@
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinitionLink">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="CPDefinitionLinkId" type="long" />
 		<field name="groupId" type="long" />
@@ -186,7 +180,6 @@
 		</field>
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinitionOptionRel">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="CPDefinitionOptionRelId" type="long" />
 		<field name="groupId" type="long" />
@@ -216,7 +209,6 @@
 		<field name="priceType" type="String" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinitionOptionValueRel">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="CPDefinitionOptionValueRelId" type="long" />
 		<field name="groupId" type="long" />
@@ -242,7 +234,6 @@
 		<field name="price" type="BigDecimal" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="CPDefinitionSpecificationOptionValueId" type="long" />
 		<field name="groupId" type="long" />
@@ -263,7 +254,6 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDisplayLayout">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="CPDisplayLayoutId" type="long" />
 		<field name="groupId" type="long" />
@@ -279,7 +269,6 @@
 		</field>
 	</model>
 	<model name="com.liferay.commerce.product.model.CPFriendlyURLEntry">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="CPFriendlyURLEntryId" type="long" />
 		<field name="groupId" type="long" />
@@ -297,7 +286,6 @@
 		<field name="main" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPInstance">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="CPInstanceId" type="long" />
@@ -364,7 +352,6 @@
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPInstanceOptionValueRel">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="CPInstanceOptionValueRelId" type="long" />
 		<field name="groupId" type="long" />
@@ -378,7 +365,6 @@
 		<field name="CPInstanceId" type="long" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPMeasurementUnit">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="CPMeasurementUnitId" type="long" />
 		<field name="groupId" type="long" />
@@ -402,7 +388,6 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPOption">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="CPOptionId" type="long" />
@@ -429,7 +414,6 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPOptionCategory">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="CPOptionCategoryId" type="long" />
 		<field name="companyId" type="long" />
@@ -450,7 +434,6 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPOptionValue">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="CPOptionValueId" type="long" />
@@ -472,7 +455,6 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CProduct">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="CProductId" type="long" />
@@ -486,7 +468,6 @@
 		<field name="latestVersion" type="int" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPSpecificationOption">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="CPSpecificationOptionId" type="long" />
 		<field name="companyId" type="long" />
@@ -508,7 +489,6 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPTaxCategory">
-		<field name="mvccVersion" type="long" />
 		<field name="CPTaxCategoryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

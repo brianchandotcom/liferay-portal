@@ -4,11 +4,10 @@
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate" />
 	<import class="com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel" />
-	<class dynamic-update="true" name="com.liferay.commerce.tax.engine.fixed.model.impl.CommerceTaxFixedRateImpl" table="CommerceTaxFixedRate">
+	<class name="com.liferay.commerce.tax.engine.fixed.model.impl.CommerceTaxFixedRateImpl" table="CommerceTaxFixedRate">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceTaxFixedRateId" type="long">
 			<generator class="assigned" />
 		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -19,11 +18,10 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceTaxMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="rate" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
-	<class dynamic-update="true" name="com.liferay.commerce.tax.engine.fixed.model.impl.CommerceTaxFixedRateAddressRelImpl" table="CommerceTaxFixedRateAddressRel">
+	<class name="com.liferay.commerce.tax.engine.fixed.model.impl.CommerceTaxFixedRateAddressRelImpl" table="CommerceTaxFixedRateAddressRel">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="CTaxFixedRateAddressRelId" name="commerceTaxFixedRateAddressRelId" type="long">
 			<generator class="assigned" />
 		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

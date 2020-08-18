@@ -73,7 +73,7 @@ public class CommerceAccountGroupCommerceAccountRelModelImpl
 	public static final String TABLE_NAME = "CAccountGroupCAccountRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"CAccountGroupCAccountRelId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -86,7 +86,6 @@ public class CommerceAccountGroupCommerceAccountRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CAccountGroupCAccountRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -99,7 +98,7 @@ public class CommerceAccountGroupCommerceAccountRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CAccountGroupCAccountRel (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,CAccountGroupCAccountRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountGroupId LONG,commerceAccountId LONG)";
+		"create table CAccountGroupCAccountRel (externalReferenceCode VARCHAR(75) null,CAccountGroupCAccountRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountGroupId LONG,commerceAccountId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CAccountGroupCAccountRel";
@@ -150,7 +149,9 @@ public class CommerceAccountGroupCommerceAccountRelModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceAccountGroupCommerceAccountRel toModel(
 		CommerceAccountGroupCommerceAccountRelSoap soapModel) {
 
@@ -161,7 +162,6 @@ public class CommerceAccountGroupCommerceAccountRelModelImpl
 		CommerceAccountGroupCommerceAccountRel model =
 			new CommerceAccountGroupCommerceAccountRelImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCommerceAccountGroupCommerceAccountRelId(
 			soapModel.getCommerceAccountGroupCommerceAccountRelId());
@@ -181,7 +181,9 @@ public class CommerceAccountGroupCommerceAccountRelModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceAccountGroupCommerceAccountRel> toModels(
 		CommerceAccountGroupCommerceAccountRelSoap[] soapModels) {
 
@@ -347,13 +349,6 @@ public class CommerceAccountGroupCommerceAccountRelModelImpl
 					 BiConsumer<CommerceAccountGroupCommerceAccountRel, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion",
-			CommerceAccountGroupCommerceAccountRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceAccountGroupCommerceAccountRel, Long>)
-				CommerceAccountGroupCommerceAccountRel::setMvccVersion);
-		attributeGetterFunctions.put(
 			"externalReferenceCode",
 			CommerceAccountGroupCommerceAccountRel::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
@@ -422,17 +417,6 @@ public class CommerceAccountGroupCommerceAccountRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -655,8 +639,6 @@ public class CommerceAccountGroupCommerceAccountRelModelImpl
 			commerceAccountGroupCommerceAccountRelImpl =
 				new CommerceAccountGroupCommerceAccountRelImpl();
 
-		commerceAccountGroupCommerceAccountRelImpl.setMvccVersion(
-			getMvccVersion());
 		commerceAccountGroupCommerceAccountRelImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
 		commerceAccountGroupCommerceAccountRelImpl.
@@ -771,9 +753,6 @@ public class CommerceAccountGroupCommerceAccountRelModelImpl
 		CommerceAccountGroupCommerceAccountRelCacheModel
 			commerceAccountGroupCommerceAccountRelCacheModel =
 				new CommerceAccountGroupCommerceAccountRelCacheModel();
-
-		commerceAccountGroupCommerceAccountRelCacheModel.mvccVersion =
-			getMvccVersion();
 
 		commerceAccountGroupCommerceAccountRelCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -919,7 +898,6 @@ public class CommerceAccountGroupCommerceAccountRelModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private String _originalExternalReferenceCode;
 	private long _commerceAccountGroupCommerceAccountRelId;

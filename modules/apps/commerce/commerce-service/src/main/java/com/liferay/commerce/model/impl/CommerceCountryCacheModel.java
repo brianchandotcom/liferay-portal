@@ -18,7 +18,6 @@ import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +33,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceCountryCacheModel
-	implements CacheModel<CommerceCountry>, Externalizable, MVCCModel {
+	implements CacheModel<CommerceCountry>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -49,10 +48,7 @@ public class CommerceCountryCacheModel
 		CommerceCountryCacheModel commerceCountryCacheModel =
 			(CommerceCountryCacheModel)object;
 
-		if ((commerceCountryId ==
-				commerceCountryCacheModel.commerceCountryId) &&
-			(mvccVersion == commerceCountryCacheModel.mvccVersion)) {
-
+		if (commerceCountryId == commerceCountryCacheModel.commerceCountryId) {
 			return true;
 		}
 
@@ -61,28 +57,14 @@ public class CommerceCountryCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, commerceCountryId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, commerceCountryId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(37);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", uuid=");
+		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", commerceCountryId=");
 		sb.append(commerceCountryId);
@@ -126,8 +108,6 @@ public class CommerceCountryCacheModel
 	@Override
 	public CommerceCountry toEntityModel() {
 		CommerceCountryImpl commerceCountryImpl = new CommerceCountryImpl();
-
-		commerceCountryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			commerceCountryImpl.setUuid("");
@@ -206,7 +186,6 @@ public class CommerceCountryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		commerceCountryId = objectInput.readLong();
@@ -239,8 +218,6 @@ public class CommerceCountryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -301,7 +278,6 @@ public class CommerceCountryCacheModel
 		objectOutput.writeBoolean(channelFilterEnabled);
 	}
 
-	public long mvccVersion;
 	public String uuid;
 	public long commerceCountryId;
 	public long companyId;

@@ -1,5 +1,4 @@
 create table CPricingClassCPDefinitionRel (
-	mvccVersion LONG default 0 not null,
 	CPricingClassCPDefinitionRelId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -11,7 +10,6 @@ create table CPricingClassCPDefinitionRel (
 );
 
 create table CommercePriceModifier (
-	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	commercePriceModifierId LONG not null primary key,
@@ -38,7 +36,6 @@ create table CommercePriceModifier (
 );
 
 create table CommercePriceModifierRel (
-	mvccVersion LONG default 0 not null,
 	commercePriceModifierRelId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -51,7 +48,6 @@ create table CommercePriceModifierRel (
 );
 
 create table CommercePricingClass (
-	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	commercePricingClassId LONG not null primary key,

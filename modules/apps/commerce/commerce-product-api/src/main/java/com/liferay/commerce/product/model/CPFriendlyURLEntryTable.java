@@ -37,9 +37,6 @@ public class CPFriendlyURLEntryTable
 	public static final CPFriendlyURLEntryTable INSTANCE =
 		new CPFriendlyURLEntryTable();
 
-	public final Column<CPFriendlyURLEntryTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CPFriendlyURLEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPFriendlyURLEntryTable, Long> CPFriendlyURLEntryId =

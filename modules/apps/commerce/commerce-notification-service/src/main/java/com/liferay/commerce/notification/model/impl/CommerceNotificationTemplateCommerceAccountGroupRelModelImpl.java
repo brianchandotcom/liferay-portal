@@ -74,7 +74,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	public static final String TABLE_NAME = "CNTemplateCAccountGroupRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT},
 		{"CNTemplateCAccountGroupRelId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -87,7 +86,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CNTemplateCAccountGroupRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -100,7 +98,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CNTemplateCAccountGroupRel (mvccVersion LONG default 0 not null,CNTemplateCAccountGroupRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceNotificationTemplateId LONG,commerceAccountGroupId LONG)";
+		"create table CNTemplateCAccountGroupRel (CNTemplateCAccountGroupRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceNotificationTemplateId LONG,commerceAccountGroupId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CNTemplateCAccountGroupRel";
@@ -146,7 +144,9 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceNotificationTemplateCommerceAccountGroupRel toModel(
 		CommerceNotificationTemplateCommerceAccountGroupRelSoap soapModel) {
 
@@ -157,7 +157,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 		CommerceNotificationTemplateCommerceAccountGroupRel model =
 			new CommerceNotificationTemplateCommerceAccountGroupRelImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceNotificationTemplateCommerceAccountGroupRelId(
 			soapModel.
 				getCommerceNotificationTemplateCommerceAccountGroupRelId());
@@ -179,7 +178,9 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceNotificationTemplateCommerceAccountGroupRel>
 		toModels(
 			CommerceNotificationTemplateCommerceAccountGroupRelSoap[]
@@ -377,16 +378,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 							  ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion",
-			CommerceNotificationTemplateCommerceAccountGroupRel::
-				getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer
-				<CommerceNotificationTemplateCommerceAccountGroupRel, Long>)
-					CommerceNotificationTemplateCommerceAccountGroupRel::
-						setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceNotificationTemplateCommerceAccountGroupRelId",
 			CommerceNotificationTemplateCommerceAccountGroupRel::
 				getCommerceNotificationTemplateCommerceAccountGroupRelId);
@@ -476,17 +467,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -689,8 +669,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 			commerceNotificationTemplateCommerceAccountGroupRelImpl =
 				new CommerceNotificationTemplateCommerceAccountGroupRelImpl();
 
-		commerceNotificationTemplateCommerceAccountGroupRelImpl.setMvccVersion(
-			getMvccVersion());
 		commerceNotificationTemplateCommerceAccountGroupRelImpl.
 			setCommerceNotificationTemplateCommerceAccountGroupRelId(
 				getCommerceNotificationTemplateCommerceAccountGroupRelId());
@@ -811,9 +789,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 		CommerceNotificationTemplateCommerceAccountGroupRelCacheModel
 			commerceNotificationTemplateCommerceAccountGroupRelCacheModel =
 				new CommerceNotificationTemplateCommerceAccountGroupRelCacheModel();
-
-		commerceNotificationTemplateCommerceAccountGroupRelCacheModel.
-			mvccVersion = getMvccVersion();
 
 		commerceNotificationTemplateCommerceAccountGroupRelCacheModel.
 			commerceNotificationTemplateCommerceAccountGroupRelId =
@@ -963,7 +938,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceNotificationTemplateCommerceAccountGroupRelId;
 	private long _groupId;
 	private long _companyId;

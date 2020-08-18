@@ -17,7 +17,6 @@ package com.liferay.commerce.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -37,8 +36,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceOrderPaymentModel
-	extends BaseModel<CommerceOrderPayment>, GroupedModel, MVCCModel,
-			ShardedModel {
+	extends BaseModel<CommerceOrderPayment>, GroupedModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -59,22 +57,6 @@ public interface CommerceOrderPaymentModel
 	 * @param primaryKey the primary key of this commerce order payment
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this commerce order payment.
-	 *
-	 * @return the mvcc version of this commerce order payment
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this commerce order payment.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce order payment
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the commerce order payment ID of this commerce order payment.

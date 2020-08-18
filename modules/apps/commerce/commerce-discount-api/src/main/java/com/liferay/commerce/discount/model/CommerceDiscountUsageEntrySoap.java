@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services.
  *
  * @author Marco Leo
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceDiscountUsageEntrySoap implements Serializable {
 
 	public static CommerceDiscountUsageEntrySoap toSoapModel(
@@ -34,7 +36,6 @@ public class CommerceDiscountUsageEntrySoap implements Serializable {
 		CommerceDiscountUsageEntrySoap soapModel =
 			new CommerceDiscountUsageEntrySoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceDiscountUsageEntryId(
 			model.getCommerceDiscountUsageEntryId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -106,14 +107,6 @@ public class CommerceDiscountUsageEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceDiscountUsageEntryId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceDiscountUsageEntryId() {
@@ -190,7 +183,6 @@ public class CommerceDiscountUsageEntrySoap implements Serializable {
 		_commerceDiscountId = commerceDiscountId;
 	}
 
-	private long _mvccVersion;
 	private long _commerceDiscountUsageEntryId;
 	private long _companyId;
 	private long _userId;

@@ -142,9 +142,6 @@ public class
 			newCommerceNotificationTemplateCommerceAccountGroupRel =
 				_persistence.create(pk);
 
-		newCommerceNotificationTemplateCommerceAccountGroupRel.setMvccVersion(
-			RandomTestUtil.nextLong());
-
 		newCommerceNotificationTemplateCommerceAccountGroupRel.setGroupId(
 			RandomTestUtil.nextLong());
 
@@ -179,11 +176,6 @@ public class
 					newCommerceNotificationTemplateCommerceAccountGroupRel.
 						getPrimaryKey());
 
-		Assert.assertEquals(
-			existingCommerceNotificationTemplateCommerceAccountGroupRel.
-				getMvccVersion(),
-			newCommerceNotificationTemplateCommerceAccountGroupRel.
-				getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceNotificationTemplateCommerceAccountGroupRel.
 				getCommerceNotificationTemplateCommerceAccountGroupRelId(),
@@ -294,7 +286,7 @@ public class
 			getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CNTemplateCAccountGroupRel", "mvccVersion", true,
+			"CNTemplateCAccountGroupRel",
 			"commerceNotificationTemplateCommerceAccountGroupRelId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true,
@@ -630,9 +622,6 @@ public class
 		CommerceNotificationTemplateCommerceAccountGroupRel
 			commerceNotificationTemplateCommerceAccountGroupRel =
 				_persistence.create(pk);
-
-		commerceNotificationTemplateCommerceAccountGroupRel.setMvccVersion(
-			RandomTestUtil.nextLong());
 
 		commerceNotificationTemplateCommerceAccountGroupRel.setGroupId(
 			RandomTestUtil.nextLong());

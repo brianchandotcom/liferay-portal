@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.notification.service.http.CommerceNotificationQueueEntryServiceSoap}.
  *
  * @author Alessio Antonio Rendina
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceNotificationQueueEntrySoap implements Serializable {
 
 	public static CommerceNotificationQueueEntrySoap toSoapModel(
@@ -34,7 +36,6 @@ public class CommerceNotificationQueueEntrySoap implements Serializable {
 		CommerceNotificationQueueEntrySoap soapModel =
 			new CommerceNotificationQueueEntrySoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceNotificationQueueEntryId(
 			model.getCommerceNotificationQueueEntryId());
 		soapModel.setGroupId(model.getGroupId());
@@ -118,14 +119,6 @@ public class CommerceNotificationQueueEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceNotificationQueueEntryId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceNotificationQueueEntryId() {
@@ -304,7 +297,6 @@ public class CommerceNotificationQueueEntrySoap implements Serializable {
 		_sentDate = sentDate;
 	}
 
-	private long _mvccVersion;
 	private long _commerceNotificationQueueEntryId;
 	private long _groupId;
 	private long _companyId;

@@ -126,8 +126,6 @@ public class CPInstancePersistenceTest {
 
 		CPInstance newCPInstance = _persistence.create(pk);
 
-		newCPInstance.setMvccVersion(RandomTestUtil.nextLong());
-
 		newCPInstance.setUuid(RandomTestUtil.randomString());
 
 		newCPInstance.setExternalReferenceCode(RandomTestUtil.randomString());
@@ -222,9 +220,6 @@ public class CPInstancePersistenceTest {
 		CPInstance existingCPInstance = _persistence.findByPrimaryKey(
 			newCPInstance.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingCPInstance.getMvccVersion(),
-			newCPInstance.getMvccVersion());
 		Assert.assertEquals(
 			existingCPInstance.getUuid(), newCPInstance.getUuid());
 		Assert.assertEquals(
@@ -477,13 +472,12 @@ public class CPInstancePersistenceTest {
 
 	protected OrderByComparator<CPInstance> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CPInstance", "mvccVersion", true, "uuid", true,
-			"externalReferenceCode", true, "CPInstanceId", true, "groupId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "CPDefinitionId", true,
-			"CPInstanceUuid", true, "sku", true, "gtin", true,
-			"manufacturerPartNumber", true, "purchasable", true, "width", true,
-			"height", true, "depth", true, "weight", true, "price", true,
+			"CPInstance", "uuid", true, "externalReferenceCode", true,
+			"CPInstanceId", true, "groupId", true, "companyId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"CPDefinitionId", true, "CPInstanceUuid", true, "sku", true, "gtin",
+			true, "manufacturerPartNumber", true, "purchasable", true, "width",
+			true, "height", true, "depth", true, "weight", true, "price", true,
 			"promoPrice", true, "cost", true, "published", true, "displayDate",
 			true, "expirationDate", true, "lastPublishDate", true,
 			"overrideSubscriptionInfo", true, "subscriptionEnabled", true,
@@ -759,8 +753,6 @@ public class CPInstancePersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CPInstance cpInstance = _persistence.create(pk);
-
-		cpInstance.setMvccVersion(RandomTestUtil.nextLong());
 
 		cpInstance.setUuid(RandomTestUtil.randomString());
 

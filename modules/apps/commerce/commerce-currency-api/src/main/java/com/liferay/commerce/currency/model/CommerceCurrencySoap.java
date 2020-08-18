@@ -26,14 +26,15 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.currency.service.http.CommerceCurrencyServiceSoap}.
  *
  * @author Andrea Di Giorgi
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceCurrencySoap implements Serializable {
 
 	public static CommerceCurrencySoap toSoapModel(CommerceCurrency model) {
 		CommerceCurrencySoap soapModel = new CommerceCurrencySoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCommerceCurrencyId(model.getCommerceCurrencyId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -112,14 +113,6 @@ public class CommerceCurrencySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceCurrencyId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -282,7 +275,6 @@ public class CommerceCurrencySoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private long _commerceCurrencyId;
 	private long _companyId;

@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Andrea Di Giorgi
  * @see CommerceWishListServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceWishListServiceSoap {
 
 	public static com.liferay.commerce.wish.list.model.CommerceWishListSoap

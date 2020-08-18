@@ -35,9 +35,6 @@ public class CommerceInventoryAuditTable
 	public static final CommerceInventoryAuditTable INSTANCE =
 		new CommerceInventoryAuditTable();
 
-	public final Column<CommerceInventoryAuditTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceInventoryAuditTable, Long>
 		commerceInventoryAuditId = createColumn(
 			"CIAuditId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

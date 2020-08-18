@@ -82,7 +82,7 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 	public static final String TABLE_NAME = "CPDSpecificationOptionValue";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"uuid_", Types.VARCHAR},
 		{"CPDSpecificationOptionValueId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -97,7 +97,6 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPDSpecificationOptionValueId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -115,7 +114,7 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDSpecificationOptionValue (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPDSpecificationOptionValueId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPSpecificationOptionId LONG,CPOptionCategoryId LONG,value STRING null,priority DOUBLE,lastPublishDate DATE null)";
+		"create table CPDSpecificationOptionValue (uuid_ VARCHAR(75) null,CPDSpecificationOptionValueId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPSpecificationOptionId LONG,CPOptionCategoryId LONG,value STRING null,priority DOUBLE,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDSpecificationOptionValue";
@@ -172,7 +171,9 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CPDefinitionSpecificationOptionValue toModel(
 		CPDefinitionSpecificationOptionValueSoap soapModel) {
 
@@ -183,7 +184,6 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 		CPDefinitionSpecificationOptionValue model =
 			new CPDefinitionSpecificationOptionValueImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCPDefinitionSpecificationOptionValueId(
 			soapModel.getCPDefinitionSpecificationOptionValueId());
@@ -209,7 +209,9 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CPDefinitionSpecificationOptionValue> toModels(
 		CPDefinitionSpecificationOptionValueSoap[] soapModels) {
 
@@ -370,13 +372,6 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 					 BiConsumer<CPDefinitionSpecificationOptionValue, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion",
-			CPDefinitionSpecificationOptionValue::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CPDefinitionSpecificationOptionValue, Long>)
-				CPDefinitionSpecificationOptionValue::setMvccVersion);
-		attributeGetterFunctions.put(
 			"uuid", CPDefinitionSpecificationOptionValue::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -474,17 +469,6 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -966,8 +950,6 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 			cpDefinitionSpecificationOptionValueImpl =
 				new CPDefinitionSpecificationOptionValueImpl();
 
-		cpDefinitionSpecificationOptionValueImpl.setMvccVersion(
-			getMvccVersion());
 		cpDefinitionSpecificationOptionValueImpl.setUuid(getUuid());
 		cpDefinitionSpecificationOptionValueImpl.
 			setCPDefinitionSpecificationOptionValueId(
@@ -1108,9 +1090,6 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 		CPDefinitionSpecificationOptionValueCacheModel
 			cpDefinitionSpecificationOptionValueCacheModel =
 				new CPDefinitionSpecificationOptionValueCacheModel();
-
-		cpDefinitionSpecificationOptionValueCacheModel.mvccVersion =
-			getMvccVersion();
 
 		cpDefinitionSpecificationOptionValueCacheModel.uuid = getUuid();
 
@@ -1273,7 +1252,6 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _CPDefinitionSpecificationOptionValueId;

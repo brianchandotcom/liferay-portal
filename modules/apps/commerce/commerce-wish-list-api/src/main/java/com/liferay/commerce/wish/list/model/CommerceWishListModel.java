@@ -17,7 +17,6 @@ package com.liferay.commerce.wish.list.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 
@@ -38,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceWishListModel
-	extends BaseModel<CommerceWishList>, GroupedModel, MVCCModel, ShardedModel,
+	extends BaseModel<CommerceWishList>, GroupedModel, ShardedModel,
 			StagedAuditedModel {
 
 	/*
@@ -60,22 +59,6 @@ public interface CommerceWishListModel
 	 * @param primaryKey the primary key of this commerce wish list
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this commerce wish list.
-	 *
-	 * @return the mvcc version of this commerce wish list
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this commerce wish list.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce wish list
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this commerce wish list.

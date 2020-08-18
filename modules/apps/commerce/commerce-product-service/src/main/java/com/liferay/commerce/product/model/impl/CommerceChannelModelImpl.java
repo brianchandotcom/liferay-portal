@@ -73,7 +73,7 @@ public class CommerceChannelModelImpl
 	public static final String TABLE_NAME = "CommerceChannel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"commerceChannelId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -88,7 +88,6 @@ public class CommerceChannelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceChannelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -106,7 +105,7 @@ public class CommerceChannelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceChannel (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceChannelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteGroupId LONG,name VARCHAR(75) null,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,commerceCurrencyCode VARCHAR(75) null,priceDisplayType VARCHAR(75) null,discountsTargetNetPrice BOOLEAN)";
+		"create table CommerceChannel (externalReferenceCode VARCHAR(75) null,commerceChannelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteGroupId LONG,name VARCHAR(75) null,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,commerceCurrencyCode VARCHAR(75) null,priceDisplayType VARCHAR(75) null,discountsTargetNetPrice BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceChannel";
 
@@ -153,7 +152,9 @@ public class CommerceChannelModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceChannel toModel(CommerceChannelSoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -161,7 +162,6 @@ public class CommerceChannelModelImpl
 
 		CommerceChannel model = new CommerceChannelImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCommerceChannelId(soapModel.getCommerceChannelId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -185,7 +185,9 @@ public class CommerceChannelModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceChannel> toModels(
 		CommerceChannelSoap[] soapModels) {
 
@@ -333,11 +335,6 @@ public class CommerceChannelModelImpl
 			new LinkedHashMap<String, BiConsumer<CommerceChannel, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceChannel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceChannel, Long>)CommerceChannel::setMvccVersion);
-		attributeGetterFunctions.put(
 			"externalReferenceCode", CommerceChannel::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
 			"externalReferenceCode",
@@ -416,17 +413,6 @@ public class CommerceChannelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -716,7 +702,6 @@ public class CommerceChannelModelImpl
 	public Object clone() {
 		CommerceChannelImpl commerceChannelImpl = new CommerceChannelImpl();
 
-		commerceChannelImpl.setMvccVersion(getMvccVersion());
 		commerceChannelImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
 		commerceChannelImpl.setCommerceChannelId(getCommerceChannelId());
@@ -820,8 +805,6 @@ public class CommerceChannelModelImpl
 	public CacheModel<CommerceChannel> toCacheModel() {
 		CommerceChannelCacheModel commerceChannelCacheModel =
 			new CommerceChannelCacheModel();
-
-		commerceChannelCacheModel.mvccVersion = getMvccVersion();
 
 		commerceChannelCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -989,7 +972,6 @@ public class CommerceChannelModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private String _originalExternalReferenceCode;
 	private long _commerceChannelId;

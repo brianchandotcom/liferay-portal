@@ -51,7 +51,9 @@ package com.liferay.commerce.service.http;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceAddressRestrictionServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceAddressRestrictionServiceSoap {
 }

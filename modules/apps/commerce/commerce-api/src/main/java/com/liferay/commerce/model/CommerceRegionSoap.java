@@ -24,14 +24,15 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.service.http.CommerceRegionServiceSoap}.
  *
  * @author Alessio Antonio Rendina
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceRegionSoap implements Serializable {
 
 	public static CommerceRegionSoap toSoapModel(CommerceRegion model) {
 		CommerceRegionSoap soapModel = new CommerceRegionSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCommerceRegionId(model.getCommerceRegionId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -101,14 +102,6 @@ public class CommerceRegionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceRegionId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -219,7 +212,6 @@ public class CommerceRegionSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private long _commerceRegionId;
 	private long _companyId;

@@ -73,7 +73,7 @@ public class CommerceAccountGroupModelImpl
 	public static final String TABLE_NAME = "CommerceAccountGroup";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"commerceAccountGroupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -85,7 +85,6 @@ public class CommerceAccountGroupModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceAccountGroupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -99,7 +98,7 @@ public class CommerceAccountGroupModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceAccountGroup (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceAccountGroupId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ INTEGER,system_ BOOLEAN)";
+		"create table CommerceAccountGroup (externalReferenceCode VARCHAR(75) null,commerceAccountGroupId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ INTEGER,system_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceAccountGroup";
@@ -149,7 +148,9 @@ public class CommerceAccountGroupModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceAccountGroup toModel(
 		CommerceAccountGroupSoap soapModel) {
 
@@ -159,7 +160,6 @@ public class CommerceAccountGroupModelImpl
 
 		CommerceAccountGroup model = new CommerceAccountGroupImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCommerceAccountGroupId(soapModel.getCommerceAccountGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -179,7 +179,9 @@ public class CommerceAccountGroupModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceAccountGroup> toModels(
 		CommerceAccountGroupSoap[] soapModels) {
 
@@ -330,12 +332,6 @@ public class CommerceAccountGroupModelImpl
 					<String, BiConsumer<CommerceAccountGroup, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceAccountGroup::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceAccountGroup, Long>)
-				CommerceAccountGroup::setMvccVersion);
-		attributeGetterFunctions.put(
 			"externalReferenceCode",
 			CommerceAccountGroup::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
@@ -398,17 +394,6 @@ public class CommerceAccountGroupModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -648,7 +633,6 @@ public class CommerceAccountGroupModelImpl
 		CommerceAccountGroupImpl commerceAccountGroupImpl =
 			new CommerceAccountGroupImpl();
 
-		commerceAccountGroupImpl.setMvccVersion(getMvccVersion());
 		commerceAccountGroupImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
 		commerceAccountGroupImpl.setCommerceAccountGroupId(
@@ -751,8 +735,6 @@ public class CommerceAccountGroupModelImpl
 	public CacheModel<CommerceAccountGroup> toCacheModel() {
 		CommerceAccountGroupCacheModel commerceAccountGroupCacheModel =
 			new CommerceAccountGroupCacheModel();
-
-		commerceAccountGroupCacheModel.mvccVersion = getMvccVersion();
 
 		commerceAccountGroupCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -887,7 +869,6 @@ public class CommerceAccountGroupModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private String _originalExternalReferenceCode;
 	private long _commerceAccountGroupId;

@@ -18,7 +18,6 @@ import com.liferay.commerce.model.CommerceAvailabilityEstimate;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,8 +33,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceAvailabilityEstimateCacheModel
-	implements CacheModel<CommerceAvailabilityEstimate>, Externalizable,
-			   MVCCModel {
+	implements CacheModel<CommerceAvailabilityEstimate>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -51,11 +49,9 @@ public class CommerceAvailabilityEstimateCacheModel
 			commerceAvailabilityEstimateCacheModel =
 				(CommerceAvailabilityEstimateCacheModel)object;
 
-		if ((commerceAvailabilityEstimateId ==
+		if (commerceAvailabilityEstimateId ==
 				commerceAvailabilityEstimateCacheModel.
-					commerceAvailabilityEstimateId) &&
-			(mvccVersion ==
-				commerceAvailabilityEstimateCacheModel.mvccVersion)) {
+					commerceAvailabilityEstimateId) {
 
 			return true;
 		}
@@ -65,28 +61,14 @@ public class CommerceAvailabilityEstimateCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, commerceAvailabilityEstimateId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, commerceAvailabilityEstimateId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", uuid=");
+		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", commerceAvailabilityEstimateId=");
 		sb.append(commerceAvailabilityEstimateId);
@@ -115,8 +97,6 @@ public class CommerceAvailabilityEstimateCacheModel
 	public CommerceAvailabilityEstimate toEntityModel() {
 		CommerceAvailabilityEstimateImpl commerceAvailabilityEstimateImpl =
 			new CommerceAvailabilityEstimateImpl();
-
-		commerceAvailabilityEstimateImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			commerceAvailabilityEstimateImpl.setUuid("");
@@ -177,7 +157,6 @@ public class CommerceAvailabilityEstimateCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		commerceAvailabilityEstimateId = objectInput.readLong();
@@ -196,8 +175,6 @@ public class CommerceAvailabilityEstimateCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -232,7 +209,6 @@ public class CommerceAvailabilityEstimateCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
-	public long mvccVersion;
 	public String uuid;
 	public long commerceAvailabilityEstimateId;
 	public long companyId;

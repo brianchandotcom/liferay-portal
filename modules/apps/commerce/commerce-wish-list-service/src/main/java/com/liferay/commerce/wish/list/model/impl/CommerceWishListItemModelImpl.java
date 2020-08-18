@@ -74,19 +74,18 @@ public class CommerceWishListItemModelImpl
 	public static final String TABLE_NAME = "CommerceWishListItem";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"commerceWishListItemId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"commerceWishListId", Types.BIGINT}, {"CPInstanceUuid", Types.VARCHAR},
-		{"CProductId", Types.BIGINT}, {"json", Types.CLOB}
+		{"commerceWishListItemId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"commerceWishListId", Types.BIGINT},
+		{"CPInstanceUuid", Types.VARCHAR}, {"CProductId", Types.BIGINT},
+		{"json", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceWishListItemId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -101,7 +100,7 @@ public class CommerceWishListItemModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceWishListItem (mvccVersion LONG default 0 not null,commerceWishListItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceWishListId LONG,CPInstanceUuid VARCHAR(75) null,CProductId LONG,json TEXT null)";
+		"create table CommerceWishListItem (commerceWishListItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceWishListId LONG,CPInstanceUuid VARCHAR(75) null,CProductId LONG,json TEXT null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceWishListItem";
@@ -149,7 +148,9 @@ public class CommerceWishListItemModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceWishListItem toModel(
 		CommerceWishListItemSoap soapModel) {
 
@@ -159,7 +160,6 @@ public class CommerceWishListItemModelImpl
 
 		CommerceWishListItem model = new CommerceWishListItemImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceWishListItemId(soapModel.getCommerceWishListItemId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -180,7 +180,9 @@ public class CommerceWishListItemModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceWishListItem> toModels(
 		CommerceWishListItemSoap[] soapModels) {
 
@@ -331,12 +333,6 @@ public class CommerceWishListItemModelImpl
 					<String, BiConsumer<CommerceWishListItem, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceWishListItem::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceWishListItem, Long>)
-				CommerceWishListItem::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceWishListItemId",
 			CommerceWishListItem::getCommerceWishListItemId);
 		attributeSetterBiConsumers.put(
@@ -406,17 +402,6 @@ public class CommerceWishListItemModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -649,7 +634,6 @@ public class CommerceWishListItemModelImpl
 		CommerceWishListItemImpl commerceWishListItemImpl =
 			new CommerceWishListItemImpl();
 
-		commerceWishListItemImpl.setMvccVersion(getMvccVersion());
 		commerceWishListItemImpl.setCommerceWishListItemId(
 			getCommerceWishListItemId());
 		commerceWishListItemImpl.setGroupId(getGroupId());
@@ -750,8 +734,6 @@ public class CommerceWishListItemModelImpl
 	public CacheModel<CommerceWishListItem> toCacheModel() {
 		CommerceWishListItemCacheModel commerceWishListItemCacheModel =
 			new CommerceWishListItemCacheModel();
-
-		commerceWishListItemCacheModel.mvccVersion = getMvccVersion();
 
 		commerceWishListItemCacheModel.commerceWishListItemId =
 			getCommerceWishListItemId();
@@ -885,7 +867,6 @@ public class CommerceWishListItemModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceWishListItemId;
 	private long _groupId;
 	private long _companyId;

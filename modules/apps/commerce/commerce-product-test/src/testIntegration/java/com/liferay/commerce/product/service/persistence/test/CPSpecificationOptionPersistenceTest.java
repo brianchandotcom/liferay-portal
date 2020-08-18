@@ -127,8 +127,6 @@ public class CPSpecificationOptionPersistenceTest {
 		CPSpecificationOption newCPSpecificationOption = _persistence.create(
 			pk);
 
-		newCPSpecificationOption.setMvccVersion(RandomTestUtil.nextLong());
-
 		newCPSpecificationOption.setUuid(RandomTestUtil.randomString());
 
 		newCPSpecificationOption.setCompanyId(RandomTestUtil.nextLong());
@@ -161,9 +159,6 @@ public class CPSpecificationOptionPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCPSpecificationOption.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingCPSpecificationOption.getMvccVersion(),
-			newCPSpecificationOption.getMvccVersion());
 		Assert.assertEquals(
 			existingCPSpecificationOption.getUuid(),
 			newCPSpecificationOption.getUuid());
@@ -278,11 +273,11 @@ public class CPSpecificationOptionPersistenceTest {
 
 	protected OrderByComparator<CPSpecificationOption> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CPSpecificationOption", "mvccVersion", true, "uuid", true,
-			"CPSpecificationOptionId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"CPOptionCategoryId", true, "title", true, "description", true,
-			"facetable", true, "key", true, "lastPublishDate", true);
+			"CPSpecificationOption", "uuid", true, "CPSpecificationOptionId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "CPOptionCategoryId",
+			true, "title", true, "description", true, "facetable", true, "key",
+			true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -550,8 +545,6 @@ public class CPSpecificationOptionPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CPSpecificationOption cpSpecificationOption = _persistence.create(pk);
-
-		cpSpecificationOption.setMvccVersion(RandomTestUtil.nextLong());
 
 		cpSpecificationOption.setUuid(RandomTestUtil.randomString());
 

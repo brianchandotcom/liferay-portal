@@ -34,9 +34,6 @@ public class CommerceTaxFixedRateAddressRelTable
 	public static final CommerceTaxFixedRateAddressRelTable INSTANCE =
 		new CommerceTaxFixedRateAddressRelTable();
 
-	public final Column<CommerceTaxFixedRateAddressRelTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceTaxFixedRateAddressRelTable, Long>
 		commerceTaxFixedRateAddressRelId = createColumn(
 			"CTaxFixedRateAddressRelId", Long.class, Types.BIGINT,

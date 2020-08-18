@@ -2,7 +2,6 @@
 
 <model-hints>
 	<model name="com.liferay.commerce.pricing.model.CommercePriceModifier">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="commercePriceModifierId" type="long" />
@@ -28,7 +27,6 @@
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.pricing.model.CommercePriceModifierRel">
-		<field name="mvccVersion" type="long" />
 		<field name="commercePriceModifierRelId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -40,7 +38,6 @@
 		<field name="classPK" type="long" />
 	</model>
 	<model name="com.liferay.commerce.pricing.model.CommercePricingClass">
-		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="commercePricingClassId" type="long" />
@@ -54,7 +51,6 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel">
-		<field name="mvccVersion" type="long" />
 		<field name="CommercePricingClassCPDefinitionRelId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

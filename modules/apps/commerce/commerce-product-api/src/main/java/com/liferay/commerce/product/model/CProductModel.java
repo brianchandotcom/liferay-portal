@@ -17,7 +17,6 @@ package com.liferay.commerce.product.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 
@@ -38,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CProductModel
-	extends BaseModel<CProduct>, GroupedModel, MVCCModel, ShardedModel,
+	extends BaseModel<CProduct>, GroupedModel, ShardedModel,
 			StagedAuditedModel {
 
 	/*
@@ -60,22 +59,6 @@ public interface CProductModel
 	 * @param primaryKey the primary key of this c product
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this c product.
-	 *
-	 * @return the mvcc version of this c product
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this c product.
-	 *
-	 * @param mvccVersion the mvcc version of this c product
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this c product.

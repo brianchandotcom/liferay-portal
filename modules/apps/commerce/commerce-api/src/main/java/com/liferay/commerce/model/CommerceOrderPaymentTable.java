@@ -35,9 +35,6 @@ public class CommerceOrderPaymentTable
 	public static final CommerceOrderPaymentTable INSTANCE =
 		new CommerceOrderPaymentTable();
 
-	public final Column<CommerceOrderPaymentTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceOrderPaymentTable, Long>
 		commerceOrderPaymentId = createColumn(
 			"commerceOrderPaymentId", Long.class, Types.BIGINT,

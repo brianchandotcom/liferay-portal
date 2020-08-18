@@ -76,18 +76,17 @@ public class CommerceChannelRelModelImpl
 	public static final String TABLE_NAME = "CommerceChannelRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"commerceChannelRelId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"commerceChannelId", Types.BIGINT}
+		{"commerceChannelRelId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"commerceChannelId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceChannelRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -100,7 +99,7 @@ public class CommerceChannelRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceChannelRel (mvccVersion LONG default 0 not null,commerceChannelRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceChannelId LONG)";
+		"create table CommerceChannelRel (commerceChannelRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceChannelId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceChannelRel";
 
@@ -147,7 +146,9 @@ public class CommerceChannelRelModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceChannelRel toModel(CommerceChannelRelSoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -155,7 +156,6 @@ public class CommerceChannelRelModelImpl
 
 		CommerceChannelRel model = new CommerceChannelRelImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceChannelRelId(soapModel.getCommerceChannelRelId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -174,7 +174,9 @@ public class CommerceChannelRelModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceChannelRel> toModels(
 		CommerceChannelRelSoap[] soapModels) {
 
@@ -324,12 +326,6 @@ public class CommerceChannelRelModelImpl
 				new LinkedHashMap<String, BiConsumer<CommerceChannelRel, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceChannelRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceChannelRel, Long>)
-				CommerceChannelRel::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceChannelRelId",
 			CommerceChannelRel::getCommerceChannelRelId);
 		attributeSetterBiConsumers.put(
@@ -387,17 +383,6 @@ public class CommerceChannelRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -620,7 +605,6 @@ public class CommerceChannelRelModelImpl
 		CommerceChannelRelImpl commerceChannelRelImpl =
 			new CommerceChannelRelImpl();
 
-		commerceChannelRelImpl.setMvccVersion(getMvccVersion());
 		commerceChannelRelImpl.setCommerceChannelRelId(
 			getCommerceChannelRelId());
 		commerceChannelRelImpl.setCompanyId(getCompanyId());
@@ -720,8 +704,6 @@ public class CommerceChannelRelModelImpl
 	public CacheModel<CommerceChannelRel> toCacheModel() {
 		CommerceChannelRelCacheModel commerceChannelRelCacheModel =
 			new CommerceChannelRelCacheModel();
-
-		commerceChannelRelCacheModel.mvccVersion = getMvccVersion();
 
 		commerceChannelRelCacheModel.commerceChannelRelId =
 			getCommerceChannelRelId();
@@ -835,7 +817,6 @@ public class CommerceChannelRelModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceChannelRelId;
 	private long _companyId;
 	private long _userId;

@@ -61,8 +61,10 @@ import java.util.Map;
  *
  * @author Riccardo Alberti
  * @see CommercePricingClassServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommercePricingClassServiceSoap {
 
 	public static com.liferay.commerce.pricing.model.CommercePricingClassSoap

@@ -34,9 +34,6 @@ public class CommerceVirtualOrderItemTable
 	public static final CommerceVirtualOrderItemTable INSTANCE =
 		new CommerceVirtualOrderItemTable();
 
-	public final Column<CommerceVirtualOrderItemTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceVirtualOrderItemTable, String> uuid =
 		createColumn("uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceVirtualOrderItemTable, Long>

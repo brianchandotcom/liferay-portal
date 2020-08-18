@@ -46,7 +46,6 @@ public class CPDefinitionGroupedEntryWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put(
 			"CPDefinitionGroupedEntryId", getCPDefinitionGroupedEntryId());
@@ -66,12 +65,6 @@ public class CPDefinitionGroupedEntryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -246,16 +239,6 @@ public class CPDefinitionGroupedEntryWrapper
 	}
 
 	/**
-	 * Returns the mvcc version of this cp definition grouped entry.
-	 *
-	 * @return the mvcc version of this cp definition grouped entry
-	 */
-	@Override
-	public long getMvccVersion() {
-		return model.getMvccVersion();
-	}
-
-	/**
 	 * Returns the primary key of this cp definition grouped entry.
 	 *
 	 * @return the primary key of this cp definition grouped entry
@@ -398,16 +381,6 @@ public class CPDefinitionGroupedEntryWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	 * Sets the mvcc version of this cp definition grouped entry.
-	 *
-	 * @param mvccVersion the mvcc version of this cp definition grouped entry
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

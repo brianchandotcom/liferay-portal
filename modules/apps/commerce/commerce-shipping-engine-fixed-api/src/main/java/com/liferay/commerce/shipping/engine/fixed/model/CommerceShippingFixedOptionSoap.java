@@ -26,8 +26,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.shipping.engine.fixed.service.http.CommerceShippingFixedOptionServiceSoap}.
  *
  * @author Alessio Antonio Rendina
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceShippingFixedOptionSoap implements Serializable {
 
 	public static CommerceShippingFixedOptionSoap toSoapModel(
@@ -36,7 +38,6 @@ public class CommerceShippingFixedOptionSoap implements Serializable {
 		CommerceShippingFixedOptionSoap soapModel =
 			new CommerceShippingFixedOptionSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceShippingFixedOptionId(
 			model.getCommerceShippingFixedOptionId());
 		soapModel.setGroupId(model.getGroupId());
@@ -111,14 +112,6 @@ public class CommerceShippingFixedOptionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceShippingFixedOptionId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceShippingFixedOptionId() {
@@ -219,7 +212,6 @@ public class CommerceShippingFixedOptionSoap implements Serializable {
 		_priority = priority;
 	}
 
-	private long _mvccVersion;
 	private long _commerceShippingFixedOptionId;
 	private long _groupId;
 	private long _companyId;

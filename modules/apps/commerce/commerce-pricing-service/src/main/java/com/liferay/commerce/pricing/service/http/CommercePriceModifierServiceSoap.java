@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Riccardo Alberti
  * @see CommercePriceModifierServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommercePriceModifierServiceSoap {
 
 	public static com.liferay.commerce.pricing.model.CommercePriceModifierSoap

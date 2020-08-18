@@ -46,7 +46,6 @@ public class CommerceSubscriptionEntryWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put(
 			"commerceSubscriptionEntryId", getCommerceSubscriptionEntryId());
@@ -93,12 +92,6 @@ public class CommerceSubscriptionEntryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -525,16 +518,6 @@ public class CommerceSubscriptionEntryWrapper
 	}
 
 	/**
-	 * Returns the mvcc version of this commerce subscription entry.
-	 *
-	 * @return the mvcc version of this commerce subscription entry
-	 */
-	@Override
-	public long getMvccVersion() {
-		return model.getMvccVersion();
-	}
-
-	/**
 	 * Returns the next iteration date of this commerce subscription entry.
 	 *
 	 * @return the next iteration date of this commerce subscription entry
@@ -870,16 +853,6 @@ public class CommerceSubscriptionEntryWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	 * Sets the mvcc version of this commerce subscription entry.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce subscription entry
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

@@ -34,9 +34,6 @@ public class CPInstanceOptionValueRelTable
 	public static final CPInstanceOptionValueRelTable INSTANCE =
 		new CPInstanceOptionValueRelTable();
 
-	public final Column<CPInstanceOptionValueRelTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CPInstanceOptionValueRelTable, String> uuid =
 		createColumn("uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPInstanceOptionValueRelTable, Long>

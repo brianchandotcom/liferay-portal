@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceTaxFixedRateAddressRelServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceTaxFixedRateAddressRelServiceSoap {
 
 	public static com.liferay.commerce.tax.engine.fixed.model.

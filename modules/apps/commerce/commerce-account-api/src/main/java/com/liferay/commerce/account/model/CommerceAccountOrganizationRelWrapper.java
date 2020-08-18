@@ -45,7 +45,6 @@ public class CommerceAccountOrganizationRelWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceAccountId", getCommerceAccountId());
 		attributes.put("organizationId", getOrganizationId());
 		attributes.put("companyId", getCompanyId());
@@ -59,12 +58,6 @@ public class CommerceAccountOrganizationRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
 		Long commerceAccountId = (Long)attributes.get("commerceAccountId");
 
 		if (commerceAccountId != null) {
@@ -146,16 +139,6 @@ public class CommerceAccountOrganizationRelWrapper
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
-	}
-
-	/**
-	 * Returns the mvcc version of this commerce account organization rel.
-	 *
-	 * @return the mvcc version of this commerce account organization rel
-	 */
-	@Override
-	public long getMvccVersion() {
-		return model.getMvccVersion();
 	}
 
 	@Override
@@ -260,16 +243,6 @@ public class CommerceAccountOrganizationRelWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	 * Sets the mvcc version of this commerce account organization rel.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce account organization rel
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

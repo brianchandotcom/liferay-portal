@@ -17,7 +17,6 @@ package com.liferay.commerce.tax.engine.fixed.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -37,7 +36,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceTaxFixedRateAddressRelModel
-	extends BaseModel<CommerceTaxFixedRateAddressRel>, GroupedModel, MVCCModel,
+	extends BaseModel<CommerceTaxFixedRateAddressRel>, GroupedModel,
 			ShardedModel {
 
 	/*
@@ -59,22 +58,6 @@ public interface CommerceTaxFixedRateAddressRelModel
 	 * @param primaryKey the primary key of this commerce tax fixed rate address rel
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this commerce tax fixed rate address rel.
-	 *
-	 * @return the mvcc version of this commerce tax fixed rate address rel
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this commerce tax fixed rate address rel.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce tax fixed rate address rel
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the commerce tax fixed rate address rel ID of this commerce tax fixed rate address rel.

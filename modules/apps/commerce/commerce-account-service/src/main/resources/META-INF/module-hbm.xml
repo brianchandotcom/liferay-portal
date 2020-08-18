@@ -8,11 +8,10 @@
 	<import class="com.liferay.commerce.account.model.CommerceAccountGroupRel" />
 	<import class="com.liferay.commerce.account.model.CommerceAccountOrganizationRel" />
 	<import class="com.liferay.commerce.account.model.CommerceAccountUserRel" />
-	<class dynamic-update="true" name="com.liferay.commerce.account.model.impl.CommerceAccountImpl" table="CommerceAccount">
+	<class name="com.liferay.commerce.account.model.impl.CommerceAccountImpl" table="CommerceAccount">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceAccountId" type="long">
 			<generator class="assigned" />
 		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="externalReferenceCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -36,11 +35,10 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class dynamic-update="true" name="com.liferay.commerce.account.model.impl.CommerceAccountGroupImpl" table="CommerceAccountGroup">
+	<class name="com.liferay.commerce.account.model.impl.CommerceAccountGroupImpl" table="CommerceAccountGroup">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceAccountGroupId" type="long">
 			<generator class="assigned" />
 		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="externalReferenceCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -51,11 +49,10 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="system_" name="system" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
-	<class dynamic-update="true" name="com.liferay.commerce.account.model.impl.CommerceAccountGroupCommerceAccountRelImpl" table="CAccountGroupCAccountRel">
+	<class name="com.liferay.commerce.account.model.impl.CommerceAccountGroupCommerceAccountRelImpl" table="CAccountGroupCAccountRel">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="CAccountGroupCAccountRelId" name="commerceAccountGroupCommerceAccountRelId" type="long">
 			<generator class="assigned" />
 		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="externalReferenceCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -65,11 +62,10 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceAccountGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceAccountId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
-	<class dynamic-update="true" name="com.liferay.commerce.account.model.impl.CommerceAccountGroupRelImpl" table="CommerceAccountGroupRel">
+	<class name="com.liferay.commerce.account.model.impl.CommerceAccountGroupRelImpl" table="CommerceAccountGroupRel">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceAccountGroupRelId" type="long">
 			<generator class="assigned" />
 		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -79,24 +75,22 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceAccountGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
-	<class dynamic-update="true" name="com.liferay.commerce.account.model.impl.CommerceAccountOrganizationRelImpl" table="CommerceAccountOrganizationRel">
+	<class name="com.liferay.commerce.account.model.impl.CommerceAccountOrganizationRelImpl" table="CommerceAccountOrganizationRel">
 		<composite-id class="com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPK" name="primaryKey">
 			<key-property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceAccountId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="organizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		</composite-id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class dynamic-update="true" name="com.liferay.commerce.account.model.impl.CommerceAccountUserRelImpl" table="CommerceAccountUserRel">
+	<class name="com.liferay.commerce.account.model.impl.CommerceAccountUserRelImpl" table="CommerceAccountUserRel">
 		<composite-id class="com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPK" name="primaryKey">
 			<key-property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceAccountId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 			<key-property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceAccountUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		</composite-id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />

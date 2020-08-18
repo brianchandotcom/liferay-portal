@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Marco Leo
  * @see CommerceDiscountRuleServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceDiscountRuleServiceSoap {
 
 	public static com.liferay.commerce.discount.model.CommerceDiscountRuleSoap

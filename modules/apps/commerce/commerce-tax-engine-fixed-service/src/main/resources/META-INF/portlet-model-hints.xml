@@ -2,7 +2,6 @@
 
 <model-hints>
 	<model name="com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate">
-		<field name="mvccVersion" type="long" />
 		<field name="commerceTaxFixedRateId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -17,7 +16,6 @@
 		<field name="rate" type="double" />
 	</model>
 	<model name="com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel">
-		<field name="mvccVersion" type="long" />
 		<field name="commerceTaxFixedRateAddressRelId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

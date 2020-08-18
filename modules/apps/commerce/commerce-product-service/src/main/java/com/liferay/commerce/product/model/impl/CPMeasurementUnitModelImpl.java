@@ -81,21 +81,20 @@ public class CPMeasurementUnitModelImpl
 	public static final String TABLE_NAME = "CPMeasurementUnit";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"CPMeasurementUnitId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
-		{"key_", Types.VARCHAR}, {"rate", Types.DOUBLE},
-		{"primary_", Types.BOOLEAN}, {"priority", Types.DOUBLE},
-		{"type_", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP}
+		{"uuid_", Types.VARCHAR}, {"CPMeasurementUnitId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"name", Types.VARCHAR}, {"key_", Types.VARCHAR},
+		{"rate", Types.DOUBLE}, {"primary_", Types.BOOLEAN},
+		{"priority", Types.DOUBLE}, {"type_", Types.INTEGER},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPMeasurementUnitId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -114,7 +113,7 @@ public class CPMeasurementUnitModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPMeasurementUnit (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPMeasurementUnitId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,key_ VARCHAR(75) null,rate DOUBLE,primary_ BOOLEAN,priority DOUBLE,type_ INTEGER,lastPublishDate DATE null)";
+		"create table CPMeasurementUnit (uuid_ VARCHAR(75) null,CPMeasurementUnitId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,key_ VARCHAR(75) null,rate DOUBLE,primary_ BOOLEAN,priority DOUBLE,type_ INTEGER,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CPMeasurementUnit";
 
@@ -167,7 +166,9 @@ public class CPMeasurementUnitModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CPMeasurementUnit toModel(CPMeasurementUnitSoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -175,7 +176,6 @@ public class CPMeasurementUnitModelImpl
 
 		CPMeasurementUnit model = new CPMeasurementUnitImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCPMeasurementUnitId(soapModel.getCPMeasurementUnitId());
 		model.setGroupId(soapModel.getGroupId());
@@ -200,7 +200,9 @@ public class CPMeasurementUnitModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CPMeasurementUnit> toModels(
 		CPMeasurementUnitSoap[] soapModels) {
 
@@ -349,12 +351,6 @@ public class CPMeasurementUnitModelImpl
 			attributeSetterBiConsumers =
 				new LinkedHashMap<String, BiConsumer<CPMeasurementUnit, ?>>();
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CPMeasurementUnit::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CPMeasurementUnit, Long>)
-				CPMeasurementUnit::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CPMeasurementUnit::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -435,17 +431,6 @@ public class CPMeasurementUnitModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -925,7 +910,6 @@ public class CPMeasurementUnitModelImpl
 		CPMeasurementUnitImpl cpMeasurementUnitImpl =
 			new CPMeasurementUnitImpl();
 
-		cpMeasurementUnitImpl.setMvccVersion(getMvccVersion());
 		cpMeasurementUnitImpl.setUuid(getUuid());
 		cpMeasurementUnitImpl.setCPMeasurementUnitId(getCPMeasurementUnitId());
 		cpMeasurementUnitImpl.setGroupId(getGroupId());
@@ -1044,8 +1028,6 @@ public class CPMeasurementUnitModelImpl
 	public CacheModel<CPMeasurementUnit> toCacheModel() {
 		CPMeasurementUnitCacheModel cpMeasurementUnitCacheModel =
 			new CPMeasurementUnitCacheModel();
-
-		cpMeasurementUnitCacheModel.mvccVersion = getMvccVersion();
 
 		cpMeasurementUnitCacheModel.uuid = getUuid();
 
@@ -1197,7 +1179,6 @@ public class CPMeasurementUnitModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _CPMeasurementUnitId;

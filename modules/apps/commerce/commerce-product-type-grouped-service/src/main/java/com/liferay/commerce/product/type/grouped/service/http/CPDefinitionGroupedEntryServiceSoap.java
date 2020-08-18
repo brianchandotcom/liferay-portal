@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Andrea Di Giorgi
  * @see CPDefinitionGroupedEntryServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CPDefinitionGroupedEntryServiceSoap {
 
 	public static void addCPDefinitionGroupedEntries(

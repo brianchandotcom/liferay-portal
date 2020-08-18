@@ -18,7 +18,6 @@ import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +33,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceAccountGroupCacheModel
-	implements CacheModel<CommerceAccountGroup>, Externalizable, MVCCModel {
+	implements CacheModel<CommerceAccountGroup>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -49,9 +48,8 @@ public class CommerceAccountGroupCacheModel
 		CommerceAccountGroupCacheModel commerceAccountGroupCacheModel =
 			(CommerceAccountGroupCacheModel)object;
 
-		if ((commerceAccountGroupId ==
-				commerceAccountGroupCacheModel.commerceAccountGroupId) &&
-			(mvccVersion == commerceAccountGroupCacheModel.mvccVersion)) {
+		if (commerceAccountGroupId ==
+				commerceAccountGroupCacheModel.commerceAccountGroupId) {
 
 			return true;
 		}
@@ -61,28 +59,14 @@ public class CommerceAccountGroupCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, commerceAccountGroupId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, commerceAccountGroupId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", externalReferenceCode=");
+		sb.append("{externalReferenceCode=");
 		sb.append(externalReferenceCode);
 		sb.append(", commerceAccountGroupId=");
 		sb.append(commerceAccountGroupId);
@@ -111,8 +95,6 @@ public class CommerceAccountGroupCacheModel
 	public CommerceAccountGroup toEntityModel() {
 		CommerceAccountGroupImpl commerceAccountGroupImpl =
 			new CommerceAccountGroupImpl();
-
-		commerceAccountGroupImpl.setMvccVersion(mvccVersion);
 
 		if (externalReferenceCode == null) {
 			commerceAccountGroupImpl.setExternalReferenceCode("");
@@ -165,7 +147,6 @@ public class CommerceAccountGroupCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		mvccVersion = objectInput.readLong();
 		externalReferenceCode = objectInput.readUTF();
 
 		commerceAccountGroupId = objectInput.readLong();
@@ -185,8 +166,6 @@ public class CommerceAccountGroupCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		if (externalReferenceCode == null) {
 			objectOutput.writeUTF("");
 		}
@@ -222,7 +201,6 @@ public class CommerceAccountGroupCacheModel
 		objectOutput.writeBoolean(system);
 	}
 
-	public long mvccVersion;
 	public String externalReferenceCode;
 	public long commerceAccountGroupId;
 	public long companyId;

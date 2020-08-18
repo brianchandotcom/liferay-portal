@@ -82,7 +82,7 @@ public class CPDefinitionVirtualSettingModelImpl
 	public static final String TABLE_NAME = "CPDefinitionVirtualSetting";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"uuid_", Types.VARCHAR},
 		{"CPDefinitionVirtualSettingId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -102,7 +102,6 @@ public class CPDefinitionVirtualSettingModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPDefinitionVirtualSettingId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -129,7 +128,7 @@ public class CPDefinitionVirtualSettingModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDefinitionVirtualSetting (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPDefinitionVirtualSettingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,url VARCHAR(75) null,activationStatus INTEGER,duration LONG,maxUsages INTEGER,useSample BOOLEAN,sampleFileEntryId LONG,sampleUrl VARCHAR(75) null,termsOfUseRequired BOOLEAN,termsOfUseContent STRING null,termsOfUseArticleResourcePK LONG,override BOOLEAN,lastPublishDate DATE null)";
+		"create table CPDefinitionVirtualSetting (uuid_ VARCHAR(75) null,CPDefinitionVirtualSettingId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,url VARCHAR(75) null,activationStatus INTEGER,duration LONG,maxUsages INTEGER,useSample BOOLEAN,sampleFileEntryId LONG,sampleUrl VARCHAR(75) null,termsOfUseRequired BOOLEAN,termsOfUseContent STRING null,termsOfUseArticleResourcePK LONG,override BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionVirtualSetting";
@@ -181,7 +180,9 @@ public class CPDefinitionVirtualSettingModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CPDefinitionVirtualSetting toModel(
 		CPDefinitionVirtualSettingSoap soapModel) {
 
@@ -191,7 +192,6 @@ public class CPDefinitionVirtualSettingModelImpl
 
 		CPDefinitionVirtualSetting model = new CPDefinitionVirtualSettingImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCPDefinitionVirtualSettingId(
 			soapModel.getCPDefinitionVirtualSettingId());
@@ -226,7 +226,9 @@ public class CPDefinitionVirtualSettingModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CPDefinitionVirtualSetting> toModels(
 		CPDefinitionVirtualSettingSoap[] soapModels) {
 
@@ -381,12 +383,6 @@ public class CPDefinitionVirtualSettingModelImpl
 					<String, BiConsumer<CPDefinitionVirtualSetting, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CPDefinitionVirtualSetting::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CPDefinitionVirtualSetting, Long>)
-				CPDefinitionVirtualSetting::setMvccVersion);
-		attributeGetterFunctions.put(
 			"uuid", CPDefinitionVirtualSetting::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -536,17 +532,6 @@ public class CPDefinitionVirtualSettingModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1164,7 +1149,6 @@ public class CPDefinitionVirtualSettingModelImpl
 		CPDefinitionVirtualSettingImpl cpDefinitionVirtualSettingImpl =
 			new CPDefinitionVirtualSettingImpl();
 
-		cpDefinitionVirtualSettingImpl.setMvccVersion(getMvccVersion());
 		cpDefinitionVirtualSettingImpl.setUuid(getUuid());
 		cpDefinitionVirtualSettingImpl.setCPDefinitionVirtualSettingId(
 			getCPDefinitionVirtualSettingId());
@@ -1293,8 +1277,6 @@ public class CPDefinitionVirtualSettingModelImpl
 		CPDefinitionVirtualSettingCacheModel
 			cpDefinitionVirtualSettingCacheModel =
 				new CPDefinitionVirtualSettingCacheModel();
-
-		cpDefinitionVirtualSettingCacheModel.mvccVersion = getMvccVersion();
 
 		cpDefinitionVirtualSettingCacheModel.uuid = getUuid();
 
@@ -1484,7 +1466,6 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _CPDefinitionVirtualSettingId;

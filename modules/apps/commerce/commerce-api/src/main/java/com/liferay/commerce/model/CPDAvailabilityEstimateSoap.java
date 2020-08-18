@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.service.http.CPDAvailabilityEstimateServiceSoap}.
  *
  * @author Alessio Antonio Rendina
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CPDAvailabilityEstimateSoap implements Serializable {
 
 	public static CPDAvailabilityEstimateSoap toSoapModel(
@@ -34,7 +36,6 @@ public class CPDAvailabilityEstimateSoap implements Serializable {
 		CPDAvailabilityEstimateSoap soapModel =
 			new CPDAvailabilityEstimateSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCPDAvailabilityEstimateId(
 			model.getCPDAvailabilityEstimateId());
@@ -108,14 +109,6 @@ public class CPDAvailabilityEstimateSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCPDAvailabilityEstimateId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -200,7 +193,6 @@ public class CPDAvailabilityEstimateSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private long _CPDAvailabilityEstimateId;
 	private long _companyId;

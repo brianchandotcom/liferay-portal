@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceShipmentItemServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceShipmentItemServiceSoap {
 
 	public static com.liferay.commerce.model.CommerceShipmentItemSoap

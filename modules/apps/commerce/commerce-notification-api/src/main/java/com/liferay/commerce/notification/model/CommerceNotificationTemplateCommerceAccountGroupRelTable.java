@@ -38,10 +38,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelTable
 
 	public final Column
 		<CommerceNotificationTemplateCommerceAccountGroupRelTable, Long>
-			mvccVersion = createColumn(
-				"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column
-		<CommerceNotificationTemplateCommerceAccountGroupRelTable, Long>
 			commerceNotificationTemplateCommerceAccountGroupRelId =
 				createColumn(
 					"CNTemplateCAccountGroupRelId", Long.class, Types.BIGINT,

@@ -6,11 +6,10 @@
 	<import class="com.liferay.commerce.notification.model.CommerceNotificationQueueEntry" />
 	<import class="com.liferay.commerce.notification.model.CommerceNotificationTemplate" />
 	<import class="com.liferay.commerce.notification.model.CommerceNotificationTemplateCommerceAccountGroupRel" />
-	<class dynamic-update="true" name="com.liferay.commerce.notification.model.impl.CommerceNotificationAttachmentImpl" table="CNotificationAttachment">
+	<class name="com.liferay.commerce.notification.model.impl.CommerceNotificationAttachmentImpl" table="CNotificationAttachment">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="CNotificationAttachmentId" name="commerceNotificationAttachmentId" type="long">
 			<generator class="assigned" />
 		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -22,11 +21,10 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="fileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="deleteOnSend" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
-	<class dynamic-update="true" name="com.liferay.commerce.notification.model.impl.CommerceNotificationQueueEntryImpl" table="CommerceNotificationQueueEntry">
+	<class name="com.liferay.commerce.notification.model.impl.CommerceNotificationQueueEntryImpl" table="CommerceNotificationQueueEntry">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="CNotificationQueueEntryId" name="commerceNotificationQueueEntryId" type="long">
 			<generator class="assigned" />
 		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -48,11 +46,10 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="sent" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="sentDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class dynamic-update="true" name="com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateImpl" table="CommerceNotificationTemplate">
+	<class name="com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateImpl" table="CommerceNotificationTemplate">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceNotificationTemplateId" type="long">
 			<generator class="assigned" />
 		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -72,11 +69,10 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="subject" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="body" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
-	<class dynamic-update="true" name="com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateCommerceAccountGroupRelImpl" table="CNTemplateCAccountGroupRel">
+	<class name="com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateCommerceAccountGroupRelImpl" table="CNTemplateCAccountGroupRel">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="CNTemplateCAccountGroupRelId" name="commerceNotificationTemplateCommerceAccountGroupRelId" type="long">
 			<generator class="assigned" />
 		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

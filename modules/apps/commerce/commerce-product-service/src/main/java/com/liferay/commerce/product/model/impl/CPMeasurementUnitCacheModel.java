@@ -18,7 +18,6 @@ import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +33,7 @@ import java.util.Date;
  * @generated
  */
 public class CPMeasurementUnitCacheModel
-	implements CacheModel<CPMeasurementUnit>, Externalizable, MVCCModel {
+	implements CacheModel<CPMeasurementUnit>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -49,9 +48,8 @@ public class CPMeasurementUnitCacheModel
 		CPMeasurementUnitCacheModel cpMeasurementUnitCacheModel =
 			(CPMeasurementUnitCacheModel)object;
 
-		if ((CPMeasurementUnitId ==
-				cpMeasurementUnitCacheModel.CPMeasurementUnitId) &&
-			(mvccVersion == cpMeasurementUnitCacheModel.mvccVersion)) {
+		if (CPMeasurementUnitId ==
+				cpMeasurementUnitCacheModel.CPMeasurementUnitId) {
 
 			return true;
 		}
@@ -61,28 +59,14 @@ public class CPMeasurementUnitCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, CPMeasurementUnitId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, CPMeasurementUnitId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(31);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", uuid=");
+		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", CPMeasurementUnitId=");
 		sb.append(CPMeasurementUnitId);
@@ -121,8 +105,6 @@ public class CPMeasurementUnitCacheModel
 	public CPMeasurementUnit toEntityModel() {
 		CPMeasurementUnitImpl cpMeasurementUnitImpl =
 			new CPMeasurementUnitImpl();
-
-		cpMeasurementUnitImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			cpMeasurementUnitImpl.setUuid("");
@@ -190,7 +172,6 @@ public class CPMeasurementUnitCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		CPMeasurementUnitId = objectInput.readLong();
@@ -218,8 +199,6 @@ public class CPMeasurementUnitCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -269,7 +248,6 @@ public class CPMeasurementUnitCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
-	public long mvccVersion;
 	public String uuid;
 	public long CPMeasurementUnitId;
 	public long groupId;

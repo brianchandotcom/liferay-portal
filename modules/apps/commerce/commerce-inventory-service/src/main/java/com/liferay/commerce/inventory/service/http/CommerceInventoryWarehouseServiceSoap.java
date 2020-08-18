@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Luca Pellizzon
  * @see CommerceInventoryWarehouseServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceInventoryWarehouseServiceSoap {
 
 	public static

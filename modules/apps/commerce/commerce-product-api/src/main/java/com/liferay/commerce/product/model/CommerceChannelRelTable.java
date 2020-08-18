@@ -34,9 +34,6 @@ public class CommerceChannelRelTable
 	public static final CommerceChannelRelTable INSTANCE =
 		new CommerceChannelRelTable();
 
-	public final Column<CommerceChannelRelTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceChannelRelTable, Long> commerceChannelRelId =
 		createColumn(
 			"commerceChannelRelId", Long.class, Types.BIGINT,

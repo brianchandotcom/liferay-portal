@@ -76,8 +76,7 @@ public class CommercePriceListModelImpl
 	public static final String TABLE_NAME = "CommercePriceList";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"externalReferenceCode", Types.VARCHAR},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
 		{"commercePriceListId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -96,7 +95,6 @@ public class CommercePriceListModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commercePriceListId", Types.BIGINT);
@@ -123,7 +121,7 @@ public class CommercePriceListModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommercePriceList (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commercePriceListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCurrencyId LONG,parentCommercePriceListId LONG,catalogBasePriceList BOOLEAN,netPrice BOOLEAN,type_ VARCHAR(75) null,name VARCHAR(75) null,priority DOUBLE,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CommercePriceList (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commercePriceListId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCurrencyId LONG,parentCommercePriceListId LONG,catalogBasePriceList BOOLEAN,netPrice BOOLEAN,type_ VARCHAR(75) null,name VARCHAR(75) null,priority DOUBLE,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommercePriceList";
 
@@ -186,7 +184,9 @@ public class CommercePriceListModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommercePriceList toModel(CommercePriceListSoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -194,7 +194,6 @@ public class CommercePriceListModelImpl
 
 		CommercePriceList model = new CommercePriceListImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCommercePriceListId(soapModel.getCommercePriceListId());
@@ -228,7 +227,9 @@ public class CommercePriceListModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommercePriceList> toModels(
 		CommercePriceListSoap[] soapModels) {
 
@@ -377,12 +378,6 @@ public class CommercePriceListModelImpl
 			attributeSetterBiConsumers =
 				new LinkedHashMap<String, BiConsumer<CommercePriceList, ?>>();
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommercePriceList::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommercePriceList, Long>)
-				CommercePriceList::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CommercePriceList::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -517,17 +512,6 @@ public class CommercePriceListModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1098,7 +1082,6 @@ public class CommercePriceListModelImpl
 		CommercePriceListImpl commercePriceListImpl =
 			new CommercePriceListImpl();
 
-		commercePriceListImpl.setMvccVersion(getMvccVersion());
 		commercePriceListImpl.setUuid(getUuid());
 		commercePriceListImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
@@ -1258,8 +1241,6 @@ public class CommercePriceListModelImpl
 	public CacheModel<CommercePriceList> toCacheModel() {
 		CommercePriceListCacheModel commercePriceListCacheModel =
 			new CommercePriceListCacheModel();
-
-		commercePriceListCacheModel.mvccVersion = getMvccVersion();
 
 		commercePriceListCacheModel.uuid = getUuid();
 
@@ -1468,7 +1449,6 @@ public class CommercePriceListModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private String _externalReferenceCode;

@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceShippingFixedOptionRelServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceShippingFixedOptionRelServiceSoap {
 
 	public static com.liferay.commerce.shipping.engine.fixed.model.

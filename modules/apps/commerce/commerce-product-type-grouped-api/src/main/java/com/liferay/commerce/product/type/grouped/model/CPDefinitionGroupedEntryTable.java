@@ -34,9 +34,6 @@ public class CPDefinitionGroupedEntryTable
 	public static final CPDefinitionGroupedEntryTable INSTANCE =
 		new CPDefinitionGroupedEntryTable();
 
-	public final Column<CPDefinitionGroupedEntryTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CPDefinitionGroupedEntryTable, String> uuid =
 		createColumn("uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionGroupedEntryTable, Long>

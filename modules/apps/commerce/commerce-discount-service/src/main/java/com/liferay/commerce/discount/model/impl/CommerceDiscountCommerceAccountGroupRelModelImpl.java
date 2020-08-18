@@ -74,7 +74,6 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 	public static final String TABLE_NAME = "CDiscountCAccountGroupRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT},
 		{"CDiscountCAccountGroupRelId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -86,7 +85,6 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CDiscountCAccountGroupRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -98,7 +96,7 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CDiscountCAccountGroupRel (mvccVersion LONG default 0 not null,CDiscountCAccountGroupRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceDiscountId LONG,commerceAccountGroupId LONG)";
+		"create table CDiscountCAccountGroupRel (CDiscountCAccountGroupRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceDiscountId LONG,commerceAccountGroupId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CDiscountCAccountGroupRel";
@@ -144,7 +142,9 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceDiscountCommerceAccountGroupRel toModel(
 		CommerceDiscountCommerceAccountGroupRelSoap soapModel) {
 
@@ -155,7 +155,6 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 		CommerceDiscountCommerceAccountGroupRel model =
 			new CommerceDiscountCommerceAccountGroupRelImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceDiscountCommerceAccountGroupRelId(
 			soapModel.getCommerceDiscountCommerceAccountGroupRelId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -174,7 +173,9 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceDiscountCommerceAccountGroupRel> toModels(
 		CommerceDiscountCommerceAccountGroupRelSoap[] soapModels) {
 
@@ -341,13 +342,6 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 					 BiConsumer<CommerceDiscountCommerceAccountGroupRel, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion",
-			CommerceDiscountCommerceAccountGroupRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceDiscountCommerceAccountGroupRel, Long>)
-				CommerceDiscountCommerceAccountGroupRel::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceDiscountCommerceAccountGroupRelId",
 			CommerceDiscountCommerceAccountGroupRel::
 				getCommerceDiscountCommerceAccountGroupRelId);
@@ -408,17 +402,6 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -603,8 +586,6 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 			commerceDiscountCommerceAccountGroupRelImpl =
 				new CommerceDiscountCommerceAccountGroupRelImpl();
 
-		commerceDiscountCommerceAccountGroupRelImpl.setMvccVersion(
-			getMvccVersion());
 		commerceDiscountCommerceAccountGroupRelImpl.
 			setCommerceDiscountCommerceAccountGroupRelId(
 				getCommerceDiscountCommerceAccountGroupRelId());
@@ -713,9 +694,6 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 		CommerceDiscountCommerceAccountGroupRelCacheModel
 			commerceDiscountCommerceAccountGroupRelCacheModel =
 				new CommerceDiscountCommerceAccountGroupRelCacheModel();
-
-		commerceDiscountCommerceAccountGroupRelCacheModel.mvccVersion =
-			getMvccVersion();
 
 		commerceDiscountCommerceAccountGroupRelCacheModel.
 			commerceDiscountCommerceAccountGroupRelId =
@@ -847,7 +825,6 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceDiscountCommerceAccountGroupRelId;
 	private long _companyId;
 	private long _userId;

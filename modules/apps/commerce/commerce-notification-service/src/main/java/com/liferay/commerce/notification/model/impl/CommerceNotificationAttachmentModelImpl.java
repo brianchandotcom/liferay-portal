@@ -71,11 +71,10 @@ public class CommerceNotificationAttachmentModelImpl
 	public static final String TABLE_NAME = "CNotificationAttachment";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"CNotificationAttachmentId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP},
+		{"uuid_", Types.VARCHAR}, {"CNotificationAttachmentId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"CNotificationQueueEntryId", Types.BIGINT},
 		{"fileEntryId", Types.BIGINT}, {"deleteOnSend", Types.BOOLEAN}
 	};
@@ -84,7 +83,6 @@ public class CommerceNotificationAttachmentModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CNotificationAttachmentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -99,7 +97,7 @@ public class CommerceNotificationAttachmentModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CNotificationAttachment (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CNotificationAttachmentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CNotificationQueueEntryId LONG,fileEntryId LONG,deleteOnSend BOOLEAN)";
+		"create table CNotificationAttachment (uuid_ VARCHAR(75) null,CNotificationAttachmentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CNotificationQueueEntryId LONG,fileEntryId LONG,deleteOnSend BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CNotificationAttachment";
@@ -283,12 +281,6 @@ public class CommerceNotificationAttachmentModelImpl
 					<String, BiConsumer<CommerceNotificationAttachment, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceNotificationAttachment::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceNotificationAttachment, Long>)
-				CommerceNotificationAttachment::setMvccVersion);
-		attributeGetterFunctions.put(
 			"uuid", CommerceNotificationAttachment::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -365,16 +357,6 @@ public class CommerceNotificationAttachmentModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -620,7 +602,6 @@ public class CommerceNotificationAttachmentModelImpl
 		CommerceNotificationAttachmentImpl commerceNotificationAttachmentImpl =
 			new CommerceNotificationAttachmentImpl();
 
-		commerceNotificationAttachmentImpl.setMvccVersion(getMvccVersion());
 		commerceNotificationAttachmentImpl.setUuid(getUuid());
 		commerceNotificationAttachmentImpl.setCommerceNotificationAttachmentId(
 			getCommerceNotificationAttachmentId());
@@ -730,8 +711,6 @@ public class CommerceNotificationAttachmentModelImpl
 		CommerceNotificationAttachmentCacheModel
 			commerceNotificationAttachmentCacheModel =
 				new CommerceNotificationAttachmentCacheModel();
-
-		commerceNotificationAttachmentCacheModel.mvccVersion = getMvccVersion();
 
 		commerceNotificationAttachmentCacheModel.uuid = getUuid();
 
@@ -869,7 +848,6 @@ public class CommerceNotificationAttachmentModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _commerceNotificationAttachmentId;

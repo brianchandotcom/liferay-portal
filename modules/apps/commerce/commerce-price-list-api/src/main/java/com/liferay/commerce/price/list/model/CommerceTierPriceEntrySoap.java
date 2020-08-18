@@ -26,8 +26,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.price.list.service.http.CommerceTierPriceEntryServiceSoap}.
  *
  * @author Alessio Antonio Rendina
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceTierPriceEntrySoap implements Serializable {
 
 	public static CommerceTierPriceEntrySoap toSoapModel(
@@ -35,7 +37,6 @@ public class CommerceTierPriceEntrySoap implements Serializable {
 
 		CommerceTierPriceEntrySoap soapModel = new CommerceTierPriceEntrySoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setCommerceTierPriceEntryId(
@@ -121,14 +122,6 @@ public class CommerceTierPriceEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceTierPriceEntryId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -327,7 +320,6 @@ public class CommerceTierPriceEntrySoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _externalReferenceCode;
 	private long _commerceTierPriceEntryId;

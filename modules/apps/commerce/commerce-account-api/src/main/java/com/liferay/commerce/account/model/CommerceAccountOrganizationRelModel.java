@@ -18,7 +18,6 @@ import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizat
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -38,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceAccountOrganizationRelModel
-	extends AuditedModel, BaseModel<CommerceAccountOrganizationRel>, MVCCModel,
+	extends AuditedModel, BaseModel<CommerceAccountOrganizationRel>,
 			ShardedModel {
 
 	/*
@@ -60,22 +59,6 @@ public interface CommerceAccountOrganizationRelModel
 	 * @param primaryKey the primary key of this commerce account organization rel
 	 */
 	public void setPrimaryKey(CommerceAccountOrganizationRelPK primaryKey);
-
-	/**
-	 * Returns the mvcc version of this commerce account organization rel.
-	 *
-	 * @return the mvcc version of this commerce account organization rel
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this commerce account organization rel.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce account organization rel
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the commerce account ID of this commerce account organization rel.

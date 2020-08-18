@@ -128,8 +128,6 @@ public class CommerceAccountGroupRelPersistenceTest {
 		CommerceAccountGroupRel newCommerceAccountGroupRel =
 			_persistence.create(pk);
 
-		newCommerceAccountGroupRel.setMvccVersion(RandomTestUtil.nextLong());
-
 		newCommerceAccountGroupRel.setCompanyId(RandomTestUtil.nextLong());
 
 		newCommerceAccountGroupRel.setUserId(RandomTestUtil.nextLong());
@@ -154,9 +152,6 @@ public class CommerceAccountGroupRelPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommerceAccountGroupRel.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingCommerceAccountGroupRel.getMvccVersion(),
-			newCommerceAccountGroupRel.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceAccountGroupRel.getCommerceAccountGroupRelId(),
 			newCommerceAccountGroupRel.getCommerceAccountGroupRelId());
@@ -243,11 +238,10 @@ public class CommerceAccountGroupRelPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceAccountGroupRel", "mvccVersion", true,
-			"commerceAccountGroupRelId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "commerceAccountGroupId",
-			true);
+			"CommerceAccountGroupRel", "commerceAccountGroupRelId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "classNameId", true, "classPK", true,
+			"commerceAccountGroupId", true);
 	}
 
 	@Test
@@ -522,8 +516,6 @@ public class CommerceAccountGroupRelPersistenceTest {
 
 		CommerceAccountGroupRel commerceAccountGroupRel = _persistence.create(
 			pk);
-
-		commerceAccountGroupRel.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceAccountGroupRel.setCompanyId(RandomTestUtil.nextLong());
 

@@ -33,8 +33,6 @@ public class CommerceRegionTable extends BaseTable<CommerceRegionTable> {
 	public static final CommerceRegionTable INSTANCE =
 		new CommerceRegionTable();
 
-	public final Column<CommerceRegionTable, Long> mvccVersion = createColumn(
-		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceRegionTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceRegionTable, Long> commerceRegionId =

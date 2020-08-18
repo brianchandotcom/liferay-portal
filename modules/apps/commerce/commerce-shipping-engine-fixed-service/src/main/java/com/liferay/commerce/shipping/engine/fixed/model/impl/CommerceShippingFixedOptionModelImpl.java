@@ -82,7 +82,6 @@ public class CommerceShippingFixedOptionModelImpl
 	public static final String TABLE_NAME = "CommerceShippingFixedOption";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT},
 		{"commerceShippingFixedOptionId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -96,7 +95,6 @@ public class CommerceShippingFixedOptionModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceShippingFixedOptionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -112,7 +110,7 @@ public class CommerceShippingFixedOptionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceShippingFixedOption (mvccVersion LONG default 0 not null,commerceShippingFixedOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShippingMethodId LONG,name STRING null,description STRING null,amount DECIMAL(30, 16) null,priority DOUBLE)";
+		"create table CommerceShippingFixedOption (commerceShippingFixedOptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShippingMethodId LONG,name STRING null,description STRING null,amount DECIMAL(30, 16) null,priority DOUBLE)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceShippingFixedOption";
@@ -156,7 +154,9 @@ public class CommerceShippingFixedOptionModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceShippingFixedOption toModel(
 		CommerceShippingFixedOptionSoap soapModel) {
 
@@ -167,7 +167,6 @@ public class CommerceShippingFixedOptionModelImpl
 		CommerceShippingFixedOption model =
 			new CommerceShippingFixedOptionImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceShippingFixedOptionId(
 			soapModel.getCommerceShippingFixedOptionId());
 		model.setGroupId(soapModel.getGroupId());
@@ -191,7 +190,9 @@ public class CommerceShippingFixedOptionModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceShippingFixedOption> toModels(
 		CommerceShippingFixedOptionSoap[] soapModels) {
 
@@ -347,12 +348,6 @@ public class CommerceShippingFixedOptionModelImpl
 					<String, BiConsumer<CommerceShippingFixedOption, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceShippingFixedOption::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceShippingFixedOption, Long>)
-				CommerceShippingFixedOption::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceShippingFixedOptionId",
 			CommerceShippingFixedOption::getCommerceShippingFixedOptionId);
 		attributeSetterBiConsumers.put(
@@ -431,17 +426,6 @@ public class CommerceShippingFixedOptionModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -932,7 +916,6 @@ public class CommerceShippingFixedOptionModelImpl
 		CommerceShippingFixedOptionImpl commerceShippingFixedOptionImpl =
 			new CommerceShippingFixedOptionImpl();
 
-		commerceShippingFixedOptionImpl.setMvccVersion(getMvccVersion());
 		commerceShippingFixedOptionImpl.setCommerceShippingFixedOptionId(
 			getCommerceShippingFixedOptionId());
 		commerceShippingFixedOptionImpl.setGroupId(getGroupId());
@@ -1037,8 +1020,6 @@ public class CommerceShippingFixedOptionModelImpl
 		CommerceShippingFixedOptionCacheModel
 			commerceShippingFixedOptionCacheModel =
 				new CommerceShippingFixedOptionCacheModel();
-
-		commerceShippingFixedOptionCacheModel.mvccVersion = getMvccVersion();
 
 		commerceShippingFixedOptionCacheModel.commerceShippingFixedOptionId =
 			getCommerceShippingFixedOptionId();
@@ -1179,7 +1160,6 @@ public class CommerceShippingFixedOptionModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceShippingFixedOptionId;
 	private long _groupId;
 	private long _companyId;

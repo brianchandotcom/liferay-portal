@@ -18,7 +18,6 @@ import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,8 +33,7 @@ import java.util.Date;
  * @generated
  */
 public class CommercePaymentMethodGroupRelCacheModel
-	implements CacheModel<CommercePaymentMethodGroupRel>, Externalizable,
-			   MVCCModel {
+	implements CacheModel<CommercePaymentMethodGroupRel>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -51,11 +49,9 @@ public class CommercePaymentMethodGroupRelCacheModel
 			commercePaymentMethodGroupRelCacheModel =
 				(CommercePaymentMethodGroupRelCacheModel)object;
 
-		if ((commercePaymentMethodGroupRelId ==
+		if (commercePaymentMethodGroupRelId ==
 				commercePaymentMethodGroupRelCacheModel.
-					commercePaymentMethodGroupRelId) &&
-			(mvccVersion ==
-				commercePaymentMethodGroupRelCacheModel.mvccVersion)) {
+					commercePaymentMethodGroupRelId) {
 
 			return true;
 		}
@@ -65,28 +61,14 @@ public class CommercePaymentMethodGroupRelCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, commercePaymentMethodGroupRelId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, commercePaymentMethodGroupRelId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(27);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", commercePaymentMethodGroupRelId=");
+		sb.append("{commercePaymentMethodGroupRelId=");
 		sb.append(commercePaymentMethodGroupRelId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -122,7 +104,6 @@ public class CommercePaymentMethodGroupRelCacheModel
 		CommercePaymentMethodGroupRelImpl commercePaymentMethodGroupRelImpl =
 			new CommercePaymentMethodGroupRelImpl();
 
-		commercePaymentMethodGroupRelImpl.setMvccVersion(mvccVersion);
 		commercePaymentMethodGroupRelImpl.setCommercePaymentMethodGroupRelId(
 			commercePaymentMethodGroupRelId);
 		commercePaymentMethodGroupRelImpl.setGroupId(groupId);
@@ -185,8 +166,6 @@ public class CommercePaymentMethodGroupRelCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		mvccVersion = objectInput.readLong();
-
 		commercePaymentMethodGroupRelId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -210,8 +189,6 @@ public class CommercePaymentMethodGroupRelCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		objectOutput.writeLong(commercePaymentMethodGroupRelId);
 
 		objectOutput.writeLong(groupId);
@@ -258,7 +235,6 @@ public class CommercePaymentMethodGroupRelCacheModel
 		objectOutput.writeBoolean(active);
 	}
 
-	public long mvccVersion;
 	public long commercePaymentMethodGroupRelId;
 	public long groupId;
 	public long companyId;

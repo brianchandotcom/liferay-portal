@@ -78,8 +78,7 @@ public class CommerceTierPriceEntryModelImpl
 	public static final String TABLE_NAME = "CommerceTierPriceEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"externalReferenceCode", Types.VARCHAR},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
 		{"commerceTierPriceEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -98,7 +97,6 @@ public class CommerceTierPriceEntryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceTierPriceEntryId", Types.BIGINT);
@@ -126,7 +124,7 @@ public class CommerceTierPriceEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceTierPriceEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceTierPriceEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceEntryId LONG,price DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,discountDiscovery BOOLEAN,discountLevel1 DECIMAL(30, 16) null,discountLevel2 DECIMAL(30, 16) null,discountLevel3 DECIMAL(30, 16) null,discountLevel4 DECIMAL(30, 16) null,minQuantity INTEGER,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CommerceTierPriceEntry (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceTierPriceEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceEntryId LONG,price DECIMAL(30, 16) null,promoPrice DECIMAL(30, 16) null,discountDiscovery BOOLEAN,discountLevel1 DECIMAL(30, 16) null,discountLevel2 DECIMAL(30, 16) null,discountLevel3 DECIMAL(30, 16) null,discountLevel4 DECIMAL(30, 16) null,minQuantity INTEGER,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceTierPriceEntry";
@@ -176,7 +174,9 @@ public class CommerceTierPriceEntryModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceTierPriceEntry toModel(
 		CommerceTierPriceEntrySoap soapModel) {
 
@@ -186,7 +186,6 @@ public class CommerceTierPriceEntryModelImpl
 
 		CommerceTierPriceEntry model = new CommerceTierPriceEntryImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCommerceTierPriceEntryId(
@@ -221,7 +220,9 @@ public class CommerceTierPriceEntryModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceTierPriceEntry> toModels(
 		CommerceTierPriceEntrySoap[] soapModels) {
 
@@ -372,12 +373,6 @@ public class CommerceTierPriceEntryModelImpl
 				new LinkedHashMap
 					<String, BiConsumer<CommerceTierPriceEntry, ?>>();
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommerceTierPriceEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceTierPriceEntry, Long>)
-				CommerceTierPriceEntry::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CommerceTierPriceEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -528,17 +523,6 @@ public class CommerceTierPriceEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1049,7 +1033,6 @@ public class CommerceTierPriceEntryModelImpl
 		CommerceTierPriceEntryImpl commerceTierPriceEntryImpl =
 			new CommerceTierPriceEntryImpl();
 
-		commerceTierPriceEntryImpl.setMvccVersion(getMvccVersion());
 		commerceTierPriceEntryImpl.setUuid(getUuid());
 		commerceTierPriceEntryImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
@@ -1176,8 +1159,6 @@ public class CommerceTierPriceEntryModelImpl
 	public CacheModel<CommerceTierPriceEntry> toCacheModel() {
 		CommerceTierPriceEntryCacheModel commerceTierPriceEntryCacheModel =
 			new CommerceTierPriceEntryCacheModel();
-
-		commerceTierPriceEntryCacheModel.mvccVersion = getMvccVersion();
 
 		commerceTierPriceEntryCacheModel.uuid = getUuid();
 
@@ -1381,7 +1362,6 @@ public class CommerceTierPriceEntryModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private String _externalReferenceCode;

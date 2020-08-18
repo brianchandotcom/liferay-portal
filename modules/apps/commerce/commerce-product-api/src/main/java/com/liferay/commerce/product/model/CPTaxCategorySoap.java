@@ -24,14 +24,15 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.product.service.http.CPTaxCategoryServiceSoap}.
  *
  * @author Marco Leo
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CPTaxCategorySoap implements Serializable {
 
 	public static CPTaxCategorySoap toSoapModel(CPTaxCategory model) {
 		CPTaxCategorySoap soapModel = new CPTaxCategorySoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCPTaxCategoryId(model.getCPTaxCategoryId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -91,14 +92,6 @@ public class CPTaxCategorySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCPTaxCategoryId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public long getCPTaxCategoryId() {
@@ -165,7 +158,6 @@ public class CPTaxCategorySoap implements Serializable {
 		_description = description;
 	}
 
-	private long _mvccVersion;
 	private long _CPTaxCategoryId;
 	private long _companyId;
 	private long _userId;

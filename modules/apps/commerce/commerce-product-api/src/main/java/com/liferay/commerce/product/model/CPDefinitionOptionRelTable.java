@@ -34,9 +34,6 @@ public class CPDefinitionOptionRelTable
 	public static final CPDefinitionOptionRelTable INSTANCE =
 		new CPDefinitionOptionRelTable();
 
-	public final Column<CPDefinitionOptionRelTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CPDefinitionOptionRelTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionOptionRelTable, Long>

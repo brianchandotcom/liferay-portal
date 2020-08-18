@@ -43,7 +43,6 @@ public class CommerceRegionWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("commerceRegionId", getCommerceRegionId());
 		attributes.put("companyId", getCompanyId());
@@ -63,12 +62,6 @@ public class CommerceRegionWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -236,16 +229,6 @@ public class CommerceRegionWrapper
 	}
 
 	/**
-	 * Returns the mvcc version of this commerce region.
-	 *
-	 * @return the mvcc version of this commerce region
-	 */
-	@Override
-	public long getMvccVersion() {
-		return model.getMvccVersion();
-	}
-
-	/**
 	 * Returns the name of this commerce region.
 	 *
 	 * @return the name of this commerce region
@@ -408,16 +391,6 @@ public class CommerceRegionWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	 * Sets the mvcc version of this commerce region.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce region
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

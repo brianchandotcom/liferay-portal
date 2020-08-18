@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 
@@ -41,7 +40,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceCountryModel
-	extends BaseModel<CommerceCountry>, LocalizedModel, MVCCModel, ShardedModel,
+	extends BaseModel<CommerceCountry>, LocalizedModel, ShardedModel,
 			StagedAuditedModel {
 
 	/*
@@ -63,22 +62,6 @@ public interface CommerceCountryModel
 	 * @param primaryKey the primary key of this commerce country
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this commerce country.
-	 *
-	 * @return the mvcc version of this commerce country
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this commerce country.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce country
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this commerce country.

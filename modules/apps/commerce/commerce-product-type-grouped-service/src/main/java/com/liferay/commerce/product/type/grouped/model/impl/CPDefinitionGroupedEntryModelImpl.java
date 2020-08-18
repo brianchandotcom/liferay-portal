@@ -75,20 +75,18 @@ public class CPDefinitionGroupedEntryModelImpl
 	public static final String TABLE_NAME = "CPDefinitionGroupedEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"CPDefinitionGroupedEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"CPDefinitionId", Types.BIGINT},
-		{"entryCProductId", Types.BIGINT}, {"priority", Types.DOUBLE},
-		{"quantity", Types.INTEGER}
+		{"uuid_", Types.VARCHAR}, {"CPDefinitionGroupedEntryId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"CPDefinitionId", Types.BIGINT}, {"entryCProductId", Types.BIGINT},
+		{"priority", Types.DOUBLE}, {"quantity", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPDefinitionGroupedEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -104,7 +102,7 @@ public class CPDefinitionGroupedEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDefinitionGroupedEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPDefinitionGroupedEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,entryCProductId LONG,priority DOUBLE,quantity INTEGER)";
+		"create table CPDefinitionGroupedEntry (uuid_ VARCHAR(75) null,CPDefinitionGroupedEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,entryCProductId LONG,priority DOUBLE,quantity INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionGroupedEntry";
@@ -156,7 +154,9 @@ public class CPDefinitionGroupedEntryModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CPDefinitionGroupedEntry toModel(
 		CPDefinitionGroupedEntrySoap soapModel) {
 
@@ -166,7 +166,6 @@ public class CPDefinitionGroupedEntryModelImpl
 
 		CPDefinitionGroupedEntry model = new CPDefinitionGroupedEntryImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCPDefinitionGroupedEntryId(
 			soapModel.getCPDefinitionGroupedEntryId());
@@ -189,7 +188,9 @@ public class CPDefinitionGroupedEntryModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CPDefinitionGroupedEntry> toModels(
 		CPDefinitionGroupedEntrySoap[] soapModels) {
 
@@ -341,12 +342,6 @@ public class CPDefinitionGroupedEntryModelImpl
 				new LinkedHashMap
 					<String, BiConsumer<CPDefinitionGroupedEntry, ?>>();
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CPDefinitionGroupedEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CPDefinitionGroupedEntry, Long>)
-				CPDefinitionGroupedEntry::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CPDefinitionGroupedEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -424,17 +419,6 @@ public class CPDefinitionGroupedEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -704,7 +688,6 @@ public class CPDefinitionGroupedEntryModelImpl
 		CPDefinitionGroupedEntryImpl cpDefinitionGroupedEntryImpl =
 			new CPDefinitionGroupedEntryImpl();
 
-		cpDefinitionGroupedEntryImpl.setMvccVersion(getMvccVersion());
 		cpDefinitionGroupedEntryImpl.setUuid(getUuid());
 		cpDefinitionGroupedEntryImpl.setCPDefinitionGroupedEntryId(
 			getCPDefinitionGroupedEntryId());
@@ -819,8 +802,6 @@ public class CPDefinitionGroupedEntryModelImpl
 	public CacheModel<CPDefinitionGroupedEntry> toCacheModel() {
 		CPDefinitionGroupedEntryCacheModel cpDefinitionGroupedEntryCacheModel =
 			new CPDefinitionGroupedEntryCacheModel();
-
-		cpDefinitionGroupedEntryCacheModel.mvccVersion = getMvccVersion();
 
 		cpDefinitionGroupedEntryCacheModel.uuid = getUuid();
 
@@ -953,7 +934,6 @@ public class CPDefinitionGroupedEntryModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _CPDefinitionGroupedEntryId;

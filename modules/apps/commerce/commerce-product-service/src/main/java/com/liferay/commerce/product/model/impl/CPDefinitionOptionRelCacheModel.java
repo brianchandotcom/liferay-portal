@@ -18,7 +18,6 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +33,7 @@ import java.util.Date;
  * @generated
  */
 public class CPDefinitionOptionRelCacheModel
-	implements CacheModel<CPDefinitionOptionRel>, Externalizable, MVCCModel {
+	implements CacheModel<CPDefinitionOptionRel>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -49,9 +48,8 @@ public class CPDefinitionOptionRelCacheModel
 		CPDefinitionOptionRelCacheModel cpDefinitionOptionRelCacheModel =
 			(CPDefinitionOptionRelCacheModel)object;
 
-		if ((CPDefinitionOptionRelId ==
-				cpDefinitionOptionRelCacheModel.CPDefinitionOptionRelId) &&
-			(mvccVersion == cpDefinitionOptionRelCacheModel.mvccVersion)) {
+		if (CPDefinitionOptionRelId ==
+				cpDefinitionOptionRelCacheModel.CPDefinitionOptionRelId) {
 
 			return true;
 		}
@@ -61,28 +59,14 @@ public class CPDefinitionOptionRelCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, CPDefinitionOptionRelId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, CPDefinitionOptionRelId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(39);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", uuid=");
+		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", CPDefinitionOptionRelId=");
 		sb.append(CPDefinitionOptionRelId);
@@ -129,8 +113,6 @@ public class CPDefinitionOptionRelCacheModel
 	public CPDefinitionOptionRel toEntityModel() {
 		CPDefinitionOptionRelImpl cpDefinitionOptionRelImpl =
 			new CPDefinitionOptionRelImpl();
-
-		cpDefinitionOptionRelImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			cpDefinitionOptionRelImpl.setUuid("");
@@ -217,7 +199,6 @@ public class CPDefinitionOptionRelCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		CPDefinitionOptionRelId = objectInput.readLong();
@@ -251,8 +232,6 @@ public class CPDefinitionOptionRelCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -326,7 +305,6 @@ public class CPDefinitionOptionRelCacheModel
 		}
 	}
 
-	public long mvccVersion;
 	public String uuid;
 	public long CPDefinitionOptionRelId;
 	public long groupId;

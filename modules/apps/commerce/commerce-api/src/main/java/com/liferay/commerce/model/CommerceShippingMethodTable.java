@@ -34,9 +34,6 @@ public class CommerceShippingMethodTable
 	public static final CommerceShippingMethodTable INSTANCE =
 		new CommerceShippingMethodTable();
 
-	public final Column<CommerceShippingMethodTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceShippingMethodTable, Long>
 		commerceShippingMethodId = createColumn(
 			"commerceShippingMethodId", Long.class, Types.BIGINT,

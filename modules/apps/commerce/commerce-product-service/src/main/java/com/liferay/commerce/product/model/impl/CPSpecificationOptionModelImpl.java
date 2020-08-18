@@ -82,20 +82,19 @@ public class CPSpecificationOptionModelImpl
 	public static final String TABLE_NAME = "CPSpecificationOption";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"CPSpecificationOptionId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"CPOptionCategoryId", Types.BIGINT}, {"title", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"facetable", Types.BOOLEAN},
-		{"key_", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
+		{"uuid_", Types.VARCHAR}, {"CPSpecificationOptionId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"CPOptionCategoryId", Types.BIGINT},
+		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"facetable", Types.BOOLEAN}, {"key_", Types.VARCHAR},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPSpecificationOptionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -112,7 +111,7 @@ public class CPSpecificationOptionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPSpecificationOption (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPSpecificationOptionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPOptionCategoryId LONG,title STRING null,description STRING null,facetable BOOLEAN,key_ VARCHAR(75) null,lastPublishDate DATE null)";
+		"create table CPSpecificationOption (uuid_ VARCHAR(75) null,CPSpecificationOptionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPOptionCategoryId LONG,title STRING null,description STRING null,facetable BOOLEAN,key_ VARCHAR(75) null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPSpecificationOption";
@@ -162,7 +161,9 @@ public class CPSpecificationOptionModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CPSpecificationOption toModel(
 		CPSpecificationOptionSoap soapModel) {
 
@@ -172,7 +173,6 @@ public class CPSpecificationOptionModelImpl
 
 		CPSpecificationOption model = new CPSpecificationOptionImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCPSpecificationOptionId(
 			soapModel.getCPSpecificationOptionId());
@@ -196,7 +196,9 @@ public class CPSpecificationOptionModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CPSpecificationOption> toModels(
 		CPSpecificationOptionSoap[] soapModels) {
 
@@ -347,12 +349,6 @@ public class CPSpecificationOptionModelImpl
 				new LinkedHashMap
 					<String, BiConsumer<CPSpecificationOption, ?>>();
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CPSpecificationOption::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CPSpecificationOption, Long>)
-				CPSpecificationOption::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CPSpecificationOption::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -434,17 +430,6 @@ public class CPSpecificationOptionModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1000,7 +985,6 @@ public class CPSpecificationOptionModelImpl
 		CPSpecificationOptionImpl cpSpecificationOptionImpl =
 			new CPSpecificationOptionImpl();
 
-		cpSpecificationOptionImpl.setMvccVersion(getMvccVersion());
 		cpSpecificationOptionImpl.setUuid(getUuid());
 		cpSpecificationOptionImpl.setCPSpecificationOptionId(
 			getCPSpecificationOptionId());
@@ -1103,8 +1087,6 @@ public class CPSpecificationOptionModelImpl
 	public CacheModel<CPSpecificationOption> toCacheModel() {
 		CPSpecificationOptionCacheModel cpSpecificationOptionCacheModel =
 			new CPSpecificationOptionCacheModel();
-
-		cpSpecificationOptionCacheModel.mvccVersion = getMvccVersion();
 
 		cpSpecificationOptionCacheModel.uuid = getUuid();
 
@@ -1262,7 +1244,6 @@ public class CPSpecificationOptionModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _CPSpecificationOptionId;

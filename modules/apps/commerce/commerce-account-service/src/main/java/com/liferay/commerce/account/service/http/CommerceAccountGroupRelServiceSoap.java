@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Marco Leo
  * @see CommerceAccountGroupRelServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceAccountGroupRelServiceSoap {
 
 	public static com.liferay.commerce.account.model.CommerceAccountGroupRelSoap

@@ -76,7 +76,6 @@ public class CommerceAddressRestrictionModelImpl
 	public static final String TABLE_NAME = "CommerceAddressRestriction";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT},
 		{"commerceAddressRestrictionId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -89,7 +88,6 @@ public class CommerceAddressRestrictionModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceAddressRestrictionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -103,7 +101,7 @@ public class CommerceAddressRestrictionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceAddressRestriction (mvccVersion LONG default 0 not null,commerceAddressRestrictionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceCountryId LONG)";
+		"create table CommerceAddressRestriction (commerceAddressRestrictionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceCountryId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceAddressRestriction";
@@ -151,7 +149,9 @@ public class CommerceAddressRestrictionModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceAddressRestriction toModel(
 		CommerceAddressRestrictionSoap soapModel) {
 
@@ -161,7 +161,6 @@ public class CommerceAddressRestrictionModelImpl
 
 		CommerceAddressRestriction model = new CommerceAddressRestrictionImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceAddressRestrictionId(
 			soapModel.getCommerceAddressRestrictionId());
 		model.setGroupId(soapModel.getGroupId());
@@ -182,7 +181,9 @@ public class CommerceAddressRestrictionModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceAddressRestriction> toModels(
 		CommerceAddressRestrictionSoap[] soapModels) {
 
@@ -337,12 +338,6 @@ public class CommerceAddressRestrictionModelImpl
 					<String, BiConsumer<CommerceAddressRestriction, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceAddressRestriction::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceAddressRestriction, Long>)
-				CommerceAddressRestriction::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceAddressRestrictionId",
 			CommerceAddressRestriction::getCommerceAddressRestrictionId);
 		attributeSetterBiConsumers.put(
@@ -409,17 +404,6 @@ public class CommerceAddressRestrictionModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -655,7 +639,6 @@ public class CommerceAddressRestrictionModelImpl
 		CommerceAddressRestrictionImpl commerceAddressRestrictionImpl =
 			new CommerceAddressRestrictionImpl();
 
-		commerceAddressRestrictionImpl.setMvccVersion(getMvccVersion());
 		commerceAddressRestrictionImpl.setCommerceAddressRestrictionId(
 			getCommerceAddressRestrictionId());
 		commerceAddressRestrictionImpl.setGroupId(getGroupId());
@@ -761,8 +744,6 @@ public class CommerceAddressRestrictionModelImpl
 		CommerceAddressRestrictionCacheModel
 			commerceAddressRestrictionCacheModel =
 				new CommerceAddressRestrictionCacheModel();
-
-		commerceAddressRestrictionCacheModel.mvccVersion = getMvccVersion();
 
 		commerceAddressRestrictionCacheModel.commerceAddressRestrictionId =
 			getCommerceAddressRestrictionId();
@@ -887,7 +868,6 @@ public class CommerceAddressRestrictionModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceAddressRestrictionId;
 	private long _groupId;
 	private long _companyId;

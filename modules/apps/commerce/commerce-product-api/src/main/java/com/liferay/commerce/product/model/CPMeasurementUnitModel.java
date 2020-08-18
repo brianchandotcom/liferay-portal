@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 
@@ -41,8 +40,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CPMeasurementUnitModel
-	extends BaseModel<CPMeasurementUnit>, LocalizedModel, MVCCModel,
-			ShardedModel, StagedGroupedModel {
+	extends BaseModel<CPMeasurementUnit>, LocalizedModel, ShardedModel,
+			StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -63,22 +62,6 @@ public interface CPMeasurementUnitModel
 	 * @param primaryKey the primary key of this cp measurement unit
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this cp measurement unit.
-	 *
-	 * @return the mvcc version of this cp measurement unit
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this cp measurement unit.
-	 *
-	 * @param mvccVersion the mvcc version of this cp measurement unit
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this cp measurement unit.

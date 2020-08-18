@@ -4,11 +4,10 @@
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption" />
 	<import class="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel" />
-	<class dynamic-update="true" name="com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionImpl" table="CommerceShippingFixedOption">
+	<class name="com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionImpl" table="CommerceShippingFixedOption">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceShippingFixedOptionId" type="long">
 			<generator class="assigned" />
 		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -21,11 +20,10 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="amount" type="org.hibernate.type.BigDecimalType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
-	<class dynamic-update="true" name="com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelImpl" table="CShippingFixedOptionRel">
+	<class name="com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelImpl" table="CShippingFixedOptionRel">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="CShippingFixedOptionRelId" name="commerceShippingFixedOptionRelId" type="long">
 			<generator class="assigned" />
 		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

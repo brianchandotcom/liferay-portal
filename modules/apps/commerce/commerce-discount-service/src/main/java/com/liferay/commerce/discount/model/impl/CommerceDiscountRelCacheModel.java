@@ -18,7 +18,6 @@ import com.liferay.commerce.discount.model.CommerceDiscountRel;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +33,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceDiscountRelCacheModel
-	implements CacheModel<CommerceDiscountRel>, Externalizable, MVCCModel {
+	implements CacheModel<CommerceDiscountRel>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -49,9 +48,8 @@ public class CommerceDiscountRelCacheModel
 		CommerceDiscountRelCacheModel commerceDiscountRelCacheModel =
 			(CommerceDiscountRelCacheModel)object;
 
-		if ((commerceDiscountRelId ==
-				commerceDiscountRelCacheModel.commerceDiscountRelId) &&
-			(mvccVersion == commerceDiscountRelCacheModel.mvccVersion)) {
+		if (commerceDiscountRelId ==
+				commerceDiscountRelCacheModel.commerceDiscountRelId) {
 
 			return true;
 		}
@@ -61,28 +59,14 @@ public class CommerceDiscountRelCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, commerceDiscountRelId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, commerceDiscountRelId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(19);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", commerceDiscountRelId=");
+		sb.append("{commerceDiscountRelId=");
 		sb.append(commerceDiscountRelId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -110,7 +94,6 @@ public class CommerceDiscountRelCacheModel
 		CommerceDiscountRelImpl commerceDiscountRelImpl =
 			new CommerceDiscountRelImpl();
 
-		commerceDiscountRelImpl.setMvccVersion(mvccVersion);
 		commerceDiscountRelImpl.setCommerceDiscountRelId(commerceDiscountRelId);
 		commerceDiscountRelImpl.setCompanyId(companyId);
 		commerceDiscountRelImpl.setUserId(userId);
@@ -147,8 +130,6 @@ public class CommerceDiscountRelCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		mvccVersion = objectInput.readLong();
-
 		commerceDiscountRelId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -167,8 +148,6 @@ public class CommerceDiscountRelCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		objectOutput.writeLong(commerceDiscountRelId);
 
 		objectOutput.writeLong(companyId);
@@ -192,7 +171,6 @@ public class CommerceDiscountRelCacheModel
 		objectOutput.writeLong(classPK);
 	}
 
-	public long mvccVersion;
 	public long commerceDiscountRelId;
 	public long companyId;
 	public long userId;

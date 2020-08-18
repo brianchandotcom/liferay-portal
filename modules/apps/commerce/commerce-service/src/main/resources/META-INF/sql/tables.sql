@@ -1,5 +1,4 @@
 create table CPDAvailabilityEstimate (
-	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	CPDAvailabilityEstimateId LONG not null primary key,
 	companyId LONG,
@@ -13,7 +12,6 @@ create table CPDAvailabilityEstimate (
 );
 
 create table CPDefinitionInventory (
-	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	CPDefinitionInventoryId LONG not null primary key,
 	groupId LONG,
@@ -36,7 +34,6 @@ create table CPDefinitionInventory (
 );
 
 create table CommerceAddress (
-	mvccVersion LONG default 0 not null,
 	externalReferenceCode VARCHAR(75) null,
 	commerceAddressId LONG not null primary key,
 	groupId LONG,
@@ -65,7 +62,6 @@ create table CommerceAddress (
 );
 
 create table CommerceAddressRestriction (
-	mvccVersion LONG default 0 not null,
 	commerceAddressRestrictionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -79,7 +75,6 @@ create table CommerceAddressRestriction (
 );
 
 create table CommerceAvailabilityEstimate (
-	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	commerceAvailabilityEstimateId LONG not null primary key,
 	companyId LONG,
@@ -93,7 +88,6 @@ create table CommerceAvailabilityEstimate (
 );
 
 create table CommerceCountry (
-	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	commerceCountryId LONG not null primary key,
 	companyId LONG,
@@ -115,7 +109,6 @@ create table CommerceCountry (
 );
 
 create table CommerceOrder (
-	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	commerceOrderId LONG not null primary key,
@@ -187,7 +180,6 @@ create table CommerceOrder (
 );
 
 create table CommerceOrderItem (
-	mvccVersion LONG default 0 not null,
 	externalReferenceCode VARCHAR(75) null,
 	commerceOrderItemId LONG not null primary key,
 	groupId LONG,
@@ -232,7 +224,6 @@ create table CommerceOrderItem (
 );
 
 create table CommerceOrderNote (
-	mvccVersion LONG default 0 not null,
 	externalReferenceCode VARCHAR(75) null,
 	commerceOrderNoteId LONG not null primary key,
 	groupId LONG,
@@ -247,7 +238,6 @@ create table CommerceOrderNote (
 );
 
 create table CommerceOrderPayment (
-	mvccVersion LONG default 0 not null,
 	commerceOrderPaymentId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -262,7 +252,6 @@ create table CommerceOrderPayment (
 );
 
 create table CommerceRegion (
-	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	commerceRegionId LONG not null primary key,
 	companyId LONG,
@@ -279,7 +268,6 @@ create table CommerceRegion (
 );
 
 create table CommerceShipment (
-	mvccVersion LONG default 0 not null,
 	commerceShipmentId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -299,7 +287,6 @@ create table CommerceShipment (
 );
 
 create table CommerceShipmentItem (
-	mvccVersion LONG default 0 not null,
 	commerceShipmentItemId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -314,7 +301,6 @@ create table CommerceShipmentItem (
 );
 
 create table CommerceShippingMethod (
-	mvccVersion LONG default 0 not null,
 	commerceShippingMethodId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -331,7 +317,6 @@ create table CommerceShippingMethod (
 );
 
 create table CommerceSubscriptionEntry (
-	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
 	commerceSubscriptionEntryId LONG not null primary key,
 	groupId LONG,

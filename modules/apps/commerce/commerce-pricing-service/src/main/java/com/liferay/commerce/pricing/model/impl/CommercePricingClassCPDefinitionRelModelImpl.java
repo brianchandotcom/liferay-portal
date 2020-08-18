@@ -74,7 +74,6 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 	public static final String TABLE_NAME = "CPricingClassCPDefinitionRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT},
 		{"CPricingClassCPDefinitionRelId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -87,7 +86,6 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPricingClassCPDefinitionRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -99,7 +97,7 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPricingClassCPDefinitionRel (mvccVersion LONG default 0 not null,CPricingClassCPDefinitionRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePricingClassId LONG,CPDefinitionId LONG)";
+		"create table CPricingClassCPDefinitionRel (CPricingClassCPDefinitionRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePricingClassId LONG,CPDefinitionId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPricingClassCPDefinitionRel";
@@ -145,7 +143,9 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommercePricingClassCPDefinitionRel toModel(
 		CommercePricingClassCPDefinitionRelSoap soapModel) {
 
@@ -156,7 +156,6 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 		CommercePricingClassCPDefinitionRel model =
 			new CommercePricingClassCPDefinitionRelImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommercePricingClassCPDefinitionRelId(
 			soapModel.getCommercePricingClassCPDefinitionRelId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -175,7 +174,9 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommercePricingClassCPDefinitionRel> toModels(
 		CommercePricingClassCPDefinitionRelSoap[] soapModels) {
 
@@ -336,12 +337,6 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 					 BiConsumer<CommercePricingClassCPDefinitionRel, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommercePricingClassCPDefinitionRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommercePricingClassCPDefinitionRel, Long>)
-				CommercePricingClassCPDefinitionRel::setMvccVersion);
-		attributeGetterFunctions.put(
 			"CommercePricingClassCPDefinitionRelId",
 			CommercePricingClassCPDefinitionRel::
 				getCommercePricingClassCPDefinitionRelId);
@@ -400,17 +395,6 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -594,8 +578,6 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 			commercePricingClassCPDefinitionRelImpl =
 				new CommercePricingClassCPDefinitionRelImpl();
 
-		commercePricingClassCPDefinitionRelImpl.setMvccVersion(
-			getMvccVersion());
 		commercePricingClassCPDefinitionRelImpl.
 			setCommercePricingClassCPDefinitionRelId(
 				getCommercePricingClassCPDefinitionRelId());
@@ -701,9 +683,6 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 		CommercePricingClassCPDefinitionRelCacheModel
 			commercePricingClassCPDefinitionRelCacheModel =
 				new CommercePricingClassCPDefinitionRelCacheModel();
-
-		commercePricingClassCPDefinitionRelCacheModel.mvccVersion =
-			getMvccVersion();
 
 		commercePricingClassCPDefinitionRelCacheModel.
 			CommercePricingClassCPDefinitionRelId =
@@ -832,7 +811,6 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _CommercePricingClassCPDefinitionRelId;
 	private long _companyId;
 	private long _userId;

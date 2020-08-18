@@ -124,8 +124,6 @@ public class CommerceOrderNotePersistenceTest {
 
 		CommerceOrderNote newCommerceOrderNote = _persistence.create(pk);
 
-		newCommerceOrderNote.setMvccVersion(RandomTestUtil.nextLong());
-
 		newCommerceOrderNote.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -152,9 +150,6 @@ public class CommerceOrderNotePersistenceTest {
 		CommerceOrderNote existingCommerceOrderNote =
 			_persistence.findByPrimaryKey(newCommerceOrderNote.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingCommerceOrderNote.getMvccVersion(),
-			newCommerceOrderNote.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceOrderNote.getExternalReferenceCode(),
 			newCommerceOrderNote.getExternalReferenceCode());
@@ -239,9 +234,9 @@ public class CommerceOrderNotePersistenceTest {
 
 	protected OrderByComparator<CommerceOrderNote> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceOrderNote", "mvccVersion", true, "externalReferenceCode",
-			true, "commerceOrderNoteId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
+			"CommerceOrderNote", "externalReferenceCode", true,
+			"commerceOrderNoteId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "commerceOrderId", true, "content", true,
 			"restricted", true);
 	}
@@ -491,8 +486,6 @@ public class CommerceOrderNotePersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CommerceOrderNote commerceOrderNote = _persistence.create(pk);
-
-		commerceOrderNote.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceOrderNote.setExternalReferenceCode(
 			RandomTestUtil.randomString());

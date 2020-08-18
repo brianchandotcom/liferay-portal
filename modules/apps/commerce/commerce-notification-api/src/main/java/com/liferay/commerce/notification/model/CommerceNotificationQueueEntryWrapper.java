@@ -45,7 +45,6 @@ public class CommerceNotificationQueueEntryWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceNotificationQueueEntryId",
 			getCommerceNotificationQueueEntryId());
@@ -77,12 +76,6 @@ public class CommerceNotificationQueueEntryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
 		Long commerceNotificationQueueEntryId = (Long)attributes.get(
 			"commerceNotificationQueueEntryId");
 
@@ -354,16 +347,6 @@ public class CommerceNotificationQueueEntryWrapper
 	}
 
 	/**
-	 * Returns the mvcc version of this commerce notification queue entry.
-	 *
-	 * @return the mvcc version of this commerce notification queue entry
-	 */
-	@Override
-	public long getMvccVersion() {
-		return model.getMvccVersion();
-	}
-
-	/**
 	 * Returns the primary key of this commerce notification queue entry.
 	 *
 	 * @return the primary key of this commerce notification queue entry
@@ -616,16 +599,6 @@ public class CommerceNotificationQueueEntryWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	 * Sets the mvcc version of this commerce notification queue entry.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce notification queue entry
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

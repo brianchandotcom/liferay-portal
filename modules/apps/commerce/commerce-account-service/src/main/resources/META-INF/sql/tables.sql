@@ -1,5 +1,4 @@
 create table CAccountGroupCAccountRel (
-	mvccVersion LONG default 0 not null,
 	externalReferenceCode VARCHAR(75) null,
 	CAccountGroupCAccountRelId LONG not null primary key,
 	companyId LONG,
@@ -12,7 +11,6 @@ create table CAccountGroupCAccountRel (
 );
 
 create table CommerceAccount (
-	mvccVersion LONG default 0 not null,
 	externalReferenceCode VARCHAR(75) null,
 	commerceAccountId LONG not null primary key,
 	companyId LONG,
@@ -39,7 +37,6 @@ create table CommerceAccount (
 );
 
 create table CommerceAccountGroup (
-	mvccVersion LONG default 0 not null,
 	externalReferenceCode VARCHAR(75) null,
 	commerceAccountGroupId LONG not null primary key,
 	companyId LONG,
@@ -53,7 +50,6 @@ create table CommerceAccountGroup (
 );
 
 create table CommerceAccountGroupRel (
-	mvccVersion LONG default 0 not null,
 	commerceAccountGroupRelId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -66,7 +62,6 @@ create table CommerceAccountGroupRel (
 );
 
 create table CommerceAccountOrganizationRel (
-	mvccVersion LONG default 0 not null,
 	commerceAccountId LONG not null,
 	organizationId LONG not null,
 	companyId LONG,
@@ -78,7 +73,6 @@ create table CommerceAccountOrganizationRel (
 );
 
 create table CommerceAccountUserRel (
-	mvccVersion LONG default 0 not null,
 	commerceAccountId LONG not null,
 	commerceAccountUserId LONG not null,
 	companyId LONG,

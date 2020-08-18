@@ -80,7 +80,6 @@ public class CommerceShippingMethodModelImpl
 	public static final String TABLE_NAME = "CommerceShippingMethod";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT},
 		{"commerceShippingMethodId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -94,7 +93,6 @@ public class CommerceShippingMethodModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceShippingMethodId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -111,7 +109,7 @@ public class CommerceShippingMethodModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceShippingMethod (mvccVersion LONG default 0 not null,commerceShippingMethodId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,imageId LONG,engineKey VARCHAR(75) null,priority DOUBLE,active_ BOOLEAN)";
+		"create table CommerceShippingMethod (commerceShippingMethodId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,imageId LONG,engineKey VARCHAR(75) null,priority DOUBLE,active_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceShippingMethod";
@@ -159,7 +157,9 @@ public class CommerceShippingMethodModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceShippingMethod toModel(
 		CommerceShippingMethodSoap soapModel) {
 
@@ -169,7 +169,6 @@ public class CommerceShippingMethodModelImpl
 
 		CommerceShippingMethod model = new CommerceShippingMethodImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceShippingMethodId(
 			soapModel.getCommerceShippingMethodId());
 		model.setGroupId(soapModel.getGroupId());
@@ -193,7 +192,9 @@ public class CommerceShippingMethodModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceShippingMethod> toModels(
 		CommerceShippingMethodSoap[] soapModels) {
 
@@ -345,12 +346,6 @@ public class CommerceShippingMethodModelImpl
 					<String, BiConsumer<CommerceShippingMethod, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceShippingMethod::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceShippingMethod, Long>)
-				CommerceShippingMethod::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceShippingMethodId",
 			CommerceShippingMethod::getCommerceShippingMethodId);
 		attributeSetterBiConsumers.put(
@@ -433,17 +428,6 @@ public class CommerceShippingMethodModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -976,7 +960,6 @@ public class CommerceShippingMethodModelImpl
 		CommerceShippingMethodImpl commerceShippingMethodImpl =
 			new CommerceShippingMethodImpl();
 
-		commerceShippingMethodImpl.setMvccVersion(getMvccVersion());
 		commerceShippingMethodImpl.setCommerceShippingMethodId(
 			getCommerceShippingMethodId());
 		commerceShippingMethodImpl.setGroupId(getGroupId());
@@ -1085,8 +1068,6 @@ public class CommerceShippingMethodModelImpl
 	public CacheModel<CommerceShippingMethod> toCacheModel() {
 		CommerceShippingMethodCacheModel commerceShippingMethodCacheModel =
 			new CommerceShippingMethodCacheModel();
-
-		commerceShippingMethodCacheModel.mvccVersion = getMvccVersion();
 
 		commerceShippingMethodCacheModel.commerceShippingMethodId =
 			getCommerceShippingMethodId();
@@ -1229,7 +1210,6 @@ public class CommerceShippingMethodModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceShippingMethodId;
 	private long _groupId;
 	private long _originalGroupId;

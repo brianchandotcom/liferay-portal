@@ -18,7 +18,6 @@ import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +33,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceWishListCacheModel
-	implements CacheModel<CommerceWishList>, Externalizable, MVCCModel {
+	implements CacheModel<CommerceWishList>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -49,9 +48,8 @@ public class CommerceWishListCacheModel
 		CommerceWishListCacheModel commerceWishListCacheModel =
 			(CommerceWishListCacheModel)object;
 
-		if ((commerceWishListId ==
-				commerceWishListCacheModel.commerceWishListId) &&
-			(mvccVersion == commerceWishListCacheModel.mvccVersion)) {
+		if (commerceWishListId ==
+				commerceWishListCacheModel.commerceWishListId) {
 
 			return true;
 		}
@@ -61,28 +59,14 @@ public class CommerceWishListCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, commerceWishListId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, commerceWishListId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", uuid=");
+		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", commerceWishListId=");
 		sb.append(commerceWishListId);
@@ -110,8 +94,6 @@ public class CommerceWishListCacheModel
 	@Override
 	public CommerceWishList toEntityModel() {
 		CommerceWishListImpl commerceWishListImpl = new CommerceWishListImpl();
-
-		commerceWishListImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			commerceWishListImpl.setUuid("");
@@ -162,7 +144,6 @@ public class CommerceWishListCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		commerceWishListId = objectInput.readLong();
@@ -182,8 +163,6 @@ public class CommerceWishListCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -219,7 +198,6 @@ public class CommerceWishListCacheModel
 		objectOutput.writeBoolean(defaultWishList);
 	}
 
-	public long mvccVersion;
 	public String uuid;
 	public long commerceWishListId;
 	public long groupId;

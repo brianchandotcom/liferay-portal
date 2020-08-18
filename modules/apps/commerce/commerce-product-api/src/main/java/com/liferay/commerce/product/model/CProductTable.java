@@ -32,8 +32,6 @@ public class CProductTable extends BaseTable<CProductTable> {
 
 	public static final CProductTable INSTANCE = new CProductTable();
 
-	public final Column<CProductTable, Long> mvccVersion = createColumn(
-		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CProductTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CProductTable, String> externalReferenceCode =

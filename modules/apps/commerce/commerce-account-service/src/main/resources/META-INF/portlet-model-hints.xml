@@ -2,7 +2,6 @@
 
 <model-hints>
 	<model name="com.liferay.commerce.account.model.CommerceAccount">
-		<field name="mvccVersion" type="long" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="commerceAccountId" type="long" />
 		<field name="companyId" type="long" />
@@ -31,7 +30,6 @@
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.account.model.CommerceAccountGroup">
-		<field name="mvccVersion" type="long" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="commerceAccountGroupId" type="long" />
 		<field name="companyId" type="long" />
@@ -46,7 +44,6 @@
 		<field name="system" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.account.model.CommerceAccountGroupCommerceAccountRel">
-		<field name="mvccVersion" type="long" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="commerceAccountGroupCommerceAccountRelId" type="long" />
 		<field name="companyId" type="long" />
@@ -58,7 +55,6 @@
 		<field name="commerceAccountId" type="long" />
 	</model>
 	<model name="com.liferay.commerce.account.model.CommerceAccountGroupRel">
-		<field name="mvccVersion" type="long" />
 		<field name="commerceAccountGroupRelId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -70,7 +66,6 @@
 		<field name="commerceAccountGroupId" type="long" />
 	</model>
 	<model name="com.liferay.commerce.account.model.CommerceAccountOrganizationRel">
-		<field name="mvccVersion" type="long" />
 		<field name="commerceAccountId" type="long" />
 		<field name="organizationId" type="long" />
 		<field name="companyId" type="long" />
@@ -80,7 +75,6 @@
 		<field name="modifiedDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.account.model.CommerceAccountUserRel">
-		<field name="mvccVersion" type="long" />
 		<field name="commerceAccountId" type="long" />
 		<field name="commerceAccountUserId" type="long" />
 		<field name="companyId" type="long" />

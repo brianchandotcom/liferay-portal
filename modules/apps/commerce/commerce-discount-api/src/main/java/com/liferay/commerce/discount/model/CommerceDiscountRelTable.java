@@ -34,9 +34,6 @@ public class CommerceDiscountRelTable
 	public static final CommerceDiscountRelTable INSTANCE =
 		new CommerceDiscountRelTable();
 
-	public final Column<CommerceDiscountRelTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceDiscountRelTable, Long> commerceDiscountRelId =
 		createColumn(
 			"commerceDiscountRelId", Long.class, Types.BIGINT,

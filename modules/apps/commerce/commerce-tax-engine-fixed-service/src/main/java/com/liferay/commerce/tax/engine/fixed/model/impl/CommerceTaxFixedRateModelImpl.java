@@ -74,11 +74,10 @@ public class CommerceTaxFixedRateModelImpl
 	public static final String TABLE_NAME = "CommerceTaxFixedRate";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"commerceTaxFixedRateId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"CPTaxCategoryId", Types.BIGINT},
+		{"commerceTaxFixedRateId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"CPTaxCategoryId", Types.BIGINT},
 		{"commerceTaxMethodId", Types.BIGINT}, {"rate", Types.DOUBLE}
 	};
 
@@ -86,7 +85,6 @@ public class CommerceTaxFixedRateModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceTaxFixedRateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -100,7 +98,7 @@ public class CommerceTaxFixedRateModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceTaxFixedRate (mvccVersion LONG default 0 not null,commerceTaxFixedRateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPTaxCategoryId LONG,commerceTaxMethodId LONG,rate DOUBLE)";
+		"create table CommerceTaxFixedRate (commerceTaxFixedRateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPTaxCategoryId LONG,commerceTaxMethodId LONG,rate DOUBLE)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceTaxFixedRate";
@@ -146,7 +144,9 @@ public class CommerceTaxFixedRateModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceTaxFixedRate toModel(
 		CommerceTaxFixedRateSoap soapModel) {
 
@@ -156,7 +156,6 @@ public class CommerceTaxFixedRateModelImpl
 
 		CommerceTaxFixedRate model = new CommerceTaxFixedRateImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceTaxFixedRateId(soapModel.getCommerceTaxFixedRateId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -176,7 +175,9 @@ public class CommerceTaxFixedRateModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceTaxFixedRate> toModels(
 		CommerceTaxFixedRateSoap[] soapModels) {
 
@@ -327,12 +328,6 @@ public class CommerceTaxFixedRateModelImpl
 					<String, BiConsumer<CommerceTaxFixedRate, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceTaxFixedRate::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceTaxFixedRate, Long>)
-				CommerceTaxFixedRate::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceTaxFixedRateId",
 			CommerceTaxFixedRate::getCommerceTaxFixedRateId);
 		attributeSetterBiConsumers.put(
@@ -397,17 +392,6 @@ public class CommerceTaxFixedRateModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -609,7 +593,6 @@ public class CommerceTaxFixedRateModelImpl
 		CommerceTaxFixedRateImpl commerceTaxFixedRateImpl =
 			new CommerceTaxFixedRateImpl();
 
-		commerceTaxFixedRateImpl.setMvccVersion(getMvccVersion());
 		commerceTaxFixedRateImpl.setCommerceTaxFixedRateId(
 			getCommerceTaxFixedRateId());
 		commerceTaxFixedRateImpl.setGroupId(getGroupId());
@@ -708,8 +691,6 @@ public class CommerceTaxFixedRateModelImpl
 	public CacheModel<CommerceTaxFixedRate> toCacheModel() {
 		CommerceTaxFixedRateCacheModel commerceTaxFixedRateCacheModel =
 			new CommerceTaxFixedRateCacheModel();
-
-		commerceTaxFixedRateCacheModel.mvccVersion = getMvccVersion();
 
 		commerceTaxFixedRateCacheModel.commerceTaxFixedRateId =
 			getCommerceTaxFixedRateId();
@@ -829,7 +810,6 @@ public class CommerceTaxFixedRateModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceTaxFixedRateId;
 	private long _groupId;
 	private long _companyId;

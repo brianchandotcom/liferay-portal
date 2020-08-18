@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 
@@ -43,7 +42,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CPDefinitionOptionRelModel
 	extends BaseModel<CPDefinitionOptionRel>, GroupedModel, LocalizedModel,
-			MVCCModel, ShardedModel, StagedAuditedModel {
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -64,22 +63,6 @@ public interface CPDefinitionOptionRelModel
 	 * @param primaryKey the primary key of this cp definition option rel
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this cp definition option rel.
-	 *
-	 * @return the mvcc version of this cp definition option rel
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this cp definition option rel.
-	 *
-	 * @param mvccVersion the mvcc version of this cp definition option rel
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this cp definition option rel.

@@ -17,7 +17,6 @@ package com.liferay.commerce.shipping.engine.fixed.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.math.BigDecimal;
@@ -39,7 +38,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceShippingFixedOptionRelModel
-	extends BaseModel<CommerceShippingFixedOptionRel>, GroupedModel, MVCCModel,
+	extends BaseModel<CommerceShippingFixedOptionRel>, GroupedModel,
 			ShardedModel {
 
 	/*
@@ -61,22 +60,6 @@ public interface CommerceShippingFixedOptionRelModel
 	 * @param primaryKey the primary key of this commerce shipping fixed option rel
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this commerce shipping fixed option rel.
-	 *
-	 * @return the mvcc version of this commerce shipping fixed option rel
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this commerce shipping fixed option rel.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce shipping fixed option rel
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the commerce shipping fixed option rel ID of this commerce shipping fixed option rel.

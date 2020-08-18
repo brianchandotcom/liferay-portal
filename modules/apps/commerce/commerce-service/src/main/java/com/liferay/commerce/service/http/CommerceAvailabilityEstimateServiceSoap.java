@@ -61,8 +61,10 @@ import java.util.Map;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceAvailabilityEstimateServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceAvailabilityEstimateServiceSoap {
 
 	public static com.liferay.commerce.model.CommerceAvailabilityEstimateSoap

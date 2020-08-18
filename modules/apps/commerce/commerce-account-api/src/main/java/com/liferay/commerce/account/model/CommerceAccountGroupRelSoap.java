@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.account.service.http.CommerceAccountGroupRelServiceSoap}.
  *
  * @author Marco Leo
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceAccountGroupRelSoap implements Serializable {
 
 	public static CommerceAccountGroupRelSoap toSoapModel(
@@ -34,7 +36,6 @@ public class CommerceAccountGroupRelSoap implements Serializable {
 		CommerceAccountGroupRelSoap soapModel =
 			new CommerceAccountGroupRelSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceAccountGroupRelId(
 			model.getCommerceAccountGroupRelId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -106,14 +107,6 @@ public class CommerceAccountGroupRelSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceAccountGroupRelId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceAccountGroupRelId() {
@@ -188,7 +181,6 @@ public class CommerceAccountGroupRelSoap implements Serializable {
 		_commerceAccountGroupId = commerceAccountGroupId;
 	}
 
-	private long _mvccVersion;
 	private long _commerceAccountGroupRelId;
 	private long _companyId;
 	private long _userId;

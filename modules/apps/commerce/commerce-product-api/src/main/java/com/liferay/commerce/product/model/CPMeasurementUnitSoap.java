@@ -24,14 +24,15 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.product.service.http.CPMeasurementUnitServiceSoap}.
  *
  * @author Marco Leo
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CPMeasurementUnitSoap implements Serializable {
 
 	public static CPMeasurementUnitSoap toSoapModel(CPMeasurementUnit model) {
 		CPMeasurementUnitSoap soapModel = new CPMeasurementUnitSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCPMeasurementUnitId(model.getCPMeasurementUnitId());
 		soapModel.setGroupId(model.getGroupId());
@@ -106,14 +107,6 @@ public class CPMeasurementUnitSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCPMeasurementUnitId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -240,7 +233,6 @@ public class CPMeasurementUnitSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private long _CPMeasurementUnitId;
 	private long _groupId;

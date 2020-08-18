@@ -18,7 +18,6 @@ import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,8 +33,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceSubscriptionEntryCacheModel
-	implements CacheModel<CommerceSubscriptionEntry>, Externalizable,
-			   MVCCModel {
+	implements CacheModel<CommerceSubscriptionEntry>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -51,10 +49,9 @@ public class CommerceSubscriptionEntryCacheModel
 			commerceSubscriptionEntryCacheModel =
 				(CommerceSubscriptionEntryCacheModel)object;
 
-		if ((commerceSubscriptionEntryId ==
+		if (commerceSubscriptionEntryId ==
 				commerceSubscriptionEntryCacheModel.
-					commerceSubscriptionEntryId) &&
-			(mvccVersion == commerceSubscriptionEntryCacheModel.mvccVersion)) {
+					commerceSubscriptionEntryId) {
 
 			return true;
 		}
@@ -64,28 +61,14 @@ public class CommerceSubscriptionEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, commerceSubscriptionEntryId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, commerceSubscriptionEntryId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(59);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", uuid=");
+		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", commerceSubscriptionEntryId=");
 		sb.append(commerceSubscriptionEntryId);
@@ -152,8 +135,6 @@ public class CommerceSubscriptionEntryCacheModel
 	public CommerceSubscriptionEntry toEntityModel() {
 		CommerceSubscriptionEntryImpl commerceSubscriptionEntryImpl =
 			new CommerceSubscriptionEntryImpl();
-
-		commerceSubscriptionEntryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			commerceSubscriptionEntryImpl.setUuid("");
@@ -305,7 +286,6 @@ public class CommerceSubscriptionEntryCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
-		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		commerceSubscriptionEntryId = objectInput.readLong();
@@ -353,8 +333,6 @@ public class CommerceSubscriptionEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -442,7 +420,6 @@ public class CommerceSubscriptionEntryCacheModel
 		objectOutput.writeLong(deliveryStartDate);
 	}
 
-	public long mvccVersion;
 	public String uuid;
 	public long commerceSubscriptionEntryId;
 	public long groupId;

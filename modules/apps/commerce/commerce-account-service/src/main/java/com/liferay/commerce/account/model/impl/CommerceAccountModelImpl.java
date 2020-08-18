@@ -73,7 +73,7 @@ public class CommerceAccountModelImpl
 	public static final String TABLE_NAME = "CommerceAccount";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"commerceAccountId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -93,7 +93,6 @@ public class CommerceAccountModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceAccountId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -120,7 +119,7 @@ public class CommerceAccountModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceAccount (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceAccountId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCommerceAccountId LONG,name VARCHAR(255) null,logoId LONG,email VARCHAR(75) null,taxId VARCHAR(75) null,type_ INTEGER,active_ BOOLEAN,displayDate DATE null,defaultBillingAddressId LONG,defaultShippingAddressId LONG,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CommerceAccount (externalReferenceCode VARCHAR(75) null,commerceAccountId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCommerceAccountId LONG,name VARCHAR(255) null,logoId LONG,email VARCHAR(75) null,taxId VARCHAR(75) null,type_ INTEGER,active_ BOOLEAN,displayDate DATE null,defaultBillingAddressId LONG,defaultShippingAddressId LONG,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceAccount";
 
@@ -169,7 +168,9 @@ public class CommerceAccountModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceAccount toModel(CommerceAccountSoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -177,7 +178,6 @@ public class CommerceAccountModelImpl
 
 		CommerceAccount model = new CommerceAccountImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setCommerceAccountId(soapModel.getCommerceAccountId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -213,7 +213,9 @@ public class CommerceAccountModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceAccount> toModels(
 		CommerceAccountSoap[] soapModels) {
 
@@ -361,11 +363,6 @@ public class CommerceAccountModelImpl
 			new LinkedHashMap<String, BiConsumer<CommerceAccount, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceAccount::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceAccount, Long>)CommerceAccount::setMvccVersion);
-		attributeGetterFunctions.put(
 			"externalReferenceCode", CommerceAccount::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
 			"externalReferenceCode",
@@ -489,17 +486,6 @@ public class CommerceAccountModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -991,7 +977,6 @@ public class CommerceAccountModelImpl
 	public Object clone() {
 		CommerceAccountImpl commerceAccountImpl = new CommerceAccountImpl();
 
-		commerceAccountImpl.setMvccVersion(getMvccVersion());
 		commerceAccountImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
 		commerceAccountImpl.setCommerceAccountId(getCommerceAccountId());
@@ -1108,8 +1093,6 @@ public class CommerceAccountModelImpl
 	public CacheModel<CommerceAccount> toCacheModel() {
 		CommerceAccountCacheModel commerceAccountCacheModel =
 			new CommerceAccountCacheModel();
-
-		commerceAccountCacheModel.mvccVersion = getMvccVersion();
 
 		commerceAccountCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -1316,7 +1299,6 @@ public class CommerceAccountModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _externalReferenceCode;
 	private String _originalExternalReferenceCode;
 	private long _commerceAccountId;

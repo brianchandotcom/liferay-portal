@@ -33,9 +33,6 @@ public class CommerceTaxMethodTable extends BaseTable<CommerceTaxMethodTable> {
 	public static final CommerceTaxMethodTable INSTANCE =
 		new CommerceTaxMethodTable();
 
-	public final Column<CommerceTaxMethodTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceTaxMethodTable, Long> commerceTaxMethodId =
 		createColumn(
 			"commerceTaxMethodId", Long.class, Types.BIGINT,

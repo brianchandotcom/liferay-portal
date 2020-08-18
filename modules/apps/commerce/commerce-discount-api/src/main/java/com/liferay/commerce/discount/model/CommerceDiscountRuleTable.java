@@ -35,9 +35,6 @@ public class CommerceDiscountRuleTable
 	public static final CommerceDiscountRuleTable INSTANCE =
 		new CommerceDiscountRuleTable();
 
-	public final Column<CommerceDiscountRuleTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceDiscountRuleTable, Long>
 		commerceDiscountRuleId = createColumn(
 			"commerceDiscountRuleId", Long.class, Types.BIGINT,

@@ -44,7 +44,6 @@ public class CommerceShipmentItemWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceShipmentItemId", getCommerceShipmentItemId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -63,12 +62,6 @@ public class CommerceShipmentItemWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
 		Long commerceShipmentItemId = (Long)attributes.get(
 			"commerceShipmentItemId");
 
@@ -231,16 +224,6 @@ public class CommerceShipmentItemWrapper
 	}
 
 	/**
-	 * Returns the mvcc version of this commerce shipment item.
-	 *
-	 * @return the mvcc version of this commerce shipment item
-	 */
-	@Override
-	public long getMvccVersion() {
-		return model.getMvccVersion();
-	}
-
-	/**
 	 * Returns the primary key of this commerce shipment item.
 	 *
 	 * @return the primary key of this commerce shipment item
@@ -375,16 +358,6 @@ public class CommerceShipmentItemWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	 * Sets the mvcc version of this commerce shipment item.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce shipment item
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

@@ -18,7 +18,6 @@ import com.liferay.commerce.notification.model.CommerceNotificationTemplateComme
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -35,7 +34,7 @@ import java.util.Date;
  */
 public class CommerceNotificationTemplateCommerceAccountGroupRelCacheModel
 	implements CacheModel<CommerceNotificationTemplateCommerceAccountGroupRel>,
-			   Externalizable, MVCCModel {
+			   Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -54,12 +53,9 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelCacheModel
 				(CommerceNotificationTemplateCommerceAccountGroupRelCacheModel)
 					object;
 
-		if ((commerceNotificationTemplateCommerceAccountGroupRelId ==
+		if (commerceNotificationTemplateCommerceAccountGroupRelId ==
 				commerceNotificationTemplateCommerceAccountGroupRelCacheModel.
-					commerceNotificationTemplateCommerceAccountGroupRelId) &&
-			(mvccVersion ==
-				commerceNotificationTemplateCommerceAccountGroupRelCacheModel.
-					mvccVersion)) {
+					commerceNotificationTemplateCommerceAccountGroupRelId) {
 
 			return true;
 		}
@@ -69,29 +65,15 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(
+		return HashUtil.hash(
 			0, commerceNotificationTemplateCommerceAccountGroupRelId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(19);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", commerceNotificationTemplateCommerceAccountGroupRelId=");
+		sb.append("{commerceNotificationTemplateCommerceAccountGroupRelId=");
 		sb.append(commerceNotificationTemplateCommerceAccountGroupRelId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -120,8 +102,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelCacheModel
 			commerceNotificationTemplateCommerceAccountGroupRelImpl =
 				new CommerceNotificationTemplateCommerceAccountGroupRelImpl();
 
-		commerceNotificationTemplateCommerceAccountGroupRelImpl.setMvccVersion(
-			mvccVersion);
 		commerceNotificationTemplateCommerceAccountGroupRelImpl.
 			setCommerceNotificationTemplateCommerceAccountGroupRelId(
 				commerceNotificationTemplateCommerceAccountGroupRelId);
@@ -172,8 +152,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		mvccVersion = objectInput.readLong();
-
 		commerceNotificationTemplateCommerceAccountGroupRelId =
 			objectInput.readLong();
 
@@ -193,8 +171,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		objectOutput.writeLong(
 			commerceNotificationTemplateCommerceAccountGroupRelId);
 
@@ -219,7 +195,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelCacheModel
 		objectOutput.writeLong(commerceAccountGroupId);
 	}
 
-	public long mvccVersion;
 	public long commerceNotificationTemplateCommerceAccountGroupRelId;
 	public long groupId;
 	public long companyId;

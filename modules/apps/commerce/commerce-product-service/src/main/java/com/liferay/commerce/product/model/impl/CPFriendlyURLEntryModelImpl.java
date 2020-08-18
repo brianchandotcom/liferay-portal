@@ -74,20 +74,19 @@ public class CPFriendlyURLEntryModelImpl
 	public static final String TABLE_NAME = "CPFriendlyURLEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"CPFriendlyURLEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"languageId", Types.VARCHAR},
-		{"urlTitle", Types.VARCHAR}, {"main", Types.BOOLEAN}
+		{"uuid_", Types.VARCHAR}, {"CPFriendlyURLEntryId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"languageId", Types.VARCHAR}, {"urlTitle", Types.VARCHAR},
+		{"main", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPFriendlyURLEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -104,7 +103,7 @@ public class CPFriendlyURLEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPFriendlyURLEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPFriendlyURLEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,languageId VARCHAR(75) null,urlTitle VARCHAR(255) null,main BOOLEAN)";
+		"create table CPFriendlyURLEntry (uuid_ VARCHAR(75) null,CPFriendlyURLEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,languageId VARCHAR(75) null,urlTitle VARCHAR(255) null,main BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table CPFriendlyURLEntry";
 
@@ -285,12 +284,6 @@ public class CPFriendlyURLEntryModelImpl
 			attributeSetterBiConsumers =
 				new LinkedHashMap<String, BiConsumer<CPFriendlyURLEntry, ?>>();
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CPFriendlyURLEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CPFriendlyURLEntry, Long>)
-				CPFriendlyURLEntry::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CPFriendlyURLEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -370,16 +363,6 @@ public class CPFriendlyURLEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -714,7 +697,6 @@ public class CPFriendlyURLEntryModelImpl
 		CPFriendlyURLEntryImpl cpFriendlyURLEntryImpl =
 			new CPFriendlyURLEntryImpl();
 
-		cpFriendlyURLEntryImpl.setMvccVersion(getMvccVersion());
 		cpFriendlyURLEntryImpl.setUuid(getUuid());
 		cpFriendlyURLEntryImpl.setCPFriendlyURLEntryId(
 			getCPFriendlyURLEntryId());
@@ -858,8 +840,6 @@ public class CPFriendlyURLEntryModelImpl
 		CPFriendlyURLEntryCacheModel cpFriendlyURLEntryCacheModel =
 			new CPFriendlyURLEntryCacheModel();
 
-		cpFriendlyURLEntryCacheModel.mvccVersion = getMvccVersion();
-
 		cpFriendlyURLEntryCacheModel.uuid = getUuid();
 
 		String uuid = cpFriendlyURLEntryCacheModel.uuid;
@@ -998,7 +978,6 @@ public class CPFriendlyURLEntryModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _CPFriendlyURLEntryId;

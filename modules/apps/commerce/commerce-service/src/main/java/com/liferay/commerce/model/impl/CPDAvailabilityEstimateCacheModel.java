@@ -18,7 +18,6 @@ import com.liferay.commerce.model.CPDAvailabilityEstimate;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +33,7 @@ import java.util.Date;
  * @generated
  */
 public class CPDAvailabilityEstimateCacheModel
-	implements CacheModel<CPDAvailabilityEstimate>, Externalizable, MVCCModel {
+	implements CacheModel<CPDAvailabilityEstimate>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -49,9 +48,8 @@ public class CPDAvailabilityEstimateCacheModel
 		CPDAvailabilityEstimateCacheModel cpdAvailabilityEstimateCacheModel =
 			(CPDAvailabilityEstimateCacheModel)object;
 
-		if ((CPDAvailabilityEstimateId ==
-				cpdAvailabilityEstimateCacheModel.CPDAvailabilityEstimateId) &&
-			(mvccVersion == cpdAvailabilityEstimateCacheModel.mvccVersion)) {
+		if (CPDAvailabilityEstimateId ==
+				cpdAvailabilityEstimateCacheModel.CPDAvailabilityEstimateId) {
 
 			return true;
 		}
@@ -61,28 +59,14 @@ public class CPDAvailabilityEstimateCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, CPDAvailabilityEstimateId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, CPDAvailabilityEstimateId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", uuid=");
+		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", CPDAvailabilityEstimateId=");
 		sb.append(CPDAvailabilityEstimateId);
@@ -111,8 +95,6 @@ public class CPDAvailabilityEstimateCacheModel
 	public CPDAvailabilityEstimate toEntityModel() {
 		CPDAvailabilityEstimateImpl cpdAvailabilityEstimateImpl =
 			new CPDAvailabilityEstimateImpl();
-
-		cpdAvailabilityEstimateImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			cpdAvailabilityEstimateImpl.setUuid("");
@@ -166,7 +148,6 @@ public class CPDAvailabilityEstimateCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		CPDAvailabilityEstimateId = objectInput.readLong();
@@ -186,8 +167,6 @@ public class CPDAvailabilityEstimateCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -217,7 +196,6 @@ public class CPDAvailabilityEstimateCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
-	public long mvccVersion;
 	public String uuid;
 	public long CPDAvailabilityEstimateId;
 	public long companyId;

@@ -35,9 +35,6 @@ public class CommerceSubscriptionEntryTable
 	public static final CommerceSubscriptionEntryTable INSTANCE =
 		new CommerceSubscriptionEntryTable();
 
-	public final Column<CommerceSubscriptionEntryTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceSubscriptionEntryTable, String> uuid =
 		createColumn("uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceSubscriptionEntryTable, Long>

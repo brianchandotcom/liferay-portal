@@ -33,8 +33,6 @@ public class CommerceChannelTable extends BaseTable<CommerceChannelTable> {
 	public static final CommerceChannelTable INSTANCE =
 		new CommerceChannelTable();
 
-	public final Column<CommerceChannelTable, Long> mvccVersion = createColumn(
-		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceChannelTable, String> externalReferenceCode =
 		createColumn(
 			"externalReferenceCode", String.class, Types.VARCHAR,

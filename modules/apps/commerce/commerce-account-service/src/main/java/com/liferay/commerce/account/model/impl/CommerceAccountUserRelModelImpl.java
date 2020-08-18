@@ -71,7 +71,7 @@ public class CommerceAccountUserRelModelImpl
 	public static final String TABLE_NAME = "CommerceAccountUserRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"commerceAccountId", Types.BIGINT},
+		{"commerceAccountId", Types.BIGINT},
 		{"commerceAccountUserId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP}
@@ -81,7 +81,6 @@ public class CommerceAccountUserRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceAccountId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceAccountUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -92,7 +91,7 @@ public class CommerceAccountUserRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceAccountUserRel (mvccVersion LONG default 0 not null,commerceAccountId LONG not null,commerceAccountUserId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,primary key (commerceAccountId, commerceAccountUserId))";
+		"create table CommerceAccountUserRel (commerceAccountId LONG not null,commerceAccountUserId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,primary key (commerceAccountId, commerceAccountUserId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceAccountUserRel";
@@ -138,7 +137,9 @@ public class CommerceAccountUserRelModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceAccountUserRel toModel(
 		CommerceAccountUserRelSoap soapModel) {
 
@@ -148,7 +149,6 @@ public class CommerceAccountUserRelModelImpl
 
 		CommerceAccountUserRel model = new CommerceAccountUserRelImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceAccountId(soapModel.getCommerceAccountId());
 		model.setCommerceAccountUserId(soapModel.getCommerceAccountUserId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -165,7 +165,9 @@ public class CommerceAccountUserRelModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceAccountUserRel> toModels(
 		CommerceAccountUserRelSoap[] soapModels) {
 
@@ -320,12 +322,6 @@ public class CommerceAccountUserRelModelImpl
 					<String, BiConsumer<CommerceAccountUserRel, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceAccountUserRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceAccountUserRel, Long>)
-				CommerceAccountUserRel::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceAccountId", CommerceAccountUserRel::getCommerceAccountId);
 		attributeSetterBiConsumers.put(
 			"commerceAccountId",
@@ -373,17 +369,6 @@ public class CommerceAccountUserRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -555,7 +540,6 @@ public class CommerceAccountUserRelModelImpl
 		CommerceAccountUserRelImpl commerceAccountUserRelImpl =
 			new CommerceAccountUserRelImpl();
 
-		commerceAccountUserRelImpl.setMvccVersion(getMvccVersion());
 		commerceAccountUserRelImpl.setCommerceAccountId(getCommerceAccountId());
 		commerceAccountUserRelImpl.setCommerceAccountUserId(
 			getCommerceAccountUserId());
@@ -660,8 +644,6 @@ public class CommerceAccountUserRelModelImpl
 
 		commerceAccountUserRelCacheModel.commerceAccountUserRelPK =
 			getPrimaryKey();
-
-		commerceAccountUserRelCacheModel.mvccVersion = getMvccVersion();
 
 		commerceAccountUserRelCacheModel.commerceAccountId =
 			getCommerceAccountId();
@@ -775,7 +757,6 @@ public class CommerceAccountUserRelModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceAccountId;
 	private long _originalCommerceAccountId;
 	private boolean _setOriginalCommerceAccountId;

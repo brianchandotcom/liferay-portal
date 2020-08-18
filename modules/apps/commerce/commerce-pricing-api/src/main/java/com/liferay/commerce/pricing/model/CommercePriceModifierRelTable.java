@@ -34,9 +34,6 @@ public class CommercePriceModifierRelTable
 	public static final CommercePriceModifierRelTable INSTANCE =
 		new CommercePriceModifierRelTable();
 
-	public final Column<CommercePriceModifierRelTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommercePriceModifierRelTable, Long>
 		commercePriceModifierRelId = createColumn(
 			"commercePriceModifierRelId", Long.class, Types.BIGINT,

@@ -34,9 +34,6 @@ public class CommercePaymentMethodGroupRelTable
 	public static final CommercePaymentMethodGroupRelTable INSTANCE =
 		new CommercePaymentMethodGroupRelTable();
 
-	public final Column<CommercePaymentMethodGroupRelTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommercePaymentMethodGroupRelTable, Long>
 		commercePaymentMethodGroupRelId = createColumn(
 			"CPaymentMethodGroupRelId", Long.class, Types.BIGINT,

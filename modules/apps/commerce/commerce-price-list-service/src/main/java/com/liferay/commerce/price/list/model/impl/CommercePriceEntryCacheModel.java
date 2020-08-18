@@ -18,7 +18,6 @@ import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -36,7 +35,7 @@ import java.util.Date;
  * @generated
  */
 public class CommercePriceEntryCacheModel
-	implements CacheModel<CommercePriceEntry>, Externalizable, MVCCModel {
+	implements CacheModel<CommercePriceEntry>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -51,9 +50,8 @@ public class CommercePriceEntryCacheModel
 		CommercePriceEntryCacheModel commercePriceEntryCacheModel =
 			(CommercePriceEntryCacheModel)object;
 
-		if ((commercePriceEntryId ==
-				commercePriceEntryCacheModel.commercePriceEntryId) &&
-			(mvccVersion == commercePriceEntryCacheModel.mvccVersion)) {
+		if (commercePriceEntryId ==
+				commercePriceEntryCacheModel.commercePriceEntryId) {
 
 			return true;
 		}
@@ -63,28 +61,14 @@ public class CommercePriceEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, commercePriceEntryId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, commercePriceEntryId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(55);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", uuid=");
+		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
 		sb.append(externalReferenceCode);
@@ -147,8 +131,6 @@ public class CommercePriceEntryCacheModel
 	public CommercePriceEntry toEntityModel() {
 		CommercePriceEntryImpl commercePriceEntryImpl =
 			new CommercePriceEntryImpl();
-
-		commercePriceEntryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			commercePriceEntryImpl.setUuid("");
@@ -258,7 +240,6 @@ public class CommercePriceEntryCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
-		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
@@ -300,8 +281,6 @@ public class CommercePriceEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -372,7 +351,6 @@ public class CommercePriceEntryCacheModel
 		objectOutput.writeLong(statusDate);
 	}
 
-	public long mvccVersion;
 	public String uuid;
 	public String externalReferenceCode;
 	public long commercePriceEntryId;

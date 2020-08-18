@@ -61,8 +61,10 @@ import java.util.Map;
  *
  * @author Marco Leo
  * @see CPSpecificationOptionServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CPSpecificationOptionServiceSoap {
 
 	public static com.liferay.commerce.product.model.CPSpecificationOptionSoap

@@ -24,14 +24,15 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.product.service.http.CPDefinitionLinkServiceSoap}.
  *
  * @author Marco Leo
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CPDefinitionLinkSoap implements Serializable {
 
 	public static CPDefinitionLinkSoap toSoapModel(CPDefinitionLink model) {
 		CPDefinitionLinkSoap soapModel = new CPDefinitionLinkSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCPDefinitionLinkId(model.getCPDefinitionLinkId());
 		soapModel.setGroupId(model.getGroupId());
@@ -103,14 +104,6 @@ public class CPDefinitionLinkSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCPDefinitionLinkId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -209,7 +202,6 @@ public class CPDefinitionLinkSoap implements Serializable {
 		_type = type;
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private long _CPDefinitionLinkId;
 	private long _groupId;

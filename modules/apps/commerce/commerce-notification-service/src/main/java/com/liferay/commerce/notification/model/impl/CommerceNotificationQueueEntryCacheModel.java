@@ -18,7 +18,6 @@ import com.liferay.commerce.notification.model.CommerceNotificationQueueEntry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,8 +33,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceNotificationQueueEntryCacheModel
-	implements CacheModel<CommerceNotificationQueueEntry>, Externalizable,
-			   MVCCModel {
+	implements CacheModel<CommerceNotificationQueueEntry>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -51,11 +49,9 @@ public class CommerceNotificationQueueEntryCacheModel
 			commerceNotificationQueueEntryCacheModel =
 				(CommerceNotificationQueueEntryCacheModel)object;
 
-		if ((commerceNotificationQueueEntryId ==
+		if (commerceNotificationQueueEntryId ==
 				commerceNotificationQueueEntryCacheModel.
-					commerceNotificationQueueEntryId) &&
-			(mvccVersion ==
-				commerceNotificationQueueEntryCacheModel.mvccVersion)) {
+					commerceNotificationQueueEntryId) {
 
 			return true;
 		}
@@ -65,28 +61,14 @@ public class CommerceNotificationQueueEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, commerceNotificationQueueEntryId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, commerceNotificationQueueEntryId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(43);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", commerceNotificationQueueEntryId=");
+		sb.append("{commerceNotificationQueueEntryId=");
 		sb.append(commerceNotificationQueueEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -138,7 +120,6 @@ public class CommerceNotificationQueueEntryCacheModel
 		CommerceNotificationQueueEntryImpl commerceNotificationQueueEntryImpl =
 			new CommerceNotificationQueueEntryImpl();
 
-		commerceNotificationQueueEntryImpl.setMvccVersion(mvccVersion);
 		commerceNotificationQueueEntryImpl.setCommerceNotificationQueueEntryId(
 			commerceNotificationQueueEntryId);
 		commerceNotificationQueueEntryImpl.setGroupId(groupId);
@@ -248,8 +229,6 @@ public class CommerceNotificationQueueEntryCacheModel
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
-		mvccVersion = objectInput.readLong();
-
 		commerceNotificationQueueEntryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -283,8 +262,6 @@ public class CommerceNotificationQueueEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		objectOutput.writeLong(commerceNotificationQueueEntryId);
 
 		objectOutput.writeLong(groupId);
@@ -371,7 +348,6 @@ public class CommerceNotificationQueueEntryCacheModel
 		objectOutput.writeLong(sentDate);
 	}
 
-	public long mvccVersion;
 	public long commerceNotificationQueueEntryId;
 	public long groupId;
 	public long companyId;

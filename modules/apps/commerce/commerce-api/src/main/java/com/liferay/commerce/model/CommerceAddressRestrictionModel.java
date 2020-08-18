@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -39,7 +38,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CommerceAddressRestrictionModel
 	extends AttachedModel, BaseModel<CommerceAddressRestriction>, GroupedModel,
-			MVCCModel, ShardedModel {
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -60,22 +59,6 @@ public interface CommerceAddressRestrictionModel
 	 * @param primaryKey the primary key of this commerce address restriction
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this commerce address restriction.
-	 *
-	 * @return the mvcc version of this commerce address restriction
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this commerce address restriction.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce address restriction
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the commerce address restriction ID of this commerce address restriction.

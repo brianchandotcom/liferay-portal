@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Marco Leo
  * @see CommerceAccountOrganizationRelServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceAccountOrganizationRelServiceSoap {
 
 	public static

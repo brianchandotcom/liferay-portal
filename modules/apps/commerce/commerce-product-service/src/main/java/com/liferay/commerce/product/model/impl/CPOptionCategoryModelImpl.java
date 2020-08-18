@@ -81,20 +81,18 @@ public class CPOptionCategoryModelImpl
 	public static final String TABLE_NAME = "CPOptionCategory";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"CPOptionCategoryId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"priority", Types.DOUBLE}, {"key_", Types.VARCHAR},
-		{"lastPublishDate", Types.TIMESTAMP}
+		{"uuid_", Types.VARCHAR}, {"CPOptionCategoryId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"title", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"priority", Types.DOUBLE},
+		{"key_", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPOptionCategoryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -110,7 +108,7 @@ public class CPOptionCategoryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPOptionCategory (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,CPOptionCategoryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,description STRING null,priority DOUBLE,key_ VARCHAR(75) null,lastPublishDate DATE null)";
+		"create table CPOptionCategory (uuid_ VARCHAR(75) null,CPOptionCategoryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,description STRING null,priority DOUBLE,key_ VARCHAR(75) null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CPOptionCategory";
 
@@ -159,7 +157,9 @@ public class CPOptionCategoryModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CPOptionCategory toModel(CPOptionCategorySoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -167,7 +167,6 @@ public class CPOptionCategoryModelImpl
 
 		CPOptionCategory model = new CPOptionCategoryImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCPOptionCategoryId(soapModel.getCPOptionCategoryId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -189,7 +188,9 @@ public class CPOptionCategoryModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CPOptionCategory> toModels(
 		CPOptionCategorySoap[] soapModels) {
 
@@ -337,12 +338,6 @@ public class CPOptionCategoryModelImpl
 			attributeSetterBiConsumers =
 				new LinkedHashMap<String, BiConsumer<CPOptionCategory, ?>>();
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CPOptionCategory::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CPOptionCategory, Long>)
-				CPOptionCategory::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CPOptionCategory::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -409,17 +404,6 @@ public class CPOptionCategoryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -944,7 +928,6 @@ public class CPOptionCategoryModelImpl
 	public Object clone() {
 		CPOptionCategoryImpl cpOptionCategoryImpl = new CPOptionCategoryImpl();
 
-		cpOptionCategoryImpl.setMvccVersion(getMvccVersion());
 		cpOptionCategoryImpl.setUuid(getUuid());
 		cpOptionCategoryImpl.setCPOptionCategoryId(getCPOptionCategoryId());
 		cpOptionCategoryImpl.setCompanyId(getCompanyId());
@@ -1054,8 +1037,6 @@ public class CPOptionCategoryModelImpl
 	public CacheModel<CPOptionCategory> toCacheModel() {
 		CPOptionCategoryCacheModel cpOptionCategoryCacheModel =
 			new CPOptionCategoryCacheModel();
-
-		cpOptionCategoryCacheModel.mvccVersion = getMvccVersion();
 
 		cpOptionCategoryCacheModel.uuid = getUuid();
 
@@ -1206,7 +1187,6 @@ public class CPOptionCategoryModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _CPOptionCategoryId;

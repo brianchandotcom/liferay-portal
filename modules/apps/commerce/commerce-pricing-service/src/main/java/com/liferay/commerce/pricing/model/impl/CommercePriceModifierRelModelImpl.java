@@ -76,7 +76,6 @@ public class CommercePriceModifierRelModelImpl
 	public static final String TABLE_NAME = "CommercePriceModifierRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT},
 		{"commercePriceModifierRelId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -89,7 +88,6 @@ public class CommercePriceModifierRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commercePriceModifierRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -102,7 +100,7 @@ public class CommercePriceModifierRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommercePriceModifierRel (mvccVersion LONG default 0 not null,commercePriceModifierRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceModifierId LONG,classNameId LONG,classPK LONG)";
+		"create table CommercePriceModifierRel (commercePriceModifierRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceModifierId LONG,classNameId LONG,classPK LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommercePriceModifierRel";
@@ -150,7 +148,9 @@ public class CommercePriceModifierRelModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommercePriceModifierRel toModel(
 		CommercePriceModifierRelSoap soapModel) {
 
@@ -160,7 +160,6 @@ public class CommercePriceModifierRelModelImpl
 
 		CommercePriceModifierRel model = new CommercePriceModifierRelImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommercePriceModifierRelId(
 			soapModel.getCommercePriceModifierRelId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -181,7 +180,9 @@ public class CommercePriceModifierRelModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommercePriceModifierRel> toModels(
 		CommercePriceModifierRelSoap[] soapModels) {
 
@@ -334,12 +335,6 @@ public class CommercePriceModifierRelModelImpl
 					<String, BiConsumer<CommercePriceModifierRel, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommercePriceModifierRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommercePriceModifierRel, Long>)
-				CommercePriceModifierRel::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commercePriceModifierRelId",
 			CommercePriceModifierRel::getCommercePriceModifierRelId);
 		attributeSetterBiConsumers.put(
@@ -400,17 +395,6 @@ public class CommercePriceModifierRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -633,7 +617,6 @@ public class CommercePriceModifierRelModelImpl
 		CommercePriceModifierRelImpl commercePriceModifierRelImpl =
 			new CommercePriceModifierRelImpl();
 
-		commercePriceModifierRelImpl.setMvccVersion(getMvccVersion());
 		commercePriceModifierRelImpl.setCommercePriceModifierRelId(
 			getCommercePriceModifierRelId());
 		commercePriceModifierRelImpl.setCompanyId(getCompanyId());
@@ -735,8 +718,6 @@ public class CommercePriceModifierRelModelImpl
 	public CacheModel<CommercePriceModifierRel> toCacheModel() {
 		CommercePriceModifierRelCacheModel commercePriceModifierRelCacheModel =
 			new CommercePriceModifierRelCacheModel();
-
-		commercePriceModifierRelCacheModel.mvccVersion = getMvccVersion();
 
 		commercePriceModifierRelCacheModel.commercePriceModifierRelId =
 			getCommercePriceModifierRelId();
@@ -857,7 +838,6 @@ public class CommercePriceModifierRelModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commercePriceModifierRelId;
 	private long _companyId;
 	private long _userId;

@@ -34,9 +34,6 @@ public class CPSpecificationOptionTable
 	public static final CPSpecificationOptionTable INSTANCE =
 		new CPSpecificationOptionTable();
 
-	public final Column<CPSpecificationOptionTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CPSpecificationOptionTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPSpecificationOptionTable, Long>

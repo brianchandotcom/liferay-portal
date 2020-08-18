@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 
@@ -42,7 +41,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CPDefinitionSpecificationOptionValueModel
 	extends BaseModel<CPDefinitionSpecificationOptionValue>, LocalizedModel,
-			MVCCModel, ShardedModel, StagedGroupedModel {
+			ShardedModel, StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -63,22 +62,6 @@ public interface CPDefinitionSpecificationOptionValueModel
 	 * @param primaryKey the primary key of this cp definition specification option value
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this cp definition specification option value.
-	 *
-	 * @return the mvcc version of this cp definition specification option value
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this cp definition specification option value.
-	 *
-	 * @param mvccVersion the mvcc version of this cp definition specification option value
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this cp definition specification option value.

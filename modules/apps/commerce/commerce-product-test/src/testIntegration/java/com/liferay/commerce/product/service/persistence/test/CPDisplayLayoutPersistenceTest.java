@@ -123,8 +123,6 @@ public class CPDisplayLayoutPersistenceTest {
 
 		CPDisplayLayout newCPDisplayLayout = _persistence.create(pk);
 
-		newCPDisplayLayout.setMvccVersion(RandomTestUtil.nextLong());
-
 		newCPDisplayLayout.setUuid(RandomTestUtil.randomString());
 
 		newCPDisplayLayout.setGroupId(RandomTestUtil.nextLong());
@@ -150,9 +148,6 @@ public class CPDisplayLayoutPersistenceTest {
 		CPDisplayLayout existingCPDisplayLayout = _persistence.findByPrimaryKey(
 			newCPDisplayLayout.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingCPDisplayLayout.getMvccVersion(),
-			newCPDisplayLayout.getMvccVersion());
 		Assert.assertEquals(
 			existingCPDisplayLayout.getUuid(), newCPDisplayLayout.getUuid());
 		Assert.assertEquals(
@@ -271,11 +266,10 @@ public class CPDisplayLayoutPersistenceTest {
 
 	protected OrderByComparator<CPDisplayLayout> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CPDisplayLayout", "mvccVersion", true, "uuid", true,
-			"CPDisplayLayoutId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "classNameId", true, "classPK", true,
-			"layoutUuid", true);
+			"CPDisplayLayout", "uuid", true, "CPDisplayLayoutId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "classNameId", true,
+			"classPK", true, "layoutUuid", true);
 	}
 
 	@Test
@@ -528,8 +522,6 @@ public class CPDisplayLayoutPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		CPDisplayLayout cpDisplayLayout = _persistence.create(pk);
-
-		cpDisplayLayout.setMvccVersion(RandomTestUtil.nextLong());
 
 		cpDisplayLayout.setUuid(RandomTestUtil.randomString());
 

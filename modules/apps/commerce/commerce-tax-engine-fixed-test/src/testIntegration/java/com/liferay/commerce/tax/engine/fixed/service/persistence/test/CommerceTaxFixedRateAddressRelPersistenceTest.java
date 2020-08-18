@@ -129,9 +129,6 @@ public class CommerceTaxFixedRateAddressRelPersistenceTest {
 		CommerceTaxFixedRateAddressRel newCommerceTaxFixedRateAddressRel =
 			_persistence.create(pk);
 
-		newCommerceTaxFixedRateAddressRel.setMvccVersion(
-			RandomTestUtil.nextLong());
-
 		newCommerceTaxFixedRateAddressRel.setGroupId(RandomTestUtil.nextLong());
 
 		newCommerceTaxFixedRateAddressRel.setCompanyId(
@@ -171,9 +168,6 @@ public class CommerceTaxFixedRateAddressRelPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommerceTaxFixedRateAddressRel.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingCommerceTaxFixedRateAddressRel.getMvccVersion(),
-			newCommerceTaxFixedRateAddressRel.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceTaxFixedRateAddressRel.
 				getCommerceTaxFixedRateAddressRelId(),
@@ -273,7 +267,7 @@ public class CommerceTaxFixedRateAddressRelPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceTaxFixedRateAddressRel", "mvccVersion", true,
+			"CommerceTaxFixedRateAddressRel",
 			"commerceTaxFixedRateAddressRelId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "commerceTaxMethodId", true,
@@ -537,9 +531,6 @@ public class CommerceTaxFixedRateAddressRelPersistenceTest {
 
 		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel =
 			_persistence.create(pk);
-
-		commerceTaxFixedRateAddressRel.setMvccVersion(
-			RandomTestUtil.nextLong());
 
 		commerceTaxFixedRateAddressRel.setGroupId(RandomTestUtil.nextLong());
 

@@ -83,7 +83,7 @@ public class CommerceNotificationTemplateModelImpl
 	public static final String TABLE_NAME = "CommerceNotificationTemplate";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"uuid_", Types.VARCHAR},
 		{"commerceNotificationTemplateId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -99,7 +99,6 @@ public class CommerceNotificationTemplateModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceNotificationTemplateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -122,7 +121,7 @@ public class CommerceNotificationTemplateModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceNotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceNotificationTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,from_ VARCHAR(75) null,fromName STRING null,to_ VARCHAR(75) null,cc VARCHAR(255) null,bcc VARCHAR(255) null,type_ VARCHAR(75) null,enabled BOOLEAN,subject STRING null,body TEXT null)";
+		"create table CommerceNotificationTemplate (uuid_ VARCHAR(75) null,commerceNotificationTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,from_ VARCHAR(75) null,fromName STRING null,to_ VARCHAR(75) null,cc VARCHAR(255) null,bcc VARCHAR(255) null,type_ VARCHAR(75) null,enabled BOOLEAN,subject STRING null,body TEXT null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceNotificationTemplate";
@@ -176,7 +175,9 @@ public class CommerceNotificationTemplateModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceNotificationTemplate toModel(
 		CommerceNotificationTemplateSoap soapModel) {
 
@@ -187,7 +188,6 @@ public class CommerceNotificationTemplateModelImpl
 		CommerceNotificationTemplate model =
 			new CommerceNotificationTemplateImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceNotificationTemplateId(
 			soapModel.getCommerceNotificationTemplateId());
@@ -217,7 +217,9 @@ public class CommerceNotificationTemplateModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceNotificationTemplate> toModels(
 		CommerceNotificationTemplateSoap[] soapModels) {
 
@@ -372,12 +374,6 @@ public class CommerceNotificationTemplateModelImpl
 					<String, BiConsumer<CommerceNotificationTemplate, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceNotificationTemplate::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceNotificationTemplate, Long>)
-				CommerceNotificationTemplate::setMvccVersion);
-		attributeGetterFunctions.put(
 			"uuid", CommerceNotificationTemplate::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -496,17 +492,6 @@ public class CommerceNotificationTemplateModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -1287,7 +1272,6 @@ public class CommerceNotificationTemplateModelImpl
 		CommerceNotificationTemplateImpl commerceNotificationTemplateImpl =
 			new CommerceNotificationTemplateImpl();
 
-		commerceNotificationTemplateImpl.setMvccVersion(getMvccVersion());
 		commerceNotificationTemplateImpl.setUuid(getUuid());
 		commerceNotificationTemplateImpl.setCommerceNotificationTemplateId(
 			getCommerceNotificationTemplateId());
@@ -1414,8 +1398,6 @@ public class CommerceNotificationTemplateModelImpl
 		CommerceNotificationTemplateCacheModel
 			commerceNotificationTemplateCacheModel =
 				new CommerceNotificationTemplateCacheModel();
-
-		commerceNotificationTemplateCacheModel.mvccVersion = getMvccVersion();
 
 		commerceNotificationTemplateCacheModel.uuid = getUuid();
 
@@ -1624,7 +1606,6 @@ public class CommerceNotificationTemplateModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _commerceNotificationTemplateId;

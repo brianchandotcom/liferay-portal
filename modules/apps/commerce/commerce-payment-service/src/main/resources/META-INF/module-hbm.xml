@@ -3,11 +3,10 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel" />
-	<class dynamic-update="true" name="com.liferay.commerce.payment.model.impl.CommercePaymentMethodGroupRelImpl" table="CommercePaymentMethodGroupRel">
+	<class name="com.liferay.commerce.payment.model.impl.CommercePaymentMethodGroupRelImpl" table="CommercePaymentMethodGroupRel">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="CPaymentMethodGroupRelId" name="commercePaymentMethodGroupRelId" type="long">
 			<generator class="assigned" />
 		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

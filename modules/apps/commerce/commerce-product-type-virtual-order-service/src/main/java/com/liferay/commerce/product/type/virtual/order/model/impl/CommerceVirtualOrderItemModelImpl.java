@@ -76,11 +76,10 @@ public class CommerceVirtualOrderItemModelImpl
 	public static final String TABLE_NAME = "CommerceVirtualOrderItem";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"commerceVirtualOrderItemId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP},
+		{"uuid_", Types.VARCHAR}, {"commerceVirtualOrderItemId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"commerceOrderItemId", Types.BIGINT}, {"fileEntryId", Types.BIGINT},
 		{"url", Types.VARCHAR}, {"activationStatus", Types.INTEGER},
 		{"duration", Types.BIGINT}, {"usages", Types.INTEGER},
@@ -92,7 +91,6 @@ public class CommerceVirtualOrderItemModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceVirtualOrderItemId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -114,7 +112,7 @@ public class CommerceVirtualOrderItemModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceVirtualOrderItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceVirtualOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderItemId LONG,fileEntryId LONG,url VARCHAR(75) null,activationStatus INTEGER,duration LONG,usages INTEGER,maxUsages INTEGER,active_ BOOLEAN,startDate DATE null,endDate DATE null)";
+		"create table CommerceVirtualOrderItem (uuid_ VARCHAR(75) null,commerceVirtualOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderItemId LONG,fileEntryId LONG,url VARCHAR(75) null,activationStatus INTEGER,duration LONG,usages INTEGER,maxUsages INTEGER,active_ BOOLEAN,startDate DATE null,endDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceVirtualOrderItem";
@@ -164,7 +162,9 @@ public class CommerceVirtualOrderItemModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceVirtualOrderItem toModel(
 		CommerceVirtualOrderItemSoap soapModel) {
 
@@ -174,7 +174,6 @@ public class CommerceVirtualOrderItemModelImpl
 
 		CommerceVirtualOrderItem model = new CommerceVirtualOrderItemImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceVirtualOrderItemId(
 			soapModel.getCommerceVirtualOrderItemId());
@@ -203,7 +202,9 @@ public class CommerceVirtualOrderItemModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceVirtualOrderItem> toModels(
 		CommerceVirtualOrderItemSoap[] soapModels) {
 
@@ -356,12 +357,6 @@ public class CommerceVirtualOrderItemModelImpl
 				new LinkedHashMap
 					<String, BiConsumer<CommerceVirtualOrderItem, ?>>();
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommerceVirtualOrderItem::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceVirtualOrderItem, Long>)
-				CommerceVirtualOrderItem::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CommerceVirtualOrderItem::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -475,17 +470,6 @@ public class CommerceVirtualOrderItemModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -820,7 +804,6 @@ public class CommerceVirtualOrderItemModelImpl
 		CommerceVirtualOrderItemImpl commerceVirtualOrderItemImpl =
 			new CommerceVirtualOrderItemImpl();
 
-		commerceVirtualOrderItemImpl.setMvccVersion(getMvccVersion());
 		commerceVirtualOrderItemImpl.setUuid(getUuid());
 		commerceVirtualOrderItemImpl.setCommerceVirtualOrderItemId(
 			getCommerceVirtualOrderItemId());
@@ -933,8 +916,6 @@ public class CommerceVirtualOrderItemModelImpl
 	public CacheModel<CommerceVirtualOrderItem> toCacheModel() {
 		CommerceVirtualOrderItemCacheModel commerceVirtualOrderItemCacheModel =
 			new CommerceVirtualOrderItemCacheModel();
-
-		commerceVirtualOrderItemCacheModel.mvccVersion = getMvccVersion();
 
 		commerceVirtualOrderItemCacheModel.uuid = getUuid();
 
@@ -1100,7 +1081,6 @@ public class CommerceVirtualOrderItemModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _commerceVirtualOrderItemId;

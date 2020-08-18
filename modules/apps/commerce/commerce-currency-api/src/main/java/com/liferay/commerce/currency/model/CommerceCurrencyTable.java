@@ -35,8 +35,6 @@ public class CommerceCurrencyTable extends BaseTable<CommerceCurrencyTable> {
 	public static final CommerceCurrencyTable INSTANCE =
 		new CommerceCurrencyTable();
 
-	public final Column<CommerceCurrencyTable, Long> mvccVersion = createColumn(
-		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceCurrencyTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceCurrencyTable, Long> commerceCurrencyId =

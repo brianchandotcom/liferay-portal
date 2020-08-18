@@ -34,9 +34,6 @@ public class CommerceAvailabilityEstimateTable
 	public static final CommerceAvailabilityEstimateTable INSTANCE =
 		new CommerceAvailabilityEstimateTable();
 
-	public final Column<CommerceAvailabilityEstimateTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceAvailabilityEstimateTable, String> uuid =
 		createColumn("uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceAvailabilityEstimateTable, Long>

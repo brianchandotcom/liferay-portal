@@ -61,8 +61,10 @@ import java.util.Map;
  *
  * @author Alessio Antonio Rendina
  * @see CommerceCountryServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceCountryServiceSoap {
 
 	public static com.liferay.commerce.model.CommerceCountrySoap

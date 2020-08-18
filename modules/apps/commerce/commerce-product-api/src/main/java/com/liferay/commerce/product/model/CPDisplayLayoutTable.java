@@ -33,8 +33,6 @@ public class CPDisplayLayoutTable extends BaseTable<CPDisplayLayoutTable> {
 	public static final CPDisplayLayoutTable INSTANCE =
 		new CPDisplayLayoutTable();
 
-	public final Column<CPDisplayLayoutTable, Long> mvccVersion = createColumn(
-		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CPDisplayLayoutTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPDisplayLayoutTable, Long> CPDisplayLayoutId =

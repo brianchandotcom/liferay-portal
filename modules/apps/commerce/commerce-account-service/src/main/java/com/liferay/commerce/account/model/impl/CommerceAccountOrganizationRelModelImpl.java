@@ -71,17 +71,16 @@ public class CommerceAccountOrganizationRelModelImpl
 	public static final String TABLE_NAME = "CommerceAccountOrganizationRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"commerceAccountId", Types.BIGINT},
-		{"organizationId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP}
+		{"commerceAccountId", Types.BIGINT}, {"organizationId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceAccountId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("organizationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -92,7 +91,7 @@ public class CommerceAccountOrganizationRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceAccountOrganizationRel (mvccVersion LONG default 0 not null,commerceAccountId LONG not null,organizationId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,primary key (commerceAccountId, organizationId))";
+		"create table CommerceAccountOrganizationRel (commerceAccountId LONG not null,organizationId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,primary key (commerceAccountId, organizationId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceAccountOrganizationRel";
@@ -138,7 +137,9 @@ public class CommerceAccountOrganizationRelModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceAccountOrganizationRel toModel(
 		CommerceAccountOrganizationRelSoap soapModel) {
 
@@ -149,7 +150,6 @@ public class CommerceAccountOrganizationRelModelImpl
 		CommerceAccountOrganizationRel model =
 			new CommerceAccountOrganizationRelImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceAccountId(soapModel.getCommerceAccountId());
 		model.setOrganizationId(soapModel.getOrganizationId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -166,7 +166,9 @@ public class CommerceAccountOrganizationRelModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceAccountOrganizationRel> toModels(
 		CommerceAccountOrganizationRelSoap[] soapModels) {
 
@@ -325,12 +327,6 @@ public class CommerceAccountOrganizationRelModelImpl
 					<String, BiConsumer<CommerceAccountOrganizationRel, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceAccountOrganizationRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceAccountOrganizationRel, Long>)
-				CommerceAccountOrganizationRel::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceAccountId",
 			CommerceAccountOrganizationRel::getCommerceAccountId);
 		attributeSetterBiConsumers.put(
@@ -379,17 +375,6 @@ public class CommerceAccountOrganizationRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -544,7 +529,6 @@ public class CommerceAccountOrganizationRelModelImpl
 		CommerceAccountOrganizationRelImpl commerceAccountOrganizationRelImpl =
 			new CommerceAccountOrganizationRelImpl();
 
-		commerceAccountOrganizationRelImpl.setMvccVersion(getMvccVersion());
 		commerceAccountOrganizationRelImpl.setCommerceAccountId(
 			getCommerceAccountId());
 		commerceAccountOrganizationRelImpl.setOrganizationId(
@@ -653,8 +637,6 @@ public class CommerceAccountOrganizationRelModelImpl
 
 		commerceAccountOrganizationRelCacheModel.
 			commerceAccountOrganizationRelPK = getPrimaryKey();
-
-		commerceAccountOrganizationRelCacheModel.mvccVersion = getMvccVersion();
 
 		commerceAccountOrganizationRelCacheModel.commerceAccountId =
 			getCommerceAccountId();
@@ -775,7 +757,6 @@ public class CommerceAccountOrganizationRelModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceAccountId;
 	private long _originalCommerceAccountId;
 	private boolean _setOriginalCommerceAccountId;

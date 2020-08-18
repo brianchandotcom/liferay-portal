@@ -126,8 +126,6 @@ public class CommerceAccountUserRelPersistenceTest {
 		CommerceAccountUserRel newCommerceAccountUserRel = _persistence.create(
 			pk);
 
-		newCommerceAccountUserRel.setMvccVersion(RandomTestUtil.nextLong());
-
 		newCommerceAccountUserRel.setCompanyId(RandomTestUtil.nextLong());
 
 		newCommerceAccountUserRel.setUserId(RandomTestUtil.nextLong());
@@ -145,9 +143,6 @@ public class CommerceAccountUserRelPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommerceAccountUserRel.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingCommerceAccountUserRel.getMvccVersion(),
-			newCommerceAccountUserRel.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceAccountUserRel.getCommerceAccountId(),
 			newCommerceAccountUserRel.getCommerceAccountId());
@@ -461,8 +456,6 @@ public class CommerceAccountUserRelPersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		CommerceAccountUserRel commerceAccountUserRel = _persistence.create(pk);
-
-		commerceAccountUserRel.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceAccountUserRel.setCompanyId(RandomTestUtil.nextLong());
 

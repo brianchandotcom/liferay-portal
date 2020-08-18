@@ -74,20 +74,19 @@ public class CommerceRegionModelImpl
 	public static final String TABLE_NAME = "CommerceRegion";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"commerceRegionId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"commerceCountryId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"code_", Types.VARCHAR}, {"priority", Types.DOUBLE},
-		{"active_", Types.BOOLEAN}, {"lastPublishDate", Types.TIMESTAMP}
+		{"uuid_", Types.VARCHAR}, {"commerceRegionId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"commerceCountryId", Types.BIGINT},
+		{"name", Types.VARCHAR}, {"code_", Types.VARCHAR},
+		{"priority", Types.DOUBLE}, {"active_", Types.BOOLEAN},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceRegionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -104,7 +103,7 @@ public class CommerceRegionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceRegion (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceRegionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCountryId LONG,name VARCHAR(75) null,code_ VARCHAR(75) null,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
+		"create table CommerceRegion (uuid_ VARCHAR(75) null,commerceRegionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceCountryId LONG,name VARCHAR(75) null,code_ VARCHAR(75) null,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceRegion";
 
@@ -155,7 +154,9 @@ public class CommerceRegionModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceRegion toModel(CommerceRegionSoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -163,7 +164,6 @@ public class CommerceRegionModelImpl
 
 		CommerceRegion model = new CommerceRegionImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceRegionId(soapModel.getCommerceRegionId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -186,7 +186,9 @@ public class CommerceRegionModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceRegion> toModels(
 		CommerceRegionSoap[] soapModels) {
 
@@ -332,11 +334,6 @@ public class CommerceRegionModelImpl
 		Map<String, BiConsumer<CommerceRegion, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<CommerceRegion, ?>>();
 
-		attributeGetterFunctions.put(
-			"mvccVersion", CommerceRegion::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceRegion, Long>)CommerceRegion::setMvccVersion);
 		attributeGetterFunctions.put("uuid", CommerceRegion::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -402,17 +399,6 @@ public class CommerceRegionModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -704,7 +690,6 @@ public class CommerceRegionModelImpl
 	public Object clone() {
 		CommerceRegionImpl commerceRegionImpl = new CommerceRegionImpl();
 
-		commerceRegionImpl.setMvccVersion(getMvccVersion());
 		commerceRegionImpl.setUuid(getUuid());
 		commerceRegionImpl.setCommerceRegionId(getCommerceRegionId());
 		commerceRegionImpl.setCompanyId(getCompanyId());
@@ -816,8 +801,6 @@ public class CommerceRegionModelImpl
 	public CacheModel<CommerceRegion> toCacheModel() {
 		CommerceRegionCacheModel commerceRegionCacheModel =
 			new CommerceRegionCacheModel();
-
-		commerceRegionCacheModel.mvccVersion = getMvccVersion();
 
 		commerceRegionCacheModel.uuid = getUuid();
 
@@ -964,7 +947,6 @@ public class CommerceRegionModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _commerceRegionId;

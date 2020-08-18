@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.service.http.CPDefinitionInventoryServiceSoap}.
  *
  * @author Alessio Antonio Rendina
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CPDefinitionInventorySoap implements Serializable {
 
 	public static CPDefinitionInventorySoap toSoapModel(
@@ -33,7 +35,6 @@ public class CPDefinitionInventorySoap implements Serializable {
 
 		CPDefinitionInventorySoap soapModel = new CPDefinitionInventorySoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCPDefinitionInventoryId(
 			model.getCPDefinitionInventoryId());
@@ -115,14 +116,6 @@ public class CPDefinitionInventorySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCPDefinitionInventoryId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -291,7 +284,6 @@ public class CPDefinitionInventorySoap implements Serializable {
 		_multipleOrderQuantity = multipleOrderQuantity;
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
 	private long _CPDefinitionInventoryId;
 	private long _groupId;

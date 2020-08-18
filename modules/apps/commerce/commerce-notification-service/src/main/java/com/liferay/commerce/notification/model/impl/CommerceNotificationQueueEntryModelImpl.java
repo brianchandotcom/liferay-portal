@@ -75,7 +75,6 @@ public class CommerceNotificationQueueEntryModelImpl
 	public static final String TABLE_NAME = "CommerceNotificationQueueEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT},
 		{"CNotificationQueueEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -94,7 +93,6 @@ public class CommerceNotificationQueueEntryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CNotificationQueueEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -119,7 +117,7 @@ public class CommerceNotificationQueueEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceNotificationQueueEntry (mvccVersion LONG default 0 not null,CNotificationQueueEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceNotificationTemplateId LONG,from_ VARCHAR(75) null,fromName VARCHAR(75) null,to_ VARCHAR(75) null,toName VARCHAR(75) null,cc VARCHAR(255) null,bcc VARCHAR(255) null,subject VARCHAR(255) null,body TEXT null,priority DOUBLE,sent BOOLEAN,sentDate DATE null)";
+		"create table CommerceNotificationQueueEntry (CNotificationQueueEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceNotificationTemplateId LONG,from_ VARCHAR(75) null,fromName VARCHAR(75) null,to_ VARCHAR(75) null,toName VARCHAR(75) null,cc VARCHAR(255) null,bcc VARCHAR(255) null,subject VARCHAR(255) null,body TEXT null,priority DOUBLE,sent BOOLEAN,sentDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceNotificationQueueEntry";
@@ -173,7 +171,9 @@ public class CommerceNotificationQueueEntryModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceNotificationQueueEntry toModel(
 		CommerceNotificationQueueEntrySoap soapModel) {
 
@@ -184,7 +184,6 @@ public class CommerceNotificationQueueEntryModelImpl
 		CommerceNotificationQueueEntry model =
 			new CommerceNotificationQueueEntryImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceNotificationQueueEntryId(
 			soapModel.getCommerceNotificationQueueEntryId());
 		model.setGroupId(soapModel.getGroupId());
@@ -217,7 +216,9 @@ public class CommerceNotificationQueueEntryModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceNotificationQueueEntry> toModels(
 		CommerceNotificationQueueEntrySoap[] soapModels) {
 
@@ -373,12 +374,6 @@ public class CommerceNotificationQueueEntryModelImpl
 					<String, BiConsumer<CommerceNotificationQueueEntry, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceNotificationQueueEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceNotificationQueueEntry, Long>)
-				CommerceNotificationQueueEntry::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceNotificationQueueEntryId",
 			CommerceNotificationQueueEntry::
 				getCommerceNotificationQueueEntryId);
@@ -514,17 +509,6 @@ public class CommerceNotificationQueueEntryModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -964,7 +948,6 @@ public class CommerceNotificationQueueEntryModelImpl
 		CommerceNotificationQueueEntryImpl commerceNotificationQueueEntryImpl =
 			new CommerceNotificationQueueEntryImpl();
 
-		commerceNotificationQueueEntryImpl.setMvccVersion(getMvccVersion());
 		commerceNotificationQueueEntryImpl.setCommerceNotificationQueueEntryId(
 			getCommerceNotificationQueueEntryId());
 		commerceNotificationQueueEntryImpl.setGroupId(getGroupId());
@@ -1099,8 +1082,6 @@ public class CommerceNotificationQueueEntryModelImpl
 		CommerceNotificationQueueEntryCacheModel
 			commerceNotificationQueueEntryCacheModel =
 				new CommerceNotificationQueueEntryCacheModel();
-
-		commerceNotificationQueueEntryCacheModel.mvccVersion = getMvccVersion();
 
 		commerceNotificationQueueEntryCacheModel.
 			commerceNotificationQueueEntryId =
@@ -1307,7 +1288,6 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceNotificationQueueEntryId;
 	private long _groupId;
 	private long _originalGroupId;

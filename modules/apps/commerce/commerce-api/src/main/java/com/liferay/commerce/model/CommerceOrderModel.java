@@ -17,7 +17,6 @@ package com.liferay.commerce.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
@@ -41,7 +40,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceOrderModel
-	extends BaseModel<CommerceOrder>, GroupedModel, MVCCModel, ShardedModel,
+	extends BaseModel<CommerceOrder>, GroupedModel, ShardedModel,
 			StagedAuditedModel, WorkflowedModel {
 
 	/*
@@ -63,22 +62,6 @@ public interface CommerceOrderModel
 	 * @param primaryKey the primary key of this commerce order
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this commerce order.
-	 *
-	 * @return the mvcc version of this commerce order
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this commerce order.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce order
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this commerce order.

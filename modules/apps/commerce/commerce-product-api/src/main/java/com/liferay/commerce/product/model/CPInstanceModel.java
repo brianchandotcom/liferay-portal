@@ -16,7 +16,6 @@ package com.liferay.commerce.product.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
@@ -40,7 +39,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CPInstanceModel
-	extends BaseModel<CPInstance>, MVCCModel, ShardedModel, StagedGroupedModel,
+	extends BaseModel<CPInstance>, ShardedModel, StagedGroupedModel,
 			WorkflowedModel {
 
 	/*
@@ -62,22 +61,6 @@ public interface CPInstanceModel
 	 * @param primaryKey the primary key of this cp instance
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this cp instance.
-	 *
-	 * @return the mvcc version of this cp instance
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this cp instance.
-	 *
-	 * @param mvccVersion the mvcc version of this cp instance
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this cp instance.

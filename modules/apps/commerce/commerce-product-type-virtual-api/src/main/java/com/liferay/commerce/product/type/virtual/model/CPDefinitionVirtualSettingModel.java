@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 
@@ -43,7 +42,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CPDefinitionVirtualSettingModel
 	extends AttachedModel, BaseModel<CPDefinitionVirtualSetting>,
-			LocalizedModel, MVCCModel, ShardedModel, StagedGroupedModel {
+			LocalizedModel, ShardedModel, StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -64,22 +63,6 @@ public interface CPDefinitionVirtualSettingModel
 	 * @param primaryKey the primary key of this cp definition virtual setting
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this cp definition virtual setting.
-	 *
-	 * @return the mvcc version of this cp definition virtual setting
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this cp definition virtual setting.
-	 *
-	 * @param mvccVersion the mvcc version of this cp definition virtual setting
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this cp definition virtual setting.

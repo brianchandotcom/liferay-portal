@@ -34,9 +34,6 @@ public class CommerceDiscountUsageEntryTable
 	public static final CommerceDiscountUsageEntryTable INSTANCE =
 		new CommerceDiscountUsageEntryTable();
 
-	public final Column<CommerceDiscountUsageEntryTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceDiscountUsageEntryTable, Long>
 		commerceDiscountUsageEntryId = createColumn(
 			"commerceDiscountUsageEntryId", Long.class, Types.BIGINT,

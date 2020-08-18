@@ -80,7 +80,6 @@ public class CommercePaymentMethodGroupRelModelImpl
 	public static final String TABLE_NAME = "CommercePaymentMethodGroupRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT},
 		{"CPaymentMethodGroupRelId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -94,7 +93,6 @@ public class CommercePaymentMethodGroupRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPaymentMethodGroupRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -111,7 +109,7 @@ public class CommercePaymentMethodGroupRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommercePaymentMethodGroupRel (mvccVersion LONG default 0 not null,CPaymentMethodGroupRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,imageId LONG,engineKey VARCHAR(75) null,priority DOUBLE,active_ BOOLEAN)";
+		"create table CommercePaymentMethodGroupRel (CPaymentMethodGroupRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,imageId LONG,engineKey VARCHAR(75) null,priority DOUBLE,active_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommercePaymentMethodGroupRel";
@@ -159,7 +157,9 @@ public class CommercePaymentMethodGroupRelModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommercePaymentMethodGroupRel toModel(
 		CommercePaymentMethodGroupRelSoap soapModel) {
 
@@ -170,7 +170,6 @@ public class CommercePaymentMethodGroupRelModelImpl
 		CommercePaymentMethodGroupRel model =
 			new CommercePaymentMethodGroupRelImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommercePaymentMethodGroupRelId(
 			soapModel.getCommercePaymentMethodGroupRelId());
 		model.setGroupId(soapModel.getGroupId());
@@ -194,7 +193,9 @@ public class CommercePaymentMethodGroupRelModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommercePaymentMethodGroupRel> toModels(
 		CommercePaymentMethodGroupRelSoap[] soapModels) {
 
@@ -349,12 +350,6 @@ public class CommercePaymentMethodGroupRelModelImpl
 					<String, BiConsumer<CommercePaymentMethodGroupRel, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommercePaymentMethodGroupRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommercePaymentMethodGroupRel, Long>)
-				CommercePaymentMethodGroupRel::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commercePaymentMethodGroupRelId",
 			CommercePaymentMethodGroupRel::getCommercePaymentMethodGroupRelId);
 		attributeSetterBiConsumers.put(
@@ -439,17 +434,6 @@ public class CommercePaymentMethodGroupRelModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
-	}
-
-	@JSON
-	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	@JSON
@@ -984,7 +968,6 @@ public class CommercePaymentMethodGroupRelModelImpl
 		CommercePaymentMethodGroupRelImpl commercePaymentMethodGroupRelImpl =
 			new CommercePaymentMethodGroupRelImpl();
 
-		commercePaymentMethodGroupRelImpl.setMvccVersion(getMvccVersion());
 		commercePaymentMethodGroupRelImpl.setCommercePaymentMethodGroupRelId(
 			getCommercePaymentMethodGroupRelId());
 		commercePaymentMethodGroupRelImpl.setGroupId(getGroupId());
@@ -1096,8 +1079,6 @@ public class CommercePaymentMethodGroupRelModelImpl
 		CommercePaymentMethodGroupRelCacheModel
 			commercePaymentMethodGroupRelCacheModel =
 				new CommercePaymentMethodGroupRelCacheModel();
-
-		commercePaymentMethodGroupRelCacheModel.mvccVersion = getMvccVersion();
 
 		commercePaymentMethodGroupRelCacheModel.
 			commercePaymentMethodGroupRelId =
@@ -1248,7 +1229,6 @@ public class CommercePaymentMethodGroupRelModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commercePaymentMethodGroupRelId;
 	private long _groupId;
 	private long _originalGroupId;

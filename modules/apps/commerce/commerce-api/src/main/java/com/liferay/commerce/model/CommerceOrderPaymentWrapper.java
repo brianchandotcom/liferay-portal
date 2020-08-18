@@ -44,7 +44,6 @@ public class CommerceOrderPaymentWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceOrderPaymentId", getCommerceOrderPaymentId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -63,12 +62,6 @@ public class CommerceOrderPaymentWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
 		Long commerceOrderPaymentId = (Long)attributes.get(
 			"commerceOrderPaymentId");
 
@@ -219,16 +212,6 @@ public class CommerceOrderPaymentWrapper
 	}
 
 	/**
-	 * Returns the mvcc version of this commerce order payment.
-	 *
-	 * @return the mvcc version of this commerce order payment
-	 */
-	@Override
-	public long getMvccVersion() {
-		return model.getMvccVersion();
-	}
-
-	/**
 	 * Returns the primary key of this commerce order payment.
 	 *
 	 * @return the primary key of this commerce order payment
@@ -361,16 +344,6 @@ public class CommerceOrderPaymentWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	 * Sets the mvcc version of this commerce order payment.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce order payment
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

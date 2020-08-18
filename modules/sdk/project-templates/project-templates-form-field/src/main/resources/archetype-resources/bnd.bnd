@@ -4,7 +4,7 @@ Bundle-Version: ${version}
 #if (!(${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")}))
 Liferay-JS-Config: /META-INF/resources/config.js
 #end
-#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
+#if (${liferayVersion.startsWith("7.2")} || (${liferayVersion.startsWith("7.3")} && !${reactTemplate.equals("true")}))
 Provide-Capability:\
 	soy;\
 		type:String="LiferayFormField"

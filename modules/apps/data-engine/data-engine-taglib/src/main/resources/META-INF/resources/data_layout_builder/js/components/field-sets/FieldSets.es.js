@@ -30,6 +30,7 @@ import usePropagateFieldSet from './actions/usePropagateFieldSet.es';
 export default function FieldSets({keywords}) {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const [{appProps, dataDefinition, fieldSets}] = useContext(AppContext);
+
 	const [state, setState] = useState({
 		childrenAppProps: {},
 		editingDataDefinition: null,
@@ -110,17 +111,6 @@ export default function FieldSets({keywords}) {
 		);
 	};
 
-	const AddButton = () => (
-		<ClayButton
-			block
-			className="add-fieldset"
-			displayType="secondary"
-			onClick={() => toggleFieldSet(null, dataDefinition)}
-		>
-			{Liferay.Language.get('create-new-fieldset')}
-		</ClayButton>
-	);
-
 	const filteredFieldSets = fieldSets
 		.filter(({defaultLanguageId}) =>
 			new RegExp(keywords, 'ig').test(
@@ -140,6 +130,17 @@ export default function FieldSets({keywords}) {
 			return localizedValueA.localeCompare(localizedValueB);
 		});
 
+	const AddButton = () => (
+		<ClayButton
+			block
+			className="add-fieldset"
+			displayType="secondary"
+			onClick={() => toggleFieldSet(null, dataDefinition)}
+		>
+			{Liferay.Language.get('create-new-fieldset')}
+		</ClayButton>
+	);
+
 	return (
 		<>
 			{filteredFieldSets.length ? (
@@ -148,16 +149,37 @@ export default function FieldSets({keywords}) {
 
 					<div className="mt-3">
 						{filteredFieldSets.map((fieldSet) => {
+							const fieldSetLanguageId =
+								fieldSet.defaultLanguageId;
+
 							const fieldSetName = getLocalizedValue(
-								fieldSet.defaultLanguageId,
+								fieldSetLanguageId,
 								fieldSet.name
 							);
 
+							let editAction = {
+								action: () => toggleFieldSet(fieldSet),
+								name: Liferay.Language.get('edit'),
+							};
+
+							if (defaultLanguageId !== fieldSetLanguageId) {
+								editAction = {
+									...editAction,
+									className: 'disabled',
+									popover: {
+										alignPosition: 'left',
+										body: Liferay.Language.get(
+											'the-fieldset-cannot-be-edited-because-the-instance-language-does-not-match-the-current-language-of-the-fieldset-re-create-the-fieldset-if-changes-are-required'
+										),
+										header: Liferay.Language.get(
+											'edit-not-allowed'
+										),
+									},
+								};
+							}
+
 							const dropDownActions = [
-								{
-									action: () => toggleFieldSet(fieldSet),
-									name: Liferay.Language.get('edit'),
-								},
+								editAction,
 								{
 									action: () =>
 										propagateFieldSet({

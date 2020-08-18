@@ -164,6 +164,10 @@ definition {
 		SelectFrameTop(value1 = "relative=top");
 	}
 
+	macro openWidgetTemplatesAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_dynamic_data_mapping_web_portlet_PortletDisplayTemplatePortlet");
+	}
+
 	macro selectPortletADT {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",

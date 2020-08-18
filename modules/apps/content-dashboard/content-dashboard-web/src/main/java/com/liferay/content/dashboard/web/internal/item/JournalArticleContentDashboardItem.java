@@ -21,7 +21,6 @@ import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemA
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
-import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -61,11 +59,8 @@ public class JournalArticleContentDashboardItem
 		ContentDashboardItemActionProviderTracker
 			contentDashboardItemActionProviderTracker,
 		ContentDashboardItemType contentDashboardItemType, Group group,
-		InfoEditURLProvider<JournalArticle> infoEditURLProvider,
 		JournalArticle journalArticle, Language language,
-		JournalArticle latestApprovedJournalArticle,
-		ModelResourcePermission<JournalArticle> modelResourcePermission,
-		User user) {
+		JournalArticle latestApprovedJournalArticle, User user) {
 
 		if (ListUtil.isEmpty(assetCategories)) {
 			_assetCategories = Collections.emptyList();
@@ -85,7 +80,6 @@ public class JournalArticleContentDashboardItem
 			contentDashboardItemActionProviderTracker;
 		_contentDashboardItemType = contentDashboardItemType;
 		_group = group;
-		_infoEditURLProvider = infoEditURLProvider;
 		_journalArticle = journalArticle;
 		_language = language;
 
@@ -96,7 +90,6 @@ public class JournalArticleContentDashboardItem
 			_latestApprovedJournalArticle = null;
 		}
 
-		_modelResourcePermission = modelResourcePermission;
 		_user = user;
 	}
 
@@ -340,12 +333,9 @@ public class JournalArticleContentDashboardItem
 		_contentDashboardItemActionProviderTracker;
 	private final ContentDashboardItemType _contentDashboardItemType;
 	private final Group _group;
-	private final InfoEditURLProvider<JournalArticle> _infoEditURLProvider;
 	private final JournalArticle _journalArticle;
 	private final Language _language;
 	private final JournalArticle _latestApprovedJournalArticle;
-	private final ModelResourcePermission<JournalArticle>
-		_modelResourcePermission;
 	private final User _user;
 
 }

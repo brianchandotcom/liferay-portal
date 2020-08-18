@@ -250,7 +250,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				return LocaleUtil.US;
 			}
 
-
 			@Override
 			public Date getModifiedDate() {
 				return new Date();

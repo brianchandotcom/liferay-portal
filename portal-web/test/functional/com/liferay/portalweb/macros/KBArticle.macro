@@ -409,10 +409,8 @@ definition {
 			locator1 = "Button#SELECT",
 			value1 = "Select");
 
-		SelectFrame(value1 = "relative=top");
-
 		if (isSet(kbFolderName)) {
-			Modal.selectFrameSpecific(modalTitle = "Select Entry");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			AssertClick(
 				key_kbFolderName = "${kbFolderName}",
@@ -422,7 +420,7 @@ definition {
 			SelectFrame(value1 = "relative=top");
 		}
 
-		Modal.selectFrameSpecific(modalTitle = "Select Entry");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Click(
 			key_kbArticleTitle = "${kbArticleTitle}",
@@ -485,9 +483,7 @@ definition {
 			locator1 = "Button#SELECT",
 			value1 = "Select");
 
-		SelectFrame(value1 = "relative=top");
-
-		Modal.selectFrameSpecific(modalTitle = "Select Entry");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		AssertClick(
 			key_kbFolderName = "${kbFolderName}",
@@ -968,9 +964,7 @@ definition {
 			locator1 = "Button#SELECT",
 			value1 = "Select");
 
-		SelectFrame(value1 = "relative=top");
-
-		Modal.selectFrameSpecific(modalTitle = "Select Entry");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		AssertClick(
 			key_kbArticleTitle = "${kbArticleTitle}",

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchLayoutRevisionException;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
@@ -644,41 +645,82 @@ public class LayoutRevisionPersistenceTest {
 
 		_persistence.clearCache();
 
-		LayoutRevision existingLayoutRevision = _persistence.findByPrimaryKey(
-			newLayoutRevision.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newLayoutRevision.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		LayoutRevision newLayoutRevision = addLayoutRevision();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			LayoutRevision.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"layoutRevisionId", newLayoutRevision.getLayoutRevisionId()));
+
+		List<LayoutRevision> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(LayoutRevision layoutRevision) {
+		Assert.assertEquals(
+			Long.valueOf(layoutRevision.getLayoutSetBranchId()),
+			ReflectionTestUtil.<Long>invoke(
+				layoutRevision, "getOriginalLayoutSetBranchId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Boolean.valueOf(layoutRevision.getHead()),
+			ReflectionTestUtil.<Boolean>invoke(
+				layoutRevision, "getOriginalHead", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(layoutRevision.getPlid()),
+			ReflectionTestUtil.<Long>invoke(
+				layoutRevision, "getOriginalPlid", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingLayoutRevision.getLayoutSetBranchId()),
+			Long.valueOf(layoutRevision.getLayoutSetBranchId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingLayoutRevision, "getOriginalLayoutSetBranchId",
+				layoutRevision, "getOriginalLayoutSetBranchId",
 				new Class<?>[0]));
 		Assert.assertEquals(
-			Boolean.valueOf(existingLayoutRevision.getHead()),
+			Long.valueOf(layoutRevision.getLayoutBranchId()),
+			ReflectionTestUtil.<Long>invoke(
+				layoutRevision, "getOriginalLayoutBranchId", new Class<?>[0]));
+		Assert.assertEquals(
+			Boolean.valueOf(layoutRevision.getHead()),
 			ReflectionTestUtil.<Boolean>invoke(
-				existingLayoutRevision, "getOriginalHead", new Class<?>[0]));
+				layoutRevision, "getOriginalHead", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingLayoutRevision.getPlid()),
+			Long.valueOf(layoutRevision.getPlid()),
 			ReflectionTestUtil.<Long>invoke(
-				existingLayoutRevision, "getOriginalPlid", new Class<?>[0]));
-
-		Assert.assertEquals(
-			Long.valueOf(existingLayoutRevision.getLayoutSetBranchId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingLayoutRevision, "getOriginalLayoutSetBranchId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingLayoutRevision.getLayoutBranchId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingLayoutRevision, "getOriginalLayoutBranchId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Boolean.valueOf(existingLayoutRevision.getHead()),
-			ReflectionTestUtil.<Boolean>invoke(
-				existingLayoutRevision, "getOriginalHead", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingLayoutRevision.getPlid()),
-			ReflectionTestUtil.<Long>invoke(
-				existingLayoutRevision, "getOriginalPlid", new Class<?>[0]));
+				layoutRevision, "getOriginalPlid", new Class<?>[0]));
 	}
 
 	protected LayoutRevision addLayoutRevision() throws Exception {

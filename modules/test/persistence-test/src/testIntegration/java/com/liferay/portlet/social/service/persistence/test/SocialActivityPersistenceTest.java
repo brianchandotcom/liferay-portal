@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -546,46 +547,85 @@ public class SocialActivityPersistenceTest {
 
 		_persistence.clearCache();
 
-		SocialActivity existingSocialActivity = _persistence.findByPrimaryKey(
-			newSocialActivity.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newSocialActivity.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		SocialActivity newSocialActivity = addSocialActivity();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SocialActivity.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"activityId", newSocialActivity.getActivityId()));
+
+		List<SocialActivity> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(SocialActivity socialActivity) {
+		Assert.assertEquals(
+			Long.valueOf(socialActivity.getMirrorActivityId()),
+			ReflectionTestUtil.<Long>invoke(
+				socialActivity, "getOriginalMirrorActivityId",
+				new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingSocialActivity.getMirrorActivityId()),
+			Long.valueOf(socialActivity.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivity, "getOriginalMirrorActivityId",
-				new Class<?>[0]));
-
+				socialActivity, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingSocialActivity.getGroupId()),
+			Long.valueOf(socialActivity.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivity, "getOriginalGroupId", new Class<?>[0]));
+				socialActivity, "getOriginalUserId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingSocialActivity.getUserId()),
+			Long.valueOf(socialActivity.getCreateDate()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivity, "getOriginalUserId", new Class<?>[0]));
+				socialActivity, "getOriginalCreateDate", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingSocialActivity.getCreateDate()),
+			Long.valueOf(socialActivity.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivity, "getOriginalCreateDate",
-				new Class<?>[0]));
+				socialActivity, "getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingSocialActivity.getClassNameId()),
+			Long.valueOf(socialActivity.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivity, "getOriginalClassNameId",
-				new Class<?>[0]));
+				socialActivity, "getOriginalClassPK", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingSocialActivity.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivity, "getOriginalClassPK", new Class<?>[0]));
-		Assert.assertEquals(
-			Integer.valueOf(existingSocialActivity.getType()),
+			Integer.valueOf(socialActivity.getType()),
 			ReflectionTestUtil.<Integer>invoke(
-				existingSocialActivity, "getOriginalType", new Class<?>[0]));
+				socialActivity, "getOriginalType", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingSocialActivity.getReceiverUserId()),
+			Long.valueOf(socialActivity.getReceiverUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivity, "getOriginalReceiverUserId",
-				new Class<?>[0]));
+				socialActivity, "getOriginalReceiverUserId", new Class<?>[0]));
 	}
 
 	protected SocialActivity addSocialActivity() throws Exception {

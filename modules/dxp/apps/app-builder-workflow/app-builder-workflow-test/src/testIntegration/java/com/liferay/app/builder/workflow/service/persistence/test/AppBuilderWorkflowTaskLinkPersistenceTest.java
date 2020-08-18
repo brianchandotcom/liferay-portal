@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -44,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -507,34 +507,78 @@ public class AppBuilderWorkflowTaskLinkPersistenceTest {
 
 		_persistence.clearCache();
 
-		AppBuilderWorkflowTaskLink existingAppBuilderWorkflowTaskLink =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newAppBuilderWorkflowTaskLink.getPrimaryKey());
+				newAppBuilderWorkflowTaskLink.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		AppBuilderWorkflowTaskLink newAppBuilderWorkflowTaskLink =
+			addAppBuilderWorkflowTaskLink();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			AppBuilderWorkflowTaskLink.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"appBuilderWorkflowTaskLinkId",
+				newAppBuilderWorkflowTaskLink.
+					getAppBuilderWorkflowTaskLinkId()));
+
+		List<AppBuilderWorkflowTaskLink> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		AppBuilderWorkflowTaskLink appBuilderWorkflowTaskLink) {
 
 		Assert.assertEquals(
-			Long.valueOf(
-				existingAppBuilderWorkflowTaskLink.getAppBuilderAppId()),
+			Long.valueOf(appBuilderWorkflowTaskLink.getAppBuilderAppId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAppBuilderWorkflowTaskLink,
-				"getOriginalAppBuilderAppId", new Class<?>[0]));
+				appBuilderWorkflowTaskLink, "getOriginalAppBuilderAppId",
+				new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(
-				existingAppBuilderWorkflowTaskLink.getAppBuilderAppVersionId()),
+				appBuilderWorkflowTaskLink.getAppBuilderAppVersionId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAppBuilderWorkflowTaskLink,
-				"getOriginalAppBuilderAppVersionId", new Class<?>[0]));
+				appBuilderWorkflowTaskLink, "getOriginalAppBuilderAppVersionId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(
-				existingAppBuilderWorkflowTaskLink.getDdmStructureLayoutId()),
+			Long.valueOf(appBuilderWorkflowTaskLink.getDdmStructureLayoutId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAppBuilderWorkflowTaskLink,
-				"getOriginalDdmStructureLayoutId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingAppBuilderWorkflowTaskLink.getWorkflowTaskName(),
-				ReflectionTestUtil.invoke(
-					existingAppBuilderWorkflowTaskLink,
-					"getOriginalWorkflowTaskName", new Class<?>[0])));
+				appBuilderWorkflowTaskLink, "getOriginalDdmStructureLayoutId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			appBuilderWorkflowTaskLink.getWorkflowTaskName(),
+			ReflectionTestUtil.invoke(
+				appBuilderWorkflowTaskLink, "getOriginalWorkflowTaskName",
+				new Class<?>[0]));
 	}
 
 	protected AppBuilderWorkflowTaskLink addAppBuilderWorkflowTaskLink()

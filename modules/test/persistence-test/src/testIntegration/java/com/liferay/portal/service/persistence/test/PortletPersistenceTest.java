@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchPortletException;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
@@ -44,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -400,18 +400,56 @@ public class PortletPersistenceTest {
 
 		_persistence.clearCache();
 
-		Portlet existingPortlet = _persistence.findByPrimaryKey(
-			newPortlet.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newPortlet.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		Portlet newPortlet = addPortlet();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Portlet.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("id", newPortlet.getId()));
+
+		List<Portlet> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(Portlet portlet) {
 		Assert.assertEquals(
-			Long.valueOf(existingPortlet.getCompanyId()),
+			Long.valueOf(portlet.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingPortlet, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingPortlet.getPortletId(),
-				ReflectionTestUtil.invoke(
-					existingPortlet, "getOriginalPortletId", new Class<?>[0])));
+				portlet, "getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(
+			portlet.getPortletId(),
+			ReflectionTestUtil.invoke(
+				portlet, "getOriginalPortletId", new Class<?>[0]));
 	}
 
 	protected Portlet addPortlet() throws Exception {

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -515,30 +515,69 @@ public class KaleoTransitionPersistenceTest {
 
 		_persistence.clearCache();
 
-		KaleoTransition existingKaleoTransition = _persistence.findByPrimaryKey(
-			newKaleoTransition.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newKaleoTransition.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		KaleoTransition newKaleoTransition = addKaleoTransition();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			KaleoTransition.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"kaleoTransitionId",
+				newKaleoTransition.getKaleoTransitionId()));
+
+		List<KaleoTransition> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(KaleoTransition kaleoTransition) {
+		Assert.assertEquals(
+			Long.valueOf(kaleoTransition.getKaleoNodeId()),
+			ReflectionTestUtil.<Long>invoke(
+				kaleoTransition, "getOriginalKaleoNodeId", new Class<?>[0]));
+		Assert.assertEquals(
+			kaleoTransition.getName(),
+			ReflectionTestUtil.invoke(
+				kaleoTransition, "getOriginalName", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingKaleoTransition.getKaleoNodeId()),
+			Long.valueOf(kaleoTransition.getKaleoNodeId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingKaleoTransition, "getOriginalKaleoNodeId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingKaleoTransition.getName(),
-				ReflectionTestUtil.invoke(
-					existingKaleoTransition, "getOriginalName",
-					new Class<?>[0])));
-
+				kaleoTransition, "getOriginalKaleoNodeId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingKaleoTransition.getKaleoNodeId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingKaleoTransition, "getOriginalKaleoNodeId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Boolean.valueOf(existingKaleoTransition.getDefaultTransition()),
+			Boolean.valueOf(kaleoTransition.getDefaultTransition()),
 			ReflectionTestUtil.<Boolean>invoke(
-				existingKaleoTransition, "getOriginalDefaultTransition",
+				kaleoTransition, "getOriginalDefaultTransition",
 				new Class<?>[0]));
 	}
 

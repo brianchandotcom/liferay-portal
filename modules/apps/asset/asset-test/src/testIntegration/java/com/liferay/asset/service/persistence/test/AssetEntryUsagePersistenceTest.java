@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -523,41 +523,77 @@ public class AssetEntryUsagePersistenceTest {
 
 		_persistence.clearCache();
 
-		AssetEntryUsage existingAssetEntryUsage = _persistence.findByPrimaryKey(
-			newAssetEntryUsage.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newAssetEntryUsage.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingAssetEntryUsage.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingAssetEntryUsage, "getOriginalUuid",
-					new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		AssetEntryUsage newAssetEntryUsage = addAssetEntryUsage();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			AssetEntryUsage.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"assetEntryUsageId",
+				newAssetEntryUsage.getAssetEntryUsageId()));
+
+		List<AssetEntryUsage> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(AssetEntryUsage assetEntryUsage) {
 		Assert.assertEquals(
-			Long.valueOf(existingAssetEntryUsage.getGroupId()),
+			assetEntryUsage.getUuid(),
+			ReflectionTestUtil.invoke(
+				assetEntryUsage, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(assetEntryUsage.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAssetEntryUsage, "getOriginalGroupId",
-				new Class<?>[0]));
+				assetEntryUsage, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingAssetEntryUsage.getAssetEntryId()),
+			Long.valueOf(assetEntryUsage.getAssetEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAssetEntryUsage, "getOriginalAssetEntryId",
-				new Class<?>[0]));
+				assetEntryUsage, "getOriginalAssetEntryId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingAssetEntryUsage.getContainerType()),
+			Long.valueOf(assetEntryUsage.getContainerType()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAssetEntryUsage, "getOriginalContainerType",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingAssetEntryUsage.getContainerKey(),
-				ReflectionTestUtil.invoke(
-					existingAssetEntryUsage, "getOriginalContainerKey",
-					new Class<?>[0])));
+				assetEntryUsage, "getOriginalContainerType", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingAssetEntryUsage.getPlid()),
+			assetEntryUsage.getContainerKey(),
+			ReflectionTestUtil.invoke(
+				assetEntryUsage, "getOriginalContainerKey", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(assetEntryUsage.getPlid()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAssetEntryUsage, "getOriginalPlid", new Class<?>[0]));
+				assetEntryUsage, "getOriginalPlid", new Class<?>[0]));
 	}
 
 	protected AssetEntryUsage addAssetEntryUsage() throws Exception {

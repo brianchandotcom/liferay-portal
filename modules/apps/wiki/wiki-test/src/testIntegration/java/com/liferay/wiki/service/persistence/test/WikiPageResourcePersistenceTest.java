@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -44,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -448,32 +448,68 @@ public class WikiPageResourcePersistenceTest {
 
 		_persistence.clearCache();
 
-		WikiPageResource existingWikiPageResource =
-			_persistence.findByPrimaryKey(newWikiPageResource.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newWikiPageResource.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingWikiPageResource.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingWikiPageResource, "getOriginalUuid",
-					new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		WikiPageResource newWikiPageResource = addWikiPageResource();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			WikiPageResource.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"resourcePrimKey", newWikiPageResource.getResourcePrimKey()));
+
+		List<WikiPageResource> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(WikiPageResource wikiPageResource) {
 		Assert.assertEquals(
-			Long.valueOf(existingWikiPageResource.getGroupId()),
+			wikiPageResource.getUuid(),
+			ReflectionTestUtil.invoke(
+				wikiPageResource, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(wikiPageResource.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingWikiPageResource, "getOriginalGroupId",
-				new Class<?>[0]));
+				wikiPageResource, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingWikiPageResource.getNodeId()),
+			Long.valueOf(wikiPageResource.getNodeId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingWikiPageResource, "getOriginalNodeId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingWikiPageResource.getTitle(),
-				ReflectionTestUtil.invoke(
-					existingWikiPageResource, "getOriginalTitle",
-					new Class<?>[0])));
+				wikiPageResource, "getOriginalNodeId", new Class<?>[0]));
+		Assert.assertEquals(
+			wikiPageResource.getTitle(),
+			ReflectionTestUtil.invoke(
+				wikiPageResource, "getOriginalTitle", new Class<?>[0]));
 	}
 
 	protected WikiPageResource addWikiPageResource() throws Exception {

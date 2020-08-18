@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -544,44 +544,78 @@ public class AssetVocabularyPersistenceTest {
 
 		_persistence.clearCache();
 
-		AssetVocabulary existingAssetVocabulary = _persistence.findByPrimaryKey(
-			newAssetVocabulary.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newAssetVocabulary.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingAssetVocabulary.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingAssetVocabulary, "getOriginalUuid",
-					new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		AssetVocabulary newAssetVocabulary = addAssetVocabulary();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			AssetVocabulary.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"vocabularyId", newAssetVocabulary.getVocabularyId()));
+
+		List<AssetVocabulary> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(AssetVocabulary assetVocabulary) {
 		Assert.assertEquals(
-			Long.valueOf(existingAssetVocabulary.getGroupId()),
+			assetVocabulary.getUuid(),
+			ReflectionTestUtil.invoke(
+				assetVocabulary, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(assetVocabulary.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAssetVocabulary, "getOriginalGroupId",
-				new Class<?>[0]));
+				assetVocabulary, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingAssetVocabulary.getGroupId()),
+			Long.valueOf(assetVocabulary.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAssetVocabulary, "getOriginalGroupId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingAssetVocabulary.getName(),
-				ReflectionTestUtil.invoke(
-					existingAssetVocabulary, "getOriginalName",
-					new Class<?>[0])));
+				assetVocabulary, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(
+			assetVocabulary.getName(),
+			ReflectionTestUtil.invoke(
+				assetVocabulary, "getOriginalName", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingAssetVocabulary.getCompanyId()),
+			Long.valueOf(assetVocabulary.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAssetVocabulary, "getOriginalCompanyId",
+				assetVocabulary, "getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(
+			assetVocabulary.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				assetVocabulary, "getOriginalExternalReferenceCode",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingAssetVocabulary.getExternalReferenceCode(),
-				ReflectionTestUtil.invoke(
-					existingAssetVocabulary, "getOriginalExternalReferenceCode",
-					new Class<?>[0])));
 	}
 
 	protected AssetVocabulary addAssetVocabulary() throws Exception {

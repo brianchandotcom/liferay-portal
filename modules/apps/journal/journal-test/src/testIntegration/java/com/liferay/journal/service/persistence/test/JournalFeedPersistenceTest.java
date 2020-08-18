@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -46,7 +47,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -542,29 +542,67 @@ public class JournalFeedPersistenceTest {
 
 		_persistence.clearCache();
 
-		JournalFeed existingJournalFeed = _persistence.findByPrimaryKey(
-			newJournalFeed.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newJournalFeed.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingJournalFeed.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingJournalFeed, "getOriginalUuid", new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		JournalFeed newJournalFeed = addJournalFeed();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			JournalFeed.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("id", newJournalFeed.getId()));
+
+		List<JournalFeed> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(JournalFeed journalFeed) {
 		Assert.assertEquals(
-			Long.valueOf(existingJournalFeed.getGroupId()),
+			journalFeed.getUuid(),
+			ReflectionTestUtil.invoke(
+				journalFeed, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(journalFeed.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingJournalFeed, "getOriginalGroupId", new Class<?>[0]));
+				journalFeed, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingJournalFeed.getGroupId()),
+			Long.valueOf(journalFeed.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingJournalFeed, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingJournalFeed.getFeedId(),
-				ReflectionTestUtil.invoke(
-					existingJournalFeed, "getOriginalFeedId",
-					new Class<?>[0])));
+				journalFeed, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(
+			journalFeed.getFeedId(),
+			ReflectionTestUtil.invoke(
+				journalFeed, "getOriginalFeedId", new Class<?>[0]));
 	}
 
 	protected JournalFeed addJournalFeed() throws Exception {

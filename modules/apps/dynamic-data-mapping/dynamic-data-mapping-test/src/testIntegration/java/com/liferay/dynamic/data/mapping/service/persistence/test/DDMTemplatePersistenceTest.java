@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -669,40 +669,77 @@ public class DDMTemplatePersistenceTest {
 
 		_persistence.clearCache();
 
-		DDMTemplate existingDDMTemplate = _persistence.findByPrimaryKey(
-			newDDMTemplate.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newDDMTemplate.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingDDMTemplate.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingDDMTemplate, "getOriginalUuid", new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		DDMTemplate newDDMTemplate = addDDMTemplate();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DDMTemplate.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"templateId", newDDMTemplate.getTemplateId()));
+
+		List<DDMTemplate> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(DDMTemplate ddmTemplate) {
 		Assert.assertEquals(
-			Long.valueOf(existingDDMTemplate.getGroupId()),
+			ddmTemplate.getUuid(),
+			ReflectionTestUtil.invoke(
+				ddmTemplate, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(ddmTemplate.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDDMTemplate, "getOriginalGroupId", new Class<?>[0]));
+				ddmTemplate, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingDDMTemplate.getSmallImageId()),
+			Long.valueOf(ddmTemplate.getSmallImageId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDDMTemplate, "getOriginalSmallImageId",
-				new Class<?>[0]));
+				ddmTemplate, "getOriginalSmallImageId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingDDMTemplate.getGroupId()),
+			Long.valueOf(ddmTemplate.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDDMTemplate, "getOriginalGroupId", new Class<?>[0]));
+				ddmTemplate, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingDDMTemplate.getClassNameId()),
+			Long.valueOf(ddmTemplate.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDDMTemplate, "getOriginalClassNameId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingDDMTemplate.getTemplateKey(),
-				ReflectionTestUtil.invoke(
-					existingDDMTemplate, "getOriginalTemplateKey",
-					new Class<?>[0])));
+				ddmTemplate, "getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(
+			ddmTemplate.getTemplateKey(),
+			ReflectionTestUtil.invoke(
+				ddmTemplate, "getOriginalTemplateKey", new Class<?>[0]));
 	}
 
 	protected DDMTemplate addDDMTemplate() throws Exception {

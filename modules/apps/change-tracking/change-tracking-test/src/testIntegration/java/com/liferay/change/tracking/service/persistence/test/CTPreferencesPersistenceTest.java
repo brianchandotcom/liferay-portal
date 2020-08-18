@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -432,18 +433,59 @@ public class CTPreferencesPersistenceTest {
 
 		_persistence.clearCache();
 
-		CTPreferences existingCTPreferences = _persistence.findByPrimaryKey(
-			newCTPreferences.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newCTPreferences.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CTPreferences newCTPreferences = addCTPreferences();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CTPreferences.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"ctPreferencesId", newCTPreferences.getCtPreferencesId()));
+
+		List<CTPreferences> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(CTPreferences ctPreferences) {
 		Assert.assertEquals(
-			Long.valueOf(existingCTPreferences.getCompanyId()),
+			Long.valueOf(ctPreferences.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCTPreferences, "getOriginalCompanyId",
-				new Class<?>[0]));
+				ctPreferences, "getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingCTPreferences.getUserId()),
+			Long.valueOf(ctPreferences.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCTPreferences, "getOriginalUserId", new Class<?>[0]));
+				ctPreferences, "getOriginalUserId", new Class<?>[0]));
 	}
 
 	protected CTPreferences addCTPreferences() throws Exception {

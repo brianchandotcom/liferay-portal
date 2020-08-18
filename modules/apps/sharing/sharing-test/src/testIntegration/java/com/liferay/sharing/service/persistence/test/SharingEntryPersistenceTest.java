@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -531,32 +531,72 @@ public class SharingEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		SharingEntry existingSharingEntry = _persistence.findByPrimaryKey(
-			newSharingEntry.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newSharingEntry.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingSharingEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingSharingEntry, "getOriginalUuid", new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		SharingEntry newSharingEntry = addSharingEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SharingEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"sharingEntryId", newSharingEntry.getSharingEntryId()));
+
+		List<SharingEntry> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(SharingEntry sharingEntry) {
 		Assert.assertEquals(
-			Long.valueOf(existingSharingEntry.getGroupId()),
+			sharingEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				sharingEntry, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(sharingEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSharingEntry, "getOriginalGroupId", new Class<?>[0]));
+				sharingEntry, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingSharingEntry.getToUserId()),
+			Long.valueOf(sharingEntry.getToUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSharingEntry, "getOriginalToUserId", new Class<?>[0]));
+				sharingEntry, "getOriginalToUserId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingSharingEntry.getClassNameId()),
+			Long.valueOf(sharingEntry.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSharingEntry, "getOriginalClassNameId",
-				new Class<?>[0]));
+				sharingEntry, "getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingSharingEntry.getClassPK()),
+			Long.valueOf(sharingEntry.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSharingEntry, "getOriginalClassPK", new Class<?>[0]));
+				sharingEntry, "getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected SharingEntry addSharingEntry() throws Exception {

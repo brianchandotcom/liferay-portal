@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -446,25 +446,64 @@ public class OAuthUserPersistenceTest {
 
 		_persistence.clearCache();
 
-		OAuthUser existingOAuthUser = _persistence.findByPrimaryKey(
-			newOAuthUser.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newOAuthUser.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingOAuthUser.getAccessToken(),
-				ReflectionTestUtil.invoke(
-					existingOAuthUser, "getOriginalAccessToken",
-					new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		OAuthUser newOAuthUser = addOAuthUser();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			OAuthUser.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"oAuthUserId", newOAuthUser.getOAuthUserId()));
+
+		List<OAuthUser> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(OAuthUser oAuthUser) {
+		Assert.assertEquals(
+			oAuthUser.getAccessToken(),
+			ReflectionTestUtil.invoke(
+				oAuthUser, "getOriginalAccessToken", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingOAuthUser.getUserId()),
+			Long.valueOf(oAuthUser.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingOAuthUser, "getOriginalUserId", new Class<?>[0]));
+				oAuthUser, "getOriginalUserId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingOAuthUser.getOAuthApplicationId()),
+			Long.valueOf(oAuthUser.getOAuthApplicationId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingOAuthUser, "getOriginalOAuthApplicationId",
-				new Class<?>[0]));
+				oAuthUser, "getOriginalOAuthApplicationId", new Class<?>[0]));
 	}
 
 	protected OAuthUser addOAuthUser() throws Exception {

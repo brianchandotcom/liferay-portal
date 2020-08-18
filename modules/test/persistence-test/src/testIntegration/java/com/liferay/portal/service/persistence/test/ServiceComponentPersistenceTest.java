@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchServiceComponentException;
 import com.liferay.portal.kernel.model.ServiceComponent;
 import com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil;
@@ -44,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -426,20 +426,61 @@ public class ServiceComponentPersistenceTest {
 
 		_persistence.clearCache();
 
-		ServiceComponent existingServiceComponent =
-			_persistence.findByPrimaryKey(newServiceComponent.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newServiceComponent.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingServiceComponent.getBuildNamespace(),
-				ReflectionTestUtil.invoke(
-					existingServiceComponent, "getOriginalBuildNamespace",
-					new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		ServiceComponent newServiceComponent = addServiceComponent();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ServiceComponent.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"serviceComponentId",
+				newServiceComponent.getServiceComponentId()));
+
+		List<ServiceComponent> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(ServiceComponent serviceComponent) {
 		Assert.assertEquals(
-			Long.valueOf(existingServiceComponent.getBuildNumber()),
-			ReflectionTestUtil.<Long>invoke(
-				existingServiceComponent, "getOriginalBuildNumber",
+			serviceComponent.getBuildNamespace(),
+			ReflectionTestUtil.invoke(
+				serviceComponent, "getOriginalBuildNamespace",
 				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(serviceComponent.getBuildNumber()),
+			ReflectionTestUtil.<Long>invoke(
+				serviceComponent, "getOriginalBuildNumber", new Class<?>[0]));
 	}
 
 	protected ServiceComponent addServiceComponent() throws Exception {

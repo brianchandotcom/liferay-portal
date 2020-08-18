@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -461,21 +462,62 @@ public class AssetLinkPersistenceTest {
 
 		_persistence.clearCache();
 
-		AssetLink existingAssetLink = _persistence.findByPrimaryKey(
-			newAssetLink.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newAssetLink.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		AssetLink newAssetLink = addAssetLink();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			AssetLink.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("linkId", newAssetLink.getLinkId()));
+
+		List<AssetLink> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(AssetLink assetLink) {
 		Assert.assertEquals(
-			Long.valueOf(existingAssetLink.getEntryId1()),
+			Long.valueOf(assetLink.getEntryId1()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAssetLink, "getOriginalEntryId1", new Class<?>[0]));
+				assetLink, "getOriginalEntryId1", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingAssetLink.getEntryId2()),
+			Long.valueOf(assetLink.getEntryId2()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAssetLink, "getOriginalEntryId2", new Class<?>[0]));
+				assetLink, "getOriginalEntryId2", new Class<?>[0]));
 		Assert.assertEquals(
-			Integer.valueOf(existingAssetLink.getType()),
+			Integer.valueOf(assetLink.getType()),
 			ReflectionTestUtil.<Integer>invoke(
-				existingAssetLink, "getOriginalType", new Class<?>[0]));
+				assetLink, "getOriginalType", new Class<?>[0]));
 	}
 
 	protected AssetLink addAssetLink() throws Exception {

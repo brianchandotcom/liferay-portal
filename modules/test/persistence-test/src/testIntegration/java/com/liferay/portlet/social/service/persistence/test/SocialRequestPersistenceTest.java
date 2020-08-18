@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -44,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -546,42 +546,80 @@ public class SocialRequestPersistenceTest {
 
 		_persistence.clearCache();
 
-		SocialRequest existingSocialRequest = _persistence.findByPrimaryKey(
-			newSocialRequest.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newSocialRequest.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingSocialRequest.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingSocialRequest, "getOriginalUuid",
-					new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		SocialRequest newSocialRequest = addSocialRequest();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SocialRequest.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"requestId", newSocialRequest.getRequestId()));
+
+		List<SocialRequest> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(SocialRequest socialRequest) {
 		Assert.assertEquals(
-			Long.valueOf(existingSocialRequest.getGroupId()),
+			socialRequest.getUuid(),
+			ReflectionTestUtil.invoke(
+				socialRequest, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(socialRequest.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSocialRequest, "getOriginalGroupId", new Class<?>[0]));
+				socialRequest, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingSocialRequest.getUserId()),
+			Long.valueOf(socialRequest.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSocialRequest, "getOriginalUserId", new Class<?>[0]));
+				socialRequest, "getOriginalUserId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingSocialRequest.getClassNameId()),
+			Long.valueOf(socialRequest.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSocialRequest, "getOriginalClassNameId",
-				new Class<?>[0]));
+				socialRequest, "getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingSocialRequest.getClassPK()),
+			Long.valueOf(socialRequest.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSocialRequest, "getOriginalClassPK", new Class<?>[0]));
+				socialRequest, "getOriginalClassPK", new Class<?>[0]));
 		Assert.assertEquals(
-			Integer.valueOf(existingSocialRequest.getType()),
+			Integer.valueOf(socialRequest.getType()),
 			ReflectionTestUtil.<Integer>invoke(
-				existingSocialRequest, "getOriginalType", new Class<?>[0]));
+				socialRequest, "getOriginalType", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingSocialRequest.getReceiverUserId()),
+			Long.valueOf(socialRequest.getReceiverUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSocialRequest, "getOriginalReceiverUserId",
-				new Class<?>[0]));
+				socialRequest, "getOriginalReceiverUserId", new Class<?>[0]));
 	}
 
 	protected SocialRequest addSocialRequest() throws Exception {

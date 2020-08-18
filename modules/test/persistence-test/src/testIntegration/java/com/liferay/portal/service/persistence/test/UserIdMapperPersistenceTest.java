@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchUserIdMapperException;
 import com.liferay.portal.kernel.model.UserIdMapper;
 import com.liferay.portal.kernel.service.UserIdMapperLocalServiceUtil;
@@ -44,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -434,30 +434,68 @@ public class UserIdMapperPersistenceTest {
 
 		_persistence.clearCache();
 
-		UserIdMapper existingUserIdMapper = _persistence.findByPrimaryKey(
-			newUserIdMapper.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newUserIdMapper.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		UserIdMapper newUserIdMapper = addUserIdMapper();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UserIdMapper.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"userIdMapperId", newUserIdMapper.getUserIdMapperId()));
+
+		List<UserIdMapper> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(UserIdMapper userIdMapper) {
+		Assert.assertEquals(
+			Long.valueOf(userIdMapper.getUserId()),
+			ReflectionTestUtil.<Long>invoke(
+				userIdMapper, "getOriginalUserId", new Class<?>[0]));
+		Assert.assertEquals(
+			userIdMapper.getType(),
+			ReflectionTestUtil.invoke(
+				userIdMapper, "getOriginalType", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingUserIdMapper.getUserId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingUserIdMapper, "getOriginalUserId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingUserIdMapper.getType(),
-				ReflectionTestUtil.invoke(
-					existingUserIdMapper, "getOriginalType", new Class<?>[0])));
-
-		Assert.assertTrue(
-			Objects.equals(
-				existingUserIdMapper.getType(),
-				ReflectionTestUtil.invoke(
-					existingUserIdMapper, "getOriginalType", new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				existingUserIdMapper.getExternalUserId(),
-				ReflectionTestUtil.invoke(
-					existingUserIdMapper, "getOriginalExternalUserId",
-					new Class<?>[0])));
+			userIdMapper.getType(),
+			ReflectionTestUtil.invoke(
+				userIdMapper, "getOriginalType", new Class<?>[0]));
+		Assert.assertEquals(
+			userIdMapper.getExternalUserId(),
+			ReflectionTestUtil.invoke(
+				userIdMapper, "getOriginalExternalUserId", new Class<?>[0]));
 	}
 
 	protected UserIdMapper addUserIdMapper() throws Exception {

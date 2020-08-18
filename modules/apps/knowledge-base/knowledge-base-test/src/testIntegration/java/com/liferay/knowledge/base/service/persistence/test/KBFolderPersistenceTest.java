@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -487,48 +487,84 @@ public class KBFolderPersistenceTest {
 
 		_persistence.clearCache();
 
-		KBFolder existingKBFolder = _persistence.findByPrimaryKey(
-			newKBFolder.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newKBFolder.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingKBFolder.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingKBFolder, "getOriginalUuid", new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		KBFolder newKBFolder = addKBFolder();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			KBFolder.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"kbFolderId", newKBFolder.getKbFolderId()));
+
+		List<KBFolder> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(KBFolder kbFolder) {
 		Assert.assertEquals(
-			Long.valueOf(existingKBFolder.getGroupId()),
+			kbFolder.getUuid(),
+			ReflectionTestUtil.invoke(
+				kbFolder, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(kbFolder.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingKBFolder, "getOriginalGroupId", new Class<?>[0]));
+				kbFolder, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingKBFolder.getGroupId()),
+			Long.valueOf(kbFolder.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingKBFolder, "getOriginalGroupId", new Class<?>[0]));
+				kbFolder, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingKBFolder.getParentKBFolderId()),
+			Long.valueOf(kbFolder.getParentKBFolderId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingKBFolder, "getOriginalParentKBFolderId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingKBFolder.getName(),
-				ReflectionTestUtil.invoke(
-					existingKBFolder, "getOriginalName", new Class<?>[0])));
+				kbFolder, "getOriginalParentKBFolderId", new Class<?>[0]));
+		Assert.assertEquals(
+			kbFolder.getName(),
+			ReflectionTestUtil.invoke(
+				kbFolder, "getOriginalName", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingKBFolder.getGroupId()),
+			Long.valueOf(kbFolder.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingKBFolder, "getOriginalGroupId", new Class<?>[0]));
+				kbFolder, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingKBFolder.getParentKBFolderId()),
+			Long.valueOf(kbFolder.getParentKBFolderId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingKBFolder, "getOriginalParentKBFolderId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingKBFolder.getUrlTitle(),
-				ReflectionTestUtil.invoke(
-					existingKBFolder, "getOriginalUrlTitle", new Class<?>[0])));
+				kbFolder, "getOriginalParentKBFolderId", new Class<?>[0]));
+		Assert.assertEquals(
+			kbFolder.getUrlTitle(),
+			ReflectionTestUtil.invoke(
+				kbFolder, "getOriginalUrlTitle", new Class<?>[0]));
 	}
 
 	protected KBFolder addKBFolder() throws Exception {

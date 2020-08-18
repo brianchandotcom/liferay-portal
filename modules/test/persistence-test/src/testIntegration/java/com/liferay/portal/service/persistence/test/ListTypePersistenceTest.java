@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.service.ListTypeLocalServiceUtil;
@@ -44,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -401,19 +401,58 @@ public class ListTypePersistenceTest {
 
 		_persistence.clearCache();
 
-		ListType existingListType = _persistence.findByPrimaryKey(
-			newListType.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newListType.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingListType.getName(),
-				ReflectionTestUtil.invoke(
-					existingListType, "getOriginalName", new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				existingListType.getType(),
-				ReflectionTestUtil.invoke(
-					existingListType, "getOriginalType", new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		ListType newListType = addListType();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ListType.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"listTypeId", newListType.getListTypeId()));
+
+		List<ListType> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(ListType listType) {
+		Assert.assertEquals(
+			listType.getName(),
+			ReflectionTestUtil.invoke(
+				listType, "getOriginalName", new Class<?>[0]));
+		Assert.assertEquals(
+			listType.getType(),
+			ReflectionTestUtil.invoke(
+				listType, "getOriginalType", new Class<?>[0]));
 	}
 
 	protected ListType addListType() throws Exception {

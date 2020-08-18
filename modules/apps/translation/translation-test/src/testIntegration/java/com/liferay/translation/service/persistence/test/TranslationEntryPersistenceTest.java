@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -512,37 +512,73 @@ public class TranslationEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		TranslationEntry existingTranslationEntry =
-			_persistence.findByPrimaryKey(newTranslationEntry.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newTranslationEntry.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingTranslationEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingTranslationEntry, "getOriginalUuid",
-					new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		TranslationEntry newTranslationEntry = addTranslationEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			TranslationEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"translationEntryId",
+				newTranslationEntry.getTranslationEntryId()));
+
+		List<TranslationEntry> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(TranslationEntry translationEntry) {
 		Assert.assertEquals(
-			Long.valueOf(existingTranslationEntry.getGroupId()),
+			translationEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				translationEntry, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(translationEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingTranslationEntry, "getOriginalGroupId",
-				new Class<?>[0]));
+				translationEntry, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingTranslationEntry.getClassNameId()),
+			Long.valueOf(translationEntry.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingTranslationEntry, "getOriginalClassNameId",
-				new Class<?>[0]));
+				translationEntry, "getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingTranslationEntry.getClassPK()),
+			Long.valueOf(translationEntry.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				existingTranslationEntry, "getOriginalClassPK",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingTranslationEntry.getLanguageId(),
-				ReflectionTestUtil.invoke(
-					existingTranslationEntry, "getOriginalLanguageId",
-					new Class<?>[0])));
+				translationEntry, "getOriginalClassPK", new Class<?>[0]));
+		Assert.assertEquals(
+			translationEntry.getLanguageId(),
+			ReflectionTestUtil.invoke(
+				translationEntry, "getOriginalLanguageId", new Class<?>[0]));
 	}
 
 	protected TranslationEntry addTranslationEntry() throws Exception {

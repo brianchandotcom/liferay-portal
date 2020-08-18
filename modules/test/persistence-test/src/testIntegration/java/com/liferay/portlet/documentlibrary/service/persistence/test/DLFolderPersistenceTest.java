@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -651,42 +651,79 @@ public class DLFolderPersistenceTest {
 
 		_persistence.clearCache();
 
-		DLFolder existingDLFolder = _persistence.findByPrimaryKey(
-			newDLFolder.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newDLFolder.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingDLFolder.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingDLFolder, "getOriginalUuid", new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		DLFolder newDLFolder = addDLFolder();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DLFolder.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("folderId", newDLFolder.getFolderId()));
+
+		List<DLFolder> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(DLFolder dlFolder) {
 		Assert.assertEquals(
-			Long.valueOf(existingDLFolder.getGroupId()),
+			dlFolder.getUuid(),
+			ReflectionTestUtil.invoke(
+				dlFolder, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(dlFolder.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDLFolder, "getOriginalGroupId", new Class<?>[0]));
+				dlFolder, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingDLFolder.getRepositoryId()),
+			Long.valueOf(dlFolder.getRepositoryId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDLFolder, "getOriginalRepositoryId", new Class<?>[0]));
+				dlFolder, "getOriginalRepositoryId", new Class<?>[0]));
 		Assert.assertEquals(
-			Boolean.valueOf(existingDLFolder.getMountPoint()),
+			Boolean.valueOf(dlFolder.getMountPoint()),
 			ReflectionTestUtil.<Boolean>invoke(
-				existingDLFolder, "getOriginalMountPoint", new Class<?>[0]));
+				dlFolder, "getOriginalMountPoint", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingDLFolder.getGroupId()),
+			Long.valueOf(dlFolder.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDLFolder, "getOriginalGroupId", new Class<?>[0]));
+				dlFolder, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingDLFolder.getParentFolderId()),
+			Long.valueOf(dlFolder.getParentFolderId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDLFolder, "getOriginalParentFolderId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingDLFolder.getName(),
-				ReflectionTestUtil.invoke(
-					existingDLFolder, "getOriginalName", new Class<?>[0])));
+				dlFolder, "getOriginalParentFolderId", new Class<?>[0]));
+		Assert.assertEquals(
+			dlFolder.getName(),
+			ReflectionTestUtil.invoke(
+				dlFolder, "getOriginalName", new Class<?>[0]));
 	}
 
 	protected DLFolder addDLFolder() throws Exception {

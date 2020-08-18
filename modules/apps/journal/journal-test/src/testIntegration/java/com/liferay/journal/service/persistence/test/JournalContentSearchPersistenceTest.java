@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -44,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -539,37 +539,77 @@ public class JournalContentSearchPersistenceTest {
 
 		_persistence.clearCache();
 
-		JournalContentSearch existingJournalContentSearch =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newJournalContentSearch.getPrimaryKey());
+				newJournalContentSearch.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		JournalContentSearch newJournalContentSearch =
+			addJournalContentSearch();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			JournalContentSearch.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"contentSearchId",
+				newJournalContentSearch.getContentSearchId()));
+
+		List<JournalContentSearch> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		JournalContentSearch journalContentSearch) {
 
 		Assert.assertEquals(
-			Long.valueOf(existingJournalContentSearch.getGroupId()),
+			Long.valueOf(journalContentSearch.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingJournalContentSearch, "getOriginalGroupId",
-				new Class<?>[0]));
+				journalContentSearch, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(
-			Boolean.valueOf(existingJournalContentSearch.getPrivateLayout()),
+			Boolean.valueOf(journalContentSearch.getPrivateLayout()),
 			ReflectionTestUtil.<Boolean>invoke(
-				existingJournalContentSearch, "getOriginalPrivateLayout",
+				journalContentSearch, "getOriginalPrivateLayout",
 				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingJournalContentSearch.getLayoutId()),
+			Long.valueOf(journalContentSearch.getLayoutId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingJournalContentSearch, "getOriginalLayoutId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingJournalContentSearch.getPortletId(),
-				ReflectionTestUtil.invoke(
-					existingJournalContentSearch, "getOriginalPortletId",
-					new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				existingJournalContentSearch.getArticleId(),
-				ReflectionTestUtil.invoke(
-					existingJournalContentSearch, "getOriginalArticleId",
-					new Class<?>[0])));
+				journalContentSearch, "getOriginalLayoutId", new Class<?>[0]));
+		Assert.assertEquals(
+			journalContentSearch.getPortletId(),
+			ReflectionTestUtil.invoke(
+				journalContentSearch, "getOriginalPortletId", new Class<?>[0]));
+		Assert.assertEquals(
+			journalContentSearch.getArticleId(),
+			ReflectionTestUtil.invoke(
+				journalContentSearch, "getOriginalArticleId", new Class<?>[0]));
 	}
 
 	protected JournalContentSearch addJournalContentSearch() throws Exception {

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -598,31 +598,68 @@ public class PasswordPolicyPersistenceTest {
 
 		_persistence.clearCache();
 
-		PasswordPolicy existingPasswordPolicy = _persistence.findByPrimaryKey(
-			newPasswordPolicy.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newPasswordPolicy.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		PasswordPolicy newPasswordPolicy = addPasswordPolicy();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PasswordPolicy.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"passwordPolicyId", newPasswordPolicy.getPasswordPolicyId()));
+
+		List<PasswordPolicy> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(PasswordPolicy passwordPolicy) {
 		Assert.assertEquals(
-			Long.valueOf(existingPasswordPolicy.getCompanyId()),
+			Long.valueOf(passwordPolicy.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingPasswordPolicy, "getOriginalCompanyId",
-				new Class<?>[0]));
+				passwordPolicy, "getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertEquals(
-			Boolean.valueOf(existingPasswordPolicy.getDefaultPolicy()),
+			Boolean.valueOf(passwordPolicy.getDefaultPolicy()),
 			ReflectionTestUtil.<Boolean>invoke(
-				existingPasswordPolicy, "getOriginalDefaultPolicy",
-				new Class<?>[0]));
+				passwordPolicy, "getOriginalDefaultPolicy", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingPasswordPolicy.getCompanyId()),
+			Long.valueOf(passwordPolicy.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingPasswordPolicy, "getOriginalCompanyId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingPasswordPolicy.getName(),
-				ReflectionTestUtil.invoke(
-					existingPasswordPolicy, "getOriginalName",
-					new Class<?>[0])));
+				passwordPolicy, "getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(
+			passwordPolicy.getName(),
+			ReflectionTestUtil.invoke(
+				passwordPolicy, "getOriginalName", new Class<?>[0]));
 	}
 
 	protected PasswordPolicy addPasswordPolicy() throws Exception {

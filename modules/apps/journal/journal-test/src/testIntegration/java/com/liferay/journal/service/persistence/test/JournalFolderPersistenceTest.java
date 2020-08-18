@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -582,46 +582,81 @@ public class JournalFolderPersistenceTest {
 
 		_persistence.clearCache();
 
-		JournalFolder existingJournalFolder = _persistence.findByPrimaryKey(
-			newJournalFolder.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newJournalFolder.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingJournalFolder.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingJournalFolder, "getOriginalUuid",
-					new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		JournalFolder newJournalFolder = addJournalFolder();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			JournalFolder.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"folderId", newJournalFolder.getFolderId()));
+
+		List<JournalFolder> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(JournalFolder journalFolder) {
 		Assert.assertEquals(
-			Long.valueOf(existingJournalFolder.getGroupId()),
+			journalFolder.getUuid(),
+			ReflectionTestUtil.invoke(
+				journalFolder, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(journalFolder.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingJournalFolder, "getOriginalGroupId", new Class<?>[0]));
+				journalFolder, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingJournalFolder.getGroupId()),
+			Long.valueOf(journalFolder.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingJournalFolder, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingJournalFolder.getName(),
-				ReflectionTestUtil.invoke(
-					existingJournalFolder, "getOriginalName",
-					new Class<?>[0])));
+				journalFolder, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(
+			journalFolder.getName(),
+			ReflectionTestUtil.invoke(
+				journalFolder, "getOriginalName", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingJournalFolder.getGroupId()),
+			Long.valueOf(journalFolder.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingJournalFolder, "getOriginalGroupId", new Class<?>[0]));
+				journalFolder, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingJournalFolder.getParentFolderId()),
+			Long.valueOf(journalFolder.getParentFolderId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingJournalFolder, "getOriginalParentFolderId",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingJournalFolder.getName(),
-				ReflectionTestUtil.invoke(
-					existingJournalFolder, "getOriginalName",
-					new Class<?>[0])));
+				journalFolder, "getOriginalParentFolderId", new Class<?>[0]));
+		Assert.assertEquals(
+			journalFolder.getName(),
+			ReflectionTestUtil.invoke(
+				journalFolder, "getOriginalName", new Class<?>[0]));
 	}
 
 	protected JournalFolder addJournalFolder() throws Exception {

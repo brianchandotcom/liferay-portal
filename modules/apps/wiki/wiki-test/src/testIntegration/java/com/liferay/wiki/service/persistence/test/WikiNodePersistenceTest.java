@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -515,28 +515,66 @@ public class WikiNodePersistenceTest {
 
 		_persistence.clearCache();
 
-		WikiNode existingWikiNode = _persistence.findByPrimaryKey(
-			newWikiNode.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newWikiNode.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingWikiNode.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingWikiNode, "getOriginalUuid", new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		WikiNode newWikiNode = addWikiNode();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			WikiNode.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("nodeId", newWikiNode.getNodeId()));
+
+		List<WikiNode> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(WikiNode wikiNode) {
 		Assert.assertEquals(
-			Long.valueOf(existingWikiNode.getGroupId()),
+			wikiNode.getUuid(),
+			ReflectionTestUtil.invoke(
+				wikiNode, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(wikiNode.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingWikiNode, "getOriginalGroupId", new Class<?>[0]));
+				wikiNode, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingWikiNode.getGroupId()),
+			Long.valueOf(wikiNode.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingWikiNode, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingWikiNode.getName(),
-				ReflectionTestUtil.invoke(
-					existingWikiNode, "getOriginalName", new Class<?>[0])));
+				wikiNode, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(
+			wikiNode.getName(),
+			ReflectionTestUtil.invoke(
+				wikiNode, "getOriginalName", new Class<?>[0]));
 	}
 
 	protected WikiNode addWikiNode() throws Exception {

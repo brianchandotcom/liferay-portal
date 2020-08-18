@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -502,28 +502,66 @@ public class AssetTagPersistenceTest {
 
 		_persistence.clearCache();
 
-		AssetTag existingAssetTag = _persistence.findByPrimaryKey(
-			newAssetTag.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newAssetTag.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingAssetTag.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingAssetTag, "getOriginalUuid", new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		AssetTag newAssetTag = addAssetTag();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			AssetTag.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("tagId", newAssetTag.getTagId()));
+
+		List<AssetTag> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(AssetTag assetTag) {
 		Assert.assertEquals(
-			Long.valueOf(existingAssetTag.getGroupId()),
+			assetTag.getUuid(),
+			ReflectionTestUtil.invoke(
+				assetTag, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(assetTag.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAssetTag, "getOriginalGroupId", new Class<?>[0]));
+				assetTag, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingAssetTag.getGroupId()),
+			Long.valueOf(assetTag.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAssetTag, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingAssetTag.getName(),
-				ReflectionTestUtil.invoke(
-					existingAssetTag, "getOriginalName", new Class<?>[0])));
+				assetTag, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(
+			assetTag.getName(),
+			ReflectionTestUtil.invoke(
+				assetTag, "getOriginalName", new Class<?>[0]));
 	}
 
 	protected AssetTag addAssetTag() throws Exception {

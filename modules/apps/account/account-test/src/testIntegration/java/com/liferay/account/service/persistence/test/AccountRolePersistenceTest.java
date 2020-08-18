@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -421,13 +422,55 @@ public class AccountRolePersistenceTest {
 
 		_persistence.clearCache();
 
-		AccountRole existingAccountRole = _persistence.findByPrimaryKey(
-			newAccountRole.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newAccountRole.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		AccountRole newAccountRole = addAccountRole();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			AccountRole.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"accountRoleId", newAccountRole.getAccountRoleId()));
+
+		List<AccountRole> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(AccountRole accountRole) {
 		Assert.assertEquals(
-			Long.valueOf(existingAccountRole.getRoleId()),
+			Long.valueOf(accountRole.getRoleId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAccountRole, "getOriginalRoleId", new Class<?>[0]));
+				accountRole, "getOriginalRoleId", new Class<?>[0]));
 	}
 
 	protected AccountRole addAccountRole() throws Exception {

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.service.VirtualHostLocalServiceUtil;
@@ -44,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -436,30 +436,68 @@ public class VirtualHostPersistenceTest {
 
 		_persistence.clearCache();
 
-		VirtualHost existingVirtualHost = _persistence.findByPrimaryKey(
-			newVirtualHost.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newVirtualHost.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingVirtualHost.getHostname(),
-				ReflectionTestUtil.invoke(
-					existingVirtualHost, "getOriginalHostname",
-					new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		VirtualHost newVirtualHost = addVirtualHost();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			VirtualHost.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"virtualHostId", newVirtualHost.getVirtualHostId()));
+
+		List<VirtualHost> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(VirtualHost virtualHost) {
+		Assert.assertEquals(
+			virtualHost.getHostname(),
+			ReflectionTestUtil.invoke(
+				virtualHost, "getOriginalHostname", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingVirtualHost.getCompanyId()),
+			Long.valueOf(virtualHost.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingVirtualHost, "getOriginalCompanyId", new Class<?>[0]));
+				virtualHost, "getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingVirtualHost.getLayoutSetId()),
+			Long.valueOf(virtualHost.getLayoutSetId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingVirtualHost, "getOriginalLayoutSetId",
-				new Class<?>[0]));
+				virtualHost, "getOriginalLayoutSetId", new Class<?>[0]));
 		Assert.assertEquals(
-			Boolean.valueOf(existingVirtualHost.getDefaultVirtualHost()),
+			Boolean.valueOf(virtualHost.getDefaultVirtualHost()),
 			ReflectionTestUtil.<Boolean>invoke(
-				existingVirtualHost, "getOriginalDefaultVirtualHost",
-				new Class<?>[0]));
+				virtualHost, "getOriginalDefaultVirtualHost", new Class<?>[0]));
 	}
 
 	protected VirtualHost addVirtualHost() throws Exception {

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -448,23 +448,64 @@ public class DepotEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		DepotEntry existingDepotEntry = _persistence.findByPrimaryKey(
-			newDepotEntry.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newDepotEntry.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingDepotEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingDepotEntry, "getOriginalUuid", new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		DepotEntry newDepotEntry = addDepotEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DepotEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"depotEntryId", newDepotEntry.getDepotEntryId()));
+
+		List<DepotEntry> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(DepotEntry depotEntry) {
 		Assert.assertEquals(
-			Long.valueOf(existingDepotEntry.getGroupId()),
+			depotEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				depotEntry, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(depotEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDepotEntry, "getOriginalGroupId", new Class<?>[0]));
+				depotEntry, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingDepotEntry.getGroupId()),
+			Long.valueOf(depotEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDepotEntry, "getOriginalGroupId", new Class<?>[0]));
+				depotEntry, "getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected DepotEntry addDepotEntry() throws Exception {

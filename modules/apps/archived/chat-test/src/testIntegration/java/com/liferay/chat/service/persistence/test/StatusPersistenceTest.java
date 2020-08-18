@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -421,13 +422,53 @@ public class StatusPersistenceTest {
 
 		_persistence.clearCache();
 
-		Status existingStatus = _persistence.findByPrimaryKey(
-			newStatus.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newStatus.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		Status newStatus = addStatus();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Status.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("statusId", newStatus.getStatusId()));
+
+		List<Status> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(Status status) {
 		Assert.assertEquals(
-			Long.valueOf(existingStatus.getUserId()),
+			Long.valueOf(status.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingStatus, "getOriginalUserId", new Class<?>[0]));
+				status, "getOriginalUserId", new Class<?>[0]));
 	}
 
 	protected Status addStatus() throws Exception {

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -492,22 +493,66 @@ public class SegmentsExperimentRelPersistenceTest {
 
 		_persistence.clearCache();
 
-		SegmentsExperimentRel existingSegmentsExperimentRel =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newSegmentsExperimentRel.getPrimaryKey());
+				newSegmentsExperimentRel.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		SegmentsExperimentRel newSegmentsExperimentRel =
+			addSegmentsExperimentRel();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SegmentsExperimentRel.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"segmentsExperimentRelId",
+				newSegmentsExperimentRel.getSegmentsExperimentRelId()));
+
+		List<SegmentsExperimentRel> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		SegmentsExperimentRel segmentsExperimentRel) {
 
 		Assert.assertEquals(
-			Long.valueOf(
-				existingSegmentsExperimentRel.getSegmentsExperimentId()),
+			Long.valueOf(segmentsExperimentRel.getSegmentsExperimentId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSegmentsExperimentRel,
-				"getOriginalSegmentsExperimentId", new Class<?>[0]));
+				segmentsExperimentRel, "getOriginalSegmentsExperimentId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(
-				existingSegmentsExperimentRel.getSegmentsExperienceId()),
+			Long.valueOf(segmentsExperimentRel.getSegmentsExperienceId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSegmentsExperimentRel,
-				"getOriginalSegmentsExperienceId", new Class<?>[0]));
+				segmentsExperimentRel, "getOriginalSegmentsExperienceId",
+				new Class<?>[0]));
 	}
 
 	protected SegmentsExperimentRel addSegmentsExperimentRel()

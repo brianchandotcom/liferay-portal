@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -561,14 +562,60 @@ public class KaleoTaskFormInstancePersistenceTest {
 
 		_persistence.clearCache();
 
-		KaleoTaskFormInstance existingKaleoTaskFormInstance =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newKaleoTaskFormInstance.getPrimaryKey());
+				newKaleoTaskFormInstance.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		KaleoTaskFormInstance newKaleoTaskFormInstance =
+			addKaleoTaskFormInstance();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			KaleoTaskFormInstance.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"kaleoTaskFormInstanceId",
+				newKaleoTaskFormInstance.getKaleoTaskFormInstanceId()));
+
+		List<KaleoTaskFormInstance> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		KaleoTaskFormInstance kaleoTaskFormInstance) {
 
 		Assert.assertEquals(
-			Long.valueOf(existingKaleoTaskFormInstance.getKaleoTaskFormId()),
+			Long.valueOf(kaleoTaskFormInstance.getKaleoTaskFormId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingKaleoTaskFormInstance, "getOriginalKaleoTaskFormId",
+				kaleoTaskFormInstance, "getOriginalKaleoTaskFormId",
 				new Class<?>[0]));
 	}
 

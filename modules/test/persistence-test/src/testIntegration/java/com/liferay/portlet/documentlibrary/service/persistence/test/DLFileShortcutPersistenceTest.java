@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -553,19 +553,59 @@ public class DLFileShortcutPersistenceTest {
 
 		_persistence.clearCache();
 
-		DLFileShortcut existingDLFileShortcut = _persistence.findByPrimaryKey(
-			newDLFileShortcut.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newDLFileShortcut.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingDLFileShortcut.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingDLFileShortcut, "getOriginalUuid",
-					new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		DLFileShortcut newDLFileShortcut = addDLFileShortcut();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DLFileShortcut.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"fileShortcutId", newDLFileShortcut.getFileShortcutId()));
+
+		List<DLFileShortcut> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(DLFileShortcut dlFileShortcut) {
 		Assert.assertEquals(
-			Long.valueOf(existingDLFileShortcut.getGroupId()),
+			dlFileShortcut.getUuid(),
+			ReflectionTestUtil.invoke(
+				dlFileShortcut, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(dlFileShortcut.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDLFileShortcut, "getOriginalGroupId", new Class<?>[0]));
+				dlFileShortcut, "getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected DLFileShortcut addDLFileShortcut() throws Exception {

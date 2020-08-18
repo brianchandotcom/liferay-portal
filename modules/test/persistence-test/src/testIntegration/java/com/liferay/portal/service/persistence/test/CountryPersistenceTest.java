@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.service.persistence.CountryPersistence;
@@ -41,7 +42,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -404,26 +404,63 @@ public class CountryPersistenceTest {
 
 		_persistence.clearCache();
 
-		Country existingCountry = _persistence.findByPrimaryKey(
-			newCountry.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newCountry.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingCountry.getName(),
-				ReflectionTestUtil.invoke(
-					existingCountry, "getOriginalName", new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingCountry.getA2(),
-				ReflectionTestUtil.invoke(
-					existingCountry, "getOriginalA2", new Class<?>[0])));
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingCountry.getA3(),
-				ReflectionTestUtil.invoke(
-					existingCountry, "getOriginalA3", new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		Country newCountry = addCountry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Country.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("countryId", newCountry.getCountryId()));
+
+		List<Country> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(Country country) {
+		Assert.assertEquals(
+			country.getName(),
+			ReflectionTestUtil.invoke(
+				country, "getOriginalName", new Class<?>[0]));
+
+		Assert.assertEquals(
+			country.getA2(),
+			ReflectionTestUtil.invoke(
+				country, "getOriginalA2", new Class<?>[0]));
+
+		Assert.assertEquals(
+			country.getA3(),
+			ReflectionTestUtil.invoke(
+				country, "getOriginalA3", new Class<?>[0]));
 	}
 
 	protected Country addCountry() throws Exception {

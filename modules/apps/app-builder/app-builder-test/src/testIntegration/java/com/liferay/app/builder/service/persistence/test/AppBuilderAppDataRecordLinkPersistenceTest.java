@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -487,14 +488,61 @@ public class AppBuilderAppDataRecordLinkPersistenceTest {
 
 		_persistence.clearCache();
 
-		AppBuilderAppDataRecordLink existingAppBuilderAppDataRecordLink =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newAppBuilderAppDataRecordLink.getPrimaryKey());
+				newAppBuilderAppDataRecordLink.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		AppBuilderAppDataRecordLink newAppBuilderAppDataRecordLink =
+			addAppBuilderAppDataRecordLink();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			AppBuilderAppDataRecordLink.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"appBuilderAppDataRecordLinkId",
+				newAppBuilderAppDataRecordLink.
+					getAppBuilderAppDataRecordLinkId()));
+
+		List<AppBuilderAppDataRecordLink> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		AppBuilderAppDataRecordLink appBuilderAppDataRecordLink) {
 
 		Assert.assertEquals(
-			Long.valueOf(existingAppBuilderAppDataRecordLink.getDdlRecordId()),
+			Long.valueOf(appBuilderAppDataRecordLink.getDdlRecordId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAppBuilderAppDataRecordLink, "getOriginalDdlRecordId",
+				appBuilderAppDataRecordLink, "getOriginalDdlRecordId",
 				new Class<?>[0]));
 	}
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -44,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -452,36 +452,70 @@ public class ModulePersistenceTest {
 
 		_persistence.clearCache();
 
-		Module existingModule = _persistence.findByPrimaryKey(
-			newModule.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newModule.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		Module newModule = addModule();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Module.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("moduleId", newModule.getModuleId()));
+
+		List<Module> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(Module module) {
+		Assert.assertEquals(
+			Long.valueOf(module.getAppId()),
+			ReflectionTestUtil.<Long>invoke(
+				module, "getOriginalAppId", new Class<?>[0]));
+		Assert.assertEquals(
+			module.getContextName(),
+			ReflectionTestUtil.invoke(
+				module, "getOriginalContextName", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingModule.getAppId()),
+			Long.valueOf(module.getAppId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingModule, "getOriginalAppId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingModule.getContextName(),
-				ReflectionTestUtil.invoke(
-					existingModule, "getOriginalContextName",
-					new Class<?>[0])));
-
+				module, "getOriginalAppId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingModule.getAppId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingModule, "getOriginalAppId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingModule.getBundleSymbolicName(),
-				ReflectionTestUtil.invoke(
-					existingModule, "getOriginalBundleSymbolicName",
-					new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				existingModule.getBundleVersion(),
-				ReflectionTestUtil.invoke(
-					existingModule, "getOriginalBundleVersion",
-					new Class<?>[0])));
+			module.getBundleSymbolicName(),
+			ReflectionTestUtil.invoke(
+				module, "getOriginalBundleSymbolicName", new Class<?>[0]));
+		Assert.assertEquals(
+			module.getBundleVersion(),
+			ReflectionTestUtil.invoke(
+				module, "getOriginalBundleVersion", new Class<?>[0]));
 	}
 
 	protected Module addModule() throws Exception {

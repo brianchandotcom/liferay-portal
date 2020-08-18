@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -749,35 +749,73 @@ public class FragmentEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		FragmentEntry existingFragmentEntry = _persistence.findByPrimaryKey(
-			newFragmentEntry.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newFragmentEntry.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingFragmentEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingFragmentEntry, "getOriginalUuid",
-					new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		FragmentEntry newFragmentEntry = addFragmentEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			FragmentEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"fragmentEntryId", newFragmentEntry.getFragmentEntryId()));
+
+		List<FragmentEntry> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(FragmentEntry fragmentEntry) {
 		Assert.assertEquals(
-			Long.valueOf(existingFragmentEntry.getGroupId()),
+			fragmentEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				fragmentEntry, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(fragmentEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingFragmentEntry, "getOriginalGroupId", new Class<?>[0]));
+				fragmentEntry, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingFragmentEntry.getGroupId()),
+			Long.valueOf(fragmentEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingFragmentEntry, "getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingFragmentEntry.getFragmentEntryKey(),
-				ReflectionTestUtil.invoke(
-					existingFragmentEntry, "getOriginalFragmentEntryKey",
-					new Class<?>[0])));
+				fragmentEntry, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(
+			fragmentEntry.getFragmentEntryKey(),
+			ReflectionTestUtil.invoke(
+				fragmentEntry, "getOriginalFragmentEntryKey", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingFragmentEntry.getHeadId()),
+			Long.valueOf(fragmentEntry.getHeadId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingFragmentEntry, "getOriginalHeadId", new Class<?>[0]));
+				fragmentEntry, "getOriginalHeadId", new Class<?>[0]));
 	}
 
 	protected FragmentEntry addFragmentEntry() throws Exception {

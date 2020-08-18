@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -475,22 +476,67 @@ public class AccountEntryOrganizationRelPersistenceTest {
 
 		_persistence.clearCache();
 
-		AccountEntryOrganizationRel existingAccountEntryOrganizationRel =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newAccountEntryOrganizationRel.getPrimaryKey());
+				newAccountEntryOrganizationRel.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		AccountEntryOrganizationRel newAccountEntryOrganizationRel =
+			addAccountEntryOrganizationRel();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			AccountEntryOrganizationRel.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"accountEntryOrganizationRelId",
+				newAccountEntryOrganizationRel.
+					getAccountEntryOrganizationRelId()));
+
+		List<AccountEntryOrganizationRel> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		AccountEntryOrganizationRel accountEntryOrganizationRel) {
 
 		Assert.assertEquals(
-			Long.valueOf(
-				existingAccountEntryOrganizationRel.getAccountEntryId()),
+			Long.valueOf(accountEntryOrganizationRel.getAccountEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAccountEntryOrganizationRel,
-				"getOriginalAccountEntryId", new Class<?>[0]));
+				accountEntryOrganizationRel, "getOriginalAccountEntryId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(
-				existingAccountEntryOrganizationRel.getOrganizationId()),
+			Long.valueOf(accountEntryOrganizationRel.getOrganizationId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAccountEntryOrganizationRel,
-				"getOriginalOrganizationId", new Class<?>[0]));
+				accountEntryOrganizationRel, "getOriginalOrganizationId",
+				new Class<?>[0]));
 	}
 
 	protected AccountEntryOrganizationRel addAccountEntryOrganizationRel()

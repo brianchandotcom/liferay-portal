@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -49,7 +50,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -443,19 +443,59 @@ public class LazyBlobEntityPersistenceTest {
 
 		_persistence.clearCache();
 
-		LazyBlobEntity existingLazyBlobEntity = _persistence.findByPrimaryKey(
-			newLazyBlobEntity.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newLazyBlobEntity.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingLazyBlobEntity.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingLazyBlobEntity, "getOriginalUuid",
-					new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		LazyBlobEntity newLazyBlobEntity = addLazyBlobEntity();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			LazyBlobEntity.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"lazyBlobEntityId", newLazyBlobEntity.getLazyBlobEntityId()));
+
+		List<LazyBlobEntity> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(LazyBlobEntity lazyBlobEntity) {
 		Assert.assertEquals(
-			Long.valueOf(existingLazyBlobEntity.getGroupId()),
+			lazyBlobEntity.getUuid(),
+			ReflectionTestUtil.invoke(
+				lazyBlobEntity, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(lazyBlobEntity.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingLazyBlobEntity, "getOriginalGroupId", new Class<?>[0]));
+				lazyBlobEntity, "getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected LazyBlobEntity addLazyBlobEntity() throws Exception {

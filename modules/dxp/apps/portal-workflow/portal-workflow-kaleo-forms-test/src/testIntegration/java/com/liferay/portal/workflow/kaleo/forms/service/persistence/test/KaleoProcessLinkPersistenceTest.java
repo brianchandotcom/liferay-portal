@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -44,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -423,20 +423,62 @@ public class KaleoProcessLinkPersistenceTest {
 
 		_persistence.clearCache();
 
-		KaleoProcessLink existingKaleoProcessLink =
-			_persistence.findByPrimaryKey(newKaleoProcessLink.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newKaleoProcessLink.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		KaleoProcessLink newKaleoProcessLink = addKaleoProcessLink();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			KaleoProcessLink.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"kaleoProcessLinkId",
+				newKaleoProcessLink.getKaleoProcessLinkId()));
+
+		List<KaleoProcessLink> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(KaleoProcessLink kaleoProcessLink) {
 		Assert.assertEquals(
-			Long.valueOf(existingKaleoProcessLink.getKaleoProcessId()),
+			Long.valueOf(kaleoProcessLink.getKaleoProcessId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingKaleoProcessLink, "getOriginalKaleoProcessId",
+				kaleoProcessLink, "getOriginalKaleoProcessId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingKaleoProcessLink.getWorkflowTaskName(),
-				ReflectionTestUtil.invoke(
-					existingKaleoProcessLink, "getOriginalWorkflowTaskName",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			kaleoProcessLink.getWorkflowTaskName(),
+			ReflectionTestUtil.invoke(
+				kaleoProcessLink, "getOriginalWorkflowTaskName",
+				new Class<?>[0]));
 	}
 
 	protected KaleoProcessLink addKaleoProcessLink() throws Exception {

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -469,28 +469,68 @@ public class MemberRequestPersistenceTest {
 
 		_persistence.clearCache();
 
-		MemberRequest existingMemberRequest = _persistence.findByPrimaryKey(
-			newMemberRequest.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newMemberRequest.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingMemberRequest.getKey(),
-				ReflectionTestUtil.invoke(
-					existingMemberRequest, "getOriginalKey", new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		MemberRequest newMemberRequest = addMemberRequest();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			MemberRequest.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"memberRequestId", newMemberRequest.getMemberRequestId()));
+
+		List<MemberRequest> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(MemberRequest memberRequest) {
+		Assert.assertEquals(
+			memberRequest.getKey(),
+			ReflectionTestUtil.invoke(
+				memberRequest, "getOriginalKey", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingMemberRequest.getGroupId()),
+			Long.valueOf(memberRequest.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingMemberRequest, "getOriginalGroupId", new Class<?>[0]));
+				memberRequest, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingMemberRequest.getReceiverUserId()),
+			Long.valueOf(memberRequest.getReceiverUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingMemberRequest, "getOriginalReceiverUserId",
-				new Class<?>[0]));
+				memberRequest, "getOriginalReceiverUserId", new Class<?>[0]));
 		Assert.assertEquals(
-			Integer.valueOf(existingMemberRequest.getStatus()),
+			Integer.valueOf(memberRequest.getStatus()),
 			ReflectionTestUtil.<Integer>invoke(
-				existingMemberRequest, "getOriginalStatus", new Class<?>[0]));
+				memberRequest, "getOriginalStatus", new Class<?>[0]));
 	}
 
 	protected MemberRequest addMemberRequest() throws Exception {

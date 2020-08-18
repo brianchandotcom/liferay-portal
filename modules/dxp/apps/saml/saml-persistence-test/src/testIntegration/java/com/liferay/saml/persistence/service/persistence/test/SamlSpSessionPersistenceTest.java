@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -497,29 +497,65 @@ public class SamlSpSessionPersistenceTest {
 
 		_persistence.clearCache();
 
-		SamlSpSession existingSamlSpSession = _persistence.findByPrimaryKey(
-			newSamlSpSession.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newSamlSpSession.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingSamlSpSession.getSamlSpSessionKey(),
-				ReflectionTestUtil.invoke(
-					existingSamlSpSession, "getOriginalSamlSpSessionKey",
-					new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingSamlSpSession.getJSessionId(),
-				ReflectionTestUtil.invoke(
-					existingSamlSpSession, "getOriginalJSessionId",
-					new Class<?>[0])));
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingSamlSpSession.getSessionIndex(),
-				ReflectionTestUtil.invoke(
-					existingSamlSpSession, "getOriginalSessionIndex",
-					new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		SamlSpSession newSamlSpSession = addSamlSpSession();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SamlSpSession.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"samlSpSessionId", newSamlSpSession.getSamlSpSessionId()));
+
+		List<SamlSpSession> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(SamlSpSession samlSpSession) {
+		Assert.assertEquals(
+			samlSpSession.getSamlSpSessionKey(),
+			ReflectionTestUtil.invoke(
+				samlSpSession, "getOriginalSamlSpSessionKey", new Class<?>[0]));
+
+		Assert.assertEquals(
+			samlSpSession.getJSessionId(),
+			ReflectionTestUtil.invoke(
+				samlSpSession, "getOriginalJSessionId", new Class<?>[0]));
+
+		Assert.assertEquals(
+			samlSpSession.getSessionIndex(),
+			ReflectionTestUtil.invoke(
+				samlSpSession, "getOriginalSessionIndex", new Class<?>[0]));
 	}
 
 	protected SamlSpSession addSamlSpSession() throws Exception {

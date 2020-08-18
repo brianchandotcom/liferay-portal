@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchLayoutBranchException;
 import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.service.LayoutBranchLocalServiceUtil;
@@ -44,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -460,23 +460,63 @@ public class LayoutBranchPersistenceTest {
 
 		_persistence.clearCache();
 
-		LayoutBranch existingLayoutBranch = _persistence.findByPrimaryKey(
-			newLayoutBranch.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newLayoutBranch.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		LayoutBranch newLayoutBranch = addLayoutBranch();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			LayoutBranch.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"layoutBranchId", newLayoutBranch.getLayoutBranchId()));
+
+		List<LayoutBranch> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(LayoutBranch layoutBranch) {
 		Assert.assertEquals(
-			Long.valueOf(existingLayoutBranch.getLayoutSetBranchId()),
+			Long.valueOf(layoutBranch.getLayoutSetBranchId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingLayoutBranch, "getOriginalLayoutSetBranchId",
-				new Class<?>[0]));
+				layoutBranch, "getOriginalLayoutSetBranchId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingLayoutBranch.getPlid()),
+			Long.valueOf(layoutBranch.getPlid()),
 			ReflectionTestUtil.<Long>invoke(
-				existingLayoutBranch, "getOriginalPlid", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingLayoutBranch.getName(),
-				ReflectionTestUtil.invoke(
-					existingLayoutBranch, "getOriginalName", new Class<?>[0])));
+				layoutBranch, "getOriginalPlid", new Class<?>[0]));
+		Assert.assertEquals(
+			layoutBranch.getName(),
+			ReflectionTestUtil.invoke(
+				layoutBranch, "getOriginalName", new Class<?>[0]));
 	}
 
 	protected LayoutBranch addLayoutBranch() throws Exception {

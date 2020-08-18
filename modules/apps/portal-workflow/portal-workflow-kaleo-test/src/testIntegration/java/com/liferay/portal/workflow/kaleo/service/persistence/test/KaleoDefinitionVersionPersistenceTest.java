@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -543,27 +543,69 @@ public class KaleoDefinitionVersionPersistenceTest {
 
 		_persistence.clearCache();
 
-		KaleoDefinitionVersion existingKaleoDefinitionVersion =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newKaleoDefinitionVersion.getPrimaryKey());
+				newKaleoDefinitionVersion.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		KaleoDefinitionVersion newKaleoDefinitionVersion =
+			addKaleoDefinitionVersion();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			KaleoDefinitionVersion.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"kaleoDefinitionVersionId",
+				newKaleoDefinitionVersion.getKaleoDefinitionVersionId()));
+
+		List<KaleoDefinitionVersion> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
 		Assert.assertEquals(
-			Long.valueOf(existingKaleoDefinitionVersion.getCompanyId()),
+			Long.valueOf(kaleoDefinitionVersion.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingKaleoDefinitionVersion, "getOriginalCompanyId",
+				kaleoDefinitionVersion, "getOriginalCompanyId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingKaleoDefinitionVersion.getName(),
-				ReflectionTestUtil.invoke(
-					existingKaleoDefinitionVersion, "getOriginalName",
-					new Class<?>[0])));
-		Assert.assertTrue(
-			Objects.equals(
-				existingKaleoDefinitionVersion.getVersion(),
-				ReflectionTestUtil.invoke(
-					existingKaleoDefinitionVersion, "getOriginalVersion",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			kaleoDefinitionVersion.getName(),
+			ReflectionTestUtil.invoke(
+				kaleoDefinitionVersion, "getOriginalName", new Class<?>[0]));
+		Assert.assertEquals(
+			kaleoDefinitionVersion.getVersion(),
+			ReflectionTestUtil.invoke(
+				kaleoDefinitionVersion, "getOriginalVersion", new Class<?>[0]));
 	}
 
 	protected KaleoDefinitionVersion addKaleoDefinitionVersion()

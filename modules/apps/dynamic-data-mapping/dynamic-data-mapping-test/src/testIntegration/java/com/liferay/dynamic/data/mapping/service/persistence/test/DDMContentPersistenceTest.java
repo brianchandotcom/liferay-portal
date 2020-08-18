@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -471,18 +471,59 @@ public class DDMContentPersistenceTest {
 
 		_persistence.clearCache();
 
-		DDMContent existingDDMContent = _persistence.findByPrimaryKey(
-			newDDMContent.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newDDMContent.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingDDMContent.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingDDMContent, "getOriginalUuid", new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		DDMContent newDDMContent = addDDMContent();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			DDMContent.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"contentId", newDDMContent.getContentId()));
+
+		List<DDMContent> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(DDMContent ddmContent) {
 		Assert.assertEquals(
-			Long.valueOf(existingDDMContent.getGroupId()),
+			ddmContent.getUuid(),
+			ReflectionTestUtil.invoke(
+				ddmContent, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(ddmContent.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingDDMContent, "getOriginalGroupId", new Class<?>[0]));
+				ddmContent, "getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected DDMContent addDDMContent() throws Exception {

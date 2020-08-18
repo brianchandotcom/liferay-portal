@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchUserNotificationDeliveryException;
 import com.liferay.portal.kernel.model.UserNotificationDelivery;
 import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalServiceUtil;
@@ -44,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -479,36 +479,80 @@ public class UserNotificationDeliveryPersistenceTest {
 
 		_persistence.clearCache();
 
-		UserNotificationDelivery existingUserNotificationDelivery =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newUserNotificationDelivery.getPrimaryKey());
+				newUserNotificationDelivery.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		UserNotificationDelivery newUserNotificationDelivery =
+			addUserNotificationDelivery();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UserNotificationDelivery.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"userNotificationDeliveryId",
+				newUserNotificationDelivery.getUserNotificationDeliveryId()));
+
+		List<UserNotificationDelivery> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		UserNotificationDelivery userNotificationDelivery) {
 
 		Assert.assertEquals(
-			Long.valueOf(existingUserNotificationDelivery.getUserId()),
+			Long.valueOf(userNotificationDelivery.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingUserNotificationDelivery, "getOriginalUserId",
+				userNotificationDelivery, "getOriginalUserId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingUserNotificationDelivery.getPortletId(),
-				ReflectionTestUtil.invoke(
-					existingUserNotificationDelivery, "getOriginalPortletId",
-					new Class<?>[0])));
 		Assert.assertEquals(
-			Long.valueOf(existingUserNotificationDelivery.getClassNameId()),
+			userNotificationDelivery.getPortletId(),
+			ReflectionTestUtil.invoke(
+				userNotificationDelivery, "getOriginalPortletId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(userNotificationDelivery.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingUserNotificationDelivery, "getOriginalClassNameId",
+				userNotificationDelivery, "getOriginalClassNameId",
 				new Class<?>[0]));
 		Assert.assertEquals(
-			Integer.valueOf(
-				existingUserNotificationDelivery.getNotificationType()),
+			Integer.valueOf(userNotificationDelivery.getNotificationType()),
 			ReflectionTestUtil.<Integer>invoke(
-				existingUserNotificationDelivery, "getOriginalNotificationType",
+				userNotificationDelivery, "getOriginalNotificationType",
 				new Class<?>[0]));
 		Assert.assertEquals(
-			Integer.valueOf(existingUserNotificationDelivery.getDeliveryType()),
+			Integer.valueOf(userNotificationDelivery.getDeliveryType()),
 			ReflectionTestUtil.<Integer>invoke(
-				existingUserNotificationDelivery, "getOriginalDeliveryType",
+				userNotificationDelivery, "getOriginalDeliveryType",
 				new Class<?>[0]));
 	}
 

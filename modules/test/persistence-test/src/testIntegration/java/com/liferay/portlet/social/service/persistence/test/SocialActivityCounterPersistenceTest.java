@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -44,7 +45,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -531,72 +531,110 @@ public class SocialActivityCounterPersistenceTest {
 
 		_persistence.clearCache();
 
-		SocialActivityCounter existingSocialActivityCounter =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newSocialActivityCounter.getPrimaryKey());
+				newSocialActivityCounter.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		SocialActivityCounter newSocialActivityCounter =
+			addSocialActivityCounter();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SocialActivityCounter.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"activityCounterId",
+				newSocialActivityCounter.getActivityCounterId()));
+
+		List<SocialActivityCounter> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		SocialActivityCounter socialActivityCounter) {
 
 		Assert.assertEquals(
-			Long.valueOf(existingSocialActivityCounter.getGroupId()),
+			Long.valueOf(socialActivityCounter.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivityCounter, "getOriginalGroupId",
+				socialActivityCounter, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(socialActivityCounter.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(
+				socialActivityCounter, "getOriginalClassNameId",
 				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingSocialActivityCounter.getClassNameId()),
+			Long.valueOf(socialActivityCounter.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivityCounter, "getOriginalClassNameId",
-				new Class<?>[0]));
+				socialActivityCounter, "getOriginalClassPK", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingSocialActivityCounter.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivityCounter, "getOriginalClassPK",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingSocialActivityCounter.getName(),
-				ReflectionTestUtil.invoke(
-					existingSocialActivityCounter, "getOriginalName",
-					new Class<?>[0])));
+			socialActivityCounter.getName(),
+			ReflectionTestUtil.invoke(
+				socialActivityCounter, "getOriginalName", new Class<?>[0]));
 		Assert.assertEquals(
-			Integer.valueOf(existingSocialActivityCounter.getOwnerType()),
+			Integer.valueOf(socialActivityCounter.getOwnerType()),
 			ReflectionTestUtil.<Integer>invoke(
-				existingSocialActivityCounter, "getOriginalOwnerType",
+				socialActivityCounter, "getOriginalOwnerType",
 				new Class<?>[0]));
 		Assert.assertEquals(
-			Integer.valueOf(existingSocialActivityCounter.getStartPeriod()),
+			Integer.valueOf(socialActivityCounter.getStartPeriod()),
 			ReflectionTestUtil.<Integer>invoke(
-				existingSocialActivityCounter, "getOriginalStartPeriod",
+				socialActivityCounter, "getOriginalStartPeriod",
 				new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingSocialActivityCounter.getGroupId()),
+			Long.valueOf(socialActivityCounter.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivityCounter, "getOriginalGroupId",
+				socialActivityCounter, "getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(socialActivityCounter.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(
+				socialActivityCounter, "getOriginalClassNameId",
 				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingSocialActivityCounter.getClassNameId()),
+			Long.valueOf(socialActivityCounter.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivityCounter, "getOriginalClassNameId",
-				new Class<?>[0]));
+				socialActivityCounter, "getOriginalClassPK", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingSocialActivityCounter.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(
-				existingSocialActivityCounter, "getOriginalClassPK",
-				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingSocialActivityCounter.getName(),
-				ReflectionTestUtil.invoke(
-					existingSocialActivityCounter, "getOriginalName",
-					new Class<?>[0])));
+			socialActivityCounter.getName(),
+			ReflectionTestUtil.invoke(
+				socialActivityCounter, "getOriginalName", new Class<?>[0]));
 		Assert.assertEquals(
-			Integer.valueOf(existingSocialActivityCounter.getOwnerType()),
+			Integer.valueOf(socialActivityCounter.getOwnerType()),
 			ReflectionTestUtil.<Integer>invoke(
-				existingSocialActivityCounter, "getOriginalOwnerType",
+				socialActivityCounter, "getOriginalOwnerType",
 				new Class<?>[0]));
 		Assert.assertEquals(
-			Integer.valueOf(existingSocialActivityCounter.getEndPeriod()),
+			Integer.valueOf(socialActivityCounter.getEndPeriod()),
 			ReflectionTestUtil.<Integer>invoke(
-				existingSocialActivityCounter, "getOriginalEndPeriod",
+				socialActivityCounter, "getOriginalEndPeriod",
 				new Class<?>[0]));
 	}
 

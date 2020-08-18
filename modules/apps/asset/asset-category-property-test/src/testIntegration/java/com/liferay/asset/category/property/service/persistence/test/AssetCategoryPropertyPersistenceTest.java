@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -500,21 +500,65 @@ public class AssetCategoryPropertyPersistenceTest {
 
 		_persistence.clearCache();
 
-		AssetCategoryProperty existingAssetCategoryProperty =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newAssetCategoryProperty.getPrimaryKey());
+				newAssetCategoryProperty.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		AssetCategoryProperty newAssetCategoryProperty =
+			addAssetCategoryProperty();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			AssetCategoryProperty.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"categoryPropertyId",
+				newAssetCategoryProperty.getCategoryPropertyId()));
+
+		List<AssetCategoryProperty> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		AssetCategoryProperty assetCategoryProperty) {
 
 		Assert.assertEquals(
-			Long.valueOf(existingAssetCategoryProperty.getCategoryId()),
+			Long.valueOf(assetCategoryProperty.getCategoryId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAssetCategoryProperty, "getOriginalCategoryId",
+				assetCategoryProperty, "getOriginalCategoryId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingAssetCategoryProperty.getKey(),
-				ReflectionTestUtil.invoke(
-					existingAssetCategoryProperty, "getOriginalKey",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			assetCategoryProperty.getKey(),
+			ReflectionTestUtil.invoke(
+				assetCategoryProperty, "getOriginalKey", new Class<?>[0]));
 	}
 
 	protected AssetCategoryProperty addAssetCategoryProperty()

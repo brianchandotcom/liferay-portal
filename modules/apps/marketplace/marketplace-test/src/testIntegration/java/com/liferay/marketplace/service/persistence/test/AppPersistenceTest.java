@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -451,12 +452,53 @@ public class AppPersistenceTest {
 
 		_persistence.clearCache();
 
-		App existingApp = _persistence.findByPrimaryKey(newApp.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newApp.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		App newApp = addApp();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			App.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("appId", newApp.getAppId()));
+
+		List<App> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(App app) {
 		Assert.assertEquals(
-			Long.valueOf(existingApp.getRemoteAppId()),
+			Long.valueOf(app.getRemoteAppId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingApp, "getOriginalRemoteAppId", new Class<?>[0]));
+				app, "getOriginalRemoteAppId", new Class<?>[0]));
 	}
 
 	protected App addApp() throws Exception {

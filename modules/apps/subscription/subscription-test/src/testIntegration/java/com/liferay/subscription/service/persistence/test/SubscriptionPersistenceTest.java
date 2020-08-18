@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -491,26 +492,67 @@ public class SubscriptionPersistenceTest {
 
 		_persistence.clearCache();
 
-		Subscription existingSubscription = _persistence.findByPrimaryKey(
-			newSubscription.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newSubscription.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		Subscription newSubscription = addSubscription();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Subscription.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"subscriptionId", newSubscription.getSubscriptionId()));
+
+		List<Subscription> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(Subscription subscription) {
 		Assert.assertEquals(
-			Long.valueOf(existingSubscription.getCompanyId()),
+			Long.valueOf(subscription.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSubscription, "getOriginalCompanyId", new Class<?>[0]));
+				subscription, "getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingSubscription.getUserId()),
+			Long.valueOf(subscription.getUserId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSubscription, "getOriginalUserId", new Class<?>[0]));
+				subscription, "getOriginalUserId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingSubscription.getClassNameId()),
+			Long.valueOf(subscription.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSubscription, "getOriginalClassNameId",
-				new Class<?>[0]));
+				subscription, "getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingSubscription.getClassPK()),
+			Long.valueOf(subscription.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				existingSubscription, "getOriginalClassPK", new Class<?>[0]));
+				subscription, "getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected Subscription addSubscription() throws Exception {

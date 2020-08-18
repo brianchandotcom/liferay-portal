@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -46,7 +47,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -929,42 +929,81 @@ public class KBArticlePersistenceTest {
 
 		_persistence.clearCache();
 
-		KBArticle existingKBArticle = _persistence.findByPrimaryKey(
-			newKBArticle.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newKBArticle.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingKBArticle.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingKBArticle, "getOriginalUuid", new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		KBArticle newKBArticle = addKBArticle();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			KBArticle.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"kbArticleId", newKBArticle.getKbArticleId()));
+
+		List<KBArticle> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(KBArticle kbArticle) {
 		Assert.assertEquals(
-			Long.valueOf(existingKBArticle.getGroupId()),
+			kbArticle.getUuid(),
+			ReflectionTestUtil.invoke(
+				kbArticle, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(kbArticle.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingKBArticle, "getOriginalGroupId", new Class<?>[0]));
+				kbArticle, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingKBArticle.getResourcePrimKey()),
+			Long.valueOf(kbArticle.getResourcePrimKey()),
 			ReflectionTestUtil.<Long>invoke(
-				existingKBArticle, "getOriginalResourcePrimKey",
-				new Class<?>[0]));
+				kbArticle, "getOriginalResourcePrimKey", new Class<?>[0]));
 		Assert.assertEquals(
-			Integer.valueOf(existingKBArticle.getVersion()),
+			Integer.valueOf(kbArticle.getVersion()),
 			ReflectionTestUtil.<Integer>invoke(
-				existingKBArticle, "getOriginalVersion", new Class<?>[0]));
+				kbArticle, "getOriginalVersion", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingKBArticle.getResourcePrimKey()),
+			Long.valueOf(kbArticle.getResourcePrimKey()),
 			ReflectionTestUtil.<Long>invoke(
-				existingKBArticle, "getOriginalResourcePrimKey",
-				new Class<?>[0]));
+				kbArticle, "getOriginalResourcePrimKey", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingKBArticle.getGroupId()),
+			Long.valueOf(kbArticle.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingKBArticle, "getOriginalGroupId", new Class<?>[0]));
+				kbArticle, "getOriginalGroupId", new Class<?>[0]));
 		Assert.assertEquals(
-			Integer.valueOf(existingKBArticle.getVersion()),
+			Integer.valueOf(kbArticle.getVersion()),
 			ReflectionTestUtil.<Integer>invoke(
-				existingKBArticle, "getOriginalVersion", new Class<?>[0]));
+				kbArticle, "getOriginalVersion", new Class<?>[0]));
 	}
 
 	protected KBArticle addKBArticle() throws Exception {

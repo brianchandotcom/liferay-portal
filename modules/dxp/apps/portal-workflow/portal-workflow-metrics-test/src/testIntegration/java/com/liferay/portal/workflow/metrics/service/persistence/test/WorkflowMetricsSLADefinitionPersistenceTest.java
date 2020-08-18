@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -662,33 +662,79 @@ public class WorkflowMetricsSLADefinitionPersistenceTest {
 
 		_persistence.clearCache();
 
-		WorkflowMetricsSLADefinition existingWorkflowMetricsSLADefinition =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newWorkflowMetricsSLADefinition.getPrimaryKey());
+				newWorkflowMetricsSLADefinition.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingWorkflowMetricsSLADefinition.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingWorkflowMetricsSLADefinition, "getOriginalUuid",
-					new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		WorkflowMetricsSLADefinition newWorkflowMetricsSLADefinition =
+			addWorkflowMetricsSLADefinition();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			WorkflowMetricsSLADefinition.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"workflowMetricsSLADefinitionId",
+				newWorkflowMetricsSLADefinition.
+					getWorkflowMetricsSLADefinitionId()));
+
+		List<WorkflowMetricsSLADefinition> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
+
 		Assert.assertEquals(
-			Long.valueOf(existingWorkflowMetricsSLADefinition.getGroupId()),
+			workflowMetricsSLADefinition.getUuid(),
+			ReflectionTestUtil.invoke(
+				workflowMetricsSLADefinition, "getOriginalUuid",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(workflowMetricsSLADefinition.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingWorkflowMetricsSLADefinition, "getOriginalGroupId",
+				workflowMetricsSLADefinition, "getOriginalGroupId",
 				new Class<?>[0]));
 
 		Assert.assertEquals(
 			Long.valueOf(
-				existingWorkflowMetricsSLADefinition.
+				workflowMetricsSLADefinition.
 					getWorkflowMetricsSLADefinitionId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingWorkflowMetricsSLADefinition,
+				workflowMetricsSLADefinition,
 				"getOriginalWorkflowMetricsSLADefinitionId", new Class<?>[0]));
 		Assert.assertEquals(
-			Boolean.valueOf(existingWorkflowMetricsSLADefinition.getActive()),
+			Boolean.valueOf(workflowMetricsSLADefinition.getActive()),
 			ReflectionTestUtil.<Boolean>invoke(
-				existingWorkflowMetricsSLADefinition, "getOriginalActive",
+				workflowMetricsSLADefinition, "getOriginalActive",
 				new Class<?>[0]));
 	}
 

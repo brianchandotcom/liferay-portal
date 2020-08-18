@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -535,33 +535,74 @@ public class AppBuilderAppVersionPersistenceTest {
 
 		_persistence.clearCache();
 
-		AppBuilderAppVersion existingAppBuilderAppVersion =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newAppBuilderAppVersion.getPrimaryKey());
+				newAppBuilderAppVersion.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingAppBuilderAppVersion.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingAppBuilderAppVersion, "getOriginalUuid",
-					new Class<?>[0])));
-		Assert.assertEquals(
-			Long.valueOf(existingAppBuilderAppVersion.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingAppBuilderAppVersion, "getOriginalGroupId",
-				new Class<?>[0]));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		AppBuilderAppVersion newAppBuilderAppVersion =
+			addAppBuilderAppVersion();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			AppBuilderAppVersion.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"appBuilderAppVersionId",
+				newAppBuilderAppVersion.getAppBuilderAppVersionId()));
+
+		List<AppBuilderAppVersion> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		AppBuilderAppVersion appBuilderAppVersion) {
 
 		Assert.assertEquals(
-			Long.valueOf(existingAppBuilderAppVersion.getAppBuilderAppId()),
+			appBuilderAppVersion.getUuid(),
+			ReflectionTestUtil.invoke(
+				appBuilderAppVersion, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(appBuilderAppVersion.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingAppBuilderAppVersion, "getOriginalAppBuilderAppId",
+				appBuilderAppVersion, "getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(
+			Long.valueOf(appBuilderAppVersion.getAppBuilderAppId()),
+			ReflectionTestUtil.<Long>invoke(
+				appBuilderAppVersion, "getOriginalAppBuilderAppId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingAppBuilderAppVersion.getVersion(),
-				ReflectionTestUtil.invoke(
-					existingAppBuilderAppVersion, "getOriginalVersion",
-					new Class<?>[0])));
+		Assert.assertEquals(
+			appBuilderAppVersion.getVersion(),
+			ReflectionTestUtil.invoke(
+				appBuilderAppVersion, "getOriginalVersion", new Class<?>[0]));
 	}
 
 	protected AppBuilderAppVersion addAppBuilderAppVersion() throws Exception {

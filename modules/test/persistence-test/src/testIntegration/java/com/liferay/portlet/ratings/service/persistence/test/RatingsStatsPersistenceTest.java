@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -442,18 +443,59 @@ public class RatingsStatsPersistenceTest {
 
 		_persistence.clearCache();
 
-		RatingsStats existingRatingsStats = _persistence.findByPrimaryKey(
-			newRatingsStats.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newRatingsStats.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		RatingsStats newRatingsStats = addRatingsStats();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			RatingsStats.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"statsId", newRatingsStats.getStatsId()));
+
+		List<RatingsStats> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(RatingsStats ratingsStats) {
 		Assert.assertEquals(
-			Long.valueOf(existingRatingsStats.getClassNameId()),
+			Long.valueOf(ratingsStats.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingRatingsStats, "getOriginalClassNameId",
-				new Class<?>[0]));
+				ratingsStats, "getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingRatingsStats.getClassPK()),
+			Long.valueOf(ratingsStats.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				existingRatingsStats, "getOriginalClassPK", new Class<?>[0]));
+				ratingsStats, "getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected RatingsStats addRatingsStats() throws Exception {

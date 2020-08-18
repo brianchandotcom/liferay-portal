@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -808,56 +808,95 @@ public class LayoutPageTemplateEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		LayoutPageTemplateEntry existingLayoutPageTemplateEntry =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newLayoutPageTemplateEntry.getPrimaryKey());
+				newLayoutPageTemplateEntry.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingLayoutPageTemplateEntry.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingLayoutPageTemplateEntry, "getOriginalUuid",
-					new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		LayoutPageTemplateEntry newLayoutPageTemplateEntry =
+			addLayoutPageTemplateEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			LayoutPageTemplateEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"layoutPageTemplateEntryId",
+				newLayoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+
+		List<LayoutPageTemplateEntry> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
 		Assert.assertEquals(
-			Long.valueOf(existingLayoutPageTemplateEntry.getGroupId()),
+			layoutPageTemplateEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				layoutPageTemplateEntry, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(layoutPageTemplateEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingLayoutPageTemplateEntry, "getOriginalGroupId",
+				layoutPageTemplateEntry, "getOriginalGroupId",
 				new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingLayoutPageTemplateEntry.getPlid()),
+			Long.valueOf(layoutPageTemplateEntry.getPlid()),
 			ReflectionTestUtil.<Long>invoke(
-				existingLayoutPageTemplateEntry, "getOriginalPlid",
-				new Class<?>[0]));
+				layoutPageTemplateEntry, "getOriginalPlid", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingLayoutPageTemplateEntry.getGroupId()),
+			Long.valueOf(layoutPageTemplateEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingLayoutPageTemplateEntry, "getOriginalGroupId",
+				layoutPageTemplateEntry, "getOriginalGroupId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingLayoutPageTemplateEntry.getLayoutPageTemplateEntryKey(),
-				ReflectionTestUtil.invoke(
-					existingLayoutPageTemplateEntry,
-					"getOriginalLayoutPageTemplateEntryKey", new Class<?>[0])));
+		Assert.assertEquals(
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryKey(),
+			ReflectionTestUtil.invoke(
+				layoutPageTemplateEntry,
+				"getOriginalLayoutPageTemplateEntryKey", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingLayoutPageTemplateEntry.getGroupId()),
+			Long.valueOf(layoutPageTemplateEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingLayoutPageTemplateEntry, "getOriginalGroupId",
+				layoutPageTemplateEntry, "getOriginalGroupId",
 				new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingLayoutPageTemplateEntry.getName(),
-				ReflectionTestUtil.invoke(
-					existingLayoutPageTemplateEntry, "getOriginalName",
-					new Class<?>[0])));
 		Assert.assertEquals(
-			Integer.valueOf(existingLayoutPageTemplateEntry.getType()),
+			layoutPageTemplateEntry.getName(),
+			ReflectionTestUtil.invoke(
+				layoutPageTemplateEntry, "getOriginalName", new Class<?>[0]));
+		Assert.assertEquals(
+			Integer.valueOf(layoutPageTemplateEntry.getType()),
 			ReflectionTestUtil.<Integer>invoke(
-				existingLayoutPageTemplateEntry, "getOriginalType",
-				new Class<?>[0]));
+				layoutPageTemplateEntry, "getOriginalType", new Class<?>[0]));
 	}
 
 	protected LayoutPageTemplateEntry addLayoutPageTemplateEntry()

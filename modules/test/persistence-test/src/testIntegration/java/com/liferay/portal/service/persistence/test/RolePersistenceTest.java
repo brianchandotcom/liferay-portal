@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -536,48 +536,87 @@ public class RolePersistenceTest {
 
 		_persistence.clearCache();
 
-		Role existingRole = _persistence.findByPrimaryKey(
-			newRole.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newRole.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		Role newRole = addRole();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			Role.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("roleId", newRole.getRoleId()));
+
+		List<Role> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(Role role) {
+		Assert.assertEquals(
+			Long.valueOf(role.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				role, "getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(
+			role.getName(),
+			ReflectionTestUtil.invoke(
+				role, "getOriginalName", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingRole.getCompanyId()),
+			Long.valueOf(role.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingRole, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingRole.getName(),
-				ReflectionTestUtil.invoke(
-					existingRole, "getOriginalName", new Class<?>[0])));
+				role, "getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(role.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(
+				role, "getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(role.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(
+				role, "getOriginalClassPK", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingRole.getCompanyId()),
+			Long.valueOf(role.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingRole, "getOriginalCompanyId", new Class<?>[0]));
+				role, "getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingRole.getClassNameId()),
+			Long.valueOf(role.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingRole, "getOriginalClassNameId", new Class<?>[0]));
+				role, "getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingRole.getClassPK()),
+			Long.valueOf(role.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				existingRole, "getOriginalClassPK", new Class<?>[0]));
-
+				role, "getOriginalClassPK", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingRole.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingRole, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingRole.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingRole, "getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingRole.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(
-				existingRole, "getOriginalClassPK", new Class<?>[0]));
-		Assert.assertEquals(
-			Integer.valueOf(existingRole.getType()),
+			Integer.valueOf(role.getType()),
 			ReflectionTestUtil.<Integer>invoke(
-				existingRole, "getOriginalType", new Class<?>[0]));
+				role, "getOriginalType", new Class<?>[0]));
 	}
 
 	protected Role addRole() throws Exception {

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -495,30 +496,72 @@ public class ExpandoValuePersistenceTest {
 
 		_persistence.clearCache();
 
-		ExpandoValue existingExpandoValue = _persistence.findByPrimaryKey(
-			newExpandoValue.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newExpandoValue.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		ExpandoValue newExpandoValue = addExpandoValue();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ExpandoValue.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"valueId", newExpandoValue.getValueId()));
+
+		List<ExpandoValue> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(ExpandoValue expandoValue) {
+		Assert.assertEquals(
+			Long.valueOf(expandoValue.getColumnId()),
+			ReflectionTestUtil.<Long>invoke(
+				expandoValue, "getOriginalColumnId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(expandoValue.getRowId()),
+			ReflectionTestUtil.<Long>invoke(
+				expandoValue, "getOriginalRowId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingExpandoValue.getColumnId()),
+			Long.valueOf(expandoValue.getTableId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingExpandoValue, "getOriginalColumnId", new Class<?>[0]));
+				expandoValue, "getOriginalTableId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingExpandoValue.getRowId()),
+			Long.valueOf(expandoValue.getColumnId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingExpandoValue, "getOriginalRowId", new Class<?>[0]));
-
+				expandoValue, "getOriginalColumnId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingExpandoValue.getTableId()),
+			Long.valueOf(expandoValue.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				existingExpandoValue, "getOriginalTableId", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingExpandoValue.getColumnId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingExpandoValue, "getOriginalColumnId", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingExpandoValue.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(
-				existingExpandoValue, "getOriginalClassPK", new Class<?>[0]));
+				expandoValue, "getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected ExpandoValue addExpandoValue() throws Exception {

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -472,28 +472,68 @@ public class PollsChoicePersistenceTest {
 
 		_persistence.clearCache();
 
-		PollsChoice existingPollsChoice = _persistence.findByPrimaryKey(
-			newPollsChoice.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newPollsChoice.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingPollsChoice.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingPollsChoice, "getOriginalUuid", new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		PollsChoice newPollsChoice = addPollsChoice();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PollsChoice.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"choiceId", newPollsChoice.getChoiceId()));
+
+		List<PollsChoice> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(PollsChoice pollsChoice) {
 		Assert.assertEquals(
-			Long.valueOf(existingPollsChoice.getGroupId()),
+			pollsChoice.getUuid(),
+			ReflectionTestUtil.invoke(
+				pollsChoice, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(pollsChoice.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingPollsChoice, "getOriginalGroupId", new Class<?>[0]));
+				pollsChoice, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingPollsChoice.getQuestionId()),
+			Long.valueOf(pollsChoice.getQuestionId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingPollsChoice, "getOriginalQuestionId", new Class<?>[0]));
-		Assert.assertTrue(
-			Objects.equals(
-				existingPollsChoice.getName(),
-				ReflectionTestUtil.invoke(
-					existingPollsChoice, "getOriginalName", new Class<?>[0])));
+				pollsChoice, "getOriginalQuestionId", new Class<?>[0]));
+		Assert.assertEquals(
+			pollsChoice.getName(),
+			ReflectionTestUtil.invoke(
+				pollsChoice, "getOriginalName", new Class<?>[0]));
 	}
 
 	protected PollsChoice addPollsChoice() throws Exception {

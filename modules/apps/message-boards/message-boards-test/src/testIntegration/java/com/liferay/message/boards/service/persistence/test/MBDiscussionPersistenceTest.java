@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +46,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -486,33 +486,73 @@ public class MBDiscussionPersistenceTest {
 
 		_persistence.clearCache();
 
-		MBDiscussion existingMBDiscussion = _persistence.findByPrimaryKey(
-			newMBDiscussion.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newMBDiscussion.getPrimaryKey()));
+	}
 
-		Assert.assertTrue(
-			Objects.equals(
-				existingMBDiscussion.getUuid(),
-				ReflectionTestUtil.invoke(
-					existingMBDiscussion, "getOriginalUuid", new Class<?>[0])));
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		MBDiscussion newMBDiscussion = addMBDiscussion();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			MBDiscussion.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"discussionId", newMBDiscussion.getDiscussionId()));
+
+		List<MBDiscussion> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(MBDiscussion mbDiscussion) {
 		Assert.assertEquals(
-			Long.valueOf(existingMBDiscussion.getGroupId()),
+			mbDiscussion.getUuid(),
+			ReflectionTestUtil.invoke(
+				mbDiscussion, "getOriginalUuid", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(mbDiscussion.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingMBDiscussion, "getOriginalGroupId", new Class<?>[0]));
+				mbDiscussion, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingMBDiscussion.getThreadId()),
+			Long.valueOf(mbDiscussion.getThreadId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingMBDiscussion, "getOriginalThreadId", new Class<?>[0]));
+				mbDiscussion, "getOriginalThreadId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(existingMBDiscussion.getClassNameId()),
+			Long.valueOf(mbDiscussion.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingMBDiscussion, "getOriginalClassNameId",
-				new Class<?>[0]));
+				mbDiscussion, "getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(existingMBDiscussion.getClassPK()),
+			Long.valueOf(mbDiscussion.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				existingMBDiscussion, "getOriginalClassPK", new Class<?>[0]));
+				mbDiscussion, "getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected MBDiscussion addMBDiscussion() throws Exception {

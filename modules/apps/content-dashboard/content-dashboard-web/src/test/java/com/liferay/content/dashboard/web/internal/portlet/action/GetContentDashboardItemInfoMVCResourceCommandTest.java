@@ -245,6 +245,13 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			}
 
 			@Override
+			public Object getDisplayFieldValue(
+				String fieldName, Locale locale) {
+
+				return null;
+			}
+
+			@Override
 			public InfoItemReference getInfoItemReference() {
 				return new InfoItemReference(className, classPK);
 			}
@@ -267,11 +274,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			@Override
 			public long getUserId() {
 				return 0;
-			}
-
-			@Override
-			public String getUserName() {
-				return null;
 			}
 
 			@Override

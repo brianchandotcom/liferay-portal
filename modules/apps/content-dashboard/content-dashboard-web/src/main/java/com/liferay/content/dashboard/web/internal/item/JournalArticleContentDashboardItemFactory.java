@@ -20,6 +20,8 @@ import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardIt
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemTypeFactory;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemTypeFactoryTracker;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
@@ -69,15 +71,23 @@ public class JournalArticleContentDashboardItemFactory
 			_journalArticleLocalService.fetchLatestArticle(
 				classPK, WorkflowConstants.STATUS_APPROVED);
 
+		InfoDisplayContributor<JournalArticle> infoDisplayContributor =
+			(InfoDisplayContributor<JournalArticle>)
+				infoDisplayContributorTracker.getInfoDisplayContributor(
+					JournalArticle.class.getName());
+
 		return new JournalArticleContentDashboardItem(
 			assetEntry.getCategories(), assetEntry.getTags(),
 			_contentDashboardItemActionProviderTracker,
 			contentDashboardItemTypeFactory.create(
 				ddmStructure.getStructureId()),
 			_groupLocalService.fetchGroup(journalArticle.getGroupId()),
-			journalArticle, _language, latestApprovedJournalArticle,
-			_userLocalService.fetchUser(journalArticle.getUserId()));
+			infoDisplayContributor, journalArticle, _language,
+			latestApprovedJournalArticle);
 	}
+
+	@Reference
+	protected InfoDisplayContributorTracker infoDisplayContributorTracker;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

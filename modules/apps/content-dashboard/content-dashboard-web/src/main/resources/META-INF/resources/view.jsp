@@ -109,7 +109,7 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 								cssClass="text-center"
 								name="author"
 							>
-								<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(contentDashboardItem.getUserName()) %>">
+								<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(String.valueOf(contentDashboardItem.getDisplayFieldValue("authorName", locale))) %>">
 									<liferay-ui:user-portrait
 										userId="<%= contentDashboardItem.getUserId() %>"
 									/>

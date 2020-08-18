@@ -54,6 +54,8 @@ public interface ContentDashboardItem<T> {
 
 	public Locale getDefaultLocale();
 
+	public Object getDisplayFieldValue(String fieldName, Locale locale);
+
 	public InfoItemReference getInfoItemReference();
 
 	public Date getModifiedDate();
@@ -63,8 +65,6 @@ public interface ContentDashboardItem<T> {
 	public String getTitle(Locale locale);
 
 	public long getUserId();
-
-	public String getUserName();
 
 	public List<Version> getVersions(Locale locale);
 

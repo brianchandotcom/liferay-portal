@@ -23,7 +23,6 @@ import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFacto
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -32,12 +31,10 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -45,7 +42,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -145,11 +141,13 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				).put(
 					"userId", contentDashboardItem.getUserId()
 				).put(
-					"userName", _getUserName(contentDashboardItem.getUserId())
+					"userName",
+					contentDashboardItem.getDisplayFieldValue(
+						"authorName", locale)
 				).put(
 					"userPortraitURL",
-					_getUserPortraitURL(
-						httpServletRequest, contentDashboardItem.getUserId())
+					contentDashboardItem.getDisplayFieldValue(
+						"authorProfileImage", locale)
 				).put(
 					"versions",
 					_getVersionsJSONArray(contentDashboardItem, locale)
@@ -253,41 +251,6 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 			contentDashboardItem.getContentDashboardItemType();
 
 		return contentDashboardItemType.getLabel(locale);
-	}
-
-	private String _getUserName(long userId) {
-		return Optional.ofNullable(
-			_userLocalService.fetchUser(userId)
-		).map(
-			User::getFullName
-		).orElseGet(
-			() -> StringPool.BLANK
-		);
-	}
-
-	private String _getUserPortraitURL(
-		HttpServletRequest httpServletRequest, long userId) {
-
-		return Optional.ofNullable(
-			_userLocalService.fetchUser(userId)
-		).filter(
-			user -> user.getPortraitId() > 0
-		).map(
-			user -> {
-				try {
-					return user.getPortraitURL(
-						(ThemeDisplay)httpServletRequest.getAttribute(
-							WebKeys.THEME_DISPLAY));
-				}
-				catch (PortalException portalException) {
-					_log.error(portalException, portalException);
-
-					return StringPool.BLANK;
-				}
-			}
-		).orElse(
-			StringPool.BLANK
-		);
 	}
 
 	private JSONArray _getVersionsJSONArray(

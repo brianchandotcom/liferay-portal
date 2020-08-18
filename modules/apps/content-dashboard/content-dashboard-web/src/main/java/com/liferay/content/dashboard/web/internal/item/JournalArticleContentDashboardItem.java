@@ -21,6 +21,7 @@ import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemA
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -58,8 +58,9 @@ public class JournalArticleContentDashboardItem
 		ContentDashboardItemActionProviderTracker
 			contentDashboardItemActionProviderTracker,
 		ContentDashboardItemType contentDashboardItemType, Group group,
+		InfoDisplayContributor<JournalArticle> infoDisplayContributor,
 		JournalArticle journalArticle, Language language,
-		JournalArticle latestApprovedJournalArticle, User user) {
+		JournalArticle latestApprovedJournalArticle) {
 
 		if (ListUtil.isEmpty(assetCategories)) {
 			_assetCategories = Collections.emptyList();
@@ -79,6 +80,7 @@ public class JournalArticleContentDashboardItem
 			contentDashboardItemActionProviderTracker;
 		_contentDashboardItemType = contentDashboardItemType;
 		_group = group;
+		_infoDisplayContributor = infoDisplayContributor;
 		_journalArticle = journalArticle;
 		_language = language;
 
@@ -88,8 +90,6 @@ public class JournalArticleContentDashboardItem
 		else {
 			_latestApprovedJournalArticle = null;
 		}
-
-		_user = user;
 	}
 
 	@Override
@@ -200,6 +200,19 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
+	public Object getDisplayFieldValue(String fieldName, Locale locale) {
+		try {
+			return _infoDisplayContributor.getInfoDisplayFieldValue(
+				_journalArticle, fieldName, locale);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+
+			return StringPool.BLANK;
+		}
+	}
+
+	@Override
 	public InfoItemReference getInfoItemReference() {
 		return new InfoItemReference(
 			JournalArticle.class.getName(),
@@ -238,12 +251,7 @@ public class JournalArticleContentDashboardItem
 
 	@Override
 	public long getUserId() {
-		return _user.getUserId();
-	}
-
-	@Override
-	public String getUserName() {
-		return _user.getFullName();
+		return _journalArticle.getUserId();
 	}
 
 	@Override
@@ -309,9 +317,10 @@ public class JournalArticleContentDashboardItem
 		_contentDashboardItemActionProviderTracker;
 	private final ContentDashboardItemType _contentDashboardItemType;
 	private final Group _group;
+	private final InfoDisplayContributor<JournalArticle>
+		_infoDisplayContributor;
 	private final JournalArticle _journalArticle;
 	private final Language _language;
 	private final JournalArticle _latestApprovedJournalArticle;
-	private final User _user;
 
 }

@@ -5357,8 +5357,6 @@ public class SharingEntryPersistenceImpl
 				sharingEntry.getClassPK()
 			},
 			sharingEntry);
-
-		sharingEntry.resetOriginalValues();
 	}
 
 	/**
@@ -5374,9 +5372,6 @@ public class SharingEntryPersistenceImpl
 						null) {
 
 				cacheResult(sharingEntry);
-			}
-			else {
-				sharingEntry.resetOriginalValues();
 			}
 		}
 	}

@@ -2284,8 +2284,6 @@ public class SyncDevicePersistenceImpl
 	public void cacheResult(SyncDevice syncDevice) {
 		entityCache.putResult(
 			SyncDeviceImpl.class, syncDevice.getPrimaryKey(), syncDevice);
-
-		syncDevice.resetOriginalValues();
 	}
 
 	/**
@@ -2300,9 +2298,6 @@ public class SyncDevicePersistenceImpl
 					SyncDeviceImpl.class, syncDevice.getPrimaryKey()) == null) {
 
 				cacheResult(syncDevice);
-			}
-			else {
-				syncDevice.resetOriginalValues();
 			}
 		}
 	}

@@ -1124,8 +1124,6 @@ public class OAuthTokenPersistenceImpl
 				oAuthToken.getTokenName()
 			},
 			oAuthToken);
-
-		oAuthToken.resetOriginalValues();
 	}
 
 	/**
@@ -1140,9 +1138,6 @@ public class OAuthTokenPersistenceImpl
 					OAuthTokenImpl.class, oAuthToken.getPrimaryKey()) == null) {
 
 				cacheResult(oAuthToken);
-			}
-			else {
-				oAuthToken.resetOriginalValues();
 			}
 		}
 	}

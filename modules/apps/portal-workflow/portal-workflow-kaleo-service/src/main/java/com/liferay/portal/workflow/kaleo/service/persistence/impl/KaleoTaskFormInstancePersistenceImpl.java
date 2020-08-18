@@ -2910,8 +2910,6 @@ public class KaleoTaskFormInstancePersistenceImpl
 			_finderPathFetchByKaleoTaskFormId,
 			new Object[] {kaleoTaskFormInstance.getKaleoTaskFormId()},
 			kaleoTaskFormInstance);
-
-		kaleoTaskFormInstance.resetOriginalValues();
 	}
 
 	/**
@@ -2931,9 +2929,6 @@ public class KaleoTaskFormInstancePersistenceImpl
 					kaleoTaskFormInstance.getPrimaryKey()) == null) {
 
 				cacheResult(kaleoTaskFormInstance);
-			}
-			else {
-				kaleoTaskFormInstance.resetOriginalValues();
 			}
 		}
 	}

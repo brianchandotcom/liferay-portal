@@ -893,8 +893,6 @@ public class LocalizedEntryLocalizationPersistenceImpl
 				localizedEntryLocalization.getLanguageId()
 			},
 			localizedEntryLocalization);
-
-		localizedEntryLocalization.resetOriginalValues();
 	}
 
 	/**
@@ -914,9 +912,6 @@ public class LocalizedEntryLocalizationPersistenceImpl
 					localizedEntryLocalization.getPrimaryKey()) == null) {
 
 				cacheResult(localizedEntryLocalization);
-			}
-			else {
-				localizedEntryLocalization.resetOriginalValues();
 			}
 		}
 	}

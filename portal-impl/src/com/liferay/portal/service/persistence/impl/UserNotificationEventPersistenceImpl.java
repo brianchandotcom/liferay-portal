@@ -11450,8 +11450,6 @@ public class UserNotificationEventPersistenceImpl
 		EntityCacheUtil.putResult(
 			UserNotificationEventImpl.class,
 			userNotificationEvent.getPrimaryKey(), userNotificationEvent);
-
-		userNotificationEvent.resetOriginalValues();
 	}
 
 	/**
@@ -11471,9 +11469,6 @@ public class UserNotificationEventPersistenceImpl
 					userNotificationEvent.getPrimaryKey()) == null) {
 
 				cacheResult(userNotificationEvent);
-			}
-			else {
-				userNotificationEvent.resetOriginalValues();
 			}
 		}
 	}

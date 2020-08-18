@@ -1684,8 +1684,6 @@ public class LayoutSEOSitePersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByGroupId,
 			new Object[] {layoutSEOSite.getGroupId()}, layoutSEOSite);
-
-		layoutSEOSite.resetOriginalValues();
 	}
 
 	/**
@@ -1701,9 +1699,6 @@ public class LayoutSEOSitePersistenceImpl
 						null) {
 
 				cacheResult(layoutSEOSite);
-			}
-			else {
-				layoutSEOSite.resetOriginalValues();
 			}
 		}
 	}

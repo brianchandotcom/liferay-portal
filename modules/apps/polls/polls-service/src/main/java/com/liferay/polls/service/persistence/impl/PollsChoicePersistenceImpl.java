@@ -2227,8 +2227,6 @@ public class PollsChoicePersistenceImpl
 			_finderPathFetchByQ_N,
 			new Object[] {pollsChoice.getQuestionId(), pollsChoice.getName()},
 			pollsChoice);
-
-		pollsChoice.resetOriginalValues();
 	}
 
 	/**
@@ -2244,9 +2242,6 @@ public class PollsChoicePersistenceImpl
 						null) {
 
 				cacheResult(pollsChoice);
-			}
-			else {
-				pollsChoice.resetOriginalValues();
 			}
 		}
 	}

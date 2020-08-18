@@ -345,8 +345,6 @@ public class ReleasePersistenceImpl
 		FinderCacheUtil.putResult(
 			_finderPathFetchByServletContextName,
 			new Object[] {release.getServletContextName()}, release);
-
-		release.resetOriginalValues();
 	}
 
 	/**
@@ -361,9 +359,6 @@ public class ReleasePersistenceImpl
 					ReleaseImpl.class, release.getPrimaryKey()) == null) {
 
 				cacheResult(release);
-			}
-			else {
-				release.resetOriginalValues();
 			}
 		}
 	}

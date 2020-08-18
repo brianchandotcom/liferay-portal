@@ -2671,8 +2671,6 @@ public class JournalFeedPersistenceImpl
 	@Override
 	public void cacheResult(JournalFeed journalFeed) {
 		if (journalFeed.getCtCollectionId() != 0) {
-			journalFeed.resetOriginalValues();
-
 			return;
 		}
 
@@ -2688,8 +2686,6 @@ public class JournalFeedPersistenceImpl
 			_finderPathFetchByG_F,
 			new Object[] {journalFeed.getGroupId(), journalFeed.getFeedId()},
 			journalFeed);
-
-		journalFeed.resetOriginalValues();
 	}
 
 	/**
@@ -2701,8 +2697,6 @@ public class JournalFeedPersistenceImpl
 	public void cacheResult(List<JournalFeed> journalFeeds) {
 		for (JournalFeed journalFeed : journalFeeds) {
 			if (journalFeed.getCtCollectionId() != 0) {
-				journalFeed.resetOriginalValues();
-
 				continue;
 			}
 
@@ -2711,9 +2705,6 @@ public class JournalFeedPersistenceImpl
 						null) {
 
 				cacheResult(journalFeed);
-			}
-			else {
-				journalFeed.resetOriginalValues();
 			}
 		}
 	}

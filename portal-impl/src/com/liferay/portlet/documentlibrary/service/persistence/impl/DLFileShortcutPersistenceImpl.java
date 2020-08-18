@@ -6154,8 +6154,6 @@ public class DLFileShortcutPersistenceImpl
 	@Override
 	public void cacheResult(DLFileShortcut dlFileShortcut) {
 		if (dlFileShortcut.getCtCollectionId() != 0) {
-			dlFileShortcut.resetOriginalValues();
-
 			return;
 		}
 
@@ -6169,8 +6167,6 @@ public class DLFileShortcutPersistenceImpl
 				dlFileShortcut.getUuid(), dlFileShortcut.getGroupId()
 			},
 			dlFileShortcut);
-
-		dlFileShortcut.resetOriginalValues();
 	}
 
 	/**
@@ -6182,8 +6178,6 @@ public class DLFileShortcutPersistenceImpl
 	public void cacheResult(List<DLFileShortcut> dlFileShortcuts) {
 		for (DLFileShortcut dlFileShortcut : dlFileShortcuts) {
 			if (dlFileShortcut.getCtCollectionId() != 0) {
-				dlFileShortcut.resetOriginalValues();
-
 				continue;
 			}
 
@@ -6192,9 +6186,6 @@ public class DLFileShortcutPersistenceImpl
 						null) {
 
 				cacheResult(dlFileShortcut);
-			}
-			else {
-				dlFileShortcut.resetOriginalValues();
 			}
 		}
 	}

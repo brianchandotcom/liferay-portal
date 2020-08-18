@@ -2773,8 +2773,6 @@ public class MBThreadFlagPersistenceImpl
 	@Override
 	public void cacheResult(MBThreadFlag mbThreadFlag) {
 		if (mbThreadFlag.getCtCollectionId() != 0) {
-			mbThreadFlag.resetOriginalValues();
-
 			return;
 		}
 
@@ -2790,8 +2788,6 @@ public class MBThreadFlagPersistenceImpl
 			_finderPathFetchByU_T,
 			new Object[] {mbThreadFlag.getUserId(), mbThreadFlag.getThreadId()},
 			mbThreadFlag);
-
-		mbThreadFlag.resetOriginalValues();
 	}
 
 	/**
@@ -2803,8 +2799,6 @@ public class MBThreadFlagPersistenceImpl
 	public void cacheResult(List<MBThreadFlag> mbThreadFlags) {
 		for (MBThreadFlag mbThreadFlag : mbThreadFlags) {
 			if (mbThreadFlag.getCtCollectionId() != 0) {
-				mbThreadFlag.resetOriginalValues();
-
 				continue;
 			}
 
@@ -2813,9 +2807,6 @@ public class MBThreadFlagPersistenceImpl
 						null) {
 
 				cacheResult(mbThreadFlag);
-			}
-			else {
-				mbThreadFlag.resetOriginalValues();
 			}
 		}
 	}

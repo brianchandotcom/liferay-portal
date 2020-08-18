@@ -12604,8 +12604,6 @@ public class GroupPersistenceImpl
 	@Override
 	public void cacheResult(Group group) {
 		if (group.getCtCollectionId() != 0) {
-			group.resetOriginalValues();
-
 			return;
 		}
 
@@ -12650,8 +12648,6 @@ public class GroupPersistenceImpl
 				group.getLiveGroupId(), group.getGroupKey()
 			},
 			group);
-
-		group.resetOriginalValues();
 	}
 
 	/**
@@ -12663,8 +12659,6 @@ public class GroupPersistenceImpl
 	public void cacheResult(List<Group> groups) {
 		for (Group group : groups) {
 			if (group.getCtCollectionId() != 0) {
-				group.resetOriginalValues();
-
 				continue;
 			}
 
@@ -12672,9 +12666,6 @@ public class GroupPersistenceImpl
 					GroupImpl.class, group.getPrimaryKey()) == null) {
 
 				cacheResult(group);
-			}
-			else {
-				group.resetOriginalValues();
 			}
 		}
 	}

@@ -307,8 +307,6 @@ public class MFAEmailOTPEntryPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByUserId,
 			new Object[] {mfaEmailOTPEntry.getUserId()}, mfaEmailOTPEntry);
-
-		mfaEmailOTPEntry.resetOriginalValues();
 	}
 
 	/**
@@ -324,9 +322,6 @@ public class MFAEmailOTPEntryPersistenceImpl
 					mfaEmailOTPEntry.getPrimaryKey()) == null) {
 
 				cacheResult(mfaEmailOTPEntry);
-			}
-			else {
-				mfaEmailOTPEntry.resetOriginalValues();
 			}
 		}
 	}

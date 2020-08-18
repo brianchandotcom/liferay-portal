@@ -4078,8 +4078,6 @@ public class AssetEntryUsagePersistenceImpl
 	@Override
 	public void cacheResult(AssetEntryUsage assetEntryUsage) {
 		if (assetEntryUsage.getCtCollectionId() != 0) {
-			assetEntryUsage.resetOriginalValues();
-
 			return;
 		}
 
@@ -4102,8 +4100,6 @@ public class AssetEntryUsagePersistenceImpl
 				assetEntryUsage.getContainerKey(), assetEntryUsage.getPlid()
 			},
 			assetEntryUsage);
-
-		assetEntryUsage.resetOriginalValues();
 	}
 
 	/**
@@ -4115,8 +4111,6 @@ public class AssetEntryUsagePersistenceImpl
 	public void cacheResult(List<AssetEntryUsage> assetEntryUsages) {
 		for (AssetEntryUsage assetEntryUsage : assetEntryUsages) {
 			if (assetEntryUsage.getCtCollectionId() != 0) {
-				assetEntryUsage.resetOriginalValues();
-
 				continue;
 			}
 
@@ -4125,9 +4119,6 @@ public class AssetEntryUsagePersistenceImpl
 					assetEntryUsage.getPrimaryKey()) == null) {
 
 				cacheResult(assetEntryUsage);
-			}
-			else {
-				assetEntryUsage.resetOriginalValues();
 			}
 		}
 	}

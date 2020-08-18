@@ -1677,8 +1677,6 @@ public class KaleoNodePersistenceImpl
 	public void cacheResult(KaleoNode kaleoNode) {
 		entityCache.putResult(
 			KaleoNodeImpl.class, kaleoNode.getPrimaryKey(), kaleoNode);
-
-		kaleoNode.resetOriginalValues();
 	}
 
 	/**
@@ -1693,9 +1691,6 @@ public class KaleoNodePersistenceImpl
 					KaleoNodeImpl.class, kaleoNode.getPrimaryKey()) == null) {
 
 				cacheResult(kaleoNode);
-			}
-			else {
-				kaleoNode.resetOriginalValues();
 			}
 		}
 	}

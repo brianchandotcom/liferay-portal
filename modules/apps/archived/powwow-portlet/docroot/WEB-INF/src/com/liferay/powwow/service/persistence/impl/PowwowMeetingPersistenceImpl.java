@@ -3048,8 +3048,6 @@ public class PowwowMeetingPersistenceImpl
 		EntityCacheUtil.putResult(
 			PowwowMeetingImpl.class, powwowMeeting.getPrimaryKey(),
 			powwowMeeting);
-
-		powwowMeeting.resetOriginalValues();
 	}
 
 	/**
@@ -3065,9 +3063,6 @@ public class PowwowMeetingPersistenceImpl
 						null) {
 
 				cacheResult(powwowMeeting);
-			}
-			else {
-				powwowMeeting.resetOriginalValues();
 			}
 		}
 	}

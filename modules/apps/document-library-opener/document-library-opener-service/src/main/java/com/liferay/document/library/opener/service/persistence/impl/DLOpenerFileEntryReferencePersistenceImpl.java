@@ -592,8 +592,6 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 				dlOpenerFileEntryReference.getFileEntryId()
 			},
 			dlOpenerFileEntryReference);
-
-		dlOpenerFileEntryReference.resetOriginalValues();
 	}
 
 	/**
@@ -613,9 +611,6 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 					dlOpenerFileEntryReference.getPrimaryKey()) == null) {
 
 				cacheResult(dlOpenerFileEntryReference);
-			}
-			else {
-				dlOpenerFileEntryReference.resetOriginalValues();
 			}
 		}
 	}

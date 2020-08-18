@@ -15338,8 +15338,6 @@ public class LayoutPersistenceImpl
 	@Override
 	public void cacheResult(Layout layout) {
 		if (layout.getCtCollectionId() != 0) {
-			layout.resetOriginalValues();
-
 			return;
 		}
 
@@ -15390,8 +15388,6 @@ public class LayoutPersistenceImpl
 				layout.getSourcePrototypeLayoutUuid()
 			},
 			layout);
-
-		layout.resetOriginalValues();
 	}
 
 	/**
@@ -15403,8 +15399,6 @@ public class LayoutPersistenceImpl
 	public void cacheResult(List<Layout> layouts) {
 		for (Layout layout : layouts) {
 			if (layout.getCtCollectionId() != 0) {
-				layout.resetOriginalValues();
-
 				continue;
 			}
 
@@ -15412,9 +15406,6 @@ public class LayoutPersistenceImpl
 					LayoutImpl.class, layout.getPrimaryKey()) == null) {
 
 				cacheResult(layout);
-			}
-			else {
-				layout.resetOriginalValues();
 			}
 		}
 	}

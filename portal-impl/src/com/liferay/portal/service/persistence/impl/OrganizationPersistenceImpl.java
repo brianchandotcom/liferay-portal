@@ -9222,8 +9222,6 @@ public class OrganizationPersistenceImpl
 	@Override
 	public void cacheResult(Organization organization) {
 		if (organization.getCtCollectionId() != 0) {
-			organization.resetOriginalValues();
-
 			return;
 		}
 
@@ -9242,8 +9240,6 @@ public class OrganizationPersistenceImpl
 				organization.getExternalReferenceCode()
 			},
 			organization);
-
-		organization.resetOriginalValues();
 	}
 
 	/**
@@ -9255,8 +9251,6 @@ public class OrganizationPersistenceImpl
 	public void cacheResult(List<Organization> organizations) {
 		for (Organization organization : organizations) {
 			if (organization.getCtCollectionId() != 0) {
-				organization.resetOriginalValues();
-
 				continue;
 			}
 
@@ -9265,9 +9259,6 @@ public class OrganizationPersistenceImpl
 						null) {
 
 				cacheResult(organization);
-			}
-			else {
-				organization.resetOriginalValues();
 			}
 		}
 	}

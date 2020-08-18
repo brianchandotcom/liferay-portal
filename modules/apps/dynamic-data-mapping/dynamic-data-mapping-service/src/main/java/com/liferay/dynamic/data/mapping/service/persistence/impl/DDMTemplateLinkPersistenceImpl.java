@@ -860,8 +860,6 @@ public class DDMTemplateLinkPersistenceImpl
 	@Override
 	public void cacheResult(DDMTemplateLink ddmTemplateLink) {
 		if (ddmTemplateLink.getCtCollectionId() != 0) {
-			ddmTemplateLink.resetOriginalValues();
-
 			return;
 		}
 
@@ -875,8 +873,6 @@ public class DDMTemplateLinkPersistenceImpl
 				ddmTemplateLink.getClassNameId(), ddmTemplateLink.getClassPK()
 			},
 			ddmTemplateLink);
-
-		ddmTemplateLink.resetOriginalValues();
 	}
 
 	/**
@@ -888,8 +884,6 @@ public class DDMTemplateLinkPersistenceImpl
 	public void cacheResult(List<DDMTemplateLink> ddmTemplateLinks) {
 		for (DDMTemplateLink ddmTemplateLink : ddmTemplateLinks) {
 			if (ddmTemplateLink.getCtCollectionId() != 0) {
-				ddmTemplateLink.resetOriginalValues();
-
 				continue;
 			}
 
@@ -898,9 +892,6 @@ public class DDMTemplateLinkPersistenceImpl
 					ddmTemplateLink.getPrimaryKey()) == null) {
 
 				cacheResult(ddmTemplateLink);
-			}
-			else {
-				ddmTemplateLink.resetOriginalValues();
 			}
 		}
 	}

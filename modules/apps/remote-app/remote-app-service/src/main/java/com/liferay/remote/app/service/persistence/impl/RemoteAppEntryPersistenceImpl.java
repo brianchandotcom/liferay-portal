@@ -1487,8 +1487,6 @@ public class RemoteAppEntryPersistenceImpl
 				remoteAppEntry.getCompanyId(), remoteAppEntry.getUrl()
 			},
 			remoteAppEntry);
-
-		remoteAppEntry.resetOriginalValues();
 	}
 
 	/**
@@ -1504,9 +1502,6 @@ public class RemoteAppEntryPersistenceImpl
 						null) {
 
 				cacheResult(remoteAppEntry);
-			}
-			else {
-				remoteAppEntry.resetOriginalValues();
 			}
 		}
 	}

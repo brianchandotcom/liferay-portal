@@ -3172,8 +3172,6 @@ public class GadgetPersistenceImpl
 		FinderCacheUtil.putResult(
 			_finderPathFetchByC_U,
 			new Object[] {gadget.getCompanyId(), gadget.getUrl()}, gadget);
-
-		gadget.resetOriginalValues();
 	}
 
 	/**
@@ -3188,9 +3186,6 @@ public class GadgetPersistenceImpl
 					GadgetImpl.class, gadget.getPrimaryKey()) == null) {
 
 				cacheResult(gadget);
-			}
-			else {
-				gadget.resetOriginalValues();
 			}
 		}
 	}

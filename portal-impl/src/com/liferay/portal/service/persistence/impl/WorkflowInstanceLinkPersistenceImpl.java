@@ -1343,16 +1343,12 @@ public class WorkflowInstanceLinkPersistenceImpl
 	@Override
 	public void cacheResult(WorkflowInstanceLink workflowInstanceLink) {
 		if (workflowInstanceLink.getCtCollectionId() != 0) {
-			workflowInstanceLink.resetOriginalValues();
-
 			return;
 		}
 
 		EntityCacheUtil.putResult(
 			WorkflowInstanceLinkImpl.class,
 			workflowInstanceLink.getPrimaryKey(), workflowInstanceLink);
-
-		workflowInstanceLink.resetOriginalValues();
 	}
 
 	/**
@@ -1366,8 +1362,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 				workflowInstanceLinks) {
 
 			if (workflowInstanceLink.getCtCollectionId() != 0) {
-				workflowInstanceLink.resetOriginalValues();
-
 				continue;
 			}
 
@@ -1376,9 +1370,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 					workflowInstanceLink.getPrimaryKey()) == null) {
 
 				cacheResult(workflowInstanceLink);
-			}
-			else {
-				workflowInstanceLink.resetOriginalValues();
 			}
 		}
 	}

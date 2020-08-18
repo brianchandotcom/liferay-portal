@@ -2956,8 +2956,6 @@ public class BlogsStatsUserPersistenceImpl
 				blogsStatsUser.getGroupId(), blogsStatsUser.getUserId()
 			},
 			blogsStatsUser);
-
-		blogsStatsUser.resetOriginalValues();
 	}
 
 	/**
@@ -2973,9 +2971,6 @@ public class BlogsStatsUserPersistenceImpl
 						null) {
 
 				cacheResult(blogsStatsUser);
-			}
-			else {
-				blogsStatsUser.resetOriginalValues();
 			}
 		}
 	}

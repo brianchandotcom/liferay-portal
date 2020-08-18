@@ -863,8 +863,6 @@ public class EntryPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByU_EA,
 			new Object[] {entry.getUserId(), entry.getEmailAddress()}, entry);
-
-		entry.resetOriginalValues();
 	}
 
 	/**
@@ -879,9 +877,6 @@ public class EntryPersistenceImpl
 					null) {
 
 				cacheResult(entry);
-			}
-			else {
-				entry.resetOriginalValues();
 			}
 		}
 	}

@@ -1327,8 +1327,6 @@ public class KaleoTimerPersistenceImpl
 	public void cacheResult(KaleoTimer kaleoTimer) {
 		entityCache.putResult(
 			KaleoTimerImpl.class, kaleoTimer.getPrimaryKey(), kaleoTimer);
-
-		kaleoTimer.resetOriginalValues();
 	}
 
 	/**
@@ -1343,9 +1341,6 @@ public class KaleoTimerPersistenceImpl
 					KaleoTimerImpl.class, kaleoTimer.getPrimaryKey()) == null) {
 
 				cacheResult(kaleoTimer);
-			}
-			else {
-				kaleoTimer.resetOriginalValues();
 			}
 		}
 	}

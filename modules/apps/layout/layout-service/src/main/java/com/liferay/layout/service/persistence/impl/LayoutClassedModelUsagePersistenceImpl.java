@@ -4218,8 +4218,6 @@ public class LayoutClassedModelUsagePersistenceImpl
 	@Override
 	public void cacheResult(LayoutClassedModelUsage layoutClassedModelUsage) {
 		if (layoutClassedModelUsage.getCtCollectionId() != 0) {
-			layoutClassedModelUsage.resetOriginalValues();
-
 			return;
 		}
 
@@ -4245,8 +4243,6 @@ public class LayoutClassedModelUsagePersistenceImpl
 				layoutClassedModelUsage.getPlid()
 			},
 			layoutClassedModelUsage);
-
-		layoutClassedModelUsage.resetOriginalValues();
 	}
 
 	/**
@@ -4262,8 +4258,6 @@ public class LayoutClassedModelUsagePersistenceImpl
 				layoutClassedModelUsages) {
 
 			if (layoutClassedModelUsage.getCtCollectionId() != 0) {
-				layoutClassedModelUsage.resetOriginalValues();
-
 				continue;
 			}
 
@@ -4272,9 +4266,6 @@ public class LayoutClassedModelUsagePersistenceImpl
 					layoutClassedModelUsage.getPrimaryKey()) == null) {
 
 				cacheResult(layoutClassedModelUsage);
-			}
-			else {
-				layoutClassedModelUsage.resetOriginalValues();
 			}
 		}
 	}

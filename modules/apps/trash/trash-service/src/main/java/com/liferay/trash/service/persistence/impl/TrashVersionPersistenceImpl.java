@@ -1405,8 +1405,6 @@ public class TrashVersionPersistenceImpl
 	@Override
 	public void cacheResult(TrashVersion trashVersion) {
 		if (trashVersion.getCtCollectionId() != 0) {
-			trashVersion.resetOriginalValues();
-
 			return;
 		}
 
@@ -1419,8 +1417,6 @@ public class TrashVersionPersistenceImpl
 				trashVersion.getClassNameId(), trashVersion.getClassPK()
 			},
 			trashVersion);
-
-		trashVersion.resetOriginalValues();
 	}
 
 	/**
@@ -1432,8 +1428,6 @@ public class TrashVersionPersistenceImpl
 	public void cacheResult(List<TrashVersion> trashVersions) {
 		for (TrashVersion trashVersion : trashVersions) {
 			if (trashVersion.getCtCollectionId() != 0) {
-				trashVersion.resetOriginalValues();
-
 				continue;
 			}
 
@@ -1442,9 +1436,6 @@ public class TrashVersionPersistenceImpl
 						null) {
 
 				cacheResult(trashVersion);
-			}
-			else {
-				trashVersion.resetOriginalValues();
 			}
 		}
 	}

@@ -4329,8 +4329,6 @@ public class DDMStructureLayoutPersistenceImpl
 	@Override
 	public void cacheResult(DDMStructureLayout ddmStructureLayout) {
 		if (ddmStructureLayout.getCtCollectionId() != 0) {
-			ddmStructureLayout.resetOriginalValues();
-
 			return;
 		}
 
@@ -4358,8 +4356,6 @@ public class DDMStructureLayoutPersistenceImpl
 				ddmStructureLayout.getStructureLayoutKey()
 			},
 			ddmStructureLayout);
-
-		ddmStructureLayout.resetOriginalValues();
 	}
 
 	/**
@@ -4371,8 +4367,6 @@ public class DDMStructureLayoutPersistenceImpl
 	public void cacheResult(List<DDMStructureLayout> ddmStructureLayouts) {
 		for (DDMStructureLayout ddmStructureLayout : ddmStructureLayouts) {
 			if (ddmStructureLayout.getCtCollectionId() != 0) {
-				ddmStructureLayout.resetOriginalValues();
-
 				continue;
 			}
 
@@ -4381,9 +4375,6 @@ public class DDMStructureLayoutPersistenceImpl
 					ddmStructureLayout.getPrimaryKey()) == null) {
 
 				cacheResult(ddmStructureLayout);
-			}
-			else {
-				ddmStructureLayout.resetOriginalValues();
 			}
 		}
 	}

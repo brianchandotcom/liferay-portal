@@ -2815,8 +2815,6 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion) {
 
 		if (ddmFormInstanceRecordVersion.getCtCollectionId() != 0) {
-			ddmFormInstanceRecordVersion.resetOriginalValues();
-
 			return;
 		}
 
@@ -2832,8 +2830,6 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 				ddmFormInstanceRecordVersion.getVersion()
 			},
 			ddmFormInstanceRecordVersion);
-
-		ddmFormInstanceRecordVersion.resetOriginalValues();
 	}
 
 	/**
@@ -2849,8 +2845,6 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 				ddmFormInstanceRecordVersions) {
 
 			if (ddmFormInstanceRecordVersion.getCtCollectionId() != 0) {
-				ddmFormInstanceRecordVersion.resetOriginalValues();
-
 				continue;
 			}
 
@@ -2859,9 +2853,6 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 					ddmFormInstanceRecordVersion.getPrimaryKey()) == null) {
 
 				cacheResult(ddmFormInstanceRecordVersion);
-			}
-			else {
-				ddmFormInstanceRecordVersion.resetOriginalValues();
 			}
 		}
 	}

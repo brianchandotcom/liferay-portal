@@ -7913,8 +7913,6 @@ public class AnnouncementsEntryPersistenceImpl
 		EntityCacheUtil.putResult(
 			AnnouncementsEntryImpl.class, announcementsEntry.getPrimaryKey(),
 			announcementsEntry);
-
-		announcementsEntry.resetOriginalValues();
 	}
 
 	/**
@@ -7930,9 +7928,6 @@ public class AnnouncementsEntryPersistenceImpl
 					announcementsEntry.getPrimaryKey()) == null) {
 
 				cacheResult(announcementsEntry);
-			}
-			else {
-				announcementsEntry.resetOriginalValues();
 			}
 		}
 	}

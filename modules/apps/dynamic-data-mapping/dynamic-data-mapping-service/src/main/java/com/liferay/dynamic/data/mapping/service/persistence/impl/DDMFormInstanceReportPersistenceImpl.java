@@ -352,8 +352,6 @@ public class DDMFormInstanceReportPersistenceImpl
 	@Override
 	public void cacheResult(DDMFormInstanceReport ddmFormInstanceReport) {
 		if (ddmFormInstanceReport.getCtCollectionId() != 0) {
-			ddmFormInstanceReport.resetOriginalValues();
-
 			return;
 		}
 
@@ -365,8 +363,6 @@ public class DDMFormInstanceReportPersistenceImpl
 			_finderPathFetchByFormInstanceId,
 			new Object[] {ddmFormInstanceReport.getFormInstanceId()},
 			ddmFormInstanceReport);
-
-		ddmFormInstanceReport.resetOriginalValues();
 	}
 
 	/**
@@ -382,8 +378,6 @@ public class DDMFormInstanceReportPersistenceImpl
 				ddmFormInstanceReports) {
 
 			if (ddmFormInstanceReport.getCtCollectionId() != 0) {
-				ddmFormInstanceReport.resetOriginalValues();
-
 				continue;
 			}
 
@@ -392,9 +386,6 @@ public class DDMFormInstanceReportPersistenceImpl
 					ddmFormInstanceReport.getPrimaryKey()) == null) {
 
 				cacheResult(ddmFormInstanceReport);
-			}
-			else {
-				ddmFormInstanceReport.resetOriginalValues();
 			}
 		}
 	}

@@ -2444,8 +2444,6 @@ public class DepotEntryGroupRelPersistenceImpl
 				depotEntryGroupRel.getToGroupId()
 			},
 			depotEntryGroupRel);
-
-		depotEntryGroupRel.resetOriginalValues();
 	}
 
 	/**
@@ -2461,9 +2459,6 @@ public class DepotEntryGroupRelPersistenceImpl
 					depotEntryGroupRel.getPrimaryKey()) == null) {
 
 				cacheResult(depotEntryGroupRel);
-			}
-			else {
-				depotEntryGroupRel.resetOriginalValues();
 			}
 		}
 	}

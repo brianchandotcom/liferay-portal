@@ -3928,8 +3928,6 @@ public class PhonePersistenceImpl
 	public void cacheResult(Phone phone) {
 		EntityCacheUtil.putResult(
 			PhoneImpl.class, phone.getPrimaryKey(), phone);
-
-		phone.resetOriginalValues();
 	}
 
 	/**
@@ -3944,9 +3942,6 @@ public class PhonePersistenceImpl
 					PhoneImpl.class, phone.getPrimaryKey()) == null) {
 
 				cacheResult(phone);
-			}
-			else {
-				phone.resetOriginalValues();
 			}
 		}
 	}

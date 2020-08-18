@@ -7484,8 +7484,6 @@ public class JournalFolderPersistenceImpl
 	@Override
 	public void cacheResult(JournalFolder journalFolder) {
 		if (journalFolder.getCtCollectionId() != 0) {
-			journalFolder.resetOriginalValues();
-
 			return;
 		}
 
@@ -7510,8 +7508,6 @@ public class JournalFolderPersistenceImpl
 				journalFolder.getName()
 			},
 			journalFolder);
-
-		journalFolder.resetOriginalValues();
 	}
 
 	/**
@@ -7523,8 +7519,6 @@ public class JournalFolderPersistenceImpl
 	public void cacheResult(List<JournalFolder> journalFolders) {
 		for (JournalFolder journalFolder : journalFolders) {
 			if (journalFolder.getCtCollectionId() != 0) {
-				journalFolder.resetOriginalValues();
-
 				continue;
 			}
 
@@ -7533,9 +7527,6 @@ public class JournalFolderPersistenceImpl
 						null) {
 
 				cacheResult(journalFolder);
-			}
-			else {
-				journalFolder.resetOriginalValues();
 			}
 		}
 	}

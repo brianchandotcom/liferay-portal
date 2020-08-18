@@ -2474,8 +2474,6 @@ public class DLFileRankPersistenceImpl
 				dlFileRank.getFileEntryId()
 			},
 			dlFileRank);
-
-		dlFileRank.resetOriginalValues();
 	}
 
 	/**
@@ -2490,9 +2488,6 @@ public class DLFileRankPersistenceImpl
 					DLFileRankImpl.class, dlFileRank.getPrimaryKey()) == null) {
 
 				cacheResult(dlFileRank);
-			}
-			else {
-				dlFileRank.resetOriginalValues();
 			}
 		}
 	}

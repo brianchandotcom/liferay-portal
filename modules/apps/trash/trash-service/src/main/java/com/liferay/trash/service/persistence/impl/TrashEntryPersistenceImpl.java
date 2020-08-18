@@ -2494,8 +2494,6 @@ public class TrashEntryPersistenceImpl
 	@Override
 	public void cacheResult(TrashEntry trashEntry) {
 		if (trashEntry.getCtCollectionId() != 0) {
-			trashEntry.resetOriginalValues();
-
 			return;
 		}
 
@@ -2506,8 +2504,6 @@ public class TrashEntryPersistenceImpl
 			_finderPathFetchByC_C,
 			new Object[] {trashEntry.getClassNameId(), trashEntry.getClassPK()},
 			trashEntry);
-
-		trashEntry.resetOriginalValues();
 	}
 
 	/**
@@ -2519,8 +2515,6 @@ public class TrashEntryPersistenceImpl
 	public void cacheResult(List<TrashEntry> trashEntries) {
 		for (TrashEntry trashEntry : trashEntries) {
 			if (trashEntry.getCtCollectionId() != 0) {
-				trashEntry.resetOriginalValues();
-
 				continue;
 			}
 
@@ -2528,9 +2522,6 @@ public class TrashEntryPersistenceImpl
 					TrashEntryImpl.class, trashEntry.getPrimaryKey()) == null) {
 
 				cacheResult(trashEntry);
-			}
-			else {
-				trashEntry.resetOriginalValues();
 			}
 		}
 	}

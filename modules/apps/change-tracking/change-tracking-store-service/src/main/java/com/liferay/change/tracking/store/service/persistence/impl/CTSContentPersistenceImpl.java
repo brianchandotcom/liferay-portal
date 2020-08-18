@@ -2579,8 +2579,6 @@ public class CTSContentPersistenceImpl
 	@Override
 	public void cacheResult(CTSContent ctsContent) {
 		if (ctsContent.getCtCollectionId() != 0) {
-			ctsContent.resetOriginalValues();
-
 			return;
 		}
 
@@ -2595,8 +2593,6 @@ public class CTSContentPersistenceImpl
 				ctsContent.getStoreType()
 			},
 			ctsContent);
-
-		ctsContent.resetOriginalValues();
 	}
 
 	/**
@@ -2608,8 +2604,6 @@ public class CTSContentPersistenceImpl
 	public void cacheResult(List<CTSContent> ctsContents) {
 		for (CTSContent ctsContent : ctsContents) {
 			if (ctsContent.getCtCollectionId() != 0) {
-				ctsContent.resetOriginalValues();
-
 				continue;
 			}
 
@@ -2617,9 +2611,6 @@ public class CTSContentPersistenceImpl
 					CTSContentImpl.class, ctsContent.getPrimaryKey()) == null) {
 
 				cacheResult(ctsContent);
-			}
-			else {
-				ctsContent.resetOriginalValues();
 			}
 		}
 	}

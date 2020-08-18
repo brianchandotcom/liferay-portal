@@ -295,8 +295,6 @@ public class BrowserTrackerPersistenceImpl
 		FinderCacheUtil.putResult(
 			_finderPathFetchByUserId, new Object[] {browserTracker.getUserId()},
 			browserTracker);
-
-		browserTracker.resetOriginalValues();
 	}
 
 	/**
@@ -312,9 +310,6 @@ public class BrowserTrackerPersistenceImpl
 						null) {
 
 				cacheResult(browserTracker);
-			}
-			else {
-				browserTracker.resetOriginalValues();
 			}
 		}
 	}

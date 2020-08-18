@@ -2271,8 +2271,6 @@ public class DLContentPersistenceImpl
 	@Override
 	public void cacheResult(DLContent dlContent) {
 		if (dlContent.getCtCollectionId() != 0) {
-			dlContent.resetOriginalValues();
-
 			return;
 		}
 
@@ -2286,8 +2284,6 @@ public class DLContentPersistenceImpl
 				dlContent.getPath(), dlContent.getVersion()
 			},
 			dlContent);
-
-		dlContent.resetOriginalValues();
 	}
 
 	/**
@@ -2299,8 +2295,6 @@ public class DLContentPersistenceImpl
 	public void cacheResult(List<DLContent> dlContents) {
 		for (DLContent dlContent : dlContents) {
 			if (dlContent.getCtCollectionId() != 0) {
-				dlContent.resetOriginalValues();
-
 				continue;
 			}
 
@@ -2308,9 +2302,6 @@ public class DLContentPersistenceImpl
 					DLContentImpl.class, dlContent.getPrimaryKey()) == null) {
 
 				cacheResult(dlContent);
-			}
-			else {
-				dlContent.resetOriginalValues();
 			}
 		}
 	}

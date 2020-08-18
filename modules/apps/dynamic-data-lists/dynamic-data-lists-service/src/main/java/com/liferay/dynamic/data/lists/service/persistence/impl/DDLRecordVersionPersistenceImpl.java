@@ -2655,8 +2655,6 @@ public class DDLRecordVersionPersistenceImpl
 				ddlRecordVersion.getRecordId(), ddlRecordVersion.getVersion()
 			},
 			ddlRecordVersion);
-
-		ddlRecordVersion.resetOriginalValues();
 	}
 
 	/**
@@ -2672,9 +2670,6 @@ public class DDLRecordVersionPersistenceImpl
 					ddlRecordVersion.getPrimaryKey()) == null) {
 
 				cacheResult(ddlRecordVersion);
-			}
-			else {
-				ddlRecordVersion.resetOriginalValues();
 			}
 		}
 	}

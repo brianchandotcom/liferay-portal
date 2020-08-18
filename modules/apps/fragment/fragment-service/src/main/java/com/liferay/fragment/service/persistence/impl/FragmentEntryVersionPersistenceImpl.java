@@ -15084,8 +15084,6 @@ public class FragmentEntryVersionPersistenceImpl
 				fragmentEntryVersion.getVersion()
 			},
 			fragmentEntryVersion);
-
-		fragmentEntryVersion.resetOriginalValues();
 	}
 
 	/**
@@ -15109,9 +15107,6 @@ public class FragmentEntryVersionPersistenceImpl
 					fragmentEntryVersion.getPrimaryKey()) == null) {
 
 				cacheResult(fragmentEntryVersion);
-			}
-			else {
-				fragmentEntryVersion.resetOriginalValues();
 			}
 		}
 	}

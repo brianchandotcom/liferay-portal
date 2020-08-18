@@ -4170,8 +4170,6 @@ public class DDLRecordPersistenceImpl
 			_finderPathFetchByUUID_G,
 			new Object[] {ddlRecord.getUuid(), ddlRecord.getGroupId()},
 			ddlRecord);
-
-		ddlRecord.resetOriginalValues();
 	}
 
 	/**
@@ -4186,9 +4184,6 @@ public class DDLRecordPersistenceImpl
 					DDLRecordImpl.class, ddlRecord.getPrimaryKey()) == null) {
 
 				cacheResult(ddlRecord);
-			}
-			else {
-				ddlRecord.resetOriginalValues();
 			}
 		}
 	}

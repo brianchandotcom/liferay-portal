@@ -598,8 +598,6 @@ public class AuditEventPersistenceImpl
 	public void cacheResult(AuditEvent auditEvent) {
 		entityCache.putResult(
 			AuditEventImpl.class, auditEvent.getPrimaryKey(), auditEvent);
-
-		auditEvent.resetOriginalValues();
 	}
 
 	/**
@@ -614,9 +612,6 @@ public class AuditEventPersistenceImpl
 					AuditEventImpl.class, auditEvent.getPrimaryKey()) == null) {
 
 				cacheResult(auditEvent);
-			}
-			else {
-				auditEvent.resetOriginalValues();
 			}
 		}
 	}

@@ -3728,8 +3728,6 @@ public class KaleoActionPersistenceImpl
 	public void cacheResult(KaleoAction kaleoAction) {
 		entityCache.putResult(
 			KaleoActionImpl.class, kaleoAction.getPrimaryKey(), kaleoAction);
-
-		kaleoAction.resetOriginalValues();
 	}
 
 	/**
@@ -3745,9 +3743,6 @@ public class KaleoActionPersistenceImpl
 						null) {
 
 				cacheResult(kaleoAction);
-			}
-			else {
-				kaleoAction.resetOriginalValues();
 			}
 		}
 	}

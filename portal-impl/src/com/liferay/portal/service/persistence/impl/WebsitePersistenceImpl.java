@@ -3930,8 +3930,6 @@ public class WebsitePersistenceImpl
 	public void cacheResult(Website website) {
 		EntityCacheUtil.putResult(
 			WebsiteImpl.class, website.getPrimaryKey(), website);
-
-		website.resetOriginalValues();
 	}
 
 	/**
@@ -3946,9 +3944,6 @@ public class WebsitePersistenceImpl
 					WebsiteImpl.class, website.getPrimaryKey()) == null) {
 
 				cacheResult(website);
-			}
-			else {
-				website.resetOriginalValues();
 			}
 		}
 	}

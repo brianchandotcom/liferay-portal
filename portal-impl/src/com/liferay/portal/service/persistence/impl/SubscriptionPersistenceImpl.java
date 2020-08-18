@@ -2851,8 +2851,6 @@ public class SubscriptionPersistenceImpl
 				subscription.getClassNameId(), subscription.getClassPK()
 			},
 			subscription);
-
-		subscription.resetOriginalValues();
 	}
 
 	/**
@@ -2868,9 +2866,6 @@ public class SubscriptionPersistenceImpl
 						null) {
 
 				cacheResult(subscription);
-			}
-			else {
-				subscription.resetOriginalValues();
 			}
 		}
 	}

@@ -6554,8 +6554,6 @@ public class SiteNavigationMenuPersistenceImpl
 				siteNavigationMenu.getGroupId(), siteNavigationMenu.getName()
 			},
 			siteNavigationMenu);
-
-		siteNavigationMenu.resetOriginalValues();
 	}
 
 	/**
@@ -6571,9 +6569,6 @@ public class SiteNavigationMenuPersistenceImpl
 					siteNavigationMenu.getPrimaryKey()) == null) {
 
 				cacheResult(siteNavigationMenu);
-			}
-			else {
-				siteNavigationMenu.resetOriginalValues();
 			}
 		}
 	}

@@ -3008,8 +3008,6 @@ public class KBFolderPersistenceImpl
 				kbFolder.getUrlTitle()
 			},
 			kbFolder);
-
-		kbFolder.resetOriginalValues();
 	}
 
 	/**
@@ -3024,9 +3022,6 @@ public class KBFolderPersistenceImpl
 					KBFolderImpl.class, kbFolder.getPrimaryKey()) == null) {
 
 				cacheResult(kbFolder);
-			}
-			else {
-				kbFolder.resetOriginalValues();
 			}
 		}
 	}

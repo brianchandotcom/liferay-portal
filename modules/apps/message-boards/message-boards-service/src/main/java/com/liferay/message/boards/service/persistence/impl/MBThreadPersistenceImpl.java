@@ -13255,8 +13255,6 @@ public class MBThreadPersistenceImpl
 	@Override
 	public void cacheResult(MBThread mbThread) {
 		if (mbThread.getCtCollectionId() != 0) {
-			mbThread.resetOriginalValues();
-
 			return;
 		}
 
@@ -13270,8 +13268,6 @@ public class MBThreadPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByRootMessageId,
 			new Object[] {mbThread.getRootMessageId()}, mbThread);
-
-		mbThread.resetOriginalValues();
 	}
 
 	/**
@@ -13283,8 +13279,6 @@ public class MBThreadPersistenceImpl
 	public void cacheResult(List<MBThread> mbThreads) {
 		for (MBThread mbThread : mbThreads) {
 			if (mbThread.getCtCollectionId() != 0) {
-				mbThread.resetOriginalValues();
-
 				continue;
 			}
 
@@ -13292,9 +13286,6 @@ public class MBThreadPersistenceImpl
 					MBThreadImpl.class, mbThread.getPrimaryKey()) == null) {
 
 				cacheResult(mbThread);
-			}
-			else {
-				mbThread.resetOriginalValues();
 			}
 		}
 	}

@@ -1396,8 +1396,6 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	@Override
 	public void cacheResult(AssetAutoTaggerEntry assetAutoTaggerEntry) {
 		if (assetAutoTaggerEntry.getCtCollectionId() != 0) {
-			assetAutoTaggerEntry.resetOriginalValues();
-
 			return;
 		}
 
@@ -1412,8 +1410,6 @@ public class AssetAutoTaggerEntryPersistenceImpl
 				assetAutoTaggerEntry.getAssetTagId()
 			},
 			assetAutoTaggerEntry);
-
-		assetAutoTaggerEntry.resetOriginalValues();
 	}
 
 	/**
@@ -1427,8 +1423,6 @@ public class AssetAutoTaggerEntryPersistenceImpl
 				assetAutoTaggerEntries) {
 
 			if (assetAutoTaggerEntry.getCtCollectionId() != 0) {
-				assetAutoTaggerEntry.resetOriginalValues();
-
 				continue;
 			}
 
@@ -1437,9 +1431,6 @@ public class AssetAutoTaggerEntryPersistenceImpl
 					assetAutoTaggerEntry.getPrimaryKey()) == null) {
 
 				cacheResult(assetAutoTaggerEntry);
-			}
-			else {
-				assetAutoTaggerEntry.resetOriginalValues();
 			}
 		}
 	}

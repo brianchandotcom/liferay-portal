@@ -3002,8 +3002,6 @@ public class PollsVotePersistenceImpl
 			_finderPathFetchByUUID_G,
 			new Object[] {pollsVote.getUuid(), pollsVote.getGroupId()},
 			pollsVote);
-
-		pollsVote.resetOriginalValues();
 	}
 
 	/**
@@ -3018,9 +3016,6 @@ public class PollsVotePersistenceImpl
 					PollsVoteImpl.class, pollsVote.getPrimaryKey()) == null) {
 
 				cacheResult(pollsVote);
-			}
-			else {
-				pollsVote.resetOriginalValues();
 			}
 		}
 	}

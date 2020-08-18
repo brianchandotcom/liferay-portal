@@ -9947,8 +9947,6 @@ public class RolePersistenceImpl
 	@Override
 	public void cacheResult(Role role) {
 		if (role.getCtCollectionId() != 0) {
-			role.resetOriginalValues();
-
 			return;
 		}
 
@@ -9972,8 +9970,6 @@ public class RolePersistenceImpl
 				role.getType()
 			},
 			role);
-
-		role.resetOriginalValues();
 	}
 
 	/**
@@ -9985,8 +9981,6 @@ public class RolePersistenceImpl
 	public void cacheResult(List<Role> roles) {
 		for (Role role : roles) {
 			if (role.getCtCollectionId() != 0) {
-				role.resetOriginalValues();
-
 				continue;
 			}
 
@@ -9994,9 +9988,6 @@ public class RolePersistenceImpl
 					RoleImpl.class, role.getPrimaryKey()) == null) {
 
 				cacheResult(role);
-			}
-			else {
-				role.resetOriginalValues();
 			}
 		}
 	}

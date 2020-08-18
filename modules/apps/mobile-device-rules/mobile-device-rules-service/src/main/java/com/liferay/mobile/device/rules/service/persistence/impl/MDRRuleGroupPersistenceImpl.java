@@ -2806,8 +2806,6 @@ public class MDRRuleGroupPersistenceImpl
 			_finderPathFetchByUUID_G,
 			new Object[] {mdrRuleGroup.getUuid(), mdrRuleGroup.getGroupId()},
 			mdrRuleGroup);
-
-		mdrRuleGroup.resetOriginalValues();
 	}
 
 	/**
@@ -2823,9 +2821,6 @@ public class MDRRuleGroupPersistenceImpl
 						null) {
 
 				cacheResult(mdrRuleGroup);
-			}
-			else {
-				mdrRuleGroup.resetOriginalValues();
 			}
 		}
 	}

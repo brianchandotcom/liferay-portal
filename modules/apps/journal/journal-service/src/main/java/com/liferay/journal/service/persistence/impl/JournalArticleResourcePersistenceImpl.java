@@ -2331,8 +2331,6 @@ public class JournalArticleResourcePersistenceImpl
 	@Override
 	public void cacheResult(JournalArticleResource journalArticleResource) {
 		if (journalArticleResource.getCtCollectionId() != 0) {
-			journalArticleResource.resetOriginalValues();
-
 			return;
 		}
 
@@ -2355,8 +2353,6 @@ public class JournalArticleResourcePersistenceImpl
 				journalArticleResource.getArticleId()
 			},
 			journalArticleResource);
-
-		journalArticleResource.resetOriginalValues();
 	}
 
 	/**
@@ -2372,8 +2368,6 @@ public class JournalArticleResourcePersistenceImpl
 				journalArticleResources) {
 
 			if (journalArticleResource.getCtCollectionId() != 0) {
-				journalArticleResource.resetOriginalValues();
-
 				continue;
 			}
 
@@ -2382,9 +2376,6 @@ public class JournalArticleResourcePersistenceImpl
 					journalArticleResource.getPrimaryKey()) == null) {
 
 				cacheResult(journalArticleResource);
-			}
-			else {
-				journalArticleResource.resetOriginalValues();
 			}
 		}
 	}

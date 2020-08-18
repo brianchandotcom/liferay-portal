@@ -23741,8 +23741,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				layoutPageTemplateEntry.getType()
 			},
 			layoutPageTemplateEntry);
-
-		layoutPageTemplateEntry.resetOriginalValues();
 	}
 
 	/**
@@ -23768,9 +23766,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					layoutPageTemplateEntry.getPrimaryKey()) == null) {
 
 				cacheResult(layoutPageTemplateEntry);
-			}
-			else {
-				layoutPageTemplateEntry.resetOriginalValues();
 			}
 		}
 	}

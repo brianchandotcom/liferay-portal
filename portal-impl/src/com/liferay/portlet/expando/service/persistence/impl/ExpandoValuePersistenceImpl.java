@@ -4972,8 +4972,6 @@ public class ExpandoValuePersistenceImpl
 	@Override
 	public void cacheResult(ExpandoValue expandoValue) {
 		if (expandoValue.getCtCollectionId() != 0) {
-			expandoValue.resetOriginalValues();
-
 			return;
 		}
 
@@ -4992,8 +4990,6 @@ public class ExpandoValuePersistenceImpl
 				expandoValue.getClassPK()
 			},
 			expandoValue);
-
-		expandoValue.resetOriginalValues();
 	}
 
 	/**
@@ -5005,8 +5001,6 @@ public class ExpandoValuePersistenceImpl
 	public void cacheResult(List<ExpandoValue> expandoValues) {
 		for (ExpandoValue expandoValue : expandoValues) {
 			if (expandoValue.getCtCollectionId() != 0) {
-				expandoValue.resetOriginalValues();
-
 				continue;
 			}
 
@@ -5015,9 +5009,6 @@ public class ExpandoValuePersistenceImpl
 						null) {
 
 				cacheResult(expandoValue);
-			}
-			else {
-				expandoValue.resetOriginalValues();
 			}
 		}
 	}

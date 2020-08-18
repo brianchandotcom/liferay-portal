@@ -2051,8 +2051,6 @@ public class SegmentsEntryRelPersistenceImpl
 	@Override
 	public void cacheResult(SegmentsEntryRel segmentsEntryRel) {
 		if (segmentsEntryRel.getCtCollectionId() != 0) {
-			segmentsEntryRel.resetOriginalValues();
-
 			return;
 		}
 
@@ -2067,8 +2065,6 @@ public class SegmentsEntryRelPersistenceImpl
 				segmentsEntryRel.getClassNameId(), segmentsEntryRel.getClassPK()
 			},
 			segmentsEntryRel);
-
-		segmentsEntryRel.resetOriginalValues();
 	}
 
 	/**
@@ -2080,8 +2076,6 @@ public class SegmentsEntryRelPersistenceImpl
 	public void cacheResult(List<SegmentsEntryRel> segmentsEntryRels) {
 		for (SegmentsEntryRel segmentsEntryRel : segmentsEntryRels) {
 			if (segmentsEntryRel.getCtCollectionId() != 0) {
-				segmentsEntryRel.resetOriginalValues();
-
 				continue;
 			}
 
@@ -2090,9 +2084,6 @@ public class SegmentsEntryRelPersistenceImpl
 					segmentsEntryRel.getPrimaryKey()) == null) {
 
 				cacheResult(segmentsEntryRel);
-			}
-			else {
-				segmentsEntryRel.resetOriginalValues();
 			}
 		}
 	}

@@ -6236,8 +6236,6 @@ public class CalendarResourcePersistenceImpl
 				calendarResource.getClassNameId(), calendarResource.getClassPK()
 			},
 			calendarResource);
-
-		calendarResource.resetOriginalValues();
 	}
 
 	/**
@@ -6253,9 +6251,6 @@ public class CalendarResourcePersistenceImpl
 					calendarResource.getPrimaryKey()) == null) {
 
 				cacheResult(calendarResource);
-			}
-			else {
-				calendarResource.resetOriginalValues();
 			}
 		}
 	}

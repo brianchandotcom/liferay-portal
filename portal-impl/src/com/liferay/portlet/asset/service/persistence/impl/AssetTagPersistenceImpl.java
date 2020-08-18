@@ -4281,8 +4281,6 @@ public class AssetTagPersistenceImpl
 	@Override
 	public void cacheResult(AssetTag assetTag) {
 		if (assetTag.getCtCollectionId() != 0) {
-			assetTag.resetOriginalValues();
-
 			return;
 		}
 
@@ -4296,8 +4294,6 @@ public class AssetTagPersistenceImpl
 		FinderCacheUtil.putResult(
 			_finderPathFetchByG_N,
 			new Object[] {assetTag.getGroupId(), assetTag.getName()}, assetTag);
-
-		assetTag.resetOriginalValues();
 	}
 
 	/**
@@ -4309,8 +4305,6 @@ public class AssetTagPersistenceImpl
 	public void cacheResult(List<AssetTag> assetTags) {
 		for (AssetTag assetTag : assetTags) {
 			if (assetTag.getCtCollectionId() != 0) {
-				assetTag.resetOriginalValues();
-
 				continue;
 			}
 
@@ -4318,9 +4312,6 @@ public class AssetTagPersistenceImpl
 					AssetTagImpl.class, assetTag.getPrimaryKey()) == null) {
 
 				cacheResult(assetTag);
-			}
-			else {
-				assetTag.resetOriginalValues();
 			}
 		}
 	}

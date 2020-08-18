@@ -3393,8 +3393,6 @@ public class ModulePersistenceImpl
 				module.getBundleVersion()
 			},
 			module);
-
-		module.resetOriginalValues();
 	}
 
 	/**
@@ -3409,9 +3407,6 @@ public class ModulePersistenceImpl
 					ModuleImpl.class, module.getPrimaryKey()) == null) {
 
 				cacheResult(module);
-			}
-			else {
-				module.resetOriginalValues();
 			}
 		}
 	}

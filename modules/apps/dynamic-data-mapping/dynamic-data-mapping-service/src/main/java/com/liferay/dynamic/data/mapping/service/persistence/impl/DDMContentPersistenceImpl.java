@@ -2539,8 +2539,6 @@ public class DDMContentPersistenceImpl
 	@Override
 	public void cacheResult(DDMContent ddmContent) {
 		if (ddmContent.getCtCollectionId() != 0) {
-			ddmContent.resetOriginalValues();
-
 			return;
 		}
 
@@ -2551,8 +2549,6 @@ public class DDMContentPersistenceImpl
 			_finderPathFetchByUUID_G,
 			new Object[] {ddmContent.getUuid(), ddmContent.getGroupId()},
 			ddmContent);
-
-		ddmContent.resetOriginalValues();
 	}
 
 	/**
@@ -2564,8 +2560,6 @@ public class DDMContentPersistenceImpl
 	public void cacheResult(List<DDMContent> ddmContents) {
 		for (DDMContent ddmContent : ddmContents) {
 			if (ddmContent.getCtCollectionId() != 0) {
-				ddmContent.resetOriginalValues();
-
 				continue;
 			}
 
@@ -2573,9 +2567,6 @@ public class DDMContentPersistenceImpl
 					DDMContentImpl.class, ddmContent.getPrimaryKey()) == null) {
 
 				cacheResult(ddmContent);
-			}
-			else {
-				ddmContent.resetOriginalValues();
 			}
 		}
 	}

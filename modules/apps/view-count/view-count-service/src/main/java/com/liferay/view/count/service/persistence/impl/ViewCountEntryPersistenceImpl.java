@@ -103,8 +103,6 @@ public class ViewCountEntryPersistenceImpl
 		entityCache.putResult(
 			ViewCountEntryImpl.class, viewCountEntry.getPrimaryKey(),
 			viewCountEntry);
-
-		viewCountEntry.resetOriginalValues();
 	}
 
 	/**
@@ -120,9 +118,6 @@ public class ViewCountEntryPersistenceImpl
 						null) {
 
 				cacheResult(viewCountEntry);
-			}
-			else {
-				viewCountEntry.resetOriginalValues();
 			}
 		}
 	}

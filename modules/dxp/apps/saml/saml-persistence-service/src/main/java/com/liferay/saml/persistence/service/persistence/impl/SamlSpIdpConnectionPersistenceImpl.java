@@ -898,8 +898,6 @@ public class SamlSpIdpConnectionPersistenceImpl
 				samlSpIdpConnection.getSamlIdpEntityId()
 			},
 			samlSpIdpConnection);
-
-		samlSpIdpConnection.resetOriginalValues();
 	}
 
 	/**
@@ -915,9 +913,6 @@ public class SamlSpIdpConnectionPersistenceImpl
 					samlSpIdpConnection.getPrimaryKey()) == null) {
 
 				cacheResult(samlSpIdpConnection);
-			}
-			else {
-				samlSpIdpConnection.resetOriginalValues();
 			}
 		}
 	}

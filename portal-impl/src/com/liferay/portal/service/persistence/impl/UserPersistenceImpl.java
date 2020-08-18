@@ -8227,8 +8227,6 @@ public class UserPersistenceImpl
 	@Override
 	public void cacheResult(User user) {
 		if (user.getCtCollectionId() != 0) {
-			user.resetOriginalValues();
-
 			return;
 		}
 
@@ -8274,8 +8272,6 @@ public class UserPersistenceImpl
 			_finderPathFetchByC_ERC,
 			new Object[] {user.getCompanyId(), user.getExternalReferenceCode()},
 			user);
-
-		user.resetOriginalValues();
 	}
 
 	/**
@@ -8287,8 +8283,6 @@ public class UserPersistenceImpl
 	public void cacheResult(List<User> users) {
 		for (User user : users) {
 			if (user.getCtCollectionId() != 0) {
-				user.resetOriginalValues();
-
 				continue;
 			}
 
@@ -8296,9 +8290,6 @@ public class UserPersistenceImpl
 					UserImpl.class, user.getPrimaryKey()) == null) {
 
 				cacheResult(user);
-			}
-			else {
-				user.resetOriginalValues();
 			}
 		}
 	}

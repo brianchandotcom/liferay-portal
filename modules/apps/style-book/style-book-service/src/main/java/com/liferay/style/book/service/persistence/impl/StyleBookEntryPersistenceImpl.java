@@ -4531,8 +4531,6 @@ public class StyleBookEntryPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByHeadId, new Object[] {styleBookEntry.getHeadId()},
 			styleBookEntry);
-
-		styleBookEntry.resetOriginalValues();
 	}
 
 	/**
@@ -4548,9 +4546,6 @@ public class StyleBookEntryPersistenceImpl
 						null) {
 
 				cacheResult(styleBookEntry);
-			}
-			else {
-				styleBookEntry.resetOriginalValues();
 			}
 		}
 	}

@@ -3647,8 +3647,6 @@ public class RedirectEntryPersistenceImpl
 				redirectEntry.getGroupId(), redirectEntry.getSourceURL()
 			},
 			redirectEntry);
-
-		redirectEntry.resetOriginalValues();
 	}
 
 	/**
@@ -3664,9 +3662,6 @@ public class RedirectEntryPersistenceImpl
 						null) {
 
 				cacheResult(redirectEntry);
-			}
-			else {
-				redirectEntry.resetOriginalValues();
 			}
 		}
 	}

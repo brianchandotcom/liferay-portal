@@ -1463,8 +1463,6 @@ public class DDMStructureVersionPersistenceImpl
 	@Override
 	public void cacheResult(DDMStructureVersion ddmStructureVersion) {
 		if (ddmStructureVersion.getCtCollectionId() != 0) {
-			ddmStructureVersion.resetOriginalValues();
-
 			return;
 		}
 
@@ -1479,8 +1477,6 @@ public class DDMStructureVersionPersistenceImpl
 				ddmStructureVersion.getVersion()
 			},
 			ddmStructureVersion);
-
-		ddmStructureVersion.resetOriginalValues();
 	}
 
 	/**
@@ -1492,8 +1488,6 @@ public class DDMStructureVersionPersistenceImpl
 	public void cacheResult(List<DDMStructureVersion> ddmStructureVersions) {
 		for (DDMStructureVersion ddmStructureVersion : ddmStructureVersions) {
 			if (ddmStructureVersion.getCtCollectionId() != 0) {
-				ddmStructureVersion.resetOriginalValues();
-
 				continue;
 			}
 
@@ -1502,9 +1496,6 @@ public class DDMStructureVersionPersistenceImpl
 					ddmStructureVersion.getPrimaryKey()) == null) {
 
 				cacheResult(ddmStructureVersion);
-			}
-			else {
-				ddmStructureVersion.resetOriginalValues();
 			}
 		}
 	}

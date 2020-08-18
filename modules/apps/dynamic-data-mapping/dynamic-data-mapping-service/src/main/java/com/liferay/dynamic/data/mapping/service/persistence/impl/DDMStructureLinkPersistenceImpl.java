@@ -1446,8 +1446,6 @@ public class DDMStructureLinkPersistenceImpl
 	@Override
 	public void cacheResult(DDMStructureLink ddmStructureLink) {
 		if (ddmStructureLink.getCtCollectionId() != 0) {
-			ddmStructureLink.resetOriginalValues();
-
 			return;
 		}
 
@@ -1462,8 +1460,6 @@ public class DDMStructureLinkPersistenceImpl
 				ddmStructureLink.getClassPK(), ddmStructureLink.getStructureId()
 			},
 			ddmStructureLink);
-
-		ddmStructureLink.resetOriginalValues();
 	}
 
 	/**
@@ -1475,8 +1471,6 @@ public class DDMStructureLinkPersistenceImpl
 	public void cacheResult(List<DDMStructureLink> ddmStructureLinks) {
 		for (DDMStructureLink ddmStructureLink : ddmStructureLinks) {
 			if (ddmStructureLink.getCtCollectionId() != 0) {
-				ddmStructureLink.resetOriginalValues();
-
 				continue;
 			}
 
@@ -1485,9 +1479,6 @@ public class DDMStructureLinkPersistenceImpl
 					ddmStructureLink.getPrimaryKey()) == null) {
 
 				cacheResult(ddmStructureLink);
-			}
-			else {
-				ddmStructureLink.resetOriginalValues();
 			}
 		}
 	}

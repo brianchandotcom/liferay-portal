@@ -1565,8 +1565,6 @@ public class AccountRolePersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByRoleId, new Object[] {accountRole.getRoleId()},
 			accountRole);
-
-		accountRole.resetOriginalValues();
 	}
 
 	/**
@@ -1582,9 +1580,6 @@ public class AccountRolePersistenceImpl
 						null) {
 
 				cacheResult(accountRole);
-			}
-			else {
-				accountRole.resetOriginalValues();
 			}
 		}
 	}

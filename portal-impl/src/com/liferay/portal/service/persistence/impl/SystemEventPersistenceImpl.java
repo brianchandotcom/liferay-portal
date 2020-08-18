@@ -2395,15 +2395,11 @@ public class SystemEventPersistenceImpl
 	@Override
 	public void cacheResult(SystemEvent systemEvent) {
 		if (systemEvent.getCtCollectionId() != 0) {
-			systemEvent.resetOriginalValues();
-
 			return;
 		}
 
 		EntityCacheUtil.putResult(
 			SystemEventImpl.class, systemEvent.getPrimaryKey(), systemEvent);
-
-		systemEvent.resetOriginalValues();
 	}
 
 	/**
@@ -2415,8 +2411,6 @@ public class SystemEventPersistenceImpl
 	public void cacheResult(List<SystemEvent> systemEvents) {
 		for (SystemEvent systemEvent : systemEvents) {
 			if (systemEvent.getCtCollectionId() != 0) {
-				systemEvent.resetOriginalValues();
-
 				continue;
 			}
 
@@ -2425,9 +2419,6 @@ public class SystemEventPersistenceImpl
 						null) {
 
 				cacheResult(systemEvent);
-			}
-			else {
-				systemEvent.resetOriginalValues();
 			}
 		}
 	}

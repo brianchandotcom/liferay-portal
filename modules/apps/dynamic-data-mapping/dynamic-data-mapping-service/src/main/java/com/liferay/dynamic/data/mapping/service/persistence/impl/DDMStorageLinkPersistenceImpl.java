@@ -2795,8 +2795,6 @@ public class DDMStorageLinkPersistenceImpl
 	@Override
 	public void cacheResult(DDMStorageLink ddmStorageLink) {
 		if (ddmStorageLink.getCtCollectionId() != 0) {
-			ddmStorageLink.resetOriginalValues();
-
 			return;
 		}
 
@@ -2807,8 +2805,6 @@ public class DDMStorageLinkPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByClassPK,
 			new Object[] {ddmStorageLink.getClassPK()}, ddmStorageLink);
-
-		ddmStorageLink.resetOriginalValues();
 	}
 
 	/**
@@ -2820,8 +2816,6 @@ public class DDMStorageLinkPersistenceImpl
 	public void cacheResult(List<DDMStorageLink> ddmStorageLinks) {
 		for (DDMStorageLink ddmStorageLink : ddmStorageLinks) {
 			if (ddmStorageLink.getCtCollectionId() != 0) {
-				ddmStorageLink.resetOriginalValues();
-
 				continue;
 			}
 
@@ -2830,9 +2824,6 @@ public class DDMStorageLinkPersistenceImpl
 						null) {
 
 				cacheResult(ddmStorageLink);
-			}
-			else {
-				ddmStorageLink.resetOriginalValues();
 			}
 		}
 	}

@@ -2556,8 +2556,6 @@ public class DLFileEntryMetadataPersistenceImpl
 	@Override
 	public void cacheResult(DLFileEntryMetadata dlFileEntryMetadata) {
 		if (dlFileEntryMetadata.getCtCollectionId() != 0) {
-			dlFileEntryMetadata.resetOriginalValues();
-
 			return;
 		}
 
@@ -2572,8 +2570,6 @@ public class DLFileEntryMetadataPersistenceImpl
 				dlFileEntryMetadata.getFileVersionId()
 			},
 			dlFileEntryMetadata);
-
-		dlFileEntryMetadata.resetOriginalValues();
 	}
 
 	/**
@@ -2585,8 +2581,6 @@ public class DLFileEntryMetadataPersistenceImpl
 	public void cacheResult(List<DLFileEntryMetadata> dlFileEntryMetadatas) {
 		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
 			if (dlFileEntryMetadata.getCtCollectionId() != 0) {
-				dlFileEntryMetadata.resetOriginalValues();
-
 				continue;
 			}
 
@@ -2595,9 +2589,6 @@ public class DLFileEntryMetadataPersistenceImpl
 					dlFileEntryMetadata.getPrimaryKey()) == null) {
 
 				cacheResult(dlFileEntryMetadata);
-			}
-			else {
-				dlFileEntryMetadata.resetOriginalValues();
 			}
 		}
 	}

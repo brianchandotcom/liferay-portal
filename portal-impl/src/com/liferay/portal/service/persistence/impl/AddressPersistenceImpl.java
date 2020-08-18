@@ -4552,8 +4552,6 @@ public class AddressPersistenceImpl
 	public void cacheResult(Address address) {
 		EntityCacheUtil.putResult(
 			AddressImpl.class, address.getPrimaryKey(), address);
-
-		address.resetOriginalValues();
 	}
 
 	/**
@@ -4568,9 +4566,6 @@ public class AddressPersistenceImpl
 					AddressImpl.class, address.getPrimaryKey()) == null) {
 
 				cacheResult(address);
-			}
-			else {
-				address.resetOriginalValues();
 			}
 		}
 	}

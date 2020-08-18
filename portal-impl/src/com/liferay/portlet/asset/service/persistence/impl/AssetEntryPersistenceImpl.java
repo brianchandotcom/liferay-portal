@@ -5124,8 +5124,6 @@ public class AssetEntryPersistenceImpl
 	@Override
 	public void cacheResult(AssetEntry assetEntry) {
 		if (assetEntry.getCtCollectionId() != 0) {
-			assetEntry.resetOriginalValues();
-
 			return;
 		}
 
@@ -5141,8 +5139,6 @@ public class AssetEntryPersistenceImpl
 			_finderPathFetchByC_C,
 			new Object[] {assetEntry.getClassNameId(), assetEntry.getClassPK()},
 			assetEntry);
-
-		assetEntry.resetOriginalValues();
 	}
 
 	/**
@@ -5154,8 +5150,6 @@ public class AssetEntryPersistenceImpl
 	public void cacheResult(List<AssetEntry> assetEntries) {
 		for (AssetEntry assetEntry : assetEntries) {
 			if (assetEntry.getCtCollectionId() != 0) {
-				assetEntry.resetOriginalValues();
-
 				continue;
 			}
 
@@ -5163,9 +5157,6 @@ public class AssetEntryPersistenceImpl
 					AssetEntryImpl.class, assetEntry.getPrimaryKey()) == null) {
 
 				cacheResult(assetEntry);
-			}
-			else {
-				assetEntry.resetOriginalValues();
 			}
 		}
 	}

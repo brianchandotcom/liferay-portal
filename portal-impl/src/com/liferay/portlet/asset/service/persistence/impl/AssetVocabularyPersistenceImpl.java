@@ -4987,8 +4987,6 @@ public class AssetVocabularyPersistenceImpl
 	@Override
 	public void cacheResult(AssetVocabulary assetVocabulary) {
 		if (assetVocabulary.getCtCollectionId() != 0) {
-			assetVocabulary.resetOriginalValues();
-
 			return;
 		}
 
@@ -5017,8 +5015,6 @@ public class AssetVocabularyPersistenceImpl
 				assetVocabulary.getExternalReferenceCode()
 			},
 			assetVocabulary);
-
-		assetVocabulary.resetOriginalValues();
 	}
 
 	/**
@@ -5030,8 +5026,6 @@ public class AssetVocabularyPersistenceImpl
 	public void cacheResult(List<AssetVocabulary> assetVocabularies) {
 		for (AssetVocabulary assetVocabulary : assetVocabularies) {
 			if (assetVocabulary.getCtCollectionId() != 0) {
-				assetVocabulary.resetOriginalValues();
-
 				continue;
 			}
 
@@ -5040,9 +5034,6 @@ public class AssetVocabularyPersistenceImpl
 					assetVocabulary.getPrimaryKey()) == null) {
 
 				cacheResult(assetVocabulary);
-			}
-			else {
-				assetVocabulary.resetOriginalValues();
 			}
 		}
 	}

@@ -1268,8 +1268,6 @@ public class CompanyPersistenceImpl
 		FinderCacheUtil.putResult(
 			_finderPathFetchByLogoId, new Object[] {company.getLogoId()},
 			company);
-
-		company.resetOriginalValues();
 	}
 
 	/**
@@ -1284,9 +1282,6 @@ public class CompanyPersistenceImpl
 					CompanyImpl.class, company.getPrimaryKey()) == null) {
 
 				cacheResult(company);
-			}
-			else {
-				company.resetOriginalValues();
 			}
 		}
 	}

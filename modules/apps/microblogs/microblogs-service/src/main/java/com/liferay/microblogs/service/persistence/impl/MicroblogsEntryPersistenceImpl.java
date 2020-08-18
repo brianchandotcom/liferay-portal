@@ -13186,8 +13186,6 @@ public class MicroblogsEntryPersistenceImpl
 		entityCache.putResult(
 			MicroblogsEntryImpl.class, microblogsEntry.getPrimaryKey(),
 			microblogsEntry);
-
-		microblogsEntry.resetOriginalValues();
 	}
 
 	/**
@@ -13203,9 +13201,6 @@ public class MicroblogsEntryPersistenceImpl
 					microblogsEntry.getPrimaryKey()) == null) {
 
 				cacheResult(microblogsEntry);
-			}
-			else {
-				microblogsEntry.resetOriginalValues();
 			}
 		}
 	}

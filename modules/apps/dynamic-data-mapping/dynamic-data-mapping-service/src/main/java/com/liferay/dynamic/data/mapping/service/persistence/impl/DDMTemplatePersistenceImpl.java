@@ -12154,8 +12154,6 @@ public class DDMTemplatePersistenceImpl
 	@Override
 	public void cacheResult(DDMTemplate ddmTemplate) {
 		if (ddmTemplate.getCtCollectionId() != 0) {
-			ddmTemplate.resetOriginalValues();
-
 			return;
 		}
 
@@ -12178,8 +12176,6 @@ public class DDMTemplatePersistenceImpl
 				ddmTemplate.getTemplateKey()
 			},
 			ddmTemplate);
-
-		ddmTemplate.resetOriginalValues();
 	}
 
 	/**
@@ -12191,8 +12187,6 @@ public class DDMTemplatePersistenceImpl
 	public void cacheResult(List<DDMTemplate> ddmTemplates) {
 		for (DDMTemplate ddmTemplate : ddmTemplates) {
 			if (ddmTemplate.getCtCollectionId() != 0) {
-				ddmTemplate.resetOriginalValues();
-
 				continue;
 			}
 
@@ -12201,9 +12195,6 @@ public class DDMTemplatePersistenceImpl
 						null) {
 
 				cacheResult(ddmTemplate);
-			}
-			else {
-				ddmTemplate.resetOriginalValues();
 			}
 		}
 	}

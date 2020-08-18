@@ -5402,8 +5402,6 @@ public class CalendarBookingPersistenceImpl
 				calendarBooking.getCalendarId(), calendarBooking.getVEventUid()
 			},
 			calendarBooking);
-
-		calendarBooking.resetOriginalValues();
 	}
 
 	/**
@@ -5419,9 +5417,6 @@ public class CalendarBookingPersistenceImpl
 					calendarBooking.getPrimaryKey()) == null) {
 
 				cacheResult(calendarBooking);
-			}
-			else {
-				calendarBooking.resetOriginalValues();
 			}
 		}
 	}

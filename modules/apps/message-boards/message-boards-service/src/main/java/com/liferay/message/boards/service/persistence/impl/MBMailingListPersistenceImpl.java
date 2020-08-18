@@ -2273,8 +2273,6 @@ public class MBMailingListPersistenceImpl
 	@Override
 	public void cacheResult(MBMailingList mbMailingList) {
 		if (mbMailingList.getCtCollectionId() != 0) {
-			mbMailingList.resetOriginalValues();
-
 			return;
 		}
 
@@ -2293,8 +2291,6 @@ public class MBMailingListPersistenceImpl
 				mbMailingList.getGroupId(), mbMailingList.getCategoryId()
 			},
 			mbMailingList);
-
-		mbMailingList.resetOriginalValues();
 	}
 
 	/**
@@ -2306,8 +2302,6 @@ public class MBMailingListPersistenceImpl
 	public void cacheResult(List<MBMailingList> mbMailingLists) {
 		for (MBMailingList mbMailingList : mbMailingLists) {
 			if (mbMailingList.getCtCollectionId() != 0) {
-				mbMailingList.resetOriginalValues();
-
 				continue;
 			}
 
@@ -2316,9 +2310,6 @@ public class MBMailingListPersistenceImpl
 						null) {
 
 				cacheResult(mbMailingList);
-			}
-			else {
-				mbMailingList.resetOriginalValues();
 			}
 		}
 	}

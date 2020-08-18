@@ -2008,8 +2008,6 @@ public class LayoutBranchPersistenceImpl
 				layoutBranch.getName()
 			},
 			layoutBranch);
-
-		layoutBranch.resetOriginalValues();
 	}
 
 	/**
@@ -2025,9 +2023,6 @@ public class LayoutBranchPersistenceImpl
 						null) {
 
 				cacheResult(layoutBranch);
-			}
-			else {
-				layoutBranch.resetOriginalValues();
 			}
 		}
 	}

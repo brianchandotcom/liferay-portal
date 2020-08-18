@@ -4364,8 +4364,6 @@ public class AMImageEntryPersistenceImpl
 				amImageEntry.getFileVersionId()
 			},
 			amImageEntry);
-
-		amImageEntry.resetOriginalValues();
 	}
 
 	/**
@@ -4381,9 +4379,6 @@ public class AMImageEntryPersistenceImpl
 						null) {
 
 				cacheResult(amImageEntry);
-			}
-			else {
-				amImageEntry.resetOriginalValues();
 			}
 		}
 	}

@@ -1077,8 +1077,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 				oAuth2ScopeGrant.getScope()
 			},
 			oAuth2ScopeGrant);
-
-		oAuth2ScopeGrant.resetOriginalValues();
 	}
 
 	/**
@@ -1094,9 +1092,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 					oAuth2ScopeGrant.getPrimaryKey()) == null) {
 
 				cacheResult(oAuth2ScopeGrant);
-			}
-			else {
-				oAuth2ScopeGrant.resetOriginalValues();
 			}
 		}
 	}

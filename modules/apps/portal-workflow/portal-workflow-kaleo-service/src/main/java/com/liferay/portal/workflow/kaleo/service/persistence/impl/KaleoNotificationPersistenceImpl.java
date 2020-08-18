@@ -2404,8 +2404,6 @@ public class KaleoNotificationPersistenceImpl
 		entityCache.putResult(
 			KaleoNotificationImpl.class, kaleoNotification.getPrimaryKey(),
 			kaleoNotification);
-
-		kaleoNotification.resetOriginalValues();
 	}
 
 	/**
@@ -2421,9 +2419,6 @@ public class KaleoNotificationPersistenceImpl
 					kaleoNotification.getPrimaryKey()) == null) {
 
 				cacheResult(kaleoNotification);
-			}
-			else {
-				kaleoNotification.resetOriginalValues();
 			}
 		}
 	}

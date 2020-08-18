@@ -4117,8 +4117,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				layoutPageTemplateCollection.getName()
 			},
 			layoutPageTemplateCollection);
-
-		layoutPageTemplateCollection.resetOriginalValues();
 	}
 
 	/**
@@ -4144,9 +4142,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 					layoutPageTemplateCollection.getPrimaryKey()) == null) {
 
 				cacheResult(layoutPageTemplateCollection);
-			}
-			else {
-				layoutPageTemplateCollection.resetOriginalValues();
 			}
 		}
 	}

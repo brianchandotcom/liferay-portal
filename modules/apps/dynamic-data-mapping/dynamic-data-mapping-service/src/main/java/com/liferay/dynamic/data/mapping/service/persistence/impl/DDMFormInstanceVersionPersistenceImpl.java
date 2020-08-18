@@ -1475,8 +1475,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 	@Override
 	public void cacheResult(DDMFormInstanceVersion ddmFormInstanceVersion) {
 		if (ddmFormInstanceVersion.getCtCollectionId() != 0) {
-			ddmFormInstanceVersion.resetOriginalValues();
-
 			return;
 		}
 
@@ -1491,8 +1489,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 				ddmFormInstanceVersion.getVersion()
 			},
 			ddmFormInstanceVersion);
-
-		ddmFormInstanceVersion.resetOriginalValues();
 	}
 
 	/**
@@ -1508,8 +1504,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 				ddmFormInstanceVersions) {
 
 			if (ddmFormInstanceVersion.getCtCollectionId() != 0) {
-				ddmFormInstanceVersion.resetOriginalValues();
-
 				continue;
 			}
 
@@ -1518,9 +1512,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 					ddmFormInstanceVersion.getPrimaryKey()) == null) {
 
 				cacheResult(ddmFormInstanceVersion);
-			}
-			else {
-				ddmFormInstanceVersion.resetOriginalValues();
 			}
 		}
 	}

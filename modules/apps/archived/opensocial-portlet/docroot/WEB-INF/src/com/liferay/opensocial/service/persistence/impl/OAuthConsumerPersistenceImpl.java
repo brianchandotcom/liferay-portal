@@ -939,8 +939,6 @@ public class OAuthConsumerPersistenceImpl
 				oAuthConsumer.getGadgetKey(), oAuthConsumer.getServiceName()
 			},
 			oAuthConsumer);
-
-		oAuthConsumer.resetOriginalValues();
 	}
 
 	/**
@@ -956,9 +954,6 @@ public class OAuthConsumerPersistenceImpl
 						null) {
 
 				cacheResult(oAuthConsumer);
-			}
-			else {
-				oAuthConsumer.resetOriginalValues();
 			}
 		}
 	}

@@ -1427,8 +1427,6 @@ public class SyncDLFileVersionDiffPersistenceImpl
 				syncDLFileVersionDiff.getTargetFileVersionId()
 			},
 			syncDLFileVersionDiff);
-
-		syncDLFileVersionDiff.resetOriginalValues();
 	}
 
 	/**
@@ -1448,9 +1446,6 @@ public class SyncDLFileVersionDiffPersistenceImpl
 					syncDLFileVersionDiff.getPrimaryKey()) == null) {
 
 				cacheResult(syncDLFileVersionDiff);
-			}
-			else {
-				syncDLFileVersionDiff.resetOriginalValues();
 			}
 		}
 	}

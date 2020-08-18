@@ -21001,8 +21001,6 @@ public class BlogsEntryPersistenceImpl
 			_finderPathFetchByG_UT,
 			new Object[] {blogsEntry.getGroupId(), blogsEntry.getUrlTitle()},
 			blogsEntry);
-
-		blogsEntry.resetOriginalValues();
 	}
 
 	/**
@@ -21017,9 +21015,6 @@ public class BlogsEntryPersistenceImpl
 					BlogsEntryImpl.class, blogsEntry.getPrimaryKey()) == null) {
 
 				cacheResult(blogsEntry);
-			}
-			else {
-				blogsEntry.resetOriginalValues();
 			}
 		}
 	}

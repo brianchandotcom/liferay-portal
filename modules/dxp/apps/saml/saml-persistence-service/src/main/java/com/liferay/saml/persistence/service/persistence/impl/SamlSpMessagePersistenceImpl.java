@@ -956,8 +956,6 @@ public class SamlSpMessagePersistenceImpl
 				samlSpMessage.getSamlIdpResponseKey()
 			},
 			samlSpMessage);
-
-		samlSpMessage.resetOriginalValues();
 	}
 
 	/**
@@ -973,9 +971,6 @@ public class SamlSpMessagePersistenceImpl
 						null) {
 
 				cacheResult(samlSpMessage);
-			}
-			else {
-				samlSpMessage.resetOriginalValues();
 			}
 		}
 	}

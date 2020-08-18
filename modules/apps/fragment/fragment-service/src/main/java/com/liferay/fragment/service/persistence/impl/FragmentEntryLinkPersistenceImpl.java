@@ -7968,8 +7968,6 @@ public class FragmentEntryLinkPersistenceImpl
 				fragmentEntryLink.getUuid(), fragmentEntryLink.getGroupId()
 			},
 			fragmentEntryLink);
-
-		fragmentEntryLink.resetOriginalValues();
 	}
 
 	/**
@@ -7991,9 +7989,6 @@ public class FragmentEntryLinkPersistenceImpl
 					fragmentEntryLink.getPrimaryKey()) == null) {
 
 				cacheResult(fragmentEntryLink);
-			}
-			else {
-				fragmentEntryLink.resetOriginalValues();
 			}
 		}
 	}

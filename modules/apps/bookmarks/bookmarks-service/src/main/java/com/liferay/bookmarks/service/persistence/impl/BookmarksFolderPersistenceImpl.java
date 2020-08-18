@@ -6787,8 +6787,6 @@ public class BookmarksFolderPersistenceImpl
 				bookmarksFolder.getUuid(), bookmarksFolder.getGroupId()
 			},
 			bookmarksFolder);
-
-		bookmarksFolder.resetOriginalValues();
 	}
 
 	/**
@@ -6804,9 +6802,6 @@ public class BookmarksFolderPersistenceImpl
 					bookmarksFolder.getPrimaryKey()) == null) {
 
 				cacheResult(bookmarksFolder);
-			}
-			else {
-				bookmarksFolder.resetOriginalValues();
 			}
 		}
 	}

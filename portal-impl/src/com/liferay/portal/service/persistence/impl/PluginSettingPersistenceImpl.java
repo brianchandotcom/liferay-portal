@@ -914,8 +914,6 @@ public class PluginSettingPersistenceImpl
 				pluginSetting.getPluginType()
 			},
 			pluginSetting);
-
-		pluginSetting.resetOriginalValues();
 	}
 
 	/**
@@ -931,9 +929,6 @@ public class PluginSettingPersistenceImpl
 						null) {
 
 				cacheResult(pluginSetting);
-			}
-			else {
-				pluginSetting.resetOriginalValues();
 			}
 		}
 	}

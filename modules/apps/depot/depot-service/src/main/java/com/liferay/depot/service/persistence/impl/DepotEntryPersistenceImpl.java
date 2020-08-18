@@ -1674,8 +1674,6 @@ public class DepotEntryPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByGroupId, new Object[] {depotEntry.getGroupId()},
 			depotEntry);
-
-		depotEntry.resetOriginalValues();
 	}
 
 	/**
@@ -1690,9 +1688,6 @@ public class DepotEntryPersistenceImpl
 					DepotEntryImpl.class, depotEntry.getPrimaryKey()) == null) {
 
 				cacheResult(depotEntry);
-			}
-			else {
-				depotEntry.resetOriginalValues();
 			}
 		}
 	}

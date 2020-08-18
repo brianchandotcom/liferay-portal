@@ -605,8 +605,6 @@ public class AnalyticsMessagePersistenceImpl
 		entityCache.putResult(
 			AnalyticsMessageImpl.class, analyticsMessage.getPrimaryKey(),
 			analyticsMessage);
-
-		analyticsMessage.resetOriginalValues();
 	}
 
 	/**
@@ -622,9 +620,6 @@ public class AnalyticsMessagePersistenceImpl
 					analyticsMessage.getPrimaryKey()) == null) {
 
 				cacheResult(analyticsMessage);
-			}
-			else {
-				analyticsMessage.resetOriginalValues();
 			}
 		}
 	}

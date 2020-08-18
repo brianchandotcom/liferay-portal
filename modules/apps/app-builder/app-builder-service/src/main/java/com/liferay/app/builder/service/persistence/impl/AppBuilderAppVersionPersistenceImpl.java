@@ -3307,8 +3307,6 @@ public class AppBuilderAppVersionPersistenceImpl
 				appBuilderAppVersion.getVersion()
 			},
 			appBuilderAppVersion);
-
-		appBuilderAppVersion.resetOriginalValues();
 	}
 
 	/**
@@ -3326,9 +3324,6 @@ public class AppBuilderAppVersionPersistenceImpl
 					appBuilderAppVersion.getPrimaryKey()) == null) {
 
 				cacheResult(appBuilderAppVersion);
-			}
-			else {
-				appBuilderAppVersion.resetOriginalValues();
 			}
 		}
 	}

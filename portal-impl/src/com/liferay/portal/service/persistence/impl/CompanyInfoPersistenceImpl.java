@@ -303,8 +303,6 @@ public class CompanyInfoPersistenceImpl
 		FinderCacheUtil.putResult(
 			_finderPathFetchByCompanyId,
 			new Object[] {companyInfo.getCompanyId()}, companyInfo);
-
-		companyInfo.resetOriginalValues();
 	}
 
 	/**
@@ -320,9 +318,6 @@ public class CompanyInfoPersistenceImpl
 						null) {
 
 				cacheResult(companyInfo);
-			}
-			else {
-				companyInfo.resetOriginalValues();
 			}
 		}
 	}

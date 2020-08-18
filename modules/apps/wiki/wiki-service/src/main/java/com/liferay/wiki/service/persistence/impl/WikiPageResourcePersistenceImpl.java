@@ -1740,8 +1740,6 @@ public class WikiPageResourcePersistenceImpl
 				wikiPageResource.getNodeId(), wikiPageResource.getTitle()
 			},
 			wikiPageResource);
-
-		wikiPageResource.resetOriginalValues();
 	}
 
 	/**
@@ -1757,9 +1755,6 @@ public class WikiPageResourcePersistenceImpl
 					wikiPageResource.getPrimaryKey()) == null) {
 
 				cacheResult(wikiPageResource);
-			}
-			else {
-				wikiPageResource.resetOriginalValues();
 			}
 		}
 	}

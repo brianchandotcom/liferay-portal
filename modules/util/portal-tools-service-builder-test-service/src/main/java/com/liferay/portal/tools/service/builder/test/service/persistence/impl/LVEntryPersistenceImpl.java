@@ -5994,8 +5994,6 @@ public class LVEntryPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByHeadId, new Object[] {lvEntry.getHeadId()},
 			lvEntry);
-
-		lvEntry.resetOriginalValues();
 	}
 
 	/**
@@ -6010,9 +6008,6 @@ public class LVEntryPersistenceImpl
 					LVEntryImpl.class, lvEntry.getPrimaryKey()) == null) {
 
 				cacheResult(lvEntry);
-			}
-			else {
-				lvEntry.resetOriginalValues();
 			}
 		}
 	}

@@ -337,8 +337,6 @@ public class PortalPreferencesPersistenceImpl
 				portalPreferences.getOwnerId(), portalPreferences.getOwnerType()
 			},
 			portalPreferences);
-
-		portalPreferences.resetOriginalValues();
 	}
 
 	/**
@@ -354,9 +352,6 @@ public class PortalPreferencesPersistenceImpl
 					portalPreferences.getPrimaryKey()) == null) {
 
 				cacheResult(portalPreferences);
-			}
-			else {
-				portalPreferences.resetOriginalValues();
 			}
 		}
 	}

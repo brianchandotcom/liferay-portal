@@ -1073,8 +1073,6 @@ public class LVEntryLocalizationPersistenceImpl
 			_finderPathFetchByHeadId,
 			new Object[] {lvEntryLocalization.getHeadId()},
 			lvEntryLocalization);
-
-		lvEntryLocalization.resetOriginalValues();
 	}
 
 	/**
@@ -1090,9 +1088,6 @@ public class LVEntryLocalizationPersistenceImpl
 					lvEntryLocalization.getPrimaryKey()) == null) {
 
 				cacheResult(lvEntryLocalization);
-			}
-			else {
-				lvEntryLocalization.resetOriginalValues();
 			}
 		}
 	}

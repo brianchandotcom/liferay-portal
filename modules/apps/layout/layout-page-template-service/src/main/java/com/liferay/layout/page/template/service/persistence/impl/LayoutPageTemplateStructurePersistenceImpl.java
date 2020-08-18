@@ -2372,8 +2372,6 @@ public class LayoutPageTemplateStructurePersistenceImpl
 				layoutPageTemplateStructure.getClassPK()
 			},
 			layoutPageTemplateStructure);
-
-		layoutPageTemplateStructure.resetOriginalValues();
 	}
 
 	/**
@@ -2399,9 +2397,6 @@ public class LayoutPageTemplateStructurePersistenceImpl
 					layoutPageTemplateStructure.getPrimaryKey()) == null) {
 
 				cacheResult(layoutPageTemplateStructure);
-			}
-			else {
-				layoutPageTemplateStructure.resetOriginalValues();
 			}
 		}
 	}

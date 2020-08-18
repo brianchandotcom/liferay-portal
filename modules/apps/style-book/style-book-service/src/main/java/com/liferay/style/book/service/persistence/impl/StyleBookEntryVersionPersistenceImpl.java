@@ -5143,8 +5143,6 @@ public class StyleBookEntryVersionPersistenceImpl
 				styleBookEntryVersion.getVersion()
 			},
 			styleBookEntryVersion);
-
-		styleBookEntryVersion.resetOriginalValues();
 	}
 
 	/**
@@ -5164,9 +5162,6 @@ public class StyleBookEntryVersionPersistenceImpl
 					styleBookEntryVersion.getPrimaryKey()) == null) {
 
 				cacheResult(styleBookEntryVersion);
-			}
-			else {
-				styleBookEntryVersion.resetOriginalValues();
 			}
 		}
 	}

@@ -9890,8 +9890,6 @@ public class TasksEntryPersistenceImpl
 	public void cacheResult(TasksEntry tasksEntry) {
 		EntityCacheUtil.putResult(
 			TasksEntryImpl.class, tasksEntry.getPrimaryKey(), tasksEntry);
-
-		tasksEntry.resetOriginalValues();
 	}
 
 	/**
@@ -9906,9 +9904,6 @@ public class TasksEntryPersistenceImpl
 					TasksEntryImpl.class, tasksEntry.getPrimaryKey()) == null) {
 
 				cacheResult(tasksEntry);
-			}
-			else {
-				tasksEntry.resetOriginalValues();
 			}
 		}
 	}

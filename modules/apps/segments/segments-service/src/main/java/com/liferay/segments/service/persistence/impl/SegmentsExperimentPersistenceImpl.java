@@ -5945,8 +5945,6 @@ public class SegmentsExperimentPersistenceImpl
 	@Override
 	public void cacheResult(SegmentsExperiment segmentsExperiment) {
 		if (segmentsExperiment.getCtCollectionId() != 0) {
-			segmentsExperiment.resetOriginalValues();
-
 			return;
 		}
 
@@ -5968,8 +5966,6 @@ public class SegmentsExperimentPersistenceImpl
 				segmentsExperiment.getSegmentsExperimentKey()
 			},
 			segmentsExperiment);
-
-		segmentsExperiment.resetOriginalValues();
 	}
 
 	/**
@@ -5981,8 +5977,6 @@ public class SegmentsExperimentPersistenceImpl
 	public void cacheResult(List<SegmentsExperiment> segmentsExperiments) {
 		for (SegmentsExperiment segmentsExperiment : segmentsExperiments) {
 			if (segmentsExperiment.getCtCollectionId() != 0) {
-				segmentsExperiment.resetOriginalValues();
-
 				continue;
 			}
 
@@ -5991,9 +5985,6 @@ public class SegmentsExperimentPersistenceImpl
 					segmentsExperiment.getPrimaryKey()) == null) {
 
 				cacheResult(segmentsExperiment);
-			}
-			else {
-				segmentsExperiment.resetOriginalValues();
 			}
 		}
 	}

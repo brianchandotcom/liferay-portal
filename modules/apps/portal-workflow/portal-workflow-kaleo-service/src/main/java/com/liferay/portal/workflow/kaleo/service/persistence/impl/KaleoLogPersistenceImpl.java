@@ -3439,8 +3439,6 @@ public class KaleoLogPersistenceImpl
 	public void cacheResult(KaleoLog kaleoLog) {
 		entityCache.putResult(
 			KaleoLogImpl.class, kaleoLog.getPrimaryKey(), kaleoLog);
-
-		kaleoLog.resetOriginalValues();
 	}
 
 	/**
@@ -3455,9 +3453,6 @@ public class KaleoLogPersistenceImpl
 					KaleoLogImpl.class, kaleoLog.getPrimaryKey()) == null) {
 
 				cacheResult(kaleoLog);
-			}
-			else {
-				kaleoLog.resetOriginalValues();
 			}
 		}
 	}

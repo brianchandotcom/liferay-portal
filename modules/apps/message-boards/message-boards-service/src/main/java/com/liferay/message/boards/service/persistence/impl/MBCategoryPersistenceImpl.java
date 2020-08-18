@@ -11598,8 +11598,6 @@ public class MBCategoryPersistenceImpl
 	@Override
 	public void cacheResult(MBCategory mbCategory) {
 		if (mbCategory.getCtCollectionId() != 0) {
-			mbCategory.resetOriginalValues();
-
 			return;
 		}
 
@@ -11610,8 +11608,6 @@ public class MBCategoryPersistenceImpl
 			_finderPathFetchByUUID_G,
 			new Object[] {mbCategory.getUuid(), mbCategory.getGroupId()},
 			mbCategory);
-
-		mbCategory.resetOriginalValues();
 	}
 
 	/**
@@ -11623,8 +11619,6 @@ public class MBCategoryPersistenceImpl
 	public void cacheResult(List<MBCategory> mbCategories) {
 		for (MBCategory mbCategory : mbCategories) {
 			if (mbCategory.getCtCollectionId() != 0) {
-				mbCategory.resetOriginalValues();
-
 				continue;
 			}
 
@@ -11632,9 +11626,6 @@ public class MBCategoryPersistenceImpl
 					MBCategoryImpl.class, mbCategory.getPrimaryKey()) == null) {
 
 				cacheResult(mbCategory);
-			}
-			else {
-				mbCategory.resetOriginalValues();
 			}
 		}
 	}

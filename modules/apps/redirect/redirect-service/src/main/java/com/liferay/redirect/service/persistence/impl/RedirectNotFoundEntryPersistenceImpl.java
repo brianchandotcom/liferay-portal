@@ -876,8 +876,6 @@ public class RedirectNotFoundEntryPersistenceImpl
 				redirectNotFoundEntry.getUrl()
 			},
 			redirectNotFoundEntry);
-
-		redirectNotFoundEntry.resetOriginalValues();
 	}
 
 	/**
@@ -897,9 +895,6 @@ public class RedirectNotFoundEntryPersistenceImpl
 					redirectNotFoundEntry.getPrimaryKey()) == null) {
 
 				cacheResult(redirectNotFoundEntry);
-			}
-			else {
-				redirectNotFoundEntry.resetOriginalValues();
 			}
 		}
 	}

@@ -1531,8 +1531,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 		entityCache.putResult(
 			CTAutoResolutionInfoImpl.class,
 			ctAutoResolutionInfo.getPrimaryKey(), ctAutoResolutionInfo);
-
-		ctAutoResolutionInfo.resetOriginalValues();
 	}
 
 	/**
@@ -1550,9 +1548,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 					ctAutoResolutionInfo.getPrimaryKey()) == null) {
 
 				cacheResult(ctAutoResolutionInfo);
-			}
-			else {
-				ctAutoResolutionInfo.resetOriginalValues();
 			}
 		}
 	}

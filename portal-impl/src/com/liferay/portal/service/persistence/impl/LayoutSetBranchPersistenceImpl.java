@@ -3229,8 +3229,6 @@ public class LayoutSetBranchPersistenceImpl
 				layoutSetBranch.getName()
 			},
 			layoutSetBranch);
-
-		layoutSetBranch.resetOriginalValues();
 	}
 
 	/**
@@ -3246,9 +3244,6 @@ public class LayoutSetBranchPersistenceImpl
 					layoutSetBranch.getPrimaryKey()) == null) {
 
 				cacheResult(layoutSetBranch);
-			}
-			else {
-				layoutSetBranch.resetOriginalValues();
 			}
 		}
 	}

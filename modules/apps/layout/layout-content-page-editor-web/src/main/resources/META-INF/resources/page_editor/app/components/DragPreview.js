@@ -13,9 +13,11 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import React, {useRef} from 'react';
 import {useDragLayer} from 'react-dnd';
 
+import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {config} from '../config/index';
 import {useSelector} from '../store/index';
 
@@ -58,7 +60,10 @@ export default function DragPreview() {
 	return (
 		<div className="page-editor__drag-preview">
 			<div
-				className="page-editor__drag-preview__content"
+				className={classNames('page-editor__drag-preview__content', {
+					'page-editor__drag-preview__content__treeview':
+						item?.origin === ITEM_ACTIVATION_ORIGINS.structureTree,
+				})}
 				ref={ref}
 				style={getItemStyles(
 					currentOffset,
@@ -66,12 +71,8 @@ export default function DragPreview() {
 					config.languageDirection[languageId] === 'rtl'
 				)}
 			>
-				{item && item.icon && (
-					<ClayIcon className="mr-3" symbol={item.icon} />
-				)}
-				{item && item.name
-					? item.name
-					: Liferay.Language.get('element')}
+				{item?.icon && <ClayIcon symbol={item.icon} />}
+				{item?.name ? item.name : Liferay.Language.get('element')}
 			</div>
 		</div>
 	);

@@ -183,6 +183,7 @@ export function useDragItem(sourceItem, onDragEnd, onBegin = () => {}) {
 			id: sourceItem.itemId,
 			name: sourceItem.name,
 			type: sourceItem.type,
+			...(sourceItem.origin && {origin: sourceItem.origin}),
 		},
 	});
 

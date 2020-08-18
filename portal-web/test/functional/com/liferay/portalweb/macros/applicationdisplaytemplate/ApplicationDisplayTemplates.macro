@@ -164,6 +164,22 @@ definition {
 		SelectFrameTop(value1 = "relative=top");
 	}
 
+	macro editWidgetTemplate {
+		SiteAdmin.viewPortletTitle(portletTitle = "${oldWidgetTemplateName}");
+
+		if (isSet(newWidgetTemplateName)) {
+			PortletEntry.inputName(name = "${newWidgetTemplateName}");
+		}
+
+		if (isSet(adtFile)) {
+			UploadCommonFile(
+				locator1 = "DDMEditTemplate#SCRIPT_FILE_FIELD",
+				value1 = "${adtFile}");
+		}
+
+		PortletEntry.save();
+	}
+
 	macro gotoWidgetTemplatesEllipsisItem {
 		Click.waitForMenuToggleJSClick(
 			key_tableEntry = "${widgetTemplateName}",

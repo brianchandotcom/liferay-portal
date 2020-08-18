@@ -54,10 +54,7 @@ definition {
 
 	function selectSecondFrame {
 		if (contains("${locator1}", "/iframe")) {
-			WaitForLiferayEvent(
-				attributeName = "src",
-				attributeValue = "dialog-iframe-popup",
-				eventName = "modalIframeLoaded");
+			selenium.waitForVisible();
 
 			selenium.mouseOver();
 

@@ -5,8 +5,6 @@ definition {
 
 		Click.pauseClickAt(locator1 = "Button#SELECT");
 
-		SelectFrame(value1 = "relative=top");
-
 		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Click(

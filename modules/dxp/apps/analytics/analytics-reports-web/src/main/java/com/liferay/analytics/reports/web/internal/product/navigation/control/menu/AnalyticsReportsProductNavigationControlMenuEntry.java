@@ -17,8 +17,9 @@ package com.liferay.analytics.reports.web.internal.product.navigation.control.me
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemTracker;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
-import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -119,16 +120,18 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 			values.put("cssClass", "active");
 		}
 		else {
-			InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-				(InfoDisplayObjectProvider<?>)httpServletRequest.getAttribute(
-					AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+				(LayoutDisplayPageObjectProvider<?>)
+					httpServletRequest.getAttribute(
+						LayoutDisplayPageWebKeys.
+							LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
 			try {
 				values.put(
 					"analyticsReportsPanelURL",
 					AnalyticsReportsUtil.getAnalyticsReportsPanelURL(
-						infoDisplayObjectProvider.getClassNameId(),
-						infoDisplayObjectProvider.getClassPK(),
+						layoutDisplayPageObjectProvider.getClassNameId(),
+						layoutDisplayPageObjectProvider.getClassPK(),
 						httpServletRequest, _portal, _portletURLFactory));
 			}
 			catch (WindowStateException windowStateException) {
@@ -189,9 +192,12 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			(LayoutDisplayPageObjectProvider<?>)httpServletRequest.getAttribute(
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
+
 		InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-			(InfoDisplayObjectProvider<?>)httpServletRequest.getAttribute(
-				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+			_getInfoDisplayObjectProvider(layoutDisplayPageObjectProvider);
 
 		if (!AnalyticsReportsUtil.isShowAnalyticsReportsPanel(
 				_analyticsReportsInfoItemTracker, themeDisplay.getCompanyId(),
@@ -209,6 +215,63 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 	protected void activate() {
 		_portletNamespace = _portal.getPortletNamespace(
 			AnalyticsReportsPortletKeys.ANALYTICS_REPORTS);
+	}
+
+	private InfoDisplayObjectProvider<?> _getInfoDisplayObjectProvider(
+		LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider) {
+
+		if (layoutDisplayPageObjectProvider == null) {
+			return null;
+		}
+
+		return new InfoDisplayObjectProvider() {
+
+			@Override
+			public long getClassNameId() {
+				return layoutDisplayPageObjectProvider.getClassNameId();
+			}
+
+			@Override
+			public long getClassPK() {
+				return layoutDisplayPageObjectProvider.getClassPK();
+			}
+
+			@Override
+			public long getClassTypeId() {
+				return layoutDisplayPageObjectProvider.getClassTypeId();
+			}
+
+			@Override
+			public String getDescription(Locale locale) {
+				return layoutDisplayPageObjectProvider.getDescription(locale);
+			}
+
+			@Override
+			public Object getDisplayObject() {
+				return layoutDisplayPageObjectProvider.getDisplayObject();
+			}
+
+			@Override
+			public long getGroupId() {
+				return layoutDisplayPageObjectProvider.getGroupId();
+			}
+
+			@Override
+			public String getKeywords(Locale locale) {
+				return layoutDisplayPageObjectProvider.getKeywords(locale);
+			}
+
+			@Override
+			public String getTitle(Locale locale) {
+				return layoutDisplayPageObjectProvider.getTitle(locale);
+			}
+
+			@Override
+			public String getURLTitle(Locale locale) {
+				return layoutDisplayPageObjectProvider.getURLTitle(locale);
+			}
+
+		};
 	}
 
 	private void _processBodyBottomTagBody(PageContext pageContext) {

@@ -23,7 +23,6 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.Version;
@@ -51,21 +50,6 @@ public class FlatJSBundle implements JSBundle {
 	 */
 	public void addJSPackage(JSPackage jsPackage) {
 		_jsPackages.add(jsPackage);
-	}
-
-	/**
-	 * Returns the entries inside an OSGi bundle path given the glob pattern.
-	 *
-	 * @param  path the path where the search must start
-	 * @param  filePattern the glob pattern of files to look for
-	 * @param  recurse whether to exclusively look for files in the path;
-	 *         otherwise, look for files in the path and its subfolders
-	 * @return the entries inside an OSGi bundle path
-	 */
-	public Enumeration<URL> findEntries(
-		String path, String filePattern, boolean recurse) {
-
-		return _bundle.findEntries(path, filePattern, recurse);
 	}
 
 	@Override

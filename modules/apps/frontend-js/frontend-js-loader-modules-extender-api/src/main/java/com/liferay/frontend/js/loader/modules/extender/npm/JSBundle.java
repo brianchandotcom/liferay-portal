@@ -35,8 +35,10 @@ public interface JSBundle extends JSBundleObject {
 	/**
 	 * Returns the {@link URL} of an OSGi bundle's resource.
 	 *
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 * @return the URL of an OSGi bundle's resource
 	 */
+	@Deprecated
 	public URL getResourceURL(String location);
 
 	/**

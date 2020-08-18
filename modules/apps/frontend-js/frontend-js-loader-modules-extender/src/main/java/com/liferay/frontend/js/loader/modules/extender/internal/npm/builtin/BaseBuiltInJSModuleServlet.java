@@ -15,6 +15,7 @@
 package com.liferay.frontend.js.loader.modules.extender.internal.npm.builtin;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundle;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -124,7 +125,7 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 
 		JSPackage jsPackage = resourceDescriptor.getJsPackage();
 
-		URL url = null;
+		InputStream inputStream = null;
 
 		if (PropsValues.WORK_DIR_OVERRIDE_ENABLED && pathInfo.endsWith(".js")) {
 			JSBundle jsBundle = jsPackage.getJSBundle();
@@ -139,7 +140,9 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 				try {
 					URI uri = file.toURI();
 
-					url = uri.toURL();
+					URL url = uri.toURL();
+
+					inputStream = url.openStream();
 				}
 				catch (MalformedURLException malformedURLException) {
 					if (_log.isWarnEnabled()) {
@@ -151,24 +154,37 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 			}
 		}
 
-		if (url == null) {
-			url = jsPackage.getResourceURL(resourceDescriptor.getPackagePath());
+		String extension = FileUtil.getExtension(pathInfo);
+
+		if (inputStream == null) {
+			String moduleName = resourceDescriptor.getPackagePath();
+
+			if (extension.equals("map")) {
+				moduleName = moduleName.substring(0, moduleName.length() - 7);
+			}
+			else if (extension.equals("js")) {
+				moduleName = moduleName.substring(0, moduleName.length() - 3);
+			}
+
+			JSModule jsModule = jsPackage.getJSModule(moduleName);
+
+			if (jsModule != null) {
+				inputStream = jsModule.getInputStream();
+			}
 		}
 
-		if (url == null) {
+		if (inputStream == null) {
 			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
 
 			return;
 		}
 
-		try (InputStream inputStream = url.openStream()) {
+		try {
 			String content = StringUtil.read(inputStream);
 
 			httpServletResponse.setCharacterEncoding(StringPool.UTF8);
 
 			PrintWriter printWriter = httpServletResponse.getWriter();
-
-			String extension = FileUtil.getExtension(pathInfo);
 
 			if (extension.equals("js")) {
 				JSBundle jsBundle = jsPackage.getJSBundle();
@@ -193,6 +209,9 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 			httpServletResponse.sendError(
 				HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 				"Unable to read file");
+		}
+		finally {
+			inputStream.close();
 		}
 	}
 

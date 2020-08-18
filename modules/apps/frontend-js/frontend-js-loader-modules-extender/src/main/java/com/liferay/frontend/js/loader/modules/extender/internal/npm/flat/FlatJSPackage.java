@@ -66,7 +66,7 @@ public class FlatJSPackage implements JSPackage {
 	 * @param jsModule the NPM module
 	 */
 	public void addJSModule(JSModule jsModule) {
-		_jsModules.add(jsModule);
+		_jsModules.put(jsModule.getName(), jsModule);
 	}
 
 	public void addJSModuleAlias(JSModuleAlias jsModuleAlias) {
@@ -98,13 +98,18 @@ public class FlatJSPackage implements JSPackage {
 	}
 
 	@Override
+	public JSModule getJSModule(String packagePath) {
+		return _jsModules.get(packagePath);
+	}
+
+	@Override
 	public Collection<JSModuleAlias> getJSModuleAliases() {
 		return _jsModuleAliases;
 	}
 
 	@Override
 	public Collection<JSModule> getJSModules() {
-		return _jsModules;
+		return _jsModules.values();
 	}
 
 	@Override
@@ -176,7 +181,7 @@ public class FlatJSPackage implements JSPackage {
 
 	private final FlatJSBundle _flatJSBundle;
 	private final List<JSModuleAlias> _jsModuleAliases = new ArrayList<>();
-	private final List<JSModule> _jsModules = new ArrayList<>();
+	private final Map<String, JSModule> _jsModules = new HashMap<>();
 	private final Map<String, JSPackageDependency> _jsPackageDependencies =
 		new HashMap<>();
 	private final String _mainModuleName;

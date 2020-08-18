@@ -37,6 +37,8 @@ public interface JSPackage extends JSBundleObject {
 	 */
 	public JSBundle getJSBundle();
 
+	public JSModule getJSModule(String packagePath);
+
 	public Collection<JSModuleAlias> getJSModuleAliases();
 
 	/**
@@ -76,12 +78,15 @@ public interface JSPackage extends JSBundleObject {
 	/**
 	 * Returns the resource's URL residing in the NPM package.
 	 *
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 * @param  location the resource's path
 	 * @return the resource's URL
 	 */
+	@Deprecated
 	public URL getResourceURL(String location);
 
 	/**
+	 /**
 	 * Returns the package's NPM version.
 	 *
 	 * @return the package's NPM version

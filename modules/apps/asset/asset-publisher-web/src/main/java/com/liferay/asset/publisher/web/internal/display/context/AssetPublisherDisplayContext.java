@@ -14,7 +14,6 @@
 
 package com.liferay.asset.publisher.web.internal.display.context;
 
-import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.action.AssetEntryAction;
 import com.liferay.asset.kernel.model.AssetCategory;
@@ -53,6 +52,8 @@ import com.liferay.info.list.provider.InfoListProviderTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoListItemSelectorCriterion;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.CharPool;
@@ -339,9 +340,16 @@ public class AssetPublisherDisplayContext {
 					new DefaultInfoListProviderContext(
 						_themeDisplay.getScopeGroup(), _themeDisplay.getUser());
 
+				LayoutDisplayPageObjectProvider<?>
+					layoutDisplayPageObjectProvider =
+						(LayoutDisplayPageObjectProvider<?>)
+							_portletRequest.getAttribute(
+								LayoutDisplayPageWebKeys.
+									LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
+
 				InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-					(InfoDisplayObjectProvider<?>)_portletRequest.getAttribute(
-						AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+					_getInfoDisplayObjectProvider(
+						layoutDisplayPageObjectProvider);
 
 				defaultInfoListProviderContext.setInfoDisplayObjectProvider(
 					infoDisplayObjectProvider);
@@ -2055,6 +2063,59 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return filteredAssetEntries;
+	}
+
+	private InfoDisplayObjectProvider<?> _getInfoDisplayObjectProvider(
+		LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider) {
+
+		return new InfoDisplayObjectProvider() {
+
+			@Override
+			public long getClassNameId() {
+				return layoutDisplayPageObjectProvider.getClassNameId();
+			}
+
+			@Override
+			public long getClassPK() {
+				return layoutDisplayPageObjectProvider.getClassPK();
+			}
+
+			@Override
+			public long getClassTypeId() {
+				return layoutDisplayPageObjectProvider.getClassTypeId();
+			}
+
+			@Override
+			public String getDescription(Locale locale) {
+				return layoutDisplayPageObjectProvider.getDescription(locale);
+			}
+
+			@Override
+			public Object getDisplayObject() {
+				return layoutDisplayPageObjectProvider.getDisplayObject();
+			}
+
+			@Override
+			public long getGroupId() {
+				return layoutDisplayPageObjectProvider.getGroupId();
+			}
+
+			@Override
+			public String getKeywords(Locale locale) {
+				return layoutDisplayPageObjectProvider.getKeywords(locale);
+			}
+
+			@Override
+			public String getTitle(Locale locale) {
+				return layoutDisplayPageObjectProvider.getTitle(locale);
+			}
+
+			@Override
+			public String getURLTitle(Locale locale) {
+				return layoutDisplayPageObjectProvider.getURLTitle(locale);
+			}
+
+		};
 	}
 
 	private String _getSegmentsAnonymousUserId() {

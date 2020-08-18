@@ -34,6 +34,8 @@ public class DLFileVersionPreviewSoap implements Serializable {
 
 		DLFileVersionPreviewSoap soapModel = new DLFileVersionPreviewSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setDlFileVersionPreviewId(model.getDlFileVersionPreviewId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -102,6 +104,22 @@ public class DLFileVersionPreviewSoap implements Serializable {
 		setDlFileVersionPreviewId(pk);
 	}
 
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
+	}
+
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
+	}
+
 	public long getDlFileVersionPreviewId() {
 		return _dlFileVersionPreviewId;
 	}
@@ -150,6 +168,8 @@ public class DLFileVersionPreviewSoap implements Serializable {
 		_previewStatus = previewStatus;
 	}
 
+	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _dlFileVersionPreviewId;
 	private long _groupId;
 	private long _companyId;

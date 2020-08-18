@@ -18,6 +18,7 @@ import com.liferay.document.library.model.DLFileVersionPreview;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -31,7 +32,7 @@ import java.io.ObjectOutput;
  * @generated
  */
 public class DLFileVersionPreviewCacheModel
-	implements CacheModel<DLFileVersionPreview>, Externalizable {
+	implements CacheModel<DLFileVersionPreview>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -46,8 +47,9 @@ public class DLFileVersionPreviewCacheModel
 		DLFileVersionPreviewCacheModel dlFileVersionPreviewCacheModel =
 			(DLFileVersionPreviewCacheModel)object;
 
-		if (dlFileVersionPreviewId ==
-				dlFileVersionPreviewCacheModel.dlFileVersionPreviewId) {
+		if ((dlFileVersionPreviewId ==
+				dlFileVersionPreviewCacheModel.dlFileVersionPreviewId) &&
+			(mvccVersion == dlFileVersionPreviewCacheModel.mvccVersion)) {
 
 			return true;
 		}
@@ -57,14 +59,30 @@ public class DLFileVersionPreviewCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, dlFileVersionPreviewId);
+		int hashCode = HashUtil.hash(0, dlFileVersionPreviewId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(17);
 
-		sb.append("{dlFileVersionPreviewId=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
+		sb.append(", dlFileVersionPreviewId=");
 		sb.append(dlFileVersionPreviewId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -86,6 +104,8 @@ public class DLFileVersionPreviewCacheModel
 		DLFileVersionPreviewImpl dlFileVersionPreviewImpl =
 			new DLFileVersionPreviewImpl();
 
+		dlFileVersionPreviewImpl.setMvccVersion(mvccVersion);
+		dlFileVersionPreviewImpl.setCtCollectionId(ctCollectionId);
 		dlFileVersionPreviewImpl.setDlFileVersionPreviewId(
 			dlFileVersionPreviewId);
 		dlFileVersionPreviewImpl.setGroupId(groupId);
@@ -101,6 +121,10 @@ public class DLFileVersionPreviewCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
+
 		dlFileVersionPreviewId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -116,6 +140,10 @@ public class DLFileVersionPreviewCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
+
 		objectOutput.writeLong(dlFileVersionPreviewId);
 
 		objectOutput.writeLong(groupId);
@@ -129,6 +157,8 @@ public class DLFileVersionPreviewCacheModel
 		objectOutput.writeInt(previewStatus);
 	}
 
+	public long mvccVersion;
+	public long ctCollectionId;
 	public long dlFileVersionPreviewId;
 	public long groupId;
 	public long companyId;

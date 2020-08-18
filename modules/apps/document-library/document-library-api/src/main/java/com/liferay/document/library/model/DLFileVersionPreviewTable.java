@@ -32,6 +32,12 @@ public class DLFileVersionPreviewTable
 	public static final DLFileVersionPreviewTable INSTANCE =
 		new DLFileVersionPreviewTable();
 
+	public final Column<DLFileVersionPreviewTable, Long> mvccVersion =
+		createColumn(
+			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<DLFileVersionPreviewTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<DLFileVersionPreviewTable, Long>
 		dlFileVersionPreviewId = createColumn(
 			"dlFileVersionPreviewId", Long.class, Types.BIGINT,

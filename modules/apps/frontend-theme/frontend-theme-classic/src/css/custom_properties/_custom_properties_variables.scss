@@ -40,10 +40,10 @@ $theme-colors-cp: map-deep-merge(
 :root {
 	// Aspect ratios
 
-	--aspect-ratio: 100%;
 	--aspect-ratio-4-to-3: 75%;
 	--aspect-ratio-8-to-3: 37.5%;
 	--aspect-ratio-16-to-9: 56.25%;
+	--aspect-ratio: 100%;
 
 	// Blockquotes
 
@@ -58,10 +58,10 @@ $theme-colors-cp: map-deep-merge(
 
 	// Border radius
 
-	--border-radius: #{$border-radius};
 	--border-radius-circle: 50%;
 	--border-radius-lg: #{$border-radius-lg};
 	--border-radius-sm: #{$border-radius-sm};
+	--border-radius: #{$border-radius};
 	--rounded-pill: #{$rounded-pill};
 
 	// Colors
@@ -159,9 +159,9 @@ $theme-colors-cp: map-deep-merge(
 
 	// Shadows
 
-	--box-shadow: #{$box-shadow};
 	--box-shadow-lg: #{$box-shadow-lg};
 	--box-shadow-sm: #{$box-shadow-sm};
+	--box-shadow: #{$box-shadow};
 
 	// Spacers
 

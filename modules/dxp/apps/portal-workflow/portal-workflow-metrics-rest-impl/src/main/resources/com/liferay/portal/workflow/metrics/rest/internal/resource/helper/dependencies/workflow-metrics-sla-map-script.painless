@@ -1,14 +1,14 @@
 def instanceId = doc.instanceId.value;
 
 if (doc.uid.value.startsWith("WorkflowMetricsSLAInstanceResult") &&
-	!instanceId.equals("0") && (doc.elapsedTime.value != 0)) {
+	instanceId != 0 && (doc.elapsedTime.value != 0)) {
 
 	state.onTimeMap.merge(
 		instanceId, doc.onTime.value,
 		(onTime1, onTime2) -> (onTime1 && onTime2));
 }
 else if (doc.uid.value.startsWith("WorkflowMetricsSLATaskResult") && 
-	!instanceId.equals("0")) {
+	instanceId != 0) {
 
 	state.onTimeMap.merge(
 		instanceId, doc.onTime.value,

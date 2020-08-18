@@ -105,7 +105,6 @@ function TopperContent({
 	isHovered,
 	item,
 	itemElement,
-	layoutData,
 	style,
 }) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
@@ -124,7 +123,7 @@ function TopperContent({
 		sourceItem,
 		targetPosition,
 		targetRef,
-	} = useDropTarget(item, layoutData);
+	} = useDropTarget(item);
 
 	const {handlerRef, isDraggingSource} = useDragItem(
 		item,

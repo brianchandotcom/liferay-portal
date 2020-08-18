@@ -31,7 +31,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {ORIGIN_TYPES} from '../config/constants/originTypes';
 import {useSelector} from '../store/index';
 
-const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
+export const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
 	[LAYOUT_DATA_ITEM_TYPES.root]: [
 		LAYOUT_DATA_ITEM_TYPES.collection,
 		LAYOUT_DATA_ITEM_TYPES.dropZone,
@@ -84,7 +84,7 @@ const DRAG_DROP_TARGET_TYPE = {
 	INSIDE: 'inside',
 };
 
-const initialDragDrop = {
+export const initialDragDrop = {
 	dispatch: null,
 
 	layoutDataRef: {
@@ -236,12 +236,11 @@ export function useDropClear() {
 	return dropClearRef;
 }
 
-export function useDropTarget(_targetItem) {
+export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 	const collectionItemIndex = useCollectionItemIndex();
 	const {dispatch, layoutDataRef, state, targetRefs} = useContext(
 		DragAndDropContext
 	);
-
 	const targetRef = useRef(null);
 
 	const targetItem = useMemo(
@@ -369,7 +368,7 @@ function computeDrop({dispatch, layoutDataRef, onDragEnd, state}) {
 	dispatch(initialDragDrop.state);
 }
 
-function computeHover({
+function defaultComputeHover({
 	dispatch,
 	layoutDataRef,
 	monitor,
@@ -529,7 +528,7 @@ function computeHover({
 		);
 
 		if (elevatedTargetItem && elevatedTargetItem !== targetItem) {
-			return computeHover({
+			return defaultComputeHover({
 				dispatch,
 				layoutDataRef,
 				monitor,
@@ -550,7 +549,7 @@ function computeHover({
  * @param {object} parent
  * @return {boolean}
  */
-function checkAllowedChild(child, parent, layoutDataRef) {
+export function checkAllowedChild(child, parent, layoutDataRef) {
 	const parentIsInsideCollection = (function checkItemInsideCollection(item) {
 		if (item.type === LAYOUT_DATA_ITEM_TYPES.collection) {
 			return true;
@@ -579,7 +578,7 @@ function checkAllowedChild(child, parent, layoutDataRef) {
  * @param {object} layoutDataRef
  * @return {boolean}
  */
-function itemIsAncestor(child, parent, layoutDataRef) {
+export function itemIsAncestor(child, parent, layoutDataRef) {
 	if (child && parent) {
 		return child.itemId !== parent.itemId
 			? itemIsAncestor(
@@ -668,7 +667,7 @@ function getItemPosition(item, monitor, layoutDataRef, targetRefs) {
  * @param {object} item
  * @return {string}
  */
-function toControlsId(layoutDataRef, item) {
+export function toControlsId(layoutDataRef, item) {
 	const baseItem = item;
 
 	const computeControlsId = (layoutDataRef, item) => {

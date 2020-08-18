@@ -34,7 +34,7 @@ export default function ({children, ...props}) {
 	);
 }
 
-function TopperEmpty({children, item, layoutData}) {
+function TopperEmpty({children, item}) {
 	const containerRef = useRef(null);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 
@@ -44,7 +44,7 @@ function TopperEmpty({children, item, layoutData}) {
 		sourceItem,
 		targetPosition,
 		targetRef,
-	} = useDropTarget(item, layoutData);
+	} = useDropTarget(item);
 
 	const isFragment = children.type === React.Fragment;
 	const realChildren = isFragment ? children.props.children : children;

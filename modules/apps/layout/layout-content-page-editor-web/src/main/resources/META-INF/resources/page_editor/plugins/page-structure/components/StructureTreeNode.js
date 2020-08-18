@@ -29,15 +29,28 @@ import {
 import {fromControlsId} from '../../../app/components/layout-data-items/Collection';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
+import {ORIGIN_TYPES} from '../../../app/config/constants/originTypes';
 import selectCanUpdatePageStructure from '../../../app/selectors/selectCanUpdatePageStructure';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import deleteItem from '../../../app/thunks/deleteItem';
 import moveItem from '../../../app/thunks/moveItem';
 import {
 	TARGET_POSITION,
+	checkAllowedChild,
+	initialDragDrop,
+	itemIsAncestor,
+	toControlsId,
 	useDragItem,
 	useDropTarget,
 } from '../../../app/utils/useDragAndDrop';
+
+const DRAG_DROP_TARGET_TYPE = {
+	DRAGGING_TO_ITSELF: 'itself',
+	ELEVATE: 'elevate',
+	INITIAL: 'initial',
+	INSIDE: 'inside',
+};
 
 const nodeIsHovered = (nodeId, hoveredItemId) =>
 	nodeId === fromControlsId(hoveredItemId);
@@ -51,7 +64,6 @@ export default function StructureTreeNode({node}) {
 	const dispatch = useDispatch();
 	const hoverItem = useHoverItem();
 	const hoveredItemId = useHoveredItemId();
-	const layoutData = useSelector((state) => state.layoutData);
 	const segmentsExperienceId = useSelector(
 		(state) => state.segmentsExperienceId
 	);
@@ -62,10 +74,13 @@ export default function StructureTreeNode({node}) {
 
 	const isActive = node.activable && nodeIsSelected(node.id, activeItemId);
 
-	const {isOverTarget, targetPosition, targetRef} = useDropTarget(
-		{...node, parentId: node.parentItemId},
-		layoutData
-	);
+	const {
+		canDropOverTarget,
+		isOverTarget,
+		sourceItem,
+		targetPosition,
+		targetRef,
+	} = useDropTarget({...node, parentId: node.parentItemId}, computeHover);
 
 	const {handlerRef, isDraggingSource} = useDragItem(
 		{...node, parentId: node.parentItemId},
@@ -233,3 +248,181 @@ const RemoveButton = ({node, visible}) => {
 		</ClayButton>
 	);
 };
+
+function computeHover({
+	dispatch,
+	layoutDataRef,
+	monitor,
+	siblingItem = null,
+	sourceItem,
+	targetItem,
+	targetRefs,
+}) {
+
+	// Not dragging over direct child
+	// We do not want to alter state here,
+	// as dnd generate extra hover events when
+	// items are being dragged over nested children
+
+	if (!monitor.isOver({shallow: true})) {
+		return;
+	}
+
+	// Dragging over itself or a descendant
+
+	if (itemIsAncestor(sourceItem, targetItem, layoutDataRef)) {
+		return dispatch({
+			...initialDragDrop.state,
+			type: DRAG_DROP_TARGET_TYPE.DRAGGING_TO_ITSELF,
+		});
+	}
+
+	// Apparently valid drag, calculate vertical position and
+	// nesting validation
+
+	const [
+		targetPositionWithMiddle,
+		targetPositionWithoutMiddle,
+		elevation,
+	] = getItemPosition(
+		siblingItem || targetItem,
+		monitor,
+		layoutDataRef,
+		targetRefs
+	);
+
+	// Drop inside target
+
+	const validDropInsideTarget = (() => {
+		const targetIsColumn =
+			targetItem.type === LAYOUT_DATA_ITEM_TYPES.column;
+		const targetIsFragment =
+			targetItem.type === LAYOUT_DATA_ITEM_TYPES.fragment;
+		const targetIsContainer =
+			targetItem.type === LAYOUT_DATA_ITEM_TYPES.container;
+		const targetIsEmpty =
+			layoutDataRef.current.items[targetItem.itemId]?.children.length ===
+			0;
+		const targetIsParent = sourceItem.parentId === targetItem.itemId;
+
+		return (
+			targetPositionWithMiddle === TARGET_POSITION.MIDDLE &&
+			(targetIsEmpty || targetIsColumn || targetIsContainer) &&
+			!targetIsFragment &&
+			!targetIsParent
+		);
+	})();
+
+	if (!siblingItem && validDropInsideTarget) {
+		return dispatch({
+			dropItem: sourceItem,
+			dropTargetItem: targetItem,
+			droppable: checkAllowedChild(sourceItem, targetItem, layoutDataRef),
+			elevate: null,
+			targetPositionWithMiddle,
+			targetPositionWithoutMiddle,
+			type: DRAG_DROP_TARGET_TYPE.INSIDE,
+		});
+	}
+
+	// Valid elevation:
+	// - dropItem should be child of dropTargetItem
+	// - dropItem should be sibling of siblingItem
+
+	if (
+		siblingItem &&
+		checkAllowedChild(sourceItem, targetItem, layoutDataRef)
+	) {
+		return dispatch({
+			dropItem: sourceItem,
+			dropTargetItem: siblingItem,
+			droppable: true,
+			elevate: true,
+			targetPositionWithMiddle,
+			targetPositionWithoutMiddle,
+			type: DRAG_DROP_TARGET_TYPE.ELEVATE,
+		});
+	}
+
+	// Try to elevate to a valid ancestor
+
+	if (elevation) {
+		const getElevatedTargetItem = (target) => {
+			const parent = layoutDataRef.current.items[target.parentId]
+				? {
+						...layoutDataRef.current.items[target.parentId],
+						collectionItemIndex: target.collectionItemIndex,
+				  }
+				: null;
+
+			if (parent) {
+				const [targetPosition] = getItemPosition(
+					target,
+					monitor,
+					layoutDataRef,
+					targetRefs
+				);
+
+				const [parentPosition] = getItemPosition(
+					parent,
+					monitor,
+					layoutDataRef,
+					targetRefs
+				);
+
+				if (
+					(targetPosition === targetPositionWithMiddle ||
+						parentPosition === targetPositionWithMiddle) &&
+					checkAllowedChild(sourceItem, parent, layoutDataRef)
+				) {
+					return [parent, target];
+				}
+			}
+
+			return [null, null];
+		};
+
+		const [elevatedTargetItem, siblingItem] = getElevatedTargetItem(
+			targetItem
+		);
+
+		if (elevatedTargetItem && elevatedTargetItem !== targetItem) {
+			return computeHover({
+				dispatch,
+				layoutDataRef,
+				monitor,
+				siblingItem,
+				sourceItem,
+				targetItem: elevatedTargetItem,
+				targetRefs,
+			});
+		}
+	}
+}
+
+function getItemPosition(item, monitor, layoutDataRef, targetRefs) {
+	const targetRef = targetRefs.get(toControlsId(layoutDataRef, item));
+
+	if (!targetRef || !targetRef.current) {
+		return [null, null];
+	}
+
+	const clientOffsetY = monitor.getClientOffset().y;
+	const hoverBoundingRect = targetRef.current.getBoundingClientRect();
+	const hoverMiddleY = hoverBoundingRect.top + hoverBoundingRect.height / 2;
+
+	const targetPositionWithoutMiddle =
+		clientOffsetY < hoverMiddleY
+			? TARGET_POSITION.TOP
+			: TARGET_POSITION.BOTTOM;
+
+	const targetPositionWithMiddle =
+		clientOffsetY < hoverBoundingRect.bottom - 5 &&
+		clientOffsetY > hoverBoundingRect.top + 5
+			? TARGET_POSITION.MIDDLE
+			: targetPositionWithoutMiddle;
+
+	const elevation = targetPositionWithMiddle !== TARGET_POSITION.MIDDLE;
+
+	return [targetPositionWithMiddle, targetPositionWithoutMiddle, elevation];
+}

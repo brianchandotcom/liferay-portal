@@ -32,7 +32,7 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 <portlet:actionURL name="/edit_entry" var="editEntryURL" />
 
 <clay:container-fluid>
-	<aui:form action="<%= editEntryURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveEntry();" %>'>
+	<aui:form action="<%= editRemoteAppEntryURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveRemoteAppEntry();" %>'>
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="remoteAppEntryId" type="hidden" value="<%= remoteAppEntryId %>" />
@@ -66,7 +66,7 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 </clay:container-fluid>
 
 <aui:script>
-	function <portlet:namespace />saveEntry() {
+	function <portlet:namespace />saveRemoteAppEntry() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value =
 			'<%= (remoteAppEntry == null) ? Constants.ADD : Constants.UPDATE %>';
 

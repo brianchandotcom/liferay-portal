@@ -136,7 +136,7 @@ export default function ReassignEntryModal({entry, onCloseModal}) {
 					isLoading: false,
 				};
 
-				if (items.length > 0) {
+				if (items.length) {
 					newState.taskId = items.pop().id;
 				}
 

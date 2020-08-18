@@ -105,7 +105,7 @@ export default function ViewEntry({
 			{...query, dataListViewId, page: entryIndex, pageSize: 1}
 		)
 			.then(({items = [], ...response}) => {
-				if (items.length > 0) {
+				if (items.length) {
 					const state = {
 						dataRecord: items.pop(),
 						isFetching: false,
@@ -120,7 +120,7 @@ export default function ViewEntry({
 						{dataRecordIds}
 					)
 						.then(({items}) => {
-							if (items.length > 0) {
+							if (items.length) {
 								const {
 									appWorkflow: {
 										appVersion,
@@ -133,7 +133,7 @@ export default function ViewEntry({
 									`/o/portal-workflow-metrics/v1.0/processes/${appWorkflowDefinitionId}/instances`,
 									{classPKs: dataRecordIds}
 								).then(({items}) => {
-									if (items.length > 0) {
+									if (items.length) {
 										const {id, ...instance} = items.pop();
 
 										const [assignee] = instance.assignees;

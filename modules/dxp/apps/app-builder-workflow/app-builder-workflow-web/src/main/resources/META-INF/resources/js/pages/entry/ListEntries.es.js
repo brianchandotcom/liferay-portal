@@ -110,7 +110,7 @@ export default function ListEntries({history}) {
 						...response,
 					});
 
-					if (response.items.length > 0) {
+					if (response.items.length) {
 						const classPKs = response.items.map(({id}) => id);
 
 						setDataRecordIds(classPKs);

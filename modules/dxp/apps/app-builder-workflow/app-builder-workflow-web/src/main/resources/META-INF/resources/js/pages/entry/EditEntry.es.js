@@ -102,7 +102,7 @@ export default function EditEntry({dataRecordId, redirect}) {
 				).then(({items}) => {
 					setLoading(false);
 
-					if (items.length > 0) {
+					if (items.length) {
 						const {id, ...instance} = items.pop();
 
 						const [assignee] = instance.assignees;

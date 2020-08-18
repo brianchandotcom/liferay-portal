@@ -26,6 +26,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -219,15 +220,24 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 					PortletURL portletURL = PortletURLUtil.clone(
 						currentURLObj, liferayPortletResponse);
 
+					InfoItemReference infoItemReference =
+						contentDashboardItemType.getInfoItemReference();
+
 					Stream<? extends ContentDashboardItemType> stream =
 						contentDashboardItemTypes.stream();
 
 					portletURL.setParameter(
 						"contentDashboardItemTypePayload",
 						stream.filter(
-							curContentDashboardItemType -> !Objects.equals(
-								curContentDashboardItemType.getClassPK(),
-								contentDashboardItemType.getClassPK())
+							curContentDashboardItemType -> {
+								InfoItemReference curInfoItemReference =
+									curContentDashboardItemType.
+										getInfoItemReference();
+
+								return !Objects.equals(
+									curInfoItemReference.getClassPK(),
+									infoItemReference.getClassPK());
+							}
 						).map(
 							curContentDashboardItemType ->
 								curContentDashboardItemType.toJSONString(

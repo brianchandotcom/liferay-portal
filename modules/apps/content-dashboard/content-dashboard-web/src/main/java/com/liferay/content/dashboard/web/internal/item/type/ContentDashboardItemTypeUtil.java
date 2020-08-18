@@ -14,6 +14,7 @@
 
 package com.liferay.content.dashboard.web.internal.item.type;
 
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -38,9 +39,29 @@ public class ContentDashboardItemTypeUtil {
 			Document document) {
 
 		return toContentDashboardItemTypeOptional(
-			GetterUtil.getString(document.get(Field.ENTRY_CLASS_NAME)),
-			GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)),
-			contentDashboardItemTypeFactoryTracker);
+			contentDashboardItemTypeFactoryTracker,
+			new InfoItemReference(
+				GetterUtil.getString(document.get(Field.ENTRY_CLASS_NAME)),
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+	}
+
+	public static Optional<ContentDashboardItemType>
+		toContentDashboardItemTypeOptional(
+			ContentDashboardItemTypeFactoryTracker
+				contentDashboardItemTypeFactoryTracker,
+			InfoItemReference infoItemReference) {
+
+		Optional<ContentDashboardItemTypeFactory>
+			contentDashboardItemTypeFactoryOptional =
+				contentDashboardItemTypeFactoryTracker.
+					getContentDashboardItemTypeFactoryOptional(
+						infoItemReference.getClassName());
+
+		return contentDashboardItemTypeFactoryOptional.flatMap(
+			contentDashboardItemTypeFactory ->
+				_toContentDashboardItemTypeOptional(
+					contentDashboardItemTypeFactoryOptional,
+					infoItemReference.getClassPK()));
 	}
 
 	public static Optional<ContentDashboardItemType>
@@ -50,11 +71,12 @@ public class ContentDashboardItemTypeUtil {
 			JSONObject contentDashboardItemTypePayload) {
 
 		return toContentDashboardItemTypeOptional(
-			GetterUtil.getString(
-				contentDashboardItemTypePayload.getString("className")),
-			GetterUtil.getLong(
-				contentDashboardItemTypePayload.getLong("classPK")),
-			contentDashboardItemTypeFactoryTracker);
+			contentDashboardItemTypeFactoryTracker,
+			new InfoItemReference(
+				GetterUtil.getString(
+					contentDashboardItemTypePayload.getString("className")),
+				GetterUtil.getLong(
+					contentDashboardItemTypePayload.getLong("classPK"))));
 	}
 
 	public static Optional<ContentDashboardItemType>
@@ -74,23 +96,6 @@ public class ContentDashboardItemTypeUtil {
 
 			return Optional.empty();
 		}
-	}
-
-	public static Optional<ContentDashboardItemType>
-		toContentDashboardItemTypeOptional(
-			String className, Long classPK,
-			ContentDashboardItemTypeFactoryTracker
-				contentDashboardItemTypeFactoryTracker) {
-
-		Optional<ContentDashboardItemTypeFactory>
-			contentDashboardItemTypeFactoryOptional =
-				contentDashboardItemTypeFactoryTracker.
-					getContentDashboardItemTypeFactoryOptional(className);
-
-		return contentDashboardItemTypeFactoryOptional.flatMap(
-			contentDashboardItemTypeFactory ->
-				_toContentDashboardItemTypeOptional(
-					contentDashboardItemTypeFactoryOptional, classPK));
 	}
 
 	private static Optional<ContentDashboardItemType>

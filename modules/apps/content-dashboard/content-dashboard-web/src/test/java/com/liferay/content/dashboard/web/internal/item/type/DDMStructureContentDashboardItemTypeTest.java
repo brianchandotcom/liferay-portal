@@ -15,6 +15,7 @@
 package com.liferay.content.dashboard.web.internal.item.type;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -54,12 +55,6 @@ public class DDMStructureContentDashboardItemTypeTest {
 					ddmStructure, _getGroup("groupName"));
 
 		Assert.assertEquals(
-			DDMStructure.class.getName(),
-			ddmStructureContentDashboardItemType.getClassName());
-		Assert.assertEquals(
-			ddmStructure.getStructureId(),
-			ddmStructureContentDashboardItemType.getClassPK());
-		Assert.assertEquals(
 			"structureName (groupName)",
 			ddmStructureContentDashboardItemType.getFullLabel(LocaleUtil.US));
 		Assert.assertEquals(
@@ -71,6 +66,14 @@ public class DDMStructureContentDashboardItemTypeTest {
 		Assert.assertEquals(
 			ddmStructure.getUserId(),
 			ddmStructureContentDashboardItemType.getUserId());
+
+		InfoItemReference infoItemReference =
+			ddmStructureContentDashboardItemType.getInfoItemReference();
+
+		Assert.assertEquals(
+			DDMStructure.class.getName(), infoItemReference.getClassName());
+		Assert.assertEquals(
+			ddmStructure.getStructureId(), infoItemReference.getClassPK());
 	}
 
 	@Test
@@ -121,11 +124,14 @@ public class DDMStructureContentDashboardItemTypeTest {
 				new DDMStructureContentDashboardItemType(
 					ddmStructure, _getGroup("groupName"));
 
+		InfoItemReference infoItemReference =
+			ddmStructureContentDashboardItemType.getInfoItemReference();
+
 		Assert.assertEquals(
 			JSONUtil.put(
-				"className", ddmStructureContentDashboardItemType.getClassName()
+				"className", infoItemReference.getClassName()
 			).put(
-				"classPK", ddmStructureContentDashboardItemType.getClassPK()
+				"classPK", infoItemReference.getClassPK()
 			).put(
 				"title",
 				ddmStructureContentDashboardItemType.getFullLabel(LocaleUtil.US)

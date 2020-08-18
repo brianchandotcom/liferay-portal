@@ -20,6 +20,7 @@ import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
@@ -203,17 +204,12 @@ public class JournalArticleContentDashboardItemTest {
 				new ContentDashboardItemType() {
 
 					@Override
-					public String getClassName() {
+					public String getFullLabel(Locale locale) {
 						return null;
 					}
 
 					@Override
-					public long getClassPK() {
-						return 0;
-					}
-
-					@Override
-					public String getFullLabel(Locale locale) {
+					public InfoItemReference getInfoItemReference() {
 						return null;
 					}
 

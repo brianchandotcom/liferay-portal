@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
@@ -274,13 +275,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			}
 
 			@Override
-			public String getUserPortraitURL(
-				HttpServletRequest httpServletRequest) {
-
-				return null;
-			}
-
-			@Override
 			public List<Version> getVersions(Locale locale) {
 				return Collections.singletonList(
 					new Version("version", "style", 0.1));
@@ -335,6 +329,10 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		ReflectionTestUtil.setFieldValue(
 			_getContentDashboardItemInfoMVCResourceCommand, "_portal",
 			new PortalImpl());
+
+		ReflectionTestUtil.setFieldValue(
+			_getContentDashboardItemInfoMVCResourceCommand, "_userLocalService",
+			Mockito.mock(UserLocalService.class));
 	}
 
 	private GetContentDashboardItemInfoMVCResourceCommand

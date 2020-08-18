@@ -406,13 +406,6 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
-			public String getUserPortraitURL(
-				HttpServletRequest httpServletRequest) {
-
-				return null;
-			}
-
-			@Override
 			public List<Version> getVersions(Locale locale) {
 				return null;
 			}

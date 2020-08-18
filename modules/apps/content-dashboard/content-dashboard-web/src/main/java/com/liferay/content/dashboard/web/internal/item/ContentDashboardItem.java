@@ -66,8 +66,6 @@ public interface ContentDashboardItem<T> {
 
 	public String getUserName();
 
-	public String getUserPortraitURL(HttpServletRequest httpServletRequest);
-
 	public List<Version> getVersions(Locale locale);
 
 	public boolean isViewable(HttpServletRequest httpServletRequest);

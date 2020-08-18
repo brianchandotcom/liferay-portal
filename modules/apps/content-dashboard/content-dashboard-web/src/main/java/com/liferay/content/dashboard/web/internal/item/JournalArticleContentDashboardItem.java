@@ -30,11 +30,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
@@ -246,26 +244,6 @@ public class JournalArticleContentDashboardItem
 	@Override
 	public String getUserName() {
 		return _user.getFullName();
-	}
-
-	@Override
-	public String getUserPortraitURL(HttpServletRequest httpServletRequest) {
-		if (_user.getPortraitId() <= 0) {
-			return StringPool.BLANK;
-		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		try {
-			return _user.getPortraitURL(themeDisplay);
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-
-			return StringPool.BLANK;
-		}
 	}
 
 	@Override

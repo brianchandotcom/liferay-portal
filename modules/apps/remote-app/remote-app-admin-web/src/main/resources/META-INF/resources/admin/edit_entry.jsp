@@ -37,7 +37,7 @@ renderResponse.setTitle((remoteAppEntry == null) ? LanguageUtil.get(request, "ne
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="remoteAppEntryId" type="hidden" value="<%= remoteAppEntryId %>" />
 
-		<liferay-ui:error exception="<%= DuplicateRemoteAppEntryURLException.class %>" message="please-enter-an-unique-app-url" />
+		<liferay-ui:error exception="<%= DuplicateRemoteAppEntryURLException.class %>" message="please-enter-a-unique-remote-app-url" />
 
 		<aui:model-context bean="<%= remoteAppEntry %>" model="<%= RemoteAppEntry.class %>" />
 

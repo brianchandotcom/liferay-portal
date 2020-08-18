@@ -43,14 +43,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rubén Pulido
  */
 @Component(immediate = true, service = DocumentContributor.class)
-public class AssetPublicCategoryDocumentContributor
+public class AssetInternalCategoryDocumentContributor
 	implements DocumentContributor<AssetCategory> {
 
 	@Override
 	public void contribute(
 		Document document, BaseModel<AssetCategory> baseModel) {
 
-		List<AssetCategory> publicAssetCategories = new ArrayList<>();
+		List<AssetCategory> internalAssetCategories = new ArrayList<>();
 
 		String className = document.get(Field.ENTRY_CLASS_NAME);
 		long classPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
@@ -70,21 +70,21 @@ public class AssetPublicCategoryDocumentContributor
 
 			if ((assetVocabulary != null) &&
 				(assetVocabulary.getVisibilityType() ==
-					AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC)) {
+					AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL)) {
 
-				publicAssetCategories.add(assetCategory);
+				internalAssetCategories.add(assetCategory);
 			}
 		}
 
-		long[] publicAssetCategoryIds = ListUtil.toLongArray(
-			publicAssetCategories, AssetCategory.CATEGORY_ID_ACCESSOR);
+		long[] internalAssetCategoryIds = ListUtil.toLongArray(
+			internalAssetCategories, AssetCategory.CATEGORY_ID_ACCESSOR);
 
 		document.addKeyword(
-			Field.ASSET_PUBLIC_CATEGORY_IDS, publicAssetCategoryIds);
+			Field.ASSET_INTERNAL_CATEGORY_IDS, internalAssetCategoryIds);
 
 		addAssetCategoryTitles(
-			document, Field.ASSET_PUBLIC_CATEGORY_TITLES,
-			publicAssetCategories);
+			document, Field.ASSET_INTERNAL_CATEGORY_TITLES,
+			internalAssetCategories);
 	}
 
 	protected void addAssetCategoryTitles(

@@ -90,4 +90,85 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-108566. The IntelliSense for available resources will popup when the current collection has resources and Auto-Complete works."
+	@priority = "5"
+	test AutocompleteFragmentWithCollectionResource {
+		task ("Navigate to the fragment collection") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+		}
+
+		task ("Add a fragment") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+		}
+
+		task ("Assert the IntelliSense for available resources doesn't popup") {
+			var htmlSnippet = '''[resources:''';
+
+			FragmentsEditor.typeHtmlEditor(content = "");
+
+			Type.sendKeysAceEditor(
+				locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
+				value1 = "${htmlSnippet}");
+
+			AssertElementNotPresent(locator1 = "//ul[contains(@class,'CodeMirror-hints')]");
+		}
+
+		task ("Upload resource for collection") {
+			Navigator.gotoBack();
+
+			Navigator.gotoNavTab(navTab = "Resources");
+
+			FragmentsAdmin.addResource(resourceFile = "Document_1.jpg");
+		}
+
+		task ("Add the second collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "New Collection Name");
+
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "New Collection Name");
+		}
+
+		task ("Upload resource for collection") {
+			Navigator.gotoNavTab(navTab = "Resources");
+
+			FragmentsAdmin.addResource(resourceFile = "Document_2.jpg");
+		}
+
+		task ("Assert only current collection's resources are available in IntelliSense") {
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Fragment Name",
+				item = "Edit");
+
+			var htmlSnippet = '''[resources:''';
+			var fragmentHTML = '''[resources:Document_2.jpg]''';
+
+			FragmentsEditor.typeHtmlEditor(content = "");
+
+			Type.sendKeysAceEditor(
+				locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
+				value1 = "${htmlSnippet}");
+
+			AssertElementNotPresent(
+				autocompleteField = "Document_2.jpg",
+				locator1 = "FragmentEditor#AUTOCOMPLETE_FIELD");
+
+			AssertElementPresent(
+				autocompleteField = "Document_1.jpg",
+				locator1 = "FragmentEditor#AUTOCOMPLETE_FIELD");
+
+			Click(
+				autocompleteField = "Document_1.jpg",
+				locator1 = "FragmentEditor#AUTOCOMPLETE_FIELD");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "FragmentEditor#HTML_EDITOR_CONTENT",
+				value1 = "${fragmentHTML}");
+		}
+	}
+
 }

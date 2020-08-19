@@ -21,6 +21,15 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../src/main/resources/META-INF
 import {VIEWPORT_SIZES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/store';
 
+jest.mock(
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({
+		config: {
+			frontendTokens: {},
+		},
+	})
+);
+
 const renderContainer = (config) => {
 	return render(
 		<StoreAPIContextProvider

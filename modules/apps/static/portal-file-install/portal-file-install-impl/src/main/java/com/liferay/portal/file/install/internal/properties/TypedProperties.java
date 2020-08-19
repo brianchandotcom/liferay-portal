@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.io.BufferedReader;
-import java.io.FilterWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -105,40 +104,46 @@ public class TypedProperties {
 	}
 
 	public void save(Writer writer) throws IOException {
-		try (PropertiesWriter propertiesWriter = new PropertiesWriter(writer)) {
-			if (_header != null) {
-				propertiesWriter.writeln(_header);
+		StringBundler sb = new StringBundler();
+
+		if (_header != null) {
+			sb.append(_header);
+			sb.append(_LINE_SEPARATOR);
+		}
+
+		for (Map.Entry<String, ObjectValuePair<String, List<String>>> entry :
+				_storage.entrySet()) {
+
+			ObjectValuePair<String, List<String>> objectValuePair =
+				entry.getValue();
+
+			List<String> layout = objectValuePair.getValue();
+
+			if ((layout == null) || layout.isEmpty()) {
+				sb.append(entry.getKey());
+				sb.append(_EQUALS_WITH_SPACES);
+				sb.append(objectValuePair.getKey());
+				sb.append(_LINE_SEPARATOR);
+
+				continue;
 			}
 
-			for (Map.Entry<String, ObjectValuePair<String, List<String>>>
-					entry : _storage.entrySet()) {
+			int size = layout.size();
 
-				ObjectValuePair<String, List<String>> objectValuePair =
-					entry.getValue();
+			for (int i = 0; i < size; i++) {
+				String string = layout.get(i);
 
-				List<String> layout = objectValuePair.getValue();
+				sb.append(string);
 
-				if ((layout == null) || layout.isEmpty()) {
-					propertiesWriter.writeProperty(
-						entry.getKey(), objectValuePair.getKey());
-
-					continue;
+				if (i < (size - 1)) {
+					sb.append("\\");
 				}
 
-				int size = layout.size();
-
-				for (int i = 0; i < size; i++) {
-					String string = layout.get(i);
-
-					if (i < (size - 1)) {
-						propertiesWriter.writeln(string + "\\");
-					}
-					else {
-						propertiesWriter.writeln(string);
-					}
-				}
+				sb.append(_LINE_SEPARATOR);
 			}
 		}
+
+		writer.write(sb.toString());
 	}
 
 	public class PropertiesReader extends BufferedReader {
@@ -283,30 +288,6 @@ public class TypedProperties {
 
 	}
 
-	public class PropertiesWriter extends FilterWriter {
-
-		public PropertiesWriter(Writer writer) {
-			super(writer);
-		}
-
-		public void writeln(String string) throws IOException {
-			if (string != null) {
-				write(string);
-			}
-
-			write(_LINE_SEPARATOR);
-		}
-
-		public void writeProperty(String key, String value) throws IOException {
-			write(key);
-			write(" = ");
-			write(value);
-
-			writeln(null);
-		}
-
-	}
-
 	private Object _convertFromString(String value) {
 		try {
 			return ConfigurationHandler.read(value);
@@ -336,6 +317,8 @@ public class TypedProperties {
 
 		return false;
 	}
+
+	private static final String _EQUALS_WITH_SPACES = " = ";
 
 	private static final String _LINE_SEPARATOR = System.getProperty(
 		"line.separator");

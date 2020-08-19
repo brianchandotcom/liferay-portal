@@ -18,10 +18,13 @@ import React from 'react';
 
 import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
+import {config} from '../../config/index';
 import {useId} from '../../utils/useId';
 
 export const SelectField = ({disabled, field, onValueSelect, value}) => {
 	const inputId = useId();
+
+	const frontendTokens = config.frontendTokens;
 
 	const validValues = field.typeOptions
 		? field.typeOptions.validValues
@@ -32,6 +35,15 @@ export const SelectField = ({disabled, field, onValueSelect, value}) => {
 	const [nextValue, setNextValue] = useControlledState(
 		value || field.defaultValue || firstOption.value
 	);
+
+	const getFrontendTokenOption = (option) => {
+		const token = frontendTokens[option.frontendTokenName];
+
+		return {
+			label: token.label,
+			value: option.frontendTokenName,
+		};
+	};
 
 	return (
 		<ClayForm.Group small>
@@ -48,7 +60,11 @@ export const SelectField = ({disabled, field, onValueSelect, value}) => {
 					setNextValue(nextValue);
 					onValueSelect(field.name, nextValue);
 				}}
-				options={validValues}
+				options={validValues.map((validValue) =>
+					validValue.frontendTokenName
+						? getFrontendTokenOption(validValue)
+						: validValue
+				)}
 				value={nextValue}
 			/>
 		</ClayForm.Group>

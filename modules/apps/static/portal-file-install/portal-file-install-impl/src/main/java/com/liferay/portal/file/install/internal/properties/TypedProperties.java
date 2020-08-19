@@ -272,7 +272,8 @@ public class TypedProperties {
 		}
 
 		private String _comment;
-		private final Pattern _linePattern = Pattern.compile("(.+)=(.+)");
+		private final Pattern _linePattern = Pattern.compile(
+			"(\\s*[0-9a-zA-Z-_\\.]+\\s*)=(.+)");
 		private final Pattern _pattern = Pattern.compile(
 			"\\s*[TILFDXSCBilfdxscb]?(\\[[\\S\\s]*\\]|\\{[\\S\\s]*\\}|" +
 				"\\([\\S\\s]*\\)|\"[\\S\\s]*\")\\s*");

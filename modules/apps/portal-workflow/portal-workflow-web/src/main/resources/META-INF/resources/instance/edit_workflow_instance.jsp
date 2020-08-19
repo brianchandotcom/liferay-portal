@@ -124,6 +124,22 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 							assetRenderer="<%= assetRenderer %>"
 							template="<%= AssetRenderer.TEMPLATE_ABSTRACT %>"
 						/>
+
+						<c:if test="<%= assetEntry != null %>">
+							<h4 class="task-content-author">
+								<liferay-ui:message key="author" />
+							</h4>
+
+							<%
+							String[] metadataFields = {"author", "categories", "tags"};
+							%>
+
+							<liferay-asset:asset-metadata
+								className="<%= assetEntry.getClassName() %>"
+								classPK="<%= assetEntry.getClassPK() %>"
+								metadataFields="<%= metadataFields %>"
+							/>
+						</c:if>
 					</liferay-ui:panel>
 
 					<liferay-ui:panel

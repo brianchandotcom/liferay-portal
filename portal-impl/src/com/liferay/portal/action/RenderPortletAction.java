@@ -55,6 +55,7 @@ public class RenderPortletAction implements Action {
 
 		User user = PortalUtil.getUser(httpServletRequest);
 		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
+
 		String portletId = ParamUtil.getString(httpServletRequest, "p_p_id");
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(

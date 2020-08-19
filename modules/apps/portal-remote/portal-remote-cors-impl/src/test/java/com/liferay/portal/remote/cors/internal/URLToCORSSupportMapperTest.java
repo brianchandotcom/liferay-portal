@@ -118,22 +118,6 @@ public class URLToCORSSupportMapperTest {
 					comparisonFailure.getActual());
 			}
 		}
-
-		long start = System.currentTimeMillis();
-
-		for (int i = 0; i < 100000; i++) {
-			for (KeyValuePair keyValuePair : keyValuePairs) {
-				urlToCORSSupportMapper.get(keyValuePair.getKey());
-			}
-		}
-
-		long end = System.currentTimeMillis();
-
-		long delta = end - start;
-
-		System.out.println("Iterated 100 thousand times in " + delta + " ms");
-
-		Assert.assertTrue(delta < 2000);
 	}
 
 	protected URLToCORSSupportMapper createURLToCORSSupportMapper(

@@ -43,7 +43,9 @@ renderResponse.setTitle((accountGroupDisplay.getAccountGroupId() == 0) ? Languag
 			<%= LanguageUtil.get(request, "information") %>
 		</h2>
 
-		<aui:input label="account-group-name" name="name" required="<%= true %>" type="text" value="<%= accountGroupDisplay.getName() %>" />
+		<aui:input label="account-group-name" name="name" required="<%= true %>" type="text" value="<%= accountGroupDisplay.getName() %>">
+			<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AccountGroup.class.getName(), "name") %></aui:validator>
+		</aui:input>
 
 		<aui:field-wrapper cssClass="form-group lfr-input-text-container">
 			<aui:input name="description" type="textarea" value="<%= accountGroupDisplay.getDescription() %>" />

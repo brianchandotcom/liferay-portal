@@ -15,8 +15,10 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
-import React, {useEffect, useState} from 'react';
+import ClayLink from '@clayui/link';
+import React, {useContext, useEffect, useState} from 'react';
 
+import {AppContext} from '../../AppContext.es';
 import {getItem} from '../../utils/client.es';
 import {getLocalizedValue} from '../../utils/lang.es';
 import DropDownWithSearch from './DropDownWithSearch.es';
@@ -35,6 +37,7 @@ export function getDataObjects() {
 }
 
 export default ({defaultValue, label, onSelect, selectedValue, visible}) => {
+	const {objectsPortletURL} = useContext(AppContext);
 	const [state, setState] = useState({
 		error: null,
 		isLoading: true,
@@ -73,6 +76,20 @@ export default ({defaultValue, label, onSelect, selectedValue, visible}) => {
 			});
 	};
 
+	const getMessageWithNewObjectLink = (message) => (
+		<>
+			<span className="d-block">{message}</span>
+
+			<ClayLink
+				href={`${objectsPortletURL}#/?showCustomObjectPopover=1`}
+				target="_blank"
+			>
+				{Liferay.Language.get('create-new-object')}{' '}
+				<ClayIcon fontSize="10px" symbol="shortcut" />
+			</ClayLink>
+		</>
+	);
+
 	useEffect(() => {
 		doFetch();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -80,7 +97,9 @@ export default ({defaultValue, label, onSelect, selectedValue, visible}) => {
 
 	const stateProps = {
 		emptyProps: {
-			label: Liferay.Language.get('there-are-no-objects-yet'),
+			label: getMessageWithNewObjectLink(
+				Liferay.Language.get('there-are-no-objects-yet')
+			),
 		},
 		errorProps: {
 			children: (
@@ -147,8 +166,8 @@ export default ({defaultValue, label, onSelect, selectedValue, visible}) => {
 				visible={visible}
 			>
 				<DropDownWithSearch.Items
-					emptyResultMessage={Liferay.Language.get(
-						'no-objects-found-with-this-name-try-searching-again-with-a-different-name'
+					emptyResultMessage={getMessageWithNewObjectLink(
+						Liferay.Language.get('no-objects-found-with-this-name')
 					)}
 					items={items}
 					onSelect={onSelect}

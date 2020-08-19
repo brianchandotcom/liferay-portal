@@ -168,7 +168,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 
 							<%
 							String id = "infoField--" + infoField.getName() + "--";
-							String targetContent = journalTranslateDisplayContext.getStringValue(infoField, journalTranslateDisplayContext.getTargetLocale());
+							String targetContent = journalTranslateDisplayContext.getTargetStringValue(infoField, journalTranslateDisplayContext.getTargetLocale());
 							%>
 
 							<c:choose>

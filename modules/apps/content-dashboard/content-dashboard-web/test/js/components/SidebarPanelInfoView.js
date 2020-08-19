@@ -58,7 +58,11 @@ const mockTags = ['tag1', 'tag2'];
 
 const mockTitle = 'Basic Web Content Title';
 
-const mockUserName = 'Kate Williams';
+const mockUser = {
+	alt: 'Kate Williams',
+	url: '',
+	userId: 20126,
+};
 
 const mockVersions = [
 	{
@@ -119,9 +123,7 @@ describe('SidebarPanelInfoView', () => {
 					subType={mockSubType}
 					tags={mockTags}
 					title={mockTitle}
-					userId={'20126'}
-					userName={mockUserName}
-					userPortraitURL={''}
+					user={mockUser}
 					versions={mockVersions}
 					viewURLs={mockViewURLs}
 				/>
@@ -144,9 +146,7 @@ describe('SidebarPanelInfoView', () => {
 					subType={mockSubType}
 					tags={mockTags}
 					title={mockTitle}
-					userId={'20126'}
-					userName={mockUserName}
-					userPortraitURL={''}
+					user={mockUser}
 					versions={mockVersions}
 					viewURLs={mockViewURLs}
 				/>

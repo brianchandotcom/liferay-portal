@@ -67,8 +67,9 @@ public class SyncCTEventListener implements CTEventListener {
 	private void _processPublish(
 		long ctCollectionId, long classNameId, String type) {
 
-		for (CTEntry ctEntry : _ctEntryLocalService.getCTEntries(
-				ctCollectionId, classNameId)) {
+		for (CTEntry ctEntry :
+				_ctEntryLocalService.getCTEntries(
+					ctCollectionId, classNameId)) {
 
 			String event = _getEvent(ctEntry);
 

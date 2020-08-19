@@ -742,7 +742,6 @@
 				"defaultValue": 0,
 				"dependencies": [
 				],
-				"displaySize": "small",
 				"label": "border-width",
 				"name": "borderWidth",
 				"responsive": false,
@@ -758,7 +757,6 @@
 				"defaultValue": "0",
 				"dependencies": [
 				],
-				"displaySize": "small",
 				"label": "border-radius",
 				"name": "borderRadius",
 				"responsive": false,
@@ -809,7 +807,6 @@
 				"defaultValue": 100,
 				"dependencies": [
 				],
-				"displaySize": "small",
 				"label": "opacity",
 				"name": "opacity",
 				"responsive": false,
@@ -825,7 +822,6 @@
 				"defaultValue": "none",
 				"dependencies": [
 				],
-				"displaySize": "small",
 				"label": "shadow",
 				"name": "shadow",
 				"responsive": false,

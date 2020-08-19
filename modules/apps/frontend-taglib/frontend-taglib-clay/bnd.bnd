@@ -4,8 +4,11 @@ Bundle-Version: 6.0.0
 Export-Package:\
 	com.liferay.frontend.taglib.clay.data,\
 	com.liferay.frontend.taglib.clay.data.set,\
+	com.liferay.frontend.taglib.clay.data.set.constants,\
+	com.liferay.frontend.taglib.clay.data.set.filter,\
 	com.liferay.frontend.taglib.clay.data.set.model,\
 	com.liferay.frontend.taglib.clay.data.set.provider,\
+	com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util,\
 	com.liferay.frontend.taglib.clay.data.set.view.cards,\
 	com.liferay.frontend.taglib.clay.data.set.view.list,\
 	com.liferay.frontend.taglib.clay.data.set.view.table,\

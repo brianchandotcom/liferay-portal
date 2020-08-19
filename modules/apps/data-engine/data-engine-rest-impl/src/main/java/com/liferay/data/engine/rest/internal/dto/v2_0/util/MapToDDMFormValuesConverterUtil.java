@@ -55,18 +55,7 @@ public class MapToDDMFormValuesConverterUtil {
 		}
 
 		MapToDDMFormValuesConverterStrategy
-			mapToDDMFormValuesConverterStrategy =
-				_getMapToDDMFormValuesConverterStrategy(dataRecordValues);
-
-		mapToDDMFormValuesConverterStrategy.setDDMFormFieldValues(
-			dataRecordValues, ddmForm, ddmFormValues, locale);
-
-		return ddmFormValues;
-	}
-
-	private static MapToDDMFormValuesConverterStrategy
-		_getMapToDDMFormValuesConverterStrategy(
-			Map<String, Object> dataRecordValues) {
+			mapToDDMFormValuesConverterStrategy = null;
 
 		Set<String> keySet = dataRecordValues.keySet();
 
@@ -75,11 +64,19 @@ public class MapToDDMFormValuesConverterUtil {
 		String key = iterator.next();
 
 		if (key.contains("_INSTANCE_")) {
-			return NestedFieldsSupportMapToDDMFormValuesConverterStrategy.
-				getInstance();
+			mapToDDMFormValuesConverterStrategy =
+				NestedFieldsSupportMapToDDMFormValuesConverterStrategy.
+					getInstance();
+		}
+		else {
+			mapToDDMFormValuesConverterStrategy =
+				DefaultMapToDDMFormValuesConverterStrategy.getInstance();
 		}
 
-		return DefaultMapToDDMFormValuesConverterStrategy.getInstance();
+		mapToDDMFormValuesConverterStrategy.setDDMFormFieldValues(
+			dataRecordValues, ddmForm, ddmFormValues, locale);
+
+		return ddmFormValues;
 	}
 
 }

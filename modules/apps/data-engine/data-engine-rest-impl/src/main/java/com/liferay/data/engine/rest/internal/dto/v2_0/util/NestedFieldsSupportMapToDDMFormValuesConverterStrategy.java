@@ -73,34 +73,28 @@ public class NestedFieldsSupportMapToDDMFormValuesConverterStrategy
 		}
 
 		if (ListUtil.isNotEmpty(ddmFormField.getNestedDDMFormFields())) {
-			_setNestedDDMFormFieldValues(
-				ddmFormFields, ddmFormFieldValue, locale,
-				(Map<String, Object>)fieldInstanceValue.get("nestedValues"));
+			Map<String, Object> nestedValues =
+				(Map<String, Object>)fieldInstanceValue.get("nestedValues");
+
+			if (MapUtil.isEmpty(nestedValues)) {
+				return ddmFormFieldValue;
+			}
+
+			for (Map.Entry<String, Object> entry : nestedValues.entrySet()) {
+				String[] parts = StringUtil.split(entry.getKey(), "_INSTANCE_");
+
+				ddmFormFieldValue.addNestedDDMFormFieldValue(
+					createDDMFormFieldValue(
+						ddmFormFields.get(parts[0]), ddmFormFields,
+						(Map<String, Object>)entry.getValue(), parts[1],
+						locale));
+			}
 		}
 
 		return ddmFormFieldValue;
 	}
 
 	private NestedFieldsSupportMapToDDMFormValuesConverterStrategy() {
-	}
-
-	private void _setNestedDDMFormFieldValues(
-		Map<String, DDMFormField> ddmFormFields,
-		DDMFormFieldValue ddmFormFieldValue, Locale locale,
-		Map<String, Object> nestedValues) {
-
-		if (MapUtil.isEmpty(nestedValues)) {
-			return;
-		}
-
-		for (Map.Entry<String, Object> entry : nestedValues.entrySet()) {
-			String[] parts = StringUtil.split(entry.getKey(), "_INSTANCE_");
-
-			ddmFormFieldValue.addNestedDDMFormFieldValue(
-				createDDMFormFieldValue(
-					ddmFormFields.get(parts[0]), ddmFormFields,
-					(Map<String, Object>)entry.getValue(), parts[1], locale));
-		}
 	}
 
 	private static NestedFieldsSupportMapToDDMFormValuesConverterStrategy

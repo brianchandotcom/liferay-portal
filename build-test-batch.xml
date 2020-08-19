@@ -6490,6 +6490,29 @@ tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/
 				<record action="stop" name="${project.dir}/build.services.output.txt" />
 
 				<loadfile
+					property="build.services.output.txt.warning"
+					srcfile="${project.dir}/build.services.output.txt"
+				>
+					<filterchain>
+						<filterreader classname="org.apache.tools.ant.filters.LineContains">
+							<param type="contains" value="Warning: " />
+						</filterreader>
+					</filterchain>
+				</loadfile>
+
+				<if>
+					<isset property="build.services.output.txt.warning" />
+					<then>
+						<delete file="${project.dir}/build.services.output.txt" />
+
+						<fail>
+Detected build services warning:
+${build.services.output.txt.warning}
+						</fail>
+					</then>
+				</if>
+
+				<loadfile
 					property="build.services.output.txt.content"
 					srcfile="${project.dir}/build.services.output.txt"
 				/>

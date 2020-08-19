@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<portlet portlet-id="com_liferay_portal_search_web_folder_facet_portlet_FolderFacetPortlet" root-portlet-id="com_liferay_portal_search_web_folder_facet_portlet_FolderFacetPortlet" scope-group-id="20159" private-layout="true" self-path="/group/20159/portlet/com_liferay_portal_search_web_folder_facet_portlet_FolderFacetPortlet/3/portlet.xml">
-	<portlet-preferences path="/group/20159/portlet/com_liferay_portal_search_web_folder_facet_portlet_FolderFacetPortlet/preferences/layout/0/3/portlet-preferences.xml">
-		<preference-data/>
-	</portlet-preferences>
-</portlet>

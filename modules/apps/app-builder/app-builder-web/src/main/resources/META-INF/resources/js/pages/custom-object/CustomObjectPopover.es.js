@@ -78,7 +78,9 @@ const CustomObjectPopover = ({
 					onSubmit={(event) => {
 						event.preventDefault();
 
-						handleSubmit();
+						if (!isLoading) {
+							handleSubmit();
+						}
 					}}
 				>
 					<div

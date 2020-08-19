@@ -137,7 +137,9 @@ const EditTableView = withRouter(({history}) => {
 					onSubmit={(event) => {
 						event.preventDefault();
 
-						onSave();
+						if (!isLoading) {
+							onSave();
+						}
 					}}
 				>
 					<UpperToolbar>

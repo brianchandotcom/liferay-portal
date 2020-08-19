@@ -62,6 +62,7 @@ export default function ColorFrontendToken({
 							debouncedOnValueSelect(onValueSelect, `#${color}`);
 						}}
 						showHex={false}
+						showPalette={false}
 						value={color?.replace('#', '') ?? ''}
 					/>
 				</ClayInput.GroupItem>

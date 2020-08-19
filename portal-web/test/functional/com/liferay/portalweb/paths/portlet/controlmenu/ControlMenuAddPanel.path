@@ -31,7 +31,7 @@
 <!--APPLICATIONS-->
 <tr>
   <td>ADD_PORTLET_LINK</td>
-  <td>//div[contains(@class,'item-body') and contains(.,'${key_portletName}')]/following-sibling::button[contains(@class,'item-add')]</td>
+  <td>//div[contains(@class,'item-body')]//*[normalize-space(text())='${key_portletName}']/../../..//button[contains(@class,'item-add')]</td>
   <td></td>
 </tr>
 <tr>

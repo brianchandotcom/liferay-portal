@@ -24,11 +24,16 @@ import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -80,7 +85,20 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			_ctPreferencesLocalService.fetchCTPreferences(
 				themeDisplay.getCompanyId(), 0);
 
-		if (ctPreferences == null) {
+		try {
+			if ((ctPreferences == null) ||
+				!_portletPermission.contains(
+					themeDisplay.getPermissionChecker(),
+					CTPortletKeys.CHANGE_LISTS, ActionKeys.VIEW)) {
+
+				return;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException, portalException);
+			}
+
 			return;
 		}
 
@@ -358,6 +376,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		return data;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ChangeTrackingIndicatorDynamicInclude.class);
+
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
 
@@ -378,6 +399,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletPermission _portletPermission;
 
 	@Reference
 	private ReactRenderer _reactRenderer;

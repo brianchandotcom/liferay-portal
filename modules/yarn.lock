@@ -1372,10 +1372,10 @@
     "@clayui/shared" "^3.2.1"
     classnames "^2.2.6"
 
-"@clayui/popover@3.4.4":
-  version "3.4.4"
-  resolved "https://registry.yarnpkg.com/@clayui/popover/-/popover-3.4.4.tgz#b35255e865f02a16ebc5bd8a564d55ab6067ef1c"
-  integrity sha512-EPZgpoKQnFCUJSzOMOnz7O8+SXE8ZrTLKLwfrHtGVmsBAxVl9rwNnPeUOoRrxozFLTxNlwJSMu3n23NSJRbw9w==
+"@clayui/popover@3.4.5":
+  version "3.4.5"
+  resolved "https://registry.yarnpkg.com/@clayui/popover/-/popover-3.4.5.tgz#d87aaa8f570f057de27b938b2a075492e662c7e0"
+  integrity sha512-O/epC4ebfXLyCGzUYVFZOGdJlVo6XmTaHoA6MMfqN9eWDcD0DsSrXPbZ8cxvfb/8YBvhp3VX9Z1TIoFt8u8c2Q==
   dependencies:
     "@clayui/shared" "^3.2.1"
     classnames "^2.2.6"

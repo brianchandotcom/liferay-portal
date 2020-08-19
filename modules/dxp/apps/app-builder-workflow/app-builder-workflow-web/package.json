@@ -7,7 +7,7 @@
 		"@clayui/icon": "3.0.5",
 		"@clayui/link": "3.2.0",
 		"@clayui/modal": "3.6.5",
-		"@clayui/popover": "3.4.4",
+		"@clayui/popover": "3.4.5",
 		"@clayui/tooltip": "3.3.3",
 		"classnames": "2.2.6",
 		"frontend-js-react-web": "*",

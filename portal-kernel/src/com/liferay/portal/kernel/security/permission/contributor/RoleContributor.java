@@ -15,13 +15,11 @@
 package com.liferay.portal.kernel.security.permission.contributor;
 
 /**
- * RoleContributors are invoked during permission checking allowing the roles
- * calculated from persisted assignment and inheritance to be altered
- * dynamically. Implementations must make every attempt to be as efficient as
- * possible or risk potentially dramatic performance degradation.
+ * Invoked during permission checking, this interface dynamically alters roles
+ * calculated from persisted assignment and inheritance. Implementations must
+ * maximize efficiency to avoid potentially dramatic performance degredation.
  *
  * @author Raymond Augé
- * @review
  */
 public interface RoleContributor {
 

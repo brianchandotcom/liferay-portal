@@ -20,19 +20,19 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import java.util.Locale;
 
 /**
- * Used to contribute a role type entry in the Roles Admin portlet. Each role
- * type will create a tab in the user interface.
+ * Represents a role type entry to contribute in the Roles Admin portlet. A tab
+ * is created for each role type.
  *
  * @author Drew Brokke
- * @review
  */
 public interface RoleTypeContributor {
 
 	/**
-	 * Optionally returns a className to be used when creating a new role of
-	 * this type. If none is given, the class name of Role will be used.
+	 * Optionally returns a class name to be used when creating a new role of
+	 * this type. If {@code null} is returned, use the class name of the role.
 	 *
-	 * @return
+	 * @return a class name to be used when creating a new role of
+	 * this types
 	 */
 	public default String getClassName() {
 		return null;
@@ -42,82 +42,90 @@ public interface RoleTypeContributor {
 	 * Returns a list of role names whose permissions cannot be manually defined
 	 * by users.
 	 *
-	 * @return
+	 * @return a list of role names whose permissions cannot be manually defined
+	 *         by users
 	 */
 	public default String[] getExcludedRoleNames() {
 		return new String[0];
 	}
 
 	/**
-	 * Returns the css class of the icon that represents the role type.
+	 * Returns the CSS class of the role type icon.
 	 *
-	 * @return
+	 * @return the CSS class of the role type icon
 	 */
 	public String getIcon();
 
 	/**
 	 * Returns the role type name.
 	 *
-	 * Example: "regular"
+	 * <p>
+	 * Example: <code>"regular"</code>
+	 * </p>
 	 *
-	 * @return
+	 * @return the role type name
 	 */
 	public String getName();
 
 	/**
-	 * Optionally returns an array of subtypes for the given role type. If
-	 * given, a subtype may be chosen for a role of this type when adding or
-	 * updating the role.
+	 * Optionally returns an array of subtypes for this role type.
 	 *
-	 * @return
+	 * @return an array of subtypes for this role type
 	 */
 	public default String[] getSubtypes() {
 		return new String[0];
 	}
 
 	/**
-	 * Returns the display title for this role type's section.
+	 * Returns the title to display for this role type's tab.
 	 *
-	 * Example: "Regular Roles"
+	 * <p>
+	 * Example: <code>"Regular Roles"</code>
+	 * </p>
 	 *
-	 * @param locale
-	 * @return
+	 * @param  locale the locale to apply
+	 * @return the title to display for this role type's tab
 	 */
 	public String getTabTitle(Locale locale);
 
 	/**
-	 * Returns the display title for this role in the creation menu.
+	 * Returns the title to display for this role type in the creation menu.
 	 *
-	 * Example: "Regular Role"
+	 * <p>
+	 * Example: <code>"Regular Roles"</code>
+	 * </p>
 	 *
-	 * @param locale
-	 * @return
+	 * @param  locale the locale to apply
+	 * @return the title to display for this role type in the creation menu
 	 */
 	public String getTitle(Locale locale);
 
 	/**
-	 * Returns an integer that corresponds to this role's type. This is used as
-	 * a key to retrieve the RoleTypeContributor.
+	 * Returns an integer that represents the role type. It is used as a key to
+	 * retrieve the {@code
+	 * com.liferay.roles.admin.internal.role.type.contributor.RoleTypeContributor}.
 	 *
-	 * @return
+	 * @return an integer that represents the role type
 	 */
 	public int getType();
 
 	/**
-	 * Returns whether or not to allow a user to manually assign members to the
-	 * given role.
+	 * Returns <code>true</code> if users are allowed to assign members to the
+	 * role; <code>false</code> otherwise.
 	 *
-	 * @param role
-	 * @return
+	 * @param  role a role
+	 * @return <code>true</code> if users are allowed to assign members to the
+	 *         role; <code>false</code> otherwise
 	 */
 	public boolean isAllowAssignMembers(Role role);
 
 	/**
-	 * Returns whether or not to allow a user to manually define the permissions
-	 * granted by the given role.
+	 * Returns <code>true</code> if users are allowed to define permissions
+	 * granted by the role; <code>false</code> otherwise.
 	 *
-	 * @param role
-	 * @return
+	 * @param  role a role
+	 * @return <code>true</code> if users are allowed to define permissions
+	 *         granted by the role; <code>false</code> otherwise
 	 */
 	public default boolean isAllowDefinePermissions(Role role) {
 		if (ArrayUtil.contains(getExcludedRoleNames(), role.getName())) {
@@ -128,18 +136,22 @@ public interface RoleTypeContributor {
 	}
 
 	/**
-	 * Returns whether or not the given role can be deleted.
+	 * Returns <code>true</code> if users are allowed to delete the role;
+	 * <code>false</code> otherwise.
 	 *
-	 * @param role
-	 * @return
+	 * @param  role a role
+	 * @return <code>true</code> if users are allowed to delete the role;
+	 *         <code>false</code> otherwise
 	 */
 	public boolean isAllowDelete(Role role);
 
 	/**
-	 * Returns whether or not the given role is automatically assigned.
+	 * Returns <code>true</code> if the role is automatically assgned;
+	 * <code>false</code> otherwise.
 	 *
-	 * @param role
-	 * @return
+	 * @param  role a role
+	 * @return <code>true</code> if the role is automatically assgned;
+	 *         <code>false</code> otherwise
 	 */
 	public default boolean isAutomaticallyAssigned(Role role) {
 		return false;

@@ -40,6 +40,10 @@
 				}
 			}
 
+			&__node:first-child {
+				padding-left: 16px;
+			}
+
 			&__children {
 				padding-left: 8px !important;
 			}

@@ -5,7 +5,7 @@
 	display: flex;
 	font-size: 12px;
 	justify-content: space-between;
-	padding: 4px 4px 4px 0;
+	padding: 5px 4px 5px 0;
 	position: relative;
 	white-space: nowrap;
 
@@ -19,8 +19,8 @@
 
 	&.drag-over-middle {
 		background-color: $primary-l3;
-		box-shadow: 0 0 0 1px $primary-l1;
 		border-radius: 4px;
+		box-shadow: 0 0 0 1px $primary-l1;
 	}
 
 	&__mask {

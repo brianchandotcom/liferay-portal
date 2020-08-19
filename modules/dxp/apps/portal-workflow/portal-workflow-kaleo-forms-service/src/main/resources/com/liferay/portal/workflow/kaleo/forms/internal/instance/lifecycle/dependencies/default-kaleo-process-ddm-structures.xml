@@ -24,14 +24,14 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" indexType="keyword" multiple="false" name="imService" required="false" showLabel="true" type="select">
-				<dynamic-element name="gtalk" type="option" value="gtalk">
+				<dynamic-element name="googlehangouts" type="option" value="googlehangouts">
 					<meta-data locale="[$LOCALE_DEFAULT$]">
-						<entry name="label"><![CDATA[google-talk]]></entry>
+						<entry name="label"><![CDATA[google-hangouts]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[instant-messenger-service]]></entry>
-					<entry name="predefinedValue"><![CDATA[["gtalk"]]]></entry>
+					<entry name="predefinedValue"><![CDATA[["googlehangouts"]]]></entry>
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" indexType="keyword" name="imUserName" required="false" showLabel="true" type="text" width="medium">

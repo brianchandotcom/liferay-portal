@@ -307,7 +307,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Page");
 
-		Portlet.addPG(portletName = "Message Board");
+		Portlet.addPG(portletName = "Message Boards");
 
 		Navigator.gotoPage(pageName = "Test Page");
 

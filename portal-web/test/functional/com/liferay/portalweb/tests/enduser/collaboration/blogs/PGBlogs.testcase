@@ -1636,7 +1636,9 @@ definition {
 
 	@priority = "4"
 	test ViewEntriesUsingCardADT {
-		ApplicationDisplayTemplates.selectPortletADT(templateName = "Card");
+		ApplicationDisplayTemplates.selectPortletADT(
+			portletName = "Blogs",
+			templateName = "Card");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",

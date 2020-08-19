@@ -154,7 +154,7 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 
 				writer.write("<tr><td>");
 				writer.write(LanguageUtil.get(_resourceBundle, languageKey));
-				writer.write("</td><td>");
+				writer.write("</td><td style=\"white-space:pre-line;\">");
 
 				if (value instanceof Blob) {
 					String downloadURL = _displayContext.getDownloadURL(

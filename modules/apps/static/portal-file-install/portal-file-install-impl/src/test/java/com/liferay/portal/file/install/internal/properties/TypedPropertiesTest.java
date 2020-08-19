@@ -47,7 +47,7 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
-	public void testLoadandStoreArray() throws IOException {
+	public void testLoadandSaveArray() throws IOException {
 		String line = "testKey = [\"testValue1\",\"testValue2\"]";
 
 		TypedProperties typedProperties = _createTypedProperties(line);
@@ -60,7 +60,7 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
-	public void testLoadandStoreCollection() throws IOException {
+	public void testLoadandSaveCollection() throws IOException {
 		String line = "testKey = (\"testValue1\",\"testValue2\")";
 
 		TypedProperties typedProperties = _createTypedProperties(line);
@@ -78,7 +78,7 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
-	public void testLoadandStoreComment() throws IOException {
+	public void testLoadandSaveComment() throws IOException {
 		String line = "#comment\ntestKey = \"testValue\"";
 
 		TypedProperties typedProperties = _createTypedProperties(line);
@@ -89,7 +89,7 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
-	public void testLoadandStoreEscapedEquals() throws IOException {
+	public void testLoadandSaveEscapedEquals() throws IOException {
 		String line = "testKey = \"testValue\\=test\"";
 
 		TypedProperties typedProperties = _createTypedProperties(line);
@@ -100,7 +100,7 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
-	public void testLoadandStoreMultiline() throws IOException {
+	public void testLoadandSaveMultiline() throws IOException {
 		String line =
 			"testKey = [\\\n\t\"testValue1\",\\\n\t\"testValue2\"\\\n]";
 
@@ -114,7 +114,7 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
-	public void testLoadAndStoreSubstitution() throws IOException {
+	public void testLoadAndSaveSubstitution() throws IOException {
 		String systemKey = "testSystemKey";
 
 		String line = StringBundler.concat("testKey = \"${", systemKey, "}\"");
@@ -152,7 +152,7 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
-	public void testLoadPutandStoreMultiline() throws IOException {
+	public void testLoadPutandSaveMultiline() throws IOException {
 		String line =
 			"testKey = [\\\n\t\"testValue1\",\\\n\t\"testValue2\"\\\n]";
 
@@ -221,7 +221,7 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
-	public void testPutandStore() throws IOException {
+	public void testPutandSave() throws IOException {
 		TypedProperties typedProperties = new TypedProperties();
 
 		typedProperties.put("testKey", "testValue");
@@ -242,7 +242,7 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
-	public void testStoreNontyped() throws IOException {
+	public void testSaveNontyped() throws IOException {
 		String line = "testKey = \"testValue\"";
 
 		TypedProperties typedProperties = _createTypedProperties(line);
@@ -251,7 +251,7 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
-	public void testStoreTyped() throws IOException {
+	public void testSaveTyped() throws IOException {
 		String line = "testKey = I\"1\"";
 
 		TypedProperties typedProperties = _createTypedProperties(line);

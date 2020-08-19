@@ -111,9 +111,16 @@ export default function StructureTreeNode({node}) {
 	}, [activationOrigin, isActive]);
 
 	useEffect(() => {
+		let timer = null;
 		if (isOverTarget) {
-			node.onHoverNode(node.id);
+			timer = setTimeout(() => {
+				node.onHoverNode(node.id);
+			}, 1000);
 		}
+
+		return () => {
+			clearTimeout(timer);
+		};
 	}, [isOverTarget, node]);
 
 	return (

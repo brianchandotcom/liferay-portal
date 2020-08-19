@@ -959,9 +959,17 @@ definition {
 		var key_entryContent = "${entryContent}";
 		var key_entryTitle = "${entryTitle}";
 
-		AssertTextEquals(
-			locator1 = "BlogsEntry#TITLE",
-			value1 = "${entryTitle}");
+		if (isSet(entryCardTitle)) {
+			AssertTextEquals(
+				key_entryTitle = "${entryCardTitle}",
+				locator1 = "BlogsEntry#TITLE_CARD",
+				value1 = "${entryCardTitle}");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "BlogsEntry#TITLE",
+				value1 = "${entryTitle}");
+		}
 
 		if (isSet(entrySubtitle)) {
 			AssertTextEquals(

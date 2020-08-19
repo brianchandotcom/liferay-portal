@@ -2122,9 +2122,11 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns a randomized string with the length informed and only alphabetic characters.
+	 * Returns a randomized string with the length informed and only alphabetic
+	 * characters.
 	 *
-	 * @return a randomized string with the length informed and only alphabetic characters.
+	 * @return a randomized string with the length informed and only alphabetic
+	 *         characters.
 	 */
 	public static String randomId(int length) {
 		Random random = new Random();

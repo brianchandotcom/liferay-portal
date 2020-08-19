@@ -212,7 +212,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 * 				#updateRelease(String, List, int, int)}
+	 *             #updateRelease(String, List, int, int)}
 	 */
 	@Deprecated
 	@Override

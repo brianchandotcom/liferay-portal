@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * challenge.
  * <p>
  *
- * @author Wilson Man
+ * @author     Wilson Man
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Component(immediate = true, service = AutoLogin.class)

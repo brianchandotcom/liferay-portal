@@ -19,7 +19,7 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Michael C. Han
+ * @author     Michael C. Han
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Deprecated

@@ -21,7 +21,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * @author Víctor Galán
+ * @author     Víctor Galán
  * @deprecated As of Athanasius (7.3.x)
  */
 @Deprecated

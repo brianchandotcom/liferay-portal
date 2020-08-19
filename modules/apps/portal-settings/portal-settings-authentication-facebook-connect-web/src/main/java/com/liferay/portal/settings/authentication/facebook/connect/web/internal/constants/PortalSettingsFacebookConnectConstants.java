@@ -15,7 +15,7 @@
 package com.liferay.portal.settings.authentication.facebook.connect.web.internal.constants;
 
 /**
- * @author Jose A. Jimenez
+ * @author     Jose A. Jimenez
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Deprecated

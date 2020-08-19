@@ -129,7 +129,7 @@ public class UpgradeProcessUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *			 #upgradeProcess(int, List)} ()}
+	 *             #upgradeProcess(int, List)} ()}
 	 */
 	@Deprecated
 	public static boolean upgradeProcess(

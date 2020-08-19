@@ -40,7 +40,9 @@ import java.util.Set;
 public class ResponsiveLayoutStructureUtil {
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnCssClass(RowStyledLayoutStructureItem, ColumnLayoutStructureItem)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnCssClass(RowStyledLayoutStructureItem,
+	 *             ColumnLayoutStructureItem)}
 	 */
 	@Deprecated
 	public static String getColumnCssClass(
@@ -183,7 +185,8 @@ public class ResponsiveLayoutStructureUtil {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getRowCssClass(RowStyledLayoutStructureItem)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getRowCssClass(RowStyledLayoutStructureItem)}
 	 */
 	@Deprecated
 	public static String getRowCssClass(

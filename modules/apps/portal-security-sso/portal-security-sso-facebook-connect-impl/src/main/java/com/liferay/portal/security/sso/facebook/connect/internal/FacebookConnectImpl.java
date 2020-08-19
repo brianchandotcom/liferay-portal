@@ -48,8 +48,8 @@ import org.osgi.service.component.annotations.Reference;
  * its methods statically.
  * </p>
  *
- * @author Wilson Man
- * @author Mika Koivisto
+ * @author     Wilson Man
+ * @author     Mika Koivisto
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Component(

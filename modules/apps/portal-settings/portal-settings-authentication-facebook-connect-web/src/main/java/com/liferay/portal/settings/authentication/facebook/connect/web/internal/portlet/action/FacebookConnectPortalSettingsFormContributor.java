@@ -30,8 +30,8 @@ import javax.portlet.PortletException;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Tomas Polesovsky
- * @author Stian Sigvartsen
+ * @author     Tomas Polesovsky
+ * @author     Stian Sigvartsen
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Component(immediate = true, service = PortalSettingsFormContributor.class)

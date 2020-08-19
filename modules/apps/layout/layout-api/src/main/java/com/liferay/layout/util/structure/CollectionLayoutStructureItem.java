@@ -15,8 +15,9 @@
 package com.liferay.layout.util.structure;
 
 /**
- * @deprecated As of Athanasius (7.3.x), replaced by {@link CollectionStyledLayoutStructureItem}
- * @author Eudaldo Alonso
+ * @author     Eudaldo Alonso
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ *             CollectionStyledLayoutStructureItem}
  */
 @Deprecated
 public class CollectionLayoutStructureItem

@@ -35,8 +35,8 @@ public class InvalidFilterException extends BadRequestException {
 	}
 
 	/**
-	 * Creates a new {@code InvalidFilterException} with a message and the throwable
-	 * of the exception.
+	 * Creates a new {@code InvalidFilterException} with a message and the
+	 * throwable of the exception.
 	 *
 	 * @param  msg the message
 	 * @param  throwable the throwable

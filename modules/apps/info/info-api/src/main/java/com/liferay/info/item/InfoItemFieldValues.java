@@ -99,7 +99,7 @@ public class InfoItemFieldValues {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 * #getInfoItemReference()}
+	 *             #getInfoItemReference()}
 	 */
 	@Deprecated
 	public InfoItemClassPKReference getInfoItemClassPKReference() {
@@ -188,7 +188,7 @@ public class InfoItemFieldValues {
 
 		/**
 		 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-		 * #infoItemReference(InfoItemReference)}
+		 *             #infoItemReference(InfoItemReference)}
 		 */
 		@Deprecated
 		public Builder infoItemClassPKReference(

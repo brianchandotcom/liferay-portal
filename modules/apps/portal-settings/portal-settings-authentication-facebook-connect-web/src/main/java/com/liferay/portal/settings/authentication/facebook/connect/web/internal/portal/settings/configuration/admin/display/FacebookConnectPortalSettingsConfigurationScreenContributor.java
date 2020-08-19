@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Drew Brokke
+ * @author     Drew Brokke
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Component(service = PortalSettingsConfigurationScreenContributor.class)

@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Stian Sigvartsen
+ * @author     Stian Sigvartsen
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Component(

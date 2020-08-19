@@ -101,9 +101,9 @@ import org.osgi.service.component.annotations.Reference;
  * </li>
  * </ol>
  *
- * @author Wilson Man
- * @author Sergio González
- * @author Mika Koivisto
+ * @author     Wilson Man
+ * @author     Sergio González
+ * @author     Mika Koivisto
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Component(

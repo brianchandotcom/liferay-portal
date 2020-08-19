@@ -15,8 +15,7 @@
 package com.liferay.info.item;
 
 /**
- * @author Jorge Ferrer
- *
+ * @author     Jorge Ferrer
  * @deprecated As of Athanasius (7.3.x)
  */
 @Deprecated

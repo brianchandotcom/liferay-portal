@@ -67,7 +67,8 @@ public class MultiMatchQueryImpl
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getFieldsBoosts()}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getFieldsBoosts()}
 	 */
 	@Deprecated
 	@Override
@@ -141,7 +142,8 @@ public class MultiMatchQueryImpl
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #isFieldBoostsEmpty()}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #isFieldBoostsEmpty()}
 	 */
 	@Deprecated
 	@Override

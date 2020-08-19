@@ -2414,6 +2414,7 @@ public interface UserLocalService
 	 * @param loginIP the IP address the user logged in from
 	 * @return the user
 	 */
+	@CTAware(onProduction = true)
 	public User updateLastLogin(long userId, String loginIP)
 		throws PortalException;
 

@@ -20,7 +20,7 @@ export default function Diff({diff, onClose, version}) {
 	return (
 		<ClayCard className="diff-container-column">
 			{version && (
-				<ClayCard.Row className="card-row-padded diff-version-filter">
+				<ClayCard.Row className="card-body diff-version-filter">
 					<div className="autofit-row">
 						<div className="autofit-col autofit-col-expand">
 							<ClayCard.Description displayType="title">
@@ -43,14 +43,14 @@ export default function Diff({diff, onClose, version}) {
 				</ClayCard.Row>
 			)}
 
-			<ClayCard.Row className="card-row-padded diff-container">
+			<ClayCard.Row className="card-body diff-container">
 				<div
 					className="taglib-diff-html"
 					dangerouslySetInnerHTML={{__html: diff}}
 				/>
 			</ClayCard.Row>
 
-			<ClayCard.Row className="card-row-padded taglib-diff-html">
+			<ClayCard.Row className="card-body taglib-diff-html">
 				<span className="diff-html-added legend-item">
 					{Liferay.Language.get('added')}
 				</span>

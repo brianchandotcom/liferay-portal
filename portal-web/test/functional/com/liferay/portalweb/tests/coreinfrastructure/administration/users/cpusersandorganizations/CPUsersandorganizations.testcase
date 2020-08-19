@@ -473,6 +473,7 @@ definition {
 			suborgType = "Organization");
 	}
 
+	@description = "This is a use case for LPS-119168."
 	@priority = "5"
 	test AddUser {
 		property testray.component.names = "Training";
@@ -500,6 +501,8 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}
 
 	@description = "This is a use case for LPS-95340."

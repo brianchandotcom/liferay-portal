@@ -59,7 +59,7 @@ public class LiferayWorkspaceYarnPlugin extends YarnPlugin {
 		_configureTaskYarnInstallProvider(
 			project, yarnInstallTaskProvider, setUpYarnTaskProvider);
 
-		project.subprojects(
+		project.allprojects(
 			new Action<Project>() {
 
 				@Override

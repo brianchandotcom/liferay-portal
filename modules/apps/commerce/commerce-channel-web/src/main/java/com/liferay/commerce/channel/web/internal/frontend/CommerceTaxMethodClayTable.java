@@ -16,23 +16,23 @@ package com.liferay.commerce.channel.web.internal.frontend;
 
 import com.liferay.commerce.channel.web.internal.frontend.util.CommerceChannelClayTableUtil;
 import com.liferay.commerce.channel.web.internal.model.TaxMethod;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.tax.CommerceTaxEngine;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
 import com.liferay.commerce.util.CommerceTaxEngineRegistry;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -61,18 +61,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.data.provider.key=" + CommerceTaxMethodClayTable.NAME,
-		"commerce.data.set.display.name=" + CommerceTaxMethodClayTable.NAME
+		"clay.data.provider.key=" + CommerceTaxMethodClayTable.NAME,
+		"clay.data.set.display.name=" + CommerceTaxMethodClayTable.NAME
 	},
 	service = {
-		ClayDataSetActionProvider.class, ClayDataSetDisplayView.class,
-		CommerceDataSetDataProvider.class
+		ClayDataSetActionProvider.class, ClayDataSetDataProvider.class,
+		ClayDataSetDisplayView.class
 	}
 )
 public class CommerceTaxMethodClayTable
-	extends ClayTableDataSetDisplayView
-	implements ClayDataSetActionProvider,
-			   CommerceDataSetDataProvider<TaxMethod> {
+	extends BaseTableClayDataSetDisplayView
+	implements ClayDataSetActionProvider, ClayDataSetDataProvider<TaxMethod> {
 
 	public static final String NAME = "tax-methods";
 
@@ -118,31 +117,23 @@ public class CommerceTaxMethodClayTable
 	}
 
 	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		Map<String, CommerceTaxEngine> commerceTaxEngines =
-			_commerceTaxEngineRegistry.getCommerceTaxEngines();
-
-		return commerceTaxEngines.size();
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField nameField = clayTableSchemaBuilder.addField(
-			"name", "name");
+		ClayTableSchemaField nameField =
+			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
 		nameField.setContentRenderer("actionLink");
 
-		clayTableSchemaBuilder.addField("description", "description");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"description", "description");
 
-		clayTableSchemaBuilder.addField("taxEngine", "tax-engine");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"taxEngine", "tax-engine");
 
-		ClayTableSchemaField statusField = clayTableSchemaBuilder.addField(
-			"status", "status");
+		ClayTableSchemaField statusField =
+			clayTableSchemaBuilder.addClayTableSchemaField("status", "status");
 
 		statusField.setContentRenderer("label");
 
@@ -200,6 +191,17 @@ public class CommerceTaxMethodClayTable
 		}
 
 		return taxMethods;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		Map<String, CommerceTaxEngine> commerceTaxEngines =
+			_commerceTaxEngineRegistry.getCommerceTaxEngines();
+
+		return commerceTaxEngines.size();
 	}
 
 	private boolean _isActive(CommerceTaxMethod commerceTaxMethod) {

@@ -15,9 +15,6 @@
 package com.liferay.commerce.pricing.web.internal.frontend;
 
 import com.liferay.commerce.currency.model.CommerceMoney;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
@@ -25,6 +22,9 @@ import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.commerce.pricing.web.internal.model.TierPriceEntry;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,24 +53,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_TIER_PRICE_ENTRIES,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_TIER_PRICE_ENTRIES,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceTierPriceEntryDataSetDataProvider
-	implements CommerceDataSetDataProvider<TierPriceEntry> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commercePriceEntryId = ParamUtil.getLong(
-			httpServletRequest, "commercePriceEntryId");
-
-		return _commerceTierPriceEntryService.
-			searchCommerceTierPriceEntriesCount(
-				_portal.getCompanyId(httpServletRequest), commercePriceEntryId,
-				filter.getKeywords());
-	}
+	implements ClayDataSetDataProvider<TierPriceEntry> {
 
 	@Override
 	public List<TierPriceEntry> getItems(
@@ -125,6 +112,20 @@ public class CommerceTierPriceEntryDataSetDataProvider
 		}
 
 		return tierPriceEntries;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commercePriceEntryId = ParamUtil.getLong(
+			httpServletRequest, "commercePriceEntryId");
+
+		return _commerceTierPriceEntryService.
+			searchCommerceTierPriceEntriesCount(
+				_portal.getCompanyId(httpServletRequest), commercePriceEntryId,
+				filter.getKeywords());
 	}
 
 	private String _getDiscountLevels(

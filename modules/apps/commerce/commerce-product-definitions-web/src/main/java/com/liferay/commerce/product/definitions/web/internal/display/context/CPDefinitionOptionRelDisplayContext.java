@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
-import com.liferay.commerce.frontend.ClayCreationMenu;
-import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
 import com.liferay.commerce.product.configuration.CPOptionConfiguration;
 import com.liferay.commerce.product.constants.CPConstants;
@@ -27,6 +25,8 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -80,29 +80,6 @@ public class CPDefinitionOptionRelDisplayContext
 		_itemSelector = itemSelector;
 	}
 
-	public ClayCreationMenu getClayCreationMenu() throws Exception {
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
-
-		RenderURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "editProductDefinitionOptionValueRel");
-		portletURL.setParameter(
-			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
-		portletURL.setParameter(
-			"cpDefinitionOptionRelId",
-			String.valueOf(getCPDefinitionOptionRelId()));
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		clayCreationMenu.addClayCreationMenuActionItem(
-			new ClayCreationMenuActionItem(
-				portletURL.toString(),
-				LanguageUtil.get(cpRequestHelper.getRequest(), "add-value"),
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE));
-
-		return clayCreationMenu;
-	}
-
 	public CPDefinitionOptionRel getCPDefinitionOptionRel()
 		throws PortalException {
 
@@ -125,6 +102,31 @@ public class CPDefinitionOptionRelDisplayContext
 		}
 
 		return cpDefinitionOptionRel.getCPDefinitionOptionRelId();
+	}
+
+	public CreationMenu getCreationMenu() throws Exception {
+		RenderURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editProductDefinitionOptionValueRel");
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
+		portletURL.setParameter(
+			"cpDefinitionOptionRelId",
+			String.valueOf(getCPDefinitionOptionRelId()));
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setTarget(
+					ClayMenuActionItem.
+						CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						cpRequestHelper.getRequest(), "add-value"));
+				dropdownItem.setHref(portletURL.toString());
+			}
+		).build();
 	}
 
 	public String getDDMFormFieldTypeLabel(

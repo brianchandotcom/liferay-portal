@@ -14,11 +14,12 @@
 
 package com.liferay.commerce.notification.web.internal.display.context;
 
-import com.liferay.commerce.frontend.ClayCreationMenu;
 import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.notification.web.internal.display.context.util.CommerceNotificationsRequestHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -85,19 +86,19 @@ public class CommerceNotificationQueueEntriesDisplayContext {
 		return commerceChannel.getCommerceChannelId();
 	}
 
-	public ClayCreationMenu getNotificationTemplateClayCreationMenu()
-		throws Exception {
-
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
-
-		clayCreationMenu.addClayCreationMenuActionItem(
-			getAddNotificationTemplateURL(),
-			LanguageUtil.get(
-				_commerceNotificationsRequestHelper.getRequest(),
-				"add-notification-template"),
-			ClayCreationMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
-
-		return clayCreationMenu;
+	public CreationMenu getNotificationTemplateCreationMenu() throws Exception {
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(getAddNotificationTemplateURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_commerceNotificationsRequestHelper.getRequest(),
+						"add-notification-template"));
+				dropdownItem.setTarget(
+					ClayCreationMenuActionItem.
+						CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
+			}
+		).build();
 	}
 
 	public PortletURL getPortletURL() {

@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.pricing.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,37 +30,40 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LISTS,
+	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LISTS,
 	service = ClayDataSetDisplayView.class
 )
 public class CommercePriceListClayTableDataSetDisplayView
-	extends ClayTableDataSetDisplayView {
+	extends BaseTableClayDataSetDisplayView {
 
 	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField nameField = clayTableSchemaBuilder.addField(
-			"name", "name");
+		ClayTableSchemaField nameField =
+			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
 		nameField.setContentRenderer("actionLink");
 		nameField.setSortable(true);
 
-		clayTableSchemaBuilder.addField("author", "author");
+		clayTableSchemaBuilder.addClayTableSchemaField("author", "author");
 
-		clayTableSchemaBuilder.addField("catalogName", "catalog");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"catalogName", "catalog");
 
-		clayTableSchemaBuilder.addField("priority", "priority");
+		clayTableSchemaBuilder.addClayTableSchemaField("priority", "priority");
 
 		ClayTableSchemaField dateclayTableSchemaField =
-			clayTableSchemaBuilder.addField("createDate", "create-date");
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"createDate", "create-date");
 
 		dateclayTableSchemaField.setContentRenderer("date");
 		dateclayTableSchemaField.setSortable(true);
 
 		ClayTableSchemaField clayTableSchemaField =
-			clayTableSchemaBuilder.addField("workflowStatusInfo", "status");
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"workflowStatusInfo", "status");
 
 		clayTableSchemaField.setContentRenderer("status");
 

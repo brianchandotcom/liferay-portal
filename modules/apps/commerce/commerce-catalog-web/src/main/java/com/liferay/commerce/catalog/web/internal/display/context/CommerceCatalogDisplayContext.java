@@ -16,8 +16,6 @@ package com.liferay.commerce.catalog.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.frontend.ClayCreationMenu;
-import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.media.CommerceCatalogDefaultImage;
@@ -32,6 +30,7 @@ import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -136,22 +135,6 @@ public class CommerceCatalogDisplayContext {
 		return baseCommercePriceList.getCommercePriceListId();
 	}
 
-	public ClayCreationMenu getClayCreationMenu() throws Exception {
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
-
-		if (hasAddCatalogPermission()) {
-			clayCreationMenu.addClayCreationMenuActionItem(
-				new ClayCreationMenuActionItem(
-					getAddCommerceCatalogRenderURL(),
-					LanguageUtil.get(
-						cpRequestHelper.getRequest(), "add-catalog"),
-					ClayMenuActionItem.
-						CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE));
-		}
-
-		return clayCreationMenu;
-	}
-
 	public CommerceCatalog getCommerceCatalog() throws PortalException {
 		long commerceCatalogId = ParamUtil.getLong(
 			cpRequestHelper.getRequest(), "commerceCatalogId");
@@ -179,6 +162,25 @@ public class CommerceCatalogDisplayContext {
 		return _commerceCurrencyLocalService.getCommerceCurrencies(
 			cpRequestHelper.getCompanyId(), true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
+	}
+
+	public CreationMenu getCreationMenu() throws Exception {
+		CreationMenu creationMenu = new CreationMenu();
+
+		if (hasAddCatalogPermission()) {
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setLabel(
+						LanguageUtil.get(
+							cpRequestHelper.getRequest(), "add-catalog"));
+					dropdownItem.setHref(getAddCommerceCatalogRenderURL());
+					dropdownItem.setTarget(
+						ClayMenuActionItem.
+							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+				});
+		}
+
+		return creationMenu;
 	}
 
 	public FileEntry getDefaultFileEntry() throws PortalException {

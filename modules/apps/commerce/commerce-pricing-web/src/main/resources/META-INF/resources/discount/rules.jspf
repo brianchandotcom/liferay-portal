@@ -34,10 +34,10 @@
 					</div>
 				</aui:fieldset>
 
-				<commerce-ui:headless-dataset-display
-					apiUrl="<%= commerceDiscountDisplayContext.getDiscountRulesApiUrl() %>"
-					clayCreationMenu="<%= commerceDiscountDisplayContext.getClayCreationDiscountRuleMenu() %>"
-					clayHeadlessDataSetActionTemplates="<%= commerceDiscountDisplayContext.getClayHeadlessDataSetActionDiscountRulesTemplates() %>"
+				<clay:headless-data-set-display
+					apiURL="<%= commerceDiscountDisplayContext.getDiscountRulesApiURL() %>"
+					clayDataSetActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountRulesClayDataSetActionDropdownItem() %>"
+					creationMenu="<%= commerceDiscountDisplayContext.getDiscountRuleCreationMenu() %>"
 					formId="fm"
 					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_RULES %>"
 					itemsPerPage="<%= 10 %>"

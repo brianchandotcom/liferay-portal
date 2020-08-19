@@ -14,12 +14,12 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,32 +29,33 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.set.display.name=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_LINKS,
+	property = "clay.data.set.display.name=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_LINKS,
 	service = ClayDataSetDisplayView.class
 )
 public class CommerceProductDefinitionLinkClayTableDataSetDisplayView
-	extends ClayTableDataSetDisplayView {
+	extends BaseTableClayDataSetDisplayView {
 
 	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField imageField = clayTableSchemaBuilder.addField(
-			"image", "");
+		ClayTableSchemaField imageField =
+			clayTableSchemaBuilder.addClayTableSchemaField("image", "");
 
 		imageField.setContentRenderer("image");
 
-		ClayTableSchemaField nameField = clayTableSchemaBuilder.addField(
-			"name", "name");
+		ClayTableSchemaField nameField =
+			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
 		nameField.setContentRenderer("actionLink");
 
-		clayTableSchemaBuilder.addField("type", "type");
+		clayTableSchemaBuilder.addClayTableSchemaField("type", "type");
 
-		clayTableSchemaBuilder.addField("order", "order");
+		clayTableSchemaBuilder.addClayTableSchemaField("order", "order");
 
-		clayTableSchemaBuilder.addField("createDate", "create-date");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"createDate", "create-date");
 
 		return clayTableSchemaBuilder.build();
 	}

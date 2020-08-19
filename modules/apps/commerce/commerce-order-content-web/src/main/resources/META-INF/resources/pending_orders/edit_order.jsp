@@ -309,7 +309,7 @@ List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getB
 		contextParams.put("commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId()));
 		%>
 
-		<commerce-ui:dataset-display
+		<clay:data-set-display
 			contextParams="<%= contextParams %>"
 			dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDER_ITEMS %>"
 			id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDER_ITEMS %>"

@@ -36,9 +36,9 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 			bodyClasses="p-0"
 			title='<%= LanguageUtil.get(request, "images") %>'
 		>
-			<commerce-ui:dataset-display
-				clayCreationMenu="<%= cpAttachmentFileEntriesDisplayContext.getClayCreationMenu(CPAttachmentFileEntryConstants.TYPE_IMAGE) %>"
+			<clay:data-set-display
 				contextParams="<%= contextParams %>"
+				creationMenu="<%= cpAttachmentFileEntriesDisplayContext.getCreationMenu(CPAttachmentFileEntryConstants.TYPE_IMAGE) %>"
 				dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_IMAGES %>"
 				formId="fm"
 				id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_IMAGES %>"
@@ -53,9 +53,9 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 			bodyClasses="p-0"
 			title='<%= LanguageUtil.get(request, "attachments") %>'
 		>
-			<commerce-ui:dataset-display
-				clayCreationMenu="<%= cpAttachmentFileEntriesDisplayContext.getClayCreationMenu(CPAttachmentFileEntryConstants.TYPE_OTHER) %>"
+			<clay:data-set-display
 				contextParams="<%= contextParams %>"
+				creationMenu="<%= cpAttachmentFileEntriesDisplayContext.getCreationMenu(CPAttachmentFileEntryConstants.TYPE_OTHER) %>"
 				dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_ATTACHMENTS %>"
 				formId="fm"
 				id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_ATTACHMENTS %>"

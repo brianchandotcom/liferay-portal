@@ -31,10 +31,10 @@ CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePrice
 		<aui:input name="redirect" type="hidden" value="<%= currentURLObj.toString() %>" />
 		<aui:input name="deletePriceLists" type="hidden" />
 
-		<commerce-ui:headless-dataset-display
-			apiUrl="<%= commercePriceListDisplayContext.getPriceListsApiUrl(portletName) %>"
-			clayCreationMenu="<%= commercePriceListDisplayContext.getClayCreationPriceListMenu() %>"
-			clayHeadlessDataSetActionTemplates="<%= commercePriceListDisplayContext.getClayHeadlessDataSetActionPriceListTemplates() %>"
+		<clay:headless-data-set-display
+			apiURL="<%= commercePriceListDisplayContext.getPriceListsApiUrl(portletName) %>"
+			clayDataSetActionDropdownItems="<%= commercePriceListDisplayContext.getPriceListClayDataSetActionDropdownItems() %>"
+			creationMenu="<%= commercePriceListDisplayContext.getPriceListCreationMenu() %>"
 			formId="fm"
 			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LISTS %>"
 			itemsPerPage="<%= 10 %>"

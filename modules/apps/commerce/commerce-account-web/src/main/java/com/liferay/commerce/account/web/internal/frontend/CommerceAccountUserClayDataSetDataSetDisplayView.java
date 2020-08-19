@@ -20,16 +20,16 @@ import com.liferay.commerce.account.model.CommerceAccountUserRel;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.service.CommerceAccountUserRelService;
 import com.liferay.commerce.account.web.internal.model.Member;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -66,17 +66,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.data.provider.key=" + CommerceAccountUserClayDataSetDataSetDisplayView.NAME,
-		"commerce.data.set.display.name=" + CommerceAccountUserClayDataSetDataSetDisplayView.NAME
+		"clay.data.provider.key=" + CommerceAccountUserClayDataSetDataSetDisplayView.NAME,
+		"clay.data.set.display.name=" + CommerceAccountUserClayDataSetDataSetDisplayView.NAME
 	},
 	service = {
-		ClayDataSetActionProvider.class, ClayDataSetDisplayView.class,
-		CommerceDataSetDataProvider.class
+		ClayDataSetActionProvider.class, ClayDataSetDataProvider.class,
+		ClayDataSetDisplayView.class
 	}
 )
 public class CommerceAccountUserClayDataSetDataSetDisplayView
-	extends ClayTableDataSetDisplayView
-	implements ClayDataSetActionProvider, CommerceDataSetDataProvider<Member> {
+	extends BaseTableClayDataSetDisplayView
+	implements ClayDataSetActionProvider, ClayDataSetDataProvider<Member> {
 
 	public static final String NAME = "commerceAccountUsers";
 
@@ -129,26 +129,15 @@ public class CommerceAccountUserClayDataSetDataSetDisplayView
 	}
 
 	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commerceAccountId = ParamUtil.getLong(
-			httpServletRequest, "commerceAccountId");
-
-		return _commerceAccountUserRelService.getCommerceAccountUserRelsCount(
-			commerceAccountId);
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+			_clayTableSchemaBuilderFactory.create();
 
-		clayTableSchemaBuilder.addField("name", "name");
+		clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
-		clayTableSchemaBuilder.addField("roles", "roles");
+		clayTableSchemaBuilder.addClayTableSchemaField("roles", "roles");
 
-		clayTableSchemaBuilder.addField("email", "email");
+		clayTableSchemaBuilder.addClayTableSchemaField("email", "email");
 
 		return clayTableSchemaBuilder.build();
 	}
@@ -188,6 +177,18 @@ public class CommerceAccountUserClayDataSetDataSetDisplayView
 		}
 
 		return members;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commerceAccountId = ParamUtil.getLong(
+			httpServletRequest, "commerceAccountId");
+
+		return _commerceAccountUserRelService.getCommerceAccountUserRelsCount(
+			commerceAccountId);
 	}
 
 	protected String getUserRoles(User user, long groupId)

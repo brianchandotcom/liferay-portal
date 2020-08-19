@@ -28,9 +28,9 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 	bodyClasses="p-0"
 	title='<%= LanguageUtil.get(request, "incoming") %>'
 >
-	<commerce-ui:dataset-display
-		clayCreationMenu="<%= commerceInventoryDisplayContext.getReplenishmentClayCreationMenu() %>"
+	<clay:data-set-display
 		contextParams="<%= contextParams %>"
+		creationMenu="<%= commerceInventoryDisplayContext.getReplenishmentCreationMenu() %>"
 		dataProviderKey="<%= CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_REPLENISHMENT %>"
 		id="<%= CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_REPLENISHMENT %>"
 		itemsPerPage="<%= 10 %>"

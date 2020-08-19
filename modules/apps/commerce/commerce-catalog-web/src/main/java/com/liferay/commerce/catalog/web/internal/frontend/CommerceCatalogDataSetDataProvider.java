@@ -16,11 +16,11 @@ package com.liferay.commerce.catalog.web.internal.frontend;
 
 import com.liferay.commerce.catalog.web.internal.constants.CommerceCatalogDataSetConstants;
 import com.liferay.commerce.catalog.web.internal.model.Catalog;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -40,23 +40,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOGS,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOGS,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceCatalogDataSetDataProvider
-	implements CommerceDataSetDataProvider<Catalog> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return _commerceCatalogService.searchCommerceCatalogsCount(
-			themeDisplay.getCompanyId(), filter.getKeywords());
-	}
+	implements ClayDataSetDataProvider<Catalog> {
 
 	@Override
 	public List<Catalog> getItems(
@@ -86,6 +74,19 @@ public class CommerceCatalogDataSetDataProvider
 		}
 
 		return catalogs;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return _commerceCatalogService.searchCommerceCatalogsCount(
+			themeDisplay.getCompanyId(), filter.getKeywords());
 	}
 
 	@Reference

@@ -17,10 +17,7 @@ package com.liferay.commerce.pricing.web.internal.display.context;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.comparator.CommerceCurrencyPriorityComparator;
-import com.liferay.commerce.frontend.ClayCreationMenu;
-import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
-import com.liferay.commerce.frontend.clay.data.set.ClayHeadlessDataSetActionTemplate;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.price.list.constants.CommercePriceListActionKeys;
 import com.liferay.commerce.price.list.model.CommercePriceList;
@@ -34,6 +31,8 @@ import com.liferay.commerce.pricing.web.internal.servlet.taglib.ui.CommercePrice
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
+import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -106,109 +105,6 @@ public class CommercePriceListDisplayContext
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();
-	}
-
-	public ClayCreationMenu getClayCreationPriceListMenu() throws Exception {
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
-
-		if (hasPermission(
-				CommercePriceListActionKeys.ADD_COMMERCE_PRICE_LIST)) {
-
-			clayCreationMenu.addClayCreationMenuActionItem(
-				new ClayCreationMenuActionItem(
-					getAddCommercePriceListRenderURL(),
-					LanguageUtil.get(
-						httpServletRequest, "create-new-price-list"),
-					ClayMenuActionItem.
-						CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE));
-		}
-
-		return clayCreationMenu;
-	}
-
-	public List<ClayHeadlessDataSetActionTemplate>
-			getClayHeadlessDataSetActionPriceListTemplates()
-		throws PortalException {
-
-		RenderResponse renderResponse =
-			commercePricingRequestHelper.getRenderResponse();
-
-		RenderURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "editCommercePriceList");
-		portletURL.setParameter(
-			"redirect", commercePricingRequestHelper.getCurrentURL());
-		portletURL.setParameter("commercePriceListId", "{id}");
-		portletURL.setParameter(
-			"screenNavigationCategoryKey",
-			CommercePriceListScreenNavigationConstants.CATEGORY_KEY_DETAILS);
-
-		List<ClayHeadlessDataSetActionTemplate>
-			clayHeadlessDataSetActionTemplates =
-				getClayHeadlessDataSetActionTemplates(
-					portletURL.toString(), false);
-
-		clayHeadlessDataSetActionTemplates.add(
-			new ClayHeadlessDataSetActionTemplate(
-				_getManagePriceListPermissionsURL(), null, "permissions",
-				LanguageUtil.get(httpServletRequest, "permissions"), "get",
-				"permissions",
-				ClayMenuActionItem.
-					CLAY_MENU_ACTION_ITEM_TARGET_MODAL_PERMISSIONS));
-
-		return clayHeadlessDataSetActionTemplates;
-	}
-
-	public List<ClayHeadlessDataSetActionTemplate>
-			getClayHeadlessDataSetActionPriceModifierCategoryTemplates()
-		throws PortalException {
-
-		List<ClayHeadlessDataSetActionTemplate>
-			clayHeadlessDataSetActionTemplates = new ArrayList<>();
-
-		clayHeadlessDataSetActionTemplates.add(
-			new ClayHeadlessDataSetActionTemplate(
-				null, "trash", "delete",
-				LanguageUtil.get(httpServletRequest, "delete"), "delete",
-				"delete",
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
-
-		return clayHeadlessDataSetActionTemplates;
-	}
-
-	public List<ClayHeadlessDataSetActionTemplate>
-			getClayHeadlessDataSetActionPriceModifierCPDefinitionTemplates()
-		throws PortalException {
-
-		List<ClayHeadlessDataSetActionTemplate>
-			clayHeadlessDataSetActionTemplates = new ArrayList<>();
-
-		clayHeadlessDataSetActionTemplates.add(
-			new ClayHeadlessDataSetActionTemplate(
-				null, "trash", "delete",
-				LanguageUtil.get(httpServletRequest, "delete"), "delete",
-				"delete",
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
-
-		return clayHeadlessDataSetActionTemplates;
-	}
-
-	public List<ClayHeadlessDataSetActionTemplate>
-			getClayHeadlessDataSetActionPriceModifierPricingClassTemplates()
-		throws PortalException {
-
-		List<ClayHeadlessDataSetActionTemplate>
-			clayHeadlessDataSetActionTemplates = new ArrayList<>();
-
-		clayHeadlessDataSetActionTemplates.add(
-			new ClayHeadlessDataSetActionTemplate(
-				null, "trash", "delete",
-				LanguageUtil.get(httpServletRequest, "delete"), "delete",
-				"delete",
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
-
-		return clayHeadlessDataSetActionTemplates;
 	}
 
 	public List<CommerceCatalog> getCommerceCatalogs() throws PortalException {
@@ -361,6 +257,59 @@ public class CommercePriceListDisplayContext
 		return commercePriceList.getParentCommercePriceListId();
 	}
 
+	public List<ClayDataSetActionDropdownItem>
+			getPriceListClayDataSetActionDropdownItems()
+		throws PortalException {
+
+		RenderResponse renderResponse =
+			commercePricingRequestHelper.getRenderResponse();
+
+		RenderURL portletURL = renderResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editCommercePriceList");
+		portletURL.setParameter(
+			"redirect", commercePricingRequestHelper.getCurrentURL());
+		portletURL.setParameter("commercePriceListId", "{id}");
+		portletURL.setParameter(
+			"screenNavigationCategoryKey",
+			CommercePriceListScreenNavigationConstants.CATEGORY_KEY_DETAILS);
+
+		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
+			getClayDataSetActionDropdownItems(portletURL.toString(), false);
+
+		clayDataSetActionDropdownItems.add(
+			new ClayDataSetActionDropdownItem(
+				_getManagePriceListPermissionsURL(), null, "permissions",
+				LanguageUtil.get(httpServletRequest, "permissions"), "get",
+				"permissions",
+				ClayMenuActionItem.
+					CLAY_MENU_ACTION_ITEM_TARGET_MODAL_PERMISSIONS));
+
+		return clayDataSetActionDropdownItems;
+	}
+
+	public CreationMenu getPriceListCreationMenu() throws Exception {
+		CreationMenu creationMenu = new CreationMenu();
+
+		if (hasPermission(
+				CommercePriceListActionKeys.ADD_COMMERCE_PRICE_LIST)) {
+
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setLabel(
+						LanguageUtil.get(
+							httpServletRequest, "create-new-price-list"));
+					dropdownItem.setHref(getAddCommercePriceListRenderURL());
+					dropdownItem.setTarget(
+						ClayMenuActionItem.
+							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+				});
+		}
+
+		return creationMenu;
+	}
+
 	public String getPriceListsApiUrl(String portletName) {
 		StringBundler filterSB = new StringBundler(4);
 
@@ -387,10 +336,61 @@ public class CommercePriceListDisplayContext
 				"/price-modifier-categories?nestedFields=category";
 	}
 
+	public List<ClayDataSetActionDropdownItem>
+			getPriceModifierCategoryClayDataSetActionDropdownItems()
+		throws PortalException {
+
+		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
+			new ArrayList<>();
+
+		clayDataSetActionDropdownItems.add(
+			new ClayDataSetActionDropdownItem(
+				null, "trash", "delete",
+				LanguageUtil.get(httpServletRequest, "delete"), "delete",
+				"delete",
+				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
+
+		return clayDataSetActionDropdownItems;
+	}
+
 	public String getPriceModifierCPDefinitionApiUrl() throws PortalException {
 		return "/o/headless-commerce-admin-pricing/v2.0/price-modifiers/" +
 			getCommercePriceModifierId() +
 				"/price-modifier-products?nestedFields=product";
+	}
+
+	public List<ClayDataSetActionDropdownItem>
+			getPriceModifierCPDefinitionClayDataSetActionDropdownItems()
+		throws PortalException {
+
+		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItem =
+			new ArrayList<>();
+
+		clayDataSetActionDropdownItem.add(
+			new ClayDataSetActionDropdownItem(
+				null, "trash", "delete",
+				LanguageUtil.get(httpServletRequest, "delete"), "delete",
+				"delete",
+				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
+
+		return clayDataSetActionDropdownItem;
+	}
+
+	public List<ClayDataSetActionDropdownItem>
+			getPriceModifierPricingClassClayDataSetActionDropdownItems()
+		throws PortalException {
+
+		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
+			new ArrayList<>();
+
+		clayDataSetActionDropdownItems.add(
+			new ClayDataSetActionDropdownItem(
+				null, "trash", "delete",
+				LanguageUtil.get(httpServletRequest, "delete"), "delete",
+				"delete",
+				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
+
+		return clayDataSetActionDropdownItems;
 	}
 
 	public String getPriceModifierPricingClassesApiUrl()
@@ -401,21 +401,24 @@ public class CommercePriceListDisplayContext
 				"/price-modifier-product-groups?nestedFields=productGroup";
 	}
 
-	public ClayCreationMenu getPriceModifiersClayCreationMenu()
-		throws Exception {
-
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
+	public CreationMenu getPriceModifiersCreationMenu() throws Exception {
+		CreationMenu creationMenu = new CreationMenu();
 
 		if (hasPermission(getCommercePriceListId(), ActionKeys.UPDATE)) {
-			clayCreationMenu.addClayCreationMenuActionItem(
-				new ClayCreationMenuActionItem(
-					getAddCommercePriceModifierRenderURL(),
-					LanguageUtil.get(httpServletRequest, "add-price-modifier"),
-					ClayMenuActionItem.
-						CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE));
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setLabel(
+						LanguageUtil.get(
+							httpServletRequest, "add-price-modifier"));
+					dropdownItem.setHref(
+						getAddCommercePriceModifierRenderURL());
+					dropdownItem.setTarget(
+						ClayMenuActionItem.
+							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+				});
 		}
 
-		return clayCreationMenu;
+		return creationMenu;
 	}
 
 	public boolean hasCustomAttributesAvailable(String className, long classPK)

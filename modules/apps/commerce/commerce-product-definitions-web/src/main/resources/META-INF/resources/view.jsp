@@ -39,10 +39,10 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 		<aui:input name="deleteCPDefinitionIds" type="hidden" />
 
-		<commerce-ui:headless-dataset-display
-			apiUrl="/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=skus,catalog"
-			clayCreationMenu="<%= cpDefinitionsDisplayContext.getClayCreationMenu() %>"
-			clayHeadlessDataSetActionTemplates="<%= cpDefinitionsDisplayContext.getClayHeadlessDataSetActionTemplates() %>"
+		<clay:headless-data-set-display
+			apiURL="/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=skus,catalog"
+			clayDataSetActionDropdownItems="<%= cpDefinitionsDisplayContext.getClayDataSetActionDropdownItems() %>"
+			creationMenu="<%= cpDefinitionsDisplayContext.getCreationMenu() %>"
 			formId="fm"
 			id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITIONS %>"
 			itemsPerPage="<%= 10 %>"

@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.asset.categories.web.internal.display.context;
 
-import com.liferay.commerce.frontend.ClayCreationMenu;
 import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
@@ -22,6 +21,8 @@ import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDisplayLayoutService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -87,17 +88,6 @@ public class CategoryCPDisplayLayoutDisplayContext
 		return portletURL.toString();
 	}
 
-	public ClayCreationMenu getClayCreationMenu() throws Exception {
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
-
-		clayCreationMenu.addClayCreationMenuActionItem(
-			getAddCategoryDisplayPageURL(),
-			LanguageUtil.get(httpServletRequest, "add-display-layout"),
-			ClayCreationMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
-
-		return clayCreationMenu;
-	}
-
 	public CommerceChannel getCommerceChannel() {
 		long commerceChannelId = ParamUtil.getLong(
 			httpServletRequest, "commerceChannelId");
@@ -128,6 +118,19 @@ public class CategoryCPDisplayLayoutDisplayContext
 			cpDisplayLayoutId);
 
 		return _cpDisplayLayout;
+	}
+
+	public CreationMenu getCreationMenu() throws Exception {
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setTarget(
+					ClayCreationMenuActionItem.
+						CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "add-display-layout"));
+				dropdownItem.setHref(getAddCategoryDisplayPageURL());
+			}
+		).build();
 	}
 
 	public String getItemSelectorUrl(RenderRequest renderRequest)

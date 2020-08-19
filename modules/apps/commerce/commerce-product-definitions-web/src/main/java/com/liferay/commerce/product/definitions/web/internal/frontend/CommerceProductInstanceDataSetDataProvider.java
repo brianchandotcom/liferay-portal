@@ -17,10 +17,7 @@ package com.liferay.commerce.product.definitions.web.internal.frontend;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
 import com.liferay.commerce.frontend.DefaultFilterImpl;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
@@ -32,6 +29,9 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.JsonHelper;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -62,37 +62,13 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_ALL_PRODUCT_INSTANCES,
-		"commerce.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_INSTANCES
+		"clay.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_ALL_PRODUCT_INSTANCES,
+		"clay.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_INSTANCES
 	},
-	service = CommerceDataSetDataProvider.class
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceProductInstanceDataSetDataProvider
-	implements CommerceDataSetDataProvider<Sku> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		DefaultFilterImpl defaultFilterImpl = (DefaultFilterImpl)filter;
-
-		String keywords = defaultFilterImpl.getKeywords();
-
-		long cpDefinitionId = ParamUtil.getLong(
-			httpServletRequest, "cpDefinitionId");
-
-		if (Validator.isNotNull(keywords) || (cpDefinitionId == 0)) {
-			BaseModelSearchResult<CPInstance> baseModelSearchResult =
-				_getBaseModelSearchResult(
-					_portal.getCompanyId(httpServletRequest), cpDefinitionId,
-					keywords, null);
-
-			return baseModelSearchResult.getLength();
-		}
-
-		return _cpInstanceService.getCPDefinitionInstancesCount(
-			cpDefinitionId, WorkflowConstants.STATUS_ANY);
-	}
+	implements ClayDataSetDataProvider<Sku> {
 
 	@Override
 	public List<Sku> getItems(
@@ -157,6 +133,31 @@ public class CommerceProductInstanceDataSetDataProvider
 		}
 
 		return skus;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		DefaultFilterImpl defaultFilterImpl = (DefaultFilterImpl)filter;
+
+		String keywords = defaultFilterImpl.getKeywords();
+
+		long cpDefinitionId = ParamUtil.getLong(
+			httpServletRequest, "cpDefinitionId");
+
+		if (Validator.isNotNull(keywords) || (cpDefinitionId == 0)) {
+			BaseModelSearchResult<CPInstance> baseModelSearchResult =
+				_getBaseModelSearchResult(
+					_portal.getCompanyId(httpServletRequest), cpDefinitionId,
+					keywords, null);
+
+			return baseModelSearchResult.getLength();
+		}
+
+		return _cpInstanceService.getCPDefinitionInstancesCount(
+			cpDefinitionId, WorkflowConstants.STATUS_ANY);
 	}
 
 	private String _formatPrice(CPInstance cpInstance, Locale locale)

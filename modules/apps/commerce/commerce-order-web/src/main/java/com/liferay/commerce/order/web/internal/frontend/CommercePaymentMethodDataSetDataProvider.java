@@ -14,9 +14,6 @@
 
 package com.liferay.commerce.order.web.internal.frontend;
 
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.model.ImageField;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.web.internal.model.PaymentMethod;
@@ -25,6 +22,9 @@ import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -45,25 +45,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PAYMENT_METHODS,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PAYMENT_METHODS,
+	service = ClayDataSetDataProvider.class
 )
 public class CommercePaymentMethodDataSetDataProvider
-	implements CommerceDataSetDataProvider<PaymentMethod> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commerceOrderId = ParamUtil.getLong(
-			httpServletRequest, "commerceOrderId");
-
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			commerceOrderId);
-
-		return _commercePaymentEngine.getCommercePaymentMethodGroupRelsCount(
-			commerceOrder.getGroupId());
-	}
+	implements ClayDataSetDataProvider<PaymentMethod> {
 
 	@Override
 	public List<PaymentMethod> getItems(
@@ -106,6 +92,21 @@ public class CommercePaymentMethodDataSetDataProvider
 		}
 
 		return paymentMethods;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commerceOrderId = ParamUtil.getLong(
+			httpServletRequest, "commerceOrderId");
+
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			commerceOrderId);
+
+		return _commercePaymentEngine.getCommercePaymentMethodGroupRelsCount(
+			commerceOrder.getGroupId());
 	}
 
 	private ImageField _getThumbnail(

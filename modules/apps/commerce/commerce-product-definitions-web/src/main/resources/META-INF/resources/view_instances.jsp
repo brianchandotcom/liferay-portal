@@ -41,7 +41,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 		<liferay-ui:error exception="<%= NoSuchSkuContributorCPDefinitionOptionRelException.class %>" message="there-are-no-options-set-as-sku-contributor" />
 
-		<commerce-ui:dataset-display
+		<clay:data-set-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
 					"cpDefinitionId", String.valueOf(cpInstanceDisplayContext.getCPDefinitionId())

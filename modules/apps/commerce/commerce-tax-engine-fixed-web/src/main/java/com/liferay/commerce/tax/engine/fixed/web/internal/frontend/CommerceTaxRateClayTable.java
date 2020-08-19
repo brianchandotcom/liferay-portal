@@ -19,17 +19,8 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.model.CommerceMoneyFactory;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
 import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -39,6 +30,15 @@ import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateService
 import com.liferay.commerce.tax.engine.fixed.web.internal.model.TaxRate;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodLocalService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -75,17 +75,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.data.provider.key=" + CommerceTaxRateClayTable.NAME,
-		"commerce.data.set.display.name=" + CommerceTaxRateClayTable.NAME
+		"clay.data.provider.key=" + CommerceTaxRateClayTable.NAME,
+		"clay.data.set.display.name=" + CommerceTaxRateClayTable.NAME
 	},
 	service = {
-		ClayDataSetActionProvider.class, ClayDataSetDisplayView.class,
-		CommerceDataSetDataProvider.class
+		ClayDataSetActionProvider.class, ClayDataSetDataProvider.class,
+		ClayDataSetDisplayView.class
 	}
 )
 public class CommerceTaxRateClayTable
-	extends ClayTableDataSetDisplayView
-	implements ClayDataSetActionProvider, CommerceDataSetDataProvider<TaxRate> {
+	extends BaseTableClayDataSetDisplayView
+	implements ClayDataSetActionProvider, ClayDataSetDataProvider<TaxRate> {
 
 	public static final String NAME = "tax-rates";
 
@@ -144,32 +144,16 @@ public class CommerceTaxRateClayTable
 	}
 
 	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commerceChannelId = ParamUtil.getLong(
-			httpServletRequest, "commerceChannelId");
-		long commerceTaxMethodId = ParamUtil.getLong(
-			httpServletRequest, "commerceTaxMethodId");
-
-		CommerceChannel commerceChannel =
-			_commerceChannelService.getCommerceChannel(commerceChannelId);
-
-		return _commerceTaxFixedRateService.getCommerceTaxFixedRatesCount(
-			commerceChannel.getGroupId(), commerceTaxMethodId);
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField nameField = clayTableSchemaBuilder.addField(
-			"name", "name");
+		ClayTableSchemaField nameField =
+			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
 		nameField.setContentRenderer("actionLink");
 
-		clayTableSchemaBuilder.addField("rate", "rate");
+		clayTableSchemaBuilder.addClayTableSchemaField("rate", "rate");
 
 		return clayTableSchemaBuilder.build();
 	}
@@ -226,6 +210,23 @@ public class CommerceTaxRateClayTable
 		}
 
 		return taxRates;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commerceChannelId = ParamUtil.getLong(
+			httpServletRequest, "commerceChannelId");
+		long commerceTaxMethodId = ParamUtil.getLong(
+			httpServletRequest, "commerceTaxMethodId");
+
+		CommerceChannel commerceChannel =
+			_commerceChannelService.getCommerceChannel(commerceChannelId);
+
+		return _commerceTaxFixedRateService.getCommerceTaxFixedRatesCount(
+			commerceChannel.getGroupId(), commerceTaxMethodId);
 	}
 
 	private String _getLocalizedRate(

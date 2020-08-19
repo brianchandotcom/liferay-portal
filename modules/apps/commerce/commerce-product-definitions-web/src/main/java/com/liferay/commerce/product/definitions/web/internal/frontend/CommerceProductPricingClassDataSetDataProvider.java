@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend;
 
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelService;
 import com.liferay.commerce.pricing.service.CommercePricingClassService;
 import com.liferay.commerce.product.definitions.web.internal.model.ProductPricingClass;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -44,22 +44,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_PRICING_CLASSES,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_PRICING_CLASSES,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceProductPricingClassDataSetDataProvider
-	implements CommerceDataSetDataProvider<ProductPricingClass> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long cpDefinitionId = ParamUtil.getLong(
-			httpServletRequest, "cpDefinitionId");
-
-		return _commercePricingClassService.getCommercePricingClassesCount(
-			cpDefinitionId, filter.getKeywords());
-	}
+	implements ClayDataSetDataProvider<ProductPricingClass> {
 
 	@Override
 	public List<ProductPricingClass> getItems(
@@ -102,6 +91,18 @@ public class CommerceProductPricingClassDataSetDataProvider
 		}
 
 		return productPricingClasses;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long cpDefinitionId = ParamUtil.getLong(
+			httpServletRequest, "cpDefinitionId");
+
+		return _commercePricingClassService.getCommercePricingClassesCount(
+			cpDefinitionId, filter.getKeywords());
 	}
 
 	@Reference

@@ -14,12 +14,12 @@
 
 package com.liferay.commerce.subscription.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,31 +30,31 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.set.display.name=" + CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_ORDER_ITEMS,
+	property = "clay.data.set.display.name=" + CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_ORDER_ITEMS,
 	service = ClayDataSetDisplayView.class
 )
 public class CommerceSubscriptionOrderItemClayTableDataSetDisplayView
-	extends ClayTableDataSetDisplayView {
+	extends BaseTableClayDataSetDisplayView {
 
 	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+			_clayTableSchemaBuilderFactory.create();
 
-		clayTableSchemaBuilder.addField("sku", "sku");
+		clayTableSchemaBuilder.addClayTableSchemaField("sku", "sku");
 
-		clayTableSchemaBuilder.addField("name", "name");
+		clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
-		ClayTableSchemaField priceField = clayTableSchemaBuilder.addField(
-			"price", "price");
+		ClayTableSchemaField priceField =
+			clayTableSchemaBuilder.addClayTableSchemaField("price", "price");
 
 		priceField.setContentRenderer("commerceTableCellSubscription");
 
-		clayTableSchemaBuilder.addField("discount", "discount");
+		clayTableSchemaBuilder.addClayTableSchemaField("discount", "discount");
 
-		clayTableSchemaBuilder.addField("quantity", "quantity");
+		clayTableSchemaBuilder.addClayTableSchemaField("quantity", "quantity");
 
-		clayTableSchemaBuilder.addField("total", "total");
+		clayTableSchemaBuilder.addClayTableSchemaField("total", "total");
 
 		return clayTableSchemaBuilder.build();
 	}

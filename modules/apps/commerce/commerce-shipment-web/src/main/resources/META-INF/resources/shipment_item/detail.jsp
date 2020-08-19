@@ -56,7 +56,7 @@ portletDisplay.setURLBack(redirect);
 
 		<hr class="mt-0" />
 
-		<commerce-ui:dataset-display
+		<clay:data-set-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
 					"commerceOrderItemId", String.valueOf(commerceOrderItem.getCommerceOrderItemId())

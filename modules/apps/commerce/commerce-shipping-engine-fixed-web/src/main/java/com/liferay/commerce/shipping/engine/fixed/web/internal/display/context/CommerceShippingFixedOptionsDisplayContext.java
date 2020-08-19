@@ -16,7 +16,6 @@ package com.liferay.commerce.shipping.engine.fixed.web.internal.display.context;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.frontend.ClayCreationMenu;
 import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.CommerceShippingMethodService;
@@ -25,6 +24,8 @@ import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOpt
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.commerce.shipping.engine.fixed.web.internal.FixedCommerceShippingEngine;
 import com.liferay.commerce.shipping.engine.fixed.web.internal.servlet.taglib.ui.CommerceShippingMethodFixedOptionsScreenNavigationEntry;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -77,20 +78,6 @@ public class CommerceShippingFixedOptionsDisplayContext
 		return portletURL.toString();
 	}
 
-	public ClayCreationMenu getClayCreationMenu() throws Exception {
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		clayCreationMenu.addClayCreationMenuActionItem(
-			getAddShippingFixedOptionURL(),
-			LanguageUtil.get(themeDisplay.getLocale(), "add-shipping-option"),
-			ClayCreationMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
-
-		return clayCreationMenu;
-	}
-
 	public CommerceShippingFixedOption getCommerceShippingFixedOption()
 		throws PortalException {
 
@@ -115,6 +102,23 @@ public class CommerceShippingFixedOptionsDisplayContext
 			commerceShippingFixedOption);
 
 		return commerceShippingFixedOption;
+	}
+
+	public CreationMenu getCreationMenu() throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(getAddShippingFixedOptionURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						themeDisplay.getLocale(), "add-shipping-option"));
+				dropdownItem.setTarget(
+					ClayCreationMenuActionItem.
+						CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
+			}
+		).build();
 	}
 
 	@Override

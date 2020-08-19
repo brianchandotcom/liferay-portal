@@ -22,7 +22,7 @@ CommerceAccountDisplayContext commerceAccountDisplayContext = (CommerceAccountDi
 CommerceAccount commerceAccount = commerceAccountDisplayContext.getCurrentCommerceAccount();
 %>
 
-<commerce-ui:dataset-display
+<clay:data-set-display
 	contextParams='<%= HashMapBuilder.<String, String>put("commerceAccountId", String.valueOf(commerceAccount.getCommerceAccountId())).build() %>'
 	dataProviderKey="<%= CommerceAccountOrganizationClayDataSetDataSetDisplayView.NAME %>"
 	id="<%= CommerceAccountOrganizationClayDataSetDataSetDisplayView.NAME %>"

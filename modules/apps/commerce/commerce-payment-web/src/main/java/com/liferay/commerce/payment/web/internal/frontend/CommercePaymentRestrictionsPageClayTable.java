@@ -14,11 +14,6 @@
 
 package com.liferay.commerce.payment.web.internal.frontend;
 
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.selectable.ClaySelectableTableDataSetDisplayView;
 import com.liferay.commerce.frontend.model.RestrictionField;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
@@ -28,6 +23,11 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceAddressRestrictionLocalService;
 import com.liferay.commerce.service.CommerceCountryService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.taglib.clay.data.set.view.table.selectable.BaseSelectableTableClayDataSetDisplayView;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -54,29 +54,16 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.data.provider.key=" + CommercePaymentRestrictionsPageClayTable.NAME,
-		"commerce.data.set.display.name=" + CommercePaymentRestrictionsPageClayTable.NAME
+		"clay.data.provider.key=" + CommercePaymentRestrictionsPageClayTable.NAME,
+		"clay.data.set.display.name=" + CommercePaymentRestrictionsPageClayTable.NAME
 	},
-	service = {ClayDataSetDisplayView.class, CommerceDataSetDataProvider.class}
+	service = {ClayDataSetDataProvider.class, ClayDataSetDisplayView.class}
 )
 public class CommercePaymentRestrictionsPageClayTable
-	extends ClaySelectableTableDataSetDisplayView
-	implements CommerceDataSetDataProvider<PaymentRestriction> {
+	extends BaseSelectableTableClayDataSetDisplayView
+	implements ClayDataSetDataProvider<PaymentRestriction> {
 
 	public static final String NAME = "payment-restrictions";
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		BaseModelSearchResult<CommerceCountry>
-			commerceCountryBaseModelSearchResult =
-				_commerceCountryService.searchCommerceCountries(
-					_portal.getCompanyId(httpServletRequest), true,
-					filter.getKeywords(), 0, 0, null);
-
-		return commerceCountryBaseModelSearchResult.getLength();
-	}
 
 	@Override
 	public String getFirstColumnLabel(Locale locale) {
@@ -135,6 +122,20 @@ public class CommercePaymentRestrictionsPageClayTable
 		}
 
 		return paymentRestrictions;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		BaseModelSearchResult<CommerceCountry>
+			commerceCountryBaseModelSearchResult =
+				_commerceCountryService.searchCommerceCountries(
+					_portal.getCompanyId(httpServletRequest), true,
+					filter.getKeywords(), 0, 0, null);
+
+		return commerceCountryBaseModelSearchResult.getLength();
 	}
 
 	private List<RestrictionField> _getFields(

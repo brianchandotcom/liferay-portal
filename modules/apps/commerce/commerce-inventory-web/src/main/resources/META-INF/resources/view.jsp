@@ -22,8 +22,8 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 
 <div class="row">
 	<div class="col-12">
-		<commerce-ui:dataset-display
-			clayCreationMenu="<%= commerceInventoryDisplayContext.getInventoryItemClayCreationMenu() %>"
+		<clay:data-set-display
+			creationMenu="<%= commerceInventoryDisplayContext.getInventoryItemCreationMenu() %>"
 			dataProviderKey="<%= CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_ITEMS %>"
 			id="<%= CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_ITEMS %>"
 			itemsPerPage="<%= 10 %>"

@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.inventory.web.internal.frontend;
 
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemService;
 import com.liferay.commerce.inventory.web.internal.model.Replenishment;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -46,22 +46,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_REPLENISHMENT,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_REPLENISHMENT,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceInventoryReplenishmentDataSetDataProvider
-	implements CommerceDataSetDataProvider<Replenishment> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		String sku = ParamUtil.getString(httpServletRequest, "sku");
-
-		return _commerceInventoryReplenishmentItemService.
-			getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku(
-				_portal.getCompanyId(httpServletRequest), sku);
-	}
+	implements ClayDataSetDataProvider<Replenishment> {
 
 	@Override
 	public List<Replenishment> getItems(
@@ -109,6 +98,18 @@ public class CommerceInventoryReplenishmentDataSetDataProvider
 		}
 
 		return replenishments;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		String sku = ParamUtil.getString(httpServletRequest, "sku");
+
+		return _commerceInventoryReplenishmentItemService.
+			getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku(
+				_portal.getCompanyId(httpServletRequest), sku);
 	}
 
 	@Reference

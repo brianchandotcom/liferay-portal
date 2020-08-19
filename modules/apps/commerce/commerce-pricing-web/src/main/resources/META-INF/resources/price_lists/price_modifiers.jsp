@@ -31,9 +31,9 @@ long commercePriceListId = commercePriceListDisplayContext.getCommercePriceListI
 	%>
 
 	<div class="pt-4">
-		<commerce-ui:dataset-display
-			clayCreationMenu="<%= commercePriceListDisplayContext.getPriceModifiersClayCreationMenu() %>"
+		<clay:data-set-display
 			contextParams="<%= contextParams %>"
+			creationMenu="<%= commercePriceListDisplayContext.getPriceModifiersCreationMenu() %>"
 			dataProviderKey="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIERS %>"
 			formId="fm"
 			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIERS %>"

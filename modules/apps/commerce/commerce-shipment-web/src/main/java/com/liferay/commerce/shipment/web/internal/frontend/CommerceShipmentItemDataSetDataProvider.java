@@ -15,9 +15,6 @@
 package com.liferay.commerce.shipment.web.internal.frontend;
 
 import com.liferay.commerce.constants.CommerceShipmentDataSetConstants;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.model.ShipmentItem;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
@@ -25,6 +22,9 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
@@ -43,22 +43,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPMENT_ITEMS,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPMENT_ITEMS,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceShipmentItemDataSetDataProvider
-	implements CommerceDataSetDataProvider<ShipmentItem> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commerceShipmentId = ParamUtil.getLong(
-			httpServletRequest, "commerceShipmentId");
-
-		return _commerceShipmentItemService.getCommerceShipmentItemsCount(
-			commerceShipmentId);
-	}
+	implements ClayDataSetDataProvider<ShipmentItem> {
 
 	@Override
 	public List<ShipmentItem> getItems(
@@ -109,6 +98,18 @@ public class CommerceShipmentItemDataSetDataProvider
 		}
 
 		return shipmentItems;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commerceShipmentId = ParamUtil.getLong(
+			httpServletRequest, "commerceShipmentId");
+
+		return _commerceShipmentItemService.getCommerceShipmentItemsCount(
+			commerceShipmentId);
 	}
 
 	@Reference

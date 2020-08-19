@@ -22,7 +22,6 @@ import com.liferay.commerce.configuration.CommerceOrderFieldsConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
-import com.liferay.commerce.frontend.ClayCreationMenu;
 import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.model.CommerceOrder;
@@ -39,6 +38,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.tax.configuration.CommerceShippingTaxConfiguration;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchWorkflowDefinitionLinkException;
@@ -212,20 +212,6 @@ public class CommerceChannelDisplayContext
 		return portletURL.toString();
 	}
 
-	public ClayCreationMenu getClayCreationMenu() throws Exception {
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
-
-		if (hasAddChannelPermission()) {
-			clayCreationMenu.addClayCreationMenuActionItem(
-				getAddChannelURL(),
-				LanguageUtil.get(httpServletRequest, "add-channel"),
-				ClayCreationMenuActionItem.
-					CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
-		}
-
-		return clayCreationMenu;
-	}
-
 	public CommerceChannel getCommerceChannel() throws PortalException {
 		long commerceChannelId = ParamUtil.getLong(
 			httpServletRequest, "commerceChannelId");
@@ -265,6 +251,24 @@ public class CommerceChannelDisplayContext
 				getCommerceAccountGroupServiceConfiguration();
 
 		return commerceAccountGroupServiceConfiguration.commerceSiteType();
+	}
+
+	public CreationMenu getCreationMenu() throws Exception {
+		CreationMenu creationMenu = new CreationMenu();
+
+		if (hasAddChannelPermission()) {
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setLabel(
+						LanguageUtil.get(httpServletRequest, "add-channel"));
+					dropdownItem.setHref(getAddChannelURL());
+					dropdownItem.setTarget(
+						ClayCreationMenuActionItem.
+							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+				});
+		}
+
+		return creationMenu;
 	}
 
 	public PortletURL getEditCommerceChannelRenderURL() {

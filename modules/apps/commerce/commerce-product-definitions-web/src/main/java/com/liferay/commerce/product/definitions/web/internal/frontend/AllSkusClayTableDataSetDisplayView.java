@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.set.display.name=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_ALL_PRODUCT_INSTANCES,
+	property = "clay.data.set.display.name=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_ALL_PRODUCT_INSTANCES,
 	service = ClayDataSetDisplayView.class
 )
 public class AllSkusClayTableDataSetDisplayView
@@ -35,22 +35,23 @@ public class AllSkusClayTableDataSetDisplayView
 	protected void addActionLinkFields(
 		ClayTableSchemaBuilder clayTableSchemaBuilder) {
 
-		ClayTableSchemaField skuField = clayTableSchemaBuilder.addField(
-			"sku", "sku");
+		ClayTableSchemaField skuField =
+			clayTableSchemaBuilder.addClayTableSchemaField("sku", "sku");
 
 		skuField.setContentRenderer("actionLink");
 	}
 
 	@Override
 	protected void addFields(ClayTableSchemaBuilder clayTableSchemaBuilder) {
-		clayTableSchemaBuilder.addField("productName", "product");
-		clayTableSchemaBuilder.addField("options", "options");
-		clayTableSchemaBuilder.addField("price", "price");
-		clayTableSchemaBuilder.addField(
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"productName", "product");
+		clayTableSchemaBuilder.addClayTableSchemaField("options", "options");
+		clayTableSchemaBuilder.addClayTableSchemaField("price", "price");
+		clayTableSchemaBuilder.addClayTableSchemaField(
 			"availableQuantity", "available-quantity");
 
-		ClayTableSchemaField statusField = clayTableSchemaBuilder.addField(
-			"status", "status");
+		ClayTableSchemaField statusField =
+			clayTableSchemaBuilder.addClayTableSchemaField("status", "status");
 
 		statusField.setContentRenderer("label");
 	}

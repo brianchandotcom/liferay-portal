@@ -31,7 +31,7 @@ PortletURL portletURL = commerceOrderEditDisplayContext.getCommerceShipmentsPort
 CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder();
 %>
 
-<commerce-ui:dataset-display
+<clay:data-set-display
 	contextParams='<%=
 		HashMapBuilder.<String, String>put(
 			"commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId())

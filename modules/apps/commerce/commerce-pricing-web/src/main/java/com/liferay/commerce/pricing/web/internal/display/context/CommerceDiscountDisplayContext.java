@@ -26,16 +26,15 @@ import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.discount.target.CommerceDiscountTarget;
 import com.liferay.commerce.discount.target.CommerceDiscountTargetRegistry;
-import com.liferay.commerce.frontend.ClayCreationMenu;
-import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
-import com.liferay.commerce.frontend.clay.data.set.ClayHeadlessDataSetActionTemplate;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.web.internal.servlet.taglib.ui.CommerceDiscountScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -127,165 +126,6 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();
-	}
-
-	public ClayCreationMenu getClayCreationDiscountMenu() throws Exception {
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
-
-		if (hasAddPermission()) {
-			clayCreationMenu.addClayCreationMenuActionItem(
-				new ClayCreationMenuActionItem(
-					getAddCommerceDiscountRenderURL(),
-					LanguageUtil.get(
-						commercePricingRequestHelper.getRequest(),
-						"add-discount"),
-					ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL));
-		}
-
-		return clayCreationMenu;
-	}
-
-	public ClayCreationMenu getClayCreationDiscountRuleMenu() throws Exception {
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
-
-		if (hasPermission(ActionKeys.UPDATE)) {
-			clayCreationMenu.addClayCreationMenuActionItem(
-				new ClayCreationMenuActionItem(
-					getAddCommerceDiscountRuleRenderURL(),
-					LanguageUtil.get(
-						commercePricingRequestHelper.getRequest(),
-						"add-discount-rule"),
-					ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL));
-		}
-
-		return clayCreationMenu;
-	}
-
-	public List<ClayHeadlessDataSetActionTemplate>
-			getClayHeadlessDataSetActionDiscountCategoryTemplates()
-		throws PortalException {
-
-		List<ClayHeadlessDataSetActionTemplate>
-			clayHeadlessDataSetActionTemplates = new ArrayList<>();
-
-		clayHeadlessDataSetActionTemplates.add(
-			new ClayHeadlessDataSetActionTemplate(
-				null, "trash", "delete",
-				LanguageUtil.get(httpServletRequest, "delete"), "delete",
-				"delete",
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
-
-		return clayHeadlessDataSetActionTemplates;
-	}
-
-	public List<ClayHeadlessDataSetActionTemplate>
-			getClayHeadlessDataSetActionDiscountCPDefinitionTemplates()
-		throws PortalException {
-
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CPDefinition.class.getName(),
-			PortletProvider.Action.MANAGE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "editProductDefinition");
-		portletURL.setParameter(
-			"redirect", commercePricingRequestHelper.getCurrentURL());
-		portletURL.setParameter("cpDefinitionId", "{product.id}");
-		portletURL.setParameter("screenNavigationCategoryKey", "details");
-
-		return getClayHeadlessDataSetActionTemplates(
-			portletURL.toString(), false);
-	}
-
-	public List<ClayHeadlessDataSetActionTemplate>
-			getClayHeadlessDataSetActionDiscountPricingClassTemplates()
-		throws PortalException {
-
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CommercePricingClass.class.getName(),
-			PortletProvider.Action.MANAGE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "editCommercePricingClass");
-		portletURL.setParameter(
-			"redirect", commercePricingRequestHelper.getCurrentURL());
-		portletURL.setParameter("commercePricingClassId", "{productGroupId}");
-		portletURL.setParameter("screenNavigationCategoryKey", "details");
-
-		return getClayHeadlessDataSetActionTemplates(
-			portletURL.toString(), false);
-	}
-
-	public List<ClayHeadlessDataSetActionTemplate>
-			getClayHeadlessDataSetActionDiscountRulesTemplates()
-		throws PortalException {
-
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CommerceDiscount.class.getName(),
-			PortletProvider.Action.EDIT);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "editCommerceDiscountRule");
-		portletURL.setParameter(
-			"redirect", commercePricingRequestHelper.getCurrentURL());
-		portletURL.setParameter("commerceDiscountRuleId", "{id}");
-		portletURL.setParameter(
-			"screenNavigationCategoryKey",
-			CommerceDiscountScreenNavigationConstants.CATEGORY_KEY_DETAILS);
-
-		try {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException windowStateException) {
-			_log.error(windowStateException, windowStateException);
-		}
-
-		return getClayHeadlessDataSetActionTemplates(
-			portletURL.toString(), true);
-	}
-
-	public List<ClayHeadlessDataSetActionTemplate>
-			getClayHeadlessDataSetActionDiscountTemplates()
-		throws PortalException {
-
-		List<ClayHeadlessDataSetActionTemplate>
-			clayHeadlessDataSetActionTemplates = new ArrayList<>();
-
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CommerceDiscount.class.getName(),
-			PortletProvider.Action.MANAGE);
-
-		portletURL.setParameter("mvcRenderCommandName", "editCommerceDiscount");
-		portletURL.setParameter(
-			"redirect", commercePricingRequestHelper.getCurrentURL());
-		portletURL.setParameter("commerceDiscountId", "{id}");
-		portletURL.setParameter("usePercentage", "{usePercentage}");
-		portletURL.setParameter(
-			"screenNavigationCategoryKey",
-			CommerceDiscountScreenNavigationConstants.CATEGORY_KEY_DETAILS);
-
-		clayHeadlessDataSetActionTemplates.add(
-			new ClayHeadlessDataSetActionTemplate(
-				portletURL.toString(), "pencil", "edit",
-				LanguageUtil.get(httpServletRequest, "edit"), "get", null,
-				null));
-
-		clayHeadlessDataSetActionTemplates.add(
-			new ClayHeadlessDataSetActionTemplate(
-				null, "trash", "delete",
-				LanguageUtil.get(httpServletRequest, "delete"), "delete",
-				"delete",
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
-
-		clayHeadlessDataSetActionTemplates.add(
-			new ClayHeadlessDataSetActionTemplate(
-				_getManageDiscountPermissionsURL(), null, "permissions",
-				LanguageUtil.get(httpServletRequest, "permissions"), "get",
-				"permissions",
-				ClayMenuActionItem.
-					CLAY_MENU_ACTION_ITEM_TARGET_MODAL_PERMISSIONS));
-
-		return clayHeadlessDataSetActionTemplates;
 	}
 
 	public CommerceDiscount getCommerceDiscount() throws PortalException {
@@ -403,26 +243,191 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 		return commerceCurrency.getCode();
 	}
 
-	public String getDiscountCategoriesApiUrl() throws PortalException {
+	public String getDiscountCategoriesApiURL() throws PortalException {
 		return "/o/headless-commerce-admin-pricing/v2.0/discounts/" +
 			getCommerceDiscountId() +
 				"/discount-categories?nestedFields=category";
 	}
 
-	public String getDiscountCPDefinitionApiUrl() throws PortalException {
+	public List<ClayDataSetActionDropdownItem>
+			getDiscountCategoryClayDataSetActionDropdownItems()
+		throws PortalException {
+
+		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
+			new ArrayList<>();
+
+		clayDataSetActionDropdownItems.add(
+			new ClayDataSetActionDropdownItem(
+				null, "trash", "delete",
+				LanguageUtil.get(httpServletRequest, "delete"), "delete",
+				"delete",
+				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
+
+		return clayDataSetActionDropdownItems;
+	}
+
+	public List<ClayDataSetActionDropdownItem>
+			getDiscountClayDataSetActionDropdownItems()
+		throws PortalException {
+
+		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
+			new ArrayList<>();
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			httpServletRequest, CommerceDiscount.class.getName(),
+			PortletProvider.Action.MANAGE);
+
+		portletURL.setParameter("mvcRenderCommandName", "editCommerceDiscount");
+		portletURL.setParameter(
+			"redirect", commercePricingRequestHelper.getCurrentURL());
+		portletURL.setParameter("commerceDiscountId", "{id}");
+		portletURL.setParameter("usePercentage", "{usePercentage}");
+		portletURL.setParameter(
+			"screenNavigationCategoryKey",
+			CommerceDiscountScreenNavigationConstants.CATEGORY_KEY_DETAILS);
+
+		clayDataSetActionDropdownItems.add(
+			new ClayDataSetActionDropdownItem(
+				portletURL.toString(), "pencil", "edit",
+				LanguageUtil.get(httpServletRequest, "edit"), "get", null,
+				null));
+
+		clayDataSetActionDropdownItems.add(
+			new ClayDataSetActionDropdownItem(
+				null, "trash", "delete",
+				LanguageUtil.get(httpServletRequest, "delete"), "delete",
+				"delete",
+				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
+
+		clayDataSetActionDropdownItems.add(
+			new ClayDataSetActionDropdownItem(
+				_getManageDiscountPermissionsURL(), null, "permissions",
+				LanguageUtil.get(httpServletRequest, "permissions"), "get",
+				"permissions",
+				ClayMenuActionItem.
+					CLAY_MENU_ACTION_ITEM_TARGET_MODAL_PERMISSIONS));
+
+		return clayDataSetActionDropdownItems;
+	}
+
+	public String getDiscountCPDefinitionApiURL() throws PortalException {
 		return "/o/headless-commerce-admin-pricing/v2.0/discounts/" +
 			getCommerceDiscountId() + "/discount-products?nestedFields=product";
 	}
 
-	public String getDiscountPricingClassesApiUrl() throws PortalException {
+	public List<ClayDataSetActionDropdownItem>
+			getDiscountCPDefinitionClayDataSetActionDropdownItems()
+		throws PortalException {
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			httpServletRequest, CPDefinition.class.getName(),
+			PortletProvider.Action.MANAGE);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editProductDefinition");
+		portletURL.setParameter(
+			"redirect", commercePricingRequestHelper.getCurrentURL());
+		portletURL.setParameter("cpDefinitionId", "{product.id}");
+		portletURL.setParameter("screenNavigationCategoryKey", "details");
+
+		return getClayHeadlessDataSetActionTemplates(
+			portletURL.toString(), false);
+	}
+
+	public CreationMenu getDiscountCreationMenu() throws Exception {
+		CreationMenu creationMenu = new CreationMenu();
+
+		if (hasAddPermission()) {
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(getAddCommerceDiscountRenderURL());
+					dropdownItem.setLabel(
+						LanguageUtil.get(
+							commercePricingRequestHelper.getRequest(),
+							"add-discount"));
+					dropdownItem.setTarget(
+						ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL);
+				});
+		}
+
+		return creationMenu;
+	}
+
+	public List<ClayDataSetActionDropdownItem>
+			getDiscountPricingClassClayDataSetActionDropdownItems()
+		throws PortalException {
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			httpServletRequest, CommercePricingClass.class.getName(),
+			PortletProvider.Action.MANAGE);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editCommercePricingClass");
+		portletURL.setParameter(
+			"redirect", commercePricingRequestHelper.getCurrentURL());
+		portletURL.setParameter("commercePricingClassId", "{productGroupId}");
+		portletURL.setParameter("screenNavigationCategoryKey", "details");
+
+		return getClayHeadlessDataSetActionTemplates(
+			portletURL.toString(), false);
+	}
+
+	public String getDiscountPricingClassesApiURL() throws PortalException {
 		return "/o/headless-commerce-admin-pricing/v2.0/discounts/" +
 			getCommerceDiscountId() +
 				"/discount-product-groups?nestedFields=productGroup";
 	}
 
-	public String getDiscountRulesApiUrl() throws PortalException {
+	public CreationMenu getDiscountRuleCreationMenu() throws Exception {
+		CreationMenu creationMenu = new CreationMenu();
+
+		if (hasPermission(ActionKeys.UPDATE)) {
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(getAddCommerceDiscountRuleRenderURL());
+					dropdownItem.setLabel(
+						LanguageUtil.get(
+							commercePricingRequestHelper.getRequest(),
+							"add-discount-rule"));
+					dropdownItem.setTarget(
+						ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL);
+				});
+		}
+
+		return creationMenu;
+	}
+
+	public String getDiscountRulesApiURL() throws PortalException {
 		return "/o/headless-commerce-admin-pricing/v2.0/discounts/" +
 			getCommerceDiscountId() + "/discount-rules";
+	}
+
+	public List<ClayDataSetActionDropdownItem>
+			getDiscountRulesClayDataSetActionDropdownItem()
+		throws PortalException {
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			httpServletRequest, CommerceDiscount.class.getName(),
+			PortletProvider.Action.EDIT);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editCommerceDiscountRule");
+		portletURL.setParameter(
+			"redirect", commercePricingRequestHelper.getCurrentURL());
+		portletURL.setParameter("commerceDiscountRuleId", "{id}");
+		portletURL.setParameter(
+			"screenNavigationCategoryKey",
+			CommerceDiscountScreenNavigationConstants.CATEGORY_KEY_DETAILS);
+
+		try {
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (WindowStateException wse) {
+			_log.error(wse, wse);
+		}
+
+		return getClayHeadlessDataSetActionTemplates(
+			portletURL.toString(), true);
 	}
 
 	public String getEditCommerceDiscountActionURL() throws Exception {
@@ -623,34 +628,33 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 		return commerceCurrency.round(value);
 	}
 
-	protected List<ClayHeadlessDataSetActionTemplate>
+	protected List<ClayDataSetActionDropdownItem>
 		getClayHeadlessDataSetActionTemplates(
 			String portletURL, boolean sidePanel) {
 
-		List<ClayHeadlessDataSetActionTemplate>
-			clayHeadlessDataSetActionTemplates = new ArrayList<>();
+		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
+			new ArrayList<>();
 
-		ClayHeadlessDataSetActionTemplate clayHeadlessDataSetActionTemplate =
-			new ClayHeadlessDataSetActionTemplate(
+		ClayDataSetActionDropdownItem clayDataSetActionDropdownItem =
+			new ClayDataSetActionDropdownItem(
 				portletURL, "pencil", "edit",
 				LanguageUtil.get(httpServletRequest, "edit"), "get", null,
 				null);
 
 		if (sidePanel) {
-			clayHeadlessDataSetActionTemplate.setTarget("sidePanel");
+			clayDataSetActionDropdownItem.setTarget("sidePanel");
 		}
 
-		clayHeadlessDataSetActionTemplates.add(
-			clayHeadlessDataSetActionTemplate);
+		clayDataSetActionDropdownItems.add(clayDataSetActionDropdownItem);
 
-		clayHeadlessDataSetActionTemplates.add(
-			new ClayHeadlessDataSetActionTemplate(
+		clayDataSetActionDropdownItems.add(
+			new ClayDataSetActionDropdownItem(
 				null, "trash", "remove",
 				LanguageUtil.get(httpServletRequest, "remove"), "delete",
 				"delete",
 				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
 
-		return clayHeadlessDataSetActionTemplates;
+		return clayDataSetActionDropdownItems;
 	}
 
 	private String _getCommerceDiscountAmountFormatted(

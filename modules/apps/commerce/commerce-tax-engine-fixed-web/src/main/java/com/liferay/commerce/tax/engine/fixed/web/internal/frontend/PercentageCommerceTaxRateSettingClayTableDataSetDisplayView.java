@@ -14,12 +14,12 @@
 
 package com.liferay.commerce.tax.engine.fixed.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,29 +29,30 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.set.display.name=" + CommerceTaxRateSettingDataSetConstants.COMMERCE_DATA_SET_KEY_PERCENTAGE_TAX_RATE_SETTING,
+	property = "clay.data.set.display.name=" + CommerceTaxRateSettingDataSetConstants.COMMERCE_DATA_SET_KEY_PERCENTAGE_TAX_RATE_SETTING,
 	service = ClayDataSetDisplayView.class
 )
 public class PercentageCommerceTaxRateSettingClayTableDataSetDisplayView
-	extends ClayTableDataSetDisplayView {
+	extends BaseTableClayDataSetDisplayView {
 
 	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField taxRateField = clayTableSchemaBuilder.addField(
-			"taxRate", "tax-rate");
+		ClayTableSchemaField taxRateField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"taxRate", "tax-rate");
 
 		taxRateField.setContentRenderer("actionLink");
 
-		clayTableSchemaBuilder.addField("country", "country");
+		clayTableSchemaBuilder.addClayTableSchemaField("country", "country");
 
-		clayTableSchemaBuilder.addField("region", "region");
+		clayTableSchemaBuilder.addClayTableSchemaField("region", "region");
 
-		clayTableSchemaBuilder.addField("zip", "zip");
+		clayTableSchemaBuilder.addClayTableSchemaField("zip", "zip");
 
-		clayTableSchemaBuilder.addField("rate", "rate");
+		clayTableSchemaBuilder.addClayTableSchemaField("rate", "rate");
 
 		return clayTableSchemaBuilder.build();
 	}

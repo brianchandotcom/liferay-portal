@@ -43,9 +43,9 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 		collapseSwitchName='<%= liferayPortletResponse.getNamespace() + "channelFilterEnabled" %>'
 		title='<%= LanguageUtil.get(request, "channels") %>'
 	>
-		<commerce-ui:dataset-display
-			clayCreationMenu="<%= cpDefinitionsDisplayContext.getChannelsClayCreationMenu() %>"
+		<clay:data-set-display
 			contextParams="<%= contextParams %>"
+			creationMenu="<%= cpDefinitionsDisplayContext.getChannelsCreationMenu() %>"
 			dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_CHANNELS %>"
 			formId="fm"
 			id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_CHANNELS %>"
@@ -63,9 +63,9 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 		collapseSwitchName='<%= liferayPortletResponse.getNamespace() + "accountGroupFilterEnabled" %>'
 		title='<%= LanguageUtil.get(request, "account-groups") %>'
 	>
-		<commerce-ui:dataset-display
-			clayCreationMenu="<%= cpDefinitionsDisplayContext.getAccountGroupsClayCreationMenu() %>"
+		<clay:data-set-display
 			contextParams="<%= contextParams %>"
+			creationMenu="<%= cpDefinitionsDisplayContext.getAccountGroupsCreationMenu() %>"
 			dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_ACCOUNT_GROUPS %>"
 			formId="fm"
 			id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_ACCOUNT_GROUPS %>"

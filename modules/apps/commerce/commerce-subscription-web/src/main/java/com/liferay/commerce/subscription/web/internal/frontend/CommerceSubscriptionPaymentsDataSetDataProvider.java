@@ -16,9 +16,6 @@ package com.liferay.commerce.subscription.web.internal.frontend;
 
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -28,6 +25,9 @@ import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
 import com.liferay.commerce.subscription.web.internal.model.Payment;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -58,30 +58,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_PAYMENTS,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_PAYMENTS,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceSubscriptionPaymentsDataSetDataProvider
-	implements CommerceDataSetDataProvider<Payment> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commerceSubscriptionEntryId = ParamUtil.getLong(
-			httpServletRequest, "commerceSubscriptionEntryId");
-
-		CommerceSubscriptionEntry commerceSubscriptionEntry =
-			_commerceSubscriptionEntryLocalService.getCommerceSubscriptionEntry(
-				commerceSubscriptionEntryId);
-
-		CommerceOrderItem commerceOrderItem =
-			_commerceOrderItemService.getCommerceOrderItem(
-				commerceSubscriptionEntry.getCommerceOrderItemId());
-
-		return _commerceOrderPaymentLocalService.getCommerceOrderPaymentsCount(
-			commerceOrderItem.getCommerceOrderId());
-	}
+	implements ClayDataSetDataProvider<Payment> {
 
 	@Override
 	public List<Payment> getItems(
@@ -147,6 +128,26 @@ public class CommerceSubscriptionPaymentsDataSetDataProvider
 		}
 
 		return orderPayments;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commerceSubscriptionEntryId = ParamUtil.getLong(
+			httpServletRequest, "commerceSubscriptionEntryId");
+
+		CommerceSubscriptionEntry commerceSubscriptionEntry =
+			_commerceSubscriptionEntryLocalService.getCommerceSubscriptionEntry(
+				commerceSubscriptionEntryId);
+
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemService.getCommerceOrderItem(
+				commerceSubscriptionEntry.getCommerceOrderItemId());
+
+		return _commerceOrderPaymentLocalService.getCommerceOrderPaymentsCount(
+			commerceOrderItem.getCommerceOrderId());
 	}
 
 	@Reference

@@ -28,9 +28,9 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 ).build();
 %>
 
-<commerce-ui:dataset-display
-	clayCreationMenu="<%= commerceTaxFixedRatesDisplayContext.getClayCreationMenu() %>"
+<clay:data-set-display
 	contextParams="<%= contextParams %>"
+	creationMenu="<%= commerceTaxFixedRatesDisplayContext.getCreationMenu() %>"
 	dataProviderKey="<%= CommerceTaxRateClayTable.NAME %>"
 	id="<%= CommerceTaxRateClayTable.NAME %>"
 	itemsPerPage="<%= 10 %>"

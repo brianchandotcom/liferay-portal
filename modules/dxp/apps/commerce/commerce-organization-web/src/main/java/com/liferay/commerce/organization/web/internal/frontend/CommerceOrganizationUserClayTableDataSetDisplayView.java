@@ -14,17 +14,17 @@
 
 package com.liferay.commerce.organization.web.internal.frontend;
 
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
 import com.liferay.commerce.organization.web.internal.model.User;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -65,17 +65,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.data.provider.key=" + CommerceOrganizationUserClayTableDataSetDisplayView.NAME,
-		"commerce.data.set.display.name=" + CommerceOrganizationUserClayTableDataSetDisplayView.NAME
+		"clay.data.provider.key=" + CommerceOrganizationUserClayTableDataSetDisplayView.NAME,
+		"clay.data.set.display.name=" + CommerceOrganizationUserClayTableDataSetDisplayView.NAME
 	},
 	service = {
-		ClayDataSetActionProvider.class, ClayDataSetDisplayView.class,
-		CommerceDataSetDataProvider.class
+		ClayDataSetActionProvider.class, ClayDataSetDataProvider.class,
+		ClayDataSetDisplayView.class
 	}
 )
 public class CommerceOrganizationUserClayTableDataSetDisplayView
-	extends ClayTableDataSetDisplayView
-	implements ClayDataSetActionProvider, CommerceDataSetDataProvider<User> {
+	extends BaseTableClayDataSetDisplayView
+	implements ClayDataSetActionProvider, ClayDataSetDataProvider<User> {
 
 	public static final String NAME = "commerceOrganizationUsers";
 
@@ -134,26 +134,15 @@ public class CommerceOrganizationUserClayTableDataSetDisplayView
 	}
 
 	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long organizationId = ParamUtil.getLong(
-			httpServletRequest, "organizationId");
-
-		return _userService.getOrganizationUsersCount(
-			organizationId, WorkflowConstants.STATUS_ANY);
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+			_clayTableSchemaBuilderFactory.create();
 
-		clayTableSchemaBuilder.addField("name", "name");
+		clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
-		clayTableSchemaBuilder.addField("roles", "roles");
+		clayTableSchemaBuilder.addClayTableSchemaField("roles", "roles");
 
-		clayTableSchemaBuilder.addField("email", "email");
+		clayTableSchemaBuilder.addClayTableSchemaField("email", "email");
 
 		return clayTableSchemaBuilder.build();
 	}
@@ -190,6 +179,18 @@ public class CommerceOrganizationUserClayTableDataSetDisplayView
 		}
 
 		return users;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long organizationId = ParamUtil.getLong(
+			httpServletRequest, "organizationId");
+
+		return _userService.getOrganizationUsersCount(
+			organizationId, WorkflowConstants.STATUS_ANY);
 	}
 
 	protected String getUserRoles(

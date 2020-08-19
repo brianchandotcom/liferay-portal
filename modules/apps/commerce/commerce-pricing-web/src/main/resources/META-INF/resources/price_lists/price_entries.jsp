@@ -99,9 +99,9 @@ if (CommercePriceListConstants.TYPE_PROMOTION.equals(commercePriceEntryDisplayCo
 				bodyClasses="p-0"
 				title='<%= LanguageUtil.get(request, "entries") %>'
 			>
-				<commerce-ui:headless-dataset-display
-					apiUrl="<%= commercePriceEntryDisplayContext.getPriceEntryApiUrl() %>"
-					clayHeadlessDataSetActionTemplates="<%= commercePriceEntryDisplayContext.getClayHeadlessDataSetActionPriceEntriesTemplates() %>"
+				<clay:headless-data-set-display
+					apiURL="<%= commercePriceEntryDisplayContext.getPriceEntryApiURL() %>"
+					clayDataSetActionDropdownItems="<%= commercePriceEntryDisplayContext.getPriceEntriesClayDataSetActionDropdownItems() %>"
 					formId="fm"
 					id="<%= datasetId %>"
 					itemsPerPage="<%= 10 %>"

@@ -31,7 +31,7 @@ CommerceOrderContentDisplayContext commerceOrderContentDisplayContext = (Commerc
 	displayStyleGroupId="<%= commerceOrderContentDisplayContext.getDisplayStyleGroupId(CommercePortletKeys.COMMERCE_ORDER_CONTENT) %>"
 	entries="<%= commerceOrderContentDisplayContext.getCommerceOrders() %>"
 >
-	<commerce-ui:dataset-display
+	<clay:data-set-display
 		dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS %>"
 		id="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS %>"
 		itemsPerPage="<%= 10 %>"

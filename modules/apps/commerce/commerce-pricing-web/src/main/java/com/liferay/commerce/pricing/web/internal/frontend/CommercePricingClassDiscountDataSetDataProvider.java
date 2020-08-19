@@ -16,12 +16,12 @@ package com.liferay.commerce.pricing.web.internal.frontend;
 
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.commerce.pricing.web.internal.model.PricingClassDiscount;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -42,23 +42,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_DISCOUNTS,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_DISCOUNTS,
+	service = ClayDataSetDataProvider.class
 )
 public class CommercePricingClassDiscountDataSetDataProvider
-	implements CommerceDataSetDataProvider<PricingClassDiscount> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commercePricingClassId = ParamUtil.getLong(
-			httpServletRequest, "commercePricingClassId");
-
-		return _commerceDiscountService.
-			getCommerceDiscountsCountByPricingClassId(
-				commercePricingClassId, filter.getKeywords());
-	}
+	implements ClayDataSetDataProvider<PricingClassDiscount> {
 
 	@Override
 	public List<PricingClassDiscount> getItems(
@@ -109,6 +97,19 @@ public class CommercePricingClassDiscountDataSetDataProvider
 		}
 
 		return priceClassDiscounts;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commercePricingClassId = ParamUtil.getLong(
+			httpServletRequest, "commercePricingClassId");
+
+		return _commerceDiscountService.
+			getCommerceDiscountsCountByPricingClassId(
+				commercePricingClassId, filter.getKeywords());
 	}
 
 	private String _getDiscountType(boolean usePercentage) {

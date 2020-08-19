@@ -15,13 +15,13 @@
 package com.liferay.commerce.price.list.web.internal.frontend;
 
 import com.liferay.commerce.currency.model.CommerceMoney;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.web.internal.model.InstancePriceEntry;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Sort;
@@ -43,22 +43,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommercePriceListDataSetConstants.COMMERCE_DATA_SET_KEY_INSTANCE_PRICE_ENTRIES,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommercePriceListDataSetConstants.COMMERCE_DATA_SET_KEY_INSTANCE_PRICE_ENTRIES,
+	service = ClayDataSetDataProvider.class
 )
 public class CPInstancePriceEntryDataSetDataProvider
-	implements CommerceDataSetDataProvider<InstancePriceEntry> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long cpInstanceId = ParamUtil.getLong(
-			httpServletRequest, "cpInstanceId");
-
-		return _commercePriceEntryService.getInstanceCommercePriceEntriesCount(
-			cpInstanceId);
-	}
+	implements ClayDataSetDataProvider<InstancePriceEntry> {
 
 	@Override
 	public List<InstancePriceEntry> getItems(
@@ -102,6 +91,18 @@ public class CPInstancePriceEntryDataSetDataProvider
 		}
 
 		return instancePriceEntries;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long cpInstanceId = ParamUtil.getLong(
+			httpServletRequest, "cpInstanceId");
+
+		return _commercePriceEntryService.getInstanceCommercePriceEntriesCount(
+			cpInstanceId);
 	}
 
 	@Reference

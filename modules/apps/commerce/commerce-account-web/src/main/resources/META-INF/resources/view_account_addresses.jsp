@@ -32,7 +32,7 @@ portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backUR
 
 <portlet:actionURL name="editCommerceAddress" var="editCommerceAddressActionURL" />
 
-<commerce-ui:dataset-display
+<clay:data-set-display
 	contextParams="<%= contextParams %>"
 	dataProviderKey="<%= CommerceAccountAddressClayDataSetDataSetDisplayView.NAME %>"
 	id="<%= CommerceAccountAddressClayDataSetDataSetDisplayView.NAME %>"

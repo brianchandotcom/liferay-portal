@@ -27,7 +27,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 <commerce-ui:panel
 	title='<%= LanguageUtil.get(request, "change-logs") %>'
 >
-	<commerce-ui:dataset-display
+	<clay:data-set-display
 		contextParams="<%= contextParams %>"
 		dataProviderKey="<%= CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_AUDIT %>"
 		id="<%= CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_AUDIT %>"

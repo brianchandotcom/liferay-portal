@@ -31,7 +31,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 
 <c:if test="<%= hasPermission %>">
 	<div class="col-12 pt-4">
-		<commerce-ui:dataset-display
+		<clay:data-set-display
 			contextParams="<%= contextParams %>"
 			dataProviderKey="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRICE_LISTS %>"
 			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRICE_LISTS %>"

@@ -16,14 +16,14 @@ package com.liferay.commerce.catalog.web.internal.frontend;
 
 import com.liferay.commerce.catalog.web.internal.constants.CommerceCatalogDataSetConstants;
 import com.liferay.commerce.catalog.web.internal.model.Channel;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -41,22 +41,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOG_CHANNELS,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOG_CHANNELS,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceCatalogChannelsDataSetDataProvider
-	implements CommerceDataSetDataProvider<Channel> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commerceCatalogId = ParamUtil.getLong(
-			httpServletRequest, "commerceCatalogId");
-
-		return _commerceChannelRelService.getCommerceChannelRelsCount(
-			CommerceCatalog.class.getName(), commerceCatalogId);
-	}
+	implements ClayDataSetDataProvider<Channel> {
 
 	@Override
 	public List<Channel> getItems(
@@ -86,6 +75,18 @@ public class CommerceCatalogChannelsDataSetDataProvider
 		}
 
 		return channels;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commerceCatalogId = ParamUtil.getLong(
+			httpServletRequest, "commerceCatalogId");
+
+		return _commerceChannelRelService.getCommerceChannelRelsCount(
+			CommerceCatalog.class.getName(), commerceCatalogId);
 	}
 
 	@Reference

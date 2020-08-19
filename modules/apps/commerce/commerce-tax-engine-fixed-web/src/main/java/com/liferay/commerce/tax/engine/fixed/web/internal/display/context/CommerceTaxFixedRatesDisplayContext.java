@@ -16,7 +16,6 @@ package com.liferay.commerce.tax.engine.fixed.web.internal.display.context;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.frontend.ClayCreationMenu;
 import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -26,6 +25,7 @@ import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateService;
 import com.liferay.commerce.tax.engine.fixed.web.internal.servlet.taglib.ui.CommerceTaxMethodFixedRatesScreenNavigationEntry;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -78,22 +78,6 @@ public class CommerceTaxFixedRatesDisplayContext
 		return portletURL.toString();
 	}
 
-	public ClayCreationMenu getClayCreationMenu() throws Exception {
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
-
-		if (hasUpdateCommerceChannelPermission()) {
-			clayCreationMenu.addClayCreationMenuActionItem(
-				getAddTaxRateURL(),
-				LanguageUtil.get(
-					commerceTaxFixedRateRequestHelper.getRequest(),
-					"add-tax-rate"),
-				ClayCreationMenuActionItem.
-					CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
-		}
-
-		return clayCreationMenu;
-	}
-
 	public CommerceTaxFixedRate getCommerceTaxFixedRate()
 		throws PortalException {
 
@@ -103,6 +87,26 @@ public class CommerceTaxFixedRatesDisplayContext
 
 		return _commerceTaxFixedRateService.fetchCommerceTaxFixedRate(
 			commerceTaxFixedRateId);
+	}
+
+	public CreationMenu getCreationMenu() throws Exception {
+		CreationMenu creationMenu = new CreationMenu();
+
+		if (hasUpdateCommerceChannelPermission()) {
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(getAddTaxRateURL());
+					dropdownItem.setLabel(
+						LanguageUtil.get(
+							commerceTaxFixedRateRequestHelper.getRequest(),
+							"add-tax-rate"));
+					dropdownItem.setTarget(
+						ClayCreationMenuActionItem.
+							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+				});
+		}
+
+		return creationMenu;
 	}
 
 	@Override

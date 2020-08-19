@@ -15,9 +15,6 @@
 package com.liferay.commerce.order.web.internal.frontend;
 
 import com.liferay.commerce.currency.model.CommerceMoney;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.model.ImageField;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -33,6 +30,9 @@ import com.liferay.commerce.product.util.CPSubscriptionType;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceSubscriptionEntryLocalService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -69,21 +69,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_ITEMS,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ORDER_ITEMS,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceOrderItemDataSetDataProvider
-	implements CommerceDataSetDataProvider<OrderItem> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		BaseModelSearchResult<CommerceOrderItem> baseModelSearchResult =
-			_getBaseModelSearchResult(httpServletRequest, filter, null, null);
-
-		return baseModelSearchResult.getLength();
-	}
+	implements ClayDataSetDataProvider<OrderItem> {
 
 	@Override
 	public List<OrderItem> getItems(
@@ -106,6 +96,17 @@ public class CommerceOrderItemDataSetDataProvider
 		}
 
 		return orderItems;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		BaseModelSearchResult<CommerceOrderItem> baseModelSearchResult =
+			_getBaseModelSearchResult(httpServletRequest, filter, null, null);
+
+		return baseModelSearchResult.getLength();
 	}
 
 	private BaseModelSearchResult<CommerceOrderItem> _getBaseModelSearchResult(

@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
-import com.liferay.commerce.frontend.ClayCreationMenu;
-import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
 import com.liferay.commerce.product.configuration.AttachmentsConfiguration;
 import com.liferay.commerce.product.ddm.DDMHelper;
@@ -31,6 +29,8 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -102,27 +102,6 @@ public class CPAttachmentFileEntriesDisplayContext
 		return itemSelectorURL.toString();
 	}
 
-	public ClayCreationMenu getClayCreationMenu(int type) throws Exception {
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
-
-		RenderURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "editCPAttachmentFileEntry");
-		portletURL.setParameter(
-			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
-		portletURL.setParameter("type", String.valueOf(type));
-
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		clayCreationMenu.addClayCreationMenuActionItem(
-			new ClayCreationMenuActionItem(
-				portletURL.toString(), _getTypeLabel(type),
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL));
-
-		return clayCreationMenu;
-	}
-
 	public CPAttachmentFileEntry getCPAttachmentFileEntry()
 		throws PortalException {
 
@@ -158,6 +137,27 @@ public class CPAttachmentFileEntriesDisplayContext
 
 		return _cpDefinitionOptionRelService.getCPDefinitionOptionRels(
 			cpDefinition.getCPDefinitionId(), true);
+	}
+
+	public CreationMenu getCreationMenu(int type) throws Exception {
+		RenderURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editCPAttachmentFileEntry");
+		portletURL.setParameter(
+			"cpDefinitionId", String.valueOf(getCPDefinitionId()));
+		portletURL.setParameter("type", String.valueOf(type));
+
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(portletURL.toString());
+				dropdownItem.setLabel(_getTypeLabel(type));
+				dropdownItem.setTarget(
+					ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
+			}
+		).build();
 	}
 
 	public String getCssClassFileMimeType(FileEntry fileEntry) {

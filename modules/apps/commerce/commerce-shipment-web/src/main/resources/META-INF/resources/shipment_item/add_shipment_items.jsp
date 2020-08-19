@@ -38,8 +38,8 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commerceShipmentId" type="hidden" value="<%= commerceShipment.getCommerceShipmentId() %>" />
 
-		<commerce-ui:dataset-display
-			bulkActions="<%= commerceShipmentDisplayContext.getShipmentItemBulkActions() %>"
+		<clay:data-set-display
+			bulkActionDropdownItems="<%= commerceShipmentDisplayContext.getShipmentItemBulkActions() %>"
 			contextParams="<%= contextParams %>"
 			dataProviderKey="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPPABLE_ORDER_ITEMS %>"
 			formId='<%= liferayPortletResponse.getNamespace() + "fm" %>'

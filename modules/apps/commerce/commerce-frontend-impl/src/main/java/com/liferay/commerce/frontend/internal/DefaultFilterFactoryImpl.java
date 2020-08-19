@@ -15,8 +15,8 @@
 package com.liferay.commerce.frontend.internal;
 
 import com.liferay.commerce.frontend.DefaultFilterImpl;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.FilterFactory;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.FilterFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.servlet.http.HttpServletRequest;

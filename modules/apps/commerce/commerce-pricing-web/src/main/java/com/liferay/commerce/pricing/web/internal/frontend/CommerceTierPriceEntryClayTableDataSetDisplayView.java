@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.pricing.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,31 +30,36 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_TIER_PRICE_ENTRIES,
+	property = "clay.data.set.display.name=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_TIER_PRICE_ENTRIES,
 	service = ClayDataSetDisplayView.class
 )
 public class CommerceTierPriceEntryClayTableDataSetDisplayView
-	extends ClayTableDataSetDisplayView {
+	extends BaseTableClayDataSetDisplayView {
 
 	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+			_clayTableSchemaBuilderFactory.create();
 
-		clayTableSchemaBuilder.addField("quantity", "quantity");
+		clayTableSchemaBuilder.addClayTableSchemaField("quantity", "quantity");
 
-		ClayTableSchemaField priceField = clayTableSchemaBuilder.addField(
-			"price", "tier-price");
+		ClayTableSchemaField priceField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"price", "tier-price");
 
 		priceField.setContentRenderer("actionLink");
 
-		clayTableSchemaBuilder.addField("startDate", "publish-date");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"startDate", "publish-date");
 
-		clayTableSchemaBuilder.addField("endDate", "expiration-date");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"endDate", "expiration-date");
 
-		clayTableSchemaBuilder.addField("override", "override-discount");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"override", "override-discount");
 
-		clayTableSchemaBuilder.addField("discountLevels", "discount-levels");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"discountLevels", "discount-levels");
 
 		return clayTableSchemaBuilder.build();
 	}

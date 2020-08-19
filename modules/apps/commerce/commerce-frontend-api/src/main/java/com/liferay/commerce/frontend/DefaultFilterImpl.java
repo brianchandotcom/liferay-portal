@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.frontend;
 
+import com.liferay.frontend.taglib.clay.data.Filter;
+
 /**
  * @author Marco Leo
  */

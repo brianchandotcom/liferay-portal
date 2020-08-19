@@ -14,9 +14,6 @@
 
 package com.liferay.commerce.pricing.web.internal.frontend;
 
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.model.ImageField;
 import com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel;
 import com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelService;
@@ -25,6 +22,9 @@ import com.liferay.commerce.pricing.web.internal.model.PricingClassCPDefinitionR
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -50,28 +50,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRODUCT_DEFINITIONS,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRODUCT_DEFINITIONS,
+	service = ClayDataSetDataProvider.class
 )
 public class CommercePricingClassCPDefinitionRelDataSetDataProvider
-	implements CommerceDataSetDataProvider<PricingClassCPDefinitionRel> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commercePricingClassId = ParamUtil.getLong(
-			httpServletRequest, "commercePricingClassId");
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return _commercePricingClassCPDefinitionRelService.
-			getCommercePricingClassCPDefinitionRelsCount(
-				commercePricingClassId, filter.getKeywords(),
-				themeDisplay.getLanguageId());
-	}
+	implements ClayDataSetDataProvider<PricingClassCPDefinitionRel> {
 
 	@Override
 	public List<PricingClassCPDefinitionRel> getItems(
@@ -127,6 +110,24 @@ public class CommercePricingClassCPDefinitionRelDataSetDataProvider
 		}
 
 		return pricingClasseCPDefinitionRels;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commercePricingClassId = ParamUtil.getLong(
+			httpServletRequest, "commercePricingClassId");
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return _commercePricingClassCPDefinitionRelService.
+			getCommercePricingClassCPDefinitionRelsCount(
+				commercePricingClassId, filter.getKeywords(),
+				themeDisplay.getLanguageId());
 	}
 
 	private String _getSku(CPDefinition cpDefinition, Locale locale) {

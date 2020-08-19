@@ -21,8 +21,6 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.constants.CommerceShipmentDataSetConstants;
-import com.liferay.commerce.frontend.ClayCreationMenu;
-import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.frontend.model.StepModel;
@@ -39,6 +37,8 @@ import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.shipment.web.internal.portlet.action.ActionHelper;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -287,10 +287,10 @@ public class CommerceShipmentDisplayContext
 		return portletURL;
 	}
 
-	public List<ClayMenuActionItem> getShipmentItemBulkActions()
+	public List<DropdownItem> getShipmentItemBulkActions()
 		throws PortalException {
 
-		List<ClayMenuActionItem> bulkActions = new ArrayList<>();
+		List<DropdownItem> dropdownItems = new ArrayList<>();
 
 		CommerceShipment commerceShipment = getCommerceShipment();
 
@@ -298,16 +298,16 @@ public class CommerceShipmentDisplayContext
 			(commerceShipment.getStatus() ==
 				CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING)) {
 
-			bulkActions.add(new ClayMenuActionItem(null, null, null, null));
+			dropdownItems.add(new DropdownItem());
 		}
 
-		return bulkActions;
+		return dropdownItems;
 	}
 
-	public ClayCreationMenu getShipmentItemClayCreationMenu()
+	public CreationMenu getShipmentItemCreationMenu()
 		throws PortalException, WindowStateException {
 
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
+		CreationMenu creationMenu = new CreationMenu();
 
 		CommerceShipment commerceShipment = getCommerceShipment();
 
@@ -326,16 +326,20 @@ public class CommerceShipmentDisplayContext
 				"mvcRenderCommandName", "addCommerceShipmentItems");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-			clayCreationMenu.addClayCreationMenuActionItem(
-				new ClayCreationMenuActionItem(
-					portletURL.toString(),
-					LanguageUtil.get(
-						httpServletRequest, "add-products-to-this-shipment"),
-					ClayMenuActionItem.
-						CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE));
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(portletURL.toString());
+					dropdownItem.setLabel(
+						LanguageUtil.get(
+							httpServletRequest,
+							"add-products-to-this-shipment"));
+					dropdownItem.setTarget(
+						ClayMenuActionItem.
+							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+				});
 		}
 
-		return clayCreationMenu;
+		return creationMenu;
 	}
 
 	public List<StepModel> getShipmentSteps() throws PortalException {

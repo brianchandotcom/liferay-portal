@@ -15,15 +15,14 @@
 package com.liferay.commerce.pricing.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceMoney;
-import com.liferay.commerce.frontend.ClayCreationMenu;
-import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
-import com.liferay.commerce.frontend.clay.data.set.ClayHeadlessDataSetActionTemplate;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
+import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -97,61 +96,6 @@ public class CommercePriceEntryDisplayContext
 		return priceMoney.format(commercePricingRequestHelper.getLocale());
 	}
 
-	public ClayCreationMenu getClayCreationMenu() throws Exception {
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
-
-		if (hasPermission(getCommercePriceListId(), ActionKeys.UPDATE)) {
-			clayCreationMenu.addClayCreationMenuActionItem(
-				new ClayCreationMenuActionItem(
-					getAddCommerceTierPriceEntryRenderURL(),
-					LanguageUtil.get(httpServletRequest, "add-new-price-tier"),
-					ClayMenuActionItem.
-						CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE));
-		}
-
-		return clayCreationMenu;
-	}
-
-	public List<ClayHeadlessDataSetActionTemplate>
-			getClayHeadlessDataSetActionPriceEntriesTemplates()
-		throws PortalException {
-
-		List<ClayHeadlessDataSetActionTemplate>
-			clayHeadlessDataSetActionTemplates = new ArrayList<>();
-
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "editCommercePriceEntry");
-		portletURL.setParameter(
-			"redirect", commercePricingRequestHelper.getCurrentURL());
-		portletURL.setParameter(
-			"commercePriceListId", String.valueOf(getCommercePriceListId()));
-		portletURL.setParameter("commercePriceEntryId", "{id}");
-
-		try {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException windowStateException) {
-			_log.error(windowStateException, windowStateException);
-		}
-
-		clayHeadlessDataSetActionTemplates.add(
-			new ClayHeadlessDataSetActionTemplate(
-				portletURL.toString(), "pencil", "edit",
-				LanguageUtil.get(httpServletRequest, "edit"), "get", null,
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL));
-
-		clayHeadlessDataSetActionTemplates.add(
-			new ClayHeadlessDataSetActionTemplate(
-				null, "trash", "remove",
-				LanguageUtil.get(httpServletRequest, "remove"), "delete",
-				"delete",
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
-
-		return clayHeadlessDataSetActionTemplates;
-	}
-
 	public CommercePriceEntry getCommercePriceEntry() throws PortalException {
 		if (_commercePriceEntry != null) {
 			return _commercePriceEntry;
@@ -179,7 +123,67 @@ public class CommercePriceEntryDisplayContext
 		return commercePriceEntry.getCommercePriceEntryId();
 	}
 
-	public String getPriceEntryApiUrl() throws PortalException {
+	public CreationMenu getCreationMenu() throws Exception {
+		CreationMenu creationMenu = new CreationMenu();
+
+		if (hasPermission(getCommercePriceListId(), ActionKeys.UPDATE)) {
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(
+						getAddCommerceTierPriceEntryRenderURL());
+					dropdownItem.setLabel(
+						LanguageUtil.get(
+							httpServletRequest, "add-new-price-tier"));
+					dropdownItem.setTarget(
+						ClayMenuActionItem.
+							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+				});
+		}
+
+		return creationMenu;
+	}
+
+	public List<ClayDataSetActionDropdownItem>
+			getPriceEntriesClayDataSetActionDropdownItems()
+		throws PortalException {
+
+		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
+			new ArrayList<>();
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editCommercePriceEntry");
+		portletURL.setParameter(
+			"redirect", commercePricingRequestHelper.getCurrentURL());
+		portletURL.setParameter(
+			"commercePriceListId", String.valueOf(getCommercePriceListId()));
+		portletURL.setParameter("commercePriceEntryId", "{id}");
+
+		try {
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (WindowStateException windowStateException) {
+			_log.error(windowStateException, windowStateException);
+		}
+
+		clayDataSetActionDropdownItems.add(
+			new ClayDataSetActionDropdownItem(
+				portletURL.toString(), "pencil", "edit",
+				LanguageUtil.get(httpServletRequest, "edit"), "get", null,
+				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL));
+
+		clayDataSetActionDropdownItems.add(
+			new ClayDataSetActionDropdownItem(
+				null, "trash", "remove",
+				LanguageUtil.get(httpServletRequest, "remove"), "delete",
+				"delete",
+				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
+
+		return clayDataSetActionDropdownItems;
+	}
+
+	public String getPriceEntryApiURL() throws PortalException {
 		return "/o/headless-commerce-admin-pricing/v2.0/price-lists/" +
 			getCommercePriceListId() +
 				"/price-entries?nestedFields=product,sku";

@@ -16,7 +16,6 @@ package com.liferay.commerce.pricing.web.internal.display.context;
 
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
-import com.liferay.commerce.frontend.clay.data.set.ClayHeadlessDataSetActionTemplate;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListAccountRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelService;
@@ -24,6 +23,7 @@ import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
+import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -102,25 +102,8 @@ public class CommercePriceListQualifiersDisplayContext
 		return "all";
 	}
 
-	public List<ClayHeadlessDataSetActionTemplate>
-			getClayHeadlessDataSetActionPriceListAccountGroupTemplates()
-		throws PortalException {
-
-		List<ClayHeadlessDataSetActionTemplate>
-			clayHeadlessDataSetActionTemplates = new ArrayList<>();
-
-		clayHeadlessDataSetActionTemplates.add(
-			new ClayHeadlessDataSetActionTemplate(
-				null, "trash", "delete",
-				LanguageUtil.get(httpServletRequest, "delete"), "delete",
-				"delete",
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
-
-		return clayHeadlessDataSetActionTemplates;
-	}
-
-	public List<ClayHeadlessDataSetActionTemplate>
-			getClayHeadlessDataSetActionPriceListAccountTemplates()
+	public List<ClayDataSetActionDropdownItem>
+			getPriceListAccountClayDataSetActionDropdownItems()
 		throws PortalException {
 
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
@@ -132,12 +115,40 @@ public class CommercePriceListQualifiersDisplayContext
 			"redirect", commercePricingRequestHelper.getCurrentURL());
 		portletURL.setParameter("commerceAccountId", "{account.id}");
 
-		return getClayHeadlessDataSetActionTemplates(
-			portletURL.toString(), false);
+		return getClayDataSetActionDropdownItems(portletURL.toString(), false);
 	}
 
-	public List<ClayHeadlessDataSetActionTemplate>
-			getClayHeadlessDataSetActionPriceListChannelTemplates()
+	public List<ClayDataSetActionDropdownItem>
+			getPriceListAccountGroupClayDataSetActionDropdownItems()
+		throws PortalException {
+
+		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
+			new ArrayList<>();
+
+		clayDataSetActionDropdownItems.add(
+			new ClayDataSetActionDropdownItem(
+				null, "trash", "delete",
+				LanguageUtil.get(httpServletRequest, "delete"), "delete",
+				"delete",
+				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
+
+		return clayDataSetActionDropdownItems;
+	}
+
+	public String getPriceListAccountGroupsApiURL() throws PortalException {
+		return "/o/headless-commerce-admin-pricing/v2.0/price-lists/" +
+			getCommercePriceListId() +
+				"/price-list-account-groups?nestedFields=accountGroup";
+	}
+
+	public String getPriceListAccountsApiURL() throws PortalException {
+		return "/o/headless-commerce-admin-pricing/v2.0/price-lists/" +
+			getCommercePriceListId() +
+				"/price-list-accounts?nestedFields=account";
+	}
+
+	public List<ClayDataSetActionDropdownItem>
+			getPriceListChannelClayDataSetActionDropdownItems()
 		throws PortalException {
 
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
@@ -149,23 +160,10 @@ public class CommercePriceListQualifiersDisplayContext
 			"redirect", commercePricingRequestHelper.getCurrentURL());
 		portletURL.setParameter("commerceChannelId", "{channel.id}");
 
-		return getClayHeadlessDataSetActionTemplates(
-			portletURL.toString(), false);
+		return getClayDataSetActionDropdownItems(portletURL.toString(), false);
 	}
 
-	public String getPriceListAccountGroupsApiUrl() throws PortalException {
-		return "/o/headless-commerce-admin-pricing/v2.0/price-lists/" +
-			getCommercePriceListId() +
-				"/price-list-account-groups?nestedFields=accountGroup";
-	}
-
-	public String getPriceListAccountsApiUrl() throws PortalException {
-		return "/o/headless-commerce-admin-pricing/v2.0/price-lists/" +
-			getCommercePriceListId() +
-				"/price-list-accounts?nestedFields=account";
-	}
-
-	public String getPriceListChannelsApiUrl() throws PortalException {
+	public String getPriceListChannelsApiURL() throws PortalException {
 		return "/o/headless-commerce-admin-pricing/v2.0/price-lists/" +
 			getCommercePriceListId() +
 				"/price-list-channels?nestedFields=channel";

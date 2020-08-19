@@ -30,7 +30,7 @@ PortletURL portletURL = currentURLObj;
 portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL", backURL);
 %>
 
-<commerce-ui:dataset-display
+<clay:data-set-display
 	contextParams="<%= contextParams %>"
 	dataProviderKey="<%= CommerceAccountUserClayDataSetDataSetDisplayView.NAME %>"
 	id="<%= CommerceAccountUserClayDataSetDataSetDisplayView.NAME %>"

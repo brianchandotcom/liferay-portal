@@ -88,9 +88,9 @@
 				bodyClasses="p-0"
 				title='<%= LanguageUtil.get(request, "account-groups") %>'
 			>
-				<commerce-ui:headless-dataset-display
-					apiUrl="<%= commerceDiscountQualifiersDisplayContext.getDiscountAccountGroupsApiUrl() %>"
-					clayHeadlessDataSetActionTemplates="<%= commerceDiscountQualifiersDisplayContext.getClayHeadlessDataSetActionDiscountAccountGroupTemplates() %>"
+				<clay:headless-data-set-display
+					apiURL="<%= commerceDiscountQualifiersDisplayContext.getDiscountAccountGroupsApiURL() %>"
+					clayDataSetActionDropdownItems="<%= commerceDiscountQualifiersDisplayContext.getAccountGroupClayDataSetActionDropdownItems() %>"
 					formId="fm"
 					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_QUALIFIER_ACCOUNT_GROUPS %>"
 					itemsPerPage="<%= 10 %>"

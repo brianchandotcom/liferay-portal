@@ -33,10 +33,10 @@ PortletURL portletURL = commerceDiscountDisplayContext.getPortletURL();
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 		<aui:input name="deleteDiscounts" type="hidden" />
 
-		<commerce-ui:headless-dataset-display
-			apiUrl="/o/headless-commerce-admin-pricing/v2.0/discounts"
-			clayCreationMenu="<%= commerceDiscountDisplayContext.getClayCreationDiscountMenu() %>"
-			clayHeadlessDataSetActionTemplates="<%= commerceDiscountDisplayContext.getClayHeadlessDataSetActionDiscountTemplates() %>"
+		<clay:headless-data-set-display
+			apiURL="/o/headless-commerce-admin-pricing/v2.0/discounts"
+			clayDataSetActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountClayDataSetActionDropdownItems() %>"
+			creationMenu="<%= commerceDiscountDisplayContext.getDiscountCreationMenu() %>"
 			formId="fm"
 			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNTS %>"
 			itemsPerPage="<%= 10 %>"

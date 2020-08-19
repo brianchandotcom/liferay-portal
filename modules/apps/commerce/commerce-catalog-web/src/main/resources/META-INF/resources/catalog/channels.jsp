@@ -28,7 +28,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 
 <div class="row">
 	<div class="col-12">
-		<commerce-ui:dataset-display
+		<clay:data-set-display
 			contextParams="<%= contextParams %>"
 			dataProviderKey="<%= CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOG_CHANNELS %>"
 			id="<%= CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOG_CHANNELS %>"

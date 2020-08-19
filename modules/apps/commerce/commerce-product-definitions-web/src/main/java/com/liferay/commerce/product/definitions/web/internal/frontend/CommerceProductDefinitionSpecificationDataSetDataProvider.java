@@ -14,9 +14,6 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend;
 
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.product.constants.CPOptionCategoryConstants;
 import com.liferay.commerce.product.definitions.web.internal.model.ProductSpecification;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
@@ -24,6 +21,9 @@ import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -47,22 +47,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITION_SPECIFICATIONS,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITION_SPECIFICATIONS,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceProductDefinitionSpecificationDataSetDataProvider
-	implements CommerceDataSetDataProvider<ProductSpecification> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long cpDefinitionId = ParamUtil.getLong(
-			httpServletRequest, "cpDefinitionId");
-
-		return _cpDefinitionSpecificationOptionValueService.
-			getCPDefinitionSpecificationOptionValuesCount(cpDefinitionId);
-	}
+	implements ClayDataSetDataProvider<ProductSpecification> {
 
 	@Override
 	public List<ProductSpecification> getItems(
@@ -104,6 +93,18 @@ public class CommerceProductDefinitionSpecificationDataSetDataProvider
 		}
 
 		return productSpecifications;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long cpDefinitionId = ParamUtil.getLong(
+			httpServletRequest, "cpDefinitionId");
+
+		return _cpDefinitionSpecificationOptionValueService.
+			getCPDefinitionSpecificationOptionValuesCount(cpDefinitionId);
 	}
 
 	private String _getCPOptionCategoryTitle(

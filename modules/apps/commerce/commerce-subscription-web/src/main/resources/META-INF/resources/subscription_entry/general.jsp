@@ -378,7 +378,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 	bodyClasses="p-0"
 	title='<%= LanguageUtil.get(request, "items") %>'
 >
-<commerce-ui:dataset-display
+<clay:data-set-display
 	contextParams="<%= contextParams %>"
 	dataProviderKey="<%= CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_ORDER_ITEMS %>"
 	id="<%= CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_ORDER_ITEMS %>"

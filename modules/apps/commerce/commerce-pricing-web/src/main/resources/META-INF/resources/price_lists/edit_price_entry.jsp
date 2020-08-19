@@ -68,13 +68,13 @@ if ((commercePriceEntry != null) && (commercePriceEntry.getExpirationDate() != n
 						</div>
 					</div>
 
-					<commerce-ui:dataset-display
-						clayCreationMenu="<%= commercePriceEntryDisplayContext.getClayCreationMenu() %>"
+					<clay:data-set-display
 						contextParams='<%=
 							HashMapBuilder.<String, String>put(
 								"commercePriceEntryId", String.valueOf(commercePriceEntryId)
 							).build()
 						%>'
+						creationMenu="<%= commercePriceEntryDisplayContext.getCreationMenu() %>"
 						dataProviderKey="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_TIER_PRICE_ENTRIES %>"
 						formId="fm"
 						id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_TIER_PRICE_ENTRIES %>"

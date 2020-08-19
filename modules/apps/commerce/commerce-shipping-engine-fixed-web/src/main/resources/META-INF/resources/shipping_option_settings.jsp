@@ -22,13 +22,13 @@ CommerceShippingFixedOptionRelsDisplayContext commerceShippingFixedOptionRelsDis
 
 <c:choose>
 	<c:when test="<%= commerceShippingFixedOptionRelsDisplayContext.isVisible() %>">
-		<commerce-ui:dataset-display
-			clayCreationMenu="<%= commerceShippingFixedOptionRelsDisplayContext.getClayCreationMenu() %>"
+		<clay:data-set-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
 					"commerceShippingMethodId", String.valueOf(commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingMethodId())
 				).build()
 			%>'
+			creationMenu="<%= commerceShippingFixedOptionRelsDisplayContext.getCreationMenu() %>"
 			dataProviderKey="<%= CommerceShippingFixedOptionSettingClayTable.NAME %>"
 			id="<%= CommerceShippingFixedOptionSettingClayTable.NAME %>"
 			itemsPerPage="<%= 10 %>"

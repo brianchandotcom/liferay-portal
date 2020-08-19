@@ -16,7 +16,6 @@ package com.liferay.commerce.shipping.engine.fixed.web.internal.display.context;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.frontend.ClayCreationMenu;
 import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
@@ -34,6 +33,8 @@ import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOpt
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.commerce.shipping.engine.fixed.web.internal.servlet.taglib.ui.CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -101,21 +102,6 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 		editCommerceChannelPortletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return editCommerceChannelPortletURL.toString();
-	}
-
-	public ClayCreationMenu getClayCreationMenu() throws Exception {
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		clayCreationMenu.addClayCreationMenuActionItem(
-			getAddShippingFixedOptionURL(),
-			LanguageUtil.get(
-				themeDisplay.getRequest(), "add-shipping-option-setting"),
-			ClayCreationMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
-
-		return clayCreationMenu;
 	}
 
 	public List<CommerceCountry> getCommerceCountries() {
@@ -225,6 +211,24 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public CreationMenu getCreationMenu() throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(getAddShippingFixedOptionURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						themeDisplay.getRequest(),
+						"add-shipping-option-setting"));
+				dropdownItem.setTarget(
+					ClayCreationMenuActionItem.
+						CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
+			}
+		).build();
 	}
 
 	@Override

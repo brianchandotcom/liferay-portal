@@ -146,7 +146,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 				bodyClasses="p-0"
 				title='<%= LanguageUtil.get(request, "health-checks") %>'
 			>
-				<commerce-ui:dataset-display
+				<clay:data-set-display
 					contextParams="<%= contextParams %>"
 					dataProviderKey="<%= CommerceChannelHealthCheckClayTable.NAME %>"
 					id="<%= CommerceChannelHealthCheckClayTable.NAME %>"
@@ -167,7 +167,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 			bodyClasses="p-0"
 			title='<%= LanguageUtil.get(request, "payment-methods") %>'
 		>
-			<commerce-ui:dataset-display
+			<clay:data-set-display
 				contextParams="<%= contextParams %>"
 				dataProviderKey="<%= CommercePaymentMethodClayTable.NAME %>"
 				id="<%= CommercePaymentMethodClayTable.NAME %>"
@@ -187,7 +187,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 			bodyClasses="p-0"
 			title='<%= LanguageUtil.get(request, "shipping-methods") %>'
 		>
-			<commerce-ui:dataset-display
+			<clay:data-set-display
 				contextParams="<%= contextParams %>"
 				dataProviderKey="<%= CommerceShippingMethodClayTable.NAME %>"
 				id="<%= CommerceShippingMethodClayTable.NAME %>"
@@ -207,7 +207,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 			bodyClasses="p-0"
 			title='<%= LanguageUtil.get(request, "tax-calculations") %>'
 		>
-			<commerce-ui:dataset-display
+			<clay:data-set-display
 				contextParams="<%= contextParams %>"
 				dataProviderKey="<%= CommerceTaxMethodClayTable.NAME %>"
 				id="<%= CommerceTaxMethodClayTable.NAME %>"

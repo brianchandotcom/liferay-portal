@@ -18,8 +18,6 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
-import com.liferay.commerce.frontend.ClayCreationMenu;
-import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.ddm.DDMHelper;
@@ -35,6 +33,8 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -98,29 +98,6 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 
 		return _cpInstanceHelper.getCPInstanceCPDefinitionOptionRelsMap(
 			cpInstanceId);
-	}
-
-	public ClayCreationMenu getClayCreationMenu() throws Exception {
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
-
-		clayCreationMenu.addClayCreationMenuActionItem(
-			new ClayCreationMenuActionItem(
-				_getEditCPInstancePortletURL(),
-				LanguageUtil.get(cpRequestHelper.getRequest(), "add-sku"),
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL));
-
-		CPDefinition cpDefinition = getCPDefinition();
-
-		if ((cpDefinition != null) && !cpDefinition.isIgnoreSKUCombinations()) {
-			clayCreationMenu.addClayCreationMenuActionItem(
-				new ClayCreationMenuActionItem(
-					_getAddMultipleCPInstancePortletURL(),
-					LanguageUtil.get(
-						cpRequestHelper.getRequest(),
-						"generate-all-sku-combinations")));
-		}
-
-		return clayCreationMenu;
 	}
 
 	public String getCommerceCurrencyCode() throws PortalException {
@@ -194,6 +171,33 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public CreationMenu getCreationMenu() throws Exception {
+		CreationMenu creationMenu = CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(_getEditCPInstancePortletURL());
+				dropdownItem.setLabel(
+					LanguageUtil.get(cpRequestHelper.getRequest(), "add-sku"));
+				dropdownItem.setTarget(
+					ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
+			}
+		).build();
+
+		CPDefinition cpDefinition = getCPDefinition();
+
+		if ((cpDefinition != null) && !cpDefinition.isIgnoreSKUCombinations()) {
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(_getAddMultipleCPInstancePortletURL());
+					dropdownItem.setLabel(
+						LanguageUtil.get(
+							cpRequestHelper.getRequest(),
+							"generate-all-sku-combinations"));
+				});
+		}
+
+		return creationMenu;
 	}
 
 	@Override

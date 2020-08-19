@@ -37,8 +37,7 @@ CommerceTaxFixedRateAddressRelsDisplayContext commerceTaxFixedRateAddressRelsDis
 		</aui:select>
 	</commerce-ui:panel>
 
-	<commerce-ui:dataset-display
-		clayCreationMenu="<%= commerceTaxFixedRateAddressRelsDisplayContext.getClayCreationMenu() %>"
+	<clay:data-set-display
 		contextParams='<%=
 			HashMapBuilder.<String, String>put(
 				"commerceChannelId", String.valueOf(commerceTaxFixedRateAddressRelsDisplayContext.getCommerceChannelId())
@@ -46,6 +45,7 @@ CommerceTaxFixedRateAddressRelsDisplayContext commerceTaxFixedRateAddressRelsDis
 				"commerceTaxMethodId", String.valueOf(commerceTaxFixedRateAddressRelsDisplayContext.getCommerceTaxMethodId())
 			).build()
 		%>'
+		creationMenu="<%= commerceTaxFixedRateAddressRelsDisplayContext.getCreationMenu() %>"
 		dataProviderKey="<%= CommerceTaxRateSettingDataSetConstants.COMMERCE_DATA_SET_KEY_TAX_RATE_SETTING %>"
 		id="<%= commerceTaxFixedRateAddressRelsDisplayContext.getDatasetView() %>"
 		itemsPerPage="<%= 10 %>"

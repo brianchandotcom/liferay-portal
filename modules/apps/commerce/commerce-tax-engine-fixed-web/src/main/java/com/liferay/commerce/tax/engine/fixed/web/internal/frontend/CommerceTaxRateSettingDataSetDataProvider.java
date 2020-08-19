@@ -18,9 +18,6 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.model.CommerceMoneyFactory;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.percentage.PercentageFormatter;
@@ -31,6 +28,9 @@ import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRe
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelService;
 import com.liferay.commerce.tax.engine.fixed.web.internal.model.TaxRateSetting;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
@@ -55,29 +55,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceTaxRateSettingDataSetConstants.COMMERCE_DATA_SET_KEY_TAX_RATE_SETTING,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceTaxRateSettingDataSetConstants.COMMERCE_DATA_SET_KEY_TAX_RATE_SETTING,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceTaxRateSettingDataSetDataProvider
-	implements CommerceDataSetDataProvider<TaxRateSetting> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commerceChannelId = ParamUtil.getLong(
-			httpServletRequest, "commerceChannelId");
-
-		CommerceChannel commerceChannel =
-			_commerceChannelService.getCommerceChannel(commerceChannelId);
-
-		long commerceTaxMethodId = ParamUtil.getLong(
-			httpServletRequest, "commerceTaxMethodId");
-
-		return _commerceTaxFixedRateAddressRelService.
-			getCommerceTaxMethodFixedRateAddressRelsCount(
-				commerceChannel.getGroupId(), commerceTaxMethodId);
-	}
+	implements ClayDataSetDataProvider<TaxRateSetting> {
 
 	@Override
 	public List<TaxRateSetting> getItems(
@@ -135,6 +117,25 @@ public class CommerceTaxRateSettingDataSetDataProvider
 		}
 
 		return taxRateSettings;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commerceChannelId = ParamUtil.getLong(
+			httpServletRequest, "commerceChannelId");
+
+		CommerceChannel commerceChannel =
+			_commerceChannelService.getCommerceChannel(commerceChannelId);
+
+		long commerceTaxMethodId = ParamUtil.getLong(
+			httpServletRequest, "commerceTaxMethodId");
+
+		return _commerceTaxFixedRateAddressRelService.
+			getCommerceTaxMethodFixedRateAddressRelsCount(
+				commerceChannel.getGroupId(), commerceTaxMethodId);
 	}
 
 	private String _getCountry(

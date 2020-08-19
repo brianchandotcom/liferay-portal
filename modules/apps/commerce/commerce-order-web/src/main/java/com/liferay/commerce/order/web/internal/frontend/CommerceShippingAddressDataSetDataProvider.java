@@ -15,15 +15,15 @@
 package com.liferay.commerce.order.web.internal.frontend;
 
 import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.order.web.internal.model.Address;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,26 +43,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPPING_ADDRESSES,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPPING_ADDRESSES,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceShippingAddressDataSetDataProvider
-	implements CommerceDataSetDataProvider<Address> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commerceOrderId = ParamUtil.getLong(
-			httpServletRequest, "commerceOrderId");
-
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			commerceOrderId);
-
-		return _commerceAddressService.getShippingCommerceAddressesCount(
-			commerceOrder.getCompanyId(), CommerceAccount.class.getName(),
-			commerceOrder.getCommerceAccountId(), filter.getKeywords());
-	}
+	implements ClayDataSetDataProvider<Address> {
 
 	@Override
 	public List<Address> getItems(
@@ -94,6 +79,22 @@ public class CommerceShippingAddressDataSetDataProvider
 		}
 
 		return addresses;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commerceOrderId = ParamUtil.getLong(
+			httpServletRequest, "commerceOrderId");
+
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			commerceOrderId);
+
+		return _commerceAddressService.getShippingCommerceAddressesCount(
+			commerceOrder.getCompanyId(), CommerceAccount.class.getName(),
+			commerceOrder.getCommerceAccountId(), filter.getKeywords());
 	}
 
 	private String _getDescriptiveCommerceAddress(

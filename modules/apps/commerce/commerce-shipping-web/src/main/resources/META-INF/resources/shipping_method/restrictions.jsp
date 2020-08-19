@@ -28,7 +28,7 @@ long commerceChannelId = commerceShippingMethodsDisplayContext.getCommerceChanne
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="commerceChannelId" type="hidden" value="<%= commerceChannelId %>" />
 
-	<commerce-ui:dataset-display
+	<clay:data-set-display
 		contextParams='<%=
 			HashMapBuilder.<String, String>put(
 			"commerceChannelId", String.valueOf(commerceChannelId)

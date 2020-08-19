@@ -24,8 +24,8 @@ CommerceCatalogDisplayContext commerceCatalogDisplayContext = (CommerceCatalogDi
 
 <div class="row">
 	<div class="col-12">
-		<commerce-ui:dataset-display
-			clayCreationMenu="<%= commerceCatalogDisplayContext.getClayCreationMenu() %>"
+		<clay:data-set-display
+			creationMenu="<%= commerceCatalogDisplayContext.getCreationMenu() %>"
 			dataProviderKey="<%= CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOGS %>"
 			id="<%= CommerceCatalogDataSetConstants.COMMERCE_DATA_SET_KEY_CATALOGS %>"
 			itemsPerPage="<%= 10 %>"

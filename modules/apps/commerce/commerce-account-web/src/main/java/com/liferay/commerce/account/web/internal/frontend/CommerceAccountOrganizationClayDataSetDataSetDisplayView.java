@@ -19,16 +19,16 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.model.CommerceAccountOrganizationRel;
 import com.liferay.commerce.account.service.CommerceAccountOrganizationRelService;
 import com.liferay.commerce.account.web.internal.model.Organization;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -57,18 +57,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.data.provider.key=" + CommerceAccountOrganizationClayDataSetDataSetDisplayView.NAME,
-		"commerce.data.set.display.name=" + CommerceAccountOrganizationClayDataSetDataSetDisplayView.NAME
+		"clay.data.provider.key=" + CommerceAccountOrganizationClayDataSetDataSetDisplayView.NAME,
+		"clay.data.set.display.name=" + CommerceAccountOrganizationClayDataSetDataSetDisplayView.NAME
 	},
 	service = {
-		ClayDataSetActionProvider.class, ClayDataSetDisplayView.class,
-		CommerceDataSetDataProvider.class
+		ClayDataSetActionProvider.class, ClayDataSetDataProvider.class,
+		ClayDataSetDisplayView.class
 	}
 )
 public class CommerceAccountOrganizationClayDataSetDataSetDisplayView
-	extends ClayTableDataSetDisplayView
+	extends BaseTableClayDataSetDisplayView
 	implements ClayDataSetActionProvider,
-			   CommerceDataSetDataProvider<Organization> {
+			   ClayDataSetDataProvider<Organization> {
 
 	public static final String NAME = "commerceAccountOrganizations";
 
@@ -106,23 +106,12 @@ public class CommerceAccountOrganizationClayDataSetDataSetDisplayView
 	}
 
 	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commerceAccountId = ParamUtil.getLong(
-			httpServletRequest, "commerceAccountId");
-
-		return _commerceAccountOrganizationRelService.
-			getCommerceAccountOrganizationRelsCount(commerceAccountId);
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+			_clayTableSchemaBuilderFactory.create();
 
-		clayTableSchemaBuilder.addField("name", "name");
-		clayTableSchemaBuilder.addField("path", "path");
+		clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
+		clayTableSchemaBuilder.addClayTableSchemaField("path", "path");
 
 		return clayTableSchemaBuilder.build();
 	}
@@ -159,6 +148,18 @@ public class CommerceAccountOrganizationClayDataSetDataSetDisplayView
 		}
 
 		return organizations;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commerceAccountId = ParamUtil.getLong(
+			httpServletRequest, "commerceAccountId");
+
+		return _commerceAccountOrganizationRelService.
+			getCommerceAccountOrganizationRelsCount(commerceAccountId);
 	}
 
 	protected String getPath(String treePath) throws PortalException {

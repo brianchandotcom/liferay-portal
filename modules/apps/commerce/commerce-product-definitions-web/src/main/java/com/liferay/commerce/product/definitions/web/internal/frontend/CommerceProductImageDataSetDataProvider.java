@@ -14,9 +14,6 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend;
 
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.model.ImageField;
 import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.media.CommerceMediaResolverUtil;
@@ -25,6 +22,9 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -50,24 +50,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_IMAGES,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_IMAGES,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceProductImageDataSetDataProvider
-	implements CommerceDataSetDataProvider<ProductMedia> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long cpDefinitionId = ParamUtil.getLong(
-			httpServletRequest, "cpDefinitionId");
-
-		return _cpAttachmentFileEntryService.getCPAttachmentFileEntriesCount(
-			_portal.getClassNameId(CPDefinition.class), cpDefinitionId,
-			CPAttachmentFileEntryConstants.TYPE_IMAGE,
-			WorkflowConstants.STATUS_ANY);
-	}
+	implements ClayDataSetDataProvider<ProductMedia> {
 
 	@Override
 	public List<ProductMedia> getItems(
@@ -136,6 +123,20 @@ public class CommerceProductImageDataSetDataProvider
 		}
 
 		return productMedia;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long cpDefinitionId = ParamUtil.getLong(
+			httpServletRequest, "cpDefinitionId");
+
+		return _cpAttachmentFileEntryService.getCPAttachmentFileEntriesCount(
+			_portal.getClassNameId(CPDefinition.class), cpDefinitionId,
+			CPAttachmentFileEntryConstants.TYPE_IMAGE,
+			WorkflowConstants.STATUS_ANY);
 	}
 
 	@Reference

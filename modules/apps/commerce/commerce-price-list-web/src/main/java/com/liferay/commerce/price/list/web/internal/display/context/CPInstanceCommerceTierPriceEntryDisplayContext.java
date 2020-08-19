@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.price.list.web.internal.display.context;
 
-import com.liferay.commerce.frontend.ClayCreationMenu;
-import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
@@ -25,6 +23,8 @@ import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefini
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,17 +53,6 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		super(actionHelper, httpServletRequest);
 
 		_commercePriceListActionHelper = commercePriceListActionHelper;
-	}
-
-	public ClayCreationMenu getClayCreationMenu() throws Exception {
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
-
-		clayCreationMenu.addClayCreationMenuActionItem(
-			new ClayCreationMenuActionItem(
-				_getAddCommerceTierPriceEntryURL(), StringPool.BLANK,
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE));
-
-		return clayCreationMenu;
 	}
 
 	public CommercePriceEntry getCommercePriceEntry() throws PortalException {
@@ -172,6 +161,18 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		}
 
 		return cpInstanceId;
+	}
+
+	public CreationMenu getCreationMenu() throws Exception {
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(_getAddCommerceTierPriceEntryURL());
+				dropdownItem.setLabel(StringPool.BLANK);
+				dropdownItem.setTarget(
+					ClayMenuActionItem.
+						CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+			}
+		).build();
 	}
 
 	@Override

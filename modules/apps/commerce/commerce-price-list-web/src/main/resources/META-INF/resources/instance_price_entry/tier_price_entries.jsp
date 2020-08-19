@@ -31,13 +31,13 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-		<commerce-ui:dataset-display
-			clayCreationMenu="<%= cpInstanceCommerceTierPriceEntryDisplayContext.getClayCreationMenu() %>"
+		<clay:data-set-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
 					"commercePriceEntryId", String.valueOf(commercePriceEntryId)
 				).build()
 			%>'
+			creationMenu="<%= cpInstanceCommerceTierPriceEntryDisplayContext.getCreationMenu() %>"
 			dataProviderKey="<%= CommercePriceListDataSetConstants.COMMERCE_DATA_SET_KEY_INSTANCE_TIER_PRICE_ENTRIES %>"
 			formId="fm"
 			id="<%= CommercePriceListDataSetConstants.COMMERCE_DATA_SET_KEY_INSTANCE_TIER_PRICE_ENTRIES %>"

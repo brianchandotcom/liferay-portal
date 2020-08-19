@@ -114,7 +114,7 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 			elementClasses="flex-fill"
 			title='<%= LanguageUtil.get(request, "transaction-history") %>'
 		>
-			<commerce-ui:dataset-display
+			<clay:data-set-display
 				contextParams='<%=
 					HashMapBuilder.<String, String>put(
 						"commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId())

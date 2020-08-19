@@ -17,11 +17,11 @@ package com.liferay.commerce.product.definitions.web.internal.frontend;
 import com.liferay.commerce.account.model.CommerceAccountGroup;
 import com.liferay.commerce.account.model.CommerceAccountGroupRel;
 import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.product.definitions.web.internal.model.AccountGroup;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -39,22 +39,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_ACCOUNT_GROUPS,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_ACCOUNT_GROUPS,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceProductAccountGroupDataSetDataProvider
-	implements CommerceDataSetDataProvider<AccountGroup> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long cpDefinitionId = ParamUtil.getLong(
-			httpServletRequest, "cpDefinitionId");
-
-		return _commerceAccountGroupRelService.getCommerceAccountGroupRelsCount(
-			CPDefinition.class.getName(), cpDefinitionId);
-	}
+	implements ClayDataSetDataProvider<AccountGroup> {
 
 	@Override
 	public List<AccountGroup> getItems(
@@ -86,6 +75,18 @@ public class CommerceProductAccountGroupDataSetDataProvider
 		}
 
 		return accountGroups;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long cpDefinitionId = ParamUtil.getLong(
+			httpServletRequest, "cpDefinitionId");
+
+		return _commerceAccountGroupRelService.getCommerceAccountGroupRelsCount(
+			CPDefinition.class.getName(), cpDefinitionId);
 	}
 
 	@Reference

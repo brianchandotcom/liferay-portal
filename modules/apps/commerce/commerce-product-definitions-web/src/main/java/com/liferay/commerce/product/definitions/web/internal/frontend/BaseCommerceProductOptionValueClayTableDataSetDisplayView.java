@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 
 /**
  * @author Igor Beslic
@@ -27,13 +27,14 @@ public abstract class BaseCommerceProductOptionValueClayTableDataSetDisplayView
 	protected void addActionLinkFields(
 		ClayTableSchemaBuilder clayTableSchemaBuilder) {
 
-		ClayTableSchemaField nameField = clayTableSchemaBuilder.addField(
-			"name", "name");
+		ClayTableSchemaField nameField =
+			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
 		nameField.setContentRenderer("actionLink");
 
-		ClayTableSchemaField preselectedField = clayTableSchemaBuilder.addField(
-			"preselected", "default");
+		ClayTableSchemaField preselectedField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"preselected", "default");
 
 		preselectedField.setActionId("updatePreselected");
 		preselectedField.setContentRenderer("actionLink");

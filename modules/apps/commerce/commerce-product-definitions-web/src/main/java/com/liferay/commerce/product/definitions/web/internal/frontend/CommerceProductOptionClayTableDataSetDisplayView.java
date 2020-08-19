@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.set.display.name=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS,
+	property = "clay.data.set.display.name=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS,
 	service = ClayDataSetDisplayView.class
 )
 public class CommerceProductOptionClayTableDataSetDisplayView
@@ -32,11 +32,14 @@ public class CommerceProductOptionClayTableDataSetDisplayView
 
 	@Override
 	protected void addFields(ClayTableSchemaBuilder clayTableSchemaBuilder) {
-		clayTableSchemaBuilder.addField("fieldType", "field-type");
-		clayTableSchemaBuilder.addField("skuContributor", "sku-contributor");
-		clayTableSchemaBuilder.addField("required", "is-required");
-		clayTableSchemaBuilder.addField("position", "position");
-		clayTableSchemaBuilder.addField("values", "values");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"fieldType", "field-type");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"skuContributor", "sku-contributor");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"required", "is-required");
+		clayTableSchemaBuilder.addClayTableSchemaField("position", "position");
+		clayTableSchemaBuilder.addClayTableSchemaField("values", "values");
 	}
 
 }

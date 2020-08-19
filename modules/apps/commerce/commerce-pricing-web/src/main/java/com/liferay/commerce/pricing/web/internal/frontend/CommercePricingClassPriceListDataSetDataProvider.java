@@ -14,9 +14,6 @@
 
 package com.liferay.commerce.pricing.web.internal.frontend;
 
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
@@ -24,6 +21,9 @@ import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePric
 import com.liferay.commerce.pricing.web.internal.model.PricingClassPriceList;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -50,22 +50,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRICE_LISTS,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES_PRICE_LISTS,
+	service = ClayDataSetDataProvider.class
 )
 public class CommercePricingClassPriceListDataSetDataProvider
-	implements CommerceDataSetDataProvider<PricingClassPriceList> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commercePricingClassId = ParamUtil.getLong(
-			httpServletRequest, "commercePricingClassId");
-
-		return _commercePriceListService.getCommercePriceListsCount(
-			commercePricingClassId, filter.getKeywords());
-	}
+	implements ClayDataSetDataProvider<PricingClassPriceList> {
 
 	@Override
 	public List<PricingClassPriceList> getItems(
@@ -129,6 +118,18 @@ public class CommercePricingClassPriceListDataSetDataProvider
 		}
 
 		return pricingClassPriceLists;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commercePricingClassId = ParamUtil.getLong(
+			httpServletRequest, "commercePricingClassId");
+
+		return _commercePriceListService.getCommercePriceListsCount(
+			commercePricingClassId, filter.getKeywords());
 	}
 
 	private String _getIsActive(CommercePriceList commercePriceList) {

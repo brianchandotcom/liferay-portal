@@ -136,7 +136,7 @@ CProduct cProduct = cpDefinition.getCProduct();
 			elementClasses="mt-4"
 			title='<%= LanguageUtil.get(request, "product-groups") %>'
 		>
-			<commerce-ui:dataset-display
+			<clay:data-set-display
 				contextParams='<%=
 					HashMapBuilder.<String, String>put(
 						"cpDefinitionId", String.valueOf(cpDefinitionPricingClassDisplayContext.getCPDefinitionId())

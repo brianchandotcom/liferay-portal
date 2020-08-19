@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.order.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_NOTIFICATIONS,
+	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_NOTIFICATIONS,
 	service = ClayDataSetDisplayView.class
 )
 public class CommerceNotificationDataSetDisplayView
@@ -37,6 +37,11 @@ public class CommerceNotificationDataSetDisplayView
 	@Override
 	public String getLabel() {
 		return "emails";
+	}
+
+	@Override
+	public String getName() {
+		return "emailsList";
 	}
 
 	@Override

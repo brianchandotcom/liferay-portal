@@ -16,9 +16,6 @@ package com.liferay.commerce.shipment.web.internal.frontend;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceShipmentDataSetConstants;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService;
@@ -30,6 +27,9 @@ import com.liferay.commerce.service.CommerceShipmentItemLocalService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.shipment.web.internal.model.Warehouse;
 import com.liferay.commerce.shipment.web.internal.model.WarehouseItem;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
@@ -49,32 +49,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_WAREHOUSE_ITEM,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_WAREHOUSE_ITEM,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceInventoryWarehouseItemDataSetDataProvider
-	implements CommerceDataSetDataProvider<Warehouse> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commerceShipmentItemId = ParamUtil.getLong(
-			httpServletRequest, "commerceShipmentItemId");
-
-		CommerceShipmentItem commerceShipmentItem =
-			_commerceShipmentItemService.getCommerceShipmentItem(
-				commerceShipmentItemId);
-
-		CommerceOrderItem commerceOrderItem =
-			_commerceOrderItemService.getCommerceOrderItem(
-				commerceShipmentItem.getCommerceOrderItemId());
-
-		return _commerceInventoryWarehouseItemService.
-			getCommerceInventoryWarehouseItemsCount(
-				_portal.getCompanyId(httpServletRequest),
-				commerceOrderItem.getSku());
-	}
+	implements ClayDataSetDataProvider<Warehouse> {
 
 	@Override
 	public List<Warehouse> getItems(
@@ -173,6 +152,28 @@ public class CommerceInventoryWarehouseItemDataSetDataProvider
 		}
 
 		return warehouses;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commerceShipmentItemId = ParamUtil.getLong(
+			httpServletRequest, "commerceShipmentItemId");
+
+		CommerceShipmentItem commerceShipmentItem =
+			_commerceShipmentItemService.getCommerceShipmentItem(
+				commerceShipmentItemId);
+
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemService.getCommerceOrderItem(
+				commerceShipmentItem.getCommerceOrderItemId());
+
+		return _commerceInventoryWarehouseItemService.
+			getCommerceInventoryWarehouseItemsCount(
+				_portal.getCompanyId(httpServletRequest),
+				commerceOrderItem.getSku());
 	}
 
 	@Reference

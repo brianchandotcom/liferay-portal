@@ -16,7 +16,6 @@ package com.liferay.commerce.inventory.web.internal.display.context;
 
 import static com.liferay.portal.kernel.security.permission.PermissionThreadLocal.getPermissionChecker;
 
-import com.liferay.commerce.frontend.ClayCreationMenu;
 import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
@@ -27,6 +26,7 @@ import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItem
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -209,25 +209,27 @@ public class CommerceInventoryDisplayContext {
 		return headerActionModels;
 	}
 
-	public ClayCreationMenu getInventoryItemClayCreationMenu()
-		throws Exception {
-
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
+	public CreationMenu getInventoryItemCreationMenu() throws Exception {
+		CreationMenu creationMenu = new CreationMenu();
 
 		if (PortalPermissionUtil.contains(
 				getPermissionChecker(),
 				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
 
-			clayCreationMenu.addClayCreationMenuActionItem(
-				new ClayCreationMenuActionItem(
-					getCreateInventoryItemActionURL(),
-					LanguageUtil.get(
-						_cpRequestHelper.getRequest(), "add-inventory-item"),
-					ClayCreationMenuActionItem.
-						CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE));
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(getCreateInventoryItemActionURL());
+					dropdownItem.setLabel(
+						LanguageUtil.get(
+							_cpRequestHelper.getRequest(),
+							"add-inventory-item"));
+					dropdownItem.setTarget(
+						ClayCreationMenuActionItem.
+							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+				});
 		}
 
-		return clayCreationMenu;
+		return creationMenu;
 	}
 
 	public PortletURL getPortletURL() {
@@ -250,25 +252,26 @@ public class CommerceInventoryDisplayContext {
 		return portletURL;
 	}
 
-	public ClayCreationMenu getReplenishmentClayCreationMenu()
-		throws Exception {
-
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
+	public CreationMenu getReplenishmentCreationMenu() throws Exception {
+		CreationMenu creationMenu = new CreationMenu();
 
 		if (PortalPermissionUtil.contains(
 				getPermissionChecker(),
 				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
 
-			clayCreationMenu.addClayCreationMenuActionItem(
-				new ClayCreationMenuActionItem(
-					getCreateReplenishmentActionURL(),
-					LanguageUtil.get(
-						_cpRequestHelper.getRequest(), "add-income"),
-					ClayCreationMenuActionItem.
-						CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE));
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(getCreateReplenishmentActionURL());
+					dropdownItem.setLabel(
+						LanguageUtil.get(
+							_cpRequestHelper.getRequest(), "add-income"));
+					dropdownItem.setTarget(
+						ClayCreationMenuActionItem.
+							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+				});
 		}
 
-		return clayCreationMenu;
+		return creationMenu;
 	}
 
 	public String getSku() {
@@ -304,31 +307,38 @@ public class CommerceInventoryDisplayContext {
 		return portletURL;
 	}
 
-	public ClayCreationMenu getWarehousesClayCreationMenu() throws Exception {
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
+	public CreationMenu getWarehousesCreationMenu() throws Exception {
+		CreationMenu creationMenu = new CreationMenu();
 
 		if (PortalPermissionUtil.contains(
 				getPermissionChecker(),
 				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
 
-			clayCreationMenu.addClayCreationMenuActionItem(
-				new ClayCreationMenuActionItem(
-					getAddQuantityActionURL(),
-					LanguageUtil.get(
-						_cpRequestHelper.getRequest(), "add-inventory"),
-					ClayCreationMenuActionItem.
-						CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE));
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(getAddQuantityActionURL());
+					dropdownItem.setLabel(
+						LanguageUtil.get(
+							_cpRequestHelper.getRequest(), "add-inventory"));
+					dropdownItem.setTarget(
+						ClayCreationMenuActionItem.
+							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+				});
 
-			clayCreationMenu.addClayCreationMenuActionItem(
-				new ClayCreationMenuActionItem(
-					getTransferQuantitiesActionURL(),
-					LanguageUtil.get(
-						_cpRequestHelper.getRequest(), "create-a-transfer"),
-					ClayCreationMenuActionItem.
-						CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE));
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(getTransferQuantitiesActionURL());
+					dropdownItem.setLabel(
+						LanguageUtil.get(
+							_cpRequestHelper.getRequest(),
+							"create-a-transfer"));
+					dropdownItem.setTarget(
+						ClayCreationMenuActionItem.
+							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+				});
 		}
 
-		return clayCreationMenu;
+		return creationMenu;
 	}
 
 	private final CommerceInventoryReplenishmentItemService

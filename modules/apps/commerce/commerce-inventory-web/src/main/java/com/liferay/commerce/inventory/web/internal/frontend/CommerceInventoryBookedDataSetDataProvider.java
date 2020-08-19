@@ -14,15 +14,15 @@
 
 package com.liferay.commerce.inventory.web.internal.frontend;
 
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityService;
 import com.liferay.commerce.inventory.web.internal.model.BookedQuantity;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -51,22 +51,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_BOOKED,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_BOOKED,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceInventoryBookedDataSetDataProvider
-	implements CommerceDataSetDataProvider<BookedQuantity> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		String sku = ParamUtil.getString(httpServletRequest, "sku");
-
-		return _commerceInventoryBookedQuantityService.
-			getCommerceInventoryBookedQuantitiesCount(
-				_portal.getCompanyId(httpServletRequest), sku);
-	}
+	implements ClayDataSetDataProvider<BookedQuantity> {
 
 	@Override
 	public List<BookedQuantity> getItems(
@@ -106,6 +95,18 @@ public class CommerceInventoryBookedDataSetDataProvider
 		}
 
 		return bookedQuantities;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		String sku = ParamUtil.getString(httpServletRequest, "sku");
+
+		return _commerceInventoryBookedQuantityService.
+			getCommerceInventoryBookedQuantitiesCount(
+				_portal.getCompanyId(httpServletRequest), sku);
 	}
 
 	private String _getAccountName(CommerceOrderItem commerceOrderItem)

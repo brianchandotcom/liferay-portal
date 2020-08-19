@@ -72,7 +72,7 @@ wrapperCssClass = viewMode + " " + wrapperCssClass;
 <c:choose>
 	<c:when test="<%= viewMode.equals(CommerceOrganizationConstants.LIST_VIEW_MODE) %>">
 		<div class="commerce-organization-container container container-fluid" id="<portlet:namespace />entriesContainer">
-			<commerce-ui:dataset-display
+			<clay:data-set-display
 				dataProviderKey="<%= CommerceOrganizationClayTableDataSetDisplayView.NAME %>"
 				id="<%= CommerceOrganizationClayTableDataSetDisplayView.NAME %>"
 				itemsPerPage="<%= 10 %>"

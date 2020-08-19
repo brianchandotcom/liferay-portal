@@ -89,9 +89,9 @@
 				bodyClasses="p-0"
 				title='<%= LanguageUtil.get(request, "product-groups") %>'
 			>
-				<commerce-ui:headless-dataset-display
-					apiUrl="<%= commerceDiscountDisplayContext.getDiscountPricingClassesApiUrl() %>"
-					clayHeadlessDataSetActionTemplates="<%= commerceDiscountDisplayContext.getClayHeadlessDataSetActionDiscountPricingClassTemplates() %>"
+				<clay:headless-data-set-display
+					apiURL="<%= commerceDiscountDisplayContext.getDiscountPricingClassesApiURL() %>"
+					clayDataSetActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountPricingClassClayDataSetActionDropdownItems() %>"
 					formId="fm"
 					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_PRICING_CLASSES %>"
 					itemsPerPage="<%= 10 %>"

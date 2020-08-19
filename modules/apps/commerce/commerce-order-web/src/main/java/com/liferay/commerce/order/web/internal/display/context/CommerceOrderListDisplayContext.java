@@ -14,12 +14,12 @@
 
 package com.liferay.commerce.order.web.internal.display.context;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayHeadlessDataSetActionTemplate;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.web.internal.display.context.util.CommerceOrderRequestHelper;
 import com.liferay.commerce.order.web.internal.search.CommerceOrderDisplayTerms;
 import com.liferay.commerce.order.web.internal.security.permission.resource.CommerceOrderPermission;
 import com.liferay.commerce.service.CommerceOrderNoteService;
+import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -53,12 +53,12 @@ public class CommerceOrderListDisplayContext {
 		_keywords = ParamUtil.getString(renderRequest, "keywords");
 	}
 
-	public List<ClayHeadlessDataSetActionTemplate>
-			getClayHeadlessDataSetActionTemplates()
+	public List<ClayDataSetActionDropdownItem>
+			getClayDataSetActionDropdownItems()
 		throws PortalException {
 
-		List<ClayHeadlessDataSetActionTemplate>
-			clayHeadlessDataSetActionTemplates = new ArrayList<>();
+		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
+			new ArrayList<>();
 
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
 			_commerceOrderRequestHelper.getRequest(),
@@ -67,22 +67,22 @@ public class CommerceOrderListDisplayContext {
 		portletURL.setParameter("mvcRenderCommandName", "editCommerceOrder");
 		portletURL.setParameter("commerceOrderId", "{id}");
 
-		clayHeadlessDataSetActionTemplates.add(
-			new ClayHeadlessDataSetActionTemplate(
+		clayDataSetActionDropdownItems.add(
+			new ClayDataSetActionDropdownItem(
 				portletURL.toString(), "view", "view",
 				LanguageUtil.get(
 					_commerceOrderRequestHelper.getRequest(), "view"),
 				"get", null, null));
 
-		clayHeadlessDataSetActionTemplates.add(
-			new ClayHeadlessDataSetActionTemplate(
+		clayDataSetActionDropdownItems.add(
+			new ClayDataSetActionDropdownItem(
 				"/o/headless-commerce-admin-order/v1.0/orders/{id}", "trash",
 				"delete",
 				LanguageUtil.get(
 					_commerceOrderRequestHelper.getRequest(), "delete"),
 				"delete", "delete", "async"));
 
-		return clayHeadlessDataSetActionTemplates;
+		return clayDataSetActionDropdownItems;
 	}
 
 	public int getCommerceOrderNotesCount(CommerceOrder commerceOrder)

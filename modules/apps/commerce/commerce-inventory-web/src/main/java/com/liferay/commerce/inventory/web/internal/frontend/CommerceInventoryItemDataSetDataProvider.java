@@ -16,13 +16,13 @@ package com.liferay.commerce.inventory.web.internal.frontend;
 
 import static com.liferay.portal.kernel.security.permission.PermissionThreadLocal.getPermissionChecker;
 
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.model.CIWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalService;
 import com.liferay.commerce.inventory.web.internal.model.InventoryItem;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
@@ -42,24 +42,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_ITEMS,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_ITEMS,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceInventoryItemDataSetDataProvider
-	implements CommerceDataSetDataProvider<InventoryItem> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
-
-		return _commerceInventoryWarehouseItemLocalService.
-			countItemsByCompanyId(
-				_portal.getCompanyId(httpServletRequest), filter.getKeywords());
-	}
+	implements ClayDataSetDataProvider<InventoryItem> {
 
 	@Override
 	public List<InventoryItem> getItems(
@@ -88,6 +75,20 @@ public class CommerceInventoryItemDataSetDataProvider
 		}
 
 		return inventoryItems;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		PortalPermissionUtil.check(
+			getPermissionChecker(),
+			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+
+		return _commerceInventoryWarehouseItemLocalService.
+			countItemsByCompanyId(
+				_portal.getCompanyId(httpServletRequest), filter.getKeywords());
 	}
 
 	@Reference

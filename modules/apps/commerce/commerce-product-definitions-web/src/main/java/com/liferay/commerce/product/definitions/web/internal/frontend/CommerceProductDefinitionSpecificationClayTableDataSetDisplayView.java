@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.set.display.name=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITION_SPECIFICATIONS,
+	property = "clay.data.set.display.name=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITION_SPECIFICATIONS,
 	service = ClayDataSetDisplayView.class
 )
 public class CommerceProductDefinitionSpecificationClayTableDataSetDisplayView
@@ -35,17 +35,17 @@ public class CommerceProductDefinitionSpecificationClayTableDataSetDisplayView
 	protected void addActionLinkFields(
 		ClayTableSchemaBuilder clayTableSchemaBuilder) {
 
-		ClayTableSchemaField labelField = clayTableSchemaBuilder.addField(
-			"label", "label");
+		ClayTableSchemaField labelField =
+			clayTableSchemaBuilder.addClayTableSchemaField("label", "label");
 
 		labelField.setContentRenderer("actionLink");
 	}
 
 	@Override
 	protected void addFields(ClayTableSchemaBuilder clayTableSchemaBuilder) {
-		clayTableSchemaBuilder.addField("value", "value");
-		clayTableSchemaBuilder.addField("group", "group");
-		clayTableSchemaBuilder.addField("order", "order");
+		clayTableSchemaBuilder.addClayTableSchemaField("value", "value");
+		clayTableSchemaBuilder.addClayTableSchemaField("group", "group");
+		clayTableSchemaBuilder.addClayTableSchemaField("order", "order");
 	}
 
 }

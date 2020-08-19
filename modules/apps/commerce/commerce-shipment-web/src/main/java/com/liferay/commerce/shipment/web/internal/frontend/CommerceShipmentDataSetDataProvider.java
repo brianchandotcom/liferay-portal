@@ -21,9 +21,6 @@ import com.liferay.commerce.account.model.CommerceAccountModel;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.constants.CommerceShipmentDataSetConstants;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.frontend.model.Shipment;
 import com.liferay.commerce.model.CommerceAddress;
@@ -35,6 +32,9 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShipmentService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -66,34 +66,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPMENTS,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPMENTS,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceShipmentDataSetDataProvider
-	implements CommerceDataSetDataProvider<Shipment> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commerceOrderId = ParamUtil.getLong(
-			httpServletRequest, "commerceOrderId");
-
-		CommerceOrder commerceOrder = _commerceOrderService.fetchCommerceOrder(
-			commerceOrderId);
-
-		if (commerceOrder != null) {
-			return _commerceShipmentService.getCommerceShipmentsCountByOrderId(
-				commerceOrderId);
-		}
-
-		long companyId = _portal.getCompanyId(httpServletRequest);
-
-		return _commerceShipmentService.getCommerceShipmentsCount(
-			companyId, _getCommerceChannelGroupIds(companyId),
-			_getCommerceAccountIds(_portal.getUserId(httpServletRequest)),
-			filter.getKeywords(), null, false);
-	}
+	implements ClayDataSetDataProvider<Shipment> {
 
 	@Override
 	public List<Shipment> getItems(
@@ -175,6 +152,30 @@ public class CommerceShipmentDataSetDataProvider
 		}
 
 		return shipments;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commerceOrderId = ParamUtil.getLong(
+			httpServletRequest, "commerceOrderId");
+
+		CommerceOrder commerceOrder = _commerceOrderService.fetchCommerceOrder(
+			commerceOrderId);
+
+		if (commerceOrder != null) {
+			return _commerceShipmentService.getCommerceShipmentsCountByOrderId(
+				commerceOrderId);
+		}
+
+		long companyId = _portal.getCompanyId(httpServletRequest);
+
+		return _commerceShipmentService.getCommerceShipmentsCount(
+			companyId, _getCommerceChannelGroupIds(companyId),
+			_getCommerceAccountIds(_portal.getUserId(httpServletRequest)),
+			filter.getKeywords(), null, false);
 	}
 
 	private long[] _getCommerceAccountIds(long userId) throws PortalException {

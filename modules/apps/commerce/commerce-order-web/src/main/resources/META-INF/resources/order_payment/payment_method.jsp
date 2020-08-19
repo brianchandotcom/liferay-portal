@@ -40,7 +40,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 
 		<liferay-ui:error exception="<%= CommerceOrderPaymentMethodException.class %>" message="please-select-a-valid-payment-method" />
 
-		<commerce-ui:dataset-display
+		<clay:data-set-display
 			contextParams="<%= contextParams %>"
 			dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PAYMENT_METHODS %>"
 			formId="fm"

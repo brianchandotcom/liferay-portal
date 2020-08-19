@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.order.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.list.ClayListDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.list.BaseListClayDataSetDisplayView;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,11 +24,11 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPPING_ADDRESSES,
-	service = {ClayDataSetDisplayView.class, ClayListDataSetDisplayView.class}
+	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPPING_ADDRESSES,
+	service = ClayDataSetDisplayView.class
 )
 public class CommerceShippingAddressClayListDataSetDisplayView
-	extends ClayListDataSetDisplayView {
+	extends BaseListClayDataSetDisplayView {
 
 	@Override
 	public String getDescription() {

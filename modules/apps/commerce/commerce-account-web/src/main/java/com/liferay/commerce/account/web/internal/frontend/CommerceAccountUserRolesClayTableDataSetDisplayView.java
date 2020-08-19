@@ -17,14 +17,14 @@ package com.liferay.commerce.account.web.internal.frontend;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.web.internal.model.AccountRole;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroupRole;
@@ -49,38 +49,23 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.data.provider.key=" + CommerceAccountUserRolesClayTableDataSetDisplayView.NAME,
-		"commerce.data.set.display.name=" + CommerceAccountUserRolesClayTableDataSetDisplayView.NAME
+		"clay.data.provider.key=" + CommerceAccountUserRolesClayTableDataSetDisplayView.NAME,
+		"clay.data.set.display.name=" + CommerceAccountUserRolesClayTableDataSetDisplayView.NAME
 	},
-	service = {ClayDataSetDisplayView.class, CommerceDataSetDataProvider.class}
+	service = {ClayDataSetDataProvider.class, ClayDataSetDisplayView.class}
 )
 public class CommerceAccountUserRolesClayTableDataSetDisplayView
-	extends ClayTableDataSetDisplayView
-	implements CommerceDataSetDataProvider<AccountRole> {
+	extends BaseTableClayDataSetDisplayView
+	implements ClayDataSetDataProvider<AccountRole> {
 
 	public static final String NAME = "commerceAccountUserRoles";
 
 	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commerceAccountId = ParamUtil.getLong(
-			httpServletRequest, "commerceAccountId");
-		long userId = ParamUtil.getLong(httpServletRequest, "userId");
-
-		CommerceAccount commerceAccount =
-			_commerceAccountService.getCommerceAccount(commerceAccountId);
-
-		return _userGroupRoleLocalService.getUserGroupRolesCount(
-			userId, commerceAccount.getCommerceAccountGroupId());
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+			_clayTableSchemaBuilderFactory.create();
 
-		clayTableSchemaBuilder.addField("name", "name");
+		clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
 		return clayTableSchemaBuilder.build();
 	}
@@ -119,6 +104,22 @@ public class CommerceAccountUserRolesClayTableDataSetDisplayView
 		}
 
 		return accountRoles;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commerceAccountId = ParamUtil.getLong(
+			httpServletRequest, "commerceAccountId");
+		long userId = ParamUtil.getLong(httpServletRequest, "userId");
+
+		CommerceAccount commerceAccount =
+			_commerceAccountService.getCommerceAccount(commerceAccountId);
+
+		return _userGroupRoleLocalService.getUserGroupRolesCount(
+			userId, commerceAccount.getCommerceAccountGroupId());
 	}
 
 	@Reference

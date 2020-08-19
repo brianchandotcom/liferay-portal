@@ -15,9 +15,6 @@
 package com.liferay.commerce.order.content.web.internal.frontend;
 
 import com.liferay.commerce.currency.model.CommerceMoney;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.content.web.internal.model.OrderItem;
@@ -29,6 +26,9 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.CPSubscriptionType;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderItemService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -62,21 +62,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDER_ITEMS,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDER_ITEMS,
+	service = ClayDataSetDataProvider.class
 )
 public class CommercePlacedOrderItemDataSetDataProvider
-	implements CommerceDataSetDataProvider<OrderItem> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		OrderFilterImpl orderFilterImpl = (OrderFilterImpl)filter;
-
-		return _commerceOrderItemService.getCommerceOrderItemsCount(
-			orderFilterImpl.getCommerceOrderId());
-	}
+	implements ClayDataSetDataProvider<OrderItem> {
 
 	@Override
 	public List<OrderItem> getItems(
@@ -97,6 +87,17 @@ public class CommercePlacedOrderItemDataSetDataProvider
 		}
 
 		return Collections.emptyList();
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		OrderFilterImpl orderFilterImpl = (OrderFilterImpl)filter;
+
+		return _commerceOrderItemService.getCommerceOrderItemsCount(
+			orderFilterImpl.getCommerceOrderId());
 	}
 
 	private String _formatDiscountAmount(

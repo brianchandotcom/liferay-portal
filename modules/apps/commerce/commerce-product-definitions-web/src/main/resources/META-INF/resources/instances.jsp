@@ -22,13 +22,13 @@ CPInstanceDisplayContext cpInstanceDisplayContext = (CPInstanceDisplayContext)re
 
 <c:if test="<%= CommerceCatalogPermission.contains(permissionChecker, cpInstanceDisplayContext.getCPDefinition(), ActionKeys.VIEW) %>">
 	<div class="pt-4" id="<portlet:namespace />productInstancesContainer">
-		<commerce-ui:dataset-display
-			clayCreationMenu="<%= cpInstanceDisplayContext.getClayCreationMenu() %>"
+		<clay:data-set-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
 					"cpDefinitionId", String.valueOf(cpInstanceDisplayContext.getCPDefinitionId())
 				).build()
 			%>'
+			creationMenu="<%= cpInstanceDisplayContext.getCreationMenu() %>"
 			dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_INSTANCES %>"
 			id="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_INSTANCES %>"
 			itemsPerPage="<%= 10 %>"

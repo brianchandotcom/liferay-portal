@@ -14,9 +14,6 @@
 
 package com.liferay.commerce.order.web.internal.frontend;
 
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.model.AuthorField;
 import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.model.CommerceOrder;
@@ -26,6 +23,9 @@ import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryL
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateService;
 import com.liferay.commerce.order.web.internal.model.Notification;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -61,27 +61,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_NOTIFICATIONS,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_NOTIFICATIONS,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceNotificationDataSetDataProvider
-	implements CommerceDataSetDataProvider<Notification> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commerceOrderId = ParamUtil.getLong(
-			httpServletRequest, "commerceOrderId");
-
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			commerceOrderId);
-
-		return _commerceNotificationQueueEntryLocalService.
-			getCommerceNotificationQueueEntriesCount(
-				commerceOrder.getGroupId(), CommerceOrder.class.getName(),
-				commerceOrder.getCommerceOrderId(), true);
-	}
+	implements ClayDataSetDataProvider<Notification> {
 
 	@Override
 	public List<Notification> getItems(
@@ -135,6 +119,23 @@ public class CommerceNotificationDataSetDataProvider
 		}
 
 		return notifications;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commerceOrderId = ParamUtil.getLong(
+			httpServletRequest, "commerceOrderId");
+
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			commerceOrderId);
+
+		return _commerceNotificationQueueEntryLocalService.
+			getCommerceNotificationQueueEntriesCount(
+				commerceOrder.getGroupId(), CommerceOrder.class.getName(),
+				commerceOrder.getCommerceOrderId(), true);
 	}
 
 	protected String getCommerceNotificationTemplateType(

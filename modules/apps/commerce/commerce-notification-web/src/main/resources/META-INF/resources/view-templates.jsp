@@ -26,13 +26,13 @@ PortletURL portletURL = commerceNotificationQueueEntriesDisplayContext.getPortle
 portletURL.setParameter("notificationNavigationItem", notificationNavigationItem);
 %>
 
-<commerce-ui:dataset-display
-	clayCreationMenu="<%= commerceNotificationQueueEntriesDisplayContext.getNotificationTemplateClayCreationMenu() %>"
+<clay:data-set-display
 	contextParams='<%=
 		HashMapBuilder.<String, String>put(
 			"commerceChannelId", String.valueOf(commerceNotificationQueueEntriesDisplayContext.getCommerceChannelId())
 		).build()
 	%>'
+	creationMenu="<%= commerceNotificationQueueEntriesDisplayContext.getNotificationTemplateCreationMenu() %>"
 	dataProviderKey="<%= CommerceNotificationTemplateClayTable.NAME %>"
 	id="<%= CommerceNotificationTemplateClayTable.NAME %>"
 	itemsPerPage="<%= 10 %>"

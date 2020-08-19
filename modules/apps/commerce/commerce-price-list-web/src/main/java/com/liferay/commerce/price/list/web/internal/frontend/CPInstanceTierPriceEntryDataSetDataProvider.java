@@ -15,14 +15,14 @@
 package com.liferay.commerce.price.list.web.internal.frontend;
 
 import com.liferay.commerce.currency.model.CommerceMoney;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.commerce.price.list.web.internal.model.InstanceTierPriceEntry;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Sort;
@@ -44,22 +44,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommercePriceListDataSetConstants.COMMERCE_DATA_SET_KEY_INSTANCE_TIER_PRICE_ENTRIES,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommercePriceListDataSetConstants.COMMERCE_DATA_SET_KEY_INSTANCE_TIER_PRICE_ENTRIES,
+	service = ClayDataSetDataProvider.class
 )
 public class CPInstanceTierPriceEntryDataSetDataProvider
-	implements CommerceDataSetDataProvider<InstanceTierPriceEntry> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commercePriceEntryId = ParamUtil.getLong(
-			httpServletRequest, "commercePriceEntryId");
-
-		return _commerceTierPriceEntryService.getCommerceTierPriceEntriesCount(
-			commercePriceEntryId);
-	}
+	implements ClayDataSetDataProvider<InstanceTierPriceEntry> {
 
 	@Override
 	public List<InstanceTierPriceEntry> getItems(
@@ -109,6 +98,18 @@ public class CPInstanceTierPriceEntryDataSetDataProvider
 		}
 
 		return instanceTierPriceEntries;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commercePriceEntryId = ParamUtil.getLong(
+			httpServletRequest, "commercePriceEntryId");
+
+		return _commerceTierPriceEntryService.getCommerceTierPriceEntriesCount(
+			commercePriceEntryId);
 	}
 
 	@Reference

@@ -24,10 +24,10 @@ import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.discount.target.CommerceDiscountTargetRegistry;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
-import com.liferay.commerce.frontend.clay.data.set.ClayHeadlessDataSetActionTemplate;
 import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
+import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -76,6 +76,40 @@ public class CommerceDiscountQualifiersDisplayContext
 			commerceDiscountCommerceAccountGroupRelService;
 	}
 
+	public List<ClayDataSetActionDropdownItem>
+			getAccountClayDataSetActionDropdownItems()
+		throws PortalException {
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			httpServletRequest, CommerceAccount.class.getName(),
+			PortletProvider.Action.EDIT);
+
+		portletURL.setParameter("mvcRenderCommandName", "editCommerceAccount");
+		portletURL.setParameter(
+			"redirect", commercePricingRequestHelper.getCurrentURL());
+		portletURL.setParameter("commerceAccountId", "{account.id}");
+
+		return getClayHeadlessDataSetActionTemplates(
+			portletURL.toString(), false);
+	}
+
+	public List<ClayDataSetActionDropdownItem>
+			getAccountGroupClayDataSetActionDropdownItems()
+		throws PortalException {
+
+		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
+			new ArrayList<>();
+
+		clayDataSetActionDropdownItems.add(
+			new ClayDataSetActionDropdownItem(
+				null, "trash", "remove",
+				LanguageUtil.get(httpServletRequest, "remove"), "delete",
+				"delete",
+				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
+
+		return clayDataSetActionDropdownItems;
+	}
+
 	public String getActiveAccountEligibility() throws PortalException {
 		long commerceDiscountId = getCommerceDiscountId();
 
@@ -113,42 +147,19 @@ public class CommerceDiscountQualifiersDisplayContext
 		return "all";
 	}
 
-	public List<ClayHeadlessDataSetActionTemplate>
-			getClayHeadlessDataSetActionDiscountAccountGroupTemplates()
-		throws PortalException {
-
-		List<ClayHeadlessDataSetActionTemplate>
-			clayHeadlessDataSetActionTemplates = new ArrayList<>();
-
-		clayHeadlessDataSetActionTemplates.add(
-			new ClayHeadlessDataSetActionTemplate(
-				null, "trash", "remove",
-				LanguageUtil.get(httpServletRequest, "remove"), "delete",
-				"delete",
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
-
-		return clayHeadlessDataSetActionTemplates;
+	public String getDiscountAccountGroupsApiURL() throws PortalException {
+		return "/o/headless-commerce-admin-pricing/v2.0/discounts/" +
+			getCommerceDiscountId() +
+				"/discount-account-groups?nestedFields=accountGroup";
 	}
 
-	public List<ClayHeadlessDataSetActionTemplate>
-			getClayHeadlessDataSetActionDiscountAccountTemplates()
-		throws PortalException {
-
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			httpServletRequest, CommerceAccount.class.getName(),
-			PortletProvider.Action.EDIT);
-
-		portletURL.setParameter("mvcRenderCommandName", "editCommerceAccount");
-		portletURL.setParameter(
-			"redirect", commercePricingRequestHelper.getCurrentURL());
-		portletURL.setParameter("commerceAccountId", "{account.id}");
-
-		return getClayHeadlessDataSetActionTemplates(
-			portletURL.toString(), false);
+	public String getDiscountAccountsApiURL() throws PortalException {
+		return "/o/headless-commerce-admin-pricing/v2.0/discounts/" +
+			getCommerceDiscountId() + "/discount-accounts?nestedFields=account";
 	}
 
-	public List<ClayHeadlessDataSetActionTemplate>
-			getClayHeadlessDataSetActionDiscountChannelTemplates()
+	public List<ClayDataSetActionDropdownItem>
+			getDiscountChannelClayDataSetActionDropdownItems()
 		throws PortalException {
 
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
@@ -164,18 +175,7 @@ public class CommerceDiscountQualifiersDisplayContext
 			portletURL.toString(), false);
 	}
 
-	public String getDiscountAccountGroupsApiUrl() throws PortalException {
-		return "/o/headless-commerce-admin-pricing/v2.0/discounts/" +
-			getCommerceDiscountId() +
-				"/discount-account-groups?nestedFields=accountGroup";
-	}
-
-	public String getDiscountAccountsApiUrl() throws PortalException {
-		return "/o/headless-commerce-admin-pricing/v2.0/discounts/" +
-			getCommerceDiscountId() + "/discount-accounts?nestedFields=account";
-	}
-
-	public String getDiscountChannelsApiUrl() throws PortalException {
+	public String getDiscountChannelsApiURL() throws PortalException {
 		return "/o/headless-commerce-admin-pricing/v2.0/discounts/" +
 			getCommerceDiscountId() + "/discount-channels?nestedFields=channel";
 	}

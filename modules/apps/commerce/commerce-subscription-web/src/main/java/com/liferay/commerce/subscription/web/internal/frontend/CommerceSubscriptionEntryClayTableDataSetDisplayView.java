@@ -14,12 +14,12 @@
 
 package com.liferay.commerce.subscription.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,38 +30,43 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.set.display.name=" + CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_ENTRIES,
+	property = "clay.data.set.display.name=" + CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_ENTRIES,
 	service = ClayDataSetDisplayView.class
 )
 public class CommerceSubscriptionEntryClayTableDataSetDisplayView
-	extends ClayTableDataSetDisplayView {
+	extends BaseTableClayDataSetDisplayView {
 
 	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+			_clayTableSchemaBuilderFactory.create();
 
 		ClayTableSchemaField subscriptionIdField =
-			clayTableSchemaBuilder.addField("subscriptionId", "id");
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"subscriptionId", "id");
 
 		subscriptionIdField.setContentRenderer("actionLink");
 
 		ClayTableSchemaField subscriptionStatusField =
-			clayTableSchemaBuilder.addField("subscriptionStatus", "status");
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"subscriptionStatus", "status");
 
 		subscriptionStatusField.setContentRenderer("label");
 
-		ClayTableSchemaField orderIdField = clayTableSchemaBuilder.addField(
-			"orderId", "order-id");
+		ClayTableSchemaField orderIdField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"orderId", "order-id");
 
 		orderIdField.setContentRenderer("link");
 
-		ClayTableSchemaField accountIdField = clayTableSchemaBuilder.addField(
-			"commerceAccountId", "account-id");
+		ClayTableSchemaField accountIdField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"commerceAccountId", "account-id");
 
 		accountIdField.setContentRenderer("link");
 
-		clayTableSchemaBuilder.addField("commerceAccountName", "account-name");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"commerceAccountName", "account-name");
 
 		return clayTableSchemaBuilder.build();
 	}

@@ -16,10 +16,7 @@ package com.liferay.commerce.subscription.web.internal.frontend;
 
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceSubscriptionEntryConstants;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
 import com.liferay.commerce.frontend.DefaultFilterImpl;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
@@ -29,6 +26,9 @@ import com.liferay.commerce.service.CommerceSubscriptionEntryService;
 import com.liferay.commerce.subscription.web.internal.model.Label;
 import com.liferay.commerce.subscription.web.internal.model.Link;
 import com.liferay.commerce.subscription.web.internal.model.SubscriptionEntry;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -57,21 +57,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_ENTRIES,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceSubscriptionDataSetConstants.COMMERCE_DATA_SET_KEY_SUBSCRIPTION_ENTRIES,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceSubscriptionEntryDataSetDataProvider
-	implements CommerceDataSetDataProvider<SubscriptionEntry> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		BaseModelSearchResult<CommerceSubscriptionEntry> baseModelSearchResult =
-			_getBaseModelSearchResult(httpServletRequest, filter, null, null);
-
-		return baseModelSearchResult.getLength();
-	}
+	implements ClayDataSetDataProvider<SubscriptionEntry> {
 
 	@Override
 	public List<SubscriptionEntry> getItems(
@@ -122,6 +112,17 @@ public class CommerceSubscriptionEntryDataSetDataProvider
 		}
 
 		return subscriptionEntries;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		BaseModelSearchResult<CommerceSubscriptionEntry> baseModelSearchResult =
+			_getBaseModelSearchResult(httpServletRequest, filter, null, null);
+
+		return baseModelSearchResult.getLength();
 	}
 
 	private BaseModelSearchResult<CommerceSubscriptionEntry>

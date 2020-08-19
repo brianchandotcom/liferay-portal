@@ -14,14 +14,13 @@
 
 package com.liferay.commerce.pricing.web.internal.display.context;
 
-import com.liferay.commerce.frontend.ClayCreationMenu;
-import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.pricing.constants.CommercePricingClassActionKeys;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePricingClassService;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -79,22 +78,6 @@ public class CommercePricingClassDisplayContext
 		return portletURL.toString();
 	}
 
-	public ClayCreationMenu getClayCreationMenu() throws Exception {
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
-
-		if (hasAddPermission()) {
-			clayCreationMenu.addClayCreationMenuActionItem(
-				new ClayCreationMenuActionItem(
-					getAddCommercePricingClassRenderURL(),
-					LanguageUtil.get(
-						commercePricingRequestHelper.getRequest(),
-						"add-product-group"),
-					ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL));
-		}
-
-		return clayCreationMenu;
-	}
-
 	public CommercePricingClass getCommercePricingClass()
 		throws PortalException {
 
@@ -118,6 +101,25 @@ public class CommercePricingClassDisplayContext
 		}
 
 		return commercePricingClass.getCommercePricingClassId();
+	}
+
+	public CreationMenu getCreationMenu() throws Exception {
+		CreationMenu creationMenu = new CreationMenu();
+
+		if (hasAddPermission()) {
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(getAddCommercePricingClassRenderURL());
+					dropdownItem.setLabel(
+						LanguageUtil.get(
+							commercePricingRequestHelper.getRequest(),
+							"add-product-group"));
+					dropdownItem.setTarget(
+						ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL);
+				});
+		}
+
+		return creationMenu;
 	}
 
 	public String getEditCommercePricingClassActionURL() throws Exception {

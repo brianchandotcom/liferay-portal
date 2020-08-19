@@ -21,21 +21,21 @@ import com.liferay.commerce.account.web.internal.model.Account;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
 import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -68,17 +68,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.data.provider.key=" + CommerceAccountClayDataSetDataSetDisplayView.NAME,
-		"commerce.data.set.display.name=" + CommerceAccountClayDataSetDataSetDisplayView.NAME
+		"clay.data.provider.key=" + CommerceAccountClayDataSetDataSetDisplayView.NAME,
+		"clay.data.set.display.name=" + CommerceAccountClayDataSetDataSetDisplayView.NAME
 	},
 	service = {
-		ClayDataSetActionProvider.class, ClayDataSetDisplayView.class,
-		CommerceDataSetDataProvider.class
+		ClayDataSetActionProvider.class, ClayDataSetDataProvider.class,
+		ClayDataSetDisplayView.class
 	}
 )
 public class CommerceAccountClayDataSetDataSetDisplayView
-	extends ClayTableDataSetDisplayView
-	implements ClayDataSetActionProvider, CommerceDataSetDataProvider<Account> {
+	extends BaseTableClayDataSetDisplayView
+	implements ClayDataSetActionProvider, ClayDataSetDataProvider<Account> {
 
 	public static final String NAME = "commerceAccounts";
 
@@ -158,43 +158,24 @@ public class CommerceAccountClayDataSetDataSetDisplayView
 	}
 
 	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		CommerceContext commerceContext = _commerceContextFactory.create(
-			themeDisplay.getCompanyId(),
-			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
-				themeDisplay.getScopeGroupId()),
-			_portal.getUserId(httpServletRequest), 0, 0);
-
-		return _commerceAccountService.getUserCommerceAccountsCount(
-			_portal.getUserId(httpServletRequest),
-			CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
-			commerceContext.getCommerceSiteType(), filter.getKeywords());
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField nameField = clayTableSchemaBuilder.addField(
-			"name", "name");
+		ClayTableSchemaField nameField =
+			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
 		nameField.setContentRenderer("actionLink");
 
-		clayTableSchemaBuilder.addField("accountId", "id");
+		clayTableSchemaBuilder.addClayTableSchemaField("accountId", "id");
 
-		clayTableSchemaBuilder.addField("email", "email");
+		clayTableSchemaBuilder.addClayTableSchemaField("email", "email");
 
-		clayTableSchemaBuilder.addField("address", "address");
+		clayTableSchemaBuilder.addClayTableSchemaField("address", "address");
 
-		ClayTableSchemaField statusField = clayTableSchemaBuilder.addField(
-			"statusLabel", "status");
+		ClayTableSchemaField statusField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"statusLabel", "status");
 
 		statusField.setContentRenderer("label");
 
@@ -265,6 +246,27 @@ public class CommerceAccountClayDataSetDataSetDisplayView
 		}
 
 		return accounts;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		CommerceContext commerceContext = _commerceContextFactory.create(
+			themeDisplay.getCompanyId(),
+			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
+				themeDisplay.getScopeGroupId()),
+			_portal.getUserId(httpServletRequest), 0, 0);
+
+		return _commerceAccountService.getUserCommerceAccountsCount(
+			_portal.getUserId(httpServletRequest),
+			CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
+			commerceContext.getCommerceSiteType(), filter.getKeywords());
 	}
 
 	private String _getAccountViewDetailURL(

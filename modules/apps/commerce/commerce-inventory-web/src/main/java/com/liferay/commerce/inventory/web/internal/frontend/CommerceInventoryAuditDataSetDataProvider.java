@@ -14,14 +14,14 @@
 
 package com.liferay.commerce.inventory.web.internal.frontend;
 
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.model.TimelineModel;
 import com.liferay.commerce.inventory.model.CommerceInventoryAudit;
 import com.liferay.commerce.inventory.service.CommerceInventoryAuditService;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
 import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeRegistry;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
@@ -48,21 +48,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_AUDIT,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_AUDIT,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceInventoryAuditDataSetDataProvider
-	implements CommerceDataSetDataProvider<TimelineModel> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		String sku = ParamUtil.getString(httpServletRequest, "sku");
-
-		return _commerceInventoryAuditService.getCommerceInventoryAuditsCount(
-			_portal.getCompanyId(httpServletRequest), sku);
-	}
+	implements ClayDataSetDataProvider<TimelineModel> {
 
 	@Override
 	public List<TimelineModel> getItems(
@@ -118,6 +108,17 @@ public class CommerceInventoryAuditDataSetDataProvider
 		}
 
 		return timelineModels;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		String sku = ParamUtil.getString(httpServletRequest, "sku");
+
+		return _commerceInventoryAuditService.getCommerceInventoryAuditsCount(
+			_portal.getCompanyId(httpServletRequest), sku);
 	}
 
 	@Reference

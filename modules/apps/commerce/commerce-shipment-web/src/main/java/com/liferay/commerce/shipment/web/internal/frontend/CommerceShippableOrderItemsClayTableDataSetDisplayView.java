@@ -15,11 +15,11 @@
 package com.liferay.commerce.shipment.web.internal.frontend;
 
 import com.liferay.commerce.constants.CommerceShipmentDataSetConstants;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,26 +29,29 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.set.display.name=" + CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPPABLE_ORDER_ITEMS,
+	property = "clay.data.set.display.name=" + CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPPABLE_ORDER_ITEMS,
 	service = ClayDataSetDisplayView.class
 )
 public class CommerceShippableOrderItemsClayTableDataSetDisplayView
-	extends ClayTableDataSetDisplayView {
+	extends BaseTableClayDataSetDisplayView {
 
 	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+			_clayTableSchemaBuilderFactory.create();
 
-		clayTableSchemaBuilder.addField("sku", "sku");
+		clayTableSchemaBuilder.addClayTableSchemaField("sku", "sku");
 
-		clayTableSchemaBuilder.addField("orderId", "order-id");
+		clayTableSchemaBuilder.addClayTableSchemaField("orderId", "order-id");
 
-		clayTableSchemaBuilder.addField("quantity", "outstanding-quantity");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"quantity", "outstanding-quantity");
 
-		clayTableSchemaBuilder.addField("available", "available");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"available", "available");
 
-		clayTableSchemaBuilder.addField("icon", "address-matches-shipment");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"icon", "address-matches-shipment");
 
 		return clayTableSchemaBuilder.build();
 	}

@@ -15,9 +15,6 @@
 package com.liferay.commerce.order.content.web.internal.frontend;
 
 import com.liferay.commerce.currency.model.CommerceMoney;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
@@ -32,6 +29,9 @@ import com.liferay.commerce.product.util.CPSubscriptionType;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,13 +40,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
@@ -67,21 +66,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDER_ITEMS,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDER_ITEMS,
+	service = ClayDataSetDataProvider.class
 )
 public class CommercePendingOrderItemDataSetDataProvider
-	implements CommerceDataSetDataProvider<OrderItem> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		OrderFilterImpl orderFilterImpl = (OrderFilterImpl)filter;
-
-		return _commerceOrderItemService.getCommerceOrderItemsCount(
-			orderFilterImpl.getCommerceOrderId());
-	}
+	implements ClayDataSetDataProvider<OrderItem> {
 
 	@Override
 	public List<OrderItem> getItems(
@@ -106,9 +95,20 @@ public class CommercePendingOrderItemDataSetDataProvider
 		return Collections.emptyList();
 	}
 
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		OrderFilterImpl orderFilterImpl = (OrderFilterImpl)filter;
+
+		return _commerceOrderItemService.getCommerceOrderItemsCount(
+			orderFilterImpl.getCommerceOrderId());
+	}
+
 	private String _formatDiscountAmount(
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
-		throws Exception {
+		throws PortalException {
 
 		if (commerceOrderItemPrice.getDiscountAmount() == null) {
 			return StringPool.BLANK;
@@ -122,7 +122,7 @@ public class CommercePendingOrderItemDataSetDataProvider
 
 	private String _formatFinalPrice(
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
-		throws Exception {
+		throws PortalException {
 
 		if (commerceOrderItemPrice.getFinalPrice() == null) {
 			return StringPool.BLANK;
@@ -135,7 +135,7 @@ public class CommercePendingOrderItemDataSetDataProvider
 
 	private String _formatPromoPrice(
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
-		throws Exception {
+		throws PortalException {
 
 		CommerceMoney promoPrice = commerceOrderItemPrice.getPromoPrice();
 
@@ -154,7 +154,7 @@ public class CommercePendingOrderItemDataSetDataProvider
 
 	private String _formatSubscriptionPeriod(
 			CommerceOrderItem commerceOrderItem, Locale locale)
-		throws Exception {
+		throws PortalException {
 
 		CPInstance cpInstance = commerceOrderItem.fetchCPInstance();
 
@@ -192,7 +192,7 @@ public class CommercePendingOrderItemDataSetDataProvider
 
 	private String _formatUnitPrice(
 			CommerceOrderItemPrice commerceOrderItemPrice, Locale locale)
-		throws Exception {
+		throws PortalException {
 
 		if (commerceOrderItemPrice.getUnitPrice() == null) {
 			return StringPool.BLANK;
@@ -268,7 +268,7 @@ public class CommercePendingOrderItemDataSetDataProvider
 
 	private String _getCommerceOrderOptions(
 			CommerceOrderItem commerceOrderItem, Locale locale)
-		throws Exception {
+		throws PortalException {
 
 		StringJoiner stringJoiner = new StringJoiner(
 			StringPool.COMMA_AND_SPACE);
@@ -287,9 +287,8 @@ public class CommercePendingOrderItemDataSetDataProvider
 
 	private Map<Long, List<CommerceOrderValidatorResult>>
 			_getCommerceOrderValidatorResultMap(
-				List<CommerceOrderItem> commerceOrderItems,
-				ThemeDisplay themeDisplay)
-		throws Exception {
+				List<CommerceOrderItem> commerceOrderItems, Locale locale)
+		throws PortalException {
 
 		if (commerceOrderItems.isEmpty()) {
 			return Collections.emptyMap();
@@ -298,7 +297,7 @@ public class CommercePendingOrderItemDataSetDataProvider
 		CommerceOrderItem commerceOrderItem = commerceOrderItems.get(0);
 
 		return _commerceOrderValidatorRegistry.getCommerceOrderValidatorResults(
-			themeDisplay.getLocale(),
+			locale,
 			_commerceOrderService.getCommerceOrder(
 				commerceOrderItem.getCommerceOrderId()));
 	}
@@ -314,13 +313,9 @@ public class CommercePendingOrderItemDataSetDataProvider
 			return Collections.emptyList();
 		}
 
+		Locale locale = _portal.getLocale(httpServletRequest);
+
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			Locale locale = themeDisplay.getLocale();
-
 			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
 			CommerceOrderItemPrice commerceOrderItemPrice =
@@ -330,7 +325,7 @@ public class CommercePendingOrderItemDataSetDataProvider
 			Map<Long, List<CommerceOrderValidatorResult>>
 				commerceOrderValidatorResultMap =
 					_getCommerceOrderValidatorResultMap(
-						commerceOrderItems, themeDisplay);
+						commerceOrderItems, locale);
 
 			orderItems.add(
 				new OrderItem(
@@ -377,5 +372,8 @@ public class CommercePendingOrderItemDataSetDataProvider
 
 	@Reference
 	private CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;
+
+	@Reference
+	private Portal _portal;
 
 }

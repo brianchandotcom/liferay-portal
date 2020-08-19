@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
-import com.liferay.commerce.frontend.ClayCreationMenu;
-import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
 import com.liferay.commerce.product.configuration.CPDefinitionLinkTypeSettings;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
@@ -25,6 +23,7 @@ import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSele
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -66,27 +65,6 @@ public class CPDefinitionLinkDisplayContext
 		_itemSelector = itemSelector;
 	}
 
-	public ClayCreationMenu getClayCreationMenu() {
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
-
-		for (String type : getCPDefinitionLinkTypes()) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(liferayPortletResponse.getNamespace());
-			sb.append("addCommerceProductDefinitionLink");
-			sb.append(type);
-
-			clayCreationMenu.addClayCreationMenuActionItem(
-				new ClayCreationMenuActionItem(
-					sb.toString(),
-					LanguageUtil.format(
-						httpServletRequest, "add-x-product", type, true),
-					ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_EVENT));
-		}
-
-		return clayCreationMenu;
-	}
-
 	public CPDefinitionLink getCPDefinitionLink() throws PortalException {
 		if (_cpDefinitionLink != null) {
 			return _cpDefinitionLink;
@@ -110,6 +88,30 @@ public class CPDefinitionLinkDisplayContext
 
 	public String[] getCPDefinitionLinkTypes() {
 		return _cpDefinitionLinkTypeSettings.getTypes();
+	}
+
+	public CreationMenu getCreationMenu() {
+		CreationMenu creationMenu = new CreationMenu();
+
+		for (String type : getCPDefinitionLinkTypes()) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(liferayPortletResponse.getNamespace());
+			sb.append("addCommerceProductDefinitionLink");
+			sb.append(type);
+
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(sb.toString());
+					dropdownItem.setLabel(
+						LanguageUtil.format(
+							httpServletRequest, "add-x-product", type, true));
+					dropdownItem.setTarget(
+						ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_EVENT);
+				});
+		}
+
+		return creationMenu;
 	}
 
 	public String getItemSelectorUrl(String type) throws PortalException {

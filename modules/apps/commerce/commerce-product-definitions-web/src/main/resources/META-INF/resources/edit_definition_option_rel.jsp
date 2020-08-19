@@ -122,13 +122,13 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 				}
 				%>
 
-				<commerce-ui:dataset-display
-					clayCreationMenu="<%= cpDefinitionOptionRelDisplayContext.getClayCreationMenu() %>"
+				<clay:data-set-display
 					contextParams='<%=
 						HashMapBuilder.<String, String>put(
 							"cpDefinitionOptionRelId", String.valueOf(cpDefinitionOptionRelId)
 						).build()
 					%>'
+					creationMenu="<%= cpDefinitionOptionRelDisplayContext.getCreationMenu() %>"
 					dataProviderKey="<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTION_VALUES %>"
 					id="<%= datasetDisplayId %>"
 					itemsPerPage="<%= 10 %>"

@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.inventory.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.timeline.ClayTimelineDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.timeline.BaseTimelineClayDataSetDisplayView;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,11 +24,11 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.set.display.name=" + CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_AUDIT,
+	property = "clay.data.set.display.name=" + CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_AUDIT,
 	service = ClayDataSetDisplayView.class
 )
 public class CommerceInventoryAuditClayTimelineDataSetDisplayView
-	extends ClayTimelineDataSetDisplayView {
+	extends BaseTimelineClayDataSetDisplayView {
 
 	@Override
 	public String getDate() {

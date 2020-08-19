@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.price.list.web.internal.display.context;
 
-import com.liferay.commerce.frontend.ClayCreationMenu;
-import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
 import com.liferay.commerce.item.selector.criterion.CommercePriceListItemSelectorCriterion;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
@@ -24,6 +22,8 @@ import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActio
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -61,22 +61,6 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		_commercePriceEntryService = commercePriceEntryService;
 		_commercePriceListActionHelper = commercePriceListActionHelper;
 		_itemSelector = itemSelector;
-	}
-
-	public ClayCreationMenu getClayCreationMenu() throws PortalException {
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
-
-		CPInstance cpInstance = getCPInstance();
-
-		clayCreationMenu.addClayCreationMenuActionItem(
-			new ClayCreationMenuActionItem(
-				liferayPortletResponse.getNamespace() + "addCommercePriceEntry",
-				LanguageUtil.format(
-					httpServletRequest, "add-x-to-price-list",
-					HtmlUtil.escape(cpInstance.getSku()), false),
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_EVENT));
-
-		return clayCreationMenu;
 	}
 
 	public CommercePriceEntry getCommercePriceEntry() throws PortalException {
@@ -117,6 +101,24 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		}
 
 		return cpInstanceId;
+	}
+
+	public CreationMenu getCreationMenu() throws PortalException {
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				CPInstance cpInstance = getCPInstance();
+
+				dropdownItem.setHref(
+					liferayPortletResponse.getNamespace() +
+						"addCommercePriceEntry");
+				dropdownItem.setLabel(
+					LanguageUtil.format(
+						httpServletRequest, "add-x-to-price-list",
+						HtmlUtil.escape(cpInstance.getSku()), false));
+				dropdownItem.setTarget(
+					ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_EVENT);
+			}
+		).build();
 	}
 
 	public PortletURL getInstancePriceListURL() throws PortalException {

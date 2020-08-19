@@ -16,7 +16,6 @@ package com.liferay.commerce.order.web.internal.display.context;
 
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceOrderConstants;
-import com.liferay.commerce.frontend.ClayCreationMenu;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.frontend.model.StepModel;
 import com.liferay.commerce.model.CommerceAddress;
@@ -40,6 +39,8 @@ import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShipmentService;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -153,11 +154,9 @@ public class CommerceOrderEditDisplayContext {
 		return sb.toString();
 	}
 
-	public ClayCreationMenu getCommerceAddressClayCreationMenu(
+	public CreationMenu getCommerceAddressCreationMenu(
 			String mvcRenderCommandName)
 		throws Exception {
-
-		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
 
 		LiferayPortletResponse liferayPortletResponse =
 			_commerceOrderRequestHelper.getLiferayPortletResponse();
@@ -171,12 +170,15 @@ public class CommerceOrderEditDisplayContext {
 
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-		clayCreationMenu.addClayCreationMenuActionItem(
-			portletURL.toString(),
-			LanguageUtil.get(
-				_commerceOrderRequestHelper.getRequest(), "add-new-address"));
-
-		return clayCreationMenu;
+		return CreationMenuBuilder.addDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setHref(portletURL.toString());
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_commerceOrderRequestHelper.getRequest(),
+						"add-new-address"));
+			}
+		).build();
 	}
 
 	public String getCommerceChannelName() throws PortalException {

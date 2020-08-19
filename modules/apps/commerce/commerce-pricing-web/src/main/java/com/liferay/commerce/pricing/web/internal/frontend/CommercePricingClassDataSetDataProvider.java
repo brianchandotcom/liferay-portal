@@ -14,15 +14,15 @@
 
 package com.liferay.commerce.pricing.web.internal.frontend;
 
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
 import com.liferay.commerce.frontend.DefaultFilterImpl;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelService;
 import com.liferay.commerce.pricing.service.CommercePricingClassService;
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.commerce.pricing.web.internal.model.PricingClass;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -48,36 +48,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES,
+	service = ClayDataSetDataProvider.class
 )
 public class CommercePricingClassDataSetDataProvider
-	implements CommerceDataSetDataProvider<PricingClass> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		DefaultFilterImpl defaultFilterImpl = (DefaultFilterImpl)filter;
-
-		String keywords = defaultFilterImpl.getKeywords();
-
-		if (Validator.isNotNull(keywords)) {
-			BaseModelSearchResult<CommercePricingClass> baseModelSearchResult =
-				_getBaseModelSearchResult(
-					themeDisplay.getCompanyId(), keywords, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
-
-			return baseModelSearchResult.getLength();
-		}
-
-		return _commercePricingClassService.getCommercePricingClassesCount(
-			themeDisplay.getCompanyId());
-	}
+	implements ClayDataSetDataProvider<PricingClass> {
 
 	@Override
 	public List<PricingClass> getItems(
@@ -120,6 +95,32 @@ public class CommercePricingClassDataSetDataProvider
 		}
 
 		return pricingClasses;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		DefaultFilterImpl defaultFilterImpl = (DefaultFilterImpl)filter;
+
+		String keywords = defaultFilterImpl.getKeywords();
+
+		if (Validator.isNotNull(keywords)) {
+			BaseModelSearchResult<CommercePricingClass> baseModelSearchResult =
+				_getBaseModelSearchResult(
+					themeDisplay.getCompanyId(), keywords, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+
+			return baseModelSearchResult.getLength();
+		}
+
+		return _commercePricingClassService.getCommercePricingClassesCount(
+			themeDisplay.getCompanyId());
 	}
 
 	private BaseModelSearchResult<CommercePricingClass>

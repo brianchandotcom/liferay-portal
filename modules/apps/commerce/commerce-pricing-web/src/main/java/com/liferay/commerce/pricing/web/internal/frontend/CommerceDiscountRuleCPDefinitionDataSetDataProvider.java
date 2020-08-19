@@ -16,16 +16,16 @@ package com.liferay.commerce.pricing.web.internal.frontend;
 
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
 import com.liferay.commerce.frontend.DefaultFilterImpl;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.model.ImageField;
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.commerce.pricing.web.internal.model.DiscountRuleCPDefinition;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -51,28 +51,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_RULE_PRODUCT_DEFINITIONS,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_DISCOUNT_RULE_PRODUCT_DEFINITIONS,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceDiscountRuleCPDefinitionDataSetDataProvider
-	implements CommerceDataSetDataProvider<DiscountRuleCPDefinition> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		try {
-			List<DiscountRuleCPDefinition> discountRuleCPDefinitions =
-				_getDiscountRuleCPDefinitions(httpServletRequest, filter);
-
-			return discountRuleCPDefinitions.size();
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-		}
-
-		return 0;
-	}
+	implements ClayDataSetDataProvider<DiscountRuleCPDefinition> {
 
 	@Override
 	public List<DiscountRuleCPDefinition> getItems(
@@ -88,6 +71,24 @@ public class CommerceDiscountRuleCPDefinitionDataSetDataProvider
 		}
 
 		return Collections.emptyList();
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		try {
+			List<DiscountRuleCPDefinition> discountRuleCPDefinitions =
+				_getDiscountRuleCPDefinitions(httpServletRequest, filter);
+
+			return discountRuleCPDefinitions.size();
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
+
+		return 0;
 	}
 
 	private List<DiscountRuleCPDefinition> _getDiscountRuleCPDefinitions(

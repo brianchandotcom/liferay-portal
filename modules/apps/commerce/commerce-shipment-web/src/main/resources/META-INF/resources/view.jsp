@@ -23,7 +23,7 @@ CommerceShipmentDisplayContext commerceShipmentDisplayContext = (CommerceShipmen
 <c:if test="<%= commerceShipmentDisplayContext.hasManageCommerceShipmentsPermission() %>">
 	<div class="row" id="<portlet:namespace />editShipmentContainer">
 		<div class="col-12">
-			<commerce-ui:dataset-display
+			<clay:data-set-display
 				dataProviderKey="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPMENTS %>"
 				id="<%= CommerceShipmentDataSetConstants.COMMERCE_DATA_SET_KEY_SHIPMENTS %>"
 				itemsPerPage="<%= 10 %>"

@@ -14,12 +14,12 @@
 
 package com.liferay.commerce.order.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,43 +29,49 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ALL_ORDERS,
+	property = "clay.data.set.display.name=" + CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_ALL_ORDERS,
 	service = ClayDataSetDisplayView.class
 )
 public class AllCommerceOrderClayTableDataSetDisplayView
-	extends ClayTableDataSetDisplayView {
+	extends BaseTableClayDataSetDisplayView {
 
 	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField orderIdField = clayTableSchemaBuilder.addField(
-			"id", "order-id");
+		ClayTableSchemaField orderIdField =
+			clayTableSchemaBuilder.addClayTableSchemaField("id", "order-id");
 
 		orderIdField.setContentRenderer("actionLink");
 
-		clayTableSchemaBuilder.addField("account.name", "account");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"account.name", "account");
 
-		clayTableSchemaBuilder.addField("accountId", "account-number");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"accountId", "account-number");
 
-		clayTableSchemaBuilder.addField("channel.name", "channel");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"channel.name", "channel");
 
-		clayTableSchemaBuilder.addField("totalFormatted", "amount");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"totalFormatted", "amount");
 
 		ClayTableSchemaField dateClayTableSchemaField =
-			clayTableSchemaBuilder.addField("createDate", "create-date");
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"createDate", "create-date");
 
 		dateClayTableSchemaField.setContentRenderer("date");
 		dateClayTableSchemaField.setSortable(true);
 
-		ClayTableSchemaField orderStatusField = clayTableSchemaBuilder.addField(
-			"orderStatusInfo", "order-status");
+		ClayTableSchemaField orderStatusField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"orderStatusInfo", "order-status");
 
 		orderStatusField.setContentRenderer("status");
 
 		ClayTableSchemaField fulfillmentWorkflowField =
-			clayTableSchemaBuilder.addField(
+			clayTableSchemaBuilder.addClayTableSchemaField(
 				"workflowStatusInfo", "acceptance-workflow-status");
 
 		fulfillmentWorkflowField.setContentRenderer("status");

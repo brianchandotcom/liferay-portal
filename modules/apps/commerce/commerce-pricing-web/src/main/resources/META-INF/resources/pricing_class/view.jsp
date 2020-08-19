@@ -30,8 +30,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "product-groups"));
 
 <div class="row">
 	<div class="col-12">
-		<commerce-ui:dataset-display
-			clayCreationMenu="<%= commercePricingClassDisplayContext.getClayCreationMenu() %>"
+		<clay:data-set-display
+			creationMenu="<%= commercePricingClassDisplayContext.getCreationMenu() %>"
 			dataProviderKey="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES %>"
 			id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICING_CLASSES %>"
 			itemsPerPage="<%= 10 %>"

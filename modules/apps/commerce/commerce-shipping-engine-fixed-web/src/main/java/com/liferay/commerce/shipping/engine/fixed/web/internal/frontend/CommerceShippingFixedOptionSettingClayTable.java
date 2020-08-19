@@ -15,17 +15,8 @@
 package com.liferay.commerce.shipping.engine.fixed.web.internal.frontend;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceRegion;
@@ -35,6 +26,15 @@ import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOpt
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelService;
 import com.liferay.commerce.shipping.engine.fixed.web.internal.model.ShippingFixedOptionSetting;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -67,18 +67,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.data.provider.key=" + CommerceShippingFixedOptionSettingClayTable.NAME,
-		"commerce.data.set.display.name=" + CommerceShippingFixedOptionSettingClayTable.NAME
+		"clay.data.provider.key=" + CommerceShippingFixedOptionSettingClayTable.NAME,
+		"clay.data.set.display.name=" + CommerceShippingFixedOptionSettingClayTable.NAME
 	},
 	service = {
-		ClayDataSetActionProvider.class, ClayDataSetDisplayView.class,
-		CommerceDataSetDataProvider.class
+		ClayDataSetActionProvider.class, ClayDataSetDataProvider.class,
+		ClayDataSetDisplayView.class
 	}
 )
 public class CommerceShippingFixedOptionSettingClayTable
-	extends ClayTableDataSetDisplayView
+	extends BaseTableClayDataSetDisplayView
 	implements ClayDataSetActionProvider,
-			   CommerceDataSetDataProvider<ShippingFixedOptionSetting> {
+			   ClayDataSetDataProvider<ShippingFixedOptionSetting> {
 
 	public static final String NAME = "shipping-fixed-option-settings";
 
@@ -126,37 +126,27 @@ public class CommerceShippingFixedOptionSettingClayTable
 	}
 
 	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commerceShippingMethodId = ParamUtil.getLong(
-			httpServletRequest, "commerceShippingMethodId");
-
-		return _commerceShippingFixedOptionRelService.
-			getCommerceShippingMethodFixedOptionRelsCount(
-				commerceShippingMethodId);
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+			_clayTableSchemaBuilderFactory.create();
 
 		ClayTableSchemaField shippingOptionField =
-			clayTableSchemaBuilder.addField(
+			clayTableSchemaBuilder.addClayTableSchemaField(
 				"shippingOption", "shipping-option");
 
 		shippingOptionField.setContentRenderer("actionLink");
 
-		clayTableSchemaBuilder.addField("shippingMethod", "shipping-method");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"shippingMethod", "shipping-method");
 
-		clayTableSchemaBuilder.addField("warehouse", "warehouse");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"warehouse", "warehouse");
 
-		clayTableSchemaBuilder.addField("country", "country");
+		clayTableSchemaBuilder.addClayTableSchemaField("country", "country");
 
-		clayTableSchemaBuilder.addField("region", "region");
+		clayTableSchemaBuilder.addClayTableSchemaField("region", "region");
 
-		clayTableSchemaBuilder.addField("zip", "zip");
+		clayTableSchemaBuilder.addClayTableSchemaField("zip", "zip");
 
 		return clayTableSchemaBuilder.build();
 	}
@@ -207,6 +197,19 @@ public class CommerceShippingFixedOptionSettingClayTable
 		}
 
 		return shippingFixedOptionSettings;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commerceShippingMethodId = ParamUtil.getLong(
+			httpServletRequest, "commerceShippingMethodId");
+
+		return _commerceShippingFixedOptionRelService.
+			getCommerceShippingMethodFixedOptionRelsCount(
+				commerceShippingMethodId);
 	}
 
 	private String _getCountry(

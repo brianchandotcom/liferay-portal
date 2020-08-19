@@ -77,7 +77,7 @@ portletURL.setParameter("userId", String.valueOf(selectedUser.getUserId()));
 	</div>
 
 	<div class="commerce-account-container">
-		<commerce-ui:dataset-display
+		<clay:data-set-display
 			contextParams="<%= contextParams %>"
 			dataProviderKey="<%= CommerceAccountUserRolesClayTableDataSetDisplayView.NAME %>"
 			id="<%= CommerceAccountUserRolesClayTableDataSetDisplayView.NAME %>"

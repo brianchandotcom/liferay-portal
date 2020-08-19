@@ -18,19 +18,19 @@ import com.liferay.commerce.account.constants.CommerceAccountActionKeys;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.web.internal.model.Address;
 import com.liferay.commerce.constants.CommerceAddressConstants;
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.service.CommerceAddressService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,17 +56,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.data.provider.key=" + CommerceAccountAddressClayDataSetDataSetDisplayView.NAME,
-		"commerce.data.set.display.name=" + CommerceAccountAddressClayDataSetDataSetDisplayView.NAME
+		"clay.data.provider.key=" + CommerceAccountAddressClayDataSetDataSetDisplayView.NAME,
+		"clay.data.set.display.name=" + CommerceAccountAddressClayDataSetDataSetDisplayView.NAME
 	},
 	service = {
-		ClayDataSetActionProvider.class, ClayDataSetDisplayView.class,
-		CommerceDataSetDataProvider.class
+		ClayDataSetActionProvider.class, ClayDataSetDataProvider.class,
+		ClayDataSetDisplayView.class
 	}
 )
 public class CommerceAccountAddressClayDataSetDataSetDisplayView
-	extends ClayTableDataSetDisplayView
-	implements ClayDataSetActionProvider, CommerceDataSetDataProvider<Address> {
+	extends BaseTableClayDataSetDisplayView
+	implements ClayDataSetActionProvider, ClayDataSetDataProvider<Address> {
 
 	public static final String NAME = "commerceAccountAddresses";
 
@@ -123,30 +123,14 @@ public class CommerceAccountAddressClayDataSetDataSetDisplayView
 	}
 
 	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		long commerceAccountId = ParamUtil.getLong(
-			httpServletRequest, "commerceAccountId");
-
-		return _commerceAddressService.getCommerceAddressesCountByCompanyId(
-			themeDisplay.getCompanyId(), CommerceAccount.class.getName(),
-			commerceAccountId);
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+			_clayTableSchemaBuilderFactory.create();
 
-		clayTableSchemaBuilder.addField("address", "address");
-		clayTableSchemaBuilder.addField("type", "type");
-		clayTableSchemaBuilder.addField("referent", "name");
-		clayTableSchemaBuilder.addField("phoneNumber", "phone");
+		clayTableSchemaBuilder.addClayTableSchemaField("address", "address");
+		clayTableSchemaBuilder.addClayTableSchemaField("type", "type");
+		clayTableSchemaBuilder.addClayTableSchemaField("referent", "name");
+		clayTableSchemaBuilder.addClayTableSchemaField("phoneNumber", "phone");
 
 		return clayTableSchemaBuilder.build();
 	}
@@ -187,6 +171,23 @@ public class CommerceAccountAddressClayDataSetDataSetDisplayView
 		}
 
 		return addresses;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		long commerceAccountId = ParamUtil.getLong(
+			httpServletRequest, "commerceAccountId");
+
+		return _commerceAddressService.getCommerceAddressesCountByCompanyId(
+			themeDisplay.getCompanyId(), CommerceAccount.class.getName(),
+			commerceAccountId);
 	}
 
 	protected String getCompleteAddress(CommerceAddress commerceAddress)

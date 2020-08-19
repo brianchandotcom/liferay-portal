@@ -14,14 +14,14 @@
 
 package com.liferay.commerce.inventory.web.internal.frontend;
 
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService;
 import com.liferay.commerce.inventory.web.internal.model.Warehouse;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -41,22 +41,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_WAREHOUSES,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceInventoryDataSetConstants.COMMERCE_DATA_SET_KEY_INVENTORY_WAREHOUSES,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceInventoryWarehouseDataSetDataProvider
-	implements CommerceDataSetDataProvider<Warehouse> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		String sku = ParamUtil.getString(httpServletRequest, "sku");
-
-		return _commerceInventoryWarehouseItemService.
-			getCommerceInventoryWarehouseItemsCount(
-				_portal.getCompanyId(httpServletRequest), sku);
-	}
+	implements ClayDataSetDataProvider<Warehouse> {
 
 	@Override
 	public List<Warehouse> getItems(
@@ -95,6 +84,18 @@ public class CommerceInventoryWarehouseDataSetDataProvider
 		}
 
 		return warehouses;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		String sku = ParamUtil.getString(httpServletRequest, "sku");
+
+		return _commerceInventoryWarehouseItemService.
+			getCommerceInventoryWarehouseItemsCount(
+				_portal.getCompanyId(httpServletRequest), sku);
 	}
 
 	@Reference

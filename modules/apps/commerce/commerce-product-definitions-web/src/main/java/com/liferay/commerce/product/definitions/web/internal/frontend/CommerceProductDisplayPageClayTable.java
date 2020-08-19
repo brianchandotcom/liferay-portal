@@ -14,17 +14,8 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend;
 
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.model.ProductDisplayPage;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -33,6 +24,15 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDisplayLayoutService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -66,18 +66,18 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.data.provider.key=" + CommerceProductDisplayPageClayTable.NAME,
-		"commerce.data.set.display.name=" + CommerceProductDisplayPageClayTable.NAME
+		"clay.data.provider.key=" + CommerceProductDisplayPageClayTable.NAME,
+		"clay.data.set.display.name=" + CommerceProductDisplayPageClayTable.NAME
 	},
 	service = {
-		ClayDataSetActionProvider.class, ClayDataSetDisplayView.class,
-		CommerceDataSetDataProvider.class
+		ClayDataSetActionProvider.class, ClayDataSetDataProvider.class,
+		ClayDataSetDisplayView.class
 	}
 )
 public class CommerceProductDisplayPageClayTable
-	extends ClayTableDataSetDisplayView
+	extends BaseTableClayDataSetDisplayView
 	implements ClayDataSetActionProvider,
-			   CommerceDataSetDataProvider<ProductDisplayPage> {
+			   ClayDataSetDataProvider<ProductDisplayPage> {
 
 	public static final String NAME = "product-display-pages";
 
@@ -122,37 +122,17 @@ public class CommerceProductDisplayPageClayTable
 	}
 
 	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commerceChannelId = ParamUtil.getLong(
-			httpServletRequest, "commerceChannelId");
-
-		CommerceChannel commerceChannel =
-			_commerceChannelService.getCommerceChannel(commerceChannelId);
-
-		BaseModelSearchResult<CPDisplayLayout>
-			cpDisplayLayoutBaseModelSearchResult =
-				_cpDisplayLayoutService.searchCPDisplayLayout(
-					commerceChannel.getCompanyId(),
-					commerceChannel.getSiteGroupId(),
-					CPDefinition.class.getName(), filter.getKeywords(), 0, 0,
-					null);
-
-		return cpDisplayLayoutBaseModelSearchResult.getLength();
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField nameField = clayTableSchemaBuilder.addField(
-			"productName", "product-name");
+		ClayTableSchemaField nameField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"productName", "product-name");
 
 		nameField.setContentRenderer("actionLink");
 
-		clayTableSchemaBuilder.addField("layout", "layout");
+		clayTableSchemaBuilder.addClayTableSchemaField("layout", "layout");
 
 		return clayTableSchemaBuilder.build();
 	}
@@ -196,6 +176,28 @@ public class CommerceProductDisplayPageClayTable
 		}
 
 		return productDisplayPages;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commerceChannelId = ParamUtil.getLong(
+			httpServletRequest, "commerceChannelId");
+
+		CommerceChannel commerceChannel =
+			_commerceChannelService.getCommerceChannel(commerceChannelId);
+
+		BaseModelSearchResult<CPDisplayLayout>
+			cpDisplayLayoutBaseModelSearchResult =
+				_cpDisplayLayoutService.searchCPDisplayLayout(
+					commerceChannel.getCompanyId(),
+					commerceChannel.getSiteGroupId(),
+					CPDefinition.class.getName(), filter.getKeywords(), 0, 0,
+					null);
+
+		return cpDisplayLayoutBaseModelSearchResult.getLength();
 	}
 
 	private String _getLayout(

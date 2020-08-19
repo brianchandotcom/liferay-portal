@@ -98,9 +98,9 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 				bodyClasses="p-0"
 				title='<%= LanguageUtil.get(request, "product-groups") %>'
 			>
-				<commerce-ui:headless-dataset-display
-					apiUrl="<%= commercePriceListDisplayContext.getPriceModifierPricingClassesApiUrl() %>"
-					clayHeadlessDataSetActionTemplates="<%= commercePriceListDisplayContext.getClayHeadlessDataSetActionPriceModifierPricingClassTemplates() %>"
+				<clay:headless-data-set-display
+					apiURL="<%= commercePriceListDisplayContext.getPriceModifierPricingClassesApiUrl() %>"
+					clayDataSetActionDropdownItems="<%= commercePriceListDisplayContext.getPriceModifierPricingClassClayDataSetActionDropdownItems() %>"
 					formId="fm"
 					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIER_PRICING_CLASSES %>"
 					itemsPerPage="<%= 10 %>"

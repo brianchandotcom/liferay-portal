@@ -14,10 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend;
 
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
 import com.liferay.commerce.frontend.DefaultFilterImpl;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.product.definitions.web.internal.model.ProductOption;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -25,6 +22,9 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -56,35 +56,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTIONS,
+	service = ClayDataSetDataProvider.class
 )
 public class CommerceProductOptionDataSetDataProvider
-	implements CommerceDataSetDataProvider<ProductOption> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		DefaultFilterImpl defaultFilterImpl = (DefaultFilterImpl)filter;
-
-		String keywords = defaultFilterImpl.getKeywords();
-
-		long cpDefinitionId = ParamUtil.getLong(
-			httpServletRequest, "cpDefinitionId");
-
-		if (Validator.isNotNull(keywords) || (cpDefinitionId == 0)) {
-			BaseModelSearchResult<CPDefinitionOptionRel> baseModelSearchResult =
-				_getBaseModelSearchResult(
-					cpDefinitionId, keywords, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
-
-			return baseModelSearchResult.getLength();
-		}
-
-		return _cpDefinitionOptionRelService.getCPDefinitionOptionRelsCount(
-			cpDefinitionId);
-	}
+	implements ClayDataSetDataProvider<ProductOption> {
 
 	@Override
 	public List<ProductOption> getItems(
@@ -132,6 +108,31 @@ public class CommerceProductOptionDataSetDataProvider
 		}
 
 		return productOptions;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		DefaultFilterImpl defaultFilterImpl = (DefaultFilterImpl)filter;
+
+		String keywords = defaultFilterImpl.getKeywords();
+
+		long cpDefinitionId = ParamUtil.getLong(
+			httpServletRequest, "cpDefinitionId");
+
+		if (Validator.isNotNull(keywords) || (cpDefinitionId == 0)) {
+			BaseModelSearchResult<CPDefinitionOptionRel> baseModelSearchResult =
+				_getBaseModelSearchResult(
+					cpDefinitionId, keywords, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+
+			return baseModelSearchResult.getLength();
+		}
+
+		return _cpDefinitionOptionRelService.getCPDefinitionOptionRelsCount(
+			cpDefinitionId);
 	}
 
 	private BaseModelSearchResult<CPDefinitionOptionRel>

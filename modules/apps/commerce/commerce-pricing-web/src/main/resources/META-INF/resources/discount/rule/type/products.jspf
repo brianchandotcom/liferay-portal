@@ -117,7 +117,7 @@ String typeSettings = unicodeProperties.getProperty(commerceDiscountRule.getType
 		bodyClasses="p-0"
 		title='<%= LanguageUtil.get(request, "products") %>'
 	>
-		<commerce-ui:dataset-display
+		<clay:data-set-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
 					"commerceDiscountRuleId", String.valueOf(commerceDiscountRule.getCommerceDiscountRuleId())

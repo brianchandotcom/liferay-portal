@@ -24,7 +24,7 @@ CommerceOrderEditDisplayContext commerceOrderEditDisplayContext = (CommerceOrder
 	bodyClasses="p-0"
 	title='<%= LanguageUtil.get(request, "emails") %>'
 >
-	<commerce-ui:dataset-display
+	<clay:data-set-display
 		contextParams='<%=
 			HashMapBuilder.<String, String>put(
 				"commerceOrderId", String.valueOf(commerceOrderEditDisplayContext.getCommerceOrderId())

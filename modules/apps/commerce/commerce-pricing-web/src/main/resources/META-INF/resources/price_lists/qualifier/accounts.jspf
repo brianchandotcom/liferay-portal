@@ -85,9 +85,9 @@
 				bodyClasses="p-0"
 				title='<%= LanguageUtil.get(request, "accounts") %>'
 			>
-				<commerce-ui:headless-dataset-display
-					apiUrl="<%= commercePriceListQualifiersDisplayContext.getPriceListAccountsApiUrl() %>"
-					clayHeadlessDataSetActionTemplates="<%= commercePriceListQualifiersDisplayContext.getClayHeadlessDataSetActionPriceListAccountTemplates() %>"
+				<clay:headless-data-set-display
+					apiURL="<%= commercePriceListQualifiersDisplayContext.getPriceListAccountsApiURL() %>"
+					clayDataSetActionDropdownItems="<%= commercePriceListQualifiersDisplayContext.getPriceListAccountClayDataSetActionDropdownItems() %>"
 					formId="fm"
 					id="<%= CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_LIST_QUALIFIER_ACCOUNTS %>"
 					itemsPerPage="<%= 10 %>"

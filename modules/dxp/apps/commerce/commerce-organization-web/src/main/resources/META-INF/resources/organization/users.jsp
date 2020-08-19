@@ -24,7 +24,7 @@ PortletURL portletURL = currentURLObj;
 portletURL.setParameter(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL", backURL);
 %>
 
-<commerce-ui:dataset-display
+<clay:data-set-display
 	contextParams='<%= HashMapBuilder.<String, String>put("organizationId", String.valueOf(commerceOrganizationDisplayContext.getOrganizationId())).build() %>'
 	dataProviderKey="<%= CommerceOrganizationUserClayTableDataSetDisplayView.NAME %>"
 	id="<%= CommerceOrganizationUserClayTableDataSetDisplayView.NAME %>"

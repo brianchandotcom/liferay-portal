@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,17 +24,18 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.set.display.name=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTION_VALUES_STATIC,
+	property = "clay.data.set.display.name=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTION_VALUES_STATIC,
 	service = ClayDataSetDisplayView.class
 )
 public class CommerceProductOptionValueStaticClayTableDataSetDisplayView
 	extends BaseCommerceProductOptionValueClayTableDataSetDisplayView {
 
 	protected void addFields(ClayTableSchemaBuilder clayTableSchemaBuilder) {
-		clayTableSchemaBuilder.addField("key", "key");
-		clayTableSchemaBuilder.addField("position", "position");
-		clayTableSchemaBuilder.addField("deltaPrice", "delta-price");
-		clayTableSchemaBuilder.addField("sku", "linked-product");
+		clayTableSchemaBuilder.addClayTableSchemaField("key", "key");
+		clayTableSchemaBuilder.addClayTableSchemaField("position", "position");
+		clayTableSchemaBuilder.addClayTableSchemaField(
+			"deltaPrice", "delta-price");
+		clayTableSchemaBuilder.addClayTableSchemaField("sku", "linked-product");
 	}
 
 }

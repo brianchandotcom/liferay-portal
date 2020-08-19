@@ -15,13 +15,13 @@
 package com.liferay.commerce.pricing.web.internal.display.context;
 
 import com.liferay.commerce.frontend.ClayMenuActionItem;
-import com.liferay.commerce.frontend.clay.data.set.ClayHeadlessDataSetActionTemplate;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
+import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -128,35 +128,34 @@ public abstract class BaseCommercePriceListDisplayContext
 			commercePricingRequestHelper.getPermissionChecker(), actionId);
 	}
 
-	protected List<ClayHeadlessDataSetActionTemplate>
-		getClayHeadlessDataSetActionTemplates(
+	protected List<ClayDataSetActionDropdownItem>
+		getClayDataSetActionDropdownItems(
 			String portletURL, boolean sidePanel) {
 
-		List<ClayHeadlessDataSetActionTemplate>
-			clayHeadlessDataSetActionTemplates = new ArrayList<>();
+		List<ClayDataSetActionDropdownItem> clayDataSetActionDropdownItems =
+			new ArrayList<>();
 
-		ClayHeadlessDataSetActionTemplate clayHeadlessDataSetActionTemplate =
-			new ClayHeadlessDataSetActionTemplate(
+		ClayDataSetActionDropdownItem clayDataSetActionDropdownItem =
+			new ClayDataSetActionDropdownItem(
 				portletURL, "pencil", "edit",
 				LanguageUtil.get(httpServletRequest, "edit"), "get", null,
 				null);
 
 		if (sidePanel) {
-			clayHeadlessDataSetActionTemplate.setTarget(
+			clayDataSetActionDropdownItem.setTarget(
 				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
 		}
 
-		clayHeadlessDataSetActionTemplates.add(
-			clayHeadlessDataSetActionTemplate);
+		clayDataSetActionDropdownItems.add(clayDataSetActionDropdownItem);
 
-		clayHeadlessDataSetActionTemplates.add(
-			new ClayHeadlessDataSetActionTemplate(
+		clayDataSetActionDropdownItems.add(
+			new ClayDataSetActionDropdownItem(
 				null, "trash", "delete",
 				LanguageUtil.get(httpServletRequest, "delete"), "delete",
 				"delete",
 				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
 
-		return clayHeadlessDataSetActionTemplates;
+		return clayDataSetActionDropdownItems;
 	}
 
 	protected CommerceCatalogService commerceCatalogService;

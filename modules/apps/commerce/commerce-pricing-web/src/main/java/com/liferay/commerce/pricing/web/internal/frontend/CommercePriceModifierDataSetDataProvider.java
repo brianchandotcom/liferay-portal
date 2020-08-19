@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.pricing.web.internal.frontend;
 
-import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.pricing.model.CommercePriceModifier;
 import com.liferay.commerce.pricing.service.CommercePriceModifierService;
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.commerce.pricing.web.internal.model.PriceModifier;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -48,22 +48,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIERS,
-	service = CommerceDataSetDataProvider.class
+	property = "clay.data.provider.key=" + CommercePricingDataSetConstants.COMMERCE_DATA_SET_KEY_PRICE_MODIFIERS,
+	service = ClayDataSetDataProvider.class
 )
 public class CommercePriceModifierDataSetDataProvider
-	implements CommerceDataSetDataProvider<PriceModifier> {
-
-	@Override
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException {
-
-		long commercePriceListId = ParamUtil.getLong(
-			httpServletRequest, "commercePriceListId");
-
-		return _commercePriceModifierService.getCommercePriceModifiersCount(
-			commercePriceListId);
-	}
+	implements ClayDataSetDataProvider<PriceModifier> {
 
 	@Override
 	public List<PriceModifier> getItems(
@@ -110,6 +99,18 @@ public class CommercePriceModifierDataSetDataProvider
 		}
 
 		return priceModifiers;
+	}
+
+	@Override
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
+		throws PortalException {
+
+		long commercePriceListId = ParamUtil.getLong(
+			httpServletRequest, "commercePriceListId");
+
+		return _commercePriceModifierService.getCommercePriceModifiersCount(
+			commercePriceListId);
 	}
 
 	private String _getEndDate(

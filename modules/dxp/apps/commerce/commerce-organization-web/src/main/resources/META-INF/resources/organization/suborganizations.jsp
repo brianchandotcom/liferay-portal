@@ -27,7 +27,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 %>
 
 <div class="commerce-organization-container" id="<portlet:namespace />entriesContainer">
-	<commerce-ui:dataset-display
+	<clay:data-set-display
 		contextParams="<%= contextParams %>"
 		dataProviderKey="<%= CommerceOrganizationClayTableDataSetDisplayView.NAME %>"
 		id="<%= CommerceOrganizationClayTableDataSetDisplayView.NAME %>"

@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.organization.web.internal.frontend;
 
-import com.liferay.commerce.frontend.Filter;
-import com.liferay.commerce.frontend.FilterFactory;
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.data.FilterFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceOrganizationClayTableDataSetDisplayView.NAME,
+	property = "clay.data.provider.key=" + CommerceOrganizationClayTableDataSetDisplayView.NAME,
 	service = FilterFactory.class
 )
 public class OrganizationFilterFactoryImpl implements FilterFactory {

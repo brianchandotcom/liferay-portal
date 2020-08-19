@@ -104,7 +104,7 @@ boolean hasPermission = commercePricingClassCPDefinitionDisplayContext.hasPermis
 				bodyClasses="p-0"
 				title='<%= LanguageUtil.get(request, "products") %>'
 			>
-				<commerce-ui:dataset-display
+				<clay:data-set-display
 					contextParams='<%=
 						HashMapBuilder.<String, String>put(
 							"commercePricingClassId", String.valueOf(commercePricingClassId)

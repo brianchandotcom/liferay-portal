@@ -38,12 +38,11 @@ class AutoSize {
 
 		this.template.innerHTML = inputElement.value + DEFAULT_APPEND_CONTENT;
 
-		const height =
+		inputElement.style.height = `${
 			this.template.scrollHeight < this.minHeight
 				? this.minHeight
-				: this.template.scrollHeight;
-
-		inputElement.style.height = height + 'px';
+				: this.template.scrollHeight
+		}px`;
 	}
 
 	createTemplate(computedStyle) {
@@ -75,9 +74,7 @@ class AutoSize {
 
 	handleInput = (event) => {
 		requestAnimationFrame(() => {
-			const target = event.target;
-
-			this._resizeInput(target);
+			this._resizeInput(event.target);
 		});
 	};
 }

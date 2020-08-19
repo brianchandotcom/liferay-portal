@@ -18,59 +18,6 @@ import {FIELD_TYPE_FIELDSET} from '../../../util/constants.es';
 import RulesSupport from '../../RuleBuilder/RulesSupport.es';
 import {updateField} from '../util/settingsContext.es';
 
-export const formatRules = (state, pages) => {
-	const visitor = new PagesVisitor(pages);
-
-	const rules = (state.rules || []).map((rule) => {
-		const {actions, conditions} = rule;
-
-		conditions.forEach((condition) => {
-			let firstOperandFieldExists = false;
-			let secondOperandFieldExists = false;
-
-			const secondOperand = condition.operands[1];
-
-			visitor.mapFields(
-				({fieldName}) => {
-					if (condition.operands[0].value === fieldName) {
-						firstOperandFieldExists = true;
-					}
-
-					if (secondOperand && secondOperand.value === fieldName) {
-						secondOperandFieldExists = true;
-					}
-				},
-				true,
-				true
-			);
-
-			if (condition.operands[0].value === 'user') {
-				firstOperandFieldExists = true;
-			}
-
-			if (!firstOperandFieldExists) {
-				RulesSupport.clearAllConditionFieldValues(condition);
-			}
-
-			if (
-				!secondOperandFieldExists &&
-				secondOperand &&
-				secondOperand.type == 'field'
-			) {
-				RulesSupport.clearSecondOperandValue(condition);
-			}
-		});
-
-		return {
-			...rule,
-			actions: RulesSupport.syncActions(pages, actions),
-			conditions,
-		};
-	});
-
-	return rules;
-};
-
 export const removeField = (
 	props,
 	pages,
@@ -172,7 +119,7 @@ export const handleFieldDeleted = (
 	return {
 		focusedField: {},
 		pages: newPages,
-		rules: formatRules(state, newPages),
+		rules: RulesSupport.formatRules(newPages, state.rules),
 	};
 };
 

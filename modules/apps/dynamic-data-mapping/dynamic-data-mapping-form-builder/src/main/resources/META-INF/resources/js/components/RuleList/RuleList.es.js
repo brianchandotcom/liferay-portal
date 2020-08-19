@@ -24,6 +24,7 @@ import {Config} from 'metal-state';
 
 import {maxPageIndex, pageOptions} from '../../util/pageSupport.es';
 import {getFieldProperty} from '../LayoutProvider/util/fields.es';
+import RulesSupport from '../RuleBuilder/RulesSupport.es';
 import templates from './RuleList.soy';
 
 /**
@@ -52,7 +53,10 @@ class RuleList extends Component {
 	}
 
 	prepareStateForRender(states) {
-		const rules = this._setDataProviderNames(states);
+		const rules = RulesSupport.formatRules(
+			this.pages,
+			this._setDataProviderNames(states)
+		);
 
 		return {
 			...states,

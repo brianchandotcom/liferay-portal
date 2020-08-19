@@ -176,12 +176,15 @@ public class DDMFormValuesToMapConverterImpl
 		DDMFormField ddmFormField = ddmFormFields.get(
 			ddmFormFieldValue.getName());
 
+		if (ddmFormField == null) {
+			return;
+		}
+
 		if (!Objects.equals(ddmFormField.getType(), "fieldset")) {
 			_addValue(ddmFormField, ddmFormFieldValue, fieldInstanceValue);
 		}
 
-		if ((ddmFormField != null) &&
-			ListUtil.isNotEmpty(
+		if (ListUtil.isNotEmpty(
 				ddmFormFieldValue.getNestedDDMFormFieldValues())) {
 
 			Map<String, Object> nestedFieldInstanceValues =

@@ -168,13 +168,13 @@ public class FileEntryInfoItemFormProvider
 		).infoFieldSetEntry(
 			FileEntryInfoItemFields.fileName
 		).infoFieldSetEntry(
-			FileEntryInfoItemFields.mimeType
+			FileEntryInfoItemFields.downloadURL
 		).infoFieldSetEntry(
 			FileEntryInfoItemFields.fileURL
 		).infoFieldSetEntry(
-			FileEntryInfoItemFields.size
+			FileEntryInfoItemFields.mimeType
 		).infoFieldSetEntry(
-			FileEntryInfoItemFields.downloadURL
+			FileEntryInfoItemFields.size
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "file-information")
 		).name(

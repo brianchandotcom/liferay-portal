@@ -36,6 +36,15 @@ public class URLToCORSSupportMapperPerformanceTest {
 
 	@Test
 	public void testGet() {
+
+		// warm-up
+
+		for (int i = 0; i < 100000; i++) {
+			for (KeyValuePair keyValuePair : _expectedMatches) {
+				urlToCORSSupportMapper.get(keyValuePair.getKey());
+			}
+		}
+
 		long start = System.currentTimeMillis();
 
 		for (int i = 0; i < 100000; i++) {

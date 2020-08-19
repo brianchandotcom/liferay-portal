@@ -29,10 +29,61 @@ import java.util.Map;
  */
 public class URLToCORSSupportMapper {
 
-	public URLToCORSSupportMapper(Map<String, CORSSupport> corsSupports) {
-		for (Map.Entry<String, CORSSupport> entry : corsSupports.entrySet()) {
-			_put(entry.getKey(), entry.getValue());
+	public static boolean isExtensionURLPattern(String urlPattern) {
+
+		// Servlet 4 spec 12.1.3
+		// Servlet 4 spec 12.2
+
+		if ((urlPattern.length() < 3) || (urlPattern.charAt(0) != '*') ||
+			(urlPattern.charAt(1) != '.')) {
+
+			return false;
 		}
+
+		for (int i = 2; i < urlPattern.length(); ++i) {
+			if (urlPattern.charAt(i) == '/') {
+				return false;
+			}
+
+			if (urlPattern.charAt(i) == '.') {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public static boolean isWildcardURLPattern(String urlPattern) {
+
+		// Servlet 4 spec 12.2
+
+		if ((urlPattern.length() < 2) || (urlPattern.charAt(0) != '/') ||
+			(urlPattern.charAt(urlPattern.length() - 1) != '*') ||
+			(urlPattern.charAt(urlPattern.length() - 2) != '/')) {
+
+			return false;
+		}
+
+		// RFC 3986 3.3
+
+		try {
+			String urlPath = urlPattern.substring(0, urlPattern.length() - 1);
+
+			URI uri = new URI("https://test" + urlPath);
+
+			if (!urlPath.contentEquals(uri.getPath())) {
+				return false;
+			}
+		}
+		catch (URISyntaxException uriSyntaxException) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public URLToCORSSupportMapper(Map<String, CORSSupport> corsSupports) {
+		doPut(corsSupports);
 	}
 
 	public CORSSupport get(String urlPath) {
@@ -75,63 +126,16 @@ public class URLToCORSSupportMapper {
 			"*" + urlPath.substring(index));
 	}
 
-	private boolean _isExtensionURLPattern(String urlPattern) {
-
-		// Servlet 4 spec 12.1.3
-		// Servlet 4 spec 12.2
-
-		if ((urlPattern.length() < 3) || (urlPattern.charAt(0) != '*') ||
-			(urlPattern.charAt(1) != '.')) {
-
-			return false;
+	protected void doPut(Map<String, CORSSupport> corsSupports) {
+		for (Map.Entry<String, CORSSupport> entry : corsSupports.entrySet()) {
+			_put(entry.getKey(), entry.getValue());
 		}
-
-		for (int i = 2; i < urlPattern.length(); ++i) {
-			if (urlPattern.charAt(i) == '/') {
-				return false;
-			}
-
-			if (urlPattern.charAt(i) == '.') {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	private boolean _isWildcardURLPattern(String urlPattern) {
-
-		// Servlet 4 spec 12.2
-
-		if ((urlPattern.length() < 2) || (urlPattern.charAt(0) != '/') ||
-			(urlPattern.charAt(urlPattern.length() - 1) != '*') ||
-			(urlPattern.charAt(urlPattern.length() - 2) != '/')) {
-
-			return false;
-		}
-
-		// RFC 3986 3.3
-
-		try {
-			String urlPath = urlPattern.substring(0, urlPattern.length() - 1);
-
-			URI uri = new URI("https://test" + urlPath);
-
-			if (!urlPath.contentEquals(uri.getPath())) {
-				return false;
-			}
-		}
-		catch (URISyntaxException uriSyntaxException) {
-			return false;
-		}
-
-		return true;
 	}
 
 	private void _put(String urlPattern, CORSSupport corsSupport)
 		throws IllegalArgumentException {
 
-		if (_isWildcardURLPattern(urlPattern)) {
+		if (isWildcardURLPattern(urlPattern)) {
 			if (!_wildcardURLPatternCORSSupports.containsKey(urlPattern)) {
 				_wildcardURLPatternCORSSupports.put(urlPattern, corsSupport);
 			}
@@ -139,7 +143,7 @@ public class URLToCORSSupportMapper {
 			return;
 		}
 
-		if (_isExtensionURLPattern(urlPattern)) {
+		if (isExtensionURLPattern(urlPattern)) {
 			if (!_extensionURLPatternCORSSupports.containsKey(urlPattern)) {
 				_extensionURLPatternCORSSupports.put(urlPattern, corsSupport);
 			}

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -70,7 +72,12 @@ public class GetCollectionMappingFieldsMVCResourceCommand
 		String fieldType = ParamUtil.getString(resourceRequest, "fieldType");
 		String itemSubtype = ParamUtil.getString(
 			resourceRequest, "itemSubtype");
+
 		String itemType = ParamUtil.getString(resourceRequest, "itemType");
+
+		if (Objects.equals(DLFileEntryConstants.getClassName(), itemType)) {
+			itemType = FileEntry.class.getName();
+		}
 
 		String itemSubtypeLabel = StringPool.BLANK;
 
@@ -105,11 +112,11 @@ public class GetCollectionMappingFieldsMVCResourceCommand
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFormProvider.class, itemType);
 
-		InfoForm infoForm = infoItemFormProvider.getInfoForm();
-
-		String itemTypeLabel = infoForm.getLabel(themeDisplay.getLocale());
-
 		try {
+			InfoForm infoForm = infoItemFormProvider.getInfoForm();
+
+			String itemTypeLabel = infoForm.getLabel(themeDisplay.getLocale());
+
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(

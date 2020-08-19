@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.pricing.web.servlet.taglib.ui;
+package com.liferay.commerce.pricing.web.internal.constants;
 
 /**
  * @author Alessio Antonio Rendina

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.remote.app.admin.web.internal.data.set;
+package com.liferay.remote.app.admin.web.internal.frontend.taglib.clay.data.set.view.table;
 
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;

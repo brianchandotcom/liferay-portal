@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.remote.app.admin.web.internal.data.set;
+package com.liferay.remote.app.admin.web.internal.frontend.taglib.clay.data.set.provider;
 
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.remote.app.admin.web.internal.constants.RemoteAppAdminConstants;
+import com.liferay.remote.app.admin.web.internal.frontend.taglib.clay.data.set.RemoteAppClayDataSetEntry;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 

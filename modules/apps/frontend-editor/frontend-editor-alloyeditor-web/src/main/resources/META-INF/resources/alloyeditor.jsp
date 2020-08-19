@@ -242,8 +242,8 @@ name = HtmlUtil.escapeJS(name);
 			contents: '<%= HtmlUtil.escapeJS(contents) %>',
 			editorConfig: editorConfig,
 			editorPaths: [
-				'<%= PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) %>',
 				'<%= PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_ALLOYEDITOR) %>',
+				'<%= PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) %>',
 			],
 			namespace: '<%= name %>',
 

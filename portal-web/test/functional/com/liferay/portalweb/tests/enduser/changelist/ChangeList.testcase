@@ -417,7 +417,9 @@ definition {
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content");
 
-		ChangeList.prepareToPublish(publicationName = "Publication Name");
+		ChangeList.prepareToPublish(
+			gotoManagePublications = "true",
+			publicationName = "Publication Name");
 
 		ChangeList.publishPublication(publicationName = "Publication Name");
 

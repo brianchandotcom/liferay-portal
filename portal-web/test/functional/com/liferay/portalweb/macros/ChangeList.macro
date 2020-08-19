@@ -154,6 +154,29 @@ definition {
 			locator1 = "ChangeList#PUBLICATION_NAME",
 			value1 = "Revert &quot;${publicationName}&quot;");
 
+		if ("${publishNow}" == "true") {
+			Click(
+				key_radioName = "Now",
+				locator1 = "ChangeList#REVERT_SCREEN_RADIO_OPTION",
+				value1 = "Now");
+
+			AssertTextEquals.assertPartialText(
+				key_radioHelpMessage = "Revert your changes to production immediately",
+				locator1 = "ChangeList#REVERT_SCREEN_RADIO_HELP",
+				value1 = "Revert your changes to production immediately");
+		}
+		else {
+			Click(
+				key_radioName = "Later",
+				locator1 = "ChangeList#REVERT_SCREEN_RADIO_OPTION",
+				value1 = "Later");
+
+			AssertTextEquals.assertPartialText(
+				key_radioHelpMessage = "Make additional changes and publish them when you are ready",
+				locator1 = "ChangeList#REVERT_SCREEN_RADIO_HELP",
+				value1 = "Make additional changes and publish them when you are ready");
+		}
+
 		Button.click(button = "Revert and Create Publication");
 
 		Alert.viewSuccessMessage();

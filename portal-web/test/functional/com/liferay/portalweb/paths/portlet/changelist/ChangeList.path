@@ -125,6 +125,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REVERT_SCREEN_RADIO_HELP</td>
+	<td>//div[contains(@class,'change-lists-radio-help') and contains(.,'${key_radioHelpMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REVERT_SCREEN_RADIO_OPTION</td>
+	<td>//div[contains(@class,'change-lists-radio-label') and contains(.,'${key_radioName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_PUBLICATION_NAME</td>
 	<td>//a[contains(.,'${key_publicationName}')]</td>
 	<td></td>

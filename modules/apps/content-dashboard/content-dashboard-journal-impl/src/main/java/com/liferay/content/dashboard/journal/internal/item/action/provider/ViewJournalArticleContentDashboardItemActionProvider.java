@@ -38,9 +38,12 @@ public class ViewJournalArticleContentDashboardItemActionProvider
 	public ContentDashboardItemAction getContentDashboardItemAction(
 		JournalArticle journalArticle, HttpServletRequest httpServletRequest) {
 
-		return new ViewJournalArticleContentDashboardItemAction(
-			_assetDisplayPageFriendlyURLProvider, httpServletRequest,
-			journalArticle, _language);
+		if (!isShow(journalArticle, httpServletRequest)) {
+			return null;
+		}
+
+		return _getContentDashboardItemAction(
+			httpServletRequest, journalArticle);
 	}
 
 	@Override
@@ -62,13 +65,21 @@ public class ViewJournalArticleContentDashboardItemActionProvider
 		}
 
 		ContentDashboardItemAction contentDashboardItemAction =
-			getContentDashboardItemAction(journalArticle, httpServletRequest);
+			_getContentDashboardItemAction(httpServletRequest, journalArticle);
 
 		if (Validator.isNull(contentDashboardItemAction.getURL())) {
 			return false;
 		}
 
 		return true;
+	}
+
+	private ContentDashboardItemAction _getContentDashboardItemAction(
+		HttpServletRequest httpServletRequest, JournalArticle journalArticle) {
+
+		return new ViewJournalArticleContentDashboardItemAction(
+			_assetDisplayPageFriendlyURLProvider, httpServletRequest,
+			journalArticle, _language);
 	}
 
 	@Reference

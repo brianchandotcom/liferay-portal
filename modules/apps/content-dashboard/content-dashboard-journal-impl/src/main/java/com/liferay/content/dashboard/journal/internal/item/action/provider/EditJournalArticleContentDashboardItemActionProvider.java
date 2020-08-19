@@ -44,6 +44,10 @@ public class EditJournalArticleContentDashboardItemActionProvider
 	public ContentDashboardItemAction getContentDashboardItemAction(
 		JournalArticle journalArticle, HttpServletRequest httpServletRequest) {
 
+		if (!isShow(journalArticle, httpServletRequest)) {
+			return null;
+		}
+
 		return new EditJournalArticleContentDashboardItemAction(
 			_infoEditURLProviderTracker.getInfoEditURLProvider(
 				JournalArticle.class.getName()),

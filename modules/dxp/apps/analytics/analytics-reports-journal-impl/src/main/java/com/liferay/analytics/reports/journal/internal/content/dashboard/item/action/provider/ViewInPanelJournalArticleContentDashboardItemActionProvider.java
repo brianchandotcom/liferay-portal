@@ -41,6 +41,10 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProvider
 			HttpServletRequest httpServletRequest)
 		throws ContentDashboardItemActionException {
 
+		if (!isShow(journalArticle, httpServletRequest)) {
+			return null;
+		}
+
 		return _analyticsReportsContentDashboardItemActionProvider.
 			getContentDashboardItemAction(
 				JournalArticle.class.getName(),

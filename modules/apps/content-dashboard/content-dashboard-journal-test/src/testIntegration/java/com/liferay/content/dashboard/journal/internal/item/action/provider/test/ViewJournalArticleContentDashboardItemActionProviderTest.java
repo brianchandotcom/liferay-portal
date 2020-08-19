@@ -25,7 +25,6 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -126,12 +125,9 @@ public class ViewJournalArticleContentDashboardItemActionProviderTest {
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(LocaleUtil.US));
 
-		ContentDashboardItemAction contentDashboardItemAction =
+		Assert.assertNull(
 			_contentDashboardItemActionProvider.getContentDashboardItemAction(
-				journalArticle, mockHttpServletRequest);
-
-		Assert.assertEquals(
-			StringPool.BLANK, contentDashboardItemAction.getURL());
+				journalArticle, mockHttpServletRequest));
 	}
 
 	@Test

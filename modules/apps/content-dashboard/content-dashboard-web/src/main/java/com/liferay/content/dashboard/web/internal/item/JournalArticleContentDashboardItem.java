@@ -142,13 +142,7 @@ public class JournalArticleContentDashboardItem
 		return stream.map(
 			contentDashboardItemActionProvider -> {
 				try {
-					if (!contentDashboardItemActionProvider.isShow(
-							_journalArticle, httpServletRequest)) {
-
-						return Optional.<ContentDashboardItemAction>empty();
-					}
-
-					return Optional.of(
+					return Optional.ofNullable(
 						contentDashboardItemActionProvider.
 							getContentDashboardItemAction(
 								_journalArticle, httpServletRequest));

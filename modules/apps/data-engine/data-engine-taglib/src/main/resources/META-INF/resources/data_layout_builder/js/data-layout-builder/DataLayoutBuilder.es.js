@@ -307,7 +307,9 @@ class DataLayoutBuilder extends React.Component {
 		dataDefinition,
 		dataLayout = this.getDefaultDataLayout(dataDefinition)
 	) {
-		const {editingLanguageId = themeDisplay.getDefaultLanguageId()} = this.props;
+		const {
+			editingLanguageId = themeDisplay.getDefaultLanguageId(),
+		} = this.props;
 		const {defaultLanguageId, name} = dataDefinition;
 
 		return {

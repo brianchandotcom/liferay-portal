@@ -56,12 +56,13 @@ public class FileEntryInfoItemFormVariationsProvider
 				_dlFileEntryTypeLocalService.getFileEntryTypes(groupIds);
 
 			for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
-				new InfoItemFormVariation(
-					String.valueOf(dlFileEntryType.getFileEntryTypeId()),
-					InfoLocalizedValue.<String>builder(
-					).values(
-						dlFileEntryType.getNameMap()
-					).build());
+				infoItemFormVariations.add(
+					new InfoItemFormVariation(
+						String.valueOf(dlFileEntryType.getFileEntryTypeId()),
+						InfoLocalizedValue.<String>builder(
+						).values(
+							dlFileEntryType.getNameMap()
+						).build()));
 			}
 
 			return infoItemFormVariations;

@@ -115,6 +115,12 @@ export default function StructureTreeNode({node}) {
 		}
 	}, [activationOrigin, isActive]);
 
+	useEffect(() => {
+		if (isOverTarget) {
+			node.onHoverNode(node.id);
+		}
+	}, [isOverTarget, node]);
+
 	return (
 		<div
 			aria-selected={isActive}
@@ -125,6 +131,7 @@ export default function StructureTreeNode({node}) {
 					isOverTarget && targetPosition === TARGET_POSITION.MIDDLE,
 				'drag-over-top':
 					isOverTarget && targetPosition === TARGET_POSITION.TOP,
+				dragged: isDraggingSource,
 				'page-editor__page-structure__tree-node--activable':
 					node.activable && node.itemType !== ITEM_TYPES.editable,
 				'page-editor__page-structure__tree-node--active': isActive,

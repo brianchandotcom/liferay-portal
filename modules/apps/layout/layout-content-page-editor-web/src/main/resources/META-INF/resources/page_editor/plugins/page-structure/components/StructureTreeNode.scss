@@ -23,6 +23,10 @@
 		box-shadow: 0 0 0 1px $primary-l1;
 	}
 
+	&.dragged {
+		opacity: 0.5;
+	}
+
 	&__mask {
 		height: 100%;
 		left: 0;

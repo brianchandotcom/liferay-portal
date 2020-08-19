@@ -40,8 +40,12 @@
 				}
 			}
 
-			&__node:first-child {
-				padding-left: 16px;
+			&__node {
+				flex-grow: 1;
+
+				&:first-child {
+					padding-left: 16px;
+				}
 			}
 
 			&__children {

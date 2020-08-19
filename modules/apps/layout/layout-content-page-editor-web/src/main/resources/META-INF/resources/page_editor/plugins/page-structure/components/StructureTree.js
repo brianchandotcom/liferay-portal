@@ -14,7 +14,7 @@
 
 import ClayAlert from '@clayui/alert';
 import {Treeview} from 'frontend-js-components-web';
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 
 import {useActiveItemId} from '../../../app/components/Controls';
 import hasDropZoneChild from '../../../app/components/layout-data-items/hasDropZoneChild';
@@ -72,9 +72,15 @@ export default function PageStructureSidebar() {
 		(state) => state.masterLayout?.masterLayoutData
 	);
 
+	const [expandedNodeId, setExpandedNodeId] = useState(null);
+
 	const isMasterPage = config.layoutType === LAYOUT_TYPES.master;
 
 	const data = masterLayoutData || layoutData;
+
+	const onHoverNode = useCallback((id) => {
+		setExpandedNodeId(id);
+	}, []);
 
 	const nodes = useMemo(
 		() =>
@@ -82,10 +88,12 @@ export default function PageStructureSidebar() {
 				activeItemId,
 				canUpdateEditables,
 				canUpdateItemConfiguration,
+				expandedNodeId,
 				fragmentEntryLinks,
 				isMasterPage,
 				layoutData,
 				masterLayoutData,
+				onHoverNode,
 			}).children,
 		[
 			activeItemId,
@@ -93,10 +101,12 @@ export default function PageStructureSidebar() {
 			canUpdateItemConfiguration,
 			data.items,
 			data.rootItems.main,
+			expandedNodeId,
 			fragmentEntryLinks,
 			isMasterPage,
 			layoutData,
 			masterLayoutData,
+			onHoverNode,
 		]
 	);
 
@@ -144,10 +154,12 @@ function visit(
 		activeItemId,
 		canUpdateEditables,
 		canUpdateItemConfiguration,
+		expandedNodeId,
 		fragmentEntryLinks,
 		isMasterPage,
 		layoutData,
 		masterLayoutData,
+		onHoverNode,
 	}
 ) {
 	const children = [];
@@ -181,9 +193,11 @@ function visit(
 				disabled: !isMasterPage && itemInMasterLayout,
 				draggable: false,
 				expanded: childId === activeItemId,
+				expandedNodeId,
 				icon: EDITABLE_TYPE_ICONS[type],
 				id: childId,
 				name: EDITABLE_TYPE_LABELS[type],
+				onHoverNode,
 				parentId: item.parentId,
 				removable: false,
 				type: ITEM_TYPES.editable,
@@ -196,10 +210,12 @@ function visit(
 					activeItemId,
 					canUpdateEditables,
 					canUpdateItemConfiguration,
+					expandedNodeId,
 					fragmentEntryLinks,
 					isMasterPage,
 					layoutData,
 					masterLayoutData,
+					onHoverNode,
 				}),
 
 				name: Liferay.Language.get('drop-zone'),
@@ -229,10 +245,12 @@ function visit(
 						activeItemId,
 						canUpdateEditables,
 						canUpdateItemConfiguration,
+						expandedNodeId,
 						fragmentEntryLinks,
 						isMasterPage,
 						layoutData,
 						masterLayoutData,
+						onHoverNode,
 					}
 				).children;
 
@@ -243,10 +261,12 @@ function visit(
 					activeItemId,
 					canUpdateEditables,
 					canUpdateItemConfiguration,
+					expandedNodeId,
 					fragmentEntryLinks,
 					isMasterPage,
 					layoutData,
 					masterLayoutData,
+					onHoverNode,
 				});
 
 				children.push(child);
@@ -262,11 +282,13 @@ function visit(
 		children,
 		disabled: !isMasterPage && itemInMasterLayout,
 		draggable: item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone,
-		expanded: item.itemId === activeItemId,
+		expanded:
+			item.itemId === activeItemId || expandedNodeId === item.itemId,
 		icon,
 		id: item.itemId,
 		itemType: ITEM_TYPES.layoutDataItem,
 		name: getLayoutDataItemLabel(item, fragmentEntryLinks),
+		onHoverNode,
 		parentItemId: item.parentId,
 		removable: !itemInMasterLayout && isRemovable(item, layoutData),
 		type: item.type,

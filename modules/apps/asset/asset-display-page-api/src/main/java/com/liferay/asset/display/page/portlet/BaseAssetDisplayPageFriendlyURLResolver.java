@@ -86,25 +86,17 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_getLayoutDisplayPageProvider(friendlyURL);
 
-		httpServletRequest.setAttribute(
-			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
-			layoutDisplayPageProvider);
-
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			_getLayoutDisplayPageObjectProvider(
 				layoutDisplayPageProvider, groupId, friendlyURL);
-
-		httpServletRequest.setAttribute(
-			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
-			layoutDisplayPageObjectProvider);
-
-		String infoItemClassName = portal.getClassName(
-			layoutDisplayPageObjectProvider.getClassNameId());
 
 		Object infoItem = _getInfoItem(
 			friendlyURL, layoutDisplayPageObjectProvider);
 
 		httpServletRequest.setAttribute(InfoDisplayWebKeys.INFO_ITEM, infoItem);
+
+		String infoItemClassName = portal.getClassName(
+			layoutDisplayPageObjectProvider.getClassNameId());
 
 		InfoItemDetailsProvider infoItemDetailsProvider =
 			infoItemServiceTracker.getFirstInfoItemService(
@@ -114,13 +106,20 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			InfoDisplayWebKeys.INFO_ITEM_DETAILS,
 			infoItemDetailsProvider.getInfoItemDetails(infoItem));
 
-		InfoItemFieldValuesProvider<?> infoItemFieldValuesProvider =
-			infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class, infoItemClassName);
-
 		httpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_ITEM_FIELD_VALUES_PROVIDER,
-			infoItemFieldValuesProvider);
+			infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class, infoItemClassName));
+		httpServletRequest.setAttribute(
+			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+			layoutDisplayPageObjectProvider);
+		httpServletRequest.setAttribute(
+			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
+			layoutDisplayPageProvider);
+
+		httpServletRequest.setAttribute(
+			WebKeys.LAYOUT_ASSET_ENTRY,
+			_getAssetEntry(layoutDisplayPageObjectProvider));
 
 		Locale locale = portal.getLocale(httpServletRequest);
 		Layout layout = _getLayoutDisplayPageObjectProviderLayout(
@@ -144,10 +143,6 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 				layout.getTypeSettingsProperty("mapped-title"),
 				layoutDisplayPageObjectProvider::getTitle),
 			httpServletRequest);
-
-		AssetEntry assetEntry = _getAssetEntry(layoutDisplayPageObjectProvider);
-
-		httpServletRequest.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 
 		return portal.getLayoutActualURL(layout, mainPath);
 	}

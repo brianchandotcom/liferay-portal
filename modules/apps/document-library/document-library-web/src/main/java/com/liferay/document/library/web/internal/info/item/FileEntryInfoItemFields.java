@@ -95,7 +95,7 @@ public class FileEntryInfoItemFields {
 			"mimeType"
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
-				FileEntryInfoItemFields.class, "content-type")
+				FileEntryInfoItemFields.class, "mime-type")
 		).build();
 	public static final InfoField<ImageInfoFieldType> previewImage =
 		InfoField.builder(

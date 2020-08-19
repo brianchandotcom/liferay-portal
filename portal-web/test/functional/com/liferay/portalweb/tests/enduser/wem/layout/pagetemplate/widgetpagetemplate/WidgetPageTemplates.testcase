@@ -381,12 +381,57 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
+		JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
+			pageTemplateEntryActive = "true",
+			pageTemplateEntryName = "College Landing Page");
+
+		JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
+			pageTemplateEntryActive = "true",
+			pageTemplateEntryName = "Department Landing Page");
+
 		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
+		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+			item = "Edit",
+			pageTemplateName = "College Landing Page");
+
+		for (var portletName : list "Media Gallery,Web Content Display,Web Content Display,Web Content Display,Asset Publisher") {
+			Portlet.addPG(portletName = "${portletName}");
+
+			Refresh();
+		}
+
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
+
+		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+			item = "Edit",
+			pageTemplateName = "Department Landing Page");
+
+		for (var portletName : list "Media Gallery,Web Content Display,Web Content Display,Navigation Menu,Members,Asset Publisher") {
+			Portlet.addPG(portletName = "${portletName}");
+
+			Refresh();
+		}
+
+		LAR.exportSiteCP(
+			larFileName = "college-and-department-page-templates",
+			siteScopeName = "Global");
+
+		var key_larFileName = "${larFileName}";
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
+
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
+
+		PageTemplatesAdminGlobalSite.deleteCP(pageTemplateName = "College Landing Page");
+
+		PageTemplatesAdminGlobalSite.deleteCP(pageTemplateName = "Department Landing Page");
+
 		LAR.importSiteCP(
-			larFileName = "college-and-department-page-templates.lar",
-			siteName = "Global",
-			uploadFrom = "dependencies");
+			larFileName = "${larFileName}",
+			siteName = "Global");
 
 		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 

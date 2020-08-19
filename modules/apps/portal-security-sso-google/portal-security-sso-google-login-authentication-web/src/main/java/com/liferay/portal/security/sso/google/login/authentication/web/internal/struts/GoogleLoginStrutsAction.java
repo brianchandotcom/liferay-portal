@@ -83,12 +83,11 @@ public class GoogleLoginStrutsAction implements StrutsAction {
 			httpServletResponse.sendRedirect(loginRedirect);
 		}
 		else if (cmd.equals("token")) {
-			HttpSession session = httpServletRequest.getSession();
-
 			String authorizationCode = ParamUtil.getString(
 				httpServletRequest, "code");
 
 			if (Validator.isNotNull(authorizationCode)) {
+				HttpSession session = httpServletRequest.getSession();
 				String returnRequestUri = getReturnRequestUri(
 					httpServletRequest);
 

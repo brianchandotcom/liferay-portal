@@ -80,10 +80,6 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		long plid = ParamUtil.getLong(httpServletRequest, "plid");
 		long resourcePrimKey = ParamUtil.getLong(
 			httpServletRequest, "resourcePrimKey");
@@ -95,6 +91,10 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 		KBArticle kbArticle = getKBArticle(resourcePrimKey, status);
 
 		if (!isValidPlid(plid)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			plid = themeDisplay.getPlid();
 		}
 
@@ -360,9 +360,6 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		long resourcePrimKey = ParamUtil.getLong(
-			httpServletRequest, "resourcePrimKey");
-
 		String mvcPath = null;
 
 		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
@@ -382,6 +379,9 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 		}
 
 		if ((kbArticle == null) || Validator.isNull(kbArticle.getUrlTitle())) {
+			long resourcePrimKey = ParamUtil.getLong(
+				httpServletRequest, "resourcePrimKey");
+
 			portletURL.setParameter(
 				"resourcePrimKey", String.valueOf(resourcePrimKey));
 		}

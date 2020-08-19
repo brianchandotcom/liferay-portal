@@ -144,16 +144,16 @@ public class DLBreadcrumbUtil {
 			PortletURL portletURL)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		long rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 		boolean ignoreRootFolder = ParamUtil.getBoolean(
 			httpServletRequest, "ignoreRootFolder");
 
 		if (!ignoreRootFolder) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 			DLPortletInstanceSettings dlPortletInstanceSettings =

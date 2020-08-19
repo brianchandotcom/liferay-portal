@@ -381,12 +381,13 @@ public class ActionUtil {
 	public static JournalFeed getFeed(HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 		String feedId = ParamUtil.getString(httpServletRequest, "feedId");
 
 		JournalFeed feed = null;
 
 		if (Validator.isNotNull(feedId)) {
+			long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
+
 			feed = JournalFeedServiceUtil.getFeed(groupId, feedId);
 		}
 

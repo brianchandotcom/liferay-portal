@@ -989,10 +989,6 @@ public class PortletContainerImpl implements PortletContainer {
 			}
 		}
 
-		PortletMode portletMode = PortletModeFactory.getPortletMode(
-			ParamUtil.getString(httpServletRequest, "p_p_mode"),
-			portletSpecMajorVersion);
-
 		PortletPreferencesIds portletPreferencesIds =
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
 				httpServletRequest, portlet.getPortletId());
@@ -1047,6 +1043,10 @@ public class PortletContainerImpl implements PortletContainer {
 		LiferayResourceResponse liferayResourceResponse = null;
 
 		if (liferayResourceRequest == null) {
+			PortletMode portletMode = PortletModeFactory.getPortletMode(
+				ParamUtil.getString(httpServletRequest, "p_p_mode"),
+				portletSpecMajorVersion);
+
 			PortletPreferences portletPreferences =
 				PortletPreferencesLocalServiceUtil.getStrictPreferences(
 					portletPreferencesIds);

@@ -85,7 +85,6 @@ public class RSSStrutsAction implements StrutsAction {
 
 		long companyId = ParamUtil.getLong(httpServletRequest, "companyId");
 		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
-		long userId = ParamUtil.getLong(httpServletRequest, "userId");
 		long categoryId = ParamUtil.getLong(httpServletRequest, "mbCategoryId");
 		long threadId = ParamUtil.getLong(httpServletRequest, "threadId");
 		int max = ParamUtil.getInteger(
@@ -142,6 +141,8 @@ public class RSSStrutsAction implements StrutsAction {
 					"/message_boards/find_category?p_l_id=", plid,
 					"&mbCategoryId=", categoryId);
 			}
+
+			long userId = ParamUtil.getLong(httpServletRequest, "userId");
 
 			if (userId > 0) {
 				rss = _mbMessageService.getGroupMessagesRSS(

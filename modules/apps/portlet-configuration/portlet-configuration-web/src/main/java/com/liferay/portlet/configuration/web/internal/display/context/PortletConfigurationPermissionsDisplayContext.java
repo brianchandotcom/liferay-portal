@@ -693,14 +693,14 @@ public class PortletConfigurationPermissionsDisplayContext {
 			return _resourceGroupId;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		_resourceGroupId = ParamUtil.getLong(
 			_httpServletRequest, "resourceGroupId");
 
 		if (_resourceGroupId == 0) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			_resourceGroupId = themeDisplay.getScopeGroupId();
 		}
 

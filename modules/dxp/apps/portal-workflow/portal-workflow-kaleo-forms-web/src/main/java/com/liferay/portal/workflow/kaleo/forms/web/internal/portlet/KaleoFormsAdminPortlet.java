@@ -1066,9 +1066,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 		long ddlRecordId = ParamUtil.getLong(httpServletRequest, "ddlRecordId");
 
-		long ddlRecordSetId = ParamUtil.getLong(
-			httpServletRequest, "ddlRecordSetId");
-
 		long kaleoProcessId = ParamUtil.getLong(
 			httpServletRequest, "kaleoProcessId");
 
@@ -1084,6 +1081,9 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			ddlRecordSet.getDDMStructureId(), StringPool.BLANK, serviceContext);
 
 		if (ddlRecord == null) {
+			long ddlRecordSetId = ParamUtil.getLong(
+				httpServletRequest, "ddlRecordSetId");
+
 			ddlRecord = _ddlRecordLocalService.addRecord(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				ddlRecordSetId, DDLRecordConstants.DISPLAY_INDEX_DEFAULT,

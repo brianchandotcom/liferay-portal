@@ -48,9 +48,7 @@ const SidebarPanelInfoView = ({
 	subType,
 	tags = [],
 	title,
-	userId,
-	userName,
-	userPortraitURL,
+	user,
 	versions = [],
 	viewURLs = [],
 }) => {
@@ -78,7 +76,7 @@ const SidebarPanelInfoView = ({
 		[viewURLs]
 	);
 
-	const stickerColor = parseInt(userId, 10) % 10;
+	const stickerColor = parseInt(user.userId, 10) % 10;
 
 	return (
 		<>
@@ -119,21 +117,21 @@ const SidebarPanelInfoView = ({
 				<div className="c-mb-4 sidebar-dl sidebar-section">
 					<ClaySticker
 						className={classnames('sticker-user-icon', {
-							[`user-icon-color-${stickerColor}`]: !userPortraitURL,
+							[`user-icon-color-${stickerColor}`]: !user.url,
 						})}
 						shape="circle"
 					>
-						{userPortraitURL ? (
+						{user.url ? (
 							<img
-								alt={`${userName}.`}
+								alt={`${user.alt}.`}
 								className="sticker-img"
-								src={userPortraitURL}
+								src={user.url}
 							/>
 						) : (
 							<ClayIcon symbol="user" />
 						)}
 					</ClaySticker>
-					<span className="c-ml-2 h5">{userName}</span>
+					<span className="c-ml-2 h5">{user.alt}</span>
 				</div>
 
 				{!!sortedViewURLS.length && (

@@ -25,6 +25,7 @@ import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItem
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -138,15 +139,7 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				).put(
 					"title", contentDashboardItem.getTitle(locale)
 				).put(
-					"userId", contentDashboardItem.getUserId()
-				).put(
-					"userName",
-					contentDashboardItem.getDisplayFieldValue(
-						"authorName", locale)
-				).put(
-					"userPortraitURL",
-					contentDashboardItem.getDisplayFieldValue(
-						"authorProfileImage", locale)
+					"user", _getUserJSONObject(contentDashboardItem, locale)
 				).put(
 					"versions",
 					_getVersionsJSONArray(contentDashboardItem, locale)
@@ -250,6 +243,33 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 			contentDashboardItem.getContentDashboardItemType();
 
 		return contentDashboardItemType.getLabel(locale);
+	}
+
+	private JSONObject _getUserJSONObject(
+		ContentDashboardItem contentDashboardItem, Locale locale) {
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				String.valueOf(
+					contentDashboardItem.getDisplayFieldValue(
+						"authorProfileImage", locale)));
+
+			long portraitId = GetterUtil.getLong(
+				_http.getParameter(jsonObject.getString("url"), "img_id"));
+
+			if (portraitId <= 0) {
+				jsonObject.put("url", (String)null);
+			}
+
+			jsonObject.put("userId", contentDashboardItem.getUserId());
+
+			return jsonObject;
+		}
+		catch (JSONException jsonException) {
+			_log.error(jsonException, jsonException);
+
+			return JSONFactoryUtil.createJSONObject();
+		}
 	}
 
 	private JSONArray _getVersionsJSONArray(

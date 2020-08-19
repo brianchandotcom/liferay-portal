@@ -513,6 +513,23 @@ name = HtmlUtil.escapeJS(name);
 				if (instanceReady) {
 					initData();
 				}
+
+				// LPS-118801
+
+				var editorPath =
+					'<%= HtmlUtil.escapeJS(PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR)) %>';
+
+				document
+					.querySelectorAll(
+						'link[href*="' +
+							editorPath +
+							'"],script[src*="' +
+							editorPath +
+							'"]'
+					)
+					.forEach(function (tag) {
+						tag.setAttribute('data-senna-track', 'temporary');
+					});
 			});
 		</c:if>
 

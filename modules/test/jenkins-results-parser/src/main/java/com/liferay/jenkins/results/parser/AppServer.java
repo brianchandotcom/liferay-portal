@@ -85,6 +85,14 @@ public class AppServer {
 		environments.put("JAVA_OPTS", _getJavaOpts());
 		environments.put("PATH", _getPath());
 
+		for (Map.Entry<String, String> environment : environments.entrySet()) {
+			if (environment.getValue() != null) {
+				continue;
+			}
+
+			environments.remove(environment.getKey());
+		}
+
 		return environments;
 	}
 

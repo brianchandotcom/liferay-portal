@@ -15,7 +15,7 @@ definition {
 			panel = "Applications",
 			portlet = "Settings");
 
-		ChangeList.enableChangeList();
+		ChangeList.enableChangeList(gotoOverview = "true");
 	}
 
 	tearDown {

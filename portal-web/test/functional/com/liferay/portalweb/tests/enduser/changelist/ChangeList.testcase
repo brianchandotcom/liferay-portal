@@ -184,69 +184,6 @@ definition {
 			publicationName = "Publication 2 Name");
 	}
 
-	@priority = "5"
-	test PublishAndRevertPublication {
-		property test.name.skip.portal.instance = "ChangeList#PublishAndRevertPublication";
-
-		ChangeList.createNewPublication(publicationName = "Publication Name");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "Web Content Title");
-
-		PortletEntry.publish();
-
-		ChangeList.prepareToPublish(publicationName = "Publication Name");
-
-		ChangeList.publishPublication(publicationName = "Publication Name");
-
-		ChangeList.viewPublishedPublicationDetails(
-			publicationName = "Publication Name",
-			publicationPublishedBy = "Test Test");
-
-		AssertTextPresent(
-			key_publicationName = "Production",
-			locator1 = "ChangeList#CHANGE_LIST_INDICATOR_TITLE",
-			value1 = "Production");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
-
-		AssertElementPresent(
-			key_webContentTitle = "Web Content Title",
-			locator1 = "WC#ENTRY_LIST_TITLE");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Manage Publications");
-
-		Navigator.gotoNavTab(navTab = "History");
-
-		ChangeList.revertPublication(publicationName = "Publication Name");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
-
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No web content was found.");
-	}
-
 	@priority = "4"
 	test PublishDeletedPageWithTag {
 		property test.name.skip.portal.instance = "ChangeList#PublishDeletedPageWithTag";
@@ -625,6 +562,73 @@ definition {
 		AssertElementPresent(
 			key_webContentTitle = "WC WebContent Title",
 			locator1 = "WC#ENTRY_LIST_TITLE");
+	}
+
+	@priority = "5"
+	test RevertPublicationAndPublishNow {
+		property test.name.skip.portal.instance = "ChangeList#RevertPublicationAndPublishNow";
+
+		ChangeList.createNewPublication(publicationName = "Publication Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		ChangeList.prepareToPublish(publicationName = "Publication Name");
+
+		ChangeList.publishPublication(publicationName = "Publication Name");
+
+		ChangeList.viewPublishedPublicationDetails(
+			publicationName = "Publication Name",
+			publicationPublishedBy = "Test Test");
+
+		AssertTextPresent(
+			key_publicationName = "Production",
+			locator1 = "ChangeList#CHANGE_LIST_INDICATOR_TITLE",
+			value1 = "Production");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		AssertElementPresent(
+			key_webContentTitle = "Web Content Title",
+			locator1 = "WC#ENTRY_LIST_TITLE");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Publications",
+			panel = "Applications",
+			portlet = "Manage Publications");
+
+		Navigator.gotoNavTab(navTab = "History");
+
+		ChangeList.revertPublication(
+			publicationName = "Publication Name",
+			publishNow = "true");
+
+		ChangeList.publishPublication(publicationName = "Revert &quot;Publication Name&quot;");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No web content was found.");
 	}
 
 	@priority = "5"

@@ -145,7 +145,7 @@ definition {
 				item = "Edit");
 
 			var htmlSnippet = '''[resources:''';
-			var fragmentHTML = '''[resources:Document_2.jpg]''';
+			var fragmentHTML = '''[resources:Document_1.jpg''';
 
 			FragmentsEditor.typeHtmlEditor(content = "");
 

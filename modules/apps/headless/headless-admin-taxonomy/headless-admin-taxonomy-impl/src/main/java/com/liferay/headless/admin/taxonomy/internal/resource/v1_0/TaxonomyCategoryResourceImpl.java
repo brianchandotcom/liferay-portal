@@ -144,11 +144,16 @@ public class TaxonomyCategoryResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		AssetCategory assetCategory = _getAssetCategory(
-			parentTaxonomyCategoryId);
+		Map<String, Map<String, String>> actions = null;
 
-		return _getCategoriesPage(
-			HashMapBuilder.put(
+		if (!parentTaxonomyCategoryId.equals("0")) {
+			AssetCategory assetCategory = _getAssetCategory(
+				parentTaxonomyCategoryId);
+
+			parentTaxonomyCategoryId = String.valueOf(
+				assetCategory.getCategoryId());
+
+			actions = HashMapBuilder.<String, Map<String, String>>put(
 				"add-category",
 				addAction(
 					"ADD_CATEGORY", assetCategory.getCategoryId(),
@@ -162,15 +167,20 @@ public class TaxonomyCategoryResourceImpl
 					"getTaxonomyCategoryTaxonomyCategoriesPage",
 					assetCategory.getUserId(), AssetCategory.class.getName(),
 					assetCategory.getGroupId())
-			).build(),
+			).build();
+		}
+
+		String taxonomyCategoryId = parentTaxonomyCategoryId;
+
+		return _getCategoriesPage(
+			actions,
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
 
 				booleanFilter.add(
 					new TermFilter(
-						Field.ASSET_PARENT_CATEGORY_ID,
-						String.valueOf(assetCategory.getCategoryId())),
+						Field.ASSET_PARENT_CATEGORY_ID, taxonomyCategoryId),
 					BooleanClauseOccur.MUST);
 			},
 			filter, search, pagination, sorts);

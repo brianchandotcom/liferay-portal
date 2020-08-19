@@ -23,6 +23,7 @@ import {
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useSelector} from '../../store/index';
+import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import loadBackgroundImage from '../../utils/loadBackgroundImage';
 import {useCustomRowContext} from '../ResizeContext';
@@ -71,6 +72,18 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 
 	const style = {};
 
+	style.border = `solid ${borderWidth}px`;
+	style.borderRadius = getFrontendTokenValue(borderRadius);
+	style.boxShadow = getFrontendTokenValue(shadow);
+	style.fontFamily = getFrontendTokenValue(fontFamily);
+	style.fontSize = getFrontendTokenValue(fontSize);
+	style.fontWeight = getFrontendTokenValue(fontWeight);
+	style.height = height;
+	style.maxHeight = maxHeight;
+	style.minHeight = minHeight;
+	style.opacity = opacity;
+	style.overflow = overflow;
+
 	if (backgroundImageValue) {
 		style.backgroundImage = `url(${backgroundImageValue})`;
 		style.backgroundPosition = '50% 50%';
@@ -78,33 +91,19 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 		style.backgroundSize = 'cover';
 	}
 
-	if (fontSize) {
-		style.fontSize = fontSize;
-	}
-
-	style.border = `solid ${borderWidth}px`;
-	style.height = height;
-	style.maxHeight = maxHeight;
-	style.minHeight = minHeight;
-	style.opacity = opacity;
-	style.overflow = overflow;
-
 	const rowContent = (
 		<ClayLayout.Row
 			className={classNames(
 				className,
-				fontWeight,
 				`mb-${marginBottom}`,
 				`mt-${marginTop}`,
 				`pb-${paddingBottom}`,
 				`pl-${paddingLeft}`,
 				`pr-${paddingRight}`,
 				`pt-${paddingTop}`,
-				shadow,
 				{
 					[`bg-${backgroundColor?.cssClass}`]: backgroundColor,
 					[`border-${borderColor?.cssClass}`]: borderColor,
-					[borderRadius]: !!borderRadius,
 					empty:
 						item.config.numberOfColumns === modulesPerRow &&
 						!item.children.some(
@@ -116,7 +115,6 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 						item.config.numberOfColumns === 2 &&
 						modulesPerRow === 1 &&
 						reverseOrder,
-					[`text-${fontFamily}`]: fontFamily !== 'default',
 					[`ml-${marginLeft}`]: marginLeft !== '0',
 					[`mr-${marginRight}`]: marginRight !== '0',
 					'no-gutters': !item.config.gutters,

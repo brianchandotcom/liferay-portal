@@ -21,17 +21,18 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {useSelector} from '../../store/index';
+import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import loadBackgroundImage from '../../utils/loadBackgroundImage';
 import Topper from '../Topper';
 import FragmentContent from '../fragment-content/FragmentContent';
 
 const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
-	const [setRef, itemElement] = useSetRef(ref);
-
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
+
+	const [setRef, itemElement] = useSetRef(ref);
 
 	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
 
@@ -73,18 +74,12 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 
 	const style = {};
 
-	if (backgroundImageValue) {
-		style.backgroundImage = `url(${backgroundImageValue})`;
-		style.backgroundPosition = '50% 50%';
-		style.backgroundRepeat = 'no-repeat';
-		style.backgroundSize = 'cover';
-	}
-
-	if (fontSize) {
-		style.fontSize = fontSize;
-	}
-
 	style.border = `solid ${borderWidth}px`;
+	style.borderRadius = getFrontendTokenValue(borderRadius);
+	style.boxShadow = getFrontendTokenValue(shadow);
+	style.fontFamily = getFrontendTokenValue(fontFamily);
+	style.fontSize = getFrontendTokenValue(fontSize);
+	style.fontWeight = getFrontendTokenValue(fontWeight);
 	style.height = height;
 	style.maxHeight = maxHeight;
 	style.maxWidth = maxWidth;
@@ -94,10 +89,16 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	style.overflow = overflow;
 	style.width = width;
 
+	if (backgroundImageValue) {
+		style.backgroundImage = `url(${backgroundImageValue})`;
+		style.backgroundPosition = '50% 50%';
+		style.backgroundRepeat = 'no-repeat';
+		style.backgroundSize = 'cover';
+	}
+
 	return (
 		<Topper
 			className={classNames(
-				fontWeight,
 				`mb-${marginBottom}`,
 				`ml-${marginLeft}`,
 				`mr-${marginRight}`,
@@ -106,12 +107,9 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 				`pl-${paddingLeft}`,
 				`pr-${paddingRight}`,
 				`pt-${paddingTop}`,
-				shadow,
 				{
 					[`bg-${backgroundColor?.cssClass}`]: backgroundColor,
 					[`border-${borderColor?.cssClass}`]: borderColor,
-					[borderRadius]: !!borderRadius,
-					[`text-${fontFamily}`]: fontFamily !== 'default',
 					[textAlign]: textAlign !== 'none',
 					[`text-${textColor?.cssClass || textColor}`]: textColor,
 				}

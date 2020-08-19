@@ -23,6 +23,7 @@ import {
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import {useSelector} from '../../store/index';
+import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import Topper from '../Topper';
 import Container from './Container';
@@ -59,13 +60,14 @@ const ContainerWithControls = React.forwardRef(
 
 		const style = {};
 
+		style.boxShadow = getFrontendTokenValue(shadow);
 		style.maxWidth = maxWidth;
 		style.minWidth = minWidth;
 		style.width = width;
 
 		return (
 			<Topper
-				className={classNames(shadow, {
+				className={classNames({
 					container: widthType === 'fixed',
 					[`ml-${marginLeft}`]: widthType !== 'fixed',
 					[`mr-${marginRight}`]: widthType !== 'fixed',

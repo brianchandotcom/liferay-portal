@@ -13,17 +13,10 @@
  */
 
 import {ClassicEditor} from 'frontend-editor-ckeditor-web';
-import React, {useMemo} from 'react';
+import React from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
-
-const CKEDITOR_CONFIG = {
-	autoGrow_bottomSpace: 50,
-	autoGrow_maxHeight: 600,
-	autoGrow_minHeight: 215,
-	resize_enabled: true,
-};
 
 const RichText = ({
 	editorConfig,

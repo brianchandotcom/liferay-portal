@@ -161,10 +161,12 @@ const ModalContent = ({
 					}),
 				},
 				onPropagate: () => saveFieldSet(name),
-			}).finally(onClose);
+			})
+				.then(onClose)
+				.catch(onClose);
 		}
 		else {
-			createFieldSet(name).finally(onClose);
+			createFieldSet(name).then(onClose).catch(onClose);
 		}
 	};
 

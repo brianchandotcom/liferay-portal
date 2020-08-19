@@ -201,7 +201,7 @@ public class DataRecordResourceImpl
 					_searchRequestBuilderFactory.builder(
 						searchContext
 					).sorts(
-						_getSearchSorts(sorts)
+						_getFieldSorts(sorts)
 					);
 				}
 
@@ -433,18 +433,12 @@ public class DataRecordResourceImpl
 		return ddlRecordSet.getRecordSetId();
 	}
 
-	private String _getIndexFieldName(
-		long ddmStructureId, String fieldName, Locale locale) {
-
-		return _ddmIndexer.encodeName(ddmStructureId, fieldName, locale);
-	}
-
-	private FieldSort[] _getSearchSorts(Sort[] sorts) {
+	private FieldSort[] _getFieldSorts(Sort[] sorts) {
 		List<FieldSort> fieldSorts = new ArrayList<>();
 
 		for (Sort sort : sorts) {
 			FieldSort fieldSort = _sorts.field(
-				_getSortableField(sort.getFieldName()));
+				_getSortableFieldName(sort.getFieldName()));
 
 			if (sort.isReverse()) {
 				fieldSort.setSortOrder(SortOrder.DESC);
@@ -467,14 +461,20 @@ public class DataRecordResourceImpl
 		return fieldSorts.toArray(new FieldSort[0]);
 	}
 
-	private String _getSortableField(String sortField) {
+	private String _getIndexFieldName(
+		long ddmStructureId, String fieldName, Locale locale) {
+
+		return _ddmIndexer.encodeName(ddmStructureId, fieldName, locale);
+	}
+
+	private String _getSortableFieldName(String fieldName) {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(DDMIndexer.DDM_FIELD_ARRAY);
 		sb.append(StringPool.PERIOD);
 		sb.append(
 			_ddmIndexer.getValueFieldName(
-				sortField.split(DDMIndexer.DDM_FIELD_SEPARATOR)[1],
+				fieldName.split(DDMIndexer.DDM_FIELD_SEPARATOR)[1],
 				contextAcceptLanguage.getPreferredLocale()));
 		sb.append(StringPool.UNDERLINE);
 		sb.append("String");

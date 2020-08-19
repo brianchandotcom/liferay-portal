@@ -105,20 +105,6 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 			LocaleUtil.getDefault()
 		).build();
 
-		DataListView dataListView =
-			dataListViewResource.postDataDefinitionDataListView(
-				_dataDefinition.getId(),
-				new DataListView() {
-					{
-						appliedFilters =
-							LinkedHashMapBuilder.<String, Object>put(
-								"SingleSelection", new String[] {"Car"}
-							).build();
-						dataDefinitionId = _dataDefinition.getId();
-						fieldNames = new String[] {"SingleSelection"};
-					}
-				});
-
 		Long dataRecordCollectionId =
 			testGetDataRecordCollectionDataRecordsPage_getDataRecordCollectionId();
 
@@ -150,6 +136,20 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 					).build();
 				}
 			});
+
+		DataListView dataListView =
+			dataListViewResource.postDataDefinitionDataListView(
+				_dataDefinition.getId(),
+				new DataListView() {
+					{
+						appliedFilters =
+							LinkedHashMapBuilder.<String, Object>put(
+								"SingleSelection", new String[] {"Car"}
+							).build();
+						dataDefinitionId = _dataDefinition.getId();
+						fieldNames = new String[] {"SingleSelection"};
+					}
+				});
 
 		Page<DataRecord> page =
 			dataRecordResource.getDataRecordCollectionDataRecordsPage(

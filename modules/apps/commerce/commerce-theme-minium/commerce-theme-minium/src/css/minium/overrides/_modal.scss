@@ -1,7 +1,6 @@
-.modal {
+#wrapper .modal {
 	left: $frame-size;
 	top: 0;
-	z-index: 1160;
 
 	body.signed-in & {
 		top: $liferay-topbar-size;
@@ -31,10 +30,6 @@
 		pointer-events: unset;
 		position: relative;
 	}
-}
-
-.modal-backdrop {
-	z-index: 1120;
 }
 
 #minium {

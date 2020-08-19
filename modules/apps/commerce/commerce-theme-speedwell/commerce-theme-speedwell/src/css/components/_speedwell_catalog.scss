@@ -14,7 +14,7 @@
 			transition: opacity 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 			transition-delay: 300ms;
 			width: 100%;
-			z-index: 1000;
+			z-index: 998;
 
 			.portlet {
 				margin: 20px 0;
@@ -53,7 +53,7 @@
 					text-align: center;
 					top: 0;
 					width: 70px;
-					z-index: 1001;
+					z-index: 999;
 				}
 			}
 

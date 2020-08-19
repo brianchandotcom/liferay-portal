@@ -8,7 +8,7 @@
 		right: 0;
 		top: 0;
 		transition: all ease 500ms;
-		z-index: 1105;
+		z-index: 950;
 
 		@media screen and (hover: none) {
 			margin-left: 0;
@@ -21,7 +21,7 @@
 		position: fixed;
 		top: 0;
 		transition: all ease 500ms;
-		z-index: 1120;
+		z-index: 951;
 
 		@media screen and (hover: none) {
 			box-shadow: $shadow;
@@ -166,7 +166,7 @@
 		justify-self: end;
 		margin-right: 20px;
 		margin-top: 20px;
-		z-index: 1190;
+		z-index: 999;
 
 		&:empty {
 			display: none;
@@ -183,7 +183,7 @@
 		position: fixed;
 		right: 0;
 		top: 0;
-		z-index: 1180;
+		z-index: 998;
 
 		&:not(.is-visible) {
 			display: none;

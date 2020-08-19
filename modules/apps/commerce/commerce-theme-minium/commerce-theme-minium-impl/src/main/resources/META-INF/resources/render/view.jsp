@@ -125,7 +125,7 @@ List<CPMedia> cpAttachmentFileEntries = cpContentHelper.getCPAttachmentFileEntri
 
 <c:if test="<%= cpContentHelper.hasCPDefinitionSpecificationOptionValues(cpDefinitionId) %>">
 	<commerce-ui:panel
-		elementClasses="mb-3"
+		elementClasses="flex-column mb-3"
 		title='<%= LanguageUtil.get(resourceBundle, "specifications") %>'
 	>
 		<dl class="specification-list">

@@ -14,7 +14,6 @@
 
 import {render} from 'frontend-js-react-web';
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 export default function launcher(
 	Component,
@@ -22,25 +21,11 @@ export default function launcher(
 	containerId,
 	props = {}
 ) {
-	const {portletId} = props;
-	const container = window.document.getElementById(containerId);
-	const destroyOnNavigate = !portletId;
-
-	if (Liferay.component) {
-		Liferay.component(
+	const container = window.document.getElementById(containerId),
+		renderData = {
 			componentId,
-			{
-				destroy: () => {
-					ReactDOM.unmountComponentAtNode(container);
-				},
-			},
-			{
-				destroyOnNavigate,
-				portletId,
-			}
-		);
-	}
+			...props
+		};
 
-	// eslint-disable-next-line liferay-portal/no-react-dom-render
-	render(<Component {...props} />, container);
+	render(Component, renderData, container);
 }

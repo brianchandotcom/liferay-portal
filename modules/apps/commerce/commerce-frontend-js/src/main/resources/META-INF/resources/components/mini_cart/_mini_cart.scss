@@ -8,7 +8,7 @@
 	transition: background-color 200ms ease-out;
 	transition-delay: unset;
 	width: 100vw;
-	z-index: 1140;
+	z-index: 999;
 
 	&:not(.is-open) {
 		height: 64px;

@@ -128,7 +128,7 @@
 		top: 0;
 		transform: translateX(100%);
 		transition: transform 0.2s ease-in;
-		z-index: 1102;
+		z-index: 999;
 
 		.commerce-item.is-deleting & {
 			transform: translateX(0%);

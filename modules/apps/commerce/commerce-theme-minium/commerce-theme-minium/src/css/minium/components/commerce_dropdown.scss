@@ -18,7 +18,7 @@
 		transform-origin: 100% 0%;
 		transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 		width: 450px;
-		z-index: 1160;
+		z-index: 999;
 
 		@media screen and (max-width: $bp-small) {
 			left: $sm-gutter;
@@ -37,7 +37,7 @@
 			position: absolute;
 			right: 24px;
 			transition: max-height 0.2s ease-in, opacity 0.2s ease-in;
-			z-index: 1160;
+			z-index: 999;
 
 			@media screen and (max-width: $bp-small) {
 				right: 64px;

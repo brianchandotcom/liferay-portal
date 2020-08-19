@@ -18,7 +18,7 @@
 		"@clayui/panel": "3.0.7",
 		"@clayui/shared": "3.0.7",
 		"@clayui/sticker": "3.0.5",
-		"@clayui/table": "^4.0.0",
+		"@clayui/table": "3.0.7",
 		"@clayui/tooltip": "3.1.0",
 		"classnames": "^2.2.6",
 		"frontend-js-react-web": "*",

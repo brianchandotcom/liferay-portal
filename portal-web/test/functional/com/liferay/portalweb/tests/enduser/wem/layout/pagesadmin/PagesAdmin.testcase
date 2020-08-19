@@ -24,12 +24,14 @@ definition {
 		}
 	}
 
+	// Quarantine it until LPS-119174 resolved
+
 	@description = "This is use case for LPS-107776. Can add collection items in a collection page based on dynamic collection with all types."
 	@priority = "5"
 	test AddCollectionItemsInCollectionPageBasedOnDynamicCollection {
 		property osgi.app.includes = "bookmarks";
 		property osgi.app.includes = "document-library-google-docs";
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		task ("Add a dynamic collection with All Types") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
@@ -148,10 +150,12 @@ definition {
 		}
 	}
 
+	// Quarantine it until LPS-119174 resolved
+
 	@description = "This is a test for LPS-107775. Can add new collections when add a collection page from pages admin."
 	@priority = "5"
 	test AddcollectionViaAddingCollectionPage {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -347,10 +351,12 @@ definition {
 		SitePages.viewCheckboxChecked(pageName = "Test Content Page");
 	}
 
+	// Quarantine it until LPS-119174 resolved
+
 	@description = "This is a test for LPS-110183. Can access to display page in Collection Items modal when the collection item has associated display page template."
 	@priority = "5"
 	test GoToCollectionItemDisplayPage {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Web Content Article",
@@ -1089,10 +1095,12 @@ definition {
 		AssertVisible(locator1 = "Icon#EDIT_PENCIL");
 	}
 
+	// Quarantine it until LPS-119174 resolved
+
 	@description = "This is a test for LPS-110183. Can view information about collection items of collection page."
 	@priority = "5"
 	test ViewCollectionItemViaPageFinderAndPageAdmin {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property osgi.app.includes = "bookmarks";
 		property osgi.app.includes = "document-library-google-docs";
 

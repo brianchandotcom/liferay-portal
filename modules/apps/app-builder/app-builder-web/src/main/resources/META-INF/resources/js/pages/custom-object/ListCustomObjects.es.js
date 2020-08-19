@@ -18,6 +18,7 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
 import {useKeyDown} from '../../hooks/index.es';
+import useQuery from '../../hooks/useQuery.es';
 import isClickOutside from '../../utils/clickOutside.es';
 import {addItem, parseResponse} from '../../utils/client.es';
 import {errorToast, successToast} from '../../utils/toast.es';
@@ -33,6 +34,7 @@ export default ({history}) => {
 
 	const [alignElement, setAlignElement] = useState(addButtonRef.current);
 	const [isPopoverVisible, setPopoverVisible] = useState(false);
+	const [{showCustomObjectPopover}] = useQuery(history);
 
 	const confirmDelete = ({id: dataDefinitionId}) => {
 		return new Promise((resolve, reject) => {
@@ -137,6 +139,13 @@ export default ({history}) => {
 
 		return () => window.removeEventListener('click', handler);
 	}, [addButtonRef, emptyStateButtonRef, popoverRef]);
+
+	useEffect(() => {
+		if (addButtonRef.current && showCustomObjectPopover) {
+			setAlignElement(addButtonRef.current);
+			setPopoverVisible(true);
+		}
+	}, [addButtonRef, showCustomObjectPopover]);
 
 	useKeyDown(() => {
 		if (isPopoverVisible) {

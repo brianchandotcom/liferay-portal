@@ -13,13 +13,13 @@
 	<name>${artifactId}</name>
 	<properties>
 #if (${liferayVersion.startsWith("7.0")})
-		<liferay.bom.version>7.0.6-1</liferay.bom.version>
+		<liferay.bom.version>7.0.6-2</liferay.bom.version>
 		<liferay.workspace.bundle.url>https://releases-cdn.liferay.com/portal/7.0.6-ga7/liferay-ce-portal-tomcat-7.0-ga7-20180507111753223.zip</liferay.workspace.bundle.url>
 #elseif (${liferayVersion.startsWith("7.1")})
-		<liferay.bom.version>7.1.3</liferay.bom.version>
+		<liferay.bom.version>7.1.3-1</liferay.bom.version>
 		<liferay.workspace.bundle.url>https://releases-cdn.liferay.com/portal/7.1.3-ga4/liferay-ce-portal-tomcat-7.1.3-ga4-20190508171117552.tar.gz</liferay.workspace.bundle.url>
 #elseif (${liferayVersion.startsWith("7.2")})
-		<liferay.bom.version>7.2.1</liferay.bom.version>
+		<liferay.bom.version>7.2.1-1</liferay.bom.version>
 		<liferay.workspace.bundle.url>https://releases-cdn.liferay.com/portal/7.2.1-ga2/liferay-ce-portal-tomcat-7.2.1-ga2-20191111141448326.tar.gz</liferay.workspace.bundle.url>
 #elseif (${liferayVersion.startsWith("7.3")})
 		<liferay.bom.version>7.3.3</liferay.bom.version>

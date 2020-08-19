@@ -16,6 +16,8 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import {DndProvider} from 'react-dnd';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {ControlsProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/components/Controls';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
@@ -43,137 +45,139 @@ const renderComponent = ({
 	);
 
 	return render(
-		<ControlsProvider
-			activeInitialState={{
-				activationOrigin: null,
-				activeItemId,
-				activeItemType: null,
-			}}
-			hoverInitialState={{
-				hoveredItemId: null,
-			}}
-		>
-			<StoreAPIContextProvider
-				getState={() => ({
-					fragmentEntryLinks: {
-						'001': {
-							content: {
-								value: {
-									content: '<div>001</div>',
-								},
-							},
-							editableTypes: {
-								'05-editable': 'text',
-							},
-							editableValues: {
-								[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
-									'05-editable': {
-										defaultValue: 'defaultValue',
+		<DndProvider backend={HTML5Backend}>
+			<ControlsProvider
+				activeInitialState={{
+					activationOrigin: null,
+					activeItemId,
+					activeItemType: null,
+				}}
+				hoverInitialState={{
+					hoveredItemId: null,
+				}}
+			>
+				<StoreAPIContextProvider
+					getState={() => ({
+						fragmentEntryLinks: {
+							'001': {
+								content: {
+									value: {
+										content: '<div>001</div>',
 									},
 								},
-							},
-							fragmentEntryLinkId: '001',
-							name: 'Fragment 1',
-						},
-					},
-
-					layoutData: {
-						items: {
-							'00-main': {
-								children: rootItemChildren,
-								config: {},
-								itemId: '00-main',
-								parentId: null,
-								type: LAYOUT_DATA_ITEM_TYPES.root,
-							},
-							'01-container': {
-								children: ['02-row'],
-								config: {},
-								itemId: '01-container',
-								parentId: 'main',
-								type: LAYOUT_DATA_ITEM_TYPES.container,
-							},
-							'02-row': {
-								children: ['03-column'],
-								config: {},
-								itemId: '02-row',
-								parentId: '01-container',
-								type: LAYOUT_DATA_ITEM_TYPES.row,
-							},
-							'03-column': {
-								children: ['04-fragment'],
-								config: {},
-								itemId: '03-column',
-								parentId: '02-row',
-								type: LAYOUT_DATA_ITEM_TYPES.column,
-							},
-							'04-fragment': {
-								children: [],
-								config: {
-									fragmentEntryLinkId: '001',
+								editableTypes: {
+									'05-editable': 'text',
 								},
-								itemId: '04-fragment',
-								parentId: '03-column',
-								type: LAYOUT_DATA_ITEM_TYPES.fragment,
-							},
-							'05-row': {
-								children: [],
-								config: {
-									fragmentEntryLinkId: '001',
+								editableValues: {
+									[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
+										'05-editable': {
+											defaultValue: 'defaultValue',
+										},
+									},
 								},
-								itemId: '05-row',
-								parentId: '03-column',
-								type: LAYOUT_DATA_ITEM_TYPES.fragment,
+								fragmentEntryLinkId: '001',
+								name: 'Fragment 1',
 							},
 						},
 
-						rootItems: {main: '00-main'},
-						version: 1,
-					},
-
-					masterLayout: {
-						masterLayoutData: {
+						layoutData: {
 							items: {
-								'10-main': {
-									children: masterRootItemChildren,
+								'00-main': {
+									children: rootItemChildren,
 									config: {},
-									itemId: '10-main',
+									itemId: '00-main',
 									parentId: null,
 									type: LAYOUT_DATA_ITEM_TYPES.root,
 								},
-								'11-container': {
-									children: ['12-dropzone'],
+								'01-container': {
+									children: ['02-row'],
 									config: {},
-									itemId: '11-container',
-									parentId: '10-main',
+									itemId: '01-container',
+									parentId: 'main',
 									type: LAYOUT_DATA_ITEM_TYPES.container,
 								},
-								'12-dropzone': {
-									children: [],
+								'02-row': {
+									children: ['03-column'],
 									config: {},
-									itemId: '12-dropzone',
-									parentId: '11-container',
-									type: LAYOUT_DATA_ITEM_TYPES.dropZone,
+									itemId: '02-row',
+									parentId: '01-container',
+									type: LAYOUT_DATA_ITEM_TYPES.row,
+								},
+								'03-column': {
+									children: ['04-fragment'],
+									config: {},
+									itemId: '03-column',
+									parentId: '02-row',
+									type: LAYOUT_DATA_ITEM_TYPES.column,
+								},
+								'04-fragment': {
+									children: [],
+									config: {
+										fragmentEntryLinkId: '001',
+									},
+									itemId: '04-fragment',
+									parentId: '03-column',
+									type: LAYOUT_DATA_ITEM_TYPES.fragment,
+								},
+								'05-row': {
+									children: [],
+									config: {
+										fragmentEntryLinkId: '001',
+									},
+									itemId: '05-row',
+									parentId: '03-column',
+									type: LAYOUT_DATA_ITEM_TYPES.fragment,
 								},
 							},
 
-							rootItems: {main: '10-main'},
+							rootItems: {main: '00-main'},
 							version: 1,
 						},
-						masterLayoutPlid: '0',
-					},
 
-					permissions: {
-						LOCKED_SEGMENTS_EXPERIMENT: lockedExperience,
-						UPDATE: hasUpdatePermissions,
-					},
+						masterLayout: {
+							masterLayoutData: {
+								items: {
+									'10-main': {
+										children: masterRootItemChildren,
+										config: {},
+										itemId: '10-main',
+										parentId: null,
+										type: LAYOUT_DATA_ITEM_TYPES.root,
+									},
+									'11-container': {
+										children: ['12-dropzone'],
+										config: {},
+										itemId: '11-container',
+										parentId: '10-main',
+										type: LAYOUT_DATA_ITEM_TYPES.container,
+									},
+									'12-dropzone': {
+										children: [],
+										config: {},
+										itemId: '12-dropzone',
+										parentId: '11-container',
+										type: LAYOUT_DATA_ITEM_TYPES.dropZone,
+									},
+								},
 
-					selectedViewportSize: viewportSize,
-				})}
-			>
-				<PageStructureSidebar />
-			</StoreAPIContextProvider>
-		</ControlsProvider>
+								rootItems: {main: '10-main'},
+								version: 1,
+							},
+							masterLayoutPlid: '0',
+						},
+
+						permissions: {
+							LOCKED_SEGMENTS_EXPERIMENT: lockedExperience,
+							UPDATE: hasUpdatePermissions,
+						},
+
+						selectedViewportSize: viewportSize,
+					})}
+				>
+					<PageStructureSidebar />
+				</StoreAPIContextProvider>
+			</ControlsProvider>
+		</DndProvider>
 	);
 };
 

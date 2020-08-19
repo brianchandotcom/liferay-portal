@@ -40,10 +40,9 @@ public class LoginPostAction extends Action {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		long userId = _portal.getUserId(httpServletRequest);
-		String password = _portal.getUserPassword(httpServletRequest);
-
-		JabberUtil.login(userId, password);
+		JabberUtil.login(
+			_portal.getUserId(httpServletRequest),
+			_portal.getUserPassword(httpServletRequest));
 	}
 
 	@Reference

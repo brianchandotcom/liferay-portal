@@ -53,13 +53,12 @@ public class RenderPortletAction implements Action {
 
 		String ajaxId = httpServletRequest.getParameter("ajax_id");
 
-		long companyId = PortalUtil.getCompanyId(httpServletRequest);
 		User user = PortalUtil.getUser(httpServletRequest);
 		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
 		String portletId = ParamUtil.getString(httpServletRequest, "p_p_id");
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			companyId, portletId);
+			PortalUtil.getCompanyId(httpServletRequest), portletId);
 
 		String columnId = ParamUtil.getString(httpServletRequest, "p_p_col_id");
 		int columnPos = ParamUtil.getInteger(httpServletRequest, "p_p_col_pos");

@@ -1653,8 +1653,8 @@ definition {
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		BlogsEntry.viewPG(
-			entryContent = "Blogs Entry Content Edited",
-			entryTitle = "Blogs Entry Title");
+			entryCardTitle = "Blogs Entry Title",
+			entryContent = "Blogs Entry Content Edited");
 	}
 
 	@description = "This is a usecase for LPS-82025"

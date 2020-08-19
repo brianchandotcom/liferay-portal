@@ -58,16 +58,16 @@ public class VerifyEmailAddressAction implements Action {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		String cmd = ParamUtil.getString(httpServletRequest, Constants.CMD);
 
 		if (Validator.isNull(cmd)) {
 			return actionMapping.getActionForward(
 				"portal.verify_email_address");
 		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isSignedIn() && cmd.equals(Constants.SEND)) {
 			sendEmailAddressVerification(

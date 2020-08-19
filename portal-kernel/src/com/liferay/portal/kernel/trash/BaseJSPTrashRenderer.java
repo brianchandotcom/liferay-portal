@@ -41,13 +41,13 @@ public abstract class BaseJSPTrashRenderer extends BaseTrashRenderer {
 			HttpServletResponse httpServletResponse, String template)
 		throws Exception {
 
-		ServletContext servletContext = getServletContext(httpServletRequest);
-
 		String jspPath = getJspPath(httpServletRequest, template);
 
 		if (Validator.isNull(jspPath)) {
 			return false;
 		}
+
+		ServletContext servletContext = getServletContext(httpServletRequest);
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(jspPath);

@@ -121,13 +121,6 @@ public abstract class BaseItemSelectorViewDisplayContext
 
 	@Override
 	public long[] getSelectedGroupIds() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		String portletResource = ParamUtil.getString(
-			httpServletRequest, "portletResource");
-
 		long plid = ParamUtil.getLong(httpServletRequest, "plid");
 
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
@@ -135,6 +128,13 @@ public abstract class BaseItemSelectorViewDisplayContext
 		if (layout == null) {
 			return new long[0];
 		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String portletResource = ParamUtil.getString(
+			httpServletRequest, "portletResource");
 
 		PortletPreferences portletPreferences =
 			themeDisplay.getStrictLayoutPortletSetup(layout, portletResource);

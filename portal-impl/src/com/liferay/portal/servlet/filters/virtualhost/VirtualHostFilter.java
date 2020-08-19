@@ -168,8 +168,6 @@ public class VirtualHostFilter extends BasePortalFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		long companyId = PortalInstances.getCompanyId(httpServletRequest);
-
 		String originalFriendlyURL = HttpUtil.normalizePath(
 			httpServletRequest.getRequestURI());
 
@@ -268,6 +266,8 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 			return;
 		}
+
+		long companyId = PortalInstances.getCompanyId(httpServletRequest);
 
 		try {
 			Map<String, String[]> parameterMap =

@@ -85,9 +85,6 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 			namespacedHttpServletRequest, Constants.CMD);
 
 		try {
-			String redirect = _portal.escapeRedirect(
-				ParamUtil.getString(namespacedHttpServletRequest, "redirect"));
-
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				long commentId = updateComment(namespacedHttpServletRequest);
 
@@ -118,6 +115,9 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 			else if (cmd.equals(Constants.UNSUBSCRIBE_FROM_COMMENTS)) {
 				subscribeToComments(namespacedHttpServletRequest, false);
 			}
+
+			String redirect = _portal.escapeRedirect(
+				ParamUtil.getString(namespacedHttpServletRequest, "redirect"));
 
 			if (Validator.isNotNull(redirect)) {
 				httpServletResponse.sendRedirect(redirect);

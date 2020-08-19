@@ -87,19 +87,19 @@ public class JSONServiceAction extends JSONAction {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String className = ParamUtil.getString(
-			httpServletRequest, "serviceClassName");
-		String methodName = ParamUtil.getString(
-			httpServletRequest, "serviceMethodName");
+		if (!isValidRequest(httpServletRequest)) {
+			return null;
+		}
 
 		String[] serviceParameters = getStringArrayFromJSON(
 			httpServletRequest, "serviceParameters");
 		String[] serviceParameterTypes = getStringArrayFromJSON(
 			httpServletRequest, "serviceParameterTypes");
 
-		if (!isValidRequest(httpServletRequest)) {
-			return null;
-		}
+		String className = ParamUtil.getString(
+			httpServletRequest, "serviceClassName");
+		String methodName = ParamUtil.getString(
+			httpServletRequest, "serviceMethodName");
 
 		Thread currentThread = Thread.currentThread();
 

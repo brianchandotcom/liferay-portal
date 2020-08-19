@@ -663,7 +663,6 @@ public class BeanPropertiesImpl implements BeanProperties {
 		int day = ParamUtil.getInteger(httpServletRequest, param + "Day");
 		int year = ParamUtil.getInteger(httpServletRequest, param + "Year");
 		int hour = ParamUtil.getInteger(httpServletRequest, param + "Hour", -1);
-		int minute = ParamUtil.getInteger(httpServletRequest, param + "Minute");
 
 		int amPm = ParamUtil.getInteger(httpServletRequest, param + "AmPm");
 
@@ -674,6 +673,8 @@ public class BeanPropertiesImpl implements BeanProperties {
 		if (hour == -1) {
 			return PortalUtil.getDate(month, day, year);
 		}
+
+		int minute = ParamUtil.getInteger(httpServletRequest, param + "Minute");
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

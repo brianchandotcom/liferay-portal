@@ -49,15 +49,15 @@ public class DynamicCSSUtil {
 			HttpServletRequest httpServletRequest, String content)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		Theme theme = _getTheme(httpServletRequest);
 
 		if (theme == null) {
 			return content;
 		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return replaceToken(
 			servletContext, httpServletRequest, themeDisplay, theme, content);

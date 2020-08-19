@@ -75,10 +75,6 @@ public class RSSStrutsAction implements StrutsAction {
 	protected byte[] getRSS(HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		String rss = StringPool.BLANK;
 
 		long nodeId = ParamUtil.getLong(httpServletRequest, "nodeId");
@@ -86,6 +82,10 @@ public class RSSStrutsAction implements StrutsAction {
 		if (nodeId <= 0) {
 			return rss.getBytes(StringPool.UTF8);
 		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String title = ParamUtil.getString(httpServletRequest, "title");
 		int max = ParamUtil.getInteger(

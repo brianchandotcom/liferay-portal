@@ -303,16 +303,16 @@ public class ActionUtil {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		long repositoryId = ParamUtil.getLong(
 			httpServletRequest, "repositoryId");
 
 		if (repositoryId > 0) {
 			return RepositoryServiceUtil.getRepository(repositoryId);
 		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		DLPermission.check(
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),

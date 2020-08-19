@@ -164,16 +164,16 @@ public class DDMFormTaglibUtil {
 		long ddmStructureId, long ddmStructureVersionId,
 		HttpServletRequest httpServletRequest) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		String serializedFormBuilderContext = ParamUtil.getString(
 			httpServletRequest, "serializedFormBuilderContext");
 
 		if (Validator.isNotNull(serializedFormBuilderContext)) {
 			return serializedFormBuilderContext;
 		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		JSONSerializer jsonSerializer = _jsonFactory.createJSONSerializer();
 

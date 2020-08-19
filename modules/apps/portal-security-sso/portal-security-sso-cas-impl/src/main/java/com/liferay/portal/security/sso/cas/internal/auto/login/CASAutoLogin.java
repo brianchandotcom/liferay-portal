@@ -95,8 +95,6 @@ public class CASAutoLogin extends BaseAutoLogin {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		HttpSession session = httpServletRequest.getSession();
-
 		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		CASConfiguration casConfiguration =
@@ -108,6 +106,8 @@ public class CASAutoLogin extends BaseAutoLogin {
 		if (!casConfiguration.enabled()) {
 			return null;
 		}
+
+		HttpSession session = httpServletRequest.getSession();
 
 		String login = (String)session.getAttribute(CASWebKeys.CAS_LOGIN);
 

@@ -97,6 +97,7 @@ ViewTranslationDisplayContext viewTranslationDisplayContext = (ViewTranslationDi
 			for (InfoField<TextInfoFieldType> infoField : infoFields) {
 				boolean html = viewTranslationDisplayContext.getBooleanValue(infoField, TextInfoFieldType.HTML);
 				String label = viewTranslationDisplayContext.getInfoFieldLabel(infoField);
+				boolean multiline = viewTranslationDisplayContext.getBooleanValue(infoField, TextInfoFieldType.MULTILINE);
 			%>
 
 				<clay:row>
@@ -120,7 +121,7 @@ ViewTranslationDisplayContext viewTranslationDisplayContext = (ViewTranslationDi
 								</div>
 							</c:when>
 							<c:otherwise>
-								<%= sourceContent %>
+								<aui:input dir="<%= sourceContentDir %>" label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" type='<%= multiline ? "textarea" : "text" %>' value="<%= sourceContent %>" />
 							</c:otherwise>
 						</c:choose>
 					</clay:col>
@@ -138,7 +139,7 @@ ViewTranslationDisplayContext viewTranslationDisplayContext = (ViewTranslationDi
 								<%= targetContent %>
 							</c:when>
 							<c:otherwise>
-								<%= targetContent %>
+								<aui:input dir='<%= LanguageUtil.get(viewTranslationDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" type='<%= multiline ? "textarea" : "text" %>' value="<%= targetContent %>" />
 							</c:otherwise>
 						</c:choose>
 					</clay:col>

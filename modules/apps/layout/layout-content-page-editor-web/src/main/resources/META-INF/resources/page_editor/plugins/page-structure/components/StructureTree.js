@@ -27,8 +27,8 @@ import {config} from '../../../app/config/index';
 import selectCanUpdateEditables from '../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemConfiguration from '../../../app/selectors/selectCanUpdateItemConfiguration';
 import {useSelector} from '../../../app/store/index';
+import {DragAndDropContextProvider} from '../../../app/utils/dragAndDrop/useDragAndDrop';
 import getLayoutDataItemLabel from '../../../app/utils/getLayoutDataItemLabel';
-import {DragAndDropContextProvider} from '../../../app/utils/useDragAndDrop';
 import PageStructureSidebarSection from './PageStructureSidebarSection';
 import StructureTreeNode from './StructureTreeNode';
 

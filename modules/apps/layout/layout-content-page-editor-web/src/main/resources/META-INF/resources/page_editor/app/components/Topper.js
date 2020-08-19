@@ -29,12 +29,9 @@ import selectCanUpdateItemConfiguration from '../selectors/selectCanUpdateItemCo
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import {useDispatch, useSelector} from '../store/index';
 import moveItem from '../thunks/moveItem';
+import {TARGET_POSITION} from '../utils/dragAndDrop/constants/targetPosition';
+import {useDragItem, useDropTarget} from '../utils/dragAndDrop/useDragAndDrop';
 import getLayoutDataItemLabel from '../utils/getLayoutDataItemLabel';
-import {
-	TARGET_POSITION,
-	useDragItem,
-	useDropTarget,
-} from '../utils/useDragAndDrop';
 import {
 	useHoverItem,
 	useIsActive,

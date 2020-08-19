@@ -20,7 +20,7 @@ import {INIT} from '../actions/types';
 import {config} from '../config/index';
 import {reducer} from '../reducers/index';
 import {StoreContextProvider, useSelector} from '../store/index';
-import {DragAndDropContextProvider} from '../utils/useDragAndDrop';
+import {DragAndDropContextProvider} from '../utils/dragAndDrop/useDragAndDrop';
 import {CollectionActiveItemContextProvider} from './CollectionActiveItemContext';
 import {ControlsProvider} from './Controls';
 import DragPreview from './DragPreview';

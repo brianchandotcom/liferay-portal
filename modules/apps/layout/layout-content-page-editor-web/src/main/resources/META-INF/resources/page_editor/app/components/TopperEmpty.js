@@ -21,8 +21,9 @@ import {
 } from '../../prop-types/index';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import {useSelector} from '../store/index';
+import {TARGET_POSITION} from '../utils/dragAndDrop/constants/targetPosition';
+import {useDropTarget} from '../utils/dragAndDrop/useDragAndDrop';
 import getLayoutDataItemLabel from '../utils/getLayoutDataItemLabel';
-import {TARGET_POSITION, useDropTarget} from '../utils/useDragAndDrop';
 
 export default function ({children, ...props}) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);

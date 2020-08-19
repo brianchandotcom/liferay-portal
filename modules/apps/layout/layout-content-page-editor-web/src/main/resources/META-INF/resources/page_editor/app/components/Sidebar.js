@@ -28,7 +28,7 @@ import {config} from '../config/index';
 import selectAvailablePanels from '../selectors/selectAvailablePanels';
 import selectAvailableSidebarPanels from '../selectors/selectAvailableSidebarPanels';
 import {useDispatch, useSelector} from '../store/index';
-import {useDropClear} from '../utils/useDragAndDrop';
+import {useDropClear} from '../utils/dragAndDrop/useDragAndDrop';
 import {useId} from '../utils/useId';
 import {useSelectItem} from './Controls';
 

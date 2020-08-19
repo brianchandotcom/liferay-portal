@@ -22,7 +22,7 @@ import {CollectionItemWithControls} from '../../../../src/main/resources/META-IN
 import Collection from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout-data-items/Collection';
 import CollectionService from '../../../../src/main/resources/META-INF/resources/page_editor/app/services/CollectionService';
 import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store';
-import {DragAndDropContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/useDragAndDrop';
+import {DragAndDropContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/dragAndDrop/useDragAndDrop';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/services/CollectionService',

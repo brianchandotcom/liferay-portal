@@ -26,8 +26,8 @@ import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStr
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import resizeColumns from '../../thunks/resizeColumns';
+import {NotDraggableArea} from '../../utils/dragAndDrop/useDragAndDrop';
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
-import {NotDraggableArea} from '../../utils/useDragAndDrop';
 import {useIsActive} from '../Controls';
 import {useGlobalContext} from '../GlobalContext';
 import {

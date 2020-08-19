@@ -34,22 +34,17 @@ import selectCanUpdatePageStructure from '../../../app/selectors/selectCanUpdate
 import {useDispatch, useSelector} from '../../../app/store/index';
 import deleteItem from '../../../app/thunks/deleteItem';
 import moveItem from '../../../app/thunks/moveItem';
+import checkAllowedChild from '../../../app/utils/dragAndDrop/checkAllowedChild';
+import {DRAG_DROP_TARGET_TYPE} from '../../../app/utils/dragAndDrop/constants/dragDropTargetType';
+import {TARGET_POSITION} from '../../../app/utils/dragAndDrop/constants/targetPosition';
+import getTargetPosition from '../../../app/utils/dragAndDrop/getTargetPosition';
+import itemIsAncestor from '../../../app/utils/dragAndDrop/itemIsAncestor';
+import toControlsId from '../../../app/utils/dragAndDrop/toControlsId';
 import {
-	TARGET_POSITION,
-	checkAllowedChild,
 	initialDragDrop,
-	itemIsAncestor,
-	toControlsId,
 	useDragItem,
 	useDropTarget,
-} from '../../../app/utils/useDragAndDrop';
-
-const DRAG_DROP_TARGET_TYPE = {
-	DRAGGING_TO_ITSELF: 'itself',
-	ELEVATE: 'elevate',
-	INITIAL: 'initial',
-	INSIDE: 'inside',
-};
+} from '../../../app/utils/dragAndDrop/useDragAndDrop';
 
 const nodeIsHovered = (nodeId, hoveredItemId) =>
 	nodeId === fromControlsId(hoveredItemId);
@@ -413,6 +408,8 @@ function computeHover({
 	}
 }
 
+const ELEVATION_BORDER_SIZE = 5;
+
 function getItemPosition(item, monitor, layoutDataRef, targetRefs) {
 	const targetRef = targetRefs.get(toControlsId(layoutDataRef, item));
 
@@ -422,18 +419,15 @@ function getItemPosition(item, monitor, layoutDataRef, targetRefs) {
 
 	const clientOffsetY = monitor.getClientOffset().y;
 	const hoverBoundingRect = targetRef.current.getBoundingClientRect();
-	const hoverMiddleY = hoverBoundingRect.top + hoverBoundingRect.height / 2;
 
-	const targetPositionWithoutMiddle =
-		clientOffsetY < hoverMiddleY
-			? TARGET_POSITION.TOP
-			: TARGET_POSITION.BOTTOM;
-
-	const targetPositionWithMiddle =
-		clientOffsetY < hoverBoundingRect.bottom - 5 &&
-		clientOffsetY > hoverBoundingRect.top + 5
-			? TARGET_POSITION.MIDDLE
-			: targetPositionWithoutMiddle;
+	const [
+		targetPositionWithMiddle,
+		targetPositionWithoutMiddle,
+	] = getTargetPosition(
+		clientOffsetY,
+		hoverBoundingRect,
+		ELEVATION_BORDER_SIZE
+	);
 
 	const elevation = targetPositionWithMiddle !== TARGET_POSITION.MIDDLE;
 

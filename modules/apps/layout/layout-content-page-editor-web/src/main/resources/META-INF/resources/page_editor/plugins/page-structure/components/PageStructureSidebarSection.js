@@ -16,7 +16,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {NotDraggableArea} from '../../../app/utils/useDragAndDrop';
+import {NotDraggableArea} from '../../../app/utils/dragAndDrop/useDragAndDrop';
 
 export default function PageStructureSidebarSection({
 	children,

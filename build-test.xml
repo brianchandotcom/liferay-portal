@@ -6588,6 +6588,32 @@ go</echo>
 		<delete dir="/tmp/sprite" />
 	</target>
 
+	<target name="deploy-analytics-cloud-demo-data-creator">
+		<if>
+			<equals arg1="${functional.test.type}" arg2="analytics-cloud" />
+			<then>
+				<mirrors-get
+					dest="${app.server.parent.dir}/osgi/modules/com.liferay.analytics.demo.data.creator.api.jar"
+					src="${baseline.jar.url}/com/liferay/com.liferay.analytics.demo.data.creator.api/${analytics.cloud.faro.data.creator.api}/com.liferay.analytics.demo.data.creator.api-${analytics.cloud.faro.data.creator.api}.jar"
+				/>
+
+				<mirrors-get
+					dest="${app.server.parent.dir}/osgi/modules/com.liferay.analytics.demo.data.creator.impl.jar"
+					src="${baseline.jar.url}/com/liferay/com.liferay.analytics.demo.data.creator.impl/${analytics.cloud.faro.data.creator.impl}/com.liferay.analytics.demo.data.creator.impl-${analytics.cloud.faro.data.creator.impl}.jar"
+				/>
+
+				<property location="${analytics.cloud.faro.data.csv}" name="analytics.cloud.faro.data.csv.file.path" />
+
+				<echo file="${app.server.parent.dir}/osgi/modules/com.liferay.analytics.demo.data.creator.configuration.AnalyticsDemoDataCreatorConfiguration.config">
+pathToUsersCSV=${analytics.cloud.faro.data.csv.file.path}
+virtualHostname=localhost
+				</echo>
+
+				<print-file file.name="${app.server.parent.dir}/osgi/modules/com.liferay.analytics.demo.data.creator.configuration.AnalyticsDemoDataCreatorConfiguration.config" />
+			</then>
+		</if>
+	</target>
+
 	<target name="deploy-dependency-jars">
 		<get-testcase-property property.name="liferay.training.dependency.jars" />
 
@@ -12762,6 +12788,13 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		<antcall target="hot-deploy-osgi-apps" />
 
 		<antcall target="deploy-osgi-modules" />
+
+		<if>
+			<equals arg1="${functional.test.type}" arg2="analytics-cloud" />
+			<then>
+				<antcall target="deploy-analytics-cloud-demo-data-creator" />
+			</then>
+		</if>
 
 		<antcall target="deploy-specified-plugins">
 			<param name="test.class" value="${test.class}" />

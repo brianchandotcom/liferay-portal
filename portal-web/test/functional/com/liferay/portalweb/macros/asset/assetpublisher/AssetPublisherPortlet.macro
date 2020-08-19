@@ -380,11 +380,9 @@ definition {
 				locator1 = "APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET",
 				value1 = "${assetType}");
 
-			SelectFrameTop();
-
 			WaitForElementPresent(locator1 = "APConfigurationManual#ASSET_SELECTION_MANUAL_SELECT_ASSET_ENTRIES_DIALOG");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			var key_assetTitle = "${assetTitle}";
 
@@ -394,9 +392,9 @@ definition {
 
 			SelectFrameTop();
 
-			Button.clickAdd();
+			SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			Button.clickAdd();
 		}
 
 		Alert.viewSuccessMessage();
@@ -847,9 +845,7 @@ definition {
 
 		Button.clickSelect();
 
-		SelectFrameTop();
-
-		SelectFrame(locator1 = "IFrame#ASSET_LIST_DIALOG");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#ASSET_LIST_DIALOG");
 
 		if (isSet(depotName)) {
 			AssertClick(

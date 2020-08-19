@@ -288,11 +288,9 @@ definition {
 			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
 			value1 = "Select");
 
-		SelectFrame(value1 = "relative=top");
-
 		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Click(
 			key_breadcrumbName = "Sites",

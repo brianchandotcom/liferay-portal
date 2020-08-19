@@ -13,7 +13,7 @@
 
 	<body class="speedwell ${css_class}" id="content">
 		<@liferay.control_menu />
-		
+
 		<div id="wrapper">
 			<div class="liferay-top">
 				<@liferay_ui["quick-access"] contentId="#main-content" />

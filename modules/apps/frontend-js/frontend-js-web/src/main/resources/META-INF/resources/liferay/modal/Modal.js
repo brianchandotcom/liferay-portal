@@ -171,10 +171,13 @@ const openSelectionModal = ({
 				});
 			}
 
-			itemElements.forEach((itemElement) => {
-				itemElement.addEventListener('click', (event) => {
-					Liferay.fire(selectEventName, event.currentTarget.dataset);
-				});
+			container.addEventListener('click', (event) => {
+				const delegateTarget =
+					event.target && event.target.closest('.selector-button');
+
+				if (delegateTarget) {
+					Liferay.fire(selectEventName, delegateTarget.dataset);
+				}
 			});
 		},
 		title,

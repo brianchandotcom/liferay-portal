@@ -9,6 +9,7 @@ Export-Package:\
 	com.liferay.frontend.taglib.clay.data.set.view.cards,\
 	com.liferay.frontend.taglib.clay.data.set.view.list,\
 	com.liferay.frontend.taglib.clay.data.set.view.table,\
+	com.liferay.frontend.taglib.clay.data.set.view.table.selectable,\
 	com.liferay.frontend.taglib.clay.data.set.view.timeline,\
 	com.liferay.frontend.taglib.clay.servlet.taglib,\
 	com.liferay.frontend.taglib.clay.servlet.taglib.contributor,\

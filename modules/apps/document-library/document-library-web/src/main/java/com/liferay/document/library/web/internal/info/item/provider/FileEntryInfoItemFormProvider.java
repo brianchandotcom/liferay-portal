@@ -35,13 +35,16 @@ import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
@@ -182,6 +185,18 @@ public class FileEntryInfoItemFormProvider
 	private InfoForm _getInfoForm(long ddmStructureId)
 		throws NoSuchFormVariationException {
 
+		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
+
+		InfoLocalizedValue.Builder infoLocalizedValueBuilder =
+			InfoLocalizedValue.builder();
+
+		for (Locale locale : availableLocales) {
+			infoLocalizedValueBuilder.value(
+				locale,
+				ResourceActionsUtil.getModelResource(
+					locale, FileEntry.class.getName()));
+		}
+
 		try {
 			return InfoForm.builder(
 			).infoFieldSetEntry(
@@ -212,8 +227,10 @@ public class FileEntryInfoItemFormProvider
 			).infoFieldSetEntry(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
 					AssetCategory.class.getName())
+			).labelInfoLocalizedValue(
+				infoLocalizedValueBuilder.build()
 			).name(
-				AssetCategory.class.getName()
+				FileEntry.class.getName()
 			).build();
 		}
 		catch (NoSuchStructureException noSuchStructureException) {

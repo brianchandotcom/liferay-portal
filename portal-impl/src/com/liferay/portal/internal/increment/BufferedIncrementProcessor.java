@@ -14,6 +14,7 @@
 
 package com.liferay.portal.internal.increment;
 
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.increment.Increment;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
@@ -66,7 +67,9 @@ public class BufferedIncrementProcessor {
 				_bufferedIncrementConfiguration, _batchablePipe,
 				_queueLengthTracker, Thread.currentThread());
 
-			if (ProxyModeThreadLocal.isForceSync()) {
+			if (ProxyModeThreadLocal.isForceSync() ||
+				!CTCollectionThreadLocal.isProductionMode()) {
+
 				runnable.run();
 			}
 			else {

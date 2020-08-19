@@ -29,6 +29,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 
 <aui:form action="<%= journalTranslateDisplayContext.getUpdateTranslationPortletURL() %>" cssClass="translate-article" name="translate_fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="sourceLanguageId" type="hidden" value="<%= journalTranslateDisplayContext.getSourceLanguageId() %>" />
 	<aui:input name="targetLanguageId" type="hidden" value="<%= journalTranslateDisplayContext.getTargetLanguageId() %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
 

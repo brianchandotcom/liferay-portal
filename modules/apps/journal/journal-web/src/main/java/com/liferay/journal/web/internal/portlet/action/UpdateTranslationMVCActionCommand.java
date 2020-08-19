@@ -20,8 +20,8 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -112,23 +112,57 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		UnicodeProperties infoFieldUnicodeProperties =
 			PropertiesParamUtil.getProperties(actionRequest, "infoField--");
 
+		InfoItemFieldValues infoItemFieldValues = _getInfoItemFieldValues(
+			article);
+
 		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
 
 		for (InfoField infoField : _getInfoFields(article)) {
 			String value = infoFieldUnicodeProperties.get(infoField.getName());
 
 			if (value != null) {
+				Locale sourceLocale = _getSourceLocale(actionRequest);
+
 				infoFieldValues.add(
 					new InfoFieldValue<>(
 						infoField,
 						InfoLocalizedValue.builder(
 						).value(
 							_getTargetLocale(actionRequest), value
+						).value(
+							biConsumer -> {
+								InfoFieldValue<Object> infoFieldValue =
+									infoItemFieldValues.getInfoFieldValue(
+										infoField.getName());
+
+								biConsumer.accept(
+									sourceLocale,
+									infoFieldValue.getValue(sourceLocale));
+							}
 						).build()));
 			}
 		}
 
 		return infoFieldValues;
+	}
+
+	private InfoItemFieldValues _getInfoItemFieldValues(
+		JournalArticle article) {
+
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class,
+				JournalArticle.class.getName());
+
+		return infoItemFieldValuesProvider.getInfoItemFieldValues(article);
+	}
+
+	private String _getSourceLanguageId(ActionRequest actionRequest) {
+		return ParamUtil.getString(actionRequest, "sourceLanguageId");
+	}
+
+	private Locale _getSourceLocale(ActionRequest actionRequest) {
+		return LocaleUtil.fromLanguageId(_getSourceLanguageId(actionRequest));
 	}
 
 	private String _getTargetLanguageId(ActionRequest actionRequest) {
@@ -144,12 +178,6 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
-
-	@Reference(
-		target = "(item.class.name=com.liferay.journal.model.JournalArticle)"
-	)
-	private InfoItemFieldValuesUpdater<JournalArticle>
-		_journalArticleInfoItemFieldValuesUpdater;
 
 	@Reference
 	private TranslationEntryService _translationEntryService;

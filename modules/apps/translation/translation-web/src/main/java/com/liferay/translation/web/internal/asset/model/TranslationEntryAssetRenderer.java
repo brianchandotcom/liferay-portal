@@ -15,9 +15,21 @@
 package com.liferay.translation.web.internal.asset.model;
 
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import com.liferay.translation.model.TranslationEntry;
+import com.liferay.translation.snapshot.TranslationSnapshot;
+import com.liferay.translation.snapshot.TranslationSnapshotProvider;
+import com.liferay.translation.web.internal.display.context.ViewTranslationDisplayContext;
+
+import java.io.ByteArrayInputStream;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.Locale;
 
@@ -26,6 +38,7 @@ import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Adolfo Pérez
@@ -34,9 +47,15 @@ public class TranslationEntryAssetRenderer
 	extends BaseJSPAssetRenderer<TranslationEntry> {
 
 	public TranslationEntryAssetRenderer(
-		ServletContext servletContext, TranslationEntry translationEntry) {
+		InfoItemServiceTracker infoItemServiceTracker,
+		ServletContext servletContext, TranslationEntry translationEntry,
+		TranslationInfoFieldChecker translationInfoFieldChecker,
+		TranslationSnapshotProvider translationSnapshotProvider) {
 
+		_infoItemServiceTracker = infoItemServiceTracker;
 		_translationEntry = translationEntry;
+		_translationInfoFieldChecker = translationInfoFieldChecker;
+		_translationSnapshotProvider = translationSnapshotProvider;
 
 		setServletContext(servletContext);
 	}
@@ -95,6 +114,46 @@ public class TranslationEntryAssetRenderer
 		return _translationEntry.getUuid();
 	}
 
+	@Override
+	public boolean include(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String template)
+		throws Exception {
+
+		InfoItemFormProvider<Object> infoItemFormProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFormProvider.class, _translationEntry.getClassName());
+
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemObjectProvider.class, _translationEntry.getClassName());
+
+		String content = _translationEntry.getContent();
+
+		TranslationSnapshot translationSnapshot =
+			_translationSnapshotProvider.getTranslationSnapshot(
+				_translationEntry.getGroupId(),
+				new InfoItemReference(
+					_translationEntry.getClassName(),
+					_translationEntry.getClassPK()),
+				new ByteArrayInputStream(
+					content.getBytes(StandardCharsets.UTF_8)));
+
+		httpServletRequest.setAttribute(
+			ViewTranslationDisplayContext.class.getName(),
+			new ViewTranslationDisplayContext(
+				httpServletRequest,
+				infoItemFormProvider.getInfoForm(
+					infoItemObjectProvider.getInfoItem(
+						_translationEntry.getClassPK())),
+				_translationInfoFieldChecker, translationSnapshot));
+
+		return super.include(httpServletRequest, httpServletResponse, template);
+	}
+
+	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private final TranslationEntry _translationEntry;
+	private final TranslationInfoFieldChecker _translationInfoFieldChecker;
+	private final TranslationSnapshotProvider _translationSnapshotProvider;
 
 }

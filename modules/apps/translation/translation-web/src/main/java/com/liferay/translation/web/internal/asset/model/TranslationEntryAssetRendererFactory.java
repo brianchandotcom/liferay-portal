@@ -17,9 +17,12 @@ package com.liferay.translation.web.internal.asset.model;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
+import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
+import com.liferay.translation.snapshot.TranslationSnapshotProvider;
 import com.liferay.translation.web.internal.constants.TranslationPortletKeys;
 
 import javax.servlet.ServletContext;
@@ -48,8 +51,9 @@ public class TranslationEntryAssetRendererFactory
 		throws PortalException {
 
 		return new TranslationEntryAssetRenderer(
-			_servletContext,
-			_translationEntryLocalService.getTranslationEntry(classPK));
+			_infoItemServiceTracker, _servletContext,
+			_translationEntryLocalService.getTranslationEntry(classPK),
+			_translationInfoFieldChecker, _translationSnapshotProvider);
 	}
 
 	@Override
@@ -57,10 +61,19 @@ public class TranslationEntryAssetRendererFactory
 		return "translation";
 	}
 
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
+
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.translation.web)")
 	private ServletContext _servletContext;
 
 	@Reference
 	private TranslationEntryLocalService _translationEntryLocalService;
+
+	@Reference
+	private TranslationInfoFieldChecker _translationInfoFieldChecker;
+
+	@Reference
+	private TranslationSnapshotProvider _translationSnapshotProvider;
 
 }

@@ -258,15 +258,21 @@ renderResponse.setTitle(headerTitle);
 							template="<%= AssetRenderer.TEMPLATE_ABSTRACT %>"
 						/>
 
-						<%
-						String[] metadataFields = {"author", "categories", "tags"};
-						%>
+						<c:if test="<%= assetEntry != null %>">
+							<h4 class="task-content-author">
+								<liferay-ui:message key="author" />
+							</h4>
 
-						<liferay-asset:asset-metadata
-							className="<%= assetEntry.getClassName() %>"
-							classPK="<%= assetEntry.getClassPK() %>"
-							metadataFields="<%= metadataFields %>"
-						/>
+							<%
+							String[] metadataFields = {"author", "categories", "tags"};
+							%>
+
+							<liferay-asset:asset-metadata
+								className="<%= assetEntry.getClassName() %>"
+								classPK="<%= assetEntry.getClassPK() %>"
+								metadataFields="<%= metadataFields %>"
+							/>
+						</c:if>
 					</liferay-ui:panel>
 
 					<c:if test="<%= assetEntry != null %>">

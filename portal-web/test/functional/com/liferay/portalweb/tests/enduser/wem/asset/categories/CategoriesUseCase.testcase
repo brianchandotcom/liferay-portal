@@ -836,6 +836,19 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
+		JSONGroup.addGroup(groupName = "Site Name 2");
+
+		for (var title : list "Unit 2 - Moon Minerals,Unit 3 - Ingeneous Moon Rocks,Unit 4 - Metamorphic Moon Rocks,Unit 5 - Sedimentary Moon Rocks,Unit 6 - Moon Rock Structure and Deformation,Unit 7 - Geological Structures on the Moon,Unit 8 - Moon Tectonics,Unit 9 - Nova Rocks,Unit 10 - Moon Crust Formation,Unit 11 - Evidence of Moon Rivers,Unit 12 - Geological Mapping,Unit 13 - Moon Topography,Unit 14 - Field Techniques,Unit 15 - Climate Through Moon History") {
+			JSONCategory.addVocabulary(
+				groupName = "Site Name 2",
+				siteURLKey = "site-name-2",
+				title = "${title}");
+		}
+
+		Category.openCategoriesAdmin(siteURLKey = "site-name-2");
+
+		LAR.exportPortlet(larFileName = "Moon-Rocks-Unit-Category-Hierarchy.lar");
+
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 		LAR.importPortlet(

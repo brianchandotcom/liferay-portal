@@ -107,7 +107,9 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		throws DDMFormValidationException {
 
 		if (Validator.isNull(ddmExpressionString)) {
-			return;
+			throw new MustSetValidFormRuleExpression(
+				expressionType, ddmExpressionString,
+				new DDMExpressionException());
 		}
 
 		try {

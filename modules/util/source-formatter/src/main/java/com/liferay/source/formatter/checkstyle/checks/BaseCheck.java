@@ -1068,8 +1068,24 @@ public abstract class BaseCheck extends AbstractCheck {
 				identDetailAST, identDetailAST.getText(), false);
 
 			if (typeName.equals("ActionRequest") ||
+				typeName.equals("HttpServletRequest") ||
 				typeName.equals("PortletRequest") ||
 				typeName.equals("ResourceRequest")) {
+
+				String methodName = getMethodName(parentDetailAST.getParent());
+
+				// We can assume variable of these types are not modified when
+				// passed as parameter, except when the name starts with 'set'
+				// or equals 'getCompanyId' (value changes in
+				// PortalInstances.getCompanyId)
+
+				if ((methodName != null) &&
+					(methodName.equals("getCompanyId") ||
+					 methodName.startsWith("_set") ||
+					 methodName.startsWith("set"))) {
+
+					return true;
+				}
 
 				return false;
 			}

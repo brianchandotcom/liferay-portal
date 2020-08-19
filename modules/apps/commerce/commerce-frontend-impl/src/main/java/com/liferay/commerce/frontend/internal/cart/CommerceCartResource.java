@@ -39,11 +39,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -174,13 +173,6 @@ public class CommerceCartResource {
 			httpServletRequest.setAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			themeDisplay.setScopeGroupId(groupId);
-			themeDisplay.setLanguageId(languageId);
-
 			CommerceOrder commerceOrder =
 				_commerceOrderService.fetchCommerceOrder(orderId);
 
@@ -214,8 +206,8 @@ public class CommerceCartResource {
 
 			cart = _commerceCartResourceHelper.getCart(
 				commerceOrderItem.getCommerceOrderId(),
-				_getDetailsURL(commerceOrder, themeDisplay),
-				themeDisplay.getLocale(), commerceContext, true);
+				_getDetailsURL(commerceOrder, groupId, httpServletRequest),
+				LocaleUtil.fromLanguageId(languageId), commerceContext, true);
 		}
 		catch (Exception exception) {
 			if (exception instanceof CommerceOrderValidatorException) {
@@ -277,19 +269,19 @@ public class CommerceCartResource {
 	}
 
 	private String _getDetailsURL(
-			CommerceOrder commerceOrder, ThemeDisplay themeDisplay)
+			CommerceOrder commerceOrder, long siteGroupId,
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		PortletURL portletURL =
 			_commerceOrderHttpHelper.getCommerceCartPortletURL(
-				themeDisplay.getScopeGroupId(), themeDisplay.getRequest(),
-				commerceOrder);
+				siteGroupId, httpServletRequest, commerceOrder);
 
 		if (portletURL != null) {
 			return portletURL.toString();
 		}
 
-		return _portal.getHomeURL(themeDisplay.getRequest());
+		return _portal.getHomeURL(httpServletRequest);
 	}
 
 	private static final ObjectMapper _OBJECT_MAPPER = new ObjectMapper() {

@@ -28,6 +28,22 @@ class AutoSize {
 		document.body.appendChild(this.template);
 
 		this.inputElement.addEventListener('input', this.handleInput);
+		this._resizeInput(this.inputElement);
+	}
+
+	_resizeInput(inputElement) {
+		if (this.template.style.width !== this.computedStyle.width) {
+			this.template.style.width = this.computedStyle.width;
+		}
+
+		this.template.innerHTML = inputElement.value + DEFAULT_APPEND_CONTENT;
+
+		const height =
+			this.template.scrollHeight < this.minHeight
+				? this.minHeight
+				: this.template.scrollHeight;
+
+		inputElement.style.height = height + 'px';
 	}
 
 	createTemplate(computedStyle) {
@@ -60,20 +76,8 @@ class AutoSize {
 	handleInput = (event) => {
 		requestAnimationFrame(() => {
 			const target = event.target;
-			const value = target.value;
 
-			if (this.template.style.width !== this.computedStyle.width) {
-				this.template.style.width = this.computedStyle.width;
-			}
-
-			this.template.innerHTML = value + DEFAULT_APPEND_CONTENT;
-
-			const height =
-				this.template.scrollHeight < this.minHeight
-					? this.minHeight
-					: this.template.scrollHeight;
-
-			target.style.height = height + 'px';
+			this._resizeInput(target);
 		});
 	};
 }

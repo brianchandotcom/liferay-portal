@@ -63,7 +63,7 @@ ViewAccountEntriesManagementToolbarDisplayContext viewAccountEntriesManagementTo
 					cssClass="table-cell-expand table-title"
 					href="<%= rowURL %>"
 					name="name"
-					property="name"
+					value="<%= HtmlUtil.escape(accountEntryDisplay.getName()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

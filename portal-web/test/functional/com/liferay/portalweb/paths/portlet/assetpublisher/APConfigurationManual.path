@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ASSET_SELECTION_MANUAL_SELECT_ASSET_ENTRIES_DIALOG</td>
-	<td>//div[contains(@id,'selectAsset') and contains(@class,'dialog-iframe-modal')]</td>
+	<td>//*[contains(@id,'selectAsset')]//*[contains(@class,'modal-dialog')]</td>
 	<td></td>
 </tr>
 </tbody>

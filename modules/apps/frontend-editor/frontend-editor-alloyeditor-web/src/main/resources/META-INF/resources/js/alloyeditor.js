@@ -36,6 +36,11 @@ AUI.add(
 					value: {},
 				},
 
+				editorPaths: {
+					validator: Lang.isArray,
+					value: [],
+				},
+
 				onBlurMethod: {
 					getter: '_getEditorMethod',
 					validator: '_validateEditorMethod',
@@ -325,6 +330,21 @@ AUI.add(
 
 						doc.designMode = 'off';
 					}
+
+					// LPS-118801
+
+					instance.get('editorPaths').forEach((editorPath) => {
+						document
+							.querySelectorAll(
+								`link[href*="${editorPath}"],script[src*="${editorPath}"]`
+							)
+							.forEach((tag) => {
+								tag.setAttribute(
+									'data-senna-track',
+									'temporary'
+								);
+							});
+					});
 				},
 
 				_onKey(event) {

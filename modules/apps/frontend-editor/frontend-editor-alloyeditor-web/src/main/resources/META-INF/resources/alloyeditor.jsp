@@ -241,6 +241,10 @@ name = HtmlUtil.escapeJS(name);
 		alloyEditor = new A.LiferayAlloyEditor({
 			contents: '<%= HtmlUtil.escapeJS(contents) %>',
 			editorConfig: editorConfig,
+			editorPaths: [
+				'<%= PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) %>',
+				'<%= PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_ALLOYEDITOR) %>',
+			],
 			namespace: '<%= name %>',
 
 			<c:if test="<%= Validator.isNotNull(onBlurMethod) %>">

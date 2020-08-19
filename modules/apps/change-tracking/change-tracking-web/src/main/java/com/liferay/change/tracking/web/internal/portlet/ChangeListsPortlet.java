@@ -15,6 +15,7 @@
 package com.liferay.change.tracking.web.internal.portlet;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
@@ -23,12 +24,18 @@ import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistr
 import com.liferay.change.tracking.web.internal.display.context.ChangeListsDisplayContext;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -67,6 +74,13 @@ public class ChangeListsPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		try {
+			checkPermissions(renderRequest);
+		}
+		catch (Exception exception) {
+			throw new PortletException(exception);
+		}
+
 		ChangeListsDisplayContext changeListsDisplayContext =
 			new ChangeListsDisplayContext(
 				_ctCollectionService, _ctDisplayRendererRegistry,
@@ -77,6 +91,25 @@ public class ChangeListsPortlet extends MVCPortlet {
 			CTWebKeys.CHANGE_LISTS_DISPLAY_CONTEXT, changeListsDisplayContext);
 
 		super.render(renderRequest, renderResponse);
+	}
+
+	@Override
+	protected void checkPermissions(PortletRequest portletRequest)
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.fetchCTPreferences(
+				permissionChecker.getCompanyId(), 0);
+
+		if (ctPreferences == null) {
+			throw new PrincipalException("Publications are not enabled");
+		}
+
+		_portletPermission.check(
+			permissionChecker, CTPortletKeys.CHANGE_LISTS, ActionKeys.VIEW);
 	}
 
 	@Reference
@@ -96,5 +129,8 @@ public class ChangeListsPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletPermission _portletPermission;
 
 }

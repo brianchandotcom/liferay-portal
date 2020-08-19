@@ -30,12 +30,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CTConfiguration {
 
 	@Meta.AD(
-		deflt = "Administrator", name = "administrator-role-names",
-		required = false
-	)
-	public String[] administratorRoleNames();
-
-	@Meta.AD(
 		deflt = "com.liferay.portal.kernel.model.Group|com.liferay.portal.kernel.model.User",
 		name = "root-display-class-names", required = false
 	)

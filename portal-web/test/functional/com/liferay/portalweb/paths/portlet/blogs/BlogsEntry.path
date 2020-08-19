@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TITLE_CARD</td>
+	<td>//div[contains(@class,'card-row')]//h3[contains(.,'${key_entryTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TITLE_LINK</td>
 	<td>//div[contains(@class,'autofit-row')]//h3//a[contains(.,'${key_entryTitle}')]</td>
 	<td></td>

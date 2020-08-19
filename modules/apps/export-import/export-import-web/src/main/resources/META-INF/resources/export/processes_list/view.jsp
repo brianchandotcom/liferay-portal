@@ -30,6 +30,10 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 	<clay:container-fluid
 		id='<%= liferayPortletResponse.getNamespace() + "processesContainer" %>'
 	>
+		<liferay-ui:breadcrumb
+			showLayout="<%= false %>"
+		/>
+
 		<liferay-util:include page="/export/processes_list/export_layouts_processes.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 			<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />

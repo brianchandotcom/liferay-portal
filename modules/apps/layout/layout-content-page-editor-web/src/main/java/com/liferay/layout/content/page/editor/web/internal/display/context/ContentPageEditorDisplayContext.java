@@ -1380,9 +1380,12 @@ public class ContentPageEditorDisplayContext {
 						fragmentEntryLink.getFragmentEntryId());
 
 				if (fragmentEntry == null) {
-					fragmentEntry =
-						_fragmentCollectionContributorTracker.getFragmentEntry(
-							fragmentEntryLink.getRendererKey());
+					Map<String, FragmentEntry> fragmentEntries =
+						_fragmentCollectionContributorTracker.
+							getFragmentEntries(themeDisplay.getLocale());
+
+					fragmentEntry = fragmentEntries.get(
+						fragmentEntryLink.getRendererKey());
 				}
 
 				Map<String, Object> fragmentEntryLinkMap =

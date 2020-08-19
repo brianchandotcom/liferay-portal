@@ -12,10 +12,10 @@
  *
  */
 
-package com.liferay.commerce.bom.internal.security.permission.resource.definition;
+package com.liferay.commerce.bom.internal.security.permission.resource;
 
-import com.liferay.commerce.bom.model.CommerceBOMFolder;
-import com.liferay.commerce.bom.permission.CommerceBOMFolderPermission;
+import com.liferay.commerce.bom.model.CommerceBOMDefinition;
+import com.liferay.commerce.bom.permission.CommerceBOMDefinitionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -29,55 +29,55 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.commerce.bom.model.CommerceBOMFolder",
+	property = "model.class.name=com.liferay.commerce.bom.model.CommerceBOMDefinition",
 	service = ModelResourcePermission.class
 )
-public class CommerceBOMFolderModelResourcePermission
-	implements ModelResourcePermission<CommerceBOMFolder> {
+public class CommerceBOMDefinitionModelResourcePermission
+	implements ModelResourcePermission<CommerceBOMDefinition> {
 
 	@Override
 	public void check(
 			PermissionChecker permissionChecker,
-			CommerceBOMFolder commerceBOMFolder, String actionId)
+			CommerceBOMDefinition commerceBOMDefinition, String actionId)
 		throws PortalException {
 
-		commerceBOMFolderPermission.check(
-			permissionChecker, commerceBOMFolder, actionId);
+		commerceBOMDefinitionPermission.check(
+			permissionChecker, commerceBOMDefinition, actionId);
 	}
 
 	@Override
 	public void check(
-			PermissionChecker permissionChecker, long commerceBOMFolderId,
+			PermissionChecker permissionChecker, long commerceBOMDefinitionId,
 			String actionId)
 		throws PortalException {
 
-		commerceBOMFolderPermission.check(
-			permissionChecker, commerceBOMFolderId, actionId);
+		commerceBOMDefinitionPermission.check(
+			permissionChecker, commerceBOMDefinitionId, actionId);
 	}
 
 	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker,
-			CommerceBOMFolder commerceBOMFolder, String actionId)
+			CommerceBOMDefinition commerceBOMDefinition, String actionId)
 		throws PortalException {
 
-		return commerceBOMFolderPermission.contains(
-			permissionChecker, commerceBOMFolder, actionId);
+		return commerceBOMDefinitionPermission.contains(
+			permissionChecker, commerceBOMDefinition, actionId);
 	}
 
 	@Override
 	public boolean contains(
-			PermissionChecker permissionChecker, long commerceBOMFolderId,
+			PermissionChecker permissionChecker, long commerceBOMDefinitionId,
 			String actionId)
 		throws PortalException {
 
-		return commerceBOMFolderPermission.contains(
-			permissionChecker, commerceBOMFolderId, actionId);
+		return commerceBOMDefinitionPermission.contains(
+			permissionChecker, commerceBOMDefinitionId, actionId);
 	}
 
 	@Override
 	public String getModelName() {
-		return CommerceBOMFolder.class.getName();
+		return CommerceBOMDefinition.class.getName();
 	}
 
 	@Override
@@ -86,6 +86,6 @@ public class CommerceBOMFolderModelResourcePermission
 	}
 
 	@Reference
-	protected CommerceBOMFolderPermission commerceBOMFolderPermission;
+	protected CommerceBOMDefinitionPermission commerceBOMDefinitionPermission;
 
 }

@@ -24,8 +24,8 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.application.admin.web.internal.display.context.CommerceApplicationAdminDisplayContext" %><%@
-page import="com.liferay.commerce.application.admin.web.internal.servlet.taglib.ui.CommerceApplicationBrandScreenNavigationConstants" %><%@
+<%@ page import="com.liferay.commerce.application.admin.web.internal.constants.CommerceApplicationBrandScreenNavigationConstants" %><%@
+page import="com.liferay.commerce.application.admin.web.internal.display.context.CommerceApplicationAdminDisplayContext" %><%@
 page import="com.liferay.commerce.application.constants.CommerceApplicationActionKeys" %><%@
 page import="com.liferay.commerce.application.exception.NoSuchApplicationBrandException" %><%@
 page import="com.liferay.commerce.application.exception.NoSuchApplicationModelException" %><%@

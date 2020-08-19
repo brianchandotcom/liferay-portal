@@ -12,10 +12,10 @@
  *
  */
 
-package com.liferay.commerce.application.internal.security.permission.resource.definition;
+package com.liferay.commerce.application.internal.security.permission.resource;
 
-import com.liferay.commerce.application.model.CommerceApplicationModel;
-import com.liferay.commerce.application.permission.CommerceApplicationModelPermission;
+import com.liferay.commerce.application.model.CommerceApplicationBrand;
+import com.liferay.commerce.application.permission.CommerceApplicationBrandPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -29,55 +29,55 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.commerce.application.model.CommerceApplicationModel",
+	property = "model.class.name=com.liferay.commerce.application.model.CommerceApplicationBrand",
 	service = ModelResourcePermission.class
 )
-public class CommerceApplicationModelModelResourcePermission
-	implements ModelResourcePermission<CommerceApplicationModel> {
+public class CommerceApplicationBrandModelResourcePermission
+	implements ModelResourcePermission<CommerceApplicationBrand> {
 
 	@Override
 	public void check(
 			PermissionChecker permissionChecker,
-			CommerceApplicationModel commerceApplicationModel, String actionId)
+			CommerceApplicationBrand commerceApplicationBrand, String actionId)
 		throws PortalException {
 
-		commerceApplicationModelPermission.check(
-			permissionChecker, commerceApplicationModel, actionId);
+		commerceApplicationBrandPermission.check(
+			permissionChecker, commerceApplicationBrand, actionId);
 	}
 
 	@Override
 	public void check(
 			PermissionChecker permissionChecker,
-			long commerceApplicationModelId, String actionId)
+			long commerceApplicationBrandId, String actionId)
 		throws PortalException {
 
-		commerceApplicationModelPermission.check(
-			permissionChecker, commerceApplicationModelId, actionId);
+		commerceApplicationBrandPermission.check(
+			permissionChecker, commerceApplicationBrandId, actionId);
 	}
 
 	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker,
-			CommerceApplicationModel commerceApplicationModel, String actionId)
+			CommerceApplicationBrand commerceApplicationBrand, String actionId)
 		throws PortalException {
 
-		return commerceApplicationModelPermission.contains(
-			permissionChecker, commerceApplicationModel, actionId);
+		return commerceApplicationBrandPermission.contains(
+			permissionChecker, commerceApplicationBrand, actionId);
 	}
 
 	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker,
-			long commerceApplicationModelId, String actionId)
+			long commerceApplicationBrandId, String actionId)
 		throws PortalException {
 
-		return commerceApplicationModelPermission.contains(
-			permissionChecker, commerceApplicationModelId, actionId);
+		return commerceApplicationBrandPermission.contains(
+			permissionChecker, commerceApplicationBrandId, actionId);
 	}
 
 	@Override
 	public String getModelName() {
-		return CommerceApplicationModel.class.getName();
+		return CommerceApplicationBrand.class.getName();
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class CommerceApplicationModelModelResourcePermission
 	}
 
 	@Reference
-	protected CommerceApplicationModelPermission
-		commerceApplicationModelPermission;
+	protected CommerceApplicationBrandPermission
+		commerceApplicationBrandPermission;
 
 }

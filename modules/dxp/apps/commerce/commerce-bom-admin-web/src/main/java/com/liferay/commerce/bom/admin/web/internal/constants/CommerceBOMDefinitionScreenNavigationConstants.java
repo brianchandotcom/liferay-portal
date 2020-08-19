@@ -12,19 +12,22 @@
  *
  */
 
-package com.liferay.commerce.machine.learning.internal.gateway;
+package com.liferay.commerce.bom.admin.web.internal.constants;
 
 /**
- * @author Riccardo Ferrari
+ * @author Alessio Antonio Rendina
  */
-public class CommerceMLJobStateConstants {
+public class CommerceBOMDefinitionScreenNavigationConstants {
 
-	public static final String COMPLETE = "COMPLETE";
+	public static final String CATEGORY_KEY_DETAILS = "details";
 
-	public static final String ERROR = "ERROR";
+	public static final String CATEGORY_KEY_ENTRIES = "entries";
 
-	public static final String RUNNING = "RUNNING";
+	public static final String ENTRY_KEY_DETAILS = "details";
 
-	public static final String UNKNOWN = "UNKNOWN";
+	public static final String ENTRY_KEY_ENTRIES = "entries";
+
+	public static final String SCREEN_NAVIGATION_KEY =
+		"bom-definition-screen-navigation";
 
 }

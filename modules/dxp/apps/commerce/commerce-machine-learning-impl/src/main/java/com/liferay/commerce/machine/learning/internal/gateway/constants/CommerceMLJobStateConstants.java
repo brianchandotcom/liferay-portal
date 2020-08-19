@@ -12,13 +12,19 @@
  *
  */
 
-package com.liferay.commerce.bom.model;
+package com.liferay.commerce.machine.learning.internal.gateway.constants;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Riccardo Ferrari
  */
-public class CommerceBOMFolderConstants {
+public class CommerceMLJobStateConstants {
 
-	public static final long DEFAULT_COMMERCE_BOM_FOLDER_ID = 0L;
+	public static final String COMPLETE = "COMPLETE";
+
+	public static final String ERROR = "ERROR";
+
+	public static final String RUNNING = "RUNNING";
+
+	public static final String UNKNOWN = "UNKNOWN";
 
 }

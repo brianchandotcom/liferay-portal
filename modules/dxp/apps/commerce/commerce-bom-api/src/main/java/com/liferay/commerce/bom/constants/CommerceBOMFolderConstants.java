@@ -12,24 +12,13 @@
  *
  */
 
-package com.liferay.commerce.bom.admin.web.internal.servlet.taglib.ui;
+package com.liferay.commerce.bom.constants;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceBOMFolderScreenNavigationConstants {
+public class CommerceBOMFolderConstants {
 
-	public static final String CATEGORY_KEY_APPLICATION_MODELS =
-		"application-models";
-
-	public static final String CATEGORY_KEY_DETAILS = "details";
-
-	public static final String ENTRY_KEY_APPLICATION_MODELS =
-		"application-models";
-
-	public static final String ENTRY_KEY_DETAILS = "details";
-
-	public static final String SCREEN_NAVIGATION_KEY =
-		"bom-folder-screen-navigation";
+	public static final long DEFAULT_COMMERCE_BOM_FOLDER_ID = 0L;
 
 }

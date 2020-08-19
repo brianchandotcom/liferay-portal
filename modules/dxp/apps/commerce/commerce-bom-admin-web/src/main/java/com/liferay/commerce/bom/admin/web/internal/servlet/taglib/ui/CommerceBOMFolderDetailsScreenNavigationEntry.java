@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.bom.admin.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.bom.admin.web.internal.constants.CommerceBOMFolderScreenNavigationConstants;
 import com.liferay.commerce.bom.constants.CommerceBOMActionKeys;
 import com.liferay.commerce.bom.model.CommerceBOMFolder;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;

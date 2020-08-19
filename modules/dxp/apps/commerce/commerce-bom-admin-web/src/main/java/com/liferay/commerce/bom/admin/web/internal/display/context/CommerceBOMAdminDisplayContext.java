@@ -16,10 +16,10 @@ package com.liferay.commerce.bom.admin.web.internal.display.context;
 
 import com.liferay.commerce.application.item.selector.criterion.CommerceApplicationModelItemSelectorCriterion;
 import com.liferay.commerce.bom.admin.web.internal.display.context.util.CommerceBOMAdminRequestHelper;
+import com.liferay.commerce.bom.constants.CommerceBOMFolderConstants;
 import com.liferay.commerce.bom.model.CommerceBOMDefinition;
 import com.liferay.commerce.bom.model.CommerceBOMFolder;
 import com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel;
-import com.liferay.commerce.bom.model.CommerceBOMFolderConstants;
 import com.liferay.commerce.bom.search.CommerceBOMSearcher;
 import com.liferay.commerce.bom.service.CommerceBOMDefinitionService;
 import com.liferay.commerce.bom.service.CommerceBOMFolderApplicationRelService;

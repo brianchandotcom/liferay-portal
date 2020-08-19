@@ -51,6 +51,9 @@ public class JournalWebConstants {
 
 	public static final String SOURCE_LANGUAGE_ID = "SOURCE_LANGUAGE_ID";
 
+	public static final String TARGET_INFO_ITEM_FIELD_VALUES =
+		"TARGET_INFO_ITEM_FIELD_VALUES";
+
 	public static final String TARGET_LANGUAGE_ID = "TARGET_LANGUAGE_ID";
 
 }

@@ -98,8 +98,12 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				availableTargetLanguageIds.get(0));
 
 			renderRequest.setAttribute(
-				InfoItemFieldValues.class.getName(),
+				JournalWebConstants.TARGET_INFO_ITEM_FIELD_VALUES,
 				_getInfoItemFieldValues(article, targetLanguageId));
+
+			renderRequest.setAttribute(
+				InfoItemFieldValues.class.getName(),
+				_getInfoItemFieldValues(article));
 
 			List<String> availableSourceLanguageIds = Arrays.asList(
 				article.getAvailableLanguageIds());
@@ -127,8 +131,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private InfoItemFieldValues _getInfoItemFieldValues(
-			JournalArticle article, String targetLanguageId)
-		throws IOException, PortalException {
+		JournalArticle article) {
 
 		InfoItemFieldValuesProvider<JournalArticle>
 			infoItemFieldValuesProvider =
@@ -136,8 +139,15 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 					InfoItemFieldValuesProvider.class,
 					JournalArticle.class.getName());
 
+		return infoItemFieldValuesProvider.getInfoItemFieldValues(article);
+	}
+
+	private InfoItemFieldValues _getInfoItemFieldValues(
+			JournalArticle article, String targetLanguageId)
+		throws IOException, PortalException {
+
 		InfoItemFieldValues journalArticleInfoItemFieldValues =
-			infoItemFieldValuesProvider.getInfoItemFieldValues(article);
+			_getInfoItemFieldValues(article);
 
 		TranslationEntry translationEntry =
 			_translationEntryLocalService.fetchTranslationEntry(

@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.change.tracking.spi.display.base;
+package com.liferay.change.tracking.spi.display;
 
-import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.exception.PortalException;

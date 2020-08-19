@@ -14,8 +14,8 @@
 
 package com.liferay.layout.admin.web.internal.change.tracking.spi.display;
 
+import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
-import com.liferay.change.tracking.spi.display.base.BaseCTDisplayRenderer;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ColorScheme;

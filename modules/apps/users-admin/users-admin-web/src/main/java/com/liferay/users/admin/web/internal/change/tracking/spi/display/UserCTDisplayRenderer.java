@@ -14,8 +14,8 @@
 
 package com.liferay.users.admin.web.internal.change.tracking.spi.display;
 
+import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
-import com.liferay.change.tracking.spi.display.base.BaseCTDisplayRenderer;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.UserPermission;

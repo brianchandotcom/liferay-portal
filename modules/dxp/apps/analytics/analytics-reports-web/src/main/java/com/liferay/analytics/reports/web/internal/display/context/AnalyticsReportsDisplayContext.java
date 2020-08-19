@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.time.format.DateTimeFormatter;
 
@@ -51,6 +52,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -99,6 +101,26 @@ public class AnalyticsReportsDisplayContext<T> {
 		).build();
 
 		return _data;
+	}
+
+	public String getHideAnalyticsReportsPanelURL() {
+		PortletURL portletURL = _renderResponse.createActionURL();
+
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "/analytics_reports/hide_panel");
+
+		String redirect = ParamUtil.getString(_renderRequest, "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			portletURL.setParameter("redirect", redirect);
+		}
+		else {
+			portletURL.setParameter(
+				"redirect",
+				_themeDisplay.getLayoutFriendlyURL(_themeDisplay.getLayout()));
+		}
+
+		return String.valueOf(portletURL);
 	}
 
 	public String getLiferayAnalyticsURL() {

@@ -129,7 +129,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 					AnalyticsReportsUtil.getAnalyticsReportsPanelURL(
 						infoDisplayObjectProvider.getClassNameId(),
 						infoDisplayObjectProvider.getClassPK(),
-						httpServletRequest, _portletURLFactory));
+						httpServletRequest, _portal, _portletURLFactory));
 			}
 			catch (WindowStateException windowStateException) {
 				ReflectionUtil.throwException(windowStateException);

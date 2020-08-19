@@ -70,16 +70,12 @@ AnalyticsReportsDisplayContext analyticsReportsDisplayContext = (AnalyticsReport
 							url="<%= AnalyticsReportsUtil.ANALYTICS_CLOUD_TRIAL_URL %>"
 						/>
 
-						<portlet:actionURL name="/analytics_reports/hide_panel" var="hideAnalyticsReportsPanelURL">
-							<portlet:param name="redirect" value="<%= themeDisplay.getLayoutFriendlyURL(layout) %>" />
-						</portlet:actionURL>
-
 						<liferay-ui:icon
 							label="<%= true %>"
 							linkCssClass="d-block font-weight-bold mb-3 mt-5"
 							markupView="lexicon"
 							message="do-not-show-me-this-again"
-							url="<%= hideAnalyticsReportsPanelURL %>"
+							url="<%= analyticsReportsDisplayContext.getHideAnalyticsReportsPanelURL() %>"
 						/>
 
 						<p class="text-secondary"><liferay-ui:message key="do-not-show-me-this-again-help" /></p>

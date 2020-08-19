@@ -57,7 +57,7 @@ public class AnalyticsReportsUtil {
 
 	public static String getAnalyticsReportsPanelURL(
 			long classNameId, long classPK,
-			HttpServletRequest httpServletRequest,
+			HttpServletRequest httpServletRequest, Portal portal,
 			PortletURLFactory portletURLFactory)
 		throws WindowStateException {
 
@@ -71,6 +71,8 @@ public class AnalyticsReportsUtil {
 
 		portletURL.setParameter("classNameId", String.valueOf(classNameId));
 		portletURL.setParameter("classPK", String.valueOf(classPK));
+		portletURL.setParameter(
+			"redirect", portal.getCurrentCompleteURL(httpServletRequest));
 
 		return portletURL.toString();
 	}

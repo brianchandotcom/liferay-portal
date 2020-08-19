@@ -27,6 +27,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.PortalCacheMapSynchronizeUtil;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
@@ -4748,6 +4749,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  loginIP the IP address the user logged in from
 	 * @return the user
 	 */
+	@CTAware(onProduction = true)
 	@Override
 	public User updateLastLogin(long userId, String loginIP)
 		throws PortalException {

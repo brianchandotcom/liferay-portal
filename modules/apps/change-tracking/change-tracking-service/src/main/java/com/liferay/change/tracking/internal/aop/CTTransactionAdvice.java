@@ -46,8 +46,16 @@ public class CTTransactionAdvice extends ChainableMethodAdvice {
 		Transactional transactional = (Transactional)annotations.get(
 			Transactional.class);
 
-		if ((transactional == null) || !transactional.enabled() ||
-			annotations.containsKey(CTAware.class)) {
+		if ((transactional == null) || !transactional.enabled()) {
+			return null;
+		}
+
+		CTAware ctAware = (CTAware)annotations.get(CTAware.class);
+
+		if (ctAware != null) {
+			if (ctAware.onProduction()) {
+				return CTMode.READ_ONLY;
+			}
 
 			return null;
 		}

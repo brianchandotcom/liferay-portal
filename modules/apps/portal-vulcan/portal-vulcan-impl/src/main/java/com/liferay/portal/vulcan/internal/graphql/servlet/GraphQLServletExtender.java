@@ -20,6 +20,8 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
@@ -67,9 +69,12 @@ import graphql.GraphqlErrorBuilder;
 import graphql.Scalars;
 import graphql.TypeResolutionEnvironment;
 
+import graphql.annotations.annotationTypes.GraphQLTypeResolver;
+import graphql.annotations.annotationTypes.GraphQLUnion;
 import graphql.annotations.directives.DirectiveWirer;
 import graphql.annotations.directives.DirectiveWiringMapRetriever;
 import graphql.annotations.processor.ProcessingElementsContainer;
+import graphql.annotations.processor.exceptions.CannotCastMemberException;
 import graphql.annotations.processor.exceptions.GraphQLAnnotationsException;
 import graphql.annotations.processor.graphQLProcessors.GraphQLInputProcessor;
 import graphql.annotations.processor.graphQLProcessors.GraphQLOutputProcessor;
@@ -86,6 +91,11 @@ import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodNameB
 import graphql.annotations.processor.retrievers.fieldBuilders.method.MethodTypeBuilder;
 import graphql.annotations.processor.searchAlgorithms.BreadthFirstSearch;
 import graphql.annotations.processor.searchAlgorithms.ParentalSearch;
+import graphql.annotations.processor.typeBuilders.EnumBuilder;
+import graphql.annotations.processor.typeBuilders.InputObjectBuilder;
+import graphql.annotations.processor.typeBuilders.InterfaceBuilder;
+import graphql.annotations.processor.typeBuilders.OutputObjectBuilder;
+import graphql.annotations.processor.typeBuilders.UnionBuilder;
 import graphql.annotations.processor.typeFunctions.DefaultTypeFunction;
 import graphql.annotations.processor.typeFunctions.TypeFunction;
 import graphql.annotations.processor.util.NamingKit;
@@ -118,6 +128,7 @@ import graphql.schema.DataFetchingEnvironmentImpl;
 import graphql.schema.FieldCoordinates;
 import graphql.schema.GraphQLArgument;
 import graphql.schema.GraphQLCodeRegistry;
+import graphql.schema.GraphQLDirectiveContainer;
 import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLFieldsContainer;
 import graphql.schema.GraphQLInputType;
@@ -129,6 +140,7 @@ import graphql.schema.GraphQLOutputType;
 import graphql.schema.GraphQLScalarType;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.GraphQLType;
+import graphql.schema.GraphQLTypeReference;
 import graphql.schema.PropertyDataFetcher;
 import graphql.schema.TypeResolver;
 
@@ -170,6 +182,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -259,18 +272,205 @@ public class GraphQLServletExtender {
 		ParentalSearch parentalSearch = new ParentalSearch(
 			graphQLObjectInfoRetriever);
 
+		GraphQLExtensionsHandler extensionsHandler =
+			new GraphQLExtensionsHandler() {
+				{
+					setFieldRetriever(_graphQLFieldRetriever);
+					setFieldSearchAlgorithm(parentalSearch);
+					setGraphQLObjectInfoRetriever(graphQLObjectInfoRetriever);
+					setMethodSearchAlgorithm(breadthFirstSearch);
+				}
+			};
+
 		GraphQLTypeRetriever graphQLTypeRetriever = new GraphQLTypeRetriever() {
-			{
-				setExtensionsHandler(
-					new GraphQLExtensionsHandler() {
-						{
-							setFieldRetriever(_graphQLFieldRetriever);
-							setFieldSearchAlgorithm(parentalSearch);
-							setGraphQLObjectInfoRetriever(
-								graphQLObjectInfoRetriever);
-							setMethodSearchAlgorithm(breadthFirstSearch);
+
+			public GraphQLType getGraphQLType(
+					Class<?> object,
+					ProcessingElementsContainer processingElementsContainer,
+					boolean isInput)
+				throws CannotCastMemberException, GraphQLAnnotationsException {
+
+				Map<String, GraphQLType> graphQLTypes =
+					processingElementsContainer.getTypeRegistry();
+
+				String typeName = _getTypeName(
+					isInput, processingElementsContainer,
+					graphQLObjectInfoRetriever.getTypeName(object));
+
+				GraphQLType graphQLType = graphQLTypes.get(typeName);
+
+				if ((graphQLType != null) &&
+					!_typeKeys.contains(object.getName())) {
+
+					String name = object.getName();
+
+					name = name.replaceAll("\\.", "_");
+
+					typeName = _getTypeName(
+						isInput, processingElementsContainer,
+						StringUtil.replace(name, '$', '_'));
+				}
+
+				Stack<String> processingStack =
+					processingElementsContainer.getProcessing();
+
+				if (processingStack.contains(typeName)) {
+					return new GraphQLTypeReference(typeName);
+				}
+
+				graphQLType = graphQLTypes.get(typeName);
+
+				if (graphQLType != null) {
+					return graphQLType;
+				}
+
+				processingStack.push(typeName);
+
+				_typeKeys.add(object.getName());
+
+				if (object.getAnnotation(GraphQLUnion.class) != null) {
+					graphQLType = new UnionBuilder(
+						graphQLObjectInfoRetriever
+					).getUnionBuilder(
+						object, processingElementsContainer
+					).build();
+				}
+				else if (object.isAnnotationPresent(
+							GraphQLTypeResolver.class)) {
+
+					graphQLType = new InterfaceBuilder(
+						graphQLObjectInfoRetriever, _graphQLFieldRetriever,
+						extensionsHandler
+					).getInterfaceBuilder(
+						object, processingElementsContainer
+					).build();
+				}
+				else if (Enum.class.isAssignableFrom(object)) {
+					graphQLType = new EnumBuilder(
+						graphQLObjectInfoRetriever
+					).getEnumBuilder(
+						object
+					).build();
+				}
+				else {
+					if (isInput) {
+						graphQLType = new InputObjectBuilder(
+							graphQLObjectInfoRetriever, parentalSearch,
+							breadthFirstSearch, _graphQLFieldRetriever
+						).getInputObjectBuilder(
+							object, processingElementsContainer
+						).build();
+					}
+					else {
+						graphQLType = new OutputObjectBuilder(
+							graphQLObjectInfoRetriever, parentalSearch,
+							breadthFirstSearch, _graphQLFieldRetriever,
+							graphQLInterfaceRetriever, extensionsHandler
+						).getOutputObjectBuilder(
+							object, processingElementsContainer
+						).build();
+					}
+				}
+
+				if (!StringUtil.equals(graphQLType.getName(), typeName)) {
+					if (!_typesAreEqual(
+							graphQLTypes.get(graphQLType.getName()),
+							graphQLType)) {
+
+						try {
+							Class<? extends GraphQLType> clazz =
+								graphQLType.getClass();
+
+							Field name = clazz.getDeclaredField("name");
+
+							name.setAccessible(true);
+							name.set(graphQLType, typeName);
 						}
-					});
+						catch (Exception exception) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(exception, exception);
+							}
+						}
+					}
+					else {
+						graphQLType = graphQLTypes.get(graphQLType.getName());
+					}
+				}
+
+				DirectiveWirer directiveWirer = new DirectiveWirer();
+
+				DirectiveWiringMapRetriever directiveWiringMapRetriever =
+					new DirectiveWiringMapRetriever();
+
+				graphQLType = directiveWirer.wire(
+					(GraphQLDirectiveContainer)graphQLType,
+					directiveWiringMapRetriever.getDirectiveWiringMap(
+						object, processingElementsContainer),
+					processingElementsContainer.getCodeRegistryBuilder(), null);
+
+				graphQLTypes.put(graphQLType.getName(), graphQLType);
+
+				processingStack.pop();
+
+				return graphQLType;
+			}
+
+			private String _getTypeName(
+				boolean isInput,
+				ProcessingElementsContainer processingElementsContainer,
+				String typeName) {
+
+				if (isInput) {
+					typeName =
+						processingElementsContainer.getInputPrefix() +
+							typeName +
+								processingElementsContainer.getInputSuffix();
+				}
+
+				return typeName;
+			}
+
+			private boolean _typesAreEqual(
+				GraphQLType graphQLType1, GraphQLType graphQLType2) {
+
+				List<GraphQLType> childrenGraphQLType1 =
+					graphQLType1.getChildren();
+
+				List<GraphQLType> childrenGraphQLType2 =
+					graphQLType2.getChildren();
+
+				for (GraphQLType childGraphQLType1 : childrenGraphQLType1) {
+					boolean found = false;
+
+					for (GraphQLType childGraphQLType2 : childrenGraphQLType2) {
+						if (StringUtil.equals(
+								childGraphQLType2.getName(),
+								childGraphQLType1.getName())) {
+
+							found = true;
+
+							break;
+						}
+					}
+
+					if (!found) {
+						return false;
+					}
+				}
+
+				if (childrenGraphQLType1.size() ==
+						childrenGraphQLType2.size()) {
+
+					return true;
+				}
+
+				return false;
+			}
+
+			private final Set<String> _typeKeys = new HashSet<>();
+
+			{
+				setExtensionsHandler(extensionsHandler);
 				setFieldSearchAlgorithm(parentalSearch);
 				setGraphQLFieldRetriever(_graphQLFieldRetriever);
 				setGraphQLInterfaceRetriever(graphQLInterfaceRetriever);
@@ -1003,12 +1203,12 @@ public class GraphQLServletExtender {
 				graphQLObjectTypeBuilder, configurations, ServletData::getQuery,
 				processingElementsContainer, servletDatas);
 
+			graphQLSchemaBuilder.mutation(mutationBuilder.build());
+			graphQLSchemaBuilder.query(graphQLObjectTypeBuilder.build());
+
 			_registerInterfaces(
 				processingElementsContainer, graphQLObjectTypeBuilder,
 				graphQLSchemaBuilder);
-
-			graphQLSchemaBuilder.mutation(mutationBuilder.build());
-			graphQLSchemaBuilder.query(graphQLObjectTypeBuilder.build());
 
 			GraphQLConfiguration.Builder graphQLConfigurationBuilder =
 				GraphQLConfiguration.with(graphQLSchemaBuilder.build());
@@ -1335,6 +1535,9 @@ public class GraphQLServletExtender {
 		method.invoke(
 			graphQLObjectType, Collections.singletonList(graphQLInterfaceType));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GraphQLServletExtender.class);
 
 	private static final GraphQLScalarType _dateGraphQLScalarType;
 	private static final GraphQLType _mapGraphQLType;

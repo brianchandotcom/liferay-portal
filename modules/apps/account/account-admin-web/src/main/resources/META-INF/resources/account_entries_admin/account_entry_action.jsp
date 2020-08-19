@@ -46,7 +46,7 @@ long accountEntryId = accountEntryDisplay.getAccountEntryId();
 		/>
 	</c:if>
 
-	<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryId, ActionKeys.MANAGE_USERS) %>">
+	<c:if test="<%= Objects.equals(AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, accountEntryDisplay.getType()) && AccountEntryPermission.contains(permissionChecker, accountEntryId, ActionKeys.MANAGE_USERS) %>">
 		<portlet:renderURL var="manageUsersURL">
 			<portlet:param name="mvcRenderCommandName" value="/account_admin/edit_account_entry" />
 			<portlet:param name="screenNavigationCategoryKey" value="<%= AccountScreenNavigationEntryConstants.CATEGORY_KEY_USERS %>" />

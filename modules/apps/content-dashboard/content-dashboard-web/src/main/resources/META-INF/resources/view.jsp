@@ -77,10 +77,7 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 
 							String rowId = String.valueOf(infoItemReference.getClassPK());
 
-							row.setData(
-								HashMapBuilder.<String, Object>put(
-									"rowId", row.getRowId()
-								).build());
+							row.setData(Collections.singletonMap("rowId", rowId));
 							row.setRowId(rowId);
 							%>
 

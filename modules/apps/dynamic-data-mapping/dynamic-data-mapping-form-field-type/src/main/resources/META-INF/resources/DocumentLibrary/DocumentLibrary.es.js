@@ -18,9 +18,9 @@ import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {usePage} from 'dynamic-data-mapping-form-renderer';
 import {
+	ItemSelectorDialog,
 	createActionURL,
 	createPortletURL,
-	openSelectionModal,
 } from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
@@ -232,20 +232,33 @@ const Main = ({
 		return errorMessages.join(' ');
 	};
 
+	const handleVisibleChange = (event) => {
+		if (event.selectedItem) {
+			onFocus({}, event);
+		}
+		else {
+			onBlur({}, event);
+		}
+	};
+
 	const handleSelectButtonClicked = ({
 		itemSelectorAuthToken,
 		portletNamespace,
 	}) => {
-		openSelectionModal({
-			onSelect: handleFieldChanged,
-			selectEventName: `${portletNamespace}selectDocumentLibrary`,
-			title: 'select-file',
+		const itemSelectorDialog = new ItemSelectorDialog({
+			eventName: `${portletNamespace}selectDocumentLibrary`,
+			singleSelect: true,
 			url: getDocumentLibrarySelectorURL({
 				groupId,
 				itemSelectorAuthToken,
 				portletNamespace,
 			}),
 		});
+
+		itemSelectorDialog.on('selectedItemChange', handleFieldChanged);
+		itemSelectorDialog.on('visibleChange', handleVisibleChange);
+
+		itemSelectorDialog.open();
 	};
 
 	const handleFieldChanged = (event) => {
@@ -257,11 +270,6 @@ const Main = ({
 			setCurrentValue(value);
 
 			onChange(event, value);
-
-			onFocus({}, event);
-		}
-		else {
-			onBlur({}, event);
 		}
 	};
 

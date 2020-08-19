@@ -185,9 +185,7 @@ definition {
 			amountOfUsedTimes = "2",
 			tagName = "tag1");
 
-		Questions.gotoTab(questionTabField = "Questions");
-
-		Click(locator1 = "Questions#QUESTIONS_HOME_ICON");
+		Navigator.gotoPage(pageName = "Questions Page");
 
 		Questions.gotoCategory(categoryName = "Question ValidateTagsOccurrences2");
 

@@ -159,8 +159,18 @@
 			padding-left: 0;
 			text-align: center;
 
-			&.alloy-editor-placeholder:empty:not(:focus) {
+			&.alloy-editor-placeholder.ae-placeholder:not(:focus):not(.form-control) {
 				border-left-width: 0;
+			}
+
+			&.alloy-editor-placeholder:before {
+				display: inline-block;
+				border-color: inherit;
+				border-left: 2px solid;
+				margin: 0 auto;
+				padding-left: 0.5rem;
+				text-align: center;
+				width: auto;
 			}
 		}
 

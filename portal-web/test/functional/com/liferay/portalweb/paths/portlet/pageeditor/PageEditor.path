@@ -396,6 +396,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SIDEBAR_SUB_TYPE_LABEL</td>
+	<td>xpath=(//p[contains(@class,'type-label')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SIDEBAR_TITLE</td>
 	<td>//div[contains(@class,'content--open')]//h1[contains(@class,'page-editor__sidebar__panel-header') and contains(.,'${key_sidebarButton}')]</td>
 	<td></td>

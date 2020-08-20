@@ -72,14 +72,16 @@ export default function PageStructureSidebar() {
 		(state) => state.masterLayout?.masterLayoutData
 	);
 
-	const [expandedNodeId, setExpandedNodeId] = useState(null);
+	const [dragAndDropHoveredItemId, setDragAndDropHoveredItemId] = useState(
+		null
+	);
 
 	const isMasterPage = config.layoutType === LAYOUT_TYPES.master;
 
 	const data = masterLayoutData || layoutData;
 
-	const onHoverNode = useCallback((id) => {
-		setExpandedNodeId(id);
+	const onHoverNode = useCallback((itemId) => {
+		setDragAndDropHoveredItemId(itemId);
 	}, []);
 
 	const nodes = useMemo(
@@ -88,7 +90,7 @@ export default function PageStructureSidebar() {
 				activeItemId,
 				canUpdateEditables,
 				canUpdateItemConfiguration,
-				expandedNodeId,
+				dragAndDropHoveredItemId,
 				fragmentEntryLinks,
 				isMasterPage,
 				layoutData,
@@ -101,7 +103,7 @@ export default function PageStructureSidebar() {
 			canUpdateItemConfiguration,
 			data.items,
 			data.rootItems.main,
-			expandedNodeId,
+			dragAndDropHoveredItemId,
 			fragmentEntryLinks,
 			isMasterPage,
 			layoutData,
@@ -154,7 +156,7 @@ function visit(
 		activeItemId,
 		canUpdateEditables,
 		canUpdateItemConfiguration,
-		expandedNodeId,
+		dragAndDropHoveredItemId,
 		fragmentEntryLinks,
 		isMasterPage,
 		layoutData,
@@ -191,9 +193,9 @@ function visit(
 				activable: canUpdateEditables,
 				children: [],
 				disabled: !isMasterPage && itemInMasterLayout,
+				dragAndDropHoveredItemId,
 				draggable: false,
 				expanded: childId === activeItemId,
-				expandedNodeId,
 				icon: EDITABLE_TYPE_ICONS[type],
 				id: childId,
 				name: EDITABLE_TYPE_LABELS[type],
@@ -210,7 +212,7 @@ function visit(
 					activeItemId,
 					canUpdateEditables,
 					canUpdateItemConfiguration,
-					expandedNodeId,
+					dragAndDropHoveredItemId,
 					fragmentEntryLinks,
 					isMasterPage,
 					layoutData,
@@ -245,7 +247,7 @@ function visit(
 						activeItemId,
 						canUpdateEditables,
 						canUpdateItemConfiguration,
-						expandedNodeId,
+						dragAndDropHoveredItemId,
 						fragmentEntryLinks,
 						isMasterPage,
 						layoutData,
@@ -261,7 +263,7 @@ function visit(
 					activeItemId,
 					canUpdateEditables,
 					canUpdateItemConfiguration,
-					expandedNodeId,
+					dragAndDropHoveredItemId,
 					fragmentEntryLinks,
 					isMasterPage,
 					layoutData,
@@ -283,7 +285,8 @@ function visit(
 		disabled: !isMasterPage && itemInMasterLayout,
 		draggable: item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone,
 		expanded:
-			item.itemId === activeItemId || expandedNodeId === item.itemId,
+			item.itemId === activeItemId ||
+			dragAndDropHoveredItemId === item.itemId,
 		icon,
 		id: item.itemId,
 		itemType: ITEM_TYPES.layoutDataItem,

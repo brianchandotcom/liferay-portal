@@ -143,6 +143,18 @@ public class TypedPropertiesTest {
 	}
 
 	@Test
+	public void testLoadandStoreMultilineString() throws IOException {
+		String line = "testKey = \"testValue1,\\\n\ttestValue2\"";
+
+		TypedProperties typedProperties = _createTypedProperties(line);
+
+		Assert.assertEquals(
+			"testValue1,testValue2", typedProperties.get("testKey"));
+
+		_assertSave(typedProperties, line);
+	}
+
+	@Test
 	public void testLoadNontyped() throws IOException {
 		TypedProperties typedProperties = _createTypedProperties(
 			"testKey = \"testValue\"");

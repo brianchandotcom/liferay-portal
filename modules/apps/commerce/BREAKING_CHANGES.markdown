@@ -345,3 +345,35 @@ Give administrators more flexibility on whether or not they want to provide
 sorting functionality of product search results.
 
 ---------------------------------------
+
+### Files Moved
+- **Date:** 2020-Aug-20
+- **JIRA Ticket:** [COMMERCE-4052](https://issues.liferay.com/browse/COMMERCE-4052)
+
+#### What changed?
+
+Files listed below have moved:
+
+- `com.liferay.commerce.pricing.web.servlet.taglib.ui.
+CommerceDiscountScreenNavigationConstants;`
+- `com.liferay.commerce.pricing.web.servlet.taglib.ui.
+CommercePricingClassScreenNavigationConstants;`
+
+#### Who is affected?
+
+Anyone who references or uses these files.
+
+#### How should I update my code?
+Replace old references with the new package path.
+
+New package paths:
+- `com.liferay.commerce.pricing.web.internal.constants.
+CommerceDiscountScreenNavigationConstants;`
+- `com.liferay.commerce.pricing.web.internal.constants.
+CommercePricingClassScreenNavigationConstants;`
+
+#### Why was this change made?
+
+This was moved to follow Liferay coding pattern.
+
+---------------------------------------

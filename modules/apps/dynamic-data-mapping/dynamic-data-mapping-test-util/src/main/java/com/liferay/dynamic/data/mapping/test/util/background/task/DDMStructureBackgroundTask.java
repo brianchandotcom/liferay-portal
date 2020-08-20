@@ -31,7 +31,9 @@ import java.util.Map;
 
 /**
  * @author Lucas Marques de Paula
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class DDMStructureBackgroundTask implements BackgroundTask {
 
 	public DDMStructureBackgroundTask(long structureId) {

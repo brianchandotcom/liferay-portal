@@ -18,11 +18,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.test.util.background.task.DDMStructureBackgroundTask;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
@@ -97,7 +97,11 @@ public class JournalArticleDDMStructureIndexerTest {
 
 		disableJournalArticleIndexer();
 
-		runBackgroundTaskReindex(structure);
+		Message message = new Message();
+
+		message.put("structureId", structure.getStructureId());
+
+		_messageBus.sendMessage("liferay/ddm_structure_reindex", message);
 
 		journalArticleIndexer.searchNoOne(searchTerm, locale);
 	}
@@ -116,7 +120,11 @@ public class JournalArticleDDMStructureIndexerTest {
 
 		journalArticleIndexer.deleteDocument(document);
 
-		runBackgroundTaskReindex(structure);
+		Message message = new Message();
+
+		message.put("structureId", structure.getStructureId());
+
+		_messageBus.sendMessage("liferay/ddm_structure_reindex", message);
 
 		journalArticleIndexer.searchOnlyOne(searchTerm, locale);
 	}
@@ -136,15 +144,6 @@ public class JournalArticleDDMStructureIndexerTest {
 			JournalArticle.class);
 
 		indexer.setIndexerEnabled(true);
-	}
-
-	protected void runBackgroundTaskReindex(DDMStructure structure)
-		throws Exception {
-
-		DDMStructureBackgroundTask backgroundTask =
-			new DDMStructureBackgroundTask(structure.getStructureId());
-
-		backgroundTaskExecutor.execute(backgroundTask);
 	}
 
 	protected void setUpJournalArticleDDMStructureFixture() throws Exception {
@@ -174,11 +173,6 @@ public class JournalArticleDDMStructureIndexerTest {
 	@Inject
 	protected static JournalArticleLocalService journalArticleLocalService;
 
-	@Inject(
-		filter = "background.task.executor.class.name=com.liferay.dynamic.data.mapping.internal.background.task.DDMStructureIndexerBackgroundTaskExecutor"
-	)
-	protected BackgroundTaskExecutor backgroundTaskExecutor;
-
 	@Inject(filter = "ddm.form.deserializer.type=json")
 	protected DDMFormDeserializer ddmFormDeserializer;
 
@@ -198,5 +192,8 @@ public class JournalArticleDDMStructureIndexerTest {
 
 	@DeleteAfterTestRun
 	protected List<User> users;
+
+	@Inject
+	private static MessageBus _messageBus;
 
 }

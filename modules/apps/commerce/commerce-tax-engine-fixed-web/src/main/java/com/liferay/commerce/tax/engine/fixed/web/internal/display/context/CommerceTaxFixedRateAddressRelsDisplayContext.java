@@ -155,9 +155,7 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 						LanguageUtil.get(
 							commerceTaxFixedRateRequestHelper.getRequest(),
 							"add-tax-rate-setting"));
-					dropdownItem.setTarget(
-						ClayCreationMenuActionItem.
-							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+					dropdownItem.setTarget("modal-lg");
 				});
 		}
 

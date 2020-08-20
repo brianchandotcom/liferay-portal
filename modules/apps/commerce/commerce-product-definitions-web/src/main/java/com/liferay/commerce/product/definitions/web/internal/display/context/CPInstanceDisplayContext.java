@@ -178,8 +178,7 @@ public class CPInstanceDisplayContext extends BaseCPDefinitionsDisplayContext {
 				dropdownItem.setHref(_getEditCPInstancePortletURL());
 				dropdownItem.setLabel(
 					LanguageUtil.get(cpRequestHelper.getRequest(), "add-sku"));
-				dropdownItem.setTarget(
-					ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
+				dropdownItem.setTarget("sidePanel");
 			}
 		).build();
 

@@ -30,6 +30,7 @@ import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodLocalService;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
@@ -37,7 +38,8 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
-import com.liferay.petra.string.StringPool;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -45,6 +47,7 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -88,60 +91,6 @@ public class CommerceTaxRateClayTable
 	public static final String NAME = "tax-rates";
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
-		throws PortalException {
-
-		List<ClayDataSetAction> clayTableActions = new ArrayList<>();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		try {
-			TaxRate taxRate = (TaxRate)model;
-
-			long commerceChannelId = ParamUtil.getLong(
-				httpServletRequest, "commerceChannelId");
-
-			CommerceChannel commerceChannel =
-				_commerceChannelService.getCommerceChannel(commerceChannelId);
-
-			if (!_commerceChannelModelResourcePermission.contains(
-					themeDisplay.getPermissionChecker(), commerceChannel,
-					ActionKeys.UPDATE)) {
-
-				return clayTableActions;
-			}
-
-			ClayDataSetAction editClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK,
-				_getTaxRateEditURL(httpServletRequest, taxRate.getTaxRateId()),
-				StringPool.BLANK, LanguageUtil.get(httpServletRequest, "edit"),
-				null, false, false);
-
-			editClayDataSetAction.setTarget("sidePanel");
-
-			clayTableActions.add(editClayDataSetAction);
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK,
-				_getTaxRateDeleteURL(
-					httpServletRequest, taxRate.getTaxRateId()),
-				StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "delete"), null, false,
-				false);
-
-			clayTableActions.add(deleteClayDataSetAction);
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-		}
-
-		return clayTableActions;
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
@@ -154,6 +103,46 @@ public class CommerceTaxRateClayTable
 		clayTableSchemaBuilder.addClayTableSchemaField("rate", "rate");
 
 		return clayTableSchemaBuilder.build();
+	}
+
+	@Override
+	public List<DropdownItem> getDropdownItems(
+			HttpServletRequest httpServletRequest, long groupId, Object model)
+		throws PortalException {
+
+		TaxRate taxRate = (TaxRate)model;
+
+		long commerceChannelId = ParamUtil.getLong(
+			httpServletRequest, "commerceChannelId");
+
+		CommerceChannel commerceChannel =
+			_commerceChannelService.getCommerceChannel(commerceChannelId);
+
+		return DropdownItemListBuilder.add(
+			() -> _commerceChannelModelResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), commerceChannel,
+				ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getTaxRateEditURL(
+						httpServletRequest, taxRate.getTaxRateId()));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "edit"));
+				dropdownItem.setTarget("sidePanel");
+			}
+		).add(
+			() -> _commerceChannelModelResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), commerceChannel,
+				ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getTaxRateDeleteURL(
+						httpServletRequest, taxRate.getTaxRateId()));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+				dropdownItem.setTarget("sidePanel");
+			}
+		).build();
 	}
 
 	@Override

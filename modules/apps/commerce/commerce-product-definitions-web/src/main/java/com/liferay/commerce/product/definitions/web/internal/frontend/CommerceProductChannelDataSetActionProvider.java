@@ -21,17 +21,17 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
-import com.liferay.petra.string.StringPool;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -55,11 +55,9 @@ public class CommerceProductChannelDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
+	public List<DropdownItem> getDropdownItems(
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
-
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
 
 		Channel channel = (Channel)model;
 
@@ -70,26 +68,18 @@ public class CommerceProductChannelDataSetActionProvider
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			commerceChannelRel.getClassPK());
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (CommerceCatalogPermission.contains(
-				themeDisplay.getPermissionChecker(), cpDefinition,
-				ActionKeys.UPDATE)) {
-
-			PortletURL deleteURL = _getChannelDeleteURL(
-				commerceChannelRel, httpServletRequest);
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, deleteURL.toString(), StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "delete"), null, false,
-				false);
-
-			clayDataSetActions.add(deleteClayDataSetAction);
-		}
-
-		return clayDataSetActions;
+		return DropdownItemListBuilder.add(
+			() -> CommerceCatalogPermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), cpDefinition,
+				ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getChannelDeleteURL(
+						commerceChannelRel, httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+			}
+		).build();
 	}
 
 	private PortletURL _getChannelDeleteURL(

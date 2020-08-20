@@ -25,9 +25,9 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.frontend.ClayMenuActionItem" %><%@
-page import="com.liferay.commerce.frontend.model.HeaderActionModel" %><%@
+<%@ page import="com.liferay.commerce.frontend.model.HeaderActionModel" %><%@
 page import="com.liferay.commerce.frontend.util.HeaderHelperUtil" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONSerializer" %><%@
@@ -45,8 +45,6 @@ page import="com.liferay.portal.kernel.workflow.WorkflowTask" %>
 <%@ page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
-<%@ page
-	import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %>
 
 <liferay-theme:defineObjects />
 

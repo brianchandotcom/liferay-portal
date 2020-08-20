@@ -16,6 +16,9 @@ package com.liferay.commerce.product.definitions.web.internal.frontend;
 
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.frontend.taglib.clay.data.set.filter.BaseRadioClayDataSetFilter;
+import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilter;
+import com.liferay.portal.kernel.util.KeyValuePair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,27 +35,24 @@ import org.osgi.service.component.annotations.Reference;
 	property = "clay.data.set.display.name=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITIONS,
 	service = ClayDataSetFilter.class
 )
-public class ProductTypeClayTableDataSetFilter extends ClayRadioDataSetFilter {
-
-	@Override
-	public List<ClayRadioDataSetFilterItem> getClayRadioDataSetFilterItems(
-		Locale locale) {
-
-		List<ClayRadioDataSetFilterItem> clayRadioDataSetFilterItems =
-			new ArrayList<>();
-
-		for (CPType cpType : _cpTypeServicesTracker.getCPTypes()) {
-			clayRadioDataSetFilterItems.add(
-				new ClayRadioDataSetFilterItem(
-					cpType.getLabel(locale), cpType.getName()));
-		}
-
-		return clayRadioDataSetFilterItems;
-	}
+public class ProductTypeClayTableDataSetFilter
+	extends BaseRadioClayDataSetFilter {
 
 	@Override
 	public String getId() {
 		return "productType";
+	}
+
+	@Override
+	public List<KeyValuePair> getKeyValuePairs(Locale locale) {
+		List<KeyValuePair> keyValuePairs = new ArrayList<>();
+
+		for (CPType cpType : _cpTypeServicesTracker.getCPTypes()) {
+			keyValuePairs.add(
+				new KeyValuePair(cpType.getName(), cpType.getLabel(locale)));
+		}
+
+		return keyValuePairs;
 	}
 
 	@Override

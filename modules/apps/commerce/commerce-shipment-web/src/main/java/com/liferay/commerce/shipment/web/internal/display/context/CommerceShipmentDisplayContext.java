@@ -332,9 +332,7 @@ public class CommerceShipmentDisplayContext
 						LanguageUtil.get(
 							httpServletRequest,
 							"add-products-to-this-shipment"));
-					dropdownItem.setTarget(
-						ClayMenuActionItem.
-							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+					dropdownItem.setTarget("modal-lg");
 				});
 		}
 

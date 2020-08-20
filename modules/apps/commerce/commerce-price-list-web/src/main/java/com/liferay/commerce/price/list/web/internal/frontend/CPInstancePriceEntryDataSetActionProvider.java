@@ -21,7 +21,9 @@ import com.liferay.commerce.price.list.web.internal.model.InstancePriceEntry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.petra.string.StringPool;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -30,14 +32,13 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -62,11 +63,9 @@ public class CPInstancePriceEntryDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
+	public List<DropdownItem> getDropdownItems(
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
-
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
 
 		InstancePriceEntry instancePriceEntry = (InstancePriceEntry)model;
 
@@ -74,45 +73,33 @@ public class CPInstancePriceEntryDataSetActionProvider
 			_commercePriceEntryService.getCommercePriceEntry(
 				instancePriceEntry.getPriceEntryId());
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
-		if (_commercePriceListModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(),
-				commercePriceEntry.getCommercePriceListId(),
-				ActionKeys.UPDATE)) {
-
-			PortletURL editURL = _getInstancePriceEntryEditURL(
-				commercePriceEntry, httpServletRequest);
-
-			ClayDataSetAction editClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, editURL.toString(), StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "edit"), StringPool.BLANK,
-				false, false);
-
-			editClayDataSetAction.setTarget("sidePanel");
-
-			clayDataSetActions.add(editClayDataSetAction);
-		}
-
-		if (_commercePriceListModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(),
-				commercePriceEntry.getCommercePriceListId(),
-				ActionKeys.DELETE)) {
-
-			PortletURL deleteURL = _getInstancePriceEntryDeleteURL(
-				commercePriceEntry, httpServletRequest);
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, deleteURL.toString(), StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "delete"),
-				StringPool.BLANK, false, false);
-
-			clayDataSetActions.add(deleteClayDataSetAction);
-		}
-
-		return clayDataSetActions;
+		return DropdownItemListBuilder.add(
+			() -> _commercePriceListModelResourcePermission.contains(
+				permissionChecker, commercePriceEntry.getCommercePriceListId(),
+				ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getInstancePriceEntryEditURL(
+						commercePriceEntry, httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "edit"));
+				dropdownItem.setTarget("sidePanel");
+			}
+		).add(
+			() -> _commercePriceListModelResourcePermission.contains(
+				permissionChecker, commercePriceEntry.getCommercePriceListId(),
+				ActionKeys.DELETE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getInstancePriceEntryDeleteURL(
+						commercePriceEntry, httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+			}
+		).build();
 	}
 
 	private PortletURL _getInstancePriceEntryDeleteURL(

@@ -19,21 +19,21 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.tax.engine.fixed.web.internal.model.TaxRateSetting;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
-import com.liferay.petra.string.StringPool;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -60,58 +60,45 @@ public class CommerceTaxRateSettingDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
+	public List<DropdownItem> getDropdownItems(
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
 
-		List<ClayDataSetAction> clayTableActions = new ArrayList<>();
+		TaxRateSetting taxRateSetting = (TaxRateSetting)model;
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		long commerceChannelId = ParamUtil.getLong(
+			httpServletRequest, "commerceChannelId");
 
-		try {
-			TaxRateSetting taxRateSetting = (TaxRateSetting)model;
+		CommerceChannel commerceChannel =
+			_commerceChannelService.getCommerceChannel(commerceChannelId);
 
-			long commerceChannelId = ParamUtil.getLong(
-				httpServletRequest, "commerceChannelId");
-
-			CommerceChannel commerceChannel =
-				_commerceChannelService.getCommerceChannel(commerceChannelId);
-
-			if (!_commerceChannelModelResourcePermission.contains(
-					themeDisplay.getPermissionChecker(), commerceChannel,
-					ActionKeys.UPDATE)) {
-
-				return clayTableActions;
+		return DropdownItemListBuilder.add(
+			() -> _commerceChannelModelResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), commerceChannel,
+				ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getTaxRateSettingEditURL(
+						httpServletRequest,
+						taxRateSetting.getTaxRateSettingId()));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "edit"));
+				dropdownItem.setTarget("sidePanel");
 			}
-
-			ClayDataSetAction editClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK,
-				_getTaxRateSettingEditURL(
-					httpServletRequest, taxRateSetting.getTaxRateSettingId()),
-				StringPool.BLANK, LanguageUtil.get(httpServletRequest, "edit"),
-				null, false, false);
-
-			editClayDataSetAction.setTarget("sidePanel");
-
-			clayTableActions.add(editClayDataSetAction);
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK,
-				_getTaxRateSettingDeleteURL(
-					httpServletRequest, taxRateSetting.getTaxRateSettingId()),
-				StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "delete"), null, false,
-				false);
-
-			clayTableActions.add(deleteClayDataSetAction);
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-		}
-
-		return clayTableActions;
+		).add(
+			() -> _commerceChannelModelResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), commerceChannel,
+				ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getTaxRateSettingDeleteURL(
+						httpServletRequest,
+						taxRateSetting.getTaxRateSettingId()));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+				dropdownItem.setTarget("sidePanel");
+			}
+		).build();
 	}
 
 	private String _getTaxRateSettingDeleteURL(

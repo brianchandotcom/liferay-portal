@@ -22,7 +22,9 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
-import com.liferay.petra.string.StringPool;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -31,14 +33,12 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -66,11 +66,9 @@ public class CommerceProductMediaDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
+	public List<DropdownItem> getDropdownItems(
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
-
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
 
 		ProductMedia productMedia = (ProductMedia)model;
 
@@ -78,38 +76,31 @@ public class CommerceProductMediaDataSetActionProvider
 			_cpAttachmentFileEntryService.getCPAttachmentFileEntry(
 				productMedia.getCPAttachmentFileEntryId());
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (_hasManagePermission(
-				cpAttachmentFileEntry, themeDisplay.getPermissionChecker())) {
-
-			PortletURL editURL = _getProductMediaEditURL(
-				cpAttachmentFileEntry, httpServletRequest);
-
-			ClayDataSetAction editClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, editURL.toString(), StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "edit"), StringPool.BLANK,
-				false, false);
-
-			editClayDataSetAction.setTarget("sidePanel");
-
-			clayDataSetActions.add(editClayDataSetAction);
-
-			PortletURL deleteURL = _getProductMediaDeleteURL(
-				cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
-				httpServletRequest);
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, deleteURL.toString(), StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "delete"),
-				StringPool.BLANK, false, false);
-
-			clayDataSetActions.add(deleteClayDataSetAction);
-		}
-
-		return clayDataSetActions;
+		return DropdownItemListBuilder.add(
+			() -> _hasManagePermission(
+				cpAttachmentFileEntry,
+				PermissionThreadLocal.getPermissionChecker()),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getProductMediaEditURL(
+						cpAttachmentFileEntry, httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "edit"));
+				dropdownItem.setTarget("sidePanel");
+			}
+		).add(
+			() -> _hasManagePermission(
+				cpAttachmentFileEntry,
+				PermissionThreadLocal.getPermissionChecker()),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getProductMediaDeleteURL(
+						cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
+						httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+			}
+		).build();
 	}
 
 	private PortletURL _getProductMediaDeleteURL(

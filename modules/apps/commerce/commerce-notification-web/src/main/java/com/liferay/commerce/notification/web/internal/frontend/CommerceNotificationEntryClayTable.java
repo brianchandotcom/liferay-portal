@@ -27,6 +27,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
@@ -34,7 +35,8 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
-import com.liferay.petra.string.StringPool;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Sort;
@@ -78,54 +80,6 @@ public class CommerceNotificationEntryClayTable
 	public static final String NAME = "notification-entries";
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
-		throws PortalException {
-
-		List<ClayDataSetAction> clayTableActions = new ArrayList<>();
-
-		try {
-			NotificationEntry notificationEntry = (NotificationEntry)model;
-
-			PortletURL portletURL = _portal.getControlPanelPortletURL(
-				httpServletRequest, CPPortletKeys.COMMERCE_CHANNELS,
-				PortletRequest.ACTION_PHASE);
-
-			String redirect = ParamUtil.getString(
-				httpServletRequest, "currentUrl",
-				_portal.getCurrentURL(httpServletRequest));
-
-			portletURL.setParameter(
-				ActionRequest.ACTION_NAME,
-				"editCommerceNotificationQueueEntry");
-			portletURL.setParameter(Constants.CMD, "resend");
-			portletURL.setParameter("redirect", redirect);
-			portletURL.setParameter(
-				"commerceNotificationQueueEntryId",
-				String.valueOf(notificationEntry.getNotificationEntryId()));
-
-			clayTableActions.add(
-				new ClayDataSetAction(
-					StringPool.BLANK, portletURL.toString(), StringPool.BLANK,
-					LanguageUtil.get(httpServletRequest, "resend"), null, false,
-					false));
-
-			portletURL.setParameter(Constants.CMD, Constants.DELETE);
-
-			clayTableActions.add(
-				new ClayDataSetAction(
-					StringPool.BLANK, portletURL.toString(), StringPool.BLANK,
-					LanguageUtil.get(httpServletRequest, "delete"), null, false,
-					false));
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-		}
-
-		return clayTableActions;
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
@@ -144,6 +98,46 @@ public class CommerceNotificationEntryClayTable
 		clayTableSchemaBuilder.addClayTableSchemaField("priority", "priority");
 
 		return clayTableSchemaBuilder.build();
+	}
+
+	@Override
+	public List<DropdownItem> getDropdownItems(
+			HttpServletRequest httpServletRequest, long groupId, Object model)
+		throws PortalException {
+
+		NotificationEntry notificationEntry = (NotificationEntry)model;
+
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			httpServletRequest, CPPortletKeys.COMMERCE_CHANNELS,
+			PortletRequest.ACTION_PHASE);
+
+		String redirect = ParamUtil.getString(
+			httpServletRequest, "currentUrl",
+			_portal.getCurrentURL(httpServletRequest));
+
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "editCommerceNotificationQueueEntry");
+		portletURL.setParameter(Constants.CMD, "resend");
+		portletURL.setParameter("redirect", redirect);
+		portletURL.setParameter(
+			"commerceNotificationQueueEntryId",
+			String.valueOf(notificationEntry.getNotificationEntryId()));
+
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setHref(portletURL.toString());
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "resend"));
+			}
+		).add(
+			dropdownItem -> {
+				portletURL.setParameter(Constants.CMD, Constants.DELETE);
+
+				dropdownItem.setHref(portletURL.toString());
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+			}
+		).build();
 	}
 
 	@Override

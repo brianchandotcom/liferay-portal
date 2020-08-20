@@ -167,9 +167,7 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 			dropdownItem -> {
 				dropdownItem.setHref(_getAddCommerceTierPriceEntryURL());
 				dropdownItem.setLabel(StringPool.BLANK);
-				dropdownItem.setTarget(
-					ClayMenuActionItem.
-						CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+				dropdownItem.setTarget("modal-lg");
 			}
 		).build();
 	}

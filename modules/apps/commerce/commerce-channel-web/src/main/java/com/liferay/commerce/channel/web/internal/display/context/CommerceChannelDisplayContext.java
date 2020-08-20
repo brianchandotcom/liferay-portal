@@ -261,9 +261,7 @@ public class CommerceChannelDisplayContext
 					dropdownItem.setLabel(
 						LanguageUtil.get(httpServletRequest, "add-channel"));
 					dropdownItem.setHref(getAddChannelURL());
-					dropdownItem.setTarget(
-						ClayCreationMenuActionItem.
-							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+					dropdownItem.setTarget("modal-lg");
 				});
 		}
 

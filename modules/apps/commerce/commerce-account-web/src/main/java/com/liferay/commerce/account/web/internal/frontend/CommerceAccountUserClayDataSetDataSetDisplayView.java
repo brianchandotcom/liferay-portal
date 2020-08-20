@@ -22,12 +22,15 @@ import com.liferay.commerce.account.service.CommerceAccountUserRelService;
 import com.liferay.commerce.account.web.internal.model.Member;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -39,14 +42,13 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,54 +81,6 @@ public class CommerceAccountUserClayDataSetDataSetDisplayView
 	public static final String NAME = "commerceAccountUsers";
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
-		throws PortalException {
-
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
-
-		Member member = (Member)model;
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (_accountModelResourcePermission.contains(
-				permissionChecker, member.getAccountId(),
-				CommerceAccountActionKeys.MANAGE_MEMBERS)) {
-
-			String viewURL = _getAccountUserViewDetailURL(
-				member.getMemberId(), httpServletRequest);
-
-			ClayDataSetAction viewClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, viewURL, StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "view"), null, false,
-				false);
-
-			clayDataSetActions.add(viewClayDataSetAction);
-
-			if (permissionChecker.isCompanyAdmin() ||
-				(member.getMemberId() != themeDisplay.getUserId())) {
-
-				ClayDataSetAction removeClayDataSetAction =
-					new ClayDataSetAction(
-						StringPool.BLANK, StringPool.POUND, StringPool.BLANK,
-						LanguageUtil.get(httpServletRequest, "remove"),
-						"removeCommerceAccountUser('" + member.getMemberId() +
-							"')",
-						false, false);
-
-				clayDataSetActions.add(removeClayDataSetAction);
-			}
-		}
-
-		return clayDataSetActions;
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
@@ -138,6 +92,41 @@ public class CommerceAccountUserClayDataSetDataSetDisplayView
 		clayTableSchemaBuilder.addClayTableSchemaField("email", "email");
 
 		return clayTableSchemaBuilder.build();
+	}
+
+	@Override
+	public List<DropdownItem> getDropdownItems(
+			HttpServletRequest httpServletRequest, long groupId, Object model)
+		throws PortalException {
+
+		Member member = (Member)model;
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		return DropdownItemListBuilder.add(
+			() -> _accountModelResourcePermission.contains(
+				permissionChecker, member.getAccountId(),
+				CommerceAccountActionKeys.MANAGE_MEMBERS),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getAccountUserViewDetailURL(
+						member.getMemberId(), httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "view"));
+			}
+		).add(
+			() ->
+				permissionChecker.isCompanyAdmin() ||
+				(member.getMemberId() != _portal.getUserId(httpServletRequest)),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					"javascript:removeCommerceAccountUser('" +
+						member.getMemberId() + "')");
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "remove"));
+			}
+		).build();
 	}
 
 	@Override

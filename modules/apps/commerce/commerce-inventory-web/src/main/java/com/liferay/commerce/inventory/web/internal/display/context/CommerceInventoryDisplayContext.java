@@ -222,9 +222,7 @@ public class CommerceInventoryDisplayContext {
 						LanguageUtil.get(
 							_cpRequestHelper.getRequest(),
 							"add-inventory-item"));
-					dropdownItem.setTarget(
-						ClayCreationMenuActionItem.
-							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+					dropdownItem.setTarget("modal-lg");
 				});
 		}
 
@@ -264,9 +262,7 @@ public class CommerceInventoryDisplayContext {
 					dropdownItem.setLabel(
 						LanguageUtil.get(
 							_cpRequestHelper.getRequest(), "add-income"));
-					dropdownItem.setTarget(
-						ClayCreationMenuActionItem.
-							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+					dropdownItem.setTarget("modal-lg");
 				});
 		}
 
@@ -319,9 +315,7 @@ public class CommerceInventoryDisplayContext {
 					dropdownItem.setLabel(
 						LanguageUtil.get(
 							_cpRequestHelper.getRequest(), "add-inventory"));
-					dropdownItem.setTarget(
-						ClayCreationMenuActionItem.
-							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+					dropdownItem.setTarget("modal-lg");
 				});
 
 			creationMenu.addDropdownItem(
@@ -331,9 +325,7 @@ public class CommerceInventoryDisplayContext {
 						LanguageUtil.get(
 							_cpRequestHelper.getRequest(),
 							"create-a-transfer"));
-					dropdownItem.setTarget(
-						ClayCreationMenuActionItem.
-							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+					dropdownItem.setTarget("modal-lg");
 				});
 		}
 

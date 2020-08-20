@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend;
 
+import com.liferay.frontend.taglib.clay.data.set.filter.BaseAutocompleteClayDataSetFilter;
+import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilter;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -25,10 +28,10 @@ import org.osgi.service.component.annotations.Component;
 	service = ClayDataSetFilter.class
 )
 public class CommerceCatalogClayTableDataSetFilter
-	extends ClayAutocompleteDataSetFilter {
+	extends BaseAutocompleteClayDataSetFilter {
 
 	@Override
-	public String getApiURL() {
+	public String getAPIURL() {
 		return "/o/headless-commerce-admin-catalog/v1.0/catalogs?sort=name:asc";
 	}
 

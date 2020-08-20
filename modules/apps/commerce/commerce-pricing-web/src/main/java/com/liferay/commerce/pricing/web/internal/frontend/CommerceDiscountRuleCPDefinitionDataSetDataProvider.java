@@ -25,6 +25,7 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.taglib.clay.internal.data.DefaultFilterImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -117,9 +118,7 @@ public class CommerceDiscountRuleCPDefinitionDataSetDataProvider
 
 		String languageId = LanguageUtil.getLanguageId(locale);
 
-		DefaultFilterImpl defaultFilterImpl = (DefaultFilterImpl)filter;
-
-		String keywords = defaultFilterImpl.getKeywords();
+		String keywords = filter.getKeywords();
 
 		String keywordsLowerCase = StringUtil.toLowerCase(keywords);
 

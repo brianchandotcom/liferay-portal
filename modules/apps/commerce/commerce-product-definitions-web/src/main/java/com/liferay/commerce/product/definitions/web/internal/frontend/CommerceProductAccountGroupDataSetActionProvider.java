@@ -21,17 +21,18 @@ import com.liferay.commerce.product.definitions.web.internal.model.AccountGroup;
 import com.liferay.commerce.product.definitions.web.internal.security.permission.resource.CommerceCatalogPermission;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.petra.string.StringPool;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -55,11 +56,9 @@ public class CommerceProductAccountGroupDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
+	public List<DropdownItem> getDropdownItems(
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
-
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
 
 		AccountGroup accountGroup = (AccountGroup)model;
 
@@ -70,26 +69,21 @@ public class CommerceProductAccountGroupDataSetActionProvider
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			commerceAccountGroupRel.getClassPK());
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
-		if (CommerceCatalogPermission.contains(
-				themeDisplay.getPermissionChecker(), cpDefinition,
-				ActionKeys.UPDATE)) {
+		return DropdownItemListBuilder.add(
+			() -> CommerceCatalogPermission.contains(
+				permissionChecker, cpDefinition, ActionKeys.UPDATE),
+			dropdownItem -> {
+				PortletURL deleteURL = _getAccountGroupDeleteURL(
+					commerceAccountGroupRel, httpServletRequest);
 
-			PortletURL deleteURL = _getAccountGroupDeleteURL(
-				commerceAccountGroupRel, httpServletRequest);
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, deleteURL.toString(), StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "delete"), null, false,
-				false);
-
-			clayDataSetActions.add(deleteClayDataSetAction);
-		}
-
-		return clayDataSetActions;
+				dropdownItem.setHref(deleteURL.toString());
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+			}
+		).build();
 	}
 
 	private PortletURL _getAccountGroupDeleteURL(

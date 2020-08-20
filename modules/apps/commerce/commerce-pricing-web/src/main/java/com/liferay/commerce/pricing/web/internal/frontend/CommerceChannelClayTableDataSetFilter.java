@@ -15,6 +15,8 @@
 package com.liferay.commerce.pricing.web.internal.frontend;
 
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
+import com.liferay.frontend.taglib.clay.data.set.filter.BaseAutocompleteClayDataSetFilter;
+import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilter;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,10 +32,10 @@ import org.osgi.service.component.annotations.Component;
 	service = ClayDataSetFilter.class
 )
 public class CommerceChannelClayTableDataSetFilter
-	extends ClayAutocompleteDataSetFilter {
+	extends BaseAutocompleteClayDataSetFilter {
 
 	@Override
-	public String getApiURL() {
+	public String getAPIURL() {
 		return "/o/headless-commerce-admin-channel/v1.0/channels?sort=name:asc";
 	}
 

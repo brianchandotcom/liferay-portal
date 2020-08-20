@@ -20,19 +20,18 @@ import com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelL
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.commerce.pricing.web.internal.model.PricingClassCPDefinitionRel;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.petra.string.StringPool;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -54,11 +53,9 @@ public class CommercePricingClassCPDefinitionRelDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
+	public List<DropdownItem> getDropdownItems(
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
-
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
 
 		PricingClassCPDefinitionRel pricingClassCPDefinitionRel =
 			(PricingClassCPDefinitionRel)model;
@@ -70,49 +67,34 @@ public class CommercePricingClassCPDefinitionRelDataSetActionProvider
 						pricingClassCPDefinitionRel.
 							getPricingClassCPDefinitionRelId());
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (_commercePricingClassModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(),
+		return DropdownItemListBuilder.add(
+			() -> _commercePricingClassModelResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
 				commercePricingClassCPDefinitionRel.getCommercePricingClassId(),
-				ActionKeys.UPDATE)) {
-
-			PortletURL editURL = _getCPDefinitionEditURL(
-				pricingClassCPDefinitionRel.getCPDefinitionId(),
-				httpServletRequest);
-
-			ClayDataSetAction editClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, editURL.toString(), StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, Constants.EDIT),
-				StringPool.BLANK, false, false);
-
-			clayDataSetActions.add(editClayDataSetAction);
-		}
-
-		if (_commercePricingClassModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(),
+				ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getCPDefinitionEditURL(
+						pricingClassCPDefinitionRel.getCPDefinitionId(),
+						httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "edit"));
+			}
+		).add(
+			() -> _commercePricingClassModelResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
 				commercePricingClassCPDefinitionRel.getCommercePricingClassId(),
-				ActionKeys.DELETE)) {
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK,
-				_getPricingClassCPDefinitionRelDeleteURL(
-					pricingClassCPDefinitionRel.
-						getPricingClassCPDefinitionRelId()),
-				StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, Constants.DELETE),
-				StringPool.BLANK, false, false);
-
-			deleteClayDataSetAction.setTarget("async");
-
-			deleteClayDataSetAction.setMethod("delete");
-
-			clayDataSetActions.add(deleteClayDataSetAction);
-		}
-
-		return clayDataSetActions;
+				ActionKeys.DELETE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getPricingClassCPDefinitionRelDeleteURL(
+						pricingClassCPDefinitionRel.getCPDefinitionId()));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+				dropdownItem.setTarget("async");
+				dropdownItem.put("method", "delete");
+			}
+		).build();
 	}
 
 	private PortletURL _getCPDefinitionEditURL(

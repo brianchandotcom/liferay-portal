@@ -259,8 +259,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 			new ClayDataSetActionDropdownItem(
 				null, "trash", "delete",
 				LanguageUtil.get(httpServletRequest, "delete"), "delete",
-				"delete",
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
+				"delete", "headless"));
 
 		return clayDataSetActionDropdownItems;
 	}
@@ -295,16 +294,13 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 			new ClayDataSetActionDropdownItem(
 				null, "trash", "delete",
 				LanguageUtil.get(httpServletRequest, "delete"), "delete",
-				"delete",
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
+				"delete", "headless"));
 
 		clayDataSetActionDropdownItems.add(
 			new ClayDataSetActionDropdownItem(
 				_getManageDiscountPermissionsURL(), null, "permissions",
 				LanguageUtil.get(httpServletRequest, "permissions"), "get",
-				"permissions",
-				ClayMenuActionItem.
-					CLAY_MENU_ACTION_ITEM_TARGET_MODAL_PERMISSIONS));
+				"permissions", "modal-permissions"));
 
 		return clayDataSetActionDropdownItems;
 	}
@@ -344,8 +340,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 						LanguageUtil.get(
 							commercePricingRequestHelper.getRequest(),
 							"add-discount"));
-					dropdownItem.setTarget(
-						ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL);
+					dropdownItem.setTarget("modal");
 				});
 		}
 
@@ -388,8 +383,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 						LanguageUtil.get(
 							commercePricingRequestHelper.getRequest(),
 							"add-discount-rule"));
-					dropdownItem.setTarget(
-						ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL);
+					dropdownItem.setTarget("modal");
 				});
 		}
 
@@ -650,8 +644,7 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 			new ClayDataSetActionDropdownItem(
 				null, "trash", "remove",
 				LanguageUtil.get(httpServletRequest, "remove"), "delete",
-				"delete",
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
+				"delete", "headless"));
 
 		return clayDataSetActionDropdownItems;
 	}

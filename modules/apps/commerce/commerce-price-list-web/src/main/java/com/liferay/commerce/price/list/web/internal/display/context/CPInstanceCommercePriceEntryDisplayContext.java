@@ -114,8 +114,7 @@ public class CPInstanceCommercePriceEntryDisplayContext
 					LanguageUtil.format(
 						httpServletRequest, "add-x-to-price-list",
 						HtmlUtil.escape(cpInstance.getSku()), false));
-				dropdownItem.setTarget(
-					ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_EVENT);
+				dropdownItem.setTarget("event");
 			}
 		).build();
 	}

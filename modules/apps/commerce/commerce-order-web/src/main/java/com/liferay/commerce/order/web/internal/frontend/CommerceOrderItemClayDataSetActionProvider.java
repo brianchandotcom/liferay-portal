@@ -18,7 +18,9 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.web.internal.model.OrderItem;
 import com.liferay.commerce.order.web.internal.security.permission.resource.CommerceOrderPermission;
-import com.liferay.petra.string.StringPool;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -27,13 +29,12 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -58,49 +59,39 @@ public class CommerceOrderItemClayDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
+	public List<DropdownItem> getDropdownItems(
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
-
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
 
 		OrderItem orderItem = (OrderItem)model;
 
 		if (orderItem.getParentOrderItemId() > 0) {
-			return clayDataSetActions;
+			return Collections.emptyList();
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (_commerceOrderPermission.contains(
-				themeDisplay.getPermissionChecker(), orderItem.getOrderId(),
-				ActionKeys.UPDATE)) {
-
-			ClayDataSetAction editClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK,
-				_getOrderItemEditURL(
-					orderItem.getOrderItemId(), httpServletRequest),
-				StringPool.BLANK, LanguageUtil.get(httpServletRequest, "edit"),
-				StringPool.BLANK, false, false);
-
-			editClayDataSetAction.setTarget("sidePanel");
-
-			clayDataSetActions.add(editClayDataSetAction);
-
-			PortletURL deleteURL = _getOrderItemDeleteURL(
-				orderItem.getOrderItemId(), httpServletRequest);
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, deleteURL.toString(), StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "delete"),
-				StringPool.BLANK, false, false);
-
-			clayDataSetActions.add(deleteClayDataSetAction);
-		}
-
-		return clayDataSetActions;
+		return DropdownItemListBuilder.add(
+			() -> _commerceOrderPermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				orderItem.getOrderId(), ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getOrderItemEditURL(
+						orderItem.getOrderItemId(), httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "edit"));
+			}
+		).add(
+			() -> _commerceOrderPermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				orderItem.getOrderId(), ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getOrderItemDeleteURL(
+						orderItem.getOrderItemId(), httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+			}
+		).build();
 	}
 
 	private PortletURL _getOrderItemDeleteURL(

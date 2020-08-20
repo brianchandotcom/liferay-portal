@@ -21,7 +21,9 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
-import com.liferay.petra.string.StringPool;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -30,13 +32,11 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -64,11 +64,9 @@ public class CommerceProductOptionValueDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
+	public List<DropdownItem> getDropdownItems(
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
-
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
 
 		ProductOptionValue productOptionValue = (ProductOptionValue)model;
 
@@ -79,56 +77,47 @@ public class CommerceProductOptionValueDataSetActionProvider
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			cpDefinitionOptionValueRel.getCPDefinitionOptionRel();
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (CommerceCatalogPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				cpDefinitionOptionRel.getCPDefinition(), ActionKeys.UPDATE)) {
-
-			PortletURL editURL = _getProductOptionValueEditURL(
-				cpDefinitionOptionValueRel, httpServletRequest);
-
-			ClayDataSetAction editClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, editURL.toString(), StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "edit"), StringPool.BLANK,
-				false, false);
-
-			editClayDataSetAction.setTarget("sidePanel");
-
-			clayDataSetActions.add(editClayDataSetAction);
-
-			PortletURL deleteURL = _getProductOptionValueDeleteURL(
-				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId(),
-				httpServletRequest);
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, deleteURL.toString(), StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "delete"),
-				StringPool.BLANK, false, false);
-
-			clayDataSetActions.add(deleteClayDataSetAction);
-
-			PortletURL updatePreselectedURL =
-				_getProductOptionValueUpdatePreselectedURL(
-					cpDefinitionOptionValueRel.
-						getCPDefinitionOptionValueRelId(),
-					httpServletRequest);
-
-			ClayDataSetAction updatePreselectedClayDataSetAction =
-				new ClayDataSetAction(
-					StringPool.BLANK, updatePreselectedURL.toString(),
-					StringPool.BLANK,
-					LanguageUtil.get(httpServletRequest, "toggle-default"),
-					StringPool.BLANK, false, false);
-
-			updatePreselectedClayDataSetAction.setId("updatePreselected");
-
-			clayDataSetActions.add(updatePreselectedClayDataSetAction);
-		}
-
-		return clayDataSetActions;
+		return DropdownItemListBuilder.add(
+			() -> CommerceCatalogPermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				cpDefinitionOptionRel.getCPDefinition(), ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getProductOptionValueEditURL(
+						cpDefinitionOptionValueRel, httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "edit"));
+				dropdownItem.setTarget("sidePanel");
+			}
+		).add(
+			() -> CommerceCatalogPermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				cpDefinitionOptionRel.getCPDefinition(), ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getProductOptionValueDeleteURL(
+						cpDefinitionOptionValueRel.
+							getCPDefinitionOptionValueRelId(),
+						httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+				dropdownItem.setTarget("sidePanel");
+			}
+		).add(
+			() -> CommerceCatalogPermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				cpDefinitionOptionRel.getCPDefinition(), ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getProductOptionValueUpdatePreselectedURL(
+						cpDefinitionOptionValueRel.
+							getCPDefinitionOptionValueRelId(),
+						httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "toggle-default"));
+				dropdownItem.put("id", "updatePreselected");
+			}
+		).build();
 	}
 
 	private PortletURL _getProductOptionValueDeleteURL(

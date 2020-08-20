@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.taglib.clay.internal.data.DefaultFilterImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -69,8 +70,6 @@ public class CommerceProductOptionDataSetDataProvider
 
 		List<ProductOption> productOptions = new ArrayList<>();
 
-		DefaultFilterImpl defaultFilterImpl = (DefaultFilterImpl)filter;
-
 		long cpDefinitionId = ParamUtil.getLong(
 			httpServletRequest, "cpDefinitionId");
 
@@ -78,7 +77,7 @@ public class CommerceProductOptionDataSetDataProvider
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
 			_getCPDefinitionOptionRels(
-				cpDefinitionId, defaultFilterImpl.getKeywords(),
+				cpDefinitionId, filter.getKeywords(),
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				sort);
 
@@ -114,9 +113,7 @@ public class CommerceProductOptionDataSetDataProvider
 			HttpServletRequest httpServletRequest, Filter filter)
 		throws PortalException {
 
-		DefaultFilterImpl defaultFilterImpl = (DefaultFilterImpl)filter;
-
-		String keywords = defaultFilterImpl.getKeywords();
+		String keywords = filter.getKeywords();
 
 		long cpDefinitionId = ParamUtil.getLong(
 			httpServletRequest, "cpDefinitionId");

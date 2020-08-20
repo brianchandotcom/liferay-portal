@@ -14,10 +14,13 @@
 
 package com.liferay.commerce.order.content.web.internal.frontend;
 
+import com.liferay.frontend.taglib.clay.data.Filter;
+import com.liferay.frontend.taglib.clay.internal.data.DefaultFilterImpl;
+
 /**
  * @author Alessio Antonio Rendina
  */
-public class OrderFilterImpl extends DefaultFilterImpl {
+public class OrderFilterImpl implements Filter {
 
 	public long getAccountId() {
 		return _accountId;
@@ -37,5 +40,16 @@ public class OrderFilterImpl extends DefaultFilterImpl {
 
 	private long _accountId;
 	private long _commerceOrderId;
+
+	@Override
+	public String getKeywords() {
+		return _keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		_keywords = keywords;
+	}
+
+	private String _keywords;
 
 }

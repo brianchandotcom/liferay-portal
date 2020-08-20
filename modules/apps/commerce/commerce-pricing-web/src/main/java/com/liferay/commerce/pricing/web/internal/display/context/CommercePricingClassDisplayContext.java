@@ -113,8 +113,7 @@ public class CommercePricingClassDisplayContext
 						LanguageUtil.get(
 							commercePricingRequestHelper.getRequest(),
 							"add-product-group"));
-					dropdownItem.setTarget(
-						ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL);
+					dropdownItem.setTarget("modal");
 				});
 		}
 

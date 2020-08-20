@@ -31,6 +31,7 @@ import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.taglib.clay.internal.data.DefaultFilterImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -77,8 +78,6 @@ public class CommerceProductInstanceDataSetDataProvider
 
 		List<Sku> skus = new ArrayList<>();
 
-		DefaultFilterImpl defaultFilterImpl = (DefaultFilterImpl)filter;
-
 		long cpDefinitionId = ParamUtil.getLong(
 			httpServletRequest, "cpDefinitionId");
 
@@ -88,7 +87,7 @@ public class CommerceProductInstanceDataSetDataProvider
 
 		List<CPInstance> cpInstances = _getCPInstances(
 			_portal.getCompanyId(httpServletRequest), cpDefinitionId,
-			defaultFilterImpl.getKeywords(), pagination.getStartPosition(),
+			filter.getKeywords(), pagination.getStartPosition(),
 			pagination.getEndPosition(), sort);
 
 		for (CPInstance cpInstance : cpInstances) {
@@ -139,9 +138,7 @@ public class CommerceProductInstanceDataSetDataProvider
 			HttpServletRequest httpServletRequest, Filter filter)
 		throws PortalException {
 
-		DefaultFilterImpl defaultFilterImpl = (DefaultFilterImpl)filter;
-
-		String keywords = defaultFilterImpl.getKeywords();
+		String keywords = filter.getKeywords();
 
 		long cpDefinitionId = ParamUtil.getLong(
 			httpServletRequest, "cpDefinitionId");

@@ -93,9 +93,7 @@ public class CommerceNotificationQueueEntriesDisplayContext {
 					LanguageUtil.get(
 						_commerceNotificationsRequestHelper.getRequest(),
 						"add-notification-template"));
-				dropdownItem.setTarget(
-					ClayCreationMenuActionItem.
-						CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
+				dropdownItem.setTarget("sidePanel");
 			}
 		).build();
 	}

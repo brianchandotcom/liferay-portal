@@ -141,8 +141,7 @@ public abstract class BaseCommercePriceListDisplayContext
 				null);
 
 		if (sidePanel) {
-			clayDataSetActionDropdownItem.setTarget(
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
+			clayDataSetActionDropdownItem.setTarget("sidePanel");
 		}
 
 		clayDataSetActionDropdownItems.add(clayDataSetActionDropdownItem);
@@ -151,8 +150,7 @@ public abstract class BaseCommercePriceListDisplayContext
 			new ClayDataSetActionDropdownItem(
 				null, "trash", "delete",
 				LanguageUtil.get(httpServletRequest, "delete"), "delete",
-				"delete",
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
+				"delete", "headless"));
 
 		return clayDataSetActionDropdownItems;
 	}

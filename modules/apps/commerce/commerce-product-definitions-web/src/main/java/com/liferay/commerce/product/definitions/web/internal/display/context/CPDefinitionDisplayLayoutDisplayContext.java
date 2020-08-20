@@ -127,9 +127,7 @@ public class CPDefinitionDisplayLayoutDisplayContext
 				dropdownItem.setHref(getAddProductDisplayPageURL());
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "add-display-layout"));
-				dropdownItem.setTarget(
-					ClayCreationMenuActionItem.
-						CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
+				dropdownItem.setTarget("sidePanel");
 			}
 		).build();
 	}

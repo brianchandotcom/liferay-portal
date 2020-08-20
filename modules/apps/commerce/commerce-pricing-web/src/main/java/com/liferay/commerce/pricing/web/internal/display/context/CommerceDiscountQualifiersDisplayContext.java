@@ -103,8 +103,7 @@ public class CommerceDiscountQualifiersDisplayContext
 			new ClayDataSetActionDropdownItem(
 				null, "trash", "remove",
 				LanguageUtil.get(httpServletRequest, "remove"), "delete",
-				"delete",
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
+				"delete", "headless"));
 
 		return clayDataSetActionDropdownItems;
 	}

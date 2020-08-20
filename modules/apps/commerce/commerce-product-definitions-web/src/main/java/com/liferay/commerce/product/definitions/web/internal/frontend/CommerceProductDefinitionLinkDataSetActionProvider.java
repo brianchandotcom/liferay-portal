@@ -20,7 +20,9 @@ import com.liferay.commerce.product.definitions.web.internal.security.permission
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
-import com.liferay.petra.string.StringPool;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -29,13 +31,11 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -60,11 +60,9 @@ public class CommerceProductDefinitionLinkDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
+	public List<DropdownItem> getDropdownItems(
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
-
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
 
 		ProductLink productLink = (ProductLink)model;
 
@@ -72,38 +70,31 @@ public class CommerceProductDefinitionLinkDataSetActionProvider
 			_cpDefinitionLinkService.getCPDefinitionLink(
 				productLink.getCPDefinitionLinkId());
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (CommerceCatalogPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				cpDefinitionLink.getCPDefinition(), ActionKeys.UPDATE)) {
-
-			PortletURL editURL = _getProductLinkEditURL(
-				cpDefinitionLink, httpServletRequest);
-
-			ClayDataSetAction editClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, editURL.toString(), StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "edit"), StringPool.BLANK,
-				false, false);
-
-			editClayDataSetAction.setTarget("modal");
-
-			clayDataSetActions.add(editClayDataSetAction);
-
-			PortletURL deleteURL = _getProductLinkDeleteURL(
-				cpDefinitionLink, httpServletRequest);
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, deleteURL.toString(), StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "delete"),
-				StringPool.BLANK, false, false);
-
-			clayDataSetActions.add(deleteClayDataSetAction);
-		}
-
-		return clayDataSetActions;
+		return DropdownItemListBuilder.add(
+			() -> CommerceCatalogPermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				cpDefinitionLink.getCPDefinition(), ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getProductLinkEditURL(
+						cpDefinitionLink, httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "edit"));
+				dropdownItem.setTarget("modal");
+			}
+		).add(
+			() -> CommerceCatalogPermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				cpDefinitionLink.getCPDefinition(), ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getProductLinkDeleteURL(
+						cpDefinitionLink, httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+				dropdownItem.setTarget("modal");
+			}
+		).build();
 	}
 
 	private PortletURL _getProductLinkDeleteURL(

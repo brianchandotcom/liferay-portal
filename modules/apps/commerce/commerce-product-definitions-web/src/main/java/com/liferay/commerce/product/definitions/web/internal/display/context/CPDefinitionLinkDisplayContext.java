@@ -105,8 +105,7 @@ public class CPDefinitionLinkDisplayContext
 					dropdownItem.setLabel(
 						LanguageUtil.format(
 							httpServletRequest, "add-x-product", type, true));
-					dropdownItem.setTarget(
-						ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_EVENT);
+					dropdownItem.setTarget("event");
 				});
 		}
 

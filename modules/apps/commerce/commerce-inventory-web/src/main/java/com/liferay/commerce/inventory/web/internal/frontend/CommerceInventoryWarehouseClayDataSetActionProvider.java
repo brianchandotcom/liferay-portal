@@ -19,7 +19,9 @@ import static com.liferay.portal.kernel.security.permission.PermissionThreadLoca
 import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.web.internal.model.Warehouse;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.petra.string.StringPool;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -34,7 +36,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -60,43 +61,38 @@ public class CommerceInventoryWarehouseClayDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
+	public List<DropdownItem> getDropdownItems(
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
 
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
-
 		Warehouse warehouse = (Warehouse)model;
 
-		if (PortalPermissionUtil.contains(
+		return DropdownItemListBuilder.add(
+			() -> PortalPermissionUtil.contains(
 				getPermissionChecker(),
-				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
-
-			ClayDataSetAction editClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK,
-				_getWarehouseEditURL(
-					warehouse.getCommerceInventoryWarehouseItemId(),
-					httpServletRequest),
-				StringPool.BLANK, LanguageUtil.get(httpServletRequest, "edit"),
-				null, false, false);
-
-			editClayDataSetAction.setTarget("sidePanel");
-
-			clayDataSetActions.add(editClayDataSetAction);
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK,
-				_getWarehouseDeleteURL(
-					warehouse.getCommerceInventoryWarehouseItemId(),
-					httpServletRequest),
-				StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "delete"),
-				StringPool.BLANK, false, false);
-
-			clayDataSetActions.add(deleteClayDataSetAction);
-		}
-
-		return clayDataSetActions;
+				CommerceInventoryActionKeys.MANAGE_INVENTORY),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getWarehouseEditURL(
+						warehouse.getCommerceInventoryWarehouseItemId(),
+						httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "edit"));
+				dropdownItem.setTarget("sidePanel");
+			}
+		).add(
+			() -> PortalPermissionUtil.contains(
+				getPermissionChecker(),
+				CommerceInventoryActionKeys.MANAGE_INVENTORY),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getWarehouseDeleteURL(
+						warehouse.getCommerceInventoryWarehouseItemId(),
+						httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+			}
+		).build();
 	}
 
 	private String _getWarehouseDeleteURL(

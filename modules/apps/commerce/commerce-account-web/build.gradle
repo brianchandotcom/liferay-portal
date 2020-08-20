@@ -18,4 +18,5 @@ dependencies {
 	compileOnly project(":apps:users-admin:users-admin-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
+	compileOnly project(":core:petra:petra-function")
 }

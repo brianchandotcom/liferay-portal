@@ -22,6 +22,7 @@ import com.liferay.commerce.pricing.web.internal.model.PricingClass;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.frontend.taglib.clay.internal.data.DefaultFilterImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -59,8 +60,6 @@ public class CommercePricingClassDataSetDataProvider
 			Pagination pagination, Sort sort)
 		throws PortalException {
 
-		DefaultFilterImpl defaultFilterImpl = (DefaultFilterImpl)filter;
-
 		List<PricingClass> pricingClasses = new ArrayList<>();
 
 		ThemeDisplay themeDisplay =
@@ -75,7 +74,7 @@ public class CommercePricingClassDataSetDataProvider
 
 		List<CommercePricingClass> commercePricingClasses =
 			_getCommercePricingClasses(
-				companyId, defaultFilterImpl.getKeywords(),
+				companyId, filter.getKeywords(),
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				sort);
 
@@ -105,9 +104,7 @@ public class CommercePricingClassDataSetDataProvider
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		DefaultFilterImpl defaultFilterImpl = (DefaultFilterImpl)filter;
-
-		String keywords = defaultFilterImpl.getKeywords();
+		String keywords = filter.getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
 			BaseModelSearchResult<CommercePricingClass> baseModelSearchResult =

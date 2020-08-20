@@ -137,8 +137,7 @@ public class CPDefinitionsDisplayContext
 					LanguageUtil.format(
 						httpServletRequest, "add-account-group-relation-to-x",
 						cpDefinitionName));
-				dropdownItem.setTarget(
-					ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_EVENT);
+				dropdownItem.setTarget("event");
 			}
 		).build();
 	}
@@ -187,8 +186,7 @@ public class CPDefinitionsDisplayContext
 					LanguageUtil.format(
 						httpServletRequest, "add-channel-relation-to-x",
 						cpDefinitionName));
-				dropdownItem.setTarget(
-					ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_EVENT);
+				dropdownItem.setTarget("event");
 			}
 		).build();
 	}
@@ -225,31 +223,6 @@ public class CPDefinitionsDisplayContext
 				"delete", "async"));
 
 		return clayDataSetActionDropdownItems;
-	}
-
-	public List<DropdownItem> getDropdownItems() throws Exception {
-		List<DropdownItem> dropdownItems = new ArrayList<>();
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			cpRequestHelper.getRenderRequest(), cpRequestHelper.getPortletId(),
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "duplicateCPDefinition");
-		portletURL.setParameter(
-			"cpDefinitionId",
-			ParamUtil.getString(httpServletRequest, "cpDefinitionId"));
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		DropdownItem dropdownItem = new DropdownItem();
-
-		dropdownItem.setHref(portletURL.toString());
-		dropdownItem.setLabel(LanguageUtil.get(httpServletRequest, "duplicate"));
-		dropdownItem.setTarget(ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL);
-
-		dropdownItems.add(dropdownItem);
-
-		return dropdownItems;
 	}
 
 	public long[] getCommerceAccountGroupRelCommerceAccountGroupIds()
@@ -326,12 +299,37 @@ public class CPDefinitionsDisplayContext
 					dropdownItem.setHref(renderURL.toString());
 					dropdownItem.setLabel(
 						cpType.getLabel(cpRequestHelper.getLocale()));
-					dropdownItem.setTarget(
-						ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL);
+					dropdownItem.setTarget("modal");
 				});
 		}
 
 		return creationMenu;
+	}
+
+	public List<DropdownItem> getDropdownItems() throws Exception {
+		List<DropdownItem> dropdownItems = new ArrayList<>();
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			cpRequestHelper.getRenderRequest(), cpRequestHelper.getPortletId(),
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "duplicateCPDefinition");
+		portletURL.setParameter(
+			"cpDefinitionId",
+			ParamUtil.getString(httpServletRequest, "cpDefinitionId"));
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		DropdownItem dropdownItem = new DropdownItem();
+
+		dropdownItem.setHref(portletURL.toString());
+		dropdownItem.setLabel(
+			LanguageUtil.get(httpServletRequest, "duplicate"));
+		dropdownItem.setTarget("modal");
+
+		dropdownItems.add(dropdownItem);
+
+		return dropdownItems;
 	}
 
 	public List<HeaderActionModel> getHeaderActionModels()

@@ -223,9 +223,7 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 					LanguageUtil.get(
 						themeDisplay.getRequest(),
 						"add-shipping-option-setting"));
-				dropdownItem.setTarget(
-					ClayCreationMenuActionItem.
-						CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
+				dropdownItem.setTarget("sidePanel");
 			}
 		).build();
 	}

@@ -22,18 +22,19 @@ import com.liferay.commerce.frontend.model.ShipmentItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.service.CommerceShipmentItemService;
-import com.liferay.petra.string.StringPool;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -59,11 +60,9 @@ public class ProcessingCommerceShipmentItemDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
+	public List<DropdownItem> getDropdownItems(
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
-
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
 
 		ShipmentItem shipmentItem = (ShipmentItem)model;
 
@@ -71,49 +70,38 @@ public class ProcessingCommerceShipmentItemDataSetActionProvider
 			_commerceShipmentItemService.getCommerceShipmentItem(
 				shipmentItem.getShipmentItemId());
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
 		CommerceShipment commerceShipment =
 			commerceShipmentItem.getCommerceShipment();
 
-		if (PortalPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS)) {
-
-			if (commerceShipment.getStatus() ==
-					CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING) {
-
-				ClayDataSetAction editClayDataSetAction = new ClayDataSetAction(
-					StringPool.BLANK,
+		return DropdownItemListBuilder.add(
+			() ->
+				PortalPermissionUtil.contains(
+					permissionChecker,
+					CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS) &&
+				(commerceShipment.getStatus() ==
+					CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING),
+			dropdownItem -> {
+				dropdownItem.setHref(
 					_getShipmentItemEditURL(
-						commerceShipmentItem, httpServletRequest),
-					StringPool.BLANK,
-					LanguageUtil.get(httpServletRequest, "edit"),
-					StringPool.BLANK, false, false);
-
-				editClayDataSetAction.setTarget(
-					ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
-
-				clayDataSetActions.add(editClayDataSetAction);
+						commerceShipmentItem, httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "edit"));
 			}
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK,
-				_getShipmentItemDeleteURL(
-					shipmentItem.getShipmentItemId(), httpServletRequest),
-				StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "delete"),
-				StringPool.BLANK, false, false);
-
-			deleteClayDataSetAction.setTarget(
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL);
-
-			clayDataSetActions.add(deleteClayDataSetAction);
-		}
-
-		return clayDataSetActions;
+		).add(
+			() -> PortalPermissionUtil.contains(
+				permissionChecker,
+				CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getShipmentItemDeleteURL(
+						shipmentItem.getShipmentItemId(), httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+			}
+		).build();
 	}
 
 	private String _getShipmentItemDeleteURL(

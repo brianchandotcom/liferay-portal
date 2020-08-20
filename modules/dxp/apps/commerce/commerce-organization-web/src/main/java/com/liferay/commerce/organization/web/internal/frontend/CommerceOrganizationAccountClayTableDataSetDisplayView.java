@@ -24,12 +24,15 @@ import com.liferay.commerce.organization.web.internal.servlet.taglib.ui.constant
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,6 +43,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -77,47 +81,6 @@ public class CommerceOrganizationAccountClayTableDataSetDisplayView
 	public static final String NAME = "commerceOrganizationAccounts";
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
-		throws PortalException {
-
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		long organizationId = ParamUtil.getLong(
-			httpServletRequest, "organizationId");
-
-		if (OrganizationPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), organizationId,
-				ActionKeys.UPDATE)) {
-
-			Account account = (Account)model;
-
-			StringBundler sb = new StringBundler(7);
-
-			sb.append("javascript:deleteCommerceOrganizationAccount");
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(StringPool.APOSTROPHE);
-			sb.append(account.getAccountId());
-			sb.append(StringPool.APOSTROPHE);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-			sb.append(StringPool.SEMICOLON);
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, sb.toString(), StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "delete"), null, false,
-				false);
-
-			clayDataSetActions.add(deleteClayDataSetAction);
-		}
-
-		return clayDataSetActions;
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
@@ -126,6 +89,38 @@ public class CommerceOrganizationAccountClayTableDataSetDisplayView
 		clayTableSchemaBuilder.addClayTableSchemaField("path", "path");
 
 		return clayTableSchemaBuilder.build();
+	}
+
+	@Override
+	public List<DropdownItem> getDropdownItems(
+			HttpServletRequest httpServletRequest, long groupId, Object model)
+		throws PortalException {
+
+		long organizationId = ParamUtil.getLong(
+			httpServletRequest, "organizationId");
+
+		return DropdownItemListBuilder.add(
+			() -> OrganizationPermissionUtil.contains(
+				PermissionThreadLocal.getPermissionChecker(), organizationId,
+				ActionKeys.UPDATE),
+			dropdownItem -> {
+				Account account = (Account)model;
+
+				StringBundler sb = new StringBundler(7);
+
+				sb.append("javascript:deleteCommerceOrganizationAccount");
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(StringPool.APOSTROPHE);
+				sb.append(account.getAccountId());
+				sb.append(StringPool.APOSTROPHE);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+				sb.append(StringPool.SEMICOLON);
+
+				dropdownItem.setHref(sb.toString());
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+			}
+		).build();
 	}
 
 	@Override

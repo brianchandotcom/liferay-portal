@@ -281,9 +281,7 @@ public class CommercePriceListDisplayContext
 			new ClayDataSetActionDropdownItem(
 				_getManagePriceListPermissionsURL(), null, "permissions",
 				LanguageUtil.get(httpServletRequest, "permissions"), "get",
-				"permissions",
-				ClayMenuActionItem.
-					CLAY_MENU_ACTION_ITEM_TARGET_MODAL_PERMISSIONS));
+				"permissions", "modal-permissions"));
 
 		return clayDataSetActionDropdownItems;
 	}
@@ -300,9 +298,7 @@ public class CommercePriceListDisplayContext
 						LanguageUtil.get(
 							httpServletRequest, "create-new-price-list"));
 					dropdownItem.setHref(getAddCommercePriceListRenderURL());
-					dropdownItem.setTarget(
-						ClayMenuActionItem.
-							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+					dropdownItem.setTarget("modal-lg");
 				});
 		}
 
@@ -346,8 +342,7 @@ public class CommercePriceListDisplayContext
 			new ClayDataSetActionDropdownItem(
 				null, "trash", "delete",
 				LanguageUtil.get(httpServletRequest, "delete"), "delete",
-				"delete",
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
+				"delete", "headless"));
 
 		return clayDataSetActionDropdownItems;
 	}
@@ -369,8 +364,7 @@ public class CommercePriceListDisplayContext
 			new ClayDataSetActionDropdownItem(
 				null, "trash", "delete",
 				LanguageUtil.get(httpServletRequest, "delete"), "delete",
-				"delete",
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
+				"delete", "headless"));
 
 		return clayDataSetActionDropdownItem;
 	}
@@ -386,8 +380,7 @@ public class CommercePriceListDisplayContext
 			new ClayDataSetActionDropdownItem(
 				null, "trash", "delete",
 				LanguageUtil.get(httpServletRequest, "delete"), "delete",
-				"delete",
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
+				"delete", "headless"));
 
 		return clayDataSetActionDropdownItems;
 	}
@@ -411,9 +404,7 @@ public class CommercePriceListDisplayContext
 							httpServletRequest, "add-price-modifier"));
 					dropdownItem.setHref(
 						getAddCommercePriceModifierRenderURL());
-					dropdownItem.setTarget(
-						ClayMenuActionItem.
-							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+					dropdownItem.setTarget("modal-lg");
 				});
 		}
 

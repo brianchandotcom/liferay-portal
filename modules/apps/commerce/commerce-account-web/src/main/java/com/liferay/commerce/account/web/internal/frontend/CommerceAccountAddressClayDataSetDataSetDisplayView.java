@@ -23,24 +23,28 @@ import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,58 +73,6 @@ public class CommerceAccountAddressClayDataSetDataSetDisplayView
 	public static final String NAME = "commerceAccountAddresses";
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		long commerceAccountId = ParamUtil.getLong(
-			httpServletRequest, "commerceAccountId");
-
-		if (!_modelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), commerceAccountId,
-				CommerceAccountActionKeys.MANAGE_ADDRESSES)) {
-
-			return Collections.emptyList();
-		}
-
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
-
-		Address address = (Address)model;
-
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("deleteCommerceAddress");
-		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(StringPool.APOSTROPHE);
-		sb.append(address.getAddressId());
-		sb.append(StringPool.APOSTROPHE);
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-		sb.append(StringPool.SEMICOLON);
-
-		ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-			StringPool.BLANK, StringPool.POUND, StringPool.BLANK,
-			LanguageUtil.get(httpServletRequest, "delete"), sb.toString(),
-			false, false);
-
-		clayDataSetActions.add(deleteClayDataSetAction);
-
-		sb.setStringAt("editCommerceAddress", 0);
-
-		ClayDataSetAction editClayDataSetAction = new ClayDataSetAction(
-			StringPool.BLANK, StringPool.POUND, StringPool.BLANK,
-			LanguageUtil.get(httpServletRequest, "edit"), sb.toString(), false,
-			false);
-
-		clayDataSetActions.add(editClayDataSetAction);
-
-		return clayDataSetActions;
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
@@ -131,6 +83,60 @@ public class CommerceAccountAddressClayDataSetDataSetDisplayView
 		clayTableSchemaBuilder.addClayTableSchemaField("phoneNumber", "phone");
 
 		return clayTableSchemaBuilder.build();
+	}
+
+	@Override
+	public List<DropdownItem> getDropdownItems(
+			HttpServletRequest httpServletRequest, long groupId, Object model)
+		throws PortalException {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		long commerceAccountId = ParamUtil.getLong(
+			httpServletRequest, "commerceAccountId");
+
+		Address address = (Address)model;
+
+		return DropdownItemListBuilder.add(
+			() -> _modelResourcePermission.contains(
+				permissionChecker, commerceAccountId,
+				CommerceAccountActionKeys.MANAGE_ADDRESSES),
+			dropdownItem -> {
+				StringBundler sb = new StringBundler(7);
+
+				sb.append("javascript:deleteCommerceAddress");
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(StringPool.APOSTROPHE);
+				sb.append(address.getAddressId());
+				sb.append(StringPool.APOSTROPHE);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+				sb.append(StringPool.SEMICOLON);
+
+				dropdownItem.setHref(sb.toString());
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+			}
+		).add(
+			() -> _modelResourcePermission.contains(
+				permissionChecker, commerceAccountId,
+				CommerceAccountActionKeys.MANAGE_ADDRESSES),
+			dropdownItem -> {
+				StringBundler sb = new StringBundler(7);
+
+				sb.append("javascript:editCommerceAddress");
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(StringPool.APOSTROPHE);
+				sb.append(address.getAddressId());
+				sb.append(StringPool.APOSTROPHE);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+				sb.append(StringPool.SEMICOLON);
+
+				dropdownItem.setHref(sb.toString());
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "edit"));
+			}
+		).build();
 	}
 
 	@Override

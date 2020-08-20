@@ -153,8 +153,7 @@ public class CPAttachmentFileEntriesDisplayContext
 			dropdownItem -> {
 				dropdownItem.setHref(portletURL.toString());
 				dropdownItem.setLabel(_getTypeLabel(type));
-				dropdownItem.setTarget(
-					ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
+				dropdownItem.setTarget("sidePanel");
 			}
 		).build();
 	}

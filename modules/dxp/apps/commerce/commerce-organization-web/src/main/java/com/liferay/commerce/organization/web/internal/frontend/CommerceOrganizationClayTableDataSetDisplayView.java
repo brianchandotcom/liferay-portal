@@ -17,12 +17,15 @@ package com.liferay.commerce.organization.web.internal.frontend;
 import com.liferay.commerce.organization.web.internal.model.Organization;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -34,6 +37,7 @@ import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
@@ -75,72 +79,6 @@ public class CommerceOrganizationClayTableDataSetDisplayView
 	public static final String NAME = "commerceOrganizations";
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
-		throws PortalException {
-
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
-
-		Organization organization = (Organization)model;
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (OrganizationPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				organization.getOrganizationId(), ActionKeys.VIEW)) {
-
-			String viewURL = _getViewOrganizationDetailURL(
-				organization.getOrganizationId(), httpServletRequest);
-
-			ClayDataSetAction viewClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, viewURL, StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "view-detail"), null,
-				false, false);
-
-			clayDataSetActions.add(viewClayDataSetAction);
-
-			String viewSuborganizationsURL =
-				_getOrganizationViewSuborganizationsURL(
-					organization.getOrganizationId(), httpServletRequest);
-
-			ClayDataSetAction viewSuborganizationsClayDataSetAction =
-				new ClayDataSetAction(
-					StringPool.BLANK, viewSuborganizationsURL, StringPool.BLANK,
-					LanguageUtil.get(
-						httpServletRequest, "view-suborganizations"),
-					null, false, false);
-
-			clayDataSetActions.add(viewSuborganizationsClayDataSetAction);
-		}
-
-		if (OrganizationPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				organization.getOrganizationId(), ActionKeys.DELETE)) {
-
-			StringBundler sb = new StringBundler(7);
-
-			sb.append("javascript:deleteCommerceOrganization");
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(StringPool.APOSTROPHE);
-			sb.append(organization.getOrganizationId());
-			sb.append(StringPool.APOSTROPHE);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-			sb.append(StringPool.SEMICOLON);
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, sb.toString(), StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "delete"), null, false,
-				false);
-
-			clayDataSetActions.add(deleteClayDataSetAction);
-		}
-
-		return clayDataSetActions;
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
@@ -149,6 +87,58 @@ public class CommerceOrganizationClayTableDataSetDisplayView
 		clayTableSchemaBuilder.addClayTableSchemaField("path", "path");
 
 		return clayTableSchemaBuilder.build();
+	}
+
+	@Override
+	public List<DropdownItem> getDropdownItems(
+			HttpServletRequest httpServletRequest, long groupId, Object model)
+		throws PortalException {
+
+		Organization organization = (Organization)model;
+
+		return DropdownItemListBuilder.add(
+			() -> OrganizationPermissionUtil.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				organization.getOrganizationId(), ActionKeys.VIEW),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getViewOrganizationDetailURL(
+						organization.getOrganizationId(), httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "view-detail"));
+			}
+		).add(
+			() -> OrganizationPermissionUtil.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				organization.getOrganizationId(), ActionKeys.VIEW),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getOrganizationViewSuborganizationsURL(
+						organization.getOrganizationId(), httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						httpServletRequest, "view-suborganizations"));
+			}
+		).add(
+			() -> OrganizationPermissionUtil.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				organization.getOrganizationId(), ActionKeys.DELETE),
+			dropdownItem -> {
+				StringBundler sb = new StringBundler(7);
+
+				sb.append("javascript:deleteCommerceOrganization");
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(StringPool.APOSTROPHE);
+				sb.append(organization.getOrganizationId());
+				sb.append(StringPool.APOSTROPHE);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+				sb.append(StringPool.SEMICOLON);
+
+				dropdownItem.setHref(sb.toString());
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+			}
+		).build();
 	}
 
 	@Override

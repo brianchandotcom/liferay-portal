@@ -17,12 +17,15 @@ package com.liferay.commerce.organization.web.internal.frontend;
 import com.liferay.commerce.organization.web.internal.model.User;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,6 +39,7 @@ import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
@@ -78,60 +82,6 @@ public class CommerceOrganizationUserClayTableDataSetDisplayView
 	public static final String NAME = "commerceOrganizationUsers";
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
-		throws PortalException {
-
-		List<ClayDataSetAction> clayTableActions = new ArrayList<>();
-
-		User user = (User)model;
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (OrganizationPermissionUtil.contains(
-				permissionChecker, user.getOrganizationId(), ActionKeys.VIEW)) {
-
-			String viewURL = _getOrganizationUserViewDetailURL(
-				user.getUserId(), httpServletRequest);
-
-			ClayDataSetAction viewClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, viewURL, StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "view"), null, false,
-				false);
-
-			clayTableActions.add(viewClayDataSetAction);
-		}
-
-		if (permissionChecker.isCompanyAdmin() ||
-			(user.getUserId() != themeDisplay.getUserId())) {
-
-			StringBundler sb = new StringBundler(7);
-
-			sb.append("javascript:deleteCommerceOrganizationUser");
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(StringPool.APOSTROPHE);
-			sb.append(user.getUserId());
-			sb.append(StringPool.APOSTROPHE);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-			sb.append(StringPool.SEMICOLON);
-
-			ClayDataSetAction clayTableAction = new ClayDataSetAction(
-				StringPool.BLANK, sb.toString(), StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "delete"), null, false,
-				false);
-
-			clayTableActions.add(clayTableAction);
-		}
-
-		return clayTableActions;
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
@@ -143,6 +93,48 @@ public class CommerceOrganizationUserClayTableDataSetDisplayView
 		clayTableSchemaBuilder.addClayTableSchemaField("email", "email");
 
 		return clayTableSchemaBuilder.build();
+	}
+
+	@Override
+	public List<DropdownItem> getDropdownItems(
+			HttpServletRequest httpServletRequest, long groupId, Object model)
+		throws PortalException {
+
+		User user = (User)model;
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		return DropdownItemListBuilder.add(
+			() -> OrganizationPermissionUtil.contains(
+				permissionChecker, user.getOrganizationId(), ActionKeys.VIEW),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getOrganizationUserViewDetailURL(
+						user.getUserId(), httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "view"));
+			}
+		).add(
+			() ->
+				permissionChecker.isCompanyAdmin() ||
+				(user.getUserId() != permissionChecker.getUserId()),
+			dropdownItem -> {
+				StringBundler sb = new StringBundler(7);
+
+				sb.append("javascript:deleteCommerceOrganizationUser");
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(StringPool.APOSTROPHE);
+				sb.append(user.getUserId());
+				sb.append(StringPool.APOSTROPHE);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+				sb.append(StringPool.SEMICOLON);
+
+				dropdownItem.setHref(sb.toString());
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+			}
+		).build();
 	}
 
 	@Override

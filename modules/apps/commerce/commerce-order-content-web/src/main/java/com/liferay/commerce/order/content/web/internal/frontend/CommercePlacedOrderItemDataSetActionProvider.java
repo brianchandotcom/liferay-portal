@@ -18,15 +18,18 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.frontend.util.CommerceOrderClayTableUtil;
 import com.liferay.commerce.order.content.web.internal.model.OrderItem;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.petra.string.StringPool;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,16 +49,14 @@ public class CommercePlacedOrderItemDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
+	public List<DropdownItem> getDropdownItems(
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
-
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
 
 		OrderItem orderItem = (OrderItem)model;
 
 		if (orderItem.getParentOrderItemId() > 0) {
-			return clayDataSetActions;
+			return Collections.emptyList();
 		}
 
 		ThemeDisplay themeDisplay =
@@ -65,27 +66,19 @@ public class CommercePlacedOrderItemDataSetActionProvider
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			orderItem.getOrderId());
 
-		if (_modelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), commerceOrder,
-				ActionKeys.VIEW)) {
-
-			String viewShipmentURL =
-				CommerceOrderClayTableUtil.getViewShipmentURL(
-					orderItem.getOrderItemId(), themeDisplay);
-
-			ClayDataSetAction viewShipmentsClayDataSetAction =
-				new ClayDataSetAction(
-					StringPool.BLANK, viewShipmentURL, StringPool.BLANK,
-					LanguageUtil.get(httpServletRequest, "shipments"),
-					StringPool.BLANK, false, false);
-
-			viewShipmentsClayDataSetAction.setTarget(
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL);
-
-			clayDataSetActions.add(viewShipmentsClayDataSetAction);
-		}
-
-		return clayDataSetActions;
+		return DropdownItemListBuilder.add(
+			() -> _modelResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), commerceOrder,
+				ActionKeys.VIEW),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					CommerceOrderClayTableUtil.getViewShipmentURL(
+						orderItem.getOrderItemId(), themeDisplay));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "shipments"));
+				dropdownItem.setTarget("modal");
+			}
+		).build();
 	}
 
 	@Reference

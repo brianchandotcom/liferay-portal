@@ -23,6 +23,7 @@ import com.liferay.commerce.product.service.CPDisplayLayoutService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
@@ -30,6 +31,8 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -79,47 +82,6 @@ public class CommerceCategoryDisplayPageClayTable
 	public static final String NAME = "category-display-pages";
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
-		throws PortalException {
-
-		List<ClayDataSetAction> clayTableActions = new ArrayList<>();
-
-		try {
-			CategoryDisplayPage categoryDisplayPage =
-				(CategoryDisplayPage)model;
-
-			ClayDataSetAction editClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK,
-				_getCategoryDisplayPageEditURL(
-					httpServletRequest,
-					categoryDisplayPage.getCategoryDisplayPageId()),
-				StringPool.BLANK, LanguageUtil.get(httpServletRequest, "edit"),
-				null, false, false);
-
-			editClayDataSetAction.setTarget("sidePanel");
-
-			clayTableActions.add(editClayDataSetAction);
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK,
-				_getCategoryDisplayPageDeleteURL(
-					httpServletRequest,
-					categoryDisplayPage.getCategoryDisplayPageId()),
-				StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "delete"), null, false,
-				false);
-
-			clayTableActions.add(deleteClayDataSetAction);
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-		}
-
-		return clayTableActions;
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
@@ -133,6 +95,35 @@ public class CommerceCategoryDisplayPageClayTable
 		clayTableSchemaBuilder.addClayTableSchemaField("layout", "layout");
 
 		return clayTableSchemaBuilder.build();
+	}
+
+	@Override
+	public List<DropdownItem> getDropdownItems(
+			HttpServletRequest httpServletRequest, long groupId, Object model)
+		throws PortalException {
+
+		CategoryDisplayPage categoryDisplayPage = (CategoryDisplayPage)model;
+
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getCategoryDisplayPageEditURL(
+						httpServletRequest,
+						categoryDisplayPage.getCategoryDisplayPageId()));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "edit"));
+				dropdownItem.setTarget("sidePanel");
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getCategoryDisplayPageDeleteURL(
+						httpServletRequest,
+						categoryDisplayPage.getCategoryDisplayPageId()));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+			}
+		).build();
 	}
 
 	@Override

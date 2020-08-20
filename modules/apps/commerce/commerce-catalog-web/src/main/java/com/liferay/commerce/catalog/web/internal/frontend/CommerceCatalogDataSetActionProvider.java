@@ -18,20 +18,21 @@ import com.liferay.commerce.catalog.web.internal.constants.CommerceCatalogDataSe
 import com.liferay.commerce.catalog.web.internal.model.Catalog;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceCatalog;
-import com.liferay.petra.string.StringPool;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -56,76 +57,48 @@ public class CommerceCatalogDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
+	public List<DropdownItem> getDropdownItems(
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
 
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
-
 		Catalog catalog = (Catalog)model;
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
-		if (_commerceCatalogModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), catalog.getCatalogId(),
-				ActionKeys.UPDATE)) {
-
-			PortletURL editURL = _getCatalogEditURL(
-				catalog.getCatalogId(), httpServletRequest);
-
-			ClayDataSetAction editClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, editURL.toString(), StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, Constants.EDIT),
-				StringPool.BLANK, false, false);
-
-			clayDataSetActions.add(editClayDataSetAction);
-		}
-
-		if (_commerceCatalogModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), catalog.getCatalogId(),
-				ActionKeys.PERMISSIONS)) {
-
-			try {
-				PortletURL permissionsURL = _getManageCatalogPermissionsURL(
-					catalog, httpServletRequest);
-
-				ClayDataSetAction permissionsClayDataSetAction =
-					new ClayDataSetAction(
-						StringPool.BLANK, permissionsURL.toString(),
-						StringPool.BLANK,
-						LanguageUtil.get(httpServletRequest, "permissions"),
-						StringPool.BLANK, false, false);
-
-				permissionsClayDataSetAction.setTarget(
-					ClayMenuActionItem.
-						CLAY_MENU_ACTION_ITEM_TARGET_MODAL_PERMISSIONS);
-
-				clayDataSetActions.add(permissionsClayDataSetAction);
+		return DropdownItemListBuilder.add(
+			() -> _commerceCatalogModelResourcePermission.contains(
+				permissionChecker, catalog.getCatalogId(), ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getCatalogEditURL(
+						catalog.getCatalogId(), httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, Constants.EDIT));
 			}
-			catch (Exception exception) {
-				throw new PortalException(exception);
+		).add(
+			() -> _commerceCatalogModelResourcePermission.contains(
+				permissionChecker, catalog.getCatalogId(),
+				ActionKeys.PERMISSIONS),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getManageCatalogPermissionsURL(
+						catalog, httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "permissions"));
+				dropdownItem.setTarget("modal-permissions");
 			}
-		}
-
-		if (_commerceCatalogModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), catalog.getCatalogId(),
-				ActionKeys.DELETE) &&
-			!catalog.isSystem()) {
-
-			PortletURL deleteURL = _getCatalogDeleteURL(
-				catalog.getCatalogId(), httpServletRequest);
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, deleteURL.toString(), StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, Constants.DELETE),
-				StringPool.BLANK, false, false);
-
-			clayDataSetActions.add(deleteClayDataSetAction);
-		}
-
-		return clayDataSetActions;
+		).add(
+			() -> _commerceCatalogModelResourcePermission.contains(
+				permissionChecker, catalog.getCatalogId(), ActionKeys.DELETE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getCatalogDeleteURL(
+						catalog.getCatalogId(), httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, Constants.DELETE));
+			}
+		).build();
 	}
 
 	private PortletURL _getCatalogDeleteURL(

@@ -133,9 +133,7 @@ public class CommercePriceEntryDisplayContext
 					dropdownItem.setLabel(
 						LanguageUtil.get(
 							httpServletRequest, "add-new-price-tier"));
-					dropdownItem.setTarget(
-						ClayMenuActionItem.
-							CLAY_MENU_ACTION_ITEM_TARGET_MODAL_LARGE);
+					dropdownItem.setTarget("modal-lg");
 				});
 		}
 
@@ -170,14 +168,13 @@ public class CommercePriceEntryDisplayContext
 			new ClayDataSetActionDropdownItem(
 				portletURL.toString(), "pencil", "edit",
 				LanguageUtil.get(httpServletRequest, "edit"), "get", null,
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL));
+				"sidePanel"));
 
 		clayDataSetActionDropdownItems.add(
 			new ClayDataSetActionDropdownItem(
 				null, "trash", "remove",
 				LanguageUtil.get(httpServletRequest, "remove"), "delete",
-				"delete",
-				ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_HEADLESS));
+				"delete", "headless"));
 
 		return clayDataSetActionDropdownItems;
 	}

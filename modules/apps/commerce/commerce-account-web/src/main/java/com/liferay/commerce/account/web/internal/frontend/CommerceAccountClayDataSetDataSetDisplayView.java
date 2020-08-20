@@ -27,6 +27,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
@@ -34,6 +35,8 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,6 +47,8 @@ import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -81,81 +86,6 @@ public class CommerceAccountClayDataSetDataSetDisplayView
 	public static final String NAME = "commerceAccounts";
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
-		throws PortalException {
-
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
-
-		Account account = (Account)model;
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (_modelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), account.getAccountId(),
-				ActionKeys.VIEW)) {
-
-			String viewURL = _getAccountViewDetailURL(
-				account.getAccountId(), httpServletRequest);
-
-			ClayDataSetAction clayTableViewAction = new ClayDataSetAction(
-				StringPool.BLANK, viewURL, StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "view"), null, false,
-				false);
-
-			clayDataSetActions.add(clayTableViewAction);
-
-			CommerceContext commerceContext =
-				(CommerceContext)httpServletRequest.getAttribute(
-					CommerceWebKeys.COMMERCE_CONTEXT);
-
-			CommerceAccount currentCommerceAccount =
-				commerceContext.getCommerceAccount();
-
-			if (((currentCommerceAccount == null) ||
-				 (account.getAccountId() !=
-					 currentCommerceAccount.getCommerceAccountId())) &&
-				account.getActive()) {
-
-				ClayDataSetAction clayTableSetActiveAction =
-					new ClayDataSetAction(
-						StringPool.BLANK, StringPool.POUND, StringPool.BLANK,
-						LanguageUtil.get(httpServletRequest, "select"),
-						"setCurrentAccount('" + account.getAccountId() + "')",
-						false, false);
-
-				clayDataSetActions.add(clayTableSetActiveAction);
-			}
-		}
-
-		if (_modelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), account.getAccountId(),
-				ActionKeys.UPDATE)) {
-
-			String toggleActiveJavascript =
-				"toggleActiveCommerceAccount('" + account.getAccountId() + "')";
-
-			ClayDataSetAction clayTableSetActiveAction = new ClayDataSetAction(
-				"commerce-button--good", StringPool.POUND, StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "activate"),
-				toggleActiveJavascript, false, false);
-
-			if (account.getActive()) {
-				clayTableSetActiveAction = new ClayDataSetAction(
-					"commerce-button--bad", StringPool.POUND, StringPool.BLANK,
-					LanguageUtil.get(httpServletRequest, "deactivate"),
-					toggleActiveJavascript, false, false);
-			}
-
-			clayDataSetActions.add(clayTableSetActiveAction);
-		}
-
-		return clayDataSetActions;
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
@@ -178,6 +108,67 @@ public class CommerceAccountClayDataSetDataSetDisplayView
 		statusField.setContentRenderer("label");
 
 		return clayTableSchemaBuilder.build();
+	}
+
+	@Override
+	public List<DropdownItem> getDropdownItems(
+			HttpServletRequest httpServletRequest, long groupId, Object model)
+		throws PortalException {
+
+		Account account = (Account)model;
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		CommerceAccount currentCommerceAccount =
+			commerceContext.getCommerceAccount();
+
+		return DropdownItemListBuilder.add(
+			() -> _modelResourcePermission.contains(
+				permissionChecker, account.getAccountId(), ActionKeys.VIEW),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getAccountViewDetailURL(
+						account.getAccountId(), httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "view"));
+			}
+		).add(
+			() ->
+				_modelResourcePermission.contains(
+					permissionChecker, account.getAccountId(),
+					ActionKeys.VIEW) &&
+				((currentCommerceAccount == null) ||
+				 (account.getAccountId() !=
+					 currentCommerceAccount.getCommerceAccountId())) &&
+				account.getActive(),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					"javascript:setCurrentAccount('" + account.getAccountId() +
+						"')");
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "select"));
+			}
+		).add(
+			() -> _modelResourcePermission.contains(
+				permissionChecker, account.getAccountId(), ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					"javascript:toggleActiveCommerceAccount('" +
+						account.getAccountId() + "')");
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "activate"));
+
+				if (account.getActive()) {
+					dropdownItem.setLabel(
+						LanguageUtil.get(httpServletRequest, "deactivate"));
+				}
+			}
+		).build();
 	}
 
 	@Override

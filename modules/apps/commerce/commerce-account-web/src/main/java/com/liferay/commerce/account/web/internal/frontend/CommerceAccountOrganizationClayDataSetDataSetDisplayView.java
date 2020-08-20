@@ -21,25 +21,26 @@ import com.liferay.commerce.account.service.CommerceAccountOrganizationRelServic
 import com.liferay.commerce.account.web.internal.model.Organization;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,39 +72,6 @@ public class CommerceAccountOrganizationClayDataSetDataSetDisplayView
 	public static final String NAME = "commerceAccountOrganizations";
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
-		throws PortalException {
-
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
-
-		Organization organization = (Organization)model;
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		long commerceAccountId = ParamUtil.getLong(
-			httpServletRequest, "commerceAccountId");
-
-		if (_modelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), commerceAccountId,
-				CommerceAccountActionKeys.MANAGE_ORGANIZATIONS)) {
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, StringPool.POUND, StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "delete"),
-				"deleteCommerceAccountOrganization('" +
-					organization.getOrganizationId() + "')",
-				false, false);
-
-			clayDataSetActions.add(deleteClayDataSetAction);
-		}
-
-		return clayDataSetActions;
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
@@ -112,6 +80,30 @@ public class CommerceAccountOrganizationClayDataSetDataSetDisplayView
 		clayTableSchemaBuilder.addClayTableSchemaField("path", "path");
 
 		return clayTableSchemaBuilder.build();
+	}
+
+	@Override
+	public List<DropdownItem> getDropdownItems(
+			HttpServletRequest httpServletRequest, long groupId, Object model)
+		throws PortalException {
+
+		Organization organization = (Organization)model;
+
+		long commerceAccountId = ParamUtil.getLong(
+			httpServletRequest, "commerceAccountId");
+
+		return DropdownItemListBuilder.add(
+			() -> _modelResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), commerceAccountId,
+				CommerceAccountActionKeys.MANAGE_ORGANIZATIONS),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					"javascript:deleteCommerceAccountOrganization('" +
+						organization.getOrganizationId() + "')");
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+			}
+		).build();
 	}
 
 	@Override

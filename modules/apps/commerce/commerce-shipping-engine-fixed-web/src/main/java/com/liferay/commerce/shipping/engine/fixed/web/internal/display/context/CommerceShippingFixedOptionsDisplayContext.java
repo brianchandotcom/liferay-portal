@@ -113,9 +113,7 @@ public class CommerceShippingFixedOptionsDisplayContext
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						themeDisplay.getLocale(), "add-shipping-option"));
-				dropdownItem.setTarget(
-					ClayCreationMenuActionItem.
-						CLAY_MENU_ACTION_ITEM_TARGET_SIDE_PANEL);
+				dropdownItem.setTarget("sidePanel");
 			}
 		).build();
 	}

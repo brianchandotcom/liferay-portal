@@ -17,7 +17,9 @@ package com.liferay.commerce.order.content.web.internal.frontend;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.model.OrderItem;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.petra.string.StringPool;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -25,7 +27,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,16 +47,14 @@ public class CommercePendingOrderItemDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
+	public List<DropdownItem> getDropdownItems(
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
-
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
 
 		OrderItem orderItem = (OrderItem)model;
 
 		if (orderItem.getParentOrderItemId() > 0) {
-			return clayDataSetActions;
+			return Collections.emptyList();
 		}
 
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
@@ -63,25 +63,20 @@ public class CommercePendingOrderItemDataSetActionProvider
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (_modelResourcePermission.contains(
-				permissionChecker, commerceOrder, ActionKeys.UPDATE) &&
-			commerceOrder.isOpen()) {
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK,
-				_getDeleteCommerceOrderItemURL(orderItem.getOrderItemId()),
-				StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "delete"),
-				StringPool.BLANK, false, false);
-
-			deleteClayDataSetAction.setTarget("async");
-
-			deleteClayDataSetAction.setMethod("delete");
-
-			clayDataSetActions.add(deleteClayDataSetAction);
-		}
-
-		return clayDataSetActions;
+		return DropdownItemListBuilder.add(
+			() ->
+				_modelResourcePermission.contains(
+					permissionChecker, commerceOrder, ActionKeys.UPDATE) &&
+				commerceOrder.isOpen(),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getDeleteCommerceOrderItemURL(orderItem.getOrderItemId()));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+				dropdownItem.setTarget("async");
+				dropdownItem.put("method", "delete");
+			}
+		).build();
 	}
 
 	private String _getDeleteCommerceOrderItemURL(long commerceOrderItemId) {

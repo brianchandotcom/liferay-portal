@@ -20,21 +20,21 @@ import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.commerce.pricing.web.internal.model.DiscountRuleCPDefinition;
-import com.liferay.petra.string.StringPool;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -59,11 +59,9 @@ public class CommerceDiscountRuleCPDefinitionDataSetActionProvider
 	implements ClayDataSetActionProvider {
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
+	public List<DropdownItem> getDropdownItems(
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
-
-		List<ClayDataSetAction> clayDataSetActions = new ArrayList<>();
 
 		DiscountRuleCPDefinition discountRuleCPDefinition =
 			(DiscountRuleCPDefinition)model;
@@ -72,29 +70,21 @@ public class CommerceDiscountRuleCPDefinitionDataSetActionProvider
 			_commerceDiscountRuleService.getCommerceDiscountRule(
 				discountRuleCPDefinition.getDiscountRuleId());
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (_commerceDiscountModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(),
+		return DropdownItemListBuilder.add(
+			() -> _commerceDiscountModelResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
 				commerceDiscountRule.getCommerceDiscountId(),
-				ActionKeys.UPDATE)) {
-
-			PortletURL deleteURL = _getDiscountRuleDeleteCPDefinitionURL(
-				discountRuleCPDefinition.getCPDefinitionId(),
-				discountRuleCPDefinition.getDiscountRuleId(),
-				httpServletRequest);
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK, deleteURL.toString(), StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, Constants.REMOVE),
-				StringPool.BLANK, false, false);
-
-			clayDataSetActions.add(deleteClayDataSetAction);
-		}
-
-		return clayDataSetActions;
+				ActionKeys.UPDATE),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getDiscountRuleDeleteCPDefinitionURL(
+						discountRuleCPDefinition.getCPDefinitionId(),
+						discountRuleCPDefinition.getDiscountRuleId(),
+						httpServletRequest));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, Constants.REMOVE));
+			}
+		).build();
 	}
 
 	private PortletURL _getDiscountRuleDeleteCPDefinitionURL(

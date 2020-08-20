@@ -26,6 +26,7 @@ import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedO
 import com.liferay.commerce.shipping.engine.fixed.web.internal.model.ShippingFixedOptionSetting;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
@@ -33,6 +34,8 @@ import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -81,49 +84,6 @@ public class CommerceShippingFixedOptionSettingClayTable
 	public static final String NAME = "shipping-fixed-option-settings";
 
 	@Override
-	public List<ClayDataSetAction> clayDataSetActions(
-			HttpServletRequest httpServletRequest, long groupId, Object model)
-		throws PortalException {
-
-		List<ClayDataSetAction> clayTableActions = new ArrayList<>();
-
-		try {
-			ShippingFixedOptionSetting shippingFixedOptionSetting =
-				(ShippingFixedOptionSetting)model;
-
-			ClayDataSetAction editClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK,
-				_getShippingFixedOptionSettingEditURL(
-					httpServletRequest,
-					shippingFixedOptionSetting.
-						getShippingFixedOptionSettingId()),
-				StringPool.BLANK, LanguageUtil.get(httpServletRequest, "edit"),
-				null, false, false);
-
-			editClayDataSetAction.setTarget("sidePanel");
-
-			clayTableActions.add(editClayDataSetAction);
-
-			ClayDataSetAction deleteClayDataSetAction = new ClayDataSetAction(
-				StringPool.BLANK,
-				_getShippingFixedOptionSettingDeleteURL(
-					httpServletRequest,
-					shippingFixedOptionSetting.
-						getShippingFixedOptionSettingId()),
-				StringPool.BLANK,
-				LanguageUtil.get(httpServletRequest, "delete"), null, false,
-				false);
-
-			clayTableActions.add(deleteClayDataSetAction);
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-		}
-
-		return clayTableActions;
-	}
-
-	@Override
 	public ClayTableSchema getClayTableSchema() {
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
@@ -147,6 +107,38 @@ public class CommerceShippingFixedOptionSettingClayTable
 		clayTableSchemaBuilder.addClayTableSchemaField("zip", "zip");
 
 		return clayTableSchemaBuilder.build();
+	}
+
+	@Override
+	public List<DropdownItem> getDropdownItems(
+			HttpServletRequest httpServletRequest, long groupId, Object model)
+		throws PortalException {
+
+		ShippingFixedOptionSetting shippingFixedOptionSetting =
+			(ShippingFixedOptionSetting)model;
+
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getShippingFixedOptionSettingEditURL(
+						httpServletRequest,
+						shippingFixedOptionSetting.
+							getShippingFixedOptionSettingId()));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "edit"));
+				dropdownItem.setTarget("sidePanel");
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getShippingFixedOptionSettingDeleteURL(
+						httpServletRequest,
+						shippingFixedOptionSetting.
+							getShippingFixedOptionSettingId()));
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "delete"));
+			}
+		).build();
 	}
 
 	@Override

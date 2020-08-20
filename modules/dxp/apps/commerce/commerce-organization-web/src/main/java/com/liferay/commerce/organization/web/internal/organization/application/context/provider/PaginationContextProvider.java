@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.organization.web.internal.organization.application.context.provider;
 
+import com.liferay.commerce.organization.web.internal.pagination.PaginationImpl;
+import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.servlet.http.HttpServletRequest;

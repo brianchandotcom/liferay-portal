@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.organization.web.internal.frontend;
 
+import com.liferay.frontend.taglib.clay.internal.data.DefaultFilterImpl;
+
 /**
  * @author Alessio Antonio Rendina
  */

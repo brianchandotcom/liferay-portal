@@ -120,6 +120,9 @@ function FieldBase({
 			type === 'paragraph' ||
 			type === 'radio');
 
+	const renderLabel =
+		(label && showLabel) || required || tooltip || repeatable;
+
 	return (
 		<ClayTooltipProvider>
 			<div
@@ -168,40 +171,43 @@ function FieldBase({
 					</div>
 				)}
 
-				{((label && showLabel) ||
-					required ||
-					tooltip ||
-					repeatable) && (
+				{renderLabel && (
 					<>
 						{showLegend ? (
-							<legend className="lfr-ddm-legend">
-								{label && showLabel && label}
+							<fieldset>
+								<legend className="lfr-ddm-legend">
+									{label && showLabel && label}
 
-								<FieldProperties
-									required={required}
-									tooltip={tooltip}
-								/>
-							</legend>
+									<FieldProperties
+										required={required}
+										tooltip={tooltip}
+									/>
+								</legend>
+								{children}
+							</fieldset>
 						) : (
-							<label
-								className={classNames({
-									'ddm-empty': !showLabel && !required,
-									'ddm-label': showLabel || required,
-								})}
-								htmlFor={id ? id : name}
-							>
-								{label && showLabel && label}
+							<>
+								<label
+									className={classNames({
+										'ddm-empty': !showLabel && !required,
+										'ddm-label': showLabel || required,
+									})}
+									htmlFor={id ? id : name}
+								>
+									{label && showLabel && label}
 
-								<FieldProperties
-									required={required}
-									tooltip={tooltip}
-								/>
-							</label>
+									<FieldProperties
+										required={required}
+										tooltip={tooltip}
+									/>
+								</label>
+								{children}
+							</>
 						)}
 					</>
 				)}
 
-				{children}
+				{!renderLabel && children}
 
 				{localizedValueArray.length > 0 &&
 					localizedValueArray.map((language) => (

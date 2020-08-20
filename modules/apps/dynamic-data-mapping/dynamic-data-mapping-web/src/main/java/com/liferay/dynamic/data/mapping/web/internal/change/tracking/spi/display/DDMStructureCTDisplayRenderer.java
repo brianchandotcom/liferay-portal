@@ -17,13 +17,10 @@ package com.liferay.dynamic.data.mapping.web.internal.change.tracking.spi.displa
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Truong
@@ -38,9 +35,7 @@ public class DDMStructureCTDisplayRenderer
 	}
 
 	@Override
-	public String getTitle(Locale locale, DDMStructure ddmStructure)
-		throws PortalException {
-
+	public String getTitle(Locale locale, DDMStructure ddmStructure) {
 		return ddmStructure.getName(locale);
 	}
 
@@ -70,8 +65,5 @@ public class DDMStructureCTDisplayRenderer
 			"type", ddmStructure.getType()
 		);
 	}
-
-	@Reference
-	private Language _language;
 
 }

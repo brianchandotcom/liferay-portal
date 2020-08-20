@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.web.internal.change.tracking.spi.displa
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Locale;
 
@@ -36,9 +35,7 @@ public class DDMTemplateCTDisplayRenderer
 	}
 
 	@Override
-	public String getTitle(Locale locale, DDMTemplate ddmTemplate)
-		throws PortalException {
-
+	public String getTitle(Locale locale, DDMTemplate ddmTemplate) {
 		return ddmTemplate.getName(locale);
 	}
 

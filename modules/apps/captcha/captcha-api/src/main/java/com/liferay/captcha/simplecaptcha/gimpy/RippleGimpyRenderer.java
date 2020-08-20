@@ -24,12 +24,11 @@ import java.awt.image.BufferedImageFilter;
 import nl.captcha.gimpy.GimpyRenderer;
 
 /**
- * Copy of nl.captcha.gimpy.RippleGimpyRenderer modified to work with the latest
- * version of com.jhlabs filters.
+ * This modified copy of {@code nl.captcha.gimpy.RippleGimpyRenderer} works with the latest
+ * version of {@code com.jhlabs} filters.
  *
  * @author James Childers
  * @author Jorge Díaz
- * @review
  */
 public class RippleGimpyRenderer implements GimpyRenderer {
 

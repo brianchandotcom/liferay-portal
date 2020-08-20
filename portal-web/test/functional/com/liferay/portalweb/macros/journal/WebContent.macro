@@ -1687,9 +1687,12 @@ definition {
 		}
 
 		if (isSet(webContentHTML)) {
-			AssertTextEquals.assertPartialText(
-				key_editor = "HTML",
-				locator1 = "AlloyEditor#EDITOR",
+			SelectFrame.selectFrameNoLoading(
+				key_fieldLabel = "HTML",
+				locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+			AssertTextEquals(
+				locator1 = "CKEditor#BODY",
 				value1 = "${webContentHTML}");
 
 			SelectFrame(value1 = "relative=top");

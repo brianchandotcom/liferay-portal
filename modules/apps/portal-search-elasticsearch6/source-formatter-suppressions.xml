@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<source-check>
-		<suppress checks="JavaComponentActivateCheck" files="portal-search-elasticsearch6-impl/src/main/java/com/liferay/portal/search/elasticsearch6/internal/index/IndexSynchronizationPortalInitializedListener\.java" />
-	</source-check>
-</suppressions>

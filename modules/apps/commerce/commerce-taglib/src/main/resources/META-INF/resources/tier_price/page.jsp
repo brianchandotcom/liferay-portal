@@ -44,15 +44,21 @@ String tierPriceId = randomNamespace + "tierPrice";
 
 					<%
 					for (CommerceTierPriceEntry commerceTierPriceEntry : commerceTierPriceEntries) {
-						BigDecimal price = commerceTierPriceEntry.getCommercePriceEntry().getPrice();
+						CommercePriceEntry commercePriceEntry = commerceTierPriceEntry.getCommercePriceEntry();
+
+						BigDecimal price = commercePriceEntry.getPrice();
 
 						BigDecimal priceTotal = price.multiply(BigDecimal.valueOf(commerceTierPriceEntry.getMinQuantity()));
 
-						BigDecimal discount = price.subtract(commerceTierPriceEntry.getPrice());
+						BigDecimal commerceTierPriceEntryPrice = commerceTierPriceEntry.getPrice();
 
-						BigDecimal discountPercent = (discount.divide(price, RoundingMode.HALF_EVEN)).multiply(BigDecimal.valueOf(100));
+						BigDecimal discount = price.subtract(commerceTierPriceEntryPrice);
 
-						BigDecimal total = commerceTierPriceEntry.getPrice().multiply(BigDecimal.valueOf(commerceTierPriceEntry.getMinQuantity()));
+						BigDecimal discountPercent = discount.divide(price, RoundingMode.HALF_EVEN);
+
+						discountPercent = discountPercent.multiply(BigDecimal.valueOf(100));
+
+						BigDecimal total = commerceTierPriceEntryPrice.multiply(BigDecimal.valueOf(commerceTierPriceEntry.getMinQuantity()));
 
 						BigDecimal savings = priceTotal.subtract(total);
 					%>

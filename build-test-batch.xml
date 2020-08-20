@@ -197,22 +197,23 @@ lportal_BS
 
 			<property name="database.type" value="@{database.type}" />
 
-			<local name="database.service.executable" />
-
-			<get-database-property property.name="database.service.executable" />
-
 			<local name="database.service.cmd.start" />
-
-			<get-database-property property.name="database.service.cmd.start" />
-
 			<local name="database.service.cmd.stop" />
-
-			<get-database-property property.name="database.service.cmd.stop" />
-
+			<local name="database.service.executable" />
 			<local name="database.version.cmd" />
 
 			<get-database-property property.name="database.version.cmd" />
 
+			<if>
+				<not>
+					<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+				</not>
+				<then>
+					<get-database-property property.name="database.service.executable" />
+					<get-database-property property.name="database.service.cmd.start" />
+					<get-database-property property.name="database.service.cmd.stop" />
+				</then>
+			</if>
 			<action />
 		</sequential>
 	</macrodef>

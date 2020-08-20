@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.data.engine.rest.internal.dto.v2_0.util;
+package com.liferay.data.engine.rest.internal.strategy;
 
+import com.liferay.data.engine.rest.internal.dto.v2_0.util.MapToDDMFormValuesConverterUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;

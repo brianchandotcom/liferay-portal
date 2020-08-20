@@ -22,7 +22,7 @@ ApplicationsMenuDisplayContext applicationsMenuDisplayContext = new Applications
 
 <li class="control-menu-nav-item control-menu-nav-item-separator">
 	<clay:button
-		cssClass="lfr-portal-tooltip"
+		cssClass="btn-menu lfr-portal-tooltip"
 		displayType="unstyled"
 		icon="grid"
 		small="<%= true %>"

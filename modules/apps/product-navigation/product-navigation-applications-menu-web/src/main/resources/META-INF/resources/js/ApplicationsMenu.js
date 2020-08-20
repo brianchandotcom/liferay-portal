@@ -392,7 +392,7 @@ const ApplicationsMenu = ({
 			)}
 
 			<ClayButtonWithIcon
-				className="dropdown-toggle lfr-portal-tooltip"
+				className="btn-menu dropdown-toggle lfr-portal-tooltip"
 				data-qa-id="applicationsMenu"
 				displayType="unstyled"
 				onClick={handleTriggerButtonClick}

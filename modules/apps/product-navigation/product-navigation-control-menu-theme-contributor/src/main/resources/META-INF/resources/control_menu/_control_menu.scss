@@ -84,6 +84,12 @@ a.control-menu-icon,
 		}
 	}
 
+	.btn-menu {
+		border: 1px solid $gray-300;
+		border-radius: $border-radius-lg;
+		box-shadow: 0 4px 8px rgba(39, 38, 52, 0.05);
+	}
+
 	> .container-fluid {
 		padding-bottom: $control-menu-level-1-padding - 1px;
 
@@ -94,6 +100,19 @@ a.control-menu-icon,
 
 	.control-menu-level-1-heading {
 		color: $gray-900;
+		line-height: 1.3;
+	}
+
+	.control-menu-level-3-heading {
+		color: $gray-600;
+		font-size: 0.625rem;
+		line-height: 1.1;
+		text-transform: uppercase;
+	}
+
+	&.control-menu li > .control-menu-nav > .control-menu-nav-item-content {
+		display: inline;
+		margin-left: 16px;
 	}
 
 	.toast-animation {

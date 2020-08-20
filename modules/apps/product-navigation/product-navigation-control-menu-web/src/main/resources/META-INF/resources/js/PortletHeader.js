@@ -23,10 +23,12 @@ const PortletHeader = ({apps, category, title}) => {
 				items={apps}
 				trigger={
 					<div>
-						<span className="small">{category}</span>
-						<div>
+						<div className="control-menu-level-3-heading">
+							{category}
+						</div>
+						<div className="control-menu-level-1-heading">
 							<span
-								className="control-menu-level-1-heading inline-item inline-item-before text-truncate"
+								className="inline-item inline-item-before text-truncate"
 								data-qa-id="headerTitle"
 							>
 								{title}

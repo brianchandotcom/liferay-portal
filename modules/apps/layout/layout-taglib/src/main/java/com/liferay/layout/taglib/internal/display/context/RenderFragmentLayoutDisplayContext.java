@@ -543,7 +543,9 @@ public class RenderFragmentLayoutDisplayContext {
 				styledLayoutStructureItem.getBackgroundColor())) {
 
 			styleSB.append("background-color: ");
-			styleSB.append(styledLayoutStructureItem.getBackgroundColor());
+			styleSB.append(
+				getStyleFromStyleBook(
+					styledLayoutStructureItem.getBackgroundColor()));
 			styleSB.append(StringPool.SEMICOLON);
 		}
 
@@ -557,7 +559,9 @@ public class RenderFragmentLayoutDisplayContext {
 
 		if (Validator.isNotNull(styledLayoutStructureItem.getBorderColor())) {
 			styleSB.append("border-color: ");
-			styleSB.append(styledLayoutStructureItem.getBorderColor());
+			styleSB.append(
+				getStyleFromStyleBook(
+					styledLayoutStructureItem.getBorderColor()));
 			styleSB.append(StringPool.SEMICOLON);
 		}
 
@@ -569,13 +573,16 @@ public class RenderFragmentLayoutDisplayContext {
 
 		if (Validator.isNotNull(styledLayoutStructureItem.getFontFamily())) {
 			styleSB.append("font-family: ");
-			styleSB.append(styledLayoutStructureItem.getFontFamily());
+			styleSB.append(
+				getStyleFromStyleBook(
+					styledLayoutStructureItem.getFontFamily()));
 			styleSB.append(StringPool.SEMICOLON);
 		}
 
 		if (Validator.isNotNull(styledLayoutStructureItem.getFontSize())) {
 			styleSB.append("font-size: ");
-			styleSB.append(styledLayoutStructureItem.getFontSize());
+			styleSB.append(
+				getStyleFromStyleBook(styledLayoutStructureItem.getFontSize()));
 			styleSB.append(StringPool.SEMICOLON);
 		}
 
@@ -587,25 +594,31 @@ public class RenderFragmentLayoutDisplayContext {
 
 		if (Validator.isNotNull(styledLayoutStructureItem.getMaxHeight())) {
 			styleSB.append("max-height: ");
-			styleSB.append(styledLayoutStructureItem.getMaxHeight());
+			styleSB.append(
+				getStyleFromStyleBook(
+					styledLayoutStructureItem.getMaxHeight()));
 			styleSB.append(StringPool.SEMICOLON);
 		}
 
 		if (Validator.isNotNull(styledLayoutStructureItem.getMaxWidth())) {
 			styleSB.append("max-width: ");
-			styleSB.append(styledLayoutStructureItem.getMaxWidth());
+			styleSB.append(
+				getStyleFromStyleBook(styledLayoutStructureItem.getMaxWidth()));
 			styleSB.append(StringPool.SEMICOLON);
 		}
 
 		if (Validator.isNotNull(styledLayoutStructureItem.getMinHeight())) {
 			styleSB.append("min-height: ");
-			styleSB.append(styledLayoutStructureItem.getMinHeight());
+			styleSB.append(
+				getStyleFromStyleBook(
+					styledLayoutStructureItem.getMinHeight()));
 			styleSB.append(StringPool.SEMICOLON);
 		}
 
 		if (Validator.isNotNull(styledLayoutStructureItem.getMinWidth())) {
 			styleSB.append("min-width: ");
-			styleSB.append(styledLayoutStructureItem.getMinWidth());
+			styleSB.append(
+				getStyleFromStyleBook(styledLayoutStructureItem.getMinWidth()));
 			styleSB.append(StringPool.SEMICOLON);
 		}
 
@@ -617,13 +630,16 @@ public class RenderFragmentLayoutDisplayContext {
 
 		if (Validator.isNotNull(styledLayoutStructureItem.getOverflow())) {
 			styleSB.append("overflow: ");
-			styleSB.append(styledLayoutStructureItem.getOverflow());
+			styleSB.append(
+				getStyleFromStyleBook(styledLayoutStructureItem.getOverflow()));
 			styleSB.append(StringPool.SEMICOLON);
 		}
 
 		if (Validator.isNotNull(styledLayoutStructureItem.getTextColor())) {
 			styleSB.append("color: ");
-			styleSB.append(styledLayoutStructureItem.getTextColor());
+			styleSB.append(
+				getStyleFromStyleBook(
+					styledLayoutStructureItem.getTextColor()));
 			styleSB.append(StringPool.SEMICOLON);
 		}
 
@@ -634,6 +650,13 @@ public class RenderFragmentLayoutDisplayContext {
 		}
 
 		return styleSB.toString();
+	}
+
+	public String getStyleFromStyleBook(String styleValue) throws Exception {
+		JSONObject frontendTokensValuesJSONObject =
+			_getFrontendTokensJSONObject();
+
+		return frontendTokensValuesJSONObject.getString(styleValue, styleValue);
 	}
 
 	private String _getBackgroundImage(JSONObject rowConfigJSONObject)

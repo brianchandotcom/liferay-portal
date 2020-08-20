@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce BOM Service
 Bundle-SymbolicName: com.liferay.commerce.bom.service
-Bundle-Version: 2.0.18
+Bundle-Version: 3.0.0
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
 Require-Capability:\

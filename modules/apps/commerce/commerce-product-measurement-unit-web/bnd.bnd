@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Product Measurement Unit Web
 Bundle-SymbolicName: com.liferay.commerce.product.measurement.unit.web
-Bundle-Version: 1.0.32
+Bundle-Version: 2.0.0
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\

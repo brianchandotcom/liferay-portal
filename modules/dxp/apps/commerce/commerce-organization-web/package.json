@@ -46,5 +46,5 @@
 		"test_DISABLED": "env TZ=utc liferay-npm-scripts test",
 		"watch": "liferay-npm-scripts webpack --watch"
 	},
-	"version": "2.0.15"
+	"version": "3.0.0"
 }

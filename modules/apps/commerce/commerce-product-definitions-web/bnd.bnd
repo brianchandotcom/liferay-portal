@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Product Definitions Web
 Bundle-SymbolicName: com.liferay.commerce.product.definitions.web
-Bundle-Version: 4.2.10
+Bundle-Version: 5.0.0
 Export-Package:\
 	com.liferay.commerce.product.definitions.web.display.context,\
 	com.liferay.commerce.product.definitions.web.portlet.action,\

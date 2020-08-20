@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Machine Learning Forecast Alert API
 Bundle-SymbolicName: com.liferay.commerce.machine.learning.forecast.alert.api
-Bundle-Version: 2.0.12
+Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.commerce.machine.learning.forecast.alert.constants,\
 	com.liferay.commerce.machine.learning.forecast.alert.exception,\

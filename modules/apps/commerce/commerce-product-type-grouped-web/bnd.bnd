@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Product Type Grouped Web
 Bundle-SymbolicName: com.liferay.commerce.product.type.grouped.web
-Bundle-Version: 1.0.34
+Bundle-Version: 2.0.0
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\

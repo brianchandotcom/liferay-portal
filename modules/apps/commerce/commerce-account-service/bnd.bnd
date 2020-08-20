@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Account Service
 Bundle-SymbolicName: com.liferay.commerce.account.service
-Bundle-Version: 1.0.44
+Bundle-Version: 2.0.0
 Liferay-Require-SchemaVersion: 2.0.0
 Liferay-Service: true
 Provide-Capability:\

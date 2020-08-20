@@ -21,9 +21,9 @@
 			</activation>-->
 			<properties>
 #if (${liferayVersion.startsWith("7.1")})
-				<liferay.bom.version>7.1.3</liferay.bom.version>
+				<liferay.bom.version>7.1.3-1</liferay.bom.version>
 #elseif (${liferayVersion.startsWith("7.2")})
-				<liferay.bom.version>7.2.1</liferay.bom.version>
+				<liferay.bom.version>7.2.1-1</liferay.bom.version>
 #elseif (${liferayVersion.startsWith("7.3")})
 				<liferay.bom.version>7.3.3</liferay.bom.version>
 #end

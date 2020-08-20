@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXAMPLE_TEXT_3</td>
+	<td>//div[@class='showcase-example-usage']/span[@dir='RTL']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILE_NAME_TABLE</td>
 	<td>//table//td[contains(.,'${key_fileName}')]</td>
 	<td></td>
@@ -144,6 +149,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LINK_NAVIGATION</td>
+	<td>//a[contains(.,'To Param page')]|//input[contains(@value,'To Param page')]|//button[contains(.,'To Param page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LINK_NAVIGATION_BACK</td>
+	<td>//a[contains(.,'Back to Navigation with foo=1234')]|//input[contains(@value,'Back to Navigation with foo=1234')]|//button[contains(.,'Back to Navigation with foo=1234')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LINK_PARAMETER_VALUE</td>
+	<td>//pre/span[text()='${attribute}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MODEL_VALUE</td>
 	<td>//span[contains(@id,':modelValue') and contains(.,'${key_attribute}')]</td>
 	<td></td>
@@ -161,6 +181,16 @@
 <tr>
 	<td>NOT_PRIMARY_STYLES_BUTTON</td>
 	<td>//*[contains(@class,'btn')][not (contains(@class,'btn-primary'))][@value='${key_buttonName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OUTPUTLINK_SELECT</td>
+	<td>//select[contains(@id,':selectOneMenuId')]//option[contains(.,'${key_opt}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OUTPUTLINK_VALUE</td>
+	<td>//a[contains(., '${key_attribute}')]</td>
 	<td></td>
 </tr>
 <tr>

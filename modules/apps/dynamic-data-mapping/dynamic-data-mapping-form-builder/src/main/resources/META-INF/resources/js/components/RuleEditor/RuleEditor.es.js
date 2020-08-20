@@ -1218,7 +1218,7 @@ class RuleEditor extends Component {
 			const newCondition = {...condition};
 			const {operands} = newCondition;
 
-			if (operands[1]?.type !== 'field') {
+			if (operands[1] && operands[1].type !== 'field') {
 				const fieldType = this._getFieldType(operands[0].value);
 
 				if (

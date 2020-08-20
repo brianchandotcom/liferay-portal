@@ -1525,6 +1525,8 @@ public class ContentPageEditorDisplayContext {
 						).put(
 							"label", frontendTokenJSONObject.get("label")
 						).put(
+							"name", name
+						).put(
 							"value", value
 						).build());
 				}

@@ -780,6 +780,119 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_CONTENTS_LIST_TITLE");
 	}
 
+	@description = "This is a use case for LPS-112749. When mapping asset field to fragment in Collection Display based on collection with single itemType, the Item Type label will be shown in mapping panel."
+	@priority = "4"
+	test ViewItemTypeLabelMappedInCollectionWithSingleItemType {
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content",
+			groupName = "Test Site Name",
+			title = "Web Content Title");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Test Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document Title",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			groupName = "Test Site Name",
+			itemType = "Web Content Article",
+			title = "First Dynamic Collection");
+
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			groupName = "Test Site Name",
+			itemType = "Blogs Entry",
+			title = "Second Dynamic Collection");
+
+		JSONAssetlist.addManualAssetListEntry(
+			groupName = "Test Site Name",
+			title = "Manual Collection");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+		Click(
+			key_title = "Manual Collection",
+			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
+
+		AssetListsAdmin.configureItemTypeInManualCollection(itemType = "Document");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+		AssetListsAdmin.selectAsset(
+			assetListName = "Manual Collection",
+			assetName = "Document Title",
+			assetType = "Basic Document");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "First Dynamic Collection",
+			fragmentName = "Collection Display");
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Basic Components",
+			entryTitle = "Web Content Title",
+			fragmentName = "Heading");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "true",
+			fragmentName = "Heading",
+			id = "text");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
+			value1 = "You can use mapping to display specific fields of the items in the collection. The fields available depend on the type and subtype common to all items in the collection.");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+			value1 = "Item Type:Web Content Article");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Second Dynamic Collection",
+			fragmentName = "Collection Display");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "true",
+			fragmentName = "Heading",
+			id = "text");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
+			value1 = "You can use mapping to display specific fields of the items in the collection. The fields available depend on the type and subtype common to all items in the collection.");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+			value1 = "Item Type:Blogs Entry");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Manual Collection",
+			fragmentName = "Collection Display");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "true",
+			fragmentName = "Heading",
+			id = "text");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
+			value1 = "You can use mapping to display specific fields of the items in the collection. The fields available depend on the type and subtype common to all items in the collection.");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
+			value1 = "Item Type:Document");
+	}
+
 	@description = "This is a test for LPS-96794. In a Permission mode, the edit actions associated that will show a modal with the permission information. In an edit mode, the edit actions associated that will show a modal with the usages of the web content."
 	@priority = "4"
 	test ViewPermissionsAndUsageViaSidebarWithMappedWebContent {

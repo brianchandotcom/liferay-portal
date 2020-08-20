@@ -38,7 +38,7 @@ public interface AUIConfiguration {
 	 * @review
 	 */
 	@Meta.AD(
-		deflt = "true", description = "enable-aui-preload-description",
+		deflt = "false", description = "enable-aui-preload-description",
 		name = "enable-aui-preload", required = false
 	)
 	public boolean enableAUIPreload();

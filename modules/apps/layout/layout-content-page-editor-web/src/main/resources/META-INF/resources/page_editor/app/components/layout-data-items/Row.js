@@ -72,9 +72,12 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 
 	const style = {};
 
+	style.backgroundColor = getFrontendTokenValue(backgroundColor);
 	style.border = `solid ${borderWidth}px`;
+	style.borderColor = getFrontendTokenValue(borderColor);
 	style.borderRadius = getFrontendTokenValue(borderRadius);
 	style.boxShadow = getFrontendTokenValue(shadow);
+	style.color = getFrontendTokenValue(textColor);
 	style.fontFamily = getFrontendTokenValue(fontFamily);
 	style.fontSize = getFrontendTokenValue(fontSize);
 	style.fontWeight = getFrontendTokenValue(fontWeight);
@@ -102,8 +105,6 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 				`pr-${paddingRight}`,
 				`pt-${paddingTop}`,
 				{
-					[`bg-${backgroundColor?.cssClass}`]: backgroundColor,
-					[`border-${borderColor?.cssClass}`]: borderColor,
 					empty:
 						item.config.numberOfColumns === modulesPerRow &&
 						!item.children.some(
@@ -119,7 +120,6 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 					[`mr-${marginRight}`]: marginRight !== '0',
 					'no-gutters': !item.config.gutters,
 					[textAlign]: textAlign !== 'none',
-					[`text-${textColor?.cssClass || textColor}`]: textColor,
 				}
 			)}
 			ref={ref}

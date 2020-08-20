@@ -74,9 +74,12 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 
 	const style = {};
 
+	style.backgroundColor = getFrontendTokenValue(backgroundColor);
 	style.border = `solid ${borderWidth}px`;
+	style.borderColor = getFrontendTokenValue(borderColor);
 	style.borderRadius = getFrontendTokenValue(borderRadius);
 	style.boxShadow = getFrontendTokenValue(shadow);
+	style.color = getFrontendTokenValue(textColor);
 	style.fontFamily = getFrontendTokenValue(fontFamily);
 	style.fontSize = getFrontendTokenValue(fontSize);
 	style.fontWeight = getFrontendTokenValue(fontWeight);
@@ -108,10 +111,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 				`pr-${paddingRight}`,
 				`pt-${paddingTop}`,
 				{
-					[`bg-${backgroundColor?.cssClass}`]: backgroundColor,
-					[`border-${borderColor?.cssClass}`]: borderColor,
 					[textAlign]: textAlign !== 'none',
-					[`text-${textColor?.cssClass || textColor}`]: textColor,
 				}
 			)}
 			item={item}

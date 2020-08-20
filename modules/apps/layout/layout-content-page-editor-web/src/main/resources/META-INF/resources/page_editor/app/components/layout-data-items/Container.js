@@ -97,8 +97,11 @@ const Container = React.forwardRef(
 			boxSizing: 'border-box',
 		};
 
+		style.backgroundColor = getFrontendTokenValue(backgroundColor);
 		style.border = `solid ${borderWidth}px`;
+		style.borderColor = getFrontendTokenValue(borderColor);
 		style.borderRadius = getFrontendTokenValue(borderRadius);
+		style.color = getFrontendTokenValue(textColor);
 		style.fontFamily = getFrontendTokenValue(fontFamily);
 		style.fontSize = getFrontendTokenValue(fontSize);
 		style.fontWeight = getFrontendTokenValue(fontWeight);
@@ -127,8 +130,6 @@ const Container = React.forwardRef(
 					`pr-${paddingRight}`,
 					`pt-${paddingTop}`,
 					{
-						[`bg-${backgroundColor?.cssClass}`]: backgroundColor,
-						[`border-${borderColor?.cssClass}`]: borderColor,
 						container: widthType === 'fixed',
 						empty: item.children.length === 0,
 						[`ml-${marginLeft}`]:
@@ -136,7 +137,6 @@ const Container = React.forwardRef(
 						[`mr-${marginRight}`]:
 							widthType !== 'fixed' && !withinTopper,
 						[textAlign]: textAlign !== 'none',
-						[`text-${textColor?.cssClass || textColor}`]: textColor,
 					}
 				)}
 				ref={ref}

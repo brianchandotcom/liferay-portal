@@ -32,10 +32,10 @@ const ACTIONS = {
 	}) {
 		const message = shared
 			? Liferay.Language.get(
-					'after-disabling-structure-sharing,-any-site-content-that-uses-the-structures-will-be-invalid.-do-you-want-to-disable-structure-sharing'
+					'after-disabling-structure-and-document-type-sharing,-any-site-content-that-uses-the-structures-or-document-types-will-be-invalid.-do-you-want-to-disable-structure-and-document-type-sharing'
 			  )
 			: Liferay.Language.get(
-					'you-will-not-be-able-to-disconnect-this-site-when-structure-sharing-is-enabled.-in-order-to-disconnect-this-site-from-this-asset-library,-you-must-disable-structure-sharing-first'
+					'you-will-not-be-able-to-disconnect-this-site-when-structure-and-document-type-sharing-is-enabled.-in-order-to-disconnect-this-site-from-this-asset-library,-you-must-disable-structure-and-document-type-sharing-first'
 			  );
 
 		if (confirm(message)) {

@@ -67,7 +67,7 @@ import org.junit.runner.RunWith;
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
-public class GetAnalyticsReportsTotalViewsMVCResourceCommandTest {
+public class GetTotalViewsMVCResourceCommandTest {
 
 	@ClassRule
 	@Rule

@@ -31,6 +31,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
@@ -118,7 +119,7 @@ public interface ${schemaName}Resource {
 
 		<#list freeMarkerTool.getResourceTestCaseJavaMethodSignatures(configYAML, openAPIYAML, schemaName) as javaMethodSignature>
 			<#assign
-				arguments = freeMarkerTool.getResourceTestCaseArguments(javaMethodSignature.javaMethodParameters)?replace("filter", "filterString")?replace("sorts", "sortString")?replace("multipartBody", "${schemaVarName}, multipartFiles")
+				arguments = freeMarkerTool.getResourceTestCaseArguments(javaMethodSignature.javaMethodParameters)?replace("aggregation", "aggregations")?replace("filter", "filterString")?replace("sorts", "sortString")?replace("multipartBody", "${schemaVarName}, multipartFiles")
 				parameters = freeMarkerTool.getClientParameters(javaMethodSignature.javaMethodParameters, schemaName, schemaVarName)
 			/>
 
@@ -225,11 +226,9 @@ public interface ${schemaName}Resource {
 				</#list>
 
 				<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-					<#if stringUtil.equals(javaMethodParameter.parameterName, "aggregation")>
-						if ((aggregation != null) && (aggregation.getAggregationTerms() != null)) {
-							Map<String, String> aggregationTerms = aggregation.getAggregationTerms();
-
-							httpInvoker.parameter("aggregationTerms", String.join(",", aggregationTerms.values()));
+					<#if stringUtil.equals(javaMethodParameter.parameterName, "aggregations")>
+						if (aggregations != null) {
+							httpInvoker.parameter("aggregationTerms", String.join(",", aggregations));
 						}
 					<#elseif stringUtil.equals(javaMethodParameter.parameterName, "filter")>
 						if (filterString != null) {

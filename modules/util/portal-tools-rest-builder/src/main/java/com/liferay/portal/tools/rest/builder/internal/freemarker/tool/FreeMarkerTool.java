@@ -140,8 +140,10 @@ public class FreeMarkerTool {
 		parameter = StringUtil.replace(
 			parameter, "com.liferay.portal.kernel.search.Sort[] sorts",
 			"String sortString");
-		parameter = StringUtil.removeSubstring(
-			parameter, "com.liferay.portal.vulcan.aggregation.");
+		parameter = StringUtil.replace(
+			parameter,
+			"com.liferay.portal.vulcan.aggregation.Aggregation aggregation",
+			"List<String> aggregations");
 		parameter = StringUtil.replace(
 			parameter,
 			"com.liferay.portal.vulcan.multipart.MultipartBody multipartBody",
@@ -225,6 +227,10 @@ public class FreeMarkerTool {
 
 		String arguments = OpenAPIParserUtil.getArguments(javaMethodParameters);
 
+		arguments = StringUtil.replace(
+			arguments, "aggregation",
+			"_aggregationBiFunction.apply(" + schemaVarName +
+			"Resource, aggregations)");
 		arguments = StringUtil.replace(
 			arguments, "assetLibraryId", "Long.valueOf(assetLibraryId)");
 		arguments = StringUtil.replace(
@@ -314,6 +320,10 @@ public class FreeMarkerTool {
 			parameters,
 			"@GraphQLName(\"assetLibraryId\") java.lang.Long assetLibraryId",
 			"@GraphQLName(\"assetLibraryId\") @NotEmpty String assetLibraryId");
+		parameters = StringUtil.replace(
+			parameters,
+			"com.liferay.portal.vulcan.aggregation.Aggregation aggregation",
+			"List<String> aggregations");
 		parameters = StringUtil.replace(
 			parameters, "com.liferay.portal.kernel.search.filter.Filter filter",
 			"String filterString");

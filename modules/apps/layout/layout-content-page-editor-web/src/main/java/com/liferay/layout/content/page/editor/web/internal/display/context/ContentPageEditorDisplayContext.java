@@ -1520,6 +1520,9 @@ public class ContentPageEditorDisplayContext {
 					frontendTokensJSONObject.put(
 						name,
 						HashMapBuilder.put(
+							"editorType",
+							frontendTokenJSONObject.get("editorType")
+						).put(
 							"label", frontendTokenJSONObject.get("label")
 						).put(
 							"value", value

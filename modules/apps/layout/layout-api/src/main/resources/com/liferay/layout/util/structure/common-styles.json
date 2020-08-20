@@ -667,13 +667,13 @@
 				]
 			},
 			{
-				"dataType": "object",
+				"dataType": "string",
 				"dependencies": [
 				],
 				"label": "text-body",
 				"name": "textColor",
 				"responsive": false,
-				"type": "colorPalette"
+				"type": "colorPicker"
 			},
 			{
 				"dataType": "string",
@@ -713,13 +713,13 @@
 		"label": "background",
 		"styles": [
 			{
-				"dataType": "object",
+				"dataType": "string",
 				"dependencies": [
 				],
 				"label": "background-color",
 				"name": "backgroundColor",
 				"responsive": false,
-				"type": "colorPalette"
+				"type": "colorPicker"
 			},
 			{
 				"dataType": "object",
@@ -789,13 +789,13 @@
 				]
 			},
 			{
-				"dataType": "object",
+				"dataType": "string",
 				"dependencies": [
 				],
 				"label": "border-color",
 				"name": "borderColor",
 				"responsive": false,
-				"type": "colorPalette"
+				"type": "colorPicker"
 			}
 		]
 	},

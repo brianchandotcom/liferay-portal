@@ -162,7 +162,6 @@ renderResponse.setTitle(headerTitle);
 						markupView="lexicon"
 						title="<%= workflowTaskDisplayContext.getPreviewOfTitle(workflowTask) %>"
 					>
-
 						<c:if test="<%= assetRenderer.isLocalizable() %>">
 							<div class="locale-actions">
 								<liferay-ui:language
@@ -269,7 +268,7 @@ renderResponse.setTitle(headerTitle);
 							<liferay-asset:asset-metadata
 								className="<%= assetEntry.getClassName() %>"
 								classPK="<%= assetEntry.getClassPK() %>"
-								metadataFields="<%= new String[] {"author", "categories", "tags"} %>"
+								metadataFields='<%= new String[] {"author", "categories", "tags"} %>'
 							/>
 						</c:if>
 					</liferay-ui:panel>

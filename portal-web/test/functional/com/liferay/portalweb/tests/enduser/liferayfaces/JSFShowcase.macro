@@ -148,7 +148,12 @@ definition {
 				locator1 = "JSFShowcase#MODEL_VALUE");
 		}
 
-		AssertElementNotPresent(locator1 = "JSFShowcase#REQUIRED_ERROR_MESSAGE");
+		if ("${assertError}" == "true") {
+			AssertElementPresent(locator1 = "JSFShowcase#CONVERSION_INCORRECT_MESSAGE");
+		}
+		else {
+			AssertElementNotPresent(locator1 = "JSFShowcase#REQUIRED_ERROR_MESSAGE");
+		}
 	}
 
 	macro selectCheckbox {
@@ -185,6 +190,68 @@ definition {
 		}
 
 		else {
+			AssertElementPresent(
+				key_attribute = "${textValue}",
+				locator1 = "JSFShowcase#MODEL_VALUE");
+		}
+
+		AssertElementNotPresent(locator1 = "JSFShowcase#REQUIRED_ERROR_MESSAGE");
+	}
+
+	/*macro selectError {
+		if (isSet(listboxNameList)) {
+			for (var listboxNameList : list "${listboxNameList}") {
+				Click(
+					key_opt = "${listboxNameList}",
+					locator1 = "JSFShowcase#GENERAL_SELECT");
+			}
+		}
+
+		if (isSet(checkboxNameList)) {
+			for (var checkboxNameList : list "${checkboxNameList}") {
+				Check(
+					key_opt = "${checkboxNameList}",
+					locator1 = "JSFShowcase#GENERAL_CHECKBOX");
+			}
+		}
+
+		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
+
+		for (var textValue : list "${textValue}") {
+			AssertElementPresent(
+				key_attribute = "${textValue}",
+				locator1 = "JSFShowcase#MODEL_VALUE");
+		}
+
+		AssertElementPresent(locator1 = "JSFShowcase#CONVERSION_INCORRECT_MESSAGE");
+	}*/
+
+	macro selectInstantAjax {
+		if (isSet(listboxNameList)) {
+			for (var listboxNameList : list "${listboxNameList}") {
+				Click(
+					key_opt = "${listboxNameList}",
+					locator1 = "JSFShowcase#GENERAL_SELECT");
+			}
+		}
+
+		if (isSet(uncheckboxNameList)) {
+			for (var uncheckboxNameList : list "${uncheckboxNameList}") {
+				Uncheck(
+					key_opt = "${uncheckboxNameList}",
+					locator1 = "JSFShowcase#GENERAL_CHECKBOX");
+			}
+		}
+
+		if (isSet(checkboxNameList)) {
+			for (var checkboxNameList : list "${checkboxNameList}") {
+				Check(
+					key_opt = "${checkboxNameList}",
+					locator1 = "JSFShowcase#GENERAL_CHECKBOX");
+			}
+		}
+
+		for (var textValue : list "${textValue}") {
 			AssertElementPresent(
 				key_attribute = "${textValue}",
 				locator1 = "JSFShowcase#MODEL_VALUE");
@@ -247,10 +314,40 @@ definition {
 
 	macro submitImmediate {
 		if ("${immediate}" == "true") {
+			if (isSet(checkboxName)) {
+				Check(
+					checkboxName = "${checkboxName}",
+					locator1 = "JSFShowcase#BOOLEAN_CHECKBOX");
+			}
+
 			if (isSet(checkboxNameList)) {
 				for (var checkboxNameList : list "${checkboxNameList}") {
 					Check(
 						key_opt = "${checkboxNameList}",
+						locator1 = "JSFShowcase#GENERAL_CHECKBOX");
+				}
+			}
+
+			if (isSet(listboxNameList)) {
+				for (var listboxNameList : list "${listboxNameList}") {
+					Click(
+						key_opt = "${listboxNameList}",
+						locator1 = "JSFShowcase#GENERAL_SELECT");
+				}
+			}
+
+			if (isSet(checkboxNameList)) {
+				for (var checkboxNameList : list "${checkboxNameList}") {
+					Check(
+						key_opt = "${checkboxNameList}",
+						locator1 = "JSFShowcase#GENERAL_CHECKBOX");
+				}
+			}
+
+			if (isSet(uncheckboxNameList)) {
+				for (var uncheckboxNameList : list "${uncheckboxNameList}") {
+					Uncheck(
+						key_opt = "${uncheckboxNameList}",
 						locator1 = "JSFShowcase#GENERAL_CHECKBOX");
 				}
 			}
@@ -271,10 +368,40 @@ definition {
 		}
 
 		if ("${immediate}" == "false") {
+			if (isSet(checkboxName)) {
+				Check(
+					checkboxName = "${checkboxName}",
+					locator1 = "JSFShowcase#BOOLEAN_CHECKBOX_2");
+			}
+
 			if (isSet(checkboxNameList)) {
 				for (var checkboxNameList : list "${checkboxNameList}") {
 					Check(
 						key_opt = "${checkboxNameList}",
+						locator1 = "JSFShowcase#GENERAL_CHECKBOX_2");
+				}
+			}
+
+			if (isSet(listboxNameList)) {
+				for (var listboxNameList : list "${listboxNameList}") {
+					Click(
+						key_opt = "${listboxNameList}",
+						locator1 = "JSFShowcase#GENERAL_SELECT_2");
+				}
+			}
+
+			if (isSet(checkboxNameList)) {
+				for (var checkboxNameList : list "${checkboxNameList}") {
+					Check(
+						key_opt = "${checkboxNameList}",
+						locator1 = "JSFShowcase#GENERAL_CHECKBOX_2");
+				}
+			}
+
+			if (isSet(uncheckboxNameList)) {
+				for (var uncheckboxNameList : list "${uncheckboxNameList}") {
+					Uncheck(
+						key_opt = "${uncheckboxNameList}",
 						locator1 = "JSFShowcase#GENERAL_CHECKBOX_2");
 				}
 			}
@@ -354,7 +481,6 @@ definition {
 				key_message = "${message3}",
 				locator1 = "JSFShowcase#RESULT_MESSAGE",
 				value1 = "${message3}");
-
 		}
 	}
 
@@ -421,7 +547,7 @@ definition {
 
 		Click(locator1 = "BridgeDemos#SUBMIT_BUTTON");
 
-		if ("${selectManyMenu}" == "true" || "${selectManyList}" == "true") {
+		if ("${selectManyMenu}" == "true" || "${selectManyList}" == "true" || "${selectManyListbox}" == "true") {
 			AssertElementPresent(locator1 = "JSFShowcase#VALID_ERROR_MESSAGE");
 		}
 		else {

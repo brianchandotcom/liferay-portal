@@ -79,10 +79,10 @@ public interface CompanyLocalService
 	public Company addCompany(Company company);
 
 	/**
-	 * Adds a company.
+	 * Adds a company with the primary key.
 	 *
-	 * @param companyId the primary key of the company (<code>null</code> or
-	 <code>0</code> to generate it automatically)
+	 * @param companyId the primary key of the company (optionally <code>null</code> or
+	 <code>0</code> to generate a key automatically)
 	 * @param webId the the company's web domain
 	 * @param virtualHostname the company's virtual host name
 	 * @param mx the company's mail domain
@@ -92,7 +92,6 @@ public interface CompanyLocalService
 	 <code>0</code>)
 	 * @param active whether the company is active
 	 * @return the company
-	 * @review
 	 */
 	public Company addCompany(
 			Long companyId, String webId, String virtualHostname, String mx,

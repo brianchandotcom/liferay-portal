@@ -6,6 +6,7 @@ dependencies {
 	testIntegrationCompile project(":apps:document-library:document-library-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:info:info-api")
+	testIntegrationCompile project(":apps:layout:layout-display-page-api")
 	testIntegrationCompile project(":apps:layout:layout-page-template-api")
 	testIntegrationCompile project(":apps:layout:layout-seo-api")
 	testIntegrationCompile project(":apps:layout:layout-test-util")

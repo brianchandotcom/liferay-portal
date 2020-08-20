@@ -144,7 +144,7 @@ public class DDMFormValidatorTest {
 		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
-	@Test
+	@Test(expected = MustSetValidFormRuleExpression.class)
 	public void testFormRuleEmptyCondition() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("Name");
 

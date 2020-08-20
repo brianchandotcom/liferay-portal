@@ -20,8 +20,6 @@ import com.liferay.dynamic.data.mapping.internal.report.NumericDDMFormFieldTypeR
 import com.liferay.dynamic.data.mapping.internal.report.RadioDDMFormFieldTypeReportProcessor;
 import com.liferay.dynamic.data.mapping.internal.report.TextDDMFormFieldTypeReportProcessor;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -31,6 +29,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.report.DDMFormFieldTypeReportProcessor;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -166,24 +165,8 @@ public class UpgradeDDMFormInstanceReport extends UpgradeProcess {
 
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
-					String definition = rs.getString("definition");
-
-					DDMFormDeserializerDeserializeRequest.Builder builder =
-						DDMFormDeserializerDeserializeRequest.Builder.
-							newBuilder(definition);
-
-					DDMFormDeserializerDeserializeResponse
-						ddmFormDeserializerDeserializeResponse =
-							_ddmFormDeserializer.deserialize(builder.build());
-
-					Exception exception =
-						ddmFormDeserializerDeserializeResponse.getException();
-
-					if (exception != null) {
-						throw new UpgradeException(exception);
-					}
-
-					return ddmFormDeserializerDeserializeResponse.getDDMForm();
+					return DDMFormDeserializeUtil.deserialize(
+						_ddmFormDeserializer, rs.getString("definition"));
 				}
 			}
 

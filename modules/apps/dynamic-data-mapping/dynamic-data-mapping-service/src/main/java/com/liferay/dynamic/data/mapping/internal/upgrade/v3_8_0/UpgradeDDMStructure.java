@@ -15,11 +15,7 @@
 package com.liferay.dynamic.data.mapping.internal.upgrade.v3_8_0;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializerSerializeResponse;
@@ -34,13 +30,14 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormLayoutDeserializeUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Tuple;
@@ -97,24 +94,6 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		}
 
 		return ddmFormFieldName;
-	}
-
-	private DDMForm _getDDMForm(String definition) throws Exception {
-		DDMFormDeserializerDeserializeResponse
-			ddmFormDeserializerDeserializeResponse =
-				_ddmFormDeserializer.deserialize(
-					DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
-						definition
-					).build());
-
-		Exception exception =
-			ddmFormDeserializerDeserializeResponse.getException();
-
-		if (exception != null) {
-			throw new UpgradeException(exception);
-		}
-
-		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
 
 	private boolean _hasMoreThanOneDDMFormFieldPerColumn(
@@ -235,27 +214,10 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {
-					String definition = rs.getString("definition");
-
-					DDMFormLayoutDeserializerDeserializeResponse
-						ddmFormLayoutDeserializerDeserializeResponse =
-							_ddmFormLayoutDeserializer.deserialize(
-								DDMFormLayoutDeserializerDeserializeRequest.
-									Builder.newBuilder(
-										definition
-									).build());
-
-					Exception exception =
-						ddmFormLayoutDeserializerDeserializeResponse.
-							getException();
-
-					if (exception != null) {
-						throw new UpgradeException(exception);
-					}
-
 					DDMFormLayout ddmFormLayout =
-						ddmFormLayoutDeserializerDeserializeResponse.
-							getDDMFormLayout();
+						DDMFormLayoutDeserializeUtil.deserialize(
+							_ddmFormLayoutDeserializer,
+							rs.getString("definition"));
 
 					boolean pagination = Objects.equals(
 						ddmFormLayout.getPaginationMode(), "pagination");
@@ -396,7 +358,8 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 			String definition, long structureVersionId)
 		throws Exception {
 
-		DDMForm ddmForm = _getDDMForm(definition);
+		DDMForm ddmForm = DDMFormDeserializeUtil.deserialize(
+			_ddmFormDeserializer, definition);
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(false);

@@ -15,8 +15,6 @@
 package com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_2;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormSerializerSerializeResponse;
@@ -32,6 +30,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueTransformer;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesTransformer;
 import com.liferay.petra.string.StringBundler;
@@ -93,24 +92,6 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 	}
 
-	protected DDMForm deserialize(String content) throws Exception {
-		DDMFormDeserializerDeserializeRequest.Builder builder =
-			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
-
-		DDMFormDeserializerDeserializeResponse
-			ddmFormDeserializerDeserializeResponse =
-				_ddmFormDeserializer.deserialize(builder.build());
-
-		Exception exception =
-			ddmFormDeserializerDeserializeResponse.getException();
-
-		if (exception != null) {
-			throw new UpgradeException(exception);
-		}
-
-		return ddmFormDeserializerDeserializeResponse.getDDMForm();
-	}
-
 	protected DDMFormValues deserialize(String content, DDMForm ddmForm)
 		throws Exception {
 
@@ -154,7 +135,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
-					ddmForm = deserialize(rs.getString("definition"));
+					ddmForm = DDMFormDeserializeUtil.deserialize(
+						_ddmFormDeserializer, rs.getString("definition"));
 
 					_ddmForms.put(structureId, ddmForm);
 
@@ -371,9 +353,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 					try (ResultSet rs2 = ps3.executeQuery()) {
 						while (rs2.next()) {
-							String definition = rs2.getString("definition");
-
-							ddmForm = deserialize(definition);
+							ddmForm = DDMFormDeserializeUtil.deserialize(
+								_ddmFormDeserializer,
+								rs2.getString("definition"));
 
 							updateDDMFormFields(ddmForm);
 

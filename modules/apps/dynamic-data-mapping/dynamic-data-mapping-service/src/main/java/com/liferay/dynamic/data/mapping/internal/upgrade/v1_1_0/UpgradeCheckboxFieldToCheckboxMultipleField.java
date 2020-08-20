@@ -15,8 +15,6 @@
 package com.liferay.dynamic.data.mapping.internal.upgrade.v1_1_0;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
@@ -28,6 +26,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueTransformer;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesTransformer;
 import com.liferay.petra.string.StringBundler;
@@ -64,24 +63,6 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 		_ddmFormValuesDeserializer = ddmFormValuesDeserializer;
 		_ddmFormValuesSerializer = ddmFormValuesSerializer;
 		_jsonFactory = jsonFactory;
-	}
-
-	protected DDMForm deserialize(String content) throws Exception {
-		DDMFormDeserializerDeserializeRequest.Builder builder =
-			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(content);
-
-		DDMFormDeserializerDeserializeResponse
-			ddmFormDeserializerDeserializeResponse =
-				_ddmFormDeserializer.deserialize(builder.build());
-
-		Exception exception =
-			ddmFormDeserializerDeserializeResponse.getException();
-
-		if (exception != null) {
-			throw new UpgradeException(exception);
-		}
-
-		return ddmFormDeserializerDeserializeResponse.getDDMForm();
 	}
 
 	protected DDMFormValues deserialize(String content, DDMForm ddmForm)
@@ -153,7 +134,10 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 
 					ps3.addBatch();
 
-					updateRecords(deserialize(definition), recordSetId);
+					updateRecords(
+						DDMFormDeserializeUtil.deserialize(
+							_ddmFormDeserializer, definition),
+						recordSetId);
 				}
 
 				ps2.executeBatch();

@@ -24,7 +24,7 @@ import com.liferay.data.engine.rest.dto.v2_0.DataLayoutRenderingContext;
 import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeTracker;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataDefinitionUtil;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataLayoutUtil;
-import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataRecordValuesUtil;
+import com.liferay.data.engine.rest.internal.dto.v2_0.util.MapToDDMFormValuesConverterUtil;
 import com.liferay.data.engine.rest.internal.odata.entity.v2_0.DataLayoutEntityModel;
 import com.liferay.data.engine.rest.internal.security.permission.resource.DataDefinitionModelResourcePermission;
 import com.liferay.data.engine.rest.resource.exception.DataLayoutValidationException;
@@ -234,7 +234,7 @@ public class DataLayoutResourceImpl
 		ddmFormRenderingContext.setContainerId(
 			dataLayoutRenderingContext.getContainerId());
 		ddmFormRenderingContext.setDDMFormValues(
-			DataRecordValuesUtil.toDDMFormValues(
+			MapToDDMFormValuesConverterUtil.toDDMFormValues(
 				dataLayoutRenderingContext.getDataRecordValues(), ddmForm,
 				null));
 		ddmFormRenderingContext.setHttpServletRequest(

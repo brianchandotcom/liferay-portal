@@ -74,7 +74,7 @@ public class JournalTranslateDisplayContext {
 			InfoForm.class.getName());
 		_infoItemFieldValues =
 			(InfoItemFieldValues)_httpServletRequest.getAttribute(
-				InfoItemFieldValues.class.getName());
+				JournalWebConstants.SOURCE_INFO_ITEM_FIELD_VALUES);
 		_targetInfoItemFieldValues =
 			(InfoItemFieldValues)_httpServletRequest.getAttribute(
 				JournalWebConstants.TARGET_INFO_ITEM_FIELD_VALUES);

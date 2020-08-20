@@ -56,8 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCResourceCommand.class
 )
-public class GetAnalyticsReportsTotalReadsMVCResourceCommand
-	extends BaseMVCResourceCommand {
+public class GetTotalReadsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(
@@ -108,7 +107,7 @@ public class GetAnalyticsReportsTotalReadsMVCResourceCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GetAnalyticsReportsTotalReadsMVCResourceCommand.class);
+		GetTotalReadsMVCResourceCommand.class);
 
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider

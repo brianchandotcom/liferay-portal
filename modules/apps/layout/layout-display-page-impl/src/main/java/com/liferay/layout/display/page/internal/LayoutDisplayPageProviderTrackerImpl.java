@@ -36,23 +36,23 @@ public class LayoutDisplayPageProviderTrackerImpl
 	public LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
 		String className) {
 
-		return _layoutDisplayPageProviderMap.getService(className);
+		return _classNameLayoutDisplayPageProviderServiceTrackerMap.getService(className);
 	}
 
 	public LayoutDisplayPageProvider<?>
 		getLayoutDisplayPageProviderByURLSeparator(String urlSeparator) {
 
-		return _layoutDisplayPageProviderByURLSeparatorMap.getService(
+		return _urlSeparatorLayoutDisplayPageProviderServiceTrackerMap.getService(
 			urlSeparator);
 	}
 
 	public List<LayoutDisplayPageProvider<?>> getLayoutDisplayPageProviders() {
-		return new ArrayList(_layoutDisplayPageProviderMap.values());
+		return new ArrayList(_classNameLayoutDisplayPageProviderServiceTrackerMap.values());
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_layoutDisplayPageProviderMap =
+		_classNameLayoutDisplayPageProviderServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext,
 				(Class<LayoutDisplayPageProvider<?>>)
@@ -69,7 +69,7 @@ public class LayoutDisplayPageProviderTrackerImpl
 						bundleContext.ungetService(serviceReference);
 					}
 				});
-		_layoutDisplayPageProviderByURLSeparatorMap =
+		_urlSeparatorLayoutDisplayPageProviderServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext,
 				(Class<LayoutDisplayPageProvider<?>>)
@@ -90,8 +90,8 @@ public class LayoutDisplayPageProviderTrackerImpl
 	}
 
 	private ServiceTrackerMap<String, LayoutDisplayPageProvider<?>>
-		_layoutDisplayPageProviderByURLSeparatorMap;
+		_urlSeparatorLayoutDisplayPageProviderServiceTrackerMap;
 	private ServiceTrackerMap<String, LayoutDisplayPageProvider<?>>
-		_layoutDisplayPageProviderMap;
+		_classNameLayoutDisplayPageProviderServiceTrackerMap;
 
 }

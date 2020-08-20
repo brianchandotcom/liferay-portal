@@ -86,6 +86,10 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				InfoForm.class.getName(),
 				infoItemFormProvider.getInfoForm(article));
 
+			renderRequest.setAttribute(
+				JournalWebConstants.SOURCE_INFO_ITEM_FIELD_VALUES,
+				_getInfoItemFieldValues(article));
+
 			String sourceLanguageId = ParamUtil.getString(
 				renderRequest, "sourceLanguageId",
 				article.getDefaultLanguageId());
@@ -100,10 +104,6 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				JournalWebConstants.TARGET_INFO_ITEM_FIELD_VALUES,
 				_getInfoItemFieldValues(article, targetLanguageId));
-
-			renderRequest.setAttribute(
-				JournalWebConstants.SOURCE_INFO_ITEM_FIELD_VALUES,
-				_getInfoItemFieldValues(article));
 
 			List<String> availableSourceLanguageIds = Arrays.asList(
 				article.getAvailableLanguageIds());

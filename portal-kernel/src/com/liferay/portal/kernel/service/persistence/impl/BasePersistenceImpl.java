@@ -613,11 +613,11 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		entityCacheEnabled = GetterUtil.getBoolean(
 			configuration.get(
 				"value.object.entity.cache.enabled.".concat(modelClassName)),
-			true);
+			entityCacheEnabled);
 		finderCacheEnabled = GetterUtil.getBoolean(
 			configuration.get(
 				"value.object.finder.cache.enabled.".concat(modelClassName)),
-			true);
+			finderCacheEnabled);
 	}
 
 	@Override

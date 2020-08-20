@@ -31,13 +31,9 @@
 		<suppress checks="JavaAPISignatureCheck" files="commerce-api/src/main/java/com/liferay/commerce/payment/engine/CommerceSubscriptionEngine\.java" />
 		<suppress checks="JavaAPISignatureCheck" files="commerce-api/src/main/java/com/liferay/commerce/util/CommerceCheckoutStep\.java" />
 		<suppress checks="JavaAPISignatureCheck" files="commerce-api/src/main/java/com/liferay/commerce/util/CommerceCheckoutStepServicesTracker\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-frontend-api/src/main/java/com/liferay/commerce/frontend/clay/data/set/ClayDataSetDataJSONBuilder\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-frontend-api/src/main/java/com/liferay/commerce/frontend/CommerceDataSetDataProvider\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-frontend-api/src/main/java/com/liferay/commerce/frontend/FilterFactory\.java" />
 		<suppress checks="JavaAPISignatureCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/account/CommerceAccountResource\.java" />
 		<suppress checks="JavaAPISignatureCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/address/AddressResource\.java" />
 		<suppress checks="JavaAPISignatureCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/cart/CommerceCartResource\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/data/provider/CommerceDataSetDataProviderResource\.java" />
 		<suppress checks="JavaAPISignatureCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/order/CommerceOrderResource\.java" />
 		<suppress checks="JavaAPISignatureCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/search/CommerceSearchResource\.java" />
 		<suppress checks="JavaAPISignatureCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/search/util/CommerceSearchHelper\.java" />

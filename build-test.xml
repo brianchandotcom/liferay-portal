@@ -4327,10 +4327,15 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 										</then>
 									</elseif>
 									<else>
-										<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" outputproperty="app.server.log" resolveexecutable="true">
-											<arg line="${app.server.start.executable.arg.line}" />
-											<env key="JAVA_HOME" path="${java.jdk.home}" />
-										</exec>
+										<beanshell>
+											<![CDATA[
+												import com.liferay.jenkins.results.parser.AppServer;
+
+												AppServer appServer = new AppServer(project);
+
+												appServer.startService();
+											]]>
+										</beanshell>
 									</else>
 								</if>
 
@@ -4393,10 +4398,15 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 											</then>
 										</elseif>
 										<else>
-											<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="true" output="app.server.log" resolveexecutable="true">
-												<arg line="${app.server.start.executable.arg.line}" />
-												<env key="JAVA_HOME" path="${java.jdk.home}" />
-											</exec>
+											<beanshell>
+												<![CDATA[
+													import com.liferay.jenkins.results.parser.AppServer;
+
+													AppServer appServer = new AppServer(project);
+
+													appServer.startService();
+												]]>
+											</beanshell>
 										</else>
 									</if>
 								</daemons>

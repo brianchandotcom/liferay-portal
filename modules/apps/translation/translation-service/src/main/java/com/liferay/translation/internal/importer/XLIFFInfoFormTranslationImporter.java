@@ -131,19 +131,20 @@ public class XLIFFInfoFormTranslationImporter
 
 						_validateWellFormedTextUnit(targetLocale, iTextUnit);
 
-						TextContainer textContainer = iTextUnit.getSource();
+						TextContainer sourceTextContainer =
+							iTextUnit.getSource();
 
-						TextFragment textFragment =
-							textContainer.getFirstContent();
+						TextFragment sourceTextFragment =
+							sourceTextContainer.getFirstContent();
 
 						for (LocaleId targetLocaleId :
 								iTextUnit.getTargetLocales()) {
 
-							TextContainer targetValue = iTextUnit.getTarget(
-								targetLocaleId);
+							TextContainer targetTextContainer =
+								iTextUnit.getTarget(targetLocaleId);
 
-							TextFragment targetFirstContent =
-								targetValue.getFirstContent();
+							TextFragment targetTextFragment =
+								targetTextContainer.getFirstContent();
 
 							InfoField infoField = InfoField.builder(
 							).infoFieldType(
@@ -165,13 +166,13 @@ public class XLIFFInfoFormTranslationImporter
 									InfoLocalizedValue.builder(
 									).value(
 										targetLocale,
-										targetFirstContent.getText()
+										targetTextFragment.getText()
 									).value(
 										biConsumer -> {
 											if (includeSource) {
 												biConsumer.accept(
 													sourceLocale,
-													textFragment.
+													sourceTextFragment.
 														getText());
 											}
 										}
@@ -212,11 +213,11 @@ public class XLIFFInfoFormTranslationImporter
 							"The file only can have one unit");
 					}
 
-					Part valuePart = unit.getPart(0);
+					Part part = unit.getPart(0);
 
-					Fragment value = valuePart.getTarget();
+					Fragment targetFragment = part.getTarget();
 
-					if (value == null) {
+					if (targetFragment == null) {
 						throw new XLIFFFileException.MustBeWellFormed(
 							"There is no translation target");
 					}
@@ -240,15 +241,16 @@ public class XLIFFInfoFormTranslationImporter
 							infoField,
 							InfoLocalizedValue.builder(
 							).value(
-								targetLocale, value.getPlainText()
+								targetLocale, targetFragment.getPlainText()
 							).value(
 								biConsumer -> {
 									if (includeSource) {
-										Fragment source = valuePart.getSource();
+										Fragment sourceFragment =
+											part.getSource();
 
 										biConsumer.accept(
 											sourceLocale,
-											source.getPlainText());
+											sourceFragment.getPlainText());
 									}
 								}
 							).build()));
@@ -269,9 +271,7 @@ public class XLIFFInfoFormTranslationImporter
 			return null;
 		}
 
-		String sourceLanguage = sourceLanguageProperty.getValue();
-
-		return LocaleUtil.fromLanguageId(sourceLanguage);
+		return LocaleUtil.fromLanguageId(sourceLanguageProperty.getValue());
 	}
 
 	private StartSubDocument _getStartSubdocument(List<Event> events) {
@@ -294,9 +294,7 @@ public class XLIFFInfoFormTranslationImporter
 			return null;
 		}
 
-		String targetLanguage = targetLanguageProperty.getValue();
-
-		return LocaleUtil.fromLanguageId(targetLanguage);
+		return LocaleUtil.fromLanguageId(targetLanguageProperty.getValue());
 	}
 
 	private TranslationSnapshot _getTranslationSnapshot(
@@ -311,7 +309,7 @@ public class XLIFFInfoFormTranslationImporter
 		currentThread.setContextClassLoader(
 			XLIFFInfoFormTranslationImporter.class.getClassLoader());
 
-		try (AutoXLIFFFilter filter = new AutoXLIFFFilter()) {
+		try (AutoXLIFFFilter autoXLIFFFilter = new AutoXLIFFFilter()) {
 			File tempFile = FileUtil.createTempFile(inputStream);
 
 			Document document = _saxReader.read(tempFile);
@@ -321,12 +319,12 @@ public class XLIFFInfoFormTranslationImporter
 			LocaleId targetLocaleId = XLIFFLocaleIdUtil.getTargetLocaleId(
 				document);
 
-			filter.open(
+			autoXLIFFFilter.open(
 				new RawDocument(
 					tempFile.toURI(), document.getXMLEncoding(), sourceLocaleId,
 					targetLocaleId));
 
-			Stream<Event> stream = filter.stream();
+			Stream<Event> stream = autoXLIFFFilter.stream();
 
 			List<Event> events = stream.collect(Collectors.toList());
 
@@ -393,10 +391,10 @@ public class XLIFFInfoFormTranslationImporter
 			if (event.isDocumentPart()) {
 				DocumentPart documentPart = event.getDocumentPart();
 
-				Property version = documentPart.getProperty("version");
+				Property versionProperty = documentPart.getProperty("version");
 
-				if ((version != null) &&
-					!Objects.equals("1.2", version.getValue())) {
+				if ((versionProperty != null) &&
+					!Objects.equals("1.2", versionProperty.getValue())) {
 
 					throw new XLIFFFileException.MustBeValid(
 						"version must be 1.2");
@@ -410,19 +408,19 @@ public class XLIFFInfoFormTranslationImporter
 		throws XLIFFFileException.MustBeWellFormed {
 
 		TextContainer textContainer = iTextUnit.getSource();
-		Set<LocaleId> targetLocales = iTextUnit.getTargetLocales();
+		Set<LocaleId> targetLocaleIds = iTextUnit.getTargetLocales();
 
-		if (!textContainer.isEmpty() && targetLocales.isEmpty()) {
+		if (!textContainer.isEmpty() && targetLocaleIds.isEmpty()) {
 			throw new XLIFFFileException.MustBeWellFormed(
 				"There is no translation target");
 		}
 
-		if (targetLocales.size() > 1) {
+		if (targetLocaleIds.size() > 1) {
 			throw new XLIFFFileException.MustBeWellFormed(
 				"Only one translation language per file is permitted");
 		}
 
-		for (LocaleId targetLocaleId : targetLocales) {
+		for (LocaleId targetLocaleId : targetLocaleIds) {
 			if ((targetLocale != null) &&
 				!Objects.equals(targetLocale, targetLocaleId.toJavaLocale())) {
 
@@ -430,7 +428,8 @@ public class XLIFFInfoFormTranslationImporter
 					"Only one translation language per file is permitted");
 			}
 
-			TextContainer targetTextContainer = iTextUnit.getTarget(targetLocaleId);
+			TextContainer targetTextContainer = iTextUnit.getTarget(
+				targetLocaleId);
 
 			if (!textContainer.isEmpty() && targetTextContainer.isEmpty()) {
 				throw new XLIFFFileException.MustBeWellFormed(

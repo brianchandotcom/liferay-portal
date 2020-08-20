@@ -118,25 +118,21 @@
 	<servlet>
 		<servlet-name>Atom Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.AtomServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>Combo Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.ComboServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>Display Chart</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.DisplayChartServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>Dynamic Resource Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.webserver.DynamicResourceServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
@@ -146,7 +142,6 @@
 			<param-name>filter</param-name>
 			<param-value>(servlet.init.private=true)(servlet.init.user=false)(servlet.type=friendly-url)</param-value>
 		</init-param>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
@@ -156,7 +151,6 @@
 			<param-name>filter</param-name>
 			<param-value>(servlet.init.private=true)(servlet.init.user=true)(servlet.type=friendly-url)</param-value>
 		</init-param>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
@@ -166,97 +160,81 @@
 			<param-name>filter</param-name>
 			<param-value>(servlet.init.private=false)(servlet.type=friendly-url)</param-value>
 		</init-param>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>Google Gadget Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.GoogleGadgetServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>I18n Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.I18nServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>JSON Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.JSONServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>JSON Web Service Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.jsonwebservice.JSONWebServiceServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>Language Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.LanguageServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>Module Framework Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.module.framework.ModuleFrameworkServletAdapter</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>Netvibes Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.NetvibesServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>Poller Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.poller.PollerServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>Portal Delegator Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.kernel.servlet.PortalDelegatorServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>Robots Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.RobotsServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>Sharepoint Document Workspace Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.sharepoint.SharepointDocumentWorkspaceServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>Sharepoint Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.sharepoint.SharepointServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>Sharepoint Web Services Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.sharepoint.SharepointWebServicesServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>Sitemap Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.SitemapServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>Tunnel Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.TunnelServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
@@ -266,25 +244,21 @@
 			<param-name>last_modified</param-name>
 			<param-value>true</param-value>
 		</init-param>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>WebDAV Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.webdav.WebDAVServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>Widget Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.WidgetServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>XML-RPC Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.xmlrpc.XmlRpcServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>

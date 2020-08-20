@@ -40,6 +40,10 @@
 			row.setPrimaryKey(String.valueOf(thread.getThreadId()));
 			row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
 		}
+
+		if (!MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread)) {
+			row.setCssClass("list-group-item-primary");
+		}
 		%>
 
 		<liferay-portlet:renderURL varImpl="rowURL">
@@ -98,9 +102,9 @@
 					String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 					%>
 
-					<div>
+					<p class="list-group-subtext">
 						<liferay-ui:message arguments="<%= new String[] {messageUserName, modifiedDateDescription} %>" key="x-modified-x-ago" />
-					</div>
+					</p>
 				</c:when>
 				<c:otherwise>
 
@@ -122,9 +126,9 @@
 					String lastPostDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - lastPostDate.getTime(), true);
 					%>
 
-					<div>
+					<p class="list-group-subtext">
 						<liferay-ui:message arguments="<%= new String[] {messageUserName, lastPostDateDescription} %>" key="x-replied-x-ago" />
-					</div>
+					</p>
 				</c:otherwise>
 			</c:choose>
 
@@ -139,13 +143,13 @@
 			long viewCount = thread.getViewCount();
 			%>
 
-			<div class="mt-2">
+			<p class="list-group-subtext mt-2">
 				<liferay-ui:message arguments="<%= repliesCount %>" key='<%= (repliesCount == 1) ? "x-reply" : "x-replies" %>' />
-			</div>
+			</p>
 
-			<div>
+			<p class="list-group-subtext">
 				<liferay-ui:message arguments="<%= viewCount %>" key='<%= (viewCount == 1) ? "x-view" : "x-views" %>' />
-			</div>
+			</p>
 
 			<c:if test="<%= thread.isQuestion() %>">
 

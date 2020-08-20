@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
+import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -39,7 +40,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

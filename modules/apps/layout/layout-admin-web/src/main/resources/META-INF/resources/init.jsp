@@ -30,8 +30,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.document.library.kernel.exception.FileSizeException" %>
-<%@ page import="com.liferay.style.book.util.DefaultStyleBookEntryUtil" %><%@
+<%@ page import="com.liferay.document.library.kernel.exception.FileSizeException" %><%@
 page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %><%@
 page import="com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys" %><%@
 page import="com.liferay.exportimport.kernel.staging.LayoutStagingUtil" %><%@
@@ -149,7 +148,8 @@ page import="com.liferay.segments.exception.RequiredSegmentsExperienceException"
 page import="com.liferay.site.navigation.model.SiteNavigationMenu" %><%@
 page import="com.liferay.sites.kernel.util.SitesUtil" %><%@
 page import="com.liferay.style.book.model.StyleBookEntry" %><%@
-page import="com.liferay.style.book.service.StyleBookEntryLocalServiceUtil" %>
+page import="com.liferay.style.book.service.StyleBookEntryLocalServiceUtil" %><%@
+page import="com.liferay.style.book.util.DefaultStyleBookEntryUtil" %>
 
 <%@ page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@

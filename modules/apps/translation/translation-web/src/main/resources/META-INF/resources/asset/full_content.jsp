@@ -20,6 +20,10 @@
 ViewTranslationDisplayContext viewTranslationDisplayContext = (ViewTranslationDisplayContext)request.getAttribute(ViewTranslationDisplayContext.class.getName());
 %>
 
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" />
+</liferay-util:html-top>
+
 <clay:container-fluid
 	cssClass="container-view"
 >

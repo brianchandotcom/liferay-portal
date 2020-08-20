@@ -23,16 +23,18 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil;
+import com.liferay.asset.taglib.internal.item.selector.ItemSelectorUtil;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -57,7 +59,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -318,42 +319,30 @@ public class InputAssetLinksDisplayContext {
 		return groupId;
 	}
 
-	private PortletURL _getAssetBrowserPortletURL(
-			AssetRendererFactory<?> assetRendererFactory)
-		throws Exception {
+	private PortletURL _getAssetEntryItemSelectorPortletURL(
+		AssetRendererFactory<?> rendererFactory, long subtypeSelectionId) {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			_httpServletRequest, assetRendererFactory.getClassName(),
-			PortletProvider.Action.BROWSE);
+		AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion =
+			new AssetEntryItemSelectorCriterion();
 
-		if (portletURL == null) {
-			return null;
-		}
+		assetEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new AssetEntryItemSelectorReturnType());
+		assetEntryItemSelectorCriterion.setGroupId(
+			_themeDisplay.getScopeGroupId());
+		assetEntryItemSelectorCriterion.setSelectedGroupIds(
+			new long[] {_themeDisplay.getScopeGroupId()});
+		assetEntryItemSelectorCriterion.setShowNonindexable(true);
+		assetEntryItemSelectorCriterion.setShowScheduled(true);
+		assetEntryItemSelectorCriterion.setSubtypeSelectionId(
+			subtypeSelectionId);
+		assetEntryItemSelectorCriterion.setTypeSelection(
+			rendererFactory.getClassName());
 
-		long groupId = _getAssetBrowserGroupId(assetRendererFactory);
+		ItemSelector itemSelector = ItemSelectorUtil.getItemSelector();
 
-		portletURL.setParameter("groupId", String.valueOf(groupId));
-
-		portletURL.setParameter("selectedGroupId", String.valueOf(groupId));
-
-		if (_assetEntryId > 0) {
-			portletURL.setParameter(
-				"refererAssetEntryId", String.valueOf(_assetEntryId));
-		}
-
-		portletURL.setParameter(
-			"typeSelection", assetRendererFactory.getClassName());
-		portletURL.setParameter("eventName", getEventName());
-		portletURL.setParameter(
-			"multipleSelection", String.valueOf(Boolean.TRUE));
-		portletURL.setParameter("showBreadcrumb", String.valueOf(Boolean.TRUE));
-		portletURL.setParameter(
-			"showNonindexable", String.valueOf(Boolean.TRUE));
-		portletURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
-		portletURL.setPortletMode(PortletMode.VIEW);
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return portletURL;
+		return itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_portletRequest),
+			getEventName(), assetEntryItemSelectorCriterion);
 	}
 
 	private List<Map<String, Object>> _getSelectorEntries(
@@ -399,8 +388,8 @@ public class InputAssetLinksDisplayContext {
 
 		Map<String, Object> selectorEntryData = new HashMap<>();
 
-		PortletURL assetBrowserPortletURL = _getAssetBrowserPortletURL(
-			assetRendererFactory);
+		PortletURL assetBrowserPortletURL =
+			_getAssetEntryItemSelectorPortletURL(assetRendererFactory, 0);
 
 		if (assetBrowserPortletURL != null) {
 			selectorEntryData.put("href", assetBrowserPortletURL.toString());
@@ -427,14 +416,10 @@ public class InputAssetLinksDisplayContext {
 
 		Map<String, Object> selectorEntryData = new HashMap<>();
 
-		PortletURL portletURL = _getAssetBrowserPortletURL(
-			assetRendererFactory);
+		PortletURL portletURL = _getAssetEntryItemSelectorPortletURL(
+			assetRendererFactory, classType.getClassTypeId());
 
 		if (portletURL != null) {
-			portletURL.setParameter(
-				"subtypeSelectionId",
-				String.valueOf(classType.getClassTypeId()));
-
 			selectorEntryData.put("href", portletURL.toString());
 		}
 

@@ -303,10 +303,8 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 	private boolean _ignorePathProxy;
 
 	/**
-	 * Points to the web context path of the Portal's webapp (doesn't contain
-	 * the proxy, CDN, or any other kind of configurable path.
-	 *
-	 * @review
+	 * Portal web app's web context path (doesn't contain the proxy, CDN, or any
+	 * other kind of configurable path.
 	 */
 	private final String _pathContext;
 

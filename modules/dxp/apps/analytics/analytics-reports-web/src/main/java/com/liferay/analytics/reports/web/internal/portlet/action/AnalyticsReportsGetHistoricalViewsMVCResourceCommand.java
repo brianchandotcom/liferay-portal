@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCResourceCommand.class
 )
-public class GetAnalyticsReportsHistoricalViewsMVCResourceCommand
+public class AnalyticsReportsGetHistoricalViewsMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override
@@ -118,7 +118,7 @@ public class GetAnalyticsReportsHistoricalViewsMVCResourceCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GetAnalyticsReportsHistoricalViewsMVCResourceCommand.class);
+		AnalyticsReportsGetHistoricalViewsMVCResourceCommand.class);
 
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider

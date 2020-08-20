@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
@@ -140,6 +141,12 @@ function SelectCategory({
 
 	return (
 		<div className="select-category">
+			<ClayAlert displayType="info" variant="embedded">
+				{Liferay.Language.get(
+					'categories-can-only-be-moved-to-a-vocabulary-or-a-category-with-the-same-visibility'
+				)}
+			</ClayAlert>
+
 			<form className="select-category-filter" role="search">
 				<ClayLayout.ContainerFluid className="d-flex">
 					<div className="input-group">

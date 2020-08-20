@@ -210,16 +210,16 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
+			WebKeys.LAYOUT_ASSET_ENTRY,
+			_assetEntryLocalService.getEntry(
+				JournalArticle.class.getName(),
+				_journalArticle.getResourcePrimKey()));
+		mockHttpServletRequest.setAttribute(
 			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
 			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 				new InfoItemReference(
 					JournalArticle.class.getName(),
 					_journalArticle.getResourcePrimKey())));
-		mockHttpServletRequest.setAttribute(
-			WebKeys.LAYOUT_ASSET_ENTRY,
-			_assetEntryLocalService.getEntry(
-				JournalArticle.class.getName(),
-				_journalArticle.getResourcePrimKey()));
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY,
 			_getThemeDisplay(mockHttpServletRequest, user));

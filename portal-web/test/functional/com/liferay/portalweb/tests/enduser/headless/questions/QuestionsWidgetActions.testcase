@@ -285,6 +285,43 @@ definition {
 			locator1 = "Questions#QUESTIONS_CATEGORY_LABEL_ITEM");
 	}
 
+	@description = "Validate if the user can add subtopic via the widget."
+	@priority = "4"
+	test AddSubTopicsViaWidget {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.addSubTopic(
+			subTopicDescription = "SubTopicA Description",
+			subTopicName = "SubTopicA");
+
+		Questions.changeTopic(gotoParentTopic = "Questions Test Category");
+
+		Questions.changeTopic(
+			parentTopicName = "Questions Test Category",
+			subTopicName = "SubTopicA");
+
+		Questions.addSubTopic(
+			subTopicDescription = "SubTopicB Description",
+			subTopicName = "SubTopicB");
+
+		Questions.changeTopic(gotoParentTopic = "Questions Test Category");
+
+		Questions.changeTopic(
+			parentTopicName = "Questions Test Category",
+			subTopicName = "SubTopicA");
+
+		Questions.changeTopic(
+			parentTopicName = "SubTopicA",
+			subTopicName = "SubTopicB");
+	}
+
 	@description = "Validate if the anonymous user can ask questions and redirected to login."
 	@priority = "4"
 	test AskQuestionsThroughAnonymousUser {
@@ -336,6 +373,59 @@ definition {
 			key_questionTitle = "Title Anonymous User Ask questions",
 			locator1 = "Questions#QUESTIONS_TITLE",
 			value1 = "Title Anonymous User Ask questions");
+	}
+
+	@description = "Validate if the user can add subtopic without permission."
+	@priority = "4"
+	test CannotAddSubTopicWithoutPermission {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addRegularRole(roleTitle = "Test Regrole Name");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Test Regrole Name",
+			userEmailAddress = "userea@liferay.com");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_message_boards_web_portlet_MBAdminPortlet",
+			roleTitle = "Test Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.message.boards",
+			roleTitle = "Test Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.message.boards.model.MBCategory",
+			roleTitle = "Test Regrole Name");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		AssertElementNotPresent(locator1 = "Questions#NEW_TOPIC");
 	}
 
 	@description = "Validate if the user can search for the questions."

@@ -162,13 +162,16 @@ renderResponse.setTitle(headerTitle);
 						markupView="lexicon"
 						title="<%= workflowTaskDisplayContext.getPreviewOfTitle(workflowTask) %>"
 					>
-						<div class="locale-actions">
-							<liferay-ui:language
-								formAction="<%= currentURL %>"
-								languageId="<%= languageId %>"
-								languageIds="<%= assetRenderer.getAvailableLanguageIds() %>"
-							/>
-						</div>
+
+						<c:if test="<%= assetRenderer.isLocalizable() %>">
+							<div class="locale-actions">
+								<liferay-ui:language
+									formAction="<%= currentURL %>"
+									languageId="<%= languageId %>"
+									languageIds="<%= assetRenderer.getAvailableLanguageIds() %>"
+								/>
+							</div>
+						</c:if>
 
 						<div class="task-content-actions">
 							<liferay-ui:icon-list>

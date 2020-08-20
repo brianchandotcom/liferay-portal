@@ -53,13 +53,15 @@ renderResponse.setTitle(title);
 		<div class="card-horizontal main-content-card">
 			<div class="panel-body">
 				<c:if test="<%= assetEntry != null %>">
-					<div class="locale-actions">
-						<liferay-ui:language
-							formAction="<%= currentURL %>"
-							languageId="<%= languageId %>"
-							languageIds="<%= availableLanguageIds %>"
-						/>
-					</div>
+					<c:if test="<%= assetRenderer.isLocalizable() %>">
+						<div class="locale-actions">
+							<liferay-ui:language
+								formAction="<%= currentURL %>"
+								languageId="<%= languageId %>"
+								languageIds="<%= availableLanguageIds %>"
+							/>
+						</div>
+					</c:if>
 
 					<liferay-asset:asset-display
 						assetEntry="<%= assetEntry %>"

@@ -14,7 +14,6 @@
 
 package com.liferay.headless.delivery.client.resource.v1_0;
 
-import com.liferay.headless.delivery.client.aggregation.Aggregation;
 import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseArticle;
 import com.liferay.headless.delivery.client.dto.v1_0.Rating;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
@@ -24,6 +23,7 @@ import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.headless.delivery.client.serdes.v1_0.KnowledgeBaseArticleSerDes;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
@@ -143,14 +143,14 @@ public interface KnowledgeBaseArticleResource {
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 				Long parentKnowledgeBaseArticleId, Boolean flatten,
-				String search, Aggregation aggregation, String filterString,
+				String search, List<String> aggregations, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPageHttpResponse(
 				Long parentKnowledgeBaseArticleId, Boolean flatten,
-				String search, Aggregation aggregation, String filterString,
+				String search, List<String> aggregations, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception;
 
@@ -168,14 +168,14 @@ public interface KnowledgeBaseArticleResource {
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 				Long knowledgeBaseFolderId, Boolean flatten, String search,
-				Aggregation aggregation, String filterString,
+				List<String> aggregations, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPageHttpResponse(
 				Long knowledgeBaseFolderId, Boolean flatten, String search,
-				Aggregation aggregation, String filterString,
+				List<String> aggregations, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception;
 
@@ -201,14 +201,14 @@ public interface KnowledgeBaseArticleResource {
 
 	public Page<KnowledgeBaseArticle> getSiteKnowledgeBaseArticlesPage(
 			Long siteId, Boolean flatten, String search,
-			Aggregation aggregation, String filterString, Pagination pagination,
-			String sortString)
+			List<String> aggregations, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getSiteKnowledgeBaseArticlesPageHttpResponse(
 				Long siteId, Boolean flatten, String search,
-				Aggregation aggregation, String filterString,
+				List<String> aggregations, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception;
 
@@ -1097,13 +1097,14 @@ public interface KnowledgeBaseArticleResource {
 		public Page<KnowledgeBaseArticle>
 				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 					Long parentKnowledgeBaseArticleId, Boolean flatten,
-					String search, Aggregation aggregation, String filterString,
-					Pagination pagination, String sortString)
+					String search, List<String> aggregations,
+					String filterString, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getKnowledgeBaseArticleKnowledgeBaseArticlesPageHttpResponse(
-					parentKnowledgeBaseArticleId, flatten, search, aggregation,
+					parentKnowledgeBaseArticleId, flatten, search, aggregations,
 					filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
@@ -1129,8 +1130,9 @@ public interface KnowledgeBaseArticleResource {
 		public HttpInvoker.HttpResponse
 				getKnowledgeBaseArticleKnowledgeBaseArticlesPageHttpResponse(
 					Long parentKnowledgeBaseArticleId, Boolean flatten,
-					String search, Aggregation aggregation, String filterString,
-					Pagination pagination, String sortString)
+					String search, List<String> aggregations,
+					String filterString, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1160,17 +1162,6 @@ public interface KnowledgeBaseArticleResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if ((aggregation != null) &&
-				(aggregation.getAggregationTerms() != null)) {
-
-				Map<String, String> aggregationTerms =
-					aggregation.getAggregationTerms();
-
-				httpInvoker.parameter(
-					"aggregationTerms",
-					String.join(",", aggregationTerms.values()));
 			}
 
 			if (filterString != null) {
@@ -1275,13 +1266,13 @@ public interface KnowledgeBaseArticleResource {
 		public Page<KnowledgeBaseArticle>
 				getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 					Long knowledgeBaseFolderId, Boolean flatten, String search,
-					Aggregation aggregation, String filterString,
+					List<String> aggregations, String filterString,
 					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getKnowledgeBaseFolderKnowledgeBaseArticlesPageHttpResponse(
-					knowledgeBaseFolderId, flatten, search, aggregation,
+					knowledgeBaseFolderId, flatten, search, aggregations,
 					filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
@@ -1307,7 +1298,7 @@ public interface KnowledgeBaseArticleResource {
 		public HttpInvoker.HttpResponse
 				getKnowledgeBaseFolderKnowledgeBaseArticlesPageHttpResponse(
 					Long knowledgeBaseFolderId, Boolean flatten, String search,
-					Aggregation aggregation, String filterString,
+					List<String> aggregations, String filterString,
 					Pagination pagination, String sortString)
 			throws Exception {
 
@@ -1338,17 +1329,6 @@ public interface KnowledgeBaseArticleResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if ((aggregation != null) &&
-				(aggregation.getAggregationTerms() != null)) {
-
-				Map<String, String> aggregationTerms =
-					aggregation.getAggregationTerms();
-
-				httpInvoker.parameter(
-					"aggregationTerms",
-					String.join(",", aggregationTerms.values()));
 			}
 
 			if (filterString != null) {
@@ -1514,13 +1494,13 @@ public interface KnowledgeBaseArticleResource {
 
 		public Page<KnowledgeBaseArticle> getSiteKnowledgeBaseArticlesPage(
 				Long siteId, Boolean flatten, String search,
-				Aggregation aggregation, String filterString,
+				List<String> aggregations, String filterString,
 				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getSiteKnowledgeBaseArticlesPageHttpResponse(
-					siteId, flatten, search, aggregation, filterString,
+					siteId, flatten, search, aggregations, filterString,
 					pagination, sortString);
 
 			String content = httpResponse.getContent();
@@ -1546,7 +1526,7 @@ public interface KnowledgeBaseArticleResource {
 		public HttpInvoker.HttpResponse
 				getSiteKnowledgeBaseArticlesPageHttpResponse(
 					Long siteId, Boolean flatten, String search,
-					Aggregation aggregation, String filterString,
+					List<String> aggregations, String filterString,
 					Pagination pagination, String sortString)
 			throws Exception {
 
@@ -1577,17 +1557,6 @@ public interface KnowledgeBaseArticleResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if ((aggregation != null) &&
-				(aggregation.getAggregationTerms() != null)) {
-
-				Map<String, String> aggregationTerms =
-					aggregation.getAggregationTerms();
-
-				httpInvoker.parameter(
-					"aggregationTerms",
-					String.join(",", aggregationTerms.values()));
 			}
 
 			if (filterString != null) {

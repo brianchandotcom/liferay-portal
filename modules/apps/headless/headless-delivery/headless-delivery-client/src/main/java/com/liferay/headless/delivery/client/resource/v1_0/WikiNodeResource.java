@@ -14,7 +14,6 @@
 
 package com.liferay.headless.delivery.client.resource.v1_0;
 
-import com.liferay.headless.delivery.client.aggregation.Aggregation;
 import com.liferay.headless.delivery.client.dto.v1_0.WikiNode;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
@@ -23,6 +22,7 @@ import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.headless.delivery.client.serdes.v1_0.WikiNodeSerDes;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
@@ -42,12 +42,12 @@ public interface WikiNodeResource {
 	}
 
 	public Page<WikiNode> getSiteWikiNodesPage(
-			Long siteId, String search, Aggregation aggregation,
+			Long siteId, String search, List<String> aggregations,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteWikiNodesPageHttpResponse(
-			Long siteId, String search, Aggregation aggregation,
+			Long siteId, String search, List<String> aggregations,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
@@ -165,13 +165,13 @@ public interface WikiNodeResource {
 	public static class WikiNodeResourceImpl implements WikiNodeResource {
 
 		public Page<WikiNode> getSiteWikiNodesPage(
-				Long siteId, String search, Aggregation aggregation,
+				Long siteId, String search, List<String> aggregations,
 				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getSiteWikiNodesPageHttpResponse(
-					siteId, search, aggregation, filterString, pagination,
+					siteId, search, aggregations, filterString, pagination,
 					sortString);
 
 			String content = httpResponse.getContent();
@@ -195,7 +195,7 @@ public interface WikiNodeResource {
 		}
 
 		public HttpInvoker.HttpResponse getSiteWikiNodesPageHttpResponse(
-				Long siteId, String search, Aggregation aggregation,
+				Long siteId, String search, List<String> aggregations,
 				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
@@ -222,17 +222,6 @@ public interface WikiNodeResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if ((aggregation != null) &&
-				(aggregation.getAggregationTerms() != null)) {
-
-				Map<String, String> aggregationTerms =
-					aggregation.getAggregationTerms();
-
-				httpInvoker.parameter(
-					"aggregationTerms",
-					String.join(",", aggregationTerms.values()));
 			}
 
 			if (filterString != null) {

@@ -14,7 +14,6 @@
 
 package com.liferay.headless.delivery.client.resource.v1_0;
 
-import com.liferay.headless.delivery.client.aggregation.Aggregation;
 import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardMessage;
 import com.liferay.headless.delivery.client.dto.v1_0.Rating;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
@@ -24,6 +23,7 @@ import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.headless.delivery.client.serdes.v1_0.MessageBoardMessageSerDes;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
@@ -137,14 +137,14 @@ public interface MessageBoardMessageResource {
 	public Page<MessageBoardMessage>
 			getMessageBoardMessageMessageBoardMessagesPage(
 				Long parentMessageBoardMessageId, Boolean flatten,
-				String search, Aggregation aggregation, String filterString,
+				String search, List<String> aggregations, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getMessageBoardMessageMessageBoardMessagesPageHttpResponse(
 				Long parentMessageBoardMessageId, Boolean flatten,
-				String search, Aggregation aggregation, String filterString,
+				String search, List<String> aggregations, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception;
 
@@ -162,14 +162,14 @@ public interface MessageBoardMessageResource {
 	public Page<MessageBoardMessage>
 			getMessageBoardThreadMessageBoardMessagesPage(
 				Long messageBoardThreadId, String search,
-				Aggregation aggregation, String filterString,
+				List<String> aggregations, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getMessageBoardThreadMessageBoardMessagesPageHttpResponse(
 				Long messageBoardThreadId, String search,
-				Aggregation aggregation, String filterString,
+				List<String> aggregations, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception;
 
@@ -194,14 +194,14 @@ public interface MessageBoardMessageResource {
 
 	public Page<MessageBoardMessage> getSiteMessageBoardMessagesPage(
 			Long siteId, Boolean flatten, String search,
-			Aggregation aggregation, String filterString, Pagination pagination,
-			String sortString)
+			List<String> aggregations, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteMessageBoardMessagesPageHttpResponse(
 			Long siteId, Boolean flatten, String search,
-			Aggregation aggregation, String filterString, Pagination pagination,
-			String sortString)
+			List<String> aggregations, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public MessageBoardMessage getSiteMessageBoardMessageByFriendlyUrlPath(
@@ -1063,13 +1063,14 @@ public interface MessageBoardMessageResource {
 		public Page<MessageBoardMessage>
 				getMessageBoardMessageMessageBoardMessagesPage(
 					Long parentMessageBoardMessageId, Boolean flatten,
-					String search, Aggregation aggregation, String filterString,
-					Pagination pagination, String sortString)
+					String search, List<String> aggregations,
+					String filterString, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getMessageBoardMessageMessageBoardMessagesPageHttpResponse(
-					parentMessageBoardMessageId, flatten, search, aggregation,
+					parentMessageBoardMessageId, flatten, search, aggregations,
 					filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
@@ -1095,8 +1096,9 @@ public interface MessageBoardMessageResource {
 		public HttpInvoker.HttpResponse
 				getMessageBoardMessageMessageBoardMessagesPageHttpResponse(
 					Long parentMessageBoardMessageId, Boolean flatten,
-					String search, Aggregation aggregation, String filterString,
-					Pagination pagination, String sortString)
+					String search, List<String> aggregations,
+					String filterString, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1126,17 +1128,6 @@ public interface MessageBoardMessageResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if ((aggregation != null) &&
-				(aggregation.getAggregationTerms() != null)) {
-
-				Map<String, String> aggregationTerms =
-					aggregation.getAggregationTerms();
-
-				httpInvoker.parameter(
-					"aggregationTerms",
-					String.join(",", aggregationTerms.values()));
 			}
 
 			if (filterString != null) {
@@ -1240,13 +1231,13 @@ public interface MessageBoardMessageResource {
 		public Page<MessageBoardMessage>
 				getMessageBoardThreadMessageBoardMessagesPage(
 					Long messageBoardThreadId, String search,
-					Aggregation aggregation, String filterString,
+					List<String> aggregations, String filterString,
 					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getMessageBoardThreadMessageBoardMessagesPageHttpResponse(
-					messageBoardThreadId, search, aggregation, filterString,
+					messageBoardThreadId, search, aggregations, filterString,
 					pagination, sortString);
 
 			String content = httpResponse.getContent();
@@ -1272,7 +1263,7 @@ public interface MessageBoardMessageResource {
 		public HttpInvoker.HttpResponse
 				getMessageBoardThreadMessageBoardMessagesPageHttpResponse(
 					Long messageBoardThreadId, String search,
-					Aggregation aggregation, String filterString,
+					List<String> aggregations, String filterString,
 					Pagination pagination, String sortString)
 			throws Exception {
 
@@ -1299,17 +1290,6 @@ public interface MessageBoardMessageResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if ((aggregation != null) &&
-				(aggregation.getAggregationTerms() != null)) {
-
-				Map<String, String> aggregationTerms =
-					aggregation.getAggregationTerms();
-
-				httpInvoker.parameter(
-					"aggregationTerms",
-					String.join(",", aggregationTerms.values()));
 			}
 
 			if (filterString != null) {
@@ -1475,13 +1455,13 @@ public interface MessageBoardMessageResource {
 
 		public Page<MessageBoardMessage> getSiteMessageBoardMessagesPage(
 				Long siteId, Boolean flatten, String search,
-				Aggregation aggregation, String filterString,
+				List<String> aggregations, String filterString,
 				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getSiteMessageBoardMessagesPageHttpResponse(
-					siteId, flatten, search, aggregation, filterString,
+					siteId, flatten, search, aggregations, filterString,
 					pagination, sortString);
 
 			String content = httpResponse.getContent();
@@ -1507,7 +1487,7 @@ public interface MessageBoardMessageResource {
 		public HttpInvoker.HttpResponse
 				getSiteMessageBoardMessagesPageHttpResponse(
 					Long siteId, Boolean flatten, String search,
-					Aggregation aggregation, String filterString,
+					List<String> aggregations, String filterString,
 					Pagination pagination, String sortString)
 			throws Exception {
 
@@ -1538,17 +1518,6 @@ public interface MessageBoardMessageResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if ((aggregation != null) &&
-				(aggregation.getAggregationTerms() != null)) {
-
-				Map<String, String> aggregationTerms =
-					aggregation.getAggregationTerms();
-
-				httpInvoker.parameter(
-					"aggregationTerms",
-					String.join(",", aggregationTerms.values()));
 			}
 
 			if (filterString != null) {

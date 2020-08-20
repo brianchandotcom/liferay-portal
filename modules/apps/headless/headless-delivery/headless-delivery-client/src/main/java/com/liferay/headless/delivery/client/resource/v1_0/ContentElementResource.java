@@ -14,7 +14,6 @@
 
 package com.liferay.headless.delivery.client.resource.v1_0;
 
-import com.liferay.headless.delivery.client.aggregation.Aggregation;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentElement;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
@@ -23,6 +22,7 @@ import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.headless.delivery.client.serdes.v1_0.ContentElementSerDes;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
@@ -42,23 +42,23 @@ public interface ContentElementResource {
 	}
 
 	public Page<ContentElement> getAssetLibraryContentElementsPage(
-			Long assetLibraryId, String search, Aggregation aggregation,
+			Long assetLibraryId, String search, List<String> aggregations,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getAssetLibraryContentElementsPageHttpResponse(
-				Long assetLibraryId, String search, Aggregation aggregation,
+				Long assetLibraryId, String search, List<String> aggregations,
 				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public Page<ContentElement> getSiteContentElementsPage(
-			Long siteId, String search, Aggregation aggregation,
+			Long siteId, String search, List<String> aggregations,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteContentElementsPageHttpResponse(
-			Long siteId, String search, Aggregation aggregation,
+			Long siteId, String search, List<String> aggregations,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
@@ -119,13 +119,13 @@ public interface ContentElementResource {
 		implements ContentElementResource {
 
 		public Page<ContentElement> getAssetLibraryContentElementsPage(
-				Long assetLibraryId, String search, Aggregation aggregation,
+				Long assetLibraryId, String search, List<String> aggregations,
 				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getAssetLibraryContentElementsPageHttpResponse(
-					assetLibraryId, search, aggregation, filterString,
+					assetLibraryId, search, aggregations, filterString,
 					pagination, sortString);
 
 			String content = httpResponse.getContent();
@@ -150,9 +150,9 @@ public interface ContentElementResource {
 
 		public HttpInvoker.HttpResponse
 				getAssetLibraryContentElementsPageHttpResponse(
-					Long assetLibraryId, String search, Aggregation aggregation,
-					String filterString, Pagination pagination,
-					String sortString)
+					Long assetLibraryId, String search,
+					List<String> aggregations, String filterString,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -178,17 +178,6 @@ public interface ContentElementResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if ((aggregation != null) &&
-				(aggregation.getAggregationTerms() != null)) {
-
-				Map<String, String> aggregationTerms =
-					aggregation.getAggregationTerms();
-
-				httpInvoker.parameter(
-					"aggregationTerms",
-					String.join(",", aggregationTerms.values()));
 			}
 
 			if (filterString != null) {
@@ -219,13 +208,13 @@ public interface ContentElementResource {
 		}
 
 		public Page<ContentElement> getSiteContentElementsPage(
-				Long siteId, String search, Aggregation aggregation,
+				Long siteId, String search, List<String> aggregations,
 				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getSiteContentElementsPageHttpResponse(
-					siteId, search, aggregation, filterString, pagination,
+					siteId, search, aggregations, filterString, pagination,
 					sortString);
 
 			String content = httpResponse.getContent();
@@ -249,7 +238,7 @@ public interface ContentElementResource {
 		}
 
 		public HttpInvoker.HttpResponse getSiteContentElementsPageHttpResponse(
-				Long siteId, String search, Aggregation aggregation,
+				Long siteId, String search, List<String> aggregations,
 				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
@@ -276,17 +265,6 @@ public interface ContentElementResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if ((aggregation != null) &&
-				(aggregation.getAggregationTerms() != null)) {
-
-				Map<String, String> aggregationTerms =
-					aggregation.getAggregationTerms();
-
-				httpInvoker.parameter(
-					"aggregationTerms",
-					String.join(",", aggregationTerms.values()));
 			}
 
 			if (filterString != null) {

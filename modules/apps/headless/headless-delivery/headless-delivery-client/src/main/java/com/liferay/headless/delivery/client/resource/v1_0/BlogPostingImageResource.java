@@ -14,7 +14,6 @@
 
 package com.liferay.headless.delivery.client.resource.v1_0;
 
-import com.liferay.headless.delivery.client.aggregation.Aggregation;
 import com.liferay.headless.delivery.client.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
@@ -25,6 +24,7 @@ import com.liferay.headless.delivery.client.serdes.v1_0.BlogPostingImageSerDes;
 import java.io.File;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
@@ -65,12 +65,12 @@ public interface BlogPostingImageResource {
 		throws Exception;
 
 	public Page<BlogPostingImage> getSiteBlogPostingImagesPage(
-			Long siteId, String search, Aggregation aggregation,
+			Long siteId, String search, List<String> aggregations,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteBlogPostingImagesPageHttpResponse(
-			Long siteId, String search, Aggregation aggregation,
+			Long siteId, String search, List<String> aggregations,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
@@ -334,13 +334,13 @@ public interface BlogPostingImageResource {
 		}
 
 		public Page<BlogPostingImage> getSiteBlogPostingImagesPage(
-				Long siteId, String search, Aggregation aggregation,
+				Long siteId, String search, List<String> aggregations,
 				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getSiteBlogPostingImagesPageHttpResponse(
-					siteId, search, aggregation, filterString, pagination,
+					siteId, search, aggregations, filterString, pagination,
 					sortString);
 
 			String content = httpResponse.getContent();
@@ -365,7 +365,7 @@ public interface BlogPostingImageResource {
 
 		public HttpInvoker.HttpResponse
 				getSiteBlogPostingImagesPageHttpResponse(
-					Long siteId, String search, Aggregation aggregation,
+					Long siteId, String search, List<String> aggregations,
 					String filterString, Pagination pagination,
 					String sortString)
 			throws Exception {
@@ -393,17 +393,6 @@ public interface BlogPostingImageResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if ((aggregation != null) &&
-				(aggregation.getAggregationTerms() != null)) {
-
-				Map<String, String> aggregationTerms =
-					aggregation.getAggregationTerms();
-
-				httpInvoker.parameter(
-					"aggregationTerms",
-					String.join(",", aggregationTerms.values()));
 			}
 
 			if (filterString != null) {

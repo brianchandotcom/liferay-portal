@@ -14,7 +14,6 @@
 
 package com.liferay.headless.delivery.client.resource.v1_0;
 
-import com.liferay.headless.delivery.client.aggregation.Aggregation;
 import com.liferay.headless.delivery.client.dto.v1_0.WikiPage;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
@@ -23,6 +22,7 @@ import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.headless.delivery.client.serdes.v1_0.WikiPageSerDes;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
@@ -42,12 +42,12 @@ public interface WikiPageResource {
 	}
 
 	public Page<WikiPage> getWikiNodeWikiPagesPage(
-			Long wikiNodeId, String search, Aggregation aggregation,
+			Long wikiNodeId, String search, List<String> aggregations,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getWikiNodeWikiPagesPageHttpResponse(
-			Long wikiNodeId, String search, Aggregation aggregation,
+			Long wikiNodeId, String search, List<String> aggregations,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
@@ -180,13 +180,13 @@ public interface WikiPageResource {
 	public static class WikiPageResourceImpl implements WikiPageResource {
 
 		public Page<WikiPage> getWikiNodeWikiPagesPage(
-				Long wikiNodeId, String search, Aggregation aggregation,
+				Long wikiNodeId, String search, List<String> aggregations,
 				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getWikiNodeWikiPagesPageHttpResponse(
-					wikiNodeId, search, aggregation, filterString, pagination,
+					wikiNodeId, search, aggregations, filterString, pagination,
 					sortString);
 
 			String content = httpResponse.getContent();
@@ -210,7 +210,7 @@ public interface WikiPageResource {
 		}
 
 		public HttpInvoker.HttpResponse getWikiNodeWikiPagesPageHttpResponse(
-				Long wikiNodeId, String search, Aggregation aggregation,
+				Long wikiNodeId, String search, List<String> aggregations,
 				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
@@ -237,17 +237,6 @@ public interface WikiPageResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if ((aggregation != null) &&
-				(aggregation.getAggregationTerms() != null)) {
-
-				Map<String, String> aggregationTerms =
-					aggregation.getAggregationTerms();
-
-				httpInvoker.parameter(
-					"aggregationTerms",
-					String.join(",", aggregationTerms.values()));
 			}
 
 			if (filterString != null) {

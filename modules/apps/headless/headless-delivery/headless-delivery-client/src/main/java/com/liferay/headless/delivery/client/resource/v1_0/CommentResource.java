@@ -14,7 +14,6 @@
 
 package com.liferay.headless.delivery.client.resource.v1_0;
 
-import com.liferay.headless.delivery.client.aggregation.Aggregation;
 import com.liferay.headless.delivery.client.dto.v1_0.Comment;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
@@ -23,6 +22,7 @@ import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.headless.delivery.client.serdes.v1_0.CommentSerDes;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
@@ -42,12 +42,12 @@ public interface CommentResource {
 	}
 
 	public Page<Comment> getBlogPostingCommentsPage(
-			Long blogPostingId, String search, Aggregation aggregation,
+			Long blogPostingId, String search, List<String> aggregations,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getBlogPostingCommentsPageHttpResponse(
-			Long blogPostingId, String search, Aggregation aggregation,
+			Long blogPostingId, String search, List<String> aggregations,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
@@ -97,12 +97,12 @@ public interface CommentResource {
 		throws Exception;
 
 	public Page<Comment> getCommentCommentsPage(
-			Long parentCommentId, String search, Aggregation aggregation,
+			Long parentCommentId, String search, List<String> aggregations,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getCommentCommentsPageHttpResponse(
-			Long parentCommentId, String search, Aggregation aggregation,
+			Long parentCommentId, String search, List<String> aggregations,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
@@ -114,12 +114,12 @@ public interface CommentResource {
 		throws Exception;
 
 	public Page<Comment> getDocumentCommentsPage(
-			Long documentId, String search, Aggregation aggregation,
+			Long documentId, String search, List<String> aggregations,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getDocumentCommentsPageHttpResponse(
-			Long documentId, String search, Aggregation aggregation,
+			Long documentId, String search, List<String> aggregations,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
@@ -139,14 +139,14 @@ public interface CommentResource {
 		throws Exception;
 
 	public Page<Comment> getStructuredContentCommentsPage(
-			Long structuredContentId, String search, Aggregation aggregation,
+			Long structuredContentId, String search, List<String> aggregations,
 			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getStructuredContentCommentsPageHttpResponse(
 				Long structuredContentId, String search,
-				Aggregation aggregation, String filterString,
+				List<String> aggregations, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception;
 
@@ -223,13 +223,13 @@ public interface CommentResource {
 	public static class CommentResourceImpl implements CommentResource {
 
 		public Page<Comment> getBlogPostingCommentsPage(
-				Long blogPostingId, String search, Aggregation aggregation,
+				Long blogPostingId, String search, List<String> aggregations,
 				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getBlogPostingCommentsPageHttpResponse(
-					blogPostingId, search, aggregation, filterString,
+					blogPostingId, search, aggregations, filterString,
 					pagination, sortString);
 
 			String content = httpResponse.getContent();
@@ -253,7 +253,7 @@ public interface CommentResource {
 		}
 
 		public HttpInvoker.HttpResponse getBlogPostingCommentsPageHttpResponse(
-				Long blogPostingId, String search, Aggregation aggregation,
+				Long blogPostingId, String search, List<String> aggregations,
 				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
@@ -280,17 +280,6 @@ public interface CommentResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if ((aggregation != null) &&
-				(aggregation.getAggregationTerms() != null)) {
-
-				Map<String, String> aggregationTerms =
-					aggregation.getAggregationTerms();
-
-				httpInvoker.parameter(
-					"aggregationTerms",
-					String.join(",", aggregationTerms.values()));
 			}
 
 			if (filterString != null) {
@@ -748,13 +737,13 @@ public interface CommentResource {
 		}
 
 		public Page<Comment> getCommentCommentsPage(
-				Long parentCommentId, String search, Aggregation aggregation,
+				Long parentCommentId, String search, List<String> aggregations,
 				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getCommentCommentsPageHttpResponse(
-					parentCommentId, search, aggregation, filterString,
+					parentCommentId, search, aggregations, filterString,
 					pagination, sortString);
 
 			String content = httpResponse.getContent();
@@ -778,7 +767,7 @@ public interface CommentResource {
 		}
 
 		public HttpInvoker.HttpResponse getCommentCommentsPageHttpResponse(
-				Long parentCommentId, String search, Aggregation aggregation,
+				Long parentCommentId, String search, List<String> aggregations,
 				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
@@ -805,17 +794,6 @@ public interface CommentResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if ((aggregation != null) &&
-				(aggregation.getAggregationTerms() != null)) {
-
-				Map<String, String> aggregationTerms =
-					aggregation.getAggregationTerms();
-
-				httpInvoker.parameter(
-					"aggregationTerms",
-					String.join(",", aggregationTerms.values()));
 			}
 
 			if (filterString != null) {
@@ -911,13 +889,13 @@ public interface CommentResource {
 		}
 
 		public Page<Comment> getDocumentCommentsPage(
-				Long documentId, String search, Aggregation aggregation,
+				Long documentId, String search, List<String> aggregations,
 				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getDocumentCommentsPageHttpResponse(
-					documentId, search, aggregation, filterString, pagination,
+					documentId, search, aggregations, filterString, pagination,
 					sortString);
 
 			String content = httpResponse.getContent();
@@ -941,7 +919,7 @@ public interface CommentResource {
 		}
 
 		public HttpInvoker.HttpResponse getDocumentCommentsPageHttpResponse(
-				Long documentId, String search, Aggregation aggregation,
+				Long documentId, String search, List<String> aggregations,
 				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
@@ -968,17 +946,6 @@ public interface CommentResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if ((aggregation != null) &&
-				(aggregation.getAggregationTerms() != null)) {
-
-				Map<String, String> aggregationTerms =
-					aggregation.getAggregationTerms();
-
-				httpInvoker.parameter(
-					"aggregationTerms",
-					String.join(",", aggregationTerms.values()));
 			}
 
 			if (filterString != null) {
@@ -1136,13 +1103,13 @@ public interface CommentResource {
 
 		public Page<Comment> getStructuredContentCommentsPage(
 				Long structuredContentId, String search,
-				Aggregation aggregation, String filterString,
+				List<String> aggregations, String filterString,
 				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getStructuredContentCommentsPageHttpResponse(
-					structuredContentId, search, aggregation, filterString,
+					structuredContentId, search, aggregations, filterString,
 					pagination, sortString);
 
 			String content = httpResponse.getContent();
@@ -1168,7 +1135,7 @@ public interface CommentResource {
 		public HttpInvoker.HttpResponse
 				getStructuredContentCommentsPageHttpResponse(
 					Long structuredContentId, String search,
-					Aggregation aggregation, String filterString,
+					List<String> aggregations, String filterString,
 					Pagination pagination, String sortString)
 			throws Exception {
 
@@ -1195,17 +1162,6 @@ public interface CommentResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
-			}
-
-			if ((aggregation != null) &&
-				(aggregation.getAggregationTerms() != null)) {
-
-				Map<String, String> aggregationTerms =
-					aggregation.getAggregationTerms();
-
-				httpInvoker.parameter(
-					"aggregationTerms",
-					String.join(",", aggregationTerms.values()));
 			}
 
 			if (filterString != null) {

@@ -39,6 +39,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidCharactersForFieldType;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidDefaultLocaleForProperty;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidIndexType;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidTypeForFieldType;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidValidationExpression;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidVisibilityExpression;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
@@ -258,6 +259,20 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			throw new MustSetFieldType(ddmFormField.getName());
 		}
 
+		Boolean validType = false;
+
+		for (String type : _SUPPORTED_DDM_FORM_FIELD_TYPES) {
+			if (type.equals(ddmFormField.getType())) {
+				validType = true;
+
+				break;
+			}
+		}
+
+		if (!validType) {
+			throw new MustSetValidTypeForFieldType(ddmFormField.getType());
+		}
+
 		Matcher matcher = _ddmFormFieldTypePattern.matcher(
 			ddmFormField.getType());
 
@@ -403,6 +418,14 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 
 	private static final String[] _DDM_FORM_FIELD_INDEX_TYPES = {
 		StringPool.BLANK, "keyword", "none", "text"
+	};
+
+	private static final String[] _SUPPORTED_DDM_FORM_FIELD_TYPES = {
+		"checkbox", "ddm-color", "ddm-date", "ddm-decimal",
+		"ddm-documentlibrary", "ddm-geolocation", "ddm-image", "ddm-integer",
+		"ddm-journal-article", "ddm-link-to-page", "ddm-number",
+		"ddm-paragraph", "ddm-separator", "ddm-text-html", "fieldset", "option",
+		"radio", "select", "text", "textarea"
 	};
 
 	private static final Pattern _ddmFormFieldNamePattern = Pattern.compile(

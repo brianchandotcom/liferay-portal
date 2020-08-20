@@ -313,6 +313,25 @@ public class DDMFormValidationException extends PortalException {
 
 	}
 
+	public static class MustSetValidTypeForFieldType
+		extends DDMFormValidationException {
+
+		public MustSetValidTypeForFieldType(String fieldType) {
+			super(
+				String.format(
+					"Invalid type entered for field type %s", fieldType));
+
+			_fieldType = fieldType;
+		}
+
+		public String getFieldType() {
+			return _fieldType;
+		}
+
+		private final String _fieldType;
+
+	}
+
 	public static class MustSetValidValidationExpression
 		extends MustSetValidDDMFormFieldExpression {
 

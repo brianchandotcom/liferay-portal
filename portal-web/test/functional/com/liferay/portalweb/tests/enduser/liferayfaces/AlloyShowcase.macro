@@ -100,6 +100,180 @@ definition {
 			value1 = "${dataListItem5}");
 	}
 
+	macro viewDataSelection{
+		var dataListItem1 = "Compatible";
+		var dataListItem2 = "Enterprise Ready";
+		var dataListItem3 = "Powerful Integration";
+		var dataListItem4 = "Lightweight";
+		var dataListItem5 = "Open Source";
+
+		var dataModal1 = "Compatible: Liferay lets you reuse the enterprise software and skills you already have in-house.";
+		var dataModal2 = "Enterprise Ready: Liferay is designed for scalability, reliability, and high performance both on-premise and in the cloud.";
+		var dataModal3 = "Powerful Integration: Liferay is designed for integrating with both enterprise systems and web-based resources.";
+		var dataModal4 = "Lightweight: With Liferay, projects are completed faster and with smaller budgets so you can see immediate results.";
+		var dataModal5 = "Open Source: Our open source community fosters innovation, increase security, and improves quality of the software.";
+
+		AssertTextEquals(
+			key_item = "1",
+			locator1 = "AlloyShowcase#DATA_LIST_UNORDERED",
+			value1 = "${dataListItem1}");
+		AssertTextEquals(
+			key_item = "2",
+			locator1 = "AlloyShowcase#DATA_LIST_UNORDERED",
+			value1 = "${dataListItem2}");
+		AssertTextEquals(
+			key_item = "3",
+			locator1 = "AlloyShowcase#DATA_LIST_UNORDERED",
+			value1 = "${dataListItem3}");
+		AssertTextEquals(
+			key_item = "4",
+			locator1 = "AlloyShowcase#DATA_LIST_UNORDERED",
+			value1 = "${dataListItem4}");
+		AssertTextEquals(
+			key_item = "5",
+			locator1 = "AlloyShowcase#DATA_LIST_UNORDERED",
+			value1 = "${dataListItem5}");
+		AssertElementNotPresent(
+			key_item = "6",
+			locator1 = "AlloyShowcase#DATA_LIST_UNORDERED");
+
+		AssertElementPresent(
+			key_item = "1",
+			locator1 = "AlloyShowcase#SEARCH_ICON");
+		AssertElementPresent(
+			key_item = "2",
+			locator1 = "AlloyShowcase#SEARCH_ICON");
+		AssertElementPresent(
+			key_item = "3",
+			locator1 = "AlloyShowcase#SEARCH_ICON");
+		AssertElementPresent(
+			key_item = "4",
+			locator1 = "AlloyShowcase#SEARCH_ICON");
+		AssertElementPresent(
+			key_item = "5",
+			locator1 = "AlloyShowcase#SEARCH_ICON");
+
+		Click(
+			key_item = "1",
+			locator1 = "AlloyShowcase#SELECTION_MODAL_LINK");
+
+		AssertTextEquals(
+			locator1 = "AlloyShowcase#SELECTION_MODAL_TEXT",
+			value1 = "${dataModal1}"
+
+		Click(
+			key_item = "2",
+			locator1 = "AlloyShowcase#SELECTION_MODAL_LINK");
+
+		AssertTextEquals(
+			locator1 = "AlloyShowcase#SELECTION_MODAL_TEXT",
+			value1 = "${dataModal2}"
+
+		Click(
+			key_item = "3",
+			locator1 = "AlloyShowcase#SELECTION_MODAL_LINK");
+
+		AssertTextEquals(
+			locator1 = "AlloyShowcase#SELECTION_MODAL_TEXT",
+			value1 = "${dataModal3}"
+
+		Click(
+			key_item = "4",
+			locator1 = "AlloyShowcase#SELECTION_MODAL_LINK");
+
+		AssertTextEquals(
+			locator1 = "AlloyShowcase#SELECTION_MODAL_TEXT",
+			value1 = "${dataModal4}"
+		
+		Click(
+			key_item = "5",
+			locator1 = "AlloyShowcase#SELECTION_MODAL_LINK");
+
+		AssertTextEquals(
+			locator1 = "AlloyShowcase#SELECTION_MODAL_TEXT",
+			value1 = "${dataModal5}"
+		);
+	}
+
+	macro viewDataTable {
+		var dataListItemTitle1 = "Compatible";
+		var dataListItemTitle2 = "Enterprise Ready";
+		var dataListItemTitle3 = "Powerful Integration";
+		var dataListItemTitle4 = "Lightweight";
+		var dataListItemTitle5 = "Open Source";
+		var dataListItemDescription1 = "Liferay lets you reuse the enterprise software and skills you already have in-house.";
+		var dataListItemDescription2 = "Liferay is designed for scalability, reliability, and high performance both on-premise and in the cloud.";
+		var dataListItemDescription3 = "Liferay is designed for integrating with both enterprise systems and web-based resources.";
+		var dataListItemDescription4 = "With Liferay, projects are completed faster and with smaller budgets so you can see immediate results.";
+		var dataListItemDescription5 = "Our open source community fosters innovation, increase security, and improves quality of the software.";
+
+
+		AssertTextEquals(
+			key_item = "1",
+			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_TERM",
+			value1 = "${dataListItemTitle1}");
+		AssertTextEquals(
+			key_item = "2",
+			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_TERM",
+			value1 = "${dataListItemTitle2}");
+		AssertTextEquals(
+			key_item = "3",
+			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_TERM",
+			value1 = "${dataListItemTitle3}");
+		AssertTextEquals(
+			key_item = "4",
+			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_TERM",
+			value1 = "${dataListItemTitle4}");
+		AssertTextEquals(
+			key_item = "5",
+			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_TERM",
+			value1 = "${dataListItemTitle5}");
+		AssertElementNotPresent(
+			key_item = "6",
+			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_TERM");
+
+		AssertElementPresent(
+			key_icon = "icon-compatible.png",
+			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_ICON");
+		AssertElementPresent(
+			key_icon = "icon-enterprise.png",
+			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_ICON");
+		AssertElementPresent(
+			key_icon = "icon-integration.png",
+			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_ICON");
+		AssertElementPresent(
+			key_icon = "icon-lightweight.png",
+			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_ICON");
+		AssertElementPresent(
+			key_icon = "icon-open-source.png",
+			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_ICON");
+
+		AssertTextEquals(
+			key_item = "1",
+			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_DESCRIPTION",
+			value1 = "${dataListItemDescription1}");
+		AssertTextEquals(
+			key_item = "2",
+			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_DESCRIPTION",
+			value1 = "${dataListItemDescription2}");
+		AssertTextEquals(
+			key_item = "3",
+			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_DESCRIPTION",
+			value1 = "${dataListItemDescription3}");
+		AssertTextEquals(
+			key_item = "4",
+			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_DESCRIPTION",
+			value1 = "${dataListItemDescription4}");
+		AssertTextEquals(
+			key_item = "5",
+			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_DESCRIPTION",
+			value1 = "${dataListItemDescription5}");
+		AssertElementNotPresent(
+			key_item = "6",
+			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_DESCRIPTION");
+
+	}
+
 	macro viewPaginator {
 		Click(
 			key_buttonLabel = "nextPage",

@@ -46,9 +46,17 @@ definition {
 
 	@priority = "5"
 	test DataListSmoke {
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datalist/general");
+		// Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datalist/general");
 
-		AlloyShowcase.viewDataList();
+		// AlloyShowcase.viewDataList();
+
+		// Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datalist/data-model");
+
+		// AlloyShowcase.viewDataTable();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datalist/selection");
+
+		AlloyShowcase.viewDataSelection();
 	}
 
 	@priority = "5"

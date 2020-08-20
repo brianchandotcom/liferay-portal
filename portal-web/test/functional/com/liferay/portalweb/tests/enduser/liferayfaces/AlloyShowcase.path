@@ -73,6 +73,35 @@
 	<td>//select/option[@value='100'][(@selected='selected')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ALLOY_DATA_LIST_ITEM_TERM</td>
+	<td>xpath=(//dl[@class='alloy-data-list']//dt)[${key_item}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALLOY_DATA_LIST_ITEM_DESCRIPTION</td>
+	<td>xpath=(//dl[@class='alloy-data-list']//dd)[${key_item}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALLOY_DATA_LIST_ITEM_ICON</td>
+	<td>//img[contains(@src,'${key_icon}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_ICON</td>
+	<td>xpath=(//*[contains(@class,'icon-search')])[${key_item}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTION_MODAL_LINK</td>
+	<td>//div[@class='showcase-example']//ul//li[${key_item}]//a</td>
+	<td></td>
+</tr><tr>
+	<td>SELECTION_MODAL_TEXT</td>
+	<td>//div[@class='yui3-widget-bd modal-body']//div//div//span</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

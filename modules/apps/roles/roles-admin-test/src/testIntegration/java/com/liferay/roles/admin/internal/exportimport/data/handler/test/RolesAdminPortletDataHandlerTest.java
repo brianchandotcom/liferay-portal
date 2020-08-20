@@ -28,8 +28,16 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
+import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
+import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -73,13 +81,26 @@ public class RolesAdminPortletDataHandlerTest
 	protected void checkManifestSummaryReferrerClassNames(
 		ManifestSummary manifestSummary) {
 
+		Set<String> classNames = new HashSet<>();
+
+		classNames.add(StagedModelType.REFERRER_CLASS_NAME_ALL);
+		classNames.add(Role.class.getName());
+
+		for (RoleTypeContributor roleTypeContributor :
+				_roleTypeContributorProvider.getRoleTypeContributors()) {
+
+			if (Validator.isNotNull(roleTypeContributor.getClassName())) {
+				classNames.add(roleTypeContributor.getClassName());
+			}
+		}
+
 		for (String manifestSummaryKey :
 				manifestSummary.getManifestSummaryKeys()) {
 
+			Stream<String> classNamesStream = classNames.stream();
+
 			Assert.assertTrue(
-				manifestSummaryKey.endsWith(
-					StagedModelType.REFERRER_CLASS_NAME_ALL) ||
-				manifestSummaryKey.endsWith(Role.class.getName()));
+				classNamesStream.anyMatch(manifestSummaryKey::endsWith));
 		}
 	}
 
@@ -110,6 +131,9 @@ public class RolesAdminPortletDataHandlerTest
 
 	@DeleteAfterTestRun
 	private Company _company;
+
+	@Inject
+	private RoleTypeContributorProvider _roleTypeContributorProvider;
 
 	@DeleteAfterTestRun
 	private User _user;

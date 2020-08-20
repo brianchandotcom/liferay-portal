@@ -14,6 +14,9 @@
 
 package com.liferay.project.templates.service.wrapper;
 
+import aQute.bnd.version.Version;
+import aQute.bnd.version.VersionRange;
+
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.BaseProjectTemplatesTestCase;
 import com.liferay.project.templates.extensions.util.Validator;
@@ -92,6 +95,17 @@ public class ProjectTemplatesServiceWrapperTest
 
 		testContains(
 			gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_PORTAL_API);
+
+		Version version = Version.parseVersion(_liferayVersion);
+
+		VersionRange versionRange = new VersionRange("[7.0,7.3)");
+
+		if (versionRange.includes(version)) {
+			testContains(
+				gradleProjectDir, "build.gradle",
+				DEPENDENCY_ORG_OSGI_ANNOTATIONS);
+		}
+
 		testContains(
 			gradleProjectDir,
 			"src/main/java/serviceoverride/Serviceoverride.java",

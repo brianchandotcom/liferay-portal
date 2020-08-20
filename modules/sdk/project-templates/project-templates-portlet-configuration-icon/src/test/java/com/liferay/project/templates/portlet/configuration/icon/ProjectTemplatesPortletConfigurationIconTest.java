@@ -14,6 +14,9 @@
 
 package com.liferay.project.templates.portlet.configuration.icon;
 
+import aQute.bnd.version.Version;
+import aQute.bnd.version.VersionRange;
+
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.BaseProjectTemplatesTestCase;
 import com.liferay.project.templates.extensions.util.Validator;
@@ -92,6 +95,17 @@ public class ProjectTemplatesPortletConfigurationIconTest
 
 		testContains(
 			gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_PORTAL_API);
+
+		Version version = Version.parseVersion(_liferayVersion);
+
+		VersionRange versionRange = new VersionRange("[7.0,7.3)");
+
+		if (versionRange.includes(version)) {
+			testContains(
+				gradleProjectDir, "build.gradle", DEPENDENCY_JAVAX_PORTLET_API,
+				DEPENDENCY_JAVAX_SERVLET_API, DEPENDENCY_ORG_OSGI_ANNOTATIONS);
+		}
+
 		testContains(
 			gradleProjectDir,
 			"src/main/java/blade/test/portlet/configuration/icon" +

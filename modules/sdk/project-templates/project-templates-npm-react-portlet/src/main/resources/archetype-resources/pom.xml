@@ -93,7 +93,7 @@
 			<scope>provided</scope>
 		</dependency>
 #end
-</dependencies>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>

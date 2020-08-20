@@ -168,12 +168,39 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				"dependency-injector=\"ds\"");
 		}
 
-		testContains(
-			gradleProjectDir, _name + "-api/build.gradle",
-			DEPENDENCY_RELEASE_PORTAL_API);
-		testContains(
-			gradleProjectDir, _name + "-service/build.gradle",
-			DEPENDENCY_RELEASE_PORTAL_API);
+		if (_liferayVersion.equals("7.0.6") ||
+			_liferayVersion.equals("7.1.3")) {
+
+			testContains(
+				gradleProjectDir, _name + "-api/build.gradle",
+				DEPENDENCY_RELEASE_PORTAL_API, "biz.aQute.bnd.annotation");
+			testContains(
+				gradleProjectDir, _name + "-service/build.gradle",
+				DEPENDENCY_RELEASE_PORTAL_API, "biz.aQute.bnd.annotation");
+
+			testNotContains(
+				gradleProjectDir, _name + "-api/build.gradle",
+				"org.osgi.annotation.versioning");
+			testNotContains(
+				gradleProjectDir, _name + "-service/build.gradle",
+				"org.osgi.annotation.versioning");
+		}
+		else {
+			testContains(
+				gradleProjectDir, _name + "-api/build.gradle",
+				DEPENDENCY_RELEASE_PORTAL_API,
+				"org.osgi.annotation.versioning");
+			testContains(
+				gradleProjectDir, _name + "-service/build.gradle",
+				DEPENDENCY_RELEASE_PORTAL_API,
+				"org.osgi.annotation.versioning");
+
+			testNotContains(
+				gradleProjectDir, _name + "-api/build.gradle", "biz.aQute.bnd");
+			testNotContains(
+				gradleProjectDir, _name + "-service/build.gradle",
+				"biz.aQute.bnd");
+		}
 
 		File mavenWorkspaceDir = buildWorkspace(
 			temporaryFolder, "maven", "mavenWS", _liferayVersion,

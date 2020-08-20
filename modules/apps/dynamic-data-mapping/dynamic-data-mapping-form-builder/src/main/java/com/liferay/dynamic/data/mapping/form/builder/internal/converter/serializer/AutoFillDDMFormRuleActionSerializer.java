@@ -41,14 +41,23 @@ public class AutoFillDDMFormRuleActionSerializer
 	public String serialize(
 		SPIDDMFormRuleSerializerContext spiDDMFormRuleSerializerContext) {
 
+		Map<String, String> inputParametersMapper =
+			_autoFillDDMFormRuleAction.getInputParametersMapper();
+		Map<String, String> outputParametersMapper =
+			_autoFillDDMFormRuleAction.getOutputParametersMapper();
+
+		if (inputParametersMapper.isEmpty() &&
+			outputParametersMapper.isEmpty()) {
+
+			return null;
+		}
+
 		return String.format(
 			_FUNCTION_CALL_TERNARY_EXPRESSION_FORMAT, "call",
 			StringUtil.quote(
 				_autoFillDDMFormRuleAction.getDDMDataProviderInstanceUUID()),
-			convertAutoFillInputParameters(
-				_autoFillDDMFormRuleAction.getInputParametersMapper()),
-			convertAutoFillOutputParameters(
-				_autoFillDDMFormRuleAction.getOutputParametersMapper()));
+			convertAutoFillInputParameters(inputParametersMapper),
+			convertAutoFillOutputParameters(outputParametersMapper));
 	}
 
 	protected String convertAutoFillInputParameters(

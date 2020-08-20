@@ -15,11 +15,7 @@
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
 const clearTargetValue = (actions, index) => {
-	if (
-		actions[index] &&
-		actions[index].action !== 'auto-fill' &&
-		actions[index].action !== 'jump-to-page'
-	) {
+	if (actions[index]) {
 		actions[index].target = '';
 	}
 
@@ -114,27 +110,49 @@ const formatRules = (pages, rules) => {
 };
 
 const syncActions = (pages, actions) => {
-	const visitor = new PagesVisitor(pages);
+	actions.forEach((action) => {
+		if (action.action === 'auto-fill') {
+			const {inputs, outputs} = action;
 
-	actions.forEach((action, index) => {
-		let targetFieldExists = false;
+			Object.keys(inputs)
+				.filter((key) => !targetFieldExists(inputs[key], pages))
+				.map((key) => delete inputs[key]);
 
-		visitor.mapFields(
-			({fieldName}) => {
-				if (action.target === fieldName) {
-					targetFieldExists = true;
-				}
-			},
-			true,
-			true
-		);
+			Object.keys(outputs)
+				.filter((key) => !targetFieldExists(outputs[key], pages))
+				.map((key) => delete outputs[key]);
+		}
+		else if (action.action === 'jump-to-page') {
+			const target = parseInt(action.target, 10) + 1;
 
-		if (!targetFieldExists) {
-			actions = clearTargetValue(actions, index);
+			if (pages.length < 3 || target > pages.length) {
+				action.target = '';
+			}
+		}
+		else if (!targetFieldExists(action.target, pages)) {
+			action.target = '';
 		}
 	});
 
 	return actions;
+};
+
+const targetFieldExists = (target, pages) => {
+	const visitor = new PagesVisitor(pages);
+
+	let targetFieldExists = false;
+
+	visitor.mapFields(
+		({fieldName}) => {
+			if (target === fieldName) {
+				targetFieldExists = true;
+			}
+		},
+		true,
+		true
+	);
+
+	return targetFieldExists;
 };
 
 export default {

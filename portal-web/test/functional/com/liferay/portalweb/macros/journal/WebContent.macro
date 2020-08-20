@@ -2081,9 +2081,12 @@ definition {
 			locator1 = "TextInput#TITLE",
 			value1 = "${webContentTitle}");
 
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "content",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
 		AssertTextEquals(
-			key_editor = "content",
-			locator1 = "AlloyEditor#EDITOR",
+			locator1 = "CKEditor#BODY",
 			value1 = "${webContentContent}");
 
 		SelectFrameTop();
@@ -2163,9 +2166,12 @@ definition {
 			locator1 = "TextInput#TITLE",
 			value1 = "${webContentTitle}");
 
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "content",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
 		AssertTextEquals(
-			key_editor = "content",
-			locator1 = "AlloyEditor#EDITOR",
+			locator1 = "CKEditor#BODY",
 			value1 = "${webContentContent}");
 
 		SelectFrameTop();
@@ -2303,9 +2309,12 @@ definition {
 			locator1 = "TextInput#TITLE",
 			value1 = "${webContentTitle}");
 
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "content",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
 		AssertTextEquals(
-			key_editor = "content",
-			locator1 = "AlloyEditor#EDITOR",
+			locator1 = "CKEditor#BODY",
 			value1 = "${webContentContent}");
 
 		SelectFrameTop();
@@ -2333,10 +2342,15 @@ definition {
 			locator1 = "TextInput#TITLE",
 			value1 = "${webContentTitle}");
 
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "content",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
 		AssertTextEquals(
-			key_editor = "content",
-			locator1 = "AlloyEditor#EDITOR",
+			locator1 = "CKEditor#BODY",
 			value1 = "${webContentContent}");
+
+		SelectFrameTop();
 	}
 
 }

@@ -12,6 +12,16 @@
 				"match_mapping_type": "string",
 				"match_pattern": "regex"
 			}
+		},
+		{
+			"template_additional_mapping": {
+				"mapping": {
+					"store": true,
+					"type": "keyword"
+				},
+				"match": "*_additional_mapping",
+				"match_mapping_type": "string"
+			}
 		}
 	],
 	"properties": {

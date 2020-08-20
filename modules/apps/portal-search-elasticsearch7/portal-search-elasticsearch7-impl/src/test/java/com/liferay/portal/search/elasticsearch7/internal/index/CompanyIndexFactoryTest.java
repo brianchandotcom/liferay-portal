@@ -323,6 +323,25 @@ public class CompanyIndexFactoryTest {
 	}
 
 	@Test
+	public void testOptionalDefaultTemplateIsAlwaysAfterContributedTemplates()
+		throws Exception {
+
+		Mockito.when(
+			_elasticsearchConfigurationWrapper.additionalTypeMappings()
+		).thenReturn(
+			loadAdditionalTypeMappings()
+		);
+
+		createIndices();
+
+		indexOneDocument("match_additional_mapping");
+		indexOneDocument("match_catch_all");
+
+		assertType("match_additional_mapping", "keyword");
+		assertType("match_catch_all", "text");
+	}
+
+	@Test
 	public void testOverrideTypeMappings() throws Exception {
 		Mockito.when(
 			_elasticsearchConfigurationWrapper.additionalIndexConfigurations()

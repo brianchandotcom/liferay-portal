@@ -143,6 +143,8 @@ public class TypedProperties {
 			}
 		}
 
+		sb.setIndex(sb.index() - 1);
+
 		writer.write(sb.toString());
 	}
 

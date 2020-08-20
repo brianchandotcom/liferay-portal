@@ -15,7 +15,6 @@
 package com.liferay.portal.file.install.internal.properties;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -283,8 +282,7 @@ public class TypedPropertiesTest {
 		try (StringWriter stringWriter = new StringWriter()) {
 			typedProperties.save(stringWriter);
 
-			Assert.assertEquals(
-				expected + StringPool.NEW_LINE, stringWriter.toString());
+			Assert.assertEquals(expected, stringWriter.toString());
 		}
 	}
 

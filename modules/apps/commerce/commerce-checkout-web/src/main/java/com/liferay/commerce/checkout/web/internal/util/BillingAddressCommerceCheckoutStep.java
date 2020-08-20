@@ -110,15 +110,14 @@ public class BillingAddressCommerceCheckoutStep
 		throws Exception {
 
 		try {
-			AddressCommerceCheckoutStepHelper
-				addressCommerceCheckoutStepHelper =
-					new AddressCommerceCheckoutStepHelper(
-						commerceAccountLocalService,
-						CommerceAddressConstants.ADDRESS_TYPE_BILLING,
-						commerceOrderService, commerceAddressService,
-						commerceOrderModelResourcePermission);
+			AddressCommerceCheckoutStepUtil addressCommerceCheckoutStepUtil =
+				new AddressCommerceCheckoutStepUtil(
+					commerceAccountLocalService,
+					CommerceAddressConstants.ADDRESS_TYPE_BILLING,
+					commerceOrderService, commerceAddressService,
+					commerceOrderModelResourcePermission);
 
-			addressCommerceCheckoutStepHelper.updateCommerceOrderAddress(
+			addressCommerceCheckoutStepUtil.updateCommerceOrderAddress(
 				actionRequest,
 				CommerceCheckoutWebKeys.BILLING_ADDRESS_PARAM_NAME);
 		}

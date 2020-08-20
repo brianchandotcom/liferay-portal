@@ -19,7 +19,7 @@ import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProces
 import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcessLog;
 import com.liferay.commerce.machine.learning.internal.gateway.CommerceMLGatewayClient;
 import com.liferay.commerce.machine.learning.internal.gateway.CommerceMLJobState;
-import com.liferay.commerce.machine.learning.internal.gateway.constants.CommerceMLJobStateConstants;
+import com.liferay.commerce.machine.learning.internal.gateway.CommerceMLJobStateConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

@@ -15,7 +15,6 @@
 package com.liferay.commerce.organization.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.organization.web.internal.display.context.CommerceOrganizationDisplayContext;
-import com.liferay.commerce.organization.web.internal.servlet.taglib.ui.constants.CommerceOrganizationScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;

@@ -20,7 +20,7 @@ import com.liferay.commerce.account.service.CommerceAccountOrganizationRelServic
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.organization.web.internal.model.Account;
-import com.liferay.commerce.organization.web.internal.servlet.taglib.ui.constants.CommerceOrganizationScreenNavigationConstants;
+import com.liferay.commerce.organization.web.internal.servlet.taglib.ui.CommerceOrganizationScreenNavigationConstants;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;

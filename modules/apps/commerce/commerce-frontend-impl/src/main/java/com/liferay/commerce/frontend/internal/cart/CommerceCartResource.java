@@ -204,7 +204,7 @@ public class CommerceCartResource {
 					commerceOrder.getCommerceOrderId(), cpInstanceId, quantity,
 					0, options, commerceContext, serviceContext);
 
-			cart = _commerceCartResourceHelper.getCart(
+			cart = _commerceCartResourceUtil.getCart(
 				commerceOrderItem.getCommerceOrderId(),
 				_getDetailsURL(commerceOrder, groupId, httpServletRequest),
 				LocaleUtil.fromLanguageId(languageId), commerceContext, true);
@@ -295,7 +295,7 @@ public class CommerceCartResource {
 		CommerceCartResource.class);
 
 	@Reference
-	private CommerceCartResourceHelper _commerceCartResourceHelper;
+	private CommerceCartResourceUtil _commerceCartResourceUtil;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

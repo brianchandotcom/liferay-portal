@@ -15,7 +15,6 @@
 package com.liferay.commerce.bom.admin.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.bom.admin.web.internal.display.context.CommerceBOMAdminDisplayContext;
-import com.liferay.commerce.bom.admin.web.internal.servlet.taglib.ui.constants.CommerceBOMDefinitionScreenNavigationConstants;
 import com.liferay.commerce.bom.constants.CommerceBOMActionKeys;
 import com.liferay.commerce.bom.model.CommerceBOMDefinition;
 import com.liferay.commerce.bom.model.CommerceBOMFolder;

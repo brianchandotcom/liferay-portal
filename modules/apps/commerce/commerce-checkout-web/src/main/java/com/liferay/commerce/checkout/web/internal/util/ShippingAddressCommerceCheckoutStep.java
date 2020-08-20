@@ -85,16 +85,15 @@ public class ShippingAddressCommerceCheckoutStep
 		throws Exception {
 
 		try {
-			AddressCommerceCheckoutStepHelper
-				addressCommerceCheckoutStepHelper =
-					new AddressCommerceCheckoutStepHelper(
-						_commerceAccountLocalService,
-						CommerceAddressConstants.ADDRESS_TYPE_SHIPPING,
-						_commerceOrderService, _commerceAddressService,
-						_commerceOrderModelResourcePermission);
+			AddressCommerceCheckoutStepUtil addressCommerceCheckoutStepUtil =
+				new AddressCommerceCheckoutStepUtil(
+					_commerceAccountLocalService,
+					CommerceAddressConstants.ADDRESS_TYPE_SHIPPING,
+					_commerceOrderService, _commerceAddressService,
+					_commerceOrderModelResourcePermission);
 
 			CommerceOrder commerceOrder =
-				addressCommerceCheckoutStepHelper.updateCommerceOrderAddress(
+				addressCommerceCheckoutStepUtil.updateCommerceOrderAddress(
 					actionRequest,
 					CommerceCheckoutWebKeys.SHIPPING_ADDRESS_PARAM_NAME);
 

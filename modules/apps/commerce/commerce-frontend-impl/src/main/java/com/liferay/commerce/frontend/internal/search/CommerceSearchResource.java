@@ -30,7 +30,7 @@ import com.liferay.commerce.frontend.internal.account.model.Order;
 import com.liferay.commerce.frontend.internal.account.model.OrderList;
 import com.liferay.commerce.frontend.internal.order.CommerceOrderResource;
 import com.liferay.commerce.frontend.internal.search.model.SearchItemModel;
-import com.liferay.commerce.frontend.internal.search.util.CommerceSearchHelper;
+import com.liferay.commerce.frontend.internal.search.util.CommerceSearchUtil;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
@@ -125,8 +125,7 @@ public class CommerceSearchResource {
 					searchOrders(queryString, themeDisplay, commerceAccount));
 			}
 
-			String url = _commerceSearchHelper.getSearchFriendlyURL(
-				themeDisplay);
+			String url = _commerceSearchUtil.getSearchFriendlyURL(themeDisplay);
 
 			if (Validator.isNotNull(url)) {
 				url = _http.addParameter(url, "q", queryString);
@@ -193,7 +192,7 @@ public class CommerceSearchResource {
 			searchItemModels.add(searchItemModel);
 		}
 
-		String url = _commerceSearchHelper.getAccountManagementFriendlyURL(
+		String url = _commerceSearchUtil.getAccountManagementFriendlyURL(
 			themeDisplay);
 
 		if (Validator.isNotNull(url)) {
@@ -248,7 +247,7 @@ public class CommerceSearchResource {
 			searchItemModels.add(searchItemModel);
 		}
 
-		String url = _commerceSearchHelper.getOrdersFriendlyURL(themeDisplay);
+		String url = _commerceSearchUtil.getOrdersFriendlyURL(themeDisplay);
 
 		if (Validator.isNotNull(url)) {
 			url = _http.addParameter(url, "q", queryString);
@@ -335,7 +334,7 @@ public class CommerceSearchResource {
 				_getSearchItemModel(cpCatalogEntry, themeDisplay));
 		}
 
-		String url = _commerceSearchHelper.getCatalogFriendlyURL(themeDisplay);
+		String url = _commerceSearchUtil.getCatalogFriendlyURL(themeDisplay);
 
 		if (Validator.isNotNull(url)) {
 			url = _http.addParameter(url, "q", queryString);
@@ -425,7 +424,7 @@ public class CommerceSearchResource {
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference
-	private CommerceSearchHelper _commerceSearchHelper;
+	private CommerceSearchUtil _commerceSearchUtil;
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;

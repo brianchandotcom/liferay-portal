@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.bom.internal.model.listener;
 
-import com.liferay.commerce.bom.constants.CommerceBOMFolderConstants;
+import com.liferay.commerce.bom.model.CommerceBOMFolderConstants;
 import com.liferay.commerce.bom.service.CommerceBOMDefinitionLocalService;
 import com.liferay.commerce.bom.service.CommerceBOMFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;

@@ -72,7 +72,7 @@ public class CommerceOrganizationResource {
 				companyId = curOrganization.getCompanyId();
 			}
 
-			organization = _commerceOrganizationResourceHelper.getOrganization(
+			organization = _commerceOrganizationResourceUtil.getOrganization(
 				_portal.getUserId(httpServletRequest), companyId,
 				curOrganization);
 		}
@@ -97,7 +97,7 @@ public class CommerceOrganizationResource {
 		AccountList accountList = null;
 
 		try {
-			accountList = _commerceOrganizationResourceHelper.getAccountList(
+			accountList = _commerceOrganizationResourceUtil.getAccountList(
 				organizationId, pagination);
 		}
 		catch (Exception exception) {
@@ -121,7 +121,7 @@ public class CommerceOrganizationResource {
 		UserList userList = null;
 
 		try {
-			userList = _commerceOrganizationResourceHelper.getUserList(
+			userList = _commerceOrganizationResourceUtil.getUserList(
 				organizationId, pagination);
 		}
 		catch (Exception exception) {
@@ -168,8 +168,7 @@ public class CommerceOrganizationResource {
 		CommerceOrganizationResource.class);
 
 	@Reference
-	private CommerceOrganizationResourceHelper
-		_commerceOrganizationResourceHelper;
+	private CommerceOrganizationResourceUtil _commerceOrganizationResourceUtil;
 
 	@Reference
 	private OrganizationService _organizationService;

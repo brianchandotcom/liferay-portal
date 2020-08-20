@@ -383,8 +383,7 @@ public class InputAssetLinksDisplayContext {
 	}
 
 	private Map<String, Object> _getSelectorEntryData(
-			AssetRendererFactory<?> assetRendererFactory)
-		throws Exception {
+		AssetRendererFactory<?> assetRendererFactory) {
 
 		Map<String, Object> selectorEntryData = new HashMap<>();
 
@@ -411,8 +410,7 @@ public class InputAssetLinksDisplayContext {
 	}
 
 	private Map<String, Object> _getSelectorEntryData(
-			AssetRendererFactory<?> assetRendererFactory, ClassType classType)
-		throws Exception {
+		AssetRendererFactory<?> assetRendererFactory, ClassType classType) {
 
 		Map<String, Object> selectorEntryData = new HashMap<>();
 
@@ -435,8 +433,7 @@ public class InputAssetLinksDisplayContext {
 	}
 
 	private String _getSelectorEntryIconCssClass(
-			AssetRendererFactory<?> assetRendererFactory)
-		throws Exception {
+		AssetRendererFactory<?> assetRendererFactory) {
 
 		return assetRendererFactory.getIconCssClass();
 	}

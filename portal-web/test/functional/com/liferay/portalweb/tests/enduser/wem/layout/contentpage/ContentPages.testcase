@@ -1456,33 +1456,33 @@ definition {
 
 		task ("Configure the Container") {
 			PageEditor.editLayoutContainer(
-				backgroundColor = "success",
+				backgroundColor = "287D3C",
 				panel = "Styles");
 
 			PageEditor.viewContainerStyle(
-				backgroundColor = "success",
+				backgroundColor = "rgb(40, 125, 60)",
 				position = "1");
 		}
 
 		task ("Configure the Heading") {
 			PageEditor.gotoStyle(fragmentName = "Heading");
 
-			PageEditor.configureFragment(textColor = "white");
+			PageEditor.configureFragment(textColor = "FFFFFF");
 
 			PageEditor.viewFragmentStyle(
 				fragmentName = "heading",
-				textColor = "white");
+				textColor = "rgb(255, 255, 255)");
 		}
 
 		task ("Assert configuration duplicated with Container and Heading") {
 			PageEditor.gotoDuplicate(fragmentName = "Container");
 
 			PageEditor.viewContainerStyle(
-				backgroundColor = "success",
+				backgroundColor = "rgb(40, 125, 60)",
 				position = "2");
 
 			AssertElementPresent(
-				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Heading')]//following-sibling::div[contains(@class,'page-editor__topper__content')]/div[contains(@class,'text-white')]",
+				key_elementHeader = "//div[contains(@class,'page-editor__topper__bar') and contains(.,'Heading')]/parent::div[contains(@style,'color: rgb(255, 255, 255)')]",
 				key_position = "2",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}

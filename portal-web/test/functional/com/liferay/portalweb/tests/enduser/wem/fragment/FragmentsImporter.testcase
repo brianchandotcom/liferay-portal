@@ -432,7 +432,7 @@ definition {
 		PageEditor.configureFragment(
 			alignment = "Center",
 			marginBottom = "1",
-			textColor = "danger");
+			textColor = "DA1414");
 
 		PageEditor.gotoConfiguration(fragmentName = "Heading");
 
@@ -488,7 +488,7 @@ definition {
 				fragmentName = "heading",
 				headingLevel = "H2",
 				marginBottom = "1",
-				textColor = "danger");
+				textColor = "rgb(218, 20, 20)");
 		}
 	}
 

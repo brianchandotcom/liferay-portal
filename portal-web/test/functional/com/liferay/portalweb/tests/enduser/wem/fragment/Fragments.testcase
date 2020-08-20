@@ -375,7 +375,7 @@ definition {
 
 			PageEditor.configureFragment(
 				alignment = "Right",
-				textColor = "secondary");
+				textColor = "6C757D");
 
 			PageEditor.gotoConfiguration(fragmentName = "Heading");
 
@@ -387,7 +387,7 @@ definition {
 				alignment = "right",
 				fragmentName = "heading",
 				headingLevel = "h2",
-				textColor = "secondary");
+				textColor = "rgb(108, 117, 125)");
 		}
 
 		task ("Remove the fragment") {
@@ -494,14 +494,14 @@ definition {
 
 			PageEditor.configureFragment(
 				alignment = "Right",
-				textColor = "warning");
+				textColor = "B95000");
 		}
 
 		task ("View the fragment style") {
 			PageEditor.viewFragmentStyle(
 				alignment = "right",
 				fragmentName = "paragraph",
-				textColor = "warning");
+				textColor = "rgb(185, 80, 0)");
 		}
 
 		task ("Remove the fragment") {
@@ -549,13 +549,13 @@ definition {
 			PageEditor.gotoStyle(fragmentName = "Separator");
 
 			PageEditor.configureFragment(
-				borderColor = "lighter",
+				borderColor = "F7F8F9",
 				bottomSpacing = "1");
 		}
 
 		task ("View the fragment style") {
 			PageEditor.viewFragmentStyle(
-				borderColor = "lighter",
+				borderColor = "rgb(247, 248, 249)",
 				bottomSpacing = "1",
 				fragmentName = "separator");
 		}
@@ -703,8 +703,8 @@ definition {
 				position = "1");
 
 			PageEditor.editLayoutContainer(
-				backgroundColor = "warning",
-				borderColor = "danger",
+				backgroundColor = "B95000",
+				borderColor = "DA1414",
 				borderRadius = "Large",
 				borderWidth = "5",
 				contentDisplay = "Flex",
@@ -725,8 +725,8 @@ definition {
 
 		task ("View the Container styles") {
 			PageEditor.viewContainerStyle(
-				backgroundColor = "warning",
-				borderColor = "danger",
+				backgroundColor = "rgb(185, 80, 0)",
+				borderColor = "rgb(218, 20, 20)",
 				borderRadius = "lg",
 				borderWidth = "5",
 				contentDisplay = "flex",

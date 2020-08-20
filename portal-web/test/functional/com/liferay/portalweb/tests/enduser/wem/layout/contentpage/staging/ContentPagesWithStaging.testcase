@@ -588,7 +588,7 @@ definition {
 			text = "New editable fragment text");
 
 		PageEditor.editLayoutContainer(
-			backgroundColor = "success",
+			backgroundColor = "287D3C",
 			panel = "Styles");
 
 		PageEditor.removeFragment(fragmentName = "Container");
@@ -628,7 +628,7 @@ definition {
 		MenuItem.click(menuItem = "Update Container Configuration");
 
 		PageEditor.viewContainerStyle(
-			backgroundColor = "success",
+			backgroundColor = "rgb(40, 125, 60)",
 			position = "1");
 
 		for (var menuItem : list "Add Container,Add Heading,Update Heading Editable Values,Update Container Configuration") {

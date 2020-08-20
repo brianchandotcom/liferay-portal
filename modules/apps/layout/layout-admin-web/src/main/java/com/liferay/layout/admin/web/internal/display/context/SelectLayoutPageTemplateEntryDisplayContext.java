@@ -122,31 +122,6 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 				WorkflowConstants.STATUS_APPROVED);
 	}
 
-	public StyleBookEntry getLayoutStyleBookEntry(Layout layout) {
-		StyleBookEntry styleBookEntry = null;
-
-		if (layout.getStyleBookEntryId() > 0) {
-			styleBookEntry = StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
-				layout.getStyleBookEntryId());
-		}
-
-		if ((styleBookEntry == null) && (layout.getMasterLayoutPlid() > 0)) {
-			Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
-				layout.getMasterLayoutPlid());
-
-			styleBookEntry = StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
-				masterLayout.getStyleBookEntryId());
-		}
-
-		if (styleBookEntry == null) {
-			styleBookEntry =
-				StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
-					StagingUtil.getLiveGroupId(layout.getGroupId()));
-		}
-
-		return styleBookEntry;
-	}
-
 	public List<LayoutPageTemplateEntry> getMasterLayoutPageTemplateEntries() {
 		List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries =
 			new ArrayList<>();

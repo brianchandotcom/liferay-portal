@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,6 +39,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -118,28 +118,9 @@ public class StyleBookScopedCSSVariablesProvider
 			return StringPool.BLANK;
 		}
 
-		StyleBookEntry styleBookEntry = null;
-
-		Layout layout = themeDisplay.getLayout();
-
-		if (layout.getStyleBookEntryId() > 0) {
-			styleBookEntry = _styleBookEntryLocalService.fetchStyleBookEntry(
-				layout.getStyleBookEntryId());
-		}
-
-		if ((styleBookEntry == null) && (layout.getMasterLayoutPlid() > 0)) {
-			Layout masterLayout = _layoutLocalService.fetchLayout(
-				layout.getMasterLayoutPlid());
-
-			styleBookEntry = _styleBookEntryLocalService.fetchStyleBookEntry(
-				masterLayout.getStyleBookEntryId());
-		}
-
-		if (styleBookEntry == null) {
-			styleBookEntry =
-				_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-					_staging.getLiveGroupId(layout.getGroupId()));
-		}
+		StyleBookEntry styleBookEntry =
+			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
+				themeDisplay.getLayout());
 
 		if (styleBookEntry == null) {
 			return StringPool.BLANK;

@@ -144,6 +144,7 @@ import com.liferay.portal.util.WebAppPool;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
+import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 import com.liferay.style.book.util.comparator.StyleBookEntryNameComparator;
 
 import java.util.ArrayList;
@@ -876,30 +877,9 @@ public class ContentPageEditorDisplayContext {
 			return _defaultStyleBookEntry;
 		}
 
-		Layout layout = themeDisplay.getLayout();
-
-		if (layout.getStyleBookEntryId() > 0) {
-			_defaultStyleBookEntry =
-				StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
-					layout.getStyleBookEntryId());
-		}
-
-		if ((_defaultStyleBookEntry == null) &&
-			(layout.getMasterLayoutPlid() > 0)) {
-
-			Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
-				layout.getMasterLayoutPlid());
-
-			_defaultStyleBookEntry =
-				StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
-					masterLayout.getStyleBookEntryId());
-		}
-
-		if (_defaultStyleBookEntry == null) {
-			_defaultStyleBookEntry =
-				StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
-					layout.getGroupId());
-		}
+		_defaultStyleBookEntry =
+			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
+				themeDisplay.getLayout());
 
 		return _defaultStyleBookEntry;
 	}

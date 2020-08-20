@@ -16,7 +16,6 @@ package com.liferay.layout.taglib.internal.display.context;
 
 import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.info.constants.InfoDisplayWebKeys;
@@ -53,13 +52,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletJSONUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
@@ -70,7 +67,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
-import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
+import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.ArrayList;
@@ -767,38 +764,13 @@ public class RenderFragmentLayoutDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	private StyleBookEntry _getDefaultStyleBookEntry() {
-		StyleBookEntry styleBookEntry = null;
-
-		Layout layout = _themeDisplay.getLayout();
-
-		if (layout.getStyleBookEntryId() > 0) {
-			styleBookEntry = StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
-				layout.getStyleBookEntryId());
-		}
-
-		if ((styleBookEntry == null) && (layout.getMasterLayoutPlid() > 0)) {
-			Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
-				layout.getMasterLayoutPlid());
-
-			styleBookEntry = StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
-				masterLayout.getStyleBookEntryId());
-		}
-
-		if (styleBookEntry == null) {
-			styleBookEntry =
-				StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
-					StagingUtil.getLiveGroupId(layout.getGroupId()));
-		}
-
-		return styleBookEntry;
-	}
-
 	private JSONObject _getFrontendTokensJSONObject() throws Exception {
 		JSONObject frontendTokensJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
-		StyleBookEntry styleBookEntry = _getDefaultStyleBookEntry();
+		StyleBookEntry styleBookEntry =
+			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
+				_themeDisplay.getLayout());
 
 		JSONObject frontendTokenValuesJSONObject =
 			JSONFactoryUtil.createJSONObject();

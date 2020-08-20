@@ -28,7 +28,7 @@ if (editableMasterLayout) {
 	defaultStyleBookLabel = LanguageUtil.get(resourceBundle, "inherited-from-master");
 }
 
-StyleBookEntry layoutStyleBookEntry = selectLayoutPageTemplateEntryDisplayContext.getLayoutStyleBookEntry(layoutsAdminDisplayContext.getSelLayout());
+StyleBookEntry layoutStyleBookEntry = DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(layoutsAdminDisplayContext.getSelLayout());
 
 List<StyleBookEntry> styleBookEntries = selectLayoutPageTemplateEntryDisplayContext.getStyleBookEntries();
 %>

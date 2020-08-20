@@ -15,6 +15,7 @@
 import {CheckboxField} from './CheckboxField';
 import {CollectionSelectorField} from './CollectionSelectorField';
 import {ColorPaletteField} from './ColorPaletteField';
+import {ColorPickerField} from './ColorPickerField';
 import {ImageSelectorField} from './ImageSelectorField';
 import {ItemSelectorField} from './ItemSelectorField';
 import {SelectField} from './SelectField';
@@ -24,6 +25,7 @@ export const FRAGMENT_CONFIGURATION_FIELDS = {
 	checkbox: CheckboxField,
 	collectionSelector: CollectionSelectorField,
 	colorPalette: ColorPaletteField,
+	colorPicker: ColorPickerField,
 	imageSelector: ImageSelectorField,
 	itemSelector: ItemSelectorField,
 	select: SelectField,

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.display.page;
+package com.liferay.document.library.web.internal.layout.display.page;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;

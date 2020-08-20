@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.display.page;
+package com.liferay.journal.web.internal.layout.display.page;
 
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.model.JournalArticle;

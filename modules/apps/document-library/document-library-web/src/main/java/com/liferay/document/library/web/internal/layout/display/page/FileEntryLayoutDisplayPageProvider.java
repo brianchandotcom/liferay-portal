@@ -12,14 +12,15 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.display.page;
+package com.liferay.document.library.web.internal.layout.display.page;
 
-import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.RepositoryProvider;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,29 +28,37 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = LayoutDisplayPageProvider.class)
-public class BlogsLayoutDisplayPageProvider
-	implements LayoutDisplayPageProvider<BlogsEntry> {
+@Component(service = LayoutDisplayPageProvider.class)
+public class FileEntryLayoutDisplayPageProvider
+	implements LayoutDisplayPageProvider<FileEntry> {
 
 	@Override
 	public String getClassName() {
-		return BlogsEntry.class.getName();
+		return FileEntry.class.getName();
 	}
 
 	@Override
-	public LayoutDisplayPageObjectProvider<BlogsEntry>
+	public LayoutDisplayPageObjectProvider<FileEntry>
 		getLayoutDisplayPageObjectProvider(
 			InfoItemReference infoItemReference) {
 
 		try {
-			BlogsEntry blogsEntry = _blogsEntryService.getEntry(
-				infoItemReference.getClassPK());
+			LocalRepository localRepository =
+				_repositoryProvider.fetchFileEntryLocalRepository(
+					infoItemReference.getClassPK());
 
-			if (blogsEntry.isDraft() || blogsEntry.isInTrash()) {
+			if (localRepository == null) {
 				return null;
 			}
 
-			return new BlogsLayoutDisplayPageObjectProvider(blogsEntry);
+			FileEntry fileEntry = localRepository.getFileEntry(
+				infoItemReference.getClassPK());
+
+			if (fileEntry.isInTrash()) {
+				return null;
+			}
+
+			return new FileEntryLayoutDisplayPageObjectProvider(fileEntry);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -57,30 +66,20 @@ public class BlogsLayoutDisplayPageProvider
 	}
 
 	@Override
-	public LayoutDisplayPageObjectProvider<BlogsEntry>
+	public LayoutDisplayPageObjectProvider<FileEntry>
 		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
 
-		try {
-			BlogsEntry blogsEntry = _blogsEntryService.getEntry(
-				groupId, urlTitle);
-
-			if (blogsEntry.isInTrash()) {
-				return null;
-			}
-
-			return new BlogsLayoutDisplayPageObjectProvider(blogsEntry);
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
+		return getLayoutDisplayPageObjectProvider(
+			new InfoItemReference(
+				FileEntry.class.getName(), Long.valueOf(urlTitle)));
 	}
 
 	@Override
 	public String getURLSeparator() {
-		return "/b/";
+		return "/d/";
 	}
 
 	@Reference
-	private BlogsEntryService _blogsEntryService;
+	private RepositoryProvider _repositoryProvider;
 
 }

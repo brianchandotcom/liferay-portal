@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xuggler.XugglerUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -206,6 +207,10 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			toJSONArray("['NumberedList', 'BulletedList']"),
 			toJSONArray("['Link', Unlink]"),
 			toJSONArray("['Table', 'ImageSelector', 'VideoEmbed']"));
+
+		if (XugglerUtil.isEnabled()) {
+			jsonArray.put(toJSONArray("['AudioSelector', 'VideoSelector']"));
+		}
 
 		if (isShowSource(inputEditorTaglibAttributes)) {
 			jsonArray.put(toJSONArray("['Source']"));

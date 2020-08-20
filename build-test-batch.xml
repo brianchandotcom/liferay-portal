@@ -1340,13 +1340,13 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<antcall inheritAll="false" target="prepare-system-ext-properties" />
 
-							<property name="blacklist.cfg.name" value="com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.cfg" />
+							<property name="blacklist.config.name" value="com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config" />
 
 							<gradle-execute dir="modules/apps/static/portal-bundle-blacklist/portal-bundle-blacklist-test" task="test">
 								<arg value="test" />
 								<arg value="--tests" />
 								<arg value="*.BundleBlacklistSetUpBatchTest" />
-								<arg value="-Dblacklist.cfg.name=${blacklist.cfg.name}" />
+								<arg value="-Dblacklist.config.name=${blacklist.config.name}" />
 								<arg value="-Dliferay.home=${liferay.home}" />
 							</gradle-execute>
 
@@ -1370,7 +1370,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<antcall inheritall="false" target="stop-app-server" />
 
-							<delete file="${liferay.home}/osgi/configs/${blacklist.cfg.name}" />
+							<delete file="${liferay.home}/osgi/configs/${blacklist.config.name}" />
 
 							<trycatch>
 								<try>

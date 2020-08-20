@@ -21,6 +21,8 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -76,7 +78,10 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (_isApplicationsMenuApp(themeDisplay) &&
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		if ((_isApplicationsMenuApp(themeDisplay) ||
+			 (scopeGroup.getType() == GroupConstants.TYPE_DEPOT)) &&
 			_isEnableApplicationsMenu(themeDisplay.getCompanyId())) {
 
 			return;

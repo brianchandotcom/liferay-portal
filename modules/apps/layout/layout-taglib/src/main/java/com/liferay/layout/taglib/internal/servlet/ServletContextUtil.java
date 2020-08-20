@@ -16,6 +16,7 @@ package com.liferay.layout.taglib.internal.servlet;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
+import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.renderer.InfoListRendererTracker;
@@ -54,6 +55,12 @@ public class ServletContextUtil {
 
 	public static final FragmentRendererTracker getFragmentRendererTracker() {
 		return _fragmentRendererTracker;
+	}
+
+	public static FrontendTokenDefinitionRegistry
+		getFrontendTokenDefinitionRegistry() {
+
+		return _frontendTokenDefinitionRegistry;
 	}
 
 	public static final InfoDisplayContributorTracker
@@ -143,6 +150,13 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
+	protected void setFrontendTokenDefinitionRegistry(
+		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry) {
+
+		_frontendTokenDefinitionRegistry = frontendTokenDefinitionRegistry;
+	}
+
+	@Reference(unbind = "-")
 	protected void setInfoDisplayContributorTracker(
 		InfoDisplayContributorTracker infoDisplayContributorTracker) {
 
@@ -188,6 +202,8 @@ public class ServletContextUtil {
 	private static FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
 	private static FragmentRendererTracker _fragmentRendererTracker;
+	private static FrontendTokenDefinitionRegistry
+		_frontendTokenDefinitionRegistry;
 	private static InfoDisplayContributorTracker _infoDisplayContributorTracker;
 	private static InfoItemServiceTracker _infoItemServiceTracker;
 	private static InfoListRendererTracker _infoListRendererTracker;

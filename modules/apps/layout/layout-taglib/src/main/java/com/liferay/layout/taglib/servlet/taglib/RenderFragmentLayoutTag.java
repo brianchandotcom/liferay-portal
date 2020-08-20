@@ -151,6 +151,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			"liferay-layout:render-fragment-layout:" +
 				"renderFragmentLayoutDisplayContext",
 			new RenderFragmentLayoutDisplayContext(
+				ServletContextUtil.getFrontendTokenDefinitionRegistry(),
 				httpServletRequest,
 				(HttpServletResponse)pageContext.getResponse(),
 				ServletContextUtil.getInfoDisplayContributorTracker(),

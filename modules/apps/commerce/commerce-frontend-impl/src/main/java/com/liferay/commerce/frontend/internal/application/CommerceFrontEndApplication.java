@@ -16,11 +16,8 @@ package com.liferay.commerce.frontend.internal.application;
 
 import com.liferay.commerce.frontend.internal.account.CommerceAccountResource;
 import com.liferay.commerce.frontend.internal.address.AddressResource;
-import com.liferay.commerce.frontend.internal.application.context.provider.PaginationContextProvider;
-import com.liferay.commerce.frontend.internal.application.context.provider.SortContextProvider;
 import com.liferay.commerce.frontend.internal.application.context.provider.ThemeDisplayContextProvider;
 import com.liferay.commerce.frontend.internal.cart.CommerceCartResource;
-import com.liferay.commerce.frontend.internal.data.provider.CommerceDataSetDataProviderResource;
 import com.liferay.commerce.frontend.internal.search.CommerceSearchResource;
 import com.liferay.commerce.frontend.internal.wishlist.CommerceWishListResource;
 
@@ -53,11 +50,8 @@ public class CommerceFrontEndApplication extends Application {
 		singletons.add(_addressResource);
 		singletons.add(_commerceAccountResource);
 		singletons.add(_commerceCartResource);
-		singletons.add(_commerceDataSetDataProviderResource);
 		singletons.add(_commerceSearchResource);
 		singletons.add(_commerceWishListResource);
-		singletons.add(_paginationContextProvider);
-		singletons.add(_sortContextProvider);
 		singletons.add(_themeDisplayContextProvider);
 
 		return singletons;
@@ -73,20 +67,10 @@ public class CommerceFrontEndApplication extends Application {
 	private CommerceCartResource _commerceCartResource;
 
 	@Reference
-	private CommerceDataSetDataProviderResource
-		_commerceDataSetDataProviderResource;
-
-	@Reference
 	private CommerceSearchResource _commerceSearchResource;
 
 	@Reference
 	private CommerceWishListResource _commerceWishListResource;
-
-	@Reference
-	private PaginationContextProvider _paginationContextProvider;
-
-	@Reference
-	private SortContextProvider _sortContextProvider;
 
 	@Reference
 	private ThemeDisplayContextProvider _themeDisplayContextProvider;

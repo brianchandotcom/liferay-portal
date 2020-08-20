@@ -14,11 +14,6 @@
 
 package com.liferay.commerce.frontend.taglib.internal.servlet;
 
-import com.liferay.commerce.frontend.CommerceDataProviderRegistry;
-import com.liferay.commerce.frontend.FilterFactoryRegistry;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDataJSONBuilder;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayViewSerializer;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetFilterSerializer;
 import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.content.util.CPContentHelper;
@@ -40,30 +35,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ServletContextUtil.class)
 public class ServletContextUtil {
 
-	public static final ClayDataSetDisplayViewSerializer
-		getClayDataSetDisplayViewSerializer() {
-
-		return _servletContextUtil._getClayDataSetDisplayViewSerializer();
-	}
-
-	public static final ClayDataSetFilterSerializer
-		getClayDataSetFilterSerializer() {
-
-		return _servletContextUtil._getClayDataSetFilterSerializer();
-	}
-
-	public static final ClayDataSetDataJSONBuilder
-		getClayTableDataJSONBuilder() {
-
-		return _servletContextUtil._getClayTableDataJSONBuilder();
-	}
-
-	public static final CommerceDataProviderRegistry
-		getCommerceDataProviderRegistry() {
-
-		return _servletContextUtil._getCommerceDataProviderRegistry();
-	}
-
 	public static final CommerceOrderHttpHelper getCommerceOrderHttpHelper() {
 		return _servletContextUtil._getCommerceOrderHttpHelper();
 	}
@@ -80,10 +51,6 @@ public class ServletContextUtil {
 		getCPSubscriptionTypeRegistry() {
 
 		return _servletContextUtil._getCPSubscriptionTypeRegistry();
-	}
-
-	public static final FilterFactoryRegistry getFilterFactoryRegistry() {
-		return _servletContextUtil._getFilterFactoryRegistry();
 	}
 
 	public static final NPMResolver getNPMResolver() {
@@ -106,34 +73,6 @@ public class ServletContextUtil {
 	@Deactivate
 	protected void deactivate() {
 		_servletContextUtil = null;
-	}
-
-	@Reference(unbind = "-")
-	protected void setClayDataSetDataJSONBuilder(
-		ClayDataSetDataJSONBuilder clayDataSetDataJSONBuilder) {
-
-		_clayDataSetDataJSONBuilder = clayDataSetDataJSONBuilder;
-	}
-
-	@Reference(unbind = "-")
-	protected void setClayDataSetDisplayViewSerializer(
-		ClayDataSetDisplayViewSerializer clayDataSetDisplayViewSerializer) {
-
-		_clayDataSetDisplayViewSerializer = clayDataSetDisplayViewSerializer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setClayDataSetFilterSerializer(
-		ClayDataSetFilterSerializer clayDataSetFilterSerializer) {
-
-		_clayDataSetFilterSerializer = clayDataSetFilterSerializer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setCommerceDataProviderRegistry(
-		CommerceDataProviderRegistry commerceDataProviderRegistry) {
-
-		_commerceDataProviderRegistry = commerceDataProviderRegistry;
 	}
 
 	@Reference(unbind = "-")
@@ -163,13 +102,6 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setFilterFactoryRegistry(
-		FilterFactoryRegistry filterFactoryRegistry) {
-
-		_filterFactoryRegistry = filterFactoryRegistry;
-	}
-
-	@Reference(unbind = "-")
 	protected void setNPMResolver(NPMResolver npmResolver) {
 		_npmResolver = npmResolver;
 	}
@@ -185,24 +117,6 @@ public class ServletContextUtil {
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
-	}
-
-	private ClayDataSetDisplayViewSerializer
-		_getClayDataSetDisplayViewSerializer() {
-
-		return _clayDataSetDisplayViewSerializer;
-	}
-
-	private ClayDataSetFilterSerializer _getClayDataSetFilterSerializer() {
-		return _clayDataSetFilterSerializer;
-	}
-
-	private ClayDataSetDataJSONBuilder _getClayTableDataJSONBuilder() {
-		return _clayDataSetDataJSONBuilder;
-	}
-
-	private CommerceDataProviderRegistry _getCommerceDataProviderRegistry() {
-		return _commerceDataProviderRegistry;
 	}
 
 	private CommerceOrderHttpHelper _getCommerceOrderHttpHelper() {
@@ -221,10 +135,6 @@ public class ServletContextUtil {
 		return _cpSubscriptionTypeRegistry;
 	}
 
-	private FilterFactoryRegistry _getFilterFactoryRegistry() {
-		return _filterFactoryRegistry;
-	}
-
 	private NPMResolver _getNPMResolver() {
 		return _npmResolver;
 	}
@@ -239,15 +149,10 @@ public class ServletContextUtil {
 
 	private static ServletContextUtil _servletContextUtil;
 
-	private ClayDataSetDataJSONBuilder _clayDataSetDataJSONBuilder;
-	private ClayDataSetDisplayViewSerializer _clayDataSetDisplayViewSerializer;
-	private ClayDataSetFilterSerializer _clayDataSetFilterSerializer;
-	private CommerceDataProviderRegistry _commerceDataProviderRegistry;
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private ConfigurationProvider _configurationProvider;
 	private CPContentHelper _cpContentHelper;
 	private CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;
-	private FilterFactoryRegistry _filterFactoryRegistry;
 	private NPMResolver _npmResolver;
 	private ProductHelper _productHelper;
 	private ServletContext _servletContext;

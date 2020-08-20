@@ -65,6 +65,8 @@
 					<c:if test="<%= message != null %>">
 						<c:choose>
 							<c:when test="<%= !MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread) %>">
+								<span class="sr-only"><liferay-ui:message key="unread-thread" /></span>
+
 								<strong><%= message.getSubject() %></strong>
 							</c:when>
 							<c:otherwise>

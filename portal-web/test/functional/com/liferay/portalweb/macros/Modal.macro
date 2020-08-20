@@ -8,8 +8,8 @@ definition {
 
 	macro selectFrameSpecific {
 		SelectFrame(
-			locator1 = "IFrame#MODAL_ANY"
-			key_title = "${modalTitle}"
-		);
+			key_title = "${modalTitle}",
+			locator1 = "IFrame#MODAL_ANY");
 	}
+
 }

@@ -18,6 +18,8 @@ import React, {useEffect, useState} from 'react';
 
 import {NotDraggableArea} from '../../../app/utils/useDragAndDrop';
 
+const MIN_HEIGHT = 100;
+
 export default function PageStructureSidebarSection({
 	children,
 	resizable = false,
@@ -36,12 +38,17 @@ export default function PageStructureSidebarSection({
 		let initialHeight = 0;
 		let initialY = 0;
 		let maxHeight = 0;
-		const minHeight = 200;
 
 		const handleResizeStart = (event) => {
 			initialHeight = panelElement.getBoundingClientRect().height;
 			initialY = event.clientY;
-			maxHeight = window.innerHeight * 0.8;
+
+			maxHeight =
+				initialHeight +
+				(handlerElement?.getBoundingClientRect().height || 0) +
+				(panelElement.previousSibling?.previousSibling?.getBoundingClientRect()
+					.height || 0) -
+				MIN_HEIGHT;
 
 			document.body.addEventListener('mousemove', handleResize);
 			document.body.addEventListener('mouseleave', handleResizeEnd);
@@ -54,7 +61,7 @@ export default function PageStructureSidebarSection({
 			const delta = event.clientY - initialY;
 
 			setPanelHeight(
-				Math.max(Math.min(maxHeight, initialHeight - delta), minHeight)
+				Math.max(Math.min(maxHeight, initialHeight - delta), MIN_HEIGHT)
 			);
 		};
 

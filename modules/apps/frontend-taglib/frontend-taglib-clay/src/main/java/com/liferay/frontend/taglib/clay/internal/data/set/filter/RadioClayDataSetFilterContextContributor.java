@@ -69,12 +69,11 @@ public class RadioClayDataSetFilterContextContributor
 		for (RadioClayDataSetFilterItem radioClayDataSetFilterItem :
 				radioClayDataSetFilterItems) {
 
-			String label = LanguageUtil.get(
-				resourceBundle, radioClayDataSetFilterItem.getLabel());
-
 			jsonArray.put(
 				JSONUtil.put(
-					"label", label
+					"label",
+					LanguageUtil.get(
+						resourceBundle, radioClayDataSetFilterItem.getLabel())
 				).put(
 					"value", radioClayDataSetFilterItem.getValue()
 				));

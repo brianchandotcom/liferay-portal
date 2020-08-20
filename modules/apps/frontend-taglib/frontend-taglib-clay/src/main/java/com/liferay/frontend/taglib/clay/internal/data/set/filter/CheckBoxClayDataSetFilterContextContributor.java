@@ -71,12 +71,12 @@ public class CheckBoxClayDataSetFilterContextContributor
 		for (CheckBoxClayDataSetFilterItem checkBoxClayDataSetFilterItem :
 				checkBoxClayDataSetFilterItems) {
 
-			String label = LanguageUtil.get(
-				resourceBundle, checkBoxClayDataSetFilterItem.getLabel());
-
 			jsonArray.put(
 				JSONUtil.put(
-					"label", label
+					"label",
+					LanguageUtil.get(
+						resourceBundle,
+						checkBoxClayDataSetFilterItem.getLabel())
 				).put(
 					"value", checkBoxClayDataSetFilterItem.getValue()
 				));

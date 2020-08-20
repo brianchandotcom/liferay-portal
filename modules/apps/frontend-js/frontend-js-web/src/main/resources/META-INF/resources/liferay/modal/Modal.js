@@ -105,6 +105,7 @@ const openPortletWindow = ({bodyCssClass, portlet, uri, ...otherProps}) => {
 const openSelectionModal = ({
 	buttonAddLabel = Liferay.Language.get('add'),
 	buttonCancelLabel = Liferay.Language.get('cancel'),
+	customSelectEvent = false,
 	id,
 	multiple = false,
 	onSelect,
@@ -171,14 +172,17 @@ const openSelectionModal = ({
 				});
 			}
 
-			container.addEventListener('click', (event) => {
-				const delegateTarget =
-					event.target && event.target.closest('.selector-button');
+			if (!customSelectEvent) {
+				container.addEventListener('click', (event) => {
+					const delegateTarget =
+						event.target &&
+						event.target.closest('.selector-button');
 
-				if (delegateTarget) {
-					Liferay.fire(selectEventName, delegateTarget.dataset);
-				}
-			});
+					if (delegateTarget) {
+						Liferay.fire(selectEventName, delegateTarget.dataset);
+					}
+				});
+			}
 		},
 		title,
 		url,

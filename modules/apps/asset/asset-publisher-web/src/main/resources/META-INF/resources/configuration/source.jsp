@@ -559,6 +559,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 		);
 
 		Util.openSelectionModal({
+			customSelectEvent: true,
 			id: '<portlet:namespace />selectDDMStructure' + delegateTarget.id,
 			onSelect: function (selectedItem) {
 				setDDMFields(

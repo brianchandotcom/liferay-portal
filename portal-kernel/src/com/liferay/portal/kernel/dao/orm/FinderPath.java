@@ -34,7 +34,7 @@ public class FinderPath {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #FinderPath(Class, String, String, String[])}
+	 *             #FinderPath(String, String, String[], String[], boolean)}
 	 */
 	@Deprecated
 	public FinderPath(
@@ -42,12 +42,14 @@ public class FinderPath {
 		Class<?> resultClass, String cacheName, String methodName,
 		String[] params) {
 
-		this(resultClass, cacheName, methodName, params);
+		this(
+			cacheName, methodName, params, new String[0],
+			BaseModel.class.isAssignableFrom(resultClass));
 	}
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #FinderPath(Class, String, String, String[], long)}
+	 *             #FinderPath(String, String, String[], String[], boolean)}
 	 */
 	@Deprecated
 	public FinderPath(
@@ -55,25 +57,48 @@ public class FinderPath {
 		Class<?> resultClass, String cacheName, String methodName,
 		String[] params, long columnBitmask) {
 
-		this(resultClass, cacheName, methodName, params, columnBitmask);
+		this(
+			cacheName, methodName, params, new String[0],
+			BaseModel.class.isAssignableFrom(resultClass));
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #FinderPath(String, String, String[], String[], boolean)}
+	 */
+	@Deprecated
 	public FinderPath(
 		Class<?> resultClass, String cacheName, String methodName,
 		String[] params) {
 
-		this(resultClass, cacheName, methodName, params, -1);
+		this(
+			cacheName, methodName, params, new String[0],
+			BaseModel.class.isAssignableFrom(resultClass));
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #FinderPath(String, String, String[], String[], boolean)}
+	 */
+	@Deprecated
 	public FinderPath(
 		Class<?> resultClass, String cacheName, String methodName,
 		String[] params, long columnBitmask) {
 
-		_resultClass = resultClass;
-		_cacheName = cacheName;
-		_columnBitmask = columnBitmask;
+		this(
+			cacheName, methodName, params, new String[0],
+			BaseModel.class.isAssignableFrom(resultClass));
+	}
 
-		if (BaseModel.class.isAssignableFrom(_resultClass)) {
+	public FinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		_cacheName = cacheName;
+		_columnNames = columnNames;
+		_baseModelResult = baseModelResult;
+
+		if (baseModelResult) {
 			_cacheKeyGeneratorCacheName = _BASE_MODEL_CACHE_KEY_GENERATOR_NAME;
 		}
 		else {
@@ -162,12 +187,28 @@ public class FinderPath {
 		return _cacheName;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public long getColumnBitmask() {
-		return _columnBitmask;
+		return 0;
 	}
 
+	public String[] getColumnNames() {
+		return _columnNames;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public Class<?> getResultClass() {
-		return _resultClass;
+		return null;
+	}
+
+	public boolean isBaseModelResult() {
+		return _baseModelResult;
 	}
 
 	/**
@@ -244,11 +285,11 @@ public class FinderPath {
 
 	private static final Map<String, String> _encodedTypes = _getEncodedTypes();
 
+	private final boolean _baseModelResult;
 	private final CacheKeyGenerator _cacheKeyGenerator;
 	private final String _cacheKeyGeneratorCacheName;
 	private String _cacheKeyPrefix;
 	private final String _cacheName;
-	private final long _columnBitmask;
-	private final Class<?> _resultClass;
+	private final String[] _columnNames;
 
 }

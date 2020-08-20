@@ -24,6 +24,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -186,11 +187,82 @@ public class InfoDisplayContributorTrackerImpl
 				}
 
 			});
+
+		_layoutDisplayPageInfoDisplayContributorServiceTracker =
+			ServiceTrackerFactory.open(
+				bundleContext,
+				(Class<InfoDisplayContributor<?>>)
+					(Class<?>)InfoDisplayContributor.class,
+				new ServiceTrackerCustomizer
+					<InfoDisplayContributor<?>,
+					 ServiceRegistration<InfoDisplayContributor<?>>>() {
+
+					@Override
+					public ServiceRegistration<InfoDisplayContributor<?>>
+						addingService(
+							ServiceReference<InfoDisplayContributor<?>>
+								serviceReference) {
+
+						InfoDisplayContributor<Object> infoDisplayContributor =
+							(InfoDisplayContributor<Object>)
+								bundleContext.getService(serviceReference);
+
+						try {
+							LayoutDisplayPageProviderWrapper
+								layoutDisplayPageProviderWrapper =
+									new LayoutDisplayPageProviderWrapper(
+										infoDisplayContributor);
+
+							return (ServiceRegistration
+								<InfoDisplayContributor<?>>)
+									bundleContext.registerService(
+										new String[] {
+											LayoutDisplayPageProvider.class.
+												getName()
+										},
+										layoutDisplayPageProviderWrapper,
+										_getServiceReferenceProperties(
+											bundleContext, serviceReference));
+						}
+						catch (Exception exception) {
+							bundleContext.ungetService(serviceReference);
+
+							throw exception;
+						}
+					}
+
+					@Override
+					public void modifiedService(
+						ServiceReference<InfoDisplayContributor<?>>
+							serviceReference,
+						ServiceRegistration<InfoDisplayContributor<?>>
+							serviceRegistration) {
+
+						serviceRegistration.setProperties(
+							_getServiceReferenceProperties(
+								bundleContext, serviceReference));
+					}
+
+					@Override
+					public void removedService(
+						ServiceReference<InfoDisplayContributor<?>>
+							serviceReference,
+						ServiceRegistration<InfoDisplayContributor<?>>
+							serviceRegistration) {
+
+						bundleContext.ungetService(serviceReference);
+
+						serviceRegistration.unregister();
+					}
+
+				});
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_infoDisplayContributorServiceTracker.close();
+
+		_layoutDisplayPageInfoDisplayContributorServiceTracker.close();
 	}
 
 	private Dictionary<String, Object> _getServiceReferenceProperties(
@@ -235,5 +307,9 @@ public class InfoDisplayContributorTrackerImpl
 		<InfoDisplayContributor<?>,
 		 ServiceRegistration<InfoDisplayContributor<?>>>
 			_infoDisplayContributorServiceTracker;
+	private ServiceTracker
+		<InfoDisplayContributor<?>,
+		 ServiceRegistration<InfoDisplayContributor<?>>>
+			_layoutDisplayPageInfoDisplayContributorServiceTracker;
 
 }

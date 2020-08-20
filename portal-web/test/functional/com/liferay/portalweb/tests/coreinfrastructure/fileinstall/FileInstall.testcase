@@ -64,7 +64,7 @@ definition {
 	test UninstallWarOffline {
 		property test.name.skip.portal.instance = "FileInstall#UninstallWarOffline";
 
-		FileInstall.deployFileOnServer(liferayDependencyJars = "test-theme.war");
+		Theme.deployThemeWar(themeName = "test-theme");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",

@@ -148,13 +148,13 @@
 					noGutters="true"
 				>
 					<clay:content-col>
-						<span title="<%= LanguageUtil.format(request, (repliesCount == 1) ? "x-reply" : "x-replies", repliesCount, false) %>">
+						<span class="lfr-portal-tooltip" title="<%= LanguageUtil.format(request, (repliesCount == 1) ? "x-reply" : "x-replies", repliesCount, false) %>">
 							<%= repliesCount %> <clay:icon symbol="message" />
 						</span>
 					</clay:content-col>
 
 					<clay:content-col>
-						<span title="<%= LanguageUtil.format(request, (viewCount == 1) ? "x-view" : "x-views", viewCount, false) %>">
+						<span class="lfr-portal-tooltip" title="<%= LanguageUtil.format(request, (viewCount == 1) ? "x-view" : "x-views", viewCount, false) %>">
 							<%= viewCount %> <clay:icon symbol="view" />
 						</span>
 					</clay:content-col>

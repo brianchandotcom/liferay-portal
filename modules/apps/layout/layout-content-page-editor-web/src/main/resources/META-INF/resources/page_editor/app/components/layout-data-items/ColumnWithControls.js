@@ -389,6 +389,20 @@ const ColumnWithControls = React.forwardRef(
 			globalContext.document.body
 		);
 
+		useEventListener(
+			'mouseleave',
+			() => {
+				if (resizeInfo.current) {
+					resizeInfo.current = null;
+					setColumnSelected(null);
+					setResizing(false);
+					setUpdatedLayoutData(null);
+				}
+			},
+			false,
+			globalContext.document.body
+		);
+
 		const isActive = useIsActive();
 
 		const parentItemIsActive = useMemo(

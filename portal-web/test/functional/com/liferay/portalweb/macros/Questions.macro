@@ -56,6 +56,27 @@ definition {
 			titleField = "${titleField}");
 	}
 
+	macro addSubTopic {
+		Click(locator1 = "Questions#NEW_TOPIC");
+
+		Type(
+			key_text = "Topic Name",
+			locator1 = "TextInput#ANY",
+			value1 = "${subTopicName}");
+
+		Type(
+			key_label = "Description",
+			locator1 = "TextArea#ANY_LABELED",
+			value1 = "${subTopicDescription}");
+
+		Button.click(button = "Create");
+
+		AssertTextEquals(
+			key_topicName = "${subTopicName}",
+			locator1 = "Questions#QUESTIONS_BREADCRUMB_ACTIVE_SUBTOPIC",
+			value1 = "${subTopicName}");
+	}
+
 	macro addTags {
 		Type(
 			locator1 = "Questions#ASK_QUESTION_TAG_FIELD",

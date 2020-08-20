@@ -28,6 +28,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Provides a complete implementation of {@link JSPackage}.
@@ -66,7 +68,15 @@ public class FlatJSPackage implements ModifiableJSPackage {
 	 */
 	@Override
 	public void addJSModule(JSModule jsModule) {
-		_jsModules.put(jsModule.getName(), jsModule);
+		if (jsModule.getJSPackage() != this) {
+			throw new IllegalArgumentException(
+				"Given JSModule does not belong to this JSPackage");
+		}
+
+		if (_jsModules.putIfAbsent(jsModule.getName(), jsModule) != null) {
+			throw new IllegalStateException(
+				"A JSModule with the same name already exists");
+		}
 	}
 
 	public void addJSModuleAlias(JSModuleAlias jsModuleAlias) {
@@ -172,13 +182,37 @@ public class FlatJSPackage implements ModifiableJSPackage {
 	}
 
 	@Override
+	public void removeJSModule(JSModule jsModule) {
+		if (jsModule.getJSPackage() != this) {
+			throw new IllegalArgumentException(
+				"Given JSModule does not belong to this JSPackage");
+		}
+
+		_jsModules.remove(jsModule.getName());
+	}
+
+	@Override
+	public void replaceJSModule(JSModule jsModule) {
+		if (jsModule.getJSPackage() != this) {
+			throw new IllegalArgumentException(
+				"Given JSModule does not belong to this JSPackage");
+		}
+
+		if (_jsModules.replace(jsModule.getName(), jsModule) == null) {
+			throw new IllegalArgumentException(
+				"No JSModule with the same name exists");
+		}
+	}
+
+	@Override
 	public String toString() {
 		return getId();
 	}
 
 	private final FlatJSBundle _flatJSBundle;
 	private final List<JSModuleAlias> _jsModuleAliases = new ArrayList<>();
-	private final Map<String, JSModule> _jsModules = new HashMap<>();
+	private final ConcurrentMap<String, JSModule> _jsModules =
+		new ConcurrentHashMap<>();
 	private final Map<String, JSPackageDependency> _jsPackageDependencies =
 		new HashMap<>();
 	private final String _mainModuleName;

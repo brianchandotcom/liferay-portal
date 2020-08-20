@@ -25,16 +25,20 @@ package com.liferay.frontend.js.loader.modules.extender.npm;
  *
  * <p>
  * If you want the module to be visible immediately, use method
- * {@link NPMRegistry#registerJSModule(JSPackage, String, Collection, String)}
+ * {@link NPMRegistry#registerJSModule(JSPackage, String, Collection, String, String)}
  * instead that invokes {@link ModifiableJSPackage#addJSModule(JSModule)} under
  * the hood and triggers a registry cache update.
  * </p>
  *
  * @author Iván Zaera
- * @see NPMRegistry#registerJSModule(JSPackage, String, Collection, String)
+ * @see NPMRegistry#registerJSModule(JSPackage, String, Collection, String, String)
  */
 public interface ModifiableJSPackage extends JSPackage {
 
 	public void addJSModule(JSModule jsModule);
+
+	public void removeJSModule(JSModule jsModule);
+
+	public void replaceJSModule(JSModule jsModule);
 
 }

@@ -33,11 +33,12 @@ public class DynamicJSModule extends BaseBuiltInJSModule implements JSModule {
 
 	public DynamicJSModule(
 		JSPackage jsPackage, String name, Collection<String> dependencies,
-		String js) {
+		String js, String map) {
 
 		super(jsPackage, name, dependencies, null);
 
 		_js = js;
+		_map = map;
 	}
 
 	@Override
@@ -47,9 +48,14 @@ public class DynamicJSModule extends BaseBuiltInJSModule implements JSModule {
 
 	@Override
 	public InputStream getSourceMapInputStream() throws IOException {
-		return null;
+		if (_map == null) {
+			return null;
+		}
+
+		return new ByteArrayInputStream(_map.getBytes("UTF-8"));
 	}
 
 	private final String _js;
+	private final String _map;
 
 }

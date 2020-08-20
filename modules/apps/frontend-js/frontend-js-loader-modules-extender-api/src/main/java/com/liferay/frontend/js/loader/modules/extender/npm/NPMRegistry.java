@@ -49,10 +49,6 @@ public interface NPMRegistry {
 
 	public String mapModuleName(String moduleName);
 
-	public JSModule registerJSModule(
-		JSPackage jsPackage, String moduleName, Collection<String> dependencies,
-		String js);
-
 	/**
 	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */
@@ -61,5 +57,7 @@ public interface NPMRegistry {
 
 	public JSPackage resolveJSPackageDependency(
 		JSPackageDependency jsPackageDependency);
+
+	public NPMRegistryUpdate update();
 
 }

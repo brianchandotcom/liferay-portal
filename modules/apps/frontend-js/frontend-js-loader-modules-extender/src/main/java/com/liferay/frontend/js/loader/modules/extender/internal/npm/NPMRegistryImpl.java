@@ -19,7 +19,6 @@ import com.github.yuchi.semver.Version;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
 import com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details;
-import com.liferay.frontend.js.loader.modules.extender.internal.npm.dynamic.DynamicJSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundle;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleProcessor;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleTracker;
@@ -28,9 +27,9 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.JavaScriptAwarePortalWebResources;
-import com.liferay.frontend.js.loader.modules.extender.npm.ModifiableJSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistryUpdate;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.util.ServiceTrackerFactory;
@@ -93,6 +92,10 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Deprecated
 	@Override
 	public void addJSBundleTracker(JSBundleTracker jsBundleTracker) {
+	}
+
+	public void finishUpdate(NPMRegistryUpdate npmRegistryUpdate) {
+		_refreshJSModuleCaches(null);
 	}
 
 	@Override
@@ -216,33 +219,6 @@ public class NPMRegistryImpl implements NPMRegistry {
 		return moduleName;
 	}
 
-	@Override
-	public JSModule registerJSModule(
-		JSPackage jsPackage, String moduleName, Collection<String> dependencies,
-		String js) {
-
-		if (!(jsPackage instanceof ModifiableJSPackage)) {
-			throw new IllegalArgumentException(
-				"Invalid JSPackage type " + jsPackage.getClass());
-		}
-
-		ModifiableJSPackage modifiableJSPackage =
-			(ModifiableJSPackage)jsPackage;
-
-		JSModule jsModule = new DynamicJSModule(
-			modifiableJSPackage, moduleName, dependencies, js);
-
-		modifiableJSPackage.addJSModule(jsModule);
-
-		Map<Bundle, JSBundle> tracked = _bundleTracker.getTracked();
-
-		Collection<JSBundle> jsBundles = new ArrayList<>(tracked.values());
-
-		_refreshJSModuleCaches(jsBundles);
-
-		return jsModule;
-	}
-
 	/**
 	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */
@@ -294,6 +270,11 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 
 		return jsPackage;
+	}
+
+	@Override
+	public NPMRegistryUpdate update() {
+		return new NPMRegistryUpdateImpl(this);
 	}
 
 	@Activate
@@ -463,6 +444,12 @@ public class NPMRegistryImpl implements NPMRegistry {
 	}
 
 	private void _refreshJSModuleCaches(Collection<JSBundle> jsBundles) {
+		if (jsBundles == null) {
+			Map<Bundle, JSBundle> tracked = _bundleTracker.getTracked();
+
+			jsBundles = tracked.values();
+		}
+
 		_dependencyJSPackages.clear();
 
 		Map<String, JSModule> jsModules = new HashMap<>();
@@ -616,9 +603,7 @@ public class NPMRegistryImpl implements NPMRegistry {
 			Bundle bundle, BundleEvent bundleEvent, JSBundle jsBundle) {
 
 			if (!_activationThreadLocal.get()) {
-				Map<Bundle, JSBundle> tracked = _bundleTracker.getTracked();
-
-				_refreshJSModuleCaches(tracked.values());
+				_refreshJSModuleCaches(null);
 			}
 		}
 

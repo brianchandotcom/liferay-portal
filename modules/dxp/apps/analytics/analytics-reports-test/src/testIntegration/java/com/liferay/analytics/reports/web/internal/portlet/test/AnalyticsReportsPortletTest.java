@@ -14,11 +14,13 @@
 
 package com.liferay.analytics.reports.web.internal.portlet.test;
 
+import com.liferay.analytics.reports.test.MockObject;
+import com.liferay.analytics.reports.test.util.MockObjectUtil;
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockHttpUtil;
-import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockInfoDisplayObjectProviderUtil;
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockThemeDisplayUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -30,6 +32,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -138,58 +141,64 @@ public class AnalyticsReportsPortletTest {
 		properties.put("trafficSourcesEnabled", true);
 
 		try {
-			MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
-				_getMockLiferayPortletRenderRequest();
+			MockObjectUtil.testWithMockObject(
+				_classNameLocalService,
+				() -> {
+					MockLiferayPortletRenderRequest
+						mockLiferayPortletRenderRequest =
+							_getMockLiferayPortletRenderRequest();
 
-			_portlet.render(
-				mockLiferayPortletRenderRequest,
-				_getMockLiferayPortletRenderResponse());
+					_portlet.render(
+						mockLiferayPortletRenderRequest,
+						_getMockLiferayPortletRenderResponse());
 
-			Map<String, Object> props = _getProps(
-				mockLiferayPortletRenderRequest);
+					Map<String, Object> props = _getProps(
+						mockLiferayPortletRenderRequest);
 
-			JSONArray jsonArray = (JSONArray)props.get("trafficSources");
+					JSONArray jsonArray = (JSONArray)props.get(
+						"trafficSources");
 
-			Assert.assertEquals(2, jsonArray.length());
+					Assert.assertEquals(2, jsonArray.length());
 
-			JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+					JSONObject jsonObject1 = jsonArray.getJSONObject(0);
 
-			Assert.assertEquals("paid", jsonObject1.get("name"));
+					Assert.assertEquals("paid", jsonObject1.get("name"));
 
-			Assert.assertNull(jsonObject1.get("value"));
+					Assert.assertNull(jsonObject1.get("value"));
 
-			JSONObject jsonObject2 = jsonArray.getJSONObject(1);
+					JSONObject jsonObject2 = jsonArray.getJSONObject(1);
 
-			Assert.assertEquals("organic", jsonObject2.get("name"));
+					Assert.assertEquals("organic", jsonObject2.get("name"));
 
-			Assert.assertEquals(93.93D, jsonObject2.get("share"));
+					Assert.assertEquals(93.93D, jsonObject2.get("share"));
 
-			Assert.assertEquals(3192, jsonObject2.get("value"));
+					Assert.assertEquals(3192, jsonObject2.get("value"));
 
-			JSONArray countryKeywordsJSONArray = (JSONArray)jsonObject2.get(
-				"countryKeywords");
+					JSONArray countryKeywordsJSONArray =
+						(JSONArray)jsonObject2.get("countryKeywords");
 
-			Assert.assertEquals(
-				JSONUtil.put(
-					JSONUtil.put(
-						"countryCode", "us"
-					).put(
-						"countryName", "United States"
-					).put(
-						"keywords",
+					Assert.assertEquals(
 						JSONUtil.put(
 							JSONUtil.put(
-								"keyword", "liferay"
+								"countryCode", "us"
 							).put(
-								"position", 1
+								"countryName", "United States"
 							).put(
-								"searchVolume", 3600
-							).put(
-								"traffic", 2880
-							))
-					)
-				).toString(),
-				countryKeywordsJSONArray.toString());
+								"keywords",
+								JSONUtil.put(
+									JSONUtil.put(
+										"keyword", "liferay"
+									).put(
+										"position", 1
+									).put(
+										"searchVolume", 3600
+									).put(
+										"traffic", 2880
+									))
+							)
+						).toString(),
+						countryKeywordsJSONArray.toString());
+				});
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
@@ -201,33 +210,41 @@ public class AnalyticsReportsPortletTest {
 
 	@Test
 	public void testGetPropsViewURLs() throws Exception {
-		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
-			_getMockLiferayPortletRenderRequest();
+		MockObjectUtil.testWithMockObject(
+			_classNameLocalService,
+			() -> {
+				MockLiferayPortletRenderRequest
+					mockLiferayPortletRenderRequest =
+						_getMockLiferayPortletRenderRequest();
 
-		_portlet.render(
-			mockLiferayPortletRenderRequest,
-			_getMockLiferayPortletRenderResponse());
+				_portlet.render(
+					mockLiferayPortletRenderRequest,
+					_getMockLiferayPortletRenderResponse());
 
-		Map<String, Object> props = _getProps(mockLiferayPortletRenderRequest);
+				Map<String, Object> props = _getProps(
+					mockLiferayPortletRenderRequest);
 
-		JSONArray jsonArray = (JSONArray)props.get("viewURLs");
+				JSONArray jsonArray = (JSONArray)props.get("viewURLs");
 
-		Assert.assertEquals(String.valueOf(jsonArray), jsonArray.length(), 1);
+				Assert.assertEquals(
+					String.valueOf(jsonArray), jsonArray.length(), 1);
 
-		JSONObject jsonObject = jsonArray.getJSONObject(0);
+				JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-		Assert.assertEquals(Boolean.TRUE, jsonObject.getBoolean("default"));
+				Assert.assertEquals(
+					Boolean.TRUE, jsonObject.getBoolean("default"));
 
-		Assert.assertEquals(
-			LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
-			jsonObject.getString("languageId"));
+				Assert.assertEquals(
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
+					jsonObject.getString("languageId"));
 
-		Http http = new HttpImpl();
+				Http http = new HttpImpl();
 
-		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
-			http.getParameter(
-				jsonObject.getString("viewURL"), "param_languageId"));
+				Assert.assertEquals(
+					LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+					http.getParameter(
+						jsonObject.getString("viewURL"), "param_languageId"));
+			});
 	}
 
 	private MockLiferayPortletRenderRequest
@@ -270,10 +287,14 @@ public class AnalyticsReportsPortletTest {
 					throw new UnsupportedOperationException();
 				}));
 
+		InfoDisplayContributor<?> infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(
+				MockObject.class.getName());
+
 		mockLiferayPortletRenderRequest.setAttribute(
 			AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
-			MockInfoDisplayObjectProviderUtil.getInfoDisplayObjectProvider(
-				_infoDisplayContributorTracker, _portal));
+			infoDisplayContributor.getInfoDisplayObjectProvider(0));
+
 		mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.THEME_DISPLAY,
 			MockThemeDisplayUtil.getThemeDisplay(
@@ -330,6 +351,9 @@ public class AnalyticsReportsPortletTest {
 		ReflectionTestUtil.setFieldValue(
 			_portlet, "_http", MockHttpUtil.geHttp(mockRequest));
 	}
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

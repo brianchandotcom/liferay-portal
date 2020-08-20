@@ -214,6 +214,7 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 			_assetEntryLocalService.getEntry(
 				JournalArticle.class.getName(),
 				_journalArticle.getResourcePrimKey()));
+
 		mockHttpServletRequest.setAttribute(
 			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
 			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(

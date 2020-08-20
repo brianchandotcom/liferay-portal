@@ -149,6 +149,8 @@ public class AssetCategoriesSelectorDisplayContext {
 		).put(
 			"itemSelectorSaveEvent", HtmlUtil.escapeJS(getEventName())
 		).put(
+			"moveCategory", isMoveCategory()
+		).put(
 			"multiSelection", !isSingleSelect()
 		).put(
 			"namespace", _renderResponse.getNamespace()
@@ -233,6 +235,17 @@ public class AssetCategoriesSelectorDisplayContext {
 			_httpServletRequest, "allowedSelectVocabularies");
 
 		return _allowedSelectVocabularies;
+	}
+
+	public boolean isMoveCategory() {
+		if (_moveCategory != null) {
+			return _moveCategory;
+		}
+
+		_moveCategory = ParamUtil.getBoolean(
+			_httpServletRequest, "moveCategory");
+
+		return _moveCategory;
 	}
 
 	public boolean isSingleSelect() {
@@ -321,6 +334,7 @@ public class AssetCategoriesSelectorDisplayContext {
 	private Boolean _allowedSelectVocabularies;
 	private String _eventName;
 	private final HttpServletRequest _httpServletRequest;
+	private Boolean _moveCategory;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private List<String> _selectedCategoryIds;

@@ -132,11 +132,18 @@ ViewTranslationDisplayContext viewTranslationDisplayContext = (ViewTranslationDi
 
 						<%
 						String targetContent = viewTranslationDisplayContext.getStringValue(infoField, viewTranslationDisplayContext.getTargetLocale());
+						String targetContentDir = LanguageUtil.get(viewTranslationDisplayContext.getTargetLocale(), "lang.dir");
 						%>
 
 						<c:choose>
 							<c:when test="<%= html %>">
-								<%= targetContent %>
+								<label class="control-label">
+									<%= label %>
+								</label>
+
+								<div class="translate-editor-preview" dir="<%= targetContentDir %>">
+									<%= targetContent %>
+								</div>
 							</c:when>
 							<c:otherwise>
 								<aui:input dir='<%= LanguageUtil.get(viewTranslationDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" type='<%= multiline ? "textarea" : "text" %>' value="<%= targetContent %>" />

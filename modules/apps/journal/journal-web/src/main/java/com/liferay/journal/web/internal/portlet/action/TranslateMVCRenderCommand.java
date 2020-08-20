@@ -36,8 +36,6 @@ import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
 
-import java.io.IOException;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -86,9 +84,12 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				InfoForm.class.getName(),
 				infoItemFormProvider.getInfoForm(article));
 
+			InfoItemFieldValues sourceInfoItemFieldValues =
+				_getInfoItemFieldValues(article);
+
 			renderRequest.setAttribute(
 				JournalWebConstants.SOURCE_INFO_ITEM_FIELD_VALUES,
-				_getInfoItemFieldValues(article));
+				sourceInfoItemFieldValues);
 
 			String sourceLanguageId = ParamUtil.getString(
 				renderRequest, "sourceLanguageId",
@@ -103,7 +104,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 			renderRequest.setAttribute(
 				JournalWebConstants.TARGET_INFO_ITEM_FIELD_VALUES,
-				_getInfoItemFieldValues(article, targetLanguageId));
+				_getInfoItemFieldValues(
+					article, sourceInfoItemFieldValues, targetLanguageId));
 
 			List<String> availableSourceLanguageIds = Arrays.asList(
 				article.getAvailableLanguageIds());
@@ -143,11 +145,10 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private InfoItemFieldValues _getInfoItemFieldValues(
-			JournalArticle article, String targetLanguageId)
-		throws IOException, PortalException {
-
-		InfoItemFieldValues journalArticleInfoItemFieldValues =
-			_getInfoItemFieldValues(article);
+			JournalArticle article,
+			InfoItemFieldValues journalArticleInfoItemFieldValues,
+			String targetLanguageId)
+		throws PortalException {
 
 		TranslationEntry translationEntry =
 			_translationEntryLocalService.fetchTranslationEntry(

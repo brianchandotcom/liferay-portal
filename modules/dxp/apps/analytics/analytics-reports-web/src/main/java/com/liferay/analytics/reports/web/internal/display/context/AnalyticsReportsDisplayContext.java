@@ -152,6 +152,10 @@ public class AnalyticsReportsDisplayContext<T> {
 		).put(
 			"endpoints",
 			HashMapBuilder.<String, Object>put(
+				"getAnalyticsReportsData",
+				() -> String.valueOf(
+					_getResourceURL("/analytics_reports/get_data"))
+			).put(
 				"getAnalyticsReportsHistoricalReadsURL",
 				() -> String.valueOf(
 					_getResourceURL("/analytics_reports/get_historical_reads"))

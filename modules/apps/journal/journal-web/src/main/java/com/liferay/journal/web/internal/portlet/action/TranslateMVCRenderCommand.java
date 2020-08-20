@@ -155,39 +155,37 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				JournalArticle.class.getName(), article.getResourcePrimKey(),
 				targetLanguageId);
 
-		if (translationEntry != null) {
-			InfoItemFieldValues translationEntryInfoItemFieldValues =
-				_translationEntryLocalService.getInfoItemFieldValues(
-					translationEntry.getGroupId(),
-					translationEntry.getClassName(),
-					translationEntry.getClassPK(),
-					translationEntry.getContent());
-
-			Collection<InfoFieldValue<Object>> infoFieldValues =
-				journalArticleInfoItemFieldValues.getInfoFieldValues();
-
-			Stream<InfoFieldValue<Object>> infoFieldValueStream =
-				infoFieldValues.stream();
-
-			return InfoItemFieldValues.builder(
-			).infoItemReference(
-				journalArticleInfoItemFieldValues.getInfoItemReference()
-			).infoFieldValues(
-				infoFieldValueStream.map(
-					infoFieldValue -> new InfoFieldValue<>(
-						infoFieldValue.getInfoField(),
-						GetterUtil.getObject(
-							_getValue(
-								translationEntryInfoItemFieldValues,
-								infoFieldValue.getInfoField()),
-							infoFieldValue.getValue()))
-				).collect(
-					Collectors.toList()
-				)
-			).build();
+		if (translationEntry == null) {
+			return journalArticleInfoItemFieldValues;
 		}
 
-		return journalArticleInfoItemFieldValues;
+		InfoItemFieldValues translationEntryInfoItemFieldValues =
+			_translationEntryLocalService.getInfoItemFieldValues(
+				translationEntry.getGroupId(), translationEntry.getClassName(),
+				translationEntry.getClassPK(), translationEntry.getContent());
+
+		Collection<InfoFieldValue<Object>> infoFieldValues =
+			journalArticleInfoItemFieldValues.getInfoFieldValues();
+
+		Stream<InfoFieldValue<Object>> infoFieldValueStream =
+			infoFieldValues.stream();
+
+		return InfoItemFieldValues.builder(
+		).infoItemReference(
+			journalArticleInfoItemFieldValues.getInfoItemReference()
+		).infoFieldValues(
+			infoFieldValueStream.map(
+				infoFieldValue -> new InfoFieldValue<>(
+					infoFieldValue.getInfoField(),
+					GetterUtil.getObject(
+						_getValue(
+							translationEntryInfoItemFieldValues,
+							infoFieldValue.getInfoField()),
+						infoFieldValue.getValue()))
+			).collect(
+				Collectors.toList()
+			)
+		).build();
 	}
 
 	private List<String> _getSiteAvailableLanguageIds(

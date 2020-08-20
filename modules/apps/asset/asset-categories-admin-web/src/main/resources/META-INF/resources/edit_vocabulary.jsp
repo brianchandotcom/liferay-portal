@@ -62,7 +62,13 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 
 				<aui:input helpMessage="multi-valued-help" label="allow-multiple-categories" name="multiValued" type="toggle-switch" value="<%= (vocabulary != null) ? vocabulary.isMultiValued() : true %>" />
 
-				<aui:input helpMessage="for-internal-use-only-help" label="for-internal-use-only" name="internalUse" type="toggle-switch" value="<%= (vocabulary != null) ? (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) : false %>" />
+				<label><liferay-ui:message key="visibility" /> <liferay-ui:icon-help message="visibility-help" /></label>
+
+				<div class="form-group" id="<portlet:namespace />visibilityOptions">
+					<aui:input checked="<%= (vocabulary != null) ? (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC) : true %>" disabled="<%= !(vocabulary == null) %>" label="public" name="internalUse" type="radio" value="<%= false %>" />
+
+					<aui:input checked="<%= (vocabulary != null) ? (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) : false %>" disabled="<%= !(vocabulary == null) %>" label="internal" name="internalUse" type="radio" value="<%= true %>" />
+				</div>
 			</liferay-frontend:fieldset>
 
 			<%@ include file="/edit_vocabulary_settings.jspf" %>

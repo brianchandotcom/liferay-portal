@@ -31,6 +31,7 @@ import {ITEM_ACTIVATION_ORIGINS} from '../../../app/config/constants/itemActivat
 import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import selectCanUpdatePageStructure from '../../../app/selectors/selectCanUpdatePageStructure';
+import selectSegmentsExperienceId from '../../../app/selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import deleteItem from '../../../app/thunks/deleteItem';
 import moveItem from '../../../app/thunks/moveItem';
@@ -58,9 +59,7 @@ export default function StructureTreeNode({node}) {
 	const dispatch = useDispatch();
 	const hoverItem = useHoverItem();
 	const hoveredItemId = useHoveredItemId();
-	const segmentsExperienceId = useSelector(
-		(state) => state.segmentsExperienceId
-	);
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const nodeRef = useRef();
 	const selectItem = useSelectItem();

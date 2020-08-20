@@ -43,6 +43,8 @@ import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
 import com.liferay.redirect.web.internal.search.RedirectNotFoundEntrySearch;
 import com.liferay.redirect.web.internal.security.permission.resource.RedirectPermission;
 import com.liferay.redirect.web.internal.util.RedirectUtil;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -117,9 +119,18 @@ public class RedirectNotFoundEntriesDisplayContext {
 					LanguageUtil.get(_httpServletRequest, label));
 			}
 		).add(
-			() -> RedirectPermission.contains(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY),
+			() -> {
+				StagingGroupHelper stagingGroupHelper =
+					StagingGroupHelperUtil.getStagingGroupHelper();
+
+				return RedirectPermission.contains(
+					_themeDisplay.getPermissionChecker(),
+					_themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY) &&
+					   !(stagingGroupHelper.isLocalStagingGroup(
+						   redirectNotFoundEntry.getGroupId()) ||
+						 stagingGroupHelper.isRemoteStagingGroup(
+							 redirectNotFoundEntry.getGroupId()));
+			},
 			dropdownItem -> {
 				RenderURL editRedirectEntryURL =
 					_liferayPortletResponse.createRenderURL();

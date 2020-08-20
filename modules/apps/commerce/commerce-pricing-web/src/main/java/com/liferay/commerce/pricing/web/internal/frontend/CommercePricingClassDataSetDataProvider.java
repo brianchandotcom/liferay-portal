@@ -22,7 +22,6 @@ import com.liferay.commerce.pricing.web.internal.model.PricingClass;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
-import com.liferay.frontend.taglib.clay.internal.data.DefaultFilterImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -74,9 +73,8 @@ public class CommercePricingClassDataSetDataProvider
 
 		List<CommercePricingClass> commercePricingClasses =
 			_getCommercePricingClasses(
-				companyId, filter.getKeywords(),
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				sort);
+				companyId, filter.getKeywords(), pagination.getStartPosition(),
+				pagination.getEndPosition(), sort);
 
 		for (CommercePricingClass commercePricingClass :
 				commercePricingClasses) {

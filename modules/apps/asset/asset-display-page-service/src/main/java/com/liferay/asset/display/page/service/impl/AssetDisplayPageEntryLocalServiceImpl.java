@@ -200,8 +200,8 @@ public class AssetDisplayPageEntryLocalServiceImpl
 		String className = _portal.getClassName(classNameId);
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_layoutDisplayPageProviderTracker.getLayoutDisplayPageProvider(
-				className);
+			_layoutDisplayPageProviderTracker.
+				getLayoutDisplayPageProviderByClassName(className);
 
 		if (layoutDisplayPageProvider == null) {
 			return LayoutConstants.DEFAULT_PLID;

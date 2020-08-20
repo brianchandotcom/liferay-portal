@@ -208,8 +208,8 @@ public class PortletLayoutDisplayContext {
 			className = FileEntry.class.getName();
 		}
 
-		return _layoutDisplayPageProviderTracker.getLayoutDisplayPageProvider(
-			className);
+		return _layoutDisplayPageProviderTracker.
+			getLayoutDisplayPageProviderByClassName(className);
 	}
 
 	public String getContainerLinkHref(

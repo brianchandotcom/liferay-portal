@@ -135,7 +135,8 @@ public class GetFragmentEntryLinkMVCResourceCommand
 
 				LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 					_layoutDisplayPageProviderTracker.
-						getLayoutDisplayPageProvider(collectionItemClassName);
+						getLayoutDisplayPageProviderByClassName(
+							collectionItemClassName);
 
 				if (layoutDisplayPageProvider != null) {
 					httpServletRequest.setAttribute(

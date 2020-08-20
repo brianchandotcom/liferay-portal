@@ -459,8 +459,9 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 		throws PortalException {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			layoutDisplayPageProviderTracker.getLayoutDisplayPageProvider(
-				JournalArticle.class.getName());
+			layoutDisplayPageProviderTracker.
+				getLayoutDisplayPageProviderByClassName(
+					JournalArticle.class.getName());
 
 		InfoItemReference infoItemReference = new InfoItemReference(
 			JournalArticle.class.getName(),

@@ -868,7 +868,10 @@ definition {
 
 			PortletEntry.inputTitle(title = "Webcontent Title Edit");
 
-			AlloyEditor.addContent(content = "Webcontent Content Edit");
+			Type.typeCKEditorWaitForCKEditor(
+				key_fieldLabel = "content",
+				locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
+				value1 = "Webcontent Content Edit");
 
 			Button.clickPublish();
 

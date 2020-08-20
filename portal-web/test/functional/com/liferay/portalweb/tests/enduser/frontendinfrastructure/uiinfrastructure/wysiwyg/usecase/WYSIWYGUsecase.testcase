@@ -202,28 +202,6 @@ definition {
 		AssertElementPresent(locator1 = "//img[contains(@src,'Document_1.jpg')]");
 	}
 
-	@description = "This is a use case for LPS-61676."
-	@priority = "4"
-	test RemoveAppliedStylingInAlloyEditor {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		AlloyEditor.addContent(content = "This is a sentence");
-
-		AlloyEditor.toggleStylingInAlloyEditor(boldContent = "This is a sentence");
-
-		AlloyEditor.viewStylingInAlloyEditor(boldContent = "This is a sentence");
-
-		AlloyEditor.toggleStylingInAlloyEditor(boldContent = "This is a sentence");
-
-		AlloyEditor.viewNoStylingInAlloyEditor(boldContent = "This is a sentence");
-	}
-
 	@priority = "4"
 	test ViewWikiFrontPageLeftToRight {
 		ProductMenu.gotoPortlet(

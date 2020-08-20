@@ -33,6 +33,7 @@ import com.liferay.commerce.product.type.CPType;
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -226,8 +227,8 @@ public class CPDefinitionsDisplayContext
 		return clayDataSetActionDropdownItems;
 	}
 
-	public List<ClayMenuActionItem> getClayMenuActionItems() throws Exception {
-		List<ClayMenuActionItem> clayMenuActionItems = new ArrayList<>();
+	public List<DropdownItem> getDropdownItems() throws Exception {
+		List<DropdownItem> dropdownItems = new ArrayList<>();
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			cpRequestHelper.getRenderRequest(), cpRequestHelper.getPortletId(),
@@ -240,14 +241,15 @@ public class CPDefinitionsDisplayContext
 			ParamUtil.getString(httpServletRequest, "cpDefinitionId"));
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-		ClayMenuActionItem clayMenuActionItem = new ClayMenuActionItem(
-			portletURL.toString(), null,
-			LanguageUtil.get(httpServletRequest, "duplicate"),
-			ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL);
+		DropdownItem dropdownItem = new DropdownItem();
 
-		clayMenuActionItems.add(clayMenuActionItem);
+		dropdownItem.setHref(portletURL.toString());
+		dropdownItem.setLabel(LanguageUtil.get(httpServletRequest, "duplicate"));
+		dropdownItem.setTarget(ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL);
 
-		return clayMenuActionItems;
+		dropdownItems.add(dropdownItem);
+
+		return dropdownItems;
 	}
 
 	public long[] getCommerceAccountGroupRelCommerceAccountGroupIds()

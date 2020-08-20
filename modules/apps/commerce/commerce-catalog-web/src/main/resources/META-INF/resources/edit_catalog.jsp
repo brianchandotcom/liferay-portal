@@ -31,7 +31,6 @@ CommerceCatalog commerceCatalog = commerceCatalogDisplayContext.getCommerceCatal
 	actions="<%= commerceCatalogDisplayContext.getHeaderActionModels() %>"
 	bean="<%= commerceCatalog %>"
 	beanIdLabel="id"
-	dropdownItems="<%= commerceCatalogDisplayContext.getDropdownItems() %>"
 	externalReferenceCode="<%= commerceCatalog.getExternalReferenceCode() %>"
 	externalReferenceCodeEditUrl="<%= editCommerceCatalogExternalReferenceCodeURL %>"
 	model="<%= CommerceCatalog.class %>"

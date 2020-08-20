@@ -30,6 +30,7 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -197,10 +198,6 @@ public class CommerceCatalogDisplayContext {
 
 		return _commerceCatalogDefaultImage.getDefaultCatalogFileEntryId(
 			commerceCatalog.getGroupId());
-	}
-
-	public List<ClayMenuActionItem> getDropdownItems() {
-		return Collections.emptyList();
 	}
 
 	public String getEditCommerceCatalogActionURL() throws Exception {

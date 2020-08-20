@@ -45,6 +45,8 @@ page import="com.liferay.portal.kernel.workflow.WorkflowTask" %>
 <%@ page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
+<%@ page
+	import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %>
 
 <liferay-theme:defineObjects />
 
@@ -55,7 +57,7 @@ List<HeaderActionModel> actions = (List<HeaderActionModel>)request.getAttribute(
 Object bean = request.getAttribute("liferay-commerce:header:bean");
 String beanIdLabel = (String)request.getAttribute("liferay-commerce:header:beanIdLabel");
 String cssClasses = (String)request.getAttribute("liferay-commerce:header:cssClasses");
-List<ClayMenuActionItem> dropdownItems = (List<ClayMenuActionItem>)request.getAttribute("liferay-commerce:header:dropdownItems");
+List<DropdownItem> dropdownItems = (List<DropdownItem>)request.getAttribute("liferay-commerce:header:dropdownItems");
 String externalReferenceCode = (String)request.getAttribute("liferay-commerce:header:externalReferenceCode");
 String externalReferenceCodeEditUrl = (String)request.getAttribute("liferay-commerce:header:externalReferenceCodeEditUrl");
 boolean fullWidth = (boolean)request.getAttribute("liferay-commerce:header:fullWidth");

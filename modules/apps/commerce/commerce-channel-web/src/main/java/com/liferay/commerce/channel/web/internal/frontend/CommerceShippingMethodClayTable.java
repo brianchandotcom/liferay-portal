@@ -126,6 +126,7 @@ public class CommerceShippingMethodClayTable
 				portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 				dropdownItem.setHref(portletURL.toString());
+
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "edit"));
 				dropdownItem.setTarget("sidePanel");

@@ -69,17 +69,15 @@ public class CommerceProductAccountGroupDataSetActionProvider
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			commerceAccountGroupRel.getClassPK());
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
 		return DropdownItemListBuilder.add(
 			() -> CommerceCatalogPermission.contains(
-				permissionChecker, cpDefinition, ActionKeys.UPDATE),
+				PermissionThreadLocal.getPermissionChecker(), cpDefinition, ActionKeys.UPDATE),
 			dropdownItem -> {
 				PortletURL deleteURL = _getAccountGroupDeleteURL(
 					commerceAccountGroupRel, httpServletRequest);
 
 				dropdownItem.setHref(deleteURL.toString());
+
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
 			}

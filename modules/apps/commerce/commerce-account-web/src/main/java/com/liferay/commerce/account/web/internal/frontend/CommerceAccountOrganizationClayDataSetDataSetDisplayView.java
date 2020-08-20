@@ -87,19 +87,22 @@ public class CommerceAccountOrganizationClayDataSetDataSetDisplayView
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
 
-		Organization organization = (Organization)model;
-
-		long commerceAccountId = ParamUtil.getLong(
-			httpServletRequest, "commerceAccountId");
-
 		return DropdownItemListBuilder.add(
-			() -> _modelResourcePermission.contains(
-				PermissionThreadLocal.getPermissionChecker(), commerceAccountId,
-				CommerceAccountActionKeys.MANAGE_ORGANIZATIONS),
+			() -> {
+				long commerceAccountId = ParamUtil.getLong(
+					httpServletRequest, "commerceAccountId");
+
+				return _modelResourcePermission.contains(
+					PermissionThreadLocal.getPermissionChecker(), commerceAccountId,
+					CommerceAccountActionKeys.MANAGE_ORGANIZATIONS);
+			},
 			dropdownItem -> {
+				Organization organization = (Organization)model;
+
 				dropdownItem.setHref(
 					"javascript:deleteCommerceAccountOrganization('" +
 						organization.getOrganizationId() + "')");
+
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
 			}

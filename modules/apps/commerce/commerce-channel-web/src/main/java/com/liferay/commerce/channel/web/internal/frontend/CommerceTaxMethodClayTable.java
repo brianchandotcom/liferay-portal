@@ -104,8 +104,6 @@ public class CommerceTaxMethodClayTable
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
 
-		TaxMethod taxMethod = (TaxMethod)model;
-
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				long commerceChannelId = ParamUtil.getLong(
@@ -117,11 +115,15 @@ public class CommerceTaxMethodClayTable
 
 				portletURL.setParameter(
 					"commerceChannelId", String.valueOf(commerceChannelId));
+
+				TaxMethod taxMethod = (TaxMethod)model;
+
 				portletURL.setParameter(
 					"commerceTaxMethodEngineKey",
 					String.valueOf(taxMethod.getKey()));
 
 				portletURL.setWindowState(LiferayWindowState.POP_UP);
+
 				dropdownItem.setHref(portletURL.toString());
 
 				dropdownItem.setLabel(

@@ -73,16 +73,17 @@ public class ProcessingCommerceShipmentItemDataSetActionProvider
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		CommerceShipment commerceShipment =
-			commerceShipmentItem.getCommerceShipment();
-
 		return DropdownItemListBuilder.add(
-			() ->
-				PortalPermissionUtil.contains(
+			() -> {
+				CommerceShipment commerceShipment =
+					commerceShipmentItem.getCommerceShipment();
+
+				return PortalPermissionUtil.contains(
 					permissionChecker,
 					CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS) &&
 				(commerceShipment.getStatus() ==
-					CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING),
+					CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING);
+			},
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getShipmentItemEditURL(

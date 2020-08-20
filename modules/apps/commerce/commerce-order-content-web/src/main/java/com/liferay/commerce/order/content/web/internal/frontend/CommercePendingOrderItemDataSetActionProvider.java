@@ -60,13 +60,10 @@ public class CommercePendingOrderItemDataSetActionProvider
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			orderItem.getOrderId());
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
 		return DropdownItemListBuilder.add(
 			() ->
 				_modelResourcePermission.contains(
-					permissionChecker, commerceOrder, ActionKeys.UPDATE) &&
+					PermissionThreadLocal.getPermissionChecker(), commerceOrder, ActionKeys.UPDATE) &&
 				commerceOrder.isOpen(),
 			dropdownItem -> {
 				dropdownItem.setHref(

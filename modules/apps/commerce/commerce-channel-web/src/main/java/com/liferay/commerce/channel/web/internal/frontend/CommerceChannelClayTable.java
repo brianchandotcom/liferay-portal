@@ -113,7 +113,9 @@ public class CommerceChannelClayTable
 					String.valueOf(channel.getChannelId()));
 				portletURL.setParameter(
 					"mvcRenderCommandName", "editCommerceChannel");
+
 				dropdownItem.setHref(portletURL.toString());
+
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "edit"));
 			}

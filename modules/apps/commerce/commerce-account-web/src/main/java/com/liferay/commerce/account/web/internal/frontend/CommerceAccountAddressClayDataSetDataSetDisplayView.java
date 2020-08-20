@@ -114,6 +114,7 @@ public class CommerceAccountAddressClayDataSetDataSetDisplayView
 				sb.append(StringPool.SEMICOLON);
 
 				dropdownItem.setHref(sb.toString());
+
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
 			}
@@ -133,6 +134,7 @@ public class CommerceAccountAddressClayDataSetDataSetDisplayView
 				sb.append(StringPool.SEMICOLON);
 
 				dropdownItem.setHref(sb.toString());
+
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "edit"));
 			}

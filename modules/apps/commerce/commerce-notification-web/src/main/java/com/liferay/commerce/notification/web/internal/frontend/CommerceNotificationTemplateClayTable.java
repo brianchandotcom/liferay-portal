@@ -109,9 +109,6 @@ public class CommerceNotificationTemplateClayTable
 
 		NotificationTemplate notificationTemplate = (NotificationTemplate)model;
 
-		long commerceChannelId = ParamUtil.getLong(
-			httpServletRequest, "commerceChannelId");
-
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				PortletURL portletURL = PortletProviderUtil.getPortletURL(
@@ -119,6 +116,9 @@ public class CommerceNotificationTemplateClayTable
 					PortletProvider.Action.MANAGE);
 
 				portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+				long commerceChannelId = ParamUtil.getLong(
+					httpServletRequest, "commerceChannelId");
 
 				dropdownItem.setHref(
 					portletURL, "mvcRenderCommandName",

@@ -199,7 +199,7 @@ public class CommerceCartResourceUtil {
 	private PriceModel _getCommerceOrderItemPriceModel(
 			CommerceOrderItem commerceOrderItem,
 			CommerceContext commerceContext, Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		CommerceOrderItemPrice commerceOrderItemPrice =
 			_commerceOrderPriceCalculation.getCommerceOrderItemPricePerUnit(
@@ -225,7 +225,7 @@ public class CommerceCartResourceUtil {
 			BigDecimal discountPercentageLevel3,
 			BigDecimal discountPercentageLevel4, CommerceMoney finalPriceMoney,
 			Locale locale)
-		throws PortalException {
+		throws Exception {
 
 		PriceModel priceModel = new PriceModel(unitPriceMoney.format(locale));
 

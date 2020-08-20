@@ -96,13 +96,15 @@ public class CommerceOrganizationAccountClayTableDataSetDisplayView
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
 
-		long organizationId = ParamUtil.getLong(
-			httpServletRequest, "organizationId");
-
 		return DropdownItemListBuilder.add(
-			() -> OrganizationPermissionUtil.contains(
-				PermissionThreadLocal.getPermissionChecker(), organizationId,
-				ActionKeys.UPDATE),
+			() -> {
+				long organizationId = ParamUtil.getLong(
+					httpServletRequest, "organizationId");
+
+				return OrganizationPermissionUtil.contains(
+					PermissionThreadLocal.getPermissionChecker(), organizationId,
+					ActionKeys.UPDATE);
+			},
 			dropdownItem -> {
 				Account account = (Account)model;
 
@@ -117,6 +119,7 @@ public class CommerceOrganizationAccountClayTableDataSetDisplayView
 				sb.append(StringPool.SEMICOLON);
 
 				dropdownItem.setHref(sb.toString());
+
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
 			}

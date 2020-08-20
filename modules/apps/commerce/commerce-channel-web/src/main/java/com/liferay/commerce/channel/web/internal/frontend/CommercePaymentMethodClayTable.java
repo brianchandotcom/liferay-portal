@@ -127,6 +127,7 @@ public class CommercePaymentMethodClayTable
 				portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 				dropdownItem.setHref(portletURL);
+
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "edit"));
 				dropdownItem.setTarget("sidePanel");

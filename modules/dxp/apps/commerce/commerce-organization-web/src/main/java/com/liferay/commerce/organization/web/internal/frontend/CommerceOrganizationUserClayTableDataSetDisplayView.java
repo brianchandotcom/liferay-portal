@@ -131,6 +131,7 @@ public class CommerceOrganizationUserClayTableDataSetDisplayView
 				sb.append(StringPool.SEMICOLON);
 
 				dropdownItem.setHref(sb.toString());
+
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
 			}

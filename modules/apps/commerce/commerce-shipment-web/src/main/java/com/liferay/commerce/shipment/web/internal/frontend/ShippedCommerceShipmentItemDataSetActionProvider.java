@@ -57,16 +57,17 @@ public class ShippedCommerceShipmentItemDataSetActionProvider
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException {
 
-		ShipmentItem shipmentItem = (ShipmentItem)model;
-
 		return DropdownItemListBuilder.add(
 			() -> PortalPermissionUtil.contains(
 				PermissionThreadLocal.getPermissionChecker(),
 				CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS),
 			dropdownItem -> {
+				ShipmentItem shipmentItem = (ShipmentItem)model;
+
 				dropdownItem.setHref(
 					_getShipmentItemDeleteURL(
 						shipmentItem.getShipmentItemId(), httpServletRequest));
+
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setTarget("modal");

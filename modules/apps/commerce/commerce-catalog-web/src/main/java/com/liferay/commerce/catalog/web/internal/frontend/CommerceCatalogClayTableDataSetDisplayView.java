@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.catalog.web.internal.frontend;
 
-import com.liferay.commerce.catalog.web.internal.constants.CommerceCatalogDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema;

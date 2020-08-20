@@ -63,15 +63,15 @@ public class CommerceInventoryItemClayDataSetActionProvider
 
 		InventoryItem inventoryItem = (InventoryItem)model;
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return DropdownItemListBuilder.add(
 			() -> PortalPermissionUtil.contains(
 				getPermissionChecker(),
 				CommerceInventoryActionKeys.MANAGE_INVENTORY),
 			dropdownItem -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
 				dropdownItem.setHref(
 					_getCommerceInventoryItemEditURL(
 						inventoryItem.getSku(), themeDisplay));

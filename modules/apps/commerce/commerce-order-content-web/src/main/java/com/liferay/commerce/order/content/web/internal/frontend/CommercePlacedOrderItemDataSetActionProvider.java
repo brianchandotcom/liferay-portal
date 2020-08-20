@@ -59,10 +59,6 @@ public class CommercePlacedOrderItemDataSetActionProvider
 			return Collections.emptyList();
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			orderItem.getOrderId());
 
@@ -71,9 +67,14 @@ public class CommercePlacedOrderItemDataSetActionProvider
 				PermissionThreadLocal.getPermissionChecker(), commerceOrder,
 				ActionKeys.VIEW),
 			dropdownItem -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
 				dropdownItem.setHref(
 					CommerceOrderClayTableUtil.getViewShipmentURL(
 						orderItem.getOrderItemId(), themeDisplay));
+
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "shipments"));
 				dropdownItem.setTarget("modal");

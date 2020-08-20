@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEW_TOPIC</td>
+	<td>//button[contains(@class,'breadcrumb-button') and contains(.,'New Topic')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGINATION_RESULTS</td>
 	<td>//div[@class='pagination-results']</td>
 	<td></td>

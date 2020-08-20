@@ -36,18 +36,20 @@ public class LayoutDisplayPageProviderTrackerImpl
 	public LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
 		String className) {
 
-		return _classNameLayoutDisplayPageProviderServiceTrackerMap.getService(className);
+		return _classNameLayoutDisplayPageProviderServiceTrackerMap.getService(
+			className);
 	}
 
 	public LayoutDisplayPageProvider<?>
 		getLayoutDisplayPageProviderByURLSeparator(String urlSeparator) {
 
-		return _urlSeparatorLayoutDisplayPageProviderServiceTrackerMap.getService(
-			urlSeparator);
+		return _urlSeparatorLayoutDisplayPageProviderServiceTrackerMap.
+			getService(urlSeparator);
 	}
 
 	public List<LayoutDisplayPageProvider<?>> getLayoutDisplayPageProviders() {
-		return new ArrayList(_classNameLayoutDisplayPageProviderServiceTrackerMap.values());
+		return new ArrayList(
+			_classNameLayoutDisplayPageProviderServiceTrackerMap.values());
 	}
 
 	@Activate
@@ -90,8 +92,8 @@ public class LayoutDisplayPageProviderTrackerImpl
 	}
 
 	private ServiceTrackerMap<String, LayoutDisplayPageProvider<?>>
-		_urlSeparatorLayoutDisplayPageProviderServiceTrackerMap;
-	private ServiceTrackerMap<String, LayoutDisplayPageProvider<?>>
 		_classNameLayoutDisplayPageProviderServiceTrackerMap;
+	private ServiceTrackerMap<String, LayoutDisplayPageProvider<?>>
+		_urlSeparatorLayoutDisplayPageProviderServiceTrackerMap;
 
 }

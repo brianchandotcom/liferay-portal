@@ -138,6 +138,8 @@ public class SynchronousDestinationTestRule
 				DestinationNames.BACKGROUND_TASK);
 			Filter backgroundTaskStatusFilter = _registerDestinationFilter(
 				DestinationNames.BACKGROUND_TASK_STATUS);
+			Filter ddmStructureReindexFilter = _registerDestinationFilter(
+				"liferay/ddm_structure_reindex");
 			Filter kaleoGraphWalkerFilter = _registerDestinationFilter(
 				"liferay/kaleo_graph_walker");
 			Filter mailFilter = _registerDestinationFilter(
@@ -151,9 +153,9 @@ public class SynchronousDestinationTestRule
 
 			serviceDependencyManager.registerDependencies(
 				auditFilter, asyncFilter, backgroundTaskFilter,
-				backgroundTaskStatusFilter, kaleoGraphWalkerFilter, mailFilter,
-				pdfProcessorFilter, rawMetaDataProcessorFilter,
-				subscrpitionSenderFilter);
+				backgroundTaskStatusFilter, ddmStructureReindexFilter,
+				kaleoGraphWalkerFilter, mailFilter, pdfProcessorFilter,
+				rawMetaDataProcessorFilter, subscrpitionSenderFilter);
 
 			serviceDependencyManager.waitForDependencies();
 
@@ -177,6 +179,7 @@ public class SynchronousDestinationTestRule
 			replaceDestination(DestinationNames.SUBSCRIPTION_SENDER);
 			replaceDestination("liferay/adaptive_media_processor");
 			replaceDestination("liferay/asset_auto_tagger");
+			replaceDestination("liferay/ddm_structure_reindex");
 			replaceDestination("liferay/kaleo_graph_walker");
 			replaceDestination("liferay/report_request");
 			replaceDestination("liferay/reports_admin");

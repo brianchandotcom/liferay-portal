@@ -20,6 +20,7 @@ import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -108,6 +109,22 @@ public class XLIFFInfoFormTranslationImporter
 		return translationSnapshot.getInfoItemFieldValues();
 	}
 
+	private InfoField _createInfoField(Locale locale, String value) {
+		return InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			value
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.<String>builder(
+			).value(
+				locale, value
+			).build()
+		).localizable(
+			true
+		).build();
+	}
+
 	private InfoItemFieldValues _getInfoItemFieldValuesXLIFFv12(
 			List<Event> events, InfoItemReference infoItemReference,
 			boolean includeSource)
@@ -124,63 +141,8 @@ public class XLIFFInfoFormTranslationImporter
 
 		return InfoItemFieldValues.builder(
 		).<XLIFFFileException>infoFieldValue(
-			consumer -> {
-				for (Event event : events) {
-					if (event.isTextUnit()) {
-						ITextUnit iTextUnit = event.getTextUnit();
-
-						_validateWellFormedTextUnit(targetLocale, iTextUnit);
-
-						TextContainer sourceTextContainer =
-							iTextUnit.getSource();
-
-						TextFragment sourceTextFragment =
-							sourceTextContainer.getFirstContent();
-
-						for (LocaleId targetLocaleId :
-								iTextUnit.getTargetLocales()) {
-
-							TextContainer targetTextContainer =
-								iTextUnit.getTarget(targetLocaleId);
-
-							TextFragment targetTextFragment =
-								targetTextContainer.getFirstContent();
-
-							InfoField infoField = InfoField.builder(
-							).infoFieldType(
-								TextInfoFieldType.INSTANCE
-							).name(
-								iTextUnit.getId()
-							).labelInfoLocalizedValue(
-								InfoLocalizedValue.<String>builder(
-								).value(
-									targetLocale, iTextUnit.getId()
-								).build()
-							).localizable(
-								true
-							).build();
-
-							consumer.accept(
-								new InfoFieldValue<>(
-									infoField,
-									InfoLocalizedValue.builder(
-									).value(
-										targetLocale,
-										targetTextFragment.getText()
-									).value(
-										biConsumer -> {
-											if (includeSource) {
-												biConsumer.accept(
-													sourceLocale,
-													sourceTextFragment.
-														getText());
-											}
-										}
-									).build()));
-						}
-					}
-				}
-			}
+			consumer -> _produceInfoFieldValuesXLIFFv12(
+				consumer, events, sourceLocale, targetLocale, includeSource)
 		).infoItemReference(
 			infoItemReference
 		).build();
@@ -206,56 +168,9 @@ public class XLIFFInfoFormTranslationImporter
 
 		return InfoItemFieldValues.builder(
 		).<XLIFFFileException>infoFieldValue(
-			consumer -> {
-				for (Unit unit : xliffDocument.getUnits()) {
-					if (unit.getPartCount() != 1) {
-						throw new XLIFFFileException.MustNotHaveMoreThanOne(
-							"The file only can have one unit");
-					}
-
-					Part part = unit.getPart(0);
-
-					Fragment targetFragment = part.getTarget();
-
-					if (targetFragment == null) {
-						throw new XLIFFFileException.MustBeWellFormed(
-							"There is no translation target");
-					}
-
-					InfoField infoField = InfoField.builder(
-					).infoFieldType(
-						TextInfoFieldType.INSTANCE
-					).name(
-						unit.getId()
-					).labelInfoLocalizedValue(
-						InfoLocalizedValue.<String>builder(
-						).value(
-							targetLocale, unit.getId()
-						).build()
-					).localizable(
-						true
-					).build();
-
-					consumer.accept(
-						new InfoFieldValue<>(
-							infoField,
-							InfoLocalizedValue.builder(
-							).value(
-								targetLocale, targetFragment.getPlainText()
-							).value(
-								biConsumer -> {
-									if (includeSource) {
-										Fragment sourceFragment =
-											part.getSource();
-
-										biConsumer.accept(
-											sourceLocale,
-											sourceFragment.getPlainText());
-									}
-								}
-							).build()));
-				}
-			}
+			consumer -> _produceInfoFieldValuesXLIFFv20(
+				consumer, xliffDocument, sourceLocale, targetLocale,
+				includeSource)
 		).infoItemReference(
 			infoItemReference
 		).build();
@@ -382,6 +297,93 @@ public class XLIFFInfoFormTranslationImporter
 		}
 
 		return false;
+	}
+
+	private void _produceInfoFieldValuesXLIFFv12(
+			UnsafeConsumer<InfoFieldValue<Object>, XLIFFFileException> consumer,
+			List<Event> events, Locale sourceLocale, Locale targetLocale,
+			boolean includeSource)
+		throws XLIFFFileException {
+
+		for (Event event : events) {
+			if (!event.isTextUnit()) {
+				continue;
+			}
+
+			ITextUnit iTextUnit = event.getTextUnit();
+
+			_validateWellFormedTextUnit(targetLocale, iTextUnit);
+
+			TextContainer sourceTextContainer = iTextUnit.getSource();
+
+			for (LocaleId targetLocaleId : iTextUnit.getTargetLocales()) {
+				TextContainer targetTextContainer = iTextUnit.getTarget(
+					targetLocaleId);
+
+				TextFragment targetTextFragment =
+					targetTextContainer.getFirstContent();
+
+				consumer.accept(
+					new InfoFieldValue<>(
+						_createInfoField(targetLocale, iTextUnit.getId()),
+						InfoLocalizedValue.builder(
+						).value(
+							targetLocale, targetTextFragment.getText()
+						).value(
+							biConsumer -> {
+								if (includeSource) {
+									TextFragment sourceTextFragment =
+										sourceTextContainer.getFirstContent();
+
+									biConsumer.accept(
+										sourceLocale,
+										sourceTextFragment.getText());
+								}
+							}
+						).build()));
+			}
+		}
+	}
+
+	private void _produceInfoFieldValuesXLIFFv20(
+			UnsafeConsumer<InfoFieldValue<Object>, XLIFFFileException> consumer,
+			XLIFFDocument xliffDocument, Locale sourceLocale,
+			Locale targetLocale, boolean includeSource)
+		throws XLIFFFileException {
+
+		for (Unit unit : xliffDocument.getUnits()) {
+			if (unit.getPartCount() != 1) {
+				throw new XLIFFFileException.MustNotHaveMoreThanOne(
+					"The file only can have one unit");
+			}
+
+			Part part = unit.getPart(0);
+
+			Fragment targetFragment = part.getTarget();
+
+			if (targetFragment == null) {
+				throw new XLIFFFileException.MustBeWellFormed(
+					"There is no translation target");
+			}
+
+			consumer.accept(
+				new InfoFieldValue<>(
+					_createInfoField(targetLocale, unit.getId()),
+					InfoLocalizedValue.builder(
+					).value(
+						targetLocale, targetFragment.getPlainText()
+					).value(
+						biConsumer -> {
+							if (includeSource) {
+								Fragment sourceFragment = part.getSource();
+
+								biConsumer.accept(
+									sourceLocale,
+									sourceFragment.getPlainText());
+							}
+						}
+					).build()));
+		}
 	}
 
 	private void _validateDocumentPartVersion(List<Event> events)

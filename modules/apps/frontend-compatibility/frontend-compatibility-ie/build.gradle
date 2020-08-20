@@ -7,6 +7,7 @@ configurations {
 
 task buildCoreJSBundle(type: Copy)
 task buildFetch(type: Copy)
+task buildIntersectionObserver(type: Copy)
 
 buildCSS {
 	imports = [
@@ -49,9 +50,18 @@ buildFetch {
 	into "classes/META-INF/resources"
 }
 
+buildIntersectionObserver {
+	from new File(npmInstall.nodeModulesDir, "intersection-observer")
+
+	include "intersection-observer.js"
+
+	into "classes/META-INF/resources"
+}
+
 classes {
 	dependsOn buildCoreJSBundle
 	dependsOn buildFetch
+	dependsOn buildIntersectionObserver
 }
 
 dependencies {

@@ -8863,8 +8863,9 @@ public class JournalArticleLocalServiceImpl
 		Map<String, String> friendlyURLMap = new HashMap<>();
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_layoutDisplayPageProviderTracker.getLayoutDisplayPageProvider(
-				JournalArticle.class.getName());
+			_layoutDisplayPageProviderTracker.
+				getLayoutDisplayPageProviderByClassName(
+					JournalArticle.class.getName());
 
 		if (layoutDisplayPageProvider == null) {
 			return friendlyURLMap;

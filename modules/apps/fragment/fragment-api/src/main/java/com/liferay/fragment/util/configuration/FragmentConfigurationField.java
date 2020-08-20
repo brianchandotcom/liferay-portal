@@ -114,7 +114,7 @@ public class FragmentConfigurationField {
 
 				LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 					layoutDisplayPageProviderTracker.
-						getLayoutDisplayPageProvider(className);
+						getLayoutDisplayPageProviderByClassName(className);
 
 				if (layoutDisplayPageProvider == null) {
 					return _defaultValue;

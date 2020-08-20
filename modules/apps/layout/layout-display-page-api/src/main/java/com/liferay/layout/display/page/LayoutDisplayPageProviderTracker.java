@@ -21,7 +21,7 @@ import java.util.List;
  */
 public interface LayoutDisplayPageProviderTracker {
 
-	public LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
+	public LayoutDisplayPageProvider<?> getLayoutDisplayPageProviderByClassName(
 		String className);
 
 	public LayoutDisplayPageProvider<?>

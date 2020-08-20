@@ -33,28 +33,28 @@ import org.osgi.service.component.annotations.Component;
 public class LayoutDisplayPageProviderTrackerImpl
 	implements LayoutDisplayPageProviderTracker {
 
-	public LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
+	public LayoutDisplayPageProvider<?> getLayoutDisplayPageProviderByClassName(
 		String className) {
 
-		return _classNameLayoutDisplayPageProviderServiceTrackerMap.getService(
-			className);
+		return _layoutDisplayPageProviderByClassNameServiceTrackerMap.
+			getService(className);
 	}
 
 	public LayoutDisplayPageProvider<?>
 		getLayoutDisplayPageProviderByURLSeparator(String urlSeparator) {
 
-		return _urlSeparatorLayoutDisplayPageProviderServiceTrackerMap.
+		return _layoutDisplayPageProviderByURLSeparatorServiceTrackerMap.
 			getService(urlSeparator);
 	}
 
 	public List<LayoutDisplayPageProvider<?>> getLayoutDisplayPageProviders() {
 		return new ArrayList(
-			_classNameLayoutDisplayPageProviderServiceTrackerMap.values());
+			_layoutDisplayPageProviderByClassNameServiceTrackerMap.values());
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_classNameLayoutDisplayPageProviderServiceTrackerMap =
+		_layoutDisplayPageProviderByClassNameServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext,
 				(Class<LayoutDisplayPageProvider<?>>)
@@ -71,7 +71,7 @@ public class LayoutDisplayPageProviderTrackerImpl
 						bundleContext.ungetService(serviceReference);
 					}
 				});
-		_urlSeparatorLayoutDisplayPageProviderServiceTrackerMap =
+		_layoutDisplayPageProviderByURLSeparatorServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext,
 				(Class<LayoutDisplayPageProvider<?>>)
@@ -92,8 +92,8 @@ public class LayoutDisplayPageProviderTrackerImpl
 	}
 
 	private ServiceTrackerMap<String, LayoutDisplayPageProvider<?>>
-		_classNameLayoutDisplayPageProviderServiceTrackerMap;
+		_layoutDisplayPageProviderByClassNameServiceTrackerMap;
 	private ServiceTrackerMap<String, LayoutDisplayPageProvider<?>>
-		_urlSeparatorLayoutDisplayPageProviderServiceTrackerMap;
+		_layoutDisplayPageProviderByURLSeparatorServiceTrackerMap;
 
 }

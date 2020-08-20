@@ -50,8 +50,8 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 		throws PortalException {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_layoutDisplayPageProviderTracker.getLayoutDisplayPageProvider(
-				className);
+			_layoutDisplayPageProviderTracker.
+				getLayoutDisplayPageProviderByClassName(className);
 
 		if (layoutDisplayPageProvider == null) {
 			return null;

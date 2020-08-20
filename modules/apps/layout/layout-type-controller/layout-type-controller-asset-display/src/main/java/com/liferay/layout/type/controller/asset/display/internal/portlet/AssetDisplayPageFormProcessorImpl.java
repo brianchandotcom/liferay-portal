@@ -103,8 +103,8 @@ public class AssetDisplayPageFormProcessorImpl
 		throws PortalException {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_layoutDisplayPageProviderTracker.getLayoutDisplayPageProvider(
-				className);
+			_layoutDisplayPageProviderTracker.
+				getLayoutDisplayPageProviderByClassName(className);
 
 		if (layoutDisplayPageProvider == null) {
 			return 0;

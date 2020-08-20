@@ -318,8 +318,9 @@ public class SelectAssetDisplayPageDisplayContext {
 					getLayoutDisplayPageProviderTracker();
 
 			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-				layoutDisplayPageProviderTracker.getLayoutDisplayPageProvider(
-					PortalUtil.getClassName(_classNameId));
+				layoutDisplayPageProviderTracker.
+					getLayoutDisplayPageProviderByClassName(
+						PortalUtil.getClassName(_classNameId));
 
 			if (layoutDisplayPageProvider == null) {
 				return false;

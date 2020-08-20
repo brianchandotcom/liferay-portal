@@ -29,8 +29,8 @@ public class LayoutDisplayPageProviderTrackerUtil {
 	public static LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
 		String className) {
 
-		return _layoutDisplayPageProviderTracker.getLayoutDisplayPageProvider(
-			className);
+		return _layoutDisplayPageProviderTracker.
+			getLayoutDisplayPageProviderByClassName(className);
 	}
 
 	@Reference(unbind = "-")

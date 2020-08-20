@@ -2686,6 +2686,28 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static String toByteCountString(long byteCount) {
+		long gigaByteCount = byteCount / _GIGA_BYTE_SIZE;
+
+		if (gigaByteCount > 0) {
+			return gigaByteCount + "gb";
+		}
+
+		long megaByteCount = byteCount / _MEGA_BYTE_SIZE;
+
+		if (megaByteCount > 0) {
+			return megaByteCount + "mb";
+		}
+
+		long kiloByteCount = byteCount / _KILO_BYTE_SIZE;
+
+		if (kiloByteCount > 0) {
+			return kiloByteCount + "kb";
+		}
+
+		return byteCount + "b";
+	}
+
 	public static String toDateString(Date date, String timeZoneName) {
 		return toDateString(date, "MMM dd, yyyy h:mm:ss a z", timeZoneName);
 	}
@@ -3766,6 +3788,12 @@ public class JenkinsResultsParserUtil {
 
 	private static final String _DIST_PORTAL_JOB_URL_DEFAULT =
 		"http://test-1-1/job/test-portal-acceptance-upstream";
+
+	private static final long _GIGA_BYTE_SIZE = 1024 * 1024 * 1024;
+
+	private static final long _KILO_BYTE_SIZE = 1024;
+
+	private static final long _MEGA_BYTE_SIZE = 1024 * 1024;
 
 	private static final long _MILLIS_BASH_COMMAND_TIMEOUT_DEFAULT =
 		1000 * 60 * 60;

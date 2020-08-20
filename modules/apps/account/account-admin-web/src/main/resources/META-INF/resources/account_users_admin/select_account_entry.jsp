@@ -63,14 +63,14 @@ if (selectAccountEntryManagementToolbarDisplayContext.isSingleSelect()) {
 			<liferay-ui:search-container-column-text
 				cssClass='<%= cssClass + " table-title" %>'
 				name="name"
-				property="name"
+				value="<%= HtmlUtil.escape(accountEntryDisplay.getName()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				cssClass="<%= cssClass %>"
 				name="type"
-				property="type"
 				translate="<%= true %>"
+				value="<%= HtmlUtil.escape(accountEntryDisplay.getType()) %>"
 			/>
 
 			<c:if test="<%= selectAccountEntryManagementToolbarDisplayContext.isSingleSelect() %>">

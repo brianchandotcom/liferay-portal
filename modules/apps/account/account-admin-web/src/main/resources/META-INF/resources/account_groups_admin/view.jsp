@@ -48,14 +48,14 @@ ViewAccountGroupsManagementToolbarDisplayContext viewAccountGroupsManagementTool
 					cssClass="table-cell-expand table-title"
 					href="<%= rowURL %>"
 					name="name"
-					property="name"
+					value="<%= HtmlUtil.escape(accountGroupDisplay.getName()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
 					href="<%= rowURL %>"
 					name="description"
-					property="description"
+					value="<%= HtmlUtil.escape(accountGroupDisplay.getDescription()) %>"
 				/>
 
 				<liferay-ui:search-container-column-jsp

@@ -73,7 +73,7 @@ AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementTool
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"
 					name="name"
-					property="name"
+					value="<%= HtmlUtil.escape(accountUserDisplay.getName()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
@@ -87,14 +87,14 @@ AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementTool
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"
 					name="job-title"
-					property="jobTitle"
+					value="<%= HtmlUtil.escape(accountUserDisplay.getJobTitle()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass='<%= "table-cell-expand-small table-cell-minw-150 " + accountUserDisplay.getAccountEntryNamesStyle() %>'
 					href="<%= rowURL %>"
 					name="accounts"
-					value="<%= accountUserDisplay.getAccountEntryNamesString(request) %>"
+					value="<%= HtmlUtil.escape(accountUserDisplay.getAccountEntryNamesString(request)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

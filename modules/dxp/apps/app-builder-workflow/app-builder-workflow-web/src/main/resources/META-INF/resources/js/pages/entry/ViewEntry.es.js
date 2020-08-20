@@ -136,7 +136,8 @@ export default function ViewEntry({
 									if (items.length) {
 										const {id, ...instance} = items.pop();
 
-										const [assignee] = instance.assignees;
+										const [assignee] =
+											instance.assignees || [];
 
 										const assignedToUser =
 											Number(themeDisplay.getUserId()) ===

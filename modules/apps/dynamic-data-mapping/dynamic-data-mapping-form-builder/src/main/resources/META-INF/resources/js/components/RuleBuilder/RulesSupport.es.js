@@ -15,7 +15,11 @@
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
 const clearTargetValue = (actions, index) => {
-	if (actions[index]) {
+	if (
+		actions[index] &&
+		actions[index].action !== 'auto-fill' &&
+		actions[index].action !== 'jump-to-page'
+	) {
 		actions[index].target = '';
 	}
 

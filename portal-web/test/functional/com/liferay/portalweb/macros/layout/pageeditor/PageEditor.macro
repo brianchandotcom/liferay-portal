@@ -1751,8 +1751,7 @@ definition {
 			value1 = "${fragmentName}");
 
 		AssertTextEquals(
-			key_commentCount = "${commentCount}",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_LIST_SECONDARY_TEXT",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SECONDARY_TEXT",
 			value1 = "${commentCount}");
 
 		if (isSet(openComment)) {

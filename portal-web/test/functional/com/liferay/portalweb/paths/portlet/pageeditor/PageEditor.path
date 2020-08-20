@@ -276,11 +276,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FRAGMENT_SIDEBAR_COMMENT_LIST_SECONDARY_TEXT</td>
-	<td>//span[contains(@class,'text-secondary') and contains(.,'${key_commentCount}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FRAGMENT_SIDEBAR_COMMENT_LIST_TITLE</td>
 	<td>//h1[contains(@class,'page-editor__sidebar__panel-header')and contains(.,'Comments')]</td>
 	<td></td>
@@ -362,7 +357,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_SECONDARY_TEXT</td>
-	<td>//div[contains(@class,'text-center')]/p</td>
+	<td>//*[contains(@class,'text-secondary')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -393,6 +388,11 @@
 <tr>
 	<td>FRAGMENT_SIDEBAR_TAB_BUTTON_ACTIVE</td>
 	<td>//button[contains(@title,'${key_tabName}')][contains(@aria-pressed,'true')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_TYPE_LABEL</td>
+	<td>//p[contains(@class,'type-label')]</td>
 	<td></td>
 </tr>
 <tr>

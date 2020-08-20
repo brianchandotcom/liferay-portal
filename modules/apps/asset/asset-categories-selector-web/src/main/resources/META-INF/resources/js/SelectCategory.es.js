@@ -33,6 +33,7 @@ function visit(nodes, callback) {
 function SelectCategory({
 	addCategoryURL,
 	itemSelectorSaveEvent,
+	moveCategory,
 	multiSelection,
 	namespace,
 	nodes,
@@ -141,11 +142,13 @@ function SelectCategory({
 
 	return (
 		<div className="select-category">
-			<ClayAlert displayType="info" variant="embedded">
-				{Liferay.Language.get(
-					'categories-can-only-be-moved-to-a-vocabulary-or-a-category-with-the-same-visibility'
-				)}
-			</ClayAlert>
+			{moveCategory && (
+				<ClayAlert displayType="info" variant="embedded">
+					{Liferay.Language.get(
+						'categories-can-only-be-moved-to-a-vocabulary-or-a-category-with-the-same-visibility'
+					)}
+				</ClayAlert>
+			)}
 
 			<form className="select-category-filter" role="search">
 				<ClayLayout.ContainerFluid className="d-flex">
@@ -210,6 +213,7 @@ function SelectCategory({
 
 SelectCategory.propTypes = {
 	addCategoryURL: PropTypes.string.isRequired,
+	moveCategory: PropTypes.bool,
 };
 
 export default SelectCategory;

@@ -193,16 +193,6 @@ public class TypedProperties {
 
 			value = value.trim();
 
-			if (value.length() >= 2) {
-				matcher = _pattern.matcher(value);
-
-				if (!matcher.matches()) {
-					_log.error("Unable to read property line " + line);
-
-					return false;
-				}
-			}
-
 			_propertyName = key.trim();
 
 			_propertyValue = InterpolationUtil.substVars(value);
@@ -280,10 +270,9 @@ public class TypedProperties {
 
 		private String _comment;
 		private final Pattern _linePattern = Pattern.compile(
-			"(\\s*[0-9a-zA-Z-_\\.]+\\s*)=(.+)");
-		private final Pattern _pattern = Pattern.compile(
-			"\\s*[TILFDXSCBilfdxscb]?(\\[[\\S\\s]*\\]|\\{[\\S\\s]*\\}|" +
-				"\\([\\S\\s]*\\)|\"[\\S\\s]*\")\\s*");
+			"(\\s*[0-9a-zA-Z-_\\.]+\\s*)=(\\s*[TILFDXSCBilfdxscb]?" +
+				"(\\[[\\S\\s]*\\]|\\{[\\S\\s]*\\}|" +
+					"\\([\\S\\s]*\\)|\"[\\S\\s]*\")\\s*)");
 		private String _propertyName;
 		private String _propertyValue;
 		private final List<String> _values = new ArrayList<>();

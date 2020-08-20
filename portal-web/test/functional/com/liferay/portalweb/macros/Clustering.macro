@@ -18,11 +18,9 @@ definition {
 		var leadingPortNumber = StringUtil.replace("${nodePort}", "080", "");
 		var bundleIndex = ${leadingPortNumber} - 8;
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "deploy-dependency-jars -Dliferay.dependency.jars=${liferayDependencyJars} -Dapp.server.bundle.index=${bundleIndex}");
-
-		Pause(locator1 = "10000");
+		FileInstall.deployFileOnServer(
+			bundleIndex = "${bundleIndex}",
+			liferayDependencyJars = "${liferayDependencyJars}");
 	}
 
 	macro enableDebugging {

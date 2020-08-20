@@ -12,17 +12,16 @@
  * details.
  */
 
-/**
- * Translates the given item ID into a collectionId-itemId if the item is
- * inside a collection. Otherwise, returns the plain itemId.
- * @param {object} layoutDataRef
- * @param {object} item
- * @return {string}
- */
-
 import {getToControlsId} from '../../components/layout-data-items/Collection';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 
+/**
+ * Translates the given item ID into a collectionId-itemId if the item is
+ * inside a collection. Otherwise, returns the plain itemId.
+ * @param {{current: object}} layoutDataRef
+ * @param {object} item
+ * @return {string}
+ */
 export default function toControlsId(layoutDataRef, item) {
 	const baseItem = item;
 

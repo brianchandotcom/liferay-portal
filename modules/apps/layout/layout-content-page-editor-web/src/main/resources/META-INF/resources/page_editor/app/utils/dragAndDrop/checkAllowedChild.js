@@ -12,13 +12,6 @@
  * details.
  */
 
-/**
- * Checks if the given child can be nested inside given parent
- * @param {object} child
- * @param {object} parent
- * @return {boolean}
- */
-
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 
 const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
@@ -61,6 +54,13 @@ const LAYOUT_DATA_ALLOWED_CHILDREN_TYPES = {
 	],
 };
 
+/**
+ * Checks if the given child can be nested inside given parent
+ * @param {object} child
+ * @param {object} parent
+ * @param {{current: object}} layoutDataRef
+ * @return {boolean}
+ */
 export default function checkAllowedChild(child, parent, layoutDataRef) {
 	const parentIsInsideCollection = (function checkItemInsideCollection(item) {
 		if (item.type === LAYOUT_DATA_ITEM_TYPES.collection) {

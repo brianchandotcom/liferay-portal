@@ -16,10 +16,9 @@
  * Checks if the given parent is indeed parent of given child.
  * @param {object} child
  * @param {object} parent
- * @param {object} layoutDataRef
+ * @param {{current: object}} layoutDataRef
  * @return {boolean}
  */
-
 export default function itemIsAncestor(child, parent, layoutDataRef) {
 	if (child && parent) {
 		return child.itemId !== parent.itemId

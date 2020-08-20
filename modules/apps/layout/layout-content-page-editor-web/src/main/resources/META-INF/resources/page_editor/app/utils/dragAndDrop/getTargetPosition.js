@@ -12,16 +12,16 @@
  * details.
  */
 
+import {TARGET_POSITION} from './constants/targetPosition';
+
 /**
  * Returns the cursor vertical position (extracted from provided dnd monitor)
  * @param {number} clientOffsetY
  * @param {DOMRect} hoverBoundingRect
  * @param {number} elevationBorderSize
- * @return {Array}
+ * @return {Array} Returns a tuple with targetPositionWithMiddle and
+ *  targetPositionWithoutMiddle
  */
-
-import {TARGET_POSITION} from './constants/targetPosition';
-
 export default function getTargetPosition(
 	clientOffsetY,
 	hoverBoundingRect,

@@ -64,7 +64,7 @@ export const PANELS = {
 	[PANEL_IDS.editableLink]: {
 		component: EditableLinkPanel,
 		label: Liferay.Language.get('link'),
-		priority: 0,
+		priority: 2,
 	},
 	[PANEL_IDS.editableMapping]: {
 		component: MappingPanel,
@@ -84,7 +84,7 @@ export const PANELS = {
 	[PANEL_IDS.imageProperties]: {
 		component: ImagePropertiesPanel,
 		label: Liferay.Language.get('image'),
-		priority: 0,
+		priority: 3,
 	},
 	[PANEL_IDS.rowGeneral]: {
 		component: RowGeneralPanel,

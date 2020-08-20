@@ -27,8 +27,8 @@ import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.exception.StructureDuplicateElementException;
 import com.liferay.dynamic.data.mapping.exception.StructureDuplicateStructureKeyException;
 import com.liferay.dynamic.data.mapping.exception.StructureNameException;
-import com.liferay.dynamic.data.mapping.internal.background.task.DDMStructureIndexerBackgroundTaskExecutor;
 import com.liferay.dynamic.data.mapping.internal.background.task.DDMStructureIndexerTracker;
+import com.liferay.dynamic.data.mapping.internal.constants.DDMDestinationNames;
 import com.liferay.dynamic.data.mapping.internal.search.util.DDMSearchHelper;
 import com.liferay.dynamic.data.mapping.internal.util.DDMFormTemplateSynchonizer;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
@@ -61,7 +61,6 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -70,6 +69,8 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -87,7 +88,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -96,8 +96,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Date;
@@ -496,16 +494,6 @@ public class DDMStructureLocalServiceImpl
 		resourceLocalService.deleteResource(
 			structure.getCompanyId(), resourceName,
 			ResourceConstants.SCOPE_INDIVIDUAL, structure.getStructureId());
-
-		// Background tasks
-
-		String backgroundTaskName =
-			DDMStructureIndexerBackgroundTaskExecutor.getBackgroundTaskName(
-				structure.getStructureId());
-
-		_backgroundTaskManager.deleteGroupBackgroundTasks(
-			structure.getGroupId(), backgroundTaskName,
-			DDMStructureIndexerBackgroundTaskExecutor.class.getName());
 
 		return structure;
 	}
@@ -1842,17 +1830,17 @@ public class DDMStructureLocalServiceImpl
 			return;
 		}
 
-		String backgroundTaskName =
-			DDMStructureIndexerBackgroundTaskExecutor.getBackgroundTaskName(
-				structure.getStructureId());
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				Message message = new Message();
 
-		_backgroundTaskManager.addBackgroundTask(
-			structure.getUserId(), structure.getGroupId(), backgroundTaskName,
-			DDMStructureIndexerBackgroundTaskExecutor.class.getName(),
-			HashMapBuilder.<String, Serializable>put(
-				"structureId", structure.getStructureId()
-			).build(),
-			serviceContext);
+				message.put("structureId", structure.getStructureId());
+
+				_messageBus.sendMessage(
+					DDMDestinationNames.DDM_STRUCTURE_REINDEX, message);
+
+				return null;
+			});
 	}
 
 	protected String serializeJSONDDMForm(DDMForm ddmForm) {
@@ -2067,9 +2055,6 @@ public class DDMStructureLocalServiceImpl
 			"[0-9a-f]{12})\'\\s*,\\s*\'(.*)\'\\s*,\\s*\'(.*)\'\\s*\\)");
 
 	@Reference
-	private BackgroundTaskManager _backgroundTaskManager;
-
-	@Reference
 	private DDM _ddm;
 
 	@Reference
@@ -2115,6 +2100,9 @@ public class DDMStructureLocalServiceImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private MessageBus _messageBus;
 
 	@Reference
 	private Portal _portal;

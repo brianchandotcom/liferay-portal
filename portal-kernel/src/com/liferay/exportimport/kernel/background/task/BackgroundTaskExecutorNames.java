@@ -19,6 +19,10 @@ package com.liferay.exportimport.kernel.background.task;
  */
 public class BackgroundTaskExecutorNames {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String DDM_STRUCTURE_INDEXER_BACKGROUND_TASK_EXECUTOR =
 		"com.liferay.dynamic.data.mapping.internal.background.task." +
 			"DDMStructureIndexerBackgroundTaskExecutor";

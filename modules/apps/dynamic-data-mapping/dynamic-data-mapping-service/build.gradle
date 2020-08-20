@@ -33,7 +33,6 @@ dependencies {
 	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":apps:mobile-device-rules:mobile-device-rules-api")
 	compileOnly project(":apps:petra:petra-xml")
-	compileOnly project(":apps:portal-background-task:portal-background-task-api")
 	compileOnly project(":apps:portal-search:portal-search-api")
 	compileOnly project(":apps:portal-search:portal-search-spi")
 	compileOnly project(":apps:portal-template:portal-template-soy-api")

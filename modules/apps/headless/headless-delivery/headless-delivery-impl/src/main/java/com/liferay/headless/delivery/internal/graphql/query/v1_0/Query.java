@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
@@ -3481,12 +3482,16 @@ public class Query {
 
 		public BlogPostingPage(Page blogPostingPage) {
 			actions = blogPostingPage.getActions();
+			facets = blogPostingPage.getFacets();
 			items = blogPostingPage.getItems();
 			lastPage = blogPostingPage.getLastPage();
 			page = blogPostingPage.getPage();
 			pageSize = blogPostingPage.getPageSize();
 			totalCount = blogPostingPage.getTotalCount();
 		}
+
+		@GraphQLField
+		protected Aggregation aggregation;
 
 		@GraphQLField
 		protected Map<String, Map> actions;

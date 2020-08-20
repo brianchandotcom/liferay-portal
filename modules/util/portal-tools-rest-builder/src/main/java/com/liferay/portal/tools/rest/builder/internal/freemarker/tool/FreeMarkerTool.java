@@ -230,7 +230,7 @@ public class FreeMarkerTool {
 		arguments = StringUtil.replace(
 			arguments, "aggregation",
 			"_aggregationBiFunction.apply(" + schemaVarName +
-			"Resource, aggregations)");
+				"Resource, aggregations)");
 		arguments = StringUtil.replace(
 			arguments, "assetLibraryId", "Long.valueOf(assetLibraryId)");
 		arguments = StringUtil.replace(

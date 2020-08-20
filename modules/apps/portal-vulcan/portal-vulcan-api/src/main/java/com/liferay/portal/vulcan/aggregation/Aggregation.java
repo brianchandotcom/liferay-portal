@@ -17,15 +17,20 @@ package com.liferay.portal.vulcan.aggregation;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Javier Gamarra
  */
-@JacksonXmlRootElement(localName = "aggregation")
+@GraphQLName("Aggregation")
+@JacksonXmlRootElement(localName = "Aggregation")
 public class Aggregation {
 
+	@GraphQLField
 	@JsonProperty("aggregationTerms")
 	public Map<String, String> getAggregationTerms() {
 		return _aggregationTerms;

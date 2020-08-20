@@ -17,68 +17,79 @@ package com.liferay.portal.vulcan.aggregation;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Javier Gamarra
  */
-@JacksonXmlRootElement(localName = "facet")
+@GraphQLName("Facet")
+@JacksonXmlRootElement(localName = "Facet")
 public class Facet {
 
 	public Facet() {
 	}
 
 	public Facet(String facetCriteria, List<FacetValue> facetValues) {
-		_facetCriteria = facetCriteria;
-		_facetValues = facetValues;
+		this.facetCriteria = facetCriteria;
+		this.facetValues = facetValues;
 	}
 
-	@JsonProperty("facetCriteria")
 	public String getFacetCriteria() {
-		return _facetCriteria;
+		return facetCriteria;
 	}
 
-	@JsonProperty("facetValues")
 	public List<FacetValue> getFacetValues() {
-		return _facetValues;
+		return facetValues;
 	}
 
 	public void setFacetCriteria(String facetCriteria) {
-		_facetCriteria = facetCriteria;
+		this.facetCriteria = facetCriteria;
 	}
 
 	public void setFacetValues(List<FacetValue> facetValues) {
-		_facetValues = facetValues;
+		this.facetValues = facetValues;
 	}
 
-	@JacksonXmlRootElement(localName = "facetValue")
+	@GraphQLName("FacetValue")
+	@JacksonXmlRootElement(localName = "FacetValue")
 	public static class FacetValue {
 
 		public FacetValue() {
 		}
 
 		public FacetValue(Integer numberOfOccurrences, String term) {
-			_numberOfOccurrences = numberOfOccurrences;
-			_term = term;
+			this.numberOfOccurrences = numberOfOccurrences;
+			this.term = term;
 		}
 
-		@JsonProperty("numberOfOccurrences")
 		public Integer getNumberOfOccurrences() {
-			return _numberOfOccurrences;
+			return numberOfOccurrences;
 		}
 
-		@JsonProperty("term")
 		public String getTerm() {
-			return _term;
+			return term;
 		}
 
-		private Integer _numberOfOccurrences;
-		private String _term;
+		@GraphQLField
+		@JsonProperty("numberOfOccurrences")
+		protected Integer numberOfOccurrences;
+
+		@GraphQLField
+		@JsonProperty("term")
+		protected String term;
 
 	}
 
-	private String _facetCriteria;
-	private List<FacetValue> _facetValues = new ArrayList<>();
+	@GraphQLField
+	@JsonProperty("facetCriteria")
+	protected String facetCriteria;
+
+	@GraphQLField
+	@JsonProperty("facetValues")
+	protected List<FacetValue> facetValues = new ArrayList<>();
 
 }

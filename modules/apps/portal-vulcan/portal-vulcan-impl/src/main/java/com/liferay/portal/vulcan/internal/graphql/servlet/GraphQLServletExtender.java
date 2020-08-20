@@ -45,6 +45,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
@@ -53,6 +54,7 @@ import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.configuration.VulcanConfiguration;
 import com.liferay.portal.vulcan.internal.configuration.util.ConfigurationUtil;
+import com.liferay.portal.vulcan.internal.jaxrs.context.provider.AggregationContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.ContextProviderUtil;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
@@ -1071,6 +1073,37 @@ public class GraphQLServletExtender {
 				field.set(
 					instance,
 					_portal.getUser(httpServletRequestOptional.orElse(null)));
+			}
+			else if (Objects.equals(
+						field.getName(), "_aggregationBiFunction")) {
+
+				field.setAccessible(true);
+
+				BiFunction<Object, List<String>, Aggregation>
+					aggregationBiFunction = (resource, aggregations) -> {
+						try {
+							if (aggregations == null) {
+								return null;
+							}
+
+							AggregationContextProvider
+								aggregationContextProvider =
+									new AggregationContextProvider(
+										_language, _portal);
+
+							return aggregationContextProvider.createContext(
+								acceptLanguage,
+								aggregations.toArray(new String[0]),
+								_getEntityModel(
+									resource,
+									httpServletRequest.getParameterMap()));
+						}
+						catch (Exception exception) {
+							throw new BadRequestException(exception);
+						}
+					};
+
+				field.set(instance, aggregationBiFunction);
 			}
 			else if (Objects.equals(field.getName(), "_filterBiFunction")) {
 				field.setAccessible(true);

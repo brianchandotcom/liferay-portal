@@ -46,24 +46,7 @@ public class AggregationContextProvider
 		_portal = portal;
 	}
 
-	@Override
-	public Aggregation createContext(Message message) {
-		try {
-			HttpServletRequest httpServletRequest =
-				ContextProviderUtil.getHttpServletRequest(message);
-
-			return _createContext(
-				new AcceptLanguageImpl(httpServletRequest, _language, _portal),
-				ParamUtil.getStringValues(
-					httpServletRequest, "aggregationTerms"),
-				ContextProviderUtil.getEntityModel(message));
-		}
-		catch (Exception exception) {
-			throw new ServerErrorException(500, exception);
-		}
-	}
-
-	private Aggregation _createContext(
+	public Aggregation createContext(
 		AcceptLanguage acceptLanguage, String[] aggregationTermsArray,
 		EntityModel entityModel) {
 
@@ -101,6 +84,23 @@ public class AggregationContextProvider
 		}
 
 		return aggregation;
+	}
+
+	@Override
+	public Aggregation createContext(Message message) {
+		try {
+			HttpServletRequest httpServletRequest =
+				ContextProviderUtil.getHttpServletRequest(message);
+
+			return createContext(
+				new AcceptLanguageImpl(httpServletRequest, _language, _portal),
+				ParamUtil.getStringValues(
+					httpServletRequest, "aggregationTerms"),
+				ContextProviderUtil.getEntityModel(message));
+		}
+		catch (Exception exception) {
+			throw new ServerErrorException(500, exception);
+		}
 	}
 
 	private final Language _language;

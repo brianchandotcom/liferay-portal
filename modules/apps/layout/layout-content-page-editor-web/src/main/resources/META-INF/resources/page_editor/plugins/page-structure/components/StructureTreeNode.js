@@ -47,6 +47,8 @@ import {
 	useDropTarget,
 } from '../../../app/utils/dragAndDrop/useDragAndDrop';
 
+const HOVER_EXPAND_DELAY = 1000;
+
 const nodeIsHovered = (nodeId, hoveredItemId) =>
 	nodeId === fromControlsId(hoveredItemId);
 const nodeIsSelected = (nodeId, activeItemId) =>
@@ -115,7 +117,7 @@ export default function StructureTreeNode({node}) {
 		if (isOverTarget) {
 			timeoutId = setTimeout(() => {
 				node.onHoverNode(node.id);
-			}, 1000);
+			}, HOVER_EXPAND_DELAY);
 		}
 
 		return () => {

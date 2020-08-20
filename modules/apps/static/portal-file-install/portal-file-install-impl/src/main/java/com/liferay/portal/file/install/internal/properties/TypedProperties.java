@@ -174,10 +174,8 @@ public class TypedProperties {
 			String line = _readProperty();
 
 			if (line == null) {
-				return false; // EOF
+				return false;
 			}
-
-			// parse the line
 
 			Matcher matcher = _linePattern.matcher(line);
 
@@ -225,9 +223,6 @@ public class TypedProperties {
 				String line = readLine();
 
 				if (line == null) {
-
-					// EOF
-
 					return null;
 				}
 
@@ -299,8 +294,6 @@ public class TypedProperties {
 
 	private boolean _isCommentLine(String line) {
 		String string = line.trim();
-
-		// blank lines are also treated as comment lines
 
 		if ((string.length() < 1) || (CharPool.POUND == string.charAt(0))) {
 			return true;

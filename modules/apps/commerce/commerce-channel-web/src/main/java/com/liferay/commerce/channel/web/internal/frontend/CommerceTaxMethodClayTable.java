@@ -16,8 +16,6 @@ package com.liferay.commerce.channel.web.internal.frontend;
 
 import com.liferay.commerce.channel.web.internal.frontend.util.CommerceChannelClayTableUtil;
 import com.liferay.commerce.channel.web.internal.model.TaxMethod;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.tax.CommerceTaxEngine;

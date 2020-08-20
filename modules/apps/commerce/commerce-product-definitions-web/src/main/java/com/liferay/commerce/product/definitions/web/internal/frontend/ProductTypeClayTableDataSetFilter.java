@@ -14,9 +14,6 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetFilter;
-import com.liferay.commerce.frontend.clay.data.set.ClayRadioDataSetFilter;
-import com.liferay.commerce.frontend.clay.data.set.ClayRadioDataSetFilterItem;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 

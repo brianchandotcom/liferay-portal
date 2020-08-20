@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.organization.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.commerce.organization.web.internal.model.Organization;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;

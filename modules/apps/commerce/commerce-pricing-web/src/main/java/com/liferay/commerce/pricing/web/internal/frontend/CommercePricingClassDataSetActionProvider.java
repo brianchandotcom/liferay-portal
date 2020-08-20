@@ -14,9 +14,6 @@
 
 package com.liferay.commerce.pricing.web.internal.frontend;
 
-import com.liferay.commerce.frontend.ClayMenuActionItem;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;

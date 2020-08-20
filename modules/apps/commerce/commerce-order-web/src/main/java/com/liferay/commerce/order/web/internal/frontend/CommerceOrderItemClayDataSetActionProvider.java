@@ -15,8 +15,6 @@
 package com.liferay.commerce.order.web.internal.frontend;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.web.internal.model.OrderItem;
 import com.liferay.commerce.order.web.internal.security.permission.resource.CommerceOrderPermission;

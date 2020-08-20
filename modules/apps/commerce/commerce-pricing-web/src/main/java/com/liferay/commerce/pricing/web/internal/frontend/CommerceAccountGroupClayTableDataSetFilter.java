@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.pricing.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayAutocompleteDataSetFilter;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetFilter;
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 
 import org.osgi.service.component.annotations.Component;

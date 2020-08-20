@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend;
 
-import com.liferay.commerce.frontend.DefaultFilterImpl;
 import com.liferay.commerce.product.definitions.web.internal.model.ProductOption;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;

@@ -16,7 +16,6 @@ package com.liferay.commerce.pricing.web.internal.frontend;
 
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleService;
-import com.liferay.commerce.frontend.DefaultFilterImpl;
 import com.liferay.commerce.frontend.model.ImageField;
 import com.liferay.commerce.pricing.web.internal.frontend.constants.CommercePricingDataSetConstants;
 import com.liferay.commerce.pricing.web.internal.model.DiscountRuleCPDefinition;

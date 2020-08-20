@@ -16,8 +16,6 @@ package com.liferay.commerce.inventory.web.internal.frontend;
 
 import static com.liferay.portal.kernel.security.permission.PermissionThreadLocal.getPermissionChecker;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.web.internal.model.InventoryItem;
 import com.liferay.commerce.product.constants.CPPortletKeys;

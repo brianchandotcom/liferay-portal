@@ -21,8 +21,6 @@ import com.liferay.commerce.account.web.internal.model.Account;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;

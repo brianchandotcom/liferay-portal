@@ -18,7 +18,6 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.model.CommerceAccountOrganizationRel;
 import com.liferay.commerce.account.service.CommerceAccountOrganizationRelService;
 import com.liferay.commerce.account.service.CommerceAccountService;
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.organization.web.internal.organization.model.Account;
 import com.liferay.commerce.organization.web.internal.organization.model.AccountList;
 import com.liferay.commerce.organization.web.internal.organization.model.Organization;

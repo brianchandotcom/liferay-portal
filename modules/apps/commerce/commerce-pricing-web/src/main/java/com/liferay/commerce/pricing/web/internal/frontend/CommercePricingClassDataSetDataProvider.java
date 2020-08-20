@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.pricing.web.internal.frontend;
 
-import com.liferay.commerce.frontend.DefaultFilterImpl;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelService;
 import com.liferay.commerce.pricing.service.CommercePricingClassService;

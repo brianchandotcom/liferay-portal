@@ -15,9 +15,6 @@
 package com.liferay.commerce.channel.web.internal.frontend;
 
 import com.liferay.commerce.channel.web.internal.model.Channel;
-import com.liferay.commerce.frontend.ClayMenuActionItem;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.permission.CommerceChannelPermission;

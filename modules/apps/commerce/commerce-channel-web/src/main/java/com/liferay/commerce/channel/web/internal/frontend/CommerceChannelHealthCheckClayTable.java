@@ -15,8 +15,6 @@
 package com.liferay.commerce.channel.web.internal.frontend;
 
 import com.liferay.commerce.channel.web.internal.model.HealthCheck;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.commerce.product.channel.CommerceChannelHealthStatus;
 import com.liferay.commerce.product.channel.CommerceChannelHealthStatusRegistry;
 import com.liferay.commerce.product.constants.CPPortletKeys;

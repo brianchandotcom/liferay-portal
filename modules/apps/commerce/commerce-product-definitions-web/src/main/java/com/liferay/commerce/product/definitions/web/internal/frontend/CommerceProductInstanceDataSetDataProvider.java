@@ -17,7 +17,6 @@ package com.liferay.commerce.product.definitions.web.internal.frontend;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
-import com.liferay.commerce.frontend.DefaultFilterImpl;
 import com.liferay.commerce.frontend.model.LabelField;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;

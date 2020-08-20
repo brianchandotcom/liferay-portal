@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.order.content.web.internal.frontend;
 
-import com.liferay.commerce.frontend.DefaultFilterImpl;
-
 /**
  * @author Alessio Antonio Rendina
  */

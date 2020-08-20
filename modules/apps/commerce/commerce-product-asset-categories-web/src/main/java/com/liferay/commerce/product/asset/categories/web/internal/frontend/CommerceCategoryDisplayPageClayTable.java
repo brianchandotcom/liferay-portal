@@ -15,8 +15,6 @@
 package com.liferay.commerce.product.asset.categories.web.internal.frontend;
 
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
 import com.liferay.commerce.product.asset.categories.web.internal.model.CategoryDisplayPage;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDisplayLayout;

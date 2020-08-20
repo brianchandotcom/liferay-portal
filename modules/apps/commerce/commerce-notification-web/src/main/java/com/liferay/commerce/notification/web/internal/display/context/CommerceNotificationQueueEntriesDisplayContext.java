@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.notification.web.internal.display.context;
 
-import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.notification.web.internal.display.context.util.CommerceNotificationsRequestHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;

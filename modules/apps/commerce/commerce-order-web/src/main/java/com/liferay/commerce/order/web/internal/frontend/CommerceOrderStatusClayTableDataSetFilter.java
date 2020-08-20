@@ -14,9 +14,6 @@
 
 package com.liferay.commerce.order.web.internal.frontend;
 
-import com.liferay.commerce.frontend.clay.data.set.ClayCheckBoxDataSetFilter;
-import com.liferay.commerce.frontend.clay.data.set.ClayCheckBoxDataSetFilterItem;
-import com.liferay.commerce.frontend.clay.data.set.ClayDataSetFilter;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 

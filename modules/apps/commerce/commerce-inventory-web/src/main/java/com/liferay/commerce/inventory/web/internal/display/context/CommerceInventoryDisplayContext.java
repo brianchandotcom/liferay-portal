@@ -16,7 +16,6 @@ package com.liferay.commerce.inventory.web.internal.display.context;
 
 import static com.liferay.portal.kernel.security.permission.PermissionThreadLocal.getPermissionChecker;
 
-import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;

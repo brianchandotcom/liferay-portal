@@ -19,7 +19,6 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.organization.web.internal.organization.model.AccountList;
 import com.liferay.commerce.organization.web.internal.organization.model.Organization;
 import com.liferay.commerce.organization.web.internal.organization.model.UserList;

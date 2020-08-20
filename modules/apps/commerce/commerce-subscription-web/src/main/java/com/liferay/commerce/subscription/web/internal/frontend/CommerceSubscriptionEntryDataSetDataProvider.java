@@ -16,7 +16,6 @@ package com.liferay.commerce.subscription.web.internal.frontend;
 
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceSubscriptionEntryConstants;
-import com.liferay.commerce.frontend.DefaultFilterImpl;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;

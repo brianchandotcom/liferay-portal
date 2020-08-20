@@ -310,7 +310,13 @@ definition {
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title");
 
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "content",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
 		AdaptiveMedia.viewImageVariantURL(imageName = "high_resolution_photo.jpg");
+
+		SelectFrameTop();
 
 		Button.clickPublish();
 	}

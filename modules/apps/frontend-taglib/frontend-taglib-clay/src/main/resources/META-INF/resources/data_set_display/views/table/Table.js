@@ -141,7 +141,7 @@ function Table({items, itemsActions, schema, style}) {
 
 	const showActionItems = Boolean(
 		itemsActions?.length ||
-			items.find((element) => element.actionDropdownItems)
+			items.find((item) => item.actions || item.actionDropdownItems)
 	);
 
 	const SelectionComponent =
@@ -207,17 +207,17 @@ function Table({items, itemsActions, schema, style}) {
 										itemsActions
 									)}
 									<ClayTable.Cell className="data-set-item-actions-wrapper">
-										{showActionItems &&
-											item.actionDropdownItems && (
-												<ActionsDropdownRenderer
-													actions={
-														itemsActions ||
-														item.actionDropdownItems
-													}
-													itemData={item}
-													itemId={itemId}
-												/>
-											)}
+										{(showActionItems || item.actions) && (
+											<ActionsDropdownRenderer
+												actions={
+													itemsActions ||
+													item.actions ||
+													item.actionDropdownItems
+												}
+												itemData={item}
+												itemId={itemId}
+											/>
+										)}
 									</ClayTable.Cell>
 								</ClayTable.Row>
 								{nestedItems?.length

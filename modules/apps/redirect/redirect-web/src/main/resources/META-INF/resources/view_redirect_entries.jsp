@@ -22,11 +22,17 @@ RedirectDisplayContext redirectDisplayContext = new RedirectDisplayContext(reque
 SearchContainer<RedirectEntry> redirectSearchContainer = redirectDisplayContext.searchContainer();
 
 RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext = new RedirectManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, redirectSearchContainer);
+
+StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHelper();
+
+boolean isStagingGroup = stagingGroupHelper.isLocalStagingGroup(themeDisplay.getScopeGroup()) || stagingGroupHelper.isRemoteStagingGroup(themeDisplay.getScopeGroup());
 %>
 
-<clay:management-toolbar
-	displayContext="<%= redirectManagementToolbarDisplayContext %>"
-/>
+<c:if test="<%= !isStagingGroup %>">
+	<clay:management-toolbar
+		displayContext="<%= redirectManagementToolbarDisplayContext %>"
+	/>
+</c:if>
 
 <clay:container-fluid
 	cssClass="closed redirect-entries sidenav-container sidenav-right"
@@ -42,6 +48,15 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 	</liferay-frontend:sidebar-panel>
 
 	<div class="sidenav-content">
+		<c:if test="<%= isStagingGroup %>">
+			<div class="lfr-search-container">
+				<clay:alert
+					displayType="info"
+					message="redirections-are-unavailable-in-staged-sites"
+				/>
+			</div>
+		</c:if>
+
 		<aui:form action="<%= redirectSearchContainer.getIteratorURL() %>" cssClass="container-fluid-1280" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 

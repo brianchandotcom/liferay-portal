@@ -142,7 +142,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 						>
 
 							<%
-							String sourceContent = journalTranslateDisplayContext.getStringValue(infoField, journalTranslateDisplayContext.getSourceLocale());
+							String sourceContent = journalTranslateDisplayContext.getSourceStringValue(infoField, journalTranslateDisplayContext.getSourceLocale());
 							String sourceContentDir = LanguageUtil.get(journalTranslateDisplayContext.getSourceLocale(), "lang.dir");
 							%>
 

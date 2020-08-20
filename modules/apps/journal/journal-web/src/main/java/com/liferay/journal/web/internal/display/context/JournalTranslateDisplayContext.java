@@ -68,19 +68,21 @@ public class JournalTranslateDisplayContext {
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			liferayPortletRequest);
-
 		_article = ActionUtil.getArticle(liferayPortletRequest);
+
 		_infoForm = (InfoForm)_httpServletRequest.getAttribute(
 			InfoForm.class.getName());
-		_infoItemFieldValues =
+
+		_journalEditArticleDisplayContext =
+			new JournalEditArticleDisplayContext(
+				_httpServletRequest, liferayPortletResponse, _article);
+
+		_sourceInfoItemFieldValues =
 			(InfoItemFieldValues)_httpServletRequest.getAttribute(
 				JournalWebConstants.SOURCE_INFO_ITEM_FIELD_VALUES);
 		_targetInfoItemFieldValues =
 			(InfoItemFieldValues)_httpServletRequest.getAttribute(
 				JournalWebConstants.TARGET_INFO_ITEM_FIELD_VALUES);
-		_journalEditArticleDisplayContext =
-			new JournalEditArticleDisplayContext(
-				_httpServletRequest, liferayPortletResponse, _article);
 
 		_sourceLanguageId = (String)_httpServletRequest.getAttribute(
 			JournalWebConstants.SOURCE_LANGUAGE_ID);
@@ -181,9 +183,9 @@ public class JournalTranslateDisplayContext {
 		return _sourceLocale;
 	}
 
-	public String getStringValue(InfoField infoField, Locale locale) {
+	public String getSourceStringValue(InfoField infoField, Locale locale) {
 		InfoFieldValue<Object> infoFieldValue =
-			_infoItemFieldValues.getInfoFieldValue(infoField.getName());
+			_sourceInfoItemFieldValues.getInfoFieldValue(infoField.getName());
 
 		if (infoFieldValue != null) {
 			return GetterUtil.getString(infoFieldValue.getValue(locale));
@@ -254,10 +256,10 @@ public class JournalTranslateDisplayContext {
 	private final JournalArticle _article;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoForm _infoForm;
-	private final InfoItemFieldValues _infoItemFieldValues;
 	private final JournalEditArticleDisplayContext
 		_journalEditArticleDisplayContext;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private final InfoItemFieldValues _sourceInfoItemFieldValues;
 	private final String _sourceLanguageId;
 	private final Locale _sourceLocale;
 	private final InfoItemFieldValues _targetInfoItemFieldValues;

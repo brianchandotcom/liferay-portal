@@ -122,7 +122,10 @@ const OptionList = ({options = [], icon}) => {
 							}}
 							selectable
 						>
-							<ClayCard.AspectRatio className="card-item-first">
+							<ClayCard.AspectRatio
+								className="card-item-first"
+								containerAspectRatio="16/9"
+							>
 								{imagePreviewURL ? (
 									<img
 										alt="thumbnail"

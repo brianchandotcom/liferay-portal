@@ -40,6 +40,7 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 <liferay-frontend:edit-form
 	action="<%= editVocabularyURL %>"
 	name="fm"
+	onSubmit='<%= liferayPortletResponse.getNamespace() + "confirmation(event);" %>'
 >
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="vocabularyId" type="hidden" value="<%= vocabularyId %>" />
@@ -93,3 +94,17 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
+
+<script>
+	function <portlet:namespace />confirmation(event) {
+		<c:if test="<%= vocabulary == null %>">
+			if (
+				!confirm(
+					'<liferay-ui:message key="are-you-sure-you-want-to-create-this-vocabulary-only-with-internal-visibility" />\n\n<liferay-ui:message key="the-action-of-setting-a-vocabulary-either-with-internal-or-public-visibility-cannot-be-reversed" />'
+				)
+			) {
+				event.preventDefault();
+			}
+		</c:if>
+	}
+</script>

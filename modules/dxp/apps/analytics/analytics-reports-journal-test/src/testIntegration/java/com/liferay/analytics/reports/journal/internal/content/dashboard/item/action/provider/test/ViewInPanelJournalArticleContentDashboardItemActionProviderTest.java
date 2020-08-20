@@ -16,18 +16,19 @@ package com.liferay.analytics.reports.journal.internal.content.dashboard.item.ac
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
-import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -130,20 +131,22 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 			ContentDashboardItemAction.Type.VIEW_IN_PANEL,
 			contentDashboardItemAction.getType());
 
-		InfoDisplayObjectProvider<JournalArticle> infoDisplayObjectProvider =
-			(InfoDisplayObjectProvider<JournalArticle>)
-				httpServletRequest.getAttribute(
-					AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+		LayoutDisplayPageObjectProvider<JournalArticle>
+			layoutDisplayPageObjectProvider =
+				(LayoutDisplayPageObjectProvider<JournalArticle>)
+					httpServletRequest.getAttribute(
+						LayoutDisplayPageWebKeys.
+							LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
 		Assert.assertEquals(
-			String.valueOf(infoDisplayObjectProvider.getClassNameId()),
+			String.valueOf(layoutDisplayPageObjectProvider.getClassNameId()),
 			_http.getParameter(
 				contentDashboardItemAction.getURL(),
 				"_com_liferay_analytics_reports_web_internal_portlet_" +
 					"AnalyticsReportsPortlet_classNameId",
 				false));
 		Assert.assertEquals(
-			String.valueOf(infoDisplayObjectProvider.getClassPK()),
+			String.valueOf(layoutDisplayPageObjectProvider.getClassPK()),
 			_http.getParameter(
 				contentDashboardItemAction.getURL(),
 				"_com_liferay_analytics_reports_web_internal_portlet_" +
@@ -207,9 +210,11 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
-			AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
-			_infoDisplayContributor.getInfoDisplayObjectProvider(
-				_journalArticle.getResourcePrimKey()));
+			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(
+					JournalArticle.class.getName(),
+					_journalArticle.getResourcePrimKey())));
 		mockHttpServletRequest.setAttribute(
 			WebKeys.LAYOUT_ASSET_ENTRY,
 			_assetEntryLocalService.getEntry(
@@ -268,15 +273,16 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProviderTest {
 	@Inject
 	private Http _http;
 
-	@Inject(filter = "component.name=*.JournalArticleInfoDisplayContributor")
-	private InfoDisplayContributor<JournalArticle> _infoDisplayContributor;
-
 	private JournalArticle _journalArticle;
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	private Layout _layout;
+
+	@Inject(filter = "component.name=*.JournalArticleLayoutDisplayPageProvider")
+	private LayoutDisplayPageProvider<JournalArticle>
+		_layoutDisplayPageProvider;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

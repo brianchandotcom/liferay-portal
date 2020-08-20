@@ -59,7 +59,6 @@ public class ResourcePermissionFinderImpl
 
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_N_S_P_R_A =
 		new FinderPath(
-			Long.class,
 			ResourcePermissionPersistenceImpl.
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"countByC_N_S_P_R_A",
@@ -67,7 +66,11 @@ public class ResourcePermissionFinderImpl
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), String.class.getName(),
 				Long.class.getName(), Long.class.getName()
-			});
+			},
+			new String[] {
+				"companyId", "name", "scope", "primKey", "roleId", "actionIds"
+			},
+			false);
 
 	@Override
 	public int countByR_S(long roleId, int[] scopes) {

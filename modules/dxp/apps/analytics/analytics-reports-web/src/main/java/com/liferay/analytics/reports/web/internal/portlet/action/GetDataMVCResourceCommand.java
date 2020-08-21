@@ -49,10 +49,15 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
@@ -259,7 +264,9 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		).put(
 			"page", JSONUtil.put("plid", layout.getPlid())
 		).put(
-			"publishDate", analyticsReportsInfoItem.getPublishDate(object)
+			"publishDate",
+			DateTimeFormatter.ISO_DATE.format(
+				_toLocaleDate(analyticsReportsInfoItem.getPublishDate(object)))
 		).put(
 			"timeSpans", _getTimeSpansJSONArray(resourceBundle)
 		).put(
@@ -311,6 +318,14 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 						resourceBundle, timeSpan.getKey())
 				)
 			).toArray());
+	}
+
+	private LocalDate _toLocaleDate(Date date) {
+		Instant instant = date.toInstant();
+
+		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+
+		return zonedDateTime.toLocalDate();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

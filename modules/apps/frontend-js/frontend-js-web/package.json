@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 		"@clayui/alert": "3.4.1",
-		"@clayui/form": "3.10.0",
+		"@clayui/form": "3.10.1",
 		"@clayui/icon": "3.0.5",
 		"@clayui/modal": "3.6.5",
 		"clay": "2.18.1",

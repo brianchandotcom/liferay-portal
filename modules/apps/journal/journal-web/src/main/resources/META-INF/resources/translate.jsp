@@ -47,9 +47,9 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 					<div class="metadata-type-button-row tbar-section text-right">
 						<aui:button cssClass="btn-sm mr-3" href="<%= redirect %>" type="cancel" />
 
-						<aui:button cssClass="btn-sm mr-3" id="saveDraftBtn" primary="<%= false %>" type="submit" value="<%= journalTranslateDisplayContext.getSaveButtonLabel() %>" />
+						<aui:button cssClass="btn-sm mr-3" disabled="<%= journalTranslateDisplayContext.isSaveButtonDisabled() %>" id="saveDraftBtn" primary="<%= false %>" type="submit" value="<%= journalTranslateDisplayContext.getSaveButtonLabel() %>" />
 
-						<aui:button cssClass="btn-sm" disabled="<%= journalTranslateDisplayContext.isPending() %>" id="submitBtnId" primary="<%= true %>" type="submit" value="<%= journalTranslateDisplayContext.getPublishButtonLabel() %>" />
+						<aui:button cssClass="btn-sm" disabled="<%= journalTranslateDisplayContext.isPublishButtonDisabled() %>" id="submitBtnId" primary="<%= true %>" type="submit" value="<%= journalTranslateDisplayContext.getPublishButtonLabel() %>" />
 					</div>
 				</li>
 			</ul>

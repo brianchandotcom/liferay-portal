@@ -251,8 +251,30 @@ public class JournalTranslateDisplayContext {
 		return portletURL;
 	}
 
-	public boolean isPending() throws PortalException {
-		return _journalEditArticleDisplayContext.isPending();
+	public boolean isPublishButtonDisabled() throws PortalException {
+		if (_journalEditArticleDisplayContext.isPending() ||
+			_isAvailableLanguagesEmpty()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isSaveButtonDisabled() throws PortalException {
+		return _isAvailableLanguagesEmpty();
+	}
+
+	private boolean _isAvailableLanguagesEmpty() {
+		List<String> availableTargetLanguageIds =
+			(List<String>)_httpServletRequest.getAttribute(
+				JournalWebConstants.AVAILABLE_TARGET_LANGUAGE_IDS);
+
+		if (availableTargetLanguageIds.isEmpty()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private final JournalArticle _article;

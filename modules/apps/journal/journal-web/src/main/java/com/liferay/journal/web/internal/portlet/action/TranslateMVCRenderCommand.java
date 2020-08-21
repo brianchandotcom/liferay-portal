@@ -27,11 +27,16 @@ import com.liferay.journal.web.internal.constants.JournalWebConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.translation.constants.TranslationActionKeys;
+import com.liferay.translation.constants.TranslationConstants;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
@@ -96,7 +101,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				article.getDefaultLanguageId());
 
 			List<String> availableTargetLanguageIds =
-				_getSiteAvailableLanguageIds(sourceLanguageId, themeDisplay);
+				_getSiteAvailableLanguageIds(
+					article, sourceLanguageId, themeDisplay);
 
 			String targetLanguageId = ParamUtil.getString(
 				renderRequest, "targetLanguageId",
@@ -189,7 +195,14 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private List<String> _getSiteAvailableLanguageIds(
-		String sourceLanguageId, ThemeDisplay themeDisplay) {
+			JournalArticle article, String sourceLanguageId,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		boolean hasUpdatePermission =
+			_journalArticleModelResourcePermission.contains(
+				themeDisplay.getPermissionChecker(), article,
+				ActionKeys.UPDATE);
 
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
 			themeDisplay.getSiteGroupId());
@@ -199,7 +212,10 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		return stream.map(
 			LocaleUtil::toLanguageId
 		).filter(
-			languageId -> !Objects.equals(languageId, sourceLanguageId)
+			languageId ->
+				!Objects.equals(languageId, sourceLanguageId) &&
+				(hasUpdatePermission ||
+				 _hasTranslatePermission(languageId, themeDisplay))
 		).collect(
 			Collectors.toList()
 		);
@@ -220,8 +236,27 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		return null;
 	}
 
+	private boolean _hasTranslatePermission(
+		String languageId, ThemeDisplay themeDisplay) {
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		String name = TranslationConstants.RESOURCE_NAME + "." + languageId;
+
+		return permissionChecker.hasPermission(
+			themeDisplay.getScopeGroup(), name, name,
+			TranslationActionKeys.TRANSLATE);
+	}
+
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
+	)
+	private ModelResourcePermission<JournalArticle>
+		_journalArticleModelResourcePermission;
 
 	@Reference
 	private TranslationEntryLocalService _translationEntryLocalService;

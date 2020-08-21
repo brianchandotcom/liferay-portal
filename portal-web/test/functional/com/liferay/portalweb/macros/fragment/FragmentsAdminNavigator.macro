@@ -35,11 +35,18 @@ definition {
 	}
 
 	macro gotoImportCollection {
-		if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_ELLIPSIS")) {
-			Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "internetexplorer") {
+			Click(locator1 = "NavNested#NAV_NESTED_ELLIPSIS_IE");
 		}
 		else {
-			Button.click(button = "New");
+			if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_ELLIPSIS")) {
+				Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
+			}
+			else {
+				Button.click(button = "New");
+			}
 		}
 
 		DropdownMenuItem.click(menuItem = "Import");

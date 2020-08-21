@@ -219,6 +219,9 @@ public class ViewChangesDisplayContext {
 		Set<Long> rootClassNameIds = _getRootClassNameIds(ctClosure);
 
 		return HashMapBuilder.<String, Object>put(
+			"activeCtCollection",
+			_ctCollection.getCtCollectionId() == _activeCtCollectionId
+		).put(
 			"changes",
 			() -> {
 				JSONArray changesJSONArray = JSONFactoryUtil.createJSONArray();

@@ -65,11 +65,12 @@ export default ({
 	useEffect(() => {
 		AUI().use('portal-available-languages', () => {
 			setAvailable(Liferay.Language.available);
-			setAvailableLanguageIds(
-				availableLanguageIds || Liferay.Language.available
-			);
 		});
-	}, [availableLanguageIds]);
+	}, []);
+
+	useEffect(() => {
+		setAvailableLanguageIds(availableLanguageIds || available);
+	}, [available, availableLanguageIds]);
 
 	useEffect(() => {
 		onActiveChange(active);

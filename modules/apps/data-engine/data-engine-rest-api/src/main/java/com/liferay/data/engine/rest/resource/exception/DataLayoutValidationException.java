@@ -97,4 +97,13 @@ public class DataLayoutValidationException extends RuntimeException {
 
 	}
 
+	public static class MustSetValidRuleExpression
+		extends DataLayoutValidationException {
+
+		public MustSetValidRuleExpression() {
+			super("There are invalid rule expressions");
+		}
+
+	}
+
 }

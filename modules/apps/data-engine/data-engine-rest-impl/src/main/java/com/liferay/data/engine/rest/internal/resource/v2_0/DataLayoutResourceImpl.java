@@ -49,6 +49,7 @@ import com.liferay.dynamic.data.mapping.util.comparator.StructureLayoutModifiedD
 import com.liferay.dynamic.data.mapping.util.comparator.StructureLayoutNameComparator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -514,6 +515,20 @@ public class DataLayoutResourceImpl
 			ddmFormLayoutValidationException.getCause());
 	}
 
+	private DataLayoutValidationException _toDataLayoutValidationException(
+		DDMFormValidationException ddmFormValidationException) {
+
+		if (ddmFormValidationException instanceof
+				DDMFormValidationException.MustSetValidFormRuleExpression) {
+
+			return new DataLayoutValidationException.
+				MustSetValidRuleExpression();
+		}
+
+		return new DataLayoutValidationException(
+			ddmFormValidationException.getCause());
+	}
+
 	private OrderByComparator<DDMStructureLayout> _toOrderByComparator(
 		Sort sort) {
 
@@ -574,6 +589,9 @@ public class DataLayoutResourceImpl
 
 			throw _toDataLayoutValidationException(
 				ddmFormLayoutValidationException);
+		}
+		catch (DDMFormValidationException ddmFormValidationException) {
+			throw _toDataLayoutValidationException(ddmFormValidationException);
 		}
 		catch (Exception exception) {
 			throw new DataLayoutValidationException(exception);

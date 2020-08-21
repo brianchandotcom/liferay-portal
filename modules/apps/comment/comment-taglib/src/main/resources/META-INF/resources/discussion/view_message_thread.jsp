@@ -141,7 +141,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							</div>
 
 							<div class="text-secondary">
-								<span title="<%= dateFormatDateTime.format(createDate) %>"><liferay-ui:message arguments="<%= createDateDescription %>" key="x-ago" translateArguments="<%= false %>" /></span>
+								<span class="lfr-portal-tooltip" title="<%= dateFormatDateTime.format(createDate) %>"><liferay-ui:message arguments="<%= createDateDescription %>" key="x-ago" translateArguments="<%= false %>" /></span>
 
 								<%
 								Date modifiedDate = discussionComment.getModifiedDate();
@@ -149,7 +149,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 								<c:if test="<%= createDate.before(modifiedDate) %>">
 									-
-									<strong title="<%= dateFormatDateTime.format(modifiedDate) %>">
+									<strong class="lfr-portal-tooltip" title="<%= dateFormatDateTime.format(modifiedDate) %>">
 										<liferay-ui:message key="edited" />
 									</strong>
 								</c:if>
@@ -178,6 +178,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							markupView="lexicon"
 							message="actions"
 							showWhenSingleIcon="<%= true %>"
+							triggerCssClass="lfr-portal-tooltip"
 						>
 							<c:if test="<%= commentTreeDisplayContext.isEditActionControlVisible() %>">
 								<liferay-ui:icon

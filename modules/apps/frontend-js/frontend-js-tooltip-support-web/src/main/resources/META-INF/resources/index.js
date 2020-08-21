@@ -52,9 +52,6 @@ const SELECTOR_TRIGGER = `
 	.progress-container[data-title],
 	.redirect-entries span[data-title],
 	.source-editor__fixed-text__help[data-title],
-	.taglib-discussion [data-title]:not(.lfr-portal-tooltip),
-	.taglib-discussion [title]:not(.lfr-portal-tooltip):not([title=""]),
-	.taglib-discussion [data-restore-title],
 	.upper-tbar [data-title]:not(.lfr-portal-tooltip),
 	.upper-tbar [title]:not(.lfr-portal-tooltip),
 	.upper-tbar [data-restore-title]

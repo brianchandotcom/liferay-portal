@@ -21,8 +21,9 @@ import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemA
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemType;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -58,7 +59,7 @@ public class JournalArticleContentDashboardItem
 		ContentDashboardItemActionProviderTracker
 			contentDashboardItemActionProviderTracker,
 		ContentDashboardItemType contentDashboardItemType, Group group,
-		InfoDisplayContributor<JournalArticle> infoDisplayContributor,
+		InfoItemFieldValuesProvider<JournalArticle> infoItemFieldValuesProvider,
 		JournalArticle journalArticle, Language language,
 		JournalArticle latestApprovedJournalArticle) {
 
@@ -80,7 +81,7 @@ public class JournalArticleContentDashboardItem
 			contentDashboardItemActionProviderTracker;
 		_contentDashboardItemType = contentDashboardItemType;
 		_group = group;
-		_infoDisplayContributor = infoDisplayContributor;
+		_infoItemFieldValuesProvider = infoItemFieldValuesProvider;
 		_journalArticle = journalArticle;
 		_language = language;
 
@@ -195,15 +196,15 @@ public class JournalArticleContentDashboardItem
 
 	@Override
 	public Object getDisplayFieldValue(String fieldName, Locale locale) {
-		try {
-			return _infoDisplayContributor.getInfoDisplayFieldValue(
-				_journalArticle, fieldName, locale);
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
+		InfoFieldValue<Object> infoItemFieldValue =
+			_infoItemFieldValuesProvider.getInfoItemFieldValue(
+				_journalArticle, fieldName);
 
-			return StringPool.BLANK;
+		if (infoItemFieldValue == null) {
+			return null;
 		}
+
+		return infoItemFieldValue.getValue(locale);
 	}
 
 	@Override
@@ -311,8 +312,8 @@ public class JournalArticleContentDashboardItem
 		_contentDashboardItemActionProviderTracker;
 	private final ContentDashboardItemType _contentDashboardItemType;
 	private final Group _group;
-	private final InfoDisplayContributor<JournalArticle>
-		_infoDisplayContributor;
+	private final InfoItemFieldValuesProvider<JournalArticle>
+		_infoItemFieldValuesProvider;
 	private final JournalArticle _journalArticle;
 	private final Language _language;
 	private final JournalArticle _latestApprovedJournalArticle;

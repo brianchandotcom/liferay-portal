@@ -75,11 +75,9 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 								var selectedItems = event.newVal;
 
 								if (selectedItems) {
-									$('#<portlet:namespace />cpDefinitionIds').val(
-										selectedItems
-									);
+									window.document.querySelector('#<portlet:namespace />cpDefinitionIds').value = selectedItems;
 
-									$('#<portlet:namespace />type').val('<%= type %>');
+									window.document.querySelector('#<portlet:namespace />type').value = '<%= type %>';
 
 									var addCPDefinitionLinkFm = AUI.$(
 										'#<portlet:namespace />addCPDefinitionLinkFm'

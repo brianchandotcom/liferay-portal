@@ -172,9 +172,7 @@ PortletURL portletURL = commerceAccountGroupAdminDisplayContext.getPortletURL();
 									);
 								});
 
-								$('#<portlet:namespace />commerceAccountIds').val(
-									<portlet:namespace />addCommerceAccountIds.join(',')
-								);
+								window.document.querySelector('#<portlet:namespace />commerceAccountIds').value = <portlet:namespace />addCommerceAccountIds.join(',');
 
 								var addCommerceAccountGroupCommerceAccountRelFm = AUI.$(
 									'#<portlet:namespace />addCommerceAccountGroupCommerceAccountRelFm'

@@ -100,9 +100,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 							);
 						});
 
-						$('#<portlet:namespace />commerceAccountGroupIds').val(
-							<portlet:namespace />addCommerceAccountGroupIds
-						);
+						window.document.querySelector('#<portlet:namespace />commerceAccountGroupIds').value = <portlet:namespace />addCommerceAccountGroupIds;
 
 						var form = $('#<portlet:namespace />fm');
 
@@ -140,9 +138,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 							);
 						});
 
-						$('#<portlet:namespace />commerceChannelIds').val(
-							<portlet:namespace />addCommerceChannelIds
-						);
+						window.document.querySelector('#<portlet:namespace />commerceChannelIds').value = <portlet:namespace />addCommerceChannelIds;
 
 						var form = $('#<portlet:namespace />fm');
 

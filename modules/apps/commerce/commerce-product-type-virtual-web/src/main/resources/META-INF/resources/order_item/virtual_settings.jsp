@@ -144,9 +144,7 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 					if (selectedItem) {
 						var value = JSON.parse(selectedItem.value);
 
-						$('#<portlet:namespace />fileEntryId').val(
-							value.fileEntryId
-						);
+						window.document.querySelector('#<portlet:namespace />fileEntryId').value = value.fileEntryId;
 
 						$('#<portlet:namespace />url').attr('disabled', true);
 
@@ -171,7 +169,7 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 	$('#<portlet:namespace />fileEntryRemove').on('click', function (event) {
 		event.preventDefault();
 
-		$('#<portlet:namespace />fileEntryId').val(0);
+		window.document.querySelector('#<portlet:namespace />fileEntryId').value = 0;
 
 		$('#<portlet:namespace />url').attr('disabled', false);
 

@@ -76,9 +76,7 @@ productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
 					var selectedItems = event.newVal;
 
 					if (selectedItems) {
-						$('#<portlet:namespace />commercePriceListIds').val(
-							selectedItems
-						);
+						window.document.querySelector('#<portlet:namespace />commercePriceListIds').value = selectedItems;
 
 						var addCommercePriceEntryFm = AUI.$(
 							'#<portlet:namespace />addCommercePriceEntryFm'

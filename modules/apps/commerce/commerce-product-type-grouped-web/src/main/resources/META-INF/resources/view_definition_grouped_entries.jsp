@@ -221,9 +221,7 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 					var selectedItems = event.newVal;
 
 					if (selectedItems) {
-						$('#<portlet:namespace />entryCPDefinitionIds').val(
-							selectedItems
-						);
+						window.document.querySelector('#<portlet:namespace />entryCPDefinitionIds').value = selectedItems;
 
 						var addCPDefinitionGroupedEntryFm = AUI.$(
 							'#<portlet:namespace />addCPDefinitionGroupedEntryFm'

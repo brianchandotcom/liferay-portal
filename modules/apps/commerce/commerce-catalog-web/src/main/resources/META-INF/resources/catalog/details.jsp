@@ -109,12 +109,10 @@ boolean isViewOnly = !commerceCatalogDisplayContext.hasPermission(commerceCatalo
 								itemsLabel: 'name',
 								onValueUpdated: function (value, priceListData) {
 									if (value) {
-										$('#<portlet:namespace />baseCommercePriceListId').val(
-											priceListData.id
-										);
+										window.document.querySelector('#<portlet:namespace />baseCommercePriceListId').value = priceListData.id;
 									}
 									else {
-										$('#<portlet:namespace />baseCommercePriceListId').val(0);
+										window.document.querySelector('#<portlet:namespace />baseCommercePriceListId').value = 0;
 									}
 								},
 								required: true,
@@ -140,12 +138,10 @@ boolean isViewOnly = !commerceCatalogDisplayContext.hasPermission(commerceCatalo
 								itemsLabel: 'name',
 								onValueUpdated: function (value, priceListData) {
 									if (value) {
-										$('#<portlet:namespace />basePromotionCommercePriceListId').val(
-											priceListData.id
-										);
+										window.document.querySelector('#<portlet:namespace />basePromotionCommercePriceListId').value = priceListData.id;
 									}
 									else {
-										$('#<portlet:namespace />basePromotionCommercePriceListId').val(0);
+										window.document.querySelector('#<portlet:namespace />basePromotionCommercePriceListId').value = 0;
 									}
 								},
 								required: true,

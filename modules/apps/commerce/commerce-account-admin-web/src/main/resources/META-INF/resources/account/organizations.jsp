@@ -174,9 +174,7 @@ PortletURL portletURL = commerceAccountOrganizationRelAdminDisplayContext.getPor
 									);
 								});
 
-								$('#<portlet:namespace />organizationIds').val(
-									<portlet:namespace />addOrganizationIds.join(',')
-								);
+								window.document.querySelector('#<portlet:namespace />organizationIds').value = <portlet:namespace />addOrganizationIds.join(',');
 
 								var addCommerceAccountOrganizationRelFm = AUI.$(
 									'#<portlet:namespace />addCommerceAccountOrganizationRelFm'

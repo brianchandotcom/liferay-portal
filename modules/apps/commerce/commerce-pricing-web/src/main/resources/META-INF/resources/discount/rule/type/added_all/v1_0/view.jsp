@@ -79,9 +79,7 @@ List<CPDefinition> cpDefinitions = addedAllCommerceDiscountRuleDisplayContext.ge
 						var selectedItems = event.newVal;
 
 						if (selectedItems) {
-							$('#<portlet:namespace />addTypeSettings').val(
-								selectedItems
-							);
+							window.document.querySelector('#<portlet:namespace />addTypeSettings').value = selectedItems;
 
 							var fm = $('#<portlet:namespace />fm');
 

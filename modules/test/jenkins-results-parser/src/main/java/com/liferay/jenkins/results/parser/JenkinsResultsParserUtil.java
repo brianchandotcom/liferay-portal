@@ -2690,22 +2690,22 @@ public class JenkinsResultsParserUtil {
 		long gigaByteCount = byteCount / _BYTES_GIGA;
 
 		if (gigaByteCount > 0) {
-			return gigaByteCount + "GB";
+			return gigaByteCount + " GB";
 		}
 
 		long megaByteCount = byteCount / _BYTES_MEGA;
 
 		if (megaByteCount > 0) {
-			return megaByteCount + "MB";
+			return megaByteCount + " MB";
 		}
 
 		long kiloByteCount = byteCount / _BYTES_KILO;
 
 		if (kiloByteCount > 0) {
-			return kiloByteCount + "KB";
+			return kiloByteCount + " KB";
 		}
 
-		return byteCount + "B";
+		return byteCount + " B";
 	}
 
 	public static String toDateString(Date date, String timeZoneName) {

@@ -202,7 +202,7 @@ definition {
 				item = "Make Web Content Structures Unavailable",
 				tableEntry = "${siteName}");
 
-			AssertConfirm(value1 = "After disabling structure sharing, any site content that uses the structures will be invalid. Do you want to disable structure sharing?");
+			AssertConfirm(value1 = "After disabling structure and document type sharing, any site content that uses the structures or document types will be invalid. Do you want to disable structure and document type sharing?");
 
 			Alert.viewSuccessMessage();
 
@@ -217,7 +217,7 @@ definition {
 				item = "Make Web Content Structures Available",
 				tableEntry = "${siteName}");
 
-			AssertConfirm(value1 = "You will not be able to disconnect this site when structure sharing is enabled. In order to disconnect this site from this asset library, you must disable structure sharing first.");
+			AssertConfirm(value1 = "You will not be able to disconnect this site when structure and document type sharing is enabled. In order to disconnect this site from this asset library, you must disable structure and document type sharing first.");
 
 			Alert.viewSuccessMessage();
 

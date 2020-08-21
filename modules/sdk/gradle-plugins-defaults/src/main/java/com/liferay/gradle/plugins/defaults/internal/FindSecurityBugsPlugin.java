@@ -31,6 +31,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.Transformer;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
@@ -68,10 +69,20 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
 		Configuration findSecurityBugsConfiguration =
-			_addConfigurationFindSecurityBugs(project);
+			configurationContainer.create(
+				FIND_SECURITY_BUGS_CONFIGURATION_NAME);
 		Configuration findSecurityBugsPluginsConfiguration =
-			_addConfigurationFindSecurityBugsPlugins(project);
+			configurationContainer.create(
+				FIND_SECURITY_BUGS_PLUGINS_CONFIGURATION_NAME);
+
+		_configureConfigurationFindSecurityBugs(
+			project, findSecurityBugsConfiguration);
+		_configureConfigurationFindSecurityBugsPlugins(
+			project, findSecurityBugsPluginsConfiguration);
 
 		WriteFindBugsProjectTask writeFindBugsProjectTask =
 			_addTaskWriteFindBugsProject(project);
@@ -88,62 +99,46 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 	private FindSecurityBugsPlugin() {
 	}
 
-	private Configuration _addConfigurationFindSecurityBugs(
-		final Project project) {
+	private void _configureConfigurationFindSecurityBugs(
+		final Project project, Configuration findSecurityBugsConfiguration) {
 
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, FIND_SECURITY_BUGS_CONFIGURATION_NAME);
-
-		configuration.defaultDependencies(
+		findSecurityBugsConfiguration.defaultDependencies(
 			new Action<DependencySet>() {
 
 				@Override
 				public void execute(DependencySet dependencySet) {
-					_addDependenciesFindSecurityBugs(project);
+					GradleUtil.addDependency(
+						project, FIND_SECURITY_BUGS_CONFIGURATION_NAME,
+						"com.google.code.findbugs", "findbugs", "3.0.1");
 				}
 
 			});
 
-		configuration.setDescription(
+		findSecurityBugsConfiguration.setDescription(
 			"Configures FindBugs for the '" + FIND_SECURITY_BUGS_TASK_NAME +
 				"' task.");
-		configuration.setVisible(false);
-
-		return configuration;
+		findSecurityBugsConfiguration.setVisible(false);
 	}
 
-	private Configuration _addConfigurationFindSecurityBugsPlugins(
-		final Project project) {
+	private void _configureConfigurationFindSecurityBugsPlugins(
+		final Project project,
+		Configuration findSecurityBugsPluginsConfiguration) {
 
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, FIND_SECURITY_BUGS_PLUGINS_CONFIGURATION_NAME);
-
-		configuration.defaultDependencies(
+		findSecurityBugsPluginsConfiguration.defaultDependencies(
 			new Action<DependencySet>() {
 
 				@Override
 				public void execute(DependencySet dependencySet) {
-					_addDependenciesFindSecurityBugsPlugins(project);
+					GradleUtil.addDependency(
+						project, FIND_SECURITY_BUGS_PLUGINS_CONFIGURATION_NAME,
+						"com.liferay", "com.h3xstream.findsecbugs", _VERSION);
 				}
 
 			});
 
-		configuration.setDescription("Configures FindSecurityBugs.");
-		configuration.setVisible(false);
-
-		return configuration;
-	}
-
-	private void _addDependenciesFindSecurityBugs(Project project) {
-		GradleUtil.addDependency(
-			project, FIND_SECURITY_BUGS_CONFIGURATION_NAME,
-			"com.google.code.findbugs", "findbugs", "3.0.1");
-	}
-
-	private void _addDependenciesFindSecurityBugsPlugins(Project project) {
-		GradleUtil.addDependency(
-			project, FIND_SECURITY_BUGS_PLUGINS_CONFIGURATION_NAME,
-			"com.liferay", "com.h3xstream.findsecbugs", _VERSION);
+		findSecurityBugsPluginsConfiguration.setDescription(
+			"Configures FindSecurityBugs.");
+		findSecurityBugsPluginsConfiguration.setVisible(false);
 	}
 
 	private JavaExec _addTaskFindSecurityBugs(

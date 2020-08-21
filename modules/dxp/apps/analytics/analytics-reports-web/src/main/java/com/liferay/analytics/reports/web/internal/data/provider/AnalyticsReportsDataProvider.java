@@ -55,7 +55,7 @@ public class AnalyticsReportsDataProvider {
 			String response = _asahFaroBackendClient.doGet(
 				companyId,
 				String.format(
-					"api/1.0/pages/read-counts?canonicalUrl=%s&endDate=%s&" +
+					"api/1.0/pages/read-counts?canonicalURL=%s&endDate=%s&" +
 						"interval=D&startDate=%s",
 					HtmlUtil.escapeURL(url),
 					DateTimeFormatter.ISO_DATE.format(
@@ -79,7 +79,7 @@ public class AnalyticsReportsDataProvider {
 			String response = _asahFaroBackendClient.doGet(
 				companyId,
 				String.format(
-					"api/1.0/pages/view-counts?canonicalUrl=%s&endDate=%s&" +
+					"api/1.0/pages/view-counts?canonicalURL=%s&endDate=%s&" +
 						"interval=D&startDate=%s",
 					HtmlUtil.escapeURL(url),
 					DateTimeFormatter.ISO_DATE.format(
@@ -102,7 +102,7 @@ public class AnalyticsReportsDataProvider {
 			long totalReads = GetterUtil.getLong(
 				_asahFaroBackendClient.doGet(
 					companyId,
-					"api/1.0/pages/read-count?canonicalUrl=" +
+					"api/1.0/pages/read-count?canonicalURL=" +
 						HtmlUtil.escapeURL(url)));
 
 			return Math.max(0, totalReads - _getTodayReads(companyId, url));
@@ -119,7 +119,7 @@ public class AnalyticsReportsDataProvider {
 			long totalViews = GetterUtil.getLong(
 				_asahFaroBackendClient.doGet(
 					companyId,
-					"api/1.0/pages/view-count?canonicalUrl=" +
+					"api/1.0/pages/view-count?canonicalURL=" +
 						HtmlUtil.escapeURL(url)));
 
 			return Math.max(0, totalViews - _getTodayViews(companyId, url));

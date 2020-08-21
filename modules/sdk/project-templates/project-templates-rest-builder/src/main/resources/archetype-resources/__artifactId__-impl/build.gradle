@@ -14,12 +14,10 @@ apply plugin: "com.liferay.portal.tools.rest.builder"
 
 dependencies {
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.10.3"
-	compileOnly group: "com.liferay", name: "com.liferay.petra.function"
-	compileOnly group: "com.liferay", name: "com.liferay.petra.string"
-	compileOnly group: "com.liferay", name: "com.liferay.portal.odata.api"
+#if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")})
 	compileOnly group: "com.liferay", name: "com.liferay.portal.vulcan.api", version: "@com.liferay.portal.vulcan.api.version@"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+#end
+	compileOnly group: "com.liferay.portal", name: "release.portal.api"
 	compileOnly group: "commons-collections", name: "commons-collections"
 	compileOnly group: "io.swagger.core.v3", name: "swagger-annotations", version: "2.0.5"
 #if (${liferayVersion.startsWith("7.1")})

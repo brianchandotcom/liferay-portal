@@ -481,6 +481,20 @@ public abstract class BaseProductResourceTestCase {
 
 		assertEquals(randomProduct, postProduct);
 		assertValid(postProduct);
+
+		randomProduct = randomProduct();
+
+		assertHttpResponseStatusCode(
+			404,
+			productResource.getProductByExternalReferenceCodeHttpResponse(
+				randomProduct.getExternalReferenceCode()));
+
+		testPostProduct_addProduct(randomProduct);
+
+		assertHttpResponseStatusCode(
+			200,
+			productResource.getProductByExternalReferenceCodeHttpResponse(
+				randomProduct.getExternalReferenceCode()));
 	}
 
 	protected Product testPostProduct_addProduct(Product product)
@@ -606,6 +620,20 @@ public abstract class BaseProductResourceTestCase {
 
 		assertEquals(randomProduct, postProduct);
 		assertValid(postProduct);
+
+		randomProduct = randomProduct();
+
+		assertHttpResponseStatusCode(
+			404,
+			productResource.getProductByExternalReferenceCodeHttpResponse(
+				randomProduct.getExternalReferenceCode()));
+
+		testPostProductByExternalReferenceCodeClone_addProduct(randomProduct);
+
+		assertHttpResponseStatusCode(
+			200,
+			productResource.getProductByExternalReferenceCodeHttpResponse(
+				randomProduct.getExternalReferenceCode()));
 	}
 
 	protected Product testPostProductByExternalReferenceCodeClone_addProduct(
@@ -742,6 +770,20 @@ public abstract class BaseProductResourceTestCase {
 
 		assertEquals(randomProduct, postProduct);
 		assertValid(postProduct);
+
+		randomProduct = randomProduct();
+
+		assertHttpResponseStatusCode(
+			404,
+			productResource.getProductByExternalReferenceCodeHttpResponse(
+				randomProduct.getExternalReferenceCode()));
+
+		testPostProductClone_addProduct(randomProduct);
+
+		assertHttpResponseStatusCode(
+			200,
+			productResource.getProductByExternalReferenceCodeHttpResponse(
+				randomProduct.getExternalReferenceCode()));
 	}
 
 	protected Product testPostProductClone_addProduct(Product product)

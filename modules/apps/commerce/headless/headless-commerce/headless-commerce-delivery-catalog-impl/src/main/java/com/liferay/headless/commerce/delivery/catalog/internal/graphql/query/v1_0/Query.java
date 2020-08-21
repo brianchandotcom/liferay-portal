@@ -35,11 +35,14 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
@@ -316,6 +319,7 @@ public class Query {
 
 		public AttachmentPage(Page attachmentPage) {
 			actions = attachmentPage.getActions();
+			facets = attachmentPage.getFacets();
 			items = attachmentPage.getItems();
 			lastPage = attachmentPage.getLastPage();
 			page = attachmentPage.getPage();
@@ -325,6 +329,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Attachment> items;
@@ -348,6 +355,7 @@ public class Query {
 
 		public CategoryPage(Page categoryPage) {
 			actions = categoryPage.getActions();
+			facets = categoryPage.getFacets();
 			items = categoryPage.getItems();
 			lastPage = categoryPage.getLastPage();
 			page = categoryPage.getPage();
@@ -357,6 +365,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Category> items;
@@ -380,6 +391,7 @@ public class Query {
 
 		public ProductPage(Page productPage) {
 			actions = productPage.getActions();
+			facets = productPage.getFacets();
 			items = productPage.getItems();
 			lastPage = productPage.getLastPage();
 			page = productPage.getPage();
@@ -389,6 +401,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Product> items;
@@ -412,6 +427,7 @@ public class Query {
 
 		public ProductOptionPage(Page productOptionPage) {
 			actions = productOptionPage.getActions();
+			facets = productOptionPage.getFacets();
 			items = productOptionPage.getItems();
 			lastPage = productOptionPage.getLastPage();
 			page = productOptionPage.getPage();
@@ -421,6 +437,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<ProductOption> items;
@@ -444,6 +463,7 @@ public class Query {
 
 		public ProductSpecificationPage(Page productSpecificationPage) {
 			actions = productSpecificationPage.getActions();
+			facets = productSpecificationPage.getFacets();
 			items = productSpecificationPage.getItems();
 			lastPage = productSpecificationPage.getLastPage();
 			page = productSpecificationPage.getPage();
@@ -453,6 +473,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<ProductSpecification> items;
@@ -476,6 +499,7 @@ public class Query {
 
 		public RelatedProductPage(Page relatedProductPage) {
 			actions = relatedProductPage.getActions();
+			facets = relatedProductPage.getFacets();
 			items = relatedProductPage.getItems();
 			lastPage = relatedProductPage.getLastPage();
 			page = relatedProductPage.getPage();
@@ -485,6 +509,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<RelatedProduct> items;
@@ -508,6 +535,7 @@ public class Query {
 
 		public SkuPage(Page skuPage) {
 			actions = skuPage.getActions();
+			facets = skuPage.getFacets();
 			items = skuPage.getItems();
 			lastPage = skuPage.getLastPage();
 			page = skuPage.getPage();
@@ -517,6 +545,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Sku> items;
@@ -669,6 +700,8 @@ public class Query {
 		_skuResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
+	private BiFunction<Object, List<String>, Aggregation>
+		_aggregationBiFunction;
 	private com.liferay.portal.kernel.model.Company _company;
 	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private GroupLocalService _groupLocalService;

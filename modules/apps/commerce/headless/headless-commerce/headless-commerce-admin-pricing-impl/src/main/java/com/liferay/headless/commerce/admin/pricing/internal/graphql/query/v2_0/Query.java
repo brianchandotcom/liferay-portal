@@ -73,12 +73,15 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
@@ -2215,6 +2218,7 @@ public class Query {
 
 		public AccountPage(Page accountPage) {
 			actions = accountPage.getActions();
+			facets = accountPage.getFacets();
 			items = accountPage.getItems();
 			lastPage = accountPage.getLastPage();
 			page = accountPage.getPage();
@@ -2224,6 +2228,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Account> items;
@@ -2247,6 +2254,7 @@ public class Query {
 
 		public AccountGroupPage(Page accountGroupPage) {
 			actions = accountGroupPage.getActions();
+			facets = accountGroupPage.getFacets();
 			items = accountGroupPage.getItems();
 			lastPage = accountGroupPage.getLastPage();
 			page = accountGroupPage.getPage();
@@ -2256,6 +2264,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<AccountGroup> items;
@@ -2279,6 +2290,7 @@ public class Query {
 
 		public CategoryPage(Page categoryPage) {
 			actions = categoryPage.getActions();
+			facets = categoryPage.getFacets();
 			items = categoryPage.getItems();
 			lastPage = categoryPage.getLastPage();
 			page = categoryPage.getPage();
@@ -2288,6 +2300,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Category> items;
@@ -2311,6 +2326,7 @@ public class Query {
 
 		public ChannelPage(Page channelPage) {
 			actions = channelPage.getActions();
+			facets = channelPage.getFacets();
 			items = channelPage.getItems();
 			lastPage = channelPage.getLastPage();
 			page = channelPage.getPage();
@@ -2320,6 +2336,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Channel> items;
@@ -2343,6 +2362,7 @@ public class Query {
 
 		public DiscountPage(Page discountPage) {
 			actions = discountPage.getActions();
+			facets = discountPage.getFacets();
 			items = discountPage.getItems();
 			lastPage = discountPage.getLastPage();
 			page = discountPage.getPage();
@@ -2352,6 +2372,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Discount> items;
@@ -2375,6 +2398,7 @@ public class Query {
 
 		public DiscountAccountPage(Page discountAccountPage) {
 			actions = discountAccountPage.getActions();
+			facets = discountAccountPage.getFacets();
 			items = discountAccountPage.getItems();
 			lastPage = discountAccountPage.getLastPage();
 			page = discountAccountPage.getPage();
@@ -2384,6 +2408,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<DiscountAccount> items;
@@ -2407,6 +2434,7 @@ public class Query {
 
 		public DiscountAccountGroupPage(Page discountAccountGroupPage) {
 			actions = discountAccountGroupPage.getActions();
+			facets = discountAccountGroupPage.getFacets();
 			items = discountAccountGroupPage.getItems();
 			lastPage = discountAccountGroupPage.getLastPage();
 			page = discountAccountGroupPage.getPage();
@@ -2416,6 +2444,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<DiscountAccountGroup> items;
@@ -2439,6 +2470,7 @@ public class Query {
 
 		public DiscountCategoryPage(Page discountCategoryPage) {
 			actions = discountCategoryPage.getActions();
+			facets = discountCategoryPage.getFacets();
 			items = discountCategoryPage.getItems();
 			lastPage = discountCategoryPage.getLastPage();
 			page = discountCategoryPage.getPage();
@@ -2448,6 +2480,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<DiscountCategory> items;
@@ -2471,6 +2506,7 @@ public class Query {
 
 		public DiscountChannelPage(Page discountChannelPage) {
 			actions = discountChannelPage.getActions();
+			facets = discountChannelPage.getFacets();
 			items = discountChannelPage.getItems();
 			lastPage = discountChannelPage.getLastPage();
 			page = discountChannelPage.getPage();
@@ -2480,6 +2516,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<DiscountChannel> items;
@@ -2503,6 +2542,7 @@ public class Query {
 
 		public DiscountProductPage(Page discountProductPage) {
 			actions = discountProductPage.getActions();
+			facets = discountProductPage.getFacets();
 			items = discountProductPage.getItems();
 			lastPage = discountProductPage.getLastPage();
 			page = discountProductPage.getPage();
@@ -2512,6 +2552,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<DiscountProduct> items;
@@ -2535,6 +2578,7 @@ public class Query {
 
 		public DiscountProductGroupPage(Page discountProductGroupPage) {
 			actions = discountProductGroupPage.getActions();
+			facets = discountProductGroupPage.getFacets();
 			items = discountProductGroupPage.getItems();
 			lastPage = discountProductGroupPage.getLastPage();
 			page = discountProductGroupPage.getPage();
@@ -2544,6 +2588,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<DiscountProductGroup> items;
@@ -2567,6 +2614,7 @@ public class Query {
 
 		public DiscountRulePage(Page discountRulePage) {
 			actions = discountRulePage.getActions();
+			facets = discountRulePage.getFacets();
 			items = discountRulePage.getItems();
 			lastPage = discountRulePage.getLastPage();
 			page = discountRulePage.getPage();
@@ -2576,6 +2624,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<DiscountRule> items;
@@ -2599,6 +2650,7 @@ public class Query {
 
 		public PriceEntryPage(Page priceEntryPage) {
 			actions = priceEntryPage.getActions();
+			facets = priceEntryPage.getFacets();
 			items = priceEntryPage.getItems();
 			lastPage = priceEntryPage.getLastPage();
 			page = priceEntryPage.getPage();
@@ -2608,6 +2660,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<PriceEntry> items;
@@ -2631,6 +2686,7 @@ public class Query {
 
 		public PriceListPage(Page priceListPage) {
 			actions = priceListPage.getActions();
+			facets = priceListPage.getFacets();
 			items = priceListPage.getItems();
 			lastPage = priceListPage.getLastPage();
 			page = priceListPage.getPage();
@@ -2640,6 +2696,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<PriceList> items;
@@ -2663,6 +2722,7 @@ public class Query {
 
 		public PriceListAccountPage(Page priceListAccountPage) {
 			actions = priceListAccountPage.getActions();
+			facets = priceListAccountPage.getFacets();
 			items = priceListAccountPage.getItems();
 			lastPage = priceListAccountPage.getLastPage();
 			page = priceListAccountPage.getPage();
@@ -2672,6 +2732,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<PriceListAccount> items;
@@ -2695,6 +2758,7 @@ public class Query {
 
 		public PriceListAccountGroupPage(Page priceListAccountGroupPage) {
 			actions = priceListAccountGroupPage.getActions();
+			facets = priceListAccountGroupPage.getFacets();
 			items = priceListAccountGroupPage.getItems();
 			lastPage = priceListAccountGroupPage.getLastPage();
 			page = priceListAccountGroupPage.getPage();
@@ -2704,6 +2768,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<PriceListAccountGroup> items;
@@ -2727,6 +2794,7 @@ public class Query {
 
 		public PriceListChannelPage(Page priceListChannelPage) {
 			actions = priceListChannelPage.getActions();
+			facets = priceListChannelPage.getFacets();
 			items = priceListChannelPage.getItems();
 			lastPage = priceListChannelPage.getLastPage();
 			page = priceListChannelPage.getPage();
@@ -2736,6 +2804,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<PriceListChannel> items;
@@ -2759,6 +2830,7 @@ public class Query {
 
 		public PriceListDiscountPage(Page priceListDiscountPage) {
 			actions = priceListDiscountPage.getActions();
+			facets = priceListDiscountPage.getFacets();
 			items = priceListDiscountPage.getItems();
 			lastPage = priceListDiscountPage.getLastPage();
 			page = priceListDiscountPage.getPage();
@@ -2768,6 +2840,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<PriceListDiscount> items;
@@ -2791,6 +2866,7 @@ public class Query {
 
 		public PriceModifierPage(Page priceModifierPage) {
 			actions = priceModifierPage.getActions();
+			facets = priceModifierPage.getFacets();
 			items = priceModifierPage.getItems();
 			lastPage = priceModifierPage.getLastPage();
 			page = priceModifierPage.getPage();
@@ -2800,6 +2876,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<PriceModifier> items;
@@ -2823,6 +2902,7 @@ public class Query {
 
 		public PriceModifierCategoryPage(Page priceModifierCategoryPage) {
 			actions = priceModifierCategoryPage.getActions();
+			facets = priceModifierCategoryPage.getFacets();
 			items = priceModifierCategoryPage.getItems();
 			lastPage = priceModifierCategoryPage.getLastPage();
 			page = priceModifierCategoryPage.getPage();
@@ -2832,6 +2912,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<PriceModifierCategory> items;
@@ -2855,6 +2938,7 @@ public class Query {
 
 		public PriceModifierProductPage(Page priceModifierProductPage) {
 			actions = priceModifierProductPage.getActions();
+			facets = priceModifierProductPage.getFacets();
 			items = priceModifierProductPage.getItems();
 			lastPage = priceModifierProductPage.getLastPage();
 			page = priceModifierProductPage.getPage();
@@ -2864,6 +2948,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<PriceModifierProduct> items;
@@ -2889,6 +2976,7 @@ public class Query {
 			Page priceModifierProductGroupPage) {
 
 			actions = priceModifierProductGroupPage.getActions();
+			facets = priceModifierProductGroupPage.getFacets();
 			items = priceModifierProductGroupPage.getItems();
 			lastPage = priceModifierProductGroupPage.getLastPage();
 			page = priceModifierProductGroupPage.getPage();
@@ -2898,6 +2986,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<PriceModifierProductGroup> items;
@@ -2921,6 +3012,7 @@ public class Query {
 
 		public ProductPage(Page productPage) {
 			actions = productPage.getActions();
+			facets = productPage.getFacets();
 			items = productPage.getItems();
 			lastPage = productPage.getLastPage();
 			page = productPage.getPage();
@@ -2930,6 +3022,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Product> items;
@@ -2953,6 +3048,7 @@ public class Query {
 
 		public ProductGroupPage(Page productGroupPage) {
 			actions = productGroupPage.getActions();
+			facets = productGroupPage.getFacets();
 			items = productGroupPage.getItems();
 			lastPage = productGroupPage.getLastPage();
 			page = productGroupPage.getPage();
@@ -2962,6 +3058,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<ProductGroup> items;
@@ -2985,6 +3084,7 @@ public class Query {
 
 		public SkuPage(Page skuPage) {
 			actions = skuPage.getActions();
+			facets = skuPage.getFacets();
 			items = skuPage.getItems();
 			lastPage = skuPage.getLastPage();
 			page = skuPage.getPage();
@@ -2994,6 +3094,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Sku> items;
@@ -3017,6 +3120,7 @@ public class Query {
 
 		public TierPricePage(Page tierPricePage) {
 			actions = tierPricePage.getActions();
+			facets = tierPricePage.getFacets();
 			items = tierPricePage.getItems();
 			lastPage = tierPricePage.getLastPage();
 			page = tierPricePage.getPage();
@@ -3026,6 +3130,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<TierPrice> items;
@@ -3505,6 +3612,8 @@ public class Query {
 		_tierPriceResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
+	private BiFunction<Object, List<String>, Aggregation>
+		_aggregationBiFunction;
 	private com.liferay.portal.kernel.model.Company _company;
 	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private GroupLocalService _groupLocalService;

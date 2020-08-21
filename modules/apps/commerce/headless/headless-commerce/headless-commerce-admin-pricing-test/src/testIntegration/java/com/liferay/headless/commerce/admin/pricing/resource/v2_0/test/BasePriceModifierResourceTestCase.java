@@ -361,6 +361,23 @@ public abstract class BasePriceModifierResourceTestCase {
 
 		assertEquals(randomPriceModifier, postPriceModifier);
 		assertValid(postPriceModifier);
+
+		randomPriceModifier = randomPriceModifier();
+
+		assertHttpResponseStatusCode(
+			404,
+			priceModifierResource.
+				getPriceModifierByExternalReferenceCodeHttpResponse(
+					randomPriceModifier.getExternalReferenceCode()));
+
+		testPostPriceListByExternalReferenceCodePriceModifier_addPriceModifier(
+			randomPriceModifier);
+
+		assertHttpResponseStatusCode(
+			200,
+			priceModifierResource.
+				getPriceModifierByExternalReferenceCodeHttpResponse(
+					randomPriceModifier.getExternalReferenceCode()));
 	}
 
 	protected PriceModifier
@@ -699,6 +716,22 @@ public abstract class BasePriceModifierResourceTestCase {
 
 		assertEquals(randomPriceModifier, postPriceModifier);
 		assertValid(postPriceModifier);
+
+		randomPriceModifier = randomPriceModifier();
+
+		assertHttpResponseStatusCode(
+			404,
+			priceModifierResource.
+				getPriceModifierByExternalReferenceCodeHttpResponse(
+					randomPriceModifier.getExternalReferenceCode()));
+
+		testPostPriceListIdPriceModifier_addPriceModifier(randomPriceModifier);
+
+		assertHttpResponseStatusCode(
+			200,
+			priceModifierResource.
+				getPriceModifierByExternalReferenceCodeHttpResponse(
+					randomPriceModifier.getExternalReferenceCode()));
 	}
 
 	protected PriceModifier testPostPriceListIdPriceModifier_addPriceModifier(

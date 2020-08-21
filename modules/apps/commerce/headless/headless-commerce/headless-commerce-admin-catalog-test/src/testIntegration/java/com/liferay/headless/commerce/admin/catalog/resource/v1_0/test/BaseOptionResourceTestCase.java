@@ -473,6 +473,20 @@ public abstract class BaseOptionResourceTestCase {
 
 		assertEquals(randomOption, postOption);
 		assertValid(postOption);
+
+		randomOption = randomOption();
+
+		assertHttpResponseStatusCode(
+			404,
+			optionResource.getOptionByExternalReferenceCodeHttpResponse(
+				randomOption.getExternalReferenceCode()));
+
+		testPostOption_addOption(randomOption);
+
+		assertHttpResponseStatusCode(
+			200,
+			optionResource.getOptionByExternalReferenceCodeHttpResponse(
+				randomOption.getExternalReferenceCode()));
 	}
 
 	protected Option testPostOption_addOption(Option option) throws Exception {

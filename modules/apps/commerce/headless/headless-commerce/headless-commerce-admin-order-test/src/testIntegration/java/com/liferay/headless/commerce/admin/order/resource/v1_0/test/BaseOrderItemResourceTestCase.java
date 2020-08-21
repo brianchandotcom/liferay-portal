@@ -575,6 +575,21 @@ public abstract class BaseOrderItemResourceTestCase {
 
 		assertEquals(randomOrderItem, postOrderItem);
 		assertValid(postOrderItem);
+
+		randomOrderItem = randomOrderItem();
+
+		assertHttpResponseStatusCode(
+			404,
+			orderItemResource.getOrderItemByExternalReferenceCodeHttpResponse(
+				randomOrderItem.getExternalReferenceCode()));
+
+		testPostOrderByExternalReferenceCodeOrderItem_addOrderItem(
+			randomOrderItem);
+
+		assertHttpResponseStatusCode(
+			200,
+			orderItemResource.getOrderItemByExternalReferenceCodeHttpResponse(
+				randomOrderItem.getExternalReferenceCode()));
 	}
 
 	protected OrderItem
@@ -698,6 +713,20 @@ public abstract class BaseOrderItemResourceTestCase {
 
 		assertEquals(randomOrderItem, postOrderItem);
 		assertValid(postOrderItem);
+
+		randomOrderItem = randomOrderItem();
+
+		assertHttpResponseStatusCode(
+			404,
+			orderItemResource.getOrderItemByExternalReferenceCodeHttpResponse(
+				randomOrderItem.getExternalReferenceCode()));
+
+		testPostOrderIdOrderItem_addOrderItem(randomOrderItem);
+
+		assertHttpResponseStatusCode(
+			200,
+			orderItemResource.getOrderItemByExternalReferenceCodeHttpResponse(
+				randomOrderItem.getExternalReferenceCode()));
 	}
 
 	protected OrderItem testPostOrderIdOrderItem_addOrderItem(

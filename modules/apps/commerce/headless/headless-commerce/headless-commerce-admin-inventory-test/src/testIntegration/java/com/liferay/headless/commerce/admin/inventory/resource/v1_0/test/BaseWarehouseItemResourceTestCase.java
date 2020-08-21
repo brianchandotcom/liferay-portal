@@ -331,6 +331,23 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 		assertEquals(randomWarehouseItem, postWarehouseItem);
 		assertValid(postWarehouseItem);
+
+		randomWarehouseItem = randomWarehouseItem();
+
+		assertHttpResponseStatusCode(
+			404,
+			warehouseItemResource.
+				getWarehouseItemByExternalReferenceCodeHttpResponse(
+					randomWarehouseItem.getExternalReferenceCode()));
+
+		testPostWarehouseItemByExternalReferenceCode_addWarehouseItem(
+			randomWarehouseItem);
+
+		assertHttpResponseStatusCode(
+			200,
+			warehouseItemResource.
+				getWarehouseItemByExternalReferenceCodeHttpResponse(
+					randomWarehouseItem.getExternalReferenceCode()));
 	}
 
 	protected WarehouseItem
@@ -625,6 +642,23 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 		assertEquals(randomWarehouseItem, postWarehouseItem);
 		assertValid(postWarehouseItem);
+
+		randomWarehouseItem = randomWarehouseItem();
+
+		assertHttpResponseStatusCode(
+			404,
+			warehouseItemResource.
+				getWarehouseItemByExternalReferenceCodeHttpResponse(
+					randomWarehouseItem.getExternalReferenceCode()));
+
+		testPostWarehousByExternalReferenceCodeWarehouseItem_addWarehouseItem(
+			randomWarehouseItem);
+
+		assertHttpResponseStatusCode(
+			200,
+			warehouseItemResource.
+				getWarehouseItemByExternalReferenceCodeHttpResponse(
+					randomWarehouseItem.getExternalReferenceCode()));
 	}
 
 	protected WarehouseItem
@@ -769,6 +803,22 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 		assertEquals(randomWarehouseItem, postWarehouseItem);
 		assertValid(postWarehouseItem);
+
+		randomWarehouseItem = randomWarehouseItem();
+
+		assertHttpResponseStatusCode(
+			404,
+			warehouseItemResource.
+				getWarehouseItemByExternalReferenceCodeHttpResponse(
+					randomWarehouseItem.getExternalReferenceCode()));
+
+		testPostWarehousIdWarehouseItem_addWarehouseItem(randomWarehouseItem);
+
+		assertHttpResponseStatusCode(
+			200,
+			warehouseItemResource.
+				getWarehouseItemByExternalReferenceCodeHttpResponse(
+					randomWarehouseItem.getExternalReferenceCode()));
 	}
 
 	protected WarehouseItem testPostWarehousIdWarehouseItem_addWarehouseItem(

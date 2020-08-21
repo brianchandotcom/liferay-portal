@@ -347,6 +347,21 @@ public abstract class BaseTierPriceResourceTestCase {
 
 		assertEquals(randomTierPrice, postTierPrice);
 		assertValid(postTierPrice);
+
+		randomTierPrice = randomTierPrice();
+
+		assertHttpResponseStatusCode(
+			404,
+			tierPriceResource.getTierPriceByExternalReferenceCodeHttpResponse(
+				randomTierPrice.getExternalReferenceCode()));
+
+		testPostPriceEntryByExternalReferenceCodeTierPrice_addTierPrice(
+			randomTierPrice);
+
+		assertHttpResponseStatusCode(
+			200,
+			tierPriceResource.getTierPriceByExternalReferenceCodeHttpResponse(
+				randomTierPrice.getExternalReferenceCode()));
 	}
 
 	protected TierPrice
@@ -472,6 +487,20 @@ public abstract class BaseTierPriceResourceTestCase {
 
 		assertEquals(randomTierPrice, postTierPrice);
 		assertValid(postTierPrice);
+
+		randomTierPrice = randomTierPrice();
+
+		assertHttpResponseStatusCode(
+			404,
+			tierPriceResource.getTierPriceByExternalReferenceCodeHttpResponse(
+				randomTierPrice.getExternalReferenceCode()));
+
+		testPostPriceEntryIdTierPrice_addTierPrice(randomTierPrice);
+
+		assertHttpResponseStatusCode(
+			200,
+			tierPriceResource.getTierPriceByExternalReferenceCodeHttpResponse(
+				randomTierPrice.getExternalReferenceCode()));
 	}
 
 	protected TierPrice testPostPriceEntryIdTierPrice_addTierPrice(

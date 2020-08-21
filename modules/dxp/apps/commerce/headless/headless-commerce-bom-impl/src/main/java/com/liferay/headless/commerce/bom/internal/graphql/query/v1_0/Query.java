@@ -27,10 +27,13 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
@@ -119,6 +122,7 @@ public class Query {
 
 		public AreaPage(Page areaPage) {
 			actions = areaPage.getActions();
+			facets = areaPage.getFacets();
 			items = areaPage.getItems();
 			lastPage = areaPage.getLastPage();
 			page = areaPage.getPage();
@@ -128,6 +132,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Area> items;
@@ -151,6 +158,7 @@ public class Query {
 
 		public FolderPage(Page folderPage) {
 			actions = folderPage.getActions();
+			facets = folderPage.getFacets();
 			items = folderPage.getItems();
 			lastPage = folderPage.getLastPage();
 			page = folderPage.getPage();
@@ -160,6 +168,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Folder> items;
@@ -183,6 +194,7 @@ public class Query {
 
 		public ProductPage(Page productPage) {
 			actions = productPage.getActions();
+			facets = productPage.getFacets();
 			items = productPage.getItems();
 			lastPage = productPage.getLastPage();
 			page = productPage.getPage();
@@ -192,6 +204,9 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Product> items;
@@ -276,6 +291,8 @@ public class Query {
 		_productResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
+	private BiFunction<Object, List<String>, Aggregation>
+		_aggregationBiFunction;
 	private com.liferay.portal.kernel.model.Company _company;
 	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private GroupLocalService _groupLocalService;

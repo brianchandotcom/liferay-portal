@@ -64,6 +64,12 @@
 			<finder-column name="active" />
 			<finder-column name="scope" />
 		</finder>
+		<finder name="G_C_D_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column name="ddmStructureId" />
+			<finder-column name="scope" />
+		</finder>
 
 		<!-- References -->
 

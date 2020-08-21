@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>NAV_NESTED_PLUS_IE</td>
-	<td>//ul[contains(@class,'nav-nested')]//span[contains(@class,'btn-monospaced')]</td>
+	<td>//*[contains(@class,'nav-nested')]//a[contains(@class,'btn')]</td>
 	<td></td>
 </tr>
 </tbody>

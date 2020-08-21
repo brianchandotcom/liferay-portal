@@ -61,6 +61,8 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 		assetCategoriesSearchFacetDisplayContext.setCloud(isCloud());
 		assetCategoriesSearchFacetDisplayContext.setNothingSelected(
 			isNothingSelected());
+		assetCategoriesSearchFacetDisplayContext.
+			setPaginationStartParameterName(_paginationStartParameterName);
 		assetCategoriesSearchFacetDisplayContext.setParameterName(
 			_parameterName);
 		assetCategoriesSearchFacetDisplayContext.setParameterValue(
@@ -71,8 +73,6 @@ public class AssetCategoriesSearchFacetDisplayBuilder implements Serializable {
 			isRenderNothing());
 		assetCategoriesSearchFacetDisplayContext.setTermDisplayContexts(
 			buildTermDisplayContexts());
-		assetCategoriesSearchFacetDisplayContext.
-			setPaginationStartParameterName(_paginationStartParameterName);
 
 		return assetCategoriesSearchFacetDisplayContext;
 	}

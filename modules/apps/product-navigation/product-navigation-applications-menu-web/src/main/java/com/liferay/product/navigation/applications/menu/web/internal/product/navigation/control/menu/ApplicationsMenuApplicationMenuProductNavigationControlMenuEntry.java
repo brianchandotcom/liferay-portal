@@ -20,17 +20,12 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration;
+import com.liferay.product.navigation.applications.menu.web.internal.util.ApplicationsMenuUtil;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
@@ -70,11 +65,18 @@ public class ApplicationsMenuApplicationMenuProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!_isEnableApplicationsMenu(themeDisplay.getCompanyId())) {
+		if (!ApplicationsMenuUtil.isEnableApplicationsMenu(
+				themeDisplay.getCompanyId(), _configurationProvider)) {
+
 			return false;
 		}
 
-		if (!_isApplicationsMenuApp(themeDisplay)) {
+		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
+			_panelAppRegistry, _panelCategoryRegistry);
+
+		if (!ApplicationsMenuUtil.isApplicationsMenuApp(
+				panelCategoryHelper, themeDisplay)) {
+
 			return false;
 		}
 
@@ -120,56 +122,6 @@ public class ApplicationsMenuApplicationMenuProductNavigationControlMenuEntry
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	private boolean _isApplicationsMenuApp(ThemeDisplay themeDisplay) {
-		if (Validator.isNull(themeDisplay.getPpid())) {
-			return false;
-		}
-
-		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
-
-		if (!panelCategoryHelper.isApplicationsMenuApp(
-				themeDisplay.getPpid())) {
-
-			return false;
-		}
-
-		Layout layout = themeDisplay.getLayout();
-
-		if ((layout != null) && !layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private boolean _isEnableApplicationsMenu(long companyId) {
-		try {
-			ApplicationsMenuInstanceConfiguration
-				applicationsMenuInstanceConfiguration =
-					_configurationProvider.getCompanyConfiguration(
-						ApplicationsMenuInstanceConfiguration.class, companyId);
-
-			if (applicationsMenuInstanceConfiguration.
-					enableApplicationsMenu()) {
-
-				return true;
-			}
-		}
-		catch (ConfigurationException configurationException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to get applications menu instance configuration",
-					configurationException);
-			}
-		}
-
-		return false;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ApplicationsMenuApplicationMenuProductNavigationControlMenuEntry.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

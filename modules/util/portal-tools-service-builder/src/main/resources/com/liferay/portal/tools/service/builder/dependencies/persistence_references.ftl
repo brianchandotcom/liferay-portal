@@ -5,6 +5,11 @@
 	)
 	public void setConfiguration(Configuration configuration) {
 		<#if serviceBuilder.isVersionLTE_7_2_0()>
+			<#if !entity.isCacheEnabled()>
+				entityCacheEnabled = false;
+				finderCacheEnabled = false;
+			</#if>
+
 			super.setConfiguration(configuration);
 
 			<#if persistence>

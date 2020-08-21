@@ -13,7 +13,6 @@
  */
 
 import {render} from 'frontend-js-react-web';
-import React from 'react';
 
 export default function launcher(
 	Component,

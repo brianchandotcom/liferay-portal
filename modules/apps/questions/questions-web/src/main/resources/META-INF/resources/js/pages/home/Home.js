@@ -60,7 +60,7 @@ export default withRouter(({history}) => {
 
 	return (
 		<section className="c-mt-3 questions-section">
-			{!context.showSectionLanding && (
+			{!context.showCardsForTopicNavigation && (
 				<Redirect to={'/questions/' + context.rootTopic} />
 			)}
 

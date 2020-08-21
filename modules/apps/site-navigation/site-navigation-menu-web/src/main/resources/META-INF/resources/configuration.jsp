@@ -235,12 +235,12 @@ else {
 			<clay:col
 				md="6"
 			>
-				<div class="navbar navbar-classic navbar-expand-md navbar-light pb-3">
+				<nav class="navbar navbar-classic navbar-expand-md navbar-light pb-3">
 					<liferay-portlet:preview
 						portletName="<%= portletResource %>"
 						showBorders="<%= true %>"
 					/>
-				</div>
+				</nav>
 			</clay:col>
 		</clay:row>
 	</liferay-frontend:edit-form-body>

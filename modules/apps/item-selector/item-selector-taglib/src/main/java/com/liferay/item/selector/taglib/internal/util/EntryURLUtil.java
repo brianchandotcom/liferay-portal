@@ -17,9 +17,12 @@ package com.liferay.item.selector.taglib.internal.util;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.taglib.internal.servlet.item.selector.ItemSelectorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -32,6 +35,29 @@ import javax.portlet.PortletURL;
  * @author Adolfo Pérez
  */
 public class EntryURLUtil {
+
+	public static PortletURL getFolderPortletURL(
+			Folder folder, LiferayPortletRequest liferayPortletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (folder.getGroupId() != group.getGroupId()) {
+			group = GroupServiceUtil.getGroup(folder.getGroupId());
+		}
+
+		PortletURL portletURL = getGroupPortletURL(
+			group, liferayPortletRequest);
+
+		portletURL.setParameter(
+			"folderId", String.valueOf(folder.getFolderId()));
+
+		return portletURL;
+	}
 
 	public static PortletURL getGroupPortletURL(
 		Group group, LiferayPortletRequest liferayPortletRequest) {

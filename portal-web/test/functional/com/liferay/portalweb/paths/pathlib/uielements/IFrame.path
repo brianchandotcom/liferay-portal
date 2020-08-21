@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ELASTICSEARCH_MONITORING</td>
+	<td>//iframe[contains(@id,'MonitoringPortlet')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMBEDDED_IFRAME</td>
 	<td>//iframe[@id='embeddedIframe']</td>
 	<td></td>
@@ -231,11 +236,6 @@
 <tr>
 	<td>WEB_APPLICATION</td>
 	<td>//iframe[contains(@id,'WebApplicationFrame')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>XPACK_MONITORING</td>
-	<td>//iframe[contains(@id,'XPackMonitoringPortlet')]</td>
 	<td></td>
 </tr>
 </tbody>

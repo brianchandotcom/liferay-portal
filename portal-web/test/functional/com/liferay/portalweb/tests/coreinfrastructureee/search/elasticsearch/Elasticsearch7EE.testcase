@@ -980,7 +980,7 @@ definition {
 	@priority = "5"
 	test XPackSmokeTest {
 		property elastic.xpack.enabled = "true";
-		property osgi.app.includes = "portal-search-elasticsearch6-xpack-monitoring";
+		property osgi.app.includes = "portal-search-elasticsearch-monitoring";
 		property portal.upstream = "quarantine";
 		property remote.elasticsearch.enabled = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackSmokeTest";
@@ -1001,26 +1001,26 @@ definition {
 			portlet = "Pages");
 
 		SitePages.addPublicPage(
-			pageName = "X-Pack Monitoring Page",
+			pageName = "Elasticsearch Monitoring Page",
 			sitePageType = "Widget Page");
 
 		SitePages.configurePage(
 			columnName = "1 Column",
-			pageName = "X-Pack Monitoring Page",
+			pageName = "Elasticsearch Monitoring Page",
 			privacy = "Public Pages",
 			sitePageType = "Widget Page");
 
-		Navigator.gotoPage(pageName = "X-Pack Monitoring Page");
+		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
 
-		Portlet.addPG(portletName = "X-Pack Monitoring");
+		Portlet.addPG(portletName = "Elasticsearch Monitoring");
 
-		XPackMonitoring.viewPG();
+		ElasticsearchMonitoring.viewPG();
 
 		User.logoutPG();
 
-		Navigator.gotoPage(pageName = "X-Pack Monitoring Page");
+		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");
 
-		XPackMonitoring.viewAsGuestPG();
+		ElasticsearchMonitoring.viewAsGuestPG();
 	}
 
 }

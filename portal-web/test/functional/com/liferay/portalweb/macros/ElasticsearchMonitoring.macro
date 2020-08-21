@@ -1,11 +1,11 @@
 definition {
 
 	macro viewAsGuestPG {
-		Navigator.openSpecificURL(url = "http://localhost:8080/o/portal-search-elasticsearch-xpack-monitoring/xpack-monitoring-proxy/app/monitoring");
+		Navigator.openSpecificURL(url = "http://localhost:8080/o/portal-search-elasticsearch-monitoring/monitoring-proxy/app/monitoring");
 
 		AssertTextPresent(
 			locator1 = "//body",
-			value1 = "X-Pack Monitoring is temporarily unavailable.");
+			value1 = "Elasticsearch Monitoring is temporarily unavailable.");
 
 		AssertTextPresent(
 			locator1 = "//body",
@@ -13,13 +13,13 @@ definition {
 	}
 
 	macro viewPG {
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#XPACK_MONITORING");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#ELASTICSEARCH_MONITORING");
 
 		AssertTextPresent(
-			locator1 = "XPackMonitoring#CLUSTER_NAME",
+			locator1 = "ElasticsearchMonitoring#CLUSTER_NAME",
 			value1 = "LiferayElasticsearchCluster");
 
-		AssertElementPresent(locator1 = "XPackMonitoring#MONITORING_CLUSTER_OVERVIEW");
+		AssertElementPresent(locator1 = "ElasticsearchMonitoring#MONITORING_CLUSTER_OVERVIEW");
 
 		AssertElementPresent(
 			key_title = "Elasticsearch",

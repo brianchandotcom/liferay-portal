@@ -185,7 +185,7 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				gradleProjectDir, _name + "-service/build.gradle",
 				"org.osgi.annotation.versioning");
 		}
-		else {
+		else if(_liferayVersion.startsWith("7.2")) {
 			testContains(
 				gradleProjectDir, _name + "-api/build.gradle",
 				DEPENDENCY_RELEASE_PORTAL_API,
@@ -194,6 +194,20 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				gradleProjectDir, _name + "-service/build.gradle",
 				DEPENDENCY_RELEASE_PORTAL_API,
 				"org.osgi.annotation.versioning");
+
+			testNotContains(
+				gradleProjectDir, _name + "-api/build.gradle", "biz.aQute.bnd");
+			testNotContains(
+				gradleProjectDir, _name + "-service/build.gradle",
+				"biz.aQute.bnd");
+		}
+		else {
+			testContains(
+				gradleProjectDir, _name + "-api/build.gradle",
+				DEPENDENCY_RELEASE_PORTAL_API);
+			testContains(
+				gradleProjectDir, _name + "-service/build.gradle",
+				DEPENDENCY_RELEASE_PORTAL_API);
 
 			testNotContains(
 				gradleProjectDir, _name + "-api/build.gradle", "biz.aQute.bnd");

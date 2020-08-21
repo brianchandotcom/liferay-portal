@@ -160,6 +160,14 @@ public class AssetVocabularyServiceWrapper
 
 	@Override
 	public java.util.List<AssetVocabulary> getGroupVocabularies(
+		long groupId, int visibilityType) {
+
+		return _assetVocabularyService.getGroupVocabularies(
+			groupId, visibilityType);
+	}
+
+	@Override
+	public java.util.List<AssetVocabulary> getGroupVocabularies(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetVocabulary>
 			orderByComparator) {

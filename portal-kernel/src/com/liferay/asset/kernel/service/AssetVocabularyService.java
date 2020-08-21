@@ -119,6 +119,10 @@ public interface AssetVocabularyService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetVocabulary> getGroupVocabularies(
+		long groupId, int visibilityType);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetVocabulary> getGroupVocabularies(
 		long groupId, int start, int end,
 		OrderByComparator<AssetVocabulary> orderByComparator);
 

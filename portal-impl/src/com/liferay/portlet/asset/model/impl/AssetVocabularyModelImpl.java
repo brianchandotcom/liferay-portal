@@ -181,6 +181,12 @@ public class AssetVocabularyModelImpl
 	public static final long UUID_COLUMN_BITMASK = 16L;
 
 	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
+	public static final long VISIBILITYTYPE_COLUMN_BITMASK = 32L;
+
+	/**
 	 * Converts the soap model instance into a normal model instance.
 	 *
 	 * @param soapModel the soap model instance to convert
@@ -1047,6 +1053,15 @@ public class AssetVocabularyModelImpl
 		}
 
 		_visibilityType = visibilityType;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public int getOriginalVisibilityType() {
+		return GetterUtil.getInteger(getColumnOriginalValue("visibilityType"));
 	}
 
 	@JSON

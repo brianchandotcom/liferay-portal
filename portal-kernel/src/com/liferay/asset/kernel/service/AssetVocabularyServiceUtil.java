@@ -152,6 +152,12 @@ public class AssetVocabularyServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary>
+		getGroupVocabularies(long groupId, int visibilityType) {
+
+		return getService().getGroupVocabularies(groupId, visibilityType);
+	}
+
+	public static java.util.List<com.liferay.asset.kernel.model.AssetVocabulary>
 		getGroupVocabularies(
 			long groupId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator

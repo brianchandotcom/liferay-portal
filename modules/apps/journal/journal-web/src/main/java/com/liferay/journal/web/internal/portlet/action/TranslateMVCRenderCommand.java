@@ -90,7 +90,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				infoItemFormProvider.getInfoForm(article));
 
 			InfoItemFieldValues sourceInfoItemFieldValues =
-				_getInfoItemFieldValues(article);
+				_getSourceInfoItemFieldValues(article);
 
 			renderRequest.setAttribute(
 				JournalWebConstants.SOURCE_INFO_ITEM_FIELD_VALUES,
@@ -101,7 +101,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				article.getDefaultLanguageId());
 
 			List<String> availableTargetLanguageIds =
-				_getSiteAvailableLanguageIds(
+				_getAvailableTargetLanguageIds(
 					article, sourceLanguageId, themeDisplay);
 
 			String targetLanguageId = ParamUtil.getString(
@@ -110,7 +110,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 			renderRequest.setAttribute(
 				JournalWebConstants.TARGET_INFO_ITEM_FIELD_VALUES,
-				_getInfoItemFieldValues(
+				_getTargetInfoItemFieldValues(
 					article, sourceInfoItemFieldValues, targetLanguageId));
 
 			List<String> availableSourceLanguageIds = Arrays.asList(
@@ -130,15 +130,15 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				TranslationInfoFieldChecker.class.getName(),
 				_translationInfoFieldChecker);
+
+			return "/translate.jsp";
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);
 		}
-
-		return "/translate.jsp";
 	}
 
-	private InfoItemFieldValues _getInfoItemFieldValues(
+	private InfoItemFieldValues _getSourceInfoItemFieldValues(
 		JournalArticle article) {
 
 		InfoItemFieldValuesProvider<JournalArticle>
@@ -150,7 +150,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		return infoItemFieldValuesProvider.getInfoItemFieldValues(article);
 	}
 
-	private InfoItemFieldValues _getInfoItemFieldValues(
+	private InfoItemFieldValues _getTargetInfoItemFieldValues(
 			JournalArticle article,
 			InfoItemFieldValues journalArticleInfoItemFieldValues,
 			String targetLanguageId)
@@ -173,14 +173,13 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		Collection<InfoFieldValue<Object>> infoFieldValues =
 			journalArticleInfoItemFieldValues.getInfoFieldValues();
 
-		Stream<InfoFieldValue<Object>> infoFieldValueStream =
-			infoFieldValues.stream();
+		Stream<InfoFieldValue<Object>> stream = infoFieldValues.stream();
 
 		return InfoItemFieldValues.builder(
 		).infoItemReference(
 			journalArticleInfoItemFieldValues.getInfoItemReference()
 		).infoFieldValues(
-			infoFieldValueStream.map(
+			stream.map(
 				infoFieldValue -> new InfoFieldValue<>(
 					infoFieldValue.getInfoField(),
 					GetterUtil.getObject(
@@ -194,7 +193,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		).build();
 	}
 
-	private List<String> _getSiteAvailableLanguageIds(
+	private List<String> _getAvailableTargetLanguageIds(
 			JournalArticle article, String sourceLanguageId,
 			ThemeDisplay themeDisplay)
 		throws PortalException {

@@ -249,13 +249,51 @@ public class AppResourceImpl
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			dataDefinitionId);
 
-		if (Validator.isNull(keywords) && Validator.isNull(scope)) {
+		if (Validator.isNotNull(keywords)) {
+			return SearchUtil.search(
+				Collections.emptyMap(),
+				booleanQuery -> {
+					if (Validator.isNotNull(scope)) {
+						BooleanFilter booleanFilter =
+							booleanQuery.getPreBooleanFilter();
+
+						BooleanQuery scopeBooleanQuery = new BooleanQueryImpl();
+
+						scopeBooleanQuery.addTerm("scope", scope);
+
+						booleanFilter.add(
+							new QueryFilter(scopeBooleanQuery),
+							BooleanClauseOccur.MUST);
+					}
+				},
+				null, AppBuilderApp.class, keywords, pagination,
+				queryConfig -> queryConfig.setSelectedFieldNames(
+					Field.ENTRY_CLASS_PK),
+				searchContext -> {
+					searchContext.setAttribute(
+						Field.CLASS_NAME_ID,
+						_portal.getClassNameId(AppBuilderApp.class));
+					searchContext.setAttribute(Field.NAME, keywords);
+					searchContext.setAttribute(
+						"ddmStructureId", dataDefinitionId);
+					searchContext.setCompanyId(contextCompany.getCompanyId());
+					searchContext.setGroupIds(
+						new long[] {ddmStructure.getGroupId()});
+				},
+				sorts,
+				document -> _toApp(
+					_appBuilderAppLocalService.fetchAppBuilderApp(
+						GetterUtil.getLong(
+							document.get(Field.ENTRY_CLASS_PK)))));
+		}
+
+		if (Validator.isNotNull(scope)) {
 			return Page.of(
 				transform(
 					_appBuilderAppLocalService.getAppBuilderApps(
 						ddmStructure.getGroupId(),
 						contextCompany.getCompanyId(),
-						ddmStructure.getStructureId(),
+						ddmStructure.getStructureId(), scope,
 						pagination.getStartPosition(),
 						pagination.getEndPosition(),
 						_toOrderByComparator(sorts[0])),
@@ -266,39 +304,18 @@ public class AppResourceImpl
 					ddmStructure.getStructureId()));
 		}
 
-		return SearchUtil.search(
-			Collections.emptyMap(),
-			booleanQuery -> {
-				if (Validator.isNotNull(scope)) {
-					BooleanFilter booleanFilter =
-						booleanQuery.getPreBooleanFilter();
-
-					BooleanQuery scopeBooleanQuery = new BooleanQueryImpl();
-
-					scopeBooleanQuery.addTerm("scope", scope);
-
-					booleanFilter.add(
-						new QueryFilter(scopeBooleanQuery),
-						BooleanClauseOccur.MUST);
-				}
-			},
-			null, AppBuilderApp.class, keywords, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.setAttribute(
-					Field.CLASS_NAME_ID,
-					_portal.getClassNameId(AppBuilderApp.class));
-				searchContext.setAttribute(Field.NAME, keywords);
-				searchContext.setAttribute("ddmStructureId", dataDefinitionId);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(
-					new long[] {ddmStructure.getGroupId()});
-			},
-			sorts,
-			document -> _toApp(
-				_appBuilderAppLocalService.fetchAppBuilderApp(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+		return Page.of(
+			transform(
+				_appBuilderAppLocalService.getAppBuilderApps(
+					ddmStructure.getGroupId(), contextCompany.getCompanyId(),
+					ddmStructure.getStructureId(),
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					_toOrderByComparator(sorts[0])),
+				this::_toApp),
+			pagination,
+			_appBuilderAppLocalService.getAppBuilderAppsCount(
+				ddmStructure.getGroupId(), contextCompany.getCompanyId(),
+				ddmStructure.getStructureId()));
 	}
 
 	@Override

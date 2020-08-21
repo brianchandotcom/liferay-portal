@@ -11,7 +11,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {waitForElementToBeRemoved} from '@testing-library/dom';
-import {render} from '@testing-library/react';
+import {act, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import ListEntries from '../../../src/main/resources/META-INF/resources/js/pages/entry/ListEntries.es';
@@ -22,6 +22,7 @@ import {ENTRY} from '../../constants.es';
 const context = {
 	actionsIds: [],
 	appId: 1,
+	basePortletURL: 'portlet_url',
 	dataDefinitionId: 1,
 	dataListViewId: 1,
 	showFormView: true,
@@ -55,8 +56,16 @@ const instances = {
 	totalCount: 4,
 };
 
+const mockNavigate = jest.fn();
+const mockRenderURL = jest.fn().mockImplementation((url) => url);
+
+window.Liferay.Util = {
+	PortletURL: {createRenderURL: (...args) => mockRenderURL(...args)},
+	navigate: (url) => mockNavigate(url),
+};
+
 describe('ListEntries', () => {
-	it('renders with 5 entries', async () => {
+	it('renders with 5 entries and calls navigate after clicking on add button', async () => {
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.APP_WORKFLOW));
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_DEFINITION));
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_LIST_VIEW));
@@ -103,9 +112,22 @@ describe('ListEntries', () => {
 		expect(entries[4].children[1]).toHaveTextContent('--');
 		expect(entries[4].children[2]).toHaveTextContent('--');
 		expect(entries[4].children[3]).toHaveTextContent('--');
+
+		await act(async () => {
+			await fireEvent.click(
+				container.querySelector('.lexicon-icon-plus')
+			);
+		});
+
+		expect(mockNavigate).toHaveBeenCalledWith(context.basePortletURL);
+
+		expect(mockRenderURL).toHaveBeenCalledWith('portlet_url', {
+			dataRecordId: 0,
+			mvcPath: '/edit_entry.jsp',
+		});
 	});
 
-	it('renders with 5 entries', async () => {
+	it('renders with empty state', async () => {
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.APP_WORKFLOW));
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_DEFINITION));
 		fetch.mockResponseOnce(JSON.stringify(ENTRY.DATA_LIST_VIEW));

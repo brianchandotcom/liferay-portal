@@ -38,7 +38,7 @@ QuestionsConfiguration questionsConfiguration = portletDisplay.getPortletInstanc
 				collapsible="<%= false %>"
 				label="general-settings"
 			>
-				<aui:input name="preferences--showSectionLanding--" type="checkbox" value="<%= questionsConfiguration.showSectionLanding() %>" />
+				<aui:input name="preferences--showCardsForTopicNavigation--" type="checkbox" value="<%= questionsConfiguration.showCardsForTopicNavigation() %>" />
 
 				<aui:input name="preferences--rootTopic--" type="text" value="<%= questionsConfiguration.rootTopic() %>" />
 			</liferay-frontend:fieldset>

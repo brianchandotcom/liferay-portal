@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OK_BUTTON</td>
+	<td>//a[contains(@role,'button')][normalize-space()='OK']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SOURCE_URL</td>
 	<td>//input[contains(@id,'sourceURL')]</td>
 	<td></td>

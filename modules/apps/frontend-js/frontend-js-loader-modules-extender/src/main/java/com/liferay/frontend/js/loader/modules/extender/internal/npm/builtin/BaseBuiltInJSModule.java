@@ -26,7 +26,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Provides an imcomplete implementation of {@link JSModule} to hold modules
+ * Provides an incomplete implementation of {@link JSModule} to hold modules
  * to be served through {@link BuiltInJSModuleServlet} and
  * {@link BuiltInJSResolvedModuleServlet}.
  *

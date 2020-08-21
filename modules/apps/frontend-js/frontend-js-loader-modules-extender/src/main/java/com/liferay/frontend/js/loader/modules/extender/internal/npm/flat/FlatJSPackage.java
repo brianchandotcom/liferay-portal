@@ -70,7 +70,7 @@ public class FlatJSPackage implements ModifiableJSPackage {
 	public void addJSModule(JSModule jsModule) {
 		if (jsModule.getJSPackage() != this) {
 			throw new IllegalArgumentException(
-				"Given JSModule does not belong to this JSPackage");
+				"The given JSModule does not belong to this JSPackage");
 		}
 
 		if (_jsModules.putIfAbsent(jsModule.getName(), jsModule) != null) {
@@ -185,7 +185,7 @@ public class FlatJSPackage implements ModifiableJSPackage {
 	public void removeJSModule(JSModule jsModule) {
 		if (jsModule.getJSPackage() != this) {
 			throw new IllegalArgumentException(
-				"Given JSModule does not belong to this JSPackage");
+				"The given JSModule does not belong to this JSPackage");
 		}
 
 		_jsModules.remove(jsModule.getName());
@@ -195,7 +195,7 @@ public class FlatJSPackage implements ModifiableJSPackage {
 	public void replaceJSModule(JSModule jsModule) {
 		if (jsModule.getJSPackage() != this) {
 			throw new IllegalArgumentException(
-				"Given JSModule does not belong to this JSPackage");
+				"The given JSModule does not belong to this JSPackage");
 		}
 
 		if (_jsModules.replace(jsModule.getName(), jsModule) == null) {

@@ -119,7 +119,7 @@ public class JournalArticleActionDropdownItemsProvider {
 			_getViewContentArticleActionUnsafeConsumer();
 
 		boolean importExportTranslationEnabled =
-			_isImportExportTranslationEnabled(hasViewPermission);
+			_isImportExportTranslationEnabled(hasUpdatePermission);
 
 		return DropdownItemListBuilder.add(
 			() -> hasUpdatePermission, _getEditArticleActionUnsafeConsumer()
@@ -145,7 +145,8 @@ public class JournalArticleActionDropdownItemsProvider {
 			previewContentArticleAction
 		).add(
 			() ->
-				importExportTranslationEnabled &&
+				_isImportExportTranslationEnabled(
+					hasUpdatePermission || hasViewPermission) &&
 				FFTranslationWorkflowConfigurationUtil.enabled(),
 			_getTranslateActionUnsafeConsumer()
 		).add(

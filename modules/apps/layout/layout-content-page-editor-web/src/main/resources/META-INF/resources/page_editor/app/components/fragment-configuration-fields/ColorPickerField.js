@@ -13,7 +13,7 @@
  */
 
 import ClayColorPicker from '@clayui/color-picker';
-import ClayForm from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -39,17 +39,24 @@ export const ColorPickerField = ({field, onValueSelect, value}) => {
 
 	return (
 		<ClayForm.Group small>
-			<ClayColorPicker
-				colors={Object.keys(colorsToNames)}
-				onValueChange={(nextColor) => {
-					setColor(nextColor);
+			<label>{field.label}</label>
+			<ClayInput.Group>
+				<ClayInput.GroupItem prepend shrink>
+					<ClayColorPicker
+						colors={Object.keys(colorsToNames)}
+						onValueChange={(nextColor) => {
+							setColor(nextColor);
 
-					onValueSelect(field.name, colorsToNames[nextColor]);
-				}}
-				showHex={true}
-				title={field.label}
-				value={color}
-			/>
+							onValueSelect(field.name, colorsToNames[nextColor]);
+						}}
+						showHex={false}
+						value={color}
+					/>
+				</ClayInput.GroupItem>
+				<ClayInput.GroupItem append>
+					<ClayInput readOnly value={frontendTokens[value]?.label} />
+				</ClayInput.GroupItem>
+			</ClayInput.Group>
 		</ClayForm.Group>
 	);
 };

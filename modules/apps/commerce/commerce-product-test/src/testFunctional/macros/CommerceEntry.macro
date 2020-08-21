@@ -76,7 +76,9 @@ definition {
 			locator1 = "Select#TYPE",
 			value1 = "${channelType}");
 
-		Click(locator1 = "Button#ADD");
+		Click(
+			key_text = "Add",
+			locator1 = "Button#ANY");
 
 		if (isSet(siteName)) {
 

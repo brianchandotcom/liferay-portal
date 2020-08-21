@@ -85,7 +85,7 @@ public class PortletPreferencesCTDisplayRenderer
 				_log.warn(portalException, portalException);
 			}
 
-			arguments.add("Control Panel");
+			arguments.add(_language.get(locale, "control-panel"));
 		}
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(

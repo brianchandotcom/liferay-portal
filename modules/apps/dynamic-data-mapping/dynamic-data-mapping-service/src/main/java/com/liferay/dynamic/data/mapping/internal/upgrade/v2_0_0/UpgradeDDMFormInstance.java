@@ -193,6 +193,8 @@ public class UpgradeDDMFormInstance extends UpgradeProcess {
 			}
 
 			ps2.executeBatch();
+
+			updateWorkflowDefinitionLink();
 		}
 	}
 
@@ -314,6 +316,24 @@ public class UpgradeDDMFormInstance extends UpgradeProcess {
 			ps.setLong(2, ddmStructureId);
 
 			ps.executeUpdate();
+		}
+	}
+
+	protected void updateWorkflowDefinitionLink() throws Exception {
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update WorkflowDefinitionLink set classNameId = ? where " +
+					"classNameId = ?")) {
+
+			ps.setLong(
+				1,
+				_classNameLocalService.getClassNameId(
+					_CLASS_NAME_FORM_INSTANCE));
+
+			ps.setLong(
+				2,
+				_classNameLocalService.getClassNameId(_CLASS_NAME_RECORD_SET));
+
+			ps.execute();
 		}
 	}
 

@@ -24,6 +24,7 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.constants.JournalWebConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -106,7 +107,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 			String targetLanguageId = ParamUtil.getString(
 				renderRequest, "targetLanguageId",
-				availableTargetLanguageIds.get(0));
+				_getDefaultTargetLanguageId(availableTargetLanguageIds));
 
 			renderRequest.setAttribute(
 				JournalWebConstants.TARGET_INFO_ITEM_FIELD_VALUES,
@@ -163,6 +164,16 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		).collect(
 			Collectors.toList()
 		);
+	}
+
+	private String _getDefaultTargetLanguageId(
+		List<String> availableTargetLanguageIds) {
+
+		if (availableTargetLanguageIds.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		return availableTargetLanguageIds.get(0);
 	}
 
 	private InfoItemFieldValues _getSourceInfoItemFieldValues(

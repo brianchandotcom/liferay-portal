@@ -39,7 +39,7 @@ public class CloseIndexRequestExecutorImpl
 
 	@Override
 	public CloseIndexResponse execute(CloseIndexRequest closeIndexRequest) {
-		org.elasticsearch.action.admin.indices.close.CloseIndexRequest
+		org.elasticsearch.client.indices.CloseIndexRequest
 			elasticsearchCloseIndexRequest = createCloseIndexRequest(
 				closeIndexRequest);
 
@@ -49,13 +49,13 @@ public class CloseIndexRequestExecutorImpl
 		return new CloseIndexResponse(acknowledgedResponse.isAcknowledged());
 	}
 
-	protected org.elasticsearch.action.admin.indices.close.CloseIndexRequest
+	protected org.elasticsearch.client.indices.CloseIndexRequest
 		createCloseIndexRequest(CloseIndexRequest closeIndexRequest) {
 
-		org.elasticsearch.action.admin.indices.close.CloseIndexRequest
+		org.elasticsearch.client.indices.CloseIndexRequest
 			elasticsearchCloseIndexRequest =
-				new org.elasticsearch.action.admin.indices.close.
-					CloseIndexRequest(closeIndexRequest.getIndexNames());
+				new org.elasticsearch.client.indices.CloseIndexRequest(
+					closeIndexRequest.getIndexNames());
 
 		IndicesOptions indicesOptions = closeIndexRequest.getIndicesOptions();
 
@@ -68,15 +68,15 @@ public class CloseIndexRequestExecutorImpl
 			TimeValue timeValue = TimeValue.timeValueMillis(
 				closeIndexRequest.getTimeout());
 
-			elasticsearchCloseIndexRequest.masterNodeTimeout(timeValue);
-			elasticsearchCloseIndexRequest.timeout(timeValue);
+			elasticsearchCloseIndexRequest.setMasterTimeout(timeValue);
+			elasticsearchCloseIndexRequest.setTimeout(timeValue);
 		}
 
 		return elasticsearchCloseIndexRequest;
 	}
 
 	protected AcknowledgedResponse getAcknowledgedResponse(
-		org.elasticsearch.action.admin.indices.close.CloseIndexRequest
+		org.elasticsearch.client.indices.CloseIndexRequest
 			elasticsearchCloseIndexRequest,
 		CloseIndexRequest closeIndexRequest) {
 

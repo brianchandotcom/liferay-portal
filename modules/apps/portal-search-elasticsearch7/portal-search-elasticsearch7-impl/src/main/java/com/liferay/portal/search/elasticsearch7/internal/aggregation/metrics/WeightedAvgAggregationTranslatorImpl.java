@@ -70,7 +70,7 @@ public class WeightedAvgAggregationTranslatorImpl
 		}
 
 		if (weightedAvgAggregation.getValueType() != null) {
-			weightedAvgAggregationBuilder.valueType(
+			weightedAvgAggregationBuilder.userValueTypeHint(
 				_valueTypeTranslator.translate(
 					weightedAvgAggregation.getValueType()));
 		}

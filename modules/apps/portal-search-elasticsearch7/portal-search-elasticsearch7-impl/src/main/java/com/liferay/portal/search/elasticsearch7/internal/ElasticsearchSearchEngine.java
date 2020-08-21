@@ -227,22 +227,17 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	}
 
 	protected boolean hasBackupRepository() {
-		try {
-			GetSnapshotRepositoriesRequest getSnapshotRepositoriesRequest =
-				new GetSnapshotRepositoriesRequest(_BACKUP_REPOSITORY_NAME);
+		GetSnapshotRepositoriesRequest getSnapshotRepositoriesRequest =
+			new GetSnapshotRepositoriesRequest(_BACKUP_REPOSITORY_NAME);
 
-			GetSnapshotRepositoriesResponse getSnapshotRepositoriesResponse =
-				_searchEngineAdapter.execute(getSnapshotRepositoriesRequest);
+		GetSnapshotRepositoriesResponse getSnapshotRepositoriesResponse =
+			_searchEngineAdapter.execute(getSnapshotRepositoriesRequest);
 
-			List<SnapshotRepositoryDetails> snapshotRepositoryDetailsList =
-				getSnapshotRepositoriesResponse.getSnapshotRepositoryDetails();
+		List<SnapshotRepositoryDetails> snapshotRepositoryDetailsList =
+			getSnapshotRepositoriesResponse.getSnapshotRepositoryDetails();
 
-			if (snapshotRepositoryDetailsList.isEmpty()) {
-				return false;
-			}
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
+		if (snapshotRepositoryDetailsList.isEmpty()) {
+			return false;
 		}
 
 		return true;

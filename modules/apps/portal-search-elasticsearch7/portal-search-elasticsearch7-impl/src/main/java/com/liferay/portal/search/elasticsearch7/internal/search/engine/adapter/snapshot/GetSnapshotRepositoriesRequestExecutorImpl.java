@@ -25,12 +25,15 @@ import java.io.IOException;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
+import org.elasticsearch.ElasticsearchStatusException;
 import org.elasticsearch.action.admin.cluster.repositories.get.GetRepositoriesRequest;
 import org.elasticsearch.action.admin.cluster.repositories.get.GetRepositoriesResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.SnapshotClient;
-import org.elasticsearch.cluster.metadata.RepositoryMetaData;
+import org.elasticsearch.cluster.metadata.RepositoryMetadata;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.repositories.RepositoryMissingException;
 
@@ -59,18 +62,18 @@ public class GetSnapshotRepositoriesRequestExecutorImpl
 				getGetRepositoriesResponse(
 					getRepositoriesRequest, getSnapshotRepositoriesRequest);
 
-			List<RepositoryMetaData> repositoriesMetaDatas =
+			List<RepositoryMetadata> repositoriesMetadatas =
 				elasticsearchGetRepositoriesResponse.repositories();
 
-			repositoriesMetaDatas.forEach(
-				repositoryMetaData -> {
+			repositoriesMetadatas.forEach(
+				repositoryMetadata -> {
 					Settings repositoryMetadataSettings =
-						repositoryMetaData.settings();
+						repositoryMetadata.settings();
 
 					SnapshotRepositoryDetails snapshotRepositoryDetails =
 						new SnapshotRepositoryDetails(
-							repositoryMetaData.name(),
-							repositoryMetaData.type(),
+							repositoryMetadata.name(),
+							repositoryMetadata.type(),
 							repositoryMetadataSettings.toString());
 
 					getSnapshotRepositoriesResponse.
@@ -84,9 +87,8 @@ public class GetSnapshotRepositoriesRequestExecutorImpl
 					repositoryMissingException, repositoryMissingException);
 			}
 		}
-		finally {
-			return getSnapshotRepositoriesResponse;
-		}
+
+		return getSnapshotRepositoriesResponse;
 	}
 
 	protected GetRepositoriesRequest createGetRepositoriesRequest(
@@ -115,6 +117,17 @@ public class GetSnapshotRepositoriesRequestExecutorImpl
 		try {
 			return snapshotClient.getRepository(
 				getRepositoriesRequest, RequestOptions.DEFAULT);
+		}
+		catch (ElasticsearchStatusException elasticsearchStatusException) {
+			String message = elasticsearchStatusException.getMessage();
+
+			if (message.contains("type=repository_missing_exception")) {
+				throw new RepositoryMissingException(
+					StringUtils.substringBetween(
+						message, "reason=[", "] missing"));
+			}
+
+			throw elasticsearchStatusException;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

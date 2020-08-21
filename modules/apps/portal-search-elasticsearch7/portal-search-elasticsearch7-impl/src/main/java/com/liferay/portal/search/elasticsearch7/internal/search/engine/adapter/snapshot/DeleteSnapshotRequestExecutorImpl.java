@@ -59,7 +59,7 @@ public class DeleteSnapshotRequestExecutorImpl
 
 		elasticsearchDeleteSnapshotRequest.repository(
 			deleteSnapshotRequest.getRepositoryName());
-		elasticsearchDeleteSnapshotRequest.snapshot(
+		elasticsearchDeleteSnapshotRequest.snapshots(
 			deleteSnapshotRequest.getSnapshotName());
 
 		return elasticsearchDeleteSnapshotRequest;

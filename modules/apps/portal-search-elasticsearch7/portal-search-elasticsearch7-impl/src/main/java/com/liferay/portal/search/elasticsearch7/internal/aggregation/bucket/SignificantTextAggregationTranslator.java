@@ -20,7 +20,7 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTransla
 
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.significant.SignificantTextAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.terms.SignificantTextAggregationBuilder;
 
 /**
  * @author Michael C. Han

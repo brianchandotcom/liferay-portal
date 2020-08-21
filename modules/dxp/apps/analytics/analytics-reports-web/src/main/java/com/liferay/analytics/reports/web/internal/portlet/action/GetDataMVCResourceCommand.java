@@ -22,6 +22,7 @@ import com.liferay.analytics.reports.web.internal.info.display.contributor.util.
 import com.liferay.analytics.reports.web.internal.layout.seo.CanonicalURLProvider;
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
+import com.liferay.analytics.reports.web.internal.model.TrafficSource;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -57,9 +59,13 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
@@ -267,6 +273,11 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		).put(
 			"title", infoDisplayObjectProvider.getTitle(urlLocale)
 		).put(
+			"trafficSources",
+			_getTrafficSourcesJSONArray(
+				analyticsReportsDataProvider, companyId, canonicalURL, locale,
+				resourceBundle)
+		).put(
 			"validAnalyticsConnection",
 			analyticsReportsDataProvider.isValidAnalyticsConnection(companyId)
 		);
@@ -332,6 +343,83 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 						resourceBundle, timeSpan.getKey())
 				)
 			).toArray());
+	}
+
+	private List<TrafficSource> _getTrafficSources(
+		AnalyticsReportsDataProvider analyticsReportsDataProvider,
+		String canonicalURL, long companyId) {
+
+		if (!analyticsReportsDataProvider.isValidAnalyticsConnection(
+				companyId)) {
+
+			return Collections.emptyList();
+		}
+
+		try {
+			return analyticsReportsDataProvider.getTrafficSources(
+				companyId, canonicalURL);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+
+			return Collections.emptyList();
+		}
+	}
+
+	private JSONArray _getTrafficSourcesJSONArray(
+		AnalyticsReportsDataProvider analyticsReportsDataProvider,
+		long companyId, String canonicalURL, Locale locale,
+		ResourceBundle resourceBundle) {
+
+		JSONArray trafficSourcesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		Map<String, String> helpMessageMap = HashMapBuilder.put(
+			"organic",
+			ResourceBundleUtil.getString(
+				resourceBundle,
+				"this-number-refers-to-the-volume-of-people-that-find-your-" +
+					"page-through-a-search-engine")
+		).put(
+			"paid",
+			ResourceBundleUtil.getString(
+				resourceBundle,
+				"this-number-refers-to-the-volume-of-people-that-find-your-" +
+					"page-through-paid-keywords")
+		).build();
+
+		Map<String, String> titleMap = HashMapBuilder.put(
+			"organic", ResourceBundleUtil.getString(resourceBundle, "organic")
+		).put(
+			"paid", ResourceBundleUtil.getString(resourceBundle, "paid")
+		).build();
+
+		List<TrafficSource> trafficSources = _getTrafficSources(
+			analyticsReportsDataProvider, canonicalURL, companyId);
+
+		titleMap.forEach(
+			(name, title) -> {
+				Stream<TrafficSource> stream = trafficSources.stream();
+
+				trafficSourcesJSONArray.put(
+					stream.filter(
+						trafficSource -> Objects.equals(
+							name, trafficSource.getName())
+					).findFirst(
+					).map(
+						trafficSource -> trafficSource.toJSONObject(
+							helpMessageMap.get(name), locale, title)
+					).orElse(
+						JSONUtil.put(
+							"helpMessage", helpMessageMap.get(name)
+						).put(
+							"name", name
+						).put(
+							"title", title
+						)
+					));
+			});
+
+		return trafficSourcesJSONArray;
 	}
 
 	private LocalDate _toLocaleDate(Date date) {

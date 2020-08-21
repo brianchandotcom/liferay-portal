@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -66,6 +68,10 @@ public class UpdateGlobalChangeListsConfigurationMVCActionCommand
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_portletPermission.check(
+			themeDisplay.getPermissionChecker(),
+			CTPortletKeys.CHANGE_LISTS_CONFIGURATION, ActionKeys.CONFIGURATION);
 
 		boolean enableChangeLists = ParamUtil.getBoolean(
 			actionRequest, "enableChangeLists");
@@ -149,5 +155,8 @@ public class UpdateGlobalChangeListsConfigurationMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletPermission _portletPermission;
 
 }

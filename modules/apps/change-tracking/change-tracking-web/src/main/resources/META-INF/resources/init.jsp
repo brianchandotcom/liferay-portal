@@ -31,6 +31,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.change.tracking.conflict.ConflictInfo" %><%@
 page import="com.liferay.change.tracking.constants.CTActionKeys" %><%@
 page import="com.liferay.change.tracking.constants.CTConstants" %><%@
+page import="com.liferay.change.tracking.constants.CTPortletKeys" %><%@
 page import="com.liferay.change.tracking.exception.CTCollectionDescriptionException" %><%@
 page import="com.liferay.change.tracking.exception.CTCollectionNameException" %><%@
 page import="com.liferay.change.tracking.model.CTCollection" %><%@
@@ -59,6 +60,7 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.ModelHintsUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
+page import="com.liferay.portal.kernel.service.permission.PortletPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@

@@ -30,10 +30,14 @@
 	</div>
 </clay:sheet-section>
 
-<clay:sheet-footer>
-	<aui:button primary="<%= true %>" type="submit" value="submit" />
+<%
+boolean hasConfigurationPermission = PortletPermissionUtil.contains(permissionChecker, CTPortletKeys.CHANGE_LISTS_CONFIGURATION, ActionKeys.CONFIGURATION);
+%>
 
-	<aui:button disabled="<%= !changeListsConfigurationDisplayContext.isChangeListsEnabled() %>" name="submitRedirectToOverview" onClick='<%= liferayPortletResponse.getNamespace() + "doSubmitRedirectToOverview()" %>' primary="<%= false %>" type="submit" value="save-and-go-to-overview" />
+<clay:sheet-footer>
+	<aui:button disabled="<%= !hasConfigurationPermission %>" primary="<%= true %>" type="submit" value="submit" />
+
+	<aui:button disabled="<%= !hasConfigurationPermission || !changeListsConfigurationDisplayContext.isChangeListsEnabled() %>" name="submitRedirectToOverview" onClick='<%= liferayPortletResponse.getNamespace() + "doSubmitRedirectToOverview()" %>' primary="<%= false %>" type="submit" value="save-and-go-to-overview" />
 </clay:sheet-footer>
 
 <script>
@@ -50,6 +54,10 @@
 	}
 
 	function <portlet:namespace />updateSubmitRedirectToOverview() {
+		if (<%= !hasConfigurationPermission %>) {
+			return;
+		}
+
 		var form = document.<portlet:namespace />fm;
 
 		var enableChangeListsInput = form.<portlet:namespace />enableChangeLists;

@@ -89,9 +89,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	public static final String FILTER = "file.install.filter";
 
-	public static final String FRAGMENT_SCOPE =
-		"file.install.fragmentRefreshScope";
-
 	public static final String NO_INITIAL_DELAY = "file.install.noInitialDelay";
 
 	public static final String OPTIONAL_SCOPE =
@@ -130,7 +127,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_activeLevel = GetterUtil.getInteger(
 			bundleContext.getProperty(ACTIVE_LEVEL));
 		_filter = bundleContext.getProperty(FILTER);
-		_fragmentScope = bundleContext.getProperty(FRAGMENT_SCOPE);
 		_noInitialDelay = GetterUtil.getBoolean(
 			bundleContext.getProperty(NO_INITIAL_DELAY));
 		_optionalScope = bundleContext.getProperty(OPTIONAL_SCOPE);
@@ -323,66 +319,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 
 		super.start();
-	}
-
-	protected void findBundlesWithFragmentsToRefresh(
-		Set<Bundle> refreshBundles) {
-
-		Set<Bundle> fragments = new HashSet<>();
-
-		Set<Bundle> bundles = getScopedBundles(_fragmentScope);
-
-		for (Bundle bundle : refreshBundles) {
-			if (bundle.getState() != Bundle.UNINSTALLED) {
-				Dictionary<String, String> headers = bundle.getHeaders(
-					StringPool.BLANK);
-
-				String hostHeader = headers.get(Constants.FRAGMENT_HOST);
-
-				if (hostHeader != null) {
-					Clause[] clauses = Parser.parseHeader(hostHeader);
-
-					if ((clauses != null) && (clauses.length > 0)) {
-						Clause clause = clauses[0];
-
-						for (Bundle hostBundle : bundles) {
-							String hostSymbolicName =
-								hostBundle.getSymbolicName();
-
-							if ((hostSymbolicName != null) &&
-								Objects.equals(
-									hostSymbolicName, clause.getName())) {
-
-								String versionString = clause.getAttribute(
-									Constants.BUNDLE_VERSION_ATTRIBUTE);
-
-								if (versionString != null) {
-									VersionRange versionRange =
-										new VersionRange(versionString);
-
-									headers = hostBundle.getHeaders(
-										StringPool.BLANK);
-
-									if (versionRange.includes(
-											Version.parseVersion(
-												headers.get(
-													Constants.
-														BUNDLE_VERSION)))) {
-
-										fragments.add(hostBundle);
-									}
-								}
-								else {
-									fragments.add(hostBundle);
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		refreshBundles.addAll(fragments);
 	}
 
 	protected void findBundlesWithOptionalPackagesToRefresh(
@@ -964,8 +900,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 			bundles.addAll(installedBundles);
 
-			findBundlesWithFragmentsToRefresh(bundles);
-
 			findBundlesWithOptionalPackagesToRefresh(bundles);
 
 			if (!bundles.isEmpty()) {
@@ -1315,7 +1249,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private final ServiceTrackerList<FileInstaller, FileInstaller>
 		_fileInstallers;
 	private final String _filter;
-	private final String _fragmentScope;
 	private int _frameworkStartLevel;
 	private final Map<File, Artifact> _installationFailures = new HashMap<>();
 	private final boolean _noInitialDelay;

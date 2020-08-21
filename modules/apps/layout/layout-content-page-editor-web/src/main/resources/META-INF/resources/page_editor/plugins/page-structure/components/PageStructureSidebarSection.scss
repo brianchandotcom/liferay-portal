@@ -1,5 +1,7 @@
 @import 'atlas-variables';
 
+@import '../../../app/components/variables';
+
 .page-editor__page-structure__section {
 	flex-basis: 0;
 	flex-grow: 1;
@@ -15,8 +17,9 @@
 	}
 
 	&__custom-styles {
-		border-bottom: 1px solid $secondary-l1;
-		padding-bottom: 1rem;
+		border-bottom: 1px solid $secondary-l3;
+		margin-bottom: $pageEditorSpacing;
+		padding-bottom: $pageEditorSpacing * 2;
 	}
 
 	&__resize-handler {

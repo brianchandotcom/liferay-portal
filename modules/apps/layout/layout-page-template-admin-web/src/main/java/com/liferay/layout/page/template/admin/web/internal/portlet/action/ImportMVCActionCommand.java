@@ -18,6 +18,8 @@ import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminP
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporterResultEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -99,11 +101,18 @@ public class ImportMVCActionCommand extends BaseMVCActionCommand {
 				layoutPageTemplatesImporterResultEntries);
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
 			SessionErrors.add(actionRequest, exception.getClass(), exception);
 		}
 
 		sendRedirect(actionRequest, actionResponse);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ImportMVCActionCommand.class);
 
 	@Reference
 	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;

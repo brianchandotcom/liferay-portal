@@ -16,6 +16,8 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -58,11 +60,18 @@ public class EditLayoutSetMVCRenderCommand implements MVCRenderCommand {
 					ActionKeys.VIEW);
 			}
 			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException, portalException);
+				}
+
 				SessionErrors.add(renderRequest, portalException.getClass());
 			}
 		}
 
 		return "/edit_layout_set.jsp";
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditLayoutSetMVCRenderCommand.class);
 
 }

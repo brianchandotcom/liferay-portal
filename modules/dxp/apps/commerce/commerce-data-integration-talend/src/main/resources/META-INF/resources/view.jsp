@@ -64,7 +64,7 @@ TalendProcessTypeHelper talendProcessTypeHelper = (TalendProcessTypeHelper)reque
 </div>
 
 <aui:script>
-	$('#<portlet:namespace />fileEntryRemove').on('click', function (event) {
+	window.document.querySelector('#<portlet:namespace />fileEntryRemove').addEventListener('click', function (event) {
 		event.preventDefault();
 
 		$('#<portlet:namespace />fileEntry').removeClass('hide');

@@ -144,7 +144,7 @@ CommerceBOMFolder commerceBOMFolder = commerceBOMAdminDisplayContext.getCommerce
 	</aui:script>
 
 	<aui:script use="liferay-item-selector-dialog">
-		$('#<portlet:namespace />addCommerceBOMFolderApplicationRel').on(
+		window.document.querySelector('#<portlet:namespace />addCommerceBOMFolderApplicationRel').addEventListener(
 			'click',
 			function (event) {
 				event.preventDefault();

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -49,8 +50,10 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -214,6 +217,18 @@ public class ViewChangesDisplayContext {
 
 			_populateEntryValues(
 				modelInfoMap, entry.getKey(), entry.getValue());
+		}
+
+		if (ctClosure != null) {
+			long groupClassNameId = _portal.getClassNameId(Group.class);
+
+			for (long groupId :
+					classNameIdClassPKsMap.getOrDefault(
+						groupClassNameId, Collections.emptySet())) {
+
+				_populateModelInfoGroupIds(
+					ctClosure, modelInfoMap, groupClassNameId, groupId);
+			}
 		}
 
 		Set<Long> rootClassNameIds = _getRootClassNameIds(ctClosure);
@@ -590,6 +605,37 @@ public class ViewChangesDisplayContext {
 						modelInfo._jsonObject.put(
 							"dropdownItems", dropdownItemsJSONArray);
 					}
+				}
+			}
+		}
+	}
+
+	private void _populateModelInfoGroupIds(
+		CTClosure ctClosure, Map<ModelInfoKey, ModelInfo> modelInfoMap,
+		long groupClassNameId, long groupId) {
+
+		Map<Long, List<Long>> pksMap = ctClosure.getChildPKsMap(
+			groupClassNameId, groupId);
+
+		Deque<Map.Entry<Long, ? extends Collection<Long>>> queue =
+			new LinkedList<>(pksMap.entrySet());
+
+		Map.Entry<Long, ? extends Collection<Long>> entry = null;
+
+		while ((entry = queue.poll()) != null) {
+			long classNameId = entry.getKey();
+
+			for (long classPK : entry.getValue()) {
+				ModelInfo modelInfo = modelInfoMap.get(
+					new ModelInfoKey(classNameId, classPK));
+
+				modelInfo._jsonObject.put("groupId", groupId);
+
+				Map<Long, ? extends Collection<Long>> childPKsMap =
+					ctClosure.getChildPKsMap(classNameId, classPK);
+
+				if (!childPKsMap.isEmpty()) {
+					queue.addAll(childPKsMap.entrySet());
 				}
 			}
 		}

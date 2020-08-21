@@ -14,12 +14,17 @@
 
 package com.liferay.translation.service.impl;
 
+import com.liferay.info.exception.InfoItemPermissionException;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemPermissionProvider;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -68,23 +73,13 @@ public class TranslationEntryServiceImpl
 		throws PortalException {
 
 		try {
-			PermissionChecker permissionChecker = getPermissionChecker();
-
 			LocaleId targetLocaleId = XLIFFLocaleIdUtil.getTargetLocaleId(
 				_saxReader.read(content));
 
 			String languageId = _language.getLanguageId(
 				targetLocaleId.toJavaLocale());
 
-			String name = TranslationConstants.RESOURCE_NAME + "." + languageId;
-
-			if (!permissionChecker.hasPermission(
-					groupId, name, name, TranslationActionKeys.TRANSLATE)) {
-
-				throw new PrincipalException.MustHavePermission(
-					permissionChecker, name, name,
-					TranslationActionKeys.TRANSLATE);
-			}
+			_checkPermission(groupId, languageId, infoItemReference);
 
 			return translationEntryLocalService.addOrUpdateTranslationEntry(
 				groupId, infoItemReference.getClassName(),
@@ -105,21 +100,42 @@ public class TranslationEntryServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		String name = TranslationConstants.RESOURCE_NAME + "." + languageId;
-
-		if (!permissionChecker.hasPermission(
-				groupId, name, name, TranslationActionKeys.TRANSLATE)) {
-
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, name, name, TranslationActionKeys.TRANSLATE);
-		}
+		_checkPermission(groupId, languageId, infoItemReference);
 
 		return translationEntryLocalService.addOrUpdateTranslationEntry(
 			groupId, languageId, infoItemReference, infoItemFieldValues,
 			serviceContext);
 	}
+
+	private void _checkPermission(
+			long groupId, String languageId,
+			InfoItemReference infoItemReference)
+		throws InfoItemPermissionException, PrincipalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		InfoItemPermissionProvider<JournalArticle> infoItemPermissionProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemPermissionProvider.class,
+				JournalArticle.class.getName());
+
+		if (!infoItemPermissionProvider.hasPermission(
+				permissionChecker, infoItemReference, ActionKeys.UPDATE)) {
+
+			String name = TranslationConstants.RESOURCE_NAME + "." + languageId;
+
+			if (!permissionChecker.hasPermission(
+					groupId, name, name, TranslationActionKeys.TRANSLATE)) {
+
+				throw new PrincipalException.MustHavePermission(
+					permissionChecker, name, name,
+					TranslationActionKeys.TRANSLATE);
+			}
+		}
+	}
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private Language _language;

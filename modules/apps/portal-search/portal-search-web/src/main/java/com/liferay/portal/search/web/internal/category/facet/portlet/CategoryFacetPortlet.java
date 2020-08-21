@@ -128,6 +128,10 @@ public class CategoryFacetPortlet extends MVCPortlet {
 			assetCategoriesFacetConfiguration.getFrequencyThreshold());
 		assetCategoriesSearchFacetDisplayBuilder.setMaxTerms(
 			assetCategoriesFacetConfiguration.getMaxTerms());
+		assetCategoriesSearchFacetDisplayBuilder.
+			setPaginationStartParameterName(
+				getPaginationStartParameterName(portletSharedSearchResponse));
+		assetCategoriesSearchFacetDisplayBuilder.setPortal(portal);
 
 		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
 			renderRequest);
@@ -158,12 +162,6 @@ public class CategoryFacetPortlet extends MVCPortlet {
 			() -> portletSharedSearchResponse.getParameterValues(
 				parameterName, renderRequest),
 			assetCategoriesSearchFacetDisplayBuilder::setParameterValues);
-
-		assetCategoriesSearchFacetDisplayBuilder.setPortal(portal);
-
-		assetCategoriesSearchFacetDisplayBuilder.
-			setPaginationStartParameterName(
-				getPaginationStartParameterName(portletSharedSearchResponse));
 
 		return assetCategoriesSearchFacetDisplayBuilder.build();
 	}

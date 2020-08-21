@@ -307,6 +307,11 @@ public interface AppBuilderAppLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AppBuilderApp> getAppBuilderApps(
+		long groupId, long companyId, long ddmStructureId, String scope,
+		int start, int end, OrderByComparator<AppBuilderApp> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AppBuilderApp> getAppBuilderApps(
 		long groupId, String scope, int start, int end,
 		OrderByComparator<AppBuilderApp> orderByComparator);
 

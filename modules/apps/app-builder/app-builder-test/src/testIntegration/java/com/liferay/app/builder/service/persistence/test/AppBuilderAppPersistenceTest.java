@@ -293,6 +293,17 @@ public class AppBuilderAppPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_C_D_S() throws Exception {
+		_persistence.countByG_C_D_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_C_D_S(0L, 0L, 0L, "null");
+
+		_persistence.countByG_C_D_S(0L, 0L, 0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AppBuilderApp newAppBuilderApp = addAppBuilderApp();
 

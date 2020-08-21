@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.time.Instant;
@@ -145,7 +146,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 						_getLocale(
 							httpServletRequest, themeDisplay.getLanguageId()),
 						infoDisplayObjectProvider.getDisplayObject(),
-						resourceResponse)));
+						resourceResponse, _getTimeRange(resourceRequest))));
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -196,14 +197,10 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		InfoDisplayContributor<Object> infoDisplayContributor,
 		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider,
 		Layout layout, Locale locale, Locale urlLocale, Object object,
-		ResourceResponse resourceResponse) {
+		ResourceResponse resourceResponse, TimeRange timeRange) {
 
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
 			new AnalyticsReportsDataProvider(_http);
-
-		TimeSpan defaultTimeSpan = TimeSpan.of(TimeSpan.defaultTimeSpanKey());
-
-		TimeRange defaultTimeRange = defaultTimeSpan.toTimeRange(0);
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
@@ -215,19 +212,6 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 				object)
 		).put(
 			"canonicalURL", canonicalURL
-		).put(
-			"defaultTimeRange",
-			JSONUtil.put(
-				"endDate",
-				DateTimeFormatter.ISO_DATE.format(
-					defaultTimeRange.getEndLocalDate())
-			).put(
-				"startDate",
-				DateTimeFormatter.ISO_DATE.format(
-					defaultTimeRange.getStartLocalDate())
-			)
-		).put(
-			"defaultTimeSpanKey", TimeSpan.defaultTimeSpanKey()
 		).put(
 			"endpoints",
 			JSONUtil.put(
@@ -268,6 +252,17 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			DateTimeFormatter.ISO_DATE.format(
 				_toLocaleDate(analyticsReportsInfoItem.getPublishDate(object)))
 		).put(
+			"timeRange",
+			JSONUtil.put(
+				"endDate",
+				DateTimeFormatter.ISO_DATE.format(timeRange.getEndLocalDate())
+			).put(
+				"startDate",
+				DateTimeFormatter.ISO_DATE.format(timeRange.getStartLocalDate())
+			)
+		).put(
+			"timeSpanKey", timeRange.getTimeSpan()
+		).put(
 			"timeSpans", _getTimeSpansJSONArray(resourceBundle)
 		).put(
 			"title", infoDisplayObjectProvider.getTitle(urlLocale)
@@ -299,6 +294,25 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		resourceURL.setResourceID(resourceID);
 
 		return resourceURL;
+	}
+
+	private TimeRange _getTimeRange(ResourceRequest resourceRequest) {
+		String timeSpanKey = ParamUtil.getString(
+			resourceRequest, "timeSpanKey", TimeSpan.defaultTimeSpanKey());
+
+		if (Validator.isNull(timeSpanKey)) {
+			TimeSpan defaultTimeSpan = TimeSpan.of(
+				TimeSpan.defaultTimeSpanKey());
+
+			return defaultTimeSpan.toTimeRange(0);
+		}
+
+		TimeSpan timeSpan = TimeSpan.of(timeSpanKey);
+
+		int timeSpanOffset = ParamUtil.getInteger(
+			resourceRequest, "timeSpanOffset");
+
+		return timeSpan.toTimeRange(timeSpanOffset);
 	}
 
 	private JSONArray _getTimeSpansJSONArray(ResourceBundle resourceBundle) {

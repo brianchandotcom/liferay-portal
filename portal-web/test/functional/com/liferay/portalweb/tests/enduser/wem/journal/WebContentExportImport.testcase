@@ -208,11 +208,59 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "News Description",
+			structureName = "News");
+
+		DynamicDataMapping.addField(
+			field = "Image",
+			fieldFieldLabel = "Cover Image",
+			fieldName = "NewsCoverImage");
+
+		DynamicDataMapping.addField(
+			field = "Text Box",
+			fieldFieldLabel = "Content",
+			fieldName = "NewsContent");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Events Description",
+			structureName = "Events");
+
+		DynamicDataMapping.addField(
+			field = "Image",
+			fieldFieldLabel = "Cover Image",
+			fieldName = "EventCoverImage");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Headline",
+			fieldName = "EventHeadline");
+
+		DynamicDataMapping.addField(
+			field = "Date",
+			fieldFieldLabel = "EventDate",
+			fieldName = "EventDate");
+
+		DynamicDataMapping.addField(
+			field = "Text Box",
+			fieldFieldLabel = "Lead Text",
+			fieldName = "EventLeadText");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
+
 		LAR.exportPortlet(larFileName = "frontPage-structures.lar");
 
-		JSONGroup.addGroup(groupName = "Site Name 3");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-3");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-2");
 
 		NavItem.gotoTemplates();
 
@@ -242,7 +290,7 @@ definition {
 
 		WebContentTemplates.addCP(
 			structureName = "Events",
-			templateDescription = "News Description",
+			templateDescription = "Events Description",
 			templateFile = "events-template.txt",
 			templateName = "Events");
 
@@ -270,7 +318,7 @@ definition {
 			Navigator.gotoNavItem(navItem = "Templates");
 
 			WebContentTemplates.viewCP(
-				templateDescription = "",
+				templateDescription = "${templateName} Description",
 				templateName = "${templateName}");
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

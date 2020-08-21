@@ -18,15 +18,17 @@ import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItemTracker;
 import com.liferay.analytics.reports.web.internal.constants.AnalyticsReportsPortletKeys;
 import com.liferay.analytics.reports.web.internal.data.provider.AnalyticsReportsDataProvider;
-import com.liferay.analytics.reports.web.internal.info.display.contributor.util.InfoDisplayContributorUtil;
+import com.liferay.analytics.reports.web.internal.info.display.contributor.util.LayoutDisplayPageProviderUtil;
 import com.liferay.analytics.reports.web.internal.layout.seo.CanonicalURLProvider;
 import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.analytics.reports.web.internal.model.TrafficSource;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -99,13 +101,15 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 
-		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider =
-			(InfoDisplayObjectProvider<Object>)
-				InfoDisplayContributorUtil.getInfoDisplayObjectProvider(
-					httpServletRequest, _infoDisplayContributorTracker,
-					_portal);
+		LayoutDisplayPageObjectProvider<Object>
+			layoutDisplayPageObjectProvider =
+				(LayoutDisplayPageObjectProvider<Object>)
+					LayoutDisplayPageProviderUtil.
+						getLayoutDisplayPageObjectProvider(
+							httpServletRequest,
+							_layoutDisplayPageProviderTracker, _portal);
 
-		if (infoDisplayObjectProvider == null) {
+		if (layoutDisplayPageObjectProvider == null) {
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
@@ -122,19 +126,22 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 					_analyticsReportsInfoItemTracker.
 						getAnalyticsReportsInfoItem(
 							_portal.getClassName(
-								infoDisplayObjectProvider.getClassNameId()));
+								layoutDisplayPageObjectProvider.
+									getClassNameId()));
 			CanonicalURLProvider canonicalURLProvider =
 				new CanonicalURLProvider(
 					_assetDisplayPageFriendlyURLProvider, httpServletRequest,
-					InfoDisplayContributorUtil.getInfoDisplayObjectProvider(
-						httpServletRequest, _infoDisplayContributorTracker,
-						_portal),
-					_language, _layoutSEOLinkManager, _portal);
-			InfoDisplayContributor<Object> infoDisplayContributor =
-				(InfoDisplayContributor<Object>)
-					_infoDisplayContributorTracker.getInfoDisplayContributor(
-						_portal.getClassName(
-							infoDisplayObjectProvider.getClassNameId()));
+					_language,
+					LayoutDisplayPageProviderUtil.
+						getLayoutDisplayPageObjectProvider(
+							httpServletRequest,
+							_layoutDisplayPageProviderTracker, _portal),
+					_layoutSEOLinkManager, _portal);
+			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemFieldValuesProvider.class,
+					_portal.getClassName(
+						layoutDisplayPageObjectProvider.getClassNameId()));
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)resourceRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
@@ -146,12 +153,13 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 					_getJSONObject(
 						analyticsReportsInfoItem,
 						canonicalURLProvider.getCanonicalURL(),
-						themeDisplay.getCompanyId(), infoDisplayContributor,
-						infoDisplayObjectProvider, themeDisplay.getLayout(),
-						themeDisplay.getLocale(),
+						themeDisplay.getCompanyId(),
+						infoItemFieldValuesProvider,
+						layoutDisplayPageObjectProvider,
+						themeDisplay.getLayout(), themeDisplay.getLocale(),
 						_getLocale(
 							httpServletRequest, themeDisplay.getLanguageId()),
-						infoDisplayObjectProvider.getDisplayObject(),
+						layoutDisplayPageObjectProvider.getDisplayObject(),
 						resourceResponse, _getTimeRange(resourceRequest))));
 		}
 		catch (Exception exception) {
@@ -168,14 +176,16 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private JSONObject _getAuthorJSONObject(
 		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem,
-		InfoDisplayContributor<Object> infoDisplayContributor, Locale locale,
-		Object object) {
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
+		Locale locale, Object object) {
 
 		try {
+			InfoFieldValue<Object> infoItemFieldValue =
+				infoItemFieldValuesProvider.getInfoItemFieldValue(
+					object, "authorProfileImage");
+
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				String.valueOf(
-					infoDisplayContributor.getInfoDisplayFieldValue(
-						object, "authorProfileImage", locale)));
+				String.valueOf(infoItemFieldValue.getValue(locale)));
 
 			long portraitId = GetterUtil.getLong(
 				_http.getParameter(
@@ -200,8 +210,8 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 	private JSONObject _getJSONObject(
 		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem,
 		String canonicalURL, long companyId,
-		InfoDisplayContributor<Object> infoDisplayContributor,
-		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider,
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
+		LayoutDisplayPageObjectProvider<Object> layoutDisplayPageObjectProvider,
 		Layout layout, Locale locale, Locale urlLocale, Object object,
 		ResourceResponse resourceResponse, TimeRange timeRange) {
 
@@ -214,7 +224,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		return JSONUtil.put(
 			"author",
 			_getAuthorJSONObject(
-				analyticsReportsInfoItem, infoDisplayContributor, locale,
+				analyticsReportsInfoItem, infoItemFieldValuesProvider, locale,
 				object)
 		).put(
 			"canonicalURL", canonicalURL
@@ -224,26 +234,28 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 				"getAnalyticsReportsHistoricalReadsURL",
 				String.valueOf(
 					_getResourceURL(
-						infoDisplayObjectProvider, urlLocale, resourceResponse,
+						layoutDisplayPageObjectProvider, urlLocale,
+						resourceResponse,
 						"/analytics_reports/get_historical_reads"))
 			).put(
 				"getAnalyticsReportsHistoricalViewsURL",
 				String.valueOf(
 					_getResourceURL(
-						infoDisplayObjectProvider, urlLocale, resourceResponse,
+						layoutDisplayPageObjectProvider, urlLocale,
+						resourceResponse,
 						"/analytics_reports/get_historical_views"))
 			).put(
 				"getAnalyticsReportsTotalReadsURL",
 				String.valueOf(
 					_getResourceURL(
-						infoDisplayObjectProvider, urlLocale, resourceResponse,
-						"/analytics_reports/get_total_reads"))
+						layoutDisplayPageObjectProvider, urlLocale,
+						resourceResponse, "/analytics_reports/get_total_reads"))
 			).put(
 				"getAnalyticsReportsTotalViewsURL",
 				String.valueOf(
 					_getResourceURL(
-						infoDisplayObjectProvider, urlLocale, resourceResponse,
-						"/analytics_reports/get_total_views"))
+						layoutDisplayPageObjectProvider, urlLocale,
+						resourceResponse, "/analytics_reports/get_total_views"))
 			)
 		).put(
 			"languageTag", locale.toLanguageTag()
@@ -271,7 +283,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		).put(
 			"timeSpans", _getTimeSpansJSONArray(resourceBundle)
 		).put(
-			"title", infoDisplayObjectProvider.getTitle(urlLocale)
+			"title", layoutDisplayPageObjectProvider.getTitle(urlLocale)
 		).put(
 			"trafficSources",
 			_getTrafficSourcesJSONArray(
@@ -283,8 +295,8 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		).put(
 			"viewURLs",
 			_getViewURLsJSONArray(
-				analyticsReportsInfoItem, infoDisplayObjectProvider, object,
-				resourceResponse, urlLocale)
+				analyticsReportsInfoItem, layoutDisplayPageObjectProvider,
+				object, resourceResponse, urlLocale)
 		);
 	}
 
@@ -296,16 +308,17 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	private ResourceURL _getResourceURL(
-		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider,
+		LayoutDisplayPageObjectProvider<Object> layoutDisplayPageObjectProvider,
 		Locale locale, ResourceResponse resourceResponse, String resourceID) {
 
 		ResourceURL resourceURL = resourceResponse.createResourceURL();
 
 		resourceURL.setParameter(
 			"classNameId",
-			String.valueOf(infoDisplayObjectProvider.getClassNameId()));
+			String.valueOf(layoutDisplayPageObjectProvider.getClassNameId()));
 		resourceURL.setParameter(
-			"classPK", String.valueOf(infoDisplayObjectProvider.getClassPK()));
+			"classPK",
+			String.valueOf(layoutDisplayPageObjectProvider.getClassPK()));
 		resourceURL.setParameter("languageId", LocaleUtil.toLanguageId(locale));
 		resourceURL.setResourceID(resourceID);
 
@@ -429,7 +442,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private JSONArray _getViewURLsJSONArray(
 		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem,
-		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider,
+		LayoutDisplayPageObjectProvider<Object> layoutDisplayPageObjectProvider,
 		Object object, ResourceResponse resourceResponse, Locale urlLocale) {
 
 		List<Locale> locales = analyticsReportsInfoItem.getAvailableLocales(
@@ -451,8 +464,8 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 				).put(
 					"viewURL",
 					_getResourceURL(
-						infoDisplayObjectProvider, locale, resourceResponse,
-						"/analytics_reports/get_data")
+						layoutDisplayPageObjectProvider, locale,
+						resourceResponse, "/analytics_reports/get_data")
 				)
 			).toArray());
 	}
@@ -479,10 +492,13 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 	private Http _http;
 
 	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Reference
 	private LayoutSEOLinkManager _layoutSEOLinkManager;

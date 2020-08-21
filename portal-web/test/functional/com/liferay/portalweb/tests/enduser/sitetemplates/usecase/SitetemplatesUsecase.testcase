@@ -518,6 +518,7 @@ definition {
 			siteTemplateName = "Template Site");
 
 		var page2URL = Navigator.getCurrentURL();
+		var entryExternalURL = StringUtil.replace("${page2URL}", "http://", "");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -525,11 +526,12 @@ definition {
 
 		WebContentNavigator.gotoAddCP();
 
-		WebContent.addCP(
-			webContentContent = "${page2URL}",
-			webContentTitle = "Web Content Title");
+		PortletEntry.inputTitle(title = "Web Content Title");
 
-		AlloyEditor.addEntryExternalURL(entryExternalURL = "${page2URL}");
+		CKEditor.addEntryExternalURL(
+			displayText = "${page2URL}",
+			entryExternalURL = "${entryExternalURL}",
+			fieldLabel = "content");
 
 		PortletEntry.publish();
 

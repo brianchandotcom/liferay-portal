@@ -73,6 +73,9 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+
+		// Configurations
+
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
 
@@ -88,10 +91,14 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 		_configureConfigurationFindSecurityBugsPlugins(
 			project, findSecurityBugsPluginsConfiguration);
 
+		// Conventions
+
 		Convention convention = project.getConvention();
 
 		JavaPluginConvention javaPluginConvention = convention.getPlugin(
 			JavaPluginConvention.class);
+
+		// Tasks
 
 		TaskProvider<JavaExec> findSecurityBugsTaskProvider =
 			GradleUtil.addTaskProvider(

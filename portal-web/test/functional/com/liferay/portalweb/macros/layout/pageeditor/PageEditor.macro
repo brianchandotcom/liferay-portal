@@ -1664,6 +1664,16 @@ definition {
 			value1 = "${fragmentName}");
 	}
 
+	macro selectColorSwatchItem {
+		Click(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "Button#COLOR_PICKER");
+
+		Click(
+			key_colorSwatchItem = "${colorSwatchItem}",
+			locator1 = "Button#COLOR_SWATCH_ITEM");
+	}
+
 	macro viewAutoSaveMessage {
 		AssertTextEquals.assertPartialText(
 			locator1 = "PageEditor#AUTOSAVE_MESSAGE",

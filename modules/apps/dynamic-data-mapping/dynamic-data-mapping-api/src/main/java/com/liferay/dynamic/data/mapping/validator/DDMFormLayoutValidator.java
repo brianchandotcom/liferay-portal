@@ -22,6 +22,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 public interface DDMFormLayoutValidator {
 
 	public void validate(DDMFormLayout ddmFormLayout)
-		throws DDMFormLayoutValidationException;
+		throws DDMFormLayoutValidationException, DDMFormValidationException;
 
 }

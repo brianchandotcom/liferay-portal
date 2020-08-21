@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.validator.internal;
 
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
@@ -26,6 +27,8 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationExcepti
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException.MustSetDefaultLocale;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException.MustSetEqualLocaleForLayoutAndTitle;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
+import com.liferay.dynamic.data.mapping.validator.internal.util.DDMFormRuleValidatorUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.List;
@@ -36,6 +39,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pablo Carvalho
@@ -45,13 +49,23 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 
 	@Override
 	public void validate(DDMFormLayout ddmFormLayout)
-		throws DDMFormLayoutValidationException {
+		throws DDMFormLayoutValidationException, DDMFormValidationException {
+
+		DDMFormRuleValidatorUtil.validateDDMFormRules(
+			_ddmExpressionFactory, ddmFormLayout.getDDMFormRules());
 
 		validateDDMFormLayoutDefaultLocale(ddmFormLayout);
 
 		_validateDDMFormFieldNames(ddmFormLayout);
 		_validateDDMFormLayoutPageTitles(ddmFormLayout);
 		_validateDDMFormLayoutRowSizes(ddmFormLayout);
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMExpressionFactory(
+		DDMExpressionFactory ddmExpressionFactory) {
+
+		_ddmExpressionFactory = ddmExpressionFactory;
 	}
 
 	protected void validateDDMFormLayoutDefaultLocale(
@@ -175,5 +189,7 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 	}
 
 	private static final int _MAX_ROW_SIZE = 12;
+
+	private DDMExpressionFactory _ddmExpressionFactory;
 
 }

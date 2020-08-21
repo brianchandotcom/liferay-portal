@@ -30,8 +30,6 @@ import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationContr
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
-import java.util.List;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -87,21 +85,10 @@ public class ApplicationsMenuApplicationMenuProductNavigationControlMenuEntry
 			return false;
 		}
 
-		List<PanelCategory> applicationsMenuPanelCategories =
-			_panelCategoryRegistry.getChildPanelCategories(
-				PanelCategoryKeys.APPLICATIONS_MENU,
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroup());
+		if (ApplicationsMenuUtil.hasChildPanelCategories(
+				_panelCategoryRegistry, themeDisplay)) {
 
-		for (PanelCategory panelCategory : applicationsMenuPanelCategories) {
-			List<PanelCategory> childPanelCategories =
-				_panelCategoryRegistry.getChildPanelCategories(
-					panelCategory.getKey(), themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroup());
-
-			if (!childPanelCategories.isEmpty()) {
-				return true;
-			}
+			return true;
 		}
 
 		return false;

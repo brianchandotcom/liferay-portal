@@ -14,6 +14,9 @@
 
 package com.liferay.product.navigation.applications.menu.web.internal.util;
 
+import com.liferay.application.list.PanelCategory;
+import com.liferay.application.list.PanelCategoryRegistry;
+import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,10 +27,36 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration;
 
+import java.util.List;
+
 /**
  * @author Eudaldo Alonso
  */
 public class ApplicationsMenuUtil {
+
+	public static boolean hasChildPanelCategories(
+		PanelCategoryRegistry panelCategoryRegistry,
+		ThemeDisplay themeDisplay) {
+
+		List<PanelCategory> applicationsMenuPanelCategories =
+			panelCategoryRegistry.getChildPanelCategories(
+				PanelCategoryKeys.APPLICATIONS_MENU,
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroup());
+
+		for (PanelCategory panelCategory : applicationsMenuPanelCategories) {
+			List<PanelCategory> childPanelCategories =
+				panelCategoryRegistry.getChildPanelCategories(
+					panelCategory.getKey(), themeDisplay.getPermissionChecker(),
+					themeDisplay.getScopeGroup());
+
+			if (!childPanelCategories.isEmpty()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 	public static boolean isApplicationsMenuApp(
 		PanelCategoryHelper panelCategoryHelper, ThemeDisplay themeDisplay) {

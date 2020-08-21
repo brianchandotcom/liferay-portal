@@ -16,9 +16,9 @@ import React, {useState} from 'react';
 
 import {AppContextProvider} from '../../AppContext.es';
 import useLazy from '../../hooks/useLazy.es';
-import TranslationManagerWrapper, {
+import TranslationManagerEntry, {
 	getStorageLanguageId,
-} from './TranslationManagerWrapper.es';
+} from './TranslationManagerEntry.es';
 
 export default ({appTab, ...props}) => {
 	const EditPage = useLazy(true);
@@ -29,7 +29,7 @@ export default ({appTab, ...props}) => {
 
 	return (
 		<AppContextProvider {...props}>
-			<TranslationManagerWrapper
+			<TranslationManagerEntry
 				dataDefinitionId={props.dataDefinitionId}
 				setUserLanguageId={setUserLanguageId}
 				userLanguageId={userLanguageId}

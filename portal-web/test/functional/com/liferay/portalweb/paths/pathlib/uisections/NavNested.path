@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAV_NESTED_ELLIPSIS_IE</td>
+	<td>//*[contains(@class,'nav-nested')]//*[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAV_NESTED_LINK</td>
 	<td>//ul[contains(@class,'nav-nested')]//li//*[normalize-space()='${key_navNested}']</td>
 	<td></td>

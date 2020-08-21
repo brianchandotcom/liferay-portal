@@ -121,6 +121,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 		_configureTaskFindSecurityBugsProvider(
 			project, findSecurityBugsConfiguration,
 			findSecurityBugsPluginsConfiguration, findSecurityBugsTaskProvider,
+			printFindSecurityBugsReportTaskProvider,
 			writeFindBugsProjectTaskProvider);
 		_configureTaskPrintFindSecurityBugsReportProvider(
 			findSecurityBugsTaskProvider,
@@ -181,6 +182,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 		final Configuration findSecurityBugsConfiguration,
 		final Configuration findSecurityBugsPluginsConfiguration,
 		TaskProvider<JavaExec> findSecurityBugsTaskProvider,
+		final TaskProvider<Task> printFindSecurityBugsReportTaskProvider,
 		final TaskProvider<WriteFindBugsProjectTask>
 			writeFindBugsProjectTaskProvider) {
 
@@ -189,6 +191,9 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(JavaExec findSecurityBugsJavaExec) {
+					findSecurityBugsJavaExec.finalizedBy(
+						printFindSecurityBugsReportTaskProvider);
+
 					findSecurityBugsJavaExec.args(
 						"-bugCategories", "SECURITY", "-effort:max",
 						"-exitcode", "-html", "-medium", "-progress",
@@ -382,9 +387,6 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Task printFindSecurityBugsReportTask) {
-					final JavaExec findSecurityBugsJavaExec =
-						findSecurityBugsTaskProvider.get();
-
 					printFindSecurityBugsReportTask.doLast(
 						new Action<Task>() {
 
@@ -393,6 +395,9 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 								Logger logger = task.getLogger();
 
 								if (logger.isLifecycleEnabled()) {
+									JavaExec findSecurityBugsJavaExec =
+										findSecurityBugsTaskProvider.get();
+
 									File outputFile =
 										_reportsFileGetter.transform(
 											findSecurityBugsJavaExec);
@@ -407,9 +412,6 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 					printFindSecurityBugsReportTask.setDescription(
 						"Prints the path of the Find Security Bugs report.");
-
-					findSecurityBugsJavaExec.finalizedBy(
-						printFindSecurityBugsReportTask);
 				}
 
 			});

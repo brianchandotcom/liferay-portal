@@ -37,6 +37,7 @@ class ChangeTrackingChangesView extends React.Component {
 			renderCTEntryURL,
 			renderDiffURL,
 			rootDisplayClasses,
+			siteNames,
 			spritemap,
 			typeNames,
 			userInfo,
@@ -50,20 +51,26 @@ class ChangeTrackingChangesView extends React.Component {
 		this.renderCTEntryURL = renderCTEntryURL;
 		this.renderDiffURL = renderDiffURL;
 		this.rootDisplayClasses = rootDisplayClasses;
+		this.siteNames = siteNames;
 		this.spritemap = spritemap;
 		this.typeNames = typeNames;
 		this.userInfo = userInfo;
+
+		this.globalSiteName = Liferay.Language.get('global');
 
 		const keys = Object.keys(this.models);
 
 		for (let i = 0; i < keys.length; i++) {
 			const model = this.models[keys[i]];
 
-			if (!model.typeName) {
-				model.typeName = this.typeNames[
-					model.modelClassNameId.toString()
-				];
+			if (model.groupId) {
+				model.siteName = this.siteNames[model.groupId.toString()];
 			}
+			else {
+				model.siteName = this.globalSiteName;
+			}
+
+			model.typeName = this.typeNames[model.modelClassNameId.toString()];
 		}
 
 		for (let i = 0; i < this.rootDisplayClasses.length; i++) {
@@ -125,7 +132,49 @@ class ChangeTrackingChangesView extends React.Component {
 	_filterDisplayNodes(nodes) {
 		const ascending = this.state.ascending;
 
-		if (this._getColumn() === 'title') {
+		if (this._getColumn() === 'site') {
+			nodes.sort((a, b) => {
+				const siteNameA = a.siteName;
+				const siteNameB = b.siteName;
+				const titleA = a.title;
+				const titleB = b.title;
+
+				if (
+					siteNameA < siteNameB ||
+					(siteNameA === this.globalSiteName &&
+						siteNameB !== this.globalSiteName)
+				) {
+					if (ascending) {
+						return -1;
+					}
+
+					return 1;
+				}
+
+				if (
+					siteNameA > siteNameB ||
+					(siteNameA !== this.globalSiteName &&
+						siteNameB === this.globalSiteName)
+				) {
+					if (ascending) {
+						return 1;
+					}
+
+					return -1;
+				}
+
+				if (titleA < titleB) {
+					return -1;
+				}
+
+				if (titleA > titleB) {
+					return 1;
+				}
+
+				return 0;
+			});
+		}
+		else if (this._getColumn() === 'title') {
 			nodes.sort((a, b) => {
 				const titleA = a.title;
 				const titleB = b.title;
@@ -215,6 +264,58 @@ class ChangeTrackingChangesView extends React.Component {
 					}
 
 					return -1;
+				}
+
+				return 0;
+			});
+		}
+		else if (this._getColumn() === 'site') {
+			nodes.sort((a, b) => {
+				const siteNameA = a.siteName;
+				const siteNameB = b.siteName;
+				const titleA = a.title;
+				const titleB = b.title;
+				const typeNameA = a.typeName.toUpperCase();
+				const typeNameB = b.typeName.toUpperCase();
+
+				if (typeNameA < typeNameB) {
+					return -1;
+				}
+
+				if (typeNameA > typeNameB) {
+					return 1;
+				}
+
+				if (
+					siteNameA < siteNameB ||
+					(siteNameA === this.globalSiteName &&
+						siteNameB !== this.globalSiteName)
+				) {
+					if (ascending) {
+						return -1;
+					}
+
+					return 1;
+				}
+
+				if (
+					siteNameA > siteNameB ||
+					(siteNameA !== this.globalSiteName &&
+						siteNameB === this.globalSiteName)
+				) {
+					if (ascending) {
+						return 1;
+					}
+
+					return -1;
+				}
+
+				if (titleA < titleB) {
+					return -1;
+				}
+
+				if (titleA > titleB) {
+					return 1;
 				}
 
 				return 0;
@@ -542,7 +643,11 @@ class ChangeTrackingChangesView extends React.Component {
 						{Liferay.Language.get('user')}
 					</ClayTable.Cell>
 
-					<ClayTable.Cell headingCell style={{width: '80%'}}>
+					<ClayTable.Cell headingCell style={{width: '15%'}}>
+						{Liferay.Language.get('site')}
+					</ClayTable.Cell>
+
+					<ClayTable.Cell headingCell style={{width: '65%'}}>
 						{Liferay.Language.get('change')}
 					</ClayTable.Cell>
 
@@ -572,7 +677,7 @@ class ChangeTrackingChangesView extends React.Component {
 				rows.push(
 					<ClayTable.Row divider>
 						<ClayTable.Cell
-							colSpan={this.state.viewType === 'changes' ? 3 : 1}
+							colSpan={this.state.viewType === 'changes' ? 4 : 1}
 						>
 							{node.typeName}
 						</ClayTable.Cell>
@@ -630,6 +735,8 @@ class ChangeTrackingChangesView extends React.Component {
 						</ClayTable.Cell>
 					);
 				}
+
+				cells.push(<ClayTable.Cell>{node.siteName}</ClayTable.Cell>);
 			}
 
 			let descriptionMarkup = '';
@@ -892,13 +999,7 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_renderManagementToolbar() {
-		const items = [
-			{
-				active: this._getColumn() === 'title',
-				label: Liferay.Language.get('title'),
-				onClick: () => this._handleSortColumnChange('title'),
-			},
-		];
+		const items = [];
 
 		if (this.state.viewType === 'changes') {
 			items.push({
@@ -906,7 +1007,19 @@ class ChangeTrackingChangesView extends React.Component {
 				label: Liferay.Language.get('modified-date'),
 				onClick: () => this._handleSortColumnChange('modifiedDate'),
 			});
+
+			items.push({
+				active: this._getColumn() === 'site',
+				label: Liferay.Language.get('site'),
+				onClick: () => this._handleSortColumnChange('site'),
+			});
 		}
+
+		items.push({
+			active: this._getColumn() === 'title',
+			label: Liferay.Language.get('title'),
+			onClick: () => this._handleSortColumnChange('title'),
+		});
 
 		const dropdownItems = [
 			{

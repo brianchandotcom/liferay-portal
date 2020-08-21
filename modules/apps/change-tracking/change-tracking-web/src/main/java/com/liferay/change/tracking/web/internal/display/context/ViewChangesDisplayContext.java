@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -83,9 +84,10 @@ public class ViewChangesDisplayContext {
 		CTClosureFactory ctClosureFactory, CTCollection ctCollection,
 		CTConfiguration ctConfiguration,
 		CTDisplayRendererRegistry ctDisplayRendererRegistry,
-		CTEntryLocalService ctEntryLocalService, Language language,
-		Portal portal, RenderRequest renderRequest,
-		RenderResponse renderResponse, UserLocalService userLocalService) {
+		CTEntryLocalService ctEntryLocalService,
+		GroupLocalService groupLocalService, Language language, Portal portal,
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		UserLocalService userLocalService) {
 
 		_activeCTCollectionId = activeCTCollectionId;
 		_basePersistenceRegistry = basePersistenceRegistry;
@@ -94,6 +96,7 @@ public class ViewChangesDisplayContext {
 		_ctConfiguration = ctConfiguration;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
 		_ctEntryLocalService = ctEntryLocalService;
+		_groupLocalService = groupLocalService;
 		_language = language;
 		_portal = portal;
 		_renderRequest = renderRequest;
@@ -234,6 +237,44 @@ public class ViewChangesDisplayContext {
 
 		Set<Long> rootClassNameIds = _getRootClassNameIds(ctClosure);
 
+		JSONObject siteNamesJSONObject = JSONFactoryUtil.createJSONObject();
+
+		if (ctClosure != null) {
+			long groupClassNameId = _portal.getClassNameId(Group.class);
+
+			for (long groupId :
+					classNameIdClassPKsMap.getOrDefault(
+						groupClassNameId, Collections.emptySet())) {
+
+				ModelInfo modelInfo = modelInfoMap.get(
+					new ModelInfoKey(groupClassNameId, groupId));
+
+				siteNamesJSONObject.put(
+					String.valueOf(groupId),
+					modelInfo._jsonObject.getString("title"));
+			}
+		}
+		else {
+			for (ModelInfo modelInfo : modelInfoMap.values()) {
+				long groupId = modelInfo._jsonObject.getLong("groupId");
+
+				if (!siteNamesJSONObject.has(String.valueOf(groupId))) {
+					Group group = _groupLocalService.fetchGroup(groupId);
+
+					if (group != null) {
+						siteNamesJSONObject.put(
+							String.valueOf(groupId),
+							group.getName(_themeDisplay.getLocale()));
+					}
+					else {
+						siteNamesJSONObject.put(
+							String.valueOf(groupId),
+							_language.get(_themeDisplay.getLocale(), "global"));
+					}
+				}
+			}
+		}
+
 		return HashMapBuilder.<String, Object>put(
 			"activeCTCollection",
 			_ctCollection.getCtCollectionId() == _activeCTCollectionId
@@ -327,6 +368,8 @@ public class ViewChangesDisplayContext {
 
 				return rootDisplayClassesJSONArray;
 			}
+		).put(
+			"siteNames", siteNamesJSONObject
 		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 		).put(
@@ -476,6 +519,16 @@ public class ViewChangesDisplayContext {
 		return rootClassNameIds;
 	}
 
+	private <T extends BaseModel<T>> boolean _isSite(T model) {
+		if (model instanceof Group) {
+			Group group = (Group)model;
+
+			return group.isSite();
+		}
+
+		return false;
+	}
+
 	private <T extends BaseModel<T>> void _populateEntryValues(
 			Map<ModelInfoKey, ModelInfo> modelInfoMap, long modelClassNameId,
 			Set<Long> classPKs)
@@ -516,6 +569,8 @@ public class ViewChangesDisplayContext {
 					"modelClassPK", classPK
 				).put(
 					"modelKey", modelInfo._modelKey
+				).put(
+					"site", _isSite(model)
 				).put(
 					"title",
 					_ctDisplayRendererRegistry.getTitle(
@@ -558,6 +613,8 @@ public class ViewChangesDisplayContext {
 					"modelKey", modelInfo._modelKey
 				).put(
 					"modifiedTime", modifiedDate.getTime()
+				).put(
+					"site", _isSite(model)
 				).put(
 					"timeDescription",
 					_language.format(
@@ -622,6 +679,13 @@ public class ViewChangesDisplayContext {
 		CTClosure ctClosure, Map<ModelInfoKey, ModelInfo> modelInfoMap,
 		long groupClassNameId, long groupId) {
 
+		ModelInfo groupModelInfo = modelInfoMap.get(
+			new ModelInfoKey(groupClassNameId, groupId));
+
+		if (!groupModelInfo._jsonObject.getBoolean("site")) {
+			return;
+		}
+
 		Map<Long, List<Long>> pksMap = ctClosure.getChildPKsMap(
 			groupClassNameId, groupId);
 
@@ -659,6 +723,7 @@ public class ViewChangesDisplayContext {
 	private final CTConfiguration _ctConfiguration;
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 	private final CTEntryLocalService _ctEntryLocalService;
+	private final GroupLocalService _groupLocalService;
 	private final boolean _hasChanges;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;

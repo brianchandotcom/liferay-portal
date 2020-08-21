@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -109,8 +110,9 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 			new ViewChangesDisplayContext(
 				activeCtCollectionId, _basePersistenceRegistry,
 				_ctClosureFactory, ctCollection, _ctConfiguration,
-				_ctDisplayRendererRegistry, _ctEntryLocalService, _language,
-				_portal, renderRequest, renderResponse, _userLocalService);
+				_ctDisplayRendererRegistry, _ctEntryLocalService,
+				_groupLocalService, _language, _portal, renderRequest,
+				renderResponse, _userLocalService);
 
 		renderRequest.setAttribute(
 			CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT, viewChangesDisplayContext);
@@ -153,6 +155,9 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;

@@ -1,0 +1,225 @@
+<?xml version="1.0"?>
+
+<xsd:schema
+	attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+	targetNamespace="urn:liferay.com:liferay-jsp-view-state_1.0.0"
+	version="1.0"
+	xmlns="urn:liferay.com:liferay-jsp-view-state_1.0.0"
+	xmlns:javaee="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+>
+	<xsd:annotation>
+		<xsd:documentation>
+			@(#)liferay-jsp-view-state_1_0_0.xsds 1.0.0
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:annotation>
+		<xsd:documentation>
+			Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+
+			This library is free software; you can redistribute it and/or modify
+			it under the terms of the GNU Lesser General Public License as
+			published by the Free Software Foundation; either version 2.1 of the
+			License, or (at your option) any later version.
+
+			This library is distributed in the hope that it will be useful, but
+			WITHOUT ANY WARRANTY; without even the implied warranty of
+			MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+			Lesser General Public License for more details.
+		</xsd:documentation>
+	</xsd:annotation>
+	<xsd:import
+		namespace="http://java.sun.com/xml/ns/javaee"
+		schemaLocation="web-jsptaglibrary_2_1.xsd"
+	/>
+
+	<xsd:complexType name="ActionURL">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the javax.portlet.ActionURL object type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Boolean">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the java.lang.Boolean object type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Byte">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the java.lang.Byte object type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Character">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the java.lang.Character object type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Double">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the java.lang.Double object type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Float">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the java.lang.Float object type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Integer">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the java.lang.Integer object type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Long">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the java.lang.Long object type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="PortletURL">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the javax.portlet.PortletURL object type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="ResourceURL">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the javax.portlet.ResourceURL object type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="RenderURL">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the javax.portlet.RenderURL object type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="Short">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the java.lang.Short object type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="String">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the java.lang.String object type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="boolean">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the Java boolean primitive type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="byte">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the Java byte primitive type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="char">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the Java char primitive type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="default">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the type associated with the JSP tag attribute of the same name</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="double">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the Java double primitive type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="float">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the Java float primitive type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="fqcn">
+		<xsd:annotation>
+			<xsd:documentation>Refers to a Java type specified as a Fully Qualified Class Name (FQCN) within an fqcn child element</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType">
+				<xsd:sequence>
+					<xsd:element name="fqcn" type="javaee:java-typeType" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="int">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the Java int primitive type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="long">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the Java long primitive type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:complexType name="short">
+		<xsd:annotation>
+			<xsd:documentation>Refers to the Java short primitive type</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexContent>
+			<xsd:extension base="javaee:extensibleType" />
+		</xsd:complexContent>
+	</xsd:complexType>
+</xsd:schema>

@@ -609,6 +609,9 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 			"http://www.liferay.com/dtd/liferay-ddm-structure_7_1_0.xsd",
 			"liferay-ddm-structure_7_1_0.xsd"),
 		new KeyValuePair(
+			"http://www.liferay.com/dtd/liferay-jsp-view-state_1_0_0.xsd",
+			"liferay-jsp-view-state_1_0_0.xsd"),
+		new KeyValuePair(
 			"http://www.liferay.com/dtd/liferay-workflow-definition_6_0_0.xsd",
 			"liferay-workflow-definition_6_0_0.xsd"),
 		new KeyValuePair(

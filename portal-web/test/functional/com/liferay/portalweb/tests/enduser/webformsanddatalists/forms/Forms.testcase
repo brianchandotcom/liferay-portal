@@ -164,17 +164,13 @@ definition {
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Text Field Required");
 
-		Form.editElementSetFieldLabel(
-			fieldName = "TextFieldRequired",
-			fieldValue = "表格文本");
+		Form.editElementSetFieldLabel(fieldValue = "表格文本");
 
 		Form.closeSidebar();
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Select Repeatable");
 
-		Form.editElementSetFieldLabel(
-			fieldName = "SelectRepeatable",
-			fieldValue = "表单选择");
+		Form.editElementSetFieldLabel(fieldValue = "表单选择");
 
 		Form.closeSidebar();
 

@@ -172,9 +172,7 @@ definition {
 			var fieldName = StringUtil.replace("${fieldValue}", " ", "");
 		}
 
-		Form.editFieldLabelMetal(
-			fieldName = "${fieldName}",
-			fieldValue = "${fieldValue}");
+		Form.editFieldLabelMetal(fieldValue = "${fieldValue}");
 	}
 
 	macro editFieldDataProvider {

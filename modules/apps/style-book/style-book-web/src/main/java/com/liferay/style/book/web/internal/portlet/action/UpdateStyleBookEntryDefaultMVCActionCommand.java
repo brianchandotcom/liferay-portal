@@ -53,8 +53,6 @@ public class UpdateStyleBookEntryDefaultMVCActionCommand
 
 		_styleBookEntryService.updateDefaultStyleBookEntry(
 			styleBookEntryId, defaultStyleBookEntry);
-
-		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference

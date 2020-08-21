@@ -179,7 +179,7 @@ const CommonStyles = ({commonStyles, itemConfig, onValueSelect}) => {
 
 CommonStyles.propTypes = {
 	commonStyles: PropTypes.array.isRequired,
-	item: PropTypes.object.isRequired,
+	itemConfig: PropTypes.object.isRequired,
 	onValueSelect: PropTypes.func.isRequired,
 };
 

@@ -81,7 +81,34 @@ jest.mock(
 				desktop: {label: 'Desktop'},
 				tablet: {label: 'tablet'},
 			},
-			commonStyles: [],
+			commonStyles: [
+				{
+					label: 'margin',
+					styles: [
+						{
+							dataType: 'string',
+							defaultValue: '0',
+							dependencies: [],
+							displaySize: 'small',
+							label: 'margin-top',
+							name: 'marginTop',
+							responsive: true,
+							responsiveTemplate: 'mt{viewport}{value}',
+							type: 'select',
+							validValues: [
+								{
+									label: '0',
+									value: '0',
+								},
+								{
+									label: '1',
+									value: '1',
+								},
+							],
+						},
+					],
+				},
+			],
 			responsiveEnabled: true,
 		},
 	})
@@ -192,6 +219,29 @@ describe('RowStylesPanel', () => {
 		expect(updateItemConfig).toHaveBeenCalledWith({
 			itemConfig: {
 				tablet: {modulesPerRow: 1},
+			},
+			itemId: '0',
+			segmentsExperienceId: '0',
+		});
+	});
+
+	it('allows changing styles for a given viewport', async () => {
+		const {getByLabelText} = renderComponent({
+			state: {selectedViewportSize: 'tablet'},
+		});
+		const input = getByLabelText('margin-top');
+
+		await fireEvent.change(input, {
+			target: {value: '1'},
+		});
+
+		expect(updateItemConfig).toHaveBeenCalledWith({
+			itemConfig: {
+				tablet: {
+					styles: {
+						marginTop: '1',
+					},
+				},
 			},
 			itemId: '0',
 			segmentsExperienceId: '0',

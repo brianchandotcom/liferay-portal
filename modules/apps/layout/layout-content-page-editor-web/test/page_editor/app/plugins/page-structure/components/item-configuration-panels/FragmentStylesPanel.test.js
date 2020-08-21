@@ -19,7 +19,9 @@ import React from 'react';
 import {VIEWPORT_SIZES} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import updateItemConfig from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
-import {ContainerStylesPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/item-configuration-panels/ContainerStylesPanel';
+import {FragmentStylesPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/item-configuration-panels/FragmentStylesPanel';
+
+const FRAGMENT_ENTRY_LINK_ID = '1';
 
 const renderComponent = ({
 	dispatch = () => {},
@@ -29,14 +31,20 @@ const renderComponent = ({
 		<StoreAPIContextProvider
 			dispatch={dispatch}
 			getState={() => ({
+				fragmentEntryLinks: {
+					[FRAGMENT_ENTRY_LINK_ID]: {},
+				},
 				segmentsExperienceId: '0',
 				selectedViewportSize,
 			})}
 		>
-			<ContainerStylesPanel
+			<FragmentStylesPanel
 				item={{
 					children: [],
-					config: {tablet: {styles: {}}},
+					config: {
+						fragmentEntryLinkId: FRAGMENT_ENTRY_LINK_ID,
+						tablet: {styles: {}},
+					},
 					itemId: '0',
 					parentId: '',
 					type: '',
@@ -94,34 +102,10 @@ jest.mock(
 	})
 );
 
-describe('ContainerStylesPanel', () => {
+describe('FragmentStylesPanel', () => {
 	afterEach(() => {
 		cleanup();
 		updateItemConfig.mockClear();
-	});
-
-	it('renders correctly', () => {
-		const {getByLabelText} = renderComponent();
-
-		expect(getByLabelText('container-width')).toBeInTheDocument();
-	});
-
-	it('calls dispatch method when changing the container width', async () => {
-		const {getByLabelText} = renderComponent();
-
-		const containerWidthSelect = getByLabelText('container-width');
-
-		await fireEvent.change(containerWidthSelect, {
-			target: {value: 'fixed'},
-		});
-
-		expect(updateItemConfig).toBeCalledWith(
-			expect.objectContaining({
-				itemConfig: {
-					widthType: 'fixed',
-				},
-			})
-		);
 	});
 
 	it('allows changing styles for a given viewport', async () => {

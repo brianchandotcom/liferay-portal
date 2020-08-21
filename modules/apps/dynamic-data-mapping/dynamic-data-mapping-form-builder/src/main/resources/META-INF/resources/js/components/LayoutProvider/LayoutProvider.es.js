@@ -39,6 +39,7 @@ import handleFieldDeleted from './handlers/fieldDeletedHandler.es';
 import handleFieldDuplicated from './handlers/fieldDuplicatedHandler.es';
 import handleFieldEdited from './handlers/fieldEditedHandler.es';
 import handleFieldEditedProperties from './handlers/fieldEditedPropertiesHandler.es';
+import handleFieldHovered from './handlers/fieldHoveredHandler.es';
 import handleFieldMoved from './handlers/fieldMovedHandler.es';
 import handleFieldSetAdded from './handlers/fieldSetAddedHandler.es';
 import handleFocusedFieldEvaluationEnded from './handlers/focusedFieldEvaluationEndedHandler.es';
@@ -167,7 +168,7 @@ class LayoutProvider extends Component {
 	getPages() {
 		const {defaultLanguageId, editingLanguageId} = this.props;
 		const {availableLanguageIds = [editingLanguageId]} = this.props;
-		const {focusedField} = this.state;
+		const {fieldHovered, focusedField} = this.state;
 		let {pages} = this.state;
 
 		const visitor = new PagesVisitor(pages);
@@ -193,7 +194,9 @@ class LayoutProvider extends Component {
 						instanceId: field.instanceId || generateInstanceId(),
 						repeatedIndex: getRepeatedIndex(field.name),
 					}),
-					selected: focusedField.fieldName === field.fieldName,
+					selected:
+						focusedField.fieldName === field.fieldName ||
+						fieldHovered.fieldName === field.fieldName,
 					settingsContext: newSettingsContext,
 				};
 			},
@@ -372,7 +375,16 @@ class LayoutProvider extends Component {
 	}
 
 	_handleFieldHovered(fieldHovered) {
-		this.setState({fieldHovered});
+		const {fieldName} = fieldHovered;
+
+		if (fieldName) {
+			this.setState(
+				handleFieldHovered(this.props, this.state, fieldName)
+			);
+		}
+		else {
+			this.setState({fieldHovered});
+		}
 	}
 
 	_handleFieldBlurred(event) {

@@ -247,45 +247,41 @@ public class LocaleUtil {
 				languageId, CharPool.MINUS, CharPool.UNDERLINE);
 		}
 
-		try {
-			int pos = languageId.indexOf(CharPool.UNDERLINE);
+		int pos = languageId.indexOf(CharPool.UNDERLINE);
 
-			if (pos == -1) {
-				locale = new Locale(languageId);
+		if (pos == -1) {
+			locale = new Locale(languageId);
+		}
+		else {
+			String[] languageIdParts = StringUtil.split(
+				languageId, CharPool.UNDERLINE);
+
+			String languageCode = languageIdParts[0];
+			String countryCode = languageIdParts[1];
+
+			String variant = null;
+
+			if (languageIdParts.length > 2) {
+				variant = languageIdParts[2];
+			}
+
+			if (Validator.isNotNull(variant)) {
+				locale = new Locale(languageCode, countryCode, variant);
 			}
 			else {
-				String[] languageIdParts = StringUtil.split(
-					languageId, CharPool.UNDERLINE);
-
-				String languageCode = languageIdParts[0];
-				String countryCode = languageIdParts[1];
-
-				String variant = null;
-
-				if (languageIdParts.length > 2) {
-					variant = languageIdParts[2];
-				}
-
-				if (Validator.isNotNull(variant)) {
-					locale = new Locale(languageCode, countryCode, variant);
-				}
-				else {
-					locale = new Locale(languageCode, countryCode);
-				}
+				locale = new Locale(languageCode, countryCode);
 			}
-
-			if (validate && !LanguageUtil.isAvailableLocale(locale)) {
-				throw new IllegalArgumentException("Invalid locale " + locale);
-			}
-
-			_locales.put(languageId, locale);
 		}
-		catch (Exception exception) {
+
+		if (validate && !LanguageUtil.isAvailableLocale(locale)) {
 			locale = null;
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(languageId + " is not a valid language id");
 			}
+		}
+		else {
+			_locales.put(languageId, locale);
 		}
 
 		if ((locale == null) && useDefault) {

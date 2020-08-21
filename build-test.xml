@@ -4327,15 +4327,10 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 										</then>
 									</elseif>
 									<else>
-										<beanshell>
-											<![CDATA[
-												import com.liferay.jenkins.results.parser.AppServer;
-
-												AppServer appServer = new AppServer(project);
-
-												appServer.startService();
-											]]>
-										</beanshell>
+										<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" outputproperty="app.server.log" resolveexecutable="true">
+											<arg line="${app.server.start.executable.arg.line}" />
+											<env key="JAVA_HOME" path="${java.jdk.home}" />
+										</exec>
 									</else>
 								</if>
 

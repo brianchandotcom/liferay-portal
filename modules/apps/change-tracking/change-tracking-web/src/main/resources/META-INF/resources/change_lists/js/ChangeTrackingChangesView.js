@@ -29,6 +29,7 @@ class ChangeTrackingChangesView extends React.Component {
 		super(props);
 
 		const {
+			activeCTCollection,
 			changes,
 			contextView,
 			discardURL,
@@ -41,6 +42,7 @@ class ChangeTrackingChangesView extends React.Component {
 			userInfo,
 		} = props;
 
+		this.activeCTCollection = activeCTCollection;
 		this.changes = changes;
 		this.contextView = contextView;
 		this.discardURL = discardURL;
@@ -1076,30 +1078,34 @@ class ChangeTrackingChangesView extends React.Component {
 			dropdownItems = dropdownItems.slice(0);
 		}
 
-		dropdownItems.push({
-			href: this._getDiscardURL(node),
-			label: Liferay.Language.get('discard'),
-		});
+		if (this.activeCTCollection) {
+			dropdownItems.push({
+				href: this._getDiscardURL(node),
+				label: Liferay.Language.get('discard'),
+			});
+		}
 
-		this.setState({
-			dropdown: (
-				<div className="autofit-col">
-					<ClayDropDownWithItems
-						alignmentPosition={Align.BottomLeft}
-						items={dropdownItems}
-						spritemap={this.spritemap}
-						trigger={
-							<ClayButtonWithIcon
-								displayType="unstyled"
-								small
-								spritemap={this.spritemap}
-								symbol="ellipsis-v"
-							/>
-						}
-					/>
-				</div>
-			),
-		});
+		if (dropdownItems.length > 0) {
+			this.setState({
+				dropdown: (
+					<div className="autofit-col">
+						<ClayDropDownWithItems
+							alignmentPosition={Align.BottomLeft}
+							items={dropdownItems}
+							spritemap={this.spritemap}
+							trigger={
+								<ClayButtonWithIcon
+									displayType="unstyled"
+									small
+									spritemap={this.spritemap}
+									symbol="ellipsis-v"
+								/>
+							}
+						/>
+					</div>
+				),
+			});
+		}
 	}
 
 	render() {

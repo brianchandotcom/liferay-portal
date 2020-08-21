@@ -14,24 +14,4 @@ definition {
 			productTitle = "${productTitle}");
 	}
 
-	macro moveCatalogEntriesToRecycleBin {
-		Click(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
-
-		Click(locator1 = "Button#RECYCLE_BIN");
-	}
-
-	macro moveCatalogEntryToRecycleBinViaCheckbox {
-		Click(
-			key_entryTitle = "${productTitle}",
-			locator1 = "CommerceNavigation#SINGLE_ENTRY_CHECKBOX");
-
-		Click(locator1 = "Button#RECYCLE_BIN");
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-
-		AssertElementNotPresent(locator1 = "Message#ERROR");
-
-		AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
-	}
-
 }

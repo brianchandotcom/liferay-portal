@@ -132,9 +132,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		enumeration = bundle.findEntries("META-INF/resources", "*.js", true);
 
 		if (enumeration == null) {
-			_log.error("No *.js files found in " + bundle);
-
-			return null;
+			enumeration = Collections.enumeration(Collections.emptyList());
 		}
 
 		List<Future<Map.Entry<URL, Collection<String>>>>

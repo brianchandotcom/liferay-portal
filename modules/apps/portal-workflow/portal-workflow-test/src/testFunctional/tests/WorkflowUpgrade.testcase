@@ -82,7 +82,6 @@ definition {
 
 	@priority = "5"
 	test ViewWorkflowArchive625 {
-		property portal.upstream = "quarantine";
 		property data.archive.type = "data-archive-workflow";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "6.2.5";
@@ -92,7 +91,6 @@ definition {
 
 	@priority = "5"
 	test ViewWorkflowArchive704 {
-		property portal.upstream = "quarantine";
 		property data.archive.type = "data-archive-workflow";
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.0.4";
@@ -102,7 +100,6 @@ definition {
 
 	@priority = "5"
 	test ViewWorkflowArchive70106 {
-		property portal.upstream = "quarantine";
 		property data.archive.type = "data-archive-workflow";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.0.10.6";
@@ -114,7 +111,6 @@ definition {
 
 	@priority = "5"
 	test ViewWorkflowArchive621015 {
-		property portal.upstream = "quarantine";
 		property data.archive.type = "data-archive-workflow";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.15";
@@ -126,7 +122,6 @@ definition {
 
 	@priority = "5"
 	test ViewWorkflowArchive621021 {
-		property portal.upstream = "quarantine";
 		property data.archive.type = "data-archive-workflow";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";

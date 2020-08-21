@@ -280,6 +280,11 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		).put(
 			"validAnalyticsConnection",
 			analyticsReportsDataProvider.isValidAnalyticsConnection(companyId)
+		).put(
+			"viewURLs",
+			_getViewURLsJSONArray(
+				analyticsReportsInfoItem, infoDisplayObjectProvider, object,
+				resourceResponse, urlLocale)
 		);
 	}
 
@@ -420,6 +425,36 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			});
 
 		return trafficSourcesJSONArray;
+	}
+
+	private JSONArray _getViewURLsJSONArray(
+		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem,
+		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider,
+		Object object, ResourceResponse resourceResponse, Locale urlLocale) {
+
+		List<Locale> locales = analyticsReportsInfoItem.getAvailableLocales(
+			object);
+
+		Stream<Locale> stream = locales.stream();
+
+		return JSONUtil.putAll(
+			stream.map(
+				locale -> JSONUtil.put(
+					"default",
+					Objects.equals(
+						locale,
+						analyticsReportsInfoItem.getDefaultLocale(object))
+				).put(
+					"languageId", LocaleUtil.toBCP47LanguageId(locale)
+				).put(
+					"selected", Objects.equals(locale, urlLocale)
+				).put(
+					"viewURL",
+					_getResourceURL(
+						infoDisplayObjectProvider, locale, resourceResponse,
+						"/analytics_reports/get_data")
+				)
+			).toArray());
 	}
 
 	private LocalDate _toLocaleDate(Date date) {

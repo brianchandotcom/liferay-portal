@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -45,6 +46,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -104,6 +106,30 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 				folder.getFolderId(), httpServletRequest, folder.getName(),
 				portletURL);
 		}
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #addPortletBreadcrumbEntries(long, String,
+	 *             HttpServletRequest, LiferayPortletRequest,
+	 *             LiferayPortletResponse, PortletURL)}
+	 */
+	@Deprecated
+	public static void addPortletBreadcrumbEntries(
+			long folderId, String displayStyle,
+			HttpServletRequest httpServletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			PortletURL portletURL)
+		throws Exception {
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		addPortletBreadcrumbEntries(
+			folderId, displayStyle, httpServletRequest,
+			PortalUtil.getLiferayPortletRequest(portletRequest),
+			liferayPortletResponse, portletURL);
 	}
 
 	public static JSONObject getItemMetadataJSONObject(

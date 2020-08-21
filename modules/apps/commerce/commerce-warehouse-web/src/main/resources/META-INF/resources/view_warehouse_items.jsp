@@ -104,7 +104,7 @@ if (Validator.isNotNull(backURL)) {
 			commerceInventoryWarehouseItemId,
 			index
 		) {
-			var form = $(document.<portlet:namespace />fm);
+			var form = AUI.$(document.<portlet:namespace />fm);
 
 			if (commerceInventoryWarehouseItemId > 0) {
 				form.fm('<%= Constants.CMD %>').val('<%= Constants.UPDATE %>');
@@ -121,9 +121,9 @@ if (Validator.isNotNull(backURL)) {
 			var quantityInputId =
 				'#<portlet:namespace />commerceInventoryWarehouseItemQuantity' + index;
 
-			var quantityInput = $(quantityInputId);
+			var quantityInput = window.document.querySelector(quantityInputId);
 
-			form.fm('quantity').val(quantityInput.val());
+			form.fm('quantity').val(quantityInput.value);
 
 			submitForm(form);
 		}
@@ -134,13 +134,18 @@ if (Validator.isNotNull(backURL)) {
 			'<portlet:namespace />commerceInventoryWarehouseItemQuantity';
 		var enterKeyCode = 13;
 
-		$('input[id^=' + quantityPrefix + ']').on('keypress', function (event) {
-			if (event.keyCode == enterKeyCode) {
-				event.preventDefault();
+		var quantityInputElements = window.document.querySelectorAll('input[id^=' + quantityPrefix + ']');
 
-				var curIndex = $(this).attr('id').split(quantityPrefix)[1];
-				$('#<portlet:namespace/>saveButton' + curIndex).click();
-			}
+		Array.from(quantityInputElements).forEach(function(quantityInputElement) {
+			quantityInputElement.addEventListener('keypress', function (event) {
+				if (event.keyCode == enterKeyCode) {
+					event.preventDefault();
+
+					var curIndex = event.currentTarget.getAttribute('id').split(quantityPrefix)[1];
+
+					window.document.querySelector('#<portlet:namespace/>saveButton' + curIndex).click();
+				}
+			});
 		});
 	</aui:script>
 </c:if>

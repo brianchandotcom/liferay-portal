@@ -129,8 +129,8 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 </aui:form>
 
 <aui:script use="liferay-item-selector-dialog">
-	var fileEntryRemove = $('#<portlet:namespace />fileEntryRemove');
-	var fileEntryNameInput = $('#<portlet:namespace />fileEntryNameInput');
+	var fileEntryRemove = window.document.querySelector('#<portlet:namespace />fileEntryRemove');
+	var fileEntryNameInput = window.document.querySelector('#<portlet:namespace />fileEntryNameInput');
 
 	window.document.querySelector('#<portlet:namespace />selectFile').addEventListener('click', function (event) {
 		event.preventDefault();
@@ -150,9 +150,9 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 
 						window.document.querySelector('#lfr-virtual-order-item-button-row-message').classList.add('hide');
 
-						fileEntryRemove.removeClass('hide');
+						fileEntryRemove.classList.remove('hide');
 
-						fileEntryNameInput.html('<a>' + value.title + '</a>');
+						fileEntryNameInput.innerHTML = '<a>' + value.title + '</a>';
 					}
 				},
 			},
@@ -173,8 +173,8 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 
 		window.document.querySelector('#lfr-virtual-order-item-button-row-message').classList.remove('hide');
 
-		fileEntryNameInput.html('<liferay-ui:message key="none" />');
+		fileEntryNameInput.innerHTML = '<liferay-ui:message key="none" />';
 
-		fileEntryRemove.addClass('hide');
+		fileEntryRemove.classList.add('hide');
 	});
 </aui:script>

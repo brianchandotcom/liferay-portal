@@ -102,7 +102,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 
 						window.document.querySelector('#<portlet:namespace />commerceAccountGroupIds').value = <portlet:namespace />addCommerceAccountGroupIds;
 
-						var form = $('#<portlet:namespace />fm');
+						var form = AUI.$('#<portlet:namespace />fm');
 
 						submitForm(form);
 					}
@@ -140,7 +140,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 
 						window.document.querySelector('#<portlet:namespace />commerceChannelIds').value = <portlet:namespace />addCommerceChannelIds;
 
-						var form = $('#<portlet:namespace />fm');
+						var form = AUI.$('#<portlet:namespace />fm');
 
 						submitForm(form);
 					}

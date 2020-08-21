@@ -250,12 +250,13 @@ String productContentAuthToken = AuthTokenUtil.getToken(request, plid, CPPortlet
 </div>
 
 <aui:script>
-	$(document).ready(function () {
-		$('.thumb').click(function () {
-			$('#<portlet:namespace />full-image').attr(
-				'src',
-				$(this).attr('data-url')
-			);
+	window.document.addEventListener('DOMContentLoaded', function () {
+		var thumbElements = window.document.querySelectorAll('.thumb');
+
+		Array.from(thumbElements).forEach(function(thumbElement) {
+			thumbElement.addEventListener('click', function (event) {
+				window.document.querySelector('#<portlet:namespace />full-image').setAttribute('src', event.currentTarget.getAttribute('data-url'));
+			});
 		});
 	});
 </aui:script>

@@ -214,12 +214,10 @@ if (cpDisplayLayout != null) {
 </aui:script>
 
 <aui:script use="liferay-item-selector-dialog">
-	var displayPageItemContainer = $(
-		'#<portlet:namespace />displayPageItemContainer'
-	);
-	var displayPageItemRemove = $('#<portlet:namespace />displayPageItemRemove');
-	var displayPageNameInput = $('#<portlet:namespace />displayPageNameInput');
-	var pagesContainerInput = $('#<portlet:namespace />pagesContainerInput');
+	var displayPageItemContainer = window.document.querySelector('#<portlet:namespace />displayPageItemContainer');
+	var displayPageItemRemove = window.document.querySelector('#<portlet:namespace />displayPageItemRemove');
+	var displayPageNameInput = window.document.querySelector('#<portlet:namespace />displayPageNameInput');
+	var pagesContainerInput = window.document.querySelector('#<portlet:namespace />pagesContainerInput');
 
 	window.document.querySelector('#<portlet:namespace />chooseDisplayPage').addEventListener('click', function (event) {
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
@@ -229,11 +227,11 @@ if (cpDisplayLayout != null) {
 					var selectedItem = event.newVal;
 
 					if (selectedItem) {
-						pagesContainerInput.val(selectedItem.id);
+						pagesContainerInput.value = selectedItem.id;
 
-						displayPageNameInput.html(selectedItem.name);
+						displayPageNameInput.innerHTML = selectedItem.name;
 
-						displayPageItemRemove.removeClass('hide');
+						displayPageItemRemove.classList.remove('hide');
 					}
 				},
 			},
@@ -246,11 +244,11 @@ if (cpDisplayLayout != null) {
 		itemSelectorDialog.open();
 	});
 
-	displayPageItemRemove.on('click', function (event) {
-		displayPageNameInput.html('<liferay-ui:message key="none" />');
+	displayPageItemRemove.addEventListener('click', function (event) {
+		displayPageNameInput.innerHTML = '<liferay-ui:message key="none" />';
 
-		pagesContainerInput.val('');
+		pagesContainerInput.value = '';
 
-		displayPageItemRemove.addClass('hide');
+		displayPageItemRemove.classList.add('hide');
 	});
 </aui:script>

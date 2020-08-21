@@ -184,6 +184,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COLOR_SWATCH_ITEM</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//button[contains(@class,'color')][@*='${key_colorSwatchItem}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENT</td>
 	<td>//button/span[contains(.,'Comment')]</td>
 	<td></td>

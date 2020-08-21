@@ -119,13 +119,13 @@ public interface BaseProjectTemplatesTestCase {
 	public static final String DEPENDENCY_JAVAX_SERVLET_API =
 		"compileOnly group: \"javax.servlet\", name: \"javax.servlet-api\"";
 
-	public static final String DEPENDENCY_PORTAL_KERNEL =
-		"compileOnly group: \"com.liferay.portal\", name: " +
-			"\"com.liferay.portal.kernel\"";
-
 	public static final String DEPENDENCY_ORG_OSGI_ANNOTATIONS =
 		"compileOnly group: \"org.osgi\", name: " +
 			"\"org.osgi.service.component.annotations\"";
+
+	public static final String DEPENDENCY_PORTAL_KERNEL =
+		"compileOnly group: \"com.liferay.portal\", name: " +
+			"\"com.liferay.portal.kernel\"";
 
 	public static final String DEPENDENCY_RELEASE_PORTAL_API =
 		"compileOnly group: \"com.liferay.portal\", name: " +

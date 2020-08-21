@@ -185,7 +185,7 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				gradleProjectDir, _name + "-service/build.gradle",
 				"org.osgi.annotation.versioning");
 		}
-		else if(_liferayVersion.startsWith("7.2")) {
+		else if (_liferayVersion.startsWith("7.2")) {
 			testContains(
 				gradleProjectDir, _name + "-api/build.gradle",
 				DEPENDENCY_RELEASE_PORTAL_API,

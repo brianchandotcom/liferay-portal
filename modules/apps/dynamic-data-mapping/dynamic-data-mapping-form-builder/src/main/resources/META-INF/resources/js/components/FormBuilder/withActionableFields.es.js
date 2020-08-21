@@ -202,13 +202,15 @@ const withActionableFields = (ChildComponent) => {
 
 			if (hoveredNode) {
 				hoveredNode.classList.remove(_CSS_HOVERED);
+
+				dispatch('fieldBlurred', {});
 			}
 
 			delegateTarget.classList.add(_CSS_HOVERED);
 
-			this.showActions(hoveredFieldActions, fieldName);
-
 			dispatch('fieldHovered', {fieldName});
+
+			this.showActions(hoveredFieldActions, fieldName);
 
 			event.stopPropagation();
 		}

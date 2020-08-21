@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>com_liferay_portal_search_elasticsearch6_xpack_monitoring_portlet_XPackMonitoringPortlet</portlet-name>
+		<portlet-name>com_liferay_portal_search_elasticsearch_monitoring_portlet_MonitoringPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>VIEW</action-key>

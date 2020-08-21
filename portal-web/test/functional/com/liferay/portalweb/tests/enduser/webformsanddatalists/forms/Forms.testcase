@@ -200,11 +200,17 @@ definition {
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Text Field Required");
 
-		FormFields.editFieldName(fieldValue = "FirstTextField");
+		Form.gotoAdvancedTab();
+
+		var textFieldRequiredName1 = FormFields.getFieldName();
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Select Repeatable");
 
 		Form.gotoAdvancedTab();
 
-		var fieldName1 = FormFields.getFieldName();
+		var selectRepeatableName1 = FormFields.getFieldName();
 
 		Form.closeSidebar();
 
@@ -212,15 +218,16 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "表格文本",
-			fieldName = "${fieldName1}");
+			fieldName = "${textFieldRequiredName1}");
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "表单选择",
-			fieldName = "SelectRepeatable");
+			fieldName = "${selectRepeatableName1}");
 
 		FormFields.viewRequiredAsterisk();
 
-		FormsAdminNavigator.gotoEditField(fieldName = "SelectRepeatable");
+		FormsAdminNavigator.gotoEditField(
+			fieldName = "${selectRepeatableName1}");
 
 		Form.gotoAdvancedTab();
 
@@ -234,11 +241,21 @@ definition {
 			elementSetTitle = "Element Set 1",
 			fieldPositionNumber = "4");
 
-		FormsAdminNavigator.gotoEditField(fieldName = "TextFieldRequired");
+		FormsAdminNavigator.gotoEditField(
+			fieldName = "Text Field Required", fieldPositionNumber = "2");
 
 		Form.gotoAdvancedTab();
 
-		var fieldName2 = FormFields.getFieldName();
+		var textFieldRequiredName2 = FormFields.getFieldName();
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoEditField(
+			fieldName = "Select Repeatable", fieldPositionNumber = "2");
+
+		Form.gotoAdvancedTab();
+
+		var selectRepeatableName2 = FormFields.getFieldName();
 
 		Form.closeSidebar();
 
@@ -250,19 +267,19 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field Required",
-			fieldName = "${fieldName1}");
+			fieldName = "${textFieldRequiredName1}");
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "Select Repeatable",
-			fieldName = "SelectRepeatable");
+			fieldName = "${selectRepeatableName1}");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field Required",
-			fieldName = "${fieldName2}");
+			fieldName = "${textFieldRequiredName2}");
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "Select Repeatable",
-			fieldName = "SelectRepeatable1");
+			fieldName = "${selectRepeatableName2}");
 
 		FormFields.viewRequiredAsterisk();
 
@@ -270,28 +287,28 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "表格文本",
-			fieldName = "${fieldName1}");
+			fieldName = "${textFieldRequiredName1}");
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "表单选择",
-			fieldName = "SelectRepeatable");
+			fieldName = "${selectRepeatableName1}");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "表格文本",
-			fieldName = "${fieldName2}");
+			fieldName = "${textFieldRequiredName2}");
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "表单选择",
-			fieldName = "SelectRepeatable1");
+			fieldName = "${selectRepeatableName2}");
 
 		FormFields.viewRequiredAsterisk();
 
 		FormFields.editText(
-			fieldName = "${fieldName1}",
+			fieldName = "${textFieldRequiredName1}",
 			fieldValue = "文本输入中文");
 
 		FormFields.editText(
-			fieldName = "${fieldName2}",
+			fieldName = "${textFieldRequiredName2}",
 			fieldValue = "文本再次输入中文");
 
 		FormPortlet.submitLocalizedSuccessfully(buttonName = "提交");
@@ -312,19 +329,35 @@ definition {
 			elementSetTitle = "Element Set 1",
 			fieldPositionNumber = "1");
 
+		FormsAdminNavigator.gotoEditField(fieldName = "Text Field Required");
+
+		Form.gotoAdvancedTab();
+
+		var textFieldRequiredName3 = FormFields.getFieldName();
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Select Repeatable");
+
+		Form.gotoAdvancedTab();
+
+		var selectRepeatableName3 = FormFields.getFieldName();
+
+		Form.closeSidebar();
+
 		Form.addTranslation(localizedLanguage = "Chinese (China)");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "表格文本",
-			fieldName = "TextFieldRequired");
+			fieldName = "${textFieldRequiredName3}");
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "表单选择",
-			fieldName = "SelectRepeatable");
+			fieldName = "${selectRepeatableName3}");
 
 		FormFields.viewRequiredAsterisk();
 
-		FormsAdminNavigator.gotoEditField(fieldName = "SelectRepeatable");
+		FormsAdminNavigator.gotoEditField(fieldName = "表单选择");
 
 		Form.gotoAdvancedTab();
 

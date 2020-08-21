@@ -47,7 +47,7 @@ definition {
 
 		WebContent.addCP(webContentTitle = "Basic S.P.A.C.E. Banner");
 
-		AlloyEditor.addSourceContent(content = '''
+		CKEditor.addSourceContent(content = '''
 <h2 class="text-center">Space Program Academy of Continuing Education</h2>
 
 <p class="text-center">Dare to Dream out of this world</p>
@@ -74,7 +74,7 @@ definition {
 			locator1 = "CKEditor#BODY_FIELD_WEB_CONTENT_ARTICLE",
 			value1 = "A Japanese translation of the basic front page banner");
 
-		AlloyEditor.addSourceContent(content = '''
+		CKEditor.addSourceContent(content = '''
 <h2 class="text-center">Space Program 大学生涯教育</h2>
 
 <p class="text-center">地球から、宇宙の果てへ</p>

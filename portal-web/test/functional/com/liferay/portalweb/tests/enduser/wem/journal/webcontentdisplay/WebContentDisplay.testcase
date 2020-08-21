@@ -429,7 +429,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		AlloyEditor.addSourceContent(content = '''<p><span><a href="${portalURL}/web/test-site-name/site-page-name/-/testportlet">text</a></span></p>''');
+		CKEditor.addSourceContent(content = '''<p><span><a href="${portalURL}/web/test-site-name/site-page-name/-/testportlet">text</a></span></p>''');
 
 		PortletEntry.publish();
 

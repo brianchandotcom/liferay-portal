@@ -12,12 +12,12 @@
  *
  */
 
-package com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.constants;
+package com.liferay.portal.search.elasticsearch.monitoring.web.internal.constants;
 
 /**
  * @author André de Oliveira
  */
-public class XPackMonitoringProxyServletWebKeys {
+public class MonitoringProxyServletWebKeys {
 
 	public static final String ERROR_DISPLAY_CONTEXT = "ERROR_DISPLAY_CONTEXT";
 

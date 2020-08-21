@@ -12,13 +12,13 @@
  *
  */
 
-package com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.constants;
+package com.liferay.portal.search.elasticsearch.monitoring.web.internal.constants;
 
 /**
  * @author André de Oliveira
  */
-public class XPackMonitoringWebConstants {
+public class MonitoringWebConstants {
 
-	public static final String SERVLET_PATH = "xpack-monitoring-proxy";
+	public static final String SERVLET_PATH = "monitoring-proxy";
 
 }

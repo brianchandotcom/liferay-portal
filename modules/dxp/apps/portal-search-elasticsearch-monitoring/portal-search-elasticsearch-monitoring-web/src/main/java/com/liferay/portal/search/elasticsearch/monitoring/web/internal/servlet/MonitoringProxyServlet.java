@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.servlet;
+package com.liferay.portal.search.elasticsearch.monitoring.web.internal.servlet;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -28,11 +28,11 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.configuration.XPackMonitoringConfiguration;
-import com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.constants.XPackMonitoringPortletKeys;
-import com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.constants.XPackMonitoringProxyServletWebKeys;
-import com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.constants.XPackMonitoringWebConstants;
-import com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.servlet.display.context.ErrorDisplayContext;
+import com.liferay.portal.search.elasticsearch.monitoring.web.internal.configuration.MonitoringConfiguration;
+import com.liferay.portal.search.elasticsearch.monitoring.web.internal.constants.MonitoringPortletKeys;
+import com.liferay.portal.search.elasticsearch.monitoring.web.internal.constants.MonitoringProxyServletWebKeys;
+import com.liferay.portal.search.elasticsearch.monitoring.web.internal.constants.MonitoringWebConstants;
+import com.liferay.portal.search.elasticsearch.monitoring.web.internal.servlet.display.context.ErrorDisplayContext;
 
 import java.io.IOException;
 
@@ -62,21 +62,20 @@ import org.osgi.service.component.annotations.Reference;
  * @author André de Oliveira
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.configuration.XPackMonitoringConfiguration",
+	configurationPid = "com.liferay.portal.search.elasticsearch.monitoring.web.internal.configuration.MonitoringConfiguration",
 	immediate = true,
 	property = {
-		"osgi.http.whiteboard.context.select=portal-search-elasticsearch-xpack-monitoring",
-		"osgi.http.whiteboard.servlet.name=com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.servlet.XPackMonitoringProxyServlet",
-		"osgi.http.whiteboard.servlet.pattern=/" + XPackMonitoringWebConstants.SERVLET_PATH + "/*"
+		"osgi.http.whiteboard.context.select=portal-search-elasticsearch-monitoring",
+		"osgi.http.whiteboard.servlet.name=com.liferay.portal.search.elasticsearch.monitoring.web.internal.servlet.MonitoringProxyServlet",
+		"osgi.http.whiteboard.servlet.pattern=/" + MonitoringWebConstants.SERVLET_PATH + "/*"
 	},
 	service = Servlet.class
 )
-public class XPackMonitoringProxyServlet extends ProxyServlet {
+public class MonitoringProxyServlet extends ProxyServlet {
 
 	@Override
 	public String getServletInfo() {
-		return "Liferay Portal Search Elasticsearch X-Pack Monitoring Proxy " +
-			"Servlet";
+		return "Liferay Portal Search Elasticsearch Monitoring Proxy Servlet";
 	}
 
 	@Activate
@@ -95,7 +94,7 @@ public class XPackMonitoringProxyServlet extends ProxyServlet {
 
 		if (exception instanceof ConnectException) {
 			errorDisplayContext.setConnectExceptionAddress(
-				_xPackMonitoringConfiguration.kibanaURL());
+				_monitoringConfiguration.kibanaURL());
 		}
 		else if (exception instanceof PrincipalException.MustBeAuthenticated) {
 			error = false;
@@ -129,13 +128,12 @@ public class XPackMonitoringProxyServlet extends ProxyServlet {
 			user);
 
 		boolean hasPermission = permissionChecker.hasPermission(
-			GroupThreadLocal.getGroupId(),
-			XPackMonitoringPortletKeys.MONITORING,
-			XPackMonitoringPortletKeys.MONITORING, ActionKeys.VIEW);
+			GroupThreadLocal.getGroupId(), MonitoringPortletKeys.MONITORING,
+			MonitoringPortletKeys.MONITORING, ActionKeys.VIEW);
 
 		if (!hasPermission) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, XPackMonitoringPortletKeys.MONITORING, 0,
+				permissionChecker, MonitoringPortletKeys.MONITORING, 0,
 				ActionKeys.VIEW);
 		}
 	}
@@ -155,13 +153,12 @@ public class XPackMonitoringProxyServlet extends ProxyServlet {
 	@Override
 	protected String getConfigParam(String key) {
 		if (key.equals(ProxyServlet.P_TARGET_URI)) {
-			return GetterUtil.getString(
-				_xPackMonitoringConfiguration.kibanaURL());
+			return GetterUtil.getString(_monitoringConfiguration.kibanaURL());
 		}
 
 		if (key.equals(ProxyServlet.P_LOG)) {
 			return String.valueOf(
-				_xPackMonitoringConfiguration.proxyServletLogEnable());
+				_monitoringConfiguration.proxyServletLogEnable());
 		}
 
 		return super.getConfigParam(key);
@@ -169,9 +166,9 @@ public class XPackMonitoringProxyServlet extends ProxyServlet {
 
 	protected String getShieldAuthorization() {
 		String userName = GetterUtil.getString(
-			_xPackMonitoringConfiguration.kibanaUserName());
+			_monitoringConfiguration.kibanaUserName());
 		String password = GetterUtil.getString(
-			_xPackMonitoringConfiguration.kibanaPassword());
+			_monitoringConfiguration.kibanaPassword());
 
 		String authorization = userName + ":" + password;
 
@@ -186,8 +183,8 @@ public class XPackMonitoringProxyServlet extends ProxyServlet {
 	}
 
 	protected void replaceConfiguration(Map<String, Object> properties) {
-		_xPackMonitoringConfiguration = ConfigurableUtil.createConfigurable(
-			XPackMonitoringConfiguration.class, properties);
+		_monitoringConfiguration = ConfigurableUtil.createConfigurable(
+			MonitoringConfiguration.class, properties);
 	}
 
 	protected void sendError(
@@ -196,7 +193,7 @@ public class XPackMonitoringProxyServlet extends ProxyServlet {
 		throws IOException, ServletException {
 
 		httpServletRequest.setAttribute(
-			XPackMonitoringProxyServletWebKeys.ERROR_DISPLAY_CONTEXT,
+			MonitoringProxyServletWebKeys.ERROR_DISPLAY_CONTEXT,
 			buildErrorDisplayContext(exception));
 
 		RequestDispatcher requestDispatcher =
@@ -229,8 +226,8 @@ public class XPackMonitoringProxyServlet extends ProxyServlet {
 	protected Portal portal;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		XPackMonitoringProxyServlet.class);
+		MonitoringProxyServlet.class);
 
-	private XPackMonitoringConfiguration _xPackMonitoringConfiguration;
+	private MonitoringConfiguration _monitoringConfiguration;
 
 }

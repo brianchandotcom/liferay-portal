@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.servlet.display.context;
+package com.liferay.portal.search.elasticsearch.monitoring.web.internal.servlet.display.context;
 
 /**
  * @author André de Oliveira

@@ -12,9 +12,9 @@
  *
  */
 
-package com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.servlet.filter;
+package com.liferay.portal.search.elasticsearch.monitoring.web.internal.servlet.filter;
 
-import com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.constants.XPackMonitoringWebConstants;
+import com.liferay.portal.search.elasticsearch.monitoring.web.internal.constants.MonitoringWebConstants;
 import com.liferay.portal.servlet.filters.authverifier.AuthVerifierFilter;
 
 import javax.servlet.Filter;
@@ -27,11 +27,11 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"filter.init.auth.verifier.PortalSessionAuthVerifier.urls.includes=/" + XPackMonitoringWebConstants.SERVLET_PATH + "/*",
-		"osgi.http.whiteboard.filter.name=com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.servlet.filter.XPackMonitoringProxyAuthVerifierFilter",
-		"osgi.http.whiteboard.filter.pattern=/" + XPackMonitoringWebConstants.SERVLET_PATH + "/*"
+		"filter.init.auth.verifier.PortalSessionAuthVerifier.urls.includes=/" + MonitoringWebConstants.SERVLET_PATH + "/*",
+		"osgi.http.whiteboard.filter.name=com.liferay.portal.search.elasticsearch.monitoring.web.internal.servlet.filter.MonitoringProxyAuthVerifierFilter",
+		"osgi.http.whiteboard.filter.pattern=/" + MonitoringWebConstants.SERVLET_PATH + "/*"
 	},
 	service = Filter.class
 )
-public class XPackMonitoringProxyAuthVerifierFilter extends AuthVerifierFilter {
+public class MonitoringProxyAuthVerifierFilter extends AuthVerifierFilter {
 }

@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.configuration;
+package com.liferay.portal.search.elasticsearch.monitoring.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,11 +26,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "search")
 @Meta.OCD(
-	id = "com.liferay.portal.search.elasticsearch6.xpack.monitoring.web.internal.configuration.XPackMonitoringConfiguration",
-	localization = "content/Language",
-	name = "xpack-monitoring-configuration-name"
+	id = "com.liferay.portal.search.elasticsearch.monitoring.web.internal.configuration.MonitoringConfiguration",
+	localization = "content/Language", name = "monitoring-configuration-name"
 )
-public interface XPackMonitoringConfiguration {
+public interface MonitoringConfiguration {
 
 	@Meta.AD(
 		deflt = "http://localhost:5601", description = "kibana-url-help",

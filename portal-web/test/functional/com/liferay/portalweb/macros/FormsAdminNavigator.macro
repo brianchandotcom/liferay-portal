@@ -71,7 +71,7 @@ definition {
 	macro gotoEditField {
 		var key_fieldName = "${fieldName}";
 
-		WaitForElementPresent(locator1 = "Form#FIELD_BODY");
+		ScrollWebElementIntoView(locator1 = "Form#FIELD_BODY");
 
 		Click(locator1 = "Form#FIELD_BODY");
 

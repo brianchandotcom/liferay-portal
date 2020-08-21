@@ -41,6 +41,8 @@ definition {
 	}
 
 	macro addTranslation {
+		ScrollWebElementIntoView(locator1 = "Translation#ADD");
+
 		Click(locator1 = "Translation#ADD");
 
 		var key_localizedLanguage = "${localizedLanguage}";
@@ -520,6 +522,9 @@ definition {
 
 	macro selectTranslation {
 		var key_localizedLanguage = "${localizedLanguage}";
+
+		ScrollWebElementIntoView(
+			locator1 = "Translation#UNSELECTED_LOCALE_ICON");
 
 		Click(locator1 = "Translation#UNSELECTED_LOCALE_ICON");
 	}

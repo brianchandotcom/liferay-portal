@@ -18,7 +18,7 @@ import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.frontend.taglib.clay.data.set.filter.BaseRadioClayDataSetFilter;
 import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilter;
-import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.frontend.taglib.clay.data.set.filter.RadioClayDataSetFilterItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,20 +44,24 @@ public class ProductTypeClayTableDataSetFilter
 	}
 
 	@Override
-	public List<KeyValuePair> getKeyValuePairs(Locale locale) {
-		List<KeyValuePair> keyValuePairs = new ArrayList<>();
-
-		for (CPType cpType : _cpTypeServicesTracker.getCPTypes()) {
-			keyValuePairs.add(
-				new KeyValuePair(cpType.getName(), cpType.getLabel(locale)));
-		}
-
-		return keyValuePairs;
+	public String getLabel() {
+		return "product-type";
 	}
 
 	@Override
-	public String getLabel() {
-		return "product-type";
+	public List<RadioClayDataSetFilterItem> getRadioClayDataSetFilterItems(
+		Locale locale) {
+
+		List<RadioClayDataSetFilterItem> radioClayDataSetFilterItems =
+			new ArrayList<>();
+
+		for (CPType cpType : _cpTypeServicesTracker.getCPTypes()) {
+			radioClayDataSetFilterItems.add(
+				new RadioClayDataSetFilterItem(
+					cpType.getLabel(locale), cpType.getName()));
+		}
+
+		return radioClayDataSetFilterItems;
 	}
 
 	@Reference

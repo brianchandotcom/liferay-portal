@@ -16,9 +16,9 @@ package com.liferay.commerce.order.web.internal.frontend;
 
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
-import com.liferay.frontend.taglib.clay.data.set.filter.BaseRadioClayDataSetFilter;
+import com.liferay.frontend.taglib.clay.data.set.filter.BaseCheckBoxClayDataSetFilter;
+import com.liferay.frontend.taglib.clay.data.set.filter.CheckBoxClayDataSetFilterItem;
 import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilter;
-import com.liferay.portal.kernel.util.KeyValuePair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,27 +36,30 @@ import org.osgi.service.component.annotations.Reference;
 	service = ClayDataSetFilter.class
 )
 public class CommerceOrderStatusClayTableDataSetFilter
-	extends BaseRadioClayDataSetFilter {
+	extends BaseCheckBoxClayDataSetFilter {
 
 	@Override
-	public String getId() {
-		return "orderStatus";
-	}
+	public List<CheckBoxClayDataSetFilterItem>
+		getCheckBoxClayDataSetFilterItems(Locale locale) {
 
-	@Override
-	public List<KeyValuePair> getKeyValuePairs(Locale locale) {
-		List<KeyValuePair> keyValuePairs = new ArrayList<>();
+		List<CheckBoxClayDataSetFilterItem> checkBoxClayDataSetFilterItems =
+			new ArrayList<>();
 
 		for (CommerceOrderStatus commerceOrderStatus :
 				_commerceOrderStatusRegistry.getCommerceOrderStatuses()) {
 
-			keyValuePairs.add(
-				new KeyValuePair(
-					String.valueOf(commerceOrderStatus.getKey()),
-					commerceOrderStatus.getLabel(locale)));
+			checkBoxClayDataSetFilterItems.add(
+				new CheckBoxClayDataSetFilterItem(
+					commerceOrderStatus.getLabel(locale),
+					commerceOrderStatus.getKey()));
 		}
 
-		return keyValuePairs;
+		return checkBoxClayDataSetFilterItems;
+	}
+
+	@Override
+	public String getId() {
+		return "orderStatus";
 	}
 
 	@Override

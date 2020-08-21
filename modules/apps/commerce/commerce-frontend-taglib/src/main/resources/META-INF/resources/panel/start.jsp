@@ -17,7 +17,7 @@
 <%@ include file="/panel/init.jsp" %>
 
 <%
-String cardCssClasses = "card d-flex" + (Validator.isNotNull(elementClasses) ? StringPool.SPACE + elementClasses : StringPool.BLANK);
+String cardCssClasses = "card d-flex flex-column" + (Validator.isNotNull(elementClasses) ? StringPool.SPACE + elementClasses : StringPool.BLANK);
 String bodyCssClasses = "card-body" + (Validator.isNotNull(bodyClasses) ? StringPool.SPACE + bodyClasses : StringPool.BLANK);
 String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwitchName : (randomNamespace + "toggle-switch-check");
 %>

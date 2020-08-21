@@ -230,7 +230,12 @@ public class FileInstallDeployTest {
 		Bundle bundle = null;
 
 		try {
-			_createJAR(path, _TEST_JAR_SYMBOLIC_NAME, baseVersion, null);
+			JarBuilder jarBuilder = new JarBuilder(
+				path, _TEST_JAR_SYMBOLIC_NAME);
+
+			jarBuilder.addVersion(
+				baseVersion
+			).build();
 
 			installCountDownLatch.await();
 
@@ -241,7 +246,11 @@ public class FileInstallDeployTest {
 			Assert.assertEquals(Bundle.ACTIVE, bundle.getState());
 			Assert.assertEquals(baseVersion, bundle.getVersion());
 
-			_createJAR(path, _TEST_JAR_SYMBOLIC_NAME, updateVersion, null);
+			jarBuilder = new JarBuilder(path, _TEST_JAR_SYMBOLIC_NAME);
+
+			jarBuilder.addVersion(
+				updateVersion
+			).build();
 
 			updateCountDownLatch.await();
 
@@ -316,10 +325,11 @@ public class FileInstallDeployTest {
 
 		_bundleContext.addBundleListener(bundleListener);
 
-		Version version = new Version(1, 0, 0);
-
 		try {
-			_createJAR(path, _TEST_JAR_SYMBOLIC_NAME, version, null);
+			JarBuilder jarBuilder = new JarBuilder(
+				path, _TEST_JAR_SYMBOLIC_NAME);
+
+			jarBuilder.build();
 
 			installCountDownLatch.await();
 
@@ -327,9 +337,11 @@ public class FileInstallDeployTest {
 
 			Assert.assertEquals(Bundle.ACTIVE, bundle.getState());
 
-			_createJAR(
-				fragmentPath, testFragmentSymbolicName, version,
-				_TEST_JAR_SYMBOLIC_NAME);
+			jarBuilder = new JarBuilder(fragmentPath, testFragmentSymbolicName);
+
+			jarBuilder.addFragmentHost(
+				_TEST_JAR_SYMBOLIC_NAME
+			).build();
 
 			fragmentInstallCountDownLatch.await();
 
@@ -355,37 +367,6 @@ public class FileInstallDeployTest {
 			Files.deleteIfExists(path);
 
 			Files.deleteIfExists(fragmentPath);
-		}
-	}
-
-	private void _createJAR(
-			Path path, String symbolicName, Version version,
-			String fragmentHost)
-		throws IOException {
-
-		try (OutputStream outputStream = Files.newOutputStream(path);
-			JarOutputStream jarOutputStream = new JarOutputStream(
-				outputStream)) {
-
-			Manifest manifest = new Manifest();
-
-			Attributes attributes = manifest.getMainAttributes();
-
-			attributes.putValue(Constants.BUNDLE_MANIFESTVERSION, "2");
-			attributes.putValue(Constants.BUNDLE_SYMBOLICNAME, symbolicName);
-			attributes.putValue(Constants.BUNDLE_VERSION, version.toString());
-
-			if (fragmentHost != null) {
-				attributes.putValue(Constants.FRAGMENT_HOST, fragmentHost);
-			}
-
-			attributes.putValue("Manifest-Version", "2");
-
-			jarOutputStream.putNextEntry(new ZipEntry(JarFile.MANIFEST_NAME));
-
-			manifest.write(jarOutputStream);
-
-			jarOutputStream.closeEntry();
 		}
 	}
 
@@ -448,5 +429,62 @@ public class FileInstallDeployTest {
 	}
 
 	private BundleContext _bundleContext;
+
+	private class JarBuilder {
+
+		public JarBuilder(Path path, String symbolicName) {
+			_path = path;
+			_symbolicName = symbolicName;
+		}
+
+		public JarBuilder addFragmentHost(String fragmentHost) {
+			_fragmentHost = fragmentHost;
+
+			return this;
+		}
+
+		public JarBuilder addVersion(Version version) {
+			_version = version;
+
+			return this;
+		}
+
+		public void build() throws IOException {
+			try (OutputStream outputStream = Files.newOutputStream(_path);
+				JarOutputStream jarOutputStream = new JarOutputStream(
+					outputStream)) {
+
+				Manifest manifest = new Manifest();
+
+				Attributes attributes = manifest.getMainAttributes();
+
+				attributes.putValue(Constants.BUNDLE_MANIFESTVERSION, "2");
+				attributes.putValue(
+					Constants.BUNDLE_SYMBOLICNAME, _symbolicName);
+
+				attributes.putValue(
+					Constants.BUNDLE_VERSION, _version.toString());
+
+				if (_fragmentHost != null) {
+					attributes.putValue(Constants.FRAGMENT_HOST, _fragmentHost);
+				}
+
+				attributes.putValue("Manifest-Version", "2");
+
+				jarOutputStream.putNextEntry(
+					new ZipEntry(JarFile.MANIFEST_NAME));
+
+				manifest.write(jarOutputStream);
+
+				jarOutputStream.closeEntry();
+			}
+		}
+
+		private String _fragmentHost;
+		private final Path _path;
+		private final String _symbolicName;
+		private Version _version = new Version(1, 0, 0);
+
+	}
 
 }

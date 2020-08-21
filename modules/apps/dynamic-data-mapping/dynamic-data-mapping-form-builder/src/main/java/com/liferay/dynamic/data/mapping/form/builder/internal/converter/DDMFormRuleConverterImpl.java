@@ -99,6 +99,10 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 			spiDDMFormRuleCondition.getOperands();
 
 		if (functionName == null) {
+			if (operands.size() < 2) {
+				return StringPool.BLANK;
+			}
+
 			return String.format(
 				_COMPARISON_EXPRESSION_FORMAT, convertOperand(operands.get(0)),
 				_operatorMap.get(operator), convertOperand(operands.get(1)));

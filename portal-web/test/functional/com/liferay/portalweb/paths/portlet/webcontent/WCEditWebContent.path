@@ -85,7 +85,7 @@
 </tr>
 <tr>
 	<td>VIDEO_BUTTON</td>
-	<td>//a[@title='Video']</td>
+	<td>//a[contains(@class,'videoselector')]</td>
 	<td></td>
 </tr>
 <tr>

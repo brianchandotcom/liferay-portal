@@ -138,6 +138,33 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		}
 	}
 
+	private List<String> _getAvailableTargetLanguageIds(
+			JournalArticle article, String sourceLanguageId,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		boolean hasUpdatePermission =
+			_journalArticleModelResourcePermission.contains(
+				themeDisplay.getPermissionChecker(), article,
+				ActionKeys.UPDATE);
+
+		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
+			themeDisplay.getSiteGroupId());
+
+		Stream<Locale> stream = availableLocales.stream();
+
+		return stream.map(
+			LocaleUtil::toLanguageId
+		).filter(
+			languageId ->
+				!Objects.equals(languageId, sourceLanguageId) &&
+				(hasUpdatePermission ||
+				 _hasTranslatePermission(languageId, themeDisplay))
+		).collect(
+			Collectors.toList()
+		);
+	}
+
 	private InfoItemFieldValues _getSourceInfoItemFieldValues(
 		JournalArticle article) {
 
@@ -191,33 +218,6 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				Collectors.toList()
 			)
 		).build();
-	}
-
-	private List<String> _getAvailableTargetLanguageIds(
-			JournalArticle article, String sourceLanguageId,
-			ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		boolean hasUpdatePermission =
-			_journalArticleModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), article,
-				ActionKeys.UPDATE);
-
-		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
-			themeDisplay.getSiteGroupId());
-
-		Stream<Locale> stream = availableLocales.stream();
-
-		return stream.map(
-			LocaleUtil::toLanguageId
-		).filter(
-			languageId ->
-				!Objects.equals(languageId, sourceLanguageId) &&
-				(hasUpdatePermission ||
-				 _hasTranslatePermission(languageId, themeDisplay))
-		).collect(
-			Collectors.toList()
-		);
 	}
 
 	private Object _getValue(

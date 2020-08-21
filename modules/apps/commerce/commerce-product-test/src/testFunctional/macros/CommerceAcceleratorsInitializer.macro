@@ -6,24 +6,29 @@ definition {
 		}
 
 		if (IsNotVisible(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL")) {
-			Click.clickAt(locator1 = "ControlMenu#ADD");
+			var browserType = PropsUtil.get("browser.type");
+
+			if ("${browserType}" == "safari") {
+				Click.clickNoMouseOver(locator1 = "ControlMenu#ADD");
+			}
+			else {
+				Click.clickAt(locator1 = "ControlMenu#ADD");
+			}
 		}
 
-		AssertElementPresent(locator1 = "ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE");
+		AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
 
-		AssertVisible(
-			locator1 = "ControlMenuAddPanel#APPLICATIONS_ACCORDION_PANEL_TITLE",
-			value1 = "Widgets");
+		Navigator.gotoNavTab(navTab = "Widgets");
 
 		Pause(locator1 = "5000");
 
-		Panel.expandSidebarApplicationsPanel();
-
-		Type.sendKeysApplicationSearch(
+		Type(
 			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
 			value1 = "${portletName}");
 
 		Portlet._clickAddPortlet(portletName = "${portletName}");
+
+		var key_portletName = "${portletName}";
 
 		AssertElementPresent(
 			key_portletName = "${portletName}",

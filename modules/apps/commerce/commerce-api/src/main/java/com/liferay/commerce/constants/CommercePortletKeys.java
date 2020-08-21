@@ -60,7 +60,7 @@ public class CommercePortletKeys {
 			"CommerceShipmentContentPortlet";
 
 	public static final String COMMERCE_SHIPPING_METHODS =
-		"com_liferay_commerce_shipping_web_internal_portlet" +
+		"com_liferay_commerce_shipping_web_internal_portlet_" +
 			"CommerceShippingMethodPortlet";
 
 	public static final String COMMERCE_TAX_METHODS =

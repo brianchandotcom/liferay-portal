@@ -20,6 +20,8 @@ import com.liferay.item.selector.taglib.internal.servlet.item.selector.ItemSelec
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
@@ -28,7 +30,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Objects;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 /**
@@ -37,8 +41,10 @@ import javax.portlet.PortletURL;
 public class EntryURLUtil {
 
 	public static PortletURL getFolderPortletURL(
-			Folder folder, LiferayPortletRequest liferayPortletRequest)
-		throws PortalException {
+			Folder folder, PortletURL portletURL,
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortalException, PortletException {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
@@ -50,13 +56,22 @@ public class EntryURLUtil {
 			group = GroupServiceUtil.getGroup(folder.getGroupId());
 		}
 
-		PortletURL portletURL = getGroupPortletURL(
-			group, liferayPortletRequest);
+		PortletURL folderPortletURL = null;
 
-		portletURL.setParameter(
+		String scope = ParamUtil.getString(liferayPortletRequest, "scope");
+
+		if (Objects.equals(scope, "everywhere")) {
+			folderPortletURL = getGroupPortletURL(group, liferayPortletRequest);
+		}
+		else {
+			folderPortletURL = PortletURLUtil.clone(
+				portletURL, liferayPortletResponse);
+		}
+
+		folderPortletURL.setParameter(
 			"folderId", String.valueOf(folder.getFolderId()));
 
-		return portletURL;
+		return folderPortletURL;
 	}
 
 	public static PortletURL getGroupPortletURL(

@@ -907,13 +907,13 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
-	protected boolean entityCacheEnabled;
+	protected boolean entityCacheEnabled = true;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
-	protected boolean finderCacheEnabled;
+	protected boolean finderCacheEnabled = true;
 
 	private static Type _getType(Expression<?> expression) {
 		if (expression instanceof Column) {

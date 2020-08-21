@@ -76,8 +76,6 @@ import com.liferay.portlet.asset.util.comparator.AssetVocabularyCreateDateCompar
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -494,22 +492,13 @@ public class AssetCategoriesDisplayContext {
 			return _selectCategoryURL;
 		}
 
-		AssetVocabulary sourceVocabulary =
-			AssetVocabularyServiceUtil.getVocabulary(vocabularyId);
+		AssetVocabulary vocabulary = AssetVocabularyServiceUtil.getVocabulary(
+			vocabularyId);
 
 		List<AssetVocabulary> vocabularies =
 			AssetVocabularyServiceUtil.getGroupVocabularies(
-				_themeDisplay.getScopeGroupId());
-
-		Stream<AssetVocabulary> stream = vocabularies.stream();
-
-		List<AssetVocabulary> targetVocabularies = stream.filter(
-			targetVocabulary ->
-				targetVocabulary.getVisibilityType() ==
-					sourceVocabulary.getVisibilityType()
-		).collect(
-			Collectors.toList()
-		);
+				_themeDisplay.getScopeGroupId(),
+				vocabulary.getVisibilityType());
 
 		PortletURL selectCategoryURL = PortletProviderUtil.getPortletURL(
 			_httpServletRequest, AssetCategory.class.getName(),
@@ -524,7 +513,7 @@ public class AssetCategoriesDisplayContext {
 		selectCategoryURL.setParameter(
 			"vocabularyIds",
 			ListUtil.toString(
-				targetVocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR));
+				vocabularies, AssetVocabulary.VOCABULARY_ID_ACCESSOR));
 		selectCategoryURL.setWindowState(LiferayWindowState.POP_UP);
 
 		_selectCategoryURL = selectCategoryURL.toString();

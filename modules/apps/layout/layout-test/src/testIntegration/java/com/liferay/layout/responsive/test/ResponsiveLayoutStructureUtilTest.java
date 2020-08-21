@@ -123,6 +123,7 @@ public class ResponsiveLayoutStructureUtilTest {
 		_themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
 		_themeDisplay.setLookAndFeel(
 			_layout.getTheme(), _layout.getColorScheme());
+		_themeDisplay.setLocale(LocaleUtil.US);
 		_themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		_themeDisplay.setRealUser(TestPropsValues.getUser());

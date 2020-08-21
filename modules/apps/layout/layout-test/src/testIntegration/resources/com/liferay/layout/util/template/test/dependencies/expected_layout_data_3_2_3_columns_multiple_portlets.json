@@ -28,11 +28,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -48,7 +48,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -90,11 +90,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -110,7 +110,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -155,11 +155,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -175,7 +175,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -204,11 +204,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -224,7 +224,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -265,11 +265,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -285,7 +285,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -314,11 +314,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -334,7 +334,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -375,11 +375,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -395,7 +395,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -424,11 +424,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -444,7 +444,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -473,11 +473,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -493,7 +493,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -534,11 +534,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -554,7 +554,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -601,11 +601,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -621,7 +621,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -650,11 +650,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -670,7 +670,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -711,11 +711,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -731,7 +731,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -760,11 +760,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -780,7 +780,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -809,11 +809,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -829,7 +829,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -871,11 +871,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -891,7 +891,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -936,11 +936,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -956,7 +956,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -985,11 +985,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -1005,7 +1005,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -1046,11 +1046,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -1066,7 +1066,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -1095,11 +1095,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -1115,7 +1115,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -1156,11 +1156,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -1176,7 +1176,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},
@@ -1205,11 +1205,11 @@
 				"styles": {
 					"backgroundImage": {
 					},
-					"borderRadius": "rounded-0",
+					"borderRadius": "0",
 					"borderWidth": 0,
-					"fontFamily": "sans-serif",
-					"fontSize": "medium",
-					"fontWeight": "font-weight-normal",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
 					"height": "",
 					"marginBottom": "0",
 					"marginLeft": "0",
@@ -1225,7 +1225,7 @@
 					"paddingLeft": "0",
 					"paddingRight": "0",
 					"paddingTop": "0",
-					"shadow": "shadow-none",
+					"shadow": "none",
 					"textAlign": "none",
 					"width": ""
 				},

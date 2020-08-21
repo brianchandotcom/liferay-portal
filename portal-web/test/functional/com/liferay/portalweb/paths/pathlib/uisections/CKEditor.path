@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOOLBAR_LINK_BUTTON</td>
+	<td>//label[contains(.,'${key_fieldLabel}')]//following-sibling::div//a[contains(@class,'cke_button') and contains(@class,'button__link')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLBAR_SOURCE_BUTTON</td>
 	<td>//a[contains(@class,'cke_button') and contains(@class,'source')]</td>
 	<td></td>

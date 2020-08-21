@@ -101,7 +101,7 @@ definition {
 
 			WebContentTemplates.viewCP(
 				structureName = "Content List",
-				templateDescription = "",
+				templateDescription = "${templateName} Description",
 				templateName = "${templateName}");
 		}
 	}

@@ -146,11 +146,9 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 
 						window.document.querySelector('#<portlet:namespace />fileEntryId').value = value.fileEntryId;
 
-						$('#<portlet:namespace />url').attr('disabled', true);
+						window.document.querySelector('#<portlet:namespace />url').setAttribute('disabled', 'true');
 
-						$('#lfr-virtual-order-item-button-row-message').addClass(
-							'hide'
-						);
+						window.document.querySelector('#lfr-virtual-order-item-button-row-message').classList.add('hide');
 
 						fileEntryRemove.removeClass('hide');
 
@@ -171,9 +169,9 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 
 		window.document.querySelector('#<portlet:namespace />fileEntryId').value = 0;
 
-		$('#<portlet:namespace />url').attr('disabled', false);
+		window.document.querySelector('#<portlet:namespace />url').setAttribute('disabled', 'false');
 
-		$('#lfr-virtual-order-item-button-row-message').removeClass('hide');
+		window.document.querySelector('#lfr-virtual-order-item-button-row-message').classList.remove('hide');
 
 		fileEntryNameInput.html('<liferay-ui:message key="none" />');
 

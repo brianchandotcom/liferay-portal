@@ -21,8 +21,8 @@ export const CLOSE_MODAL = 'close-modal';
 export const CLOSE_SIDE_PANEL = 'close-side-panel';
 export const CURRENT_PRODUCT_STATUS_CHANGED = 'current-product-status-changed';
 export const CURRENT_PRODUCT_UPDATED = 'current-product-updated';
-export const DATASET_ACTION_PERFORMED = 'dataset-action-performed';
-export const DATASET_DISPLAY_UPDATED = 'dataset-display-updated';
+export const DATASET_ACTION_PERFORMED = 'data-set-action-performed';
+export const DATASET_DISPLAY_UPDATED = 'data-set-display-updated';
 export const IFRAME_LOADED = 'iframe-loaded';
 export const IS_LOADING_MODAL = 'is-loading-modal';
 export const OPEN_MODAL = 'open-modal';
@@ -30,7 +30,7 @@ export const OPEN_SIDE_PANEL = 'open-side-panel';
 export const PRODUCT_OPTIONS_CHANGED = 'product-options-changed';
 export const PRODUCT_REMOVED = 'productRemovedFromCart';
 export const SIDE_PANEL_CLOSED = 'side-panel-closed';
-export const UPDATE_DATASET_DISPLAY = 'update-dataset-display';
+export const UPDATE_DATASET_DISPLAY = 'update-data-set-display';
 
 export default {
 	ADD_TO_ORDER,

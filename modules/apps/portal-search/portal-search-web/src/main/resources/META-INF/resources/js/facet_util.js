@@ -122,7 +122,7 @@ AUI.add(
 				});
 
 				var newParameters = FacetUtil.removeURLParameters(
-					startParameterName.value,
+					startParameterName,
 					parameterArray
 				);
 
@@ -146,25 +146,25 @@ AUI.add(
 			},
 
 			selectTerms(form, selections) {
-				var formParameterName = document.querySelector(
+				var formParameterNameElement = document.querySelector(
 					'#' + form.id + ' input.facet-parameter-name'
 				);
 
-				var startParameterName = document.querySelector(
+				var startParameterNameElement = document.querySelector(
 					'#' + form.id + ' input.start-parameter-name'
 				);
 
 				var search = document.location.search;
 
-				if (startParameterName) {
+				if (startParameterNameElement) {
 					search = FacetUtil.removeStartParameter(
-						startParameterName,
+						startParameterNameElement.value,
 						search
 					);
 				}
 
 				search = FacetUtil.updateQueryString(
-					formParameterName.value,
+					formParameterNameElement.value,
 					selections,
 					search
 				);

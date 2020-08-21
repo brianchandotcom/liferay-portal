@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -57,6 +58,7 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 	public static void addPortletBreadcrumbEntries(
 			long folderId, String displayStyle,
 			HttpServletRequest httpServletRequest,
+			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			PortletURL portletURL)
 		throws Exception {
@@ -85,7 +87,7 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 		_addPortletBreadcrumbEntry(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, httpServletRequest,
 			group.getDescriptiveName(httpServletRequest.getLocale()),
-			portletURL);
+			EntryURLUtil.getGroupPortletURL(group, liferayPortletRequest));
 
 		if (folder != null) {
 			List<Folder> ancestorFolders = folder.getAncestors();

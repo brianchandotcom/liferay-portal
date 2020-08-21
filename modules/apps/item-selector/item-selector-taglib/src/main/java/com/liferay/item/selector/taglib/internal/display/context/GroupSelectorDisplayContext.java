@@ -18,6 +18,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.provider.GroupItemSelectorProvider;
 import com.liferay.item.selector.taglib.internal.servlet.item.selector.ItemSelectorUtil;
+import com.liferay.item.selector.taglib.internal.util.EntryURLUtil;
 import com.liferay.item.selector.taglib.internal.util.GroupItemSelectorTrackerUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -109,33 +110,8 @@ public class GroupSelectorDisplayContext {
 	}
 
 	public String getViewGroupURL(Group group) {
-		ItemSelector itemSelector = _getItemSelector();
-
-		String itemSelectedEventName = ParamUtil.getString(
-			_liferayPortletRequest, "itemSelectedEventName");
-
-		List<ItemSelectorCriterion> itemSelectorCriteria =
-			itemSelector.getItemSelectorCriteria(
-				_liferayPortletRequest.getParameterMap());
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		long refererGroupId = themeDisplay.getRefererGroupId();
-
-		if (refererGroupId == 0) {
-			refererGroupId = themeDisplay.getScopeGroupId();
-		}
-
-		PortletURL portletURL = itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest),
-			group, refererGroupId, itemSelectedEventName,
-			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
-
-		portletURL.setParameter(
-			"selectedTab",
-			ParamUtil.getString(_liferayPortletRequest, "selectedTab"));
+		PortletURL portletURL = EntryURLUtil.getGroupPortletURL(
+			group, _liferayPortletRequest);
 
 		return portletURL.toString();
 	}

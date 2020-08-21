@@ -1900,6 +1900,30 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			return _columnBitmasks.get(columnName);
 		}
 
+		public <T> T getColumnValue(String columnName) {
+			<#if entity.versionEntity??>
+				if (columnName.equals("head")) {
+					return (T)(Object)getHead();
+				}
+			</#if>
+
+			<#if entity.badEntityColumns?size != 0>
+				if (_attributeNames.containsKey(columnName)) {
+					columnName = _attributeNames.get(columnName);
+				}
+			</#if>
+
+			Function<${entity.name}, Object> function =
+				_attributeGetterFunctions.get(columnName);
+
+			if (function == null) {
+				throw new IllegalArgumentException(
+					"No attribute getter function found for " + columnName);
+			}
+
+			return (T)function.apply((${entity.name})this);
+		}
+
 		public <T> T getColumnOriginalValue(String columnName) {
 			if (_columnOriginalValues == null) {
 				return null;
@@ -1924,6 +1948,10 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 		private static final Map<String, Long> _columnBitmasks;
 
+		<#if entity.badEntityColumns?size != 0>
+			private static final Map<String, String> _attributeNames;
+		</#if>
+
 		static {
 			Map<String, Long> columnBitmasks = new LinkedHashMap<>();
 
@@ -1936,6 +1964,16 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			</#list>
 
 			_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+
+			<#if entity.badEntityColumns?size != 0>
+				Map<String, String> attributeNames = new LinkedHashMap<>();
+
+				<#list entity.badEntityColumns as entityColumn>
+					attributeNames.put("${entityColumn.DBName}", "${entityColumn.name}");
+				</#list>
+
+				_attributeNames = Collections.unmodifiableMap(attributeNames);
+			</#if>
 		}
 
 		private transient Map<String, Object> _columnOriginalValues;

@@ -44,7 +44,7 @@ String questionsRootElementId = liferayPortletResponse.getNamespace() + "-questi
 			).put(
 				"rootTopic", questionsConfiguration.rootTopic()
 			).put(
-				"showSectionLanding", questionsConfiguration.showSectionLanding()
+				"showCardsForTopicNavigation", questionsConfiguration.showCardsForTopicNavigation()
 			).put(
 				"siteKey", String.valueOf(themeDisplay.getScopeGroupId())
 			).put(

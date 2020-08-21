@@ -201,6 +201,17 @@ public class AppBuilderAppLocalServiceImpl
 
 	@Override
 	public List<AppBuilderApp> getAppBuilderApps(
+		long groupId, long companyId, long ddmStructureId, String scope,
+		int start, int end,
+		OrderByComparator<AppBuilderApp> orderByComparator) {
+
+		return appBuilderAppPersistence.findByG_C_D_S(
+			groupId, companyId, ddmStructureId, scope, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public List<AppBuilderApp> getAppBuilderApps(
 		long groupId, String scope, int start, int end,
 		OrderByComparator<AppBuilderApp> orderByComparator) {
 

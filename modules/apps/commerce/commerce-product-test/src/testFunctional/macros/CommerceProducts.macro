@@ -42,7 +42,7 @@ definition {
 	macro moveCatalogEntriesToRecycleBin {
 		Click(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
 
-		Click(locator1 = "Button#RECYCLE_BIN");
+		Click(locator1 = "Button#MOVE_TO_RECYCLE_BIN");
 	}
 
 	macro searchProduct {

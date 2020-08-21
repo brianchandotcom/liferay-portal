@@ -184,6 +184,21 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 		findSecurityBugsPluginsConfiguration.setVisible(false);
 	}
 
+	private void _configureTaskCheckProvider(
+		TaskProvider<Task> checkTaskProvider,
+		final TaskProvider<JavaExec> findSecurityBugsTaskProvider) {
+
+		checkTaskProvider.configure(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task checkTask) {
+					checkTask.dependsOn(findSecurityBugsTaskProvider);
+				}
+
+			});
+	}
+
 	private void _configureTaskFindSecurityBugsProvider(
 		final Project project,
 		final Configuration findSecurityBugsConfiguration,
@@ -501,21 +516,6 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 						project.files(
 							javaSourceDirectorySet.getSrcDirs(),
 							generateJSPJavaCompileJSPTask.getDestinationDir()));
-				}
-
-			});
-	}
-
-	private void _configureTaskCheckProvider(
-		TaskProvider<Task> checkTaskProvider,
-		final TaskProvider<JavaExec> findSecurityBugsTaskProvider) {
-
-		checkTaskProvider.configure(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task checkTask) {
-					checkTask.dependsOn(findSecurityBugsTaskProvider);
 				}
 
 			});

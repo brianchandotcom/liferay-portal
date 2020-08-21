@@ -1,5 +1,5 @@
 Liferay-Releng-App-Description: %liferay-releng-app-description
-Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Connector to X-Pack Monitoring [Elastic Stack 6.x]
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Connector to Elasticsearch Monitoring
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:

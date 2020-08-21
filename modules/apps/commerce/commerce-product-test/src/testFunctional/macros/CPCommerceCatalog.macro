@@ -20,26 +20,6 @@ definition {
 		Click(locator1 = "CommerceEntry#MODAL_CLOSE");
 	}
 
-	macro moveProductsEntriesToRecycleBin {
-		Click(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
-
-		Click(locator1 = "Button#RECYCLE_BIN");
-	}
-
-	macro moveProductsToRecycleBinViaCheckbox {
-		Click(
-			key_entryName = "${productName}",
-			locator1 = "CommerceNavigation#SINGLE_ENTRY_CHECKBOX");
-
-		Click(locator1 = "Button#RECYCLE_BIN");
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-
-		AssertElementNotPresent(locator1 = "Message#ERROR");
-
-		AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
-	}
-
 	macro newOptionsEntry {
 		if (IsElementPresent(locator1 = "Button#DELETE")) {
 			Click(locator1 = "CommerceEntry#ADD_BUTTON");

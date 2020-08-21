@@ -36,8 +36,11 @@ public interface QuestionsConfiguration {
 	)
 	public boolean enableRedirectToLogin();
 
-	@Meta.AD(deflt = "true", name = "show-section-landing", required = false)
-	public boolean showSectionLanding();
+	@Meta.AD(
+		deflt = "true", name = "show-cards-for-topic-navigation",
+		required = false
+	)
+	public boolean showCardsForTopicNavigation();
 
 	@Meta.AD(deflt = "0", name = "root-topic", required = false)
 	public long rootTopic();

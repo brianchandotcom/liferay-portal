@@ -78,7 +78,7 @@ public class MockInfoDisplayContributor
 
 	@Override
 	public String getInfoURLSeparator() {
-		return "/mockSeparator";
+		return "/mockSeparator/";
 	}
 
 	public static class MockInfoDisplayObjectProvider

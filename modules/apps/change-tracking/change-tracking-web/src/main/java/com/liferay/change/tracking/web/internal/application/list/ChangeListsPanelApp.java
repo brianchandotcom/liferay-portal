@@ -23,7 +23,9 @@ import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.permission.PortletPermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,7 +60,8 @@ public class ChangeListsPanelApp extends BasePanelApp {
 			return false;
 		}
 
-		return super.isShow(permissionChecker, group);
+		return _portletPermission.contains(
+			permissionChecker, CTPortletKeys.CHANGE_LISTS, ActionKeys.VIEW);
 	}
 
 	@Override
@@ -72,5 +75,8 @@ public class ChangeListsPanelApp extends BasePanelApp {
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;
+
+	@Reference
+	private PortletPermission _portletPermission;
 
 }

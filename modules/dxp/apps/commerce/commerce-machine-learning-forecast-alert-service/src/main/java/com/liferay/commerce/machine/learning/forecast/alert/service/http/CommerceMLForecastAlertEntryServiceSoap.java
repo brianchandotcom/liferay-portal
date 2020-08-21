@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Riccardo Ferrari
  * @see CommerceMLForecastAlertEntryServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceMLForecastAlertEntryServiceSoap {
 
 	public static com.liferay.commerce.machine.learning.forecast.alert.model.

@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.application.service.http.CommerceApplicationModelCProductRelServiceSoap}.
  *
  * @author Luca Pellizzon
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceApplicationModelCProductRelSoap implements Serializable {
 
 	public static CommerceApplicationModelCProductRelSoap toSoapModel(
@@ -34,7 +36,6 @@ public class CommerceApplicationModelCProductRelSoap implements Serializable {
 		CommerceApplicationModelCProductRelSoap soapModel =
 			new CommerceApplicationModelCProductRelSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceApplicationModelCProductRelId(
 			model.getCommerceApplicationModelCProductRelId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -108,14 +109,6 @@ public class CommerceApplicationModelCProductRelSoap implements Serializable {
 		setCommerceApplicationModelCProductRelId(pk);
 	}
 
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
-	}
-
 	public long getCommerceApplicationModelCProductRelId() {
 		return _commerceApplicationModelCProductRelId;
 	}
@@ -183,7 +176,6 @@ public class CommerceApplicationModelCProductRelSoap implements Serializable {
 		_CProductId = CProductId;
 	}
 
-	private long _mvccVersion;
 	private long _commerceApplicationModelCProductRelId;
 	private long _companyId;
 	private long _userId;

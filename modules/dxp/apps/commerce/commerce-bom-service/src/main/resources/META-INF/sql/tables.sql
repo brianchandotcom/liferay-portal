@@ -1,5 +1,4 @@
 create table CBOMFolderApplicationRel (
-	mvccVersion LONG default 0 not null,
 	CBOMFolderApplicationRelId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -11,7 +10,6 @@ create table CBOMFolderApplicationRel (
 );
 
 create table CommerceBOMDefinition (
-	mvccVersion LONG default 0 not null,
 	commerceBOMDefinitionId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -25,7 +23,6 @@ create table CommerceBOMDefinition (
 );
 
 create table CommerceBOMEntry (
-	mvccVersion LONG default 0 not null,
 	commerceBOMEntryId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -42,7 +39,6 @@ create table CommerceBOMEntry (
 );
 
 create table CommerceBOMFolder (
-	mvccVersion LONG default 0 not null,
 	commerceBOMFolderId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

@@ -76,7 +76,7 @@ public class CommerceMLForecastAlertEntryModelImpl
 	public static final String TABLE_NAME = "CommerceMLForecastAlertEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"uuid_", Types.VARCHAR},
 		{"commerceMLForecastAlertEntryId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -90,7 +90,6 @@ public class CommerceMLForecastAlertEntryModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceMLForecastAlertEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -107,7 +106,7 @@ public class CommerceMLForecastAlertEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceMLForecastAlertEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceMLForecastAlertEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,actual DOUBLE,forecast DOUBLE,timestamp DATE null,relativeChange DOUBLE,status INTEGER)";
+		"create table CommerceMLForecastAlertEntry (uuid_ VARCHAR(75) null,commerceMLForecastAlertEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,actual DOUBLE,forecast DOUBLE,timestamp DATE null,relativeChange DOUBLE,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceMLForecastAlertEntry";
@@ -142,16 +141,40 @@ public class CommerceMLForecastAlertEntryModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMMERCEACCOUNTID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long RELATIVECHANGE_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long STATUS_COLUMN_BITMASK = 8L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long TIMESTAMP_COLUMN_BITMASK = 16L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long UUID_COLUMN_BITMASK = 32L;
 
 	/**
@@ -159,7 +182,9 @@ public class CommerceMLForecastAlertEntryModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceMLForecastAlertEntry toModel(
 		CommerceMLForecastAlertEntrySoap soapModel) {
 
@@ -170,7 +195,6 @@ public class CommerceMLForecastAlertEntryModelImpl
 		CommerceMLForecastAlertEntry model =
 			new CommerceMLForecastAlertEntryImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setCommerceMLForecastAlertEntryId(
 			soapModel.getCommerceMLForecastAlertEntryId());
@@ -194,7 +218,9 @@ public class CommerceMLForecastAlertEntryModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceMLForecastAlertEntry> toModels(
 		CommerceMLForecastAlertEntrySoap[] soapModels) {
 
@@ -350,12 +376,6 @@ public class CommerceMLForecastAlertEntryModelImpl
 					<String, BiConsumer<CommerceMLForecastAlertEntry, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceMLForecastAlertEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceMLForecastAlertEntry, Long>)
-				CommerceMLForecastAlertEntry::setMvccVersion);
-		attributeGetterFunctions.put(
 			"uuid", CommerceMLForecastAlertEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -445,17 +465,6 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@JSON
 	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return "";
@@ -467,17 +476,24 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("uuid_");
 
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_uuid = uuid;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		return getColumnOriginalValue("uuid_");
 	}
 
 	@JSON
@@ -490,6 +506,15 @@ public class CommerceMLForecastAlertEntryModelImpl
 	public void setCommerceMLForecastAlertEntryId(
 		long commerceMLForecastAlertEntryId) {
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get(
+				"commerceMLForecastAlertEntryId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_commerceMLForecastAlertEntryId = commerceMLForecastAlertEntryId;
 	}
 
@@ -501,19 +526,24 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
 
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_companyId = companyId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -524,6 +554,14 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -556,6 +594,14 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -567,6 +613,14 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -584,6 +638,14 @@ public class CommerceMLForecastAlertEntryModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -595,19 +657,24 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setCommerceAccountId(long commerceAccountId) {
-		_columnBitmask |= COMMERCEACCOUNTID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("commerceAccountId");
 
-		if (!_setOriginalCommerceAccountId) {
-			_setOriginalCommerceAccountId = true;
-
-			_originalCommerceAccountId = _commerceAccountId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_commerceAccountId = commerceAccountId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCommerceAccountId() {
-		return _originalCommerceAccountId;
+		return GetterUtil.getLong(getColumnOriginalValue("commerceAccountId"));
 	}
 
 	@JSON
@@ -618,6 +685,14 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setActual(double actual) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("actual");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_actual = actual;
 	}
 
@@ -629,6 +704,14 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setForecast(double forecast) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("forecast");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_forecast = forecast;
 	}
 
@@ -640,17 +723,24 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setTimestamp(Date timestamp) {
-		_columnBitmask |= TIMESTAMP_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("timestamp");
 
-		if (_originalTimestamp == null) {
-			_originalTimestamp = _timestamp;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_timestamp = timestamp;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public Date getOriginalTimestamp() {
-		return _originalTimestamp;
+		return getColumnOriginalValue("timestamp");
 	}
 
 	@JSON
@@ -661,19 +751,24 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setRelativeChange(double relativeChange) {
-		_columnBitmask |= RELATIVECHANGE_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("relativeChange");
 
-		if (!_setOriginalRelativeChange) {
-			_setOriginalRelativeChange = true;
-
-			_originalRelativeChange = _relativeChange;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_relativeChange = relativeChange;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public double getOriginalRelativeChange() {
-		return _originalRelativeChange;
+		return GetterUtil.getDouble(getColumnOriginalValue("relativeChange"));
 	}
 
 	@JSON
@@ -684,19 +779,24 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("status");
 
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_status = status;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public int getOriginalStatus() {
-		return _originalStatus;
+		return GetterUtil.getInteger(getColumnOriginalValue("status"));
 	}
 
 	@Override
@@ -744,7 +844,6 @@ public class CommerceMLForecastAlertEntryModelImpl
 		CommerceMLForecastAlertEntryImpl commerceMLForecastAlertEntryImpl =
 			new CommerceMLForecastAlertEntryImpl();
 
-		commerceMLForecastAlertEntryImpl.setMvccVersion(getMvccVersion());
 		commerceMLForecastAlertEntryImpl.setUuid(getUuid());
 		commerceMLForecastAlertEntryImpl.setCommerceMLForecastAlertEntryId(
 			getCommerceMLForecastAlertEntryId());
@@ -830,26 +929,9 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_originalUuid = _uuid;
-
-		_originalCompanyId = _companyId;
-
-		_setOriginalCompanyId = false;
+		_columnOriginalValues = Collections.emptyMap();
 
 		_setModifiedDate = false;
-		_originalCommerceAccountId = _commerceAccountId;
-
-		_setOriginalCommerceAccountId = false;
-
-		_originalTimestamp = _timestamp;
-
-		_originalRelativeChange = _relativeChange;
-
-		_setOriginalRelativeChange = false;
-
-		_originalStatus = _status;
-
-		_setOriginalStatus = false;
 
 		_columnBitmask = 0;
 	}
@@ -859,8 +941,6 @@ public class CommerceMLForecastAlertEntryModelImpl
 		CommerceMLForecastAlertEntryCacheModel
 			commerceMLForecastAlertEntryCacheModel =
 				new CommerceMLForecastAlertEntryCacheModel();
-
-		commerceMLForecastAlertEntryCacheModel.mvccVersion = getMvccVersion();
 
 		commerceMLForecastAlertEntryCacheModel.uuid = getUuid();
 
@@ -1007,31 +1087,91 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private String _uuid;
-	private String _originalUuid;
 	private long _commerceMLForecastAlertEntryId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _commerceAccountId;
-	private long _originalCommerceAccountId;
-	private boolean _setOriginalCommerceAccountId;
 	private double _actual;
 	private double _forecast;
 	private Date _timestamp;
-	private Date _originalTimestamp;
 	private double _relativeChange;
-	private double _originalRelativeChange;
-	private boolean _setOriginalRelativeChange;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"commerceMLForecastAlertEntryId", _commerceMLForecastAlertEntryId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("commerceAccountId", _commerceAccountId);
+		_columnOriginalValues.put("actual", _actual);
+		_columnOriginalValues.put("forecast", _forecast);
+		_columnOriginalValues.put("timestamp", _timestamp);
+		_columnOriginalValues.put("relativeChange", _relativeChange);
+		_columnOriginalValues.put("status", _status);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("uuid_", 1L);
+
+		columnBitmasks.put("commerceMLForecastAlertEntryId", 2L);
+
+		columnBitmasks.put("companyId", 4L);
+
+		columnBitmasks.put("userId", 8L);
+
+		columnBitmasks.put("userName", 16L);
+
+		columnBitmasks.put("createDate", 32L);
+
+		columnBitmasks.put("modifiedDate", 64L);
+
+		columnBitmasks.put("commerceAccountId", 128L);
+
+		columnBitmasks.put("actual", 256L);
+
+		columnBitmasks.put("forecast", 512L);
+
+		columnBitmasks.put("timestamp", 1024L);
+
+		columnBitmasks.put("relativeChange", 2048L);
+
+		columnBitmasks.put("status", 4096L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommerceMLForecastAlertEntry _escapedModel;
 

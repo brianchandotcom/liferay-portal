@@ -34,9 +34,6 @@ public class CommerceBOMDefinitionTable
 	public static final CommerceBOMDefinitionTable INSTANCE =
 		new CommerceBOMDefinitionTable();
 
-	public final Column<CommerceBOMDefinitionTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceBOMDefinitionTable, Long>
 		commerceBOMDefinitionId = createColumn(
 			"commerceBOMDefinitionId", Long.class, Types.BIGINT,

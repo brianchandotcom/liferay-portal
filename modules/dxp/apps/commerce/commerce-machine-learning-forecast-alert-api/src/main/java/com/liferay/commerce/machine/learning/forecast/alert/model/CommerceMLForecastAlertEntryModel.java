@@ -16,7 +16,6 @@ package com.liferay.commerce.machine.learning.forecast.alert.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 
@@ -37,7 +36,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceMLForecastAlertEntryModel
-	extends BaseModel<CommerceMLForecastAlertEntry>, MVCCModel, ShardedModel,
+	extends BaseModel<CommerceMLForecastAlertEntry>, ShardedModel,
 			StagedAuditedModel {
 
 	/*
@@ -59,22 +58,6 @@ public interface CommerceMLForecastAlertEntryModel
 	 * @param primaryKey the primary key of this commerce ml forecast alert entry
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this commerce ml forecast alert entry.
-	 *
-	 * @return the mvcc version of this commerce ml forecast alert entry
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this commerce ml forecast alert entry.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce ml forecast alert entry
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this commerce ml forecast alert entry.

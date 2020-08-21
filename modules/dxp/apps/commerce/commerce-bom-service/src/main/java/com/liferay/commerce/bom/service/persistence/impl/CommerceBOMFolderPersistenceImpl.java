@@ -1955,8 +1955,6 @@ public class CommerceBOMFolderPersistenceImpl
 		entityCache.putResult(
 			CommerceBOMFolderImpl.class, commerceBOMFolder.getPrimaryKey(),
 			commerceBOMFolder);
-
-		commerceBOMFolder.resetOriginalValues();
 	}
 
 	/**
@@ -1972,9 +1970,6 @@ public class CommerceBOMFolderPersistenceImpl
 					commerceBOMFolder.getPrimaryKey()) == null) {
 
 				cacheResult(commerceBOMFolder);
-			}
-			else {
-				commerceBOMFolder.resetOriginalValues();
 			}
 		}
 	}
@@ -2241,7 +2236,8 @@ public class CommerceBOMFolderPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceBOMFolderModelImpl.getOriginalCompanyId()
+					commerceBOMFolderModelImpl.getColumnOriginalValue(
+						"companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -2260,9 +2256,10 @@ public class CommerceBOMFolderPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceBOMFolderModelImpl.getOriginalCompanyId(),
-					commerceBOMFolderModelImpl.
-						getOriginalParentCommerceBOMFolderId()
+					commerceBOMFolderModelImpl.getColumnOriginalValue(
+						"companyId"),
+					commerceBOMFolderModelImpl.getColumnOriginalValue(
+						"parentCommerceBOMFolderId")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_P, args);
@@ -2569,8 +2566,8 @@ public class CommerceBOMFolderPersistenceImpl
 			CommerceBOMFolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
-			CommerceBOMFolderModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceBOMFolderModelImpl.NAME_COLUMN_BITMASK);
+			CommerceBOMFolderModelImpl.getColumnBitmask("companyId") |
+			CommerceBOMFolderModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2589,10 +2586,10 @@ public class CommerceBOMFolderPersistenceImpl
 			CommerceBOMFolderImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CommerceBOMFolderModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceBOMFolderModelImpl.
-				PARENTCOMMERCEBOMFOLDERID_COLUMN_BITMASK |
-			CommerceBOMFolderModelImpl.NAME_COLUMN_BITMASK);
+			CommerceBOMFolderModelImpl.getColumnBitmask("companyId") |
+			CommerceBOMFolderModelImpl.getColumnBitmask(
+				"parentCommerceBOMFolderId") |
+			CommerceBOMFolderModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByC_P = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",

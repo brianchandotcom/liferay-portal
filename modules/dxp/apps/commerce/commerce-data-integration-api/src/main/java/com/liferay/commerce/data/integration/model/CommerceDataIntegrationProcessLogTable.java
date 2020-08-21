@@ -36,9 +36,6 @@ public class CommerceDataIntegrationProcessLogTable
 		new CommerceDataIntegrationProcessLogTable();
 
 	public final Column<CommerceDataIntegrationProcessLogTable, Long>
-		mvccVersion = createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<CommerceDataIntegrationProcessLogTable, Long>
 		commerceDataIntegrationProcessLogId = createColumn(
 			"CDataIntegrationProcessLogId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);

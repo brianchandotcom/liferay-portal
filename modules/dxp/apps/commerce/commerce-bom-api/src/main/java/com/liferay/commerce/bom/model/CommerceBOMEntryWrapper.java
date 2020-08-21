@@ -42,7 +42,6 @@ public class CommerceBOMEntryWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("commerceBOMEntryId", getCommerceBOMEntryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -62,12 +61,6 @@ public class CommerceBOMEntryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
 		Long commerceBOMEntryId = (Long)attributes.get("commerceBOMEntryId");
 
 		if (commerceBOMEntryId != null) {
@@ -216,16 +209,6 @@ public class CommerceBOMEntryWrapper
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
-	}
-
-	/**
-	 * Returns the mvcc version of this commerce bom entry.
-	 *
-	 * @return the mvcc version of this commerce bom entry
-	 */
-	@Override
-	public long getMvccVersion() {
-		return model.getMvccVersion();
 	}
 
 	/**
@@ -381,16 +364,6 @@ public class CommerceBOMEntryWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	 * Sets the mvcc version of this commerce bom entry.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce bom entry
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

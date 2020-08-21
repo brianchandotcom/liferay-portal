@@ -73,10 +73,9 @@ public class CommerceApplicationModelCProductRelModelImpl
 	public static final String TABLE_NAME = "CAModelCProductRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"CAModelCProductRelId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP},
+		{"CAModelCProductRelId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"commerceApplicationModelId", Types.BIGINT},
 		{"CProductId", Types.BIGINT}
 	};
@@ -85,7 +84,6 @@ public class CommerceApplicationModelCProductRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CAModelCProductRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -97,7 +95,7 @@ public class CommerceApplicationModelCProductRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CAModelCProductRel (mvccVersion LONG default 0 not null,CAModelCProductRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceApplicationModelId LONG,CProductId LONG)";
+		"create table CAModelCProductRel (CAModelCProductRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceApplicationModelId LONG,CProductId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table CAModelCProductRel";
 
@@ -131,10 +129,23 @@ public class CommerceApplicationModelCProductRelModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CPRODUCTID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMMERCEAPPLICATIONMODELID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long
 		COMMERCEAPPLICATIONMODELCPRODUCTRELID_COLUMN_BITMASK = 4L;
 
@@ -143,7 +154,9 @@ public class CommerceApplicationModelCProductRelModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceApplicationModelCProductRel toModel(
 		CommerceApplicationModelCProductRelSoap soapModel) {
 
@@ -154,7 +167,6 @@ public class CommerceApplicationModelCProductRelModelImpl
 		CommerceApplicationModelCProductRel model =
 			new CommerceApplicationModelCProductRelImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceApplicationModelCProductRelId(
 			soapModel.getCommerceApplicationModelCProductRelId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -174,7 +186,9 @@ public class CommerceApplicationModelCProductRelModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceApplicationModelCProductRel> toModels(
 		CommerceApplicationModelCProductRelSoap[] soapModels) {
 
@@ -335,12 +349,6 @@ public class CommerceApplicationModelCProductRelModelImpl
 					 BiConsumer<CommerceApplicationModelCProductRel, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceApplicationModelCProductRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceApplicationModelCProductRel, Long>)
-				CommerceApplicationModelCProductRel::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceApplicationModelCProductRelId",
 			CommerceApplicationModelCProductRel::
 				getCommerceApplicationModelCProductRelId);
@@ -403,17 +411,6 @@ public class CommerceApplicationModelCProductRelModelImpl
 
 	@JSON
 	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
 	public long getCommerceApplicationModelCProductRelId() {
 		return _commerceApplicationModelCProductRelId;
 	}
@@ -421,6 +418,14 @@ public class CommerceApplicationModelCProductRelModelImpl
 	@Override
 	public void setCommerceApplicationModelCProductRelId(
 		long commerceApplicationModelCProductRelId) {
+
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("CAModelCProductRelId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
 
 		_commerceApplicationModelCProductRelId =
 			commerceApplicationModelCProductRelId;
@@ -434,6 +439,14 @@ public class CommerceApplicationModelCProductRelModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_companyId = companyId;
 	}
 
@@ -445,6 +458,14 @@ public class CommerceApplicationModelCProductRelModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -477,6 +498,14 @@ public class CommerceApplicationModelCProductRelModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -488,6 +517,14 @@ public class CommerceApplicationModelCProductRelModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -505,6 +542,14 @@ public class CommerceApplicationModelCProductRelModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -516,19 +561,25 @@ public class CommerceApplicationModelCProductRelModelImpl
 
 	@Override
 	public void setCommerceApplicationModelId(long commerceApplicationModelId) {
-		_columnBitmask |= COMMERCEAPPLICATIONMODELID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("commerceApplicationModelId");
 
-		if (!_setOriginalCommerceApplicationModelId) {
-			_setOriginalCommerceApplicationModelId = true;
-
-			_originalCommerceApplicationModelId = _commerceApplicationModelId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_commerceApplicationModelId = commerceApplicationModelId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCommerceApplicationModelId() {
-		return _originalCommerceApplicationModelId;
+		return GetterUtil.getLong(
+			getColumnOriginalValue("commerceApplicationModelId"));
 	}
 
 	@JSON
@@ -539,19 +590,24 @@ public class CommerceApplicationModelCProductRelModelImpl
 
 	@Override
 	public void setCProductId(long CProductId) {
-		_columnBitmask |= CPRODUCTID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("CProductId");
 
-		if (!_setOriginalCProductId) {
-			_setOriginalCProductId = true;
-
-			_originalCProductId = _CProductId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_CProductId = CProductId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCProductId() {
-		return _originalCProductId;
+		return GetterUtil.getLong(getColumnOriginalValue("CProductId"));
 	}
 
 	public long getColumnBitmask() {
@@ -593,8 +649,6 @@ public class CommerceApplicationModelCProductRelModelImpl
 			commerceApplicationModelCProductRelImpl =
 				new CommerceApplicationModelCProductRelImpl();
 
-		commerceApplicationModelCProductRelImpl.setMvccVersion(
-			getMvccVersion());
 		commerceApplicationModelCProductRelImpl.
 			setCommerceApplicationModelCProductRelId(
 				getCommerceApplicationModelCProductRelId());
@@ -680,14 +734,9 @@ public class CommerceApplicationModelCProductRelModelImpl
 
 	@Override
 	public void resetOriginalValues() {
+		_columnOriginalValues = Collections.emptyMap();
+
 		_setModifiedDate = false;
-		_originalCommerceApplicationModelId = _commerceApplicationModelId;
-
-		_setOriginalCommerceApplicationModelId = false;
-
-		_originalCProductId = _CProductId;
-
-		_setOriginalCProductId = false;
 
 		_columnBitmask = 0;
 	}
@@ -697,9 +746,6 @@ public class CommerceApplicationModelCProductRelModelImpl
 		CommerceApplicationModelCProductRelCacheModel
 			commerceApplicationModelCProductRelCacheModel =
 				new CommerceApplicationModelCProductRelCacheModel();
-
-		commerceApplicationModelCProductRelCacheModel.mvccVersion =
-			getMvccVersion();
 
 		commerceApplicationModelCProductRelCacheModel.
 			commerceApplicationModelCProductRelId =
@@ -828,7 +874,6 @@ public class CommerceApplicationModelCProductRelModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceApplicationModelCProductRelId;
 	private long _companyId;
 	private long _userId;
@@ -837,11 +882,64 @@ public class CommerceApplicationModelCProductRelModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _commerceApplicationModelId;
-	private long _originalCommerceApplicationModelId;
-	private boolean _setOriginalCommerceApplicationModelId;
 	private long _CProductId;
-	private long _originalCProductId;
-	private boolean _setOriginalCProductId;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put(
+			"CAModelCProductRelId", _commerceApplicationModelCProductRelId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put(
+			"commerceApplicationModelId", _commerceApplicationModelId);
+		_columnOriginalValues.put("CProductId", _CProductId);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("CAModelCProductRelId", 1L);
+
+		columnBitmasks.put("companyId", 2L);
+
+		columnBitmasks.put("userId", 4L);
+
+		columnBitmasks.put("userName", 8L);
+
+		columnBitmasks.put("createDate", 16L);
+
+		columnBitmasks.put("modifiedDate", 32L);
+
+		columnBitmasks.put("commerceApplicationModelId", 64L);
+
+		columnBitmasks.put("CProductId", 128L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommerceApplicationModelCProductRel _escapedModel;
 

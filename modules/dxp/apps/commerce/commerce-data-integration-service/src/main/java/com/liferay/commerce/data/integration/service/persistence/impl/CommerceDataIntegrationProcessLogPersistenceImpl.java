@@ -1232,8 +1232,6 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 			CommerceDataIntegrationProcessLogImpl.class,
 			commerceDataIntegrationProcessLog.getPrimaryKey(),
 			commerceDataIntegrationProcessLog);
-
-		commerceDataIntegrationProcessLog.resetOriginalValues();
 	}
 
 	/**
@@ -1256,9 +1254,6 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 						null) {
 
 				cacheResult(commerceDataIntegrationProcessLog);
-			}
-			else {
-				commerceDataIntegrationProcessLog.resetOriginalValues();
 			}
 		}
 	}
@@ -1561,7 +1556,7 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceDataIntegrationProcessLogModelImpl.
-						getOriginalCDataIntegrationProcessId()
+						getColumnOriginalValue("CDataIntegrationProcessId")
 				};
 
 				finderCache.removeResult(
@@ -1588,9 +1583,9 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceDataIntegrationProcessLogModelImpl.
-						getOriginalCDataIntegrationProcessId(),
+						getColumnOriginalValue("CDataIntegrationProcessId"),
 					commerceDataIntegrationProcessLogModelImpl.
-						getOriginalStatus()
+						getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_S, args);
@@ -1921,10 +1916,10 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCDataIntegrationProcessId",
 				new String[] {Long.class.getName()},
-				CommerceDataIntegrationProcessLogModelImpl.
-					CDATAINTEGRATIONPROCESSID_COLUMN_BITMASK |
-				CommerceDataIntegrationProcessLogModelImpl.
-					MODIFIEDDATE_COLUMN_BITMASK);
+				CommerceDataIntegrationProcessLogModelImpl.getColumnBitmask(
+					"CDataIntegrationProcessId") |
+				CommerceDataIntegrationProcessLogModelImpl.getColumnBitmask(
+					"modifiedDate"));
 
 		_finderPathCountByCDataIntegrationProcessId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1944,11 +1939,12 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 			CommerceDataIntegrationProcessLogImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			CommerceDataIntegrationProcessLogModelImpl.
-				CDATAINTEGRATIONPROCESSID_COLUMN_BITMASK |
-			CommerceDataIntegrationProcessLogModelImpl.STATUS_COLUMN_BITMASK |
-			CommerceDataIntegrationProcessLogModelImpl.
-				MODIFIEDDATE_COLUMN_BITMASK);
+			CommerceDataIntegrationProcessLogModelImpl.getColumnBitmask(
+				"CDataIntegrationProcessId") |
+			CommerceDataIntegrationProcessLogModelImpl.getColumnBitmask(
+				"status") |
+			CommerceDataIntegrationProcessLogModelImpl.getColumnBitmask(
+				"modifiedDate"));
 
 		_finderPathCountByC_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",

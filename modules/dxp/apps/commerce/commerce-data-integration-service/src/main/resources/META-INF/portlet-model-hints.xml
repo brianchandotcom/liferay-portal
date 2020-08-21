@@ -2,7 +2,6 @@
 
 <model-hints>
 	<model name="com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess">
-		<field name="mvccVersion" type="long" />
 		<field name="commerceDataIntegrationProcessId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -21,7 +20,6 @@
 		<field name="endDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcessLog">
-		<field name="mvccVersion" type="long" />
 		<field name="commerceDataIntegrationProcessLogId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

@@ -1934,8 +1934,6 @@ public class CommerceApplicationModelPersistenceImpl
 		entityCache.putResult(
 			CommerceApplicationModelImpl.class,
 			commerceApplicationModel.getPrimaryKey(), commerceApplicationModel);
-
-		commerceApplicationModel.resetOriginalValues();
 	}
 
 	/**
@@ -1955,9 +1953,6 @@ public class CommerceApplicationModelPersistenceImpl
 					commerceApplicationModel.getPrimaryKey()) == null) {
 
 				cacheResult(commerceApplicationModel);
-			}
-			else {
-				commerceApplicationModel.resetOriginalValues();
 			}
 		}
 	}
@@ -2241,7 +2236,8 @@ public class CommerceApplicationModelPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceApplicationModelModelImpl.getOriginalCompanyId()
+					commerceApplicationModelModelImpl.getColumnOriginalValue(
+						"companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -2262,8 +2258,8 @@ public class CommerceApplicationModelPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceApplicationModelModelImpl.
-						getOriginalCommerceApplicationBrandId()
+					commerceApplicationModelModelImpl.getColumnOriginalValue(
+						"commerceApplicationBrandId")
 				};
 
 				finderCache.removeResult(
@@ -2581,8 +2577,8 @@ public class CommerceApplicationModelPersistenceImpl
 			CommerceApplicationModelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
-			CommerceApplicationModelModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceApplicationModelModelImpl.NAME_COLUMN_BITMASK);
+			CommerceApplicationModelModelImpl.getColumnBitmask("companyId") |
+			CommerceApplicationModelModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2604,9 +2600,9 @@ public class CommerceApplicationModelPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceApplicationBrandId",
 				new String[] {Long.class.getName()},
-				CommerceApplicationModelModelImpl.
-					COMMERCEAPPLICATIONBRANDID_COLUMN_BITMASK |
-				CommerceApplicationModelModelImpl.NAME_COLUMN_BITMASK);
+				CommerceApplicationModelModelImpl.getColumnBitmask(
+					"commerceApplicationBrandId") |
+				CommerceApplicationModelModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByCommerceApplicationBrandId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

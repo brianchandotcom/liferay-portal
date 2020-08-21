@@ -45,7 +45,6 @@ public class CommerceDataIntegrationProcessLogWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceDataIntegrationProcessLogId",
 			getCommerceDataIntegrationProcessLogId());
@@ -67,12 +66,6 @@ public class CommerceDataIntegrationProcessLogWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
 		Long commerceDataIntegrationProcessLogId = (Long)attributes.get(
 			"commerceDataIntegrationProcessLogId");
 
@@ -217,16 +210,6 @@ public class CommerceDataIntegrationProcessLogWrapper
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
-	}
-
-	/**
-	 * Returns the mvcc version of this commerce data integration process log.
-	 *
-	 * @return the mvcc version of this commerce data integration process log
-	 */
-	@Override
-	public long getMvccVersion() {
-		return model.getMvccVersion();
 	}
 
 	/**
@@ -375,16 +358,6 @@ public class CommerceDataIntegrationProcessLogWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	 * Sets the mvcc version of this commerce data integration process log.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce data integration process log
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

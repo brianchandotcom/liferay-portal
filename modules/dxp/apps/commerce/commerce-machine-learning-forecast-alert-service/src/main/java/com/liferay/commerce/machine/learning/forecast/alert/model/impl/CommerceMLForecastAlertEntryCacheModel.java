@@ -18,7 +18,6 @@ import com.liferay.commerce.machine.learning.forecast.alert.model.CommerceMLFore
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,8 +33,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceMLForecastAlertEntryCacheModel
-	implements CacheModel<CommerceMLForecastAlertEntry>, Externalizable,
-			   MVCCModel {
+	implements CacheModel<CommerceMLForecastAlertEntry>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -51,11 +49,9 @@ public class CommerceMLForecastAlertEntryCacheModel
 			commerceMLForecastAlertEntryCacheModel =
 				(CommerceMLForecastAlertEntryCacheModel)object;
 
-		if ((commerceMLForecastAlertEntryId ==
+		if (commerceMLForecastAlertEntryId ==
 				commerceMLForecastAlertEntryCacheModel.
-					commerceMLForecastAlertEntryId) &&
-			(mvccVersion ==
-				commerceMLForecastAlertEntryCacheModel.mvccVersion)) {
+					commerceMLForecastAlertEntryId) {
 
 			return true;
 		}
@@ -65,28 +61,14 @@ public class CommerceMLForecastAlertEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, commerceMLForecastAlertEntryId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, commerceMLForecastAlertEntryId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(27);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", uuid=");
+		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", commerceMLForecastAlertEntryId=");
 		sb.append(commerceMLForecastAlertEntryId);
@@ -121,8 +103,6 @@ public class CommerceMLForecastAlertEntryCacheModel
 	public CommerceMLForecastAlertEntry toEntityModel() {
 		CommerceMLForecastAlertEntryImpl commerceMLForecastAlertEntryImpl =
 			new CommerceMLForecastAlertEntryImpl();
-
-		commerceMLForecastAlertEntryImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			commerceMLForecastAlertEntryImpl.setUuid("");
@@ -181,7 +161,6 @@ public class CommerceMLForecastAlertEntryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		commerceMLForecastAlertEntryId = objectInput.readLong();
@@ -207,8 +186,6 @@ public class CommerceMLForecastAlertEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -244,7 +221,6 @@ public class CommerceMLForecastAlertEntryCacheModel
 		objectOutput.writeInt(status);
 	}
 
-	public long mvccVersion;
 	public String uuid;
 	public long commerceMLForecastAlertEntryId;
 	public long companyId;

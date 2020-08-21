@@ -18,7 +18,6 @@ import com.liferay.commerce.bom.model.CommerceBOMFolder;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +33,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceBOMFolderCacheModel
-	implements CacheModel<CommerceBOMFolder>, Externalizable, MVCCModel {
+	implements CacheModel<CommerceBOMFolder>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -49,9 +48,8 @@ public class CommerceBOMFolderCacheModel
 		CommerceBOMFolderCacheModel commerceBOMFolderCacheModel =
 			(CommerceBOMFolderCacheModel)object;
 
-		if ((commerceBOMFolderId ==
-				commerceBOMFolderCacheModel.commerceBOMFolderId) &&
-			(mvccVersion == commerceBOMFolderCacheModel.mvccVersion)) {
+		if (commerceBOMFolderId ==
+				commerceBOMFolderCacheModel.commerceBOMFolderId) {
 
 			return true;
 		}
@@ -61,28 +59,14 @@ public class CommerceBOMFolderCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, commerceBOMFolderId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, commerceBOMFolderId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(21);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", commerceBOMFolderId=");
+		sb.append("{commerceBOMFolderId=");
 		sb.append(commerceBOMFolderId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -112,7 +96,6 @@ public class CommerceBOMFolderCacheModel
 		CommerceBOMFolderImpl commerceBOMFolderImpl =
 			new CommerceBOMFolderImpl();
 
-		commerceBOMFolderImpl.setMvccVersion(mvccVersion);
 		commerceBOMFolderImpl.setCommerceBOMFolderId(commerceBOMFolderId);
 		commerceBOMFolderImpl.setCompanyId(companyId);
 		commerceBOMFolderImpl.setUserId(userId);
@@ -164,8 +147,6 @@ public class CommerceBOMFolderCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		mvccVersion = objectInput.readLong();
-
 		commerceBOMFolderId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -184,8 +165,6 @@ public class CommerceBOMFolderCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		objectOutput.writeLong(commerceBOMFolderId);
 
 		objectOutput.writeLong(companyId);
@@ -221,7 +200,6 @@ public class CommerceBOMFolderCacheModel
 		}
 	}
 
-	public long mvccVersion;
 	public long commerceBOMFolderId;
 	public long companyId;
 	public long userId;

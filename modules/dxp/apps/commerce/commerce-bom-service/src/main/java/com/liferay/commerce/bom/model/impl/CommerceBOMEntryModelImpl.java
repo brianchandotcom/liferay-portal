@@ -72,20 +72,19 @@ public class CommerceBOMEntryModelImpl
 	public static final String TABLE_NAME = "CommerceBOMEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"commerceBOMEntryId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"number_", Types.INTEGER},
-		{"CPInstanceUuid", Types.VARCHAR}, {"CProductId", Types.BIGINT},
-		{"commerceBOMDefinitionId", Types.BIGINT}, {"positionX", Types.DOUBLE},
-		{"positionY", Types.DOUBLE}, {"radius", Types.DOUBLE}
+		{"commerceBOMEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"number_", Types.INTEGER}, {"CPInstanceUuid", Types.VARCHAR},
+		{"CProductId", Types.BIGINT}, {"commerceBOMDefinitionId", Types.BIGINT},
+		{"positionX", Types.DOUBLE}, {"positionY", Types.DOUBLE},
+		{"radius", Types.DOUBLE}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceBOMEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -102,7 +101,7 @@ public class CommerceBOMEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceBOMEntry (mvccVersion LONG default 0 not null,commerceBOMEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,number_ INTEGER,CPInstanceUuid VARCHAR(75) null,CProductId LONG,commerceBOMDefinitionId LONG,positionX DOUBLE,positionY DOUBLE,radius DOUBLE)";
+		"create table CommerceBOMEntry (commerceBOMEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,number_ INTEGER,CPInstanceUuid VARCHAR(75) null,CProductId LONG,commerceBOMDefinitionId LONG,positionX DOUBLE,positionY DOUBLE,radius DOUBLE)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceBOMEntry";
 
@@ -136,8 +135,17 @@ public class CommerceBOMEntryModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMMERCEBOMDEFINITIONID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long NUMBER_COLUMN_BITMASK = 2L;
 
 	/**
@@ -145,7 +153,9 @@ public class CommerceBOMEntryModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceBOMEntry toModel(CommerceBOMEntrySoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -153,7 +163,6 @@ public class CommerceBOMEntryModelImpl
 
 		CommerceBOMEntry model = new CommerceBOMEntryImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceBOMEntryId(soapModel.getCommerceBOMEntryId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -177,7 +186,9 @@ public class CommerceBOMEntryModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceBOMEntry> toModels(
 		CommerceBOMEntrySoap[] soapModels) {
 
@@ -326,12 +337,6 @@ public class CommerceBOMEntryModelImpl
 				new LinkedHashMap<String, BiConsumer<CommerceBOMEntry, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceBOMEntry::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceBOMEntry, Long>)
-				CommerceBOMEntry::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceBOMEntryId", CommerceBOMEntry::getCommerceBOMEntryId);
 		attributeSetterBiConsumers.put(
 			"commerceBOMEntryId",
@@ -411,23 +416,20 @@ public class CommerceBOMEntryModelImpl
 
 	@JSON
 	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
 	public long getCommerceBOMEntryId() {
 		return _commerceBOMEntryId;
 	}
 
 	@Override
 	public void setCommerceBOMEntryId(long commerceBOMEntryId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("commerceBOMEntryId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_commerceBOMEntryId = commerceBOMEntryId;
 	}
 
@@ -439,6 +441,14 @@ public class CommerceBOMEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_companyId = companyId;
 	}
 
@@ -450,6 +460,14 @@ public class CommerceBOMEntryModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -482,6 +500,14 @@ public class CommerceBOMEntryModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -493,6 +519,14 @@ public class CommerceBOMEntryModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -510,6 +544,14 @@ public class CommerceBOMEntryModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -521,6 +563,14 @@ public class CommerceBOMEntryModelImpl
 
 	@Override
 	public void setNumber(int number) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("number_");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_number = number;
 	}
 
@@ -537,6 +587,14 @@ public class CommerceBOMEntryModelImpl
 
 	@Override
 	public void setCPInstanceUuid(String CPInstanceUuid) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("CPInstanceUuid");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_CPInstanceUuid = CPInstanceUuid;
 	}
 
@@ -548,6 +606,14 @@ public class CommerceBOMEntryModelImpl
 
 	@Override
 	public void setCProductId(long CProductId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("CProductId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_CProductId = CProductId;
 	}
 
@@ -559,19 +625,25 @@ public class CommerceBOMEntryModelImpl
 
 	@Override
 	public void setCommerceBOMDefinitionId(long commerceBOMDefinitionId) {
-		_columnBitmask |= COMMERCEBOMDEFINITIONID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("commerceBOMDefinitionId");
 
-		if (!_setOriginalCommerceBOMDefinitionId) {
-			_setOriginalCommerceBOMDefinitionId = true;
-
-			_originalCommerceBOMDefinitionId = _commerceBOMDefinitionId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_commerceBOMDefinitionId = commerceBOMDefinitionId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCommerceBOMDefinitionId() {
-		return _originalCommerceBOMDefinitionId;
+		return GetterUtil.getLong(
+			getColumnOriginalValue("commerceBOMDefinitionId"));
 	}
 
 	@JSON
@@ -582,6 +654,14 @@ public class CommerceBOMEntryModelImpl
 
 	@Override
 	public void setPositionX(double positionX) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("positionX");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_positionX = positionX;
 	}
 
@@ -593,6 +673,14 @@ public class CommerceBOMEntryModelImpl
 
 	@Override
 	public void setPositionY(double positionY) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("positionY");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_positionY = positionY;
 	}
 
@@ -604,6 +692,14 @@ public class CommerceBOMEntryModelImpl
 
 	@Override
 	public void setRadius(double radius) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("radius");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_radius = radius;
 	}
 
@@ -643,7 +739,6 @@ public class CommerceBOMEntryModelImpl
 	public Object clone() {
 		CommerceBOMEntryImpl commerceBOMEntryImpl = new CommerceBOMEntryImpl();
 
-		commerceBOMEntryImpl.setMvccVersion(getMvccVersion());
 		commerceBOMEntryImpl.setCommerceBOMEntryId(getCommerceBOMEntryId());
 		commerceBOMEntryImpl.setCompanyId(getCompanyId());
 		commerceBOMEntryImpl.setUserId(getUserId());
@@ -732,11 +827,9 @@ public class CommerceBOMEntryModelImpl
 
 	@Override
 	public void resetOriginalValues() {
+		_columnOriginalValues = Collections.emptyMap();
+
 		_setModifiedDate = false;
-
-		_originalCommerceBOMDefinitionId = _commerceBOMDefinitionId;
-
-		_setOriginalCommerceBOMDefinitionId = false;
 
 		_columnBitmask = 0;
 	}
@@ -745,8 +838,6 @@ public class CommerceBOMEntryModelImpl
 	public CacheModel<CommerceBOMEntry> toCacheModel() {
 		CommerceBOMEntryCacheModel commerceBOMEntryCacheModel =
 			new CommerceBOMEntryCacheModel();
-
-		commerceBOMEntryCacheModel.mvccVersion = getMvccVersion();
 
 		commerceBOMEntryCacheModel.commerceBOMEntryId = getCommerceBOMEntryId();
 
@@ -874,7 +965,6 @@ public class CommerceBOMEntryModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceBOMEntryId;
 	private long _companyId;
 	private long _userId;
@@ -886,11 +976,80 @@ public class CommerceBOMEntryModelImpl
 	private String _CPInstanceUuid;
 	private long _CProductId;
 	private long _commerceBOMDefinitionId;
-	private long _originalCommerceBOMDefinitionId;
-	private boolean _setOriginalCommerceBOMDefinitionId;
 	private double _positionX;
 	private double _positionY;
 	private double _radius;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("commerceBOMEntryId", _commerceBOMEntryId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("number_", _number);
+		_columnOriginalValues.put("CPInstanceUuid", _CPInstanceUuid);
+		_columnOriginalValues.put("CProductId", _CProductId);
+		_columnOriginalValues.put(
+			"commerceBOMDefinitionId", _commerceBOMDefinitionId);
+		_columnOriginalValues.put("positionX", _positionX);
+		_columnOriginalValues.put("positionY", _positionY);
+		_columnOriginalValues.put("radius", _radius);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("commerceBOMEntryId", 1L);
+
+		columnBitmasks.put("companyId", 2L);
+
+		columnBitmasks.put("userId", 4L);
+
+		columnBitmasks.put("userName", 8L);
+
+		columnBitmasks.put("createDate", 16L);
+
+		columnBitmasks.put("modifiedDate", 32L);
+
+		columnBitmasks.put("number_", 64L);
+
+		columnBitmasks.put("CPInstanceUuid", 128L);
+
+		columnBitmasks.put("CProductId", 256L);
+
+		columnBitmasks.put("commerceBOMDefinitionId", 512L);
+
+		columnBitmasks.put("positionX", 1024L);
+
+		columnBitmasks.put("positionY", 2048L);
+
+		columnBitmasks.put("radius", 4096L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommerceBOMEntry _escapedModel;
 

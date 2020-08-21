@@ -24,14 +24,15 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.bom.service.http.CommerceBOMFolderServiceSoap}.
  *
  * @author Luca Pellizzon
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceBOMFolderSoap implements Serializable {
 
 	public static CommerceBOMFolderSoap toSoapModel(CommerceBOMFolder model) {
 		CommerceBOMFolderSoap soapModel = new CommerceBOMFolderSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceBOMFolderId(model.getCommerceBOMFolderId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -102,14 +103,6 @@ public class CommerceBOMFolderSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceBOMFolderId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceBOMFolderId() {
@@ -192,7 +185,6 @@ public class CommerceBOMFolderSoap implements Serializable {
 		_treePath = treePath;
 	}
 
-	private long _mvccVersion;
 	private long _commerceBOMFolderId;
 	private long _companyId;
 	private long _userId;

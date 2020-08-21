@@ -74,7 +74,6 @@ public class CommerceDataIntegrationProcessLogModelImpl
 	public static final String TABLE_NAME = "CDataIntegrationProcessLog";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT},
 		{"CDataIntegrationProcessLogId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -88,7 +87,6 @@ public class CommerceDataIntegrationProcessLogModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CDataIntegrationProcessLogId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -104,7 +102,7 @@ public class CommerceDataIntegrationProcessLogModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CDataIntegrationProcessLog (mvccVersion LONG default 0 not null,CDataIntegrationProcessLogId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CDataIntegrationProcessId LONG,error TEXT null,output_ TEXT null,startDate DATE null,endDate DATE null,status INTEGER)";
+		"create table CDataIntegrationProcessLog (CDataIntegrationProcessLogId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CDataIntegrationProcessId LONG,error TEXT null,output_ TEXT null,startDate DATE null,endDate DATE null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CDataIntegrationProcessLog";
@@ -139,10 +137,23 @@ public class CommerceDataIntegrationProcessLogModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CDATAINTEGRATIONPROCESSID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long STATUS_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long MODIFIEDDATE_COLUMN_BITMASK = 4L;
 
 	/**
@@ -150,7 +161,9 @@ public class CommerceDataIntegrationProcessLogModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceDataIntegrationProcessLog toModel(
 		CommerceDataIntegrationProcessLogSoap soapModel) {
 
@@ -161,7 +174,6 @@ public class CommerceDataIntegrationProcessLogModelImpl
 		CommerceDataIntegrationProcessLog model =
 			new CommerceDataIntegrationProcessLogImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceDataIntegrationProcessLogId(
 			soapModel.getCommerceDataIntegrationProcessLogId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -185,7 +197,9 @@ public class CommerceDataIntegrationProcessLogModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceDataIntegrationProcessLog> toModels(
 		CommerceDataIntegrationProcessLogSoap[] soapModels) {
 
@@ -344,12 +358,6 @@ public class CommerceDataIntegrationProcessLogModelImpl
 					 BiConsumer<CommerceDataIntegrationProcessLog, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceDataIntegrationProcessLog::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceDataIntegrationProcessLog, Long>)
-				CommerceDataIntegrationProcessLog::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceDataIntegrationProcessLogId",
 			CommerceDataIntegrationProcessLog::
 				getCommerceDataIntegrationProcessLogId);
@@ -435,17 +443,6 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@JSON
 	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
 	public long getCommerceDataIntegrationProcessLogId() {
 		return _commerceDataIntegrationProcessLogId;
 	}
@@ -453,6 +450,15 @@ public class CommerceDataIntegrationProcessLogModelImpl
 	@Override
 	public void setCommerceDataIntegrationProcessLogId(
 		long commerceDataIntegrationProcessLogId) {
+
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get(
+				"CDataIntegrationProcessLogId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
 
 		_commerceDataIntegrationProcessLogId =
 			commerceDataIntegrationProcessLogId;
@@ -466,6 +472,14 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_companyId = companyId;
 	}
 
@@ -477,6 +491,14 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -509,6 +531,14 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -520,6 +550,14 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -537,6 +575,14 @@ public class CommerceDataIntegrationProcessLogModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -548,19 +594,25 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setCDataIntegrationProcessId(long CDataIntegrationProcessId) {
-		_columnBitmask |= CDATAINTEGRATIONPROCESSID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("CDataIntegrationProcessId");
 
-		if (!_setOriginalCDataIntegrationProcessId) {
-			_setOriginalCDataIntegrationProcessId = true;
-
-			_originalCDataIntegrationProcessId = _CDataIntegrationProcessId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_CDataIntegrationProcessId = CDataIntegrationProcessId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCDataIntegrationProcessId() {
-		return _originalCDataIntegrationProcessId;
+		return GetterUtil.getLong(
+			getColumnOriginalValue("CDataIntegrationProcessId"));
 	}
 
 	@JSON
@@ -576,6 +628,14 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setError(String error) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("error");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_error = error;
 	}
 
@@ -592,6 +652,14 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setOutput(String output) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("output_");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_output = output;
 	}
 
@@ -603,6 +671,14 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setStartDate(Date startDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("startDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_startDate = startDate;
 	}
 
@@ -614,6 +690,14 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setEndDate(Date endDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("endDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_endDate = endDate;
 	}
 
@@ -625,19 +709,24 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("status");
 
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_status = status;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public int getOriginalStatus() {
-		return _originalStatus;
+		return GetterUtil.getInteger(getColumnOriginalValue("status"));
 	}
 
 	public long getColumnBitmask() {
@@ -679,7 +768,6 @@ public class CommerceDataIntegrationProcessLogModelImpl
 			commerceDataIntegrationProcessLogImpl =
 				new CommerceDataIntegrationProcessLogImpl();
 
-		commerceDataIntegrationProcessLogImpl.setMvccVersion(getMvccVersion());
 		commerceDataIntegrationProcessLogImpl.
 			setCommerceDataIntegrationProcessLogId(
 				getCommerceDataIntegrationProcessLogId());
@@ -769,14 +857,9 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void resetOriginalValues() {
+		_columnOriginalValues = Collections.emptyMap();
+
 		_setModifiedDate = false;
-		_originalCDataIntegrationProcessId = _CDataIntegrationProcessId;
-
-		_setOriginalCDataIntegrationProcessId = false;
-
-		_originalStatus = _status;
-
-		_setOriginalStatus = false;
 
 		_columnBitmask = 0;
 	}
@@ -786,9 +869,6 @@ public class CommerceDataIntegrationProcessLogModelImpl
 		CommerceDataIntegrationProcessLogCacheModel
 			commerceDataIntegrationProcessLogCacheModel =
 				new CommerceDataIntegrationProcessLogCacheModel();
-
-		commerceDataIntegrationProcessLogCacheModel.mvccVersion =
-			getMvccVersion();
 
 		commerceDataIntegrationProcessLogCacheModel.
 			commerceDataIntegrationProcessLogId =
@@ -952,7 +1032,6 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceDataIntegrationProcessLogId;
 	private long _companyId;
 	private long _userId;
@@ -961,15 +1040,81 @@ public class CommerceDataIntegrationProcessLogModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _CDataIntegrationProcessId;
-	private long _originalCDataIntegrationProcessId;
-	private boolean _setOriginalCDataIntegrationProcessId;
 	private String _error;
 	private String _output;
 	private Date _startDate;
 	private Date _endDate;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put(
+			"CDataIntegrationProcessLogId",
+			_commerceDataIntegrationProcessLogId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put(
+			"CDataIntegrationProcessId", _CDataIntegrationProcessId);
+		_columnOriginalValues.put("error", _error);
+		_columnOriginalValues.put("output_", _output);
+		_columnOriginalValues.put("startDate", _startDate);
+		_columnOriginalValues.put("endDate", _endDate);
+		_columnOriginalValues.put("status", _status);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("CDataIntegrationProcessLogId", 1L);
+
+		columnBitmasks.put("companyId", 2L);
+
+		columnBitmasks.put("userId", 4L);
+
+		columnBitmasks.put("userName", 8L);
+
+		columnBitmasks.put("createDate", 16L);
+
+		columnBitmasks.put("modifiedDate", 32L);
+
+		columnBitmasks.put("CDataIntegrationProcessId", 64L);
+
+		columnBitmasks.put("error", 128L);
+
+		columnBitmasks.put("output_", 256L);
+
+		columnBitmasks.put("startDate", 512L);
+
+		columnBitmasks.put("endDate", 1024L);
+
+		columnBitmasks.put("status", 2048L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommerceDataIntegrationProcessLog _escapedModel;
 

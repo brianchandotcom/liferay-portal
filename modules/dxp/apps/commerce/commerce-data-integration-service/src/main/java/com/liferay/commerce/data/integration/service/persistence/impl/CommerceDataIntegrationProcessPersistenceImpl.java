@@ -2337,8 +2337,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 				commerceDataIntegrationProcess.getName()
 			},
 			commerceDataIntegrationProcess);
-
-		commerceDataIntegrationProcess.resetOriginalValues();
 	}
 
 	/**
@@ -2358,9 +2356,6 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 					commerceDataIntegrationProcess.getPrimaryKey()) == null) {
 
 				cacheResult(commerceDataIntegrationProcess);
-			}
-			else {
-				commerceDataIntegrationProcess.resetOriginalValues();
 			}
 		}
 	}
@@ -2473,8 +2468,10 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 			 _finderPathFetchByC_N.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceDataIntegrationProcessModelImpl.getOriginalCompanyId(),
-				commerceDataIntegrationProcessModelImpl.getOriginalName()
+				commerceDataIntegrationProcessModelImpl.getColumnOriginalValue(
+					"companyId"),
+				commerceDataIntegrationProcessModelImpl.getColumnOriginalValue(
+					"name")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_N, args);
@@ -2707,7 +2704,7 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceDataIntegrationProcessModelImpl.
-						getOriginalCompanyId()
+						getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -2729,8 +2726,9 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceDataIntegrationProcessModelImpl.
-						getOriginalCompanyId(),
-					commerceDataIntegrationProcessModelImpl.getOriginalType()
+						getColumnOriginalValue("companyId"),
+					commerceDataIntegrationProcessModelImpl.
+						getColumnOriginalValue("type_")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_T, args);
@@ -3056,9 +3054,10 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 			CommerceDataIntegrationProcessImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
-			CommerceDataIntegrationProcessModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceDataIntegrationProcessModelImpl.
-				MODIFIEDDATE_COLUMN_BITMASK);
+			CommerceDataIntegrationProcessModelImpl.getColumnBitmask(
+				"companyId") |
+			CommerceDataIntegrationProcessModelImpl.getColumnBitmask(
+				"modifiedDate"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3068,8 +3067,9 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 			CommerceDataIntegrationProcessImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceDataIntegrationProcessModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceDataIntegrationProcessModelImpl.NAME_COLUMN_BITMASK);
+			CommerceDataIntegrationProcessModelImpl.getColumnBitmask(
+				"companyId") |
+			CommerceDataIntegrationProcessModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByC_N = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
@@ -3088,10 +3088,11 @@ public class CommerceDataIntegrationProcessPersistenceImpl
 			CommerceDataIntegrationProcessImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceDataIntegrationProcessModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceDataIntegrationProcessModelImpl.TYPE_COLUMN_BITMASK |
-			CommerceDataIntegrationProcessModelImpl.
-				MODIFIEDDATE_COLUMN_BITMASK);
+			CommerceDataIntegrationProcessModelImpl.getColumnBitmask(
+				"companyId") |
+			CommerceDataIntegrationProcessModelImpl.getColumnBitmask("type_") |
+			CommerceDataIntegrationProcessModelImpl.getColumnBitmask(
+				"modifiedDate"));
 
 		_finderPathCountByC_T = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",

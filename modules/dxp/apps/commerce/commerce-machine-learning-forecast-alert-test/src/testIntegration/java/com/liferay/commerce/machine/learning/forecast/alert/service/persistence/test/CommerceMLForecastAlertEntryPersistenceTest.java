@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -130,9 +131,6 @@ public class CommerceMLForecastAlertEntryPersistenceTest {
 		CommerceMLForecastAlertEntry newCommerceMLForecastAlertEntry =
 			_persistence.create(pk);
 
-		newCommerceMLForecastAlertEntry.setMvccVersion(
-			RandomTestUtil.nextLong());
-
 		newCommerceMLForecastAlertEntry.setUuid(RandomTestUtil.randomString());
 
 		newCommerceMLForecastAlertEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -170,9 +168,6 @@ public class CommerceMLForecastAlertEntryPersistenceTest {
 			_persistence.findByPrimaryKey(
 				newCommerceMLForecastAlertEntry.getPrimaryKey());
 
-		Assert.assertEquals(
-			existingCommerceMLForecastAlertEntry.getMvccVersion(),
-			newCommerceMLForecastAlertEntry.getMvccVersion());
 		Assert.assertEquals(
 			existingCommerceMLForecastAlertEntry.getUuid(),
 			newCommerceMLForecastAlertEntry.getUuid());
@@ -331,7 +326,7 @@ public class CommerceMLForecastAlertEntryPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceMLForecastAlertEntry", "mvccVersion", true, "uuid", true,
+			"CommerceMLForecastAlertEntry", "uuid", true,
 			"commerceMLForecastAlertEntryId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"commerceAccountId", true, "actual", true, "forecast", true,
@@ -592,26 +587,72 @@ public class CommerceMLForecastAlertEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		CommerceMLForecastAlertEntry existingCommerceMLForecastAlertEntry =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newCommerceMLForecastAlertEntry.getPrimaryKey());
+				newCommerceMLForecastAlertEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CommerceMLForecastAlertEntry newCommerceMLForecastAlertEntry =
+			addCommerceMLForecastAlertEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CommerceMLForecastAlertEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"commerceMLForecastAlertEntryId",
+				newCommerceMLForecastAlertEntry.
+					getCommerceMLForecastAlertEntryId()));
+
+		List<CommerceMLForecastAlertEntry> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
 
 		Assert.assertEquals(
-			Long.valueOf(existingCommerceMLForecastAlertEntry.getCompanyId()),
+			Long.valueOf(commerceMLForecastAlertEntry.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceMLForecastAlertEntry, "getOriginalCompanyId",
-				new Class<?>[0]));
+				commerceMLForecastAlertEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
-			Long.valueOf(
-				existingCommerceMLForecastAlertEntry.getCommerceAccountId()),
+			Long.valueOf(commerceMLForecastAlertEntry.getCommerceAccountId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceMLForecastAlertEntry,
-				"getOriginalCommerceAccountId", new Class<?>[0]));
+				commerceMLForecastAlertEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "commerceAccountId"));
 		Assert.assertEquals(
-			existingCommerceMLForecastAlertEntry.getTimestamp(),
+			commerceMLForecastAlertEntry.getTimestamp(),
 			ReflectionTestUtil.invoke(
-				existingCommerceMLForecastAlertEntry, "getOriginalTimestamp",
-				new Class<?>[0]));
+				commerceMLForecastAlertEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "timestamp"));
 	}
 
 	protected CommerceMLForecastAlertEntry addCommerceMLForecastAlertEntry()
@@ -621,8 +662,6 @@ public class CommerceMLForecastAlertEntryPersistenceTest {
 
 		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry =
 			_persistence.create(pk);
-
-		commerceMLForecastAlertEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceMLForecastAlertEntry.setUuid(RandomTestUtil.randomString());
 

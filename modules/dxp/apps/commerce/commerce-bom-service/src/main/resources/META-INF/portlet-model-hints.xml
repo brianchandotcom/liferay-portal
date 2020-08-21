@@ -2,7 +2,6 @@
 
 <model-hints>
 	<model name="com.liferay.commerce.bom.model.CommerceBOMDefinition">
-		<field name="mvccVersion" type="long" />
 		<field name="commerceBOMDefinitionId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -17,7 +16,6 @@
 		<field name="friendlyUrl" type="String" />
 	</model>
 	<model name="com.liferay.commerce.bom.model.CommerceBOMEntry">
-		<field name="mvccVersion" type="long" />
 		<field name="commerceBOMEntryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -33,7 +31,6 @@
 		<field name="radius" type="double" />
 	</model>
 	<model name="com.liferay.commerce.bom.model.CommerceBOMFolder">
-		<field name="mvccVersion" type="long" />
 		<field name="commerceBOMFolderId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -48,7 +45,6 @@
 		<field name="treePath" type="String" />
 	</model>
 	<model name="com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel">
-		<field name="mvccVersion" type="long" />
 		<field name="commerceBOMFolderApplicationRelId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

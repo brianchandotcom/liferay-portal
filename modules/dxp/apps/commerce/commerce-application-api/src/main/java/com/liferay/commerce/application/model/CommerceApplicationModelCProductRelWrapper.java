@@ -46,7 +46,6 @@ public class CommerceApplicationModelCProductRelWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceApplicationModelCProductRelId",
 			getCommerceApplicationModelCProductRelId());
@@ -64,12 +63,6 @@ public class CommerceApplicationModelCProductRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
 		Long commerceApplicationModelCProductRelId = (Long)attributes.get(
 			"commerceApplicationModelCProductRelId");
 
@@ -183,16 +176,6 @@ public class CommerceApplicationModelCProductRelWrapper
 	}
 
 	/**
-	 * Returns the mvcc version of this commerce application model c product rel.
-	 *
-	 * @return the mvcc version of this commerce application model c product rel
-	 */
-	@Override
-	public long getMvccVersion() {
-		return model.getMvccVersion();
-	}
-
-	/**
 	 * Returns the primary key of this commerce application model c product rel.
 	 *
 	 * @return the primary key of this commerce application model c product rel
@@ -298,16 +281,6 @@ public class CommerceApplicationModelCProductRelWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	 * Sets the mvcc version of this commerce application model c product rel.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce application model c product rel
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

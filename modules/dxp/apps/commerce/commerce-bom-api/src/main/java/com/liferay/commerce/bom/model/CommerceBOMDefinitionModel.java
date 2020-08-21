@@ -17,7 +17,6 @@ package com.liferay.commerce.bom.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -37,8 +36,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceBOMDefinitionModel
-	extends AuditedModel, BaseModel<CommerceBOMDefinition>, MVCCModel,
-			ShardedModel {
+	extends AuditedModel, BaseModel<CommerceBOMDefinition>, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -59,22 +57,6 @@ public interface CommerceBOMDefinitionModel
 	 * @param primaryKey the primary key of this commerce bom definition
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this commerce bom definition.
-	 *
-	 * @return the mvcc version of this commerce bom definition
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this commerce bom definition.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce bom definition
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the commerce bom definition ID of this commerce bom definition.

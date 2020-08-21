@@ -45,7 +45,6 @@ public class CommerceApplicationModelWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceApplicationModelId", getCommerceApplicationModelId());
 		attributes.put("companyId", getCompanyId());
@@ -63,12 +62,6 @@ public class CommerceApplicationModelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
 		Long commerceApplicationModelId = (Long)attributes.get(
 			"commerceApplicationModelId");
 
@@ -174,16 +167,6 @@ public class CommerceApplicationModelWrapper
 	@Override
 	public Date getModifiedDate() {
 		return model.getModifiedDate();
-	}
-
-	/**
-	 * Returns the mvcc version of this commerce application model.
-	 *
-	 * @return the mvcc version of this commerce application model
-	 */
-	@Override
-	public long getMvccVersion() {
-		return model.getMvccVersion();
 	}
 
 	/**
@@ -299,16 +282,6 @@ public class CommerceApplicationModelWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	 * Sets the mvcc version of this commerce application model.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce application model
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

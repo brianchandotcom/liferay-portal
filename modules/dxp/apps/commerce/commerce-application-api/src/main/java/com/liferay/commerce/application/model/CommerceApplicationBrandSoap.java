@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.application.service.http.CommerceApplicationBrandServiceSoap}.
  *
  * @author Luca Pellizzon
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceApplicationBrandSoap implements Serializable {
 
 	public static CommerceApplicationBrandSoap toSoapModel(
@@ -34,7 +36,6 @@ public class CommerceApplicationBrandSoap implements Serializable {
 		CommerceApplicationBrandSoap soapModel =
 			new CommerceApplicationBrandSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceApplicationBrandId(
 			model.getCommerceApplicationBrandId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -107,14 +108,6 @@ public class CommerceApplicationBrandSoap implements Serializable {
 		setCommerceApplicationBrandId(pk);
 	}
 
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
-	}
-
 	public long getCommerceApplicationBrandId() {
 		return _commerceApplicationBrandId;
 	}
@@ -179,7 +172,6 @@ public class CommerceApplicationBrandSoap implements Serializable {
 		_logoId = logoId;
 	}
 
-	private long _mvccVersion;
 	private long _commerceApplicationBrandId;
 	private long _companyId;
 	private long _userId;

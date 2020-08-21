@@ -34,9 +34,6 @@ public class CommerceApplicationBrandTable
 	public static final CommerceApplicationBrandTable INSTANCE =
 		new CommerceApplicationBrandTable();
 
-	public final Column<CommerceApplicationBrandTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceApplicationBrandTable, Long>
 		commerceApplicationBrandId = createColumn(
 			"commerceApplicationBrandId", Long.class, Types.BIGINT,

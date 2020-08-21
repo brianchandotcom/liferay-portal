@@ -18,7 +18,6 @@ import com.liferay.commerce.bom.model.CommerceBOMEntry;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,7 +33,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceBOMEntryCacheModel
-	implements CacheModel<CommerceBOMEntry>, Externalizable, MVCCModel {
+	implements CacheModel<CommerceBOMEntry>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -49,9 +48,8 @@ public class CommerceBOMEntryCacheModel
 		CommerceBOMEntryCacheModel commerceBOMEntryCacheModel =
 			(CommerceBOMEntryCacheModel)object;
 
-		if ((commerceBOMEntryId ==
-				commerceBOMEntryCacheModel.commerceBOMEntryId) &&
-			(mvccVersion == commerceBOMEntryCacheModel.mvccVersion)) {
+		if (commerceBOMEntryId ==
+				commerceBOMEntryCacheModel.commerceBOMEntryId) {
 
 			return true;
 		}
@@ -61,28 +59,14 @@ public class CommerceBOMEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, commerceBOMEntryId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, commerceBOMEntryId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(27);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", commerceBOMEntryId=");
+		sb.append("{commerceBOMEntryId=");
 		sb.append(commerceBOMEntryId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -117,7 +101,6 @@ public class CommerceBOMEntryCacheModel
 	public CommerceBOMEntry toEntityModel() {
 		CommerceBOMEntryImpl commerceBOMEntryImpl = new CommerceBOMEntryImpl();
 
-		commerceBOMEntryImpl.setMvccVersion(mvccVersion);
 		commerceBOMEntryImpl.setCommerceBOMEntryId(commerceBOMEntryId);
 		commerceBOMEntryImpl.setCompanyId(companyId);
 		commerceBOMEntryImpl.setUserId(userId);
@@ -166,8 +149,6 @@ public class CommerceBOMEntryCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		mvccVersion = objectInput.readLong();
-
 		commerceBOMEntryId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -193,8 +174,6 @@ public class CommerceBOMEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		objectOutput.writeLong(commerceBOMEntryId);
 
 		objectOutput.writeLong(companyId);
@@ -231,7 +210,6 @@ public class CommerceBOMEntryCacheModel
 		objectOutput.writeDouble(radius);
 	}
 
-	public long mvccVersion;
 	public long commerceBOMEntryId;
 	public long companyId;
 	public long userId;

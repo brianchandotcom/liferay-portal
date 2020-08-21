@@ -35,9 +35,6 @@ public class CommerceDataIntegrationProcessTable
 	public static final CommerceDataIntegrationProcessTable INSTANCE =
 		new CommerceDataIntegrationProcessTable();
 
-	public final Column<CommerceDataIntegrationProcessTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceDataIntegrationProcessTable, Long>
 		commerceDataIntegrationProcessId = createColumn(
 			"CDataIntegrationProcessId", Long.class, Types.BIGINT,

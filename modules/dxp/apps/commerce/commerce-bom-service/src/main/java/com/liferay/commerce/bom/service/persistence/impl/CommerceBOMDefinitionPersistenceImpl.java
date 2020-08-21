@@ -1006,8 +1006,6 @@ public class CommerceBOMDefinitionPersistenceImpl
 		entityCache.putResult(
 			CommerceBOMDefinitionImpl.class,
 			commerceBOMDefinition.getPrimaryKey(), commerceBOMDefinition);
-
-		commerceBOMDefinition.resetOriginalValues();
 	}
 
 	/**
@@ -1027,9 +1025,6 @@ public class CommerceBOMDefinitionPersistenceImpl
 					commerceBOMDefinition.getPrimaryKey()) == null) {
 
 				cacheResult(commerceBOMDefinition);
-			}
-			else {
-				commerceBOMDefinition.resetOriginalValues();
 			}
 		}
 	}
@@ -1298,8 +1293,8 @@ public class CommerceBOMDefinitionPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceBOMDefinitionModelImpl.
-						getOriginalCommerceBOMFolderId()
+					commerceBOMDefinitionModelImpl.getColumnOriginalValue(
+						"commerceBOMFolderId")
 				};
 
 				finderCache.removeResult(
@@ -1614,8 +1609,9 @@ public class CommerceBOMDefinitionPersistenceImpl
 			CommerceBOMDefinitionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceBOMFolderId", new String[] {Long.class.getName()},
-			CommerceBOMDefinitionModelImpl.COMMERCEBOMFOLDERID_COLUMN_BITMASK |
-			CommerceBOMDefinitionModelImpl.NAME_COLUMN_BITMASK);
+			CommerceBOMDefinitionModelImpl.getColumnBitmask(
+				"commerceBOMFolderId") |
+			CommerceBOMDefinitionModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByCommerceBOMFolderId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

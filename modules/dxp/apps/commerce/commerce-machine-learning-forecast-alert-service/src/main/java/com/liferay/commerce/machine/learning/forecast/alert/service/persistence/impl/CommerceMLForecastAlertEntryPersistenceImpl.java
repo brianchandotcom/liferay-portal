@@ -4404,8 +4404,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				commerceMLForecastAlertEntry.getTimestamp()
 			},
 			commerceMLForecastAlertEntry);
-
-		commerceMLForecastAlertEntry.resetOriginalValues();
 	}
 
 	/**
@@ -4425,9 +4423,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 					commerceMLForecastAlertEntry.getPrimaryKey()) == null) {
 
 				cacheResult(commerceMLForecastAlertEntry);
-			}
-			else {
-				commerceMLForecastAlertEntry.resetOriginalValues();
 			}
 		}
 	}
@@ -4541,12 +4536,13 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			 _finderPathFetchByC_C_T.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceMLForecastAlertEntryModelImpl.getOriginalCompanyId(),
-				commerceMLForecastAlertEntryModelImpl.
-					getOriginalCommerceAccountId(),
+				commerceMLForecastAlertEntryModelImpl.getColumnOriginalValue(
+					"companyId"),
+				commerceMLForecastAlertEntryModelImpl.getColumnOriginalValue(
+					"commerceAccountId"),
 				_getTime(
 					commerceMLForecastAlertEntryModelImpl.
-						getOriginalTimestamp())
+						getColumnOriginalValue("timestamp"))
 			};
 
 			finderCache.removeResult(_finderPathCountByC_C_T, args);
@@ -4798,7 +4794,8 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceMLForecastAlertEntryModelImpl.getOriginalUuid()
+					commerceMLForecastAlertEntryModelImpl.
+						getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -4819,8 +4816,10 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceMLForecastAlertEntryModelImpl.getOriginalUuid(),
-					commerceMLForecastAlertEntryModelImpl.getOriginalCompanyId()
+					commerceMLForecastAlertEntryModelImpl.
+						getColumnOriginalValue("uuid_"),
+					commerceMLForecastAlertEntryModelImpl.
+						getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -4843,10 +4842,11 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceMLForecastAlertEntryModelImpl.
-						getOriginalCompanyId(),
+						getColumnOriginalValue("companyId"),
 					commerceMLForecastAlertEntryModelImpl.
-						getOriginalCommerceAccountId(),
-					commerceMLForecastAlertEntryModelImpl.getOriginalStatus()
+						getColumnOriginalValue("commerceAccountId"),
+					commerceMLForecastAlertEntryModelImpl.
+						getColumnOriginalValue("status")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_C_S, args);
@@ -5173,8 +5173,9 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			CommerceMLForecastAlertEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			CommerceMLForecastAlertEntryModelImpl.UUID_COLUMN_BITMASK |
-			CommerceMLForecastAlertEntryModelImpl.TIMESTAMP_COLUMN_BITMASK);
+			CommerceMLForecastAlertEntryModelImpl.getColumnBitmask("uuid_") |
+			CommerceMLForecastAlertEntryModelImpl.getColumnBitmask(
+				"timestamp"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5193,9 +5194,11 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			CommerceMLForecastAlertEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CommerceMLForecastAlertEntryModelImpl.UUID_COLUMN_BITMASK |
-			CommerceMLForecastAlertEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceMLForecastAlertEntryModelImpl.TIMESTAMP_COLUMN_BITMASK);
+			CommerceMLForecastAlertEntryModelImpl.getColumnBitmask("uuid_") |
+			CommerceMLForecastAlertEntryModelImpl.getColumnBitmask(
+				"companyId") |
+			CommerceMLForecastAlertEntryModelImpl.getColumnBitmask(
+				"timestamp"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5208,10 +5211,12 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Date.class.getName()
 			},
-			CommerceMLForecastAlertEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceMLForecastAlertEntryModelImpl.
-				COMMERCEACCOUNTID_COLUMN_BITMASK |
-			CommerceMLForecastAlertEntryModelImpl.TIMESTAMP_COLUMN_BITMASK);
+			CommerceMLForecastAlertEntryModelImpl.getColumnBitmask(
+				"companyId") |
+			CommerceMLForecastAlertEntryModelImpl.getColumnBitmask(
+				"commerceAccountId") |
+			CommerceMLForecastAlertEntryModelImpl.getColumnBitmask(
+				"timestamp"));
 
 		_finderPathCountByC_C_T = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5236,11 +5241,13 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			CommerceMLForecastAlertEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceMLForecastAlertEntryModelImpl.
-				COMMERCEACCOUNTID_COLUMN_BITMASK |
-			CommerceMLForecastAlertEntryModelImpl.STATUS_COLUMN_BITMASK |
-			CommerceMLForecastAlertEntryModelImpl.TIMESTAMP_COLUMN_BITMASK);
+			CommerceMLForecastAlertEntryModelImpl.getColumnBitmask(
+				"companyId") |
+			CommerceMLForecastAlertEntryModelImpl.getColumnBitmask(
+				"commerceAccountId") |
+			CommerceMLForecastAlertEntryModelImpl.getColumnBitmask("status") |
+			CommerceMLForecastAlertEntryModelImpl.getColumnBitmask(
+				"timestamp"));
 
 		_finderPathCountByC_C_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

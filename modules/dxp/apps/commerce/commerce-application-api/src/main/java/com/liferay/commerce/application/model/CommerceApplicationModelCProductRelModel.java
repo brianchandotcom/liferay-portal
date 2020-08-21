@@ -17,7 +17,6 @@ package com.liferay.commerce.application.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -38,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CommerceApplicationModelCProductRelModel
 	extends AuditedModel, BaseModel<CommerceApplicationModelCProductRel>,
-			MVCCModel, ShardedModel {
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -59,22 +58,6 @@ public interface CommerceApplicationModelCProductRelModel
 	 * @param primaryKey the primary key of this commerce application model c product rel
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this commerce application model c product rel.
-	 *
-	 * @return the mvcc version of this commerce application model c product rel
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this commerce application model c product rel.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce application model c product rel
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the commerce application model c product rel ID of this commerce application model c product rel.

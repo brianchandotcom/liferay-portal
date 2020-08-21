@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.bom.service.http.CommerceBOMFolderApplicationRelServiceSoap}.
  *
  * @author Luca Pellizzon
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceBOMFolderApplicationRelSoap implements Serializable {
 
 	public static CommerceBOMFolderApplicationRelSoap toSoapModel(
@@ -34,7 +36,6 @@ public class CommerceBOMFolderApplicationRelSoap implements Serializable {
 		CommerceBOMFolderApplicationRelSoap soapModel =
 			new CommerceBOMFolderApplicationRelSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceBOMFolderApplicationRelId(
 			model.getCommerceBOMFolderApplicationRelId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -107,14 +108,6 @@ public class CommerceBOMFolderApplicationRelSoap implements Serializable {
 		setCommerceBOMFolderApplicationRelId(pk);
 	}
 
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
-	}
-
 	public long getCommerceBOMFolderApplicationRelId() {
 		return _commerceBOMFolderApplicationRelId;
 	}
@@ -181,7 +174,6 @@ public class CommerceBOMFolderApplicationRelSoap implements Serializable {
 		_commerceApplicationModelId = commerceApplicationModelId;
 	}
 
-	private long _mvccVersion;
 	private long _commerceBOMFolderApplicationRelId;
 	private long _companyId;
 	private long _userId;

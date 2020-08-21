@@ -73,7 +73,6 @@ public class CommerceBOMFolderApplicationRelModelImpl
 	public static final String TABLE_NAME = "CBOMFolderApplicationRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT},
 		{"CBOMFolderApplicationRelId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -86,7 +85,6 @@ public class CommerceBOMFolderApplicationRelModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CBOMFolderApplicationRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -98,7 +96,7 @@ public class CommerceBOMFolderApplicationRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CBOMFolderApplicationRel (mvccVersion LONG default 0 not null,CBOMFolderApplicationRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceBOMFolderId LONG,commerceApplicationModelId LONG)";
+		"create table CBOMFolderApplicationRel (CBOMFolderApplicationRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceBOMFolderId LONG,commerceApplicationModelId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CBOMFolderApplicationRel";
@@ -133,10 +131,23 @@ public class CommerceBOMFolderApplicationRelModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMMERCEAPPLICATIONMODELID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMMERCEBOMFOLDERID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMMERCEBOMFOLDERAPPLICATIONRELID_COLUMN_BITMASK =
 		4L;
 
@@ -145,7 +156,9 @@ public class CommerceBOMFolderApplicationRelModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceBOMFolderApplicationRel toModel(
 		CommerceBOMFolderApplicationRelSoap soapModel) {
 
@@ -156,7 +169,6 @@ public class CommerceBOMFolderApplicationRelModelImpl
 		CommerceBOMFolderApplicationRel model =
 			new CommerceBOMFolderApplicationRelImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceBOMFolderApplicationRelId(
 			soapModel.getCommerceBOMFolderApplicationRelId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -176,7 +188,9 @@ public class CommerceBOMFolderApplicationRelModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceBOMFolderApplicationRel> toModels(
 		CommerceBOMFolderApplicationRelSoap[] soapModels) {
 
@@ -333,12 +347,6 @@ public class CommerceBOMFolderApplicationRelModelImpl
 					<String, BiConsumer<CommerceBOMFolderApplicationRel, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceBOMFolderApplicationRel::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceBOMFolderApplicationRel, Long>)
-				CommerceBOMFolderApplicationRel::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceBOMFolderApplicationRelId",
 			CommerceBOMFolderApplicationRel::
 				getCommerceBOMFolderApplicationRelId);
@@ -400,17 +408,6 @@ public class CommerceBOMFolderApplicationRelModelImpl
 
 	@JSON
 	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
 	public long getCommerceBOMFolderApplicationRelId() {
 		return _commerceBOMFolderApplicationRelId;
 	}
@@ -418,6 +415,14 @@ public class CommerceBOMFolderApplicationRelModelImpl
 	@Override
 	public void setCommerceBOMFolderApplicationRelId(
 		long commerceBOMFolderApplicationRelId) {
+
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("CBOMFolderApplicationRelId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
 
 		_commerceBOMFolderApplicationRelId = commerceBOMFolderApplicationRelId;
 	}
@@ -430,6 +435,14 @@ public class CommerceBOMFolderApplicationRelModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_companyId = companyId;
 	}
 
@@ -441,6 +454,14 @@ public class CommerceBOMFolderApplicationRelModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -473,6 +494,14 @@ public class CommerceBOMFolderApplicationRelModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -484,6 +513,14 @@ public class CommerceBOMFolderApplicationRelModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -501,6 +538,14 @@ public class CommerceBOMFolderApplicationRelModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -512,19 +557,25 @@ public class CommerceBOMFolderApplicationRelModelImpl
 
 	@Override
 	public void setCommerceBOMFolderId(long commerceBOMFolderId) {
-		_columnBitmask |= COMMERCEBOMFOLDERID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("commerceBOMFolderId");
 
-		if (!_setOriginalCommerceBOMFolderId) {
-			_setOriginalCommerceBOMFolderId = true;
-
-			_originalCommerceBOMFolderId = _commerceBOMFolderId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_commerceBOMFolderId = commerceBOMFolderId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCommerceBOMFolderId() {
-		return _originalCommerceBOMFolderId;
+		return GetterUtil.getLong(
+			getColumnOriginalValue("commerceBOMFolderId"));
 	}
 
 	@JSON
@@ -535,19 +586,25 @@ public class CommerceBOMFolderApplicationRelModelImpl
 
 	@Override
 	public void setCommerceApplicationModelId(long commerceApplicationModelId) {
-		_columnBitmask |= COMMERCEAPPLICATIONMODELID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("commerceApplicationModelId");
 
-		if (!_setOriginalCommerceApplicationModelId) {
-			_setOriginalCommerceApplicationModelId = true;
-
-			_originalCommerceApplicationModelId = _commerceApplicationModelId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_commerceApplicationModelId = commerceApplicationModelId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCommerceApplicationModelId() {
-		return _originalCommerceApplicationModelId;
+		return GetterUtil.getLong(
+			getColumnOriginalValue("commerceApplicationModelId"));
 	}
 
 	public long getColumnBitmask() {
@@ -589,7 +646,6 @@ public class CommerceBOMFolderApplicationRelModelImpl
 			commerceBOMFolderApplicationRelImpl =
 				new CommerceBOMFolderApplicationRelImpl();
 
-		commerceBOMFolderApplicationRelImpl.setMvccVersion(getMvccVersion());
 		commerceBOMFolderApplicationRelImpl.
 			setCommerceBOMFolderApplicationRelId(
 				getCommerceBOMFolderApplicationRelId());
@@ -673,14 +729,9 @@ public class CommerceBOMFolderApplicationRelModelImpl
 
 	@Override
 	public void resetOriginalValues() {
+		_columnOriginalValues = Collections.emptyMap();
+
 		_setModifiedDate = false;
-		_originalCommerceBOMFolderId = _commerceBOMFolderId;
-
-		_setOriginalCommerceBOMFolderId = false;
-
-		_originalCommerceApplicationModelId = _commerceApplicationModelId;
-
-		_setOriginalCommerceApplicationModelId = false;
 
 		_columnBitmask = 0;
 	}
@@ -690,9 +741,6 @@ public class CommerceBOMFolderApplicationRelModelImpl
 		CommerceBOMFolderApplicationRelCacheModel
 			commerceBOMFolderApplicationRelCacheModel =
 				new CommerceBOMFolderApplicationRelCacheModel();
-
-		commerceBOMFolderApplicationRelCacheModel.mvccVersion =
-			getMvccVersion();
 
 		commerceBOMFolderApplicationRelCacheModel.
 			commerceBOMFolderApplicationRelId =
@@ -819,7 +867,6 @@ public class CommerceBOMFolderApplicationRelModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceBOMFolderApplicationRelId;
 	private long _companyId;
 	private long _userId;
@@ -828,11 +875,64 @@ public class CommerceBOMFolderApplicationRelModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _commerceBOMFolderId;
-	private long _originalCommerceBOMFolderId;
-	private boolean _setOriginalCommerceBOMFolderId;
 	private long _commerceApplicationModelId;
-	private long _originalCommerceApplicationModelId;
-	private boolean _setOriginalCommerceApplicationModelId;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put(
+			"CBOMFolderApplicationRelId", _commerceBOMFolderApplicationRelId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("commerceBOMFolderId", _commerceBOMFolderId);
+		_columnOriginalValues.put(
+			"commerceApplicationModelId", _commerceApplicationModelId);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("CBOMFolderApplicationRelId", 1L);
+
+		columnBitmasks.put("companyId", 2L);
+
+		columnBitmasks.put("userId", 4L);
+
+		columnBitmasks.put("userName", 8L);
+
+		columnBitmasks.put("createDate", 16L);
+
+		columnBitmasks.put("modifiedDate", 32L);
+
+		columnBitmasks.put("commerceBOMFolderId", 64L);
+
+		columnBitmasks.put("commerceApplicationModelId", 128L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommerceBOMFolderApplicationRel _escapedModel;
 

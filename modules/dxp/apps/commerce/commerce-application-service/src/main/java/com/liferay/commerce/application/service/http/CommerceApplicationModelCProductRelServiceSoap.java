@@ -57,8 +57,10 @@ import java.rmi.RemoteException;
  *
  * @author Luca Pellizzon
  * @see CommerceApplicationModelCProductRelServiceHttp
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceApplicationModelCProductRelServiceSoap {
 
 	public static com.liferay.commerce.application.model.

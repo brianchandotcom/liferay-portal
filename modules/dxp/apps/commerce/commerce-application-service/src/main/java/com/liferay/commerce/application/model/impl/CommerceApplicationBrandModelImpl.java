@@ -73,7 +73,6 @@ public class CommerceApplicationBrandModelImpl
 	public static final String TABLE_NAME = "CommerceApplicationBrand";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT},
 		{"commerceApplicationBrandId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -85,7 +84,6 @@ public class CommerceApplicationBrandModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceApplicationBrandId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -97,7 +95,7 @@ public class CommerceApplicationBrandModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceApplicationBrand (mvccVersion LONG default 0 not null,commerceApplicationBrandId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,logoId LONG)";
+		"create table CommerceApplicationBrand (commerceApplicationBrandId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,logoId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceApplicationBrand";
@@ -132,8 +130,17 @@ public class CommerceApplicationBrandModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long NAME_COLUMN_BITMASK = 2L;
 
 	/**
@@ -141,7 +148,9 @@ public class CommerceApplicationBrandModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceApplicationBrand toModel(
 		CommerceApplicationBrandSoap soapModel) {
 
@@ -151,7 +160,6 @@ public class CommerceApplicationBrandModelImpl
 
 		CommerceApplicationBrand model = new CommerceApplicationBrandImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceApplicationBrandId(
 			soapModel.getCommerceApplicationBrandId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -170,7 +178,9 @@ public class CommerceApplicationBrandModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceApplicationBrand> toModels(
 		CommerceApplicationBrandSoap[] soapModels) {
 
@@ -323,12 +333,6 @@ public class CommerceApplicationBrandModelImpl
 					<String, BiConsumer<CommerceApplicationBrand, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceApplicationBrand::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceApplicationBrand, Long>)
-				CommerceApplicationBrand::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceApplicationBrandId",
 			CommerceApplicationBrand::getCommerceApplicationBrandId);
 		attributeSetterBiConsumers.put(
@@ -385,23 +389,20 @@ public class CommerceApplicationBrandModelImpl
 
 	@JSON
 	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
 	public long getCommerceApplicationBrandId() {
 		return _commerceApplicationBrandId;
 	}
 
 	@Override
 	public void setCommerceApplicationBrandId(long commerceApplicationBrandId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("commerceApplicationBrandId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_commerceApplicationBrandId = commerceApplicationBrandId;
 	}
 
@@ -413,19 +414,24 @@ public class CommerceApplicationBrandModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
 
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_companyId = companyId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -436,6 +442,14 @@ public class CommerceApplicationBrandModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -468,6 +482,14 @@ public class CommerceApplicationBrandModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -479,6 +501,14 @@ public class CommerceApplicationBrandModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -496,6 +526,14 @@ public class CommerceApplicationBrandModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -512,6 +550,14 @@ public class CommerceApplicationBrandModelImpl
 
 	@Override
 	public void setName(String name) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("name");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_name = name;
 	}
 
@@ -523,6 +569,14 @@ public class CommerceApplicationBrandModelImpl
 
 	@Override
 	public void setLogoId(long logoId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("logoId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_logoId = logoId;
 	}
 
@@ -564,7 +618,6 @@ public class CommerceApplicationBrandModelImpl
 		CommerceApplicationBrandImpl commerceApplicationBrandImpl =
 			new CommerceApplicationBrandImpl();
 
-		commerceApplicationBrandImpl.setMvccVersion(getMvccVersion());
 		commerceApplicationBrandImpl.setCommerceApplicationBrandId(
 			getCommerceApplicationBrandId());
 		commerceApplicationBrandImpl.setCompanyId(getCompanyId());
@@ -641,9 +694,7 @@ public class CommerceApplicationBrandModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_originalCompanyId = _companyId;
-
-		_setOriginalCompanyId = false;
+		_columnOriginalValues = Collections.emptyMap();
 
 		_setModifiedDate = false;
 
@@ -654,8 +705,6 @@ public class CommerceApplicationBrandModelImpl
 	public CacheModel<CommerceApplicationBrand> toCacheModel() {
 		CommerceApplicationBrandCacheModel commerceApplicationBrandCacheModel =
 			new CommerceApplicationBrandCacheModel();
-
-		commerceApplicationBrandCacheModel.mvccVersion = getMvccVersion();
 
 		commerceApplicationBrandCacheModel.commerceApplicationBrandId =
 			getCommerceApplicationBrandId();
@@ -779,11 +828,8 @@ public class CommerceApplicationBrandModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceApplicationBrandId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -791,6 +837,62 @@ public class CommerceApplicationBrandModelImpl
 	private boolean _setModifiedDate;
 	private String _name;
 	private long _logoId;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put(
+			"commerceApplicationBrandId", _commerceApplicationBrandId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("logoId", _logoId);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("commerceApplicationBrandId", 1L);
+
+		columnBitmasks.put("companyId", 2L);
+
+		columnBitmasks.put("userId", 4L);
+
+		columnBitmasks.put("userName", 8L);
+
+		columnBitmasks.put("createDate", 16L);
+
+		columnBitmasks.put("modifiedDate", 32L);
+
+		columnBitmasks.put("name", 64L);
+
+		columnBitmasks.put("logoId", 128L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommerceApplicationBrand _escapedModel;
 

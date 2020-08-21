@@ -1207,8 +1207,6 @@ public class CommerceApplicationModelCProductRelPersistenceImpl
 			CommerceApplicationModelCProductRelImpl.class,
 			commerceApplicationModelCProductRel.getPrimaryKey(),
 			commerceApplicationModelCProductRel);
-
-		commerceApplicationModelCProductRel.resetOriginalValues();
 	}
 
 	/**
@@ -1231,9 +1229,6 @@ public class CommerceApplicationModelCProductRelPersistenceImpl
 						null) {
 
 				cacheResult(commerceApplicationModelCProductRel);
-			}
-			else {
-				commerceApplicationModelCProductRel.resetOriginalValues();
 			}
 		}
 	}
@@ -1543,7 +1538,7 @@ public class CommerceApplicationModelCProductRelPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceApplicationModelCProductRelModelImpl.
-						getOriginalCommerceApplicationModelId()
+						getColumnOriginalValue("commerceApplicationModelId")
 				};
 
 				finderCache.removeResult(
@@ -1571,7 +1566,7 @@ public class CommerceApplicationModelCProductRelPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceApplicationModelCProductRelModelImpl.
-						getOriginalCProductId()
+						getColumnOriginalValue("CProductId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCProductId, args);
@@ -1904,8 +1899,8 @@ public class CommerceApplicationModelCProductRelPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceApplicationModelId",
 				new String[] {Long.class.getName()},
-				CommerceApplicationModelCProductRelModelImpl.
-					COMMERCEAPPLICATIONMODELID_COLUMN_BITMASK);
+				CommerceApplicationModelCProductRelModelImpl.getColumnBitmask(
+					"commerceApplicationModelId"));
 
 		_finderPathCountByCommerceApplicationModelId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1924,8 +1919,8 @@ public class CommerceApplicationModelCProductRelPersistenceImpl
 			CommerceApplicationModelCProductRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCProductId",
 			new String[] {Long.class.getName()},
-			CommerceApplicationModelCProductRelModelImpl.
-				CPRODUCTID_COLUMN_BITMASK);
+			CommerceApplicationModelCProductRelModelImpl.getColumnBitmask(
+				"CProductId"));
 
 		_finderPathCountByCProductId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

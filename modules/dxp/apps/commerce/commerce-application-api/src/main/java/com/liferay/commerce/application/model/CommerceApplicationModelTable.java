@@ -34,9 +34,6 @@ public class CommerceApplicationModelTable
 	public static final CommerceApplicationModelTable INSTANCE =
 		new CommerceApplicationModelTable();
 
-	public final Column<CommerceApplicationModelTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceApplicationModelTable, Long>
 		commerceApplicationModelId = createColumn(
 			"commerceApplicationModelId", Long.class, Types.BIGINT,

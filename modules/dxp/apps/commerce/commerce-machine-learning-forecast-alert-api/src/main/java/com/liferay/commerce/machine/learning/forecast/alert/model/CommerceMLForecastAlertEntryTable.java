@@ -34,9 +34,6 @@ public class CommerceMLForecastAlertEntryTable
 	public static final CommerceMLForecastAlertEntryTable INSTANCE =
 		new CommerceMLForecastAlertEntryTable();
 
-	public final Column<CommerceMLForecastAlertEntryTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceMLForecastAlertEntryTable, String> uuid =
 		createColumn("uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceMLForecastAlertEntryTable, Long>

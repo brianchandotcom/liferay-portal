@@ -33,8 +33,6 @@ public class CommerceBOMEntryTable extends BaseTable<CommerceBOMEntryTable> {
 	public static final CommerceBOMEntryTable INSTANCE =
 		new CommerceBOMEntryTable();
 
-	public final Column<CommerceBOMEntryTable, Long> mvccVersion = createColumn(
-		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceBOMEntryTable, Long> commerceBOMEntryId =
 		createColumn(
 			"commerceBOMEntryId", Long.class, Types.BIGINT,

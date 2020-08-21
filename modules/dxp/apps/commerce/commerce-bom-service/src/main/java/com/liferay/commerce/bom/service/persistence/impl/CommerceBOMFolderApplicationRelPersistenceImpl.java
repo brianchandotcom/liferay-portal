@@ -1194,8 +1194,6 @@ public class CommerceBOMFolderApplicationRelPersistenceImpl
 			CommerceBOMFolderApplicationRelImpl.class,
 			commerceBOMFolderApplicationRel.getPrimaryKey(),
 			commerceBOMFolderApplicationRel);
-
-		commerceBOMFolderApplicationRel.resetOriginalValues();
 	}
 
 	/**
@@ -1216,9 +1214,6 @@ public class CommerceBOMFolderApplicationRelPersistenceImpl
 					commerceBOMFolderApplicationRel.getPrimaryKey()) == null) {
 
 				cacheResult(commerceBOMFolderApplicationRel);
-			}
-			else {
-				commerceBOMFolderApplicationRel.resetOriginalValues();
 			}
 		}
 	}
@@ -1518,7 +1513,7 @@ public class CommerceBOMFolderApplicationRelPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceBOMFolderApplicationRelModelImpl.
-						getOriginalCommerceBOMFolderId()
+						getColumnOriginalValue("commerceBOMFolderId")
 				};
 
 				finderCache.removeResult(
@@ -1545,7 +1540,7 @@ public class CommerceBOMFolderApplicationRelPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceBOMFolderApplicationRelModelImpl.
-						getOriginalCommerceApplicationModelId()
+						getColumnOriginalValue("commerceApplicationModelId")
 				};
 
 				finderCache.removeResult(
@@ -1873,8 +1868,8 @@ public class CommerceBOMFolderApplicationRelPersistenceImpl
 			CommerceBOMFolderApplicationRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceBOMFolderId", new String[] {Long.class.getName()},
-			CommerceBOMFolderApplicationRelModelImpl.
-				COMMERCEBOMFOLDERID_COLUMN_BITMASK);
+			CommerceBOMFolderApplicationRelModelImpl.getColumnBitmask(
+				"commerceBOMFolderId"));
 
 		_finderPathCountByCommerceBOMFolderId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1896,8 +1891,8 @@ public class CommerceBOMFolderApplicationRelPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceApplicationModelId",
 				new String[] {Long.class.getName()},
-				CommerceBOMFolderApplicationRelModelImpl.
-					COMMERCEAPPLICATIONMODELID_COLUMN_BITMASK);
+				CommerceBOMFolderApplicationRelModelImpl.getColumnBitmask(
+					"commerceApplicationModelId"));
 
 		_finderPathCountByCommerceApplicationModelId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

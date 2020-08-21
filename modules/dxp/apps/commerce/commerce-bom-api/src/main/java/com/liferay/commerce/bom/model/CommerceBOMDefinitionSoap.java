@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.bom.service.http.CommerceBOMDefinitionServiceSoap}.
  *
  * @author Luca Pellizzon
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceBOMDefinitionSoap implements Serializable {
 
 	public static CommerceBOMDefinitionSoap toSoapModel(
@@ -33,7 +35,6 @@ public class CommerceBOMDefinitionSoap implements Serializable {
 
 		CommerceBOMDefinitionSoap soapModel = new CommerceBOMDefinitionSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceBOMDefinitionId(
 			model.getCommerceBOMDefinitionId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -106,14 +107,6 @@ public class CommerceBOMDefinitionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceBOMDefinitionId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceBOMDefinitionId() {
@@ -196,7 +189,6 @@ public class CommerceBOMDefinitionSoap implements Serializable {
 		_friendlyUrl = friendlyUrl;
 	}
 
-	private long _mvccVersion;
 	private long _commerceBOMDefinitionId;
 	private long _companyId;
 	private long _userId;

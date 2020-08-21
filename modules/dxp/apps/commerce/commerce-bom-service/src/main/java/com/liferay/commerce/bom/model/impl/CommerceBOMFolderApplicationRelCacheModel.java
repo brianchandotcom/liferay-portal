@@ -18,7 +18,6 @@ import com.liferay.commerce.bom.model.CommerceBOMFolderApplicationRel;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,8 +33,7 @@ import java.util.Date;
  * @generated
  */
 public class CommerceBOMFolderApplicationRelCacheModel
-	implements CacheModel<CommerceBOMFolderApplicationRel>, Externalizable,
-			   MVCCModel {
+	implements CacheModel<CommerceBOMFolderApplicationRel>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -51,11 +49,9 @@ public class CommerceBOMFolderApplicationRelCacheModel
 			commerceBOMFolderApplicationRelCacheModel =
 				(CommerceBOMFolderApplicationRelCacheModel)object;
 
-		if ((commerceBOMFolderApplicationRelId ==
+		if (commerceBOMFolderApplicationRelId ==
 				commerceBOMFolderApplicationRelCacheModel.
-					commerceBOMFolderApplicationRelId) &&
-			(mvccVersion ==
-				commerceBOMFolderApplicationRelCacheModel.mvccVersion)) {
+					commerceBOMFolderApplicationRelId) {
 
 			return true;
 		}
@@ -65,28 +61,14 @@ public class CommerceBOMFolderApplicationRelCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, commerceBOMFolderApplicationRelId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, commerceBOMFolderApplicationRelId);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(17);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
-		sb.append(", commerceBOMFolderApplicationRelId=");
+		sb.append("{commerceBOMFolderApplicationRelId=");
 		sb.append(commerceBOMFolderApplicationRelId);
 		sb.append(", companyId=");
 		sb.append(companyId);
@@ -113,7 +95,6 @@ public class CommerceBOMFolderApplicationRelCacheModel
 			commerceBOMFolderApplicationRelImpl =
 				new CommerceBOMFolderApplicationRelImpl();
 
-		commerceBOMFolderApplicationRelImpl.setMvccVersion(mvccVersion);
 		commerceBOMFolderApplicationRelImpl.
 			setCommerceBOMFolderApplicationRelId(
 				commerceBOMFolderApplicationRelId);
@@ -155,8 +136,6 @@ public class CommerceBOMFolderApplicationRelCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		mvccVersion = objectInput.readLong();
-
 		commerceBOMFolderApplicationRelId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -173,8 +152,6 @@ public class CommerceBOMFolderApplicationRelCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
-
 		objectOutput.writeLong(commerceBOMFolderApplicationRelId);
 
 		objectOutput.writeLong(companyId);
@@ -196,7 +173,6 @@ public class CommerceBOMFolderApplicationRelCacheModel
 		objectOutput.writeLong(commerceApplicationModelId);
 	}
 
-	public long mvccVersion;
 	public long commerceBOMFolderApplicationRelId;
 	public long companyId;
 	public long userId;

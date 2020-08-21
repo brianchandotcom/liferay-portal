@@ -17,7 +17,6 @@ package com.liferay.commerce.data.integration.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -37,7 +36,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceDataIntegrationProcessModel
-	extends AuditedModel, BaseModel<CommerceDataIntegrationProcess>, MVCCModel,
+	extends AuditedModel, BaseModel<CommerceDataIntegrationProcess>,
 			ShardedModel {
 
 	/*
@@ -59,22 +58,6 @@ public interface CommerceDataIntegrationProcessModel
 	 * @param primaryKey the primary key of this commerce data integration process
 	 */
 	public void setPrimaryKey(long primaryKey);
-
-	/**
-	 * Returns the mvcc version of this commerce data integration process.
-	 *
-	 * @return the mvcc version of this commerce data integration process
-	 */
-	@Override
-	public long getMvccVersion();
-
-	/**
-	 * Sets the mvcc version of this commerce data integration process.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce data integration process
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the commerce data integration process ID of this commerce data integration process.

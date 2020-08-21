@@ -35,9 +35,6 @@ public class CommerceBOMFolderApplicationRelTable
 		new CommerceBOMFolderApplicationRelTable();
 
 	public final Column<CommerceBOMFolderApplicationRelTable, Long>
-		mvccVersion = createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<CommerceBOMFolderApplicationRelTable, Long>
 		commerceBOMFolderApplicationRelId = createColumn(
 			"CBOMFolderApplicationRelId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);

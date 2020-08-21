@@ -24,8 +24,10 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.data.integration.service.http.CommerceDataIntegrationProcessServiceSoap}.
  *
  * @author Alessio Antonio Rendina
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  * @generated
  */
+@Deprecated
 public class CommerceDataIntegrationProcessSoap implements Serializable {
 
 	public static CommerceDataIntegrationProcessSoap toSoapModel(
@@ -34,7 +36,6 @@ public class CommerceDataIntegrationProcessSoap implements Serializable {
 		CommerceDataIntegrationProcessSoap soapModel =
 			new CommerceDataIntegrationProcessSoap();
 
-		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setCommerceDataIntegrationProcessId(
 			model.getCommerceDataIntegrationProcessId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -110,14 +111,6 @@ public class CommerceDataIntegrationProcessSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCommerceDataIntegrationProcessId(pk);
-	}
-
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
 	}
 
 	public long getCommerceDataIntegrationProcessId() {
@@ -242,7 +235,6 @@ public class CommerceDataIntegrationProcessSoap implements Serializable {
 		_endDate = endDate;
 	}
 
-	private long _mvccVersion;
 	private long _commerceDataIntegrationProcessId;
 	private long _companyId;
 	private long _userId;

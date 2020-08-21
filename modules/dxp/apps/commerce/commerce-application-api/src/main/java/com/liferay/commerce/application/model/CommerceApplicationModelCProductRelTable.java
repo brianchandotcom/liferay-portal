@@ -35,9 +35,6 @@ public class CommerceApplicationModelCProductRelTable
 		new CommerceApplicationModelCProductRelTable();
 
 	public final Column<CommerceApplicationModelCProductRelTable, Long>
-		mvccVersion = createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
-	public final Column<CommerceApplicationModelCProductRelTable, Long>
 		commerceApplicationModelCProductRelId = createColumn(
 			"CAModelCProductRelId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);

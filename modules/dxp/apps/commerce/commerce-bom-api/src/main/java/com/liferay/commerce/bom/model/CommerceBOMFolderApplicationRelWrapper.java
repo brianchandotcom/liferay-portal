@@ -45,7 +45,6 @@ public class CommerceBOMFolderApplicationRelWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put(
 			"commerceBOMFolderApplicationRelId",
 			getCommerceBOMFolderApplicationRelId());
@@ -63,12 +62,6 @@ public class CommerceBOMFolderApplicationRelWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
-
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
-		}
-
 		Long commerceBOMFolderApplicationRelId = (Long)attributes.get(
 			"commerceBOMFolderApplicationRelId");
 
@@ -197,16 +190,6 @@ public class CommerceBOMFolderApplicationRelWrapper
 	}
 
 	/**
-	 * Returns the mvcc version of this commerce bom folder application rel.
-	 *
-	 * @return the mvcc version of this commerce bom folder application rel
-	 */
-	@Override
-	public long getMvccVersion() {
-		return model.getMvccVersion();
-	}
-
-	/**
 	 * Returns the primary key of this commerce bom folder application rel.
 	 *
 	 * @return the primary key of this commerce bom folder application rel
@@ -312,16 +295,6 @@ public class CommerceBOMFolderApplicationRelWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
-	}
-
-	/**
-	 * Sets the mvcc version of this commerce bom folder application rel.
-	 *
-	 * @param mvccVersion the mvcc version of this commerce bom folder application rel
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

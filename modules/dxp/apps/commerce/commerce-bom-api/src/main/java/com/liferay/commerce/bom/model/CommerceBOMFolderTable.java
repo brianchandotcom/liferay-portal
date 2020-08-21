@@ -33,9 +33,6 @@ public class CommerceBOMFolderTable extends BaseTable<CommerceBOMFolderTable> {
 	public static final CommerceBOMFolderTable INSTANCE =
 		new CommerceBOMFolderTable();
 
-	public final Column<CommerceBOMFolderTable, Long> mvccVersion =
-		createColumn(
-			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<CommerceBOMFolderTable, Long> commerceBOMFolderId =
 		createColumn(
 			"commerceBOMFolderId", Long.class, Types.BIGINT,

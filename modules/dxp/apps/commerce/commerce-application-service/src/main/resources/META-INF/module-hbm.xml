@@ -5,11 +5,10 @@
 	<import class="com.liferay.commerce.application.model.CommerceApplicationBrand" />
 	<import class="com.liferay.commerce.application.model.CommerceApplicationModel" />
 	<import class="com.liferay.commerce.application.model.CommerceApplicationModelCProductRel" />
-	<class dynamic-update="true" name="com.liferay.commerce.application.model.impl.CommerceApplicationBrandImpl" table="CommerceApplicationBrand">
+	<class name="com.liferay.commerce.application.model.impl.CommerceApplicationBrandImpl" table="CommerceApplicationBrand">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceApplicationBrandId" type="long">
 			<generator class="assigned" />
 		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -18,11 +17,10 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="logoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
-	<class dynamic-update="true" name="com.liferay.commerce.application.model.impl.CommerceApplicationModelImpl" table="CommerceApplicationModel">
+	<class name="com.liferay.commerce.application.model.impl.CommerceApplicationModelImpl" table="CommerceApplicationModel">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceApplicationModelId" type="long">
 			<generator class="assigned" />
 		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -32,11 +30,10 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="year" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class dynamic-update="true" name="com.liferay.commerce.application.model.impl.CommerceApplicationModelCProductRelImpl" table="CAModelCProductRel">
+	<class name="com.liferay.commerce.application.model.impl.CommerceApplicationModelCProductRelImpl" table="CAModelCProductRel">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="CAModelCProductRelId" name="commerceApplicationModelCProductRelId" type="long">
 			<generator class="assigned" />
 		</id>
-		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />

@@ -72,10 +72,9 @@ public class CommerceBOMFolderModelImpl
 	public static final String TABLE_NAME = "CommerceBOMFolder";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"commerceBOMFolderId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP},
+		{"commerceBOMFolderId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"parentCommerceBOMFolderId", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"logoId", Types.BIGINT}, {"treePath", Types.VARCHAR}
 	};
@@ -84,7 +83,6 @@ public class CommerceBOMFolderModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceBOMFolderId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -98,7 +96,7 @@ public class CommerceBOMFolderModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceBOMFolder (mvccVersion LONG default 0 not null,commerceBOMFolderId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCommerceBOMFolderId LONG,name VARCHAR(75) null,logoId LONG,treePath VARCHAR(75) null)";
+		"create table CommerceBOMFolder (commerceBOMFolderId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCommerceBOMFolderId LONG,name VARCHAR(75) null,logoId LONG,treePath VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceBOMFolder";
 
@@ -132,10 +130,23 @@ public class CommerceBOMFolderModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long PARENTCOMMERCEBOMFOLDERID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long NAME_COLUMN_BITMASK = 4L;
 
 	/**
@@ -143,7 +154,9 @@ public class CommerceBOMFolderModelImpl
 	 *
 	 * @param soapModel the soap model instance to convert
 	 * @return the normal model instance
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static CommerceBOMFolder toModel(CommerceBOMFolderSoap soapModel) {
 		if (soapModel == null) {
 			return null;
@@ -151,7 +164,6 @@ public class CommerceBOMFolderModelImpl
 
 		CommerceBOMFolder model = new CommerceBOMFolderImpl();
 
-		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setCommerceBOMFolderId(soapModel.getCommerceBOMFolderId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -172,7 +184,9 @@ public class CommerceBOMFolderModelImpl
 	 *
 	 * @param soapModels the soap model instances to convert
 	 * @return the normal model instances
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public static List<CommerceBOMFolder> toModels(
 		CommerceBOMFolderSoap[] soapModels) {
 
@@ -322,12 +336,6 @@ public class CommerceBOMFolderModelImpl
 				new LinkedHashMap<String, BiConsumer<CommerceBOMFolder, ?>>();
 
 		attributeGetterFunctions.put(
-			"mvccVersion", CommerceBOMFolder::getMvccVersion);
-		attributeSetterBiConsumers.put(
-			"mvccVersion",
-			(BiConsumer<CommerceBOMFolder, Long>)
-				CommerceBOMFolder::setMvccVersion);
-		attributeGetterFunctions.put(
 			"commerceBOMFolderId", CommerceBOMFolder::getCommerceBOMFolderId);
 		attributeSetterBiConsumers.put(
 			"commerceBOMFolderId",
@@ -391,23 +399,20 @@ public class CommerceBOMFolderModelImpl
 
 	@JSON
 	@Override
-	public long getMvccVersion() {
-		return _mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
-	}
-
-	@JSON
-	@Override
 	public long getCommerceBOMFolderId() {
 		return _commerceBOMFolderId;
 	}
 
 	@Override
 	public void setCommerceBOMFolderId(long commerceBOMFolderId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("commerceBOMFolderId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_commerceBOMFolderId = commerceBOMFolderId;
 	}
 
@@ -419,19 +424,24 @@ public class CommerceBOMFolderModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
 
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_companyId = companyId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -442,6 +452,14 @@ public class CommerceBOMFolderModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -474,6 +492,14 @@ public class CommerceBOMFolderModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -485,6 +511,14 @@ public class CommerceBOMFolderModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -502,6 +536,14 @@ public class CommerceBOMFolderModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -513,19 +555,25 @@ public class CommerceBOMFolderModelImpl
 
 	@Override
 	public void setParentCommerceBOMFolderId(long parentCommerceBOMFolderId) {
-		_columnBitmask |= PARENTCOMMERCEBOMFOLDERID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("parentCommerceBOMFolderId");
 
-		if (!_setOriginalParentCommerceBOMFolderId) {
-			_setOriginalParentCommerceBOMFolderId = true;
-
-			_originalParentCommerceBOMFolderId = _parentCommerceBOMFolderId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_parentCommerceBOMFolderId = parentCommerceBOMFolderId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalParentCommerceBOMFolderId() {
-		return _originalParentCommerceBOMFolderId;
+		return GetterUtil.getLong(
+			getColumnOriginalValue("parentCommerceBOMFolderId"));
 	}
 
 	@JSON
@@ -541,6 +589,14 @@ public class CommerceBOMFolderModelImpl
 
 	@Override
 	public void setName(String name) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("name");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_name = name;
 	}
 
@@ -552,6 +608,14 @@ public class CommerceBOMFolderModelImpl
 
 	@Override
 	public void setLogoId(long logoId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("logoId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_logoId = logoId;
 	}
 
@@ -568,6 +632,14 @@ public class CommerceBOMFolderModelImpl
 
 	@Override
 	public void setTreePath(String treePath) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("treePath");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_treePath = treePath;
 	}
 
@@ -608,7 +680,6 @@ public class CommerceBOMFolderModelImpl
 		CommerceBOMFolderImpl commerceBOMFolderImpl =
 			new CommerceBOMFolderImpl();
 
-		commerceBOMFolderImpl.setMvccVersion(getMvccVersion());
 		commerceBOMFolderImpl.setCommerceBOMFolderId(getCommerceBOMFolderId());
 		commerceBOMFolderImpl.setCompanyId(getCompanyId());
 		commerceBOMFolderImpl.setUserId(getUserId());
@@ -686,14 +757,9 @@ public class CommerceBOMFolderModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_originalCompanyId = _companyId;
-
-		_setOriginalCompanyId = false;
+		_columnOriginalValues = Collections.emptyMap();
 
 		_setModifiedDate = false;
-		_originalParentCommerceBOMFolderId = _parentCommerceBOMFolderId;
-
-		_setOriginalParentCommerceBOMFolderId = false;
 
 		_columnBitmask = 0;
 	}
@@ -702,8 +768,6 @@ public class CommerceBOMFolderModelImpl
 	public CacheModel<CommerceBOMFolder> toCacheModel() {
 		CommerceBOMFolderCacheModel commerceBOMFolderCacheModel =
 			new CommerceBOMFolderCacheModel();
-
-		commerceBOMFolderCacheModel.mvccVersion = getMvccVersion();
 
 		commerceBOMFolderCacheModel.commerceBOMFolderId =
 			getCommerceBOMFolderId();
@@ -832,22 +896,79 @@ public class CommerceBOMFolderModelImpl
 
 	}
 
-	private long _mvccVersion;
 	private long _commerceBOMFolderId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _parentCommerceBOMFolderId;
-	private long _originalParentCommerceBOMFolderId;
-	private boolean _setOriginalParentCommerceBOMFolderId;
 	private String _name;
 	private long _logoId;
 	private String _treePath;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("commerceBOMFolderId", _commerceBOMFolderId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put(
+			"parentCommerceBOMFolderId", _parentCommerceBOMFolderId);
+		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("logoId", _logoId);
+		_columnOriginalValues.put("treePath", _treePath);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("commerceBOMFolderId", 1L);
+
+		columnBitmasks.put("companyId", 2L);
+
+		columnBitmasks.put("userId", 4L);
+
+		columnBitmasks.put("userName", 8L);
+
+		columnBitmasks.put("createDate", 16L);
+
+		columnBitmasks.put("modifiedDate", 32L);
+
+		columnBitmasks.put("parentCommerceBOMFolderId", 64L);
+
+		columnBitmasks.put("name", 128L);
+
+		columnBitmasks.put("logoId", 256L);
+
+		columnBitmasks.put("treePath", 512L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommerceBOMFolder _escapedModel;
 

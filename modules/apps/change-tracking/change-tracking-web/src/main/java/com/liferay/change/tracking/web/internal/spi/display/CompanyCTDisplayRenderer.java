@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.web.internal.display.company;
+package com.liferay.change.tracking.web.internal.spi.display;
 
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;

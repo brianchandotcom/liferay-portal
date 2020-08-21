@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +33,6 @@ import java.sql.ResultSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -116,21 +116,6 @@ public class UpgradeDDMContent extends UpgradeProcess {
 		}
 	}
 
-	private String _generateInstanceId() {
-		StringBundler sb = new StringBundler();
-
-		String possible =
-			"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-		Random random = new Random();
-
-		for (int i = 0; i < 8; i++) {
-			sb.append(possible.charAt(random.nextInt(possible.length())));
-		}
-
-		return sb.toString();
-	}
-
 	private boolean _hasDDMFormField(
 		DDMFormField ddmFormField, JSONArray fieldValuesJSONArray) {
 
@@ -191,7 +176,7 @@ public class UpgradeDDMContent extends UpgradeProcess {
 
 				newFieldValuesJSONArray.put(
 					JSONUtil.put(
-						"instanceId", _generateInstanceId()
+						"instanceId", StringUtil.randomString(8)
 					).put(
 						"name", fieldSetDDMFormField.getName()
 					).put(

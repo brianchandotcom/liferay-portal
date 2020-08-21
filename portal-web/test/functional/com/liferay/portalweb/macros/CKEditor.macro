@@ -17,6 +17,14 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro addSourceContent {
+		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
+
+		Type(
+			locator1 = "CKEditor#BODY_FIELD_SOURCE_ON_2",
+			value1 = "${content}");
+	}
+
 	macro assertEditorPresent {
 		AssertElementPresent(locator1 = "CKEditor#BODY_FIELD");
 	}

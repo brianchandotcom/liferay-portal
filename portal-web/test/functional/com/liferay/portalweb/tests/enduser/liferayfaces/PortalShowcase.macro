@@ -1,3 +1,10 @@
 definition {
 
+	macro example {
+
+		// Please delete this macro when adding a macro to PortalShowcase.macro!!!!!
+
+		Button.clickSave();
+	}
+
 }

@@ -1,7 +1,7 @@
 @if $compat-pager {
 	.pager {
 		list-style: none;
-		margin: $line-height-base 0;
+		margin: map-get($spacers, 4) 0;
 		padding-left: 0;
 		text-align: center;
 

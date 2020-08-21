@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -577,6 +578,13 @@ public class ViewChangesDisplayContext {
 				).put(
 					"userId", ctEntry.getUserId()
 				);
+
+				if (model instanceof GroupedModel) {
+					GroupedModel groupedModel = (GroupedModel)model;
+
+					modelInfo._jsonObject.put(
+						"groupId", groupedModel.getGroupId());
+				}
 
 				if (_ctCollection.getCtCollectionId() ==
 						_activeCTCollectionId) {

@@ -167,7 +167,9 @@ export default ({defaultValue, label, onSelect, selectedValue, visible}) => {
 			>
 				<DropDownWithSearch.Items
 					emptyResultMessage={getMessageWithNewObjectLink(
-						Liferay.Language.get('there-were-no-objects-found-with-this-name')
+						Liferay.Language.get(
+							'there-were-no-objects-found-with-this-name'
+						)
 					)}
 					items={items}
 					onSelect={onSelect}

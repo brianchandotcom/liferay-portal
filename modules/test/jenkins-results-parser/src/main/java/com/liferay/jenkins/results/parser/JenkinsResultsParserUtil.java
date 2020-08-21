@@ -2687,19 +2687,19 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String toByteCountString(long byteCount) {
-		long gigaByteCount = byteCount / _GIGA_BYTE_SIZE;
+		long gigaByteCount = byteCount / _BYTES_GIGA;
 
 		if (gigaByteCount > 0) {
 			return gigaByteCount + "gb";
 		}
 
-		long megaByteCount = byteCount / _MEGA_BYTE_SIZE;
+		long megaByteCount = byteCount / _BYTES_MEGA;
 
 		if (megaByteCount > 0) {
 			return megaByteCount + "mb";
 		}
 
-		long kiloByteCount = byteCount / _KILO_BYTE_SIZE;
+		long kiloByteCount = byteCount / _BYTES_KILO;
 
 		if (kiloByteCount > 0) {
 			return kiloByteCount + "kb";
@@ -3779,6 +3779,12 @@ public class JenkinsResultsParserUtil {
 		return true;
 	}
 
+	private static final long _BYTES_GIGA = 1024 * 1024 * 1024;
+
+	private static final long _BYTES_KILO = 1024;
+
+	private static final long _BYTES_MEGA = 1024 * 1024;
+
 	private static final String _DIST_PORTAL_BUNDLE_FILE_NAMES_DEFAULT =
 		"git-hash,liferay-portal-bundle-tomcat.tar.gz," +
 			"liferay-portal-source.tar.gz";
@@ -3788,12 +3794,6 @@ public class JenkinsResultsParserUtil {
 
 	private static final String _DIST_PORTAL_JOB_URL_DEFAULT =
 		"http://test-1-1/job/test-portal-acceptance-upstream";
-
-	private static final long _GIGA_BYTE_SIZE = 1024 * 1024 * 1024;
-
-	private static final long _KILO_BYTE_SIZE = 1024;
-
-	private static final long _MEGA_BYTE_SIZE = 1024 * 1024;
 
 	private static final long _MILLIS_BASH_COMMAND_TIMEOUT_DEFAULT =
 		1000 * 60 * 60;

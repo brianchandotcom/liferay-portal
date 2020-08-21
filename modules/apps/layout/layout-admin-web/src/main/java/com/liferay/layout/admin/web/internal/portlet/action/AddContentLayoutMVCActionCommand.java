@@ -21,8 +21,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
@@ -161,10 +159,6 @@ public class AddContentLayoutMVCActionCommand
 				JSONUtil.put("redirectURL", redirectURL));
 		}
 		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-
 			SessionErrors.add(actionRequest, "layoutNameInvalid");
 
 			hideDefaultErrorMessage(actionRequest);
@@ -173,9 +167,6 @@ public class AddContentLayoutMVCActionCommand
 				actionRequest, actionResponse, portalException);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AddContentLayoutMVCActionCommand.class);
 
 	@Reference
 	private LayoutExceptionRequestHandler _layoutExceptionRequestHandler;

@@ -19,8 +19,6 @@ import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandl
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -153,10 +151,6 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 				JSONUtil.put("redirectURL", redirectURL.toString()));
 		}
 		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-
 			SessionErrors.add(actionRequest, "layoutNameInvalid");
 
 			hideDefaultErrorMessage(actionRequest);
@@ -165,9 +159,6 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, actionResponse, portalException);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CopyLayoutMVCActionCommand.class);
 
 	@Reference
 	private LayoutCopyHelper _layoutCopyHelper;

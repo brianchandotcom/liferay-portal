@@ -29,8 +29,6 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -96,10 +94,6 @@ public class AddCollectionLayoutMVCActionCommand
 					getContentRedirectURL(actionRequest, layout)));
 		}
 		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-
 			SessionErrors.add(actionRequest, "layoutNameInvalid");
 
 			hideDefaultErrorMessage(actionRequest);
@@ -264,9 +258,6 @@ public class AddCollectionLayoutMVCActionCommand
 				layoutDefinitionJSON, 0);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AddCollectionLayoutMVCActionCommand.class);
 
 	@Reference
 	private AssetListEntryLocalService _assetListEntryLocalService;

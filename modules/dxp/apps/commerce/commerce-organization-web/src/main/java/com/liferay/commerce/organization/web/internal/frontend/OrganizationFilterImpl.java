@@ -14,12 +14,17 @@
 
 package com.liferay.commerce.organization.web.internal.frontend;
 
-import com.liferay.frontend.taglib.clay.internal.data.DefaultFilterImpl;
+import com.liferay.frontend.taglib.clay.data.Filter;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class OrganizationFilterImpl extends DefaultFilterImpl {
+public class OrganizationFilterImpl implements Filter {
+
+	@Override
+	public String getKeywords() {
+		return _keywords;
+	}
 
 	public long getOrganizationId() {
 		return _accountId;
@@ -27,6 +32,10 @@ public class OrganizationFilterImpl extends DefaultFilterImpl {
 
 	public long getUserId() {
 		return _userId;
+	}
+
+	public void setKeywords(String keywords) {
+		_keywords = keywords;
 	}
 
 	public void setOrganizationId(long accountId) {
@@ -38,6 +47,7 @@ public class OrganizationFilterImpl extends DefaultFilterImpl {
 	}
 
 	private long _accountId;
+	private String _keywords;
 	private long _userId;
 
 }

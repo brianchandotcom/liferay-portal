@@ -81,7 +81,7 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 
 									$('#<portlet:namespace />type').val('<%= type %>');
 
-									var addCPDefinitionLinkFm = $(
+									var addCPDefinitionLinkFm = AUI.$(
 										'#<portlet:namespace />addCPDefinitionLinkFm'
 									);
 

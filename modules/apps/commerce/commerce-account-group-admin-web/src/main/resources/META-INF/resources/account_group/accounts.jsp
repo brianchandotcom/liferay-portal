@@ -176,7 +176,7 @@ PortletURL portletURL = commerceAccountGroupAdminDisplayContext.getPortletURL();
 									<portlet:namespace />addCommerceAccountIds.join(',')
 								);
 
-								var addCommerceAccountGroupCommerceAccountRelFm = $(
+								var addCommerceAccountGroupCommerceAccountRelFm = AUI.$(
 									'#<portlet:namespace />addCommerceAccountGroupCommerceAccountRelFm'
 								);
 

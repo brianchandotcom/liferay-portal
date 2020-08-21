@@ -178,7 +178,7 @@ PortletURL portletURL = commerceAccountOrganizationRelAdminDisplayContext.getPor
 									<portlet:namespace />addOrganizationIds.join(',')
 								);
 
-								var addCommerceAccountOrganizationRelFm = $(
+								var addCommerceAccountOrganizationRelFm = AUI.$(
 									'#<portlet:namespace />addCommerceAccountOrganizationRelFm'
 								);
 

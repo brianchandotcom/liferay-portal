@@ -225,7 +225,7 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 							selectedItems
 						);
 
-						var addCPDefinitionGroupedEntryFm = $(
+						var addCPDefinitionGroupedEntryFm = AUI.$(
 							'#<portlet:namespace />addCPDefinitionGroupedEntryFm'
 						);
 

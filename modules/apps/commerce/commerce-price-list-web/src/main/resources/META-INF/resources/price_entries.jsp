@@ -228,7 +228,7 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 						if (selectedItems) {
 							$('#<portlet:namespace />cpInstanceIds').val(selectedItems);
 
-							var addCommercePriceEntryFm = $(
+							var addCommercePriceEntryFm = AUI.$(
 								'#<portlet:namespace />addCommercePriceEntryFm'
 							);
 

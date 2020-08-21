@@ -131,7 +131,7 @@ SearchContainer<CommerceDiscountRel> commercePricingClassCommerceDiscountRelSear
 					if (selectedItems) {
 						$('#<portlet:namespace />classPKs').val(selectedItems);
 
-						var addCommerceDiscountRelFm = $(
+						var addCommerceDiscountRelFm = AUI.$(
 							'#<portlet:namespace />addCommerceDiscountRelFm'
 						);
 

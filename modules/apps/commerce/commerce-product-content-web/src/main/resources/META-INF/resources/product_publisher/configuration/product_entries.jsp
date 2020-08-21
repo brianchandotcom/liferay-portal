@@ -137,7 +137,7 @@ List<CPCatalogEntry> catalogEntries = cpPublisherConfigurationDisplayContext.get
 </aui:script>
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace />addCommerceProductDefinition').on('click', function (
+	window.document.querySelector('#<portlet:namespace />addCommerceProductDefinition').addEventListener('click', function (
 		event
 	) {
 		event.preventDefault();

@@ -216,7 +216,7 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 	</aui:script>
 
 	<aui:script use="liferay-item-selector-dialog">
-		$('#<portlet:namespace />addCommercePriceEntry').on('click', function (event) {
+		window.document.querySelector('#<portlet:namespace />addCommercePriceEntry').addEventListener('click', function (event) {
 			event.preventDefault();
 
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog({

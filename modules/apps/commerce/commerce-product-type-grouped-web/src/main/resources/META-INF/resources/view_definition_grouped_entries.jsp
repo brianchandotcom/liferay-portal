@@ -207,7 +207,7 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 </aui:script>
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace />addDefinitionGroupedEntry').on('click', function (
+	window.document.querySelector('#<portlet:namespace />addDefinitionGroupedEntry').addEventListener('click', function (
 		event
 	) {
 		event.preventDefault();

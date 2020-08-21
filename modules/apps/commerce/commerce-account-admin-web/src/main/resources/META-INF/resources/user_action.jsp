@@ -59,7 +59,7 @@ String editUserRoleId = "editUserRoles" + commerceAccountUser.getUserId();
 </liferay-ui:icon-menu>
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace /><%= editUserRoleId %>').on('click', function (event) {
+	window.document.querySelector('#<portlet:namespace /><%= editUserRoleId %>').addEventListener('click', function (event) {
 		event.preventDefault();
 
 		var form = AUI.$(document.<portlet:namespace />fm);

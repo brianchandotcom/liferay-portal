@@ -150,7 +150,7 @@ PortletURL portletURL = commerceAccountOrganizationRelAdminDisplayContext.getPor
 	</aui:script>
 
 	<aui:script use="liferay-item-selector-dialog">
-		$('#<portlet:namespace />addCommerceAccountOrganizationRel').on(
+		window.document.querySelector('#<portlet:namespace />addCommerceAccountOrganizationRel').addEventListener(
 			'click',
 			function (event) {
 				event.preventDefault();

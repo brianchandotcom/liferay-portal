@@ -111,20 +111,25 @@ if (commerceChannel != null) {
 </aui:form>
 
 <aui:script use="aui-base,liferay-item-selector-dialog">
-	$('#<portlet:namespace />selectSite').on('click', function (event) {
-		event.preventDefault();
+	var selectSiteButton =
+		window.document.querySelector('#<portlet:namespace />selectSite');
 
-		Liferay.Util.selectEntity({
-			dialog: {
-				constrain: true,
-				modal: true,
-			},
-			eventName: 'sitesSelectItem',
-			title: '<liferay-ui:message arguments="site" key="select-x" />',
-			uri:
-				'<%= siteCommerceChannelTypeDisplayContext.getItemSelectorUrl() %>',
+	if (selectSiteButton) {
+		selectSiteButton.addEventListener('click', function (event) {
+			event.preventDefault();
+
+			Liferay.Util.selectEntity({
+				dialog: {
+					constrain: true,
+					modal: true,
+				},
+				eventName: 'sitesSelectItem',
+				title: '<liferay-ui:message arguments="site" key="select-x" />',
+				uri:
+					'<%= siteCommerceChannelTypeDisplayContext.getItemSelectorUrl() %>',
+			});
 		});
-	});
+	}
 </aui:script>
 
 <aui:script use="liferay-search-container">

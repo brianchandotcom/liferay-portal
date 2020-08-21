@@ -132,7 +132,7 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 	var fileEntryRemove = $('#<portlet:namespace />fileEntryRemove');
 	var fileEntryNameInput = $('#<portlet:namespace />fileEntryNameInput');
 
-	$('#<portlet:namespace />selectFile').on('click', function (event) {
+	window.document.querySelector('#<portlet:namespace />selectFile').addEventListener('click', function (event) {
 		event.preventDefault();
 
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
@@ -166,7 +166,7 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 		itemSelectorDialog.open();
 	});
 
-	$('#<portlet:namespace />fileEntryRemove').on('click', function (event) {
+	window.document.querySelector('#<portlet:namespace />fileEntryRemove').addEventListener('click', function (event) {
 		event.preventDefault();
 
 		window.document.querySelector('#<portlet:namespace />fileEntryId').value = 0;

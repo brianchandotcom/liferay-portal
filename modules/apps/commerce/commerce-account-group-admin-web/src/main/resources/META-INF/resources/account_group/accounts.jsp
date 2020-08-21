@@ -148,7 +148,7 @@ PortletURL portletURL = commerceAccountGroupAdminDisplayContext.getPortletURL();
 	</aui:script>
 
 	<aui:script use="liferay-item-selector-dialog">
-		$('#<portlet:namespace />addCommerceAccountGroupCommerceAccountRel').on(
+		window.document.querySelector('#<portlet:namespace />addCommerceAccountGroupCommerceAccountRel').addEventListener(
 			'click',
 			function (event) {
 				event.preventDefault();

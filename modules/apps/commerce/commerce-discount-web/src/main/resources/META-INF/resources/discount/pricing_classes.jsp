@@ -117,7 +117,7 @@ SearchContainer<CommerceDiscountRel> commercePricingClassCommerceDiscountRelSear
 </div>
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace />addCommerceDiscountRelMenuItem').on('click', function (
+	window.document.querySelector('#<portlet:namespace />addCommerceDiscountRelMenuItem').addEventListener('click', function (
 		event
 	) {
 		event.preventDefault();

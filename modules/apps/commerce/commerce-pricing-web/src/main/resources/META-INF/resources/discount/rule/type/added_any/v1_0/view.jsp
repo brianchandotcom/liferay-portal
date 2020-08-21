@@ -67,7 +67,7 @@ List<CPDefinition> cpDefinitions = addedAnyCommerceDiscountRuleDisplayContext.ge
 <aui:button name="selectCommerceDiscountCPDefinition" value="select" />
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace />selectCommerceDiscountCPDefinition').on(
+	window.document.querySelector('#<portlet:namespace />selectCommerceDiscountCPDefinition').addEventListener(
 		'click',
 		function (event) {
 			event.preventDefault();
@@ -81,7 +81,7 @@ List<CPDefinition> cpDefinitions = addedAnyCommerceDiscountRuleDisplayContext.ge
 						if (selectedItems) {
 							window.document.querySelector('#<portlet:namespace />addTypeSettings').value = selectedItems;
 
-							var fm = $('#<portlet:namespace />fm');
+							var fm = AUI.$('#<portlet:namespace />fm');
 
 							submitForm(fm);
 						}

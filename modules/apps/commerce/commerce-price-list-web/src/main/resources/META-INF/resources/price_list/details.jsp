@@ -224,7 +224,7 @@ if (parentCommercePriceList != null) {
 <aui:button cssClass="mb-4" name="selectCommercePriceListAccountRel" value="select" />
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace />selectCommercePriceListAccountRel').on(
+	window.document.querySelector('#<portlet:namespace />selectCommercePriceListAccountRel').addEventListener(
 		'click',
 		function (event) {
 			event.preventDefault();
@@ -260,7 +260,7 @@ if (parentCommercePriceList != null) {
 		}
 	);
 
-	$('#<portlet:namespace />selectCommercePriceListCommerceAccountGroupRel').on(
+	window.document.querySelector('#<portlet:namespace />selectCommercePriceListCommerceAccountGroupRel').addEventListener(
 		'click',
 		function (event) {
 			event.preventDefault();
@@ -296,7 +296,7 @@ if (parentCommercePriceList != null) {
 		}
 	);
 
-	$('#<portlet:namespace />setParentCommercePriceList').on('click', function (
+	window.document.querySelector('#<portlet:namespace />setParentCommercePriceList').addEventListener('click', function (
 		event
 	) {
 		event.preventDefault();

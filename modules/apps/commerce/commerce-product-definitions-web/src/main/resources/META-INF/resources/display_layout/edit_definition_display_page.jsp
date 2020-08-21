@@ -138,7 +138,7 @@ if (cpDisplayLayout != null) {
 </commerce-ui:side-panel-content>
 
 <aui:script use="aui-base,liferay-item-selector-dialog">
-	$('#<portlet:namespace />selectProduct').on('click', function (event) {
+	window.document.querySelector('#<portlet:namespace />selectProduct').addEventListener('click', function (event) {
 		event.preventDefault();
 
 		Liferay.Util.selectEntity({
@@ -221,7 +221,7 @@ if (cpDisplayLayout != null) {
 	var displayPageNameInput = $('#<portlet:namespace />displayPageNameInput');
 	var pagesContainerInput = $('#<portlet:namespace />pagesContainerInput');
 
-	$('#<portlet:namespace />chooseDisplayPage').on('click', function (event) {
+	window.document.querySelector('#<portlet:namespace />chooseDisplayPage').addEventListener('click', function (event) {
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
 			eventName: 'selectDisplayPage',
 			on: {

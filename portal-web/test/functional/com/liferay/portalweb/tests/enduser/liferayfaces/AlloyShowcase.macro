@@ -1,5 +1,17 @@
 definition {
 
+	var description1 = "Liferay lets you reuse the enterprise software and skills you already have in-house.";
+	var description2 = "Liferay is designed for scalability, reliability, and high performance both on-premise and in the cloud.";
+	var description3 = "Liferay is designed for integrating with both enterprise systems and web-based resources.";
+	var description4 = "With Liferay, projects are completed faster and with smaller budgets so you can see immediate results.";
+	var description5 = "Our open source community fosters innovation, increase security, and improves quality of the software.";
+
+	var title1 = "Compatible";
+	var title2 = "Enterprise Ready";
+	var title3 = "Powerful Integration";
+	var title4 = "Lightweight";
+	var title5 = "Open Source";
+
 	macro clickButton {
 		if ("${buttonRow}" == "true") {
 			AssertElementPresent(locator1 = "Button#SAVE");
@@ -30,11 +42,11 @@ definition {
 	}
 
 	macro viewDataList {
-		var dataListItem1 = "Liferay lets you reuse the enterprise software and skills you already have in-house.";
-		var dataListItem2 = "Liferay is designed for scalability, reliability, and high performance both on-premise and in the cloud.";
-		var dataListItem3 = "Liferay is designed for integrating with both enterprise systems and web-based resources.";
-		var dataListItem4 = "With Liferay, projects are completed faster and with smaller budgets so you can see immediate results.";
-		var dataListItem5 = "Our open source community fosters innovation, increase security, and improves quality of the software.";
+		var dataListItem1 = "${description1}";
+		var dataListItem2 = "${description2}";
+		var dataListItem3 = "${description3}";
+		var dataListItem4 = "${description4}";
+		var dataListItem5 = "${description5}";
 
 		AssertTextEquals(
 			key_item = "1",
@@ -100,18 +112,18 @@ definition {
 			value1 = "${dataListItem5}");
 	}
 
-	macro viewDataSelection{
-		var dataListItem1 = "Compatible";
-		var dataListItem2 = "Enterprise Ready";
-		var dataListItem3 = "Powerful Integration";
-		var dataListItem4 = "Lightweight";
-		var dataListItem5 = "Open Source";
+	macro viewDataSelection {
+		var dataListItem1 = "${title1}";
+		var dataListItem2 = "${title2}";
+		var dataListItem3 = "${title3}";
+		var dataListItem4 = "${title4}";
+		var dataListItem5 = "${title5}";
 
-		var dataModal1 = "Compatible: Liferay lets you reuse the enterprise software and skills you already have in-house.";
-		var dataModal2 = "Enterprise Ready: Liferay is designed for scalability, reliability, and high performance both on-premise and in the cloud.";
-		var dataModal3 = "Powerful Integration: Liferay is designed for integrating with both enterprise systems and web-based resources.";
-		var dataModal4 = "Lightweight: With Liferay, projects are completed faster and with smaller budgets so you can see immediate results.";
-		var dataModal5 = "Open Source: Our open source community fosters innovation, increase security, and improves quality of the software.";
+		var dataModal1 = "${title1}: ${description1}";
+		var dataModal2 = "${title2}: ${description2}";
+		var dataModal3 = "${title3}: ${description3}";
+		var dataModal4 = "${title4}: ${description4}";
+		var dataModal5 = "${title5}: ${description5}";
 
 		AssertTextEquals(
 			key_item = "1",
@@ -159,7 +171,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "AlloyShowcase#SELECTION_MODAL_TEXT",
-			value1 = "${dataModal1}"
+			value1 = "${dataModal1}");
 
 		Click(
 			key_item = "2",
@@ -167,7 +179,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "AlloyShowcase#SELECTION_MODAL_TEXT",
-			value1 = "${dataModal2}"
+			value1 = "${dataModal2}");
 
 		Click(
 			key_item = "3",
@@ -175,7 +187,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "AlloyShowcase#SELECTION_MODAL_TEXT",
-			value1 = "${dataModal3}"
+			value1 = "${dataModal3}");
 
 		Click(
 			key_item = "4",
@@ -183,30 +195,28 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "AlloyShowcase#SELECTION_MODAL_TEXT",
-			value1 = "${dataModal4}"
-		
+			value1 = "${dataModal4}");
+
 		Click(
 			key_item = "5",
 			locator1 = "AlloyShowcase#SELECTION_MODAL_LINK");
 
 		AssertTextEquals(
 			locator1 = "AlloyShowcase#SELECTION_MODAL_TEXT",
-			value1 = "${dataModal5}"
-		);
+			value1 = "${dataModal5}");
 	}
 
 	macro viewDataTable {
-		var dataListItemTitle1 = "Compatible";
-		var dataListItemTitle2 = "Enterprise Ready";
-		var dataListItemTitle3 = "Powerful Integration";
-		var dataListItemTitle4 = "Lightweight";
-		var dataListItemTitle5 = "Open Source";
-		var dataListItemDescription1 = "Liferay lets you reuse the enterprise software and skills you already have in-house.";
-		var dataListItemDescription2 = "Liferay is designed for scalability, reliability, and high performance both on-premise and in the cloud.";
-		var dataListItemDescription3 = "Liferay is designed for integrating with both enterprise systems and web-based resources.";
-		var dataListItemDescription4 = "With Liferay, projects are completed faster and with smaller budgets so you can see immediate results.";
-		var dataListItemDescription5 = "Our open source community fosters innovation, increase security, and improves quality of the software.";
-
+		var dataListItemTitle1 = "${title1}";
+		var dataListItemTitle2 = "${title2}";
+		var dataListItemTitle3 = "${title3}";
+		var dataListItemTitle4 = "${title4}";
+		var dataListItemTitle5 = "${title5}";
+		var dataListItemDescription1 = "${description1}";
+		var dataListItemDescription2 = "${description2}";
+		var dataListItemDescription3 = "${description3}";
+		var dataListItemDescription4 = "${description4}";
+		var dataListItemDescription5 = "${description5}";
 
 		AssertTextEquals(
 			key_item = "1",
@@ -271,7 +281,6 @@ definition {
 		AssertElementNotPresent(
 			key_item = "6",
 			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_DESCRIPTION");
-
 	}
 
 	macro viewPaginator {

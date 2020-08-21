@@ -449,12 +449,8 @@ public class ResourcePermissionModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("mvccVersion");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_mvccVersion = mvccVersion;
@@ -468,12 +464,8 @@ public class ResourcePermissionModelImpl
 
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("ctCollectionId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_ctCollectionId = ctCollectionId;
@@ -487,12 +479,8 @@ public class ResourcePermissionModelImpl
 
 	@Override
 	public void setResourcePermissionId(long resourcePermissionId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("resourcePermissionId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_resourcePermissionId = resourcePermissionId;
@@ -506,12 +494,8 @@ public class ResourcePermissionModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -539,12 +523,8 @@ public class ResourcePermissionModelImpl
 
 	@Override
 	public void setName(String name) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("name");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_name = name;
@@ -567,12 +547,8 @@ public class ResourcePermissionModelImpl
 
 	@Override
 	public void setScope(int scope) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("scope");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_scope = scope;
@@ -600,12 +576,8 @@ public class ResourcePermissionModelImpl
 
 	@Override
 	public void setPrimKey(String primKey) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("primKey");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_primKey = primKey;
@@ -628,12 +600,8 @@ public class ResourcePermissionModelImpl
 
 	@Override
 	public void setPrimKeyId(long primKeyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("primKeyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_primKeyId = primKeyId;
@@ -656,12 +624,8 @@ public class ResourcePermissionModelImpl
 
 	@Override
 	public void setRoleId(long roleId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("roleId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_roleId = roleId;
@@ -684,12 +648,8 @@ public class ResourcePermissionModelImpl
 
 	@Override
 	public void setOwnerId(long ownerId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("ownerId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_ownerId = ownerId;
@@ -703,12 +663,8 @@ public class ResourcePermissionModelImpl
 
 	@Override
 	public void setActionIds(long actionIds) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("actionIds");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_actionIds = actionIds;
@@ -728,12 +684,8 @@ public class ResourcePermissionModelImpl
 
 	@Override
 	public void setViewActionId(boolean viewActionId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("viewActionId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_viewActionId = viewActionId;
@@ -749,6 +701,24 @@ public class ResourcePermissionModelImpl
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -1002,6 +972,18 @@ public class ResourcePermissionModelImpl
 
 	public static long getColumnBitmask(String columnName) {
 		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnValue(String columnName) {
+		Function<ResourcePermission, Object> function =
+			_attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((ResourcePermission)this);
 	}
 
 	public <T> T getColumnOriginalValue(String columnName) {

@@ -15,6 +15,7 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -26,23 +27,30 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchBrowserTrackerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BrowserTracker;
 import com.liferay.portal.kernel.model.BrowserTrackerTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BrowserTrackerPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.BrowserTrackerImpl;
 import com.liferay.portal.model.impl.BrowserTrackerModelImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The persistence implementation for the browser tracker service.
@@ -339,26 +347,14 @@ public class BrowserTrackerPersistenceImpl
 	 */
 	@Override
 	public void clearCache(BrowserTracker browserTracker) {
-		EntityCacheUtil.removeResult(
-			BrowserTrackerImpl.class, browserTracker.getPrimaryKey());
-
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache((BrowserTrackerModelImpl)browserTracker, true);
+		EntityCacheUtil.removeResult(BrowserTrackerImpl.class, browserTracker);
 	}
 
 	@Override
 	public void clearCache(List<BrowserTracker> browserTrackers) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (BrowserTracker browserTracker : browserTrackers) {
 			EntityCacheUtil.removeResult(
-				BrowserTrackerImpl.class, browserTracker.getPrimaryKey());
-
-			clearUniqueFindersCache(
-				(BrowserTrackerModelImpl)browserTracker, true);
+				BrowserTrackerImpl.class, browserTracker);
 		}
 	}
 
@@ -382,28 +378,6 @@ public class BrowserTrackerPersistenceImpl
 			_finderPathCountByUserId, args, Long.valueOf(1), false);
 		FinderCacheUtil.putResult(
 			_finderPathFetchByUserId, args, browserTrackerModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		BrowserTrackerModelImpl browserTrackerModelImpl, boolean clearCurrent) {
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {browserTrackerModelImpl.getUserId()};
-
-			FinderCacheUtil.removeResult(_finderPathCountByUserId, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByUserId, args);
-		}
-
-		if ((browserTrackerModelImpl.getColumnBitmask() &
-			 _finderPathFetchByUserId.getColumnBitmask()) != 0) {
-
-			Object[] args = new Object[] {
-				browserTrackerModelImpl.getColumnOriginalValue("userId")
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByUserId, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByUserId, args);
-		}
 	}
 
 	/**
@@ -539,10 +513,8 @@ public class BrowserTrackerPersistenceImpl
 		try {
 			session = openSession();
 
-			if (browserTracker.isNew()) {
+			if (isNew) {
 				session.save(browserTracker);
-
-				browserTracker.setNew(false);
 			}
 			else {
 				browserTracker = (BrowserTracker)session.merge(browserTracker);
@@ -555,21 +527,14 @@ public class BrowserTrackerPersistenceImpl
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		EntityCacheUtil.putResult(
+			BrowserTrackerImpl.class, browserTrackerModelImpl, false, true);
+
+		cacheUniqueFindersCache(browserTrackerModelImpl);
 
 		if (isNew) {
-			FinderCacheUtil.removeResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+			browserTracker.setNew(false);
 		}
-
-		EntityCacheUtil.putResult(
-			BrowserTrackerImpl.class, browserTracker.getPrimaryKey(),
-			browserTracker, false);
-
-		clearUniqueFindersCache(browserTrackerModelImpl, false);
-		cacheUniqueFindersCache(browserTrackerModelImpl);
 
 		browserTracker.resetOriginalValues();
 
@@ -830,33 +795,46 @@ public class BrowserTrackerPersistenceImpl
 	 * Initializes the browser tracker persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			BrowserTrackerImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
+		Registry registry = RegistryUtil.getRegistry();
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			BrowserTrackerImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findAll", new String[0]);
+		_argumentsResolverServiceRegistration = registry.registerService(
+			ArgumentsResolver.class, new BrowserTrackerModelArgumentsResolver(),
+			HashMapBuilder.<String, Object>put(
+				"model.class.name", BrowserTracker.class.getName()
+			).build());
 
-		_finderPathCountAll = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_finderPathWithPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
 
-		_finderPathFetchByUserId = new FinderPath(
-			BrowserTrackerImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByUserId",
-			new String[] {Long.class.getName()},
-			BrowserTrackerModelImpl.getColumnBitmask("userId"));
+		_finderPathWithoutPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
 
-		_finderPathCountByUserId = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUserId", new String[] {Long.class.getName()});
+		_finderPathCountAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
+
+		_finderPathFetchByUserId = _createFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByUserId",
+			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
+
+		_finderPathCountByUserId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+			new String[] {Long.class.getName()}, new String[] {"userId"},
+			false);
 	}
 
 	public void destroy() {
 		EntityCacheUtil.removeCache(BrowserTrackerImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		_argumentsResolverServiceRegistration.unregister();
+
+		for (ServiceRegistration<FinderPath> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
 
 	private static final String _SQL_SELECT_BROWSERTRACKER =
@@ -881,5 +859,110 @@ public class BrowserTrackerPersistenceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BrowserTrackerPersistenceImpl.class);
+
+	private FinderPath _createFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, baseModelResult);
+
+		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
+			Registry registry = RegistryUtil.getRegistry();
+
+			_serviceRegistrations.add(
+				registry.registerService(
+					FinderPath.class, finderPath,
+					HashMapBuilder.<String, Object>put(
+						"cache.name", cacheName
+					).build()));
+		}
+
+		return finderPath;
+	}
+
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
+	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
+		new HashSet<>();
+
+	private static class BrowserTrackerModelArgumentsResolver
+		implements ArgumentsResolver {
+
+		@Override
+		public Object[] getArguments(
+			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
+			boolean original) {
+
+			String[] columnNames = finderPath.getColumnNames();
+
+			if ((columnNames == null) || (columnNames.length == 0)) {
+				if (baseModel.isNew()) {
+					return FINDER_ARGS_EMPTY;
+				}
+
+				return null;
+			}
+
+			BrowserTrackerModelImpl browserTrackerModelImpl =
+				(BrowserTrackerModelImpl)baseModel;
+
+			long columnBitmask = browserTrackerModelImpl.getColumnBitmask();
+
+			if (!checkColumn || (columnBitmask == 0)) {
+				return _getValue(
+					browserTrackerModelImpl, columnNames, original);
+			}
+
+			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
+				finderPath);
+
+			if (finderPathColumnBitmask == null) {
+				finderPathColumnBitmask = 0L;
+
+				for (String columnName : columnNames) {
+					finderPathColumnBitmask |=
+						browserTrackerModelImpl.getColumnBitmask(columnName);
+				}
+
+				_finderPathColumnBitmasksCache.put(
+					finderPath, finderPathColumnBitmask);
+			}
+
+			if ((columnBitmask & finderPathColumnBitmask) != 0) {
+				return _getValue(
+					browserTrackerModelImpl, columnNames, original);
+			}
+
+			return null;
+		}
+
+		private Object[] _getValue(
+			BrowserTrackerModelImpl browserTrackerModelImpl,
+			String[] columnNames, boolean original) {
+
+			Object[] arguments = new Object[columnNames.length];
+
+			for (int i = 0; i < arguments.length; i++) {
+				String columnName = columnNames[i];
+
+				if (original) {
+					arguments[i] =
+						browserTrackerModelImpl.getColumnOriginalValue(
+							columnName);
+				}
+				else {
+					arguments[i] = browserTrackerModelImpl.getColumnValue(
+						columnName);
+				}
+			}
+
+			return arguments;
+		}
+
+		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
+			new ConcurrentHashMap<>();
+
+	}
 
 }

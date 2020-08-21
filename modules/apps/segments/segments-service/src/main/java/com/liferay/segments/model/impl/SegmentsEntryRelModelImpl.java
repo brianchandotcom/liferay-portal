@@ -423,12 +423,8 @@ public class SegmentsEntryRelModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("mvccVersion");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_mvccVersion = mvccVersion;
@@ -442,12 +438,8 @@ public class SegmentsEntryRelModelImpl
 
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("ctCollectionId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_ctCollectionId = ctCollectionId;
@@ -461,12 +453,8 @@ public class SegmentsEntryRelModelImpl
 
 	@Override
 	public void setSegmentsEntryRelId(long segmentsEntryRelId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("segmentsEntryRelId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_segmentsEntryRelId = segmentsEntryRelId;
@@ -480,12 +468,8 @@ public class SegmentsEntryRelModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("groupId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_groupId = groupId;
@@ -508,12 +492,8 @@ public class SegmentsEntryRelModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -527,12 +507,8 @@ public class SegmentsEntryRelModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userId = userId;
@@ -567,12 +543,8 @@ public class SegmentsEntryRelModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userName = userName;
@@ -586,12 +558,8 @@ public class SegmentsEntryRelModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_createDate = createDate;
@@ -611,12 +579,8 @@ public class SegmentsEntryRelModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_modifiedDate = modifiedDate;
@@ -630,12 +594,8 @@ public class SegmentsEntryRelModelImpl
 
 	@Override
 	public void setSegmentsEntryId(long segmentsEntryId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("segmentsEntryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_segmentsEntryId = segmentsEntryId;
@@ -678,12 +638,8 @@ public class SegmentsEntryRelModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("classNameId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_classNameId = classNameId;
@@ -706,12 +662,8 @@ public class SegmentsEntryRelModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("classPK");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_classPK = classPK;
@@ -727,6 +679,24 @@ public class SegmentsEntryRelModelImpl
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -987,6 +957,18 @@ public class SegmentsEntryRelModelImpl
 
 	public static long getColumnBitmask(String columnName) {
 		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnValue(String columnName) {
+		Function<SegmentsEntryRel, Object> function =
+			_attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((SegmentsEntryRel)this);
 	}
 
 	public <T> T getColumnOriginalValue(String columnName) {

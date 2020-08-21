@@ -363,12 +363,8 @@ public class AccountEntryUserRelModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("mvccVersion");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_mvccVersion = mvccVersion;
@@ -382,12 +378,8 @@ public class AccountEntryUserRelModelImpl
 
 	@Override
 	public void setAccountEntryUserRelId(long accountEntryUserRelId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("accountEntryUserRelId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_accountEntryUserRelId = accountEntryUserRelId;
@@ -401,12 +393,8 @@ public class AccountEntryUserRelModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -420,12 +408,8 @@ public class AccountEntryUserRelModelImpl
 
 	@Override
 	public void setAccountEntryId(long accountEntryId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("accountEntryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_accountEntryId = accountEntryId;
@@ -448,12 +432,8 @@ public class AccountEntryUserRelModelImpl
 
 	@Override
 	public void setAccountUserId(long accountUserId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("accountUserId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_accountUserId = accountUserId;
@@ -485,6 +465,24 @@ public class AccountEntryUserRelModelImpl
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -698,6 +696,18 @@ public class AccountEntryUserRelModelImpl
 
 	public static long getColumnBitmask(String columnName) {
 		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnValue(String columnName) {
+		Function<AccountEntryUserRel, Object> function =
+			_attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((AccountEntryUserRel)this);
 	}
 
 	public <T> T getColumnOriginalValue(String columnName) {

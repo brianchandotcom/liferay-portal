@@ -361,12 +361,8 @@ public class LazyBlobEntityModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("uuid_");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_uuid = uuid;
@@ -389,12 +385,8 @@ public class LazyBlobEntityModelImpl
 
 	@Override
 	public void setLazyBlobEntityId(long lazyBlobEntityId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("lazyBlobEntityId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_lazyBlobEntityId = lazyBlobEntityId;
@@ -408,12 +400,8 @@ public class LazyBlobEntityModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("groupId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_groupId = groupId;
@@ -452,12 +440,8 @@ public class LazyBlobEntityModelImpl
 
 	@Override
 	public void setBlob1(Blob blob1) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("blob1");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		if (_blob1BlobModel == null) {
@@ -493,12 +477,8 @@ public class LazyBlobEntityModelImpl
 
 	@Override
 	public void setBlob2(Blob blob2) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("blob2");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		if (_blob2BlobModel == null) {
@@ -511,6 +491,24 @@ public class LazyBlobEntityModelImpl
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -704,6 +702,22 @@ public class LazyBlobEntityModelImpl
 		return _columnBitmasks.get(columnName);
 	}
 
+	public <T> T getColumnValue(String columnName) {
+		if (_attributeNames.containsKey(columnName)) {
+			columnName = _attributeNames.get(columnName);
+		}
+
+		Function<LazyBlobEntity, Object> function =
+			_attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((LazyBlobEntity)this);
+	}
+
 	public <T> T getColumnOriginalValue(String columnName) {
 		if (_columnOriginalValues == null) {
 			return null;
@@ -725,6 +739,7 @@ public class LazyBlobEntityModelImpl
 	}
 
 	private static final Map<String, Long> _columnBitmasks;
+	private static final Map<String, String> _attributeNames;
 
 	static {
 		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
@@ -740,6 +755,12 @@ public class LazyBlobEntityModelImpl
 		columnBitmasks.put("blob2", 16L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+
+		Map<String, String> attributeNames = new LinkedHashMap<>();
+
+		attributeNames.put("uuid_", "uuid");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;

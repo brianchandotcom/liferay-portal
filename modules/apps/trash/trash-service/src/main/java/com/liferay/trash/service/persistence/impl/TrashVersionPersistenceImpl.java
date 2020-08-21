@@ -17,6 +17,7 @@ package com.liferay.trash.service.persistence.impl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -27,9 +28,11 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.trash.exception.NoSuchVersionException;
@@ -53,9 +56,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sql.DataSource;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -1465,25 +1471,13 @@ public class TrashVersionPersistenceImpl
 	 */
 	@Override
 	public void clearCache(TrashVersion trashVersion) {
-		entityCache.removeResult(
-			TrashVersionImpl.class, trashVersion.getPrimaryKey());
-
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache((TrashVersionModelImpl)trashVersion, true);
+		entityCache.removeResult(TrashVersionImpl.class, trashVersion);
 	}
 
 	@Override
 	public void clearCache(List<TrashVersion> trashVersions) {
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (TrashVersion trashVersion : trashVersions) {
-			entityCache.removeResult(
-				TrashVersionImpl.class, trashVersion.getPrimaryKey());
-
-			clearUniqueFindersCache((TrashVersionModelImpl)trashVersion, true);
+			entityCache.removeResult(TrashVersionImpl.class, trashVersion);
 		}
 	}
 
@@ -1510,32 +1504,6 @@ public class TrashVersionPersistenceImpl
 			_finderPathCountByC_C, args, Long.valueOf(1), false);
 		finderCache.putResult(
 			_finderPathFetchByC_C, args, trashVersionModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		TrashVersionModelImpl trashVersionModelImpl, boolean clearCurrent) {
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-				trashVersionModelImpl.getClassNameId(),
-				trashVersionModelImpl.getClassPK()
-			};
-
-			finderCache.removeResult(_finderPathCountByC_C, args);
-			finderCache.removeResult(_finderPathFetchByC_C, args);
-		}
-
-		if ((trashVersionModelImpl.getColumnBitmask() &
-			 _finderPathFetchByC_C.getColumnBitmask()) != 0) {
-
-			Object[] args = new Object[] {
-				trashVersionModelImpl.getColumnOriginalValue("classNameId"),
-				trashVersionModelImpl.getColumnOriginalValue("classPK")
-			};
-
-			finderCache.removeResult(_finderPathCountByC_C, args);
-			finderCache.removeResult(_finderPathFetchByC_C, args);
-		}
 	}
 
 	/**
@@ -1680,8 +1648,6 @@ public class TrashVersionPersistenceImpl
 				}
 
 				session.save(trashVersion);
-
-				trashVersion.setNew(false);
 			}
 			else {
 				trashVersion = (TrashVersion)session.merge(trashVersion);
@@ -1695,83 +1661,23 @@ public class TrashVersionPersistenceImpl
 		}
 
 		if (trashVersion.getCtCollectionId() != 0) {
+			if (isNew) {
+				trashVersion.setNew(false);
+			}
+
 			trashVersion.resetOriginalValues();
 
 			return trashVersion;
 		}
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		entityCache.putResult(
+			TrashVersionImpl.class, trashVersionModelImpl, false, true);
+
+		cacheUniqueFindersCache(trashVersionModelImpl);
 
 		if (isNew) {
-			Object[] args = new Object[] {trashVersionModelImpl.getEntryId()};
-
-			finderCache.removeResult(_finderPathCountByEntryId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByEntryId, args);
-
-			args = new Object[] {
-				trashVersionModelImpl.getEntryId(),
-				trashVersionModelImpl.getClassNameId()
-			};
-
-			finderCache.removeResult(_finderPathCountByE_C, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByE_C, args);
-
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+			trashVersion.setNew(false);
 		}
-		else {
-			if ((trashVersionModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByEntryId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					trashVersionModelImpl.getColumnOriginalValue("entryId")
-				};
-
-				finderCache.removeResult(_finderPathCountByEntryId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByEntryId, args);
-
-				args = new Object[] {trashVersionModelImpl.getEntryId()};
-
-				finderCache.removeResult(_finderPathCountByEntryId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByEntryId, args);
-			}
-
-			if ((trashVersionModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByE_C.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					trashVersionModelImpl.getColumnOriginalValue("entryId"),
-					trashVersionModelImpl.getColumnOriginalValue("classNameId")
-				};
-
-				finderCache.removeResult(_finderPathCountByE_C, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByE_C, args);
-
-				args = new Object[] {
-					trashVersionModelImpl.getEntryId(),
-					trashVersionModelImpl.getClassNameId()
-				};
-
-				finderCache.removeResult(_finderPathCountByE_C, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByE_C, args);
-			}
-		}
-
-		entityCache.putResult(
-			TrashVersionImpl.class, trashVersion.getPrimaryKey(), trashVersion,
-			false);
-
-		clearUniqueFindersCache(trashVersionModelImpl, false);
-		cacheUniqueFindersCache(trashVersionModelImpl);
 
 		trashVersion.resetOriginalValues();
 
@@ -2208,73 +2114,85 @@ public class TrashVersionPersistenceImpl
 	 * Initializes the trash version persistence.
 	 */
 	@Activate
-	public void activate() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			TrashVersionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
+	public void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			TrashVersionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findAll", new String[0]);
+		_argumentsResolverServiceRegistration = _bundleContext.registerService(
+			ArgumentsResolver.class, new TrashVersionModelArgumentsResolver(),
+			MapUtil.singletonDictionary(
+				"model.class.name", TrashVersion.class.getName()));
 
-		_finderPathCountAll = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_finderPathWithPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
 
-		_finderPathWithPaginationFindByEntryId = new FinderPath(
-			TrashVersionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByEntryId",
+		_finderPathWithoutPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathCountAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
+
+		_finderPathWithPaginationFindByEntryId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEntryId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"entryId"}, true);
 
-		_finderPathWithoutPaginationFindByEntryId = new FinderPath(
-			TrashVersionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByEntryId", new String[] {Long.class.getName()},
-			TrashVersionModelImpl.getColumnBitmask("entryId"));
+		_finderPathWithoutPaginationFindByEntryId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEntryId",
+			new String[] {Long.class.getName()}, new String[] {"entryId"},
+			true);
 
-		_finderPathCountByEntryId = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByEntryId", new String[] {Long.class.getName()});
+		_finderPathCountByEntryId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByEntryId",
+			new String[] {Long.class.getName()}, new String[] {"entryId"},
+			false);
 
-		_finderPathWithPaginationFindByE_C = new FinderPath(
-			TrashVersionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByE_C",
+		_finderPathWithPaginationFindByE_C = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByE_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"entryId", "classNameId"}, true);
 
-		_finderPathWithoutPaginationFindByE_C = new FinderPath(
-			TrashVersionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByE_C",
+		_finderPathWithoutPaginationFindByE_C = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByE_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			TrashVersionModelImpl.getColumnBitmask("entryId") |
-			TrashVersionModelImpl.getColumnBitmask("classNameId"));
+			new String[] {"entryId", "classNameId"}, true);
 
-		_finderPathCountByE_C = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE_C",
-			new String[] {Long.class.getName(), Long.class.getName()});
-
-		_finderPathFetchByC_C = new FinderPath(
-			TrashVersionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+		_finderPathCountByE_C = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			TrashVersionModelImpl.getColumnBitmask("classNameId") |
-			TrashVersionModelImpl.getColumnBitmask("classPK"));
+			new String[] {"entryId", "classNameId"}, false);
 
-		_finderPathCountByC_C = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()});
+		_finderPathFetchByC_C = _createFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"classNameId", "classPK"}, true);
+
+		_finderPathCountByC_C = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"classNameId", "classPK"}, false);
 	}
 
 	@Deactivate
 	public void deactivate() {
 		entityCache.removeCache(TrashVersionImpl.class.getName());
-		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		_argumentsResolverServiceRegistration.unregister();
+
+		for (ServiceRegistration<FinderPath> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Override
@@ -2302,6 +2220,8 @@ public class TrashVersionPersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
+
+	private BundleContext _bundleContext;
 
 	@Reference
 	protected CTPersistenceHelper ctPersistenceHelper;
@@ -2342,6 +2262,104 @@ public class TrashVersionPersistenceImpl
 		catch (ClassNotFoundException classNotFoundException) {
 			throw new ExceptionInInitializerError(classNotFoundException);
 		}
+	}
+
+	private FinderPath _createFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, baseModelResult);
+
+		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
+			_serviceRegistrations.add(
+				_bundleContext.registerService(
+					FinderPath.class, finderPath,
+					MapUtil.singletonDictionary("cache.name", cacheName)));
+		}
+
+		return finderPath;
+	}
+
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
+	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
+		new HashSet<>();
+
+	private static class TrashVersionModelArgumentsResolver
+		implements ArgumentsResolver {
+
+		@Override
+		public Object[] getArguments(
+			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
+			boolean original) {
+
+			String[] columnNames = finderPath.getColumnNames();
+
+			if ((columnNames == null) || (columnNames.length == 0)) {
+				if (baseModel.isNew()) {
+					return FINDER_ARGS_EMPTY;
+				}
+
+				return null;
+			}
+
+			TrashVersionModelImpl trashVersionModelImpl =
+				(TrashVersionModelImpl)baseModel;
+
+			long columnBitmask = trashVersionModelImpl.getColumnBitmask();
+
+			if (!checkColumn || (columnBitmask == 0)) {
+				return _getValue(trashVersionModelImpl, columnNames, original);
+			}
+
+			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
+				finderPath);
+
+			if (finderPathColumnBitmask == null) {
+				finderPathColumnBitmask = 0L;
+
+				for (String columnName : columnNames) {
+					finderPathColumnBitmask |=
+						trashVersionModelImpl.getColumnBitmask(columnName);
+				}
+
+				_finderPathColumnBitmasksCache.put(
+					finderPath, finderPathColumnBitmask);
+			}
+
+			if ((columnBitmask & finderPathColumnBitmask) != 0) {
+				return _getValue(trashVersionModelImpl, columnNames, original);
+			}
+
+			return null;
+		}
+
+		private Object[] _getValue(
+			TrashVersionModelImpl trashVersionModelImpl, String[] columnNames,
+			boolean original) {
+
+			Object[] arguments = new Object[columnNames.length];
+
+			for (int i = 0; i < arguments.length; i++) {
+				String columnName = columnNames[i];
+
+				if (original) {
+					arguments[i] = trashVersionModelImpl.getColumnOriginalValue(
+						columnName);
+				}
+				else {
+					arguments[i] = trashVersionModelImpl.getColumnValue(
+						columnName);
+				}
+			}
+
+			return arguments;
+		}
+
+		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
+			new ConcurrentHashMap<>();
+
 	}
 
 }

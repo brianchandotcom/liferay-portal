@@ -434,12 +434,8 @@ public class KaleoTaskAssignmentModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("mvccVersion");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_mvccVersion = mvccVersion;
@@ -452,12 +448,8 @@ public class KaleoTaskAssignmentModelImpl
 
 	@Override
 	public void setKaleoTaskAssignmentId(long kaleoTaskAssignmentId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("kaleoTaskAssignmentId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_kaleoTaskAssignmentId = kaleoTaskAssignmentId;
@@ -470,12 +462,8 @@ public class KaleoTaskAssignmentModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("groupId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_groupId = groupId;
@@ -488,12 +476,8 @@ public class KaleoTaskAssignmentModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -515,12 +499,8 @@ public class KaleoTaskAssignmentModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userId = userId;
@@ -554,12 +534,8 @@ public class KaleoTaskAssignmentModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userName = userName;
@@ -572,12 +548,8 @@ public class KaleoTaskAssignmentModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_createDate = createDate;
@@ -596,12 +568,8 @@ public class KaleoTaskAssignmentModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_modifiedDate = modifiedDate;
@@ -619,12 +587,8 @@ public class KaleoTaskAssignmentModelImpl
 
 	@Override
 	public void setKaleoClassName(String kaleoClassName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("kaleoClassName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_kaleoClassName = kaleoClassName;
@@ -646,12 +610,8 @@ public class KaleoTaskAssignmentModelImpl
 
 	@Override
 	public void setKaleoClassPK(long kaleoClassPK) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("kaleoClassPK");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_kaleoClassPK = kaleoClassPK;
@@ -673,12 +633,8 @@ public class KaleoTaskAssignmentModelImpl
 
 	@Override
 	public void setKaleoDefinitionId(long kaleoDefinitionId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("kaleoDefinitionId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_kaleoDefinitionId = kaleoDefinitionId;
@@ -691,12 +647,8 @@ public class KaleoTaskAssignmentModelImpl
 
 	@Override
 	public void setKaleoDefinitionVersionId(long kaleoDefinitionVersionId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("kaleoDefinitionVersionId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_kaleoDefinitionVersionId = kaleoDefinitionVersionId;
@@ -719,12 +671,8 @@ public class KaleoTaskAssignmentModelImpl
 
 	@Override
 	public void setKaleoNodeId(long kaleoNodeId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("kaleoNodeId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_kaleoNodeId = kaleoNodeId;
@@ -742,12 +690,8 @@ public class KaleoTaskAssignmentModelImpl
 
 	@Override
 	public void setAssigneeClassName(String assigneeClassName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("assigneeClassName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_assigneeClassName = assigneeClassName;
@@ -769,12 +713,8 @@ public class KaleoTaskAssignmentModelImpl
 
 	@Override
 	public void setAssigneeClassPK(long assigneeClassPK) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("assigneeClassPK");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_assigneeClassPK = assigneeClassPK;
@@ -792,12 +732,8 @@ public class KaleoTaskAssignmentModelImpl
 
 	@Override
 	public void setAssigneeActionId(String assigneeActionId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("assigneeActionId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_assigneeActionId = assigneeActionId;
@@ -815,12 +751,8 @@ public class KaleoTaskAssignmentModelImpl
 
 	@Override
 	public void setAssigneeScript(String assigneeScript) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("assigneeScript");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_assigneeScript = assigneeScript;
@@ -838,12 +770,8 @@ public class KaleoTaskAssignmentModelImpl
 
 	@Override
 	public void setAssigneeScriptLanguage(String assigneeScriptLanguage) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("assigneeScriptLanguage");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_assigneeScriptLanguage = assigneeScriptLanguage;
@@ -863,19 +791,32 @@ public class KaleoTaskAssignmentModelImpl
 	public void setAssigneeScriptRequiredContexts(
 		String assigneeScriptRequiredContexts) {
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get(
-				"assigneeScriptRequiredContexts");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_assigneeScriptRequiredContexts = assigneeScriptRequiredContexts;
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -1230,6 +1171,18 @@ public class KaleoTaskAssignmentModelImpl
 
 	public static long getColumnBitmask(String columnName) {
 		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnValue(String columnName) {
+		Function<KaleoTaskAssignment, Object> function =
+			_attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((KaleoTaskAssignment)this);
 	}
 
 	public <T> T getColumnOriginalValue(String columnName) {

@@ -603,6 +603,22 @@ public class EagerBlobEntityModelImpl
 		return _columnBitmasks.get(columnName);
 	}
 
+	public <T> T getColumnValue(String columnName) {
+		if (_attributeNames.containsKey(columnName)) {
+			columnName = _attributeNames.get(columnName);
+		}
+
+		Function<EagerBlobEntity, Object> function =
+			_attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((EagerBlobEntity)this);
+	}
+
 	public <T> T getColumnOriginalValue(String columnName) {
 		if (_columnOriginalValues == null) {
 			return null;
@@ -625,6 +641,7 @@ public class EagerBlobEntityModelImpl
 	}
 
 	private static final Map<String, Long> _columnBitmasks;
+	private static final Map<String, String> _attributeNames;
 
 	static {
 		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
@@ -638,6 +655,13 @@ public class EagerBlobEntityModelImpl
 		columnBitmasks.put("blob_", 8L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+
+		Map<String, String> attributeNames = new LinkedHashMap<>();
+
+		attributeNames.put("uuid_", "uuid");
+		attributeNames.put("blob_", "blob");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;

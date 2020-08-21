@@ -316,12 +316,8 @@ public class WebDAVPropsModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("mvccVersion");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_mvccVersion = mvccVersion;
@@ -334,12 +330,8 @@ public class WebDAVPropsModelImpl
 
 	@Override
 	public void setWebDavPropsId(long webDavPropsId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("webDavPropsId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_webDavPropsId = webDavPropsId;
@@ -352,12 +344,8 @@ public class WebDAVPropsModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -370,12 +358,8 @@ public class WebDAVPropsModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_createDate = createDate;
@@ -394,12 +378,8 @@ public class WebDAVPropsModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_modifiedDate = modifiedDate;
@@ -432,12 +412,8 @@ public class WebDAVPropsModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("classNameId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_classNameId = classNameId;
@@ -459,12 +435,8 @@ public class WebDAVPropsModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("classPK");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_classPK = classPK;
@@ -491,18 +463,32 @@ public class WebDAVPropsModelImpl
 
 	@Override
 	public void setProps(String props) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("props");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_props = props;
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -747,6 +733,18 @@ public class WebDAVPropsModelImpl
 
 	public static long getColumnBitmask(String columnName) {
 		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnValue(String columnName) {
+		Function<WebDAVProps, Object> function = _attributeGetterFunctions.get(
+			columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((WebDAVProps)this);
 	}
 
 	public <T> T getColumnOriginalValue(String columnName) {

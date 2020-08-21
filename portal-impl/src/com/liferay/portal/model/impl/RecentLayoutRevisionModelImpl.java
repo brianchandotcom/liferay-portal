@@ -353,12 +353,8 @@ public class RecentLayoutRevisionModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("mvccVersion");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_mvccVersion = mvccVersion;
@@ -371,12 +367,8 @@ public class RecentLayoutRevisionModelImpl
 
 	@Override
 	public void setRecentLayoutRevisionId(long recentLayoutRevisionId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("recentLayoutRevisionId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_recentLayoutRevisionId = recentLayoutRevisionId;
@@ -389,12 +381,8 @@ public class RecentLayoutRevisionModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("groupId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_groupId = groupId;
@@ -416,12 +404,8 @@ public class RecentLayoutRevisionModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -434,12 +418,8 @@ public class RecentLayoutRevisionModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userId = userId;
@@ -477,12 +457,8 @@ public class RecentLayoutRevisionModelImpl
 
 	@Override
 	public void setLayoutRevisionId(long layoutRevisionId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("layoutRevisionId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_layoutRevisionId = layoutRevisionId;
@@ -504,12 +480,8 @@ public class RecentLayoutRevisionModelImpl
 
 	@Override
 	public void setLayoutSetBranchId(long layoutSetBranchId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("layoutSetBranchId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_layoutSetBranchId = layoutSetBranchId;
@@ -531,12 +503,8 @@ public class RecentLayoutRevisionModelImpl
 
 	@Override
 	public void setPlid(long plid) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("plid");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_plid = plid;
@@ -552,6 +520,24 @@ public class RecentLayoutRevisionModelImpl
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -781,6 +767,18 @@ public class RecentLayoutRevisionModelImpl
 
 	public static long getColumnBitmask(String columnName) {
 		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnValue(String columnName) {
+		Function<RecentLayoutRevision, Object> function =
+			_attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((RecentLayoutRevision)this);
 	}
 
 	public <T> T getColumnOriginalValue(String columnName) {

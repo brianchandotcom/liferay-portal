@@ -425,12 +425,8 @@ public class AccountEntryModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("mvccVersion");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_mvccVersion = mvccVersion;
@@ -449,12 +445,8 @@ public class AccountEntryModelImpl
 
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("externalReferenceCode");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_externalReferenceCode = externalReferenceCode;
@@ -477,12 +469,8 @@ public class AccountEntryModelImpl
 
 	@Override
 	public void setAccountEntryId(long accountEntryId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("accountEntryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_accountEntryId = accountEntryId;
@@ -496,12 +484,8 @@ public class AccountEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -524,12 +508,8 @@ public class AccountEntryModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userId = userId;
@@ -564,12 +544,8 @@ public class AccountEntryModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userName = userName;
@@ -583,12 +559,8 @@ public class AccountEntryModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_createDate = createDate;
@@ -608,12 +580,8 @@ public class AccountEntryModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_modifiedDate = modifiedDate;
@@ -627,12 +595,8 @@ public class AccountEntryModelImpl
 
 	@Override
 	public void setParentAccountEntryId(long parentAccountEntryId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("parentAccountEntryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_parentAccountEntryId = parentAccountEntryId;
@@ -651,12 +615,8 @@ public class AccountEntryModelImpl
 
 	@Override
 	public void setName(String name) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("name");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_name = name;
@@ -675,12 +635,8 @@ public class AccountEntryModelImpl
 
 	@Override
 	public void setDescription(String description) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("description");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_description = description;
@@ -699,12 +655,8 @@ public class AccountEntryModelImpl
 
 	@Override
 	public void setDomains(String domains) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("domains");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_domains = domains;
@@ -718,12 +670,8 @@ public class AccountEntryModelImpl
 
 	@Override
 	public void setLogoId(long logoId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("logoId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_logoId = logoId;
@@ -742,12 +690,8 @@ public class AccountEntryModelImpl
 
 	@Override
 	public void setTaxIdNumber(String taxIdNumber) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("taxIdNumber");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_taxIdNumber = taxIdNumber;
@@ -766,12 +710,8 @@ public class AccountEntryModelImpl
 
 	@Override
 	public void setType(String type) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("type_");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_type = type;
@@ -785,12 +725,8 @@ public class AccountEntryModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("status");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_status = status;
@@ -806,6 +742,24 @@ public class AccountEntryModelImpl
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -1122,6 +1076,22 @@ public class AccountEntryModelImpl
 		return _columnBitmasks.get(columnName);
 	}
 
+	public <T> T getColumnValue(String columnName) {
+		if (_attributeNames.containsKey(columnName)) {
+			columnName = _attributeNames.get(columnName);
+		}
+
+		Function<AccountEntry, Object> function = _attributeGetterFunctions.get(
+			columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((AccountEntry)this);
+	}
+
 	public <T> T getColumnOriginalValue(String columnName) {
 		if (_columnOriginalValues == null) {
 			return null;
@@ -1158,6 +1128,7 @@ public class AccountEntryModelImpl
 	}
 
 	private static final Map<String, Long> _columnBitmasks;
+	private static final Map<String, String> _attributeNames;
 
 	static {
 		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
@@ -1195,6 +1166,12 @@ public class AccountEntryModelImpl
 		columnBitmasks.put("status", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+
+		Map<String, String> attributeNames = new LinkedHashMap<>();
+
+		attributeNames.put("type_", "type");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;

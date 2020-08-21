@@ -332,12 +332,8 @@ public class DLFileVersionPreviewModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("mvccVersion");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_mvccVersion = mvccVersion;
@@ -350,12 +346,8 @@ public class DLFileVersionPreviewModelImpl
 
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("ctCollectionId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_ctCollectionId = ctCollectionId;
@@ -368,12 +360,8 @@ public class DLFileVersionPreviewModelImpl
 
 	@Override
 	public void setDlFileVersionPreviewId(long dlFileVersionPreviewId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("dlFileVersionPreviewId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_dlFileVersionPreviewId = dlFileVersionPreviewId;
@@ -386,12 +374,8 @@ public class DLFileVersionPreviewModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("groupId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_groupId = groupId;
@@ -404,12 +388,8 @@ public class DLFileVersionPreviewModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -422,12 +402,8 @@ public class DLFileVersionPreviewModelImpl
 
 	@Override
 	public void setFileEntryId(long fileEntryId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("fileEntryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_fileEntryId = fileEntryId;
@@ -449,12 +425,8 @@ public class DLFileVersionPreviewModelImpl
 
 	@Override
 	public void setFileVersionId(long fileVersionId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("fileVersionId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_fileVersionId = fileVersionId;
@@ -476,12 +448,8 @@ public class DLFileVersionPreviewModelImpl
 
 	@Override
 	public void setPreviewStatus(int previewStatus) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("previewStatus");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_previewStatus = previewStatus;
@@ -497,6 +465,24 @@ public class DLFileVersionPreviewModelImpl
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -737,6 +723,18 @@ public class DLFileVersionPreviewModelImpl
 
 	public static long getColumnBitmask(String columnName) {
 		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnValue(String columnName) {
+		Function<DLFileVersionPreview, Object> function =
+			_attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((DLFileVersionPreview)this);
 	}
 
 	public <T> T getColumnOriginalValue(String columnName) {

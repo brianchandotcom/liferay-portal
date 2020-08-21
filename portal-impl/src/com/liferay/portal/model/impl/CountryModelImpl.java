@@ -365,12 +365,8 @@ public class CountryModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("mvccVersion");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_mvccVersion = mvccVersion;
@@ -384,12 +380,8 @@ public class CountryModelImpl
 
 	@Override
 	public void setCountryId(long countryId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("countryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_countryId = countryId;
@@ -408,12 +400,8 @@ public class CountryModelImpl
 
 	@Override
 	public void setName(String name) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("name");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_name = name;
@@ -441,12 +429,8 @@ public class CountryModelImpl
 
 	@Override
 	public void setA2(String a2) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("a2");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_a2 = a2;
@@ -474,12 +458,8 @@ public class CountryModelImpl
 
 	@Override
 	public void setA3(String a3) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("a3");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_a3 = a3;
@@ -507,12 +487,8 @@ public class CountryModelImpl
 
 	@Override
 	public void setNumber(String number) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("number_");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_number = number;
@@ -531,12 +507,8 @@ public class CountryModelImpl
 
 	@Override
 	public void setIdd(String idd) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("idd_");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_idd = idd;
@@ -556,12 +528,8 @@ public class CountryModelImpl
 
 	@Override
 	public void setZipRequired(boolean zipRequired) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("zipRequired");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_zipRequired = zipRequired;
@@ -581,12 +549,8 @@ public class CountryModelImpl
 
 	@Override
 	public void setActive(boolean active) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("active_");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_active = active;
@@ -602,6 +566,24 @@ public class CountryModelImpl
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -856,6 +838,22 @@ public class CountryModelImpl
 		return _columnBitmasks.get(columnName);
 	}
 
+	public <T> T getColumnValue(String columnName) {
+		if (_attributeNames.containsKey(columnName)) {
+			columnName = _attributeNames.get(columnName);
+		}
+
+		Function<Country, Object> function = _attributeGetterFunctions.get(
+			columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((Country)this);
+	}
+
 	public <T> T getColumnOriginalValue(String columnName) {
 		if (_columnOriginalValues == null) {
 			return null;
@@ -883,6 +881,7 @@ public class CountryModelImpl
 	}
 
 	private static final Map<String, Long> _columnBitmasks;
+	private static final Map<String, String> _attributeNames;
 
 	static {
 		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
@@ -906,6 +905,14 @@ public class CountryModelImpl
 		columnBitmasks.put("active_", 256L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+
+		Map<String, String> attributeNames = new LinkedHashMap<>();
+
+		attributeNames.put("number_", "number");
+		attributeNames.put("idd_", "idd");
+		attributeNames.put("active_", "active");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;

@@ -340,12 +340,8 @@ public class SocialRelationModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("mvccVersion");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_mvccVersion = mvccVersion;
@@ -358,12 +354,8 @@ public class SocialRelationModelImpl
 
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("ctCollectionId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_ctCollectionId = ctCollectionId;
@@ -381,12 +373,8 @@ public class SocialRelationModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("uuid_");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_uuid = uuid;
@@ -408,12 +396,8 @@ public class SocialRelationModelImpl
 
 	@Override
 	public void setRelationId(long relationId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("relationId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_relationId = relationId;
@@ -426,12 +410,8 @@ public class SocialRelationModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -453,12 +433,8 @@ public class SocialRelationModelImpl
 
 	@Override
 	public void setCreateDate(long createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_createDate = createDate;
@@ -471,12 +447,8 @@ public class SocialRelationModelImpl
 
 	@Override
 	public void setUserId1(long userId1) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId1");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userId1 = userId1;
@@ -498,12 +470,8 @@ public class SocialRelationModelImpl
 
 	@Override
 	public void setUserId2(long userId2) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId2");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userId2 = userId2;
@@ -525,12 +493,8 @@ public class SocialRelationModelImpl
 
 	@Override
 	public void setType(int type) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("type_");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_type = type;
@@ -546,6 +510,24 @@ public class SocialRelationModelImpl
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -779,6 +761,22 @@ public class SocialRelationModelImpl
 		return _columnBitmasks.get(columnName);
 	}
 
+	public <T> T getColumnValue(String columnName) {
+		if (_attributeNames.containsKey(columnName)) {
+			columnName = _attributeNames.get(columnName);
+		}
+
+		Function<SocialRelation, Object> function =
+			_attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((SocialRelation)this);
+	}
+
 	public <T> T getColumnOriginalValue(String columnName) {
 		if (_columnOriginalValues == null) {
 			return null;
@@ -806,6 +804,7 @@ public class SocialRelationModelImpl
 	}
 
 	private static final Map<String, Long> _columnBitmasks;
+	private static final Map<String, String> _attributeNames;
 
 	static {
 		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
@@ -829,6 +828,13 @@ public class SocialRelationModelImpl
 		columnBitmasks.put("type_", 256L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+
+		Map<String, String> attributeNames = new LinkedHashMap<>();
+
+		attributeNames.put("uuid_", "uuid");
+		attributeNames.put("type_", "type");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;

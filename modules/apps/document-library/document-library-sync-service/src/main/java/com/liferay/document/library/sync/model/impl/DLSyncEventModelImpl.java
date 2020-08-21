@@ -284,12 +284,8 @@ public class DLSyncEventModelImpl
 
 	@Override
 	public void setSyncEventId(long syncEventId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("syncEventId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_syncEventId = syncEventId;
@@ -302,12 +298,8 @@ public class DLSyncEventModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -320,12 +312,8 @@ public class DLSyncEventModelImpl
 
 	@Override
 	public void setModifiedTime(long modifiedTime) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedTime");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_modifiedTime = modifiedTime;
@@ -352,12 +340,8 @@ public class DLSyncEventModelImpl
 
 	@Override
 	public void setEvent(String event) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("event");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_event = event;
@@ -375,12 +359,8 @@ public class DLSyncEventModelImpl
 
 	@Override
 	public void setType(String type) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("type_");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_type = type;
@@ -393,12 +373,8 @@ public class DLSyncEventModelImpl
 
 	@Override
 	public void setTypePK(long typePK) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("typePK");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_typePK = typePK;
@@ -414,6 +390,24 @@ public class DLSyncEventModelImpl
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -647,6 +641,22 @@ public class DLSyncEventModelImpl
 		return _columnBitmasks.get(columnName);
 	}
 
+	public <T> T getColumnValue(String columnName) {
+		if (_attributeNames.containsKey(columnName)) {
+			columnName = _attributeNames.get(columnName);
+		}
+
+		Function<DLSyncEvent, Object> function = _attributeGetterFunctions.get(
+			columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((DLSyncEvent)this);
+	}
+
 	public <T> T getColumnOriginalValue(String columnName) {
 		if (_columnOriginalValues == null) {
 			return null;
@@ -671,6 +681,7 @@ public class DLSyncEventModelImpl
 	}
 
 	private static final Map<String, Long> _columnBitmasks;
+	private static final Map<String, String> _attributeNames;
 
 	static {
 		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
@@ -688,6 +699,12 @@ public class DLSyncEventModelImpl
 		columnBitmasks.put("typePK", 32L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+
+		Map<String, String> attributeNames = new LinkedHashMap<>();
+
+		attributeNames.put("type_", "type");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;

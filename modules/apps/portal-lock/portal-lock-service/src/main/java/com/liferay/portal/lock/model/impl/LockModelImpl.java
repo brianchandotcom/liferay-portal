@@ -326,12 +326,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("mvccVersion");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_mvccVersion = mvccVersion;
@@ -349,12 +345,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	@Override
 	public void setUuid(String uuid) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("uuid_");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_uuid = uuid;
@@ -376,12 +368,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	@Override
 	public void setLockId(long lockId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("lockId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_lockId = lockId;
@@ -394,12 +382,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -421,12 +405,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userId = userId;
@@ -460,12 +440,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userName = userName;
@@ -478,12 +454,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_createDate = createDate;
@@ -501,12 +473,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	@Override
 	public void setClassName(String className) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("className");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_className = className;
@@ -533,12 +501,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	@Override
 	public void setKey(String key) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("key_");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_key = key;
@@ -565,12 +529,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	@Override
 	public void setOwner(String owner) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("owner");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_owner = owner;
@@ -588,12 +548,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	@Override
 	public void setInheritable(boolean inheritable) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("inheritable");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_inheritable = inheritable;
@@ -606,12 +562,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("expirationDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_expirationDate = expirationDate;
@@ -627,6 +579,24 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -907,6 +877,22 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		return _columnBitmasks.get(columnName);
 	}
 
+	public <T> T getColumnValue(String columnName) {
+		if (_attributeNames.containsKey(columnName)) {
+			columnName = _attributeNames.get(columnName);
+		}
+
+		Function<Lock, Object> function = _attributeGetterFunctions.get(
+			columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((Lock)this);
+	}
+
 	public <T> T getColumnOriginalValue(String columnName) {
 		if (_columnOriginalValues == null) {
 			return null;
@@ -937,6 +923,7 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	}
 
 	private static final Map<String, Long> _columnBitmasks;
+	private static final Map<String, String> _attributeNames;
 
 	static {
 		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
@@ -966,6 +953,13 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		columnBitmasks.put("expirationDate", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+
+		Map<String, String> attributeNames = new LinkedHashMap<>();
+
+		attributeNames.put("uuid_", "uuid");
+		attributeNames.put("key_", "key");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;

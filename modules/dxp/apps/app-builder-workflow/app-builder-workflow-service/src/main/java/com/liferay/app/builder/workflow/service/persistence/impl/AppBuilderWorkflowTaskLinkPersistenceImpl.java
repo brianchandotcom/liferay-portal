@@ -23,6 +23,7 @@ import com.liferay.app.builder.workflow.service.persistence.AppBuilderWorkflowTa
 import com.liferay.app.builder.workflow.service.persistence.impl.constants.AppBuilderWorkflowPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -33,8 +34,10 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,13 +47,17 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sql.DataSource;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -2246,34 +2253,19 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 		AppBuilderWorkflowTaskLink appBuilderWorkflowTaskLink) {
 
 		entityCache.removeResult(
-			AppBuilderWorkflowTaskLinkImpl.class,
-			appBuilderWorkflowTaskLink.getPrimaryKey());
-
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache(
-			(AppBuilderWorkflowTaskLinkModelImpl)appBuilderWorkflowTaskLink,
-			true);
+			AppBuilderWorkflowTaskLinkImpl.class, appBuilderWorkflowTaskLink);
 	}
 
 	@Override
 	public void clearCache(
 		List<AppBuilderWorkflowTaskLink> appBuilderWorkflowTaskLinks) {
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (AppBuilderWorkflowTaskLink appBuilderWorkflowTaskLink :
 				appBuilderWorkflowTaskLinks) {
 
 			entityCache.removeResult(
 				AppBuilderWorkflowTaskLinkImpl.class,
-				appBuilderWorkflowTaskLink.getPrimaryKey());
-
-			clearUniqueFindersCache(
-				(AppBuilderWorkflowTaskLinkModelImpl)appBuilderWorkflowTaskLink,
-				true);
+				appBuilderWorkflowTaskLink);
 		}
 	}
 
@@ -2305,41 +2297,6 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByA_A_D_W, args,
 			appBuilderWorkflowTaskLinkModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		AppBuilderWorkflowTaskLinkModelImpl appBuilderWorkflowTaskLinkModelImpl,
-		boolean clearCurrent) {
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-				appBuilderWorkflowTaskLinkModelImpl.getAppBuilderAppId(),
-				appBuilderWorkflowTaskLinkModelImpl.getAppBuilderAppVersionId(),
-				appBuilderWorkflowTaskLinkModelImpl.getDdmStructureLayoutId(),
-				appBuilderWorkflowTaskLinkModelImpl.getWorkflowTaskName()
-			};
-
-			finderCache.removeResult(_finderPathCountByA_A_D_W, args);
-			finderCache.removeResult(_finderPathFetchByA_A_D_W, args);
-		}
-
-		if ((appBuilderWorkflowTaskLinkModelImpl.getColumnBitmask() &
-			 _finderPathFetchByA_A_D_W.getColumnBitmask()) != 0) {
-
-			Object[] args = new Object[] {
-				appBuilderWorkflowTaskLinkModelImpl.getColumnOriginalValue(
-					"appBuilderAppId"),
-				appBuilderWorkflowTaskLinkModelImpl.getColumnOriginalValue(
-					"appBuilderAppVersionId"),
-				appBuilderWorkflowTaskLinkModelImpl.getColumnOriginalValue(
-					"ddmStructureLayoutId"),
-				appBuilderWorkflowTaskLinkModelImpl.getColumnOriginalValue(
-					"workflowTaskName")
-			};
-
-			finderCache.removeResult(_finderPathCountByA_A_D_W, args);
-			finderCache.removeResult(_finderPathFetchByA_A_D_W, args);
-		}
 	}
 
 	/**
@@ -2488,10 +2445,8 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 		try {
 			session = openSession();
 
-			if (appBuilderWorkflowTaskLink.isNew()) {
+			if (isNew) {
 				session.save(appBuilderWorkflowTaskLink);
-
-				appBuilderWorkflowTaskLink.setNew(false);
 			}
 			else {
 				appBuilderWorkflowTaskLink =
@@ -2506,128 +2461,15 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 			closeSession(session);
 		}
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-
-		if (isNew) {
-			Object[] args = new Object[] {
-				appBuilderWorkflowTaskLinkModelImpl.getAppBuilderAppId()
-			};
-
-			finderCache.removeResult(_finderPathCountByAppBuilderAppId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByAppBuilderAppId, args);
-
-			args = new Object[] {
-				appBuilderWorkflowTaskLinkModelImpl.getAppBuilderAppId(),
-				appBuilderWorkflowTaskLinkModelImpl.getAppBuilderAppVersionId()
-			};
-
-			finderCache.removeResult(_finderPathCountByA_A, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByA_A, args);
-
-			args = new Object[] {
-				appBuilderWorkflowTaskLinkModelImpl.getAppBuilderAppId(),
-				appBuilderWorkflowTaskLinkModelImpl.getAppBuilderAppVersionId(),
-				appBuilderWorkflowTaskLinkModelImpl.getWorkflowTaskName()
-			};
-
-			finderCache.removeResult(_finderPathCountByA_A_W, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByA_A_W, args);
-
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
-		}
-		else {
-			if ((appBuilderWorkflowTaskLinkModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByAppBuilderAppId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					appBuilderWorkflowTaskLinkModelImpl.getColumnOriginalValue(
-						"appBuilderAppId")
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByAppBuilderAppId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByAppBuilderAppId, args);
-
-				args = new Object[] {
-					appBuilderWorkflowTaskLinkModelImpl.getAppBuilderAppId()
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByAppBuilderAppId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByAppBuilderAppId, args);
-			}
-
-			if ((appBuilderWorkflowTaskLinkModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByA_A.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					appBuilderWorkflowTaskLinkModelImpl.getColumnOriginalValue(
-						"appBuilderAppId"),
-					appBuilderWorkflowTaskLinkModelImpl.getColumnOriginalValue(
-						"appBuilderAppVersionId")
-				};
-
-				finderCache.removeResult(_finderPathCountByA_A, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByA_A, args);
-
-				args = new Object[] {
-					appBuilderWorkflowTaskLinkModelImpl.getAppBuilderAppId(),
-					appBuilderWorkflowTaskLinkModelImpl.
-						getAppBuilderAppVersionId()
-				};
-
-				finderCache.removeResult(_finderPathCountByA_A, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByA_A, args);
-			}
-
-			if ((appBuilderWorkflowTaskLinkModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByA_A_W.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					appBuilderWorkflowTaskLinkModelImpl.getColumnOriginalValue(
-						"appBuilderAppId"),
-					appBuilderWorkflowTaskLinkModelImpl.getColumnOriginalValue(
-						"appBuilderAppVersionId"),
-					appBuilderWorkflowTaskLinkModelImpl.getColumnOriginalValue(
-						"workflowTaskName")
-				};
-
-				finderCache.removeResult(_finderPathCountByA_A_W, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByA_A_W, args);
-
-				args = new Object[] {
-					appBuilderWorkflowTaskLinkModelImpl.getAppBuilderAppId(),
-					appBuilderWorkflowTaskLinkModelImpl.
-						getAppBuilderAppVersionId(),
-					appBuilderWorkflowTaskLinkModelImpl.getWorkflowTaskName()
-				};
-
-				finderCache.removeResult(_finderPathCountByA_A_W, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByA_A_W, args);
-			}
-		}
-
 		entityCache.putResult(
 			AppBuilderWorkflowTaskLinkImpl.class,
-			appBuilderWorkflowTaskLink.getPrimaryKey(),
-			appBuilderWorkflowTaskLink, false);
+			appBuilderWorkflowTaskLinkModelImpl, false, true);
 
-		clearUniqueFindersCache(appBuilderWorkflowTaskLinkModelImpl, false);
 		cacheUniqueFindersCache(appBuilderWorkflowTaskLinkModelImpl);
+
+		if (isNew) {
+			appBuilderWorkflowTaskLink.setNew(false);
+		}
 
 		appBuilderWorkflowTaskLink.resetOriginalValues();
 
@@ -2897,123 +2739,135 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 	 * Initializes the app builder workflow task link persistence.
 	 */
 	@Activate
-	public void activate() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			AppBuilderWorkflowTaskLinkImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+	public void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			AppBuilderWorkflowTaskLinkImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+		_argumentsResolverServiceRegistration = _bundleContext.registerService(
+			ArgumentsResolver.class,
+			new AppBuilderWorkflowTaskLinkModelArgumentsResolver(),
+			MapUtil.singletonDictionary(
+				"model.class.name",
+				AppBuilderWorkflowTaskLink.class.getName()));
 
-		_finderPathCountAll = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_finderPathWithPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
 
-		_finderPathWithPaginationFindByAppBuilderAppId = new FinderPath(
-			AppBuilderWorkflowTaskLinkImpl.class,
+		_finderPathWithoutPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathCountAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
+
+		_finderPathWithPaginationFindByAppBuilderAppId = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAppBuilderAppId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"appBuilderAppId"}, true);
 
-		_finderPathWithoutPaginationFindByAppBuilderAppId = new FinderPath(
-			AppBuilderWorkflowTaskLinkImpl.class,
+		_finderPathWithoutPaginationFindByAppBuilderAppId = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAppBuilderAppId",
 			new String[] {Long.class.getName()},
-			AppBuilderWorkflowTaskLinkModelImpl.getColumnBitmask(
-				"appBuilderAppId"));
+			new String[] {"appBuilderAppId"}, true);
 
-		_finderPathCountByAppBuilderAppId = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByAppBuilderAppId", new String[] {Long.class.getName()});
+		_finderPathCountByAppBuilderAppId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAppBuilderAppId",
+			new String[] {Long.class.getName()},
+			new String[] {"appBuilderAppId"}, false);
 
-		_finderPathWithPaginationFindByA_A = new FinderPath(
-			AppBuilderWorkflowTaskLinkImpl.class,
+		_finderPathWithPaginationFindByA_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_A",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"appBuilderAppId", "appBuilderAppVersionId"}, true);
 
-		_finderPathWithoutPaginationFindByA_A = new FinderPath(
-			AppBuilderWorkflowTaskLinkImpl.class,
+		_finderPathWithoutPaginationFindByA_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_A",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			AppBuilderWorkflowTaskLinkModelImpl.getColumnBitmask(
-				"appBuilderAppId") |
-			AppBuilderWorkflowTaskLinkModelImpl.getColumnBitmask(
-				"appBuilderAppVersionId"));
+			new String[] {"appBuilderAppId", "appBuilderAppVersionId"}, true);
 
-		_finderPathCountByA_A = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_A",
-			new String[] {Long.class.getName(), Long.class.getName()});
+		_finderPathCountByA_A = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_A",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"appBuilderAppId", "appBuilderAppVersionId"}, false);
 
-		_finderPathWithPaginationFindByA_A_W = new FinderPath(
-			AppBuilderWorkflowTaskLinkImpl.class,
+		_finderPathWithPaginationFindByA_A_W = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_A_W",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {
+				"appBuilderAppId", "appBuilderAppVersionId", "workflowTaskName"
+			},
+			true);
 
-		_finderPathWithoutPaginationFindByA_A_W = new FinderPath(
-			AppBuilderWorkflowTaskLinkImpl.class,
+		_finderPathWithoutPaginationFindByA_A_W = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_A_W",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			AppBuilderWorkflowTaskLinkModelImpl.getColumnBitmask(
-				"appBuilderAppId") |
-			AppBuilderWorkflowTaskLinkModelImpl.getColumnBitmask(
-				"appBuilderAppVersionId") |
-			AppBuilderWorkflowTaskLinkModelImpl.getColumnBitmask(
-				"workflowTaskName"));
+			new String[] {
+				"appBuilderAppId", "appBuilderAppVersionId", "workflowTaskName"
+			},
+			true);
 
-		_finderPathCountByA_A_W = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByA_A_W",
+		_finderPathCountByA_A_W = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_A_W",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
-			});
+			},
+			new String[] {
+				"appBuilderAppId", "appBuilderAppVersionId", "workflowTaskName"
+			},
+			false);
 
-		_finderPathFetchByA_A_D_W = new FinderPath(
-			AppBuilderWorkflowTaskLinkImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByA_A_D_W",
+		_finderPathFetchByA_A_D_W = _createFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByA_A_D_W",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), String.class.getName()
 			},
-			AppBuilderWorkflowTaskLinkModelImpl.getColumnBitmask(
-				"appBuilderAppId") |
-			AppBuilderWorkflowTaskLinkModelImpl.getColumnBitmask(
-				"appBuilderAppVersionId") |
-			AppBuilderWorkflowTaskLinkModelImpl.getColumnBitmask(
-				"ddmStructureLayoutId") |
-			AppBuilderWorkflowTaskLinkModelImpl.getColumnBitmask(
-				"workflowTaskName"));
+			new String[] {
+				"appBuilderAppId", "appBuilderAppVersionId",
+				"ddmStructureLayoutId", "workflowTaskName"
+			},
+			true);
 
-		_finderPathCountByA_A_D_W = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByA_A_D_W",
+		_finderPathCountByA_A_D_W = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_A_D_W",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), String.class.getName()
-			});
+			},
+			new String[] {
+				"appBuilderAppId", "appBuilderAppVersionId",
+				"ddmStructureLayoutId", "workflowTaskName"
+			},
+			false);
 	}
 
 	@Deactivate
 	public void deactivate() {
 		entityCache.removeCache(AppBuilderWorkflowTaskLinkImpl.class.getName());
-		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		_argumentsResolverServiceRegistration.unregister();
+
+		for (ServiceRegistration<FinderPath> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Override
@@ -3041,6 +2895,8 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
+
+	private BundleContext _bundleContext;
 
 	@Reference
 	protected EntityCache entityCache;
@@ -3080,6 +2936,112 @@ public class AppBuilderWorkflowTaskLinkPersistenceImpl
 		catch (ClassNotFoundException classNotFoundException) {
 			throw new ExceptionInInitializerError(classNotFoundException);
 		}
+	}
+
+	private FinderPath _createFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, baseModelResult);
+
+		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
+			_serviceRegistrations.add(
+				_bundleContext.registerService(
+					FinderPath.class, finderPath,
+					MapUtil.singletonDictionary("cache.name", cacheName)));
+		}
+
+		return finderPath;
+	}
+
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
+	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
+		new HashSet<>();
+
+	private static class AppBuilderWorkflowTaskLinkModelArgumentsResolver
+		implements ArgumentsResolver {
+
+		@Override
+		public Object[] getArguments(
+			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
+			boolean original) {
+
+			String[] columnNames = finderPath.getColumnNames();
+
+			if ((columnNames == null) || (columnNames.length == 0)) {
+				if (baseModel.isNew()) {
+					return FINDER_ARGS_EMPTY;
+				}
+
+				return null;
+			}
+
+			AppBuilderWorkflowTaskLinkModelImpl
+				appBuilderWorkflowTaskLinkModelImpl =
+					(AppBuilderWorkflowTaskLinkModelImpl)baseModel;
+
+			long columnBitmask =
+				appBuilderWorkflowTaskLinkModelImpl.getColumnBitmask();
+
+			if (!checkColumn || (columnBitmask == 0)) {
+				return _getValue(
+					appBuilderWorkflowTaskLinkModelImpl, columnNames, original);
+			}
+
+			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
+				finderPath);
+
+			if (finderPathColumnBitmask == null) {
+				finderPathColumnBitmask = 0L;
+
+				for (String columnName : columnNames) {
+					finderPathColumnBitmask |=
+						appBuilderWorkflowTaskLinkModelImpl.getColumnBitmask(
+							columnName);
+				}
+
+				_finderPathColumnBitmasksCache.put(
+					finderPath, finderPathColumnBitmask);
+			}
+
+			if ((columnBitmask & finderPathColumnBitmask) != 0) {
+				return _getValue(
+					appBuilderWorkflowTaskLinkModelImpl, columnNames, original);
+			}
+
+			return null;
+		}
+
+		private Object[] _getValue(
+			AppBuilderWorkflowTaskLinkModelImpl
+				appBuilderWorkflowTaskLinkModelImpl,
+			String[] columnNames, boolean original) {
+
+			Object[] arguments = new Object[columnNames.length];
+
+			for (int i = 0; i < arguments.length; i++) {
+				String columnName = columnNames[i];
+
+				if (original) {
+					arguments[i] =
+						appBuilderWorkflowTaskLinkModelImpl.
+							getColumnOriginalValue(columnName);
+				}
+				else {
+					arguments[i] =
+						appBuilderWorkflowTaskLinkModelImpl.getColumnValue(
+							columnName);
+				}
+			}
+
+			return arguments;
+		}
+
+		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
+			new ConcurrentHashMap<>();
+
 	}
 
 }

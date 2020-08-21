@@ -298,12 +298,8 @@ public class KaleoProcessLinkModelImpl
 
 	@Override
 	public void setKaleoProcessLinkId(long kaleoProcessLinkId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("kaleoProcessLinkId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_kaleoProcessLinkId = kaleoProcessLinkId;
@@ -316,12 +312,8 @@ public class KaleoProcessLinkModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -334,12 +326,8 @@ public class KaleoProcessLinkModelImpl
 
 	@Override
 	public void setKaleoProcessId(long kaleoProcessId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("kaleoProcessId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_kaleoProcessId = kaleoProcessId;
@@ -366,12 +354,8 @@ public class KaleoProcessLinkModelImpl
 
 	@Override
 	public void setWorkflowTaskName(String workflowTaskName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("workflowTaskName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_workflowTaskName = workflowTaskName;
@@ -393,18 +377,32 @@ public class KaleoProcessLinkModelImpl
 
 	@Override
 	public void setDDMTemplateId(long DDMTemplateId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("DDMTemplateId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_DDMTemplateId = DDMTemplateId;
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -620,6 +618,18 @@ public class KaleoProcessLinkModelImpl
 
 	public static long getColumnBitmask(String columnName) {
 		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnValue(String columnName) {
+		Function<KaleoProcessLink, Object> function =
+			_attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((KaleoProcessLink)this);
 	}
 
 	public <T> T getColumnOriginalValue(String columnName) {

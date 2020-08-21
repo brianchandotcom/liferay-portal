@@ -300,12 +300,8 @@ public class StatusModelImpl
 
 	@Override
 	public void setStatusId(long statusId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("statusId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_statusId = statusId;
@@ -318,12 +314,8 @@ public class StatusModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userId = userId;
@@ -361,12 +353,8 @@ public class StatusModelImpl
 
 	@Override
 	public void setModifiedDate(long modifiedDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_modifiedDate = modifiedDate;
@@ -393,12 +381,8 @@ public class StatusModelImpl
 
 	@Override
 	public void setOnline(boolean online) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("online_");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_online = online;
@@ -425,12 +409,8 @@ public class StatusModelImpl
 
 	@Override
 	public void setAwake(boolean awake) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("awake");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_awake = awake;
@@ -448,12 +428,8 @@ public class StatusModelImpl
 
 	@Override
 	public void setActivePanelIds(String activePanelIds) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("activePanelIds");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_activePanelIds = activePanelIds;
@@ -471,12 +447,8 @@ public class StatusModelImpl
 
 	@Override
 	public void setMessage(String message) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("message");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_message = message;
@@ -494,18 +466,32 @@ public class StatusModelImpl
 
 	@Override
 	public void setPlaySound(boolean playSound) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("playSound");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_playSound = playSound;
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -738,6 +724,22 @@ public class StatusModelImpl
 		return _columnBitmasks.get(columnName);
 	}
 
+	public <T> T getColumnValue(String columnName) {
+		if (_attributeNames.containsKey(columnName)) {
+			columnName = _attributeNames.get(columnName);
+		}
+
+		Function<Status, Object> function = _attributeGetterFunctions.get(
+			columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((Status)this);
+	}
+
 	public <T> T getColumnOriginalValue(String columnName) {
 		if (_columnOriginalValues == null) {
 			return null;
@@ -764,6 +766,7 @@ public class StatusModelImpl
 	}
 
 	private static final Map<String, Long> _columnBitmasks;
+	private static final Map<String, String> _attributeNames;
 
 	static {
 		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
@@ -785,6 +788,12 @@ public class StatusModelImpl
 		columnBitmasks.put("playSound", 128L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+
+		Map<String, String> attributeNames = new LinkedHashMap<>();
+
+		attributeNames.put("online_", "online");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;

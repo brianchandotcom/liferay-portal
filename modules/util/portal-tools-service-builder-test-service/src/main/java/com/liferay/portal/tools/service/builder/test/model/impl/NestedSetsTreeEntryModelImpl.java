@@ -304,12 +304,8 @@ public class NestedSetsTreeEntryModelImpl
 
 	@Override
 	public void setNestedSetsTreeEntryId(long nestedSetsTreeEntryId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("nestedSetsTreeEntryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_nestedSetsTreeEntryId = nestedSetsTreeEntryId;
@@ -322,12 +318,8 @@ public class NestedSetsTreeEntryModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("groupId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_groupId = groupId;
@@ -342,13 +334,8 @@ public class NestedSetsTreeEntryModelImpl
 	public void setParentNestedSetsTreeEntryId(
 		long parentNestedSetsTreeEntryId) {
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get(
-				"parentNestedSetsTreeEntryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_parentNestedSetsTreeEntryId = parentNestedSetsTreeEntryId;
@@ -371,12 +358,8 @@ public class NestedSetsTreeEntryModelImpl
 
 	@Override
 	public void setLeftNestedSetsTreeEntryId(long leftNestedSetsTreeEntryId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("leftNestedSetsTreeEntryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_leftNestedSetsTreeEntryId = leftNestedSetsTreeEntryId;
@@ -389,12 +372,8 @@ public class NestedSetsTreeEntryModelImpl
 
 	@Override
 	public void setRightNestedSetsTreeEntryId(long rightNestedSetsTreeEntryId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("rightNestedSetsTreeEntryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_rightNestedSetsTreeEntryId = rightNestedSetsTreeEntryId;
@@ -421,6 +400,24 @@ public class NestedSetsTreeEntryModelImpl
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -639,6 +636,18 @@ public class NestedSetsTreeEntryModelImpl
 
 	public static long getColumnBitmask(String columnName) {
 		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnValue(String columnName) {
+		Function<NestedSetsTreeEntry, Object> function =
+			_attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((NestedSetsTreeEntry)this);
 	}
 
 	public <T> T getColumnOriginalValue(String columnName) {

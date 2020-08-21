@@ -23,6 +23,7 @@ import com.liferay.document.library.sync.service.persistence.DLSyncEventPersiste
 import com.liferay.document.library.sync.service.persistence.impl.constants.DLSyncPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -33,8 +34,10 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -44,12 +47,16 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sql.DataSource;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -834,25 +841,13 @@ public class DLSyncEventPersistenceImpl
 	 */
 	@Override
 	public void clearCache(DLSyncEvent dlSyncEvent) {
-		entityCache.removeResult(
-			DLSyncEventImpl.class, dlSyncEvent.getPrimaryKey());
-
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache((DLSyncEventModelImpl)dlSyncEvent, true);
+		entityCache.removeResult(DLSyncEventImpl.class, dlSyncEvent);
 	}
 
 	@Override
 	public void clearCache(List<DLSyncEvent> dlSyncEvents) {
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (DLSyncEvent dlSyncEvent : dlSyncEvents) {
-			entityCache.removeResult(
-				DLSyncEventImpl.class, dlSyncEvent.getPrimaryKey());
-
-			clearUniqueFindersCache((DLSyncEventModelImpl)dlSyncEvent, true);
+			entityCache.removeResult(DLSyncEventImpl.class, dlSyncEvent);
 		}
 	}
 
@@ -876,28 +871,6 @@ public class DLSyncEventPersistenceImpl
 			_finderPathCountByTypePK, args, Long.valueOf(1), false);
 		finderCache.putResult(
 			_finderPathFetchByTypePK, args, dlSyncEventModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		DLSyncEventModelImpl dlSyncEventModelImpl, boolean clearCurrent) {
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {dlSyncEventModelImpl.getTypePK()};
-
-			finderCache.removeResult(_finderPathCountByTypePK, args);
-			finderCache.removeResult(_finderPathFetchByTypePK, args);
-		}
-
-		if ((dlSyncEventModelImpl.getColumnBitmask() &
-			 _finderPathFetchByTypePK.getColumnBitmask()) != 0) {
-
-			Object[] args = new Object[] {
-				dlSyncEventModelImpl.getColumnOriginalValue("typePK")
-			};
-
-			finderCache.removeResult(_finderPathCountByTypePK, args);
-			finderCache.removeResult(_finderPathFetchByTypePK, args);
-		}
 	}
 
 	/**
@@ -1029,10 +1002,8 @@ public class DLSyncEventPersistenceImpl
 		try {
 			session = openSession();
 
-			if (dlSyncEvent.isNew()) {
+			if (isNew) {
 				session.save(dlSyncEvent);
-
-				dlSyncEvent.setNew(false);
 			}
 			else {
 				dlSyncEvent = (DLSyncEvent)session.merge(dlSyncEvent);
@@ -1045,20 +1016,14 @@ public class DLSyncEventPersistenceImpl
 			closeSession(session);
 		}
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		entityCache.putResult(
+			DLSyncEventImpl.class, dlSyncEventModelImpl, false, true);
+
+		cacheUniqueFindersCache(dlSyncEventModelImpl);
 
 		if (isNew) {
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+			dlSyncEvent.setNew(false);
 		}
-
-		entityCache.putResult(
-			DLSyncEventImpl.class, dlSyncEvent.getPrimaryKey(), dlSyncEvent,
-			false);
-
-		clearUniqueFindersCache(dlSyncEventModelImpl, false);
-		cacheUniqueFindersCache(dlSyncEventModelImpl);
 
 		dlSyncEvent.resetOriginalValues();
 
@@ -1323,47 +1288,60 @@ public class DLSyncEventPersistenceImpl
 	 * Initializes the dl sync event persistence.
 	 */
 	@Activate
-	public void activate() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			DLSyncEventImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
+	public void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			DLSyncEventImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findAll", new String[0]);
+		_argumentsResolverServiceRegistration = _bundleContext.registerService(
+			ArgumentsResolver.class, new DLSyncEventModelArgumentsResolver(),
+			MapUtil.singletonDictionary(
+				"model.class.name", DLSyncEvent.class.getName()));
 
-		_finderPathCountAll = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_finderPathWithPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
 
-		_finderPathWithPaginationFindByModifiedTime = new FinderPath(
-			DLSyncEventImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByModifiedTime",
+		_finderPathWithoutPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathCountAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
+
+		_finderPathWithPaginationFindByModifiedTime = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByModifiedTime",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"modifiedTime"}, true);
 
-		_finderPathWithPaginationCountByModifiedTime = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"countByModifiedTime", new String[] {Long.class.getName()});
+		_finderPathWithPaginationCountByModifiedTime = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByModifiedTime",
+			new String[] {Long.class.getName()}, new String[] {"modifiedTime"},
+			false);
 
-		_finderPathFetchByTypePK = new FinderPath(
-			DLSyncEventImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByTypePK",
-			new String[] {Long.class.getName()},
-			DLSyncEventModelImpl.getColumnBitmask("typePK"));
+		_finderPathFetchByTypePK = _createFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByTypePK",
+			new String[] {Long.class.getName()}, new String[] {"typePK"}, true);
 
-		_finderPathCountByTypePK = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByTypePK", new String[] {Long.class.getName()});
+		_finderPathCountByTypePK = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTypePK",
+			new String[] {Long.class.getName()}, new String[] {"typePK"},
+			false);
 	}
 
 	@Deactivate
 	public void deactivate() {
 		entityCache.removeCache(DLSyncEventImpl.class.getName());
-		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		_argumentsResolverServiceRegistration.unregister();
+
+		for (ServiceRegistration<FinderPath> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Override
@@ -1391,6 +1369,8 @@ public class DLSyncEventPersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
+
+	private BundleContext _bundleContext;
 
 	@Reference
 	protected EntityCache entityCache;
@@ -1431,6 +1411,104 @@ public class DLSyncEventPersistenceImpl
 		catch (ClassNotFoundException classNotFoundException) {
 			throw new ExceptionInInitializerError(classNotFoundException);
 		}
+	}
+
+	private FinderPath _createFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, baseModelResult);
+
+		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
+			_serviceRegistrations.add(
+				_bundleContext.registerService(
+					FinderPath.class, finderPath,
+					MapUtil.singletonDictionary("cache.name", cacheName)));
+		}
+
+		return finderPath;
+	}
+
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
+	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
+		new HashSet<>();
+
+	private static class DLSyncEventModelArgumentsResolver
+		implements ArgumentsResolver {
+
+		@Override
+		public Object[] getArguments(
+			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
+			boolean original) {
+
+			String[] columnNames = finderPath.getColumnNames();
+
+			if ((columnNames == null) || (columnNames.length == 0)) {
+				if (baseModel.isNew()) {
+					return FINDER_ARGS_EMPTY;
+				}
+
+				return null;
+			}
+
+			DLSyncEventModelImpl dlSyncEventModelImpl =
+				(DLSyncEventModelImpl)baseModel;
+
+			long columnBitmask = dlSyncEventModelImpl.getColumnBitmask();
+
+			if (!checkColumn || (columnBitmask == 0)) {
+				return _getValue(dlSyncEventModelImpl, columnNames, original);
+			}
+
+			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
+				finderPath);
+
+			if (finderPathColumnBitmask == null) {
+				finderPathColumnBitmask = 0L;
+
+				for (String columnName : columnNames) {
+					finderPathColumnBitmask |=
+						dlSyncEventModelImpl.getColumnBitmask(columnName);
+				}
+
+				_finderPathColumnBitmasksCache.put(
+					finderPath, finderPathColumnBitmask);
+			}
+
+			if ((columnBitmask & finderPathColumnBitmask) != 0) {
+				return _getValue(dlSyncEventModelImpl, columnNames, original);
+			}
+
+			return null;
+		}
+
+		private Object[] _getValue(
+			DLSyncEventModelImpl dlSyncEventModelImpl, String[] columnNames,
+			boolean original) {
+
+			Object[] arguments = new Object[columnNames.length];
+
+			for (int i = 0; i < arguments.length; i++) {
+				String columnName = columnNames[i];
+
+				if (original) {
+					arguments[i] = dlSyncEventModelImpl.getColumnOriginalValue(
+						columnName);
+				}
+				else {
+					arguments[i] = dlSyncEventModelImpl.getColumnValue(
+						columnName);
+				}
+			}
+
+			return arguments;
+		}
+
+		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
+			new ConcurrentHashMap<>();
+
 	}
 
 }

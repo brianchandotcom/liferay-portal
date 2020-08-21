@@ -474,12 +474,8 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("mvccVersion");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_mvccVersion = mvccVersion;
@@ -498,12 +494,8 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("uuid_");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_uuid = uuid;
@@ -526,12 +518,8 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setRecordSetId(long recordSetId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("recordSetId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_recordSetId = recordSetId;
@@ -545,12 +533,8 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("groupId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_groupId = groupId;
@@ -573,12 +557,8 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -601,12 +581,8 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userId = userId;
@@ -641,12 +617,8 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userName = userName;
@@ -660,12 +632,8 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setVersionUserId(long versionUserId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("versionUserId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_versionUserId = versionUserId;
@@ -700,12 +668,8 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setVersionUserName(String versionUserName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("versionUserName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_versionUserName = versionUserName;
@@ -719,12 +683,8 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_createDate = createDate;
@@ -744,12 +704,8 @@ public class DDLRecordSetModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_modifiedDate = modifiedDate;
@@ -763,12 +719,8 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setDDMStructureId(long DDMStructureId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("DDMStructureId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_DDMStructureId = DDMStructureId;
@@ -796,12 +748,8 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setRecordSetKey(String recordSetKey) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("recordSetKey");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_recordSetKey = recordSetKey;
@@ -829,12 +777,8 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setVersion(String version) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("version");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_version = version;
@@ -896,12 +840,8 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setName(String name) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("name");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_name = name;
@@ -1007,12 +947,8 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setDescription(String description) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("description");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_description = description;
@@ -1075,12 +1011,8 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setMinDisplayRows(int minDisplayRows) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("minDisplayRows");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_minDisplayRows = minDisplayRows;
@@ -1094,12 +1026,8 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setScope(int scope) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("scope");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_scope = scope;
@@ -1118,12 +1046,8 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setSettings(String settings) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("settings_");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_settings = settings;
@@ -1137,12 +1061,8 @@ public class DDLRecordSetModelImpl
 
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("lastPublishDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_lastPublishDate = lastPublishDate;
@@ -1165,6 +1085,24 @@ public class DDLRecordSetModelImpl
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -1602,6 +1540,22 @@ public class DDLRecordSetModelImpl
 		return _columnBitmasks.get(columnName);
 	}
 
+	public <T> T getColumnValue(String columnName) {
+		if (_attributeNames.containsKey(columnName)) {
+			columnName = _attributeNames.get(columnName);
+		}
+
+		Function<DDLRecordSet, Object> function = _attributeGetterFunctions.get(
+			columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((DDLRecordSet)this);
+	}
+
 	public <T> T getColumnOriginalValue(String columnName) {
 		if (_columnOriginalValues == null) {
 			return null;
@@ -1640,6 +1594,7 @@ public class DDLRecordSetModelImpl
 	}
 
 	private static final Map<String, Long> _columnBitmasks;
+	private static final Map<String, String> _attributeNames;
 
 	static {
 		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
@@ -1685,6 +1640,13 @@ public class DDLRecordSetModelImpl
 		columnBitmasks.put("lastPublishDate", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+
+		Map<String, String> attributeNames = new LinkedHashMap<>();
+
+		attributeNames.put("uuid_", "uuid");
+		attributeNames.put("settings_", "settings");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;

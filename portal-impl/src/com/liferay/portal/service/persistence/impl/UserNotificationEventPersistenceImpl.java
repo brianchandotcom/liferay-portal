@@ -15,6 +15,7 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -26,11 +27,13 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchUserNotificationEventException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.UserNotificationEventTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.UserNotificationEventPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -38,16 +41,21 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.impl.UserNotificationEventImpl;
 import com.liferay.portal.model.impl.UserNotificationEventModelImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The persistence implementation for the user notification event service.
@@ -11499,24 +11507,16 @@ public class UserNotificationEventPersistenceImpl
 	@Override
 	public void clearCache(UserNotificationEvent userNotificationEvent) {
 		EntityCacheUtil.removeResult(
-			UserNotificationEventImpl.class,
-			userNotificationEvent.getPrimaryKey());
-
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			UserNotificationEventImpl.class, userNotificationEvent);
 	}
 
 	@Override
 	public void clearCache(List<UserNotificationEvent> userNotificationEvents) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (UserNotificationEvent userNotificationEvent :
 				userNotificationEvents) {
 
 			EntityCacheUtil.removeResult(
-				UserNotificationEventImpl.class,
-				userNotificationEvent.getPrimaryKey());
+				UserNotificationEventImpl.class, userNotificationEvent);
 		}
 	}
 
@@ -11683,10 +11683,8 @@ public class UserNotificationEventPersistenceImpl
 		try {
 			session = openSession();
 
-			if (userNotificationEvent.isNew()) {
+			if (isNew) {
 				session.save(userNotificationEvent);
-
-				userNotificationEvent.setNew(false);
 			}
 			else {
 				userNotificationEvent = (UserNotificationEvent)session.merge(
@@ -11700,734 +11698,13 @@ public class UserNotificationEventPersistenceImpl
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		EntityCacheUtil.putResult(
+			UserNotificationEventImpl.class, userNotificationEventModelImpl,
+			false, true);
 
 		if (isNew) {
-			Object[] args = new Object[] {
-				userNotificationEventModelImpl.getUuid()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByUuid, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByUuid, args);
-
-			args = new Object[] {
-				userNotificationEventModelImpl.getUuid(),
-				userNotificationEventModelImpl.getCompanyId()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByUuid_C, args);
-
-			args = new Object[] {userNotificationEventModelImpl.getUserId()};
-
-			FinderCacheUtil.removeResult(_finderPathCountByUserId, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByUserId, args);
-
-			args = new Object[] {userNotificationEventModelImpl.getType()};
-
-			FinderCacheUtil.removeResult(_finderPathCountByType, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByType, args);
-
-			args = new Object[] {
-				userNotificationEventModelImpl.getUserId(),
-				userNotificationEventModelImpl.getDeliveryType()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByU_DT, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByU_DT, args);
-
-			args = new Object[] {
-				userNotificationEventModelImpl.getUserId(),
-				userNotificationEventModelImpl.isDelivered()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByU_D, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByU_D, args);
-
-			args = new Object[] {
-				userNotificationEventModelImpl.getUserId(),
-				userNotificationEventModelImpl.isArchived()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByU_A, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByU_A, args);
-
-			args = new Object[] {
-				userNotificationEventModelImpl.getUserId(),
-				userNotificationEventModelImpl.getDeliveryType(),
-				userNotificationEventModelImpl.isDelivered()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByU_DT_D, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByU_DT_D, args);
-
-			args = new Object[] {
-				userNotificationEventModelImpl.getUserId(),
-				userNotificationEventModelImpl.getDeliveryType(),
-				userNotificationEventModelImpl.isArchived()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByU_DT_A, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByU_DT_A, args);
-
-			args = new Object[] {
-				userNotificationEventModelImpl.getUserId(),
-				userNotificationEventModelImpl.isDelivered(),
-				userNotificationEventModelImpl.isActionRequired()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByU_D_AR, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByU_D_AR, args);
-
-			args = new Object[] {
-				userNotificationEventModelImpl.getUserId(),
-				userNotificationEventModelImpl.isDelivered(),
-				userNotificationEventModelImpl.isArchived()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByU_D_A, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByU_D_A, args);
-
-			args = new Object[] {
-				userNotificationEventModelImpl.getUserId(),
-				userNotificationEventModelImpl.isActionRequired(),
-				userNotificationEventModelImpl.isArchived()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByU_AR_A, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByU_AR_A, args);
-
-			args = new Object[] {
-				userNotificationEventModelImpl.getUserId(),
-				userNotificationEventModelImpl.getType(),
-				userNotificationEventModelImpl.getDeliveryType(),
-				userNotificationEventModelImpl.isDelivered()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByU_T_DT_D, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByU_T_DT_D, args);
-
-			args = new Object[] {
-				userNotificationEventModelImpl.getUserId(),
-				userNotificationEventModelImpl.getDeliveryType(),
-				userNotificationEventModelImpl.isDelivered(),
-				userNotificationEventModelImpl.isActionRequired()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByU_DT_D_AR, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByU_DT_D_AR, args);
-
-			args = new Object[] {
-				userNotificationEventModelImpl.getUserId(),
-				userNotificationEventModelImpl.getDeliveryType(),
-				userNotificationEventModelImpl.isDelivered(),
-				userNotificationEventModelImpl.isArchived()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByU_DT_D_A, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByU_DT_D_A, args);
-
-			args = new Object[] {
-				userNotificationEventModelImpl.getUserId(),
-				userNotificationEventModelImpl.getDeliveryType(),
-				userNotificationEventModelImpl.isActionRequired(),
-				userNotificationEventModelImpl.isArchived()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByU_DT_AR_A, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByU_DT_AR_A, args);
-
-			args = new Object[] {
-				userNotificationEventModelImpl.getUserId(),
-				userNotificationEventModelImpl.isDelivered(),
-				userNotificationEventModelImpl.isActionRequired(),
-				userNotificationEventModelImpl.isArchived()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByU_D_AR_A, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByU_D_AR_A, args);
-
-			args = new Object[] {
-				userNotificationEventModelImpl.getUserId(),
-				userNotificationEventModelImpl.getType(),
-				userNotificationEventModelImpl.getDeliveryType(),
-				userNotificationEventModelImpl.isDelivered(),
-				userNotificationEventModelImpl.isArchived()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByU_T_DT_D_A, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByU_T_DT_D_A, args);
-
-			args = new Object[] {
-				userNotificationEventModelImpl.getUserId(),
-				userNotificationEventModelImpl.getDeliveryType(),
-				userNotificationEventModelImpl.isDelivered(),
-				userNotificationEventModelImpl.isActionRequired(),
-				userNotificationEventModelImpl.isArchived()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByU_DT_D_AR_A, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByU_DT_D_AR_A, args);
-
-			FinderCacheUtil.removeResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+			userNotificationEvent.setNew(false);
 		}
-		else {
-			if ((userNotificationEventModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByUuid.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"uuid_")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByUuid, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByUuid, args);
-
-				args = new Object[] {userNotificationEventModelImpl.getUuid()};
-
-				FinderCacheUtil.removeResult(_finderPathCountByUuid, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByUuid, args);
-			}
-
-			if ((userNotificationEventModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"uuid_"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"companyId")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByUuid_C, args);
-
-				args = new Object[] {
-					userNotificationEventModelImpl.getUuid(),
-					userNotificationEventModelImpl.getCompanyId()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByUuid_C, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByUuid_C, args);
-			}
-
-			if ((userNotificationEventModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByUserId.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"userId")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByUserId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByUserId, args);
-
-				args = new Object[] {
-					userNotificationEventModelImpl.getUserId()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByUserId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByUserId, args);
-			}
-
-			if ((userNotificationEventModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByType.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"type_")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByType, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByType, args);
-
-				args = new Object[] {userNotificationEventModelImpl.getType()};
-
-				FinderCacheUtil.removeResult(_finderPathCountByType, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByType, args);
-			}
-
-			if ((userNotificationEventModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByU_DT.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"userId"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"deliveryType")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_DT, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_DT, args);
-
-				args = new Object[] {
-					userNotificationEventModelImpl.getUserId(),
-					userNotificationEventModelImpl.getDeliveryType()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_DT, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_DT, args);
-			}
-
-			if ((userNotificationEventModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByU_D.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"userId"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"delivered")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_D, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_D, args);
-
-				args = new Object[] {
-					userNotificationEventModelImpl.getUserId(),
-					userNotificationEventModelImpl.isDelivered()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_D, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_D, args);
-			}
-
-			if ((userNotificationEventModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByU_A.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"userId"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"archived")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_A, args);
-
-				args = new Object[] {
-					userNotificationEventModelImpl.getUserId(),
-					userNotificationEventModelImpl.isArchived()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_A, args);
-			}
-
-			if ((userNotificationEventModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByU_DT_D.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"userId"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"deliveryType"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"delivered")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_DT_D, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_DT_D, args);
-
-				args = new Object[] {
-					userNotificationEventModelImpl.getUserId(),
-					userNotificationEventModelImpl.getDeliveryType(),
-					userNotificationEventModelImpl.isDelivered()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_DT_D, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_DT_D, args);
-			}
-
-			if ((userNotificationEventModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByU_DT_A.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"userId"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"deliveryType"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"archived")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_DT_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_DT_A, args);
-
-				args = new Object[] {
-					userNotificationEventModelImpl.getUserId(),
-					userNotificationEventModelImpl.getDeliveryType(),
-					userNotificationEventModelImpl.isArchived()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_DT_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_DT_A, args);
-			}
-
-			if ((userNotificationEventModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByU_D_AR.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"userId"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"delivered"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"actionRequired")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_D_AR, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_D_AR, args);
-
-				args = new Object[] {
-					userNotificationEventModelImpl.getUserId(),
-					userNotificationEventModelImpl.isDelivered(),
-					userNotificationEventModelImpl.isActionRequired()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_D_AR, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_D_AR, args);
-			}
-
-			if ((userNotificationEventModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByU_D_A.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"userId"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"delivered"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"archived")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_D_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_D_A, args);
-
-				args = new Object[] {
-					userNotificationEventModelImpl.getUserId(),
-					userNotificationEventModelImpl.isDelivered(),
-					userNotificationEventModelImpl.isArchived()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_D_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_D_A, args);
-			}
-
-			if ((userNotificationEventModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByU_AR_A.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"userId"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"actionRequired"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"archived")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_AR_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_AR_A, args);
-
-				args = new Object[] {
-					userNotificationEventModelImpl.getUserId(),
-					userNotificationEventModelImpl.isActionRequired(),
-					userNotificationEventModelImpl.isArchived()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_AR_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_AR_A, args);
-			}
-
-			if ((userNotificationEventModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByU_T_DT_D.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"userId"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"type_"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"deliveryType"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"delivered")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_T_DT_D, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_T_DT_D, args);
-
-				args = new Object[] {
-					userNotificationEventModelImpl.getUserId(),
-					userNotificationEventModelImpl.getType(),
-					userNotificationEventModelImpl.getDeliveryType(),
-					userNotificationEventModelImpl.isDelivered()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_T_DT_D, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_T_DT_D, args);
-			}
-
-			if ((userNotificationEventModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByU_DT_D_AR.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"userId"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"deliveryType"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"delivered"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"actionRequired")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_DT_D_AR, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_DT_D_AR, args);
-
-				args = new Object[] {
-					userNotificationEventModelImpl.getUserId(),
-					userNotificationEventModelImpl.getDeliveryType(),
-					userNotificationEventModelImpl.isDelivered(),
-					userNotificationEventModelImpl.isActionRequired()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_DT_D_AR, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_DT_D_AR, args);
-			}
-
-			if ((userNotificationEventModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByU_DT_D_A.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"userId"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"deliveryType"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"delivered"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"archived")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_DT_D_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_DT_D_A, args);
-
-				args = new Object[] {
-					userNotificationEventModelImpl.getUserId(),
-					userNotificationEventModelImpl.getDeliveryType(),
-					userNotificationEventModelImpl.isDelivered(),
-					userNotificationEventModelImpl.isArchived()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_DT_D_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_DT_D_A, args);
-			}
-
-			if ((userNotificationEventModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByU_DT_AR_A.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"userId"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"deliveryType"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"actionRequired"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"archived")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_DT_AR_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_DT_AR_A, args);
-
-				args = new Object[] {
-					userNotificationEventModelImpl.getUserId(),
-					userNotificationEventModelImpl.getDeliveryType(),
-					userNotificationEventModelImpl.isActionRequired(),
-					userNotificationEventModelImpl.isArchived()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_DT_AR_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_DT_AR_A, args);
-			}
-
-			if ((userNotificationEventModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByU_D_AR_A.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"userId"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"delivered"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"actionRequired"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"archived")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_D_AR_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_D_AR_A, args);
-
-				args = new Object[] {
-					userNotificationEventModelImpl.getUserId(),
-					userNotificationEventModelImpl.isDelivered(),
-					userNotificationEventModelImpl.isActionRequired(),
-					userNotificationEventModelImpl.isArchived()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByU_D_AR_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_D_AR_A, args);
-			}
-
-			if ((userNotificationEventModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByU_T_DT_D_A.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"userId"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"type_"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"deliveryType"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"delivered"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"archived")
-				};
-
-				FinderCacheUtil.removeResult(
-					_finderPathCountByU_T_DT_D_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_T_DT_D_A, args);
-
-				args = new Object[] {
-					userNotificationEventModelImpl.getUserId(),
-					userNotificationEventModelImpl.getType(),
-					userNotificationEventModelImpl.getDeliveryType(),
-					userNotificationEventModelImpl.isDelivered(),
-					userNotificationEventModelImpl.isArchived()
-				};
-
-				FinderCacheUtil.removeResult(
-					_finderPathCountByU_T_DT_D_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_T_DT_D_A, args);
-			}
-
-			if ((userNotificationEventModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByU_DT_D_AR_A.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"userId"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"deliveryType"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"delivered"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"actionRequired"),
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						"archived")
-				};
-
-				FinderCacheUtil.removeResult(
-					_finderPathCountByU_DT_D_AR_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_DT_D_AR_A, args);
-
-				args = new Object[] {
-					userNotificationEventModelImpl.getUserId(),
-					userNotificationEventModelImpl.getDeliveryType(),
-					userNotificationEventModelImpl.isDelivered(),
-					userNotificationEventModelImpl.isActionRequired(),
-					userNotificationEventModelImpl.isArchived()
-				};
-
-				FinderCacheUtil.removeResult(
-					_finderPathCountByU_DT_D_AR_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByU_DT_D_AR_A, args);
-			}
-		}
-
-		EntityCacheUtil.putResult(
-			UserNotificationEventImpl.class,
-			userNotificationEvent.getPrimaryKey(), userNotificationEvent,
-			false);
 
 		userNotificationEvent.resetOriginalValues();
 
@@ -12698,536 +11975,526 @@ public class UserNotificationEventPersistenceImpl
 	 * Initializes the user notification event persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			UserNotificationEventImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		Registry registry = RegistryUtil.getRegistry();
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			UserNotificationEventImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+		_argumentsResolverServiceRegistration = registry.registerService(
+			ArgumentsResolver.class,
+			new UserNotificationEventModelArgumentsResolver(),
+			HashMapBuilder.<String, Object>put(
+				"model.class.name", UserNotificationEvent.class.getName()
+			).build());
 
-		_finderPathCountAll = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_finderPathWithPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
 
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathCountAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
+
+		_finderPathWithPaginationFindByUuid = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"uuid_"}, true);
 
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindByUuid = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()},
-			UserNotificationEventModelImpl.getColumnBitmask("uuid_") |
-			UserNotificationEventModelImpl.getColumnBitmask("timestamp"));
+			new String[] {String.class.getName()}, new String[] {"uuid_"},
+			true);
 
-		_finderPathCountByUuid = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUuid", new String[] {String.class.getName()});
+		_finderPathCountByUuid = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] {String.class.getName()}, new String[] {"uuid_"},
+			false);
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithPaginationFindByUuid_C = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindByUuid_C = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			UserNotificationEventModelImpl.getColumnBitmask("uuid_") |
-			UserNotificationEventModelImpl.getColumnBitmask("companyId") |
-			UserNotificationEventModelImpl.getColumnBitmask("timestamp"));
+			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathCountByUuid_C = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()});
+		_finderPathCountByUuid_C = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "companyId"}, false);
 
-		_finderPathWithPaginationFindByUserId = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithPaginationFindByUserId = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"userId"}, true);
 
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindByUserId = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()},
-			UserNotificationEventModelImpl.getColumnBitmask("userId") |
-			UserNotificationEventModelImpl.getColumnBitmask("timestamp"));
+			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
 
-		_finderPathCountByUserId = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUserId", new String[] {Long.class.getName()});
+		_finderPathCountByUserId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+			new String[] {Long.class.getName()}, new String[] {"userId"},
+			false);
 
-		_finderPathWithPaginationFindByType = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithPaginationFindByType = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"type_"}, true);
 
-		_finderPathWithoutPaginationFindByType = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindByType = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
-			new String[] {String.class.getName()},
-			UserNotificationEventModelImpl.getColumnBitmask("type_") |
-			UserNotificationEventModelImpl.getColumnBitmask("timestamp"));
+			new String[] {String.class.getName()}, new String[] {"type_"},
+			true);
 
-		_finderPathCountByType = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByType", new String[] {String.class.getName()});
+		_finderPathCountByType = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
+			new String[] {String.class.getName()}, new String[] {"type_"},
+			false);
 
-		_finderPathWithPaginationFindByU_DT = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithPaginationFindByU_DT = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"userId", "deliveryType"}, true);
 
-		_finderPathWithoutPaginationFindByU_DT = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindByU_DT = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_DT",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			UserNotificationEventModelImpl.getColumnBitmask("userId") |
-			UserNotificationEventModelImpl.getColumnBitmask("deliveryType") |
-			UserNotificationEventModelImpl.getColumnBitmask("timestamp"));
+			new String[] {"userId", "deliveryType"}, true);
 
-		_finderPathCountByU_DT = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByU_DT",
-			new String[] {Long.class.getName(), Integer.class.getName()});
+		_finderPathCountByU_DT = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_DT",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			new String[] {"userId", "deliveryType"}, false);
 
-		_finderPathWithPaginationFindByU_D = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithPaginationFindByU_D = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_D",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"userId", "delivered"}, true);
 
-		_finderPathWithoutPaginationFindByU_D = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindByU_D = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_D",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			UserNotificationEventModelImpl.getColumnBitmask("userId") |
-			UserNotificationEventModelImpl.getColumnBitmask("delivered") |
-			UserNotificationEventModelImpl.getColumnBitmask("timestamp"));
+			new String[] {"userId", "delivered"}, true);
 
-		_finderPathCountByU_D = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_D",
-			new String[] {Long.class.getName(), Boolean.class.getName()});
+		_finderPathCountByU_D = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_D",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"userId", "delivered"}, false);
 
-		_finderPathWithPaginationFindByU_A = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithPaginationFindByU_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"userId", "archived"}, true);
 
-		_finderPathWithoutPaginationFindByU_A = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindByU_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			UserNotificationEventModelImpl.getColumnBitmask("userId") |
-			UserNotificationEventModelImpl.getColumnBitmask("archived") |
-			UserNotificationEventModelImpl.getColumnBitmask("timestamp"));
+			new String[] {"userId", "archived"}, true);
 
-		_finderPathCountByU_A = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()});
+		_finderPathCountByU_A = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_A",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"userId", "archived"}, false);
 
-		_finderPathWithPaginationFindByU_DT_D = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithPaginationFindByU_DT_D = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT_D",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"userId", "deliveryType", "delivered"}, true);
 
-		_finderPathWithoutPaginationFindByU_DT_D = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindByU_DT_D = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_DT_D",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName()
 			},
-			UserNotificationEventModelImpl.getColumnBitmask("userId") |
-			UserNotificationEventModelImpl.getColumnBitmask("deliveryType") |
-			UserNotificationEventModelImpl.getColumnBitmask("delivered") |
-			UserNotificationEventModelImpl.getColumnBitmask("timestamp"));
+			new String[] {"userId", "deliveryType", "delivered"}, true);
 
-		_finderPathCountByU_DT_D = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByU_DT_D",
+		_finderPathCountByU_DT_D = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_DT_D",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName()
-			});
+			},
+			new String[] {"userId", "deliveryType", "delivered"}, false);
 
-		_finderPathWithPaginationFindByU_DT_A = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithPaginationFindByU_DT_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT_A",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"userId", "deliveryType", "archived"}, true);
 
-		_finderPathWithoutPaginationFindByU_DT_A = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindByU_DT_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_DT_A",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName()
 			},
-			UserNotificationEventModelImpl.getColumnBitmask("userId") |
-			UserNotificationEventModelImpl.getColumnBitmask("deliveryType") |
-			UserNotificationEventModelImpl.getColumnBitmask("archived") |
-			UserNotificationEventModelImpl.getColumnBitmask("timestamp"));
+			new String[] {"userId", "deliveryType", "archived"}, true);
 
-		_finderPathCountByU_DT_A = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByU_DT_A",
+		_finderPathCountByU_DT_A = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_DT_A",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName()
-			});
+			},
+			new String[] {"userId", "deliveryType", "archived"}, false);
 
-		_finderPathWithPaginationFindByU_D_AR = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithPaginationFindByU_D_AR = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_D_AR",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"userId", "delivered", "actionRequired"}, true);
 
-		_finderPathWithoutPaginationFindByU_D_AR = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindByU_D_AR = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_D_AR",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName()
 			},
-			UserNotificationEventModelImpl.getColumnBitmask("userId") |
-			UserNotificationEventModelImpl.getColumnBitmask("delivered") |
-			UserNotificationEventModelImpl.getColumnBitmask("actionRequired") |
-			UserNotificationEventModelImpl.getColumnBitmask("timestamp"));
+			new String[] {"userId", "delivered", "actionRequired"}, true);
 
-		_finderPathCountByU_D_AR = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByU_D_AR",
+		_finderPathCountByU_D_AR = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_D_AR",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName()
-			});
+			},
+			new String[] {"userId", "delivered", "actionRequired"}, false);
 
-		_finderPathWithPaginationFindByU_D_A = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithPaginationFindByU_D_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_D_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"userId", "delivered", "archived"}, true);
 
-		_finderPathWithoutPaginationFindByU_D_A = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindByU_D_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_D_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName()
 			},
-			UserNotificationEventModelImpl.getColumnBitmask("userId") |
-			UserNotificationEventModelImpl.getColumnBitmask("delivered") |
-			UserNotificationEventModelImpl.getColumnBitmask("archived") |
-			UserNotificationEventModelImpl.getColumnBitmask("timestamp"));
+			new String[] {"userId", "delivered", "archived"}, true);
 
-		_finderPathCountByU_D_A = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByU_D_A",
+		_finderPathCountByU_D_A = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_D_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName()
-			});
+			},
+			new String[] {"userId", "delivered", "archived"}, false);
 
-		_finderPathWithPaginationFindByU_AR_A = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithPaginationFindByU_AR_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_AR_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"userId", "actionRequired", "archived"}, true);
 
-		_finderPathWithoutPaginationFindByU_AR_A = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindByU_AR_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_AR_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName()
 			},
-			UserNotificationEventModelImpl.getColumnBitmask("userId") |
-			UserNotificationEventModelImpl.getColumnBitmask("actionRequired") |
-			UserNotificationEventModelImpl.getColumnBitmask("archived") |
-			UserNotificationEventModelImpl.getColumnBitmask("timestamp"));
+			new String[] {"userId", "actionRequired", "archived"}, true);
 
-		_finderPathCountByU_AR_A = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByU_AR_A",
+		_finderPathCountByU_AR_A = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_AR_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName()
-			});
+			},
+			new String[] {"userId", "actionRequired", "archived"}, false);
 
-		_finderPathWithPaginationFindByU_T_DT_D = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithPaginationFindByU_T_DT_D = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_T_DT_D",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Boolean.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"userId", "type_", "deliveryType", "delivered"},
+			true);
 
-		_finderPathWithoutPaginationFindByU_T_DT_D = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindByU_T_DT_D = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_T_DT_D",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Boolean.class.getName()
 			},
-			UserNotificationEventModelImpl.getColumnBitmask("userId") |
-			UserNotificationEventModelImpl.getColumnBitmask("type_") |
-			UserNotificationEventModelImpl.getColumnBitmask("deliveryType") |
-			UserNotificationEventModelImpl.getColumnBitmask("delivered") |
-			UserNotificationEventModelImpl.getColumnBitmask("timestamp"));
+			new String[] {"userId", "type_", "deliveryType", "delivered"},
+			true);
 
-		_finderPathCountByU_T_DT_D = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByU_T_DT_D",
+		_finderPathCountByU_T_DT_D = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_T_DT_D",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Boolean.class.getName()
-			});
+			},
+			new String[] {"userId", "type_", "deliveryType", "delivered"},
+			false);
 
-		_finderPathWithPaginationFindByU_DT_D_AR = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithPaginationFindByU_DT_D_AR = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT_D_AR",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {
+				"userId", "deliveryType", "delivered", "actionRequired"
+			},
+			true);
 
-		_finderPathWithoutPaginationFindByU_DT_D_AR = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindByU_DT_D_AR = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_DT_D_AR",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName()
 			},
-			UserNotificationEventModelImpl.getColumnBitmask("userId") |
-			UserNotificationEventModelImpl.getColumnBitmask("deliveryType") |
-			UserNotificationEventModelImpl.getColumnBitmask("delivered") |
-			UserNotificationEventModelImpl.getColumnBitmask("actionRequired") |
-			UserNotificationEventModelImpl.getColumnBitmask("timestamp"));
+			new String[] {
+				"userId", "deliveryType", "delivered", "actionRequired"
+			},
+			true);
 
-		_finderPathCountByU_DT_D_AR = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByU_DT_D_AR",
+		_finderPathCountByU_DT_D_AR = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_DT_D_AR",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName()
-			});
+			},
+			new String[] {
+				"userId", "deliveryType", "delivered", "actionRequired"
+			},
+			false);
 
-		_finderPathWithPaginationFindByU_DT_D_A = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithPaginationFindByU_DT_D_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT_D_A",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"userId", "deliveryType", "delivered", "archived"},
+			true);
 
-		_finderPathWithoutPaginationFindByU_DT_D_A = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindByU_DT_D_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_DT_D_A",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName()
 			},
-			UserNotificationEventModelImpl.getColumnBitmask("userId") |
-			UserNotificationEventModelImpl.getColumnBitmask("deliveryType") |
-			UserNotificationEventModelImpl.getColumnBitmask("delivered") |
-			UserNotificationEventModelImpl.getColumnBitmask("archived") |
-			UserNotificationEventModelImpl.getColumnBitmask("timestamp"));
+			new String[] {"userId", "deliveryType", "delivered", "archived"},
+			true);
 
-		_finderPathCountByU_DT_D_A = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByU_DT_D_A",
+		_finderPathCountByU_DT_D_A = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_DT_D_A",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName()
-			});
+			},
+			new String[] {"userId", "deliveryType", "delivered", "archived"},
+			false);
 
-		_finderPathWithPaginationFindByU_DT_AR_A = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithPaginationFindByU_DT_AR_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT_AR_A",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {
+				"userId", "deliveryType", "actionRequired", "archived"
+			},
+			true);
 
-		_finderPathWithoutPaginationFindByU_DT_AR_A = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindByU_DT_AR_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_DT_AR_A",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName()
 			},
-			UserNotificationEventModelImpl.getColumnBitmask("userId") |
-			UserNotificationEventModelImpl.getColumnBitmask("deliveryType") |
-			UserNotificationEventModelImpl.getColumnBitmask("actionRequired") |
-			UserNotificationEventModelImpl.getColumnBitmask("archived") |
-			UserNotificationEventModelImpl.getColumnBitmask("timestamp"));
+			new String[] {
+				"userId", "deliveryType", "actionRequired", "archived"
+			},
+			true);
 
-		_finderPathCountByU_DT_AR_A = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByU_DT_AR_A",
+		_finderPathCountByU_DT_AR_A = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_DT_AR_A",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName()
-			});
+			},
+			new String[] {
+				"userId", "deliveryType", "actionRequired", "archived"
+			},
+			false);
 
-		_finderPathWithPaginationFindByU_D_AR_A = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithPaginationFindByU_D_AR_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_D_AR_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"userId", "delivered", "actionRequired", "archived"},
+			true);
 
-		_finderPathWithoutPaginationFindByU_D_AR_A = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindByU_D_AR_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_D_AR_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName()
 			},
-			UserNotificationEventModelImpl.getColumnBitmask("userId") |
-			UserNotificationEventModelImpl.getColumnBitmask("delivered") |
-			UserNotificationEventModelImpl.getColumnBitmask("actionRequired") |
-			UserNotificationEventModelImpl.getColumnBitmask("archived") |
-			UserNotificationEventModelImpl.getColumnBitmask("timestamp"));
+			new String[] {"userId", "delivered", "actionRequired", "archived"},
+			true);
 
-		_finderPathCountByU_D_AR_A = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByU_D_AR_A",
+		_finderPathCountByU_D_AR_A = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_D_AR_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName()
-			});
+			},
+			new String[] {"userId", "delivered", "actionRequired", "archived"},
+			false);
 
-		_finderPathWithPaginationFindByU_T_DT_D_A = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithPaginationFindByU_T_DT_D_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_T_DT_D_A",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {
+				"userId", "type_", "deliveryType", "delivered", "archived"
+			},
+			true);
 
-		_finderPathWithoutPaginationFindByU_T_DT_D_A = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindByU_T_DT_D_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_T_DT_D_A",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName()
 			},
-			UserNotificationEventModelImpl.getColumnBitmask("userId") |
-			UserNotificationEventModelImpl.getColumnBitmask("type_") |
-			UserNotificationEventModelImpl.getColumnBitmask("deliveryType") |
-			UserNotificationEventModelImpl.getColumnBitmask("delivered") |
-			UserNotificationEventModelImpl.getColumnBitmask("archived") |
-			UserNotificationEventModelImpl.getColumnBitmask("timestamp"));
+			new String[] {
+				"userId", "type_", "deliveryType", "delivered", "archived"
+			},
+			true);
 
-		_finderPathCountByU_T_DT_D_A = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByU_T_DT_D_A",
+		_finderPathCountByU_T_DT_D_A = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_T_DT_D_A",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName()
-			});
+			},
+			new String[] {
+				"userId", "type_", "deliveryType", "delivered", "archived"
+			},
+			false);
 
-		_finderPathWithPaginationFindByU_DT_D_AR_A = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithPaginationFindByU_DT_D_AR_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT_D_AR_A",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {
+				"userId", "deliveryType", "delivered", "actionRequired",
+				"archived"
+			},
+			true);
 
-		_finderPathWithoutPaginationFindByU_DT_D_AR_A = new FinderPath(
-			UserNotificationEventImpl.class,
+		_finderPathWithoutPaginationFindByU_DT_D_AR_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_DT_D_AR_A",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName()
 			},
-			UserNotificationEventModelImpl.getColumnBitmask("userId") |
-			UserNotificationEventModelImpl.getColumnBitmask("deliveryType") |
-			UserNotificationEventModelImpl.getColumnBitmask("delivered") |
-			UserNotificationEventModelImpl.getColumnBitmask("actionRequired") |
-			UserNotificationEventModelImpl.getColumnBitmask("archived") |
-			UserNotificationEventModelImpl.getColumnBitmask("timestamp"));
+			new String[] {
+				"userId", "deliveryType", "delivered", "actionRequired",
+				"archived"
+			},
+			true);
 
-		_finderPathCountByU_DT_D_AR_A = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByU_DT_D_AR_A",
+		_finderPathCountByU_DT_D_AR_A = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_DT_D_AR_A",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName()
-			});
+			},
+			new String[] {
+				"userId", "deliveryType", "delivered", "actionRequired",
+				"archived"
+			},
+			false);
 	}
 
 	public void destroy() {
 		EntityCacheUtil.removeCache(UserNotificationEventImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		_argumentsResolverServiceRegistration.unregister();
+
+		for (ServiceRegistration<FinderPath> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
 
 	private static final String _SQL_SELECT_USERNOTIFICATIONEVENT =
@@ -13256,5 +12523,113 @@ public class UserNotificationEventPersistenceImpl
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "type"});
+
+	private FinderPath _createFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, baseModelResult);
+
+		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
+			Registry registry = RegistryUtil.getRegistry();
+
+			_serviceRegistrations.add(
+				registry.registerService(
+					FinderPath.class, finderPath,
+					HashMapBuilder.<String, Object>put(
+						"cache.name", cacheName
+					).build()));
+		}
+
+		return finderPath;
+	}
+
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
+	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
+		new HashSet<>();
+
+	private static class UserNotificationEventModelArgumentsResolver
+		implements ArgumentsResolver {
+
+		@Override
+		public Object[] getArguments(
+			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
+			boolean original) {
+
+			String[] columnNames = finderPath.getColumnNames();
+
+			if ((columnNames == null) || (columnNames.length == 0)) {
+				if (baseModel.isNew()) {
+					return FINDER_ARGS_EMPTY;
+				}
+
+				return null;
+			}
+
+			UserNotificationEventModelImpl userNotificationEventModelImpl =
+				(UserNotificationEventModelImpl)baseModel;
+
+			long columnBitmask =
+				userNotificationEventModelImpl.getColumnBitmask();
+
+			if (!checkColumn || (columnBitmask == 0)) {
+				return _getValue(
+					userNotificationEventModelImpl, columnNames, original);
+			}
+
+			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
+				finderPath);
+
+			if (finderPathColumnBitmask == null) {
+				finderPathColumnBitmask = 0L;
+
+				for (String columnName : columnNames) {
+					finderPathColumnBitmask |=
+						userNotificationEventModelImpl.getColumnBitmask(
+							columnName);
+				}
+
+				_finderPathColumnBitmasksCache.put(
+					finderPath, finderPathColumnBitmask);
+			}
+
+			if ((columnBitmask & finderPathColumnBitmask) != 0) {
+				return _getValue(
+					userNotificationEventModelImpl, columnNames, original);
+			}
+
+			return null;
+		}
+
+		private Object[] _getValue(
+			UserNotificationEventModelImpl userNotificationEventModelImpl,
+			String[] columnNames, boolean original) {
+
+			Object[] arguments = new Object[columnNames.length];
+
+			for (int i = 0; i < arguments.length; i++) {
+				String columnName = columnNames[i];
+
+				if (original) {
+					arguments[i] =
+						userNotificationEventModelImpl.getColumnOriginalValue(
+							columnName);
+				}
+				else {
+					arguments[i] =
+						userNotificationEventModelImpl.getColumnValue(
+							columnName);
+				}
+			}
+
+			return arguments;
+		}
+
+		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
+			new ConcurrentHashMap<>();
+
+	}
 
 }

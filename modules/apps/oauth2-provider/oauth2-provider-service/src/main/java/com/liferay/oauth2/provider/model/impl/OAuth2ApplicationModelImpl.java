@@ -489,12 +489,8 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setOAuth2ApplicationId(long oAuth2ApplicationId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("oAuth2ApplicationId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_oAuth2ApplicationId = oAuth2ApplicationId;
@@ -508,12 +504,8 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -536,12 +528,8 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userId = userId;
@@ -576,12 +564,8 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userName = userName;
@@ -595,12 +579,8 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_createDate = createDate;
@@ -620,12 +600,8 @@ public class OAuth2ApplicationModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_modifiedDate = modifiedDate;
@@ -641,12 +617,8 @@ public class OAuth2ApplicationModelImpl
 	public void setOAuth2ApplicationScopeAliasesId(
 		long oAuth2ApplicationScopeAliasesId) {
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("oA2AScopeAliasesId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_oAuth2ApplicationScopeAliasesId = oAuth2ApplicationScopeAliasesId;
@@ -665,12 +637,8 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setAllowedGrantTypes(String allowedGrantTypes) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("allowedGrantTypes");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_allowedGrantTypes = allowedGrantTypes;
@@ -684,12 +652,8 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setClientCredentialUserId(long clientCredentialUserId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("clientCredentialUserId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_clientCredentialUserId = clientCredentialUserId;
@@ -725,12 +689,8 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setClientCredentialUserName(String clientCredentialUserName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("clientCredentialUserName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_clientCredentialUserName = clientCredentialUserName;
@@ -749,12 +709,8 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setClientId(String clientId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("clientId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_clientId = clientId;
@@ -777,12 +733,8 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setClientProfile(int clientProfile) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("clientProfile");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_clientProfile = clientProfile;
@@ -801,12 +753,8 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setClientSecret(String clientSecret) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("clientSecret");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_clientSecret = clientSecret;
@@ -825,12 +773,8 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setDescription(String description) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("description");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_description = description;
@@ -849,12 +793,8 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setFeatures(String features) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("features");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_features = features;
@@ -873,12 +813,8 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setHomePageURL(String homePageURL) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("homePageURL");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_homePageURL = homePageURL;
@@ -892,12 +828,8 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setIconFileEntryId(long iconFileEntryId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("iconFileEntryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_iconFileEntryId = iconFileEntryId;
@@ -916,12 +848,8 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setName(String name) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("name");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_name = name;
@@ -940,12 +868,8 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setPrivacyPolicyURL(String privacyPolicyURL) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("privacyPolicyURL");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_privacyPolicyURL = privacyPolicyURL;
@@ -964,18 +888,32 @@ public class OAuth2ApplicationModelImpl
 
 	@Override
 	public void setRedirectURIs(String redirectURIs) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("redirectURIs");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_redirectURIs = redirectURIs;
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -1342,6 +1280,22 @@ public class OAuth2ApplicationModelImpl
 		return _columnBitmasks.get(columnName);
 	}
 
+	public <T> T getColumnValue(String columnName) {
+		if (_attributeNames.containsKey(columnName)) {
+			columnName = _attributeNames.get(columnName);
+		}
+
+		Function<OAuth2Application, Object> function =
+			_attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((OAuth2Application)this);
+	}
+
 	public <T> T getColumnOriginalValue(String columnName) {
 		if (_columnOriginalValues == null) {
 			return null;
@@ -1383,6 +1337,7 @@ public class OAuth2ApplicationModelImpl
 	}
 
 	private static final Map<String, Long> _columnBitmasks;
+	private static final Map<String, String> _attributeNames;
 
 	static {
 		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
@@ -1428,6 +1383,13 @@ public class OAuth2ApplicationModelImpl
 		columnBitmasks.put("redirectURIs", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+
+		Map<String, String> attributeNames = new LinkedHashMap<>();
+
+		attributeNames.put(
+			"oA2AScopeAliasesId", "oAuth2ApplicationScopeAliasesId");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;

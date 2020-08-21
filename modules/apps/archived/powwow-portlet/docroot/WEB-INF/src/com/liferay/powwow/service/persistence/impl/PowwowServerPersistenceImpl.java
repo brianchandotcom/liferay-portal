@@ -15,6 +15,7 @@
 package com.liferay.powwow.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -25,10 +26,12 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -37,6 +40,9 @@ import com.liferay.powwow.model.PowwowServer;
 import com.liferay.powwow.model.impl.PowwowServerImpl;
 import com.liferay.powwow.model.impl.PowwowServerModelImpl;
 import com.liferay.powwow.service.persistence.PowwowServerPersistence;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.io.Serializable;
 
@@ -44,10 +50,12 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The persistence implementation for the powwow server service.
@@ -728,21 +736,13 @@ public class PowwowServerPersistenceImpl
 	 */
 	@Override
 	public void clearCache(PowwowServer powwowServer) {
-		EntityCacheUtil.removeResult(
-			PowwowServerImpl.class, powwowServer.getPrimaryKey());
-
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		EntityCacheUtil.removeResult(PowwowServerImpl.class, powwowServer);
 	}
 
 	@Override
 	public void clearCache(List<PowwowServer> powwowServers) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (PowwowServer powwowServer : powwowServers) {
-			EntityCacheUtil.removeResult(
-				PowwowServerImpl.class, powwowServer.getPrimaryKey());
+			EntityCacheUtil.removeResult(PowwowServerImpl.class, powwowServer);
 		}
 	}
 
@@ -913,10 +913,8 @@ public class PowwowServerPersistenceImpl
 		try {
 			session = openSession();
 
-			if (powwowServer.isNew()) {
+			if (isNew) {
 				session.save(powwowServer);
-
-				powwowServer.setNew(false);
 			}
 			else {
 				powwowServer = (PowwowServer)session.merge(powwowServer);
@@ -929,52 +927,12 @@ public class PowwowServerPersistenceImpl
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		EntityCacheUtil.putResult(
+			PowwowServerImpl.class, powwowServerModelImpl, false, true);
 
 		if (isNew) {
-			Object[] args = new Object[] {
-				powwowServerModelImpl.getProviderType(),
-				powwowServerModelImpl.isActive()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByPT_A, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByPT_A, args);
-
-			FinderCacheUtil.removeResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+			powwowServer.setNew(false);
 		}
-		else {
-			if ((powwowServerModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByPT_A.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					powwowServerModelImpl.getColumnOriginalValue(
-						"providerType"),
-					powwowServerModelImpl.getColumnOriginalValue("active_")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByPT_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByPT_A, args);
-
-				args = new Object[] {
-					powwowServerModelImpl.getProviderType(),
-					powwowServerModelImpl.isActive()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByPT_A, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByPT_A, args);
-			}
-		}
-
-		EntityCacheUtil.putResult(
-			PowwowServerImpl.class, powwowServer.getPrimaryKey(), powwowServer,
-			false);
 
 		powwowServer.resetOriginalValues();
 
@@ -1239,46 +1197,56 @@ public class PowwowServerPersistenceImpl
 	 * Initializes the powwow server persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			PowwowServerImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
+		Registry registry = RegistryUtil.getRegistry();
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			PowwowServerImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findAll", new String[0]);
+		_argumentsResolverServiceRegistration = registry.registerService(
+			ArgumentsResolver.class, new PowwowServerModelArgumentsResolver(),
+			HashMapBuilder.<String, Object>put(
+				"model.class.name", PowwowServer.class.getName()
+			).build());
 
-		_finderPathCountAll = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_finderPathWithPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
 
-		_finderPathWithPaginationFindByPT_A = new FinderPath(
-			PowwowServerImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByPT_A",
+		_finderPathWithoutPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathCountAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
+
+		_finderPathWithPaginationFindByPT_A = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPT_A",
 			new String[] {
 				String.class.getName(), Boolean.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"providerType", "active_"}, true);
 
-		_finderPathWithoutPaginationFindByPT_A = new FinderPath(
-			PowwowServerImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByPT_A",
+		_finderPathWithoutPaginationFindByPT_A = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPT_A",
 			new String[] {String.class.getName(), Boolean.class.getName()},
-			PowwowServerModelImpl.getColumnBitmask("providerType") |
-			PowwowServerModelImpl.getColumnBitmask("active_") |
-			PowwowServerModelImpl.getColumnBitmask("name"));
+			new String[] {"providerType", "active_"}, true);
 
-		_finderPathCountByPT_A = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByPT_A",
-			new String[] {String.class.getName(), Boolean.class.getName()});
+		_finderPathCountByPT_A = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPT_A",
+			new String[] {String.class.getName(), Boolean.class.getName()},
+			new String[] {"providerType", "active_"}, false);
 	}
 
 	public void destroy() {
 		EntityCacheUtil.removeCache(PowwowServerImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		_argumentsResolverServiceRegistration.unregister();
+
+		for (ServiceRegistration<FinderPath> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
 
 	private static final String _SQL_SELECT_POWWOWSERVER =
@@ -1306,5 +1274,107 @@ public class PowwowServerPersistenceImpl
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"active"});
+
+	private FinderPath _createFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, baseModelResult);
+
+		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
+			Registry registry = RegistryUtil.getRegistry();
+
+			_serviceRegistrations.add(
+				registry.registerService(
+					FinderPath.class, finderPath,
+					HashMapBuilder.<String, Object>put(
+						"cache.name", cacheName
+					).build()));
+		}
+
+		return finderPath;
+	}
+
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
+	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
+		new HashSet<>();
+
+	private static class PowwowServerModelArgumentsResolver
+		implements ArgumentsResolver {
+
+		@Override
+		public Object[] getArguments(
+			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
+			boolean original) {
+
+			String[] columnNames = finderPath.getColumnNames();
+
+			if ((columnNames == null) || (columnNames.length == 0)) {
+				if (baseModel.isNew()) {
+					return FINDER_ARGS_EMPTY;
+				}
+
+				return null;
+			}
+
+			PowwowServerModelImpl powwowServerModelImpl =
+				(PowwowServerModelImpl)baseModel;
+
+			long columnBitmask = powwowServerModelImpl.getColumnBitmask();
+
+			if (!checkColumn || (columnBitmask == 0)) {
+				return _getValue(powwowServerModelImpl, columnNames, original);
+			}
+
+			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
+				finderPath);
+
+			if (finderPathColumnBitmask == null) {
+				finderPathColumnBitmask = 0L;
+
+				for (String columnName : columnNames) {
+					finderPathColumnBitmask |=
+						powwowServerModelImpl.getColumnBitmask(columnName);
+				}
+
+				_finderPathColumnBitmasksCache.put(
+					finderPath, finderPathColumnBitmask);
+			}
+
+			if ((columnBitmask & finderPathColumnBitmask) != 0) {
+				return _getValue(powwowServerModelImpl, columnNames, original);
+			}
+
+			return null;
+		}
+
+		private Object[] _getValue(
+			PowwowServerModelImpl powwowServerModelImpl, String[] columnNames,
+			boolean original) {
+
+			Object[] arguments = new Object[columnNames.length];
+
+			for (int i = 0; i < arguments.length; i++) {
+				String columnName = columnNames[i];
+
+				if (original) {
+					arguments[i] = powwowServerModelImpl.getColumnOriginalValue(
+						columnName);
+				}
+				else {
+					arguments[i] = powwowServerModelImpl.getColumnValue(
+						columnName);
+				}
+			}
+
+			return arguments;
+		}
+
+		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
+			new ConcurrentHashMap<>();
+
+	}
 
 }

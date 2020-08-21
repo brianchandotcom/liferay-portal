@@ -368,12 +368,8 @@ public class UserNotificationDeliveryModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("mvccVersion");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_mvccVersion = mvccVersion;
@@ -386,12 +382,8 @@ public class UserNotificationDeliveryModelImpl
 
 	@Override
 	public void setUserNotificationDeliveryId(long userNotificationDeliveryId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userNotificationDeliveryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userNotificationDeliveryId = userNotificationDeliveryId;
@@ -404,12 +396,8 @@ public class UserNotificationDeliveryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -422,12 +410,8 @@ public class UserNotificationDeliveryModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userId = userId;
@@ -470,12 +454,8 @@ public class UserNotificationDeliveryModelImpl
 
 	@Override
 	public void setPortletId(String portletId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("portletId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_portletId = portletId;
@@ -517,12 +497,8 @@ public class UserNotificationDeliveryModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("classNameId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_classNameId = classNameId;
@@ -544,12 +520,8 @@ public class UserNotificationDeliveryModelImpl
 
 	@Override
 	public void setNotificationType(int notificationType) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("notificationType");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_notificationType = notificationType;
@@ -572,12 +544,8 @@ public class UserNotificationDeliveryModelImpl
 
 	@Override
 	public void setDeliveryType(int deliveryType) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("deliveryType");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_deliveryType = deliveryType;
@@ -604,18 +572,32 @@ public class UserNotificationDeliveryModelImpl
 
 	@Override
 	public void setDeliver(boolean deliver) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("deliver");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_deliver = deliver;
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -857,6 +839,18 @@ public class UserNotificationDeliveryModelImpl
 
 	public static long getColumnBitmask(String columnName) {
 		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnValue(String columnName) {
+		Function<UserNotificationDelivery, Object> function =
+			_attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((UserNotificationDelivery)this);
 	}
 
 	public <T> T getColumnOriginalValue(String columnName) {

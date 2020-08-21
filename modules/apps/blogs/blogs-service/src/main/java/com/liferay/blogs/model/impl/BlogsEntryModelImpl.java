@@ -548,12 +548,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("mvccVersion");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_mvccVersion = mvccVersion;
@@ -572,12 +568,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("uuid_");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_uuid = uuid;
@@ -600,12 +592,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setEntryId(long entryId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("entryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_entryId = entryId;
@@ -619,12 +607,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("groupId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_groupId = groupId;
@@ -647,12 +631,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -675,12 +655,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userId = userId;
@@ -724,12 +700,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userName = userName;
@@ -743,12 +715,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_createDate = createDate;
@@ -768,12 +736,8 @@ public class BlogsEntryModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_modifiedDate = modifiedDate;
@@ -792,12 +756,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setTitle(String title) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("title");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_title = title;
@@ -816,12 +776,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setSubtitle(String subtitle) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("subtitle");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_subtitle = subtitle;
@@ -840,12 +796,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setUrlTitle(String urlTitle) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("urlTitle");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_urlTitle = urlTitle;
@@ -873,12 +825,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setDescription(String description) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("description");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_description = description;
@@ -897,12 +845,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setContent(String content) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("content");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_content = content;
@@ -916,12 +860,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setDisplayDate(Date displayDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("displayDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_displayDate = displayDate;
@@ -950,12 +890,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setAllowPingbacks(boolean allowPingbacks) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("allowPingbacks");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_allowPingbacks = allowPingbacks;
@@ -975,12 +911,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setAllowTrackbacks(boolean allowTrackbacks) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("allowTrackbacks");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_allowTrackbacks = allowTrackbacks;
@@ -999,12 +931,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setTrackbacks(String trackbacks) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("trackbacks");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_trackbacks = trackbacks;
@@ -1023,12 +951,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setCoverImageCaption(String coverImageCaption) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("coverImageCaption");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_coverImageCaption = coverImageCaption;
@@ -1042,12 +966,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setCoverImageFileEntryId(long coverImageFileEntryId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("coverImageFileEntryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_coverImageFileEntryId = coverImageFileEntryId;
@@ -1066,12 +986,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setCoverImageURL(String coverImageURL) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("coverImageURL");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_coverImageURL = coverImageURL;
@@ -1091,12 +1007,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setSmallImage(boolean smallImage) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("smallImage");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_smallImage = smallImage;
@@ -1110,12 +1022,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setSmallImageFileEntryId(long smallImageFileEntryId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("smallImageFileEntryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_smallImageFileEntryId = smallImageFileEntryId;
@@ -1129,12 +1037,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setSmallImageId(long smallImageId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("smallImageId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_smallImageId = smallImageId;
@@ -1153,12 +1057,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setSmallImageURL(String smallImageURL) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("smallImageURL");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_smallImageURL = smallImageURL;
@@ -1172,12 +1072,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("lastPublishDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_lastPublishDate = lastPublishDate;
@@ -1191,12 +1087,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("status");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_status = status;
@@ -1219,12 +1111,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("statusByUserId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_statusByUserId = statusByUserId;
@@ -1259,12 +1147,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("statusByUserName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_statusByUserName = statusByUserName;
@@ -1278,12 +1162,8 @@ public class BlogsEntryModelImpl
 
 	@Override
 	public void setStatusDate(Date statusDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("statusDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_statusDate = statusDate;
@@ -1521,6 +1401,24 @@ public class BlogsEntryModelImpl
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -1950,6 +1848,22 @@ public class BlogsEntryModelImpl
 		return _columnBitmasks.get(columnName);
 	}
 
+	public <T> T getColumnValue(String columnName) {
+		if (_attributeNames.containsKey(columnName)) {
+			columnName = _attributeNames.get(columnName);
+		}
+
+		Function<BlogsEntry, Object> function = _attributeGetterFunctions.get(
+			columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((BlogsEntry)this);
+	}
+
 	public <T> T getColumnOriginalValue(String columnName) {
 		if (_columnOriginalValues == null) {
 			return null;
@@ -2000,6 +1914,7 @@ public class BlogsEntryModelImpl
 	}
 
 	private static final Map<String, Long> _columnBitmasks;
+	private static final Map<String, String> _attributeNames;
 
 	static {
 		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
@@ -2065,6 +1980,12 @@ public class BlogsEntryModelImpl
 		columnBitmasks.put("statusDate", 536870912L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+
+		Map<String, String> attributeNames = new LinkedHashMap<>();
+
+		attributeNames.put("uuid_", "uuid");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;

@@ -360,12 +360,8 @@ public class MessageModelImpl
 
 	@Override
 	public void setMessageId(long messageId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("messageId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_messageId = messageId;
@@ -378,12 +374,8 @@ public class MessageModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -405,12 +397,8 @@ public class MessageModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userId = userId;
@@ -444,12 +432,8 @@ public class MessageModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userName = userName;
@@ -462,12 +446,8 @@ public class MessageModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_createDate = createDate;
@@ -486,12 +466,8 @@ public class MessageModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_modifiedDate = modifiedDate;
@@ -504,12 +480,8 @@ public class MessageModelImpl
 
 	@Override
 	public void setAccountId(long accountId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("accountId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_accountId = accountId;
@@ -522,12 +494,8 @@ public class MessageModelImpl
 
 	@Override
 	public void setFolderId(long folderId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("folderId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_folderId = folderId;
@@ -554,12 +522,8 @@ public class MessageModelImpl
 
 	@Override
 	public void setSender(String sender) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("sender");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_sender = sender;
@@ -577,12 +541,8 @@ public class MessageModelImpl
 
 	@Override
 	public void setTo(String to) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("to_");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_to = to;
@@ -600,12 +560,8 @@ public class MessageModelImpl
 
 	@Override
 	public void setCc(String cc) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("cc");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_cc = cc;
@@ -623,12 +579,8 @@ public class MessageModelImpl
 
 	@Override
 	public void setBcc(String bcc) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("bcc");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_bcc = bcc;
@@ -641,12 +593,8 @@ public class MessageModelImpl
 
 	@Override
 	public void setSentDate(Date sentDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("sentDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_sentDate = sentDate;
@@ -664,12 +612,8 @@ public class MessageModelImpl
 
 	@Override
 	public void setSubject(String subject) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("subject");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_subject = subject;
@@ -687,12 +631,8 @@ public class MessageModelImpl
 
 	@Override
 	public void setPreview(String preview) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("preview");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_preview = preview;
@@ -710,12 +650,8 @@ public class MessageModelImpl
 
 	@Override
 	public void setBody(String body) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("body");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_body = body;
@@ -733,12 +669,8 @@ public class MessageModelImpl
 
 	@Override
 	public void setFlags(String flags) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("flags");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_flags = flags;
@@ -751,12 +683,8 @@ public class MessageModelImpl
 
 	@Override
 	public void setSize(long size) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("size_");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_size = size;
@@ -769,12 +697,8 @@ public class MessageModelImpl
 
 	@Override
 	public void setRemoteMessageId(long remoteMessageId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("remoteMessageId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_remoteMessageId = remoteMessageId;
@@ -801,18 +725,32 @@ public class MessageModelImpl
 
 	@Override
 	public void setContentType(String contentType) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("contentType");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_contentType = contentType;
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -1165,6 +1103,22 @@ public class MessageModelImpl
 		return _columnBitmasks.get(columnName);
 	}
 
+	public <T> T getColumnValue(String columnName) {
+		if (_attributeNames.containsKey(columnName)) {
+			columnName = _attributeNames.get(columnName);
+		}
+
+		Function<Message, Object> function = _attributeGetterFunctions.get(
+			columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((Message)this);
+	}
+
 	public <T> T getColumnOriginalValue(String columnName) {
 		if (_columnOriginalValues == null) {
 			return null;
@@ -1203,6 +1157,7 @@ public class MessageModelImpl
 	}
 
 	private static final Map<String, Long> _columnBitmasks;
+	private static final Map<String, String> _attributeNames;
 
 	static {
 		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
@@ -1248,6 +1203,13 @@ public class MessageModelImpl
 		columnBitmasks.put("contentType", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+
+		Map<String, String> attributeNames = new LinkedHashMap<>();
+
+		attributeNames.put("to_", "to");
+		attributeNames.put("size_", "size");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;

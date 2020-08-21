@@ -560,12 +560,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("mvccVersion");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_mvccVersion = mvccVersion;
@@ -584,12 +580,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("uuid_");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_uuid = uuid;
@@ -612,12 +604,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setKbArticleId(long kbArticleId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("kbArticleId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_kbArticleId = kbArticleId;
@@ -631,12 +619,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setResourcePrimKey(long resourcePrimKey) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("resourcePrimKey");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_resourcePrimKey = resourcePrimKey;
@@ -664,12 +648,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("groupId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_groupId = groupId;
@@ -692,12 +672,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -720,12 +696,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userId = userId;
@@ -760,12 +732,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userName = userName;
@@ -779,12 +747,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_createDate = createDate;
@@ -804,12 +768,8 @@ public class KBArticleModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_modifiedDate = modifiedDate;
@@ -823,12 +783,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setRootResourcePrimKey(long rootResourcePrimKey) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("rootResourcePrimKey");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_rootResourcePrimKey = rootResourcePrimKey;
@@ -842,12 +798,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setParentResourceClassNameId(long parentResourceClassNameId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("parentResourceClassNameId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_parentResourceClassNameId = parentResourceClassNameId;
@@ -861,12 +813,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setParentResourcePrimKey(long parentResourcePrimKey) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("parentResourcePrimKey");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_parentResourcePrimKey = parentResourcePrimKey;
@@ -890,12 +838,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setKbFolderId(long kbFolderId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("kbFolderId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_kbFolderId = kbFolderId;
@@ -918,12 +862,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setVersion(int version) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("version");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_version = version;
@@ -951,12 +891,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setTitle(String title) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("title");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_title = title;
@@ -975,12 +911,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setUrlTitle(String urlTitle) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("urlTitle");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_urlTitle = urlTitle;
@@ -1008,12 +940,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setContent(String content) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("content");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_content = content;
@@ -1032,12 +960,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setDescription(String description) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("description");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_description = description;
@@ -1051,12 +975,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setPriority(double priority) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("priority");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_priority = priority;
@@ -1075,12 +995,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setSections(String sections) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("sections");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_sections = sections;
@@ -1109,12 +1025,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setLatest(boolean latest) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("latest");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_latest = latest;
@@ -1143,12 +1055,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setMain(boolean main) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("main");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_main = main;
@@ -1176,12 +1084,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setSourceURL(String sourceURL) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("sourceURL");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_sourceURL = sourceURL;
@@ -1195,12 +1099,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("lastPublishDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_lastPublishDate = lastPublishDate;
@@ -1214,12 +1114,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("status");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_status = status;
@@ -1242,12 +1138,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("statusByUserId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_statusByUserId = statusByUserId;
@@ -1282,12 +1174,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("statusByUserName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_statusByUserName = statusByUserName;
@@ -1301,12 +1189,8 @@ public class KBArticleModelImpl
 
 	@Override
 	public void setStatusDate(Date statusDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("statusDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_statusDate = statusDate;
@@ -1399,6 +1283,24 @@ public class KBArticleModelImpl
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -1793,6 +1695,22 @@ public class KBArticleModelImpl
 		return _columnBitmasks.get(columnName);
 	}
 
+	public <T> T getColumnValue(String columnName) {
+		if (_attributeNames.containsKey(columnName)) {
+			columnName = _attributeNames.get(columnName);
+		}
+
+		Function<KBArticle, Object> function = _attributeGetterFunctions.get(
+			columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((KBArticle)this);
+	}
+
 	public <T> T getColumnOriginalValue(String columnName) {
 		if (_columnOriginalValues == null) {
 			return null;
@@ -1842,6 +1760,7 @@ public class KBArticleModelImpl
 	}
 
 	private static final Map<String, Long> _columnBitmasks;
+	private static final Map<String, String> _attributeNames;
 
 	static {
 		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
@@ -1905,6 +1824,12 @@ public class KBArticleModelImpl
 		columnBitmasks.put("statusDate", 268435456L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+
+		Map<String, String> attributeNames = new LinkedHashMap<>();
+
+		attributeNames.put("uuid_", "uuid");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;

@@ -23,6 +23,7 @@ import com.liferay.invitation.invite.members.service.persistence.MemberRequestPe
 import com.liferay.invitation.invite.members.service.persistence.impl.constants.IMPersistenceConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -33,10 +34,12 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -49,13 +52,17 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sql.DataSource;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -1721,26 +1728,13 @@ public class MemberRequestPersistenceImpl
 	 */
 	@Override
 	public void clearCache(MemberRequest memberRequest) {
-		entityCache.removeResult(
-			MemberRequestImpl.class, memberRequest.getPrimaryKey());
-
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache((MemberRequestModelImpl)memberRequest, true);
+		entityCache.removeResult(MemberRequestImpl.class, memberRequest);
 	}
 
 	@Override
 	public void clearCache(List<MemberRequest> memberRequests) {
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (MemberRequest memberRequest : memberRequests) {
-			entityCache.removeResult(
-				MemberRequestImpl.class, memberRequest.getPrimaryKey());
-
-			clearUniqueFindersCache(
-				(MemberRequestModelImpl)memberRequest, true);
+			entityCache.removeResult(MemberRequestImpl.class, memberRequest);
 		}
 	}
 
@@ -1775,52 +1769,6 @@ public class MemberRequestPersistenceImpl
 			_finderPathCountByG_R_S, args, Long.valueOf(1), false);
 		finderCache.putResult(
 			_finderPathFetchByG_R_S, args, memberRequestModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		MemberRequestModelImpl memberRequestModelImpl, boolean clearCurrent) {
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {memberRequestModelImpl.getKey()};
-
-			finderCache.removeResult(_finderPathCountByKey, args);
-			finderCache.removeResult(_finderPathFetchByKey, args);
-		}
-
-		if ((memberRequestModelImpl.getColumnBitmask() &
-			 _finderPathFetchByKey.getColumnBitmask()) != 0) {
-
-			Object[] args = new Object[] {
-				memberRequestModelImpl.getColumnOriginalValue("key_")
-			};
-
-			finderCache.removeResult(_finderPathCountByKey, args);
-			finderCache.removeResult(_finderPathFetchByKey, args);
-		}
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-				memberRequestModelImpl.getGroupId(),
-				memberRequestModelImpl.getReceiverUserId(),
-				memberRequestModelImpl.getStatus()
-			};
-
-			finderCache.removeResult(_finderPathCountByG_R_S, args);
-			finderCache.removeResult(_finderPathFetchByG_R_S, args);
-		}
-
-		if ((memberRequestModelImpl.getColumnBitmask() &
-			 _finderPathFetchByG_R_S.getColumnBitmask()) != 0) {
-
-			Object[] args = new Object[] {
-				memberRequestModelImpl.getColumnOriginalValue("groupId"),
-				memberRequestModelImpl.getColumnOriginalValue("receiverUserId"),
-				memberRequestModelImpl.getColumnOriginalValue("status")
-			};
-
-			finderCache.removeResult(_finderPathCountByG_R_S, args);
-			finderCache.removeResult(_finderPathFetchByG_R_S, args);
-		}
 	}
 
 	/**
@@ -1979,10 +1927,8 @@ public class MemberRequestPersistenceImpl
 		try {
 			session = openSession();
 
-			if (memberRequest.isNew()) {
+			if (isNew) {
 				session.save(memberRequest);
-
-				memberRequest.setNew(false);
 			}
 			else {
 				memberRequest = (MemberRequest)session.merge(memberRequest);
@@ -1995,86 +1941,14 @@ public class MemberRequestPersistenceImpl
 			closeSession(session);
 		}
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		entityCache.putResult(
+			MemberRequestImpl.class, memberRequestModelImpl, false, true);
+
+		cacheUniqueFindersCache(memberRequestModelImpl);
 
 		if (isNew) {
-			Object[] args = new Object[] {
-				memberRequestModelImpl.getReceiverUserId()
-			};
-
-			finderCache.removeResult(_finderPathCountByReceiverUserId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByReceiverUserId, args);
-
-			args = new Object[] {
-				memberRequestModelImpl.getReceiverUserId(),
-				memberRequestModelImpl.getStatus()
-			};
-
-			finderCache.removeResult(_finderPathCountByR_S, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByR_S, args);
-
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+			memberRequest.setNew(false);
 		}
-		else {
-			if ((memberRequestModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByReceiverUserId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					memberRequestModelImpl.getColumnOriginalValue(
-						"receiverUserId")
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByReceiverUserId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByReceiverUserId, args);
-
-				args = new Object[] {
-					memberRequestModelImpl.getReceiverUserId()
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByReceiverUserId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByReceiverUserId, args);
-			}
-
-			if ((memberRequestModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByR_S.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					memberRequestModelImpl.getColumnOriginalValue(
-						"receiverUserId"),
-					memberRequestModelImpl.getColumnOriginalValue("status")
-				};
-
-				finderCache.removeResult(_finderPathCountByR_S, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByR_S, args);
-
-				args = new Object[] {
-					memberRequestModelImpl.getReceiverUserId(),
-					memberRequestModelImpl.getStatus()
-				};
-
-				finderCache.removeResult(_finderPathCountByR_S, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByR_S, args);
-			}
-		}
-
-		entityCache.putResult(
-			MemberRequestImpl.class, memberRequest.getPrimaryKey(),
-			memberRequest, false);
-
-		clearUniqueFindersCache(memberRequestModelImpl, false);
-		cacheUniqueFindersCache(memberRequestModelImpl);
 
 		memberRequest.resetOriginalValues();
 
@@ -2340,92 +2214,100 @@ public class MemberRequestPersistenceImpl
 	 * Initializes the member request persistence.
 	 */
 	@Activate
-	public void activate() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			MemberRequestImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
+	public void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			MemberRequestImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findAll", new String[0]);
+		_argumentsResolverServiceRegistration = _bundleContext.registerService(
+			ArgumentsResolver.class, new MemberRequestModelArgumentsResolver(),
+			MapUtil.singletonDictionary(
+				"model.class.name", MemberRequest.class.getName()));
 
-		_finderPathCountAll = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_finderPathWithPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
 
-		_finderPathFetchByKey = new FinderPath(
-			MemberRequestImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByKey",
-			new String[] {String.class.getName()},
-			MemberRequestModelImpl.getColumnBitmask("key_"));
+		_finderPathWithoutPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
 
-		_finderPathCountByKey = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKey",
-			new String[] {String.class.getName()});
+		_finderPathCountAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByReceiverUserId = new FinderPath(
-			MemberRequestImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByReceiverUserId",
+		_finderPathFetchByKey = _createFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByKey",
+			new String[] {String.class.getName()}, new String[] {"key_"}, true);
+
+		_finderPathCountByKey = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKey",
+			new String[] {String.class.getName()}, new String[] {"key_"},
+			false);
+
+		_finderPathWithPaginationFindByReceiverUserId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByReceiverUserId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"receiverUserId"}, true);
 
-		_finderPathWithoutPaginationFindByReceiverUserId = new FinderPath(
-			MemberRequestImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByReceiverUserId", new String[] {Long.class.getName()},
-			MemberRequestModelImpl.getColumnBitmask("receiverUserId") |
-			MemberRequestModelImpl.getColumnBitmask("createDate"));
+		_finderPathWithoutPaginationFindByReceiverUserId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByReceiverUserId",
+			new String[] {Long.class.getName()},
+			new String[] {"receiverUserId"}, true);
 
-		_finderPathCountByReceiverUserId = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByReceiverUserId", new String[] {Long.class.getName()});
+		_finderPathCountByReceiverUserId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByReceiverUserId",
+			new String[] {Long.class.getName()},
+			new String[] {"receiverUserId"}, false);
 
-		_finderPathWithPaginationFindByR_S = new FinderPath(
-			MemberRequestImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByR_S",
+		_finderPathWithPaginationFindByR_S = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_S",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"receiverUserId", "status"}, true);
 
-		_finderPathWithoutPaginationFindByR_S = new FinderPath(
-			MemberRequestImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByR_S",
+		_finderPathWithoutPaginationFindByR_S = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			MemberRequestModelImpl.getColumnBitmask("receiverUserId") |
-			MemberRequestModelImpl.getColumnBitmask("status") |
-			MemberRequestModelImpl.getColumnBitmask("createDate"));
+			new String[] {"receiverUserId", "status"}, true);
 
-		_finderPathCountByR_S = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_S",
-			new String[] {Long.class.getName(), Integer.class.getName()});
+		_finderPathCountByR_S = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_S",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			new String[] {"receiverUserId", "status"}, false);
 
-		_finderPathFetchByG_R_S = new FinderPath(
-			MemberRequestImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_R_S",
+		_finderPathFetchByG_R_S = _createFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_R_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			MemberRequestModelImpl.getColumnBitmask("groupId") |
-			MemberRequestModelImpl.getColumnBitmask("receiverUserId") |
-			MemberRequestModelImpl.getColumnBitmask("status"));
+			new String[] {"groupId", "receiverUserId", "status"}, true);
 
-		_finderPathCountByG_R_S = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByG_R_S",
+		_finderPathCountByG_R_S = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_R_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
-			});
+			},
+			new String[] {"groupId", "receiverUserId", "status"}, false);
 	}
 
 	@Deactivate
 	public void deactivate() {
 		entityCache.removeCache(MemberRequestImpl.class.getName());
-		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		_argumentsResolverServiceRegistration.unregister();
+
+		for (ServiceRegistration<FinderPath> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Override
@@ -2453,6 +2335,8 @@ public class MemberRequestPersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
+
+	private BundleContext _bundleContext;
 
 	@Reference
 	protected EntityCache entityCache;
@@ -2493,6 +2377,105 @@ public class MemberRequestPersistenceImpl
 		catch (ClassNotFoundException classNotFoundException) {
 			throw new ExceptionInInitializerError(classNotFoundException);
 		}
+	}
+
+	private FinderPath _createFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, baseModelResult);
+
+		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
+			_serviceRegistrations.add(
+				_bundleContext.registerService(
+					FinderPath.class, finderPath,
+					MapUtil.singletonDictionary("cache.name", cacheName)));
+		}
+
+		return finderPath;
+	}
+
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
+	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
+		new HashSet<>();
+
+	private static class MemberRequestModelArgumentsResolver
+		implements ArgumentsResolver {
+
+		@Override
+		public Object[] getArguments(
+			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
+			boolean original) {
+
+			String[] columnNames = finderPath.getColumnNames();
+
+			if ((columnNames == null) || (columnNames.length == 0)) {
+				if (baseModel.isNew()) {
+					return FINDER_ARGS_EMPTY;
+				}
+
+				return null;
+			}
+
+			MemberRequestModelImpl memberRequestModelImpl =
+				(MemberRequestModelImpl)baseModel;
+
+			long columnBitmask = memberRequestModelImpl.getColumnBitmask();
+
+			if (!checkColumn || (columnBitmask == 0)) {
+				return _getValue(memberRequestModelImpl, columnNames, original);
+			}
+
+			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
+				finderPath);
+
+			if (finderPathColumnBitmask == null) {
+				finderPathColumnBitmask = 0L;
+
+				for (String columnName : columnNames) {
+					finderPathColumnBitmask |=
+						memberRequestModelImpl.getColumnBitmask(columnName);
+				}
+
+				_finderPathColumnBitmasksCache.put(
+					finderPath, finderPathColumnBitmask);
+			}
+
+			if ((columnBitmask & finderPathColumnBitmask) != 0) {
+				return _getValue(memberRequestModelImpl, columnNames, original);
+			}
+
+			return null;
+		}
+
+		private Object[] _getValue(
+			MemberRequestModelImpl memberRequestModelImpl, String[] columnNames,
+			boolean original) {
+
+			Object[] arguments = new Object[columnNames.length];
+
+			for (int i = 0; i < arguments.length; i++) {
+				String columnName = columnNames[i];
+
+				if (original) {
+					arguments[i] =
+						memberRequestModelImpl.getColumnOriginalValue(
+							columnName);
+				}
+				else {
+					arguments[i] = memberRequestModelImpl.getColumnValue(
+						columnName);
+				}
+			}
+
+			return arguments;
+		}
+
+		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
+			new ConcurrentHashMap<>();
+
 	}
 
 }

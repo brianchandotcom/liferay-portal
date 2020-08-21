@@ -423,12 +423,8 @@ public class SamlSpIdpConnectionModelImpl
 
 	@Override
 	public void setSamlSpIdpConnectionId(long samlSpIdpConnectionId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("samlSpIdpConnectionId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_samlSpIdpConnectionId = samlSpIdpConnectionId;
@@ -441,12 +437,8 @@ public class SamlSpIdpConnectionModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -468,12 +460,8 @@ public class SamlSpIdpConnectionModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userId = userId;
@@ -507,12 +495,8 @@ public class SamlSpIdpConnectionModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userName = userName;
@@ -525,12 +509,8 @@ public class SamlSpIdpConnectionModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_createDate = createDate;
@@ -549,12 +529,8 @@ public class SamlSpIdpConnectionModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_modifiedDate = modifiedDate;
@@ -572,12 +548,8 @@ public class SamlSpIdpConnectionModelImpl
 
 	@Override
 	public void setSamlIdpEntityId(String samlIdpEntityId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("samlIdpEntityId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_samlIdpEntityId = samlIdpEntityId;
@@ -606,12 +578,8 @@ public class SamlSpIdpConnectionModelImpl
 	public void setAssertionSignatureRequired(
 		boolean assertionSignatureRequired) {
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("assertionSignatureRequired");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_assertionSignatureRequired = assertionSignatureRequired;
@@ -624,12 +592,8 @@ public class SamlSpIdpConnectionModelImpl
 
 	@Override
 	public void setClockSkew(long clockSkew) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("clockSkew");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_clockSkew = clockSkew;
@@ -647,12 +611,8 @@ public class SamlSpIdpConnectionModelImpl
 
 	@Override
 	public void setEnabled(boolean enabled) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("enabled");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_enabled = enabled;
@@ -670,12 +630,8 @@ public class SamlSpIdpConnectionModelImpl
 
 	@Override
 	public void setForceAuthn(boolean forceAuthn) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("forceAuthn");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_forceAuthn = forceAuthn;
@@ -693,12 +649,8 @@ public class SamlSpIdpConnectionModelImpl
 
 	@Override
 	public void setLdapImportEnabled(boolean ldapImportEnabled) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("ldapImportEnabled");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_ldapImportEnabled = ldapImportEnabled;
@@ -711,12 +663,8 @@ public class SamlSpIdpConnectionModelImpl
 
 	@Override
 	public void setMetadataUpdatedDate(Date metadataUpdatedDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("metadataUpdatedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_metadataUpdatedDate = metadataUpdatedDate;
@@ -734,12 +682,8 @@ public class SamlSpIdpConnectionModelImpl
 
 	@Override
 	public void setMetadataUrl(String metadataUrl) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("metadataUrl");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_metadataUrl = metadataUrl;
@@ -757,12 +701,8 @@ public class SamlSpIdpConnectionModelImpl
 
 	@Override
 	public void setMetadataXml(String metadataXml) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("metadataXml");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_metadataXml = metadataXml;
@@ -780,12 +720,8 @@ public class SamlSpIdpConnectionModelImpl
 
 	@Override
 	public void setName(String name) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("name");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_name = name;
@@ -803,12 +739,8 @@ public class SamlSpIdpConnectionModelImpl
 
 	@Override
 	public void setNameIdFormat(String nameIdFormat) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("nameIdFormat");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_nameIdFormat = nameIdFormat;
@@ -826,12 +758,8 @@ public class SamlSpIdpConnectionModelImpl
 
 	@Override
 	public void setSignAuthnRequest(boolean signAuthnRequest) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("signAuthnRequest");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_signAuthnRequest = signAuthnRequest;
@@ -849,12 +777,8 @@ public class SamlSpIdpConnectionModelImpl
 
 	@Override
 	public void setUnknownUsersAreStrangers(boolean unknownUsersAreStrangers) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("unknownUsersAreStrangers");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_unknownUsersAreStrangers = unknownUsersAreStrangers;
@@ -872,18 +796,32 @@ public class SamlSpIdpConnectionModelImpl
 
 	@Override
 	public void setUserAttributeMappings(String userAttributeMappings) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userAttributeMappings");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userAttributeMappings = userAttributeMappings;
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -1234,6 +1172,18 @@ public class SamlSpIdpConnectionModelImpl
 
 	public static long getColumnBitmask(String columnName) {
 		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnValue(String columnName) {
+		Function<SamlSpIdpConnection, Object> function =
+			_attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((SamlSpIdpConnection)this);
 	}
 
 	public <T> T getColumnOriginalValue(String columnName) {

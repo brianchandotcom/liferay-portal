@@ -23,6 +23,7 @@ import com.liferay.asset.kernel.service.persistence.AssetTagPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -41,6 +43,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -48,6 +51,9 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.asset.model.impl.AssetEntryImpl;
 import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.io.Serializable;
 
@@ -66,6 +72,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The persistence implementation for the asset entry service.
@@ -5186,25 +5193,13 @@ public class AssetEntryPersistenceImpl
 	 */
 	@Override
 	public void clearCache(AssetEntry assetEntry) {
-		EntityCacheUtil.removeResult(
-			AssetEntryImpl.class, assetEntry.getPrimaryKey());
-
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache((AssetEntryModelImpl)assetEntry, true);
+		EntityCacheUtil.removeResult(AssetEntryImpl.class, assetEntry);
 	}
 
 	@Override
 	public void clearCache(List<AssetEntry> assetEntries) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (AssetEntry assetEntry : assetEntries) {
-			EntityCacheUtil.removeResult(
-				AssetEntryImpl.class, assetEntry.getPrimaryKey());
-
-			clearUniqueFindersCache((AssetEntryModelImpl)assetEntry, true);
+			EntityCacheUtil.removeResult(AssetEntryImpl.class, assetEntry);
 		}
 	}
 
@@ -5240,54 +5235,6 @@ public class AssetEntryPersistenceImpl
 			_finderPathCountByC_C, args, Long.valueOf(1), false);
 		FinderCacheUtil.putResult(
 			_finderPathFetchByC_C, args, assetEntryModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		AssetEntryModelImpl assetEntryModelImpl, boolean clearCurrent) {
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-				assetEntryModelImpl.getGroupId(),
-				assetEntryModelImpl.getClassUuid()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByG_CU, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByG_CU, args);
-		}
-
-		if ((assetEntryModelImpl.getColumnBitmask() &
-			 _finderPathFetchByG_CU.getColumnBitmask()) != 0) {
-
-			Object[] args = new Object[] {
-				assetEntryModelImpl.getColumnOriginalValue("groupId"),
-				assetEntryModelImpl.getColumnOriginalValue("classUuid")
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByG_CU, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByG_CU, args);
-		}
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-				assetEntryModelImpl.getClassNameId(),
-				assetEntryModelImpl.getClassPK()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByC_C, args);
-		}
-
-		if ((assetEntryModelImpl.getColumnBitmask() &
-			 _finderPathFetchByC_C.getColumnBitmask()) != 0) {
-
-			Object[] args = new Object[] {
-				assetEntryModelImpl.getColumnOriginalValue("classNameId"),
-				assetEntryModelImpl.getColumnOriginalValue("classPK")
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByC_C, args);
-			FinderCacheUtil.removeResult(_finderPathFetchByC_C, args);
-		}
 	}
 
 	/**
@@ -5459,8 +5406,6 @@ public class AssetEntryPersistenceImpl
 				}
 
 				session.save(assetEntry);
-
-				assetEntry.setNew(false);
 			}
 			else {
 				assetEntry = (AssetEntry)session.merge(assetEntry);
@@ -5474,257 +5419,23 @@ public class AssetEntryPersistenceImpl
 		}
 
 		if (assetEntry.getCtCollectionId() != 0) {
+			if (isNew) {
+				assetEntry.setNew(false);
+			}
+
 			assetEntry.resetOriginalValues();
 
 			return assetEntry;
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		EntityCacheUtil.putResult(
+			AssetEntryImpl.class, assetEntryModelImpl, false, true);
+
+		cacheUniqueFindersCache(assetEntryModelImpl);
 
 		if (isNew) {
-			Object[] args = new Object[] {assetEntryModelImpl.getGroupId()};
-
-			FinderCacheUtil.removeResult(_finderPathCountByGroupId, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByGroupId, args);
-
-			args = new Object[] {assetEntryModelImpl.getCompanyId()};
-
-			FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByCompanyId, args);
-
-			args = new Object[] {assetEntryModelImpl.isVisible()};
-
-			FinderCacheUtil.removeResult(_finderPathCountByVisible, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByVisible, args);
-
-			args = new Object[] {assetEntryModelImpl.getPublishDate()};
-
-			FinderCacheUtil.removeResult(_finderPathCountByPublishDate, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByPublishDate, args);
-
-			args = new Object[] {assetEntryModelImpl.getExpirationDate()};
-
-			FinderCacheUtil.removeResult(
-				_finderPathCountByExpirationDate, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByExpirationDate, args);
-
-			args = new Object[] {assetEntryModelImpl.getLayoutUuid()};
-
-			FinderCacheUtil.removeResult(_finderPathCountByLayoutUuid, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByLayoutUuid, args);
-
-			args = new Object[] {
-				assetEntryModelImpl.getGroupId(),
-				assetEntryModelImpl.getClassNameId(),
-				assetEntryModelImpl.isVisible()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByG_C_V, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByG_C_V, args);
-
-			args = new Object[] {
-				assetEntryModelImpl.getGroupId(),
-				assetEntryModelImpl.getClassNameId(),
-				assetEntryModelImpl.getPublishDate(),
-				assetEntryModelImpl.getExpirationDate()
-			};
-
-			FinderCacheUtil.removeResult(_finderPathCountByG_C_P_E, args);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindByG_C_P_E, args);
-
-			FinderCacheUtil.removeResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY);
-			FinderCacheUtil.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+			assetEntry.setNew(false);
 		}
-		else {
-			if ((assetEntryModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByGroupId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					assetEntryModelImpl.getColumnOriginalValue("groupId")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByGroupId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByGroupId, args);
-
-				args = new Object[] {assetEntryModelImpl.getGroupId()};
-
-				FinderCacheUtil.removeResult(_finderPathCountByGroupId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByGroupId, args);
-			}
-
-			if ((assetEntryModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByCompanyId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					assetEntryModelImpl.getColumnOriginalValue("companyId")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByCompanyId, args);
-
-				args = new Object[] {assetEntryModelImpl.getCompanyId()};
-
-				FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByCompanyId, args);
-			}
-
-			if ((assetEntryModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByVisible.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					assetEntryModelImpl.getColumnOriginalValue("visible")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByVisible, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByVisible, args);
-
-				args = new Object[] {assetEntryModelImpl.isVisible()};
-
-				FinderCacheUtil.removeResult(_finderPathCountByVisible, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByVisible, args);
-			}
-
-			if ((assetEntryModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByPublishDate.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					assetEntryModelImpl.getColumnOriginalValue("publishDate")
-				};
-
-				FinderCacheUtil.removeResult(
-					_finderPathCountByPublishDate, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByPublishDate, args);
-
-				args = new Object[] {assetEntryModelImpl.getPublishDate()};
-
-				FinderCacheUtil.removeResult(
-					_finderPathCountByPublishDate, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByPublishDate, args);
-			}
-
-			if ((assetEntryModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByExpirationDate.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					assetEntryModelImpl.getColumnOriginalValue("expirationDate")
-				};
-
-				FinderCacheUtil.removeResult(
-					_finderPathCountByExpirationDate, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByExpirationDate, args);
-
-				args = new Object[] {assetEntryModelImpl.getExpirationDate()};
-
-				FinderCacheUtil.removeResult(
-					_finderPathCountByExpirationDate, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByExpirationDate, args);
-			}
-
-			if ((assetEntryModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByLayoutUuid.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					assetEntryModelImpl.getColumnOriginalValue("layoutUuid")
-				};
-
-				FinderCacheUtil.removeResult(
-					_finderPathCountByLayoutUuid, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByLayoutUuid, args);
-
-				args = new Object[] {assetEntryModelImpl.getLayoutUuid()};
-
-				FinderCacheUtil.removeResult(
-					_finderPathCountByLayoutUuid, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByLayoutUuid, args);
-			}
-
-			if ((assetEntryModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByG_C_V.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					assetEntryModelImpl.getColumnOriginalValue("groupId"),
-					assetEntryModelImpl.getColumnOriginalValue("classNameId"),
-					assetEntryModelImpl.getColumnOriginalValue("visible")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByG_C_V, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByG_C_V, args);
-
-				args = new Object[] {
-					assetEntryModelImpl.getGroupId(),
-					assetEntryModelImpl.getClassNameId(),
-					assetEntryModelImpl.isVisible()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByG_C_V, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByG_C_V, args);
-			}
-
-			if ((assetEntryModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByG_C_P_E.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					assetEntryModelImpl.getColumnOriginalValue("groupId"),
-					assetEntryModelImpl.getColumnOriginalValue("classNameId"),
-					assetEntryModelImpl.getColumnOriginalValue("publishDate"),
-					assetEntryModelImpl.getColumnOriginalValue("expirationDate")
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByG_C_P_E, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByG_C_P_E, args);
-
-				args = new Object[] {
-					assetEntryModelImpl.getGroupId(),
-					assetEntryModelImpl.getClassNameId(),
-					assetEntryModelImpl.getPublishDate(),
-					assetEntryModelImpl.getExpirationDate()
-				};
-
-				FinderCacheUtil.removeResult(_finderPathCountByG_C_P_E, args);
-				FinderCacheUtil.removeResult(
-					_finderPathWithoutPaginationFindByG_C_P_E, args);
-			}
-		}
-
-		EntityCacheUtil.putResult(
-			AssetEntryImpl.class, assetEntry.getPrimaryKey(), assetEntry,
-			false);
-
-		clearUniqueFindersCache(assetEntryModelImpl, false);
-		cacheUniqueFindersCache(assetEntryModelImpl);
 
 		assetEntry.resetOriginalValues();
 
@@ -6833,6 +6544,14 @@ public class AssetEntryPersistenceImpl
 	 * Initializes the asset entry persistence.
 	 */
 	public void afterPropertiesSet() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_argumentsResolverServiceRegistration = registry.registerService(
+			ArgumentsResolver.class, new AssetEntryModelArgumentsResolver(),
+			HashMapBuilder.<String, Object>put(
+				"model.class.name", AssetEntry.class.getName()
+			).build());
+
 		assetEntryToAssetCategoryTableMapper =
 			TableMapperFactory.getTableMapper(
 				"AssetEntries_AssetCategories", "companyId", "entryId",
@@ -6842,205 +6561,217 @@ public class AssetEntryPersistenceImpl
 			"AssetEntries_AssetTags", "companyId", "entryId", "tagId", this,
 			assetTagPersistence);
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
+		_finderPathWithPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findAll", new String[0]);
+		_finderPathWithoutPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
 
-		_finderPathCountAll = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_finderPathCountAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByGroupId",
+		_finderPathWithPaginationFindByGroupId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"groupId"}, true);
 
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByGroupId", new String[] {Long.class.getName()},
-			AssetEntryModelImpl.getColumnBitmask("groupId"));
+		_finderPathWithoutPaginationFindByGroupId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+			new String[] {Long.class.getName()}, new String[] {"groupId"},
+			true);
 
-		_finderPathCountByGroupId = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByGroupId", new String[] {Long.class.getName()});
+		_finderPathCountByGroupId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+			new String[] {Long.class.getName()}, new String[] {"groupId"},
+			false);
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByCompanyId",
+		_finderPathWithPaginationFindByCompanyId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"companyId"}, true);
 
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCompanyId", new String[] {Long.class.getName()},
-			AssetEntryModelImpl.getColumnBitmask("companyId"));
+		_finderPathWithoutPaginationFindByCompanyId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+			new String[] {Long.class.getName()}, new String[] {"companyId"},
+			true);
 
-		_finderPathCountByCompanyId = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCompanyId", new String[] {Long.class.getName()});
+		_finderPathCountByCompanyId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+			new String[] {Long.class.getName()}, new String[] {"companyId"},
+			false);
 
-		_finderPathWithPaginationFindByVisible = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByVisible",
+		_finderPathWithPaginationFindByVisible = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByVisible",
 			new String[] {
 				Boolean.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"visible"}, true);
 
-		_finderPathWithoutPaginationFindByVisible = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByVisible", new String[] {Boolean.class.getName()},
-			AssetEntryModelImpl.getColumnBitmask("visible"));
+		_finderPathWithoutPaginationFindByVisible = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByVisible",
+			new String[] {Boolean.class.getName()}, new String[] {"visible"},
+			true);
 
-		_finderPathCountByVisible = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByVisible", new String[] {Boolean.class.getName()});
+		_finderPathCountByVisible = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByVisible",
+			new String[] {Boolean.class.getName()}, new String[] {"visible"},
+			false);
 
-		_finderPathWithPaginationFindByPublishDate = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByPublishDate",
+		_finderPathWithPaginationFindByPublishDate = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPublishDate",
 			new String[] {
 				Date.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"publishDate"}, true);
 
-		_finderPathWithoutPaginationFindByPublishDate = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByPublishDate", new String[] {Date.class.getName()},
-			AssetEntryModelImpl.getColumnBitmask("publishDate"));
+		_finderPathWithoutPaginationFindByPublishDate = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPublishDate",
+			new String[] {Date.class.getName()}, new String[] {"publishDate"},
+			true);
 
-		_finderPathCountByPublishDate = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByPublishDate", new String[] {Date.class.getName()});
+		_finderPathCountByPublishDate = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPublishDate",
+			new String[] {Date.class.getName()}, new String[] {"publishDate"},
+			false);
 
-		_finderPathWithPaginationFindByExpirationDate = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByExpirationDate",
+		_finderPathWithPaginationFindByExpirationDate = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByExpirationDate",
 			new String[] {
 				Date.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"expirationDate"}, true);
 
-		_finderPathWithoutPaginationFindByExpirationDate = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByExpirationDate", new String[] {Date.class.getName()},
-			AssetEntryModelImpl.getColumnBitmask("expirationDate"));
+		_finderPathWithoutPaginationFindByExpirationDate = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByExpirationDate",
+			new String[] {Date.class.getName()},
+			new String[] {"expirationDate"}, true);
 
-		_finderPathCountByExpirationDate = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByExpirationDate", new String[] {Date.class.getName()});
+		_finderPathCountByExpirationDate = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByExpirationDate",
+			new String[] {Date.class.getName()},
+			new String[] {"expirationDate"}, false);
 
-		_finderPathWithPaginationFindByLayoutUuid = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByLayoutUuid",
+		_finderPathWithPaginationFindByLayoutUuid = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLayoutUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"layoutUuid"}, true);
 
-		_finderPathWithoutPaginationFindByLayoutUuid = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByLayoutUuid", new String[] {String.class.getName()},
-			AssetEntryModelImpl.getColumnBitmask("layoutUuid"));
+		_finderPathWithoutPaginationFindByLayoutUuid = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLayoutUuid",
+			new String[] {String.class.getName()}, new String[] {"layoutUuid"},
+			true);
 
-		_finderPathCountByLayoutUuid = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByLayoutUuid", new String[] {String.class.getName()});
+		_finderPathCountByLayoutUuid = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLayoutUuid",
+			new String[] {String.class.getName()}, new String[] {"layoutUuid"},
+			false);
 
-		_finderPathFetchByG_CU = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_CU",
+		_finderPathFetchByG_CU = _createFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_CU",
 			new String[] {Long.class.getName(), String.class.getName()},
-			AssetEntryModelImpl.getColumnBitmask("groupId") |
-			AssetEntryModelImpl.getColumnBitmask("classUuid"));
+			new String[] {"groupId", "classUuid"}, true);
 
-		_finderPathCountByG_CU = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByG_CU",
-			new String[] {Long.class.getName(), String.class.getName()});
+		_finderPathCountByG_CU = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_CU",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"groupId", "classUuid"}, false);
 
-		_finderPathFetchByC_C = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+		_finderPathFetchByC_C = _createFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			AssetEntryModelImpl.getColumnBitmask("classNameId") |
-			AssetEntryModelImpl.getColumnBitmask("classPK"));
+			new String[] {"classNameId", "classPK"}, true);
 
-		_finderPathCountByC_C = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()});
+		_finderPathCountByC_C = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"classNameId", "classPK"}, false);
 
-		_finderPathWithPaginationFindByG_C_V = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByG_C_V",
+		_finderPathWithPaginationFindByG_C_V = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_V",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Boolean.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"groupId", "classNameId", "visible"}, true);
 
-		_finderPathWithoutPaginationFindByG_C_V = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByG_C_V",
+		_finderPathWithoutPaginationFindByG_C_V = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_V",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
 			},
-			AssetEntryModelImpl.getColumnBitmask("groupId") |
-			AssetEntryModelImpl.getColumnBitmask("classNameId") |
-			AssetEntryModelImpl.getColumnBitmask("visible"));
+			new String[] {"groupId", "classNameId", "visible"}, true);
 
-		_finderPathCountByG_C_V = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByG_C_V",
+		_finderPathCountByG_C_V = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_V",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
-			});
+			},
+			new String[] {"groupId", "classNameId", "visible"}, false);
 
-		_finderPathWithPaginationFindByG_C_P_E = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByG_C_P_E",
+		_finderPathWithPaginationFindByG_C_P_E = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_P_E",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Date.class.getName(), Date.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {
+				"groupId", "classNameId", "publishDate", "expirationDate"
+			},
+			true);
 
-		_finderPathWithoutPaginationFindByG_C_P_E = new FinderPath(
-			AssetEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByG_C_P_E",
+		_finderPathWithoutPaginationFindByG_C_P_E = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_P_E",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Date.class.getName(), Date.class.getName()
 			},
-			AssetEntryModelImpl.getColumnBitmask("groupId") |
-			AssetEntryModelImpl.getColumnBitmask("classNameId") |
-			AssetEntryModelImpl.getColumnBitmask("publishDate") |
-			AssetEntryModelImpl.getColumnBitmask("expirationDate"));
+			new String[] {
+				"groupId", "classNameId", "publishDate", "expirationDate"
+			},
+			true);
 
-		_finderPathCountByG_C_P_E = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByG_C_P_E",
+		_finderPathCountByG_C_P_E = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_P_E",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Date.class.getName(), Date.class.getName()
-			});
+			},
+			new String[] {
+				"groupId", "classNameId", "publishDate", "expirationDate"
+			},
+			false);
 	}
 
 	public void destroy() {
 		EntityCacheUtil.removeCache(AssetEntryImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		_argumentsResolverServiceRegistration.unregister();
+
+		for (ServiceRegistration<FinderPath> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 
 		TableMapperFactory.removeTableMapper("AssetEntries_AssetCategories");
 		TableMapperFactory.removeTableMapper("AssetEntries_AssetTags");
@@ -7059,7 +6790,7 @@ public class AssetEntryPersistenceImpl
 	protected TableMapper<AssetEntry, com.liferay.asset.kernel.model.AssetTag>
 		assetEntryToAssetTagTableMapper;
 
-	private Long _getTime(Date date) {
+	private static Long _getTime(Date date) {
 		if (date == null) {
 			return null;
 		}
@@ -7089,5 +6820,107 @@ public class AssetEntryPersistenceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetEntryPersistenceImpl.class);
+
+	private FinderPath _createFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, baseModelResult);
+
+		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
+			Registry registry = RegistryUtil.getRegistry();
+
+			_serviceRegistrations.add(
+				registry.registerService(
+					FinderPath.class, finderPath,
+					HashMapBuilder.<String, Object>put(
+						"cache.name", cacheName
+					).build()));
+		}
+
+		return finderPath;
+	}
+
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
+	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
+		new HashSet<>();
+
+	private static class AssetEntryModelArgumentsResolver
+		implements ArgumentsResolver {
+
+		@Override
+		public Object[] getArguments(
+			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
+			boolean original) {
+
+			String[] columnNames = finderPath.getColumnNames();
+
+			if ((columnNames == null) || (columnNames.length == 0)) {
+				if (baseModel.isNew()) {
+					return FINDER_ARGS_EMPTY;
+				}
+
+				return null;
+			}
+
+			AssetEntryModelImpl assetEntryModelImpl =
+				(AssetEntryModelImpl)baseModel;
+
+			long columnBitmask = assetEntryModelImpl.getColumnBitmask();
+
+			if (!checkColumn || (columnBitmask == 0)) {
+				return _getValue(assetEntryModelImpl, columnNames, original);
+			}
+
+			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
+				finderPath);
+
+			if (finderPathColumnBitmask == null) {
+				finderPathColumnBitmask = 0L;
+
+				for (String columnName : columnNames) {
+					finderPathColumnBitmask |=
+						assetEntryModelImpl.getColumnBitmask(columnName);
+				}
+
+				_finderPathColumnBitmasksCache.put(
+					finderPath, finderPathColumnBitmask);
+			}
+
+			if ((columnBitmask & finderPathColumnBitmask) != 0) {
+				return _getValue(assetEntryModelImpl, columnNames, original);
+			}
+
+			return null;
+		}
+
+		private Object[] _getValue(
+			AssetEntryModelImpl assetEntryModelImpl, String[] columnNames,
+			boolean original) {
+
+			Object[] arguments = new Object[columnNames.length];
+
+			for (int i = 0; i < arguments.length; i++) {
+				String columnName = columnNames[i];
+
+				if (original) {
+					arguments[i] = assetEntryModelImpl.getColumnOriginalValue(
+						columnName);
+				}
+				else {
+					arguments[i] = assetEntryModelImpl.getColumnValue(
+						columnName);
+				}
+			}
+
+			return arguments;
+		}
+
+		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
+			new ConcurrentHashMap<>();
+
+	}
 
 }

@@ -319,12 +319,8 @@ public class DepotAppCustomizationModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("mvccVersion");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_mvccVersion = mvccVersion;
@@ -337,12 +333,8 @@ public class DepotAppCustomizationModelImpl
 
 	@Override
 	public void setDepotAppCustomizationId(long depotAppCustomizationId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("depotAppCustomizationId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_depotAppCustomizationId = depotAppCustomizationId;
@@ -355,12 +347,8 @@ public class DepotAppCustomizationModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -373,12 +361,8 @@ public class DepotAppCustomizationModelImpl
 
 	@Override
 	public void setDepotEntryId(long depotEntryId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("depotEntryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_depotEntryId = depotEntryId;
@@ -405,12 +389,8 @@ public class DepotAppCustomizationModelImpl
 
 	@Override
 	public void setEnabled(boolean enabled) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("enabled");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_enabled = enabled;
@@ -437,12 +417,8 @@ public class DepotAppCustomizationModelImpl
 
 	@Override
 	public void setPortletId(String portletId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("portletId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_portletId = portletId;
@@ -458,6 +434,24 @@ public class DepotAppCustomizationModelImpl
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -684,6 +678,18 @@ public class DepotAppCustomizationModelImpl
 
 	public static long getColumnBitmask(String columnName) {
 		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnValue(String columnName) {
+		Function<DepotAppCustomization, Object> function =
+			_attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((DepotAppCustomization)this);
 	}
 
 	public <T> T getColumnOriginalValue(String columnName) {

@@ -98,12 +98,11 @@ definition {
 		Form.save();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test AddElementSetsWithTranslation {
 		property test.name.skip.portal.instance = "Forms#AddElementSetsWithTranslation";
 		property testray.component.names = "Training";
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		Navigator.openURL();
 

@@ -19,15 +19,10 @@ import static org.mockito.Matchers.eq;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.vulcan.internal.jaxrs.extension.ExtendedEntity;
-import com.liferay.portal.vulcan.jaxrs.context.ExtensionContext;
+import com.liferay.portal.vulcan.internal.jaxrs.util.JAXRSExtensionContextUtil;
 
 import java.io.IOException;
 
-import java.util.Collections;
-import java.util.Map;
-
-import javax.ws.rs.ext.ContextResolver;
-import javax.ws.rs.ext.Providers;
 import javax.ws.rs.ext.WriterInterceptorContext;
 
 import org.junit.Assert;
@@ -46,55 +41,33 @@ public class EntityExtensionWriterInterceptorTest {
 	public void setUp() {
 		_entityExtensionWriterInterceptor =
 			new EntityExtensionWriterInterceptor();
-		_mockedProviders = Mockito.mock(Providers.class);
 		_mockedWriterInterceptorContext = Mockito.mock(
 			WriterInterceptorContext.class);
 
 		ReflectionTestUtil.setFieldValue(
-			_entityExtensionWriterInterceptor, "_providers", _mockedProviders);
+			_entityExtensionWriterInterceptor, "_providers",
+			JAXRSExtensionContextUtil.getTestProviders());
 	}
 
 	@Test
 	public void testAroundWriteWithExtensionContextWithExtendedType()
 		throws IOException {
 
-		Dummy entity = new Dummy();
-		Map<String, Object> extendedProperties = Collections.singletonMap(
-			"testProperty", "test");
+		JAXRSExtensionContextUtil.TestObject testObject =
+			JAXRSExtensionContextUtil.getTestObject();
+
 		ArgumentCaptor<ExtendedEntity> extendedEntityCaptor =
 			ArgumentCaptor.forClass(ExtendedEntity.class);
 
-		ContextResolver<ExtensionContext> mockedContextResolver = Mockito.mock(
-			ContextResolver.class);
-		ExtensionContext mockedExtensionContext = Mockito.mock(
-			ExtensionContext.class);
-
-		Mockito.when(
-			mockedContextResolver.getContext(eq(Dummy.class))
-		).thenReturn(
-			mockedExtensionContext
-		);
-		Mockito.when(
-			mockedExtensionContext.getExtendedProperties(eq(entity))
-		).thenReturn(
-			extendedProperties
-		);
-
-		Mockito.when(
-			_mockedProviders.getContextResolver(
-				eq(ExtensionContext.class), any())
-		).thenReturn(
-			mockedContextResolver
-		);
 		Mockito.when(
 			_mockedWriterInterceptorContext.getEntity()
 		).thenReturn(
-			entity
+			testObject
 		);
 		Mockito.when(
 			_mockedWriterInterceptorContext.getType()
 		).thenReturn(
-			(Class)entity.getClass()
+			(Class)testObject.getClass()
 		);
 
 		_entityExtensionWriterInterceptor.aroundWriteTo(
@@ -107,9 +80,10 @@ public class EntityExtensionWriterInterceptorTest {
 		);
 		ExtendedEntity extendedEntity = extendedEntityCaptor.getValue();
 
-		Assert.assertEquals(entity, extendedEntity.getEntity());
+		Assert.assertEquals(testObject, extendedEntity.getEntity());
 		Assert.assertEquals(
-			extendedProperties, extendedEntity.getExtendedProperties());
+			JAXRSExtensionContextUtil.getTestExtendedProperties(),
+			extendedEntity.getExtendedProperties());
 
 		Mockito.verify(
 			_mockedWriterInterceptorContext
@@ -126,14 +100,15 @@ public class EntityExtensionWriterInterceptorTest {
 	public void testAroundWriteWithExtensionContextWithNoExtendedType()
 		throws IOException {
 
-		ContextResolver<ExtensionContext> mockedContextResolver = Mockito.mock(
-			ContextResolver.class);
-
 		Mockito.when(
-			_mockedProviders.getContextResolver(
-				eq(ExtensionContext.class), any())
+			_mockedWriterInterceptorContext.getEntity()
 		).thenReturn(
-			mockedContextResolver
+			new Object()
+		);
+		Mockito.when(
+			_mockedWriterInterceptorContext.getType()
+		).thenReturn(
+			(Class)Object.class
 		);
 
 		_entityExtensionWriterInterceptor.aroundWriteTo(
@@ -160,6 +135,10 @@ public class EntityExtensionWriterInterceptorTest {
 	public void testAroundWriteWithoutExtensionContextResolver()
 		throws IOException {
 
+		ReflectionTestUtil.setFieldValue(
+			_entityExtensionWriterInterceptor, "_providers",
+			JAXRSExtensionContextUtil.getNoContextResolverProviders());
+
 		_entityExtensionWriterInterceptor.aroundWriteTo(
 			_mockedWriterInterceptorContext);
 
@@ -181,10 +160,6 @@ public class EntityExtensionWriterInterceptorTest {
 	}
 
 	private EntityExtensionWriterInterceptor _entityExtensionWriterInterceptor;
-	private Providers _mockedProviders;
 	private WriterInterceptorContext _mockedWriterInterceptorContext;
-
-	private static class Dummy {
-	}
 
 }

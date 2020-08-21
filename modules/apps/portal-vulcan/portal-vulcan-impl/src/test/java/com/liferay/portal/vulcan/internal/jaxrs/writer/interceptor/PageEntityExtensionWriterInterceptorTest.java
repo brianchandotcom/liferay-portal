@@ -19,18 +19,15 @@ import static org.mockito.Matchers.eq;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.vulcan.internal.jaxrs.extension.ExtendedEntity;
-import com.liferay.portal.vulcan.jaxrs.context.ExtensionContext;
+import com.liferay.portal.vulcan.internal.jaxrs.util.JAXRSExtensionContextUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.io.IOException;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Map;
 
 import javax.ws.rs.core.GenericType;
-import javax.ws.rs.ext.ContextResolver;
-import javax.ws.rs.ext.Providers;
 import javax.ws.rs.ext.WriterInterceptorContext;
 
 import org.junit.Assert;
@@ -47,7 +44,6 @@ public class PageEntityExtensionWriterInterceptorTest {
 
 	@Before
 	public void setUp() {
-		_mockedProviders = Mockito.mock(Providers.class);
 		_mockedWriterInterceptorContext = Mockito.mock(
 			WriterInterceptorContext.class);
 
@@ -56,7 +52,7 @@ public class PageEntityExtensionWriterInterceptorTest {
 
 		ReflectionTestUtil.setFieldValue(
 			_pageEntityExtensionWriterInterceptor, "_providers",
-			_mockedProviders);
+			JAXRSExtensionContextUtil.getTestProviders());
 	}
 
 	@Test
@@ -64,7 +60,7 @@ public class PageEntityExtensionWriterInterceptorTest {
 		Mockito.when(
 			_mockedWriterInterceptorContext.getType()
 		).thenReturn(
-			(Class)Dummy.class
+			(Class)JAXRSExtensionContextUtil.TestObject.class
 		);
 
 		_pageEntityExtensionWriterInterceptor.aroundWriteTo(
@@ -91,37 +87,15 @@ public class PageEntityExtensionWriterInterceptorTest {
 	public void testAroundWritePageWithExtensionContextWithExtendedType()
 		throws IOException {
 
-		Dummy entity = new Dummy();
+		JAXRSExtensionContextUtil.TestObject entity =
+			JAXRSExtensionContextUtil.getTestObject();
 
-		Page<Dummy> page = Page.of(Collections.singleton(entity));
+		Page<JAXRSExtensionContextUtil.TestObject> page = Page.of(
+			Collections.singleton(entity));
 
-		Map<String, Object> extendedProperties = Collections.singletonMap(
-			"testProperty", "test");
 		ArgumentCaptor<Page> extendedPageCaptor = ArgumentCaptor.forClass(
 			Page.class);
 
-		ContextResolver<ExtensionContext> mockedContextResolver = Mockito.mock(
-			ContextResolver.class);
-		ExtensionContext mockedExtensionContext = Mockito.mock(
-			ExtensionContext.class);
-
-		Mockito.when(
-			mockedContextResolver.getContext(eq(Dummy.class))
-		).thenReturn(
-			mockedExtensionContext
-		);
-		Mockito.when(
-			mockedExtensionContext.getExtendedProperties(eq(entity))
-		).thenReturn(
-			extendedProperties
-		);
-
-		Mockito.when(
-			_mockedProviders.getContextResolver(
-				eq(ExtensionContext.class), any())
-		).thenReturn(
-			mockedContextResolver
-		);
 		Mockito.when(
 			_mockedWriterInterceptorContext.getEntity()
 		).thenReturn(
@@ -130,7 +104,7 @@ public class PageEntityExtensionWriterInterceptorTest {
 		Mockito.when(
 			_mockedWriterInterceptorContext.getGenericType()
 		).thenReturn(
-			new GenericType<Page<Dummy>>() {
+			new GenericType<Page<JAXRSExtensionContextUtil.TestObject>>() {
 			}.getType()
 		);
 		Mockito.when(
@@ -157,7 +131,8 @@ public class PageEntityExtensionWriterInterceptorTest {
 
 		Assert.assertEquals(entity, extendedEntity.getEntity());
 		Assert.assertEquals(
-			extendedProperties, extendedEntity.getExtendedProperties());
+			JAXRSExtensionContextUtil.getTestExtendedProperties(),
+			extendedEntity.getExtendedProperties());
 
 		Assert.assertEquals(page.getPage(), extendedPage.getPage());
 		Assert.assertEquals(page.getPageSize(), extendedPage.getPageSize());
@@ -181,33 +156,24 @@ public class PageEntityExtensionWriterInterceptorTest {
 	public void testAroundWritePageWithExtensionContextWithNoExtendedType()
 		throws IOException {
 
-		Page<Dummy> page = Page.of(Collections.singleton(new Dummy()));
-
-		ContextResolver<ExtensionContext> mockedContextResolver = Mockito.mock(
-			ContextResolver.class);
-
-		Mockito.when(
-			_mockedProviders.getContextResolver(
-				eq(ExtensionContext.class), any())
-		).thenReturn(
-			mockedContextResolver
-		);
+		Page<Object> page = Page.of(Collections.singleton(new Object()));
 
 		Mockito.when(
 			_mockedWriterInterceptorContext.getEntity()
 		).thenReturn(
 			page
 		);
+
 		Mockito.when(
 			_mockedWriterInterceptorContext.getGenericType()
 		).thenReturn(
-			new GenericType<Page<Dummy>>() {
+			new GenericType<Page<Object>>() {
 			}.getType()
 		);
 		Mockito.when(
 			_mockedWriterInterceptorContext.getType()
 		).thenReturn(
-			(Class)page.getClass()
+			(Class)Object.class
 		);
 
 		_pageEntityExtensionWriterInterceptor.aroundWriteTo(
@@ -234,7 +200,12 @@ public class PageEntityExtensionWriterInterceptorTest {
 	public void testAroundWritePageWithoutExtensionContextResolver()
 		throws IOException {
 
-		Page<Dummy> page = Page.of(Collections.singleton(new Dummy()));
+		ReflectionTestUtil.setFieldValue(
+			_pageEntityExtensionWriterInterceptor, "_providers",
+			JAXRSExtensionContextUtil.getNoContextResolverProviders());
+
+		Page<Object> page = Page.of(
+			Collections.singleton(JAXRSExtensionContextUtil.getTestObject()));
 
 		Mockito.when(
 			_mockedWriterInterceptorContext.getEntity()
@@ -245,7 +216,7 @@ public class PageEntityExtensionWriterInterceptorTest {
 		Mockito.when(
 			_mockedWriterInterceptorContext.getGenericType()
 		).thenReturn(
-			new GenericType<Page<Dummy>>() {
+			new GenericType<Page<JAXRSExtensionContextUtil.TestObject>>() {
 			}.getType()
 		);
 		Mockito.when(
@@ -274,12 +245,8 @@ public class PageEntityExtensionWriterInterceptorTest {
 		).proceed();
 	}
 
-	private Providers _mockedProviders;
 	private WriterInterceptorContext _mockedWriterInterceptorContext;
 	private PageEntityExtensionWriterInterceptor
 		_pageEntityExtensionWriterInterceptor;
-
-	private static class Dummy {
-	}
 
 }

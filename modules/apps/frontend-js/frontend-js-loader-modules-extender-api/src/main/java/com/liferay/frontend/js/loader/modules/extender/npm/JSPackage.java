@@ -18,6 +18,8 @@ import java.net.URL;
 
 import java.util.Collection;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * Represents an NPM package inside a {@link JSBundle}.
  *
@@ -28,6 +30,7 @@ import java.util.Collection;
  *
  * @author Iván Zaera
  */
+@ProviderType
 public interface JSPackage extends JSBundleObject {
 
 	/**

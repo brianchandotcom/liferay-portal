@@ -18,11 +18,14 @@ import java.net.URL;
 
 import java.util.Collection;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * Represents an OSGi bundle containing NPM packages and modules.
  *
  * @author Iván Zaera
  */
+@ProviderType
 public interface JSBundle extends JSBundleObject {
 
 	/**

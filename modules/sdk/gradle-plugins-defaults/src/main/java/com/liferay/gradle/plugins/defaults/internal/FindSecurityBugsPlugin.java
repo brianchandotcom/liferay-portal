@@ -36,12 +36,15 @@ import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.logging.Logger;
+import org.gradle.api.plugins.Convention;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.reporting.ReportingExtension;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
 
@@ -84,8 +87,13 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 		_configureConfigurationFindSecurityBugsPlugins(
 			project, findSecurityBugsPluginsConfiguration);
 
+		Convention convention = project.getConvention();
+
+		JavaPluginConvention javaPluginConvention = convention.getPlugin(
+			JavaPluginConvention.class);
+
 		WriteFindBugsProjectTask writeFindBugsProjectTask =
-			_addTaskWriteFindBugsProject(project);
+			_addTaskWriteFindBugsProject(project, javaPluginConvention);
 
 		Task findSecurityBugsTask = _addTaskFindSecurityBugs(
 			writeFindBugsProjectTask, findSecurityBugsConfiguration,
@@ -338,7 +346,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 	}
 
 	private WriteFindBugsProjectTask _addTaskWriteFindBugsProject(
-		final Project project) {
+		final Project project, JavaPluginConvention javaPluginConvention) {
 
 		WriteFindBugsProjectTask writeFindBugsProjectTask = GradleUtil.addTask(
 			project, WRITE_FIND_BUGS_PROJECT_TASK_NAME,
@@ -354,11 +362,14 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 		writeFindBugsProjectTask.dependsOn(compileJSPTask);
 
-		final SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
+		SourceSet mainSourceSet = _getSourceSet(
+			javaPluginConvention, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		final SourceDirectorySet javaSourceDirectorySet =
+			mainSourceSet.getJava();
 
 		FileCollection auxClasspath = project.files(
-			sourceSet.getCompileClasspath(), compileJSPTask.getClasspath());
+			mainSourceSet.getCompileClasspath(), compileJSPTask.getClasspath());
 
 		writeFindBugsProjectTask.setAuxClasspath(auxClasspath);
 
@@ -375,9 +386,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					SourceDirectorySet sourceDirectorySet = sourceSet.getJava();
-
-					return sourceDirectorySet.getOutputDir();
+					return javaSourceDirectorySet.getOutputDir();
 				}
 
 			});
@@ -401,10 +410,9 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 		CompileJSPTask generateJSPJavaTask = (CompileJSPTask)GradleUtil.getTask(
 			project, JspCPlugin.GENERATE_JSP_JAVA_TASK_NAME);
-		SourceDirectorySet sourceDirectorySet = sourceSet.getJava();
 
 		FileCollection srcDirs = project.files(
-			sourceDirectorySet.getSrcDirs(),
+			javaSourceDirectorySet.getSrcDirs(),
 			generateJSPJavaTask.getDestinationDir());
 
 		writeFindBugsProjectTask.setSrcDirs(srcDirs);
@@ -418,6 +426,15 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 			LifecycleBasePlugin.CHECK_TASK_NAME);
 
 		task.dependsOn(findSecurityBugsTask);
+	}
+
+	private SourceSet _getSourceSet(
+		JavaPluginConvention javaPluginConvention, String name) {
+
+		SourceSetContainer sourceSetContainer =
+			javaPluginConvention.getSourceSets();
+
+		return sourceSetContainer.getByName(name);
 	}
 
 	private static final String _FIND_SECURITY_BUGS_EXCLUDE_FILE_NAME =

@@ -80,6 +80,8 @@ public class PublishStyleBookEntryMVCActionCommand
 			_styleBookEntryExceptionRequestHandler.handlePortalException(
 				actionRequest, actionResponse, portalException);
 		}
+
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference

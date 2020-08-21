@@ -164,9 +164,9 @@ public class UpgradeDDMContent extends UpgradeProcess {
 				while (iterator.hasNext()) {
 					JSONObject fieldValueJSONObject = iterator.next();
 
-					String name = fieldValueJSONObject.getString("name");
+					if (nestedDDMFormFieldNames.contains(
+							fieldValueJSONObject.getString("name"))) {
 
-					if (nestedDDMFormFieldNames.contains(name)) {
 						nestedFieldValuesJSONArray.put(fieldValueJSONObject);
 					}
 					else {

@@ -102,8 +102,8 @@ public class CommerceOrganizationAccountClayTableDataSetDisplayView
 					httpServletRequest, "organizationId");
 
 				return OrganizationPermissionUtil.contains(
-					PermissionThreadLocal.getPermissionChecker(), organizationId,
-					ActionKeys.UPDATE);
+					PermissionThreadLocal.getPermissionChecker(),
+					organizationId, ActionKeys.UPDATE);
 			},
 			dropdownItem -> {
 				Account account = (Account)model;

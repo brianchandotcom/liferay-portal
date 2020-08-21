@@ -120,13 +120,6 @@ public class CommerceAccountClayDataSetDataSetDisplayView
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		CommerceContext commerceContext =
-			(CommerceContext)httpServletRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
-		CommerceAccount currentCommerceAccount =
-			commerceContext.getCommerceAccount();
-
 		return DropdownItemListBuilder.add(
 			() -> _modelResourcePermission.contains(
 				permissionChecker, account.getAccountId(), ActionKeys.VIEW),
@@ -138,14 +131,27 @@ public class CommerceAccountClayDataSetDataSetDisplayView
 					LanguageUtil.get(httpServletRequest, "view"));
 			}
 		).add(
-			() ->
-				_modelResourcePermission.contains(
-					permissionChecker, account.getAccountId(),
-					ActionKeys.VIEW) &&
-				((currentCommerceAccount == null) ||
-				 (account.getAccountId() !=
-					 currentCommerceAccount.getCommerceAccountId())) &&
-				account.getActive(),
+			() -> {
+				CommerceContext commerceContext =
+					(CommerceContext)httpServletRequest.getAttribute(
+						CommerceWebKeys.COMMERCE_CONTEXT);
+
+				CommerceAccount currentCommerceAccount =
+					commerceContext.getCommerceAccount();
+
+				if (_modelResourcePermission.contains(
+						permissionChecker, account.getAccountId(),
+						ActionKeys.VIEW) &&
+					((currentCommerceAccount == null) ||
+					 (account.getAccountId() !=
+						 currentCommerceAccount.getCommerceAccountId())) &&
+					account.getActive()) {
+
+					return true;
+				}
+
+				return false;
+			},
 			dropdownItem -> {
 				dropdownItem.setHref(
 					"javascript:setCurrentAccount('" + account.getAccountId() +

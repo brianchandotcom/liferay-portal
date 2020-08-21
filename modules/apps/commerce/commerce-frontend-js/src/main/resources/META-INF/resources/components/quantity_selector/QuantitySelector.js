@@ -46,7 +46,8 @@ function QuantitySelector(props) {
 			setIsThrottling(true);
 
 			props.onUpdate(currentQuantity).then(() => setIsThrottling(false));
-		} else {
+		}
+		else {
 			props.onUpdate(currentQuantity);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,7 +64,7 @@ function QuantitySelector(props) {
 		currentQuantity,
 		props.maxQuantity,
 		props.minQuantity,
-		props.multipleQuantity
+		props.multipleQuantity,
 	]);
 
 	function updateCurrentQuantity(newQuantity) {
@@ -144,7 +145,7 @@ function QuantitySelector(props) {
 						ref={inputRef}
 						value={currentQuantity}
 					>
-						{props.allowedQuantities.map(val => (
+						{props.allowedQuantities.map((val) => (
 							<option key={val} value={val}>
 								{val}
 							</option>
@@ -274,6 +275,7 @@ QuantitySelector.propTypes = {
 	maxQuantity: PropTypes.number,
 	minQuantity: PropTypes.number,
 	multipleQuantity: PropTypes.number,
+
 	/**
 	 * if 'throttleOnUpdate' is true,
 	 * 'onUpdate' must return a <Promise>.
@@ -285,7 +287,7 @@ QuantitySelector.propTypes = {
 	size: PropTypes.oneOf(['large', 'medium', 'small']),
 	spritemap: PropTypes.string,
 	style: PropTypes.oneOf(['default', 'simple']),
-	throttleOnUpdate: PropTypes.bool
+	throttleOnUpdate: PropTypes.bool,
 };
 
 QuantitySelector.defaultProps = {
@@ -295,7 +297,7 @@ QuantitySelector.defaultProps = {
 	multipleQuantity: 1,
 	onUpdate: () => {},
 	style: 'default',
-	throttleOnUpdate: false
+	throttleOnUpdate: false,
 };
 
 export default QuantitySelector;

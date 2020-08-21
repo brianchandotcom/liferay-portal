@@ -169,7 +169,7 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 									unitPromoPriceMoney = commerceProductPrice.getUnitPromoPriceWithTaxAmount();
 								}
 
-									BigDecimal promoPrice = unitPromoPriceMoney.getPrice();
+								BigDecimal promoPrice = unitPromoPriceMoney.getPrice();
 								%>
 
 								<div class="value-section">

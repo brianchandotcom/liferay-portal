@@ -127,6 +127,7 @@ public class CommerceNotificationTemplateClayTable
 					"commerceNotificationTemplateId",
 					String.valueOf(
 						notificationTemplate.getNotificationTemplateId()));
+
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "edit"));
 				dropdownItem.setTarget("sidePanel");

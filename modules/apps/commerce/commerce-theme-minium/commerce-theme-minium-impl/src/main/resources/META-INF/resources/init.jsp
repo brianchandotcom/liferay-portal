@@ -53,5 +53,5 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 <portlet:defineObjects />
 
 <%
-	String languageId = LanguageUtil.getLanguageId(locale);
+String languageId = LanguageUtil.getLanguageId(locale);
 %>

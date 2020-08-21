@@ -48,7 +48,7 @@ if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 	totalOrder = commerceOrderPrice.getTotalWithTaxAmount();
 }
 
-	List<CommerceOrderValidatorResult> commerceOrderValidatorResults = new ArrayList<>();
+List<CommerceOrderValidatorResult> commerceOrderValidatorResults = new ArrayList<>();
 
 CommerceAccount commerceAccount = commerceOrderContentDisplayContext.getCommerceAccount();
 

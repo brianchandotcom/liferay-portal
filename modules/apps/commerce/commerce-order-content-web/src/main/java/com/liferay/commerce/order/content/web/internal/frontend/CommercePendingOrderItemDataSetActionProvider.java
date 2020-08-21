@@ -23,7 +23,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
@@ -63,7 +62,8 @@ public class CommercePendingOrderItemDataSetActionProvider
 		return DropdownItemListBuilder.add(
 			() ->
 				_modelResourcePermission.contains(
-					PermissionThreadLocal.getPermissionChecker(), commerceOrder, ActionKeys.UPDATE) &&
+					PermissionThreadLocal.getPermissionChecker(), commerceOrder,
+					ActionKeys.UPDATE) &&
 				commerceOrder.isOpen(),
 			dropdownItem -> {
 				dropdownItem.setHref(

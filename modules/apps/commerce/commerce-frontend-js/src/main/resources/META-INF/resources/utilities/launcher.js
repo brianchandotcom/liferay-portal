@@ -24,7 +24,7 @@ export default function launcher(
 	const container = window.document.getElementById(containerId),
 		renderData = {
 			componentId,
-			...props
+			...props,
 		};
 
 	render(Component, renderData, container);

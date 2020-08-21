@@ -23,12 +23,12 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 <liferay-theme:defineObjects />
 
 <%
-	String checkoutURL = (String)request.getAttribute("liferay-commerce:cart:checkoutURL");
-	boolean displayDiscountLevels = (boolean)request.getAttribute("liferay-commerce:cart:displayDiscountLevels");
-	String orderDetailURL = (String)request.getAttribute("liferay-commerce:cart:orderDetailURL");
-	long orderId = (long)request.getAttribute("liferay-commerce:cart:orderId");
-	String spritemap = (String)request.getAttribute("liferay-commerce:cart:spritemap");
-	String randomNamespace = PortalUtil.generateRandomKey(request, "taglib") + StringPool.UNDERLINE;
+String checkoutURL = (String)request.getAttribute("liferay-commerce:cart:checkoutURL");
+boolean displayDiscountLevels = (boolean)request.getAttribute("liferay-commerce:cart:displayDiscountLevels");
+String orderDetailURL = (String)request.getAttribute("liferay-commerce:cart:orderDetailURL");
+long orderId = (long)request.getAttribute("liferay-commerce:cart:orderId");
+String spritemap = (String)request.getAttribute("liferay-commerce:cart:spritemap");
+String randomNamespace = PortalUtil.generateRandomKey(request, "taglib") + StringPool.UNDERLINE;
 
-	String miniCartId = randomNamespace + "cart";
+String miniCartId = randomNamespace + "cart";
 %>

@@ -75,6 +75,7 @@ public class CommerceInventoryItemClayDataSetActionProvider
 				dropdownItem.setHref(
 					_getCommerceInventoryItemEditURL(
 						inventoryItem.getSku(), themeDisplay));
+
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "edit"));
 			}

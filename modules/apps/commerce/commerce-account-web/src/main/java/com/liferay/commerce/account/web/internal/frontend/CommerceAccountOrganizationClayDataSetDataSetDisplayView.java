@@ -93,7 +93,8 @@ public class CommerceAccountOrganizationClayDataSetDataSetDisplayView
 					httpServletRequest, "commerceAccountId");
 
 				return _modelResourcePermission.contains(
-					PermissionThreadLocal.getPermissionChecker(), commerceAccountId,
+					PermissionThreadLocal.getPermissionChecker(),
+					commerceAccountId,
 					CommerceAccountActionKeys.MANAGE_ORGANIZATIONS);
 			},
 			dropdownItem -> {

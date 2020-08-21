@@ -66,8 +66,7 @@ String type = BeanParamUtil.getString(commerceDiscountRule, request, "type");
 		<div class="row">
 
 			<%
-			CommerceDiscountRuleTypeJSPContributor
-				commerceDiscountRuleTypeJSPContributor = commerceDiscountRuleDisplayContext.getCommerceDiscountRuleTypeJSPContributor(type);
+			CommerceDiscountRuleTypeJSPContributor commerceDiscountRuleTypeJSPContributor = commerceDiscountRuleDisplayContext.getCommerceDiscountRuleTypeJSPContributor(type);
 			%>
 
 			<c:if test="<%= commerceDiscountRuleTypeJSPContributor != null %>">

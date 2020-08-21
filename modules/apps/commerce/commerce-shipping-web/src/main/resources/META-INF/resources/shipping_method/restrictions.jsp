@@ -31,7 +31,7 @@ long commerceChannelId = commerceShippingMethodsDisplayContext.getCommerceChanne
 	<clay:data-set-display
 		contextParams='<%=
 			HashMapBuilder.<String, String>put(
-			"commerceChannelId", String.valueOf(commerceChannelId)
+				"commerceChannelId", String.valueOf(commerceChannelId)
 			).build()
 		%>'
 		dataProviderKey="<%= CommerceShippingRestrictionsPageClayTable.NAME %>"

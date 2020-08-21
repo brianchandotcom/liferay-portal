@@ -81,8 +81,9 @@ public class ProcessingCommerceShipmentItemDataSetActionProvider
 				return PortalPermissionUtil.contains(
 					permissionChecker,
 					CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS) &&
-				(commerceShipment.getStatus() ==
-					CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING);
+					   (commerceShipment.getStatus() ==
+						   CommerceShipmentConstants.
+							   SHIPMENT_STATUS_PROCESSING);
 			},
 			dropdownItem -> {
 				dropdownItem.setHref(

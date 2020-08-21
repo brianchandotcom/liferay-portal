@@ -27,7 +27,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -71,7 +70,8 @@ public class CommerceProductAccountGroupDataSetActionProvider
 
 		return DropdownItemListBuilder.add(
 			() -> CommerceCatalogPermission.contains(
-				PermissionThreadLocal.getPermissionChecker(), cpDefinition, ActionKeys.UPDATE),
+				PermissionThreadLocal.getPermissionChecker(), cpDefinition,
+				ActionKeys.UPDATE),
 			dropdownItem -> {
 				PortletURL deleteURL = _getAccountGroupDeleteURL(
 					commerceAccountGroupRel, httpServletRequest);

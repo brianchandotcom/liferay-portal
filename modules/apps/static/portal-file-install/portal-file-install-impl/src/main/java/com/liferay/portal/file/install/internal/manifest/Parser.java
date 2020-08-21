@@ -15,10 +15,13 @@
 package com.liferay.portal.file.install.internal.manifest;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * // TODO Temporary class needs to be removed once the refactor is complete
@@ -27,132 +30,18 @@ import java.util.List;
  */
 public class Parser {
 
-	public static Clause[] parseHeader(String header)
+	public static Map<String, Map<String, String>> parseHeader(String header)
 		throws IllegalArgumentException {
 
-		Clause[] clauses = null;
+		String[] imports = _parseDelimitedString(header, StringPool.COMMA);
 
-		if (header != null) {
-			if (header.length() == 0) {
-				throw new IllegalArgumentException(
-					"The header cannot be an empty string");
-			}
-
-			String[] headers = _parseDelimitedString(header, StringPool.COMMA);
-
-			clauses = _parseClauses(headers);
-		}
+		Map<String, Map<String, String>> clauses = _parseImports(imports);
 
 		if (clauses == null) {
-			return new Clause[0];
+			return new HashMap<>();
 		}
 
 		return clauses;
-	}
-
-	private static Clause[] _parseClauses(String[] clauses)
-		throws IllegalArgumentException {
-
-		if (clauses == null) {
-			return null;
-		}
-
-		List<Clause> completeClauses = new ArrayList<>();
-
-		for (String clause : clauses) {
-			String[] tokens = _parseDelimitedString(
-				clause, StringPool.SEMICOLON);
-
-			int pathCount = 0;
-
-			for (String token : tokens) {
-				if (token.indexOf(CharPool.EQUAL) != -1) {
-					break;
-				}
-
-				pathCount++;
-			}
-
-			if (pathCount == 0) {
-				throw new IllegalArgumentException(
-					"No path specified on clause: " + clause);
-			}
-
-			int size = tokens.length - pathCount;
-
-			Directive[] directives = new Directive[size];
-			Attribute[] attributes = new Attribute[size];
-
-			int directiveCount = 0;
-			int attributeCount = 0;
-
-			int index = -1;
-
-			String separator = null;
-
-			for (int pieceIndex = pathCount; pieceIndex < tokens.length;
-				 pieceIndex++) {
-
-				String piece = tokens[pieceIndex];
-
-				index = piece.indexOf(StringPool.EQUAL);
-
-				if (index <= 0) {
-					throw new IllegalArgumentException(
-						"Not a directive/attribute: " + clause);
-				}
-
-				if (piece.charAt(index - 1) == CharPool.COLON) {
-					index--;
-					separator = ":=";
-				}
-				else {
-					separator = StringPool.EQUAL;
-				}
-
-				String key = piece.substring(0, index);
-
-				key = key.trim();
-
-				String value = piece.substring(index + separator.length());
-
-				value = value.trim();
-
-				if (value.startsWith(StringPool.QUOTE) &&
-					value.endsWith(StringPool.QUOTE)) {
-
-					value = value.substring(1, value.length() - 1);
-				}
-
-				if (separator.equals(":=")) {
-					directives[directiveCount++] = new Directive(key, value);
-				}
-				else {
-					attributes[attributeCount++] = new Attribute(key, value);
-				}
-			}
-
-			Directive[] dirsFinal = new Directive[directiveCount];
-
-			System.arraycopy(directives, 0, dirsFinal, 0, directiveCount);
-
-			Attribute[] attrsFinal = new Attribute[attributeCount];
-
-			System.arraycopy(attributes, 0, attrsFinal, 0, attributeCount);
-
-			Clause[] packages = new Clause[pathCount];
-
-			for (int packageIndex = 0; packageIndex < pathCount;
-				 packageIndex++) {
-
-				packages[packageIndex] = new Clause(
-					tokens[packageIndex], dirsFinal, attrsFinal);
-
-				completeClauses.add(packages[packageIndex]);
-			}
-		}
-
-		return completeClauses.toArray(new Clause[0]);
 	}
 
 	private static String[] _parseDelimitedString(
@@ -164,7 +53,7 @@ public class Parser {
 
 		List<String> strings = new ArrayList<>();
 
-		StringBuffer sb = new StringBuffer();
+		StringBundler sb = new StringBundler();
 
 		int expecting = _CHAR | _DELIMITER | _STARTQUOTE;
 
@@ -178,7 +67,7 @@ public class Parser {
 
 				strings.add(string.trim());
 
-				sb.delete(0, sb.length());
+				sb = new StringBundler();
 
 				expecting = _CHAR | _DELIMITER | _STARTQUOTE;
 			}
@@ -208,6 +97,80 @@ public class Parser {
 		}
 
 		return (String[])strings.toArray(new String[0]);
+	}
+
+	private static Map<String, Map<String, String>> _parseImports(
+			String[] imports)
+		throws IllegalArgumentException {
+
+		if (imports == null) {
+			return null;
+		}
+
+		Map<String, Map<String, String>> finalImports = new HashMap<>();
+
+		for (String clause : imports) {
+			String[] tokens = _parseDelimitedString(
+				clause, StringPool.SEMICOLON);
+
+			int pathCount = 0;
+
+			for (String token : tokens) {
+				if (token.indexOf(CharPool.EQUAL) != -1) {
+					break;
+				}
+
+				pathCount++;
+			}
+
+			if (pathCount == 0) {
+				throw new IllegalArgumentException(
+					"No path specified on clause: " + clause);
+			}
+
+			Map<String, String> attributes = new HashMap<>();
+
+			for (int pieceIndex = pathCount; pieceIndex < tokens.length;
+				 pieceIndex++) {
+
+				String piece = tokens[pieceIndex];
+
+				int index = piece.indexOf(StringPool.EQUAL);
+
+				if (index <= 0) {
+					throw new IllegalArgumentException(
+						"Not a directive/attribute: " + clause);
+				}
+
+				String key = piece.substring(0, index);
+
+				if (piece.charAt(index - 1) == CharPool.COLON) {
+					key = key.substring(0, key.length() - 1);
+				}
+
+				key = key.trim();
+
+				String value = piece.substring(index + 1);
+
+				value = value.trim();
+
+				if (value.startsWith(StringPool.QUOTE) &&
+					value.endsWith(StringPool.QUOTE)) {
+
+					value = value.substring(1, value.length() - 1);
+				}
+
+				attributes.put(key, value);
+			}
+
+			for (int packageIndex = 0; packageIndex < pathCount;
+				 packageIndex++) {
+
+				finalImports.put(tokens[packageIndex], attributes);
+			}
+		}
+
+		return finalImports;
 	}
 
 	private static final int _CHAR = 1;

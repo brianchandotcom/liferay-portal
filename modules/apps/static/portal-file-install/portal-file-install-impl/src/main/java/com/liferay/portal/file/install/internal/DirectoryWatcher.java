@@ -22,7 +22,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.FileInstaller;
-import com.liferay.portal.file.install.internal.manifest.Clause;
 import com.liferay.portal.file.install.internal.manifest.Parser;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -40,13 +39,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -332,7 +329,8 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			return;
 		}
 
-		Map<Bundle, List<Clause>> importClausesMap = new HashMap<>();
+		Map<Bundle, Map<String, Map<String, String>>> importMap =
+			new HashMap<>();
 
 		Iterator<Bundle> iterator = bundles.iterator();
 
@@ -342,15 +340,33 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			Dictionary<String, String> header = bundle.getHeaders(
 				StringPool.BLANK);
 
-			String imports = header.get(Constants.IMPORT_PACKAGE);
+			String importHeader = header.get(Constants.IMPORT_PACKAGE);
 
-			List<Clause> importClauses = getOptionalImports(imports);
+			Map<String, Map<String, String>> imports = Parser.parseHeader(
+				importHeader);
 
-			if (importClauses.isEmpty()) {
+			Collection<Map<String, String>> set = imports.values();
+
+			Iterator<Map<String, String>> parameterIterator = set.iterator();
+
+			while (parameterIterator.hasNext()) {
+				Map<String, String> attributes = parameterIterator.next();
+
+				String resolution = attributes.get(
+					Constants.RESOLUTION_DIRECTIVE);
+
+				if (!Objects.equals(
+						Constants.RESOLUTION_OPTIONAL, resolution)) {
+
+					parameterIterator.remove();
+				}
+			}
+
+			if (imports.isEmpty()) {
 				iterator.remove();
 			}
 			else {
-				importClausesMap.put(bundle, importClauses);
+				importMap.put(bundle, imports);
 			}
 		}
 
@@ -358,18 +374,17 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			return;
 		}
 
-		List<Clause> exportClauses = new ArrayList<>();
+		Map<String, Map<String, String>> exportMap = new HashMap<>();
 
 		for (Bundle bundle : refreshBundles) {
 			if (bundle.getState() != Bundle.UNINSTALLED) {
 				Dictionary<String, String> headers = bundle.getHeaders(
 					StringPool.BLANK);
 
-				String exports = headers.get(Constants.EXPORT_PACKAGE);
+				String bundleExports = headers.get(Constants.EXPORT_PACKAGE);
 
-				if (exports != null) {
-					Collections.addAll(
-						exportClauses, Parser.parseHeader(exports));
+				if (bundleExports != null) {
+					exportMap.putAll(Parser.parseHeader(bundleExports));
 				}
 			}
 		}
@@ -379,20 +394,30 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		while (iterator.hasNext()) {
 			Bundle bundle = iterator.next();
 
-			List<Clause> importClauses = importClausesMap.get(bundle);
+			Map<String, Map<String, String>> imports = importMap.get(bundle);
 
-			Iterator<Clause> importIterator = importClauses.iterator();
+			Set<Map.Entry<String, Map<String, String>>> importSet =
+				imports.entrySet();
+
+			Iterator<Map.Entry<String, Map<String, String>>> importIterator =
+				importSet.iterator();
 
 			while (importIterator.hasNext()) {
-				Clause importClause = importIterator.next();
+				Map.Entry<String, Map<String, String>> importEntry =
+					importIterator.next();
 
 				boolean matching = false;
 
-				for (Clause exportClause : exportClauses) {
-					if (Objects.equals(
-							importClause.getName(), exportClause.getName())) {
+				for (Map.Entry<String, Map<String, String>> exportEntry :
+						exportMap.entrySet()) {
 
-						String importVersionString = importClause.getAttribute(
+					if (Objects.equals(
+							importEntry.getKey(), exportEntry.getKey())) {
+
+						Map<String, String> importAttributes =
+							importEntry.getValue();
+
+						String importVersionString = importAttributes.get(
 							Constants.VERSION_ATTRIBUTE);
 
 						if (importVersionString == null) {
@@ -403,7 +428,10 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 						Version exportedVersion = Version.emptyVersion;
 
-						String exportVersionString = exportClause.getAttribute(
+						Map<String, String> exportAttributes =
+							exportEntry.getValue();
+
+						String exportVersionString = exportAttributes.get(
 							Constants.VERSION_ATTRIBUTE);
 
 						if (exportVersionString != null) {
@@ -427,29 +455,12 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 				}
 			}
 
-			if (importClauses.isEmpty()) {
+			if (imports.isEmpty()) {
 				iterator.remove();
 			}
 		}
 
 		refreshBundles.addAll(bundles);
-	}
-
-	protected List<Clause> getOptionalImports(String importsString) {
-		Clause[] importClauses = Parser.parseHeader(importsString);
-
-		List<Clause> clauses = new LinkedList<>();
-
-		for (Clause importClause : importClauses) {
-			String resolution = importClause.getDirective(
-				Constants.RESOLUTION_DIRECTIVE);
-
-			if (Constants.RESOLUTION_OPTIONAL.equals(resolution)) {
-				clauses.add(importClause);
-			}
-		}
-
-		return clauses;
 	}
 
 	protected Set<Bundle> getScopedBundles(String scope) {

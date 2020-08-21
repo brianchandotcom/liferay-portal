@@ -135,7 +135,7 @@ public class LayoutExceptionRequestHandler {
 			errorMessage = LanguageUtil.get(
 				themeDisplay.getRequest(), "an-unexpected-error-occurred");
 
-			_log.error(portalException, portalException);
+			_log.error(portalException.getMessage());
 		}
 
 		JSONObject jsonObject = JSONUtil.put("errorMessage", errorMessage);

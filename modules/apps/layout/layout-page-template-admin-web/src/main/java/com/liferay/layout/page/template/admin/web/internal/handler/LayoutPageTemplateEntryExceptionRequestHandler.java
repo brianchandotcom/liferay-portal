@@ -105,7 +105,7 @@ public class LayoutPageTemplateEntryExceptionRequestHandler {
 			errorMessage = LanguageUtil.get(
 				resourceBundle, "an-unexpected-error-occurred");
 
-			_log.error(portalException, portalException);
+			_log.error(portalException.getMessage());
 		}
 
 		return JSONUtil.put("error", errorMessage);

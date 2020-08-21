@@ -12,28 +12,24 @@
  *
  */
 
-package com.liferay.analytics.reports.test.info.display.contributor;
+package com.liferay.analytics.reports.test.layout.display.page;
 
 import com.liferay.analytics.reports.test.MockObject;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayField;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Cristina González
  */
-public class MockInfoDisplayContributor
-	implements InfoDisplayContributor<MockObject> {
+public class MockLayoutDisplayPageProvider
+	implements LayoutDisplayPageProvider<MockObject> {
 
-	public MockInfoDisplayContributor(
+	public MockLayoutDisplayPageProvider(
 		ClassNameLocalService classNameLocalService) {
 
 		_classNameLocalService = classNameLocalService;
@@ -45,46 +41,29 @@ public class MockInfoDisplayContributor
 	}
 
 	@Override
-	public Set<InfoDisplayField> getInfoDisplayFields(
-			long classTypeId, Locale locale)
-		throws PortalException {
+	public LayoutDisplayPageObjectProvider<MockObject>
+		getLayoutDisplayPageObjectProvider(
+			InfoItemReference infoItemReference) {
+
+		return new MockLayoutDisplayPageObjectProvider(_classNameLocalService);
+	}
+
+	@Override
+	public LayoutDisplayPageObjectProvider<MockObject>
+		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
 
 		return null;
 	}
 
 	@Override
-	public Map<String, Object> getInfoDisplayFieldsValues(
-			MockObject mockObject, Locale locale)
-		throws PortalException {
-
-		return new HashMap<>();
+	public String getURLSeparator() {
+		return "/mockSeparator";
 	}
 
-	@Override
-	public InfoDisplayObjectProvider<MockObject> getInfoDisplayObjectProvider(
-			long classPK)
-		throws PortalException {
+	public static class MockLayoutDisplayPageObjectProvider
+		implements LayoutDisplayPageObjectProvider<MockObject> {
 
-		return new MockInfoDisplayObjectProvider(_classNameLocalService);
-	}
-
-	@Override
-	public InfoDisplayObjectProvider<MockObject> getInfoDisplayObjectProvider(
-			long groupId, String urlTitle)
-		throws PortalException {
-
-		return null;
-	}
-
-	@Override
-	public String getInfoURLSeparator() {
-		return "/mock_separator/";
-	}
-
-	public static class MockInfoDisplayObjectProvider
-		implements InfoDisplayObjectProvider<MockObject> {
-
-		public MockInfoDisplayObjectProvider(
+		public MockLayoutDisplayPageObjectProvider(
 			ClassNameLocalService classNameLocalService) {
 
 			ClassName className = classNameLocalService.getClassName(

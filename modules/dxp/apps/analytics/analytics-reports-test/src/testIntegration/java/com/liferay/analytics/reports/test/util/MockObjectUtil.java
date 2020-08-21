@@ -17,8 +17,8 @@ package com.liferay.analytics.reports.test.util;
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.test.MockObject;
 import com.liferay.analytics.reports.test.analytics.reports.info.item.MockAnalyticsReportsInfoItem;
-import com.liferay.analytics.reports.test.info.display.contributor.MockInfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.analytics.reports.test.layout.display.page.MockLayoutDisplayPageProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -48,8 +48,8 @@ public class MockObjectUtil {
 
 		ServiceRegistration<AnalyticsReportsInfoItem<MockObject>>
 			analyticsReportsInfoItemServiceRegistration = null;
-		ServiceRegistration<InfoDisplayContributor<MockObject>>
-			infoDisplayContributorServiceRegistration = null;
+		ServiceRegistration<LayoutDisplayPageProvider<MockObject>>
+			layoutDisplayPageProviderServiceRegistration = null;
 
 		try {
 			analyticsReportsInfoItemServiceRegistration =
@@ -58,11 +58,11 @@ public class MockObjectUtil {
 						(Class<?>)AnalyticsReportsInfoItem.class,
 					new MockAnalyticsReportsInfoItem(),
 					new HashMapDictionary<>());
-			infoDisplayContributorServiceRegistration =
+			layoutDisplayPageProviderServiceRegistration =
 				bundleContext.registerService(
-					(Class<InfoDisplayContributor<MockObject>>)
-						(Class<?>)InfoDisplayContributor.class,
-					new MockInfoDisplayContributor(classNameLocalService),
+					(Class<LayoutDisplayPageProvider<MockObject>>)
+						(Class<?>)LayoutDisplayPageProvider.class,
+					new MockLayoutDisplayPageProvider(classNameLocalService),
 					new HashMapDictionary<>());
 
 			unsafeRunnable.run();
@@ -72,8 +72,8 @@ public class MockObjectUtil {
 				analyticsReportsInfoItemServiceRegistration.unregister();
 			}
 
-			if (infoDisplayContributorServiceRegistration != null) {
-				infoDisplayContributorServiceRegistration.unregister();
+			if (layoutDisplayPageProviderServiceRegistration != null) {
+				layoutDisplayPageProviderServiceRegistration.unregister();
 			}
 
 			classNameLocalService.deleteClassName(className);

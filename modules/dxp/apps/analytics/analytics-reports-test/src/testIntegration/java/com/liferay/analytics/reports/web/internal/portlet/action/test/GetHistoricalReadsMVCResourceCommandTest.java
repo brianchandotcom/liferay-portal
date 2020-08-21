@@ -19,9 +19,10 @@ import com.liferay.analytics.reports.test.util.MockObjectUtil;
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockHttpUtil;
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockThemeDisplayUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.display.page.constants.AssetDisplayPageWebKeys;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -140,13 +141,15 @@ public class GetHistoricalReadsMVCResourceCommandTest {
 			new MockLiferayResourceRequest();
 
 		try {
-			InfoDisplayContributor<?> infoDisplayContributor =
-				_infoDisplayContributorTracker.getInfoDisplayContributor(
-					MockObject.class.getName());
+			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+				_layoutDisplayPageProviderTracker.
+					getLayoutDisplayPageProviderByClassName(
+						MockObject.class.getName());
 
 			mockLiferayResourceRequest.setAttribute(
-				AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
-				infoDisplayContributor.getInfoDisplayObjectProvider(0));
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+				layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+					new InfoItemReference(MockObject.class.getName(), 0)));
 
 			mockLiferayResourceRequest.setAttribute(
 				WebKeys.THEME_DISPLAY,
@@ -176,10 +179,10 @@ public class GetHistoricalReadsMVCResourceCommandTest {
 	@Inject
 	private Http _http;
 
-	@Inject
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
-
 	private Layout _layout;
+
+	@Inject
+	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;

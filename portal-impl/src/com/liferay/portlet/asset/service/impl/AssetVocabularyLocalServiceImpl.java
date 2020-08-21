@@ -353,6 +353,13 @@ public class AssetVocabularyLocalServiceImpl
 
 	@Override
 	public List<AssetVocabulary> getGroupVocabularies(
+		long groupId, int visibilityType) {
+
+		return assetVocabularyPersistence.findByG_V(groupId, visibilityType);
+	}
+
+	@Override
+	public List<AssetVocabulary> getGroupVocabularies(
 		long groupId, String name, int start, int end,
 		OrderByComparator<AssetVocabulary> orderByComparator) {
 

@@ -14,8 +14,11 @@
 
 package com.liferay.journal.web.internal.change.tracking.spi.display;
 
+import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalContent;
@@ -25,11 +28,10 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -46,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = CTDisplayRenderer.class)
 public class JournalArticleCTDisplayRenderer
-	implements CTDisplayRenderer<JournalArticle> {
+	extends BaseCTDisplayRenderer<JournalArticle> {
 
 	@Override
 	public String getEditURL(
@@ -91,18 +93,10 @@ public class JournalArticleCTDisplayRenderer
 	}
 
 	@Override
-	public String getTypeName(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, JournalArticleCTDisplayRenderer.class);
-
-		return _language.get(
-			resourceBundle,
-			"model.resource.com.liferay.journal.model.JournalArticle");
-	}
-
-	@Override
 	public void render(DisplayContext<JournalArticle> displayContext)
 		throws Exception {
+
+		super.render(displayContext);
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher("/ct_display/render.jsp");
@@ -123,6 +117,52 @@ public class JournalArticleCTDisplayRenderer
 
 		requestDispatcher.include(
 			httpServletRequest, displayContext.getHttpServletResponse());
+	}
+
+	@Override
+	protected void buildDisplay(DisplayBuilder<JournalArticle> displayBuilder) {
+		JournalArticle journalArticle = displayBuilder.getModel();
+
+		Locale locale = displayBuilder.getLocale();
+
+		displayBuilder.display(
+			"name", journalArticle.getTitle(locale)
+		).display(
+			"description", journalArticle.getDescription(locale)
+		).display(
+			"created-by",
+			() -> {
+				String userName = journalArticle.getUserName();
+
+				if (Validator.isNotNull(userName)) {
+					return userName;
+				}
+
+				return null;
+			}
+		).display(
+			"create-date", journalArticle.getCreateDate()
+		).display(
+			"last-modified", journalArticle.getModifiedDate()
+		).display(
+			"version", journalArticle.getVersion()
+		).display(
+			"structure",
+			() -> {
+				DDMStructure ddmStructure = journalArticle.getDDMStructure();
+
+				return ddmStructure.getName(locale);
+			}
+		).display(
+			"template",
+			() -> {
+				DDMTemplate ddmTemplate = journalArticle.getDDMTemplate();
+
+				return ddmTemplate.getName(locale);
+			}
+		).display(
+			"content", ""
+		);
 	}
 
 	@Reference

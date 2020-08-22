@@ -156,7 +156,7 @@ public class JsonHelperTest {
 			_jsonHelper.getFirstElementStringValue(failingExpression);
 		}
 		catch (Exception exception2) {
-			exception1 = e;
+			exception1 = exception2;
 		}
 
 		Assert.assertNotNull("Exception instance", exception1);

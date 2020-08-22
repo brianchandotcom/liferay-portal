@@ -1901,10 +1901,6 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	</#list>
 
 	<#if serviceBuilder.isVersionGTE_7_3_0()>
-		public static long getColumnBitmask(String columnName) {
-			return _columnBitmasks.get(columnName);
-		}
-
 		public <T> T getColumnValue(String columnName) {
 			<#if entity.versionEntity??>
 				if (columnName.equals("head")) {
@@ -1951,26 +1947,10 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			</#list>
 		}
 
-		private static final Map<String, Long> _columnBitmasks;
-
 		<#if entity.badEntityColumns?size != 0>
 			private static final Map<String, String> _attributeNames;
-		</#if>
 
-		static {
-			Map<String, Long> columnBitmasks = new LinkedHashMap<>();
-
-			<#assign columnBitmask = 1 />
-
-			<#list entity.databaseRegularEntityColumns as entityColumn>
-				columnBitmasks.put("${entityColumn.DBName}", ${columnBitmask}L);
-
-				<#assign columnBitmask = columnBitmask * 2 />
-			</#list>
-
-			_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
-
-			<#if entity.badEntityColumns?size != 0>
+			static {
 				Map<String, String> attributeNames = new LinkedHashMap<>();
 
 				<#list entity.badEntityColumns as entityColumn>
@@ -1978,13 +1958,35 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				</#list>
 
 				_attributeNames = Collections.unmodifiableMap(attributeNames);
-			</#if>
-		}
+			}
+		</#if>
 
 		private transient Map<String, Object> _columnOriginalValues;
 	</#if>
 
 	<#if columnBitmaskEnabled>
+		<#if serviceBuilder.isVersionGTE_7_3_0()>
+			public static long getColumnBitmask(String columnName) {
+				return _columnBitmasks.get(columnName);
+			}
+
+			private static final Map<String, Long> _columnBitmasks;
+
+			static {
+				Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+				<#assign columnBitmask = 1 />
+
+				<#list entity.databaseRegularEntityColumns as entityColumn>
+					columnBitmasks.put("${entityColumn.DBName}", ${columnBitmask}L);
+
+					<#assign columnBitmask = columnBitmask * 2 />
+				</#list>
+
+				_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+			}
+		</#if>
+
 		private long _columnBitmask;
 	</#if>
 

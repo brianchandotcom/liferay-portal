@@ -27,7 +27,8 @@ import javax.portlet.RenderURL;
 import org.osgi.annotation.versioning.ConsumerType;
 
 /**
- * @author  Neil Griffin
+ * @author Brian Wing Shun Chan
+ * @generated
  */
 @ConsumerType
 public abstract class ManagementToolbarViewStateWrapper

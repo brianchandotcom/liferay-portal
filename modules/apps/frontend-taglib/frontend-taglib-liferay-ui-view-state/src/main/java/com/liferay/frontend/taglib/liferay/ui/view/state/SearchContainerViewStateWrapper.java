@@ -17,7 +17,8 @@ package com.liferay.frontend.taglib.liferay.ui.view.state;
 import org.osgi.annotation.versioning.ConsumerType;
 
 /**
- * @author  Neil Griffin
+ * @author Brian Wing Shun Chan
+ * @generated
  */
 @ConsumerType
 public abstract class SearchContainerViewStateWrapper

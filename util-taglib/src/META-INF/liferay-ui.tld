@@ -3,8 +3,9 @@
 <taglib
 	version="2.1"
 	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:jspvs="urn:liferay.com:liferay-jsp-view-state_1.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd urn:liferay.com:liferay-jsp-view-state_1.0.0 http://www.liferay.com/dtd/liferay-jsp-view-state_1_0_0.xsd"
 >
 	<description>Provides the Liferay UI component tags, prefixed with <![CDATA[<code>liferay-ui:</code>]]>.</description>
 	<tlib-version>1.0</tlib-version>
@@ -3049,6 +3050,17 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<tag-extension namespace="urn:liferay.com:liferay-jsp-view-state_1.0.0">
+			<extension-element id="cur" xsi:type="jspvs:default" />
+			<extension-element id="delta" xsi:type="jspvs:default" />
+			<extension-element id="displayStyle" xsi:type="jspvs:String" />
+			<extension-element id="end" xsi:type="jspvs:int"/>
+			<extension-element id="keywords" xsi:type="jspvs:String"/>
+			<extension-element id="orderByCol" xsi:type="jspvs:default"/>
+			<extension-element id="orderByType" xsi:type="jspvs:default"/>
+			<extension-element id="resetCur" xsi:type="jspvs:boolean"/>
+			<extension-element id="start" xsi:type="jspvs:int"/>
+		</tag-extension>
 	</tag>
 	<tag>
 		<description>Creates a date column in a search container.</description>

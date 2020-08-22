@@ -15,7 +15,8 @@
 package com.liferay.frontend.taglib.liferay.ui.view.state;
 
 /**
- * @author  Neil Griffin
+ * @author Brian Wing Shun Chan
+ * @generated
  */
 public interface SearchContainerViewState {
 

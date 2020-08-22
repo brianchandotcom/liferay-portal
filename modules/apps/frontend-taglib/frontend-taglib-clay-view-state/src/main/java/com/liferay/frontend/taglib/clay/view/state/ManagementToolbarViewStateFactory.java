@@ -19,7 +19,8 @@ import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
 
 /**
- * @author  Neil Griffin
+ * @author Brian Wing Shun Chan
+ * @generated
  */
 public interface ManagementToolbarViewStateFactory {
 

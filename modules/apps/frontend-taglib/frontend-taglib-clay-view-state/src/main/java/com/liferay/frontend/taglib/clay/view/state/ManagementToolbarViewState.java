@@ -24,7 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author  Neil Griffin
+ * @author Brian Wing Shun Chan
+ * @generated
  */
 public interface ManagementToolbarViewState {
 

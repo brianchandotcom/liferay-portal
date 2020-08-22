@@ -430,7 +430,7 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 			node: A.one(document.<portlet:namespace />fm),
 		},
 		moveEntryUrl:
-			'<portlet:renderURL><portlet:param name="mvcPath" value="/move_entries.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
+			'<portlet:renderURL><portlet:param name="mvcPath" value="/move_articles_and_folders.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
 		namespace: '<portlet:namespace />',
 		searchContainerId: 'articles',
 	});

@@ -38,7 +38,7 @@ export default withRouter(({history}) => {
 	const [sections, setSections] = useState({});
 
 	useEffect(() => {
-		getSectionsByRootSection(context.siteKey, context.rootTopic)
+		getSectionsByRootSection(context.siteKey, context.rootTopicId)
 			.then(({data, loading}) => {
 				setSections(data || []);
 				setLoading(loading);
@@ -50,7 +50,7 @@ export default withRouter(({history}) => {
 				setLoading(false);
 				setError({message: 'Loading Topics', title: 'Error'});
 			});
-	}, [context.rootTopic, context.siteKey]);
+	}, [context.rootTopicId, context.siteKey]);
 
 	function descriptionTruncate(description) {
 		return description.length > 150
@@ -61,7 +61,7 @@ export default withRouter(({history}) => {
 	return (
 		<section className="c-mt-3 questions-section">
 			{!context.showCardsForTopicNavigation && (
-				<Redirect to={'/questions/' + context.rootTopic} />
+				<Redirect to={'/questions/' + context.rootTopicId} />
 			)}
 
 			<div className="questions-container">

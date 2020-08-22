@@ -42,7 +42,10 @@ public interface QuestionsConfiguration {
 	)
 	public boolean showCardsForTopicNavigation();
 
-	@Meta.AD(deflt = "0", name = "root-topic", required = false)
-	public long rootTopic();
+	@Meta.AD(
+		deflt = "0", description = "the-root-mbcategory-identifier-description",
+		name = "root-topic-id", required = false
+	)
+	public long rootTopicId();
 
 }

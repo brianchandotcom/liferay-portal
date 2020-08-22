@@ -42,7 +42,7 @@ String questionsRootElementId = liferayPortletResponse.getNamespace() + "-questi
 			).put(
 				"redirectToLogin", questionsConfiguration.enableRedirectToLogin()
 			).put(
-				"rootTopic", questionsConfiguration.rootTopic()
+				"rootTopicId", questionsConfiguration.rootTopicId()
 			).put(
 				"showCardsForTopicNavigation", questionsConfiguration.showCardsForTopicNavigation()
 			).put(

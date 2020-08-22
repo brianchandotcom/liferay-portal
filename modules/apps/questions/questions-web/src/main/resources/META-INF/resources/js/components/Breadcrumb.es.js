@@ -27,7 +27,7 @@ import NewTopicModal from './NewTopicModal.es';
 export default withRouter(({allowCreateTopicInRootTopic, history, section}) => {
 	const context = useContext(AppContext);
 
-	const rootSection = context.rootTopic;
+	const rootTopicId = context.rootTopicId;
 
 	const MAX_SECTIONS_IN_BREADCRUMB = 3;
 	const historyPushParser = historyPushWithSlug(history.push);
@@ -95,10 +95,10 @@ export default withRouter(({allowCreateTopicInRootTopic, history, section}) => {
 			return;
 		}
 
-		buildBreadcrumbNodesData(rootSection, section).then((acc) =>
+		buildBreadcrumbNodesData(rootTopicId, section).then((acc) =>
 			setBreadcrumbNodes(acc)
 		);
-	}, [buildBreadcrumbNodesData, rootSection, section]);
+	}, [buildBreadcrumbNodesData, rootTopicId, section]);
 
 	return (
 		<section className="align-items-center d-flex mb-0 questions-breadcrumb">

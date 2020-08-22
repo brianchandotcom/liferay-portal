@@ -132,10 +132,10 @@ export default withRouter(
 
 		useEffect(() => {
 			if (
-				+context.rootTopic === 0 &&
-				location.pathname.endsWith('/' + context.rootTopic)
+				+context.rootTopicId === 0 &&
+				location.pathname.endsWith('/' + context.rootTopicId)
 			) {
-				getSectionsByRootSection(context.siteKey, context.rootTopic)
+				getSectionsByRootSection(context.siteKey, context.rootTopicId)
 					.then(({data}) => {
 						setAllowCreateTopicInRootTopic(
 							(data.actions && data.actions.create && true) ||
@@ -150,7 +150,7 @@ export default withRouter(
 						setError({message: 'Loading Topics', title: 'Error'});
 					});
 			}
-		}, [context.rootTopic, context.siteKey, location.pathname]);
+		}, [context.rootTopicId, context.siteKey, location.pathname]);
 
 		useEffect(() => {
 			setTotalCount(

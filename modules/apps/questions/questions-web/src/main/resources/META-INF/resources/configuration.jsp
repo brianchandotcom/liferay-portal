@@ -40,7 +40,19 @@ QuestionsConfiguration questionsConfiguration = portletDisplay.getPortletInstanc
 			>
 				<aui:input name="preferences--showCardsForTopicNavigation--" type="checkbox" value="<%= questionsConfiguration.showCardsForTopicNavigation() %>" />
 
-				<aui:input name="preferences--rootTopic--" type="text" value="<%= questionsConfiguration.rootTopic() %>" />
+				<aui:input name="preferences--rootTopicId--" type="text" value="<%= questionsConfiguration.rootTopicId() %>" />
+
+				<div class="form-group">
+					<aui:input label="parent-category[message-board]" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
+
+					<aui:button name="selectCategoryButton" value="select" />
+
+					<%
+						String taglibRemoveFolder = "Liferay.Util.removeEntitySelection('parentCategoryId', 'parentCategoryName', this, '" + liferayPortletResponse.getNamespace() + "');";
+					%>
+
+					<aui:button disabled="<%= parentCategoryId <= 0 %>" name="removeCategoryButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+				</div>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

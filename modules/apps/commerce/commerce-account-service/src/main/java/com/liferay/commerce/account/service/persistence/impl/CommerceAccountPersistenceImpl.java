@@ -2212,8 +2212,6 @@ public class CommerceAccountPersistenceImpl
 				commerceAccount.getExternalReferenceCode()
 			},
 			commerceAccount);
-
-		commerceAccount.resetOriginalValues();
 	}
 
 	/**
@@ -2229,9 +2227,6 @@ public class CommerceAccountPersistenceImpl
 					commerceAccount.getPrimaryKey()) == null) {
 
 				cacheResult(commerceAccount);
-			}
-			else {
-				commerceAccount.resetOriginalValues();
 			}
 		}
 	}
@@ -2328,8 +2323,9 @@ public class CommerceAccountPersistenceImpl
 			 _finderPathFetchByC_ERC.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceAccountModelImpl.getOriginalCompanyId(),
-				commerceAccountModelImpl.getOriginalExternalReferenceCode()
+				commerceAccountModelImpl.getColumnOriginalValue("companyId"),
+				commerceAccountModelImpl.getColumnOriginalValue(
+					"externalReferenceCode")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_ERC, args);
@@ -2542,7 +2538,7 @@ public class CommerceAccountPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceAccountModelImpl.getOriginalCompanyId()
+					commerceAccountModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -2561,8 +2557,8 @@ public class CommerceAccountPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceAccountModelImpl.getOriginalUserId(),
-					commerceAccountModelImpl.getOriginalType()
+					commerceAccountModelImpl.getColumnOriginalValue("userId"),
+					commerceAccountModelImpl.getColumnOriginalValue("type_")
 				};
 
 				finderCache.removeResult(_finderPathCountByU_T, args);
@@ -2877,8 +2873,8 @@ public class CommerceAccountPersistenceImpl
 			CommerceAccountImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
-			CommerceAccountModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceAccountModelImpl.NAME_COLUMN_BITMASK);
+			CommerceAccountModelImpl.getColumnBitmask("companyId") |
+			CommerceAccountModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2897,9 +2893,9 @@ public class CommerceAccountPersistenceImpl
 			CommerceAccountImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_T",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			CommerceAccountModelImpl.USERID_COLUMN_BITMASK |
-			CommerceAccountModelImpl.TYPE_COLUMN_BITMASK |
-			CommerceAccountModelImpl.NAME_COLUMN_BITMASK);
+			CommerceAccountModelImpl.getColumnBitmask("userId") |
+			CommerceAccountModelImpl.getColumnBitmask("type_") |
+			CommerceAccountModelImpl.getColumnBitmask("name"));
 
 		_finderPathCountByU_T = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_T",
@@ -2908,8 +2904,8 @@ public class CommerceAccountPersistenceImpl
 		_finderPathFetchByC_ERC = new FinderPath(
 			CommerceAccountImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceAccountModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceAccountModelImpl.EXTERNALREFERENCECODE_COLUMN_BITMASK);
+			CommerceAccountModelImpl.getColumnBitmask("companyId") |
+			CommerceAccountModelImpl.getColumnBitmask("externalReferenceCode"));
 
 		_finderPathCountByC_ERC = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

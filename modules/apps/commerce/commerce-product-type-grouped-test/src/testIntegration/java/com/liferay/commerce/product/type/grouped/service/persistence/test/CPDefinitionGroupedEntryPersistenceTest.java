@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -527,31 +528,77 @@ public class CPDefinitionGroupedEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		CPDefinitionGroupedEntry existingCPDefinitionGroupedEntry =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newCPDefinitionGroupedEntry.getPrimaryKey());
+				newCPDefinitionGroupedEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CPDefinitionGroupedEntry newCPDefinitionGroupedEntry =
+			addCPDefinitionGroupedEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CPDefinitionGroupedEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"CPDefinitionGroupedEntryId",
+				newCPDefinitionGroupedEntry.getCPDefinitionGroupedEntryId()));
+
+		List<CPDefinitionGroupedEntry> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
 
 		Assert.assertEquals(
-			existingCPDefinitionGroupedEntry.getUuid(),
+			cpDefinitionGroupedEntry.getUuid(),
 			ReflectionTestUtil.invoke(
-				existingCPDefinitionGroupedEntry, "getOriginalUuid",
-				new Class<?>[0]));
+				cpDefinitionGroupedEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
-			Long.valueOf(existingCPDefinitionGroupedEntry.getGroupId()),
+			Long.valueOf(cpDefinitionGroupedEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCPDefinitionGroupedEntry, "getOriginalGroupId",
-				new Class<?>[0]));
+				cpDefinitionGroupedEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
-			Long.valueOf(existingCPDefinitionGroupedEntry.getCPDefinitionId()),
+			Long.valueOf(cpDefinitionGroupedEntry.getCPDefinitionId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCPDefinitionGroupedEntry, "getOriginalCPDefinitionId",
-				new Class<?>[0]));
+				cpDefinitionGroupedEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "CPDefinitionId"));
 		Assert.assertEquals(
-			Long.valueOf(existingCPDefinitionGroupedEntry.getEntryCProductId()),
+			Long.valueOf(cpDefinitionGroupedEntry.getEntryCProductId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCPDefinitionGroupedEntry, "getOriginalEntryCProductId",
-				new Class<?>[0]));
+				cpDefinitionGroupedEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "entryCProductId"));
 	}
 
 	protected CPDefinitionGroupedEntry addCPDefinitionGroupedEntry()

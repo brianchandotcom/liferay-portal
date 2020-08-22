@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -518,25 +519,71 @@ public class CommerceWishListItemPersistenceTest {
 
 		_persistence.clearCache();
 
-		CommerceWishListItem existingCommerceWishListItem =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newCommerceWishListItem.getPrimaryKey());
+				newCommerceWishListItem.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CommerceWishListItem newCommerceWishListItem =
+			addCommerceWishListItem();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CommerceWishListItem.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"commerceWishListItemId",
+				newCommerceWishListItem.getCommerceWishListItemId()));
+
+		List<CommerceWishListItem> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		CommerceWishListItem commerceWishListItem) {
 
 		Assert.assertEquals(
-			Long.valueOf(existingCommerceWishListItem.getCommerceWishListId()),
+			Long.valueOf(commerceWishListItem.getCommerceWishListId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceWishListItem, "getOriginalCommerceWishListId",
-				new Class<?>[0]));
+				commerceWishListItem, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "commerceWishListId"));
 		Assert.assertEquals(
-			existingCommerceWishListItem.getCPInstanceUuid(),
+			commerceWishListItem.getCPInstanceUuid(),
 			ReflectionTestUtil.invoke(
-				existingCommerceWishListItem, "getOriginalCPInstanceUuid",
-				new Class<?>[0]));
+				commerceWishListItem, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "CPInstanceUuid"));
 		Assert.assertEquals(
-			Long.valueOf(existingCommerceWishListItem.getCProductId()),
+			Long.valueOf(commerceWishListItem.getCProductId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceWishListItem, "getOriginalCProductId",
-				new Class<?>[0]));
+				commerceWishListItem, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "CProductId"));
 	}
 
 	protected CommerceWishListItem addCommerceWishListItem() throws Exception {

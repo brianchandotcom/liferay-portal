@@ -3132,8 +3132,6 @@ public class CommerceWishListItemPersistenceImpl
 				commerceWishListItem.getCProductId()
 			},
 			commerceWishListItem);
-
-		commerceWishListItem.resetOriginalValues();
 	}
 
 	/**
@@ -3151,9 +3149,6 @@ public class CommerceWishListItemPersistenceImpl
 					commerceWishListItem.getPrimaryKey()) == null) {
 
 				cacheResult(commerceWishListItem);
-			}
-			else {
-				commerceWishListItem.resetOriginalValues();
 			}
 		}
 	}
@@ -3258,9 +3253,12 @@ public class CommerceWishListItemPersistenceImpl
 			 _finderPathFetchByCW_CPI_CP.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceWishListItemModelImpl.getOriginalCommerceWishListId(),
-				commerceWishListItemModelImpl.getOriginalCPInstanceUuid(),
-				commerceWishListItemModelImpl.getOriginalCProductId()
+				commerceWishListItemModelImpl.getColumnOriginalValue(
+					"commerceWishListId"),
+				commerceWishListItemModelImpl.getColumnOriginalValue(
+					"CPInstanceUuid"),
+				commerceWishListItemModelImpl.getColumnOriginalValue(
+					"CProductId")
 			};
 
 			finderCache.removeResult(_finderPathCountByCW_CPI_CP, args);
@@ -3503,8 +3501,8 @@ public class CommerceWishListItemPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceWishListItemModelImpl.
-						getOriginalCommerceWishListId()
+					commerceWishListItemModelImpl.getColumnOriginalValue(
+						"commerceWishListId")
 				};
 
 				finderCache.removeResult(
@@ -3527,7 +3525,8 @@ public class CommerceWishListItemPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceWishListItemModelImpl.getOriginalCPInstanceUuid()
+					commerceWishListItemModelImpl.getColumnOriginalValue(
+						"CPInstanceUuid")
 				};
 
 				finderCache.removeResult(
@@ -3550,7 +3549,8 @@ public class CommerceWishListItemPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceWishListItemModelImpl.getOriginalCProductId()
+					commerceWishListItemModelImpl.getColumnOriginalValue(
+						"CProductId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCProductId, args);
@@ -3571,9 +3571,10 @@ public class CommerceWishListItemPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceWishListItemModelImpl.
-						getOriginalCommerceWishListId(),
-					commerceWishListItemModelImpl.getOriginalCPInstanceUuid()
+					commerceWishListItemModelImpl.getColumnOriginalValue(
+						"commerceWishListId"),
+					commerceWishListItemModelImpl.getColumnOriginalValue(
+						"CPInstanceUuid")
 				};
 
 				finderCache.removeResult(_finderPathCountByCW_CPI, args);
@@ -3595,9 +3596,10 @@ public class CommerceWishListItemPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceWishListItemModelImpl.
-						getOriginalCommerceWishListId(),
-					commerceWishListItemModelImpl.getOriginalCProductId()
+					commerceWishListItemModelImpl.getColumnOriginalValue(
+						"commerceWishListId"),
+					commerceWishListItemModelImpl.getColumnOriginalValue(
+						"CProductId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCW_CP, args);
@@ -3909,8 +3911,9 @@ public class CommerceWishListItemPersistenceImpl
 			CommerceWishListItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceWishListId", new String[] {Long.class.getName()},
-			CommerceWishListItemModelImpl.COMMERCEWISHLISTID_COLUMN_BITMASK |
-			CommerceWishListItemModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceWishListItemModelImpl.getColumnBitmask(
+				"commerceWishListId") |
+			CommerceWishListItemModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByCommerceWishListId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3928,8 +3931,8 @@ public class CommerceWishListItemPersistenceImpl
 			CommerceWishListItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPInstanceUuid",
 			new String[] {String.class.getName()},
-			CommerceWishListItemModelImpl.CPINSTANCEUUID_COLUMN_BITMASK |
-			CommerceWishListItemModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceWishListItemModelImpl.getColumnBitmask("CPInstanceUuid") |
+			CommerceWishListItemModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByCPInstanceUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3947,8 +3950,8 @@ public class CommerceWishListItemPersistenceImpl
 			CommerceWishListItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCProductId",
 			new String[] {Long.class.getName()},
-			CommerceWishListItemModelImpl.CPRODUCTID_COLUMN_BITMASK |
-			CommerceWishListItemModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceWishListItemModelImpl.getColumnBitmask("CProductId") |
+			CommerceWishListItemModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByCProductId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3967,9 +3970,10 @@ public class CommerceWishListItemPersistenceImpl
 			CommerceWishListItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCW_CPI",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceWishListItemModelImpl.COMMERCEWISHLISTID_COLUMN_BITMASK |
-			CommerceWishListItemModelImpl.CPINSTANCEUUID_COLUMN_BITMASK |
-			CommerceWishListItemModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceWishListItemModelImpl.getColumnBitmask(
+				"commerceWishListId") |
+			CommerceWishListItemModelImpl.getColumnBitmask("CPInstanceUuid") |
+			CommerceWishListItemModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByCW_CPI = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3989,9 +3993,10 @@ public class CommerceWishListItemPersistenceImpl
 			CommerceWishListItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCW_CP",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CommerceWishListItemModelImpl.COMMERCEWISHLISTID_COLUMN_BITMASK |
-			CommerceWishListItemModelImpl.CPRODUCTID_COLUMN_BITMASK |
-			CommerceWishListItemModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceWishListItemModelImpl.getColumnBitmask(
+				"commerceWishListId") |
+			CommerceWishListItemModelImpl.getColumnBitmask("CProductId") |
+			CommerceWishListItemModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByCW_CP = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4005,9 +4010,10 @@ public class CommerceWishListItemPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()
 			},
-			CommerceWishListItemModelImpl.COMMERCEWISHLISTID_COLUMN_BITMASK |
-			CommerceWishListItemModelImpl.CPINSTANCEUUID_COLUMN_BITMASK |
-			CommerceWishListItemModelImpl.CPRODUCTID_COLUMN_BITMASK);
+			CommerceWishListItemModelImpl.getColumnBitmask(
+				"commerceWishListId") |
+			CommerceWishListItemModelImpl.getColumnBitmask("CPInstanceUuid") |
+			CommerceWishListItemModelImpl.getColumnBitmask("CProductId"));
 
 		_finderPathCountByCW_CPI_CP = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

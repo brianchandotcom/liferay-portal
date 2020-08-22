@@ -163,16 +163,41 @@ public class CPDefinitionVirtualSettingModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long UUID_COLUMN_BITMASK = 16L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CPDEFINITIONVIRTUALSETTINGID_COLUMN_BITMASK = 32L;
 
 	/**
@@ -547,17 +572,24 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("uuid_");
 
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_uuid = uuid;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		return getColumnOriginalValue("uuid_");
 	}
 
 	@JSON
@@ -570,6 +602,15 @@ public class CPDefinitionVirtualSettingModelImpl
 	public void setCPDefinitionVirtualSettingId(
 		long CPDefinitionVirtualSettingId) {
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get(
+				"CPDefinitionVirtualSettingId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_CPDefinitionVirtualSettingId = CPDefinitionVirtualSettingId;
 	}
 
@@ -581,19 +622,24 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("groupId");
 
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_groupId = groupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -604,19 +650,24 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
 
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_companyId = companyId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -627,6 +678,14 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -659,6 +718,14 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -670,6 +737,14 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -686,6 +761,14 @@ public class CPDefinitionVirtualSettingModelImpl
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
+
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
 
 		_modifiedDate = modifiedDate;
 	}
@@ -718,19 +801,24 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("classNameId");
 
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_classNameId = classNameId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
 	}
 
 	@JSON
@@ -741,19 +829,24 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("classPK");
 
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_classPK = classPK;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		return GetterUtil.getLong(getColumnOriginalValue("classPK"));
 	}
 
 	@JSON
@@ -764,6 +857,14 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setFileEntryId(long fileEntryId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("fileEntryId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_fileEntryId = fileEntryId;
 	}
 
@@ -780,6 +881,14 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setUrl(String url) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("url");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_url = url;
 	}
 
@@ -791,6 +900,14 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setActivationStatus(int activationStatus) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("activationStatus");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_activationStatus = activationStatus;
 	}
 
@@ -802,6 +919,14 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setDuration(long duration) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("duration");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_duration = duration;
 	}
 
@@ -813,6 +938,14 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setMaxUsages(int maxUsages) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("maxUsages");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_maxUsages = maxUsages;
 	}
 
@@ -830,6 +963,14 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setUseSample(boolean useSample) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("useSample");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_useSample = useSample;
 	}
 
@@ -841,6 +982,14 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setSampleFileEntryId(long sampleFileEntryId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("sampleFileEntryId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_sampleFileEntryId = sampleFileEntryId;
 	}
 
@@ -857,6 +1006,14 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setSampleUrl(String sampleUrl) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("sampleUrl");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_sampleUrl = sampleUrl;
 	}
 
@@ -874,6 +1031,14 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setTermsOfUseRequired(boolean termsOfUseRequired) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("termsOfUseRequired");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_termsOfUseRequired = termsOfUseRequired;
 	}
 
@@ -934,6 +1099,14 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setTermsOfUseContent(String termsOfUseContent) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("termsOfUseContent");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_termsOfUseContent = termsOfUseContent;
 	}
 
@@ -1000,6 +1173,15 @@ public class CPDefinitionVirtualSettingModelImpl
 	public void setTermsOfUseJournalArticleResourcePrimKey(
 		long termsOfUseJournalArticleResourcePrimKey) {
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get(
+				"termsOfUseArticleResourcePK");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_termsOfUseJournalArticleResourcePrimKey =
 			termsOfUseJournalArticleResourcePrimKey;
 	}
@@ -1018,6 +1200,14 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setOverride(boolean override) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("override");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_override = override;
 	}
 
@@ -1029,6 +1219,14 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("lastPublishDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_lastPublishDate = lastPublishDate;
 	}
 
@@ -1250,24 +1448,9 @@ public class CPDefinitionVirtualSettingModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_originalUuid = _uuid;
-
-		_originalGroupId = _groupId;
-
-		_setOriginalGroupId = false;
-
-		_originalCompanyId = _companyId;
-
-		_setOriginalCompanyId = false;
+		_columnOriginalValues = Collections.emptyMap();
 
 		_setModifiedDate = false;
-		_originalClassNameId = _classNameId;
-
-		_setOriginalClassNameId = false;
-
-		_originalClassPK = _classPK;
-
-		_setOriginalClassPK = false;
 
 		_columnBitmask = 0;
 	}
@@ -1467,25 +1650,16 @@ public class CPDefinitionVirtualSettingModelImpl
 	}
 
 	private String _uuid;
-	private String _originalUuid;
 	private long _CPDefinitionVirtualSettingId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private long _fileEntryId;
 	private String _url;
 	private int _activationStatus;
@@ -1500,6 +1674,109 @@ public class CPDefinitionVirtualSettingModelImpl
 	private long _termsOfUseJournalArticleResourcePrimKey;
 	private boolean _override;
 	private Date _lastPublishDate;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"CPDefinitionVirtualSettingId", _CPDefinitionVirtualSettingId);
+		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("classNameId", _classNameId);
+		_columnOriginalValues.put("classPK", _classPK);
+		_columnOriginalValues.put("fileEntryId", _fileEntryId);
+		_columnOriginalValues.put("url", _url);
+		_columnOriginalValues.put("activationStatus", _activationStatus);
+		_columnOriginalValues.put("duration", _duration);
+		_columnOriginalValues.put("maxUsages", _maxUsages);
+		_columnOriginalValues.put("useSample", _useSample);
+		_columnOriginalValues.put("sampleFileEntryId", _sampleFileEntryId);
+		_columnOriginalValues.put("sampleUrl", _sampleUrl);
+		_columnOriginalValues.put("termsOfUseRequired", _termsOfUseRequired);
+		_columnOriginalValues.put("termsOfUseContent", _termsOfUseContent);
+		_columnOriginalValues.put(
+			"termsOfUseArticleResourcePK",
+			_termsOfUseJournalArticleResourcePrimKey);
+		_columnOriginalValues.put("override", _override);
+		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("uuid_", 1L);
+
+		columnBitmasks.put("CPDefinitionVirtualSettingId", 2L);
+
+		columnBitmasks.put("groupId", 4L);
+
+		columnBitmasks.put("companyId", 8L);
+
+		columnBitmasks.put("userId", 16L);
+
+		columnBitmasks.put("userName", 32L);
+
+		columnBitmasks.put("createDate", 64L);
+
+		columnBitmasks.put("modifiedDate", 128L);
+
+		columnBitmasks.put("classNameId", 256L);
+
+		columnBitmasks.put("classPK", 512L);
+
+		columnBitmasks.put("fileEntryId", 1024L);
+
+		columnBitmasks.put("url", 2048L);
+
+		columnBitmasks.put("activationStatus", 4096L);
+
+		columnBitmasks.put("duration", 8192L);
+
+		columnBitmasks.put("maxUsages", 16384L);
+
+		columnBitmasks.put("useSample", 32768L);
+
+		columnBitmasks.put("sampleFileEntryId", 65536L);
+
+		columnBitmasks.put("sampleUrl", 131072L);
+
+		columnBitmasks.put("termsOfUseRequired", 262144L);
+
+		columnBitmasks.put("termsOfUseContent", 524288L);
+
+		columnBitmasks.put("termsOfUseArticleResourcePK", 1048576L);
+
+		columnBitmasks.put("override", 2097152L);
+
+		columnBitmasks.put("lastPublishDate", 4194304L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CPDefinitionVirtualSetting _escapedModel;
 

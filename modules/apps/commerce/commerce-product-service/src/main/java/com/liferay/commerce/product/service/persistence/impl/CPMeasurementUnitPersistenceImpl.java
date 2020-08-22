@@ -3386,8 +3386,6 @@ public class CPMeasurementUnitPersistenceImpl
 				cpMeasurementUnit.getType()
 			},
 			cpMeasurementUnit);
-
-		cpMeasurementUnit.resetOriginalValues();
 	}
 
 	/**
@@ -3403,9 +3401,6 @@ public class CPMeasurementUnitPersistenceImpl
 					cpMeasurementUnit.getPrimaryKey()) == null) {
 
 				cacheResult(cpMeasurementUnit);
-			}
-			else {
-				cpMeasurementUnit.resetOriginalValues();
 			}
 		}
 	}
@@ -3513,8 +3508,8 @@ public class CPMeasurementUnitPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cpMeasurementUnitModelImpl.getOriginalUuid(),
-				cpMeasurementUnitModelImpl.getOriginalGroupId()
+				cpMeasurementUnitModelImpl.getColumnOriginalValue("uuid_"),
+				cpMeasurementUnitModelImpl.getColumnOriginalValue("groupId")
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -3536,9 +3531,9 @@ public class CPMeasurementUnitPersistenceImpl
 			 _finderPathFetchByC_K_T.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cpMeasurementUnitModelImpl.getOriginalCompanyId(),
-				cpMeasurementUnitModelImpl.getOriginalKey(),
-				cpMeasurementUnitModelImpl.getOriginalType()
+				cpMeasurementUnitModelImpl.getColumnOriginalValue("companyId"),
+				cpMeasurementUnitModelImpl.getColumnOriginalValue("key_"),
+				cpMeasurementUnitModelImpl.getColumnOriginalValue("type_")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_K_T, args);
@@ -3787,7 +3782,7 @@ public class CPMeasurementUnitPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpMeasurementUnitModelImpl.getOriginalUuid()
+					cpMeasurementUnitModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -3806,8 +3801,9 @@ public class CPMeasurementUnitPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpMeasurementUnitModelImpl.getOriginalUuid(),
-					cpMeasurementUnitModelImpl.getOriginalCompanyId()
+					cpMeasurementUnitModelImpl.getColumnOriginalValue("uuid_"),
+					cpMeasurementUnitModelImpl.getColumnOriginalValue(
+						"companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -3829,7 +3825,8 @@ public class CPMeasurementUnitPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					cpMeasurementUnitModelImpl.getOriginalCompanyId()
+					cpMeasurementUnitModelImpl.getColumnOriginalValue(
+						"companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -3848,8 +3845,9 @@ public class CPMeasurementUnitPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpMeasurementUnitModelImpl.getOriginalCompanyId(),
-					cpMeasurementUnitModelImpl.getOriginalType()
+					cpMeasurementUnitModelImpl.getColumnOriginalValue(
+						"companyId"),
+					cpMeasurementUnitModelImpl.getColumnOriginalValue("type_")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_T, args);
@@ -3871,9 +3869,11 @@ public class CPMeasurementUnitPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpMeasurementUnitModelImpl.getOriginalCompanyId(),
-					cpMeasurementUnitModelImpl.getOriginalPrimary(),
-					cpMeasurementUnitModelImpl.getOriginalType()
+					cpMeasurementUnitModelImpl.getColumnOriginalValue(
+						"companyId"),
+					cpMeasurementUnitModelImpl.getColumnOriginalValue(
+						"primary_"),
+					cpMeasurementUnitModelImpl.getColumnOriginalValue("type_")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_P_T, args);
@@ -4189,8 +4189,8 @@ public class CPMeasurementUnitPersistenceImpl
 			CPMeasurementUnitImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			CPMeasurementUnitModelImpl.UUID_COLUMN_BITMASK |
-			CPMeasurementUnitModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPMeasurementUnitModelImpl.getColumnBitmask("uuid_") |
+			CPMeasurementUnitModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4200,8 +4200,8 @@ public class CPMeasurementUnitPersistenceImpl
 			CPMeasurementUnitImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CPMeasurementUnitModelImpl.UUID_COLUMN_BITMASK |
-			CPMeasurementUnitModelImpl.GROUPID_COLUMN_BITMASK);
+			CPMeasurementUnitModelImpl.getColumnBitmask("uuid_") |
+			CPMeasurementUnitModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4221,9 +4221,9 @@ public class CPMeasurementUnitPersistenceImpl
 			CPMeasurementUnitImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CPMeasurementUnitModelImpl.UUID_COLUMN_BITMASK |
-			CPMeasurementUnitModelImpl.COMPANYID_COLUMN_BITMASK |
-			CPMeasurementUnitModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPMeasurementUnitModelImpl.getColumnBitmask("uuid_") |
+			CPMeasurementUnitModelImpl.getColumnBitmask("companyId") |
+			CPMeasurementUnitModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4242,8 +4242,8 @@ public class CPMeasurementUnitPersistenceImpl
 			CPMeasurementUnitImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
-			CPMeasurementUnitModelImpl.COMPANYID_COLUMN_BITMASK |
-			CPMeasurementUnitModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPMeasurementUnitModelImpl.getColumnBitmask("companyId") |
+			CPMeasurementUnitModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4262,9 +4262,9 @@ public class CPMeasurementUnitPersistenceImpl
 			CPMeasurementUnitImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			CPMeasurementUnitModelImpl.COMPANYID_COLUMN_BITMASK |
-			CPMeasurementUnitModelImpl.TYPE_COLUMN_BITMASK |
-			CPMeasurementUnitModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPMeasurementUnitModelImpl.getColumnBitmask("companyId") |
+			CPMeasurementUnitModelImpl.getColumnBitmask("type_") |
+			CPMeasurementUnitModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByC_T = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
@@ -4277,9 +4277,9 @@ public class CPMeasurementUnitPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
 			},
-			CPMeasurementUnitModelImpl.COMPANYID_COLUMN_BITMASK |
-			CPMeasurementUnitModelImpl.KEY_COLUMN_BITMASK |
-			CPMeasurementUnitModelImpl.TYPE_COLUMN_BITMASK);
+			CPMeasurementUnitModelImpl.getColumnBitmask("companyId") |
+			CPMeasurementUnitModelImpl.getColumnBitmask("key_") |
+			CPMeasurementUnitModelImpl.getColumnBitmask("type_"));
 
 		_finderPathCountByC_K_T = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4305,10 +4305,10 @@ public class CPMeasurementUnitPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				Integer.class.getName()
 			},
-			CPMeasurementUnitModelImpl.COMPANYID_COLUMN_BITMASK |
-			CPMeasurementUnitModelImpl.PRIMARY_COLUMN_BITMASK |
-			CPMeasurementUnitModelImpl.TYPE_COLUMN_BITMASK |
-			CPMeasurementUnitModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPMeasurementUnitModelImpl.getColumnBitmask("companyId") |
+			CPMeasurementUnitModelImpl.getColumnBitmask("primary_") |
+			CPMeasurementUnitModelImpl.getColumnBitmask("type_") |
+			CPMeasurementUnitModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByC_P_T = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

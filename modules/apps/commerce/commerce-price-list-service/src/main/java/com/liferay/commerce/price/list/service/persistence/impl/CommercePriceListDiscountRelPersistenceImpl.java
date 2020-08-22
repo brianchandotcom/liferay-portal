@@ -2011,8 +2011,6 @@ public class CommercePriceListDiscountRelPersistenceImpl
 				commercePriceListDiscountRel.getCommercePriceListId()
 			},
 			commercePriceListDiscountRel);
-
-		commercePriceListDiscountRel.resetOriginalValues();
 	}
 
 	/**
@@ -2032,9 +2030,6 @@ public class CommercePriceListDiscountRelPersistenceImpl
 					commercePriceListDiscountRel.getPrimaryKey()) == null) {
 
 				cacheResult(commercePriceListDiscountRel);
-			}
-			else {
-				commercePriceListDiscountRel.resetOriginalValues();
 			}
 		}
 	}
@@ -2146,10 +2141,10 @@ public class CommercePriceListDiscountRelPersistenceImpl
 			 _finderPathFetchByC_C.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commercePriceListDiscountRelModelImpl.
-					getOriginalCommerceDiscountId(),
-				commercePriceListDiscountRelModelImpl.
-					getOriginalCommercePriceListId()
+				commercePriceListDiscountRelModelImpl.getColumnOriginalValue(
+					"commerceDiscountId"),
+				commercePriceListDiscountRelModelImpl.getColumnOriginalValue(
+					"commercePriceListId")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_C, args);
@@ -2400,7 +2395,8 @@ public class CommercePriceListDiscountRelPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commercePriceListDiscountRelModelImpl.getOriginalUuid()
+					commercePriceListDiscountRelModelImpl.
+						getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -2421,8 +2417,10 @@ public class CommercePriceListDiscountRelPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commercePriceListDiscountRelModelImpl.getOriginalUuid(),
-					commercePriceListDiscountRelModelImpl.getOriginalCompanyId()
+					commercePriceListDiscountRelModelImpl.
+						getColumnOriginalValue("uuid_"),
+					commercePriceListDiscountRelModelImpl.
+						getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -2445,7 +2443,7 @@ public class CommercePriceListDiscountRelPersistenceImpl
 
 				Object[] args = new Object[] {
 					commercePriceListDiscountRelModelImpl.
-						getOriginalCommercePriceListId()
+						getColumnOriginalValue("commercePriceListId")
 				};
 
 				finderCache.removeResult(
@@ -2774,8 +2772,8 @@ public class CommercePriceListDiscountRelPersistenceImpl
 			CommercePriceListDiscountRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			CommercePriceListDiscountRelModelImpl.UUID_COLUMN_BITMASK |
-			CommercePriceListDiscountRelModelImpl.ORDER_COLUMN_BITMASK);
+			CommercePriceListDiscountRelModelImpl.getColumnBitmask("uuid_") |
+			CommercePriceListDiscountRelModelImpl.getColumnBitmask("order_"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2794,9 +2792,10 @@ public class CommercePriceListDiscountRelPersistenceImpl
 			CommercePriceListDiscountRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CommercePriceListDiscountRelModelImpl.UUID_COLUMN_BITMASK |
-			CommercePriceListDiscountRelModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommercePriceListDiscountRelModelImpl.ORDER_COLUMN_BITMASK);
+			CommercePriceListDiscountRelModelImpl.getColumnBitmask("uuid_") |
+			CommercePriceListDiscountRelModelImpl.getColumnBitmask(
+				"companyId") |
+			CommercePriceListDiscountRelModelImpl.getColumnBitmask("order_"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2815,9 +2814,9 @@ public class CommercePriceListDiscountRelPersistenceImpl
 			CommercePriceListDiscountRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommercePriceListId", new String[] {Long.class.getName()},
-			CommercePriceListDiscountRelModelImpl.
-				COMMERCEPRICELISTID_COLUMN_BITMASK |
-			CommercePriceListDiscountRelModelImpl.ORDER_COLUMN_BITMASK);
+			CommercePriceListDiscountRelModelImpl.getColumnBitmask(
+				"commercePriceListId") |
+			CommercePriceListDiscountRelModelImpl.getColumnBitmask("order_"));
 
 		_finderPathCountByCommercePriceListId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2827,10 +2826,10 @@ public class CommercePriceListDiscountRelPersistenceImpl
 			CommercePriceListDiscountRelImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CommercePriceListDiscountRelModelImpl.
-				COMMERCEDISCOUNTID_COLUMN_BITMASK |
-			CommercePriceListDiscountRelModelImpl.
-				COMMERCEPRICELISTID_COLUMN_BITMASK);
+			CommercePriceListDiscountRelModelImpl.getColumnBitmask(
+				"commerceDiscountId") |
+			CommercePriceListDiscountRelModelImpl.getColumnBitmask(
+				"commercePriceListId"));
 
 		_finderPathCountByC_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",

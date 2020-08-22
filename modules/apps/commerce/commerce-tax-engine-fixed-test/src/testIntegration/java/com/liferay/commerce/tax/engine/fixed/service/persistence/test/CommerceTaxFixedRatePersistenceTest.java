@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -485,20 +486,66 @@ public class CommerceTaxFixedRatePersistenceTest {
 
 		_persistence.clearCache();
 
-		CommerceTaxFixedRate existingCommerceTaxFixedRate =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newCommerceTaxFixedRate.getPrimaryKey());
+				newCommerceTaxFixedRate.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CommerceTaxFixedRate newCommerceTaxFixedRate =
+			addCommerceTaxFixedRate();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CommerceTaxFixedRate.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"commerceTaxFixedRateId",
+				newCommerceTaxFixedRate.getCommerceTaxFixedRateId()));
+
+		List<CommerceTaxFixedRate> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		CommerceTaxFixedRate commerceTaxFixedRate) {
 
 		Assert.assertEquals(
-			Long.valueOf(existingCommerceTaxFixedRate.getCPTaxCategoryId()),
+			Long.valueOf(commerceTaxFixedRate.getCPTaxCategoryId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceTaxFixedRate, "getOriginalCPTaxCategoryId",
-				new Class<?>[0]));
+				commerceTaxFixedRate, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "CPTaxCategoryId"));
 		Assert.assertEquals(
-			Long.valueOf(existingCommerceTaxFixedRate.getCommerceTaxMethodId()),
+			Long.valueOf(commerceTaxFixedRate.getCommerceTaxMethodId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceTaxFixedRate, "getOriginalCommerceTaxMethodId",
-				new Class<?>[0]));
+				commerceTaxFixedRate, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "commerceTaxMethodId"));
 	}
 
 	protected CommerceTaxFixedRate addCommerceTaxFixedRate() throws Exception {

@@ -3928,8 +3928,6 @@ public class CommerceCountryPersistenceImpl
 				commerceCountry.getNumericISOCode()
 			},
 			commerceCountry);
-
-		commerceCountry.resetOriginalValues();
 	}
 
 	/**
@@ -3945,9 +3943,6 @@ public class CommerceCountryPersistenceImpl
 					commerceCountry.getPrimaryKey()) == null) {
 
 				cacheResult(commerceCountry);
-			}
-			else {
-				commerceCountry.resetOriginalValues();
 			}
 		}
 	}
@@ -4054,8 +4049,9 @@ public class CommerceCountryPersistenceImpl
 			 _finderPathFetchByC_Tw.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceCountryModelImpl.getOriginalCompanyId(),
-				commerceCountryModelImpl.getOriginalTwoLettersISOCode()
+				commerceCountryModelImpl.getColumnOriginalValue("companyId"),
+				commerceCountryModelImpl.getColumnOriginalValue(
+					"twoLettersISOCode")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_Tw, args);
@@ -4076,8 +4072,9 @@ public class CommerceCountryPersistenceImpl
 			 _finderPathFetchByC_N.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceCountryModelImpl.getOriginalCompanyId(),
-				commerceCountryModelImpl.getOriginalNumericISOCode()
+				commerceCountryModelImpl.getColumnOriginalValue("companyId"),
+				commerceCountryModelImpl.getColumnOriginalValue(
+					"numericISOCode")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_N, args);
@@ -4333,7 +4330,7 @@ public class CommerceCountryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceCountryModelImpl.getOriginalUuid()
+					commerceCountryModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -4352,8 +4349,8 @@ public class CommerceCountryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceCountryModelImpl.getOriginalUuid(),
-					commerceCountryModelImpl.getOriginalCompanyId()
+					commerceCountryModelImpl.getColumnOriginalValue("uuid_"),
+					commerceCountryModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -4375,7 +4372,7 @@ public class CommerceCountryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceCountryModelImpl.getOriginalCompanyId()
+					commerceCountryModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -4394,8 +4391,9 @@ public class CommerceCountryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceCountryModelImpl.getOriginalCompanyId(),
-					commerceCountryModelImpl.getOriginalActive()
+					commerceCountryModelImpl.getColumnOriginalValue(
+						"companyId"),
+					commerceCountryModelImpl.getColumnOriginalValue("active_")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_A, args);
@@ -4417,9 +4415,11 @@ public class CommerceCountryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceCountryModelImpl.getOriginalCompanyId(),
-					commerceCountryModelImpl.getOriginalBillingAllowed(),
-					commerceCountryModelImpl.getOriginalActive()
+					commerceCountryModelImpl.getColumnOriginalValue(
+						"companyId"),
+					commerceCountryModelImpl.getColumnOriginalValue(
+						"billingAllowed"),
+					commerceCountryModelImpl.getColumnOriginalValue("active_")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_B_A, args);
@@ -4442,9 +4442,11 @@ public class CommerceCountryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceCountryModelImpl.getOriginalCompanyId(),
-					commerceCountryModelImpl.getOriginalShippingAllowed(),
-					commerceCountryModelImpl.getOriginalActive()
+					commerceCountryModelImpl.getColumnOriginalValue(
+						"companyId"),
+					commerceCountryModelImpl.getColumnOriginalValue(
+						"shippingAllowed"),
+					commerceCountryModelImpl.getColumnOriginalValue("active_")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_S_A, args);
@@ -4760,8 +4762,8 @@ public class CommerceCountryPersistenceImpl
 			CommerceCountryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			CommerceCountryModelImpl.UUID_COLUMN_BITMASK |
-			CommerceCountryModelImpl.PRIORITY_COLUMN_BITMASK);
+			CommerceCountryModelImpl.getColumnBitmask("uuid_") |
+			CommerceCountryModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4780,9 +4782,9 @@ public class CommerceCountryPersistenceImpl
 			CommerceCountryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CommerceCountryModelImpl.UUID_COLUMN_BITMASK |
-			CommerceCountryModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceCountryModelImpl.PRIORITY_COLUMN_BITMASK);
+			CommerceCountryModelImpl.getColumnBitmask("uuid_") |
+			CommerceCountryModelImpl.getColumnBitmask("companyId") |
+			CommerceCountryModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4801,8 +4803,8 @@ public class CommerceCountryPersistenceImpl
 			CommerceCountryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
-			CommerceCountryModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceCountryModelImpl.PRIORITY_COLUMN_BITMASK);
+			CommerceCountryModelImpl.getColumnBitmask("companyId") |
+			CommerceCountryModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4811,8 +4813,8 @@ public class CommerceCountryPersistenceImpl
 		_finderPathFetchByC_Tw = new FinderPath(
 			CommerceCountryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_Tw",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceCountryModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceCountryModelImpl.TWOLETTERSISOCODE_COLUMN_BITMASK);
+			CommerceCountryModelImpl.getColumnBitmask("companyId") |
+			CommerceCountryModelImpl.getColumnBitmask("twoLettersISOCode"));
 
 		_finderPathCountByC_Tw = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4822,8 +4824,8 @@ public class CommerceCountryPersistenceImpl
 		_finderPathFetchByC_N = new FinderPath(
 			CommerceCountryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			CommerceCountryModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceCountryModelImpl.NUMERICISOCODE_COLUMN_BITMASK);
+			CommerceCountryModelImpl.getColumnBitmask("companyId") |
+			CommerceCountryModelImpl.getColumnBitmask("numericISOCode"));
 
 		_finderPathCountByC_N = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
@@ -4842,9 +4844,9 @@ public class CommerceCountryPersistenceImpl
 			CommerceCountryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			CommerceCountryModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceCountryModelImpl.ACTIVE_COLUMN_BITMASK |
-			CommerceCountryModelImpl.PRIORITY_COLUMN_BITMASK);
+			CommerceCountryModelImpl.getColumnBitmask("companyId") |
+			CommerceCountryModelImpl.getColumnBitmask("active_") |
+			CommerceCountryModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByC_A = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
@@ -4866,10 +4868,10 @@ public class CommerceCountryPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName()
 			},
-			CommerceCountryModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceCountryModelImpl.BILLINGALLOWED_COLUMN_BITMASK |
-			CommerceCountryModelImpl.ACTIVE_COLUMN_BITMASK |
-			CommerceCountryModelImpl.PRIORITY_COLUMN_BITMASK);
+			CommerceCountryModelImpl.getColumnBitmask("companyId") |
+			CommerceCountryModelImpl.getColumnBitmask("billingAllowed") |
+			CommerceCountryModelImpl.getColumnBitmask("active_") |
+			CommerceCountryModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByC_B_A = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4895,10 +4897,10 @@ public class CommerceCountryPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName()
 			},
-			CommerceCountryModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceCountryModelImpl.SHIPPINGALLOWED_COLUMN_BITMASK |
-			CommerceCountryModelImpl.ACTIVE_COLUMN_BITMASK |
-			CommerceCountryModelImpl.PRIORITY_COLUMN_BITMASK);
+			CommerceCountryModelImpl.getColumnBitmask("companyId") |
+			CommerceCountryModelImpl.getColumnBitmask("shippingAllowed") |
+			CommerceCountryModelImpl.getColumnBitmask("active_") |
+			CommerceCountryModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByC_S_A = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

@@ -152,18 +152,47 @@ public class CommerceNotificationQueueEntryModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMMERCENOTIFICATIONTEMPLATEID_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long SENT_COLUMN_BITMASK = 16L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long SENTDATE_COLUMN_BITMASK = 32L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long PRIORITY_COLUMN_BITMASK = 64L;
 
 	/**
@@ -521,6 +550,14 @@ public class CommerceNotificationQueueEntryModelImpl
 	public void setCommerceNotificationQueueEntryId(
 		long commerceNotificationQueueEntryId) {
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("CNotificationQueueEntryId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_commerceNotificationQueueEntryId = commerceNotificationQueueEntryId;
 	}
 
@@ -532,19 +569,24 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("groupId");
 
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_groupId = groupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -555,6 +597,14 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_companyId = companyId;
 	}
 
@@ -566,6 +616,14 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -598,6 +656,14 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -609,6 +675,14 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -625,6 +699,14 @@ public class CommerceNotificationQueueEntryModelImpl
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
+
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
 
 		_modifiedDate = modifiedDate;
 	}
@@ -657,19 +739,24 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	@Override
 	public void setClassNameId(long classNameId) {
-		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("classNameId");
 
-		if (!_setOriginalClassNameId) {
-			_setOriginalClassNameId = true;
-
-			_originalClassNameId = _classNameId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_classNameId = classNameId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalClassNameId() {
-		return _originalClassNameId;
+		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
 	}
 
 	@JSON
@@ -680,19 +767,24 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	@Override
 	public void setClassPK(long classPK) {
-		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("classPK");
 
-		if (!_setOriginalClassPK) {
-			_setOriginalClassPK = true;
-
-			_originalClassPK = _classPK;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_classPK = classPK;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalClassPK() {
-		return _originalClassPK;
+		return GetterUtil.getLong(getColumnOriginalValue("classPK"));
 	}
 
 	@JSON
@@ -705,20 +797,26 @@ public class CommerceNotificationQueueEntryModelImpl
 	public void setCommerceNotificationTemplateId(
 		long commerceNotificationTemplateId) {
 
-		_columnBitmask |= COMMERCENOTIFICATIONTEMPLATEID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get(
+				"commerceNotificationTemplateId");
 
-		if (!_setOriginalCommerceNotificationTemplateId) {
-			_setOriginalCommerceNotificationTemplateId = true;
-
-			_originalCommerceNotificationTemplateId =
-				_commerceNotificationTemplateId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_commerceNotificationTemplateId = commerceNotificationTemplateId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCommerceNotificationTemplateId() {
-		return _originalCommerceNotificationTemplateId;
+		return GetterUtil.getLong(
+			getColumnOriginalValue("commerceNotificationTemplateId"));
 	}
 
 	@JSON
@@ -734,6 +832,14 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	@Override
 	public void setFrom(String from) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("from_");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_from = from;
 	}
 
@@ -750,6 +856,14 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	@Override
 	public void setFromName(String fromName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("fromName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_fromName = fromName;
 	}
 
@@ -766,6 +880,14 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	@Override
 	public void setTo(String to) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("to_");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_to = to;
 	}
 
@@ -782,6 +904,14 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	@Override
 	public void setToName(String toName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("toName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_toName = toName;
 	}
 
@@ -798,6 +928,14 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	@Override
 	public void setCc(String cc) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("cc");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_cc = cc;
 	}
 
@@ -814,6 +952,14 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	@Override
 	public void setBcc(String bcc) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("bcc");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_bcc = bcc;
 	}
 
@@ -830,6 +976,14 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	@Override
 	public void setSubject(String subject) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("subject");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_subject = subject;
 	}
 
@@ -846,6 +1000,14 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	@Override
 	public void setBody(String body) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("body");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_body = body;
 	}
 
@@ -857,6 +1019,14 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	@Override
 	public void setPriority(double priority) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("priority");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_priority = priority;
 	}
 
@@ -874,19 +1044,24 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	@Override
 	public void setSent(boolean sent) {
-		_columnBitmask |= SENT_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("sent");
 
-		if (!_setOriginalSent) {
-			_setOriginalSent = true;
-
-			_originalSent = _sent;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_sent = sent;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public boolean getOriginalSent() {
-		return _originalSent;
+		return GetterUtil.getBoolean(getColumnOriginalValue("sent"));
 	}
 
 	@JSON
@@ -897,17 +1072,24 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	@Override
 	public void setSentDate(Date sentDate) {
-		_columnBitmask |= SENTDATE_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("sentDate");
 
-		if (_originalSentDate == null) {
-			_originalSentDate = _sentDate;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_sentDate = sentDate;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public Date getOriginalSentDate() {
-		return _originalSentDate;
+		return getColumnOriginalValue("sentDate");
 	}
 
 	public long getColumnBitmask() {
@@ -1050,29 +1232,9 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_originalGroupId = _groupId;
-
-		_setOriginalGroupId = false;
+		_columnOriginalValues = Collections.emptyMap();
 
 		_setModifiedDate = false;
-		_originalClassNameId = _classNameId;
-
-		_setOriginalClassNameId = false;
-
-		_originalClassPK = _classPK;
-
-		_setOriginalClassPK = false;
-
-		_originalCommerceNotificationTemplateId =
-			_commerceNotificationTemplateId;
-
-		_setOriginalCommerceNotificationTemplateId = false;
-
-		_originalSent = _sent;
-
-		_setOriginalSent = false;
-
-		_originalSentDate = _sentDate;
 
 		_columnBitmask = 0;
 	}
@@ -1290,8 +1452,6 @@ public class CommerceNotificationQueueEntryModelImpl
 
 	private long _commerceNotificationQueueEntryId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
@@ -1299,14 +1459,8 @@ public class CommerceNotificationQueueEntryModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _classNameId;
-	private long _originalClassNameId;
-	private boolean _setOriginalClassNameId;
 	private long _classPK;
-	private long _originalClassPK;
-	private boolean _setOriginalClassPK;
 	private long _commerceNotificationTemplateId;
-	private long _originalCommerceNotificationTemplateId;
-	private boolean _setOriginalCommerceNotificationTemplateId;
 	private String _from;
 	private String _fromName;
 	private String _to;
@@ -1317,10 +1471,103 @@ public class CommerceNotificationQueueEntryModelImpl
 	private String _body;
 	private double _priority;
 	private boolean _sent;
-	private boolean _originalSent;
-	private boolean _setOriginalSent;
 	private Date _sentDate;
-	private Date _originalSentDate;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put(
+			"CNotificationQueueEntryId", _commerceNotificationQueueEntryId);
+		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("classNameId", _classNameId);
+		_columnOriginalValues.put("classPK", _classPK);
+		_columnOriginalValues.put(
+			"commerceNotificationTemplateId", _commerceNotificationTemplateId);
+		_columnOriginalValues.put("from_", _from);
+		_columnOriginalValues.put("fromName", _fromName);
+		_columnOriginalValues.put("to_", _to);
+		_columnOriginalValues.put("toName", _toName);
+		_columnOriginalValues.put("cc", _cc);
+		_columnOriginalValues.put("bcc", _bcc);
+		_columnOriginalValues.put("subject", _subject);
+		_columnOriginalValues.put("body", _body);
+		_columnOriginalValues.put("priority", _priority);
+		_columnOriginalValues.put("sent", _sent);
+		_columnOriginalValues.put("sentDate", _sentDate);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("CNotificationQueueEntryId", 1L);
+
+		columnBitmasks.put("groupId", 2L);
+
+		columnBitmasks.put("companyId", 4L);
+
+		columnBitmasks.put("userId", 8L);
+
+		columnBitmasks.put("userName", 16L);
+
+		columnBitmasks.put("createDate", 32L);
+
+		columnBitmasks.put("modifiedDate", 64L);
+
+		columnBitmasks.put("classNameId", 128L);
+
+		columnBitmasks.put("classPK", 256L);
+
+		columnBitmasks.put("commerceNotificationTemplateId", 512L);
+
+		columnBitmasks.put("from_", 1024L);
+
+		columnBitmasks.put("fromName", 2048L);
+
+		columnBitmasks.put("to_", 4096L);
+
+		columnBitmasks.put("toName", 8192L);
+
+		columnBitmasks.put("cc", 16384L);
+
+		columnBitmasks.put("bcc", 32768L);
+
+		columnBitmasks.put("subject", 65536L);
+
+		columnBitmasks.put("body", 131072L);
+
+		columnBitmasks.put("priority", 262144L);
+
+		columnBitmasks.put("sent", 524288L);
+
+		columnBitmasks.put("sentDate", 1048576L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommerceNotificationQueueEntry _escapedModel;
 

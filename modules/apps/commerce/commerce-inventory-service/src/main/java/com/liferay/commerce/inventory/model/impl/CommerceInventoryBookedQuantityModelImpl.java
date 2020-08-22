@@ -133,12 +133,29 @@ public class CommerceInventoryBookedQuantityModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long SKU_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMMERCEINVENTORYBOOKEDQUANTITYID_COLUMN_BITMASK =
 		8L;
 
@@ -424,6 +441,14 @@ public class CommerceInventoryBookedQuantityModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("mvccVersion");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_mvccVersion = mvccVersion;
 	}
 
@@ -437,6 +462,14 @@ public class CommerceInventoryBookedQuantityModelImpl
 	public void setCommerceInventoryBookedQuantityId(
 		long commerceInventoryBookedQuantityId) {
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("CIBookedQuantityId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_commerceInventoryBookedQuantityId = commerceInventoryBookedQuantityId;
 	}
 
@@ -448,19 +481,24 @@ public class CommerceInventoryBookedQuantityModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
 
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_companyId = companyId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -471,6 +509,14 @@ public class CommerceInventoryBookedQuantityModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -503,6 +549,14 @@ public class CommerceInventoryBookedQuantityModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -514,6 +568,14 @@ public class CommerceInventoryBookedQuantityModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -531,6 +593,14 @@ public class CommerceInventoryBookedQuantityModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -547,17 +617,24 @@ public class CommerceInventoryBookedQuantityModelImpl
 
 	@Override
 	public void setSku(String sku) {
-		_columnBitmask |= SKU_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("sku");
 
-		if (_originalSku == null) {
-			_originalSku = _sku;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_sku = sku;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalSku() {
-		return GetterUtil.getString(_originalSku);
+		return getColumnOriginalValue("sku");
 	}
 
 	@JSON
@@ -568,6 +645,14 @@ public class CommerceInventoryBookedQuantityModelImpl
 
 	@Override
 	public void setQuantity(int quantity) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("quantity");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_quantity = quantity;
 	}
 
@@ -579,17 +664,24 @@ public class CommerceInventoryBookedQuantityModelImpl
 
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		_columnBitmask |= EXPIRATIONDATE_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("expirationDate");
 
-		if (_originalExpirationDate == null) {
-			_originalExpirationDate = _expirationDate;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_expirationDate = expirationDate;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public Date getOriginalExpirationDate() {
-		return _originalExpirationDate;
+		return getColumnOriginalValue("expirationDate");
 	}
 
 	@JSON
@@ -605,6 +697,14 @@ public class CommerceInventoryBookedQuantityModelImpl
 
 	@Override
 	public void setBookedNote(String bookedNote) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("bookedNote");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_bookedNote = bookedNote;
 	}
 
@@ -732,14 +832,9 @@ public class CommerceInventoryBookedQuantityModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_originalCompanyId = _companyId;
-
-		_setOriginalCompanyId = false;
+		_columnOriginalValues = Collections.emptyMap();
 
 		_setModifiedDate = false;
-		_originalSku = _sku;
-
-		_originalExpirationDate = _expirationDate;
 
 		_columnBitmask = 0;
 	}
@@ -905,19 +1000,80 @@ public class CommerceInventoryBookedQuantityModelImpl
 	private long _mvccVersion;
 	private long _commerceInventoryBookedQuantityId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _sku;
-	private String _originalSku;
 	private int _quantity;
 	private Date _expirationDate;
-	private Date _originalExpirationDate;
 	private String _bookedNote;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put(
+			"CIBookedQuantityId", _commerceInventoryBookedQuantityId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("sku", _sku);
+		_columnOriginalValues.put("quantity", _quantity);
+		_columnOriginalValues.put("expirationDate", _expirationDate);
+		_columnOriginalValues.put("bookedNote", _bookedNote);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("mvccVersion", 1L);
+
+		columnBitmasks.put("CIBookedQuantityId", 2L);
+
+		columnBitmasks.put("companyId", 4L);
+
+		columnBitmasks.put("userId", 8L);
+
+		columnBitmasks.put("userName", 16L);
+
+		columnBitmasks.put("createDate", 32L);
+
+		columnBitmasks.put("modifiedDate", 64L);
+
+		columnBitmasks.put("sku", 128L);
+
+		columnBitmasks.put("quantity", 256L);
+
+		columnBitmasks.put("expirationDate", 512L);
+
+		columnBitmasks.put("bookedNote", 1024L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommerceInventoryBookedQuantity _escapedModel;
 

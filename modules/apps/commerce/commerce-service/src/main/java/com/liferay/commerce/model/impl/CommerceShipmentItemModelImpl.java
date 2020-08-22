@@ -136,14 +136,35 @@ public class CommerceShipmentItemModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMMERCEINVENTORYWAREHOUSEID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMMERCEORDERITEMID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMMERCESHIPMENTID_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
 
 	/**
@@ -419,6 +440,14 @@ public class CommerceShipmentItemModelImpl
 
 	@Override
 	public void setCommerceShipmentItemId(long commerceShipmentItemId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("commerceShipmentItemId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_commerceShipmentItemId = commerceShipmentItemId;
 	}
 
@@ -430,19 +459,24 @@ public class CommerceShipmentItemModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("groupId");
 
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_groupId = groupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -453,6 +487,14 @@ public class CommerceShipmentItemModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_companyId = companyId;
 	}
 
@@ -464,6 +506,14 @@ public class CommerceShipmentItemModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -496,6 +546,14 @@ public class CommerceShipmentItemModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -507,6 +565,14 @@ public class CommerceShipmentItemModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -524,6 +590,14 @@ public class CommerceShipmentItemModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -535,19 +609,24 @@ public class CommerceShipmentItemModelImpl
 
 	@Override
 	public void setCommerceShipmentId(long commerceShipmentId) {
-		_columnBitmask |= COMMERCESHIPMENTID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("commerceShipmentId");
 
-		if (!_setOriginalCommerceShipmentId) {
-			_setOriginalCommerceShipmentId = true;
-
-			_originalCommerceShipmentId = _commerceShipmentId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_commerceShipmentId = commerceShipmentId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCommerceShipmentId() {
-		return _originalCommerceShipmentId;
+		return GetterUtil.getLong(getColumnOriginalValue("commerceShipmentId"));
 	}
 
 	@JSON
@@ -558,19 +637,25 @@ public class CommerceShipmentItemModelImpl
 
 	@Override
 	public void setCommerceOrderItemId(long commerceOrderItemId) {
-		_columnBitmask |= COMMERCEORDERITEMID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("commerceOrderItemId");
 
-		if (!_setOriginalCommerceOrderItemId) {
-			_setOriginalCommerceOrderItemId = true;
-
-			_originalCommerceOrderItemId = _commerceOrderItemId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_commerceOrderItemId = commerceOrderItemId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCommerceOrderItemId() {
-		return _originalCommerceOrderItemId;
+		return GetterUtil.getLong(
+			getColumnOriginalValue("commerceOrderItemId"));
 	}
 
 	@JSON
@@ -583,20 +668,26 @@ public class CommerceShipmentItemModelImpl
 	public void setCommerceInventoryWarehouseId(
 		long commerceInventoryWarehouseId) {
 
-		_columnBitmask |= COMMERCEINVENTORYWAREHOUSEID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get(
+				"commerceInventoryWarehouseId");
 
-		if (!_setOriginalCommerceInventoryWarehouseId) {
-			_setOriginalCommerceInventoryWarehouseId = true;
-
-			_originalCommerceInventoryWarehouseId =
-				_commerceInventoryWarehouseId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_commerceInventoryWarehouseId = commerceInventoryWarehouseId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCommerceInventoryWarehouseId() {
-		return _originalCommerceInventoryWarehouseId;
+		return GetterUtil.getLong(
+			getColumnOriginalValue("commerceInventoryWarehouseId"));
 	}
 
 	@JSON
@@ -607,6 +698,14 @@ public class CommerceShipmentItemModelImpl
 
 	@Override
 	public void setQuantity(int quantity) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("quantity");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_quantity = quantity;
 	}
 
@@ -732,22 +831,9 @@ public class CommerceShipmentItemModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_originalGroupId = _groupId;
-
-		_setOriginalGroupId = false;
+		_columnOriginalValues = Collections.emptyMap();
 
 		_setModifiedDate = false;
-		_originalCommerceShipmentId = _commerceShipmentId;
-
-		_setOriginalCommerceShipmentId = false;
-
-		_originalCommerceOrderItemId = _commerceOrderItemId;
-
-		_setOriginalCommerceOrderItemId = false;
-
-		_originalCommerceInventoryWarehouseId = _commerceInventoryWarehouseId;
-
-		_setOriginalCommerceInventoryWarehouseId = false;
 
 		_columnBitmask = 0;
 	}
@@ -881,8 +967,6 @@ public class CommerceShipmentItemModelImpl
 
 	private long _commerceShipmentItemId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
@@ -890,15 +974,75 @@ public class CommerceShipmentItemModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _commerceShipmentId;
-	private long _originalCommerceShipmentId;
-	private boolean _setOriginalCommerceShipmentId;
 	private long _commerceOrderItemId;
-	private long _originalCommerceOrderItemId;
-	private boolean _setOriginalCommerceOrderItemId;
 	private long _commerceInventoryWarehouseId;
-	private long _originalCommerceInventoryWarehouseId;
-	private boolean _setOriginalCommerceInventoryWarehouseId;
 	private int _quantity;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put(
+			"commerceShipmentItemId", _commerceShipmentItemId);
+		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("commerceShipmentId", _commerceShipmentId);
+		_columnOriginalValues.put("commerceOrderItemId", _commerceOrderItemId);
+		_columnOriginalValues.put(
+			"commerceInventoryWarehouseId", _commerceInventoryWarehouseId);
+		_columnOriginalValues.put("quantity", _quantity);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("commerceShipmentItemId", 1L);
+
+		columnBitmasks.put("groupId", 2L);
+
+		columnBitmasks.put("companyId", 4L);
+
+		columnBitmasks.put("userId", 8L);
+
+		columnBitmasks.put("userName", 16L);
+
+		columnBitmasks.put("createDate", 32L);
+
+		columnBitmasks.put("modifiedDate", 64L);
+
+		columnBitmasks.put("commerceShipmentId", 128L);
+
+		columnBitmasks.put("commerceOrderItemId", 256L);
+
+		columnBitmasks.put("commerceInventoryWarehouseId", 512L);
+
+		columnBitmasks.put("quantity", 1024L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommerceShipmentItem _escapedModel;
 

@@ -1761,8 +1761,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 			CommerceAvailabilityEstimateImpl.class,
 			commerceAvailabilityEstimate.getPrimaryKey(),
 			commerceAvailabilityEstimate);
-
-		commerceAvailabilityEstimate.resetOriginalValues();
 	}
 
 	/**
@@ -1782,9 +1780,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 					commerceAvailabilityEstimate.getPrimaryKey()) == null) {
 
 				cacheResult(commerceAvailabilityEstimate);
-			}
-			else {
-				commerceAvailabilityEstimate.resetOriginalValues();
 			}
 		}
 	}
@@ -2094,7 +2089,8 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceAvailabilityEstimateModelImpl.getOriginalUuid()
+					commerceAvailabilityEstimateModelImpl.
+						getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -2115,8 +2111,10 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceAvailabilityEstimateModelImpl.getOriginalUuid(),
-					commerceAvailabilityEstimateModelImpl.getOriginalCompanyId()
+					commerceAvailabilityEstimateModelImpl.
+						getColumnOriginalValue("uuid_"),
+					commerceAvailabilityEstimateModelImpl.
+						getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -2138,7 +2136,8 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceAvailabilityEstimateModelImpl.getOriginalCompanyId()
+					commerceAvailabilityEstimateModelImpl.
+						getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -2459,8 +2458,8 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 			CommerceAvailabilityEstimateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			CommerceAvailabilityEstimateModelImpl.UUID_COLUMN_BITMASK |
-			CommerceAvailabilityEstimateModelImpl.TITLE_COLUMN_BITMASK);
+			CommerceAvailabilityEstimateModelImpl.getColumnBitmask("uuid_") |
+			CommerceAvailabilityEstimateModelImpl.getColumnBitmask("title"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2479,9 +2478,10 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 			CommerceAvailabilityEstimateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CommerceAvailabilityEstimateModelImpl.UUID_COLUMN_BITMASK |
-			CommerceAvailabilityEstimateModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceAvailabilityEstimateModelImpl.TITLE_COLUMN_BITMASK);
+			CommerceAvailabilityEstimateModelImpl.getColumnBitmask("uuid_") |
+			CommerceAvailabilityEstimateModelImpl.getColumnBitmask(
+				"companyId") |
+			CommerceAvailabilityEstimateModelImpl.getColumnBitmask("title"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2500,8 +2500,9 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 			CommerceAvailabilityEstimateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
-			CommerceAvailabilityEstimateModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceAvailabilityEstimateModelImpl.TITLE_COLUMN_BITMASK);
+			CommerceAvailabilityEstimateModelImpl.getColumnBitmask(
+				"companyId") |
+			CommerceAvailabilityEstimateModelImpl.getColumnBitmask("title"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

@@ -147,14 +147,35 @@ public class CommerceVirtualOrderItemModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMMERCEORDERITEMID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long UUID_COLUMN_BITMASK = 8L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
 
 	/**
@@ -485,17 +506,24 @@ public class CommerceVirtualOrderItemModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("uuid_");
 
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_uuid = uuid;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		return getColumnOriginalValue("uuid_");
 	}
 
 	@JSON
@@ -506,6 +534,14 @@ public class CommerceVirtualOrderItemModelImpl
 
 	@Override
 	public void setCommerceVirtualOrderItemId(long commerceVirtualOrderItemId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("commerceVirtualOrderItemId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_commerceVirtualOrderItemId = commerceVirtualOrderItemId;
 	}
 
@@ -517,19 +553,24 @@ public class CommerceVirtualOrderItemModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("groupId");
 
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_groupId = groupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -540,19 +581,24 @@ public class CommerceVirtualOrderItemModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
 
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_companyId = companyId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -563,6 +609,14 @@ public class CommerceVirtualOrderItemModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -595,6 +649,14 @@ public class CommerceVirtualOrderItemModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -606,6 +668,14 @@ public class CommerceVirtualOrderItemModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -623,6 +693,14 @@ public class CommerceVirtualOrderItemModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -634,19 +712,25 @@ public class CommerceVirtualOrderItemModelImpl
 
 	@Override
 	public void setCommerceOrderItemId(long commerceOrderItemId) {
-		_columnBitmask |= COMMERCEORDERITEMID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("commerceOrderItemId");
 
-		if (!_setOriginalCommerceOrderItemId) {
-			_setOriginalCommerceOrderItemId = true;
-
-			_originalCommerceOrderItemId = _commerceOrderItemId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_commerceOrderItemId = commerceOrderItemId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCommerceOrderItemId() {
-		return _originalCommerceOrderItemId;
+		return GetterUtil.getLong(
+			getColumnOriginalValue("commerceOrderItemId"));
 	}
 
 	@JSON
@@ -657,6 +741,14 @@ public class CommerceVirtualOrderItemModelImpl
 
 	@Override
 	public void setFileEntryId(long fileEntryId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("fileEntryId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_fileEntryId = fileEntryId;
 	}
 
@@ -673,6 +765,14 @@ public class CommerceVirtualOrderItemModelImpl
 
 	@Override
 	public void setUrl(String url) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("url");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_url = url;
 	}
 
@@ -684,6 +784,14 @@ public class CommerceVirtualOrderItemModelImpl
 
 	@Override
 	public void setActivationStatus(int activationStatus) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("activationStatus");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_activationStatus = activationStatus;
 	}
 
@@ -695,6 +803,14 @@ public class CommerceVirtualOrderItemModelImpl
 
 	@Override
 	public void setDuration(long duration) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("duration");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_duration = duration;
 	}
 
@@ -706,6 +822,14 @@ public class CommerceVirtualOrderItemModelImpl
 
 	@Override
 	public void setUsages(int usages) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("usages");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_usages = usages;
 	}
 
@@ -717,6 +841,14 @@ public class CommerceVirtualOrderItemModelImpl
 
 	@Override
 	public void setMaxUsages(int maxUsages) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("maxUsages");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_maxUsages = maxUsages;
 	}
 
@@ -734,6 +866,14 @@ public class CommerceVirtualOrderItemModelImpl
 
 	@Override
 	public void setActive(boolean active) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("active_");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_active = active;
 	}
 
@@ -745,6 +885,14 @@ public class CommerceVirtualOrderItemModelImpl
 
 	@Override
 	public void setStartDate(Date startDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("startDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_startDate = startDate;
 	}
 
@@ -756,6 +904,14 @@ public class CommerceVirtualOrderItemModelImpl
 
 	@Override
 	public void setEndDate(Date endDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("endDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_endDate = endDate;
 	}
 
@@ -894,20 +1050,9 @@ public class CommerceVirtualOrderItemModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_originalUuid = _uuid;
-
-		_originalGroupId = _groupId;
-
-		_setOriginalGroupId = false;
-
-		_originalCompanyId = _companyId;
-
-		_setOriginalCompanyId = false;
+		_columnOriginalValues = Collections.emptyMap();
 
 		_setModifiedDate = false;
-		_originalCommerceOrderItemId = _commerceOrderItemId;
-
-		_setOriginalCommerceOrderItemId = false;
 
 		_columnBitmask = 0;
 	}
@@ -1082,22 +1227,15 @@ public class CommerceVirtualOrderItemModelImpl
 	}
 
 	private String _uuid;
-	private String _originalUuid;
 	private long _commerceVirtualOrderItemId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _commerceOrderItemId;
-	private long _originalCommerceOrderItemId;
-	private boolean _setOriginalCommerceOrderItemId;
 	private long _fileEntryId;
 	private String _url;
 	private int _activationStatus;
@@ -1107,6 +1245,92 @@ public class CommerceVirtualOrderItemModelImpl
 	private boolean _active;
 	private Date _startDate;
 	private Date _endDate;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"commerceVirtualOrderItemId", _commerceVirtualOrderItemId);
+		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("commerceOrderItemId", _commerceOrderItemId);
+		_columnOriginalValues.put("fileEntryId", _fileEntryId);
+		_columnOriginalValues.put("url", _url);
+		_columnOriginalValues.put("activationStatus", _activationStatus);
+		_columnOriginalValues.put("duration", _duration);
+		_columnOriginalValues.put("usages", _usages);
+		_columnOriginalValues.put("maxUsages", _maxUsages);
+		_columnOriginalValues.put("active_", _active);
+		_columnOriginalValues.put("startDate", _startDate);
+		_columnOriginalValues.put("endDate", _endDate);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("uuid_", 1L);
+
+		columnBitmasks.put("commerceVirtualOrderItemId", 2L);
+
+		columnBitmasks.put("groupId", 4L);
+
+		columnBitmasks.put("companyId", 8L);
+
+		columnBitmasks.put("userId", 16L);
+
+		columnBitmasks.put("userName", 32L);
+
+		columnBitmasks.put("createDate", 64L);
+
+		columnBitmasks.put("modifiedDate", 128L);
+
+		columnBitmasks.put("commerceOrderItemId", 256L);
+
+		columnBitmasks.put("fileEntryId", 512L);
+
+		columnBitmasks.put("url", 1024L);
+
+		columnBitmasks.put("activationStatus", 2048L);
+
+		columnBitmasks.put("duration", 4096L);
+
+		columnBitmasks.put("usages", 8192L);
+
+		columnBitmasks.put("maxUsages", 16384L);
+
+		columnBitmasks.put("active_", 32768L);
+
+		columnBitmasks.put("startDate", 65536L);
+
+		columnBitmasks.put("endDate", 131072L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommerceVirtualOrderItem _escapedModel;
 

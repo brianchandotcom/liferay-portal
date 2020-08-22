@@ -3048,8 +3048,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			CommerceInventoryReplenishmentItemImpl.class,
 			commerceInventoryReplenishmentItem.getPrimaryKey(),
 			commerceInventoryReplenishmentItem);
-
-		commerceInventoryReplenishmentItem.resetOriginalValues();
 	}
 
 	/**
@@ -3072,9 +3070,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 						null) {
 
 				cacheResult(commerceInventoryReplenishmentItem);
-			}
-			else {
-				commerceInventoryReplenishmentItem.resetOriginalValues();
 			}
 		}
 	}
@@ -3406,7 +3401,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceInventoryReplenishmentItemModelImpl.
-						getOriginalCommerceInventoryWarehouseId()
+						getColumnOriginalValue("commerceInventoryWarehouseId")
 				};
 
 				finderCache.removeResult(
@@ -3433,7 +3428,8 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceInventoryReplenishmentItemModelImpl.getOriginalSku()
+					commerceInventoryReplenishmentItemModelImpl.
+						getColumnOriginalValue("sku")
 				};
 
 				finderCache.removeResult(_finderPathCountBySku, args);
@@ -3456,7 +3452,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceInventoryReplenishmentItemModelImpl.
-						getOriginalAvailabilityDate()
+						getColumnOriginalValue("availabilityDate")
 				};
 
 				finderCache.removeResult(
@@ -3482,8 +3478,9 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceInventoryReplenishmentItemModelImpl.
-						getOriginalCompanyId(),
-					commerceInventoryReplenishmentItemModelImpl.getOriginalSku()
+						getColumnOriginalValue("companyId"),
+					commerceInventoryReplenishmentItemModelImpl.
+						getColumnOriginalValue("sku")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_S, args);
@@ -3507,9 +3504,9 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceInventoryReplenishmentItemModelImpl.
-						getOriginalSku(),
+						getColumnOriginalValue("sku"),
 					commerceInventoryReplenishmentItemModelImpl.
-						getOriginalAvailabilityDate()
+						getColumnOriginalValue("availabilityDate")
 				};
 
 				finderCache.removeResult(_finderPathCountByS_AD, args);
@@ -3842,8 +3839,8 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceInventoryWarehouseId",
 				new String[] {Long.class.getName()},
-				CommerceInventoryReplenishmentItemModelImpl.
-					COMMERCEINVENTORYWAREHOUSEID_COLUMN_BITMASK);
+				CommerceInventoryReplenishmentItemModelImpl.getColumnBitmask(
+					"commerceInventoryWarehouseId"));
 
 		_finderPathCountByCommerceInventoryWarehouseId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3862,7 +3859,8 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			CommerceInventoryReplenishmentItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySku",
 			new String[] {String.class.getName()},
-			CommerceInventoryReplenishmentItemModelImpl.SKU_COLUMN_BITMASK);
+			CommerceInventoryReplenishmentItemModelImpl.getColumnBitmask(
+				"sku"));
 
 		_finderPathCountBySku = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySku",
@@ -3880,8 +3878,8 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			CommerceInventoryReplenishmentItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAvailabilityDate",
 			new String[] {Date.class.getName()},
-			CommerceInventoryReplenishmentItemModelImpl.
-				AVAILABILITYDATE_COLUMN_BITMASK);
+			CommerceInventoryReplenishmentItemModelImpl.getColumnBitmask(
+				"availabilityDate"));
 
 		_finderPathCountByAvailabilityDate = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3900,9 +3898,10 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			CommerceInventoryReplenishmentItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceInventoryReplenishmentItemModelImpl.
-				COMPANYID_COLUMN_BITMASK |
-			CommerceInventoryReplenishmentItemModelImpl.SKU_COLUMN_BITMASK);
+			CommerceInventoryReplenishmentItemModelImpl.getColumnBitmask(
+				"companyId") |
+			CommerceInventoryReplenishmentItemModelImpl.getColumnBitmask(
+				"sku"));
 
 		_finderPathCountByC_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
@@ -3921,9 +3920,10 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			CommerceInventoryReplenishmentItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_AD",
 			new String[] {String.class.getName(), Date.class.getName()},
-			CommerceInventoryReplenishmentItemModelImpl.SKU_COLUMN_BITMASK |
-			CommerceInventoryReplenishmentItemModelImpl.
-				AVAILABILITYDATE_COLUMN_BITMASK);
+			CommerceInventoryReplenishmentItemModelImpl.getColumnBitmask(
+				"sku") |
+			CommerceInventoryReplenishmentItemModelImpl.getColumnBitmask(
+				"availabilityDate"));
 
 		_finderPathCountByS_AD = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

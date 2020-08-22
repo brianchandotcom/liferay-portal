@@ -1429,8 +1429,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 				commerceAccountGroupRel.getCommerceAccountGroupId()
 			},
 			commerceAccountGroupRel);
-
-		commerceAccountGroupRel.resetOriginalValues();
 	}
 
 	/**
@@ -1450,9 +1448,6 @@ public class CommerceAccountGroupRelPersistenceImpl
 					commerceAccountGroupRel.getPrimaryKey()) == null) {
 
 				cacheResult(commerceAccountGroupRel);
-			}
-			else {
-				commerceAccountGroupRel.resetOriginalValues();
 			}
 		}
 	}
@@ -1560,10 +1555,12 @@ public class CommerceAccountGroupRelPersistenceImpl
 			 _finderPathFetchByC_C_C.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceAccountGroupRelModelImpl.getOriginalClassNameId(),
-				commerceAccountGroupRelModelImpl.getOriginalClassPK(),
-				commerceAccountGroupRelModelImpl.
-					getOriginalCommerceAccountGroupId()
+				commerceAccountGroupRelModelImpl.getColumnOriginalValue(
+					"classNameId"),
+				commerceAccountGroupRelModelImpl.getColumnOriginalValue(
+					"classPK"),
+				commerceAccountGroupRelModelImpl.getColumnOriginalValue(
+					"commerceAccountGroupId")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_C_C, args);
@@ -1786,8 +1783,8 @@ public class CommerceAccountGroupRelPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceAccountGroupRelModelImpl.
-						getOriginalCommerceAccountGroupId()
+					commerceAccountGroupRelModelImpl.getColumnOriginalValue(
+						"commerceAccountGroupId")
 				};
 
 				finderCache.removeResult(
@@ -1812,8 +1809,10 @@ public class CommerceAccountGroupRelPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceAccountGroupRelModelImpl.getOriginalClassNameId(),
-					commerceAccountGroupRelModelImpl.getOriginalClassPK()
+					commerceAccountGroupRelModelImpl.getColumnOriginalValue(
+						"classNameId"),
+					commerceAccountGroupRelModelImpl.getColumnOriginalValue(
+						"classPK")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_C, args);
@@ -2133,9 +2132,10 @@ public class CommerceAccountGroupRelPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceAccountGroupId",
 				new String[] {Long.class.getName()},
-				CommerceAccountGroupRelModelImpl.
-					COMMERCEACCOUNTGROUPID_COLUMN_BITMASK |
-				CommerceAccountGroupRelModelImpl.CREATEDATE_COLUMN_BITMASK);
+				CommerceAccountGroupRelModelImpl.getColumnBitmask(
+					"commerceAccountGroupId") |
+				CommerceAccountGroupRelModelImpl.getColumnBitmask(
+					"createDate"));
 
 		_finderPathCountByCommerceAccountGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2155,9 +2155,9 @@ public class CommerceAccountGroupRelPersistenceImpl
 			CommerceAccountGroupRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CommerceAccountGroupRelModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			CommerceAccountGroupRelModelImpl.CLASSPK_COLUMN_BITMASK |
-			CommerceAccountGroupRelModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceAccountGroupRelModelImpl.getColumnBitmask("classNameId") |
+			CommerceAccountGroupRelModelImpl.getColumnBitmask("classPK") |
+			CommerceAccountGroupRelModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByC_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
@@ -2169,10 +2169,10 @@ public class CommerceAccountGroupRelPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			CommerceAccountGroupRelModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			CommerceAccountGroupRelModelImpl.CLASSPK_COLUMN_BITMASK |
-			CommerceAccountGroupRelModelImpl.
-				COMMERCEACCOUNTGROUPID_COLUMN_BITMASK);
+			CommerceAccountGroupRelModelImpl.getColumnBitmask("classNameId") |
+			CommerceAccountGroupRelModelImpl.getColumnBitmask("classPK") |
+			CommerceAccountGroupRelModelImpl.getColumnBitmask(
+				"commerceAccountGroupId"));
 
 		_finderPathCountByC_C_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -498,20 +499,66 @@ public class CommerceAccountGroupPersistenceTest {
 
 		_persistence.clearCache();
 
-		CommerceAccountGroup existingCommerceAccountGroup =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newCommerceAccountGroup.getPrimaryKey());
+				newCommerceAccountGroup.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CommerceAccountGroup newCommerceAccountGroup =
+			addCommerceAccountGroup();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CommerceAccountGroup.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"commerceAccountGroupId",
+				newCommerceAccountGroup.getCommerceAccountGroupId()));
+
+		List<CommerceAccountGroup> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		CommerceAccountGroup commerceAccountGroup) {
 
 		Assert.assertEquals(
-			Long.valueOf(existingCommerceAccountGroup.getCompanyId()),
+			Long.valueOf(commerceAccountGroup.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceAccountGroup, "getOriginalCompanyId",
-				new Class<?>[0]));
+				commerceAccountGroup, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
-			existingCommerceAccountGroup.getExternalReferenceCode(),
+			commerceAccountGroup.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
-				existingCommerceAccountGroup,
-				"getOriginalExternalReferenceCode", new Class<?>[0]));
+				commerceAccountGroup, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected CommerceAccountGroup addCommerceAccountGroup() throws Exception {

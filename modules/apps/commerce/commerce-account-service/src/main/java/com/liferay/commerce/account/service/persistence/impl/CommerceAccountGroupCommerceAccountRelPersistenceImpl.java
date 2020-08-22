@@ -1754,8 +1754,6 @@ public class CommerceAccountGroupCommerceAccountRelPersistenceImpl
 					getExternalReferenceCode()
 			},
 			commerceAccountGroupCommerceAccountRel);
-
-		commerceAccountGroupCommerceAccountRel.resetOriginalValues();
 	}
 
 	/**
@@ -1778,9 +1776,6 @@ public class CommerceAccountGroupCommerceAccountRelPersistenceImpl
 						null) {
 
 				cacheResult(commerceAccountGroupCommerceAccountRel);
-			}
-			else {
-				commerceAccountGroupCommerceAccountRel.resetOriginalValues();
 			}
 		}
 	}
@@ -1915,9 +1910,9 @@ public class CommerceAccountGroupCommerceAccountRelPersistenceImpl
 
 			Object[] args = new Object[] {
 				commerceAccountGroupCommerceAccountRelModelImpl.
-					getOriginalCommerceAccountGroupId(),
+					getColumnOriginalValue("commerceAccountGroupId"),
 				commerceAccountGroupCommerceAccountRelModelImpl.
-					getOriginalCommerceAccountId()
+					getColumnOriginalValue("commerceAccountId")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_C, args);
@@ -1941,9 +1936,9 @@ public class CommerceAccountGroupCommerceAccountRelPersistenceImpl
 
 			Object[] args = new Object[] {
 				commerceAccountGroupCommerceAccountRelModelImpl.
-					getOriginalCompanyId(),
+					getColumnOriginalValue("companyId"),
 				commerceAccountGroupCommerceAccountRelModelImpl.
-					getOriginalExternalReferenceCode()
+					getColumnOriginalValue("externalReferenceCode")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_ERC, args);
@@ -2192,7 +2187,7 @@ public class CommerceAccountGroupCommerceAccountRelPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceAccountGroupCommerceAccountRelModelImpl.
-						getOriginalCommerceAccountGroupId()
+						getColumnOriginalValue("commerceAccountGroupId")
 				};
 
 				finderCache.removeResult(
@@ -2220,7 +2215,7 @@ public class CommerceAccountGroupCommerceAccountRelPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceAccountGroupCommerceAccountRelModelImpl.
-						getOriginalCommerceAccountId()
+						getColumnOriginalValue("commerceAccountId")
 				};
 
 				finderCache.removeResult(
@@ -2564,7 +2559,7 @@ public class CommerceAccountGroupCommerceAccountRelPersistenceImpl
 				"findByCommerceAccountGroupId",
 				new String[] {Long.class.getName()},
 				CommerceAccountGroupCommerceAccountRelModelImpl.
-					COMMERCEACCOUNTGROUPID_COLUMN_BITMASK);
+					getColumnBitmask("commerceAccountGroupId"));
 
 		_finderPathCountByCommerceAccountGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2583,8 +2578,8 @@ public class CommerceAccountGroupCommerceAccountRelPersistenceImpl
 			CommerceAccountGroupCommerceAccountRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceAccountId", new String[] {Long.class.getName()},
-			CommerceAccountGroupCommerceAccountRelModelImpl.
-				COMMERCEACCOUNTID_COLUMN_BITMASK);
+			CommerceAccountGroupCommerceAccountRelModelImpl.getColumnBitmask(
+				"commerceAccountId"));
 
 		_finderPathCountByCommerceAccountId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2594,10 +2589,10 @@ public class CommerceAccountGroupCommerceAccountRelPersistenceImpl
 			CommerceAccountGroupCommerceAccountRelImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CommerceAccountGroupCommerceAccountRelModelImpl.
-				COMMERCEACCOUNTGROUPID_COLUMN_BITMASK |
-			CommerceAccountGroupCommerceAccountRelModelImpl.
-				COMMERCEACCOUNTID_COLUMN_BITMASK);
+			CommerceAccountGroupCommerceAccountRelModelImpl.getColumnBitmask(
+				"commerceAccountGroupId") |
+			CommerceAccountGroupCommerceAccountRelModelImpl.getColumnBitmask(
+				"commerceAccountId"));
 
 		_finderPathCountByC_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
@@ -2607,10 +2602,10 @@ public class CommerceAccountGroupCommerceAccountRelPersistenceImpl
 			CommerceAccountGroupCommerceAccountRelImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceAccountGroupCommerceAccountRelModelImpl.
-				COMPANYID_COLUMN_BITMASK |
-			CommerceAccountGroupCommerceAccountRelModelImpl.
-				EXTERNALREFERENCECODE_COLUMN_BITMASK);
+			CommerceAccountGroupCommerceAccountRelModelImpl.getColumnBitmask(
+				"companyId") |
+			CommerceAccountGroupCommerceAccountRelModelImpl.getColumnBitmask(
+				"externalReferenceCode"));
 
 		_finderPathCountByC_ERC = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

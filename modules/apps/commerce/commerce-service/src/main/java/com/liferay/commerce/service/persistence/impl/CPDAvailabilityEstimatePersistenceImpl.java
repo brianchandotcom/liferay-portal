@@ -1986,8 +1986,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			_finderPathFetchByCProductId,
 			new Object[] {cpdAvailabilityEstimate.getCProductId()},
 			cpdAvailabilityEstimate);
-
-		cpdAvailabilityEstimate.resetOriginalValues();
 	}
 
 	/**
@@ -2007,9 +2005,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 					cpdAvailabilityEstimate.getPrimaryKey()) == null) {
 
 				cacheResult(cpdAvailabilityEstimate);
-			}
-			else {
-				cpdAvailabilityEstimate.resetOriginalValues();
 			}
 		}
 	}
@@ -2113,7 +2108,8 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			 _finderPathFetchByCProductId.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cpdAvailabilityEstimateModelImpl.getOriginalCProductId()
+				cpdAvailabilityEstimateModelImpl.getColumnOriginalValue(
+					"CProductId")
 			};
 
 			finderCache.removeResult(_finderPathCountByCProductId, args);
@@ -2356,7 +2352,8 @@ public class CPDAvailabilityEstimatePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpdAvailabilityEstimateModelImpl.getOriginalUuid()
+					cpdAvailabilityEstimateModelImpl.getColumnOriginalValue(
+						"uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -2377,8 +2374,10 @@ public class CPDAvailabilityEstimatePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpdAvailabilityEstimateModelImpl.getOriginalUuid(),
-					cpdAvailabilityEstimateModelImpl.getOriginalCompanyId()
+					cpdAvailabilityEstimateModelImpl.getColumnOriginalValue(
+						"uuid_"),
+					cpdAvailabilityEstimateModelImpl.getColumnOriginalValue(
+						"companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -2400,8 +2399,8 @@ public class CPDAvailabilityEstimatePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					cpdAvailabilityEstimateModelImpl.
-						getOriginalCommerceAvailabilityEstimateId()
+					cpdAvailabilityEstimateModelImpl.getColumnOriginalValue(
+						"commerceAvailabilityEstimateId")
 				};
 
 				finderCache.removeResult(
@@ -2727,7 +2726,7 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			CPDAvailabilityEstimateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			CPDAvailabilityEstimateModelImpl.UUID_COLUMN_BITMASK);
+			CPDAvailabilityEstimateModelImpl.getColumnBitmask("uuid_"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2746,8 +2745,8 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			CPDAvailabilityEstimateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CPDAvailabilityEstimateModelImpl.UUID_COLUMN_BITMASK |
-			CPDAvailabilityEstimateModelImpl.COMPANYID_COLUMN_BITMASK);
+			CPDAvailabilityEstimateModelImpl.getColumnBitmask("uuid_") |
+			CPDAvailabilityEstimateModelImpl.getColumnBitmask("companyId"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2770,8 +2769,8 @@ public class CPDAvailabilityEstimatePersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceAvailabilityEstimateId",
 				new String[] {Long.class.getName()},
-				CPDAvailabilityEstimateModelImpl.
-					COMMERCEAVAILABILITYESTIMATEID_COLUMN_BITMASK);
+				CPDAvailabilityEstimateModelImpl.getColumnBitmask(
+					"commerceAvailabilityEstimateId"));
 
 		_finderPathCountByCommerceAvailabilityEstimateId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2781,7 +2780,7 @@ public class CPDAvailabilityEstimatePersistenceImpl
 		_finderPathFetchByCProductId = new FinderPath(
 			CPDAvailabilityEstimateImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByCProductId", new String[] {Long.class.getName()},
-			CPDAvailabilityEstimateModelImpl.CPRODUCTID_COLUMN_BITMASK);
+			CPDAvailabilityEstimateModelImpl.getColumnBitmask("CProductId"));
 
 		_finderPathCountByCProductId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

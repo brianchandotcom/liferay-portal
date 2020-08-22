@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -483,18 +484,61 @@ public class CommerceRegionPersistenceTest {
 
 		_persistence.clearCache();
 
-		CommerceRegion existingCommerceRegion = _persistence.findByPrimaryKey(
-			newCommerceRegion.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newCommerceRegion.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CommerceRegion newCommerceRegion = addCommerceRegion();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CommerceRegion.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"commerceRegionId", newCommerceRegion.getCommerceRegionId()));
+
+		List<CommerceRegion> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(CommerceRegion commerceRegion) {
 		Assert.assertEquals(
-			Long.valueOf(existingCommerceRegion.getCommerceCountryId()),
+			Long.valueOf(commerceRegion.getCommerceCountryId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceRegion, "getOriginalCommerceCountryId",
-				new Class<?>[0]));
+				commerceRegion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "commerceCountryId"));
 		Assert.assertEquals(
-			existingCommerceRegion.getCode(),
+			commerceRegion.getCode(),
 			ReflectionTestUtil.invoke(
-				existingCommerceRegion, "getOriginalCode", new Class<?>[0]));
+				commerceRegion, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "code_"));
 	}
 
 	protected CommerceRegion addCommerceRegion() throws Exception {

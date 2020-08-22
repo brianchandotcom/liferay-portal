@@ -4992,8 +4992,6 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 				cpDefinitionOptionValueRel.getKey()
 			},
 			cpDefinitionOptionValueRel);
-
-		cpDefinitionOptionValueRel.resetOriginalValues();
 	}
 
 	/**
@@ -5013,9 +5011,6 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 					cpDefinitionOptionValueRel.getPrimaryKey()) == null) {
 
 				cacheResult(cpDefinitionOptionValueRel);
-			}
-			else {
-				cpDefinitionOptionValueRel.resetOriginalValues();
 			}
 		}
 	}
@@ -5136,8 +5131,10 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cpDefinitionOptionValueRelModelImpl.getOriginalUuid(),
-				cpDefinitionOptionValueRelModelImpl.getOriginalGroupId()
+				cpDefinitionOptionValueRelModelImpl.getColumnOriginalValue(
+					"uuid_"),
+				cpDefinitionOptionValueRelModelImpl.getColumnOriginalValue(
+					"groupId")
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -5159,9 +5156,10 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 			 _finderPathFetchByC_K.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cpDefinitionOptionValueRelModelImpl.
-					getOriginalCPDefinitionOptionRelId(),
-				cpDefinitionOptionValueRelModelImpl.getOriginalKey()
+				cpDefinitionOptionValueRelModelImpl.getColumnOriginalValue(
+					"CPDefinitionOptionRelId"),
+				cpDefinitionOptionValueRelModelImpl.getColumnOriginalValue(
+					"key_")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_K, args);
@@ -5450,7 +5448,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpDefinitionOptionValueRelModelImpl.getOriginalUuid()
+					cpDefinitionOptionValueRelModelImpl.getColumnOriginalValue(
+						"uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -5471,8 +5470,10 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpDefinitionOptionValueRelModelImpl.getOriginalUuid(),
-					cpDefinitionOptionValueRelModelImpl.getOriginalCompanyId()
+					cpDefinitionOptionValueRelModelImpl.getColumnOriginalValue(
+						"uuid_"),
+					cpDefinitionOptionValueRelModelImpl.getColumnOriginalValue(
+						"companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -5494,7 +5495,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					cpDefinitionOptionValueRelModelImpl.getOriginalGroupId()
+					cpDefinitionOptionValueRelModelImpl.getColumnOriginalValue(
+						"groupId")
 				};
 
 				finderCache.removeResult(_finderPathCountByGroupId, args);
@@ -5515,7 +5517,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					cpDefinitionOptionValueRelModelImpl.getOriginalCompanyId()
+					cpDefinitionOptionValueRelModelImpl.getColumnOriginalValue(
+						"companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -5536,8 +5539,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					cpDefinitionOptionValueRelModelImpl.
-						getOriginalCPDefinitionOptionRelId()
+					cpDefinitionOptionValueRelModelImpl.getColumnOriginalValue(
+						"CPDefinitionOptionRelId")
 				};
 
 				finderCache.removeResult(
@@ -5563,8 +5566,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					cpDefinitionOptionValueRelModelImpl.
-						getOriginalCPInstanceUuid()
+					cpDefinitionOptionValueRelModelImpl.getColumnOriginalValue(
+						"CPInstanceUuid")
 				};
 
 				finderCache.removeResult(
@@ -5587,7 +5590,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpDefinitionOptionValueRelModelImpl.getOriginalKey()
+					cpDefinitionOptionValueRelModelImpl.getColumnOriginalValue(
+						"key_")
 				};
 
 				finderCache.removeResult(_finderPathCountByKey, args);
@@ -5608,9 +5612,10 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					cpDefinitionOptionValueRelModelImpl.
-						getOriginalCPDefinitionOptionRelId(),
-					cpDefinitionOptionValueRelModelImpl.getOriginalPreselected()
+					cpDefinitionOptionValueRelModelImpl.getColumnOriginalValue(
+						"CPDefinitionOptionRelId"),
+					cpDefinitionOptionValueRelModelImpl.getColumnOriginalValue(
+						"preselected")
 				};
 
 				finderCache.removeResult(_finderPathCountByCDORI_P, args);
@@ -5935,8 +5940,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 			CPDefinitionOptionValueRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			CPDefinitionOptionValueRelModelImpl.UUID_COLUMN_BITMASK |
-			CPDefinitionOptionValueRelModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask("uuid_") |
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5946,8 +5951,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 			CPDefinitionOptionValueRelImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CPDefinitionOptionValueRelModelImpl.UUID_COLUMN_BITMASK |
-			CPDefinitionOptionValueRelModelImpl.GROUPID_COLUMN_BITMASK);
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask("uuid_") |
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5967,9 +5972,9 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 			CPDefinitionOptionValueRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CPDefinitionOptionValueRelModelImpl.UUID_COLUMN_BITMASK |
-			CPDefinitionOptionValueRelModelImpl.COMPANYID_COLUMN_BITMASK |
-			CPDefinitionOptionValueRelModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask("uuid_") |
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask("companyId") |
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5988,8 +5993,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 			CPDefinitionOptionValueRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()},
-			CPDefinitionOptionValueRelModelImpl.GROUPID_COLUMN_BITMASK |
-			CPDefinitionOptionValueRelModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask("groupId") |
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -6007,8 +6012,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 			CPDefinitionOptionValueRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
-			CPDefinitionOptionValueRelModelImpl.COMPANYID_COLUMN_BITMASK |
-			CPDefinitionOptionValueRelModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask("companyId") |
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -6029,9 +6034,10 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCPDefinitionOptionRelId",
 				new String[] {Long.class.getName()},
-				CPDefinitionOptionValueRelModelImpl.
-					CPDEFINITIONOPTIONRELID_COLUMN_BITMASK |
-				CPDefinitionOptionValueRelModelImpl.PRIORITY_COLUMN_BITMASK);
+				CPDefinitionOptionValueRelModelImpl.getColumnBitmask(
+					"CPDefinitionOptionRelId") |
+				CPDefinitionOptionValueRelModelImpl.getColumnBitmask(
+					"priority"));
 
 		_finderPathCountByCPDefinitionOptionRelId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -6050,8 +6056,9 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 			CPDefinitionOptionValueRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPInstanceUuid",
 			new String[] {String.class.getName()},
-			CPDefinitionOptionValueRelModelImpl.CPINSTANCEUUID_COLUMN_BITMASK |
-			CPDefinitionOptionValueRelModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask(
+				"CPInstanceUuid") |
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByCPInstanceUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -6069,8 +6076,8 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 			CPDefinitionOptionValueRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKey",
 			new String[] {String.class.getName()},
-			CPDefinitionOptionValueRelModelImpl.KEY_COLUMN_BITMASK |
-			CPDefinitionOptionValueRelModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask("key_") |
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByKey = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKey",
@@ -6080,9 +6087,9 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 			CPDefinitionOptionValueRelImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_K",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CPDefinitionOptionValueRelModelImpl.
-				CPDEFINITIONOPTIONRELID_COLUMN_BITMASK |
-			CPDefinitionOptionValueRelModelImpl.KEY_COLUMN_BITMASK);
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask(
+				"CPDefinitionOptionRelId") |
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask("key_"));
 
 		_finderPathCountByC_K = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K",
@@ -6101,10 +6108,11 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 			CPDefinitionOptionValueRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCDORI_P",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			CPDefinitionOptionValueRelModelImpl.
-				CPDEFINITIONOPTIONRELID_COLUMN_BITMASK |
-			CPDefinitionOptionValueRelModelImpl.PRESELECTED_COLUMN_BITMASK |
-			CPDefinitionOptionValueRelModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask(
+				"CPDefinitionOptionRelId") |
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask(
+				"preselected") |
+			CPDefinitionOptionValueRelModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByCDORI_P = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

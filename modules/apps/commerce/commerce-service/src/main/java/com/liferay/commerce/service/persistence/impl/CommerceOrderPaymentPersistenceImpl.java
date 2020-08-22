@@ -610,8 +610,6 @@ public class CommerceOrderPaymentPersistenceImpl
 		entityCache.putResult(
 			CommerceOrderPaymentImpl.class,
 			commerceOrderPayment.getPrimaryKey(), commerceOrderPayment);
-
-		commerceOrderPayment.resetOriginalValues();
 	}
 
 	/**
@@ -629,9 +627,6 @@ public class CommerceOrderPaymentPersistenceImpl
 					commerceOrderPayment.getPrimaryKey()) == null) {
 
 				cacheResult(commerceOrderPayment);
-			}
-			else {
-				commerceOrderPayment.resetOriginalValues();
 			}
 		}
 	}
@@ -897,7 +892,8 @@ public class CommerceOrderPaymentPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceOrderPaymentModelImpl.getOriginalCommerceOrderId()
+					commerceOrderPaymentModelImpl.getColumnOriginalValue(
+						"commerceOrderId")
 				};
 
 				finderCache.removeResult(
@@ -1207,8 +1203,8 @@ public class CommerceOrderPaymentPersistenceImpl
 			CommerceOrderPaymentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCommerceOrderId",
 			new String[] {Long.class.getName()},
-			CommerceOrderPaymentModelImpl.COMMERCEORDERID_COLUMN_BITMASK |
-			CommerceOrderPaymentModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceOrderPaymentModelImpl.getColumnBitmask("commerceOrderId") |
+			CommerceOrderPaymentModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByCommerceOrderId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

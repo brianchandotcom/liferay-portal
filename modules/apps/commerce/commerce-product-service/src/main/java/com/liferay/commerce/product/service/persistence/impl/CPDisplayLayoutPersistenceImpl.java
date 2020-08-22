@@ -3322,8 +3322,6 @@ public class CPDisplayLayoutPersistenceImpl
 				cpDisplayLayout.getClassNameId(), cpDisplayLayout.getClassPK()
 			},
 			cpDisplayLayout);
-
-		cpDisplayLayout.resetOriginalValues();
 	}
 
 	/**
@@ -3339,9 +3337,6 @@ public class CPDisplayLayoutPersistenceImpl
 					cpDisplayLayout.getPrimaryKey()) == null) {
 
 				cacheResult(cpDisplayLayout);
-			}
-			else {
-				cpDisplayLayout.resetOriginalValues();
 			}
 		}
 	}
@@ -3448,8 +3443,8 @@ public class CPDisplayLayoutPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cpDisplayLayoutModelImpl.getOriginalUuid(),
-				cpDisplayLayoutModelImpl.getOriginalGroupId()
+				cpDisplayLayoutModelImpl.getColumnOriginalValue("uuid_"),
+				cpDisplayLayoutModelImpl.getColumnOriginalValue("groupId")
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -3470,8 +3465,8 @@ public class CPDisplayLayoutPersistenceImpl
 			 _finderPathFetchByC_C.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cpDisplayLayoutModelImpl.getOriginalClassNameId(),
-				cpDisplayLayoutModelImpl.getOriginalClassPK()
+				cpDisplayLayoutModelImpl.getColumnOriginalValue("classNameId"),
+				cpDisplayLayoutModelImpl.getColumnOriginalValue("classPK")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_C, args);
@@ -3716,7 +3711,7 @@ public class CPDisplayLayoutPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpDisplayLayoutModelImpl.getOriginalUuid()
+					cpDisplayLayoutModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -3735,8 +3730,8 @@ public class CPDisplayLayoutPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpDisplayLayoutModelImpl.getOriginalUuid(),
-					cpDisplayLayoutModelImpl.getOriginalCompanyId()
+					cpDisplayLayoutModelImpl.getColumnOriginalValue("uuid_"),
+					cpDisplayLayoutModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -3758,7 +3753,7 @@ public class CPDisplayLayoutPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					cpDisplayLayoutModelImpl.getOriginalGroupId()
+					cpDisplayLayoutModelImpl.getColumnOriginalValue("groupId")
 				};
 
 				finderCache.removeResult(_finderPathCountByGroupId, args);
@@ -3777,8 +3772,9 @@ public class CPDisplayLayoutPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpDisplayLayoutModelImpl.getOriginalGroupId(),
-					cpDisplayLayoutModelImpl.getOriginalClassNameId()
+					cpDisplayLayoutModelImpl.getColumnOriginalValue("groupId"),
+					cpDisplayLayoutModelImpl.getColumnOriginalValue(
+						"classNameId")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_C, args);
@@ -3800,8 +3796,9 @@ public class CPDisplayLayoutPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpDisplayLayoutModelImpl.getOriginalGroupId(),
-					cpDisplayLayoutModelImpl.getOriginalLayoutUuid()
+					cpDisplayLayoutModelImpl.getColumnOriginalValue("groupId"),
+					cpDisplayLayoutModelImpl.getColumnOriginalValue(
+						"layoutUuid")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_L, args);
@@ -4116,7 +4113,7 @@ public class CPDisplayLayoutPersistenceImpl
 			CPDisplayLayoutImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			CPDisplayLayoutModelImpl.UUID_COLUMN_BITMASK);
+			CPDisplayLayoutModelImpl.getColumnBitmask("uuid_"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4126,8 +4123,8 @@ public class CPDisplayLayoutPersistenceImpl
 			CPDisplayLayoutImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CPDisplayLayoutModelImpl.UUID_COLUMN_BITMASK |
-			CPDisplayLayoutModelImpl.GROUPID_COLUMN_BITMASK);
+			CPDisplayLayoutModelImpl.getColumnBitmask("uuid_") |
+			CPDisplayLayoutModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4147,8 +4144,8 @@ public class CPDisplayLayoutPersistenceImpl
 			CPDisplayLayoutImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CPDisplayLayoutModelImpl.UUID_COLUMN_BITMASK |
-			CPDisplayLayoutModelImpl.COMPANYID_COLUMN_BITMASK);
+			CPDisplayLayoutModelImpl.getColumnBitmask("uuid_") |
+			CPDisplayLayoutModelImpl.getColumnBitmask("companyId"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4167,7 +4164,7 @@ public class CPDisplayLayoutPersistenceImpl
 			CPDisplayLayoutImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()},
-			CPDisplayLayoutModelImpl.GROUPID_COLUMN_BITMASK);
+			CPDisplayLayoutModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4186,8 +4183,8 @@ public class CPDisplayLayoutPersistenceImpl
 			CPDisplayLayoutImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CPDisplayLayoutModelImpl.GROUPID_COLUMN_BITMASK |
-			CPDisplayLayoutModelImpl.CLASSNAMEID_COLUMN_BITMASK);
+			CPDisplayLayoutModelImpl.getColumnBitmask("groupId") |
+			CPDisplayLayoutModelImpl.getColumnBitmask("classNameId"));
 
 		_finderPathCountByG_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
@@ -4206,8 +4203,8 @@ public class CPDisplayLayoutPersistenceImpl
 			CPDisplayLayoutImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_L",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CPDisplayLayoutModelImpl.GROUPID_COLUMN_BITMASK |
-			CPDisplayLayoutModelImpl.LAYOUTUUID_COLUMN_BITMASK);
+			CPDisplayLayoutModelImpl.getColumnBitmask("groupId") |
+			CPDisplayLayoutModelImpl.getColumnBitmask("layoutUuid"));
 
 		_finderPathCountByG_L = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L",
@@ -4216,8 +4213,8 @@ public class CPDisplayLayoutPersistenceImpl
 		_finderPathFetchByC_C = new FinderPath(
 			CPDisplayLayoutImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CPDisplayLayoutModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			CPDisplayLayoutModelImpl.CLASSPK_COLUMN_BITMASK);
+			CPDisplayLayoutModelImpl.getColumnBitmask("classNameId") |
+			CPDisplayLayoutModelImpl.getColumnBitmask("classPK"));
 
 		_finderPathCountByC_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",

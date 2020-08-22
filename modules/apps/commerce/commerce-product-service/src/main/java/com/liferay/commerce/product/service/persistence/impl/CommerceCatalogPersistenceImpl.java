@@ -2215,8 +2215,6 @@ public class CommerceCatalogPersistenceImpl
 				commerceCatalog.getExternalReferenceCode()
 			},
 			commerceCatalog);
-
-		commerceCatalog.resetOriginalValues();
 	}
 
 	/**
@@ -2232,9 +2230,6 @@ public class CommerceCatalogPersistenceImpl
 					commerceCatalog.getPrimaryKey()) == null) {
 
 				cacheResult(commerceCatalog);
-			}
-			else {
-				commerceCatalog.resetOriginalValues();
 			}
 		}
 	}
@@ -2331,8 +2326,9 @@ public class CommerceCatalogPersistenceImpl
 			 _finderPathFetchByC_ERC.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceCatalogModelImpl.getOriginalCompanyId(),
-				commerceCatalogModelImpl.getOriginalExternalReferenceCode()
+				commerceCatalogModelImpl.getColumnOriginalValue("companyId"),
+				commerceCatalogModelImpl.getColumnOriginalValue(
+					"externalReferenceCode")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_ERC, args);
@@ -2545,7 +2541,7 @@ public class CommerceCatalogPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceCatalogModelImpl.getOriginalCompanyId()
+					commerceCatalogModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -2564,8 +2560,9 @@ public class CommerceCatalogPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceCatalogModelImpl.getOriginalCompanyId(),
-					commerceCatalogModelImpl.getOriginalSystem()
+					commerceCatalogModelImpl.getColumnOriginalValue(
+						"companyId"),
+					commerceCatalogModelImpl.getColumnOriginalValue("system_")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_S, args);
@@ -2880,8 +2877,8 @@ public class CommerceCatalogPersistenceImpl
 			CommerceCatalogImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
-			CommerceCatalogModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceCatalogModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceCatalogModelImpl.getColumnBitmask("companyId") |
+			CommerceCatalogModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2900,9 +2897,9 @@ public class CommerceCatalogPersistenceImpl
 			CommerceCatalogImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			CommerceCatalogModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceCatalogModelImpl.SYSTEM_COLUMN_BITMASK |
-			CommerceCatalogModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceCatalogModelImpl.getColumnBitmask("companyId") |
+			CommerceCatalogModelImpl.getColumnBitmask("system_") |
+			CommerceCatalogModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByC_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
@@ -2911,8 +2908,8 @@ public class CommerceCatalogPersistenceImpl
 		_finderPathFetchByC_ERC = new FinderPath(
 			CommerceCatalogImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceCatalogModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceCatalogModelImpl.EXTERNALREFERENCECODE_COLUMN_BITMASK);
+			CommerceCatalogModelImpl.getColumnBitmask("companyId") |
+			CommerceCatalogModelImpl.getColumnBitmask("externalReferenceCode"));
 
 		_finderPathCountByC_ERC = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

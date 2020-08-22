@@ -1532,9 +1532,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 					getCommerceAccountGroupId()
 			},
 			commerceNotificationTemplateCommerceAccountGroupRel);
-
-		commerceNotificationTemplateCommerceAccountGroupRel.
-			resetOriginalValues();
 	}
 
 	/**
@@ -1559,10 +1556,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 
 				cacheResult(
 					commerceNotificationTemplateCommerceAccountGroupRel);
-			}
-			else {
-				commerceNotificationTemplateCommerceAccountGroupRel.
-					resetOriginalValues();
 			}
 		}
 	}
@@ -1689,9 +1682,9 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 
 			Object[] args = new Object[] {
 				commerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-					getOriginalCommerceNotificationTemplateId(),
+					getColumnOriginalValue("commerceNotificationTemplateId"),
 				commerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-					getOriginalCommerceAccountGroupId()
+					getColumnOriginalValue("commerceAccountGroupId")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_C, args);
@@ -1958,7 +1951,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-						getOriginalCommerceNotificationTemplateId()
+						getColumnOriginalValue("commerceNotificationTemplateId")
 				};
 
 				finderCache.removeResult(
@@ -1986,7 +1979,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-						getOriginalCommerceAccountGroupId()
+						getColumnOriginalValue("commerceAccountGroupId")
 				};
 
 				finderCache.removeResult(
@@ -2340,9 +2333,9 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 				"findByCommerceNotificationTemplateId",
 				new String[] {Long.class.getName()},
 				CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-					COMMERCENOTIFICATIONTEMPLATEID_COLUMN_BITMASK |
+					getColumnBitmask("commerceNotificationTemplateId") |
 				CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-					CREATEDATE_COLUMN_BITMASK);
+					getColumnBitmask("createDate"));
 
 		_finderPathCountByCommerceNotificationTemplateId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2365,9 +2358,9 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 				"findByCommerceAccountGroupId",
 				new String[] {Long.class.getName()},
 				CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-					COMMERCEACCOUNTGROUPID_COLUMN_BITMASK |
+					getColumnBitmask("commerceAccountGroupId") |
 				CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-					CREATEDATE_COLUMN_BITMASK);
+					getColumnBitmask("createDate"));
 
 		_finderPathCountByCommerceAccountGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2379,9 +2372,9 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				COMMERCENOTIFICATIONTEMPLATEID_COLUMN_BITMASK |
+				getColumnBitmask("commerceNotificationTemplateId") |
 			CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				COMMERCEACCOUNTGROUPID_COLUMN_BITMASK);
+				getColumnBitmask("commerceAccountGroupId"));
 
 		_finderPathCountByC_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",

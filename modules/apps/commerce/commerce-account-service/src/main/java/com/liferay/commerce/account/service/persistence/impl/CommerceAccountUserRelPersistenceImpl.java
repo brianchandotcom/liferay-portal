@@ -1135,8 +1135,6 @@ public class CommerceAccountUserRelPersistenceImpl
 		entityCache.putResult(
 			CommerceAccountUserRelImpl.class,
 			commerceAccountUserRel.getPrimaryKey(), commerceAccountUserRel);
-
-		commerceAccountUserRel.resetOriginalValues();
 	}
 
 	/**
@@ -1156,9 +1154,6 @@ public class CommerceAccountUserRelPersistenceImpl
 					commerceAccountUserRel.getPrimaryKey()) == null) {
 
 				cacheResult(commerceAccountUserRel);
-			}
-			else {
-				commerceAccountUserRel.resetOriginalValues();
 			}
 		}
 	}
@@ -1440,8 +1435,8 @@ public class CommerceAccountUserRelPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceAccountUserRelModelImpl.
-						getOriginalCommerceAccountId()
+					commerceAccountUserRelModelImpl.getColumnOriginalValue(
+						"commerceAccountId")
 				};
 
 				finderCache.removeResult(
@@ -1464,8 +1459,8 @@ public class CommerceAccountUserRelPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceAccountUserRelModelImpl.
-						getOriginalCommerceAccountUserId()
+					commerceAccountUserRelModelImpl.getColumnOriginalValue(
+						"commerceAccountUserId")
 				};
 
 				finderCache.removeResult(
@@ -1786,8 +1781,9 @@ public class CommerceAccountUserRelPersistenceImpl
 			CommerceAccountUserRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceAccountId", new String[] {Long.class.getName()},
-			CommerceAccountUserRelModelImpl.COMMERCEACCOUNTID_COLUMN_BITMASK |
-			CommerceAccountUserRelModelImpl.USERID_COLUMN_BITMASK);
+			CommerceAccountUserRelModelImpl.getColumnBitmask(
+				"commerceAccountId") |
+			CommerceAccountUserRelModelImpl.getColumnBitmask("userId"));
 
 		_finderPathCountByCommerceAccountId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1808,9 +1804,9 @@ public class CommerceAccountUserRelPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceAccountUserId",
 				new String[] {Long.class.getName()},
-				CommerceAccountUserRelModelImpl.
-					COMMERCEACCOUNTUSERID_COLUMN_BITMASK |
-				CommerceAccountUserRelModelImpl.USERID_COLUMN_BITMASK);
+				CommerceAccountUserRelModelImpl.getColumnBitmask(
+					"commerceAccountUserId") |
+				CommerceAccountUserRelModelImpl.getColumnBitmask("userId"));
 
 		_finderPathCountByCommerceAccountUserId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -552,27 +553,72 @@ public class CommerceVirtualOrderItemPersistenceTest {
 
 		_persistence.clearCache();
 
-		CommerceVirtualOrderItem existingCommerceVirtualOrderItem =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newCommerceVirtualOrderItem.getPrimaryKey());
+				newCommerceVirtualOrderItem.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CommerceVirtualOrderItem newCommerceVirtualOrderItem =
+			addCommerceVirtualOrderItem();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CommerceVirtualOrderItem.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"commerceVirtualOrderItemId",
+				newCommerceVirtualOrderItem.getCommerceVirtualOrderItemId()));
+
+		List<CommerceVirtualOrderItem> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		CommerceVirtualOrderItem commerceVirtualOrderItem) {
 
 		Assert.assertEquals(
-			existingCommerceVirtualOrderItem.getUuid(),
+			commerceVirtualOrderItem.getUuid(),
 			ReflectionTestUtil.invoke(
-				existingCommerceVirtualOrderItem, "getOriginalUuid",
-				new Class<?>[0]));
+				commerceVirtualOrderItem, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
-			Long.valueOf(existingCommerceVirtualOrderItem.getGroupId()),
+			Long.valueOf(commerceVirtualOrderItem.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceVirtualOrderItem, "getOriginalGroupId",
-				new Class<?>[0]));
+				commerceVirtualOrderItem, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
-			Long.valueOf(
-				existingCommerceVirtualOrderItem.getCommerceOrderItemId()),
+			Long.valueOf(commerceVirtualOrderItem.getCommerceOrderItemId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceVirtualOrderItem,
-				"getOriginalCommerceOrderItemId", new Class<?>[0]));
+				commerceVirtualOrderItem, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "commerceOrderItemId"));
 	}
 
 	protected CommerceVirtualOrderItem addCommerceVirtualOrderItem()

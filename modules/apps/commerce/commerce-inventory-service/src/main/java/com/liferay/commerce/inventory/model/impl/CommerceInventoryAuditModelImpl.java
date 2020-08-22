@@ -132,10 +132,22 @@ public class CommerceInventoryAuditModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long SKU_COLUMN_BITMASK = 4L;
 
 	/**
@@ -403,6 +415,14 @@ public class CommerceInventoryAuditModelImpl
 
 	@Override
 	public void setCommerceInventoryAuditId(long commerceInventoryAuditId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("CIAuditId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_commerceInventoryAuditId = commerceInventoryAuditId;
 	}
 
@@ -414,19 +434,24 @@ public class CommerceInventoryAuditModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
 
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_companyId = companyId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -437,6 +462,14 @@ public class CommerceInventoryAuditModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -469,6 +502,14 @@ public class CommerceInventoryAuditModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -480,17 +521,24 @@ public class CommerceInventoryAuditModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask |= CREATEDATE_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
 
-		if (_originalCreateDate == null) {
-			_originalCreateDate = _createDate;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_createDate = createDate;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public Date getOriginalCreateDate() {
-		return _originalCreateDate;
+		return getColumnOriginalValue("createDate");
 	}
 
 	@JSON
@@ -506,6 +554,14 @@ public class CommerceInventoryAuditModelImpl
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
+
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
 
 		_modifiedDate = modifiedDate;
 	}
@@ -523,17 +579,24 @@ public class CommerceInventoryAuditModelImpl
 
 	@Override
 	public void setSku(String sku) {
-		_columnBitmask |= SKU_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("sku");
 
-		if (_originalSku == null) {
-			_originalSku = _sku;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_sku = sku;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalSku() {
-		return GetterUtil.getString(_originalSku);
+		return getColumnOriginalValue("sku");
 	}
 
 	@JSON
@@ -549,6 +612,14 @@ public class CommerceInventoryAuditModelImpl
 
 	@Override
 	public void setLogType(String logType) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("logType");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_logType = logType;
 	}
 
@@ -565,6 +636,14 @@ public class CommerceInventoryAuditModelImpl
 
 	@Override
 	public void setLogTypeSettings(String logTypeSettings) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("logTypeSettings");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_logTypeSettings = logTypeSettings;
 	}
 
@@ -576,6 +655,14 @@ public class CommerceInventoryAuditModelImpl
 
 	@Override
 	public void setQuantity(int quantity) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("quantity");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_quantity = quantity;
 	}
 
@@ -698,14 +785,9 @@ public class CommerceInventoryAuditModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_originalCompanyId = _companyId;
-
-		_setOriginalCompanyId = false;
-
-		_originalCreateDate = _createDate;
+		_columnOriginalValues = Collections.emptyMap();
 
 		_setModifiedDate = false;
-		_originalSku = _sku;
 
 		_columnBitmask = 0;
 	}
@@ -853,19 +935,76 @@ public class CommerceInventoryAuditModelImpl
 
 	private long _commerceInventoryAuditId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
-	private Date _originalCreateDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _sku;
-	private String _originalSku;
 	private String _logType;
 	private String _logTypeSettings;
 	private int _quantity;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("CIAuditId", _commerceInventoryAuditId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("sku", _sku);
+		_columnOriginalValues.put("logType", _logType);
+		_columnOriginalValues.put("logTypeSettings", _logTypeSettings);
+		_columnOriginalValues.put("quantity", _quantity);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("CIAuditId", 1L);
+
+		columnBitmasks.put("companyId", 2L);
+
+		columnBitmasks.put("userId", 4L);
+
+		columnBitmasks.put("userName", 8L);
+
+		columnBitmasks.put("createDate", 16L);
+
+		columnBitmasks.put("modifiedDate", 32L);
+
+		columnBitmasks.put("sku", 64L);
+
+		columnBitmasks.put("logType", 128L);
+
+		columnBitmasks.put("logTypeSettings", 256L);
+
+		columnBitmasks.put("quantity", 512L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommerceInventoryAudit _escapedModel;
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -937,28 +938,72 @@ public class CommerceOrderPersistenceTest {
 
 		_persistence.clearCache();
 
-		CommerceOrder existingCommerceOrder = _persistence.findByPrimaryKey(
-			newCommerceOrder.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newCommerceOrder.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CommerceOrder newCommerceOrder = addCommerceOrder();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CommerceOrder.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"commerceOrderId", newCommerceOrder.getCommerceOrderId()));
+
+		List<CommerceOrder> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(CommerceOrder commerceOrder) {
+		Assert.assertEquals(
+			commerceOrder.getUuid(),
+			ReflectionTestUtil.invoke(
+				commerceOrder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
+		Assert.assertEquals(
+			Long.valueOf(commerceOrder.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				commerceOrder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
-			existingCommerceOrder.getUuid(),
-			ReflectionTestUtil.invoke(
-				existingCommerceOrder, "getOriginalUuid", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingCommerceOrder.getGroupId()),
+			Long.valueOf(commerceOrder.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceOrder, "getOriginalGroupId", new Class<?>[0]));
-
+				commerceOrder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
-			Long.valueOf(existingCommerceOrder.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingCommerceOrder, "getOriginalCompanyId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			existingCommerceOrder.getExternalReferenceCode(),
+			commerceOrder.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
-				existingCommerceOrder, "getOriginalExternalReferenceCode",
-				new Class<?>[0]));
+				commerceOrder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected CommerceOrder addCommerceOrder() throws Exception {

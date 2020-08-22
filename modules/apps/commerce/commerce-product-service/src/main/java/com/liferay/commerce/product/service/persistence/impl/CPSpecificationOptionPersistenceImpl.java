@@ -4172,8 +4172,6 @@ public class CPSpecificationOptionPersistenceImpl
 				cpSpecificationOption.getKey()
 			},
 			cpSpecificationOption);
-
-		cpSpecificationOption.resetOriginalValues();
 	}
 
 	/**
@@ -4193,9 +4191,6 @@ public class CPSpecificationOptionPersistenceImpl
 					cpSpecificationOption.getPrimaryKey()) == null) {
 
 				cacheResult(cpSpecificationOption);
-			}
-			else {
-				cpSpecificationOption.resetOriginalValues();
 			}
 		}
 	}
@@ -4297,8 +4292,9 @@ public class CPSpecificationOptionPersistenceImpl
 			 _finderPathFetchByC_K.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cpSpecificationOptionModelImpl.getOriginalCompanyId(),
-				cpSpecificationOptionModelImpl.getOriginalKey()
+				cpSpecificationOptionModelImpl.getColumnOriginalValue(
+					"companyId"),
+				cpSpecificationOptionModelImpl.getColumnOriginalValue("key_")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_K, args);
@@ -4544,7 +4540,8 @@ public class CPSpecificationOptionPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpSpecificationOptionModelImpl.getOriginalUuid()
+					cpSpecificationOptionModelImpl.getColumnOriginalValue(
+						"uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -4563,8 +4560,10 @@ public class CPSpecificationOptionPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpSpecificationOptionModelImpl.getOriginalUuid(),
-					cpSpecificationOptionModelImpl.getOriginalCompanyId()
+					cpSpecificationOptionModelImpl.getColumnOriginalValue(
+						"uuid_"),
+					cpSpecificationOptionModelImpl.getColumnOriginalValue(
+						"companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -4586,7 +4585,8 @@ public class CPSpecificationOptionPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					cpSpecificationOptionModelImpl.getOriginalCompanyId()
+					cpSpecificationOptionModelImpl.getColumnOriginalValue(
+						"companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -4607,8 +4607,8 @@ public class CPSpecificationOptionPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					cpSpecificationOptionModelImpl.
-						getOriginalCPOptionCategoryId()
+					cpSpecificationOptionModelImpl.getColumnOriginalValue(
+						"CPOptionCategoryId")
 				};
 
 				finderCache.removeResult(
@@ -4929,8 +4929,8 @@ public class CPSpecificationOptionPersistenceImpl
 			CPSpecificationOptionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			CPSpecificationOptionModelImpl.UUID_COLUMN_BITMASK |
-			CPSpecificationOptionModelImpl.TITLE_COLUMN_BITMASK);
+			CPSpecificationOptionModelImpl.getColumnBitmask("uuid_") |
+			CPSpecificationOptionModelImpl.getColumnBitmask("title"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4949,9 +4949,9 @@ public class CPSpecificationOptionPersistenceImpl
 			CPSpecificationOptionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CPSpecificationOptionModelImpl.UUID_COLUMN_BITMASK |
-			CPSpecificationOptionModelImpl.COMPANYID_COLUMN_BITMASK |
-			CPSpecificationOptionModelImpl.TITLE_COLUMN_BITMASK);
+			CPSpecificationOptionModelImpl.getColumnBitmask("uuid_") |
+			CPSpecificationOptionModelImpl.getColumnBitmask("companyId") |
+			CPSpecificationOptionModelImpl.getColumnBitmask("title"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4970,8 +4970,8 @@ public class CPSpecificationOptionPersistenceImpl
 			CPSpecificationOptionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
-			CPSpecificationOptionModelImpl.COMPANYID_COLUMN_BITMASK |
-			CPSpecificationOptionModelImpl.TITLE_COLUMN_BITMASK);
+			CPSpecificationOptionModelImpl.getColumnBitmask("companyId") |
+			CPSpecificationOptionModelImpl.getColumnBitmask("title"));
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4989,8 +4989,9 @@ public class CPSpecificationOptionPersistenceImpl
 			CPSpecificationOptionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCPOptionCategoryId", new String[] {Long.class.getName()},
-			CPSpecificationOptionModelImpl.CPOPTIONCATEGORYID_COLUMN_BITMASK |
-			CPSpecificationOptionModelImpl.TITLE_COLUMN_BITMASK);
+			CPSpecificationOptionModelImpl.getColumnBitmask(
+				"CPOptionCategoryId") |
+			CPSpecificationOptionModelImpl.getColumnBitmask("title"));
 
 		_finderPathCountByCPOptionCategoryId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5000,8 +5001,8 @@ public class CPSpecificationOptionPersistenceImpl
 			CPSpecificationOptionImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_K",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CPSpecificationOptionModelImpl.COMPANYID_COLUMN_BITMASK |
-			CPSpecificationOptionModelImpl.KEY_COLUMN_BITMASK);
+			CPSpecificationOptionModelImpl.getColumnBitmask("companyId") |
+			CPSpecificationOptionModelImpl.getColumnBitmask("key_"));
 
 		_finderPathCountByC_K = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K",

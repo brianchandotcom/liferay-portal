@@ -1992,8 +1992,6 @@ public class CommercePriceModifierRelPersistenceImpl
 				commercePriceModifierRel.getClassPK()
 			},
 			commercePriceModifierRel);
-
-		commercePriceModifierRel.resetOriginalValues();
 	}
 
 	/**
@@ -2013,9 +2011,6 @@ public class CommercePriceModifierRelPersistenceImpl
 					commercePriceModifierRel.getPrimaryKey()) == null) {
 
 				cacheResult(commercePriceModifierRel);
-			}
-			else {
-				commercePriceModifierRel.resetOriginalValues();
 			}
 		}
 	}
@@ -2123,10 +2118,12 @@ public class CommercePriceModifierRelPersistenceImpl
 			 _finderPathFetchByCPM_CN_CPK.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commercePriceModifierRelModelImpl.
-					getOriginalCommercePriceModifierId(),
-				commercePriceModifierRelModelImpl.getOriginalClassNameId(),
-				commercePriceModifierRelModelImpl.getOriginalClassPK()
+				commercePriceModifierRelModelImpl.getColumnOriginalValue(
+					"commercePriceModifierId"),
+				commercePriceModifierRelModelImpl.getColumnOriginalValue(
+					"classNameId"),
+				commercePriceModifierRelModelImpl.getColumnOriginalValue(
+					"classPK")
 			};
 
 			finderCache.removeResult(_finderPathCountByCPM_CN_CPK, args);
@@ -2361,8 +2358,8 @@ public class CommercePriceModifierRelPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commercePriceModifierRelModelImpl.
-						getOriginalCommercePriceModifierId()
+					commercePriceModifierRelModelImpl.getColumnOriginalValue(
+						"commercePriceModifierId")
 				};
 
 				finderCache.removeResult(
@@ -2388,9 +2385,10 @@ public class CommercePriceModifierRelPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commercePriceModifierRelModelImpl.
-						getOriginalCommercePriceModifierId(),
-					commercePriceModifierRelModelImpl.getOriginalClassNameId()
+					commercePriceModifierRelModelImpl.getColumnOriginalValue(
+						"commercePriceModifierId"),
+					commercePriceModifierRelModelImpl.getColumnOriginalValue(
+						"classNameId")
 				};
 
 				finderCache.removeResult(_finderPathCountByCPM_CN, args);
@@ -2413,8 +2411,10 @@ public class CommercePriceModifierRelPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commercePriceModifierRelModelImpl.getOriginalClassNameId(),
-					commercePriceModifierRelModelImpl.getOriginalClassPK()
+					commercePriceModifierRelModelImpl.getColumnOriginalValue(
+						"classNameId"),
+					commercePriceModifierRelModelImpl.getColumnOriginalValue(
+						"classPK")
 				};
 
 				finderCache.removeResult(_finderPathCountByCN_CPK, args);
@@ -2734,9 +2734,10 @@ public class CommercePriceModifierRelPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommercePriceModifierId",
 				new String[] {Long.class.getName()},
-				CommercePriceModifierRelModelImpl.
-					COMMERCEPRICEMODIFIERID_COLUMN_BITMASK |
-				CommercePriceModifierRelModelImpl.CREATEDATE_COLUMN_BITMASK);
+				CommercePriceModifierRelModelImpl.getColumnBitmask(
+					"commercePriceModifierId") |
+				CommercePriceModifierRelModelImpl.getColumnBitmask(
+					"createDate"));
 
 		_finderPathCountByCommercePriceModifierId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2756,10 +2757,10 @@ public class CommercePriceModifierRelPersistenceImpl
 			CommercePriceModifierRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPM_CN",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CommercePriceModifierRelModelImpl.
-				COMMERCEPRICEMODIFIERID_COLUMN_BITMASK |
-			CommercePriceModifierRelModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			CommercePriceModifierRelModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommercePriceModifierRelModelImpl.getColumnBitmask(
+				"commercePriceModifierId") |
+			CommercePriceModifierRelModelImpl.getColumnBitmask("classNameId") |
+			CommercePriceModifierRelModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByCPM_CN = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2779,9 +2780,9 @@ public class CommercePriceModifierRelPersistenceImpl
 			CommercePriceModifierRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCN_CPK",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CommercePriceModifierRelModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			CommercePriceModifierRelModelImpl.CLASSPK_COLUMN_BITMASK |
-			CommercePriceModifierRelModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommercePriceModifierRelModelImpl.getColumnBitmask("classNameId") |
+			CommercePriceModifierRelModelImpl.getColumnBitmask("classPK") |
+			CommercePriceModifierRelModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByCN_CPK = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2794,10 +2795,10 @@ public class CommercePriceModifierRelPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			CommercePriceModifierRelModelImpl.
-				COMMERCEPRICEMODIFIERID_COLUMN_BITMASK |
-			CommercePriceModifierRelModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			CommercePriceModifierRelModelImpl.CLASSPK_COLUMN_BITMASK);
+			CommercePriceModifierRelModelImpl.getColumnBitmask(
+				"commercePriceModifierId") |
+			CommercePriceModifierRelModelImpl.getColumnBitmask("classNameId") |
+			CommercePriceModifierRelModelImpl.getColumnBitmask("classPK"));
 
 		_finderPathCountByCPM_CN_CPK = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

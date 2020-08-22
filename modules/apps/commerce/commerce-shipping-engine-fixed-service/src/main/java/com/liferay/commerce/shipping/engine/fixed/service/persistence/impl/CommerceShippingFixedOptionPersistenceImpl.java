@@ -634,8 +634,6 @@ public class CommerceShippingFixedOptionPersistenceImpl
 			CommerceShippingFixedOptionImpl.class,
 			commerceShippingFixedOption.getPrimaryKey(),
 			commerceShippingFixedOption);
-
-		commerceShippingFixedOption.resetOriginalValues();
 	}
 
 	/**
@@ -655,9 +653,6 @@ public class CommerceShippingFixedOptionPersistenceImpl
 					commerceShippingFixedOption.getPrimaryKey()) == null) {
 
 				cacheResult(commerceShippingFixedOption);
-			}
-			else {
-				commerceShippingFixedOption.resetOriginalValues();
 			}
 		}
 	}
@@ -943,8 +938,8 @@ public class CommerceShippingFixedOptionPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceShippingFixedOptionModelImpl.
-						getOriginalCommerceShippingMethodId()
+					commerceShippingFixedOptionModelImpl.getColumnOriginalValue(
+						"commerceShippingMethodId")
 				};
 
 				finderCache.removeResult(
@@ -1268,9 +1263,10 @@ public class CommerceShippingFixedOptionPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceShippingMethodId",
 				new String[] {Long.class.getName()},
-				CommerceShippingFixedOptionModelImpl.
-					COMMERCESHIPPINGMETHODID_COLUMN_BITMASK |
-				CommerceShippingFixedOptionModelImpl.PRIORITY_COLUMN_BITMASK);
+				CommerceShippingFixedOptionModelImpl.getColumnBitmask(
+					"commerceShippingMethodId") |
+				CommerceShippingFixedOptionModelImpl.getColumnBitmask(
+					"priority"));
 
 		_finderPathCountByCommerceShippingMethodId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

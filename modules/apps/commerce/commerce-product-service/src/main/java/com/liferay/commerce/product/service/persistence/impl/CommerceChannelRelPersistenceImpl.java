@@ -1413,8 +1413,6 @@ public class CommerceChannelRelPersistenceImpl
 				commerceChannelRel.getCommerceChannelId()
 			},
 			commerceChannelRel);
-
-		commerceChannelRel.resetOriginalValues();
 	}
 
 	/**
@@ -1430,9 +1428,6 @@ public class CommerceChannelRelPersistenceImpl
 					commerceChannelRel.getPrimaryKey()) == null) {
 
 				cacheResult(commerceChannelRel);
-			}
-			else {
-				commerceChannelRel.resetOriginalValues();
 			}
 		}
 	}
@@ -1532,9 +1527,11 @@ public class CommerceChannelRelPersistenceImpl
 			 _finderPathFetchByC_C_C.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceChannelRelModelImpl.getOriginalClassNameId(),
-				commerceChannelRelModelImpl.getOriginalClassPK(),
-				commerceChannelRelModelImpl.getOriginalCommerceChannelId()
+				commerceChannelRelModelImpl.getColumnOriginalValue(
+					"classNameId"),
+				commerceChannelRelModelImpl.getColumnOriginalValue("classPK"),
+				commerceChannelRelModelImpl.getColumnOriginalValue(
+					"commerceChannelId")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_C_C, args);
@@ -1752,7 +1749,8 @@ public class CommerceChannelRelPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceChannelRelModelImpl.getOriginalCommerceChannelId()
+					commerceChannelRelModelImpl.getColumnOriginalValue(
+						"commerceChannelId")
 				};
 
 				finderCache.removeResult(
@@ -1775,8 +1773,10 @@ public class CommerceChannelRelPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceChannelRelModelImpl.getOriginalClassNameId(),
-					commerceChannelRelModelImpl.getOriginalClassPK()
+					commerceChannelRelModelImpl.getColumnOriginalValue(
+						"classNameId"),
+					commerceChannelRelModelImpl.getColumnOriginalValue(
+						"classPK")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_C, args);
@@ -2087,8 +2087,8 @@ public class CommerceChannelRelPersistenceImpl
 			CommerceChannelRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceChannelId", new String[] {Long.class.getName()},
-			CommerceChannelRelModelImpl.COMMERCECHANNELID_COLUMN_BITMASK |
-			CommerceChannelRelModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceChannelRelModelImpl.getColumnBitmask("commerceChannelId") |
+			CommerceChannelRelModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByCommerceChannelId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2107,9 +2107,9 @@ public class CommerceChannelRelPersistenceImpl
 			CommerceChannelRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CommerceChannelRelModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			CommerceChannelRelModelImpl.CLASSPK_COLUMN_BITMASK |
-			CommerceChannelRelModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceChannelRelModelImpl.getColumnBitmask("classNameId") |
+			CommerceChannelRelModelImpl.getColumnBitmask("classPK") |
+			CommerceChannelRelModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByC_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
@@ -2121,9 +2121,9 @@ public class CommerceChannelRelPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			CommerceChannelRelModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			CommerceChannelRelModelImpl.CLASSPK_COLUMN_BITMASK |
-			CommerceChannelRelModelImpl.COMMERCECHANNELID_COLUMN_BITMASK);
+			CommerceChannelRelModelImpl.getColumnBitmask("classNameId") |
+			CommerceChannelRelModelImpl.getColumnBitmask("classPK") |
+			CommerceChannelRelModelImpl.getColumnBitmask("commerceChannelId"));
 
 		_finderPathCountByC_C_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

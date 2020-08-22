@@ -131,10 +131,23 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMMERCEACCOUNTGROUPID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMMERCEDISCOUNTID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 4L;
 
 	/**
@@ -414,6 +427,15 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 	public void setCommerceDiscountCommerceAccountGroupRelId(
 		long commerceDiscountCommerceAccountGroupRelId) {
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get(
+				"CDiscountCAccountGroupRelId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_commerceDiscountCommerceAccountGroupRelId =
 			commerceDiscountCommerceAccountGroupRelId;
 	}
@@ -426,6 +448,14 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_companyId = companyId;
 	}
 
@@ -437,6 +467,14 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -469,6 +507,14 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -480,6 +526,14 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -497,6 +551,14 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -508,19 +570,24 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 
 	@Override
 	public void setCommerceDiscountId(long commerceDiscountId) {
-		_columnBitmask |= COMMERCEDISCOUNTID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("commerceDiscountId");
 
-		if (!_setOriginalCommerceDiscountId) {
-			_setOriginalCommerceDiscountId = true;
-
-			_originalCommerceDiscountId = _commerceDiscountId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_commerceDiscountId = commerceDiscountId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCommerceDiscountId() {
-		return _originalCommerceDiscountId;
+		return GetterUtil.getLong(getColumnOriginalValue("commerceDiscountId"));
 	}
 
 	@JSON
@@ -531,19 +598,25 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 
 	@Override
 	public void setCommerceAccountGroupId(long commerceAccountGroupId) {
-		_columnBitmask |= COMMERCEACCOUNTGROUPID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("commerceAccountGroupId");
 
-		if (!_setOriginalCommerceAccountGroupId) {
-			_setOriginalCommerceAccountGroupId = true;
-
-			_originalCommerceAccountGroupId = _commerceAccountGroupId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_commerceAccountGroupId = commerceAccountGroupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCommerceAccountGroupId() {
-		return _originalCommerceAccountGroupId;
+		return GetterUtil.getLong(
+			getColumnOriginalValue("commerceAccountGroupId"));
 	}
 
 	public long getColumnBitmask() {
@@ -677,14 +750,9 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 
 	@Override
 	public void resetOriginalValues() {
+		_columnOriginalValues = Collections.emptyMap();
+
 		_setModifiedDate = false;
-		_originalCommerceDiscountId = _commerceDiscountId;
-
-		_setOriginalCommerceDiscountId = false;
-
-		_originalCommerceAccountGroupId = _commerceAccountGroupId;
-
-		_setOriginalCommerceAccountGroupId = false;
 
 		_columnBitmask = 0;
 	}
@@ -833,11 +901,65 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _commerceDiscountId;
-	private long _originalCommerceDiscountId;
-	private boolean _setOriginalCommerceDiscountId;
 	private long _commerceAccountGroupId;
-	private long _originalCommerceAccountGroupId;
-	private boolean _setOriginalCommerceAccountGroupId;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put(
+			"CDiscountCAccountGroupRelId",
+			_commerceDiscountCommerceAccountGroupRelId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("commerceDiscountId", _commerceDiscountId);
+		_columnOriginalValues.put(
+			"commerceAccountGroupId", _commerceAccountGroupId);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("CDiscountCAccountGroupRelId", 1L);
+
+		columnBitmasks.put("companyId", 2L);
+
+		columnBitmasks.put("userId", 4L);
+
+		columnBitmasks.put("userName", 8L);
+
+		columnBitmasks.put("createDate", 16L);
+
+		columnBitmasks.put("modifiedDate", 32L);
+
+		columnBitmasks.put("commerceDiscountId", 64L);
+
+		columnBitmasks.put("commerceAccountGroupId", 128L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommerceDiscountCommerceAccountGroupRel _escapedModel;
 

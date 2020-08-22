@@ -7851,8 +7851,6 @@ public class CommerceOrderPersistenceImpl
 				commerceOrder.getExternalReferenceCode()
 			},
 			commerceOrder);
-
-		commerceOrder.resetOriginalValues();
 	}
 
 	/**
@@ -7868,9 +7866,6 @@ public class CommerceOrderPersistenceImpl
 						null) {
 
 				cacheResult(commerceOrder);
-			}
-			else {
-				commerceOrder.resetOriginalValues();
 			}
 		}
 	}
@@ -7971,12 +7966,16 @@ public class CommerceOrderPersistenceImpl
 			finderCache.removeResult(_finderPathFetchByUUID_G, args);
 		}
 
-		if ((commerceOrderModelImpl.getColumnBitmask() &
-			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
+		if (!Objects.equals(
+				commerceOrderModelImpl.getUuid(),
+				commerceOrderModelImpl.getColumnOriginalValue("uuid_")) ||
+			!Objects.equals(
+				commerceOrderModelImpl.getGroupId(),
+				commerceOrderModelImpl.getColumnOriginalValue("groupId"))) {
 
 			Object[] args = new Object[] {
-				commerceOrderModelImpl.getOriginalUuid(),
-				commerceOrderModelImpl.getOriginalGroupId()
+				commerceOrderModelImpl.getColumnOriginalValue("uuid_"),
+				commerceOrderModelImpl.getColumnOriginalValue("groupId")
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -7993,12 +7992,18 @@ public class CommerceOrderPersistenceImpl
 			finderCache.removeResult(_finderPathFetchByC_ERC, args);
 		}
 
-		if ((commerceOrderModelImpl.getColumnBitmask() &
-			 _finderPathFetchByC_ERC.getColumnBitmask()) != 0) {
+		if (!Objects.equals(
+				commerceOrderModelImpl.getCompanyId(),
+				commerceOrderModelImpl.getColumnOriginalValue("companyId")) ||
+			!Objects.equals(
+				commerceOrderModelImpl.getExternalReferenceCode(),
+				commerceOrderModelImpl.getColumnOriginalValue(
+					"externalReferenceCode"))) {
 
 			Object[] args = new Object[] {
-				commerceOrderModelImpl.getOriginalCompanyId(),
-				commerceOrderModelImpl.getOriginalExternalReferenceCode()
+				commerceOrderModelImpl.getColumnOriginalValue("companyId"),
+				commerceOrderModelImpl.getColumnOriginalValue(
+					"externalReferenceCode")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_ERC, args);
@@ -8191,100 +8196,17 @@ public class CommerceOrderPersistenceImpl
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew) {
-			Object[] args = new Object[] {commerceOrderModelImpl.getUuid()};
-
-			finderCache.removeResult(_finderPathCountByUuid, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByUuid, args);
-
-			args = new Object[] {
-				commerceOrderModelImpl.getUuid(),
-				commerceOrderModelImpl.getCompanyId()
-			};
-
-			finderCache.removeResult(_finderPathCountByUuid_C, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByUuid_C, args);
-
-			args = new Object[] {commerceOrderModelImpl.getGroupId()};
-
-			finderCache.removeResult(_finderPathCountByGroupId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByGroupId, args);
-
-			args = new Object[] {commerceOrderModelImpl.getUserId()};
-
-			finderCache.removeResult(_finderPathCountByUserId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByUserId, args);
-
-			args = new Object[] {commerceOrderModelImpl.getCommerceAccountId()};
-
-			finderCache.removeResult(_finderPathCountByCommerceAccountId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByCommerceAccountId, args);
-
-			args = new Object[] {commerceOrderModelImpl.getBillingAddressId()};
-
-			finderCache.removeResult(_finderPathCountByBillingAddressId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByBillingAddressId, args);
-
-			args = new Object[] {commerceOrderModelImpl.getShippingAddressId()};
-
-			finderCache.removeResult(_finderPathCountByShippingAddressId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByShippingAddressId, args);
-
-			args = new Object[] {
-				commerceOrderModelImpl.getGroupId(),
-				commerceOrderModelImpl.getCommerceAccountId()
-			};
-
-			finderCache.removeResult(_finderPathCountByG_C, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByG_C, args);
-
-			args = new Object[] {
-				commerceOrderModelImpl.getGroupId(),
-				commerceOrderModelImpl.getCommercePaymentMethodKey()
-			};
-
-			finderCache.removeResult(_finderPathCountByG_CP, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByG_CP, args);
-
-			args = new Object[] {
-				commerceOrderModelImpl.getGroupId(),
-				commerceOrderModelImpl.getUserId(),
-				commerceOrderModelImpl.getOrderStatus()
-			};
-
-			finderCache.removeResult(_finderPathCountByG_U_O, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByG_U_O, args);
-
-			args = new Object[] {
-				commerceOrderModelImpl.getGroupId(),
-				commerceOrderModelImpl.getCommerceAccountId(),
-				commerceOrderModelImpl.getOrderStatus()
-			};
-
-			finderCache.removeResult(_finderPathCountByG_C_O, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByG_C_O, args);
-
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
 		}
 		else {
-			if ((commerceOrderModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByUuid.getColumnBitmask()) !=
-					 0) {
+			if (!Objects.equals(
+					commerceOrder.getUuid(),
+					commerceOrderModelImpl.getColumnOriginalValue("uuid_"))) {
 
 				Object[] args = new Object[] {
-					commerceOrderModelImpl.getOriginalUuid()
+					commerceOrderModelImpl.getColumnOriginalValue("uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -8298,13 +8220,17 @@ public class CommerceOrderPersistenceImpl
 					_finderPathWithoutPaginationFindByUuid, args);
 			}
 
-			if ((commerceOrderModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) !=
-					 0) {
+			if (!Objects.equals(
+					commerceOrder.getUuid(),
+					commerceOrderModelImpl.getColumnOriginalValue("uuid_")) ||
+				!Objects.equals(
+					commerceOrder.getCompanyId(),
+					commerceOrderModelImpl.getColumnOriginalValue(
+						"companyId"))) {
 
 				Object[] args = new Object[] {
-					commerceOrderModelImpl.getOriginalUuid(),
-					commerceOrderModelImpl.getOriginalCompanyId()
+					commerceOrderModelImpl.getColumnOriginalValue("uuid_"),
+					commerceOrderModelImpl.getColumnOriginalValue("companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -8321,12 +8247,12 @@ public class CommerceOrderPersistenceImpl
 					_finderPathWithoutPaginationFindByUuid_C, args);
 			}
 
-			if ((commerceOrderModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByGroupId.
-					 getColumnBitmask()) != 0) {
+			if (!Objects.equals(
+					commerceOrder.getGroupId(),
+					commerceOrderModelImpl.getColumnOriginalValue("groupId"))) {
 
 				Object[] args = new Object[] {
-					commerceOrderModelImpl.getOriginalGroupId()
+					commerceOrderModelImpl.getColumnOriginalValue("groupId")
 				};
 
 				finderCache.removeResult(_finderPathCountByGroupId, args);
@@ -8340,12 +8266,12 @@ public class CommerceOrderPersistenceImpl
 					_finderPathWithoutPaginationFindByGroupId, args);
 			}
 
-			if ((commerceOrderModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByUserId.getColumnBitmask()) !=
-					 0) {
+			if (!Objects.equals(
+					commerceOrder.getUserId(),
+					commerceOrderModelImpl.getColumnOriginalValue("userId"))) {
 
 				Object[] args = new Object[] {
-					commerceOrderModelImpl.getOriginalUserId()
+					commerceOrderModelImpl.getColumnOriginalValue("userId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUserId, args);
@@ -8359,12 +8285,14 @@ public class CommerceOrderPersistenceImpl
 					_finderPathWithoutPaginationFindByUserId, args);
 			}
 
-			if ((commerceOrderModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByCommerceAccountId.
-					 getColumnBitmask()) != 0) {
+			if (!Objects.equals(
+					commerceOrder.getCommerceAccountId(),
+					commerceOrderModelImpl.getColumnOriginalValue(
+						"commerceAccountId"))) {
 
 				Object[] args = new Object[] {
-					commerceOrderModelImpl.getOriginalCommerceAccountId()
+					commerceOrderModelImpl.getColumnOriginalValue(
+						"commerceAccountId")
 				};
 
 				finderCache.removeResult(
@@ -8382,12 +8310,14 @@ public class CommerceOrderPersistenceImpl
 					_finderPathWithoutPaginationFindByCommerceAccountId, args);
 			}
 
-			if ((commerceOrderModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByBillingAddressId.
-					 getColumnBitmask()) != 0) {
+			if (!Objects.equals(
+					commerceOrder.getBillingAddressId(),
+					commerceOrderModelImpl.getColumnOriginalValue(
+						"billingAddressId"))) {
 
 				Object[] args = new Object[] {
-					commerceOrderModelImpl.getOriginalBillingAddressId()
+					commerceOrderModelImpl.getColumnOriginalValue(
+						"billingAddressId")
 				};
 
 				finderCache.removeResult(
@@ -8405,12 +8335,14 @@ public class CommerceOrderPersistenceImpl
 					_finderPathWithoutPaginationFindByBillingAddressId, args);
 			}
 
-			if ((commerceOrderModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByShippingAddressId.
-					 getColumnBitmask()) != 0) {
+			if (!Objects.equals(
+					commerceOrder.getShippingAddressId(),
+					commerceOrderModelImpl.getColumnOriginalValue(
+						"shippingAddressId"))) {
 
 				Object[] args = new Object[] {
-					commerceOrderModelImpl.getOriginalShippingAddressId()
+					commerceOrderModelImpl.getColumnOriginalValue(
+						"shippingAddressId")
 				};
 
 				finderCache.removeResult(
@@ -8428,13 +8360,18 @@ public class CommerceOrderPersistenceImpl
 					_finderPathWithoutPaginationFindByShippingAddressId, args);
 			}
 
-			if ((commerceOrderModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByG_C.getColumnBitmask()) !=
-					 0) {
+			if (!Objects.equals(
+					commerceOrder.getGroupId(),
+					commerceOrderModelImpl.getColumnOriginalValue("groupId")) ||
+				!Objects.equals(
+					commerceOrder.getCommerceAccountId(),
+					commerceOrderModelImpl.getColumnOriginalValue(
+						"commerceAccountId"))) {
 
 				Object[] args = new Object[] {
-					commerceOrderModelImpl.getOriginalGroupId(),
-					commerceOrderModelImpl.getOriginalCommerceAccountId()
+					commerceOrderModelImpl.getColumnOriginalValue("groupId"),
+					commerceOrderModelImpl.getColumnOriginalValue(
+						"commerceAccountId")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_C, args);
@@ -8451,13 +8388,18 @@ public class CommerceOrderPersistenceImpl
 					_finderPathWithoutPaginationFindByG_C, args);
 			}
 
-			if ((commerceOrderModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByG_CP.getColumnBitmask()) !=
-					 0) {
+			if (!Objects.equals(
+					commerceOrder.getGroupId(),
+					commerceOrderModelImpl.getColumnOriginalValue("groupId")) ||
+				!Objects.equals(
+					commerceOrder.getCommercePaymentMethodKey(),
+					commerceOrderModelImpl.getColumnOriginalValue(
+						"commercePaymentMethodKey"))) {
 
 				Object[] args = new Object[] {
-					commerceOrderModelImpl.getOriginalGroupId(),
-					commerceOrderModelImpl.getOriginalCommercePaymentMethodKey()
+					commerceOrderModelImpl.getColumnOriginalValue("groupId"),
+					commerceOrderModelImpl.getColumnOriginalValue(
+						"commercePaymentMethodKey")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_CP, args);
@@ -8474,14 +8416,21 @@ public class CommerceOrderPersistenceImpl
 					_finderPathWithoutPaginationFindByG_CP, args);
 			}
 
-			if ((commerceOrderModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByG_U_O.getColumnBitmask()) !=
-					 0) {
+			if (!Objects.equals(
+					commerceOrder.getGroupId(),
+					commerceOrderModelImpl.getColumnOriginalValue("groupId")) ||
+				!Objects.equals(
+					commerceOrder.getUserId(),
+					commerceOrderModelImpl.getColumnOriginalValue("userId")) ||
+				!Objects.equals(
+					commerceOrder.getOrderStatus(),
+					commerceOrderModelImpl.getColumnOriginalValue(
+						"orderStatus"))) {
 
 				Object[] args = new Object[] {
-					commerceOrderModelImpl.getOriginalGroupId(),
-					commerceOrderModelImpl.getOriginalUserId(),
-					commerceOrderModelImpl.getOriginalOrderStatus()
+					commerceOrderModelImpl.getColumnOriginalValue("groupId"),
+					commerceOrderModelImpl.getColumnOriginalValue("userId"),
+					commerceOrderModelImpl.getColumnOriginalValue("orderStatus")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_U_O, args);
@@ -8499,14 +8448,23 @@ public class CommerceOrderPersistenceImpl
 					_finderPathWithoutPaginationFindByG_U_O, args);
 			}
 
-			if ((commerceOrderModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByG_C_O.getColumnBitmask()) !=
-					 0) {
+			if (!Objects.equals(
+					commerceOrder.getGroupId(),
+					commerceOrderModelImpl.getColumnOriginalValue("groupId")) ||
+				!Objects.equals(
+					commerceOrder.getCommerceAccountId(),
+					commerceOrderModelImpl.getColumnOriginalValue(
+						"commerceAccountId")) ||
+				!Objects.equals(
+					commerceOrder.getOrderStatus(),
+					commerceOrderModelImpl.getColumnOriginalValue(
+						"orderStatus"))) {
 
 				Object[] args = new Object[] {
-					commerceOrderModelImpl.getOriginalGroupId(),
-					commerceOrderModelImpl.getOriginalCommerceAccountId(),
-					commerceOrderModelImpl.getOriginalOrderStatus()
+					commerceOrderModelImpl.getColumnOriginalValue("groupId"),
+					commerceOrderModelImpl.getColumnOriginalValue(
+						"commerceAccountId"),
+					commerceOrderModelImpl.getColumnOriginalValue("orderStatus")
 				};
 
 				finderCache.removeResult(_finderPathCountByG_C_O, args);
@@ -8818,9 +8776,7 @@ public class CommerceOrderPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			CommerceOrderImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByUuid", new String[] {String.class.getName()},
-			CommerceOrderModelImpl.UUID_COLUMN_BITMASK |
-			CommerceOrderModelImpl.CREATEDATE_COLUMN_BITMASK);
+			"findByUuid", new String[] {String.class.getName()});
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -8828,9 +8784,7 @@ public class CommerceOrderPersistenceImpl
 
 		_finderPathFetchByUUID_G = new FinderPath(
 			CommerceOrderImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			CommerceOrderModelImpl.UUID_COLUMN_BITMASK |
-			CommerceOrderModelImpl.GROUPID_COLUMN_BITMASK);
+			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -8849,10 +8803,7 @@ public class CommerceOrderPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			CommerceOrderImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			CommerceOrderModelImpl.UUID_COLUMN_BITMASK |
-			CommerceOrderModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceOrderModelImpl.CREATEDATE_COLUMN_BITMASK);
+			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -8869,9 +8820,7 @@ public class CommerceOrderPersistenceImpl
 
 		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
 			CommerceOrderImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByGroupId", new String[] {Long.class.getName()},
-			CommerceOrderModelImpl.GROUPID_COLUMN_BITMASK |
-			CommerceOrderModelImpl.CREATEDATE_COLUMN_BITMASK);
+			"findByGroupId", new String[] {Long.class.getName()});
 
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -8887,9 +8836,7 @@ public class CommerceOrderPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUserId = new FinderPath(
 			CommerceOrderImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByUserId", new String[] {Long.class.getName()},
-			CommerceOrderModelImpl.USERID_COLUMN_BITMASK |
-			CommerceOrderModelImpl.CREATEDATE_COLUMN_BITMASK);
+			"findByUserId", new String[] {Long.class.getName()});
 
 		_finderPathCountByUserId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -8905,9 +8852,7 @@ public class CommerceOrderPersistenceImpl
 
 		_finderPathWithoutPaginationFindByCommerceAccountId = new FinderPath(
 			CommerceOrderImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCommerceAccountId", new String[] {Long.class.getName()},
-			CommerceOrderModelImpl.COMMERCEACCOUNTID_COLUMN_BITMASK |
-			CommerceOrderModelImpl.CREATEDATE_COLUMN_BITMASK);
+			"findByCommerceAccountId", new String[] {Long.class.getName()});
 
 		_finderPathCountByCommerceAccountId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -8923,9 +8868,7 @@ public class CommerceOrderPersistenceImpl
 
 		_finderPathWithoutPaginationFindByBillingAddressId = new FinderPath(
 			CommerceOrderImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByBillingAddressId", new String[] {Long.class.getName()},
-			CommerceOrderModelImpl.BILLINGADDRESSID_COLUMN_BITMASK |
-			CommerceOrderModelImpl.CREATEDATE_COLUMN_BITMASK);
+			"findByBillingAddressId", new String[] {Long.class.getName()});
 
 		_finderPathCountByBillingAddressId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -8941,9 +8884,7 @@ public class CommerceOrderPersistenceImpl
 
 		_finderPathWithoutPaginationFindByShippingAddressId = new FinderPath(
 			CommerceOrderImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByShippingAddressId", new String[] {Long.class.getName()},
-			CommerceOrderModelImpl.SHIPPINGADDRESSID_COLUMN_BITMASK |
-			CommerceOrderModelImpl.CREATEDATE_COLUMN_BITMASK);
+			"findByShippingAddressId", new String[] {Long.class.getName()});
 
 		_finderPathCountByShippingAddressId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -8961,10 +8902,7 @@ public class CommerceOrderPersistenceImpl
 		_finderPathWithoutPaginationFindByG_C = new FinderPath(
 			CommerceOrderImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			CommerceOrderModelImpl.GROUPID_COLUMN_BITMASK |
-			CommerceOrderModelImpl.COMMERCEACCOUNTID_COLUMN_BITMASK |
-			CommerceOrderModelImpl.CREATEDATE_COLUMN_BITMASK);
+			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathCountByG_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C",
@@ -8982,10 +8920,7 @@ public class CommerceOrderPersistenceImpl
 		_finderPathWithoutPaginationFindByG_CP = new FinderPath(
 			CommerceOrderImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByG_CP",
-			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceOrderModelImpl.GROUPID_COLUMN_BITMASK |
-			CommerceOrderModelImpl.COMMERCEPAYMENTMETHODKEY_COLUMN_BITMASK |
-			CommerceOrderModelImpl.CREATEDATE_COLUMN_BITMASK);
+			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathCountByG_CP = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -9007,11 +8942,7 @@ public class CommerceOrderPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
-			},
-			CommerceOrderModelImpl.GROUPID_COLUMN_BITMASK |
-			CommerceOrderModelImpl.USERID_COLUMN_BITMASK |
-			CommerceOrderModelImpl.ORDERSTATUS_COLUMN_BITMASK |
-			CommerceOrderModelImpl.CREATEDATE_COLUMN_BITMASK);
+			});
 
 		_finderPathCountByG_U_O = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -9036,11 +8967,7 @@ public class CommerceOrderPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
-			},
-			CommerceOrderModelImpl.GROUPID_COLUMN_BITMASK |
-			CommerceOrderModelImpl.COMMERCEACCOUNTID_COLUMN_BITMASK |
-			CommerceOrderModelImpl.ORDERSTATUS_COLUMN_BITMASK |
-			CommerceOrderModelImpl.CREATEDATE_COLUMN_BITMASK);
+			});
 
 		_finderPathCountByG_C_O = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -9086,9 +9013,7 @@ public class CommerceOrderPersistenceImpl
 
 		_finderPathFetchByC_ERC = new FinderPath(
 			CommerceOrderImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceOrderModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceOrderModelImpl.EXTERNALREFERENCECODE_COLUMN_BITMASK);
+			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathCountByC_ERC = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

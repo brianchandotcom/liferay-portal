@@ -147,14 +147,35 @@ public class CommerceInventoryWarehouseModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COUNTRYTWOLETTERSISOCODE_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 8L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long NAME_COLUMN_BITMASK = 16L;
 
 	/**
@@ -506,6 +527,14 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void setMvccVersion(long mvccVersion) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("mvccVersion");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_mvccVersion = mvccVersion;
 	}
 
@@ -522,17 +551,24 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		_columnBitmask |= EXTERNALREFERENCECODE_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("externalReferenceCode");
 
-		if (_originalExternalReferenceCode == null) {
-			_originalExternalReferenceCode = _externalReferenceCode;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_externalReferenceCode = externalReferenceCode;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalExternalReferenceCode() {
-		return GetterUtil.getString(_originalExternalReferenceCode);
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -545,6 +581,14 @@ public class CommerceInventoryWarehouseModelImpl
 	public void setCommerceInventoryWarehouseId(
 		long commerceInventoryWarehouseId) {
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("CIWarehouseId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_commerceInventoryWarehouseId = commerceInventoryWarehouseId;
 	}
 
@@ -556,19 +600,24 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("companyId");
 
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_companyId = companyId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -579,6 +628,14 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userId");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userId = userId;
 	}
 
@@ -611,6 +668,14 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("userName");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_userName = userName;
 	}
 
@@ -622,6 +687,14 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("createDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_createDate = createDate;
 	}
 
@@ -639,6 +712,14 @@ public class CommerceInventoryWarehouseModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("modifiedDate");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -655,6 +736,14 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void setName(String name) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("name");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_name = name;
 	}
 
@@ -671,6 +760,14 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void setDescription(String description) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("description");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_description = description;
 	}
 
@@ -688,19 +785,24 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void setActive(boolean active) {
-		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("active_");
 
-		if (!_setOriginalActive) {
-			_setOriginalActive = true;
-
-			_originalActive = _active;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_active = active;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public boolean getOriginalActive() {
-		return _originalActive;
+		return GetterUtil.getBoolean(getColumnOriginalValue("active_"));
 	}
 
 	@JSON
@@ -716,6 +818,14 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void setStreet1(String street1) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("street1");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_street1 = street1;
 	}
 
@@ -732,6 +842,14 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void setStreet2(String street2) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("street2");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_street2 = street2;
 	}
 
@@ -748,6 +866,14 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void setStreet3(String street3) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("street3");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_street3 = street3;
 	}
 
@@ -764,6 +890,14 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void setCity(String city) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("city");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_city = city;
 	}
 
@@ -780,6 +914,14 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void setZip(String zip) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("zip");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_zip = zip;
 	}
 
@@ -796,6 +938,14 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void setCommerceRegionCode(String commerceRegionCode) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("commerceRegionCode");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_commerceRegionCode = commerceRegionCode;
 	}
 
@@ -812,17 +962,24 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void setCountryTwoLettersISOCode(String countryTwoLettersISOCode) {
-		_columnBitmask |= COUNTRYTWOLETTERSISOCODE_COLUMN_BITMASK;
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("countryTwoLettersISOCode");
 
-		if (_originalCountryTwoLettersISOCode == null) {
-			_originalCountryTwoLettersISOCode = _countryTwoLettersISOCode;
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
 		}
 
 		_countryTwoLettersISOCode = countryTwoLettersISOCode;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalCountryTwoLettersISOCode() {
-		return GetterUtil.getString(_originalCountryTwoLettersISOCode);
+		return getColumnOriginalValue("countryTwoLettersISOCode");
 	}
 
 	@JSON
@@ -833,6 +990,14 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void setLatitude(double latitude) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("latitude");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_latitude = latitude;
 	}
 
@@ -844,6 +1009,14 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void setLongitude(double longitude) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("longitude");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_longitude = longitude;
 	}
 
@@ -860,6 +1033,14 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void setType(String type) {
+		if (_columnOriginalValues != null) {
+			_columnBitmask |= _columnBitmasks.get("type_");
+
+			if (_columnOriginalValues == Collections.EMPTY_MAP) {
+				_setColumnOriginalValues();
+			}
+		}
+
 		_type = type;
 	}
 
@@ -995,19 +1176,9 @@ public class CommerceInventoryWarehouseModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_originalExternalReferenceCode = _externalReferenceCode;
-
-		_originalCompanyId = _companyId;
-
-		_setOriginalCompanyId = false;
+		_columnOriginalValues = Collections.emptyMap();
 
 		_setModifiedDate = false;
-
-		_originalActive = _active;
-
-		_setOriginalActive = false;
-
-		_originalCountryTwoLettersISOCode = _countryTwoLettersISOCode;
 
 		_columnBitmask = 0;
 	}
@@ -1243,11 +1414,8 @@ public class CommerceInventoryWarehouseModelImpl
 
 	private long _mvccVersion;
 	private String _externalReferenceCode;
-	private String _originalExternalReferenceCode;
 	private long _commerceInventoryWarehouseId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1256,8 +1424,6 @@ public class CommerceInventoryWarehouseModelImpl
 	private String _name;
 	private String _description;
 	private boolean _active;
-	private boolean _originalActive;
-	private boolean _setOriginalActive;
 	private String _street1;
 	private String _street2;
 	private String _street3;
@@ -1265,10 +1431,106 @@ public class CommerceInventoryWarehouseModelImpl
 	private String _zip;
 	private String _commerceRegionCode;
 	private String _countryTwoLettersISOCode;
-	private String _originalCountryTwoLettersISOCode;
 	private double _latitude;
 	private double _longitude;
 	private String _type;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
+		_columnOriginalValues.put(
+			"CIWarehouseId", _commerceInventoryWarehouseId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("description", _description);
+		_columnOriginalValues.put("active_", _active);
+		_columnOriginalValues.put("street1", _street1);
+		_columnOriginalValues.put("street2", _street2);
+		_columnOriginalValues.put("street3", _street3);
+		_columnOriginalValues.put("city", _city);
+		_columnOriginalValues.put("zip", _zip);
+		_columnOriginalValues.put("commerceRegionCode", _commerceRegionCode);
+		_columnOriginalValues.put(
+			"countryTwoLettersISOCode", _countryTwoLettersISOCode);
+		_columnOriginalValues.put("latitude", _latitude);
+		_columnOriginalValues.put("longitude", _longitude);
+		_columnOriginalValues.put("type_", _type);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+
+		columnBitmasks.put("mvccVersion", 1L);
+
+		columnBitmasks.put("externalReferenceCode", 2L);
+
+		columnBitmasks.put("CIWarehouseId", 4L);
+
+		columnBitmasks.put("companyId", 8L);
+
+		columnBitmasks.put("userId", 16L);
+
+		columnBitmasks.put("userName", 32L);
+
+		columnBitmasks.put("createDate", 64L);
+
+		columnBitmasks.put("modifiedDate", 128L);
+
+		columnBitmasks.put("name", 256L);
+
+		columnBitmasks.put("description", 512L);
+
+		columnBitmasks.put("active_", 1024L);
+
+		columnBitmasks.put("street1", 2048L);
+
+		columnBitmasks.put("street2", 4096L);
+
+		columnBitmasks.put("street3", 8192L);
+
+		columnBitmasks.put("city", 16384L);
+
+		columnBitmasks.put("zip", 32768L);
+
+		columnBitmasks.put("commerceRegionCode", 65536L);
+
+		columnBitmasks.put("countryTwoLettersISOCode", 131072L);
+
+		columnBitmasks.put("latitude", 262144L);
+
+		columnBitmasks.put("longitude", 524288L);
+
+		columnBitmasks.put("type_", 1048576L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommerceInventoryWarehouse _escapedModel;
 

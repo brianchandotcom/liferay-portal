@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -615,32 +616,77 @@ public class CommerceTierPriceEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		CommerceTierPriceEntry existingCommerceTierPriceEntry =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newCommerceTierPriceEntry.getPrimaryKey());
+				newCommerceTierPriceEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CommerceTierPriceEntry newCommerceTierPriceEntry =
+			addCommerceTierPriceEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CommerceTierPriceEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"commerceTierPriceEntryId",
+				newCommerceTierPriceEntry.getCommerceTierPriceEntryId()));
+
+		List<CommerceTierPriceEntry> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		CommerceTierPriceEntry commerceTierPriceEntry) {
 
 		Assert.assertEquals(
-			Long.valueOf(
-				existingCommerceTierPriceEntry.getCommercePriceEntryId()),
+			Long.valueOf(commerceTierPriceEntry.getCommercePriceEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceTierPriceEntry,
-				"getOriginalCommercePriceEntryId", new Class<?>[0]));
+				commerceTierPriceEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "commercePriceEntryId"));
 		Assert.assertEquals(
-			Integer.valueOf(existingCommerceTierPriceEntry.getMinQuantity()),
+			Integer.valueOf(commerceTierPriceEntry.getMinQuantity()),
 			ReflectionTestUtil.<Integer>invoke(
-				existingCommerceTierPriceEntry, "getOriginalMinQuantity",
-				new Class<?>[0]));
+				commerceTierPriceEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "minQuantity"));
 
 		Assert.assertEquals(
-			Long.valueOf(existingCommerceTierPriceEntry.getCompanyId()),
+			Long.valueOf(commerceTierPriceEntry.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceTierPriceEntry, "getOriginalCompanyId",
-				new Class<?>[0]));
+				commerceTierPriceEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
-			existingCommerceTierPriceEntry.getExternalReferenceCode(),
+			commerceTierPriceEntry.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
-				existingCommerceTierPriceEntry,
-				"getOriginalExternalReferenceCode", new Class<?>[0]));
+				commerceTierPriceEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected CommerceTierPriceEntry addCommerceTierPriceEntry()

@@ -1428,8 +1428,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 				commerceAddressRestriction.getCommerceCountryId()
 			},
 			commerceAddressRestriction);
-
-		commerceAddressRestriction.resetOriginalValues();
 	}
 
 	/**
@@ -1449,9 +1447,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 					commerceAddressRestriction.getPrimaryKey()) == null) {
 
 				cacheResult(commerceAddressRestriction);
-			}
-			else {
-				commerceAddressRestriction.resetOriginalValues();
 			}
 		}
 	}
@@ -1563,10 +1558,12 @@ public class CommerceAddressRestrictionPersistenceImpl
 			 _finderPathFetchByC_C_C.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceAddressRestrictionModelImpl.getOriginalClassNameId(),
-				commerceAddressRestrictionModelImpl.getOriginalClassPK(),
-				commerceAddressRestrictionModelImpl.
-					getOriginalCommerceCountryId()
+				commerceAddressRestrictionModelImpl.getColumnOriginalValue(
+					"classNameId"),
+				commerceAddressRestrictionModelImpl.getColumnOriginalValue(
+					"classPK"),
+				commerceAddressRestrictionModelImpl.getColumnOriginalValue(
+					"commerceCountryId")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_C_C, args);
@@ -1793,8 +1790,8 @@ public class CommerceAddressRestrictionPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceAddressRestrictionModelImpl.
-						getOriginalCommerceCountryId()
+					commerceAddressRestrictionModelImpl.getColumnOriginalValue(
+						"commerceCountryId")
 				};
 
 				finderCache.removeResult(
@@ -1817,9 +1814,10 @@ public class CommerceAddressRestrictionPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceAddressRestrictionModelImpl.
-						getOriginalClassNameId(),
-					commerceAddressRestrictionModelImpl.getOriginalClassPK()
+					commerceAddressRestrictionModelImpl.getColumnOriginalValue(
+						"classNameId"),
+					commerceAddressRestrictionModelImpl.getColumnOriginalValue(
+						"classPK")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_C, args);
@@ -2138,9 +2136,9 @@ public class CommerceAddressRestrictionPersistenceImpl
 			CommerceAddressRestrictionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceCountryId", new String[] {Long.class.getName()},
-			CommerceAddressRestrictionModelImpl.
-				COMMERCECOUNTRYID_COLUMN_BITMASK |
-			CommerceAddressRestrictionModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceAddressRestrictionModelImpl.getColumnBitmask(
+				"commerceCountryId") |
+			CommerceAddressRestrictionModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByCommerceCountryId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2159,9 +2157,10 @@ public class CommerceAddressRestrictionPersistenceImpl
 			CommerceAddressRestrictionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CommerceAddressRestrictionModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			CommerceAddressRestrictionModelImpl.CLASSPK_COLUMN_BITMASK |
-			CommerceAddressRestrictionModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceAddressRestrictionModelImpl.getColumnBitmask(
+				"classNameId") |
+			CommerceAddressRestrictionModelImpl.getColumnBitmask("classPK") |
+			CommerceAddressRestrictionModelImpl.getColumnBitmask("createDate"));
 
 		_finderPathCountByC_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
@@ -2173,10 +2172,11 @@ public class CommerceAddressRestrictionPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			CommerceAddressRestrictionModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			CommerceAddressRestrictionModelImpl.CLASSPK_COLUMN_BITMASK |
-			CommerceAddressRestrictionModelImpl.
-				COMMERCECOUNTRYID_COLUMN_BITMASK);
+			CommerceAddressRestrictionModelImpl.getColumnBitmask(
+				"classNameId") |
+			CommerceAddressRestrictionModelImpl.getColumnBitmask("classPK") |
+			CommerceAddressRestrictionModelImpl.getColumnBitmask(
+				"commerceCountryId"));
 
 		_finderPathCountByC_C_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

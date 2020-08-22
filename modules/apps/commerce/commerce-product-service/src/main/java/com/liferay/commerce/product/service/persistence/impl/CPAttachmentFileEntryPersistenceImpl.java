@@ -5034,8 +5034,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 				cpAttachmentFileEntry.getExternalReferenceCode()
 			},
 			cpAttachmentFileEntry);
-
-		cpAttachmentFileEntry.resetOriginalValues();
 	}
 
 	/**
@@ -5055,9 +5053,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 					cpAttachmentFileEntry.getPrimaryKey()) == null) {
 
 				cacheResult(cpAttachmentFileEntry);
-			}
-			else {
-				cpAttachmentFileEntry.resetOriginalValues();
 			}
 		}
 	}
@@ -5185,8 +5180,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cpAttachmentFileEntryModelImpl.getOriginalUuid(),
-				cpAttachmentFileEntryModelImpl.getOriginalGroupId()
+				cpAttachmentFileEntryModelImpl.getColumnOriginalValue("uuid_"),
+				cpAttachmentFileEntryModelImpl.getColumnOriginalValue("groupId")
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -5208,9 +5203,12 @@ public class CPAttachmentFileEntryPersistenceImpl
 			 _finderPathFetchByC_C_F.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cpAttachmentFileEntryModelImpl.getOriginalClassNameId(),
-				cpAttachmentFileEntryModelImpl.getOriginalClassPK(),
-				cpAttachmentFileEntryModelImpl.getOriginalFileEntryId()
+				cpAttachmentFileEntryModelImpl.getColumnOriginalValue(
+					"classNameId"),
+				cpAttachmentFileEntryModelImpl.getColumnOriginalValue(
+					"classPK"),
+				cpAttachmentFileEntryModelImpl.getColumnOriginalValue(
+					"fileEntryId")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_C_F, args);
@@ -5231,9 +5229,10 @@ public class CPAttachmentFileEntryPersistenceImpl
 			 _finderPathFetchByC_ERC.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cpAttachmentFileEntryModelImpl.getOriginalCompanyId(),
-				cpAttachmentFileEntryModelImpl.
-					getOriginalExternalReferenceCode()
+				cpAttachmentFileEntryModelImpl.getColumnOriginalValue(
+					"companyId"),
+				cpAttachmentFileEntryModelImpl.getColumnOriginalValue(
+					"externalReferenceCode")
 			};
 
 			finderCache.removeResult(_finderPathCountByC_ERC, args);
@@ -5484,7 +5483,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpAttachmentFileEntryModelImpl.getOriginalUuid()
+					cpAttachmentFileEntryModelImpl.getColumnOriginalValue(
+						"uuid_")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -5503,8 +5503,10 @@ public class CPAttachmentFileEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpAttachmentFileEntryModelImpl.getOriginalUuid(),
-					cpAttachmentFileEntryModelImpl.getOriginalCompanyId()
+					cpAttachmentFileEntryModelImpl.getColumnOriginalValue(
+						"uuid_"),
+					cpAttachmentFileEntryModelImpl.getColumnOriginalValue(
+						"companyId")
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -5526,8 +5528,10 @@ public class CPAttachmentFileEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpAttachmentFileEntryModelImpl.getOriginalClassNameId(),
-					cpAttachmentFileEntryModelImpl.getOriginalClassPK()
+					cpAttachmentFileEntryModelImpl.getColumnOriginalValue(
+						"classNameId"),
+					cpAttachmentFileEntryModelImpl.getColumnOriginalValue(
+						"classPK")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_C, args);
@@ -5549,10 +5553,14 @@ public class CPAttachmentFileEntryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					cpAttachmentFileEntryModelImpl.getOriginalClassNameId(),
-					cpAttachmentFileEntryModelImpl.getOriginalClassPK(),
-					cpAttachmentFileEntryModelImpl.getOriginalType(),
-					cpAttachmentFileEntryModelImpl.getOriginalStatus()
+					cpAttachmentFileEntryModelImpl.getColumnOriginalValue(
+						"classNameId"),
+					cpAttachmentFileEntryModelImpl.getColumnOriginalValue(
+						"classPK"),
+					cpAttachmentFileEntryModelImpl.getColumnOriginalValue(
+						"type_"),
+					cpAttachmentFileEntryModelImpl.getColumnOriginalValue(
+						"status")
 				};
 
 				finderCache.removeResult(_finderPathCountByC_C_T_ST, args);
@@ -5874,8 +5882,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 			CPAttachmentFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			CPAttachmentFileEntryModelImpl.UUID_COLUMN_BITMASK |
-			CPAttachmentFileEntryModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPAttachmentFileEntryModelImpl.getColumnBitmask("uuid_") |
+			CPAttachmentFileEntryModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5885,8 +5893,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 			CPAttachmentFileEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CPAttachmentFileEntryModelImpl.UUID_COLUMN_BITMASK |
-			CPAttachmentFileEntryModelImpl.GROUPID_COLUMN_BITMASK);
+			CPAttachmentFileEntryModelImpl.getColumnBitmask("uuid_") |
+			CPAttachmentFileEntryModelImpl.getColumnBitmask("groupId"));
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5906,9 +5914,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 			CPAttachmentFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CPAttachmentFileEntryModelImpl.UUID_COLUMN_BITMASK |
-			CPAttachmentFileEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			CPAttachmentFileEntryModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPAttachmentFileEntryModelImpl.getColumnBitmask("uuid_") |
+			CPAttachmentFileEntryModelImpl.getColumnBitmask("companyId") |
+			CPAttachmentFileEntryModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5928,9 +5936,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 			CPAttachmentFileEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CPAttachmentFileEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			CPAttachmentFileEntryModelImpl.CLASSPK_COLUMN_BITMASK |
-			CPAttachmentFileEntryModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPAttachmentFileEntryModelImpl.getColumnBitmask("classNameId") |
+			CPAttachmentFileEntryModelImpl.getColumnBitmask("classPK") |
+			CPAttachmentFileEntryModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByC_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
@@ -5955,9 +5963,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			CPAttachmentFileEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			CPAttachmentFileEntryModelImpl.CLASSPK_COLUMN_BITMASK |
-			CPAttachmentFileEntryModelImpl.FILEENTRYID_COLUMN_BITMASK);
+			CPAttachmentFileEntryModelImpl.getColumnBitmask("classNameId") |
+			CPAttachmentFileEntryModelImpl.getColumnBitmask("classPK") |
+			CPAttachmentFileEntryModelImpl.getColumnBitmask("fileEntryId"));
 
 		_finderPathCountByC_C_F = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -6001,11 +6009,11 @@ public class CPAttachmentFileEntryPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName()
 			},
-			CPAttachmentFileEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			CPAttachmentFileEntryModelImpl.CLASSPK_COLUMN_BITMASK |
-			CPAttachmentFileEntryModelImpl.TYPE_COLUMN_BITMASK |
-			CPAttachmentFileEntryModelImpl.STATUS_COLUMN_BITMASK |
-			CPAttachmentFileEntryModelImpl.PRIORITY_COLUMN_BITMASK);
+			CPAttachmentFileEntryModelImpl.getColumnBitmask("classNameId") |
+			CPAttachmentFileEntryModelImpl.getColumnBitmask("classPK") |
+			CPAttachmentFileEntryModelImpl.getColumnBitmask("type_") |
+			CPAttachmentFileEntryModelImpl.getColumnBitmask("status") |
+			CPAttachmentFileEntryModelImpl.getColumnBitmask("priority"));
 
 		_finderPathCountByC_C_T_ST = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -6037,9 +6045,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 			CPAttachmentFileEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CPAttachmentFileEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			CPAttachmentFileEntryModelImpl.
-				EXTERNALREFERENCECODE_COLUMN_BITMASK);
+			CPAttachmentFileEntryModelImpl.getColumnBitmask("companyId") |
+			CPAttachmentFileEntryModelImpl.getColumnBitmask(
+				"externalReferenceCode"));
 
 		_finderPathCountByC_ERC = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

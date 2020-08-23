@@ -18,6 +18,8 @@
 
 <%@ include file="/announcements/init-ext.jsp" %>
 
+<%@ page import="com.liferay.portal.kernel.model.ModelHintsUtil" %>
+
 <%
 AnnouncementsPortletInstanceConfiguration announcementsPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(AnnouncementsPortletInstanceConfiguration.class);
 %>

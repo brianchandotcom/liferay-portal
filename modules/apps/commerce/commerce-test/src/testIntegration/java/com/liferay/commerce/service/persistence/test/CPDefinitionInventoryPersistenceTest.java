@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -554,72 +553,26 @@ public class CPDefinitionInventoryPersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
+		CPDefinitionInventory existingCPDefinitionInventory =
 			_persistence.findByPrimaryKey(
-				newCPDefinitionInventory.getPrimaryKey()));
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		CPDefinitionInventory newCPDefinitionInventory =
-			addCPDefinitionInventory();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CPDefinitionInventory.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"CPDefinitionInventoryId",
-				newCPDefinitionInventory.getCPDefinitionInventoryId()));
-
-		List<CPDefinitionInventory> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(
-		CPDefinitionInventory cpDefinitionInventory) {
+				newCPDefinitionInventory.getPrimaryKey());
 
 		Assert.assertEquals(
-			cpDefinitionInventory.getUuid(),
+			existingCPDefinitionInventory.getUuid(),
 			ReflectionTestUtil.invoke(
-				cpDefinitionInventory, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "uuid_"));
+				existingCPDefinitionInventory, "getOriginalUuid",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(cpDefinitionInventory.getGroupId()),
+			Long.valueOf(existingCPDefinitionInventory.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpDefinitionInventory, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
+				existingCPDefinitionInventory, "getOriginalGroupId",
+				new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(cpDefinitionInventory.getCPDefinitionId()),
+			Long.valueOf(existingCPDefinitionInventory.getCPDefinitionId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpDefinitionInventory, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "CPDefinitionId"));
+				existingCPDefinitionInventory, "getOriginalCPDefinitionId",
+				new Class<?>[0]));
 	}
 
 	protected CPDefinitionInventory addCPDefinitionInventory()

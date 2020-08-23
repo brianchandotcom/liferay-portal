@@ -164,47 +164,18 @@ public class CommercePriceEntryModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long CPINSTANCEUUID_COLUMN_BITMASK = 1L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long COMMERCEPRICELISTID_COLUMN_BITMASK = 2L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 8L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long STATUS_COLUMN_BITMASK = 16L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long UUID_COLUMN_BITMASK = 32L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *		#getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 64L;
 
 	/**
@@ -589,24 +560,17 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("uuid_");
+		_columnBitmask |= UUID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
 		}
 
 		_uuid = uuid;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public String getOriginalUuid() {
-		return getColumnOriginalValue("uuid_");
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -622,24 +586,17 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("externalReferenceCode");
+		_columnBitmask |= EXTERNALREFERENCECODE_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_originalExternalReferenceCode == null) {
+			_originalExternalReferenceCode = _externalReferenceCode;
 		}
 
 		_externalReferenceCode = externalReferenceCode;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public String getOriginalExternalReferenceCode() {
-		return getColumnOriginalValue("externalReferenceCode");
+		return GetterUtil.getString(_originalExternalReferenceCode);
 	}
 
 	@JSON
@@ -650,14 +607,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setCommercePriceEntryId(long commercePriceEntryId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("commercePriceEntryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_commercePriceEntryId = commercePriceEntryId;
 	}
 
@@ -669,24 +618,19 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
 		}
 
 		_companyId = companyId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -697,14 +641,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_userId = userId;
 	}
 
@@ -737,14 +673,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_userName = userName;
 	}
 
@@ -756,14 +684,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_createDate = createDate;
 	}
 
@@ -781,14 +701,6 @@ public class CommercePriceEntryModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_modifiedDate = modifiedDate;
 	}
 
@@ -800,25 +712,19 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setCommercePriceListId(long commercePriceListId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("commercePriceListId");
+		_columnBitmask |= COMMERCEPRICELISTID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalCommercePriceListId) {
+			_setOriginalCommercePriceListId = true;
+
+			_originalCommercePriceListId = _commercePriceListId;
 		}
 
 		_commercePriceListId = commercePriceListId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCommercePriceListId() {
-		return GetterUtil.getLong(
-			getColumnOriginalValue("commercePriceListId"));
+		return _originalCommercePriceListId;
 	}
 
 	@JSON
@@ -834,24 +740,17 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setCPInstanceUuid(String CPInstanceUuid) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("CPInstanceUuid");
+		_columnBitmask |= CPINSTANCEUUID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_originalCPInstanceUuid == null) {
+			_originalCPInstanceUuid = _CPInstanceUuid;
 		}
 
 		_CPInstanceUuid = CPInstanceUuid;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public String getOriginalCPInstanceUuid() {
-		return getColumnOriginalValue("CPInstanceUuid");
+		return GetterUtil.getString(_originalCPInstanceUuid);
 	}
 
 	@JSON
@@ -862,14 +761,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setCProductId(long CProductId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("CProductId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_CProductId = CProductId;
 	}
 
@@ -881,14 +772,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setPrice(BigDecimal price) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("price");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_price = price;
 	}
 
@@ -900,14 +783,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setPromoPrice(BigDecimal promoPrice) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("promoPrice");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_promoPrice = promoPrice;
 	}
 
@@ -925,14 +800,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setDiscountDiscovery(boolean discountDiscovery) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("discountDiscovery");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_discountDiscovery = discountDiscovery;
 	}
 
@@ -944,14 +811,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setDiscountLevel1(BigDecimal discountLevel1) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("discountLevel1");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_discountLevel1 = discountLevel1;
 	}
 
@@ -963,14 +822,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setDiscountLevel2(BigDecimal discountLevel2) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("discountLevel2");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_discountLevel2 = discountLevel2;
 	}
 
@@ -982,14 +833,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setDiscountLevel3(BigDecimal discountLevel3) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("discountLevel3");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_discountLevel3 = discountLevel3;
 	}
 
@@ -1001,14 +844,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setDiscountLevel4(BigDecimal discountLevel4) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("discountLevel4");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_discountLevel4 = discountLevel4;
 	}
 
@@ -1026,14 +861,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setHasTierPrice(boolean hasTierPrice) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("hasTierPrice");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_hasTierPrice = hasTierPrice;
 	}
 
@@ -1051,14 +878,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setBulkPricing(boolean bulkPricing) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("bulkPricing");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_bulkPricing = bulkPricing;
 	}
 
@@ -1070,14 +889,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setDisplayDate(Date displayDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("displayDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_displayDate = displayDate;
 	}
 
@@ -1089,14 +900,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setExpirationDate(Date expirationDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("expirationDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_expirationDate = expirationDate;
 	}
 
@@ -1108,14 +911,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("lastPublishDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_lastPublishDate = lastPublishDate;
 	}
 
@@ -1127,24 +922,19 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("status");
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
 		}
 
 		_status = status;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public int getOriginalStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("status"));
+		return _originalStatus;
 	}
 
 	@JSON
@@ -1155,14 +945,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("statusByUserId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_statusByUserId = statusByUserId;
 	}
 
@@ -1195,14 +977,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("statusByUserName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_statusByUserName = statusByUserName;
 	}
 
@@ -1214,14 +988,6 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void setStatusDate(Date statusDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("statusDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_statusDate = statusDate;
 	}
 
@@ -1447,9 +1213,24 @@ public class CommercePriceEntryModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_columnOriginalValues = Collections.emptyMap();
+		_originalUuid = _uuid;
+
+		_originalExternalReferenceCode = _externalReferenceCode;
+
+		_originalCompanyId = _companyId;
+
+		_setOriginalCompanyId = false;
 
 		_setModifiedDate = false;
+		_originalCommercePriceListId = _commercePriceListId;
+
+		_setOriginalCommercePriceListId = false;
+
+		_originalCPInstanceUuid = _CPInstanceUuid;
+
+		_originalStatus = _status;
+
+		_setOriginalStatus = false;
 
 		_columnBitmask = 0;
 	}
@@ -1667,16 +1448,23 @@ public class CommercePriceEntryModelImpl
 	}
 
 	private String _uuid;
+	private String _originalUuid;
 	private String _externalReferenceCode;
+	private String _originalExternalReferenceCode;
 	private long _commercePriceEntryId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _commercePriceListId;
+	private long _originalCommercePriceListId;
+	private boolean _setOriginalCommercePriceListId;
 	private String _CPInstanceUuid;
+	private String _originalCPInstanceUuid;
 	private long _CProductId;
 	private BigDecimal _price;
 	private BigDecimal _promoPrice;
@@ -1691,123 +1479,11 @@ public class CommercePriceEntryModelImpl
 	private Date _expirationDate;
 	private Date _lastPublishDate;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
-	public <T> T getColumnOriginalValue(String columnName) {
-		if (_columnOriginalValues == null) {
-			return null;
-		}
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		return (T)_columnOriginalValues.get(columnName);
-	}
-
-	private void _setColumnOriginalValues() {
-		_columnOriginalValues = new HashMap<String, Object>();
-
-		_columnOriginalValues.put("uuid_", _uuid);
-		_columnOriginalValues.put(
-			"externalReferenceCode", _externalReferenceCode);
-		_columnOriginalValues.put(
-			"commercePriceEntryId", _commercePriceEntryId);
-		_columnOriginalValues.put("companyId", _companyId);
-		_columnOriginalValues.put("userId", _userId);
-		_columnOriginalValues.put("userName", _userName);
-		_columnOriginalValues.put("createDate", _createDate);
-		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("commercePriceListId", _commercePriceListId);
-		_columnOriginalValues.put("CPInstanceUuid", _CPInstanceUuid);
-		_columnOriginalValues.put("CProductId", _CProductId);
-		_columnOriginalValues.put("price", _price);
-		_columnOriginalValues.put("promoPrice", _promoPrice);
-		_columnOriginalValues.put("discountDiscovery", _discountDiscovery);
-		_columnOriginalValues.put("discountLevel1", _discountLevel1);
-		_columnOriginalValues.put("discountLevel2", _discountLevel2);
-		_columnOriginalValues.put("discountLevel3", _discountLevel3);
-		_columnOriginalValues.put("discountLevel4", _discountLevel4);
-		_columnOriginalValues.put("hasTierPrice", _hasTierPrice);
-		_columnOriginalValues.put("bulkPricing", _bulkPricing);
-		_columnOriginalValues.put("displayDate", _displayDate);
-		_columnOriginalValues.put("expirationDate", _expirationDate);
-		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
-		_columnOriginalValues.put("status", _status);
-		_columnOriginalValues.put("statusByUserId", _statusByUserId);
-		_columnOriginalValues.put("statusByUserName", _statusByUserName);
-		_columnOriginalValues.put("statusDate", _statusDate);
-	}
-
-	private static final Map<String, Long> _columnBitmasks;
-
-	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
-
-		columnBitmasks.put("uuid_", 1L);
-
-		columnBitmasks.put("externalReferenceCode", 2L);
-
-		columnBitmasks.put("commercePriceEntryId", 4L);
-
-		columnBitmasks.put("companyId", 8L);
-
-		columnBitmasks.put("userId", 16L);
-
-		columnBitmasks.put("userName", 32L);
-
-		columnBitmasks.put("createDate", 64L);
-
-		columnBitmasks.put("modifiedDate", 128L);
-
-		columnBitmasks.put("commercePriceListId", 256L);
-
-		columnBitmasks.put("CPInstanceUuid", 512L);
-
-		columnBitmasks.put("CProductId", 1024L);
-
-		columnBitmasks.put("price", 2048L);
-
-		columnBitmasks.put("promoPrice", 4096L);
-
-		columnBitmasks.put("discountDiscovery", 8192L);
-
-		columnBitmasks.put("discountLevel1", 16384L);
-
-		columnBitmasks.put("discountLevel2", 32768L);
-
-		columnBitmasks.put("discountLevel3", 65536L);
-
-		columnBitmasks.put("discountLevel4", 131072L);
-
-		columnBitmasks.put("hasTierPrice", 262144L);
-
-		columnBitmasks.put("bulkPricing", 524288L);
-
-		columnBitmasks.put("displayDate", 1048576L);
-
-		columnBitmasks.put("expirationDate", 2097152L);
-
-		columnBitmasks.put("lastPublishDate", 4194304L);
-
-		columnBitmasks.put("status", 8388608L);
-
-		columnBitmasks.put("statusByUserId", 16777216L);
-
-		columnBitmasks.put("statusByUserName", 33554432L);
-
-		columnBitmasks.put("statusDate", 67108864L);
-
-		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
-	}
-
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommercePriceEntry _escapedModel;
 

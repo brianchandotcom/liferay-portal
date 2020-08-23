@@ -242,10 +242,29 @@ public class CommerceOrderModelImpl
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.commerce.service.util.ServiceProps.get(
-			"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceOrder"),
-		true);
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
+
+	public static final long BILLINGADDRESSID_COLUMN_BITMASK = 1L;
+
+	public static final long COMMERCEACCOUNTID_COLUMN_BITMASK = 2L;
+
+	public static final long COMMERCEPAYMENTMETHODKEY_COLUMN_BITMASK = 4L;
+
+	public static final long COMPANYID_COLUMN_BITMASK = 8L;
+
+	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
+
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 32L;
+
+	public static final long GROUPID_COLUMN_BITMASK = 64L;
+
+	public static final long ORDERSTATUS_COLUMN_BITMASK = 128L;
+
+	public static final long SHIPPINGADDRESSID_COLUMN_BITMASK = 256L;
+
+	public static final long USERID_COLUMN_BITMASK = 512L;
+
+	public static final long UUID_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -948,20 +967,17 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
+		_columnBitmask |= UUID_COLUMN_BITMASK;
+
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
 		}
 
 		_uuid = uuid;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public String getOriginalUuid() {
-		return getColumnOriginalValue("uuid_");
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -977,20 +993,17 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
+		_columnBitmask |= EXTERNALREFERENCECODE_COLUMN_BITMASK;
+
+		if (_originalExternalReferenceCode == null) {
+			_originalExternalReferenceCode = _externalReferenceCode;
 		}
 
 		_externalReferenceCode = externalReferenceCode;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public String getOriginalExternalReferenceCode() {
-		return getColumnOriginalValue("externalReferenceCode");
+		return GetterUtil.getString(_originalExternalReferenceCode);
 	}
 
 	@JSON
@@ -1001,10 +1014,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setCommerceOrderId(long commerceOrderId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_commerceOrderId = commerceOrderId;
 	}
 
@@ -1016,20 +1025,19 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
 		}
 
 		_groupId = groupId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -1040,20 +1048,19 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
 		}
 
 		_companyId = companyId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -1064,8 +1071,12 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
 		}
 
 		_userId = userId;
@@ -1087,13 +1098,8 @@ public class CommerceOrderModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return _originalUserId;
 	}
 
 	@JSON
@@ -1109,10 +1115,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_userName = userName;
 	}
 
@@ -1124,20 +1126,17 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
+		_columnBitmask |= CREATEDATE_COLUMN_BITMASK;
+
+		if (_originalCreateDate == null) {
+			_originalCreateDate = _createDate;
 		}
 
 		_createDate = createDate;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public Date getOriginalCreateDate() {
-		return getColumnOriginalValue("createDate");
+		return _originalCreateDate;
 	}
 
 	@JSON
@@ -1154,10 +1153,6 @@ public class CommerceOrderModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1169,20 +1164,19 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setCommerceAccountId(long commerceAccountId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
+		_columnBitmask |= COMMERCEACCOUNTID_COLUMN_BITMASK;
+
+		if (!_setOriginalCommerceAccountId) {
+			_setOriginalCommerceAccountId = true;
+
+			_originalCommerceAccountId = _commerceAccountId;
 		}
 
 		_commerceAccountId = commerceAccountId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCommerceAccountId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceAccountId"));
+		return _originalCommerceAccountId;
 	}
 
 	@JSON
@@ -1193,10 +1187,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setCommerceCurrencyId(long commerceCurrencyId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_commerceCurrencyId = commerceCurrencyId;
 	}
 
@@ -1208,20 +1198,19 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setBillingAddressId(long billingAddressId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
+		_columnBitmask |= BILLINGADDRESSID_COLUMN_BITMASK;
+
+		if (!_setOriginalBillingAddressId) {
+			_setOriginalBillingAddressId = true;
+
+			_originalBillingAddressId = _billingAddressId;
 		}
 
 		_billingAddressId = billingAddressId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalBillingAddressId() {
-		return GetterUtil.getLong(getColumnOriginalValue("billingAddressId"));
+		return _originalBillingAddressId;
 	}
 
 	@JSON
@@ -1232,20 +1221,19 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setShippingAddressId(long shippingAddressId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
+		_columnBitmask |= SHIPPINGADDRESSID_COLUMN_BITMASK;
+
+		if (!_setOriginalShippingAddressId) {
+			_setOriginalShippingAddressId = true;
+
+			_originalShippingAddressId = _shippingAddressId;
 		}
 
 		_shippingAddressId = shippingAddressId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalShippingAddressId() {
-		return GetterUtil.getLong(getColumnOriginalValue("shippingAddressId"));
+		return _originalShippingAddressId;
 	}
 
 	@JSON
@@ -1261,20 +1249,17 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setCommercePaymentMethodKey(String commercePaymentMethodKey) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
+		_columnBitmask |= COMMERCEPAYMENTMETHODKEY_COLUMN_BITMASK;
+
+		if (_originalCommercePaymentMethodKey == null) {
+			_originalCommercePaymentMethodKey = _commercePaymentMethodKey;
 		}
 
 		_commercePaymentMethodKey = commercePaymentMethodKey;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public String getOriginalCommercePaymentMethodKey() {
-		return getColumnOriginalValue("commercePaymentMethodKey");
+		return GetterUtil.getString(_originalCommercePaymentMethodKey);
 	}
 
 	@JSON
@@ -1290,10 +1275,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setTransactionId(String transactionId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_transactionId = transactionId;
 	}
 
@@ -1305,10 +1286,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setCommerceShippingMethodId(long commerceShippingMethodId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_commerceShippingMethodId = commerceShippingMethodId;
 	}
 
@@ -1325,10 +1302,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setShippingOptionName(String shippingOptionName) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_shippingOptionName = shippingOptionName;
 	}
 
@@ -1345,10 +1318,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setPurchaseOrderNumber(String purchaseOrderNumber) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_purchaseOrderNumber = purchaseOrderNumber;
 	}
 
@@ -1365,10 +1334,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setCouponCode(String couponCode) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_couponCode = couponCode;
 	}
 
@@ -1380,10 +1345,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setLastPriceUpdateDate(Date lastPriceUpdateDate) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_lastPriceUpdateDate = lastPriceUpdateDate;
 	}
 
@@ -1395,10 +1356,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setSubtotal(BigDecimal subtotal) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_subtotal = subtotal;
 	}
 
@@ -1410,10 +1367,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setSubtotalDiscountAmount(BigDecimal subtotalDiscountAmount) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_subtotalDiscountAmount = subtotalDiscountAmount;
 	}
 
@@ -1426,10 +1379,6 @@ public class CommerceOrderModelImpl
 	@Override
 	public void setSubtotalDiscountPercentageLevel1(
 		BigDecimal subtotalDiscountPercentageLevel1) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
 
 		_subtotalDiscountPercentageLevel1 = subtotalDiscountPercentageLevel1;
 	}
@@ -1444,10 +1393,6 @@ public class CommerceOrderModelImpl
 	public void setSubtotalDiscountPercentageLevel2(
 		BigDecimal subtotalDiscountPercentageLevel2) {
 
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_subtotalDiscountPercentageLevel2 = subtotalDiscountPercentageLevel2;
 	}
 
@@ -1460,10 +1405,6 @@ public class CommerceOrderModelImpl
 	@Override
 	public void setSubtotalDiscountPercentageLevel3(
 		BigDecimal subtotalDiscountPercentageLevel3) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
 
 		_subtotalDiscountPercentageLevel3 = subtotalDiscountPercentageLevel3;
 	}
@@ -1478,10 +1419,6 @@ public class CommerceOrderModelImpl
 	public void setSubtotalDiscountPercentageLevel4(
 		BigDecimal subtotalDiscountPercentageLevel4) {
 
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_subtotalDiscountPercentageLevel4 = subtotalDiscountPercentageLevel4;
 	}
 
@@ -1493,10 +1430,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setShippingAmount(BigDecimal shippingAmount) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_shippingAmount = shippingAmount;
 	}
 
@@ -1508,10 +1441,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setShippingDiscountAmount(BigDecimal shippingDiscountAmount) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_shippingDiscountAmount = shippingDiscountAmount;
 	}
 
@@ -1524,10 +1453,6 @@ public class CommerceOrderModelImpl
 	@Override
 	public void setShippingDiscountPercentageLevel1(
 		BigDecimal shippingDiscountPercentageLevel1) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
 
 		_shippingDiscountPercentageLevel1 = shippingDiscountPercentageLevel1;
 	}
@@ -1542,10 +1467,6 @@ public class CommerceOrderModelImpl
 	public void setShippingDiscountPercentageLevel2(
 		BigDecimal shippingDiscountPercentageLevel2) {
 
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_shippingDiscountPercentageLevel2 = shippingDiscountPercentageLevel2;
 	}
 
@@ -1558,10 +1479,6 @@ public class CommerceOrderModelImpl
 	@Override
 	public void setShippingDiscountPercentageLevel3(
 		BigDecimal shippingDiscountPercentageLevel3) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
 
 		_shippingDiscountPercentageLevel3 = shippingDiscountPercentageLevel3;
 	}
@@ -1576,10 +1493,6 @@ public class CommerceOrderModelImpl
 	public void setShippingDiscountPercentageLevel4(
 		BigDecimal shippingDiscountPercentageLevel4) {
 
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_shippingDiscountPercentageLevel4 = shippingDiscountPercentageLevel4;
 	}
 
@@ -1591,10 +1504,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setTaxAmount(BigDecimal taxAmount) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_taxAmount = taxAmount;
 	}
 
@@ -1606,10 +1515,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setTotal(BigDecimal total) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_total = total;
 	}
 
@@ -1621,10 +1526,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setTotalDiscountAmount(BigDecimal totalDiscountAmount) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_totalDiscountAmount = totalDiscountAmount;
 	}
 
@@ -1637,10 +1538,6 @@ public class CommerceOrderModelImpl
 	@Override
 	public void setTotalDiscountPercentageLevel1(
 		BigDecimal totalDiscountPercentageLevel1) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
 
 		_totalDiscountPercentageLevel1 = totalDiscountPercentageLevel1;
 	}
@@ -1655,10 +1552,6 @@ public class CommerceOrderModelImpl
 	public void setTotalDiscountPercentageLevel2(
 		BigDecimal totalDiscountPercentageLevel2) {
 
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_totalDiscountPercentageLevel2 = totalDiscountPercentageLevel2;
 	}
 
@@ -1671,10 +1564,6 @@ public class CommerceOrderModelImpl
 	@Override
 	public void setTotalDiscountPercentageLevel3(
 		BigDecimal totalDiscountPercentageLevel3) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
 
 		_totalDiscountPercentageLevel3 = totalDiscountPercentageLevel3;
 	}
@@ -1689,10 +1578,6 @@ public class CommerceOrderModelImpl
 	public void setTotalDiscountPercentageLevel4(
 		BigDecimal totalDiscountPercentageLevel4) {
 
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_totalDiscountPercentageLevel4 = totalDiscountPercentageLevel4;
 	}
 
@@ -1704,10 +1589,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setSubtotalWithTaxAmount(BigDecimal subtotalWithTaxAmount) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_subtotalWithTaxAmount = subtotalWithTaxAmount;
 	}
 
@@ -1721,10 +1602,6 @@ public class CommerceOrderModelImpl
 	public void setSubtotalDiscountWithTaxAmount(
 		BigDecimal subtotalDiscountWithTaxAmount) {
 
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_subtotalDiscountWithTaxAmount = subtotalDiscountWithTaxAmount;
 	}
 
@@ -1737,10 +1614,6 @@ public class CommerceOrderModelImpl
 	@Override
 	public void setSubtotalDiscountPercentageLevel1WithTaxAmount(
 		BigDecimal subtotalDiscountPercentageLevel1WithTaxAmount) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
 
 		_subtotalDiscountPercentageLevel1WithTaxAmount =
 			subtotalDiscountPercentageLevel1WithTaxAmount;
@@ -1756,10 +1629,6 @@ public class CommerceOrderModelImpl
 	public void setSubtotalDiscountPercentageLevel2WithTaxAmount(
 		BigDecimal subtotalDiscountPercentageLevel2WithTaxAmount) {
 
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_subtotalDiscountPercentageLevel2WithTaxAmount =
 			subtotalDiscountPercentageLevel2WithTaxAmount;
 	}
@@ -1773,10 +1642,6 @@ public class CommerceOrderModelImpl
 	@Override
 	public void setSubtotalDiscountPercentageLevel3WithTaxAmount(
 		BigDecimal subtotalDiscountPercentageLevel3WithTaxAmount) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
 
 		_subtotalDiscountPercentageLevel3WithTaxAmount =
 			subtotalDiscountPercentageLevel3WithTaxAmount;
@@ -1792,10 +1657,6 @@ public class CommerceOrderModelImpl
 	public void setSubtotalDiscountPercentageLevel4WithTaxAmount(
 		BigDecimal subtotalDiscountPercentageLevel4WithTaxAmount) {
 
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_subtotalDiscountPercentageLevel4WithTaxAmount =
 			subtotalDiscountPercentageLevel4WithTaxAmount;
 	}
@@ -1808,10 +1669,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setShippingWithTaxAmount(BigDecimal shippingWithTaxAmount) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_shippingWithTaxAmount = shippingWithTaxAmount;
 	}
 
@@ -1825,10 +1682,6 @@ public class CommerceOrderModelImpl
 	public void setShippingDiscountWithTaxAmount(
 		BigDecimal shippingDiscountWithTaxAmount) {
 
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_shippingDiscountWithTaxAmount = shippingDiscountWithTaxAmount;
 	}
 
@@ -1841,10 +1694,6 @@ public class CommerceOrderModelImpl
 	@Override
 	public void setShippingDiscountPercentageLevel1WithTaxAmount(
 		BigDecimal shippingDiscountPercentageLevel1WithTaxAmount) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
 
 		_shippingDiscountPercentageLevel1WithTaxAmount =
 			shippingDiscountPercentageLevel1WithTaxAmount;
@@ -1860,10 +1709,6 @@ public class CommerceOrderModelImpl
 	public void setShippingDiscountPercentageLevel2WithTaxAmount(
 		BigDecimal shippingDiscountPercentageLevel2WithTaxAmount) {
 
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_shippingDiscountPercentageLevel2WithTaxAmount =
 			shippingDiscountPercentageLevel2WithTaxAmount;
 	}
@@ -1877,10 +1722,6 @@ public class CommerceOrderModelImpl
 	@Override
 	public void setShippingDiscountPercentageLevel3WithTaxAmount(
 		BigDecimal shippingDiscountPercentageLevel3WithTaxAmount) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
 
 		_shippingDiscountPercentageLevel3WithTaxAmount =
 			shippingDiscountPercentageLevel3WithTaxAmount;
@@ -1896,10 +1737,6 @@ public class CommerceOrderModelImpl
 	public void setShippingDiscountPercentageLevel4WithTaxAmount(
 		BigDecimal shippingDiscountPercentageLevel4WithTaxAmount) {
 
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_shippingDiscountPercentageLevel4WithTaxAmount =
 			shippingDiscountPercentageLevel4WithTaxAmount;
 	}
@@ -1912,10 +1749,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setTotalWithTaxAmount(BigDecimal totalWithTaxAmount) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_totalWithTaxAmount = totalWithTaxAmount;
 	}
 
@@ -1929,10 +1762,6 @@ public class CommerceOrderModelImpl
 	public void setTotalDiscountWithTaxAmount(
 		BigDecimal totalDiscountWithTaxAmount) {
 
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_totalDiscountWithTaxAmount = totalDiscountWithTaxAmount;
 	}
 
@@ -1945,10 +1774,6 @@ public class CommerceOrderModelImpl
 	@Override
 	public void setTotalDiscountPercentageLevel1WithTaxAmount(
 		BigDecimal totalDiscountPercentageLevel1WithTaxAmount) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
 
 		_totalDiscountPercentageLevel1WithTaxAmount =
 			totalDiscountPercentageLevel1WithTaxAmount;
@@ -1964,10 +1789,6 @@ public class CommerceOrderModelImpl
 	public void setTotalDiscountPercentageLevel2WithTaxAmount(
 		BigDecimal totalDiscountPercentageLevel2WithTaxAmount) {
 
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_totalDiscountPercentageLevel2WithTaxAmount =
 			totalDiscountPercentageLevel2WithTaxAmount;
 	}
@@ -1982,10 +1803,6 @@ public class CommerceOrderModelImpl
 	public void setTotalDiscountPercentageLevel3WithTaxAmount(
 		BigDecimal totalDiscountPercentageLevel3WithTaxAmount) {
 
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_totalDiscountPercentageLevel3WithTaxAmount =
 			totalDiscountPercentageLevel3WithTaxAmount;
 	}
@@ -1999,10 +1816,6 @@ public class CommerceOrderModelImpl
 	@Override
 	public void setTotalDiscountPercentageLevel4WithTaxAmount(
 		BigDecimal totalDiscountPercentageLevel4WithTaxAmount) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
 
 		_totalDiscountPercentageLevel4WithTaxAmount =
 			totalDiscountPercentageLevel4WithTaxAmount;
@@ -2021,10 +1834,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setAdvanceStatus(String advanceStatus) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_advanceStatus = advanceStatus;
 	}
 
@@ -2036,10 +1845,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setPaymentStatus(int paymentStatus) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_paymentStatus = paymentStatus;
 	}
 
@@ -2051,10 +1856,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setOrderDate(Date orderDate) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_orderDate = orderDate;
 	}
 
@@ -2066,20 +1867,19 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setOrderStatus(int orderStatus) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
+		_columnBitmask |= ORDERSTATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalOrderStatus) {
+			_setOriginalOrderStatus = true;
+
+			_originalOrderStatus = _orderStatus;
 		}
 
 		_orderStatus = orderStatus;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public int getOriginalOrderStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("orderStatus"));
+		return _originalOrderStatus;
 	}
 
 	@JSON
@@ -2095,10 +1895,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setPrintedNote(String printedNote) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_printedNote = printedNote;
 	}
 
@@ -2110,10 +1906,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setRequestedDeliveryDate(Date requestedDeliveryDate) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_requestedDeliveryDate = requestedDeliveryDate;
 	}
 
@@ -2131,10 +1923,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setManuallyAdjusted(boolean manuallyAdjusted) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_manuallyAdjusted = manuallyAdjusted;
 	}
 
@@ -2146,10 +1934,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_status = status;
 	}
 
@@ -2161,10 +1945,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_statusByUserId = statusByUserId;
 	}
 
@@ -2197,10 +1977,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_statusByUserName = statusByUserName;
 	}
 
@@ -2212,10 +1988,6 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void setStatusDate(Date statusDate) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
 		_statusDate = statusDate;
 	}
 
@@ -2303,6 +2075,10 @@ public class CommerceOrderModelImpl
 		else {
 			return false;
 		}
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -2503,9 +2279,44 @@ public class CommerceOrderModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_columnOriginalValues = Collections.emptyMap();
+		_originalUuid = _uuid;
+
+		_originalExternalReferenceCode = _externalReferenceCode;
+
+		_originalGroupId = _groupId;
+
+		_setOriginalGroupId = false;
+
+		_originalCompanyId = _companyId;
+
+		_setOriginalCompanyId = false;
+
+		_originalUserId = _userId;
+
+		_setOriginalUserId = false;
+
+		_originalCreateDate = _createDate;
 
 		_setModifiedDate = false;
+		_originalCommerceAccountId = _commerceAccountId;
+
+		_setOriginalCommerceAccountId = false;
+
+		_originalBillingAddressId = _billingAddressId;
+
+		_setOriginalBillingAddressId = false;
+
+		_originalShippingAddressId = _shippingAddressId;
+
+		_setOriginalShippingAddressId = false;
+
+		_originalCommercePaymentMethodKey = _commercePaymentMethodKey;
+
+		_originalOrderStatus = _orderStatus;
+
+		_setOriginalOrderStatus = false;
+
+		_columnBitmask = 0;
 	}
 
 	@Override
@@ -2878,20 +2689,36 @@ public class CommerceOrderModelImpl
 	}
 
 	private String _uuid;
+	private String _originalUuid;
 	private String _externalReferenceCode;
+	private String _originalExternalReferenceCode;
 	private long _commerceOrderId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
+	private Date _originalCreateDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _commerceAccountId;
+	private long _originalCommerceAccountId;
+	private boolean _setOriginalCommerceAccountId;
 	private long _commerceCurrencyId;
 	private long _billingAddressId;
+	private long _originalBillingAddressId;
+	private boolean _setOriginalBillingAddressId;
 	private long _shippingAddressId;
+	private long _originalShippingAddressId;
+	private boolean _setOriginalShippingAddressId;
 	private String _commercePaymentMethodKey;
+	private String _originalCommercePaymentMethodKey;
 	private String _transactionId;
 	private long _commerceShippingMethodId;
 	private String _shippingOptionName;
@@ -2939,6 +2766,8 @@ public class CommerceOrderModelImpl
 	private int _paymentStatus;
 	private Date _orderDate;
 	private int _orderStatus;
+	private int _originalOrderStatus;
+	private boolean _setOriginalOrderStatus;
 	private String _printedNote;
 	private Date _requestedDeliveryDate;
 	private boolean _manuallyAdjusted;
@@ -2946,288 +2775,7 @@ public class CommerceOrderModelImpl
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
-	public <T> T getColumnOriginalValue(String columnName) {
-		if (_columnOriginalValues == null) {
-			return null;
-		}
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		return (T)_columnOriginalValues.get(columnName);
-	}
-
-	private void _setColumnOriginalValues() {
-		_columnOriginalValues = new HashMap<String, Object>();
-
-		_columnOriginalValues.put("uuid_", _uuid);
-		_columnOriginalValues.put(
-			"externalReferenceCode", _externalReferenceCode);
-		_columnOriginalValues.put("commerceOrderId", _commerceOrderId);
-		_columnOriginalValues.put("groupId", _groupId);
-		_columnOriginalValues.put("companyId", _companyId);
-		_columnOriginalValues.put("userId", _userId);
-		_columnOriginalValues.put("userName", _userName);
-		_columnOriginalValues.put("createDate", _createDate);
-		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("commerceAccountId", _commerceAccountId);
-		_columnOriginalValues.put("commerceCurrencyId", _commerceCurrencyId);
-		_columnOriginalValues.put("billingAddressId", _billingAddressId);
-		_columnOriginalValues.put("shippingAddressId", _shippingAddressId);
-		_columnOriginalValues.put(
-			"commercePaymentMethodKey", _commercePaymentMethodKey);
-		_columnOriginalValues.put("transactionId", _transactionId);
-		_columnOriginalValues.put(
-			"commerceShippingMethodId", _commerceShippingMethodId);
-		_columnOriginalValues.put("shippingOptionName", _shippingOptionName);
-		_columnOriginalValues.put("purchaseOrderNumber", _purchaseOrderNumber);
-		_columnOriginalValues.put("couponCode", _couponCode);
-		_columnOriginalValues.put("lastPriceUpdateDate", _lastPriceUpdateDate);
-		_columnOriginalValues.put("subtotal", _subtotal);
-		_columnOriginalValues.put(
-			"subtotalDiscountAmount", _subtotalDiscountAmount);
-		_columnOriginalValues.put(
-			"subtotalDiscountPercentLevel1", _subtotalDiscountPercentageLevel1);
-		_columnOriginalValues.put(
-			"subtotalDiscountPercentLevel2", _subtotalDiscountPercentageLevel2);
-		_columnOriginalValues.put(
-			"subtotalDiscountPercentLevel3", _subtotalDiscountPercentageLevel3);
-		_columnOriginalValues.put(
-			"subtotalDiscountPercentLevel4", _subtotalDiscountPercentageLevel4);
-		_columnOriginalValues.put("shippingAmount", _shippingAmount);
-		_columnOriginalValues.put(
-			"shippingDiscountAmount", _shippingDiscountAmount);
-		_columnOriginalValues.put(
-			"shippingDiscountPercentLevel1", _shippingDiscountPercentageLevel1);
-		_columnOriginalValues.put(
-			"shippingDiscountPercentLevel2", _shippingDiscountPercentageLevel2);
-		_columnOriginalValues.put(
-			"shippingDiscountPercentLevel3", _shippingDiscountPercentageLevel3);
-		_columnOriginalValues.put(
-			"shippingDiscountPercentLevel4", _shippingDiscountPercentageLevel4);
-		_columnOriginalValues.put("taxAmount", _taxAmount);
-		_columnOriginalValues.put("total", _total);
-		_columnOriginalValues.put("totalDiscountAmount", _totalDiscountAmount);
-		_columnOriginalValues.put(
-			"totalDiscountPercentageLevel1", _totalDiscountPercentageLevel1);
-		_columnOriginalValues.put(
-			"totalDiscountPercentageLevel2", _totalDiscountPercentageLevel2);
-		_columnOriginalValues.put(
-			"totalDiscountPercentageLevel3", _totalDiscountPercentageLevel3);
-		_columnOriginalValues.put(
-			"totalDiscountPercentageLevel4", _totalDiscountPercentageLevel4);
-		_columnOriginalValues.put(
-			"subtotalWithTaxAmount", _subtotalWithTaxAmount);
-		_columnOriginalValues.put(
-			"subtotalDiscountWithTaxAmount", _subtotalDiscountWithTaxAmount);
-		_columnOriginalValues.put(
-			"subtotalDiscountPctLev1WithTax",
-			_subtotalDiscountPercentageLevel1WithTaxAmount);
-		_columnOriginalValues.put(
-			"subtotalDiscountPctLev2WithTax",
-			_subtotalDiscountPercentageLevel2WithTaxAmount);
-		_columnOriginalValues.put(
-			"subtotalDiscountPctLev3WithTax",
-			_subtotalDiscountPercentageLevel3WithTaxAmount);
-		_columnOriginalValues.put(
-			"subtotalDiscountPctLev4WithTax",
-			_subtotalDiscountPercentageLevel4WithTaxAmount);
-		_columnOriginalValues.put(
-			"shippingWithTaxAmount", _shippingWithTaxAmount);
-		_columnOriginalValues.put(
-			"shippingDiscountWithTaxAmount", _shippingDiscountWithTaxAmount);
-		_columnOriginalValues.put(
-			"shippingDiscountPctLev1WithTax",
-			_shippingDiscountPercentageLevel1WithTaxAmount);
-		_columnOriginalValues.put(
-			"shippingDiscountPctLev2WithTax",
-			_shippingDiscountPercentageLevel2WithTaxAmount);
-		_columnOriginalValues.put(
-			"shippingDiscountPctLev3WithTax",
-			_shippingDiscountPercentageLevel3WithTaxAmount);
-		_columnOriginalValues.put(
-			"shippingDiscountPctLev4WithTax",
-			_shippingDiscountPercentageLevel4WithTaxAmount);
-		_columnOriginalValues.put("totalWithTaxAmount", _totalWithTaxAmount);
-		_columnOriginalValues.put(
-			"totalDiscountWithTaxAmount", _totalDiscountWithTaxAmount);
-		_columnOriginalValues.put(
-			"totalDiscountPctLev1WithTax",
-			_totalDiscountPercentageLevel1WithTaxAmount);
-		_columnOriginalValues.put(
-			"totalDiscountPctLev2WithTax",
-			_totalDiscountPercentageLevel2WithTaxAmount);
-		_columnOriginalValues.put(
-			"totalDiscountPctLev3WithTax",
-			_totalDiscountPercentageLevel3WithTaxAmount);
-		_columnOriginalValues.put(
-			"totalDiscountPctLev4WithTax",
-			_totalDiscountPercentageLevel4WithTaxAmount);
-		_columnOriginalValues.put("advanceStatus", _advanceStatus);
-		_columnOriginalValues.put("paymentStatus", _paymentStatus);
-		_columnOriginalValues.put("orderDate", _orderDate);
-		_columnOriginalValues.put("orderStatus", _orderStatus);
-		_columnOriginalValues.put("printedNote", _printedNote);
-		_columnOriginalValues.put(
-			"requestedDeliveryDate", _requestedDeliveryDate);
-		_columnOriginalValues.put("manuallyAdjusted", _manuallyAdjusted);
-		_columnOriginalValues.put("status", _status);
-		_columnOriginalValues.put("statusByUserId", _statusByUserId);
-		_columnOriginalValues.put("statusByUserName", _statusByUserName);
-		_columnOriginalValues.put("statusDate", _statusDate);
-	}
-
-	private static final Map<String, Long> _columnBitmasks;
-
-	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
-
-		columnBitmasks.put("uuid_", 1L);
-
-		columnBitmasks.put("externalReferenceCode", 2L);
-
-		columnBitmasks.put("commerceOrderId", 4L);
-
-		columnBitmasks.put("groupId", 8L);
-
-		columnBitmasks.put("companyId", 16L);
-
-		columnBitmasks.put("userId", 32L);
-
-		columnBitmasks.put("userName", 64L);
-
-		columnBitmasks.put("createDate", 128L);
-
-		columnBitmasks.put("modifiedDate", 256L);
-
-		columnBitmasks.put("commerceAccountId", 512L);
-
-		columnBitmasks.put("commerceCurrencyId", 1024L);
-
-		columnBitmasks.put("billingAddressId", 2048L);
-
-		columnBitmasks.put("shippingAddressId", 4096L);
-
-		columnBitmasks.put("commercePaymentMethodKey", 8192L);
-
-		columnBitmasks.put("transactionId", 16384L);
-
-		columnBitmasks.put("commerceShippingMethodId", 32768L);
-
-		columnBitmasks.put("shippingOptionName", 65536L);
-
-		columnBitmasks.put("purchaseOrderNumber", 131072L);
-
-		columnBitmasks.put("couponCode", 262144L);
-
-		columnBitmasks.put("lastPriceUpdateDate", 524288L);
-
-		columnBitmasks.put("subtotal", 1048576L);
-
-		columnBitmasks.put("subtotalDiscountAmount", 2097152L);
-
-		columnBitmasks.put("subtotalDiscountPercentLevel1", 4194304L);
-
-		columnBitmasks.put("subtotalDiscountPercentLevel2", 8388608L);
-
-		columnBitmasks.put("subtotalDiscountPercentLevel3", 16777216L);
-
-		columnBitmasks.put("subtotalDiscountPercentLevel4", 33554432L);
-
-		columnBitmasks.put("shippingAmount", 67108864L);
-
-		columnBitmasks.put("shippingDiscountAmount", 134217728L);
-
-		columnBitmasks.put("shippingDiscountPercentLevel1", 268435456L);
-
-		columnBitmasks.put("shippingDiscountPercentLevel2", 536870912L);
-
-		columnBitmasks.put("shippingDiscountPercentLevel3", 1073741824L);
-
-		columnBitmasks.put("shippingDiscountPercentLevel4", 2147483648L);
-
-		columnBitmasks.put("taxAmount", 4294967296L);
-
-		columnBitmasks.put("total", 8589934592L);
-
-		columnBitmasks.put("totalDiscountAmount", 17179869184L);
-
-		columnBitmasks.put("totalDiscountPercentageLevel1", 34359738368L);
-
-		columnBitmasks.put("totalDiscountPercentageLevel2", 68719476736L);
-
-		columnBitmasks.put("totalDiscountPercentageLevel3", 137438953472L);
-
-		columnBitmasks.put("totalDiscountPercentageLevel4", 274877906944L);
-
-		columnBitmasks.put("subtotalWithTaxAmount", 549755813888L);
-
-		columnBitmasks.put("subtotalDiscountWithTaxAmount", 1099511627776L);
-
-		columnBitmasks.put("subtotalDiscountPctLev1WithTax", 2199023255552L);
-
-		columnBitmasks.put("subtotalDiscountPctLev2WithTax", 4398046511104L);
-
-		columnBitmasks.put("subtotalDiscountPctLev3WithTax", 8796093022208L);
-
-		columnBitmasks.put("subtotalDiscountPctLev4WithTax", 17592186044416L);
-
-		columnBitmasks.put("shippingWithTaxAmount", 35184372088832L);
-
-		columnBitmasks.put("shippingDiscountWithTaxAmount", 70368744177664L);
-
-		columnBitmasks.put("shippingDiscountPctLev1WithTax", 140737488355328L);
-
-		columnBitmasks.put("shippingDiscountPctLev2WithTax", 281474976710656L);
-
-		columnBitmasks.put("shippingDiscountPctLev3WithTax", 562949953421312L);
-
-		columnBitmasks.put("shippingDiscountPctLev4WithTax", 1125899906842624L);
-
-		columnBitmasks.put("totalWithTaxAmount", 2251799813685248L);
-
-		columnBitmasks.put("totalDiscountWithTaxAmount", 4503599627370496L);
-
-		columnBitmasks.put("totalDiscountPctLev1WithTax", 9007199254740992L);
-
-		columnBitmasks.put("totalDiscountPctLev2WithTax", 18014398509481984L);
-
-		columnBitmasks.put("totalDiscountPctLev3WithTax", 36028797018963968L);
-
-		columnBitmasks.put("totalDiscountPctLev4WithTax", 72057594037927936L);
-
-		columnBitmasks.put("advanceStatus", 144115188075855872L);
-
-		columnBitmasks.put("paymentStatus", 288230376151711744L);
-
-		columnBitmasks.put("orderDate", 576460752303423488L);
-
-		columnBitmasks.put("orderStatus", 1152921504606846976L);
-
-		columnBitmasks.put("printedNote", 2305843009213693952L);
-
-		columnBitmasks.put("requestedDeliveryDate", 4611686018427387904L);
-
-		columnBitmasks.put("manuallyAdjusted", 9223372036854775808L);
-
-		columnBitmasks.put("status", 18446744073709551616L);
-
-		columnBitmasks.put("statusByUserId", 36893488147419103232L);
-
-		columnBitmasks.put("statusByUserName", 73786976294838206464L);
-
-		columnBitmasks.put("statusDate", 147573952589676412928L);
-
-		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
-	}
-
-	private transient Map<String, Object> _columnOriginalValues;
+	private long _columnBitmask;
 	private CommerceOrder _escapedModel;
 
 }

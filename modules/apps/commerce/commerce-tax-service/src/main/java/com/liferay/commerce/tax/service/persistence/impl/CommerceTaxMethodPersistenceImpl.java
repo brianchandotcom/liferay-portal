@@ -1400,6 +1400,8 @@ public class CommerceTaxMethodPersistenceImpl
 				commerceTaxMethod.getGroupId(), commerceTaxMethod.getEngineKey()
 			},
 			commerceTaxMethod);
+
+		commerceTaxMethod.resetOriginalValues();
 	}
 
 	/**
@@ -1415,6 +1417,9 @@ public class CommerceTaxMethodPersistenceImpl
 					commerceTaxMethod.getPrimaryKey()) == null) {
 
 				cacheResult(commerceTaxMethod);
+			}
+			else {
+				commerceTaxMethod.resetOriginalValues();
 			}
 		}
 	}
@@ -1511,8 +1516,8 @@ public class CommerceTaxMethodPersistenceImpl
 			 _finderPathFetchByG_E.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceTaxMethodModelImpl.getColumnOriginalValue("groupId"),
-				commerceTaxMethodModelImpl.getColumnOriginalValue("engineKey")
+				commerceTaxMethodModelImpl.getOriginalGroupId(),
+				commerceTaxMethodModelImpl.getOriginalEngineKey()
 			};
 
 			finderCache.removeResult(_finderPathCountByG_E, args);
@@ -1728,7 +1733,7 @@ public class CommerceTaxMethodPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceTaxMethodModelImpl.getColumnOriginalValue("groupId")
+					commerceTaxMethodModelImpl.getOriginalGroupId()
 				};
 
 				finderCache.removeResult(_finderPathCountByGroupId, args);
@@ -1747,9 +1752,8 @@ public class CommerceTaxMethodPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceTaxMethodModelImpl.getColumnOriginalValue(
-						"groupId"),
-					commerceTaxMethodModelImpl.getColumnOriginalValue("active_")
+					commerceTaxMethodModelImpl.getOriginalGroupId(),
+					commerceTaxMethodModelImpl.getOriginalActive()
 				};
 
 				finderCache.removeResult(_finderPathCountByG_A, args);
@@ -2064,8 +2068,8 @@ public class CommerceTaxMethodPersistenceImpl
 			CommerceTaxMethodImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()},
-			CommerceTaxMethodModelImpl.getColumnBitmask("groupId") |
-			CommerceTaxMethodModelImpl.getColumnBitmask("createDate"));
+			CommerceTaxMethodModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceTaxMethodModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2074,8 +2078,8 @@ public class CommerceTaxMethodPersistenceImpl
 		_finderPathFetchByG_E = new FinderPath(
 			CommerceTaxMethodImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceTaxMethodModelImpl.getColumnBitmask("groupId") |
-			CommerceTaxMethodModelImpl.getColumnBitmask("engineKey"));
+			CommerceTaxMethodModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceTaxMethodModelImpl.ENGINEKEY_COLUMN_BITMASK);
 
 		_finderPathCountByG_E = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_E",
@@ -2094,9 +2098,9 @@ public class CommerceTaxMethodPersistenceImpl
 			CommerceTaxMethodImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			CommerceTaxMethodModelImpl.getColumnBitmask("groupId") |
-			CommerceTaxMethodModelImpl.getColumnBitmask("active_") |
-			CommerceTaxMethodModelImpl.getColumnBitmask("createDate"));
+			CommerceTaxMethodModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceTaxMethodModelImpl.ACTIVE_COLUMN_BITMASK |
+			CommerceTaxMethodModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByG_A = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",

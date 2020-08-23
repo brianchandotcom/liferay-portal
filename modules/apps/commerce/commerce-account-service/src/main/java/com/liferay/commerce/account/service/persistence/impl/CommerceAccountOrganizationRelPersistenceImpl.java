@@ -1143,6 +1143,8 @@ public class CommerceAccountOrganizationRelPersistenceImpl
 			CommerceAccountOrganizationRelImpl.class,
 			commerceAccountOrganizationRel.getPrimaryKey(),
 			commerceAccountOrganizationRel);
+
+		commerceAccountOrganizationRel.resetOriginalValues();
 	}
 
 	/**
@@ -1162,6 +1164,9 @@ public class CommerceAccountOrganizationRelPersistenceImpl
 					commerceAccountOrganizationRel.getPrimaryKey()) == null) {
 
 				cacheResult(commerceAccountOrganizationRel);
+			}
+			else {
+				commerceAccountOrganizationRel.resetOriginalValues();
 			}
 		}
 	}
@@ -1453,7 +1458,7 @@ public class CommerceAccountOrganizationRelPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceAccountOrganizationRelModelImpl.
-						getColumnOriginalValue("commerceAccountId")
+						getOriginalCommerceAccountId()
 				};
 
 				finderCache.removeResult(
@@ -1478,7 +1483,7 @@ public class CommerceAccountOrganizationRelPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceAccountOrganizationRelModelImpl.
-						getColumnOriginalValue("organizationId")
+						getOriginalOrganizationId()
 				};
 
 				finderCache.removeResult(
@@ -1802,9 +1807,9 @@ public class CommerceAccountOrganizationRelPersistenceImpl
 			CommerceAccountOrganizationRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceAccountId", new String[] {Long.class.getName()},
-			CommerceAccountOrganizationRelModelImpl.getColumnBitmask(
-				"commerceAccountId") |
-			CommerceAccountOrganizationRelModelImpl.getColumnBitmask("userId"));
+			CommerceAccountOrganizationRelModelImpl.
+				COMMERCEACCOUNTID_COLUMN_BITMASK |
+			CommerceAccountOrganizationRelModelImpl.USERID_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceAccountId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1822,9 +1827,9 @@ public class CommerceAccountOrganizationRelPersistenceImpl
 			CommerceAccountOrganizationRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOrganizationId",
 			new String[] {Long.class.getName()},
-			CommerceAccountOrganizationRelModelImpl.getColumnBitmask(
-				"organizationId") |
-			CommerceAccountOrganizationRelModelImpl.getColumnBitmask("userId"));
+			CommerceAccountOrganizationRelModelImpl.
+				ORGANIZATIONID_COLUMN_BITMASK |
+			CommerceAccountOrganizationRelModelImpl.USERID_COLUMN_BITMASK);
 
 		_finderPathCountByOrganizationId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

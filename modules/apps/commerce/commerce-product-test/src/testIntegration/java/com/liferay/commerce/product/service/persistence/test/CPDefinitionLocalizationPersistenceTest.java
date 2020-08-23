@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -464,66 +463,20 @@ public class CPDefinitionLocalizationPersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
+		CPDefinitionLocalization existingCPDefinitionLocalization =
 			_persistence.findByPrimaryKey(
-				newCPDefinitionLocalization.getPrimaryKey()));
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		CPDefinitionLocalization newCPDefinitionLocalization =
-			addCPDefinitionLocalization();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CPDefinitionLocalization.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"cpDefinitionLocalizationId",
-				newCPDefinitionLocalization.getCpDefinitionLocalizationId()));
-
-		List<CPDefinitionLocalization> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(
-		CPDefinitionLocalization cpDefinitionLocalization) {
+				newCPDefinitionLocalization.getPrimaryKey());
 
 		Assert.assertEquals(
-			Long.valueOf(cpDefinitionLocalization.getCPDefinitionId()),
+			Long.valueOf(existingCPDefinitionLocalization.getCPDefinitionId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpDefinitionLocalization, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "CPDefinitionId"));
+				existingCPDefinitionLocalization, "getOriginalCPDefinitionId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			cpDefinitionLocalization.getLanguageId(),
+			existingCPDefinitionLocalization.getLanguageId(),
 			ReflectionTestUtil.invoke(
-				cpDefinitionLocalization, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "languageId"));
+				existingCPDefinitionLocalization, "getOriginalLanguageId",
+				new Class<?>[0]));
 	}
 
 	protected CPDefinitionLocalization addCPDefinitionLocalization()

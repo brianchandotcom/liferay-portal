@@ -133,35 +133,14 @@ public class CommerceOrderNoteModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long COMMERCEORDERID_COLUMN_BITMASK = 1L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 4L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long RESTRICTED_COLUMN_BITMASK = 8L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *		#getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
 
 	/**
@@ -432,24 +411,17 @@ public class CommerceOrderNoteModelImpl
 
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("externalReferenceCode");
+		_columnBitmask |= EXTERNALREFERENCECODE_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_originalExternalReferenceCode == null) {
+			_originalExternalReferenceCode = _externalReferenceCode;
 		}
 
 		_externalReferenceCode = externalReferenceCode;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public String getOriginalExternalReferenceCode() {
-		return getColumnOriginalValue("externalReferenceCode");
+		return GetterUtil.getString(_originalExternalReferenceCode);
 	}
 
 	@JSON
@@ -460,14 +432,6 @@ public class CommerceOrderNoteModelImpl
 
 	@Override
 	public void setCommerceOrderNoteId(long commerceOrderNoteId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("commerceOrderNoteId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_commerceOrderNoteId = commerceOrderNoteId;
 	}
 
@@ -479,14 +443,6 @@ public class CommerceOrderNoteModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("groupId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_groupId = groupId;
 	}
 
@@ -498,24 +454,19 @@ public class CommerceOrderNoteModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
 		}
 
 		_companyId = companyId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -526,14 +477,6 @@ public class CommerceOrderNoteModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_userId = userId;
 	}
 
@@ -566,14 +509,6 @@ public class CommerceOrderNoteModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_userName = userName;
 	}
 
@@ -585,14 +520,6 @@ public class CommerceOrderNoteModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_createDate = createDate;
 	}
 
@@ -610,14 +537,6 @@ public class CommerceOrderNoteModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_modifiedDate = modifiedDate;
 	}
 
@@ -629,24 +548,19 @@ public class CommerceOrderNoteModelImpl
 
 	@Override
 	public void setCommerceOrderId(long commerceOrderId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("commerceOrderId");
+		_columnBitmask |= COMMERCEORDERID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalCommerceOrderId) {
+			_setOriginalCommerceOrderId = true;
+
+			_originalCommerceOrderId = _commerceOrderId;
 		}
 
 		_commerceOrderId = commerceOrderId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCommerceOrderId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceOrderId"));
+		return _originalCommerceOrderId;
 	}
 
 	@JSON
@@ -662,14 +576,6 @@ public class CommerceOrderNoteModelImpl
 
 	@Override
 	public void setContent(String content) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("content");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_content = content;
 	}
 
@@ -687,24 +593,19 @@ public class CommerceOrderNoteModelImpl
 
 	@Override
 	public void setRestricted(boolean restricted) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("restricted");
+		_columnBitmask |= RESTRICTED_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalRestricted) {
+			_setOriginalRestricted = true;
+
+			_originalRestricted = _restricted;
 		}
 
 		_restricted = restricted;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public boolean getOriginalRestricted() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("restricted"));
+		return _originalRestricted;
 	}
 
 	public long getColumnBitmask() {
@@ -825,9 +726,20 @@ public class CommerceOrderNoteModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_columnOriginalValues = Collections.emptyMap();
+		_originalExternalReferenceCode = _externalReferenceCode;
+
+		_originalCompanyId = _companyId;
+
+		_setOriginalCompanyId = false;
 
 		_setModifiedDate = false;
+		_originalCommerceOrderId = _commerceOrderId;
+
+		_setOriginalCommerceOrderId = false;
+
+		_originalRestricted = _restricted;
+
+		_setOriginalRestricted = false;
 
 		_columnBitmask = 0;
 	}
@@ -970,82 +882,24 @@ public class CommerceOrderNoteModelImpl
 	}
 
 	private String _externalReferenceCode;
+	private String _originalExternalReferenceCode;
 	private long _commerceOrderNoteId;
 	private long _groupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _commerceOrderId;
+	private long _originalCommerceOrderId;
+	private boolean _setOriginalCommerceOrderId;
 	private String _content;
 	private boolean _restricted;
-
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
-	public <T> T getColumnOriginalValue(String columnName) {
-		if (_columnOriginalValues == null) {
-			return null;
-		}
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		return (T)_columnOriginalValues.get(columnName);
-	}
-
-	private void _setColumnOriginalValues() {
-		_columnOriginalValues = new HashMap<String, Object>();
-
-		_columnOriginalValues.put(
-			"externalReferenceCode", _externalReferenceCode);
-		_columnOriginalValues.put("commerceOrderNoteId", _commerceOrderNoteId);
-		_columnOriginalValues.put("groupId", _groupId);
-		_columnOriginalValues.put("companyId", _companyId);
-		_columnOriginalValues.put("userId", _userId);
-		_columnOriginalValues.put("userName", _userName);
-		_columnOriginalValues.put("createDate", _createDate);
-		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("commerceOrderId", _commerceOrderId);
-		_columnOriginalValues.put("content", _content);
-		_columnOriginalValues.put("restricted", _restricted);
-	}
-
-	private static final Map<String, Long> _columnBitmasks;
-
-	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
-
-		columnBitmasks.put("externalReferenceCode", 1L);
-
-		columnBitmasks.put("commerceOrderNoteId", 2L);
-
-		columnBitmasks.put("groupId", 4L);
-
-		columnBitmasks.put("companyId", 8L);
-
-		columnBitmasks.put("userId", 16L);
-
-		columnBitmasks.put("userName", 32L);
-
-		columnBitmasks.put("createDate", 64L);
-
-		columnBitmasks.put("modifiedDate", 128L);
-
-		columnBitmasks.put("commerceOrderId", 256L);
-
-		columnBitmasks.put("content", 512L);
-
-		columnBitmasks.put("restricted", 1024L);
-
-		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
-	}
-
-	private transient Map<String, Object> _columnOriginalValues;
+	private boolean _originalRestricted;
+	private boolean _setOriginalRestricted;
 	private long _columnBitmask;
 	private CommerceOrderNote _escapedModel;
 

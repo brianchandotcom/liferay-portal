@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -534,67 +533,20 @@ public class CommercePaymentMethodGroupRelPersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
+		CommercePaymentMethodGroupRel existingCommercePaymentMethodGroupRel =
 			_persistence.findByPrimaryKey(
-				newCommercePaymentMethodGroupRel.getPrimaryKey()));
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		CommercePaymentMethodGroupRel newCommercePaymentMethodGroupRel =
-			addCommercePaymentMethodGroupRel();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CommercePaymentMethodGroupRel.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"commercePaymentMethodGroupRelId",
-				newCommercePaymentMethodGroupRel.
-					getCommercePaymentMethodGroupRelId()));
-
-		List<CommercePaymentMethodGroupRel> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(
-		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel) {
+				newCommercePaymentMethodGroupRel.getPrimaryKey());
 
 		Assert.assertEquals(
-			Long.valueOf(commercePaymentMethodGroupRel.getGroupId()),
+			Long.valueOf(existingCommercePaymentMethodGroupRel.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				commercePaymentMethodGroupRel, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
+				existingCommercePaymentMethodGroupRel, "getOriginalGroupId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			commercePaymentMethodGroupRel.getEngineKey(),
+			existingCommercePaymentMethodGroupRel.getEngineKey(),
 			ReflectionTestUtil.invoke(
-				commercePaymentMethodGroupRel, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "engineKey"));
+				existingCommercePaymentMethodGroupRel, "getOriginalEngineKey",
+				new Class<?>[0]));
 	}
 
 	protected CommercePaymentMethodGroupRel addCommercePaymentMethodGroupRel()

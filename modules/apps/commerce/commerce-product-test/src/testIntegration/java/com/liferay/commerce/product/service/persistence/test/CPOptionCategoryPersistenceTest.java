@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -477,62 +476,18 @@ public class CPOptionCategoryPersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
-			_persistence.findByPrimaryKey(newCPOptionCategory.getPrimaryKey()));
-	}
+		CPOptionCategory existingCPOptionCategory =
+			_persistence.findByPrimaryKey(newCPOptionCategory.getPrimaryKey());
 
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		CPOptionCategory newCPOptionCategory = addCPOptionCategory();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CPOptionCategory.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"CPOptionCategoryId",
-				newCPOptionCategory.getCPOptionCategoryId()));
-
-		List<CPOptionCategory> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(CPOptionCategory cpOptionCategory) {
 		Assert.assertEquals(
-			Long.valueOf(cpOptionCategory.getCompanyId()),
+			Long.valueOf(existingCPOptionCategory.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpOptionCategory, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
+				existingCPOptionCategory, "getOriginalCompanyId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			cpOptionCategory.getKey(),
+			existingCPOptionCategory.getKey(),
 			ReflectionTestUtil.invoke(
-				cpOptionCategory, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "key_"));
+				existingCPOptionCategory, "getOriginalKey", new Class<?>[0]));
 	}
 
 	protected CPOptionCategory addCPOptionCategory() throws Exception {

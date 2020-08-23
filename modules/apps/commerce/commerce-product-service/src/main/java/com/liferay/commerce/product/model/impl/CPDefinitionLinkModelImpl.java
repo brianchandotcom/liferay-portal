@@ -135,47 +135,18 @@ public class CPDefinitionLinkModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long CPDEFINITIONID_COLUMN_BITMASK = 1L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long CPRODUCTID_COLUMN_BITMASK = 2L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long TYPE_COLUMN_BITMASK = 16L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long UUID_COLUMN_BITMASK = 32L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *		#getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long PRIORITY_COLUMN_BITMASK = 64L;
 
 	/**
@@ -445,24 +416,17 @@ public class CPDefinitionLinkModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("uuid_");
+		_columnBitmask |= UUID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
 		}
 
 		_uuid = uuid;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public String getOriginalUuid() {
-		return getColumnOriginalValue("uuid_");
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -473,14 +437,6 @@ public class CPDefinitionLinkModelImpl
 
 	@Override
 	public void setCPDefinitionLinkId(long CPDefinitionLinkId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("CPDefinitionLinkId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_CPDefinitionLinkId = CPDefinitionLinkId;
 	}
 
@@ -492,24 +448,19 @@ public class CPDefinitionLinkModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("groupId");
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
 		}
 
 		_groupId = groupId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -520,24 +471,19 @@ public class CPDefinitionLinkModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
 		}
 
 		_companyId = companyId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -548,14 +494,6 @@ public class CPDefinitionLinkModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_userId = userId;
 	}
 
@@ -588,14 +526,6 @@ public class CPDefinitionLinkModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_userName = userName;
 	}
 
@@ -607,14 +537,6 @@ public class CPDefinitionLinkModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_createDate = createDate;
 	}
 
@@ -632,14 +554,6 @@ public class CPDefinitionLinkModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_modifiedDate = modifiedDate;
 	}
 
@@ -651,24 +565,19 @@ public class CPDefinitionLinkModelImpl
 
 	@Override
 	public void setCPDefinitionId(long CPDefinitionId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("CPDefinitionId");
+		_columnBitmask |= CPDEFINITIONID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalCPDefinitionId) {
+			_setOriginalCPDefinitionId = true;
+
+			_originalCPDefinitionId = _CPDefinitionId;
 		}
 
 		_CPDefinitionId = CPDefinitionId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCPDefinitionId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CPDefinitionId"));
+		return _originalCPDefinitionId;
 	}
 
 	@JSON
@@ -679,24 +588,19 @@ public class CPDefinitionLinkModelImpl
 
 	@Override
 	public void setCProductId(long CProductId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("CProductId");
+		_columnBitmask |= CPRODUCTID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalCProductId) {
+			_setOriginalCProductId = true;
+
+			_originalCProductId = _CProductId;
 		}
 
 		_CProductId = CProductId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCProductId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CProductId"));
+		return _originalCProductId;
 	}
 
 	@JSON
@@ -707,14 +611,6 @@ public class CPDefinitionLinkModelImpl
 
 	@Override
 	public void setPriority(double priority) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("priority");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_priority = priority;
 	}
 
@@ -731,24 +627,17 @@ public class CPDefinitionLinkModelImpl
 
 	@Override
 	public void setType(String type) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("type_");
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_originalType == null) {
+			_originalType = _type;
 		}
 
 		_type = type;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public String getOriginalType() {
-		return getColumnOriginalValue("type_");
+		return GetterUtil.getString(_originalType);
 	}
 
 	@Override
@@ -879,9 +768,26 @@ public class CPDefinitionLinkModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_columnOriginalValues = Collections.emptyMap();
+		_originalUuid = _uuid;
+
+		_originalGroupId = _groupId;
+
+		_setOriginalGroupId = false;
+
+		_originalCompanyId = _companyId;
+
+		_setOriginalCompanyId = false;
 
 		_setModifiedDate = false;
+		_originalCPDefinitionId = _CPDefinitionId;
+
+		_setOriginalCPDefinitionId = false;
+
+		_originalCProductId = _CProductId;
+
+		_setOriginalCProductId = false;
+
+		_originalType = _type;
 
 		_columnBitmask = 0;
 	}
@@ -1021,85 +927,28 @@ public class CPDefinitionLinkModelImpl
 	}
 
 	private String _uuid;
+	private String _originalUuid;
 	private long _CPDefinitionLinkId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _CPDefinitionId;
+	private long _originalCPDefinitionId;
+	private boolean _setOriginalCPDefinitionId;
 	private long _CProductId;
+	private long _originalCProductId;
+	private boolean _setOriginalCProductId;
 	private double _priority;
 	private String _type;
-
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
-	public <T> T getColumnOriginalValue(String columnName) {
-		if (_columnOriginalValues == null) {
-			return null;
-		}
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		return (T)_columnOriginalValues.get(columnName);
-	}
-
-	private void _setColumnOriginalValues() {
-		_columnOriginalValues = new HashMap<String, Object>();
-
-		_columnOriginalValues.put("uuid_", _uuid);
-		_columnOriginalValues.put("CPDefinitionLinkId", _CPDefinitionLinkId);
-		_columnOriginalValues.put("groupId", _groupId);
-		_columnOriginalValues.put("companyId", _companyId);
-		_columnOriginalValues.put("userId", _userId);
-		_columnOriginalValues.put("userName", _userName);
-		_columnOriginalValues.put("createDate", _createDate);
-		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("CPDefinitionId", _CPDefinitionId);
-		_columnOriginalValues.put("CProductId", _CProductId);
-		_columnOriginalValues.put("priority", _priority);
-		_columnOriginalValues.put("type_", _type);
-	}
-
-	private static final Map<String, Long> _columnBitmasks;
-
-	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
-
-		columnBitmasks.put("uuid_", 1L);
-
-		columnBitmasks.put("CPDefinitionLinkId", 2L);
-
-		columnBitmasks.put("groupId", 4L);
-
-		columnBitmasks.put("companyId", 8L);
-
-		columnBitmasks.put("userId", 16L);
-
-		columnBitmasks.put("userName", 32L);
-
-		columnBitmasks.put("createDate", 64L);
-
-		columnBitmasks.put("modifiedDate", 128L);
-
-		columnBitmasks.put("CPDefinitionId", 256L);
-
-		columnBitmasks.put("CProductId", 512L);
-
-		columnBitmasks.put("priority", 1024L);
-
-		columnBitmasks.put("type_", 2048L);
-
-		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
-	}
-
-	private transient Map<String, Object> _columnOriginalValues;
+	private String _originalType;
 	private long _columnBitmask;
 	private CPDefinitionLink _escapedModel;
 

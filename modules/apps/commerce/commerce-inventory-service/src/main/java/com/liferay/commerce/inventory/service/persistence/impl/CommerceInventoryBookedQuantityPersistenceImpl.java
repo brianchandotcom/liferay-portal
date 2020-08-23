@@ -1807,6 +1807,8 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			CommerceInventoryBookedQuantityImpl.class,
 			commerceInventoryBookedQuantity.getPrimaryKey(),
 			commerceInventoryBookedQuantity);
+
+		commerceInventoryBookedQuantity.resetOriginalValues();
 	}
 
 	/**
@@ -1827,6 +1829,9 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 					commerceInventoryBookedQuantity.getPrimaryKey()) == null) {
 
 				cacheResult(commerceInventoryBookedQuantity);
+			}
+			else {
+				commerceInventoryBookedQuantity.resetOriginalValues();
 			}
 		}
 	}
@@ -2121,8 +2126,7 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceInventoryBookedQuantityModelImpl.
-						getColumnOriginalValue("sku")
+					commerceInventoryBookedQuantityModelImpl.getOriginalSku()
 				};
 
 				finderCache.removeResult(_finderPathCountBySku, args);
@@ -2144,9 +2148,8 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceInventoryBookedQuantityModelImpl.
-						getColumnOriginalValue("companyId"),
-					commerceInventoryBookedQuantityModelImpl.
-						getColumnOriginalValue("sku")
+						getOriginalCompanyId(),
+					commerceInventoryBookedQuantityModelImpl.getOriginalSku()
 				};
 
 				finderCache.removeResult(_finderPathCountByC_S, args);
@@ -2470,7 +2473,7 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			CommerceInventoryBookedQuantityImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySku",
 			new String[] {String.class.getName()},
-			CommerceInventoryBookedQuantityModelImpl.getColumnBitmask("sku"));
+			CommerceInventoryBookedQuantityModelImpl.SKU_COLUMN_BITMASK);
 
 		_finderPathCountBySku = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySku",
@@ -2501,9 +2504,8 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			CommerceInventoryBookedQuantityImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceInventoryBookedQuantityModelImpl.getColumnBitmask(
-				"companyId") |
-			CommerceInventoryBookedQuantityModelImpl.getColumnBitmask("sku"));
+			CommerceInventoryBookedQuantityModelImpl.COMPANYID_COLUMN_BITMASK |
+			CommerceInventoryBookedQuantityModelImpl.SKU_COLUMN_BITMASK);
 
 		_finderPathCountByC_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",

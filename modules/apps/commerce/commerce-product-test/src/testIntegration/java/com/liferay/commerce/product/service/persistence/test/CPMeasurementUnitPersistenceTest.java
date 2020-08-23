@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -525,79 +524,32 @@ public class CPMeasurementUnitPersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
-			_persistence.findByPrimaryKey(
-				newCPMeasurementUnit.getPrimaryKey()));
-	}
+		CPMeasurementUnit existingCPMeasurementUnit =
+			_persistence.findByPrimaryKey(newCPMeasurementUnit.getPrimaryKey());
 
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		CPMeasurementUnit newCPMeasurementUnit = addCPMeasurementUnit();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CPMeasurementUnit.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"CPMeasurementUnitId",
-				newCPMeasurementUnit.getCPMeasurementUnitId()));
-
-		List<CPMeasurementUnit> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(CPMeasurementUnit cpMeasurementUnit) {
 		Assert.assertEquals(
-			cpMeasurementUnit.getUuid(),
+			existingCPMeasurementUnit.getUuid(),
 			ReflectionTestUtil.invoke(
-				cpMeasurementUnit, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "uuid_"));
+				existingCPMeasurementUnit, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(cpMeasurementUnit.getGroupId()),
+			Long.valueOf(existingCPMeasurementUnit.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpMeasurementUnit, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
+				existingCPMeasurementUnit, "getOriginalGroupId",
+				new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(cpMeasurementUnit.getCompanyId()),
+			Long.valueOf(existingCPMeasurementUnit.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpMeasurementUnit, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
+				existingCPMeasurementUnit, "getOriginalCompanyId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			cpMeasurementUnit.getKey(),
+			existingCPMeasurementUnit.getKey(),
 			ReflectionTestUtil.invoke(
-				cpMeasurementUnit, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "key_"));
+				existingCPMeasurementUnit, "getOriginalKey", new Class<?>[0]));
 		Assert.assertEquals(
-			Integer.valueOf(cpMeasurementUnit.getType()),
+			Integer.valueOf(existingCPMeasurementUnit.getType()),
 			ReflectionTestUtil.<Integer>invoke(
-				cpMeasurementUnit, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "type_"));
+				existingCPMeasurementUnit, "getOriginalType", new Class<?>[0]));
 	}
 
 	protected CPMeasurementUnit addCPMeasurementUnit() throws Exception {

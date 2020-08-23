@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -462,68 +461,25 @@ public class CommerceChannelRelPersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
+		CommerceChannelRel existingCommerceChannelRel =
 			_persistence.findByPrimaryKey(
-				newCommerceChannelRel.getPrimaryKey()));
-	}
+				newCommerceChannelRel.getPrimaryKey());
 
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		CommerceChannelRel newCommerceChannelRel = addCommerceChannelRel();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CommerceChannelRel.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"commerceChannelRelId",
-				newCommerceChannelRel.getCommerceChannelRelId()));
-
-		List<CommerceChannelRel> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(CommerceChannelRel commerceChannelRel) {
 		Assert.assertEquals(
-			Long.valueOf(commerceChannelRel.getClassNameId()),
+			Long.valueOf(existingCommerceChannelRel.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				commerceChannelRel, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "classNameId"));
+				existingCommerceChannelRel, "getOriginalClassNameId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(commerceChannelRel.getClassPK()),
+			Long.valueOf(existingCommerceChannelRel.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				commerceChannelRel, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "classPK"));
+				existingCommerceChannelRel, "getOriginalClassPK",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(commerceChannelRel.getCommerceChannelId()),
+			Long.valueOf(existingCommerceChannelRel.getCommerceChannelId()),
 			ReflectionTestUtil.<Long>invoke(
-				commerceChannelRel, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "commerceChannelId"));
+				existingCommerceChannelRel, "getOriginalCommerceChannelId",
+				new Class<?>[0]));
 	}
 
 	protected CommerceChannelRel addCommerceChannelRel() throws Exception {

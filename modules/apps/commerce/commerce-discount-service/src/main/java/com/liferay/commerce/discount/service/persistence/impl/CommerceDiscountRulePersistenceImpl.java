@@ -621,6 +621,8 @@ public class CommerceDiscountRulePersistenceImpl
 		entityCache.putResult(
 			CommerceDiscountRuleImpl.class,
 			commerceDiscountRule.getPrimaryKey(), commerceDiscountRule);
+
+		commerceDiscountRule.resetOriginalValues();
 	}
 
 	/**
@@ -638,6 +640,9 @@ public class CommerceDiscountRulePersistenceImpl
 					commerceDiscountRule.getPrimaryKey()) == null) {
 
 				cacheResult(commerceDiscountRule);
+			}
+			else {
+				commerceDiscountRule.resetOriginalValues();
 			}
 		}
 	}
@@ -904,8 +909,8 @@ public class CommerceDiscountRulePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceDiscountRuleModelImpl.getColumnOriginalValue(
-						"commerceDiscountId")
+					commerceDiscountRuleModelImpl.
+						getOriginalCommerceDiscountId()
 				};
 
 				finderCache.removeResult(
@@ -1220,9 +1225,8 @@ public class CommerceDiscountRulePersistenceImpl
 			CommerceDiscountRuleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceDiscountId", new String[] {Long.class.getName()},
-			CommerceDiscountRuleModelImpl.getColumnBitmask(
-				"commerceDiscountId") |
-			CommerceDiscountRuleModelImpl.getColumnBitmask("createDate"));
+			CommerceDiscountRuleModelImpl.COMMERCEDISCOUNTID_COLUMN_BITMASK |
+			CommerceDiscountRuleModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceDiscountId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

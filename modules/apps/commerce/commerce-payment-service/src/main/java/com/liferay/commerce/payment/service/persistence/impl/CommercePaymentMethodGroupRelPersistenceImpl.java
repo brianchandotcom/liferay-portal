@@ -1432,6 +1432,8 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 				commercePaymentMethodGroupRel.getEngineKey()
 			},
 			commercePaymentMethodGroupRel);
+
+		commercePaymentMethodGroupRel.resetOriginalValues();
 	}
 
 	/**
@@ -1451,6 +1453,9 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 					commercePaymentMethodGroupRel.getPrimaryKey()) == null) {
 
 				cacheResult(commercePaymentMethodGroupRel);
+			}
+			else {
+				commercePaymentMethodGroupRel.resetOriginalValues();
 			}
 		}
 	}
@@ -1563,10 +1568,8 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 			 _finderPathFetchByG_E.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commercePaymentMethodGroupRelModelImpl.getColumnOriginalValue(
-					"groupId"),
-				commercePaymentMethodGroupRelModelImpl.getColumnOriginalValue(
-					"engineKey")
+				commercePaymentMethodGroupRelModelImpl.getOriginalGroupId(),
+				commercePaymentMethodGroupRelModelImpl.getOriginalEngineKey()
 			};
 
 			finderCache.removeResult(_finderPathCountByG_E, args);
@@ -1798,8 +1801,7 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commercePaymentMethodGroupRelModelImpl.
-						getColumnOriginalValue("groupId")
+					commercePaymentMethodGroupRelModelImpl.getOriginalGroupId()
 				};
 
 				finderCache.removeResult(_finderPathCountByGroupId, args);
@@ -1820,10 +1822,8 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commercePaymentMethodGroupRelModelImpl.
-						getColumnOriginalValue("groupId"),
-					commercePaymentMethodGroupRelModelImpl.
-						getColumnOriginalValue("active_")
+					commercePaymentMethodGroupRelModelImpl.getOriginalGroupId(),
+					commercePaymentMethodGroupRelModelImpl.getOriginalActive()
 				};
 
 				finderCache.removeResult(_finderPathCountByG_A, args);
@@ -2148,9 +2148,8 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 			CommercePaymentMethodGroupRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()},
-			CommercePaymentMethodGroupRelModelImpl.getColumnBitmask("groupId") |
-			CommercePaymentMethodGroupRelModelImpl.getColumnBitmask(
-				"priority"));
+			CommercePaymentMethodGroupRelModelImpl.GROUPID_COLUMN_BITMASK |
+			CommercePaymentMethodGroupRelModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2160,9 +2159,8 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 			CommercePaymentMethodGroupRelImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByG_E",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommercePaymentMethodGroupRelModelImpl.getColumnBitmask("groupId") |
-			CommercePaymentMethodGroupRelModelImpl.getColumnBitmask(
-				"engineKey"));
+			CommercePaymentMethodGroupRelModelImpl.GROUPID_COLUMN_BITMASK |
+			CommercePaymentMethodGroupRelModelImpl.ENGINEKEY_COLUMN_BITMASK);
 
 		_finderPathCountByG_E = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_E",
@@ -2181,10 +2179,9 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 			CommercePaymentMethodGroupRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			CommercePaymentMethodGroupRelModelImpl.getColumnBitmask("groupId") |
-			CommercePaymentMethodGroupRelModelImpl.getColumnBitmask("active_") |
-			CommercePaymentMethodGroupRelModelImpl.getColumnBitmask(
-				"priority"));
+			CommercePaymentMethodGroupRelModelImpl.GROUPID_COLUMN_BITMASK |
+			CommercePaymentMethodGroupRelModelImpl.ACTIVE_COLUMN_BITMASK |
+			CommercePaymentMethodGroupRelModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByG_A = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",

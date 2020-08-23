@@ -1700,6 +1700,8 @@ public class CPDefinitionInventoryPersistenceImpl
 			_finderPathFetchByCPDefinitionId,
 			new Object[] {cpDefinitionInventory.getCPDefinitionId()},
 			cpDefinitionInventory);
+
+		cpDefinitionInventory.resetOriginalValues();
 	}
 
 	/**
@@ -1719,6 +1721,9 @@ public class CPDefinitionInventoryPersistenceImpl
 					cpDefinitionInventory.getPrimaryKey()) == null) {
 
 				cacheResult(cpDefinitionInventory);
+			}
+			else {
+				cpDefinitionInventory.resetOriginalValues();
 			}
 		}
 	}
@@ -1833,8 +1838,8 @@ public class CPDefinitionInventoryPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cpDefinitionInventoryModelImpl.getColumnOriginalValue("uuid_"),
-				cpDefinitionInventoryModelImpl.getColumnOriginalValue("groupId")
+				cpDefinitionInventoryModelImpl.getOriginalUuid(),
+				cpDefinitionInventoryModelImpl.getOriginalGroupId()
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -1854,8 +1859,7 @@ public class CPDefinitionInventoryPersistenceImpl
 			 _finderPathFetchByCPDefinitionId.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cpDefinitionInventoryModelImpl.getColumnOriginalValue(
-					"CPDefinitionId")
+				cpDefinitionInventoryModelImpl.getOriginalCPDefinitionId()
 			};
 
 			finderCache.removeResult(_finderPathCountByCPDefinitionId, args);
@@ -2086,8 +2090,7 @@ public class CPDefinitionInventoryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpDefinitionInventoryModelImpl.getColumnOriginalValue(
-						"uuid_")
+					cpDefinitionInventoryModelImpl.getOriginalUuid()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -2106,10 +2109,8 @@ public class CPDefinitionInventoryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpDefinitionInventoryModelImpl.getColumnOriginalValue(
-						"uuid_"),
-					cpDefinitionInventoryModelImpl.getColumnOriginalValue(
-						"companyId")
+					cpDefinitionInventoryModelImpl.getOriginalUuid(),
+					cpDefinitionInventoryModelImpl.getOriginalCompanyId()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -2429,7 +2430,7 @@ public class CPDefinitionInventoryPersistenceImpl
 			CPDefinitionInventoryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			CPDefinitionInventoryModelImpl.getColumnBitmask("uuid_"));
+			CPDefinitionInventoryModelImpl.UUID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2439,8 +2440,8 @@ public class CPDefinitionInventoryPersistenceImpl
 			CPDefinitionInventoryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CPDefinitionInventoryModelImpl.getColumnBitmask("uuid_") |
-			CPDefinitionInventoryModelImpl.getColumnBitmask("groupId"));
+			CPDefinitionInventoryModelImpl.UUID_COLUMN_BITMASK |
+			CPDefinitionInventoryModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2460,8 +2461,8 @@ public class CPDefinitionInventoryPersistenceImpl
 			CPDefinitionInventoryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CPDefinitionInventoryModelImpl.getColumnBitmask("uuid_") |
-			CPDefinitionInventoryModelImpl.getColumnBitmask("companyId"));
+			CPDefinitionInventoryModelImpl.UUID_COLUMN_BITMASK |
+			CPDefinitionInventoryModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2471,7 +2472,7 @@ public class CPDefinitionInventoryPersistenceImpl
 		_finderPathFetchByCPDefinitionId = new FinderPath(
 			CPDefinitionInventoryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByCPDefinitionId", new String[] {Long.class.getName()},
-			CPDefinitionInventoryModelImpl.getColumnBitmask("CPDefinitionId"));
+			CPDefinitionInventoryModelImpl.CPDEFINITIONID_COLUMN_BITMASK);
 
 		_finderPathCountByCPDefinitionId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

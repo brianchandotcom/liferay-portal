@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -630,93 +629,47 @@ public class CPAttachmentFileEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
+		CPAttachmentFileEntry existingCPAttachmentFileEntry =
 			_persistence.findByPrimaryKey(
-				newCPAttachmentFileEntry.getPrimaryKey()));
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		CPAttachmentFileEntry newCPAttachmentFileEntry =
-			addCPAttachmentFileEntry();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CPAttachmentFileEntry.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"CPAttachmentFileEntryId",
-				newCPAttachmentFileEntry.getCPAttachmentFileEntryId()));
-
-		List<CPAttachmentFileEntry> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(
-		CPAttachmentFileEntry cpAttachmentFileEntry) {
+				newCPAttachmentFileEntry.getPrimaryKey());
 
 		Assert.assertEquals(
-			cpAttachmentFileEntry.getUuid(),
+			existingCPAttachmentFileEntry.getUuid(),
 			ReflectionTestUtil.invoke(
-				cpAttachmentFileEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "uuid_"));
+				existingCPAttachmentFileEntry, "getOriginalUuid",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(cpAttachmentFileEntry.getGroupId()),
+			Long.valueOf(existingCPAttachmentFileEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpAttachmentFileEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
+				existingCPAttachmentFileEntry, "getOriginalGroupId",
+				new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(cpAttachmentFileEntry.getClassNameId()),
+			Long.valueOf(existingCPAttachmentFileEntry.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpAttachmentFileEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "classNameId"));
+				existingCPAttachmentFileEntry, "getOriginalClassNameId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(cpAttachmentFileEntry.getClassPK()),
+			Long.valueOf(existingCPAttachmentFileEntry.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				cpAttachmentFileEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "classPK"));
+				existingCPAttachmentFileEntry, "getOriginalClassPK",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(cpAttachmentFileEntry.getFileEntryId()),
+			Long.valueOf(existingCPAttachmentFileEntry.getFileEntryId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpAttachmentFileEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "fileEntryId"));
+				existingCPAttachmentFileEntry, "getOriginalFileEntryId",
+				new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(cpAttachmentFileEntry.getCompanyId()),
+			Long.valueOf(existingCPAttachmentFileEntry.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpAttachmentFileEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
+				existingCPAttachmentFileEntry, "getOriginalCompanyId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			cpAttachmentFileEntry.getExternalReferenceCode(),
+			existingCPAttachmentFileEntry.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
-				cpAttachmentFileEntry, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "externalReferenceCode"));
+				existingCPAttachmentFileEntry,
+				"getOriginalExternalReferenceCode", new Class<?>[0]));
 	}
 
 	protected CPAttachmentFileEntry addCPAttachmentFileEntry()

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -471,63 +470,19 @@ public class CommerceTaxMethodPersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
-			_persistence.findByPrimaryKey(
-				newCommerceTaxMethod.getPrimaryKey()));
-	}
+		CommerceTaxMethod existingCommerceTaxMethod =
+			_persistence.findByPrimaryKey(newCommerceTaxMethod.getPrimaryKey());
 
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		CommerceTaxMethod newCommerceTaxMethod = addCommerceTaxMethod();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CommerceTaxMethod.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"commerceTaxMethodId",
-				newCommerceTaxMethod.getCommerceTaxMethodId()));
-
-		List<CommerceTaxMethod> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(CommerceTaxMethod commerceTaxMethod) {
 		Assert.assertEquals(
-			Long.valueOf(commerceTaxMethod.getGroupId()),
+			Long.valueOf(existingCommerceTaxMethod.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				commerceTaxMethod, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
+				existingCommerceTaxMethod, "getOriginalGroupId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			commerceTaxMethod.getEngineKey(),
+			existingCommerceTaxMethod.getEngineKey(),
 			ReflectionTestUtil.invoke(
-				commerceTaxMethod, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "engineKey"));
+				existingCommerceTaxMethod, "getOriginalEngineKey",
+				new Class<?>[0]));
 	}
 
 	protected CommerceTaxMethod addCommerceTaxMethod() throws Exception {

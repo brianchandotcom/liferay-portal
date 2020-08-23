@@ -594,6 +594,8 @@ public class CPTaxCategoryPersistenceImpl
 		entityCache.putResult(
 			CPTaxCategoryImpl.class, cpTaxCategory.getPrimaryKey(),
 			cpTaxCategory);
+
+		cpTaxCategory.resetOriginalValues();
 	}
 
 	/**
@@ -609,6 +611,9 @@ public class CPTaxCategoryPersistenceImpl
 						null) {
 
 				cacheResult(cpTaxCategory);
+			}
+			else {
+				cpTaxCategory.resetOriginalValues();
 			}
 		}
 	}
@@ -860,7 +865,7 @@ public class CPTaxCategoryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					cpTaxCategoryModelImpl.getColumnOriginalValue("companyId")
+					cpTaxCategoryModelImpl.getOriginalCompanyId()
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -1161,8 +1166,8 @@ public class CPTaxCategoryPersistenceImpl
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
 			CPTaxCategoryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCompanyId", new String[] {Long.class.getName()},
-			CPTaxCategoryModelImpl.getColumnBitmask("companyId") |
-			CPTaxCategoryModelImpl.getColumnBitmask("createDate"));
+			CPTaxCategoryModelImpl.COMPANYID_COLUMN_BITMASK |
+			CPTaxCategoryModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

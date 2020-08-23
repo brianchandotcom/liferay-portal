@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -708,72 +707,27 @@ public class CPDefinitionPersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
-			_persistence.findByPrimaryKey(newCPDefinition.getPrimaryKey()));
-	}
+		CPDefinition existingCPDefinition = _persistence.findByPrimaryKey(
+			newCPDefinition.getPrimaryKey());
 
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		CPDefinition newCPDefinition = addCPDefinition();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CPDefinition.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"CPDefinitionId", newCPDefinition.getCPDefinitionId()));
-
-		List<CPDefinition> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(CPDefinition cpDefinition) {
 		Assert.assertEquals(
-			cpDefinition.getUuid(),
+			existingCPDefinition.getUuid(),
 			ReflectionTestUtil.invoke(
-				cpDefinition, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "uuid_"));
+				existingCPDefinition, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(cpDefinition.getGroupId()),
+			Long.valueOf(existingCPDefinition.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpDefinition, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
+				existingCPDefinition, "getOriginalGroupId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(cpDefinition.getCProductId()),
+			Long.valueOf(existingCPDefinition.getCProductId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpDefinition, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "CProductId"));
+				existingCPDefinition, "getOriginalCProductId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			Integer.valueOf(cpDefinition.getVersion()),
+			Integer.valueOf(existingCPDefinition.getVersion()),
 			ReflectionTestUtil.<Integer>invoke(
-				cpDefinition, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "version"));
+				existingCPDefinition, "getOriginalVersion", new Class<?>[0]));
 	}
 
 	protected CPDefinition addCPDefinition() throws Exception {

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -529,67 +528,22 @@ public class CommercePriceListAccountRelPersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
+		CommercePriceListAccountRel existingCommercePriceListAccountRel =
 			_persistence.findByPrimaryKey(
-				newCommercePriceListAccountRel.getPrimaryKey()));
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		CommercePriceListAccountRel newCommercePriceListAccountRel =
-			addCommercePriceListAccountRel();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CommercePriceListAccountRel.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"commercePriceListAccountRelId",
-				newCommercePriceListAccountRel.
-					getCommercePriceListAccountRelId()));
-
-		List<CommercePriceListAccountRel> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(
-		CommercePriceListAccountRel commercePriceListAccountRel) {
+				newCommercePriceListAccountRel.getPrimaryKey());
 
 		Assert.assertEquals(
-			Long.valueOf(commercePriceListAccountRel.getCommerceAccountId()),
+			Long.valueOf(
+				existingCommercePriceListAccountRel.getCommerceAccountId()),
 			ReflectionTestUtil.<Long>invoke(
-				commercePriceListAccountRel, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "commerceAccountId"));
+				existingCommercePriceListAccountRel,
+				"getOriginalCommerceAccountId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(commercePriceListAccountRel.getCommercePriceListId()),
+			Long.valueOf(
+				existingCommercePriceListAccountRel.getCommercePriceListId()),
 			ReflectionTestUtil.<Long>invoke(
-				commercePriceListAccountRel, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "commercePriceListId"));
+				existingCommercePriceListAccountRel,
+				"getOriginalCommercePriceListId", new Class<?>[0]));
 	}
 
 	protected CommercePriceListAccountRel addCommercePriceListAccountRel()

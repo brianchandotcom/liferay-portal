@@ -1745,6 +1745,8 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 				cpDefinitionVirtualSetting.getClassPK()
 			},
 			cpDefinitionVirtualSetting);
+
+		cpDefinitionVirtualSetting.resetOriginalValues();
 	}
 
 	/**
@@ -1764,6 +1766,9 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 					cpDefinitionVirtualSetting.getPrimaryKey()) == null) {
 
 				cacheResult(cpDefinitionVirtualSetting);
+			}
+			else {
+				cpDefinitionVirtualSetting.resetOriginalValues();
 			}
 		}
 	}
@@ -1884,10 +1889,8 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cpDefinitionVirtualSettingModelImpl.getColumnOriginalValue(
-					"uuid_"),
-				cpDefinitionVirtualSettingModelImpl.getColumnOriginalValue(
-					"groupId")
+				cpDefinitionVirtualSettingModelImpl.getOriginalUuid(),
+				cpDefinitionVirtualSettingModelImpl.getOriginalGroupId()
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -1908,10 +1911,8 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			 _finderPathFetchByC_C.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cpDefinitionVirtualSettingModelImpl.getColumnOriginalValue(
-					"classNameId"),
-				cpDefinitionVirtualSettingModelImpl.getColumnOriginalValue(
-					"classPK")
+				cpDefinitionVirtualSettingModelImpl.getOriginalClassNameId(),
+				cpDefinitionVirtualSettingModelImpl.getOriginalClassPK()
 			};
 
 			finderCache.removeResult(_finderPathCountByC_C, args);
@@ -2150,8 +2151,7 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpDefinitionVirtualSettingModelImpl.getColumnOriginalValue(
-						"uuid_")
+					cpDefinitionVirtualSettingModelImpl.getOriginalUuid()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -2172,10 +2172,8 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpDefinitionVirtualSettingModelImpl.getColumnOriginalValue(
-						"uuid_"),
-					cpDefinitionVirtualSettingModelImpl.getColumnOriginalValue(
-						"companyId")
+					cpDefinitionVirtualSettingModelImpl.getOriginalUuid(),
+					cpDefinitionVirtualSettingModelImpl.getOriginalCompanyId()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -2499,7 +2497,7 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			CPDefinitionVirtualSettingImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			CPDefinitionVirtualSettingModelImpl.getColumnBitmask("uuid_"));
+			CPDefinitionVirtualSettingModelImpl.UUID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2509,8 +2507,8 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			CPDefinitionVirtualSettingImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CPDefinitionVirtualSettingModelImpl.getColumnBitmask("uuid_") |
-			CPDefinitionVirtualSettingModelImpl.getColumnBitmask("groupId"));
+			CPDefinitionVirtualSettingModelImpl.UUID_COLUMN_BITMASK |
+			CPDefinitionVirtualSettingModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2530,8 +2528,8 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			CPDefinitionVirtualSettingImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CPDefinitionVirtualSettingModelImpl.getColumnBitmask("uuid_") |
-			CPDefinitionVirtualSettingModelImpl.getColumnBitmask("companyId"));
+			CPDefinitionVirtualSettingModelImpl.UUID_COLUMN_BITMASK |
+			CPDefinitionVirtualSettingModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2542,9 +2540,8 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			CPDefinitionVirtualSettingImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CPDefinitionVirtualSettingModelImpl.getColumnBitmask(
-				"classNameId") |
-			CPDefinitionVirtualSettingModelImpl.getColumnBitmask("classPK"));
+			CPDefinitionVirtualSettingModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			CPDefinitionVirtualSettingModelImpl.CLASSPK_COLUMN_BITMASK);
 
 		_finderPathCountByC_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",

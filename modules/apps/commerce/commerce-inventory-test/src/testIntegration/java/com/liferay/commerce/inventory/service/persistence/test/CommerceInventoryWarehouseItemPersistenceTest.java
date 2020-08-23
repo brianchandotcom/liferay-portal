@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -549,80 +548,33 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
+		CommerceInventoryWarehouseItem existingCommerceInventoryWarehouseItem =
 			_persistence.findByPrimaryKey(
-				newCommerceInventoryWarehouseItem.getPrimaryKey()));
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		CommerceInventoryWarehouseItem newCommerceInventoryWarehouseItem =
-			addCommerceInventoryWarehouseItem();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CommerceInventoryWarehouseItem.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"commerceInventoryWarehouseItemId",
-				newCommerceInventoryWarehouseItem.
-					getCommerceInventoryWarehouseItemId()));
-
-		List<CommerceInventoryWarehouseItem> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(
-		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem) {
+				newCommerceInventoryWarehouseItem.getPrimaryKey());
 
 		Assert.assertEquals(
 			Long.valueOf(
-				commerceInventoryWarehouseItem.
+				existingCommerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseId()),
 			ReflectionTestUtil.<Long>invoke(
-				commerceInventoryWarehouseItem, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "commerceInventoryWarehouseId"));
+				existingCommerceInventoryWarehouseItem,
+				"getOriginalCommerceInventoryWarehouseId", new Class<?>[0]));
 		Assert.assertEquals(
-			commerceInventoryWarehouseItem.getSku(),
+			existingCommerceInventoryWarehouseItem.getSku(),
 			ReflectionTestUtil.invoke(
-				commerceInventoryWarehouseItem, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "sku"));
+				existingCommerceInventoryWarehouseItem, "getOriginalSku",
+				new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(commerceInventoryWarehouseItem.getCompanyId()),
+			Long.valueOf(existingCommerceInventoryWarehouseItem.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				commerceInventoryWarehouseItem, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
+				existingCommerceInventoryWarehouseItem, "getOriginalCompanyId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			commerceInventoryWarehouseItem.getExternalReferenceCode(),
+			existingCommerceInventoryWarehouseItem.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
-				commerceInventoryWarehouseItem, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "externalReferenceCode"));
+				existingCommerceInventoryWarehouseItem,
+				"getOriginalExternalReferenceCode", new Class<?>[0]));
 	}
 
 	protected CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem()

@@ -2081,6 +2081,8 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				commerceNotificationAttachment.getGroupId()
 			},
 			commerceNotificationAttachment);
+
+		commerceNotificationAttachment.resetOriginalValues();
 	}
 
 	/**
@@ -2100,6 +2102,9 @@ public class CommerceNotificationAttachmentPersistenceImpl
 					commerceNotificationAttachment.getPrimaryKey()) == null) {
 
 				cacheResult(commerceNotificationAttachment);
+			}
+			else {
+				commerceNotificationAttachment.resetOriginalValues();
 			}
 		}
 	}
@@ -2212,10 +2217,8 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceNotificationAttachmentModelImpl.getColumnOriginalValue(
-					"uuid_"),
-				commerceNotificationAttachmentModelImpl.getColumnOriginalValue(
-					"groupId")
+				commerceNotificationAttachmentModelImpl.getOriginalUuid(),
+				commerceNotificationAttachmentModelImpl.getOriginalGroupId()
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -2468,8 +2471,7 @@ public class CommerceNotificationAttachmentPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceNotificationAttachmentModelImpl.
-						getColumnOriginalValue("uuid_")
+					commerceNotificationAttachmentModelImpl.getOriginalUuid()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -2490,10 +2492,9 @@ public class CommerceNotificationAttachmentPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
+					commerceNotificationAttachmentModelImpl.getOriginalUuid(),
 					commerceNotificationAttachmentModelImpl.
-						getColumnOriginalValue("uuid_"),
-					commerceNotificationAttachmentModelImpl.
-						getColumnOriginalValue("companyId")
+						getOriginalCompanyId()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -2516,7 +2517,7 @@ public class CommerceNotificationAttachmentPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceNotificationAttachmentModelImpl.
-						getColumnOriginalValue("CNotificationQueueEntryId")
+						getOriginalCommerceNotificationQueueEntryId()
 				};
 
 				finderCache.removeResult(
@@ -2846,9 +2847,8 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			CommerceNotificationAttachmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			CommerceNotificationAttachmentModelImpl.getColumnBitmask("uuid_") |
-			CommerceNotificationAttachmentModelImpl.getColumnBitmask(
-				"createDate"));
+			CommerceNotificationAttachmentModelImpl.UUID_COLUMN_BITMASK |
+			CommerceNotificationAttachmentModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2858,9 +2858,8 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			CommerceNotificationAttachmentImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CommerceNotificationAttachmentModelImpl.getColumnBitmask("uuid_") |
-			CommerceNotificationAttachmentModelImpl.getColumnBitmask(
-				"groupId"));
+			CommerceNotificationAttachmentModelImpl.UUID_COLUMN_BITMASK |
+			CommerceNotificationAttachmentModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2880,11 +2879,9 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			CommerceNotificationAttachmentImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CommerceNotificationAttachmentModelImpl.getColumnBitmask("uuid_") |
-			CommerceNotificationAttachmentModelImpl.getColumnBitmask(
-				"companyId") |
-			CommerceNotificationAttachmentModelImpl.getColumnBitmask(
-				"createDate"));
+			CommerceNotificationAttachmentModelImpl.UUID_COLUMN_BITMASK |
+			CommerceNotificationAttachmentModelImpl.COMPANYID_COLUMN_BITMASK |
+			CommerceNotificationAttachmentModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2907,10 +2904,10 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceNotificationQueueEntryId",
 				new String[] {Long.class.getName()},
-				CommerceNotificationAttachmentModelImpl.getColumnBitmask(
-					"CNotificationQueueEntryId") |
-				CommerceNotificationAttachmentModelImpl.getColumnBitmask(
-					"createDate"));
+				CommerceNotificationAttachmentModelImpl.
+					COMMERCENOTIFICATIONQUEUEENTRYID_COLUMN_BITMASK |
+				CommerceNotificationAttachmentModelImpl.
+					CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceNotificationQueueEntryId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -493,72 +492,29 @@ public class CPOptionValuePersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
-			_persistence.findByPrimaryKey(newCPOptionValue.getPrimaryKey()));
-	}
+		CPOptionValue existingCPOptionValue = _persistence.findByPrimaryKey(
+			newCPOptionValue.getPrimaryKey());
 
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		CPOptionValue newCPOptionValue = addCPOptionValue();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CPOptionValue.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"CPOptionValueId", newCPOptionValue.getCPOptionValueId()));
-
-		List<CPOptionValue> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(CPOptionValue cpOptionValue) {
 		Assert.assertEquals(
-			Long.valueOf(cpOptionValue.getCPOptionId()),
+			Long.valueOf(existingCPOptionValue.getCPOptionId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpOptionValue, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "CPOptionId"));
+				existingCPOptionValue, "getOriginalCPOptionId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			cpOptionValue.getKey(),
+			existingCPOptionValue.getKey(),
 			ReflectionTestUtil.invoke(
-				cpOptionValue, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "key_"));
+				existingCPOptionValue, "getOriginalKey", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(cpOptionValue.getCompanyId()),
+			Long.valueOf(existingCPOptionValue.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpOptionValue, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
+				existingCPOptionValue, "getOriginalCompanyId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			cpOptionValue.getExternalReferenceCode(),
+			existingCPOptionValue.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
-				cpOptionValue, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "externalReferenceCode"));
+				existingCPOptionValue, "getOriginalExternalReferenceCode",
+				new Class<?>[0]));
 	}
 
 	protected CPOptionValue addCPOptionValue() throws Exception {

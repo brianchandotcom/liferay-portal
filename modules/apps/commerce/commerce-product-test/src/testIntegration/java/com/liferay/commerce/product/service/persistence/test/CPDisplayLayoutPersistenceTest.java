@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -494,73 +493,29 @@ public class CPDisplayLayoutPersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
-			_persistence.findByPrimaryKey(newCPDisplayLayout.getPrimaryKey()));
-	}
+		CPDisplayLayout existingCPDisplayLayout = _persistence.findByPrimaryKey(
+			newCPDisplayLayout.getPrimaryKey());
 
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		CPDisplayLayout newCPDisplayLayout = addCPDisplayLayout();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CPDisplayLayout.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"CPDisplayLayoutId",
-				newCPDisplayLayout.getCPDisplayLayoutId()));
-
-		List<CPDisplayLayout> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(CPDisplayLayout cpDisplayLayout) {
 		Assert.assertEquals(
-			cpDisplayLayout.getUuid(),
+			existingCPDisplayLayout.getUuid(),
 			ReflectionTestUtil.invoke(
-				cpDisplayLayout, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "uuid_"));
+				existingCPDisplayLayout, "getOriginalUuid", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(cpDisplayLayout.getGroupId()),
+			Long.valueOf(existingCPDisplayLayout.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpDisplayLayout, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
+				existingCPDisplayLayout, "getOriginalGroupId",
+				new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(cpDisplayLayout.getClassNameId()),
+			Long.valueOf(existingCPDisplayLayout.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpDisplayLayout, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "classNameId"));
+				existingCPDisplayLayout, "getOriginalClassNameId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(cpDisplayLayout.getClassPK()),
+			Long.valueOf(existingCPDisplayLayout.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				cpDisplayLayout, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "classPK"));
+				existingCPDisplayLayout, "getOriginalClassPK",
+				new Class<?>[0]));
 	}
 
 	protected CPDisplayLayout addCPDisplayLayout() throws Exception {

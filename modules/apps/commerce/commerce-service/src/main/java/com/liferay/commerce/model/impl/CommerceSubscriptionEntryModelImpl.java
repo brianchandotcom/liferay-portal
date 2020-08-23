@@ -171,59 +171,22 @@ public class CommerceSubscriptionEntryModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long CPINSTANCEUUID_COLUMN_BITMASK = 1L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long CPRODUCTID_COLUMN_BITMASK = 2L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long COMMERCEORDERITEMID_COLUMN_BITMASK = 4L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 8L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 16L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long SUBSCRIPTIONSTATUS_COLUMN_BITMASK = 32L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long USERID_COLUMN_BITMASK = 64L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long UUID_COLUMN_BITMASK = 128L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *		#getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 256L;
 
 	/**
@@ -656,24 +619,17 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("uuid_");
+		_columnBitmask |= UUID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
 		}
 
 		_uuid = uuid;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public String getOriginalUuid() {
-		return getColumnOriginalValue("uuid_");
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -686,15 +642,6 @@ public class CommerceSubscriptionEntryModelImpl
 	public void setCommerceSubscriptionEntryId(
 		long commerceSubscriptionEntryId) {
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get(
-				"commerceSubscriptionEntryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_commerceSubscriptionEntryId = commerceSubscriptionEntryId;
 	}
 
@@ -706,24 +653,19 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("groupId");
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
 		}
 
 		_groupId = groupId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -734,24 +676,19 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
 		}
 
 		_companyId = companyId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -762,12 +699,12 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
+		_columnBitmask |= USERID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
 		}
 
 		_userId = userId;
@@ -789,13 +726,8 @@ public class CommerceSubscriptionEntryModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return _originalUserId;
 	}
 
 	@JSON
@@ -811,14 +743,6 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_userName = userName;
 	}
 
@@ -830,14 +754,6 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_createDate = createDate;
 	}
 
@@ -855,14 +771,6 @@ public class CommerceSubscriptionEntryModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_modifiedDate = modifiedDate;
 	}
 
@@ -879,24 +787,17 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setCPInstanceUuid(String CPInstanceUuid) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("CPInstanceUuid");
+		_columnBitmask |= CPINSTANCEUUID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_originalCPInstanceUuid == null) {
+			_originalCPInstanceUuid = _CPInstanceUuid;
 		}
 
 		_CPInstanceUuid = CPInstanceUuid;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public String getOriginalCPInstanceUuid() {
-		return getColumnOriginalValue("CPInstanceUuid");
+		return GetterUtil.getString(_originalCPInstanceUuid);
 	}
 
 	@JSON
@@ -907,24 +808,19 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setCProductId(long CProductId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("CProductId");
+		_columnBitmask |= CPRODUCTID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalCProductId) {
+			_setOriginalCProductId = true;
+
+			_originalCProductId = _CProductId;
 		}
 
 		_CProductId = CProductId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCProductId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CProductId"));
+		return _originalCProductId;
 	}
 
 	@JSON
@@ -935,25 +831,19 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setCommerceOrderItemId(long commerceOrderItemId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("commerceOrderItemId");
+		_columnBitmask |= COMMERCEORDERITEMID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalCommerceOrderItemId) {
+			_setOriginalCommerceOrderItemId = true;
+
+			_originalCommerceOrderItemId = _commerceOrderItemId;
 		}
 
 		_commerceOrderItemId = commerceOrderItemId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCommerceOrderItemId() {
-		return GetterUtil.getLong(
-			getColumnOriginalValue("commerceOrderItemId"));
+		return _originalCommerceOrderItemId;
 	}
 
 	@JSON
@@ -964,14 +854,6 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setSubscriptionLength(int subscriptionLength) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("subscriptionLength");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_subscriptionLength = subscriptionLength;
 	}
 
@@ -988,14 +870,6 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setSubscriptionType(String subscriptionType) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("subscriptionType");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_subscriptionType = subscriptionType;
 	}
 
@@ -1012,14 +886,6 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setSubscriptionTypeSettings(String subscriptionTypeSettings) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("subscriptionTypeSettings");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_subscriptionTypeSettings = subscriptionTypeSettings;
 	}
 
@@ -1031,14 +897,6 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setCurrentCycle(long currentCycle) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("currentCycle");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_currentCycle = currentCycle;
 	}
 
@@ -1050,14 +908,6 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setMaxSubscriptionCycles(long maxSubscriptionCycles) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("maxSubscriptionCycles");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_maxSubscriptionCycles = maxSubscriptionCycles;
 	}
 
@@ -1069,25 +919,19 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setSubscriptionStatus(int subscriptionStatus) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("subscriptionStatus");
+		_columnBitmask |= SUBSCRIPTIONSTATUS_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalSubscriptionStatus) {
+			_setOriginalSubscriptionStatus = true;
+
+			_originalSubscriptionStatus = _subscriptionStatus;
 		}
 
 		_subscriptionStatus = subscriptionStatus;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public int getOriginalSubscriptionStatus() {
-		return GetterUtil.getInteger(
-			getColumnOriginalValue("subscriptionStatus"));
+		return _originalSubscriptionStatus;
 	}
 
 	@JSON
@@ -1098,14 +942,6 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setLastIterationDate(Date lastIterationDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("lastIterationDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_lastIterationDate = lastIterationDate;
 	}
 
@@ -1117,14 +953,6 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setNextIterationDate(Date nextIterationDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("nextIterationDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_nextIterationDate = nextIterationDate;
 	}
 
@@ -1136,14 +964,6 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setStartDate(Date startDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("startDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_startDate = startDate;
 	}
 
@@ -1155,14 +975,6 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setDeliverySubscriptionLength(int deliverySubscriptionLength) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("deliverySubscriptionLength");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_deliverySubscriptionLength = deliverySubscriptionLength;
 	}
 
@@ -1179,14 +991,6 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setDeliverySubscriptionType(String deliverySubscriptionType) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("deliverySubscriptionType");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_deliverySubscriptionType = deliverySubscriptionType;
 	}
 
@@ -1205,14 +1009,6 @@ public class CommerceSubscriptionEntryModelImpl
 	public void setDeliverySubscriptionTypeSettings(
 		String deliverySubscriptionTypeSettings) {
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("deliverySubTypeSettings");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_deliverySubscriptionTypeSettings = deliverySubscriptionTypeSettings;
 	}
 
@@ -1224,14 +1020,6 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setDeliveryCurrentCycle(long deliveryCurrentCycle) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("deliveryCurrentCycle");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_deliveryCurrentCycle = deliveryCurrentCycle;
 	}
 
@@ -1245,15 +1033,6 @@ public class CommerceSubscriptionEntryModelImpl
 	public void setDeliveryMaxSubscriptionCycles(
 		long deliveryMaxSubscriptionCycles) {
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get(
-				"deliveryMaxSubscriptionCycles");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_deliveryMaxSubscriptionCycles = deliveryMaxSubscriptionCycles;
 	}
 
@@ -1265,14 +1044,6 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setDeliverySubscriptionStatus(int deliverySubscriptionStatus) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("deliverySubscriptionStatus");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_deliverySubscriptionStatus = deliverySubscriptionStatus;
 	}
 
@@ -1284,14 +1055,6 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setDeliveryLastIterationDate(Date deliveryLastIterationDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("deliveryLastIterationDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_deliveryLastIterationDate = deliveryLastIterationDate;
 	}
 
@@ -1303,14 +1066,6 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setDeliveryNextIterationDate(Date deliveryNextIterationDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("deliveryNextIterationDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_deliveryNextIterationDate = deliveryNextIterationDate;
 	}
 
@@ -1322,14 +1077,6 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void setDeliveryStartDate(Date deliveryStartDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("deliveryStartDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_deliveryStartDate = deliveryStartDate;
 	}
 
@@ -1495,9 +1242,34 @@ public class CommerceSubscriptionEntryModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_columnOriginalValues = Collections.emptyMap();
+		_originalUuid = _uuid;
+
+		_originalGroupId = _groupId;
+
+		_setOriginalGroupId = false;
+
+		_originalCompanyId = _companyId;
+
+		_setOriginalCompanyId = false;
+
+		_originalUserId = _userId;
+
+		_setOriginalUserId = false;
 
 		_setModifiedDate = false;
+		_originalCPInstanceUuid = _CPInstanceUuid;
+
+		_originalCProductId = _CProductId;
+
+		_setOriginalCProductId = false;
+
+		_originalCommerceOrderItemId = _commerceOrderItemId;
+
+		_setOriginalCommerceOrderItemId = false;
+
+		_originalSubscriptionStatus = _subscriptionStatus;
+
+		_setOriginalSubscriptionStatus = false;
 
 		_columnBitmask = 0;
 	}
@@ -1781,23 +1553,37 @@ public class CommerceSubscriptionEntryModelImpl
 	}
 
 	private String _uuid;
+	private String _originalUuid;
 	private long _commerceSubscriptionEntryId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _CPInstanceUuid;
+	private String _originalCPInstanceUuid;
 	private long _CProductId;
+	private long _originalCProductId;
+	private boolean _setOriginalCProductId;
 	private long _commerceOrderItemId;
+	private long _originalCommerceOrderItemId;
+	private boolean _setOriginalCommerceOrderItemId;
 	private int _subscriptionLength;
 	private String _subscriptionType;
 	private String _subscriptionTypeSettings;
 	private long _currentCycle;
 	private long _maxSubscriptionCycles;
 	private int _subscriptionStatus;
+	private int _originalSubscriptionStatus;
+	private boolean _setOriginalSubscriptionStatus;
 	private Date _lastIterationDate;
 	private Date _nextIterationDate;
 	private Date _startDate;
@@ -1810,135 +1596,6 @@ public class CommerceSubscriptionEntryModelImpl
 	private Date _deliveryLastIterationDate;
 	private Date _deliveryNextIterationDate;
 	private Date _deliveryStartDate;
-
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
-	public <T> T getColumnOriginalValue(String columnName) {
-		if (_columnOriginalValues == null) {
-			return null;
-		}
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		return (T)_columnOriginalValues.get(columnName);
-	}
-
-	private void _setColumnOriginalValues() {
-		_columnOriginalValues = new HashMap<String, Object>();
-
-		_columnOriginalValues.put("uuid_", _uuid);
-		_columnOriginalValues.put(
-			"commerceSubscriptionEntryId", _commerceSubscriptionEntryId);
-		_columnOriginalValues.put("groupId", _groupId);
-		_columnOriginalValues.put("companyId", _companyId);
-		_columnOriginalValues.put("userId", _userId);
-		_columnOriginalValues.put("userName", _userName);
-		_columnOriginalValues.put("createDate", _createDate);
-		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("CPInstanceUuid", _CPInstanceUuid);
-		_columnOriginalValues.put("CProductId", _CProductId);
-		_columnOriginalValues.put("commerceOrderItemId", _commerceOrderItemId);
-		_columnOriginalValues.put("subscriptionLength", _subscriptionLength);
-		_columnOriginalValues.put("subscriptionType", _subscriptionType);
-		_columnOriginalValues.put(
-			"subscriptionTypeSettings", _subscriptionTypeSettings);
-		_columnOriginalValues.put("currentCycle", _currentCycle);
-		_columnOriginalValues.put(
-			"maxSubscriptionCycles", _maxSubscriptionCycles);
-		_columnOriginalValues.put("subscriptionStatus", _subscriptionStatus);
-		_columnOriginalValues.put("lastIterationDate", _lastIterationDate);
-		_columnOriginalValues.put("nextIterationDate", _nextIterationDate);
-		_columnOriginalValues.put("startDate", _startDate);
-		_columnOriginalValues.put(
-			"deliverySubscriptionLength", _deliverySubscriptionLength);
-		_columnOriginalValues.put(
-			"deliverySubscriptionType", _deliverySubscriptionType);
-		_columnOriginalValues.put(
-			"deliverySubTypeSettings", _deliverySubscriptionTypeSettings);
-		_columnOriginalValues.put(
-			"deliveryCurrentCycle", _deliveryCurrentCycle);
-		_columnOriginalValues.put(
-			"deliveryMaxSubscriptionCycles", _deliveryMaxSubscriptionCycles);
-		_columnOriginalValues.put(
-			"deliverySubscriptionStatus", _deliverySubscriptionStatus);
-		_columnOriginalValues.put(
-			"deliveryLastIterationDate", _deliveryLastIterationDate);
-		_columnOriginalValues.put(
-			"deliveryNextIterationDate", _deliveryNextIterationDate);
-		_columnOriginalValues.put("deliveryStartDate", _deliveryStartDate);
-	}
-
-	private static final Map<String, Long> _columnBitmasks;
-
-	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
-
-		columnBitmasks.put("uuid_", 1L);
-
-		columnBitmasks.put("commerceSubscriptionEntryId", 2L);
-
-		columnBitmasks.put("groupId", 4L);
-
-		columnBitmasks.put("companyId", 8L);
-
-		columnBitmasks.put("userId", 16L);
-
-		columnBitmasks.put("userName", 32L);
-
-		columnBitmasks.put("createDate", 64L);
-
-		columnBitmasks.put("modifiedDate", 128L);
-
-		columnBitmasks.put("CPInstanceUuid", 256L);
-
-		columnBitmasks.put("CProductId", 512L);
-
-		columnBitmasks.put("commerceOrderItemId", 1024L);
-
-		columnBitmasks.put("subscriptionLength", 2048L);
-
-		columnBitmasks.put("subscriptionType", 4096L);
-
-		columnBitmasks.put("subscriptionTypeSettings", 8192L);
-
-		columnBitmasks.put("currentCycle", 16384L);
-
-		columnBitmasks.put("maxSubscriptionCycles", 32768L);
-
-		columnBitmasks.put("subscriptionStatus", 65536L);
-
-		columnBitmasks.put("lastIterationDate", 131072L);
-
-		columnBitmasks.put("nextIterationDate", 262144L);
-
-		columnBitmasks.put("startDate", 524288L);
-
-		columnBitmasks.put("deliverySubscriptionLength", 1048576L);
-
-		columnBitmasks.put("deliverySubscriptionType", 2097152L);
-
-		columnBitmasks.put("deliverySubTypeSettings", 4194304L);
-
-		columnBitmasks.put("deliveryCurrentCycle", 8388608L);
-
-		columnBitmasks.put("deliveryMaxSubscriptionCycles", 16777216L);
-
-		columnBitmasks.put("deliverySubscriptionStatus", 33554432L);
-
-		columnBitmasks.put("deliveryLastIterationDate", 67108864L);
-
-		columnBitmasks.put("deliveryNextIterationDate", 134217728L);
-
-		columnBitmasks.put("deliveryStartDate", 268435456L);
-
-		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
-	}
-
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommerceSubscriptionEntry _escapedModel;
 

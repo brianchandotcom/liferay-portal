@@ -2861,6 +2861,8 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			CommerceNotificationQueueEntryImpl.class,
 			commerceNotificationQueueEntry.getPrimaryKey(),
 			commerceNotificationQueueEntry);
+
+		commerceNotificationQueueEntry.resetOriginalValues();
 	}
 
 	/**
@@ -2880,6 +2882,9 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 					commerceNotificationQueueEntry.getPrimaryKey()) == null) {
 
 				cacheResult(commerceNotificationQueueEntry);
+			}
+			else {
+				commerceNotificationQueueEntry.resetOriginalValues();
 			}
 		}
 	}
@@ -3192,8 +3197,7 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceNotificationQueueEntryModelImpl.
-						getColumnOriginalValue("groupId")
+					commerceNotificationQueueEntryModelImpl.getOriginalGroupId()
 				};
 
 				finderCache.removeResult(_finderPathCountByGroupId, args);
@@ -3215,7 +3219,7 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceNotificationQueueEntryModelImpl.
-						getColumnOriginalValue("commerceNotificationTemplateId")
+						getOriginalCommerceNotificationTemplateId()
 				};
 
 				finderCache.removeResult(
@@ -3241,8 +3245,7 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceNotificationQueueEntryModelImpl.
-						getColumnOriginalValue("sent")
+					commerceNotificationQueueEntryModelImpl.getOriginalSent()
 				};
 
 				finderCache.removeResult(_finderPathCountBySent, args);
@@ -3264,13 +3267,12 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceNotificationQueueEntryModelImpl.
-						getColumnOriginalValue("groupId"),
+						getOriginalGroupId(),
 					commerceNotificationQueueEntryModelImpl.
-						getColumnOriginalValue("classNameId"),
+						getOriginalClassNameId(),
 					commerceNotificationQueueEntryModelImpl.
-						getColumnOriginalValue("classPK"),
-					commerceNotificationQueueEntryModelImpl.
-						getColumnOriginalValue("sent")
+						getOriginalClassPK(),
+					commerceNotificationQueueEntryModelImpl.getOriginalSent()
 				};
 
 				finderCache.removeResult(_finderPathCountByG_C_C_S, args);
@@ -3595,10 +3597,8 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			CommerceNotificationQueueEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()},
-			CommerceNotificationQueueEntryModelImpl.getColumnBitmask(
-				"groupId") |
-			CommerceNotificationQueueEntryModelImpl.getColumnBitmask(
-				"priority"));
+			CommerceNotificationQueueEntryModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceNotificationQueueEntryModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3620,10 +3620,10 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceNotificationTemplateId",
 				new String[] {Long.class.getName()},
-				CommerceNotificationQueueEntryModelImpl.getColumnBitmask(
-					"commerceNotificationTemplateId") |
-				CommerceNotificationQueueEntryModelImpl.getColumnBitmask(
-					"priority"));
+				CommerceNotificationQueueEntryModelImpl.
+					COMMERCENOTIFICATIONTEMPLATEID_COLUMN_BITMASK |
+				CommerceNotificationQueueEntryModelImpl.
+					PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceNotificationTemplateId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3642,9 +3642,8 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			CommerceNotificationQueueEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySent",
 			new String[] {Boolean.class.getName()},
-			CommerceNotificationQueueEntryModelImpl.getColumnBitmask("sent") |
-			CommerceNotificationQueueEntryModelImpl.getColumnBitmask(
-				"priority"));
+			CommerceNotificationQueueEntryModelImpl.SENT_COLUMN_BITMASK |
+			CommerceNotificationQueueEntryModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountBySent = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3679,15 +3678,11 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Boolean.class.getName()
 			},
-			CommerceNotificationQueueEntryModelImpl.getColumnBitmask(
-				"groupId") |
-			CommerceNotificationQueueEntryModelImpl.getColumnBitmask(
-				"classNameId") |
-			CommerceNotificationQueueEntryModelImpl.getColumnBitmask(
-				"classPK") |
-			CommerceNotificationQueueEntryModelImpl.getColumnBitmask("sent") |
-			CommerceNotificationQueueEntryModelImpl.getColumnBitmask(
-				"priority"));
+			CommerceNotificationQueueEntryModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceNotificationQueueEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			CommerceNotificationQueueEntryModelImpl.CLASSPK_COLUMN_BITMASK |
+			CommerceNotificationQueueEntryModelImpl.SENT_COLUMN_BITMASK |
+			CommerceNotificationQueueEntryModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByG_C_C_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

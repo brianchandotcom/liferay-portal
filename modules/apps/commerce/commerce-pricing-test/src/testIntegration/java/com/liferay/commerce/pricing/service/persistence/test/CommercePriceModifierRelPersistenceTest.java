@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -499,71 +498,26 @@ public class CommercePriceModifierRelPersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
+		CommercePriceModifierRel existingCommercePriceModifierRel =
 			_persistence.findByPrimaryKey(
-				newCommercePriceModifierRel.getPrimaryKey()));
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		CommercePriceModifierRel newCommercePriceModifierRel =
-			addCommercePriceModifierRel();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CommercePriceModifierRel.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"commercePriceModifierRelId",
-				newCommercePriceModifierRel.getCommercePriceModifierRelId()));
-
-		List<CommercePriceModifierRel> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(
-		CommercePriceModifierRel commercePriceModifierRel) {
+				newCommercePriceModifierRel.getPrimaryKey());
 
 		Assert.assertEquals(
-			Long.valueOf(commercePriceModifierRel.getCommercePriceModifierId()),
+			Long.valueOf(
+				existingCommercePriceModifierRel.getCommercePriceModifierId()),
 			ReflectionTestUtil.<Long>invoke(
-				commercePriceModifierRel, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "commercePriceModifierId"));
+				existingCommercePriceModifierRel,
+				"getOriginalCommercePriceModifierId", new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(commercePriceModifierRel.getClassNameId()),
+			Long.valueOf(existingCommercePriceModifierRel.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				commercePriceModifierRel, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "classNameId"));
+				existingCommercePriceModifierRel, "getOriginalClassNameId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(commercePriceModifierRel.getClassPK()),
+			Long.valueOf(existingCommercePriceModifierRel.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				commercePriceModifierRel, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "classPK"));
+				existingCommercePriceModifierRel, "getOriginalClassPK",
+				new Class<?>[0]));
 	}
 
 	protected CommercePriceModifierRel addCommercePriceModifierRel()

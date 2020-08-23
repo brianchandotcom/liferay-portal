@@ -1365,6 +1365,8 @@ public class CommerceTaxFixedRatePersistenceImpl
 				commerceTaxFixedRate.getCommerceTaxMethodId()
 			},
 			commerceTaxFixedRate);
+
+		commerceTaxFixedRate.resetOriginalValues();
 	}
 
 	/**
@@ -1382,6 +1384,9 @@ public class CommerceTaxFixedRatePersistenceImpl
 					commerceTaxFixedRate.getPrimaryKey()) == null) {
 
 				cacheResult(commerceTaxFixedRate);
+			}
+			else {
+				commerceTaxFixedRate.resetOriginalValues();
 			}
 		}
 	}
@@ -1483,10 +1488,8 @@ public class CommerceTaxFixedRatePersistenceImpl
 			 _finderPathFetchByC_C.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceTaxFixedRateModelImpl.getColumnOriginalValue(
-					"CPTaxCategoryId"),
-				commerceTaxFixedRateModelImpl.getColumnOriginalValue(
-					"commerceTaxMethodId")
+				commerceTaxFixedRateModelImpl.getOriginalCPTaxCategoryId(),
+				commerceTaxFixedRateModelImpl.getOriginalCommerceTaxMethodId()
 			};
 
 			finderCache.removeResult(_finderPathCountByC_C, args);
@@ -1705,8 +1708,7 @@ public class CommerceTaxFixedRatePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceTaxFixedRateModelImpl.getColumnOriginalValue(
-						"CPTaxCategoryId")
+					commerceTaxFixedRateModelImpl.getOriginalCPTaxCategoryId()
 				};
 
 				finderCache.removeResult(
@@ -1729,8 +1731,8 @@ public class CommerceTaxFixedRatePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceTaxFixedRateModelImpl.getColumnOriginalValue(
-						"commerceTaxMethodId")
+					commerceTaxFixedRateModelImpl.
+						getOriginalCommerceTaxMethodId()
 				};
 
 				finderCache.removeResult(
@@ -2045,8 +2047,8 @@ public class CommerceTaxFixedRatePersistenceImpl
 			CommerceTaxFixedRateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPTaxCategoryId",
 			new String[] {Long.class.getName()},
-			CommerceTaxFixedRateModelImpl.getColumnBitmask("CPTaxCategoryId") |
-			CommerceTaxFixedRateModelImpl.getColumnBitmask("createDate"));
+			CommerceTaxFixedRateModelImpl.CPTAXCATEGORYID_COLUMN_BITMASK |
+			CommerceTaxFixedRateModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCPTaxCategoryId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2064,9 +2066,8 @@ public class CommerceTaxFixedRatePersistenceImpl
 			CommerceTaxFixedRateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceTaxMethodId", new String[] {Long.class.getName()},
-			CommerceTaxFixedRateModelImpl.getColumnBitmask(
-				"commerceTaxMethodId") |
-			CommerceTaxFixedRateModelImpl.getColumnBitmask("createDate"));
+			CommerceTaxFixedRateModelImpl.COMMERCETAXMETHODID_COLUMN_BITMASK |
+			CommerceTaxFixedRateModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceTaxMethodId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2076,9 +2077,8 @@ public class CommerceTaxFixedRatePersistenceImpl
 			CommerceTaxFixedRateImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CommerceTaxFixedRateModelImpl.getColumnBitmask("CPTaxCategoryId") |
-			CommerceTaxFixedRateModelImpl.getColumnBitmask(
-				"commerceTaxMethodId"));
+			CommerceTaxFixedRateModelImpl.CPTAXCATEGORYID_COLUMN_BITMASK |
+			CommerceTaxFixedRateModelImpl.COMMERCETAXMETHODID_COLUMN_BITMASK);
 
 		_finderPathCountByC_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -596,88 +595,42 @@ public class CPDefinitionOptionRelPersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
+		CPDefinitionOptionRel existingCPDefinitionOptionRel =
 			_persistence.findByPrimaryKey(
-				newCPDefinitionOptionRel.getPrimaryKey()));
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		CPDefinitionOptionRel newCPDefinitionOptionRel =
-			addCPDefinitionOptionRel();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CPDefinitionOptionRel.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"CPDefinitionOptionRelId",
-				newCPDefinitionOptionRel.getCPDefinitionOptionRelId()));
-
-		List<CPDefinitionOptionRel> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(
-		CPDefinitionOptionRel cpDefinitionOptionRel) {
+				newCPDefinitionOptionRel.getPrimaryKey());
 
 		Assert.assertEquals(
-			cpDefinitionOptionRel.getUuid(),
+			existingCPDefinitionOptionRel.getUuid(),
 			ReflectionTestUtil.invoke(
-				cpDefinitionOptionRel, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "uuid_"));
+				existingCPDefinitionOptionRel, "getOriginalUuid",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(cpDefinitionOptionRel.getGroupId()),
+			Long.valueOf(existingCPDefinitionOptionRel.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpDefinitionOptionRel, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
+				existingCPDefinitionOptionRel, "getOriginalGroupId",
+				new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(cpDefinitionOptionRel.getCPDefinitionId()),
+			Long.valueOf(existingCPDefinitionOptionRel.getCPDefinitionId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpDefinitionOptionRel, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "CPDefinitionId"));
+				existingCPDefinitionOptionRel, "getOriginalCPDefinitionId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(cpDefinitionOptionRel.getCPOptionId()),
+			Long.valueOf(existingCPDefinitionOptionRel.getCPOptionId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpDefinitionOptionRel, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "CPOptionId"));
+				existingCPDefinitionOptionRel, "getOriginalCPOptionId",
+				new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(cpDefinitionOptionRel.getCPDefinitionId()),
+			Long.valueOf(existingCPDefinitionOptionRel.getCPDefinitionId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpDefinitionOptionRel, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "CPDefinitionId"));
+				existingCPDefinitionOptionRel, "getOriginalCPDefinitionId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			cpDefinitionOptionRel.getKey(),
+			existingCPDefinitionOptionRel.getKey(),
 			ReflectionTestUtil.invoke(
-				cpDefinitionOptionRel, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "key_"));
+				existingCPDefinitionOptionRel, "getOriginalKey",
+				new Class<?>[0]));
 	}
 
 	protected CPDefinitionOptionRel addCPDefinitionOptionRel()

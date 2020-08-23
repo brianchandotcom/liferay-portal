@@ -4687,6 +4687,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 				commerceSubscriptionEntry.getCommerceOrderItemId()
 			},
 			commerceSubscriptionEntry);
+
+		commerceSubscriptionEntry.resetOriginalValues();
 	}
 
 	/**
@@ -4706,6 +4708,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 					commerceSubscriptionEntry.getPrimaryKey()) == null) {
 
 				cacheResult(commerceSubscriptionEntry);
+			}
+			else {
+				commerceSubscriptionEntry.resetOriginalValues();
 			}
 		}
 	}
@@ -4837,10 +4842,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceSubscriptionEntryModelImpl.getColumnOriginalValue(
-					"uuid_"),
-				commerceSubscriptionEntryModelImpl.getColumnOriginalValue(
-					"groupId")
+				commerceSubscriptionEntryModelImpl.getOriginalUuid(),
+				commerceSubscriptionEntryModelImpl.getOriginalGroupId()
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -4862,8 +4865,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			 _finderPathFetchByCommerceOrderItemId.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceSubscriptionEntryModelImpl.getColumnOriginalValue(
-					"commerceOrderItemId")
+				commerceSubscriptionEntryModelImpl.
+					getOriginalCommerceOrderItemId()
 			};
 
 			finderCache.removeResult(
@@ -4887,12 +4890,10 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			 _finderPathFetchByC_C_C.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceSubscriptionEntryModelImpl.getColumnOriginalValue(
-					"CPInstanceUuid"),
-				commerceSubscriptionEntryModelImpl.getColumnOriginalValue(
-					"CProductId"),
-				commerceSubscriptionEntryModelImpl.getColumnOriginalValue(
-					"commerceOrderItemId")
+				commerceSubscriptionEntryModelImpl.getOriginalCPInstanceUuid(),
+				commerceSubscriptionEntryModelImpl.getOriginalCProductId(),
+				commerceSubscriptionEntryModelImpl.
+					getOriginalCommerceOrderItemId()
 			};
 
 			finderCache.removeResult(_finderPathCountByC_C_C, args);
@@ -5170,8 +5171,7 @@ public class CommerceSubscriptionEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceSubscriptionEntryModelImpl.getColumnOriginalValue(
-						"uuid_")
+					commerceSubscriptionEntryModelImpl.getOriginalUuid()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -5192,10 +5192,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceSubscriptionEntryModelImpl.getColumnOriginalValue(
-						"uuid_"),
-					commerceSubscriptionEntryModelImpl.getColumnOriginalValue(
-						"companyId")
+					commerceSubscriptionEntryModelImpl.getOriginalUuid(),
+					commerceSubscriptionEntryModelImpl.getOriginalCompanyId()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -5217,8 +5215,7 @@ public class CommerceSubscriptionEntryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceSubscriptionEntryModelImpl.getColumnOriginalValue(
-						"groupId")
+					commerceSubscriptionEntryModelImpl.getOriginalGroupId()
 				};
 
 				finderCache.removeResult(_finderPathCountByGroupId, args);
@@ -5239,8 +5236,7 @@ public class CommerceSubscriptionEntryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceSubscriptionEntryModelImpl.getColumnOriginalValue(
-						"companyId")
+					commerceSubscriptionEntryModelImpl.getOriginalCompanyId()
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -5261,8 +5257,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceSubscriptionEntryModelImpl.getColumnOriginalValue(
-						"subscriptionStatus")
+					commerceSubscriptionEntryModelImpl.
+						getOriginalSubscriptionStatus()
 				};
 
 				finderCache.removeResult(
@@ -5285,10 +5281,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceSubscriptionEntryModelImpl.getColumnOriginalValue(
-						"companyId"),
-					commerceSubscriptionEntryModelImpl.getColumnOriginalValue(
-						"userId")
+					commerceSubscriptionEntryModelImpl.getOriginalCompanyId(),
+					commerceSubscriptionEntryModelImpl.getOriginalUserId()
 				};
 
 				finderCache.removeResult(_finderPathCountByC_U, args);
@@ -5310,12 +5304,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceSubscriptionEntryModelImpl.getColumnOriginalValue(
-						"groupId"),
-					commerceSubscriptionEntryModelImpl.getColumnOriginalValue(
-						"companyId"),
-					commerceSubscriptionEntryModelImpl.getColumnOriginalValue(
-						"userId")
+					commerceSubscriptionEntryModelImpl.getOriginalGroupId(),
+					commerceSubscriptionEntryModelImpl.getOriginalCompanyId(),
+					commerceSubscriptionEntryModelImpl.getOriginalUserId()
 				};
 
 				finderCache.removeResult(_finderPathCountByG_C_U, args);
@@ -5638,8 +5629,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			CommerceSubscriptionEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("uuid_") |
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("createDate"));
+			CommerceSubscriptionEntryModelImpl.UUID_COLUMN_BITMASK |
+			CommerceSubscriptionEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5649,8 +5640,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			CommerceSubscriptionEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("uuid_") |
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("groupId"));
+			CommerceSubscriptionEntryModelImpl.UUID_COLUMN_BITMASK |
+			CommerceSubscriptionEntryModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5670,9 +5661,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			CommerceSubscriptionEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("uuid_") |
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("companyId") |
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("createDate"));
+			CommerceSubscriptionEntryModelImpl.UUID_COLUMN_BITMASK |
+			CommerceSubscriptionEntryModelImpl.COMPANYID_COLUMN_BITMASK |
+			CommerceSubscriptionEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5691,8 +5682,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			CommerceSubscriptionEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()},
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("groupId") |
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("createDate"));
+			CommerceSubscriptionEntryModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceSubscriptionEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5710,8 +5701,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			CommerceSubscriptionEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("companyId") |
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("createDate"));
+			CommerceSubscriptionEntryModelImpl.COMPANYID_COLUMN_BITMASK |
+			CommerceSubscriptionEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5720,8 +5711,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 		_finderPathFetchByCommerceOrderItemId = new FinderPath(
 			CommerceSubscriptionEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByCommerceOrderItemId", new String[] {Long.class.getName()},
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask(
-				"commerceOrderItemId"));
+			CommerceSubscriptionEntryModelImpl.
+				COMMERCEORDERITEMID_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceOrderItemId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5739,9 +5730,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			CommerceSubscriptionEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findBySubscriptionStatus", new String[] {Integer.class.getName()},
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask(
-				"subscriptionStatus") |
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("createDate"));
+			CommerceSubscriptionEntryModelImpl.
+				SUBSCRIPTIONSTATUS_COLUMN_BITMASK |
+			CommerceSubscriptionEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountBySubscriptionStatus = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5761,9 +5752,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			CommerceSubscriptionEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_U",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("companyId") |
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("userId") |
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("createDate"));
+			CommerceSubscriptionEntryModelImpl.COMPANYID_COLUMN_BITMASK |
+			CommerceSubscriptionEntryModelImpl.USERID_COLUMN_BITMASK |
+			CommerceSubscriptionEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByC_U = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
@@ -5784,10 +5775,10 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("groupId") |
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("companyId") |
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("userId") |
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("createDate"));
+			CommerceSubscriptionEntryModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceSubscriptionEntryModelImpl.COMPANYID_COLUMN_BITMASK |
+			CommerceSubscriptionEntryModelImpl.USERID_COLUMN_BITMASK |
+			CommerceSubscriptionEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByG_C_U = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5803,11 +5794,10 @@ public class CommerceSubscriptionEntryPersistenceImpl
 				String.class.getName(), Long.class.getName(),
 				Long.class.getName()
 			},
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask(
-				"CPInstanceUuid") |
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask("CProductId") |
-			CommerceSubscriptionEntryModelImpl.getColumnBitmask(
-				"commerceOrderItemId"));
+			CommerceSubscriptionEntryModelImpl.CPINSTANCEUUID_COLUMN_BITMASK |
+			CommerceSubscriptionEntryModelImpl.CPRODUCTID_COLUMN_BITMASK |
+			CommerceSubscriptionEntryModelImpl.
+				COMMERCEORDERITEMID_COLUMN_BITMASK);
 
 		_finderPathCountByC_C_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

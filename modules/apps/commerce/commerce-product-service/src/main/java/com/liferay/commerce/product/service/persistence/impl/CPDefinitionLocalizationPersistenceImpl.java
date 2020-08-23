@@ -887,6 +887,8 @@ public class CPDefinitionLocalizationPersistenceImpl
 				cpDefinitionLocalization.getLanguageId()
 			},
 			cpDefinitionLocalization);
+
+		cpDefinitionLocalization.resetOriginalValues();
 	}
 
 	/**
@@ -906,6 +908,9 @@ public class CPDefinitionLocalizationPersistenceImpl
 					cpDefinitionLocalization.getPrimaryKey()) == null) {
 
 				cacheResult(cpDefinitionLocalization);
+			}
+			else {
+				cpDefinitionLocalization.resetOriginalValues();
 			}
 		}
 	}
@@ -1015,10 +1020,8 @@ public class CPDefinitionLocalizationPersistenceImpl
 				 0) {
 
 			Object[] args = new Object[] {
-				cpDefinitionLocalizationModelImpl.getColumnOriginalValue(
-					"CPDefinitionId"),
-				cpDefinitionLocalizationModelImpl.getColumnOriginalValue(
-					"languageId")
+				cpDefinitionLocalizationModelImpl.getOriginalCPDefinitionId(),
+				cpDefinitionLocalizationModelImpl.getOriginalLanguageId()
 			};
 
 			finderCache.removeResult(
@@ -1210,8 +1213,8 @@ public class CPDefinitionLocalizationPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					cpDefinitionLocalizationModelImpl.getColumnOriginalValue(
-						"CPDefinitionId")
+					cpDefinitionLocalizationModelImpl.
+						getOriginalCPDefinitionId()
 				};
 
 				finderCache.removeResult(
@@ -1529,8 +1532,7 @@ public class CPDefinitionLocalizationPersistenceImpl
 			CPDefinitionLocalizationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPDefinitionId",
 			new String[] {Long.class.getName()},
-			CPDefinitionLocalizationModelImpl.getColumnBitmask(
-				"CPDefinitionId"));
+			CPDefinitionLocalizationModelImpl.CPDEFINITIONID_COLUMN_BITMASK);
 
 		_finderPathCountByCPDefinitionId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1540,9 +1542,8 @@ public class CPDefinitionLocalizationPersistenceImpl
 			CPDefinitionLocalizationImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByCPDefinitionId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CPDefinitionLocalizationModelImpl.getColumnBitmask(
-				"CPDefinitionId") |
-			CPDefinitionLocalizationModelImpl.getColumnBitmask("languageId"));
+			CPDefinitionLocalizationModelImpl.CPDEFINITIONID_COLUMN_BITMASK |
+			CPDefinitionLocalizationModelImpl.LANGUAGEID_COLUMN_BITMASK);
 
 		_finderPathCountByCPDefinitionId_LanguageId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

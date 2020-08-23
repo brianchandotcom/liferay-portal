@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -524,66 +523,20 @@ public class CPSpecificationOptionPersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
+		CPSpecificationOption existingCPSpecificationOption =
 			_persistence.findByPrimaryKey(
-				newCPSpecificationOption.getPrimaryKey()));
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		CPSpecificationOption newCPSpecificationOption =
-			addCPSpecificationOption();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CPSpecificationOption.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"CPSpecificationOptionId",
-				newCPSpecificationOption.getCPSpecificationOptionId()));
-
-		List<CPSpecificationOption> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(
-		CPSpecificationOption cpSpecificationOption) {
+				newCPSpecificationOption.getPrimaryKey());
 
 		Assert.assertEquals(
-			Long.valueOf(cpSpecificationOption.getCompanyId()),
+			Long.valueOf(existingCPSpecificationOption.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				cpSpecificationOption, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
+				existingCPSpecificationOption, "getOriginalCompanyId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			cpSpecificationOption.getKey(),
+			existingCPSpecificationOption.getKey(),
 			ReflectionTestUtil.invoke(
-				cpSpecificationOption, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "key_"));
+				existingCPSpecificationOption, "getOriginalKey",
+				new Class<?>[0]));
 	}
 
 	protected CPSpecificationOption addCPSpecificationOption()

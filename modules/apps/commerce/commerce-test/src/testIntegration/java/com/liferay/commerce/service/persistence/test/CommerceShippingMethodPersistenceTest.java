@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -506,66 +505,20 @@ public class CommerceShippingMethodPersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
+		CommerceShippingMethod existingCommerceShippingMethod =
 			_persistence.findByPrimaryKey(
-				newCommerceShippingMethod.getPrimaryKey()));
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		CommerceShippingMethod newCommerceShippingMethod =
-			addCommerceShippingMethod();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CommerceShippingMethod.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"commerceShippingMethodId",
-				newCommerceShippingMethod.getCommerceShippingMethodId()));
-
-		List<CommerceShippingMethod> result = _persistence.findWithDynamicQuery(
-			dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(
-		CommerceShippingMethod commerceShippingMethod) {
+				newCommerceShippingMethod.getPrimaryKey());
 
 		Assert.assertEquals(
-			Long.valueOf(commerceShippingMethod.getGroupId()),
+			Long.valueOf(existingCommerceShippingMethod.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				commerceShippingMethod, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
+				existingCommerceShippingMethod, "getOriginalGroupId",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			commerceShippingMethod.getEngineKey(),
+			existingCommerceShippingMethod.getEngineKey(),
 			ReflectionTestUtil.invoke(
-				commerceShippingMethod, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "engineKey"));
+				existingCommerceShippingMethod, "getOriginalEngineKey",
+				new Class<?>[0]));
 	}
 
 	protected CommerceShippingMethod addCommerceShippingMethod()

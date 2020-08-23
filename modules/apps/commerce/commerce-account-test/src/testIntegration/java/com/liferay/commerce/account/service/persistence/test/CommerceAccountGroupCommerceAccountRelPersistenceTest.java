@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -555,88 +554,38 @@ public class CommerceAccountGroupCommerceAccountRelPersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
-			_persistence.findByPrimaryKey(
-				newCommerceAccountGroupCommerceAccountRel.getPrimaryKey()));
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
 		CommerceAccountGroupCommerceAccountRel
-			newCommerceAccountGroupCommerceAccountRel =
-				addCommerceAccountGroupCommerceAccountRel();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CommerceAccountGroupCommerceAccountRel.class,
-			_dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"commerceAccountGroupCommerceAccountRelId",
-				newCommerceAccountGroupCommerceAccountRel.
-					getCommerceAccountGroupCommerceAccountRelId()));
-
-		List<CommerceAccountGroupCommerceAccountRel> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(
-		CommerceAccountGroupCommerceAccountRel
-			commerceAccountGroupCommerceAccountRel) {
+			existingCommerceAccountGroupCommerceAccountRel =
+				_persistence.findByPrimaryKey(
+					newCommerceAccountGroupCommerceAccountRel.getPrimaryKey());
 
 		Assert.assertEquals(
 			Long.valueOf(
-				commerceAccountGroupCommerceAccountRel.
+				existingCommerceAccountGroupCommerceAccountRel.
 					getCommerceAccountGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				commerceAccountGroupCommerceAccountRel,
-				"getColumnOriginalValue", new Class<?>[] {String.class},
-				"commerceAccountGroupId"));
+				existingCommerceAccountGroupCommerceAccountRel,
+				"getOriginalCommerceAccountGroupId", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(
-				commerceAccountGroupCommerceAccountRel.getCommerceAccountId()),
+				existingCommerceAccountGroupCommerceAccountRel.
+					getCommerceAccountId()),
 			ReflectionTestUtil.<Long>invoke(
-				commerceAccountGroupCommerceAccountRel,
-				"getColumnOriginalValue", new Class<?>[] {String.class},
-				"commerceAccountId"));
+				existingCommerceAccountGroupCommerceAccountRel,
+				"getOriginalCommerceAccountId", new Class<?>[0]));
 
 		Assert.assertEquals(
-			Long.valueOf(commerceAccountGroupCommerceAccountRel.getCompanyId()),
+			Long.valueOf(
+				existingCommerceAccountGroupCommerceAccountRel.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				commerceAccountGroupCommerceAccountRel,
-				"getColumnOriginalValue", new Class<?>[] {String.class},
-				"companyId"));
+				existingCommerceAccountGroupCommerceAccountRel,
+				"getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertEquals(
-			commerceAccountGroupCommerceAccountRel.getExternalReferenceCode(),
+			existingCommerceAccountGroupCommerceAccountRel.
+				getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
-				commerceAccountGroupCommerceAccountRel,
-				"getColumnOriginalValue", new Class<?>[] {String.class},
-				"externalReferenceCode"));
+				existingCommerceAccountGroupCommerceAccountRel,
+				"getOriginalExternalReferenceCode", new Class<?>[0]));
 	}
 
 	protected CommerceAccountGroupCommerceAccountRel

@@ -4472,6 +4472,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 				commerceNotificationTemplate.getGroupId()
 			},
 			commerceNotificationTemplate);
+
+		commerceNotificationTemplate.resetOriginalValues();
 	}
 
 	/**
@@ -4491,6 +4493,9 @@ public class CommerceNotificationTemplatePersistenceImpl
 					commerceNotificationTemplate.getPrimaryKey()) == null) {
 
 				cacheResult(commerceNotificationTemplate);
+			}
+			else {
+				commerceNotificationTemplate.resetOriginalValues();
 			}
 		}
 	}
@@ -4602,10 +4607,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceNotificationTemplateModelImpl.getColumnOriginalValue(
-					"uuid_"),
-				commerceNotificationTemplateModelImpl.getColumnOriginalValue(
-					"groupId")
+				commerceNotificationTemplateModelImpl.getOriginalUuid(),
+				commerceNotificationTemplateModelImpl.getOriginalGroupId()
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -4874,8 +4877,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceNotificationTemplateModelImpl.
-						getColumnOriginalValue("uuid_")
+					commerceNotificationTemplateModelImpl.getOriginalUuid()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -4896,10 +4898,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceNotificationTemplateModelImpl.
-						getColumnOriginalValue("uuid_"),
-					commerceNotificationTemplateModelImpl.
-						getColumnOriginalValue("companyId")
+					commerceNotificationTemplateModelImpl.getOriginalUuid(),
+					commerceNotificationTemplateModelImpl.getOriginalCompanyId()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -4921,8 +4921,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceNotificationTemplateModelImpl.
-						getColumnOriginalValue("groupId")
+					commerceNotificationTemplateModelImpl.getOriginalGroupId()
 				};
 
 				finderCache.removeResult(_finderPathCountByGroupId, args);
@@ -4943,10 +4942,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceNotificationTemplateModelImpl.
-						getColumnOriginalValue("groupId"),
-					commerceNotificationTemplateModelImpl.
-						getColumnOriginalValue("enabled")
+					commerceNotificationTemplateModelImpl.getOriginalGroupId(),
+					commerceNotificationTemplateModelImpl.getOriginalEnabled()
 				};
 
 				finderCache.removeResult(_finderPathCountByG_E, args);
@@ -4968,12 +4965,9 @@ public class CommerceNotificationTemplatePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceNotificationTemplateModelImpl.
-						getColumnOriginalValue("groupId"),
-					commerceNotificationTemplateModelImpl.
-						getColumnOriginalValue("type_"),
-					commerceNotificationTemplateModelImpl.
-						getColumnOriginalValue("enabled")
+					commerceNotificationTemplateModelImpl.getOriginalGroupId(),
+					commerceNotificationTemplateModelImpl.getOriginalType(),
+					commerceNotificationTemplateModelImpl.getOriginalEnabled()
 				};
 
 				finderCache.removeResult(_finderPathCountByG_T_E, args);
@@ -5299,10 +5293,9 @@ public class CommerceNotificationTemplatePersistenceImpl
 			CommerceNotificationTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			CommerceNotificationTemplateModelImpl.getColumnBitmask("uuid_") |
-			CommerceNotificationTemplateModelImpl.getColumnBitmask(
-				"modifiedDate") |
-			CommerceNotificationTemplateModelImpl.getColumnBitmask("name"));
+			CommerceNotificationTemplateModelImpl.UUID_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5312,8 +5305,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 			CommerceNotificationTemplateImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CommerceNotificationTemplateModelImpl.getColumnBitmask("uuid_") |
-			CommerceNotificationTemplateModelImpl.getColumnBitmask("groupId"));
+			CommerceNotificationTemplateModelImpl.UUID_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5333,12 +5326,10 @@ public class CommerceNotificationTemplatePersistenceImpl
 			CommerceNotificationTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CommerceNotificationTemplateModelImpl.getColumnBitmask("uuid_") |
-			CommerceNotificationTemplateModelImpl.getColumnBitmask(
-				"companyId") |
-			CommerceNotificationTemplateModelImpl.getColumnBitmask(
-				"modifiedDate") |
-			CommerceNotificationTemplateModelImpl.getColumnBitmask("name"));
+			CommerceNotificationTemplateModelImpl.UUID_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.COMPANYID_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5357,10 +5348,9 @@ public class CommerceNotificationTemplatePersistenceImpl
 			CommerceNotificationTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()},
-			CommerceNotificationTemplateModelImpl.getColumnBitmask("groupId") |
-			CommerceNotificationTemplateModelImpl.getColumnBitmask(
-				"modifiedDate") |
-			CommerceNotificationTemplateModelImpl.getColumnBitmask("name"));
+			CommerceNotificationTemplateModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -5379,11 +5369,10 @@ public class CommerceNotificationTemplatePersistenceImpl
 			CommerceNotificationTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_E",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			CommerceNotificationTemplateModelImpl.getColumnBitmask("groupId") |
-			CommerceNotificationTemplateModelImpl.getColumnBitmask("enabled") |
-			CommerceNotificationTemplateModelImpl.getColumnBitmask(
-				"modifiedDate") |
-			CommerceNotificationTemplateModelImpl.getColumnBitmask("name"));
+			CommerceNotificationTemplateModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.ENABLED_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByG_E = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_E",
@@ -5405,12 +5394,11 @@ public class CommerceNotificationTemplatePersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName()
 			},
-			CommerceNotificationTemplateModelImpl.getColumnBitmask("groupId") |
-			CommerceNotificationTemplateModelImpl.getColumnBitmask("type_") |
-			CommerceNotificationTemplateModelImpl.getColumnBitmask("enabled") |
-			CommerceNotificationTemplateModelImpl.getColumnBitmask(
-				"modifiedDate") |
-			CommerceNotificationTemplateModelImpl.getColumnBitmask("name"));
+			CommerceNotificationTemplateModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.TYPE_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.ENABLED_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByG_T_E = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

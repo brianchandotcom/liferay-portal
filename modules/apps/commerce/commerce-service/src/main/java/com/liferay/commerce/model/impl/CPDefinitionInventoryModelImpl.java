@@ -152,35 +152,14 @@ public class CPDefinitionInventoryModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long CPDEFINITIONID_COLUMN_BITMASK = 1L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long UUID_COLUMN_BITMASK = 8L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *		#getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long CPDEFINITIONINVENTORYID_COLUMN_BITMASK = 16L;
 
 	/**
@@ -522,24 +501,17 @@ public class CPDefinitionInventoryModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("uuid_");
+		_columnBitmask |= UUID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
 		}
 
 		_uuid = uuid;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public String getOriginalUuid() {
-		return getColumnOriginalValue("uuid_");
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -550,14 +522,6 @@ public class CPDefinitionInventoryModelImpl
 
 	@Override
 	public void setCPDefinitionInventoryId(long CPDefinitionInventoryId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("CPDefinitionInventoryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_CPDefinitionInventoryId = CPDefinitionInventoryId;
 	}
 
@@ -569,24 +533,19 @@ public class CPDefinitionInventoryModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("groupId");
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
 		}
 
 		_groupId = groupId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -597,24 +556,19 @@ public class CPDefinitionInventoryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
 		}
 
 		_companyId = companyId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -625,14 +579,6 @@ public class CPDefinitionInventoryModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_userId = userId;
 	}
 
@@ -665,14 +611,6 @@ public class CPDefinitionInventoryModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_userName = userName;
 	}
 
@@ -684,14 +622,6 @@ public class CPDefinitionInventoryModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_createDate = createDate;
 	}
 
@@ -709,14 +639,6 @@ public class CPDefinitionInventoryModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_modifiedDate = modifiedDate;
 	}
 
@@ -728,24 +650,19 @@ public class CPDefinitionInventoryModelImpl
 
 	@Override
 	public void setCPDefinitionId(long CPDefinitionId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("CPDefinitionId");
+		_columnBitmask |= CPDEFINITIONID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalCPDefinitionId) {
+			_setOriginalCPDefinitionId = true;
+
+			_originalCPDefinitionId = _CPDefinitionId;
 		}
 
 		_CPDefinitionId = CPDefinitionId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCPDefinitionId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CPDefinitionId"));
+		return _originalCPDefinitionId;
 	}
 
 	@JSON
@@ -763,15 +680,6 @@ public class CPDefinitionInventoryModelImpl
 	public void setCPDefinitionInventoryEngine(
 		String CPDefinitionInventoryEngine) {
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get(
-				"CPDefinitionInventoryEngine");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_CPDefinitionInventoryEngine = CPDefinitionInventoryEngine;
 	}
 
@@ -788,14 +696,6 @@ public class CPDefinitionInventoryModelImpl
 
 	@Override
 	public void setLowStockActivity(String lowStockActivity) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("lowStockActivity");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_lowStockActivity = lowStockActivity;
 	}
 
@@ -813,14 +713,6 @@ public class CPDefinitionInventoryModelImpl
 
 	@Override
 	public void setDisplayAvailability(boolean displayAvailability) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("displayAvailability");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_displayAvailability = displayAvailability;
 	}
 
@@ -838,14 +730,6 @@ public class CPDefinitionInventoryModelImpl
 
 	@Override
 	public void setDisplayStockQuantity(boolean displayStockQuantity) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("displayStockQuantity");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_displayStockQuantity = displayStockQuantity;
 	}
 
@@ -857,14 +741,6 @@ public class CPDefinitionInventoryModelImpl
 
 	@Override
 	public void setMinStockQuantity(int minStockQuantity) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("minStockQuantity");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_minStockQuantity = minStockQuantity;
 	}
 
@@ -882,14 +758,6 @@ public class CPDefinitionInventoryModelImpl
 
 	@Override
 	public void setBackOrders(boolean backOrders) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("backOrders");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_backOrders = backOrders;
 	}
 
@@ -901,14 +769,6 @@ public class CPDefinitionInventoryModelImpl
 
 	@Override
 	public void setMinOrderQuantity(int minOrderQuantity) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("minOrderQuantity");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_minOrderQuantity = minOrderQuantity;
 	}
 
@@ -920,14 +780,6 @@ public class CPDefinitionInventoryModelImpl
 
 	@Override
 	public void setMaxOrderQuantity(int maxOrderQuantity) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("maxOrderQuantity");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_maxOrderQuantity = maxOrderQuantity;
 	}
 
@@ -944,14 +796,6 @@ public class CPDefinitionInventoryModelImpl
 
 	@Override
 	public void setAllowedOrderQuantities(String allowedOrderQuantities) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("allowedOrderQuantities");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_allowedOrderQuantities = allowedOrderQuantities;
 	}
 
@@ -963,14 +807,6 @@ public class CPDefinitionInventoryModelImpl
 
 	@Override
 	public void setMultipleOrderQuantity(int multipleOrderQuantity) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("multipleOrderQuantity");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_multipleOrderQuantity = multipleOrderQuantity;
 	}
 
@@ -1112,9 +948,20 @@ public class CPDefinitionInventoryModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_columnOriginalValues = Collections.emptyMap();
+		_originalUuid = _uuid;
+
+		_originalGroupId = _groupId;
+
+		_setOriginalGroupId = false;
+
+		_originalCompanyId = _companyId;
+
+		_setOriginalCompanyId = false;
 
 		_setModifiedDate = false;
+		_originalCPDefinitionId = _CPDefinitionId;
+
+		_setOriginalCPDefinitionId = false;
 
 		_columnBitmask = 0;
 	}
@@ -1300,15 +1147,22 @@ public class CPDefinitionInventoryModelImpl
 	}
 
 	private String _uuid;
+	private String _originalUuid;
 	private long _CPDefinitionInventoryId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _CPDefinitionId;
+	private long _originalCPDefinitionId;
+	private boolean _setOriginalCPDefinitionId;
 	private String _CPDefinitionInventoryEngine;
 	private String _lowStockActivity;
 	private boolean _displayAvailability;
@@ -1319,99 +1173,6 @@ public class CPDefinitionInventoryModelImpl
 	private int _maxOrderQuantity;
 	private String _allowedOrderQuantities;
 	private int _multipleOrderQuantity;
-
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
-	public <T> T getColumnOriginalValue(String columnName) {
-		if (_columnOriginalValues == null) {
-			return null;
-		}
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		return (T)_columnOriginalValues.get(columnName);
-	}
-
-	private void _setColumnOriginalValues() {
-		_columnOriginalValues = new HashMap<String, Object>();
-
-		_columnOriginalValues.put("uuid_", _uuid);
-		_columnOriginalValues.put(
-			"CPDefinitionInventoryId", _CPDefinitionInventoryId);
-		_columnOriginalValues.put("groupId", _groupId);
-		_columnOriginalValues.put("companyId", _companyId);
-		_columnOriginalValues.put("userId", _userId);
-		_columnOriginalValues.put("userName", _userName);
-		_columnOriginalValues.put("createDate", _createDate);
-		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("CPDefinitionId", _CPDefinitionId);
-		_columnOriginalValues.put(
-			"CPDefinitionInventoryEngine", _CPDefinitionInventoryEngine);
-		_columnOriginalValues.put("lowStockActivity", _lowStockActivity);
-		_columnOriginalValues.put("displayAvailability", _displayAvailability);
-		_columnOriginalValues.put(
-			"displayStockQuantity", _displayStockQuantity);
-		_columnOriginalValues.put("minStockQuantity", _minStockQuantity);
-		_columnOriginalValues.put("backOrders", _backOrders);
-		_columnOriginalValues.put("minOrderQuantity", _minOrderQuantity);
-		_columnOriginalValues.put("maxOrderQuantity", _maxOrderQuantity);
-		_columnOriginalValues.put(
-			"allowedOrderQuantities", _allowedOrderQuantities);
-		_columnOriginalValues.put(
-			"multipleOrderQuantity", _multipleOrderQuantity);
-	}
-
-	private static final Map<String, Long> _columnBitmasks;
-
-	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
-
-		columnBitmasks.put("uuid_", 1L);
-
-		columnBitmasks.put("CPDefinitionInventoryId", 2L);
-
-		columnBitmasks.put("groupId", 4L);
-
-		columnBitmasks.put("companyId", 8L);
-
-		columnBitmasks.put("userId", 16L);
-
-		columnBitmasks.put("userName", 32L);
-
-		columnBitmasks.put("createDate", 64L);
-
-		columnBitmasks.put("modifiedDate", 128L);
-
-		columnBitmasks.put("CPDefinitionId", 256L);
-
-		columnBitmasks.put("CPDefinitionInventoryEngine", 512L);
-
-		columnBitmasks.put("lowStockActivity", 1024L);
-
-		columnBitmasks.put("displayAvailability", 2048L);
-
-		columnBitmasks.put("displayStockQuantity", 4096L);
-
-		columnBitmasks.put("minStockQuantity", 8192L);
-
-		columnBitmasks.put("backOrders", 16384L);
-
-		columnBitmasks.put("minOrderQuantity", 32768L);
-
-		columnBitmasks.put("maxOrderQuantity", 65536L);
-
-		columnBitmasks.put("allowedOrderQuantities", 131072L);
-
-		columnBitmasks.put("multipleOrderQuantity", 262144L);
-
-		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
-	}
-
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CPDefinitionInventory _escapedModel;
 

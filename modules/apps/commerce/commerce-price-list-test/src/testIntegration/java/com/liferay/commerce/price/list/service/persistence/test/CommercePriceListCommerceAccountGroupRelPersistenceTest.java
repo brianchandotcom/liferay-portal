@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -584,76 +583,26 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
-			_persistence.findByPrimaryKey(
-				newCommercePriceListCommerceAccountGroupRel.getPrimaryKey()));
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
 		CommercePriceListCommerceAccountGroupRel
-			newCommercePriceListCommerceAccountGroupRel =
-				addCommercePriceListCommerceAccountGroupRel();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CommercePriceListCommerceAccountGroupRel.class,
-			_dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"commercePriceListCommerceAccountGroupRelId",
-				newCommercePriceListCommerceAccountGroupRel.
-					getCommercePriceListCommerceAccountGroupRelId()));
-
-		List<CommercePriceListCommerceAccountGroupRel> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(
-		CommercePriceListCommerceAccountGroupRel
-			commercePriceListCommerceAccountGroupRel) {
+			existingCommercePriceListCommerceAccountGroupRel =
+				_persistence.findByPrimaryKey(
+					newCommercePriceListCommerceAccountGroupRel.
+						getPrimaryKey());
 
 		Assert.assertEquals(
 			Long.valueOf(
-				commercePriceListCommerceAccountGroupRel.
+				existingCommercePriceListCommerceAccountGroupRel.
 					getCommercePriceListId()),
 			ReflectionTestUtil.<Long>invoke(
-				commercePriceListCommerceAccountGroupRel,
-				"getColumnOriginalValue", new Class<?>[] {String.class},
-				"commercePriceListId"));
+				existingCommercePriceListCommerceAccountGroupRel,
+				"getOriginalCommercePriceListId", new Class<?>[0]));
 		Assert.assertEquals(
 			Long.valueOf(
-				commercePriceListCommerceAccountGroupRel.
+				existingCommercePriceListCommerceAccountGroupRel.
 					getCommerceAccountGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				commercePriceListCommerceAccountGroupRel,
-				"getColumnOriginalValue", new Class<?>[] {String.class},
-				"commerceAccountGroupId"));
+				existingCommercePriceListCommerceAccountGroupRel,
+				"getOriginalCommerceAccountGroupId", new Class<?>[0]));
 	}
 
 	protected CommercePriceListCommerceAccountGroupRel

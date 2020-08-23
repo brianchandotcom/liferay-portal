@@ -1717,6 +1717,8 @@ public class CommerceVirtualOrderItemPersistenceImpl
 			_finderPathFetchByCommerceOrderItemId,
 			new Object[] {commerceVirtualOrderItem.getCommerceOrderItemId()},
 			commerceVirtualOrderItem);
+
+		commerceVirtualOrderItem.resetOriginalValues();
 	}
 
 	/**
@@ -1736,6 +1738,9 @@ public class CommerceVirtualOrderItemPersistenceImpl
 					commerceVirtualOrderItem.getPrimaryKey()) == null) {
 
 				cacheResult(commerceVirtualOrderItem);
+			}
+			else {
+				commerceVirtualOrderItem.resetOriginalValues();
 			}
 		}
 	}
@@ -1852,10 +1857,8 @@ public class CommerceVirtualOrderItemPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceVirtualOrderItemModelImpl.getColumnOriginalValue(
-					"uuid_"),
-				commerceVirtualOrderItemModelImpl.getColumnOriginalValue(
-					"groupId")
+				commerceVirtualOrderItemModelImpl.getOriginalUuid(),
+				commerceVirtualOrderItemModelImpl.getOriginalGroupId()
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -1877,8 +1880,8 @@ public class CommerceVirtualOrderItemPersistenceImpl
 			 _finderPathFetchByCommerceOrderItemId.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceVirtualOrderItemModelImpl.getColumnOriginalValue(
-					"commerceOrderItemId")
+				commerceVirtualOrderItemModelImpl.
+					getOriginalCommerceOrderItemId()
 			};
 
 			finderCache.removeResult(
@@ -2114,8 +2117,7 @@ public class CommerceVirtualOrderItemPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceVirtualOrderItemModelImpl.getColumnOriginalValue(
-						"uuid_")
+					commerceVirtualOrderItemModelImpl.getOriginalUuid()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -2136,10 +2138,8 @@ public class CommerceVirtualOrderItemPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceVirtualOrderItemModelImpl.getColumnOriginalValue(
-						"uuid_"),
-					commerceVirtualOrderItemModelImpl.getColumnOriginalValue(
-						"companyId")
+					commerceVirtualOrderItemModelImpl.getOriginalUuid(),
+					commerceVirtualOrderItemModelImpl.getOriginalCompanyId()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -2461,8 +2461,8 @@ public class CommerceVirtualOrderItemPersistenceImpl
 			CommerceVirtualOrderItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			CommerceVirtualOrderItemModelImpl.getColumnBitmask("uuid_") |
-			CommerceVirtualOrderItemModelImpl.getColumnBitmask("createDate"));
+			CommerceVirtualOrderItemModelImpl.UUID_COLUMN_BITMASK |
+			CommerceVirtualOrderItemModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2472,8 +2472,8 @@ public class CommerceVirtualOrderItemPersistenceImpl
 			CommerceVirtualOrderItemImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CommerceVirtualOrderItemModelImpl.getColumnBitmask("uuid_") |
-			CommerceVirtualOrderItemModelImpl.getColumnBitmask("groupId"));
+			CommerceVirtualOrderItemModelImpl.UUID_COLUMN_BITMASK |
+			CommerceVirtualOrderItemModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2493,9 +2493,9 @@ public class CommerceVirtualOrderItemPersistenceImpl
 			CommerceVirtualOrderItemImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CommerceVirtualOrderItemModelImpl.getColumnBitmask("uuid_") |
-			CommerceVirtualOrderItemModelImpl.getColumnBitmask("companyId") |
-			CommerceVirtualOrderItemModelImpl.getColumnBitmask("createDate"));
+			CommerceVirtualOrderItemModelImpl.UUID_COLUMN_BITMASK |
+			CommerceVirtualOrderItemModelImpl.COMPANYID_COLUMN_BITMASK |
+			CommerceVirtualOrderItemModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2505,8 +2505,8 @@ public class CommerceVirtualOrderItemPersistenceImpl
 		_finderPathFetchByCommerceOrderItemId = new FinderPath(
 			CommerceVirtualOrderItemImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByCommerceOrderItemId", new String[] {Long.class.getName()},
-			CommerceVirtualOrderItemModelImpl.getColumnBitmask(
-				"commerceOrderItemId"));
+			CommerceVirtualOrderItemModelImpl.
+				COMMERCEORDERITEMID_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceOrderItemId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

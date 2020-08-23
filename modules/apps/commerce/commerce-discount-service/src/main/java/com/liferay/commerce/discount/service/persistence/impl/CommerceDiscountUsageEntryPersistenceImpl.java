@@ -2351,6 +2351,8 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			CommerceDiscountUsageEntryImpl.class,
 			commerceDiscountUsageEntry.getPrimaryKey(),
 			commerceDiscountUsageEntry);
+
+		commerceDiscountUsageEntry.resetOriginalValues();
 	}
 
 	/**
@@ -2370,6 +2372,9 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 					commerceDiscountUsageEntry.getPrimaryKey()) == null) {
 
 				cacheResult(commerceDiscountUsageEntry);
+			}
+			else {
+				commerceDiscountUsageEntry.resetOriginalValues();
 			}
 		}
 	}
@@ -2676,8 +2681,8 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceDiscountUsageEntryModelImpl.getColumnOriginalValue(
-						"commerceDiscountId")
+					commerceDiscountUsageEntryModelImpl.
+						getOriginalCommerceDiscountId()
 				};
 
 				finderCache.removeResult(
@@ -2700,10 +2705,10 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceDiscountUsageEntryModelImpl.getColumnOriginalValue(
-						"commerceAccountId"),
-					commerceDiscountUsageEntryModelImpl.getColumnOriginalValue(
-						"commerceDiscountId")
+					commerceDiscountUsageEntryModelImpl.
+						getOriginalCommerceAccountId(),
+					commerceDiscountUsageEntryModelImpl.
+						getOriginalCommerceDiscountId()
 				};
 
 				finderCache.removeResult(_finderPathCountByA_D, args);
@@ -2725,10 +2730,10 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceDiscountUsageEntryModelImpl.getColumnOriginalValue(
-						"commerceOrderId"),
-					commerceDiscountUsageEntryModelImpl.getColumnOriginalValue(
-						"commerceDiscountId")
+					commerceDiscountUsageEntryModelImpl.
+						getOriginalCommerceOrderId(),
+					commerceDiscountUsageEntryModelImpl.
+						getOriginalCommerceDiscountId()
 				};
 
 				finderCache.removeResult(_finderPathCountByO_D, args);
@@ -2750,12 +2755,12 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceDiscountUsageEntryModelImpl.getColumnOriginalValue(
-						"commerceAccountId"),
-					commerceDiscountUsageEntryModelImpl.getColumnOriginalValue(
-						"commerceOrderId"),
-					commerceDiscountUsageEntryModelImpl.getColumnOriginalValue(
-						"commerceDiscountId")
+					commerceDiscountUsageEntryModelImpl.
+						getOriginalCommerceAccountId(),
+					commerceDiscountUsageEntryModelImpl.
+						getOriginalCommerceOrderId(),
+					commerceDiscountUsageEntryModelImpl.
+						getOriginalCommerceDiscountId()
 				};
 
 				finderCache.removeResult(_finderPathCountByA_O_D, args);
@@ -3072,9 +3077,9 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			CommerceDiscountUsageEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceDiscountId", new String[] {Long.class.getName()},
-			CommerceDiscountUsageEntryModelImpl.getColumnBitmask(
-				"commerceDiscountId") |
-			CommerceDiscountUsageEntryModelImpl.getColumnBitmask("createDate"));
+			CommerceDiscountUsageEntryModelImpl.
+				COMMERCEDISCOUNTID_COLUMN_BITMASK |
+			CommerceDiscountUsageEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceDiscountId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3093,11 +3098,11 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			CommerceDiscountUsageEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_D",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CommerceDiscountUsageEntryModelImpl.getColumnBitmask(
-				"commerceAccountId") |
-			CommerceDiscountUsageEntryModelImpl.getColumnBitmask(
-				"commerceDiscountId") |
-			CommerceDiscountUsageEntryModelImpl.getColumnBitmask("createDate"));
+			CommerceDiscountUsageEntryModelImpl.
+				COMMERCEACCOUNTID_COLUMN_BITMASK |
+			CommerceDiscountUsageEntryModelImpl.
+				COMMERCEDISCOUNTID_COLUMN_BITMASK |
+			CommerceDiscountUsageEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByA_D = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_D",
@@ -3116,11 +3121,10 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			CommerceDiscountUsageEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByO_D",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CommerceDiscountUsageEntryModelImpl.getColumnBitmask(
-				"commerceOrderId") |
-			CommerceDiscountUsageEntryModelImpl.getColumnBitmask(
-				"commerceDiscountId") |
-			CommerceDiscountUsageEntryModelImpl.getColumnBitmask("createDate"));
+			CommerceDiscountUsageEntryModelImpl.COMMERCEORDERID_COLUMN_BITMASK |
+			CommerceDiscountUsageEntryModelImpl.
+				COMMERCEDISCOUNTID_COLUMN_BITMASK |
+			CommerceDiscountUsageEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByO_D = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByO_D",
@@ -3141,13 +3145,12 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			CommerceDiscountUsageEntryModelImpl.getColumnBitmask(
-				"commerceAccountId") |
-			CommerceDiscountUsageEntryModelImpl.getColumnBitmask(
-				"commerceOrderId") |
-			CommerceDiscountUsageEntryModelImpl.getColumnBitmask(
-				"commerceDiscountId") |
-			CommerceDiscountUsageEntryModelImpl.getColumnBitmask("createDate"));
+			CommerceDiscountUsageEntryModelImpl.
+				COMMERCEACCOUNTID_COLUMN_BITMASK |
+			CommerceDiscountUsageEntryModelImpl.COMMERCEORDERID_COLUMN_BITMASK |
+			CommerceDiscountUsageEntryModelImpl.
+				COMMERCEDISCOUNTID_COLUMN_BITMASK |
+			CommerceDiscountUsageEntryModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByA_O_D = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

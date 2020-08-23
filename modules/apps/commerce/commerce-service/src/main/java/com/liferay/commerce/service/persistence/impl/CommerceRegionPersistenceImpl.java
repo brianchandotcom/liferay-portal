@@ -2534,6 +2534,8 @@ public class CommerceRegionPersistenceImpl
 				commerceRegion.getCommerceCountryId(), commerceRegion.getCode()
 			},
 			commerceRegion);
+
+		commerceRegion.resetOriginalValues();
 	}
 
 	/**
@@ -2549,6 +2551,9 @@ public class CommerceRegionPersistenceImpl
 						null) {
 
 				cacheResult(commerceRegion);
+			}
+			else {
+				commerceRegion.resetOriginalValues();
 			}
 		}
 	}
@@ -2643,9 +2648,8 @@ public class CommerceRegionPersistenceImpl
 			 _finderPathFetchByC_C.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceRegionModelImpl.getColumnOriginalValue(
-					"commerceCountryId"),
-				commerceRegionModelImpl.getColumnOriginalValue("code_")
+				commerceRegionModelImpl.getOriginalCommerceCountryId(),
+				commerceRegionModelImpl.getOriginalCode()
 			};
 
 			finderCache.removeResult(_finderPathCountByC_C, args);
@@ -2881,7 +2885,7 @@ public class CommerceRegionPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceRegionModelImpl.getColumnOriginalValue("uuid_")
+					commerceRegionModelImpl.getOriginalUuid()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -2900,8 +2904,8 @@ public class CommerceRegionPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceRegionModelImpl.getColumnOriginalValue("uuid_"),
-					commerceRegionModelImpl.getColumnOriginalValue("companyId")
+					commerceRegionModelImpl.getOriginalUuid(),
+					commerceRegionModelImpl.getOriginalCompanyId()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -2923,8 +2927,7 @@ public class CommerceRegionPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceRegionModelImpl.getColumnOriginalValue(
-						"commerceCountryId")
+					commerceRegionModelImpl.getOriginalCommerceCountryId()
 				};
 
 				finderCache.removeResult(
@@ -2947,9 +2950,8 @@ public class CommerceRegionPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceRegionModelImpl.getColumnOriginalValue(
-						"commerceCountryId"),
-					commerceRegionModelImpl.getColumnOriginalValue("active_")
+					commerceRegionModelImpl.getOriginalCommerceCountryId(),
+					commerceRegionModelImpl.getOriginalActive()
 				};
 
 				finderCache.removeResult(_finderPathCountByC_A, args);
@@ -3261,8 +3263,8 @@ public class CommerceRegionPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			CommerceRegionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid", new String[] {String.class.getName()},
-			CommerceRegionModelImpl.getColumnBitmask("uuid_") |
-			CommerceRegionModelImpl.getColumnBitmask("priority"));
+			CommerceRegionModelImpl.UUID_COLUMN_BITMASK |
+			CommerceRegionModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3281,9 +3283,9 @@ public class CommerceRegionPersistenceImpl
 			CommerceRegionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CommerceRegionModelImpl.getColumnBitmask("uuid_") |
-			CommerceRegionModelImpl.getColumnBitmask("companyId") |
-			CommerceRegionModelImpl.getColumnBitmask("priority"));
+			CommerceRegionModelImpl.UUID_COLUMN_BITMASK |
+			CommerceRegionModelImpl.COMPANYID_COLUMN_BITMASK |
+			CommerceRegionModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3301,8 +3303,8 @@ public class CommerceRegionPersistenceImpl
 		_finderPathWithoutPaginationFindByCommerceCountryId = new FinderPath(
 			CommerceRegionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCommerceCountryId", new String[] {Long.class.getName()},
-			CommerceRegionModelImpl.getColumnBitmask("commerceCountryId") |
-			CommerceRegionModelImpl.getColumnBitmask("priority"));
+			CommerceRegionModelImpl.COMMERCECOUNTRYID_COLUMN_BITMASK |
+			CommerceRegionModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceCountryId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3311,8 +3313,8 @@ public class CommerceRegionPersistenceImpl
 		_finderPathFetchByC_C = new FinderPath(
 			CommerceRegionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceRegionModelImpl.getColumnBitmask("commerceCountryId") |
-			CommerceRegionModelImpl.getColumnBitmask("code_"));
+			CommerceRegionModelImpl.COMMERCECOUNTRYID_COLUMN_BITMASK |
+			CommerceRegionModelImpl.CODE_COLUMN_BITMASK);
 
 		_finderPathCountByC_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
@@ -3331,9 +3333,9 @@ public class CommerceRegionPersistenceImpl
 			CommerceRegionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByC_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			CommerceRegionModelImpl.getColumnBitmask("commerceCountryId") |
-			CommerceRegionModelImpl.getColumnBitmask("active_") |
-			CommerceRegionModelImpl.getColumnBitmask("priority"));
+			CommerceRegionModelImpl.COMMERCECOUNTRYID_COLUMN_BITMASK |
+			CommerceRegionModelImpl.ACTIVE_COLUMN_BITMASK |
+			CommerceRegionModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByC_A = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",

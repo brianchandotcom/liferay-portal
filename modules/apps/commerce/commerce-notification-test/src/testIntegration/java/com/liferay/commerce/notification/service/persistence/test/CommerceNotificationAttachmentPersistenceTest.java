@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -537,67 +536,20 @@ public class CommerceNotificationAttachmentPersistenceTest {
 
 		_persistence.clearCache();
 
-		_assertOriginalValues(
+		CommerceNotificationAttachment existingCommerceNotificationAttachment =
 			_persistence.findByPrimaryKey(
-				newCommerceNotificationAttachment.getPrimaryKey()));
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(true);
-	}
-
-	@Test
-	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
-		throws Exception {
-
-		_testResetOriginalValuesWithDynamicQuery(false);
-	}
-
-	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
-		throws Exception {
-
-		CommerceNotificationAttachment newCommerceNotificationAttachment =
-			addCommerceNotificationAttachment();
-
-		if (clearSession) {
-			Session session = _persistence.openSession();
-
-			session.flush();
-
-			session.clear();
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CommerceNotificationAttachment.class, _dynamicQueryClassLoader);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"commerceNotificationAttachmentId",
-				newCommerceNotificationAttachment.
-					getCommerceNotificationAttachmentId()));
-
-		List<CommerceNotificationAttachment> result =
-			_persistence.findWithDynamicQuery(dynamicQuery);
-
-		_assertOriginalValues(result.get(0));
-	}
-
-	private void _assertOriginalValues(
-		CommerceNotificationAttachment commerceNotificationAttachment) {
+				newCommerceNotificationAttachment.getPrimaryKey());
 
 		Assert.assertEquals(
-			commerceNotificationAttachment.getUuid(),
+			existingCommerceNotificationAttachment.getUuid(),
 			ReflectionTestUtil.invoke(
-				commerceNotificationAttachment, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "uuid_"));
+				existingCommerceNotificationAttachment, "getOriginalUuid",
+				new Class<?>[0]));
 		Assert.assertEquals(
-			Long.valueOf(commerceNotificationAttachment.getGroupId()),
+			Long.valueOf(existingCommerceNotificationAttachment.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				commerceNotificationAttachment, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
+				existingCommerceNotificationAttachment, "getOriginalGroupId",
+				new Class<?>[0]));
 	}
 
 	protected CommerceNotificationAttachment addCommerceNotificationAttachment()

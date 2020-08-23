@@ -155,41 +155,16 @@ public class CommerceCurrencyModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long CODE_COLUMN_BITMASK = 2L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long PRIMARY_COLUMN_BITMASK = 8L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long UUID_COLUMN_BITMASK = 16L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *		#getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long PRIORITY_COLUMN_BITMASK = 32L;
 
 	/**
@@ -502,24 +477,17 @@ public class CommerceCurrencyModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("uuid_");
+		_columnBitmask |= UUID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
 		}
 
 		_uuid = uuid;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public String getOriginalUuid() {
-		return getColumnOriginalValue("uuid_");
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -530,14 +498,6 @@ public class CommerceCurrencyModelImpl
 
 	@Override
 	public void setCommerceCurrencyId(long commerceCurrencyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("commerceCurrencyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_commerceCurrencyId = commerceCurrencyId;
 	}
 
@@ -549,24 +509,19 @@ public class CommerceCurrencyModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
 		}
 
 		_companyId = companyId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -577,14 +532,6 @@ public class CommerceCurrencyModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_userId = userId;
 	}
 
@@ -617,14 +564,6 @@ public class CommerceCurrencyModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_userName = userName;
 	}
 
@@ -636,14 +575,6 @@ public class CommerceCurrencyModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_createDate = createDate;
 	}
 
@@ -661,14 +592,6 @@ public class CommerceCurrencyModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_modifiedDate = modifiedDate;
 	}
 
@@ -685,24 +608,17 @@ public class CommerceCurrencyModelImpl
 
 	@Override
 	public void setCode(String code) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("code_");
+		_columnBitmask |= CODE_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_originalCode == null) {
+			_originalCode = _code;
 		}
 
 		_code = code;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public String getOriginalCode() {
-		return getColumnOriginalValue("code_");
+		return GetterUtil.getString(_originalCode);
 	}
 
 	@JSON
@@ -761,14 +677,6 @@ public class CommerceCurrencyModelImpl
 
 	@Override
 	public void setName(String name) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("name");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_name = name;
 	}
 
@@ -829,14 +737,6 @@ public class CommerceCurrencyModelImpl
 
 	@Override
 	public void setSymbol(String symbol) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("symbol");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_symbol = symbol;
 	}
 
@@ -848,14 +748,6 @@ public class CommerceCurrencyModelImpl
 
 	@Override
 	public void setRate(BigDecimal rate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("rate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_rate = rate;
 	}
 
@@ -915,14 +807,6 @@ public class CommerceCurrencyModelImpl
 
 	@Override
 	public void setFormatPattern(String formatPattern) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("formatPattern");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_formatPattern = formatPattern;
 	}
 
@@ -983,14 +867,6 @@ public class CommerceCurrencyModelImpl
 
 	@Override
 	public void setMaxFractionDigits(int maxFractionDigits) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("maxFractionDigits");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_maxFractionDigits = maxFractionDigits;
 	}
 
@@ -1002,14 +878,6 @@ public class CommerceCurrencyModelImpl
 
 	@Override
 	public void setMinFractionDigits(int minFractionDigits) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("minFractionDigits");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_minFractionDigits = minFractionDigits;
 	}
 
@@ -1026,14 +894,6 @@ public class CommerceCurrencyModelImpl
 
 	@Override
 	public void setRoundingMode(String roundingMode) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("roundingMode");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_roundingMode = roundingMode;
 	}
 
@@ -1051,24 +911,19 @@ public class CommerceCurrencyModelImpl
 
 	@Override
 	public void setPrimary(boolean primary) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("primary_");
+		_columnBitmask |= PRIMARY_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalPrimary) {
+			_setOriginalPrimary = true;
+
+			_originalPrimary = _primary;
 		}
 
 		_primary = primary;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public boolean getOriginalPrimary() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("primary_"));
+		return _originalPrimary;
 	}
 
 	@JSON
@@ -1079,14 +934,6 @@ public class CommerceCurrencyModelImpl
 
 	@Override
 	public void setPriority(double priority) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("priority");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_priority = priority;
 	}
 
@@ -1104,24 +951,19 @@ public class CommerceCurrencyModelImpl
 
 	@Override
 	public void setActive(boolean active) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("active_");
+		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalActive) {
+			_setOriginalActive = true;
+
+			_originalActive = _active;
 		}
 
 		_active = active;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public boolean getOriginalActive() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("active_"));
+		return _originalActive;
 	}
 
 	@JSON
@@ -1132,14 +974,6 @@ public class CommerceCurrencyModelImpl
 
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("lastPublishDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_lastPublishDate = lastPublishDate;
 	}
 
@@ -1366,9 +1200,22 @@ public class CommerceCurrencyModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_columnOriginalValues = Collections.emptyMap();
+		_originalUuid = _uuid;
+
+		_originalCompanyId = _companyId;
+
+		_setOriginalCompanyId = false;
 
 		_setModifiedDate = false;
+		_originalCode = _code;
+
+		_originalPrimary = _primary;
+
+		_setOriginalPrimary = false;
+
+		_originalActive = _active;
+
+		_setOriginalActive = false;
 
 		_columnBitmask = 0;
 	}
@@ -1554,14 +1401,18 @@ public class CommerceCurrencyModelImpl
 	}
 
 	private String _uuid;
+	private String _originalUuid;
 	private long _commerceCurrencyId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _code;
+	private String _originalCode;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _symbol;
@@ -1572,97 +1423,13 @@ public class CommerceCurrencyModelImpl
 	private int _minFractionDigits;
 	private String _roundingMode;
 	private boolean _primary;
+	private boolean _originalPrimary;
+	private boolean _setOriginalPrimary;
 	private double _priority;
 	private boolean _active;
+	private boolean _originalActive;
+	private boolean _setOriginalActive;
 	private Date _lastPublishDate;
-
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
-	public <T> T getColumnOriginalValue(String columnName) {
-		if (_columnOriginalValues == null) {
-			return null;
-		}
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		return (T)_columnOriginalValues.get(columnName);
-	}
-
-	private void _setColumnOriginalValues() {
-		_columnOriginalValues = new HashMap<String, Object>();
-
-		_columnOriginalValues.put("uuid_", _uuid);
-		_columnOriginalValues.put("commerceCurrencyId", _commerceCurrencyId);
-		_columnOriginalValues.put("companyId", _companyId);
-		_columnOriginalValues.put("userId", _userId);
-		_columnOriginalValues.put("userName", _userName);
-		_columnOriginalValues.put("createDate", _createDate);
-		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("code_", _code);
-		_columnOriginalValues.put("name", _name);
-		_columnOriginalValues.put("symbol", _symbol);
-		_columnOriginalValues.put("rate", _rate);
-		_columnOriginalValues.put("formatPattern", _formatPattern);
-		_columnOriginalValues.put("maxFractionDigits", _maxFractionDigits);
-		_columnOriginalValues.put("minFractionDigits", _minFractionDigits);
-		_columnOriginalValues.put("roundingMode", _roundingMode);
-		_columnOriginalValues.put("primary_", _primary);
-		_columnOriginalValues.put("priority", _priority);
-		_columnOriginalValues.put("active_", _active);
-		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
-	}
-
-	private static final Map<String, Long> _columnBitmasks;
-
-	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
-
-		columnBitmasks.put("uuid_", 1L);
-
-		columnBitmasks.put("commerceCurrencyId", 2L);
-
-		columnBitmasks.put("companyId", 4L);
-
-		columnBitmasks.put("userId", 8L);
-
-		columnBitmasks.put("userName", 16L);
-
-		columnBitmasks.put("createDate", 32L);
-
-		columnBitmasks.put("modifiedDate", 64L);
-
-		columnBitmasks.put("code_", 128L);
-
-		columnBitmasks.put("name", 256L);
-
-		columnBitmasks.put("symbol", 512L);
-
-		columnBitmasks.put("rate", 1024L);
-
-		columnBitmasks.put("formatPattern", 2048L);
-
-		columnBitmasks.put("maxFractionDigits", 4096L);
-
-		columnBitmasks.put("minFractionDigits", 8192L);
-
-		columnBitmasks.put("roundingMode", 16384L);
-
-		columnBitmasks.put("primary_", 32768L);
-
-		columnBitmasks.put("priority", 65536L);
-
-		columnBitmasks.put("active_", 131072L);
-
-		columnBitmasks.put("lastPublishDate", 262144L);
-
-		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
-	}
-
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommerceCurrency _escapedModel;
 

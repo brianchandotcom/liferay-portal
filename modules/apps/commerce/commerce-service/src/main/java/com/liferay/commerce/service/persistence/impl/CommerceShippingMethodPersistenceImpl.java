@@ -1413,6 +1413,8 @@ public class CommerceShippingMethodPersistenceImpl
 				commerceShippingMethod.getEngineKey()
 			},
 			commerceShippingMethod);
+
+		commerceShippingMethod.resetOriginalValues();
 	}
 
 	/**
@@ -1432,6 +1434,9 @@ public class CommerceShippingMethodPersistenceImpl
 					commerceShippingMethod.getPrimaryKey()) == null) {
 
 				cacheResult(commerceShippingMethod);
+			}
+			else {
+				commerceShippingMethod.resetOriginalValues();
 			}
 		}
 	}
@@ -1536,10 +1541,8 @@ public class CommerceShippingMethodPersistenceImpl
 			 _finderPathFetchByG_E.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceShippingMethodModelImpl.getColumnOriginalValue(
-					"groupId"),
-				commerceShippingMethodModelImpl.getColumnOriginalValue(
-					"engineKey")
+				commerceShippingMethodModelImpl.getOriginalGroupId(),
+				commerceShippingMethodModelImpl.getOriginalEngineKey()
 			};
 
 			finderCache.removeResult(_finderPathCountByG_E, args);
@@ -1760,8 +1763,7 @@ public class CommerceShippingMethodPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceShippingMethodModelImpl.getColumnOriginalValue(
-						"groupId")
+					commerceShippingMethodModelImpl.getOriginalGroupId()
 				};
 
 				finderCache.removeResult(_finderPathCountByGroupId, args);
@@ -1782,10 +1784,8 @@ public class CommerceShippingMethodPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceShippingMethodModelImpl.getColumnOriginalValue(
-						"groupId"),
-					commerceShippingMethodModelImpl.getColumnOriginalValue(
-						"active_")
+					commerceShippingMethodModelImpl.getOriginalGroupId(),
+					commerceShippingMethodModelImpl.getOriginalActive()
 				};
 
 				finderCache.removeResult(_finderPathCountByG_A, args);
@@ -2106,8 +2106,8 @@ public class CommerceShippingMethodPersistenceImpl
 			CommerceShippingMethodImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] {Long.class.getName()},
-			CommerceShippingMethodModelImpl.getColumnBitmask("groupId") |
-			CommerceShippingMethodModelImpl.getColumnBitmask("priority"));
+			CommerceShippingMethodModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceShippingMethodModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2117,8 +2117,8 @@ public class CommerceShippingMethodPersistenceImpl
 			CommerceShippingMethodImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByG_E",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceShippingMethodModelImpl.getColumnBitmask("groupId") |
-			CommerceShippingMethodModelImpl.getColumnBitmask("engineKey"));
+			CommerceShippingMethodModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceShippingMethodModelImpl.ENGINEKEY_COLUMN_BITMASK);
 
 		_finderPathCountByG_E = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_E",
@@ -2137,9 +2137,9 @@ public class CommerceShippingMethodPersistenceImpl
 			CommerceShippingMethodImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			CommerceShippingMethodModelImpl.getColumnBitmask("groupId") |
-			CommerceShippingMethodModelImpl.getColumnBitmask("active_") |
-			CommerceShippingMethodModelImpl.getColumnBitmask("priority"));
+			CommerceShippingMethodModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceShippingMethodModelImpl.ACTIVE_COLUMN_BITMASK |
+			CommerceShippingMethodModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByG_A = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",

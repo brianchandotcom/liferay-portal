@@ -135,29 +135,12 @@ public class CommerceWishListItemModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long CPINSTANCEUUID_COLUMN_BITMASK = 1L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long CPRODUCTID_COLUMN_BITMASK = 2L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long COMMERCEWISHLISTID_COLUMN_BITMASK = 4L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *		#getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 8L;
 
 	/**
@@ -429,14 +412,6 @@ public class CommerceWishListItemModelImpl
 
 	@Override
 	public void setCommerceWishListItemId(long commerceWishListItemId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("commerceWishListItemId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_commerceWishListItemId = commerceWishListItemId;
 	}
 
@@ -448,14 +423,6 @@ public class CommerceWishListItemModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("groupId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_groupId = groupId;
 	}
 
@@ -467,14 +434,6 @@ public class CommerceWishListItemModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_companyId = companyId;
 	}
 
@@ -486,14 +445,6 @@ public class CommerceWishListItemModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_userId = userId;
 	}
 
@@ -526,14 +477,6 @@ public class CommerceWishListItemModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_userName = userName;
 	}
 
@@ -545,14 +488,6 @@ public class CommerceWishListItemModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_createDate = createDate;
 	}
 
@@ -570,14 +505,6 @@ public class CommerceWishListItemModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_modifiedDate = modifiedDate;
 	}
 
@@ -589,24 +516,19 @@ public class CommerceWishListItemModelImpl
 
 	@Override
 	public void setCommerceWishListId(long commerceWishListId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("commerceWishListId");
+		_columnBitmask |= COMMERCEWISHLISTID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalCommerceWishListId) {
+			_setOriginalCommerceWishListId = true;
+
+			_originalCommerceWishListId = _commerceWishListId;
 		}
 
 		_commerceWishListId = commerceWishListId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCommerceWishListId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceWishListId"));
+		return _originalCommerceWishListId;
 	}
 
 	@JSON
@@ -622,24 +544,17 @@ public class CommerceWishListItemModelImpl
 
 	@Override
 	public void setCPInstanceUuid(String CPInstanceUuid) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("CPInstanceUuid");
+		_columnBitmask |= CPINSTANCEUUID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_originalCPInstanceUuid == null) {
+			_originalCPInstanceUuid = _CPInstanceUuid;
 		}
 
 		_CPInstanceUuid = CPInstanceUuid;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public String getOriginalCPInstanceUuid() {
-		return getColumnOriginalValue("CPInstanceUuid");
+		return GetterUtil.getString(_originalCPInstanceUuid);
 	}
 
 	@JSON
@@ -650,24 +565,19 @@ public class CommerceWishListItemModelImpl
 
 	@Override
 	public void setCProductId(long CProductId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("CProductId");
+		_columnBitmask |= CPRODUCTID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalCProductId) {
+			_setOriginalCProductId = true;
+
+			_originalCProductId = _CProductId;
 		}
 
 		_CProductId = CProductId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCProductId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CProductId"));
+		return _originalCProductId;
 	}
 
 	@JSON
@@ -683,14 +593,6 @@ public class CommerceWishListItemModelImpl
 
 	@Override
 	public void setJson(String json) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("json");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_json = json;
 	}
 
@@ -814,9 +716,16 @@ public class CommerceWishListItemModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_columnOriginalValues = Collections.emptyMap();
-
 		_setModifiedDate = false;
+		_originalCommerceWishListId = _commerceWishListId;
+
+		_setOriginalCommerceWishListId = false;
+
+		_originalCPInstanceUuid = _CPInstanceUuid;
+
+		_originalCProductId = _CProductId;
+
+		_setOriginalCProductId = false;
 
 		_columnBitmask = 0;
 	}
@@ -967,74 +876,14 @@ public class CommerceWishListItemModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _commerceWishListId;
+	private long _originalCommerceWishListId;
+	private boolean _setOriginalCommerceWishListId;
 	private String _CPInstanceUuid;
+	private String _originalCPInstanceUuid;
 	private long _CProductId;
+	private long _originalCProductId;
+	private boolean _setOriginalCProductId;
 	private String _json;
-
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
-	public <T> T getColumnOriginalValue(String columnName) {
-		if (_columnOriginalValues == null) {
-			return null;
-		}
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		return (T)_columnOriginalValues.get(columnName);
-	}
-
-	private void _setColumnOriginalValues() {
-		_columnOriginalValues = new HashMap<String, Object>();
-
-		_columnOriginalValues.put(
-			"commerceWishListItemId", _commerceWishListItemId);
-		_columnOriginalValues.put("groupId", _groupId);
-		_columnOriginalValues.put("companyId", _companyId);
-		_columnOriginalValues.put("userId", _userId);
-		_columnOriginalValues.put("userName", _userName);
-		_columnOriginalValues.put("createDate", _createDate);
-		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("commerceWishListId", _commerceWishListId);
-		_columnOriginalValues.put("CPInstanceUuid", _CPInstanceUuid);
-		_columnOriginalValues.put("CProductId", _CProductId);
-		_columnOriginalValues.put("json", _json);
-	}
-
-	private static final Map<String, Long> _columnBitmasks;
-
-	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
-
-		columnBitmasks.put("commerceWishListItemId", 1L);
-
-		columnBitmasks.put("groupId", 2L);
-
-		columnBitmasks.put("companyId", 4L);
-
-		columnBitmasks.put("userId", 8L);
-
-		columnBitmasks.put("userName", 16L);
-
-		columnBitmasks.put("createDate", 32L);
-
-		columnBitmasks.put("modifiedDate", 64L);
-
-		columnBitmasks.put("commerceWishListId", 128L);
-
-		columnBitmasks.put("CPInstanceUuid", 256L);
-
-		columnBitmasks.put("CProductId", 512L);
-
-		columnBitmasks.put("json", 1024L);
-
-		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
-	}
-
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommerceWishListItem _escapedModel;
 

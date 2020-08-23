@@ -3454,6 +3454,8 @@ public class CPOptionPersistenceImpl
 				cpOption.getCompanyId(), cpOption.getExternalReferenceCode()
 			},
 			cpOption);
+
+		cpOption.resetOriginalValues();
 	}
 
 	/**
@@ -3468,6 +3470,9 @@ public class CPOptionPersistenceImpl
 					CPOptionImpl.class, cpOption.getPrimaryKey()) == null) {
 
 				cacheResult(cpOption);
+			}
+			else {
+				cpOption.resetOriginalValues();
 			}
 		}
 	}
@@ -3568,8 +3573,8 @@ public class CPOptionPersistenceImpl
 			 _finderPathFetchByC_K.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cpOptionModelImpl.getColumnOriginalValue("companyId"),
-				cpOptionModelImpl.getColumnOriginalValue("key_")
+				cpOptionModelImpl.getOriginalCompanyId(),
+				cpOptionModelImpl.getOriginalKey()
 			};
 
 			finderCache.removeResult(_finderPathCountByC_K, args);
@@ -3590,9 +3595,8 @@ public class CPOptionPersistenceImpl
 			 _finderPathFetchByC_ERC.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cpOptionModelImpl.getColumnOriginalValue("companyId"),
-				cpOptionModelImpl.getColumnOriginalValue(
-					"externalReferenceCode")
+				cpOptionModelImpl.getOriginalCompanyId(),
+				cpOptionModelImpl.getOriginalExternalReferenceCode()
 			};
 
 			finderCache.removeResult(_finderPathCountByC_ERC, args);
@@ -3810,7 +3814,7 @@ public class CPOptionPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpOptionModelImpl.getColumnOriginalValue("uuid_")
+					cpOptionModelImpl.getOriginalUuid()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -3829,8 +3833,8 @@ public class CPOptionPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpOptionModelImpl.getColumnOriginalValue("uuid_"),
-					cpOptionModelImpl.getColumnOriginalValue("companyId")
+					cpOptionModelImpl.getOriginalUuid(),
+					cpOptionModelImpl.getOriginalCompanyId()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -3852,7 +3856,7 @@ public class CPOptionPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					cpOptionModelImpl.getColumnOriginalValue("companyId")
+					cpOptionModelImpl.getOriginalCompanyId()
 				};
 
 				finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -4159,8 +4163,8 @@ public class CPOptionPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			CPOptionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid", new String[] {String.class.getName()},
-			CPOptionModelImpl.getColumnBitmask("uuid_") |
-			CPOptionModelImpl.getColumnBitmask("name"));
+			CPOptionModelImpl.UUID_COLUMN_BITMASK |
+			CPOptionModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4179,9 +4183,9 @@ public class CPOptionPersistenceImpl
 			CPOptionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CPOptionModelImpl.getColumnBitmask("uuid_") |
-			CPOptionModelImpl.getColumnBitmask("companyId") |
-			CPOptionModelImpl.getColumnBitmask("name"));
+			CPOptionModelImpl.UUID_COLUMN_BITMASK |
+			CPOptionModelImpl.COMPANYID_COLUMN_BITMASK |
+			CPOptionModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4199,8 +4203,8 @@ public class CPOptionPersistenceImpl
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
 			CPOptionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByCompanyId", new String[] {Long.class.getName()},
-			CPOptionModelImpl.getColumnBitmask("companyId") |
-			CPOptionModelImpl.getColumnBitmask("name"));
+			CPOptionModelImpl.COMPANYID_COLUMN_BITMASK |
+			CPOptionModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByCompanyId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -4209,8 +4213,8 @@ public class CPOptionPersistenceImpl
 		_finderPathFetchByC_K = new FinderPath(
 			CPOptionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CPOptionModelImpl.getColumnBitmask("companyId") |
-			CPOptionModelImpl.getColumnBitmask("key_"));
+			CPOptionModelImpl.COMPANYID_COLUMN_BITMASK |
+			CPOptionModelImpl.KEY_COLUMN_BITMASK);
 
 		_finderPathCountByC_K = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K",
@@ -4219,8 +4223,8 @@ public class CPOptionPersistenceImpl
 		_finderPathFetchByC_ERC = new FinderPath(
 			CPOptionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CPOptionModelImpl.getColumnBitmask("companyId") |
-			CPOptionModelImpl.getColumnBitmask("externalReferenceCode"));
+			CPOptionModelImpl.COMPANYID_COLUMN_BITMASK |
+			CPOptionModelImpl.EXTERNALREFERENCECODE_COLUMN_BITMASK);
 
 		_finderPathCountByC_ERC = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

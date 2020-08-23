@@ -1438,6 +1438,8 @@ public class CommerceOrderNotePersistenceImpl
 				commerceOrderNote.getExternalReferenceCode()
 			},
 			commerceOrderNote);
+
+		commerceOrderNote.resetOriginalValues();
 	}
 
 	/**
@@ -1453,6 +1455,9 @@ public class CommerceOrderNotePersistenceImpl
 					commerceOrderNote.getPrimaryKey()) == null) {
 
 				cacheResult(commerceOrderNote);
+			}
+			else {
+				commerceOrderNote.resetOriginalValues();
 			}
 		}
 	}
@@ -1549,9 +1554,8 @@ public class CommerceOrderNotePersistenceImpl
 			 _finderPathFetchByC_ERC.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				commerceOrderNoteModelImpl.getColumnOriginalValue("companyId"),
-				commerceOrderNoteModelImpl.getColumnOriginalValue(
-					"externalReferenceCode")
+				commerceOrderNoteModelImpl.getOriginalCompanyId(),
+				commerceOrderNoteModelImpl.getOriginalExternalReferenceCode()
 			};
 
 			finderCache.removeResult(_finderPathCountByC_ERC, args);
@@ -1767,8 +1771,7 @@ public class CommerceOrderNotePersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					commerceOrderNoteModelImpl.getColumnOriginalValue(
-						"commerceOrderId")
+					commerceOrderNoteModelImpl.getOriginalCommerceOrderId()
 				};
 
 				finderCache.removeResult(
@@ -1791,10 +1794,8 @@ public class CommerceOrderNotePersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceOrderNoteModelImpl.getColumnOriginalValue(
-						"commerceOrderId"),
-					commerceOrderNoteModelImpl.getColumnOriginalValue(
-						"restricted")
+					commerceOrderNoteModelImpl.getOriginalCommerceOrderId(),
+					commerceOrderNoteModelImpl.getOriginalRestricted()
 				};
 
 				finderCache.removeResult(_finderPathCountByC_R, args);
@@ -2104,8 +2105,8 @@ public class CommerceOrderNotePersistenceImpl
 			CommerceOrderNoteImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCommerceOrderId",
 			new String[] {Long.class.getName()},
-			CommerceOrderNoteModelImpl.getColumnBitmask("commerceOrderId") |
-			CommerceOrderNoteModelImpl.getColumnBitmask("createDate"));
+			CommerceOrderNoteModelImpl.COMMERCEORDERID_COLUMN_BITMASK |
+			CommerceOrderNoteModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceOrderId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2124,9 +2125,9 @@ public class CommerceOrderNotePersistenceImpl
 			CommerceOrderNoteImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			CommerceOrderNoteModelImpl.getColumnBitmask("commerceOrderId") |
-			CommerceOrderNoteModelImpl.getColumnBitmask("restricted") |
-			CommerceOrderNoteModelImpl.getColumnBitmask("createDate"));
+			CommerceOrderNoteModelImpl.COMMERCEORDERID_COLUMN_BITMASK |
+			CommerceOrderNoteModelImpl.RESTRICTED_COLUMN_BITMASK |
+			CommerceOrderNoteModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByC_R = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
@@ -2136,9 +2137,8 @@ public class CommerceOrderNotePersistenceImpl
 			CommerceOrderNoteImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceOrderNoteModelImpl.getColumnBitmask("companyId") |
-			CommerceOrderNoteModelImpl.getColumnBitmask(
-				"externalReferenceCode"));
+			CommerceOrderNoteModelImpl.COMPANYID_COLUMN_BITMASK |
+			CommerceOrderNoteModelImpl.EXTERNALREFERENCECODE_COLUMN_BITMASK);
 
 		_finderPathCountByC_ERC = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

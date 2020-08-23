@@ -135,35 +135,14 @@ public class CPDAvailabilityEstimateModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long CPRODUCTID_COLUMN_BITMASK = 1L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long COMMERCEAVAILABILITYESTIMATEID_COLUMN_BITMASK = 2L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long UUID_COLUMN_BITMASK = 8L;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *		#getColumnBitmask(String)
-	 */
-	@Deprecated
 	public static final long CPDAVAILABILITYESTIMATEID_COLUMN_BITMASK = 16L;
 
 	/**
@@ -439,24 +418,17 @@ public class CPDAvailabilityEstimateModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("uuid_");
+		_columnBitmask |= UUID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
 		}
 
 		_uuid = uuid;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public String getOriginalUuid() {
-		return getColumnOriginalValue("uuid_");
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -467,14 +439,6 @@ public class CPDAvailabilityEstimateModelImpl
 
 	@Override
 	public void setCPDAvailabilityEstimateId(long CPDAvailabilityEstimateId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("CPDAvailabilityEstimateId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_CPDAvailabilityEstimateId = CPDAvailabilityEstimateId;
 	}
 
@@ -486,24 +450,19 @@ public class CPDAvailabilityEstimateModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
 		}
 
 		_companyId = companyId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -514,14 +473,6 @@ public class CPDAvailabilityEstimateModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_userId = userId;
 	}
 
@@ -554,14 +505,6 @@ public class CPDAvailabilityEstimateModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_userName = userName;
 	}
 
@@ -573,14 +516,6 @@ public class CPDAvailabilityEstimateModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_createDate = createDate;
 	}
 
@@ -598,14 +533,6 @@ public class CPDAvailabilityEstimateModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_modifiedDate = modifiedDate;
 	}
 
@@ -619,26 +546,20 @@ public class CPDAvailabilityEstimateModelImpl
 	public void setCommerceAvailabilityEstimateId(
 		long commerceAvailabilityEstimateId) {
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get(
-				"commerceAvailabilityEstimateId");
+		_columnBitmask |= COMMERCEAVAILABILITYESTIMATEID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalCommerceAvailabilityEstimateId) {
+			_setOriginalCommerceAvailabilityEstimateId = true;
+
+			_originalCommerceAvailabilityEstimateId =
+				_commerceAvailabilityEstimateId;
 		}
 
 		_commerceAvailabilityEstimateId = commerceAvailabilityEstimateId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCommerceAvailabilityEstimateId() {
-		return GetterUtil.getLong(
-			getColumnOriginalValue("commerceAvailabilityEstimateId"));
+		return _originalCommerceAvailabilityEstimateId;
 	}
 
 	@JSON
@@ -649,24 +570,19 @@ public class CPDAvailabilityEstimateModelImpl
 
 	@Override
 	public void setCProductId(long CProductId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("CProductId");
+		_columnBitmask |= CPRODUCTID_COLUMN_BITMASK;
 
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (!_setOriginalCProductId) {
+			_setOriginalCProductId = true;
+
+			_originalCProductId = _CProductId;
 		}
 
 		_CProductId = CProductId;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
 	public long getOriginalCProductId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CProductId"));
+		return _originalCProductId;
 	}
 
 	@JSON
@@ -677,14 +593,6 @@ public class CPDAvailabilityEstimateModelImpl
 
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("lastPublishDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
-		}
-
 		_lastPublishDate = lastPublishDate;
 	}
 
@@ -813,9 +721,21 @@ public class CPDAvailabilityEstimateModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_columnOriginalValues = Collections.emptyMap();
+		_originalUuid = _uuid;
+
+		_originalCompanyId = _companyId;
+
+		_setOriginalCompanyId = false;
 
 		_setModifiedDate = false;
+		_originalCommerceAvailabilityEstimateId =
+			_commerceAvailabilityEstimateId;
+
+		_setOriginalCommerceAvailabilityEstimateId = false;
+
+		_originalCProductId = _CProductId;
+
+		_setOriginalCProductId = false;
 
 		_columnBitmask = 0;
 	}
@@ -960,79 +880,23 @@ public class CPDAvailabilityEstimateModelImpl
 	}
 
 	private String _uuid;
+	private String _originalUuid;
 	private long _CPDAvailabilityEstimateId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _commerceAvailabilityEstimateId;
+	private long _originalCommerceAvailabilityEstimateId;
+	private boolean _setOriginalCommerceAvailabilityEstimateId;
 	private long _CProductId;
+	private long _originalCProductId;
+	private boolean _setOriginalCProductId;
 	private Date _lastPublishDate;
-
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
-	public <T> T getColumnOriginalValue(String columnName) {
-		if (_columnOriginalValues == null) {
-			return null;
-		}
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		return (T)_columnOriginalValues.get(columnName);
-	}
-
-	private void _setColumnOriginalValues() {
-		_columnOriginalValues = new HashMap<String, Object>();
-
-		_columnOriginalValues.put("uuid_", _uuid);
-		_columnOriginalValues.put(
-			"CPDAvailabilityEstimateId", _CPDAvailabilityEstimateId);
-		_columnOriginalValues.put("companyId", _companyId);
-		_columnOriginalValues.put("userId", _userId);
-		_columnOriginalValues.put("userName", _userName);
-		_columnOriginalValues.put("createDate", _createDate);
-		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put(
-			"commerceAvailabilityEstimateId", _commerceAvailabilityEstimateId);
-		_columnOriginalValues.put("CProductId", _CProductId);
-		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
-	}
-
-	private static final Map<String, Long> _columnBitmasks;
-
-	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
-
-		columnBitmasks.put("uuid_", 1L);
-
-		columnBitmasks.put("CPDAvailabilityEstimateId", 2L);
-
-		columnBitmasks.put("companyId", 4L);
-
-		columnBitmasks.put("userId", 8L);
-
-		columnBitmasks.put("userName", 16L);
-
-		columnBitmasks.put("createDate", 32L);
-
-		columnBitmasks.put("modifiedDate", 64L);
-
-		columnBitmasks.put("commerceAvailabilityEstimateId", 128L);
-
-		columnBitmasks.put("CProductId", 256L);
-
-		columnBitmasks.put("lastPublishDate", 512L);
-
-		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
-	}
-
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CPDAvailabilityEstimate _escapedModel;
 

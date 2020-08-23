@@ -2251,6 +2251,8 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 				cpDefinitionGroupedEntry.getEntryCProductId()
 			},
 			cpDefinitionGroupedEntry);
+
+		cpDefinitionGroupedEntry.resetOriginalValues();
 	}
 
 	/**
@@ -2270,6 +2272,9 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 					cpDefinitionGroupedEntry.getPrimaryKey()) == null) {
 
 				cacheResult(cpDefinitionGroupedEntry);
+			}
+			else {
+				cpDefinitionGroupedEntry.resetOriginalValues();
 			}
 		}
 	}
@@ -2386,10 +2391,8 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cpDefinitionGroupedEntryModelImpl.getColumnOriginalValue(
-					"uuid_"),
-				cpDefinitionGroupedEntryModelImpl.getColumnOriginalValue(
-					"groupId")
+				cpDefinitionGroupedEntryModelImpl.getOriginalUuid(),
+				cpDefinitionGroupedEntryModelImpl.getOriginalGroupId()
 			};
 
 			finderCache.removeResult(_finderPathCountByUUID_G, args);
@@ -2410,10 +2413,8 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			 _finderPathFetchByC_E.getColumnBitmask()) != 0) {
 
 			Object[] args = new Object[] {
-				cpDefinitionGroupedEntryModelImpl.getColumnOriginalValue(
-					"CPDefinitionId"),
-				cpDefinitionGroupedEntryModelImpl.getColumnOriginalValue(
-					"entryCProductId")
+				cpDefinitionGroupedEntryModelImpl.getOriginalCPDefinitionId(),
+				cpDefinitionGroupedEntryModelImpl.getOriginalEntryCProductId()
 			};
 
 			finderCache.removeResult(_finderPathCountByC_E, args);
@@ -2655,8 +2656,7 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpDefinitionGroupedEntryModelImpl.getColumnOriginalValue(
-						"uuid_")
+					cpDefinitionGroupedEntryModelImpl.getOriginalUuid()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid, args);
@@ -2677,10 +2677,8 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					cpDefinitionGroupedEntryModelImpl.getColumnOriginalValue(
-						"uuid_"),
-					cpDefinitionGroupedEntryModelImpl.getColumnOriginalValue(
-						"companyId")
+					cpDefinitionGroupedEntryModelImpl.getOriginalUuid(),
+					cpDefinitionGroupedEntryModelImpl.getOriginalCompanyId()
 				};
 
 				finderCache.removeResult(_finderPathCountByUuid_C, args);
@@ -2702,8 +2700,8 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 					 getColumnBitmask()) != 0) {
 
 				Object[] args = new Object[] {
-					cpDefinitionGroupedEntryModelImpl.getColumnOriginalValue(
-						"CPDefinitionId")
+					cpDefinitionGroupedEntryModelImpl.
+						getOriginalCPDefinitionId()
 				};
 
 				finderCache.removeResult(
@@ -3026,8 +3024,8 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			CPDefinitionGroupedEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
-			CPDefinitionGroupedEntryModelImpl.getColumnBitmask("uuid_") |
-			CPDefinitionGroupedEntryModelImpl.getColumnBitmask("priority"));
+			CPDefinitionGroupedEntryModelImpl.UUID_COLUMN_BITMASK |
+			CPDefinitionGroupedEntryModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3037,8 +3035,8 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			CPDefinitionGroupedEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CPDefinitionGroupedEntryModelImpl.getColumnBitmask("uuid_") |
-			CPDefinitionGroupedEntryModelImpl.getColumnBitmask("groupId"));
+			CPDefinitionGroupedEntryModelImpl.UUID_COLUMN_BITMASK |
+			CPDefinitionGroupedEntryModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3058,9 +3056,9 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			CPDefinitionGroupedEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CPDefinitionGroupedEntryModelImpl.getColumnBitmask("uuid_") |
-			CPDefinitionGroupedEntryModelImpl.getColumnBitmask("companyId") |
-			CPDefinitionGroupedEntryModelImpl.getColumnBitmask("priority"));
+			CPDefinitionGroupedEntryModelImpl.UUID_COLUMN_BITMASK |
+			CPDefinitionGroupedEntryModelImpl.COMPANYID_COLUMN_BITMASK |
+			CPDefinitionGroupedEntryModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3079,9 +3077,8 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			CPDefinitionGroupedEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPDefinitionId",
 			new String[] {Long.class.getName()},
-			CPDefinitionGroupedEntryModelImpl.getColumnBitmask(
-				"CPDefinitionId") |
-			CPDefinitionGroupedEntryModelImpl.getColumnBitmask("priority"));
+			CPDefinitionGroupedEntryModelImpl.CPDEFINITIONID_COLUMN_BITMASK |
+			CPDefinitionGroupedEntryModelImpl.PRIORITY_COLUMN_BITMASK);
 
 		_finderPathCountByCPDefinitionId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3091,10 +3088,8 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			CPDefinitionGroupedEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_E",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CPDefinitionGroupedEntryModelImpl.getColumnBitmask(
-				"CPDefinitionId") |
-			CPDefinitionGroupedEntryModelImpl.getColumnBitmask(
-				"entryCProductId"));
+			CPDefinitionGroupedEntryModelImpl.CPDEFINITIONID_COLUMN_BITMASK |
+			CPDefinitionGroupedEntryModelImpl.ENTRYCPRODUCTID_COLUMN_BITMASK);
 
 		_finderPathCountByC_E = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_E",

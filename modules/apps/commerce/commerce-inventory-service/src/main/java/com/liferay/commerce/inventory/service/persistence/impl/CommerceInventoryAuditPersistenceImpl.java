@@ -1225,6 +1225,8 @@ public class CommerceInventoryAuditPersistenceImpl
 		entityCache.putResult(
 			CommerceInventoryAuditImpl.class,
 			commerceInventoryAudit.getPrimaryKey(), commerceInventoryAudit);
+
+		commerceInventoryAudit.resetOriginalValues();
 	}
 
 	/**
@@ -1244,6 +1246,9 @@ public class CommerceInventoryAuditPersistenceImpl
 					commerceInventoryAudit.getPrimaryKey()) == null) {
 
 				cacheResult(commerceInventoryAudit);
+			}
+			else {
+				commerceInventoryAudit.resetOriginalValues();
 			}
 		}
 	}
@@ -1514,10 +1519,8 @@ public class CommerceInventoryAuditPersistenceImpl
 					 0) {
 
 				Object[] args = new Object[] {
-					commerceInventoryAuditModelImpl.getColumnOriginalValue(
-						"companyId"),
-					commerceInventoryAuditModelImpl.getColumnOriginalValue(
-						"sku")
+					commerceInventoryAuditModelImpl.getOriginalCompanyId(),
+					commerceInventoryAuditModelImpl.getOriginalSku()
 				};
 
 				finderCache.removeResult(_finderPathCountByC_S, args);
@@ -1848,9 +1851,9 @@ public class CommerceInventoryAuditPersistenceImpl
 			CommerceInventoryAuditImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceInventoryAuditModelImpl.getColumnBitmask("companyId") |
-			CommerceInventoryAuditModelImpl.getColumnBitmask("sku") |
-			CommerceInventoryAuditModelImpl.getColumnBitmask("createDate"));
+			CommerceInventoryAuditModelImpl.COMPANYID_COLUMN_BITMASK |
+			CommerceInventoryAuditModelImpl.SKU_COLUMN_BITMASK |
+			CommerceInventoryAuditModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByC_S = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",

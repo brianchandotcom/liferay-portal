@@ -1201,6 +1201,8 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 			CommerceShippingFixedOptionRelImpl.class,
 			commerceShippingFixedOptionRel.getPrimaryKey(),
 			commerceShippingFixedOptionRel);
+
+		commerceShippingFixedOptionRel.resetOriginalValues();
 	}
 
 	/**
@@ -1220,6 +1222,9 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 					commerceShippingFixedOptionRel.getPrimaryKey()) == null) {
 
 				cacheResult(commerceShippingFixedOptionRel);
+			}
+			else {
+				commerceShippingFixedOptionRel.resetOriginalValues();
 			}
 		}
 	}
@@ -1517,7 +1522,7 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceShippingFixedOptionRelModelImpl.
-						getColumnOriginalValue("commerceShippingMethodId")
+						getOriginalCommerceShippingMethodId()
 				};
 
 				finderCache.removeResult(
@@ -1544,7 +1549,7 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 
 				Object[] args = new Object[] {
 					commerceShippingFixedOptionRelModelImpl.
-						getColumnOriginalValue("commerceShippingFixedOptionId")
+						getOriginalCommerceShippingFixedOptionId()
 				};
 
 				finderCache.removeResult(
@@ -1875,10 +1880,10 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceShippingMethodId",
 				new String[] {Long.class.getName()},
-				CommerceShippingFixedOptionRelModelImpl.getColumnBitmask(
-					"commerceShippingMethodId") |
-				CommerceShippingFixedOptionRelModelImpl.getColumnBitmask(
-					"commerceCountryId"));
+				CommerceShippingFixedOptionRelModelImpl.
+					COMMERCESHIPPINGMETHODID_COLUMN_BITMASK |
+				CommerceShippingFixedOptionRelModelImpl.
+					COMMERCECOUNTRYID_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceShippingMethodId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1901,10 +1906,10 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceShippingFixedOptionId",
 				new String[] {Long.class.getName()},
-				CommerceShippingFixedOptionRelModelImpl.getColumnBitmask(
-					"commerceShippingFixedOptionId") |
-				CommerceShippingFixedOptionRelModelImpl.getColumnBitmask(
-					"commerceCountryId"));
+				CommerceShippingFixedOptionRelModelImpl.
+					COMMERCESHIPPINGFIXEDOPTIONID_COLUMN_BITMASK |
+				CommerceShippingFixedOptionRelModelImpl.
+					COMMERCECOUNTRYID_COLUMN_BITMASK);
 
 		_finderPathCountByCommerceShippingFixedOptionId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,

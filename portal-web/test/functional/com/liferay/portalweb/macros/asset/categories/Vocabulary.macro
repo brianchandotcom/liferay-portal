@@ -49,7 +49,11 @@ definition {
 			PortletEntry.inputName(name = "${localization2Name}");
 		}
 
-		PortletEntry.save();
+		Button.clickNoError(button = "Save");
+
+		AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to create this vocabulary only with internal visibility?");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro addViewableByCP {
@@ -63,7 +67,11 @@ definition {
 			locator1 = "Select#PERMISSIONS",
 			value1 = "${viewableBy}");
 
-		PortletEntry.save();
+		Button.clickNoError(button = "Save");
+
+		AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to create this vocabulary only with internal visibility?");
+
+		Alert.viewSuccessMessage();
 
 		AssertTextEquals(
 			key_navNested = "${vocabularyName}",
@@ -97,7 +105,11 @@ definition {
 				value1 = "${assetSubtype}");
 		}
 
-		PortletEntry.save();
+		Button.clickNoError(button = "Save");
+
+		AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to create this vocabulary only with internal visibility?");
+
+		Alert.viewSuccessMessage();
 
 		AssertTextEquals(
 			key_navNested = "${vocabularyName}",

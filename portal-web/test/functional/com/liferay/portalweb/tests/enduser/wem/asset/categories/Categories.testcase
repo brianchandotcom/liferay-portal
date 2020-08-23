@@ -459,7 +459,11 @@ definition {
 			required = "true",
 			rowNumber = "2");
 
-		Button.clickSave();
+		Button.clickNoError(button = "Save");
+
+		AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to create this vocabulary only with internal visibility?");
+
+		Alert.viewSuccessMessage();
 
 		Vocabulary.deleteAssociatedAssetTypeViaVocabularyCP(vocabularyName = "Vocabulary Name 1");
 

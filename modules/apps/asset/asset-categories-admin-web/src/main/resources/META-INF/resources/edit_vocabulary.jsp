@@ -66,7 +66,7 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 				<label><liferay-ui:message key="visibility" /> <liferay-ui:icon-help message="visibility-help" /></label>
 
 				<div class="form-group" id="<portlet:namespace />visibilityOptions">
-					<aui:input checked="<%= (vocabulary != null) ? (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC) : true %>" disabled="<%= !(vocabulary == null) %>" label="public" name="internalUse" type="radio" value="<%= false %>" />
+					<aui:input checked="<%= (vocabulary != null) ? (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC) : true %>" disabled="<%= !(vocabulary == null) %>" id="visibilityTypePublic" label="public" name="internalUse" type="radio" value="<%= false %>" />
 
 					<aui:input checked="<%= (vocabulary != null) ? (vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL) : false %>" disabled="<%= !(vocabulary == null) %>" label="internal" name="internalUse" type="radio" value="<%= true %>" />
 				</div>
@@ -98,9 +98,24 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 <aui:script>
 	function <portlet:namespace />confirmation(event) {
 		<c:if test="<%= vocabulary == null %>">
+			var message =
+				'<liferay-ui:message key="are-you-sure-you-want-to-create-this-vocabulary-only-with-internal-visibility" />';
+
+			var visibilityTypePublic = document.getElementById(
+				'<portlet:namespace />visibilityTypePublic'
+			);
+
+			var visibilityTypePublicChecked = visibilityTypePublic.checked;
+
+			if (visibilityTypePublicChecked) {
+				message =
+					'<liferay-ui:message key="are-you-sure-you-want-to-create-this-vocabulary-with-public-visibility" />';
+			}
+
 			if (
 				!confirm(
-					'<liferay-ui:message key="are-you-sure-you-want-to-create-this-vocabulary-only-with-internal-visibility" />\n\n<liferay-ui:message key="the-action-of-setting-a-vocabulary-either-with-internal-or-public-visibility-cannot-be-reversed" />'
+					message +
+						' \n\n<liferay-ui:message key="the-action-of-setting-a-vocabulary-either-with-internal-or-public-visibility-cannot-be-reversed" />'
 				)
 			) {
 				event.preventDefault();

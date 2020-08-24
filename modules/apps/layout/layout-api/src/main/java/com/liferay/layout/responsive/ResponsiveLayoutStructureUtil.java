@@ -39,23 +39,7 @@ import java.util.Set;
  */
 public class ResponsiveLayoutStructureUtil {
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnCssClass(RowStyledLayoutStructureItem,
-	 *             ColumnLayoutStructureItem)}
-	 */
-	@Deprecated
 	public static String getColumnCssClass(
-		RowLayoutStructureItem rowLayoutStructureItem,
-		ColumnLayoutStructureItem columnLayoutStructureItem) {
-
-		return getColumnCssClass(
-			(RowStyledLayoutStructureItem)rowLayoutStructureItem,
-			columnLayoutStructureItem);
-	}
-
-	public static String getColumnCssClass(
-		RowStyledLayoutStructureItem rowStyledLayoutStructureItem,
 		ColumnLayoutStructureItem columnLayoutStructureItem) {
 
 		StringBundler sb = new StringBundler();
@@ -83,6 +67,18 @@ public class ResponsiveLayoutStructureUtil {
 		}
 
 		return sb.toString();
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnCssClass(ColumnLayoutStructureItem)}
+	 */
+	@Deprecated
+	public static String getColumnCssClass(
+		RowLayoutStructureItem rowLayoutStructureItem,
+		ColumnLayoutStructureItem columnLayoutStructureItem) {
+
+		return getColumnCssClass(columnLayoutStructureItem);
 	}
 
 	public static String getResponsiveCssClassValues(

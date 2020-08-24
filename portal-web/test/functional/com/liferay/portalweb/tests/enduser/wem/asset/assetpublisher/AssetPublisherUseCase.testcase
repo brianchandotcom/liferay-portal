@@ -940,7 +940,7 @@ definition {
 			assetContent = "Web Content Category Content",
 			assetTitle = "Web Content Category Title");
 
-		AssetPublisherPortlet.editConfigureTagsFilterPG(tagNameList = "tagname");
+		AssetPublisherPortlet.configureTagsFilterPG(tagNameList = "tagname");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",

@@ -1080,7 +1080,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		AssetPublisherPortlet.editConfigureTagsFilterPG(
+		AssetPublisherPortlet.configureTagsFilterPG(
 			queryAndOperator = "All",
 			tagNameList = "tag1,tag2");
 

@@ -334,7 +334,7 @@ definition {
 	macro deletePG {
 		var key_threadSubject = "${threadSubject}";
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
 
@@ -471,7 +471,7 @@ definition {
 			var key_threadSubject = "${threadSubjectEdit}";
 		}
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
 
@@ -483,7 +483,7 @@ definition {
 	}
 
 	macro gotoCP {
-		AssertClick(
+		AssertClick.assertPartialTextClickAt(
 			key_threadSubject = "${threadSubject}",
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
@@ -498,7 +498,7 @@ definition {
 			AssertLocation(value1 = "${messageBoardsThreadURL}");
 		}
 		else {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "MessageBoards#THREAD_LIST_THREAD",
 				value1 = "${threadSubject}");
 
@@ -517,7 +517,7 @@ definition {
 					value1 = "${replyCount}");
 			}
 
-			AssertClick(
+			AssertClick.assertPartialTextClickAt(
 				locator1 = "MessageBoards#THREAD_LIST_THREAD",
 				value1 = "${threadSubject}");
 		}
@@ -532,7 +532,7 @@ definition {
 	macro lockPG {
 		var key_threadSubject = "${threadSubject}";
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
 
@@ -621,7 +621,7 @@ definition {
 	}
 
 	macro moveToRecycleBinCP {
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			key_threadSubject = "${threadSubject}",
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
@@ -664,7 +664,7 @@ definition {
 
 	macro replyPG {
 		if ("${displayStyle}" == "Question") {
-			AssertClick(
+			AssertClick.assertPartialTextClickAt(
 				key_threadSubject = "${threadSubject}",
 				locator1 = "MessageBoards#QUESTION_CATEGORY_THREAD_TABLE_QUESTION",
 				value1 = "${threadSubject}");
@@ -672,7 +672,7 @@ definition {
 		else {
 			var key_threadSubject = "${threadSubject}";
 
-			AssertClick(
+			AssertClick.assertPartialTextClickAt(
 				locator1 = "MessageBoards#THREAD_LIST_THREAD",
 				value1 = "${threadSubject}");
 		}
@@ -720,7 +720,7 @@ definition {
 	macro replyWithAttachmentPG {
 		var key_threadSubject = "${threadSubject}";
 
-		AssertClick(
+		AssertClick.assertPartialTextClickAt(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
 
@@ -905,7 +905,7 @@ definition {
 	macro unlockPG {
 		var key_threadSubject = "${threadSubject}";
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
 
@@ -936,7 +936,7 @@ definition {
 			locator1 = "MessageBoards#THREAD_LIST_ANSWER",
 			value1 = "${answerCount} Answer");
 
-		AssertClick(
+		AssertClick.assertPartialTextClickAt(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
 
@@ -983,7 +983,7 @@ definition {
 		var key_threadSubject = "${threadSubject}";
 		var key_userName = "${userName}";
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
 
@@ -1017,7 +1017,7 @@ definition {
 			AssertElementPresent(locator1 = "MessageBoards#THREAD_LIST_ACTIONS");
 		}
 
-		AssertClick(
+		AssertClick.assertPartialTextClickAt(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
 
@@ -1093,7 +1093,7 @@ definition {
 		var key_threadStatus = "Locked";
 		var key_threadSubject = "${threadSubject}";
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
 
@@ -1101,7 +1101,7 @@ definition {
 			locator1 = "MessageBoards#THREAD_LIST_STATUS",
 			value1 = "Locked");
 
-		AssertClick(
+		AssertClick.assertPartialTextClickAt(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
 
@@ -1171,7 +1171,7 @@ definition {
 		var key_threadSubject = "${threadSubject}";
 
 		if (isSet(unReadMBthread)) {
-			AssertTextEquals(
+			AssertTextEquals.assertPartialText(
 				locator1 = "MessageBoards#THREAD_LIST_THREAD_UNREAD",
 				value1 = "${threadSubject}");
 		}
@@ -1348,7 +1348,7 @@ definition {
 		var key_threadSubject = "${threadSubject}";
 		var key_userName = "${userName}";
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
 
@@ -1365,12 +1365,12 @@ definition {
 				locator1 = "MessageBoards#THREAD_LIST_LAST_POST",
 				value1 = "Anonymous");
 
-			AssertClick(
+			AssertClick.assertPartialTextClickAt(
 				locator1 = "MessageBoards#THREAD_LIST_THREAD",
 				value1 = "${threadSubject}");
 		}
 		else {
-			AssertClick(
+			AssertClick.assertPartialTextClickAt(
 				locator1 = "MessageBoards#THREAD_LIST_THREAD",
 				value1 = "${threadSubject}");
 		}
@@ -1453,7 +1453,7 @@ definition {
 		var key_threadSubject = "${threadSubject}";
 		var key_userName = "${userName}";
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
 
@@ -1461,7 +1461,7 @@ definition {
 			locator1 = "MessageBoards#THREAD_LIST_REPLIES",
 			value1 = "1");
 
-		AssertClick(
+		AssertClick.assertPartialTextClickAt(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
 
@@ -1494,7 +1494,7 @@ definition {
 		var key_threadBody = "${threadReplyBody}";
 		var key_threadSubject = "${threadSplitSubject}";
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSplitSubject}");
 
@@ -1502,7 +1502,7 @@ definition {
 			locator1 = "MessageBoards#THREAD_LIST_REPLIES",
 			value1 = "0");
 
-		AssertClick(
+		AssertClick.assertPartialTextClickAt(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSplitSubject}");
 
@@ -1635,7 +1635,7 @@ definition {
 
 		AssertElementPresent(locator1 = "MessageBoards#THREAD_LIST_LAST_POST");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
 
@@ -1649,7 +1649,7 @@ definition {
 			locator1 = "MessageBoards#NAVIGATION_MY_POSTS",
 			value1 = "My Posts");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
 
@@ -1657,7 +1657,7 @@ definition {
 			locator1 = "MessageBoardsThread#MESSAGE_WORKFLOW_STATUS_1",
 			value1 = "Pending (${workflowTask})");
 
-		AssertClick(
+		AssertClick.assertPartialTextClickAt(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "${threadSubject}");
 

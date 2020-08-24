@@ -253,7 +253,7 @@ public class JournalTranslateDisplayContext {
 
 	public boolean isPublishButtonDisabled() throws PortalException {
 		if (_journalEditArticleDisplayContext.isPending() ||
-			_isAvailableTargetLanguageIdsEmpty()) {
+			isAvailableTargetLanguageIdsEmpty()) {
 
 			return true;
 		}
@@ -262,10 +262,10 @@ public class JournalTranslateDisplayContext {
 	}
 
 	public boolean isSaveButtonDisabled() throws PortalException {
-		return _isAvailableTargetLanguageIdsEmpty();
+		return isAvailableTargetLanguageIdsEmpty();
 	}
 
-	private boolean _isAvailableTargetLanguageIdsEmpty() {
+	public boolean isAvailableTargetLanguageIdsEmpty() {
 		List<String> availableTargetLanguageIds =
 			(List<String>)_httpServletRequest.getAttribute(
 				JournalWebConstants.AVAILABLE_TARGET_LANGUAGE_IDS);

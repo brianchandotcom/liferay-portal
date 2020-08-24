@@ -61,6 +61,16 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 		cssClass="container-view"
 	>
 		<div class="sheet translate-body-form">
+
+			<c:choose>
+				<c:when test="<%= journalTranslateDisplayContext.isAvailableTargetLanguageIdsEmpty() %>">
+					<clay:alert
+						message="you-do-not-have-permissions-to-translate-to-any-of-the-available-languages"
+					/>
+				</c:when>
+				<c:otherwise>
+
+
 			<clay:row>
 				<clay:col
 					md="6"
@@ -194,6 +204,9 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 				}
 			}
 			%>
+
+				</c:otherwise>
+			</c:choose>
 
 		</div>
 	</clay:container-fluid>

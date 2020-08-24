@@ -1195,10 +1195,6 @@ public class KaleoTaskAssignmentInstanceModelImpl
 	private boolean _completed;
 	private Date _completionDate;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
 		Function<KaleoTaskAssignmentInstance, Object> function =
 			_attributeGetterFunctions.get(columnName);
@@ -1251,10 +1247,16 @@ public class KaleoTaskAssignmentInstanceModelImpl
 		_columnOriginalValues.put("completionDate", _completionDate);
 	}
 
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("mvccVersion", 1L);
 
@@ -1297,7 +1299,6 @@ public class KaleoTaskAssignmentInstanceModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private KaleoTaskAssignmentInstance _escapedModel;
 

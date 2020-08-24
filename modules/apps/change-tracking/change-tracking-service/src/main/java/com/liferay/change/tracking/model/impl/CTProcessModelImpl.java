@@ -727,10 +727,6 @@ public class CTProcessModelImpl
 	private long _ctCollectionId;
 	private long _backgroundTaskId;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
 		Function<CTProcess, Object> function = _attributeGetterFunctions.get(
 			columnName);
@@ -767,10 +763,16 @@ public class CTProcessModelImpl
 		_columnOriginalValues.put("backgroundTaskId", _backgroundTaskId);
 	}
 
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("mvccVersion", 1L);
 
@@ -789,7 +791,6 @@ public class CTProcessModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CTProcess _escapedModel;
 

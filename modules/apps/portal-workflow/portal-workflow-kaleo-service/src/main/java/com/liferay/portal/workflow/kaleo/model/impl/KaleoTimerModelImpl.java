@@ -1064,10 +1064,6 @@ public class KaleoTimerModelImpl
 	private double _recurrenceDuration;
 	private String _recurrenceScale;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
 		Function<KaleoTimer, Object> function = _attributeGetterFunctions.get(
 			columnName);
@@ -1117,10 +1113,16 @@ public class KaleoTimerModelImpl
 		_columnOriginalValues.put("recurrenceScale", _recurrenceScale);
 	}
 
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("mvccVersion", 1L);
 
@@ -1163,7 +1165,6 @@ public class KaleoTimerModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private KaleoTimer _escapedModel;
 

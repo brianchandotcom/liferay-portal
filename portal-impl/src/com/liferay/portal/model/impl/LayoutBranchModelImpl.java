@@ -901,10 +901,6 @@ public class LayoutBranchModelImpl
 	private String _description;
 	private boolean _master;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
 		Function<LayoutBranch, Object> function = _attributeGetterFunctions.get(
 			columnName);
@@ -945,10 +941,16 @@ public class LayoutBranchModelImpl
 		_columnOriginalValues.put("master", _master);
 	}
 
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("mvccVersion", 1L);
 
@@ -975,7 +977,6 @@ public class LayoutBranchModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private LayoutBranch _escapedModel;
 

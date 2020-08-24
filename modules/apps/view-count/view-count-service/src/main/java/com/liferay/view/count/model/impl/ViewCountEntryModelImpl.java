@@ -557,10 +557,6 @@ public class ViewCountEntryModelImpl
 	private long _classPK;
 	private long _viewCount;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
 		Function<ViewCountEntry, Object> function =
 			_attributeGetterFunctions.get(columnName);
@@ -594,10 +590,16 @@ public class ViewCountEntryModelImpl
 		_columnOriginalValues.put("viewCount", _viewCount);
 	}
 
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("companyId", 1L);
 
@@ -610,7 +612,6 @@ public class ViewCountEntryModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private ViewCountEntry _escapedModel;
 

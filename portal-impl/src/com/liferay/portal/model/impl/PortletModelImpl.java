@@ -700,14 +700,8 @@ public class PortletModelImpl
 	private String _roles;
 	private boolean _active;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
-		if (_attributeNames.containsKey(columnName)) {
-			columnName = _attributeNames.get(columnName);
-		}
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<Portlet, Object> function = _attributeGetterFunctions.get(
 			columnName);
@@ -743,11 +737,27 @@ public class PortletModelImpl
 		_columnOriginalValues.put("active_", _active);
 	}
 
-	private static final Map<String, Long> _columnBitmasks;
 	private static final Map<String, String> _attributeNames;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("id_", "id");
+		attributeNames.put("active_", "active");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("mvccVersion", 1L);
 
@@ -762,16 +772,8 @@ public class PortletModelImpl
 		columnBitmasks.put("active_", 32L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
-
-		Map<String, String> attributeNames = new LinkedHashMap<>();
-
-		attributeNames.put("id_", "id");
-		attributeNames.put("active_", "active");
-
-		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private Portlet _escapedModel;
 

@@ -1064,14 +1064,8 @@ public class SamlSpSessionModelImpl
 	private String _sessionIndex;
 	private boolean _terminated;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
-		if (_attributeNames.containsKey(columnName)) {
-			columnName = _attributeNames.get(columnName);
-		}
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<SamlSpSession, Object> function =
 			_attributeGetterFunctions.get(columnName);
@@ -1118,11 +1112,26 @@ public class SamlSpSessionModelImpl
 		_columnOriginalValues.put("terminated_", _terminated);
 	}
 
-	private static final Map<String, Long> _columnBitmasks;
 	private static final Map<String, String> _attributeNames;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("terminated_", "terminated");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("samlSpSessionId", 1L);
 
@@ -1157,15 +1166,8 @@ public class SamlSpSessionModelImpl
 		columnBitmasks.put("terminated_", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
-
-		Map<String, String> attributeNames = new LinkedHashMap<>();
-
-		attributeNames.put("terminated_", "terminated");
-
-		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private SamlSpSession _escapedModel;
 

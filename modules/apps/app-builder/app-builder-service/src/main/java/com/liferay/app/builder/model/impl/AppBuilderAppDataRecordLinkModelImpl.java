@@ -662,10 +662,6 @@ public class AppBuilderAppDataRecordLinkModelImpl
 	private long _appBuilderAppVersionId;
 	private long _ddlRecordId;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
 		Function<AppBuilderAppDataRecordLink, Object> function =
 			_attributeGetterFunctions.get(columnName);
@@ -703,10 +699,16 @@ public class AppBuilderAppDataRecordLinkModelImpl
 		_columnOriginalValues.put("ddlRecordId", _ddlRecordId);
 	}
 
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("appBuilderAppDataRecordLinkId", 1L);
 
@@ -723,7 +725,6 @@ public class AppBuilderAppDataRecordLinkModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private AppBuilderAppDataRecordLink _escapedModel;
 

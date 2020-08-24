@@ -1042,14 +1042,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	private long _typeId;
 	private boolean _primary;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
-		if (_attributeNames.containsKey(columnName)) {
-			columnName = _attributeNames.get(columnName);
-		}
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<Phone, Object> function = _attributeGetterFunctions.get(
 			columnName);
@@ -1093,11 +1087,28 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		_columnOriginalValues.put("primary_", _primary);
 	}
 
-	private static final Map<String, Long> _columnBitmasks;
 	private static final Map<String, String> _attributeNames;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("uuid_", "uuid");
+		attributeNames.put("number_", "number");
+		attributeNames.put("primary_", "primary");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("mvccVersion", 1L);
 
@@ -1128,17 +1139,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		columnBitmasks.put("primary_", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
-
-		Map<String, String> attributeNames = new LinkedHashMap<>();
-
-		attributeNames.put("uuid_", "uuid");
-		attributeNames.put("number_", "number");
-		attributeNames.put("primary_", "primary");
-
-		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private Phone _escapedModel;
 

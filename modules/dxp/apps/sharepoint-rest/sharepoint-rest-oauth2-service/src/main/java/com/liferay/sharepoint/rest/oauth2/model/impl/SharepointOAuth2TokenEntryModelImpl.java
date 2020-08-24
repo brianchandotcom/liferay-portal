@@ -818,10 +818,6 @@ public class SharepointOAuth2TokenEntryModelImpl
 	private Date _expirationDate;
 	private String _refreshToken;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
 		Function<SharepointOAuth2TokenEntry, Object> function =
 			_attributeGetterFunctions.get(columnName);
@@ -861,10 +857,16 @@ public class SharepointOAuth2TokenEntryModelImpl
 		_columnOriginalValues.put("refreshToken", _refreshToken);
 	}
 
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("sharepointOAuth2TokenEntryId", 1L);
 
@@ -887,7 +889,6 @@ public class SharepointOAuth2TokenEntryModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private SharepointOAuth2TokenEntry _escapedModel;
 

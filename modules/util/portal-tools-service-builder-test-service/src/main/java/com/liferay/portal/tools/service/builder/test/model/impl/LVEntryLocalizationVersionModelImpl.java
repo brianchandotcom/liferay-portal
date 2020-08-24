@@ -819,10 +819,6 @@ public class LVEntryLocalizationVersionModelImpl
 	private String _title;
 	private String _content;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
 		Function<LVEntryLocalizationVersion, Object> function =
 			_attributeGetterFunctions.get(columnName);
@@ -862,10 +858,16 @@ public class LVEntryLocalizationVersionModelImpl
 		_columnOriginalValues.put("content", _content);
 	}
 
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("lvEntryLocalizationVersionId", 1L);
 
@@ -886,7 +888,6 @@ public class LVEntryLocalizationVersionModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private LVEntryLocalizationVersion _escapedModel;
 

@@ -1203,14 +1203,8 @@ public class OAuth2AuthorizationModelImpl
 	private Date _refreshTokenCreateDate;
 	private Date _refreshTokenExpirationDate;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
-		if (_attributeNames.containsKey(columnName)) {
-			columnName = _attributeNames.get(columnName);
-		}
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<OAuth2Authorization, Object> function =
 			_attributeGetterFunctions.get(columnName);
@@ -1265,11 +1259,27 @@ public class OAuth2AuthorizationModelImpl
 			"refreshTokenExpirationDate", _refreshTokenExpirationDate);
 	}
 
-	private static final Map<String, Long> _columnBitmasks;
 	private static final Map<String, String> _attributeNames;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put(
+			"oA2AScopeAliasesId", "oAuth2ApplicationScopeAliasesId");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("oAuth2AuthorizationId", 1L);
 
@@ -1306,16 +1316,8 @@ public class OAuth2AuthorizationModelImpl
 		columnBitmasks.put("refreshTokenExpirationDate", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
-
-		Map<String, String> attributeNames = new LinkedHashMap<>();
-
-		attributeNames.put(
-			"oA2AScopeAliasesId", "oAuth2ApplicationScopeAliasesId");
-
-		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private OAuth2Authorization _escapedModel;
 

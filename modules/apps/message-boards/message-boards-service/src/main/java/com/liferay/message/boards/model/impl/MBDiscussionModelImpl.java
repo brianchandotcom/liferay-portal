@@ -971,14 +971,8 @@ public class MBDiscussionModelImpl
 	private long _threadId;
 	private Date _lastPublishDate;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
-		if (_attributeNames.containsKey(columnName)) {
-			columnName = _attributeNames.get(columnName);
-		}
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<MBDiscussion, Object> function = _attributeGetterFunctions.get(
 			columnName);
@@ -1022,11 +1016,26 @@ public class MBDiscussionModelImpl
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 	}
 
-	private static final Map<String, Long> _columnBitmasks;
 	private static final Map<String, String> _attributeNames;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("uuid_", "uuid");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("mvccVersion", 1L);
 
@@ -1057,15 +1066,8 @@ public class MBDiscussionModelImpl
 		columnBitmasks.put("lastPublishDate", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
-
-		Map<String, String> attributeNames = new LinkedHashMap<>();
-
-		attributeNames.put("uuid_", "uuid");
-
-		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private MBDiscussion _escapedModel;
 

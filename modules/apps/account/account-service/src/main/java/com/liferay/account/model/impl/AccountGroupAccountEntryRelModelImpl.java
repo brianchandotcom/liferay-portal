@@ -697,10 +697,6 @@ public class AccountGroupAccountEntryRelModelImpl
 	private long _accountGroupId;
 	private long _accountEntryId;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
 		Function<AccountGroupAccountEntryRel, Object> function =
 			_attributeGetterFunctions.get(columnName);
@@ -736,10 +732,16 @@ public class AccountGroupAccountEntryRelModelImpl
 		_columnOriginalValues.put("accountEntryId", _accountEntryId);
 	}
 
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("mvccVersion", 1L);
 
@@ -754,7 +756,6 @@ public class AccountGroupAccountEntryRelModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private AccountGroupAccountEntryRel _escapedModel;
 

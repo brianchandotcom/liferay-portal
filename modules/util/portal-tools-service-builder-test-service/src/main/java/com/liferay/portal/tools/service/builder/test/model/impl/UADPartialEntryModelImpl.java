@@ -650,10 +650,6 @@ public class UADPartialEntryModelImpl
 	private String _userName;
 	private String _message;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
 		Function<UADPartialEntry, Object> function =
 			_attributeGetterFunctions.get(columnName);
@@ -687,10 +683,16 @@ public class UADPartialEntryModelImpl
 		_columnOriginalValues.put("message", _message);
 	}
 
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("uadPartialEntryId", 1L);
 
@@ -703,7 +705,6 @@ public class UADPartialEntryModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private UADPartialEntry _escapedModel;
 

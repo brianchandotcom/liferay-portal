@@ -667,10 +667,6 @@ public class ExpandoTableModelImpl
 	private long _classNameId;
 	private String _name;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
 		Function<ExpandoTable, Object> function = _attributeGetterFunctions.get(
 			columnName);
@@ -706,10 +702,16 @@ public class ExpandoTableModelImpl
 		_columnOriginalValues.put("name", _name);
 	}
 
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("mvccVersion", 1L);
 
@@ -726,7 +728,6 @@ public class ExpandoTableModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private ExpandoTable _escapedModel;
 

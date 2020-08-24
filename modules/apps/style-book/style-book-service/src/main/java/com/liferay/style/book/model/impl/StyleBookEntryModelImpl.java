@@ -1064,10 +1064,6 @@ public class StyleBookEntryModelImpl
 	private long _previewFileEntryId;
 	private String _styleBookEntryKey;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
 		if (columnName.equals("head")) {
 			return (T)(Object)getHead();
@@ -1117,10 +1113,16 @@ public class StyleBookEntryModelImpl
 		_columnOriginalValues.put("styleBookEntryKey", _styleBookEntryKey);
 	}
 
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("mvccVersion", 1L);
 
@@ -1153,7 +1155,6 @@ public class StyleBookEntryModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private StyleBookEntry _escapedModel;
 

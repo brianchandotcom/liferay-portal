@@ -856,10 +856,6 @@ public class MFAEmailOTPEntryModelImpl
 	private Date _lastSuccessDate;
 	private String _lastSuccessIP;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
 		Function<MFAEmailOTPEntry, Object> function =
 			_attributeGetterFunctions.get(columnName);
@@ -901,10 +897,16 @@ public class MFAEmailOTPEntryModelImpl
 		_columnOriginalValues.put("lastSuccessIP", _lastSuccessIP);
 	}
 
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("mvccVersion", 1L);
 
@@ -933,7 +935,6 @@ public class MFAEmailOTPEntryModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private MFAEmailOTPEntry _escapedModel;
 

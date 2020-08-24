@@ -820,10 +820,6 @@ public class ChangesetCollectionModelImpl
 	private String _name;
 	private String _description;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
 		Function<ChangesetCollection, Object> function =
 			_attributeGetterFunctions.get(columnName);
@@ -863,10 +859,16 @@ public class ChangesetCollectionModelImpl
 		_columnOriginalValues.put("description", _description);
 	}
 
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("changesetCollectionId", 1L);
 
@@ -889,7 +891,6 @@ public class ChangesetCollectionModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private ChangesetCollection _escapedModel;
 

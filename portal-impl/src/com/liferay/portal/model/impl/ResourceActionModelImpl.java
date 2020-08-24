@@ -640,10 +640,6 @@ public class ResourceActionModelImpl
 	private String _actionId;
 	private long _bitwiseValue;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
 		Function<ResourceAction, Object> function =
 			_attributeGetterFunctions.get(columnName);
@@ -678,10 +674,16 @@ public class ResourceActionModelImpl
 		_columnOriginalValues.put("bitwiseValue", _bitwiseValue);
 	}
 
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("mvccVersion", 1L);
 
@@ -696,7 +698,6 @@ public class ResourceActionModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private ResourceAction _escapedModel;
 

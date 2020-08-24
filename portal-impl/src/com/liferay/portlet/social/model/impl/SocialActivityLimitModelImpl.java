@@ -898,10 +898,6 @@ public class SocialActivityLimitModelImpl
 	private String _activityCounterName;
 	private String _value;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
 		Function<SocialActivityLimit, Object> function =
 			_attributeGetterFunctions.get(columnName);
@@ -942,10 +938,16 @@ public class SocialActivityLimitModelImpl
 		_columnOriginalValues.put("value", _value);
 	}
 
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("mvccVersion", 1L);
 
@@ -972,7 +974,6 @@ public class SocialActivityLimitModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private SocialActivityLimit _escapedModel;
 

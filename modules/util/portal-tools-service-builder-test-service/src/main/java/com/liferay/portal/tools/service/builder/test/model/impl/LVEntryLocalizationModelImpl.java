@@ -801,10 +801,6 @@ public class LVEntryLocalizationModelImpl
 	private String _title;
 	private String _content;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
 		if (columnName.equals("head")) {
 			return (T)(Object)getHead();
@@ -848,10 +844,16 @@ public class LVEntryLocalizationModelImpl
 		_columnOriginalValues.put("content", _content);
 	}
 
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("mvccVersion", 1L);
 
@@ -874,7 +876,6 @@ public class LVEntryLocalizationModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private LVEntryLocalization _escapedModel;
 

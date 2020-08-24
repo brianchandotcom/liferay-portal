@@ -702,14 +702,8 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 	private Date _createDate;
 	private long _oAuth2ApplicationId;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
-		if (_attributeNames.containsKey(columnName)) {
-			columnName = _attributeNames.get(columnName);
-		}
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
 		Function<OAuth2ApplicationScopeAliases, Object> function =
 			_attributeGetterFunctions.get(columnName);
@@ -746,11 +740,27 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 		_columnOriginalValues.put("oAuth2ApplicationId", _oAuth2ApplicationId);
 	}
 
-	private static final Map<String, Long> _columnBitmasks;
 	private static final Map<String, String> _attributeNames;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put(
+			"oA2AScopeAliasesId", "oAuth2ApplicationScopeAliasesId");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("oA2AScopeAliasesId", 1L);
 
@@ -765,16 +775,8 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 		columnBitmasks.put("oAuth2ApplicationId", 32L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
-
-		Map<String, String> attributeNames = new LinkedHashMap<>();
-
-		attributeNames.put(
-			"oA2AScopeAliasesId", "oAuth2ApplicationScopeAliasesId");
-
-		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private OAuth2ApplicationScopeAliases _escapedModel;
 

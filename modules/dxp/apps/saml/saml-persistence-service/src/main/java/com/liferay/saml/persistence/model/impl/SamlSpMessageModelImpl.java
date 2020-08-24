@@ -678,10 +678,6 @@ public class SamlSpMessageModelImpl
 	private String _samlIdpResponseKey;
 	private Date _expirationDate;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
-	}
-
 	public <T> T getColumnValue(String columnName) {
 		Function<SamlSpMessage, Object> function =
 			_attributeGetterFunctions.get(columnName);
@@ -717,10 +713,16 @@ public class SamlSpMessageModelImpl
 		_columnOriginalValues.put("expirationDate", _expirationDate);
 	}
 
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("samlSpMessageId", 1L);
 
@@ -737,7 +739,6 @@ public class SamlSpMessageModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private SamlSpMessage _escapedModel;
 

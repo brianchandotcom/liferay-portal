@@ -19,15 +19,26 @@ import com.liferay.portal.kernel.model.User;
 
 import java.util.List;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Rachael Koestartyo
  */
+@ProviderType
 public interface EntityModelListener<T extends BaseModel<T>> {
 
 	public void addAnalyticsMessage(
 		String eventType, List<String> includeAttributeNames, T model);
 
-	public List<String> getAttributeNames();
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getAttributeNames(long)}
+	 */
+	@Deprecated
+	public default List<String> getAttributeNames() {
+		return null;
+	}
+
+	public List<String> getAttributeNames(long companyId);
 
 	public long[] getMembershipIds(User user) throws Exception;
 

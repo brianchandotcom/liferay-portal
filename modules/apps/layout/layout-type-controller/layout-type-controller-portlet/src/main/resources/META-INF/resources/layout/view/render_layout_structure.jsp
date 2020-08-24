@@ -119,11 +119,9 @@ for (String childrenItemId : childrenItemIds) {
 			String containerLinkHref = portletLayoutDisplayContext.getContainerLinkHref(containerStyledLayoutStructureItem, request.getAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT));
 			%>
 
-			<c:choose>
-				<c:when test="<%= Validator.isNotNull(containerLinkHref) %>">
-					<a href="<%= containerLinkHref %>" style="color: inherit; text-decoration: none;" target="<%= portletLayoutDisplayContext.getContainerLinkTarget(containerStyledLayoutStructureItem) %>">
-				</c:when>
-			</c:choose>
+			<c:if test="<%= Validator.isNotNull(containerLinkHref) %>">
+				<a href="<%= containerLinkHref %>" style="color: inherit; text-decoration: none;" target="<%= portletLayoutDisplayContext.getContainerLinkTarget(containerStyledLayoutStructureItem) %>">
+			</c:if>
 
 			<%
 			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
@@ -131,11 +129,9 @@ for (String childrenItemId : childrenItemIds) {
 
 			<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
 
-			<c:choose>
-				<c:when test="<%= Validator.isNotNull(containerLinkHref) %>">
-					</a>
-				</c:when>
-			</c:choose>
+			<c:if test="<%= Validator.isNotNull(containerLinkHref) %>">
+				</a>
+			</c:if>
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof DropZoneLayoutStructureItem %>">
 

@@ -101,7 +101,7 @@ public class ExpandoRowModelListener
 
 			if (user != null) {
 				JSONObject jsonObject = super.serialize(
-					user, getUserAttributeNames());
+					user, getUserAttributeNames(user.getCompanyId()));
 
 				jsonObject.remove(getPrimaryKeyName());
 

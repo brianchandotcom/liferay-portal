@@ -33,7 +33,7 @@ public class UserModelListener extends BaseEntityModelListener<User> {
 
 	@Override
 	public List<String> getAttributeNames(long companyId) {
-		return getUserAttributeNames();
+		return getUserAttributeNames(companyId);
 	}
 
 	@Override

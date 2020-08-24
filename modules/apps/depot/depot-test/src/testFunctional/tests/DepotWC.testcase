@@ -182,6 +182,7 @@ definition {
 		NavItem.gotoStructures();
 
 		WebContentStructures.editSubstructureDefaultValuesCP(
+			depotName = "test-depot-name",
 			editSubstructureFieldNames = "Text",
 			substructureName = "WC Structure Name");
 	}

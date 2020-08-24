@@ -15,14 +15,13 @@
 import {render, useThunk} from 'frontend-js-react-web';
 import React, {useReducer} from 'react';
 
+import {AppContext} from './AppContext';
 import DataSetDisplay from './DataSetDisplay';
-import {initializeConfig} from './config';
 import ViewsContext, {viewsReducer} from './views/ViewsContext';
 
-const App = ({apiURL, appURL, ...props}) => {
+const App = ({apiURL, appURL, portletId, ...props}) => {
 	const {
 		activeViewSettings: {name: activeViewName, visibleFieldNames = {}},
-		portletId,
 		views,
 	} = props;
 	const activeView = activeViewName
@@ -36,12 +35,12 @@ const App = ({apiURL, appURL, ...props}) => {
 		})
 	);
 
-	initializeConfig({apiURL, appURL, portletId});
-
 	return (
-		<ViewsContext.Provider value={[state, dispatch]}>
-			<DataSetDisplay {...props} />
-		</ViewsContext.Provider>
+		<AppContext.Provider value={{apiURL, appURL, portletId}}>
+			<ViewsContext.Provider value={[state, dispatch]}>
+				<DataSetDisplay {...props} />
+			</ViewsContext.Provider>
+		</AppContext.Provider>
 	);
 };
 

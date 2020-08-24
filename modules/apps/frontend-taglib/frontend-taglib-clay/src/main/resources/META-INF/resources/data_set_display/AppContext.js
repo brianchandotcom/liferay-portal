@@ -12,14 +12,10 @@
  * details.
  */
 
-export let config = {};
+import React from 'react';
 
-export function initializeConfig({apiURL, appURL, portletId}) {
-	config = {
-		apiURL,
-		appURL,
-		portletId,
-	};
-
-	return config;
-}
+export const AppContext = React.createContext({
+	apiURL: null,
+	appURL: null,
+	portletId: null,
+});

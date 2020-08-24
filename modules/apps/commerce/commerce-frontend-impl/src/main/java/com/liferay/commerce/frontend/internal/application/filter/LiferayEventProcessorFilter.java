@@ -28,6 +28,7 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.PreMatching;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.ext.Provider;
 
 import org.apache.struts.Globals;
 
@@ -41,11 +42,12 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=CommerceUi.Application)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Filter.LiferayEventProcessorFilter"
+		"osgi.jaxrs.name=Commerce.Filter.LiferayEventProcessorFilter"
 	},
 	service = ContainerRequestFilter.class
 )
 @PreMatching
+@Provider
 public class LiferayEventProcessorFilter implements ContainerRequestFilter {
 
 	@Override

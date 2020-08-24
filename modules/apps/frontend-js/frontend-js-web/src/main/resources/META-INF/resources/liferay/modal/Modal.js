@@ -113,6 +113,7 @@ const openSelectionModal = ({
 	selectedData,
 	title,
 	url,
+	zIndex,
 }) => {
 	let selectedItem;
 
@@ -186,6 +187,7 @@ const openSelectionModal = ({
 		},
 		title,
 		url,
+		zIndex,
 	});
 };
 
@@ -203,6 +205,7 @@ const Modal = ({
 	size,
 	title,
 	url,
+	zIndex,
 }) => {
 	const [loading, setLoading] = useState(true);
 	const [visible, setVisible] = useState(true);
@@ -337,6 +340,7 @@ const Modal = ({
 					id={id}
 					observer={observer}
 					size={url && !size ? 'full-screen' : size}
+					zIndex={zIndex}
 				>
 					<ClayModal.Header>
 						{headerHTML ? (

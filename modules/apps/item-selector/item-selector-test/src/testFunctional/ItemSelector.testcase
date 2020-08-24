@@ -135,6 +135,49 @@ definition {
 		NavigationMenusAdmin.viewItem(itemName = "Test Page Name 2");
 	}
 
+	@description = "This test ensures that documents can filter by the current site in the item selector."
+	@priority = "5"
+	test FilterByCurrentSite {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsNavigator.gotoSelectFile();
+
+		ItemSelector.viewCurrentSiteFilter(
+			imageFileName = "Document_2.jpg",
+			navTab = "Documents and Media",
+			noImageFileName = "Document_1.jpg");
+	}
+
 	@description = "This ensures that the background image of a fragment can be added."
 	@priority = "5"
 	test FragmentSmoke {

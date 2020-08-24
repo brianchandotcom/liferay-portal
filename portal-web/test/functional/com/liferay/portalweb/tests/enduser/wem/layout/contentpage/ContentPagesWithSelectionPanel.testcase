@@ -157,4 +157,85 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-118271. Can add elements into Layout elements via Selection panel."
+	@priority = "5"
+	test MoveElementsIntoLayoutElementsViaSelectionPanel {
+		task ("Add a Container element to the page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
+
+		task ("Add a Button fragment below the Container") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				targetFragmentName = "Container");
+		}
+
+		task ("Add a Grid element below the Button") {
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid",
+				targetFragmentName = "Button");
+		}
+
+		task ("Add an Asset Publisher portlet below the Grid") {
+			PageEditor.addWidget(
+				portletName = "Asset Publisher",
+				targetFragmentName = "Grid");
+		}
+
+		task ("Assert the order of elements in page editor") {
+			var n = "1";
+
+			for (var fragmentName : list "Container,Button,Grid,Asset Publisher") {
+				PageEditor.viewFragmentOrder(
+					fragmentName = "${fragmentName}",
+					position = "${n}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Move the Button into the Container via the Selection panel") {
+			PageEditor.gotoTab(tabName = "Selection");
+
+			Pause(locator1 = "3000");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Button')]//button[contains(@class,'tree-node')][@draggable='true']",
+				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Container')]//button[contains(@class,'tree-node')][@draggable='true']");
+
+			Pause(locator1 = "3000");
+
+			AssertElementPresent(
+				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Button')]",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+		}
+
+		task ("Move the Asset Publisher into the first module of Grid via the Selection panel") {
+			Click(
+				key_nodeName = "Grid",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Asset Publisher')]//button[contains(@class,'tree-node')][@draggable='true']",
+				locator2 = "//div[contains(@class,'treeview-node-list')][@role='group']/div[contains(@role,'treeitem')][1]//button[contains(@aria-label,'Module')]");
+
+			Pause(locator1 = "3000");
+
+			AssertElementPresent(
+				key_columnNumber = "1",
+				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Asset Publisher')]",
+				key_position = "1",
+				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
+		}
+	}
+
 }

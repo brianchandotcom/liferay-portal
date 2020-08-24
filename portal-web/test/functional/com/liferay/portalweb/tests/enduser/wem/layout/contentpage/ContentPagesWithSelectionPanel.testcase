@@ -238,4 +238,59 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-118271. Can add fragments into the cell of Collection Display via Selection panel."
+	@priority = "5"
+	test MoveFragmentsIntoCollectionDisplayViaSelectionPanel {
+		task ("Add three web content articles") {
+			for (var i : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content ${i}",
+					groupName = "Test Site Name",
+					title = "Web Content Title ${i}");
+			}
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Add a Heading fragment below the Collection Display") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Collection Display");
+		}
+
+		task ("Select the Highest Rated Assets Collection Providers in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Highest Rated Assets");
+		}
+
+		task ("Move the Heading fragment to the cell of Collection Display via Selection panel") {
+			Pause(locator1 = "3000");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Heading')]//button[contains(@class,'tree-node')][@draggable='true']",
+				locator2 = "//div[contains(@class,'treeview-node-list')][@role='group']/div[contains(@role,'treeitem')]//button[contains(@aria-label,'Collection Item')]");
+
+			Pause(locator1 = "3000");
+
+			for (var n : list "1,2,3") {
+				AssertElementPresent(
+					key_colPosition = "1",
+					key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+			}
+		}
+	}
+
 }

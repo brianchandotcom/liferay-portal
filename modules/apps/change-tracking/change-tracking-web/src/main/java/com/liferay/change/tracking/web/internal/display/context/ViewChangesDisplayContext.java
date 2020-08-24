@@ -237,29 +237,6 @@ public class ViewChangesDisplayContext {
 
 		Set<Long> rootClassNameIds = _getRootClassNameIds(ctClosure);
 
-		JSONObject siteNamesJSONObject = JSONFactoryUtil.createJSONObject();
-
-		for (ModelInfo modelInfo : modelInfoMap.values()) {
-			long groupId = modelInfo._jsonObject.getLong("groupId");
-
-			String groupIdString = String.valueOf(groupId);
-
-			if (!siteNamesJSONObject.has(groupIdString)) {
-				Group group = _groupLocalService.fetchGroup(groupId);
-
-				if (group == null) {
-					siteNamesJSONObject.put(
-						groupIdString,
-						_language.get(_themeDisplay.getLocale(), "global"));
-				}
-				else {
-					siteNamesJSONObject.put(
-						groupIdString,
-						group.getName(_themeDisplay.getLocale()));
-				}
-			}
-		}
-
 		return HashMapBuilder.<String, Object>put(
 			"activeCTCollection",
 			_ctCollection.getCtCollectionId() == _activeCTCollectionId
@@ -354,7 +331,35 @@ public class ViewChangesDisplayContext {
 				return rootDisplayClassesJSONArray;
 			}
 		).put(
-			"siteNames", siteNamesJSONObject
+			"siteNames",
+			() -> {
+				JSONObject siteNamesJSONObject =
+					JSONFactoryUtil.createJSONObject();
+
+				for (ModelInfo modelInfo : modelInfoMap.values()) {
+					long groupId = modelInfo._jsonObject.getLong("groupId");
+
+					String groupIdString = String.valueOf(groupId);
+
+					if (!siteNamesJSONObject.has(groupIdString)) {
+						Group group = _groupLocalService.fetchGroup(groupId);
+
+						if (group == null) {
+							siteNamesJSONObject.put(
+								groupIdString,
+								_language.get(
+									_themeDisplay.getLocale(), "global"));
+						}
+						else {
+							siteNamesJSONObject.put(
+								groupIdString,
+								group.getName(_themeDisplay.getLocale()));
+						}
+					}
+				}
+
+				return siteNamesJSONObject;
+			}
 		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 		).put(

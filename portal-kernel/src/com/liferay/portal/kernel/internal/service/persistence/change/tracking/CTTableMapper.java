@@ -395,12 +395,12 @@ public class CTTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 				dataSource,
 				StringBundler.concat(
 					"SELECT DISTINCT (", leftColumnName, ") FROM ", tableName,
-					" WHERE (", rightColumnName, " = ? AND ", leftColumnName,
+					" WHERE ", rightColumnName, " = ? AND ((", leftColumnName,
 					" NOT IN (SELECT ", leftColumnName, " FROM ", tableName,
 					" WHERE ", rightColumnName, " = ? AND ctCollectionId = ? ",
 					"AND ctChangeType = ", db.getTemplateFalse(), ") AND ",
 					"ctCollectionId = 0) OR (ctCollectionId = ? AND ",
-					"ctChangeType = ", db.getTemplateTrue(), ")"),
+					"ctChangeType = ", db.getTemplateTrue(), "))"),
 				RowMapper.PRIMARY_KEY, ParamSetter.BIGINT, ParamSetter.BIGINT,
 				ParamSetter.BIGINT, ParamSetter.BIGINT);
 		_getCTRightPrimaryKeysSqlQuery =
@@ -408,12 +408,12 @@ public class CTTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 				dataSource,
 				StringBundler.concat(
 					"SELECT DISTINCT (", rightColumnName, ") FROM ", tableName,
-					" WHERE (", leftColumnName, " = ? AND ", rightColumnName,
+					" WHERE ", leftColumnName, " = ? AND ((", rightColumnName,
 					" NOT IN (SELECT ", rightColumnName, " FROM ", tableName,
 					" WHERE ", leftColumnName, " = ? AND ctCollectionId = ? ",
 					"AND ctChangeType = ", db.getTemplateFalse(), ") AND ",
 					"ctCollectionId = 0) OR (ctCollectionId = ? AND ",
-					"ctChangeType = ", db.getTemplateTrue(), ")"),
+					"ctChangeType = ", db.getTemplateTrue(), "))"),
 				RowMapper.PRIMARY_KEY, ParamSetter.BIGINT, ParamSetter.BIGINT,
 				ParamSetter.BIGINT, ParamSetter.BIGINT);
 

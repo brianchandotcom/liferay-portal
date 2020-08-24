@@ -2219,12 +2219,12 @@ public class CTTableMapperTest {
 			if (sql.equals(
 					StringBundler.concat(
 						"SELECT DISTINCT (", _LEFT_COLUMN_NAME, ") FROM ",
-						_TABLE_NAME, " WHERE (", _RIGHT_COLUMN_NAME,
-						" = ? AND ", _LEFT_COLUMN_NAME, " NOT IN (SELECT ",
+						_TABLE_NAME, " WHERE ", _RIGHT_COLUMN_NAME,
+						" = ? AND ((", _LEFT_COLUMN_NAME, " NOT IN (SELECT ",
 						_LEFT_COLUMN_NAME, " FROM ", _TABLE_NAME, " WHERE ",
 						_RIGHT_COLUMN_NAME, " = ? AND ctCollectionId = ? AND ",
 						"ctChangeType = false) AND ctCollectionId = 0) OR ",
-						"(ctCollectionId = ? AND ctChangeType = true)"))) {
+						"(ctCollectionId = ? AND ctChangeType = true))"))) {
 
 				return (MappingSqlQuery<T>)new MockGetCTLeftPrimaryKeysSqlQuery(
 					dataSource, RowMapper.PRIMARY_KEY, paramSetters);
@@ -2233,12 +2233,12 @@ public class CTTableMapperTest {
 			if (sql.equals(
 					StringBundler.concat(
 						"SELECT DISTINCT (", _RIGHT_COLUMN_NAME, ") FROM ",
-						_TABLE_NAME, " WHERE (", _LEFT_COLUMN_NAME, " = ? AND ",
-						_RIGHT_COLUMN_NAME, " NOT IN (SELECT ",
+						_TABLE_NAME, " WHERE ", _LEFT_COLUMN_NAME,
+						" = ? AND ((", _RIGHT_COLUMN_NAME, " NOT IN (SELECT ",
 						_RIGHT_COLUMN_NAME, " FROM ", _TABLE_NAME, " WHERE ",
 						_LEFT_COLUMN_NAME, " = ? AND ctCollectionId = ? AND ",
 						"ctChangeType = false) AND ctCollectionId = 0) OR ",
-						"(ctCollectionId = ? AND ctChangeType = true)"))) {
+						"(ctCollectionId = ? AND ctChangeType = true))"))) {
 
 				return (MappingSqlQuery<T>)
 					new MockGetCTRightPrimaryKeysSqlQuery(

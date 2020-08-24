@@ -422,7 +422,7 @@ public class CPDefinitionLocalServiceImpl
 
 			newAssetEntry.setClassPK(newCPDefinitionId);
 
-			assetEntryLocalService.updateAssetEntry(newAssetEntry);
+			assetEntryLocalService.addAssetEntry(newAssetEntry);
 		}
 
 		// CPDefinitionLocalization

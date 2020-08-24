@@ -316,7 +316,7 @@ definition {
 
 		AssetListsAdmin.openAssetListsAdmin(
 			assetListTitle = "Depot Manual Asset List",
-			siteURLKey = "test-depot-namee",
+			siteURLKey = "test-depot-name",
 			type = "Manual");
 	}
 

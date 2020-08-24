@@ -201,7 +201,7 @@ export default withRouter(
 		function buildURL(search, page, pageSize) {
 			let url = '/questions';
 
-			if (sectionTitle) {
+			if (sectionTitle || sectionTitle === '0') {
 				url += `/${sectionTitle}`;
 			}
 

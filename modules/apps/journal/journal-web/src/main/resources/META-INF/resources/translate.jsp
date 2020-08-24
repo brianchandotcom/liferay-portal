@@ -37,7 +37,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 		<clay:container-fluid>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
-					<c:if test="<%= !journalTranslateDisplayContext.isAvailableTargetLanguageIdsEmpty() %>">
+					<c:if test="<%= journalTranslateDisplayContext.hasTranslationPermission() %>">
 						<div class="tbar-section text-left">
 							<react:component
 								module="js/translate/TranslateLanguagesSelector"
@@ -64,7 +64,7 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 	>
 		<div class="sheet translate-body-form">
 			<c:choose>
-				<c:when test="<%= journalTranslateDisplayContext.isAvailableTargetLanguageIdsEmpty() %>">
+				<c:when test="<%= !journalTranslateDisplayContext.hasTranslationPermission() %>">
 					<clay:alert
 						message="you-do-not-have-permissions-to-translate-to-any-of-the-available-languages"
 					/>

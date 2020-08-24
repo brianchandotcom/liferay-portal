@@ -330,6 +330,45 @@ definition {
 		SelectFrameTop(value1 = "relative=top");
 	}
 
+	macro viewCurrentSiteFilter {
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		if (isSet(navTab)) {
+			AssertClick(
+				key_navTab = "${navTab}",
+				locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
+				value1 = "${navTab}");
+		}
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		AssertVisible(
+			key_imageFileName = "${imageFileName}",
+			locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+
+		AssertElementNotPresent(
+			key_imageFileName = "${noImageFileName}",
+			locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Current Site");
+
+		AssertVisible(
+			key_imageFileName = "${imageFileName}",
+			locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+
+		AssertElementNotPresent(
+			key_imageFileName = "${noImageFileName}",
+			locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+
+		Click(locator1 = "Link#CLEAR");
+
+		AssertElementNotPresent(locator1 = "Search#SEARCH_INFO");
+
+		AssertVisible(
+			key_imageFileName = "${imageFileName}",
+			locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+	}
+
 	macro viewLocationInfoViaBlogs {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 

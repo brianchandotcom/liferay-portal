@@ -205,9 +205,12 @@ lportal_BS
 			<get-database-property property.name="database.version.cmd" />
 
 			<if>
-				<not>
+				<and>
 					<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
-				</not>
+					<not>
+						<equals arg1="${database.type}" arg2="hypersonic" />
+					</not>
+				</and>
 				<then>
 					<get-database-property property.name="database.service.executable" />
 					<get-database-property property.name="database.service.cmd.start" />

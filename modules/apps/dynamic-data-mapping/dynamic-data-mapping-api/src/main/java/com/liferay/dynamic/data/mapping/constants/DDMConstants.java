@@ -32,4 +32,12 @@ public class DDMConstants {
 	public static final String SERVICE_NAME =
 		"com.liferay.dynamic.data.mapping";
 
+	public static final String[] SUPPORTED_DDM_FORM_FIELD_TYPES = {
+		"checkbox", "ddm-color", "ddm-date", "ddm-decimal",
+		"ddm-documentlibrary", "ddm-geolocation", "ddm-image", "ddm-integer",
+		"ddm-journal-article", "ddm-link-to-page", "ddm-number",
+		"ddm-paragraph", "ddm-separator", "ddm-text-html", "fieldset", "option",
+		"radio", "select", "text", "textarea"
+	};
+
 }

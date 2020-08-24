@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.validator.internal;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
@@ -261,7 +262,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 
 		Boolean validType = false;
 
-		for (String type : _SUPPORTED_DDM_FORM_FIELD_TYPES) {
+		for (String type : DDMConstants.SUPPORTED_DDM_FORM_FIELD_TYPES) {
 			if (type.equals(ddmFormField.getType())) {
 				validType = true;
 
@@ -418,14 +419,6 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 
 	private static final String[] _DDM_FORM_FIELD_INDEX_TYPES = {
 		StringPool.BLANK, "keyword", "none", "text"
-	};
-
-	private static final String[] _SUPPORTED_DDM_FORM_FIELD_TYPES = {
-		"checkbox", "ddm-color", "ddm-date", "ddm-decimal",
-		"ddm-documentlibrary", "ddm-geolocation", "ddm-image", "ddm-integer",
-		"ddm-journal-article", "ddm-link-to-page", "ddm-number",
-		"ddm-paragraph", "ddm-separator", "ddm-text-html", "fieldset", "option",
-		"radio", "select", "text", "textarea"
 	};
 
 	private static final Pattern _ddmFormFieldNamePattern = Pattern.compile(

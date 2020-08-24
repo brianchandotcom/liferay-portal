@@ -1580,6 +1580,7 @@ definition {
 		WebContentNavigator.gotoAddCP();
 
 		ImageEditor.gotoImageEditorViaItemSelector(
+			ckEditor = "true",
 			imageFileName = "Document_2.jpg",
 			navTab = "Documents and Media");
 

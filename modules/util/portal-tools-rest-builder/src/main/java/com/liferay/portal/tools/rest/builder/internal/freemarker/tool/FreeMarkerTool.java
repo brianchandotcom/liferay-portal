@@ -62,6 +62,25 @@ public class FreeMarkerTool {
 		return _freeMarkerTool;
 	}
 
+	public boolean containsAggregationFunction(
+		List<JavaMethodSignature> javaMethodSignatures) {
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			for (JavaMethodParameter javaMethodParameter :
+					javaMethodSignature.getJavaMethodParameters()) {
+
+				if (StringUtil.equals(
+						javaMethodParameter.getParameterType(),
+						"com.liferay.portal.vulcan.aggregation.Aggregation")) {
+
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	public boolean containsJavaMethodSignature(
 		List<JavaMethodSignature> javaMethodSignatures, String text) {
 

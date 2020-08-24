@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.OrganizationUtil;
 import com.liferay.portal.kernel.service.persistence.RoleUtil;
@@ -1086,6 +1087,8 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 		if (params == null) {
 			params = _emptyLinkedHashMap;
 		}
+
+		params.remove(Field.GROUP_ID);
 
 		LinkedHashMap<String, Object> params1 = params;
 

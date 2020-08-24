@@ -20,6 +20,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
+import {AppContext} from '../../AppContext';
 import DataSetDisplayContext from '../../DataSetDisplayContext';
 import Checkbox from '../../data_renderers/CheckboxRenderer';
 import persistVisibleFieldNames from '../../thunks/persistVisibleFieldNames';
@@ -27,6 +28,7 @@ import ViewsContext from '../ViewsContext';
 
 const FieldsSelectorDropdown = ({fields}) => {
 	const {id} = useContext(DataSetDisplayContext);
+	const {appURL, portletId} = useContext(AppContext);
 	const [{visibleFieldNames}, dispatch] = useContext(ViewsContext);
 
 	const [active, setActive] = useState(false);
@@ -68,7 +70,9 @@ const FieldsSelectorDropdown = ({fields}) => {
 							onClick={() => {
 								dispatch(
 									persistVisibleFieldNames({
+										appURL,
 										id,
+										portletId,
 										visibleFieldNames: {
 											...visibleFieldNames,
 											[fieldName]: !visibleFieldNames[

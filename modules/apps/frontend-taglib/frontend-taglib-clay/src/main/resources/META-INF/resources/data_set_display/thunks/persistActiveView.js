@@ -15,10 +15,20 @@
 import {updateActiveView} from '../actions/updateActiveView';
 import {saveViewSettings} from '../utilities/saveViewSettings';
 
-export default function persistActiveView({activeViewName, id}) {
+export default function persistActiveView({
+	activeViewName,
+	appURL,
+	id,
+	portletId,
+}) {
 	return (dispatch) => {
 		dispatch(updateActiveView(activeViewName));
 
-		return saveViewSettings(id, {name: activeViewName});
+		return saveViewSettings({
+			appURL,
+			id,
+			portletId,
+			settings: {name: activeViewName},
+		});
 	};
 }

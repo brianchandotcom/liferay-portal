@@ -15,10 +15,20 @@
 import {updateVisibleFieldNames} from '../actions/updateVisibleFieldNames';
 import {saveViewSettings} from '../utilities/saveViewSettings';
 
-export default function persistVisibleFieldNames({id, visibleFieldNames}) {
+export default function persistVisibleFieldNames({
+	appURL,
+	id,
+	portletId,
+	visibleFieldNames,
+}) {
 	return (dispatch) => {
 		dispatch(updateVisibleFieldNames(visibleFieldNames));
 
-		return saveViewSettings(id, {visibleFieldNames});
+		return saveViewSettings({
+			appURL,
+			id,
+			portletId,
+			settings: {visibleFieldNames},
+		});
 	};
 }

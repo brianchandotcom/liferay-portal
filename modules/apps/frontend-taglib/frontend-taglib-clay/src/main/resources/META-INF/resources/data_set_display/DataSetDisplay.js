@@ -17,10 +17,10 @@ import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
+import {AppContext} from './AppContext';
 import DataSetDisplayContext from './DataSetDisplayContext';
 import EmptyResultMessage from './EmptyResultMessage';
 import {updateViewComponent} from './actions/updateViewComponent';
-import {config} from './config';
 import ManagementBar from './management_bar/index';
 import Modal from './modal/Modal';
 import SidePanel from './side_panel/SidePanel';
@@ -186,8 +186,7 @@ function DataSetDisplay({
 			});
 	}
 
-	const {apiURL} = config;
-
+	const {apiURL} = useContext(AppContext);
 	useEffect(() => {
 		if (apiURL) {
 			getData(

@@ -14,11 +14,9 @@
 
 import {fetch, openToast} from 'frontend-js-web';
 
-import {config} from '../config';
 import {logError} from './logError';
 
-export const saveViewSettings = (id, settings) => {
-	const {appURL, portletId} = config;
+export const saveViewSettings = ({appURL, id, portletId, settings}) => {
 	const url = new URL(`${appURL}/data-set/${id}/save-active-view-settings`);
 
 	url.searchParams.append('groupId', themeDisplay.getScopeGroupId());

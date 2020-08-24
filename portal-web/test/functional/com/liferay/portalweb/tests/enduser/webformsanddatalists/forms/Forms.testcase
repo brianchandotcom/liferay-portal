@@ -1509,11 +1509,10 @@ definition {
 			rowNumber = "3");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test EditAllFormFieldNames {
 		property test.name.skip.portal.instance = "Forms#EditAllFormFieldNames";
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		Navigator.openURL();
 

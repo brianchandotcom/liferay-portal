@@ -33,7 +33,12 @@ definition {
 	}
 
 	macro gotoImageEditorViaItemSelector {
-		ItemSelector.gotoItemSelectorViaAlloyEditor();
+		if (isSet(ckEditor)) {
+			ItemSelector.gotoItemSelectorViaCKEditor();
+		}
+		else {
+			ItemSelector.gotoItemSelectorViaAlloyEditor();
+		}
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 

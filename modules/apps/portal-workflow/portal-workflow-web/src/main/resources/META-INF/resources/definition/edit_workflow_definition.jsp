@@ -223,14 +223,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 							<liferay-ui:message arguments="<%= workflowDefinitionDisplayContext.getMessageArguments((RequiredWorkflowDefinitionException)errorException) %>" key="<%= workflowDefinitionDisplayContext.getMessageKey((RequiredWorkflowDefinitionException)errorException) %>" translateArguments="<%= false %>" />
 						</liferay-ui:error>
 
-						<liferay-ui:error exception="<%= WorkflowDefinitionFileException.class %>">
-
-							<%
-							WorkflowDefinitionFileException wdfe = (WorkflowDefinitionFileException)errorException;
-							%>
-
-							<liferay-ui:message key="<%= HtmlUtil.escape(wdfe.getMessage()) %>" />
-						</liferay-ui:error>
+						<liferay-ui:error exception="<%= WorkflowDefinitionFileException.class %>" message="please-enter-valid-content" />
 
 						<liferay-ui:error exception="<%= WorkflowDefinitionTitleException.class %>" message="please-add-a-workflow-title-before-publishing" />
 

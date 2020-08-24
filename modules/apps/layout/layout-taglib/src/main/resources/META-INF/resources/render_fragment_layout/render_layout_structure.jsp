@@ -149,7 +149,7 @@ for (String childrenItemId : childrenItemIds) {
 			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 			%>
 
-			<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
+			<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof FragmentStyledLayoutStructureItem %>">
 

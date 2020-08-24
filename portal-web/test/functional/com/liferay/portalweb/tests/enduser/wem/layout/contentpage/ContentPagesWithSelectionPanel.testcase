@@ -1,0 +1,160 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-118271. Can change the order of the elements in page editor via Selection panel."
+	@priority = "5"
+	test ChangeOrderOfElementsViaSelectionPanel {
+		task ("Add a Container element to the page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
+
+		task ("Add a Heading fragment below the Container") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Container");
+		}
+
+		task ("Add an Asset Publisher portlet below the Heading") {
+			PageEditor.addWidget(
+				portletName = "Asset Publisher",
+				targetFragmentName = "Heading");
+		}
+
+		task ("Assert the order of elements in page editor") {
+			var n = "1";
+
+			for (var fragmentName : list "Container,Heading,Asset Publisher") {
+				PageEditor.viewFragmentOrder(
+					fragmentName = "${fragmentName}",
+					position = "${n}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the order of element nodes in the Selection panel") {
+			PageEditor.gotoTab(tabName = "Selection");
+
+			Pause(locator1 = "3000");
+
+			var n = "1";
+
+			for (var nodeName : list "Container,Heading,Asset Publisher") {
+				AssertElementPresent(
+					key_nodeName = "${nodeName}",
+					key_position = "${n}",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Move the Asset Publisher up to the Container via the Selection panel") {
+			DragAndDrop.javaScriptDragAndDropToUp(
+				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Asset Publisher')]//button[contains(@class,'tree-node')][@draggable='true']",
+				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Container')]//button[contains(@class,'tree-node')][@draggable='true']");
+
+			Pause(locator1 = "3000");
+		}
+
+		task ("Assert the order of element nodes in the Selection panel") {
+			var n = "1";
+
+			for (var nodeName : list "Asset Publisher,Container,Heading") {
+				AssertElementPresent(
+					key_nodeName = "${nodeName}",
+					key_position = "${n}",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the order of elements in page editor") {
+			var n = "1";
+
+			for (var fragmentName : list "Asset Publisher,Container,Heading") {
+				PageEditor.viewFragmentOrder(
+					fragmentName = "${fragmentName}",
+					position = "${n}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Move the Container down to the Heading via the Selection panel") {
+			DragAndDrop.javaScriptDragAndDropToBottom(
+				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Container')]//button[contains(@class,'tree-node')][@draggable='true']",
+				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Heading')]//button[contains(@class,'tree-node')][@draggable='true']");
+
+			Pause(locator1 = "3000");
+		}
+
+		task ("Assert the order of element nodes in the Selection panel") {
+			var n = "1";
+
+			for (var nodeName : list "Asset Publisher,Heading,Container") {
+				AssertElementPresent(
+					key_nodeName = "${nodeName}",
+					key_position = "${n}",
+					locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_POSITION");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the order of elements in page editor") {
+			var n = "1";
+
+			for (var fragmentName : list "Asset Publisher,Heading,Container") {
+				PageEditor.viewFragmentOrder(
+					fragmentName = "${fragmentName}",
+					position = "${n}");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
+}

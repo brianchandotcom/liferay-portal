@@ -5,7 +5,7 @@
 	<model-resource>
 		<model-name>com.liferay.commerce.notification</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_commerce_admin_web_internal_portlet_CommerceAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>

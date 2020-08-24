@@ -12,11 +12,10 @@
  *
  */
 
-package com.liferay.analytics.reports.web.internal.portlet.test;
+package com.liferay.analytics.reports.web.internal.portlet.action.test;
 
 import com.liferay.analytics.reports.test.MockObject;
 import com.liferay.analytics.reports.test.util.MockObjectUtil;
-import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockHttpUtil;
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockThemeDisplayUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.item.InfoItemReference;
@@ -28,18 +27,18 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
+import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
+import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -51,21 +50,18 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PrefsPropsImpl;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 import java.util.Dictionary;
 import java.util.Map;
 import java.util.Objects;
-
-import javax.portlet.Portlet;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequestDispatcher;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -79,7 +75,7 @@ import org.junit.runner.RunWith;
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
-public class AnalyticsReportsPortletTest {
+public class GetDataMVCResourceCommandTest {
 
 	@ClassRule
 	@Rule
@@ -93,7 +89,7 @@ public class AnalyticsReportsPortletTest {
 	}
 
 	@Test
-	public void testGetPropsTrafficSources() throws Exception {
+	public void testGetTrafficSources() throws Exception {
 		PrefsProps prefsProps = PrefsPropsUtil.getPrefsProps();
 
 		PrefsPropsWrapper prefsPropsWrapper = _getPrefsPropsWrapper(prefsProps);
@@ -145,18 +141,25 @@ public class AnalyticsReportsPortletTest {
 			MockObjectUtil.testWithMockObject(
 				_classNameLocalService,
 				() -> {
-					MockLiferayPortletRenderRequest
-						mockLiferayPortletRenderRequest =
-							_getMockLiferayPortletRenderRequest();
+					MockLiferayResourceResponse mockLiferayResourceResponse =
+						new MockLiferayResourceResponse();
 
-					_portlet.render(
-						mockLiferayPortletRenderRequest,
-						_getMockLiferayPortletRenderResponse());
+					_mvcResourceCommand.serveResource(
+						_getMockLiferayResourceRequest(),
+						mockLiferayResourceResponse);
 
-					Map<String, Object> props = _getProps(
-						mockLiferayPortletRenderRequest);
+					ByteArrayOutputStream byteArrayOutputStream =
+						(ByteArrayOutputStream)
+							mockLiferayResourceResponse.
+								getPortletOutputStream();
 
-					JSONArray jsonArray = (JSONArray)props.get(
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+						new String(byteArrayOutputStream.toByteArray()));
+
+					JSONObject contextJSONObject = jsonObject.getJSONObject(
+						"context");
+
+					JSONArray jsonArray = contextJSONObject.getJSONArray(
 						"trafficSources");
 
 					Assert.assertEquals(2, jsonArray.length());
@@ -205,124 +208,94 @@ public class AnalyticsReportsPortletTest {
 			ReflectionTestUtil.setFieldValue(
 				PrefsPropsUtil.class, "_prefsProps", prefsProps);
 
-			ReflectionTestUtil.setFieldValue(_portlet, "_http", _http);
+			ReflectionTestUtil.setFieldValue(
+				_mvcResourceCommand, "_http", _http);
 		}
 	}
 
 	@Test
-	public void testGetPropsViewURLs() throws Exception {
+	public void testGetViewURLs() throws Exception {
 		MockObjectUtil.testWithMockObject(
 			_classNameLocalService,
 			() -> {
-				MockLiferayPortletRenderRequest
-					mockLiferayPortletRenderRequest =
-						_getMockLiferayPortletRenderRequest();
+				MockLiferayResourceResponse mockLiferayResourceResponse =
+					new MockLiferayResourceResponse();
 
-				_portlet.render(
-					mockLiferayPortletRenderRequest,
-					_getMockLiferayPortletRenderResponse());
+				_mvcResourceCommand.serveResource(
+					_getMockLiferayResourceRequest(),
+					mockLiferayResourceResponse);
 
-				Map<String, Object> props = _getProps(
-					mockLiferayPortletRenderRequest);
+				ByteArrayOutputStream byteArrayOutputStream =
+					(ByteArrayOutputStream)
+						mockLiferayResourceResponse.getPortletOutputStream();
 
-				JSONArray jsonArray = (JSONArray)props.get("viewURLs");
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					new String(byteArrayOutputStream.toByteArray()));
+
+				JSONObject contextJSONObject = jsonObject.getJSONObject(
+					"context");
+
+				JSONArray jsonArray = contextJSONObject.getJSONArray(
+					"viewURLs");
 
 				Assert.assertEquals(
 					String.valueOf(jsonArray), jsonArray.length(), 1);
 
-				JSONObject jsonObject = jsonArray.getJSONObject(0);
+				JSONObject viewURLJSONObject = jsonArray.getJSONObject(0);
 
 				Assert.assertEquals(
-					Boolean.TRUE, jsonObject.getBoolean("default"));
+					Boolean.TRUE, viewURLJSONObject.getBoolean("default"));
 
 				Assert.assertEquals(
 					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
-					jsonObject.getString("languageId"));
+					viewURLJSONObject.getString("languageId"));
 
-				Http http = new HttpImpl();
+				String viewURL = viewURLJSONObject.getString("viewURL");
 
-				Assert.assertEquals(
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
-					http.getParameter(
-						jsonObject.getString("viewURL"), "param_languageId"));
+				Assert.assertTrue(
+					viewURL.contains(
+						"param_languageId=" +
+							LocaleUtil.toLanguageId(LocaleUtil.getDefault())));
 			});
 	}
 
-	private MockLiferayPortletRenderRequest
-			_getMockLiferayPortletRenderRequest()
-		throws PortalException {
+	private static int _getLastPosition(String location) {
+		if (location.contains("?")) {
+			return location.indexOf("?");
+		}
 
-		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
-			new MockLiferayPortletRenderRequest();
-
-		mockLiferayPortletRenderRequest.setAttribute(
-			StringBundler.concat(
-				mockLiferayPortletRenderRequest.getPortletName(), "-",
-				WebKeys.CURRENT_PORTLET_URL),
-			new MockLiferayPortletURL());
-
-		String path = "/view.jsp";
-
-		mockLiferayPortletRenderRequest.setAttribute(
-			MVCRenderConstants.
-				PORTLET_CONTEXT_OVERRIDE_REQUEST_ATTIBUTE_NAME_PREFIX + path,
-			ProxyUtil.newProxyInstance(
-				PortletContext.class.getClassLoader(),
-				new Class<?>[] {PortletContext.class},
-				(PortletContextProxy, portletContextMethod,
-				 portletContextArgs) -> {
-
-					if (Objects.equals(
-							portletContextMethod.getName(),
-							"getRequestDispatcher") &&
-						Objects.equals(portletContextArgs[0], path)) {
-
-						return ProxyUtil.newProxyInstance(
-							PortletRequestDispatcher.class.getClassLoader(),
-							new Class<?>[] {PortletRequestDispatcher.class},
-							(portletRequestDispatcherProxy,
-							 portletRequestDispatcherMethod,
-							 portletRequestDispatcherArgs) -> null);
-					}
-
-					throw new UnsupportedOperationException();
-				}));
-
-		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_layoutDisplayPageProviderTracker.
-				getLayoutDisplayPageProviderByClassName(
-					MockObject.class.getName());
-
-		mockLiferayPortletRenderRequest.setAttribute(
-			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
-			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-				new InfoItemReference(MockObject.class.getName(), 0)));
-
-		mockLiferayPortletRenderRequest.setAttribute(
-			WebKeys.THEME_DISPLAY,
-			MockThemeDisplayUtil.getThemeDisplay(
-				_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
-				_group, _layout,
-				_layoutSetLocalService.getLayoutSet(
-					_group.getGroupId(), false)));
-
-		mockLiferayPortletRenderRequest.setParameter("mvcPath", path);
-
-		return mockLiferayPortletRenderRequest;
+		return location.length();
 	}
 
-	private MockLiferayPortletRenderResponse
-		_getMockLiferayPortletRenderResponse() {
+	private MockLiferayResourceRequest _getMockLiferayResourceRequest() {
+		MockLiferayResourceRequest mockLiferayResourceRequest =
+			new MockLiferayResourceRequest();
 
-		return new MockLiferayPortletRenderResponse() {
+		try {
+			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+				_layoutDisplayPageProviderTracker.
+					getLayoutDisplayPageProviderByClassName(
+						MockObject.class.getName());
 
-			@Override
-			public String getNamespace() {
-				return "com_liferay_analytics_reports_web_internal_portlet_" +
-					"AnalyticsReportsPortlet";
-			}
+			mockLiferayResourceRequest.setAttribute(
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+				layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+					new InfoItemReference(MockObject.class.getName(), 0)));
 
-		};
+			mockLiferayResourceRequest.setAttribute(
+				WebKeys.THEME_DISPLAY,
+				MockThemeDisplayUtil.getThemeDisplay(
+					_companyLocalService.getCompany(
+						TestPropsValues.getCompanyId()),
+					_group, _layout,
+					_layoutSetLocalService.getLayoutSet(
+						_group.getGroupId(), false)));
+
+			return mockLiferayResourceRequest;
+		}
+		catch (PortalException portalException) {
+			throw new AssertionError(portalException);
+		}
 	}
 
 	private PrefsPropsWrapper _getPrefsPropsWrapper(PrefsProps prefsProps) {
@@ -334,25 +307,55 @@ public class AnalyticsReportsPortletTest {
 		return prefsPropsWrapper;
 	}
 
-	private Map<String, Object> _getProps(
-		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest) {
-
-		Object analyticsReportsDisplayContext =
-			mockLiferayPortletRenderRequest.getAttribute(
-				"ANALYTICS_REPORTS_DISPLAY_CONTEXT");
-
-		Map<String, Object> data = ReflectionTestUtil.invoke(
-			analyticsReportsDisplayContext, "getData", new Class<?>[0]);
-
-		return (Map<String, Object>)data.get("props");
-	}
-
 	private void _mockHttp(
-			Map<String, UnsafeSupplier<String, Exception>> mockRequest)
-		throws Exception {
+		Map<String, UnsafeSupplier<String, Exception>> mockRequest) {
 
-		ReflectionTestUtil.setFieldValue(
-			_portlet, "_http", MockHttpUtil.geHttp(mockRequest));
+		Http http = new HttpImpl() {
+
+			@Override
+			public String URLtoString(Options options) throws IOException {
+				try {
+					String location = options.getLocation();
+
+					String endpoint = location.substring(
+						location.lastIndexOf("/api"),
+						_getLastPosition(location));
+
+					if (mockRequest.containsKey(endpoint)) {
+						Response httpResponse = new Response();
+
+						httpResponse.setResponseCode(200);
+
+						options.setResponse(httpResponse);
+
+						UnsafeSupplier<String, Exception> unsafeSupplier =
+							mockRequest.get(endpoint);
+
+						return unsafeSupplier.get();
+					}
+
+					Response httpResponse = new Response();
+
+					httpResponse.setResponseCode(400);
+
+					options.setResponse(httpResponse);
+
+					return "error";
+				}
+				catch (Throwable throwable) {
+					Response httpResponse = new Response();
+
+					httpResponse.setResponseCode(400);
+
+					options.setResponse(httpResponse);
+
+					throw new RuntimeException(throwable);
+				}
+			}
+
+		};
+
+		ReflectionTestUtil.setFieldValue(_mvcResourceCommand, "_http", http);
 	}
 
 	@Inject
@@ -375,13 +378,11 @@ public class AnalyticsReportsPortletTest {
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
 
+	@Inject(filter = "mvc.command.name=/analytics_reports/get_data")
+	private MVCResourceCommand _mvcResourceCommand;
+
 	@Inject
 	private Portal _portal;
-
-	@Inject(
-		filter = "component.name=com.liferay.analytics.reports.web.internal.portlet.AnalyticsReportsPortlet"
-	)
-	private Portlet _portlet;
 
 	private class PrefsPropsWrapper extends PrefsPropsImpl {
 

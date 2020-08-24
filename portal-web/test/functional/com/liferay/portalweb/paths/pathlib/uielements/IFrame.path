@@ -204,6 +204,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_PUBLICATION</td>
+	<td>//iframe[contains(@id,'selectChangeList_iframe')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_REGULAR_ROLE</td>
 	<td>//iframe[contains(@id,'selectRegularRole_iframe_')]</td>
 	<td></td>

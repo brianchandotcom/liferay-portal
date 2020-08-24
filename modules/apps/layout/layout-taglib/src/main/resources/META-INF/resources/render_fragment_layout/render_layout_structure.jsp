@@ -80,14 +80,6 @@ for (String childrenItemId : childrenItemIds) {
 				</c:choose>
 			</div>
 		</c:when>
-		<c:when test="<%= layoutStructureItem instanceof CollectionItemLayoutStructureItem %>">
-
-			<%
-			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
-			%>
-
-			<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
-		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof ColumnLayoutStructureItem %>">
 
 			<%
@@ -131,22 +123,6 @@ for (String childrenItemId : childrenItemIds) {
 				</c:if>
 			</div>
 		</c:when>
-		<c:when test="<%= layoutStructureItem instanceof DropZoneLayoutStructureItem %>">
-
-			<%
-			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
-			%>
-
-			<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
-		</c:when>
-		<c:when test="<%= layoutStructureItem instanceof FragmentDropZoneLayoutStructureItem %>">
-
-			<%
-			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
-			%>
-
-			<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
-		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof FragmentStyledLayoutStructureItem %>">
 
 			<%
@@ -170,14 +146,6 @@ for (String childrenItemId : childrenItemIds) {
 			<div class="<%= renderFragmentLayoutDisplayContext.getCssClass((StyledLayoutStructureItem)layoutStructureItem) %>" style="<%= renderFragmentLayoutDisplayContext.getStyle((StyledLayoutStructureItem)layoutStructureItem) %>">
 				<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
 			</div>
-		</c:when>
-		<c:when test="<%= layoutStructureItem instanceof RootLayoutStructureItem %>">
-
-			<%
-			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
-			%>
-
-			<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof RowStyledLayoutStructureItem %>">
 
@@ -238,6 +206,14 @@ for (String childrenItemId : childrenItemIds) {
 				</c:choose>
 			</div>
 		</c:when>
+		<c:otherwise>
+
+			<%
+			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+			%>
+
+			<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
+		</c:otherwise>
 	</c:choose>
 
 <%

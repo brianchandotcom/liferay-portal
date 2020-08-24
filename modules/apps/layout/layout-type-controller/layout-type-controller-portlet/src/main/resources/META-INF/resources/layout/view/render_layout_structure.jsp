@@ -82,14 +82,6 @@ for (String childrenItemId : childrenItemIds) {
 				</c:choose>
 			</div>
 		</c:when>
-		<c:when test="<%= layoutStructureItem instanceof CollectionItemLayoutStructureItem %>">
-
-			<%
-			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
-			%>
-
-			<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
-		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof ColumnLayoutStructureItem %>">
 
 			<%
@@ -160,14 +152,6 @@ for (String childrenItemId : childrenItemIds) {
 			%>
 
 		</c:when>
-		<c:when test="<%= layoutStructureItem instanceof FragmentDropZoneLayoutStructureItem %>">
-
-			<%
-			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
-			%>
-
-			<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
-		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof FragmentStyledLayoutStructureItem %>">
 			<div class="master-layout-fragment">
 
@@ -200,14 +184,6 @@ for (String childrenItemId : childrenItemIds) {
 					<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
 				</div>
 			</div>
-		</c:when>
-		<c:when test="<%= layoutStructureItem instanceof RootLayoutStructureItem %>">
-
-			<%
-			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
-			%>
-
-			<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof RowStyledLayoutStructureItem %>">
 
@@ -251,6 +227,14 @@ for (String childrenItemId : childrenItemIds) {
 				</c:choose>
 			</div>
 		</c:when>
+		<c:otherwise>
+
+			<%
+			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+			%>
+
+			<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
+		</c:otherwise>
 	</c:choose>
 
 <%

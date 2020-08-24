@@ -16,9 +16,11 @@ package com.liferay.analytics.message.sender.internal.model.listener;
 
 import com.liferay.analytics.message.sender.model.listener.BaseEntityModelListener;
 import com.liferay.analytics.message.sender.model.listener.EntityModelListener;
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ContactLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +38,16 @@ public class ContactModelListener extends BaseEntityModelListener<Contact> {
 
 	@Override
 	public List<String> getAttributeNames(long companyId) {
-		return _attributeNames;
+		AnalyticsConfiguration analyticsConfiguration =
+			analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+
+		if (ArrayUtil.isEmpty(
+				analyticsConfiguration.syncedContactFieldNames())) {
+
+			return _attributeNames;
+		}
+
+		return Arrays.asList(analyticsConfiguration.syncedContactFieldNames());
 	}
 
 	@Override

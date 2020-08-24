@@ -33,7 +33,7 @@ public class MockAnalyticsReportsInfoItem
 
 	@Override
 	public Date getPublishDate(MockObject mockObjec) {
-		return null;
+		return new Date();
 	}
 
 	@Override

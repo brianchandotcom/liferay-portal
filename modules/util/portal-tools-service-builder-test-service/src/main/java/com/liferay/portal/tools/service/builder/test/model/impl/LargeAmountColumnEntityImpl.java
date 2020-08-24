@@ -26,7 +26,7 @@ package com.liferay.portal.tools.service.builder.test.model.impl;
 public class LargeAmountColumnEntityImpl
 	extends LargeAmountColumnEntityBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a large amount column entity model instance should use the {@link com.liferay.portal.tools.service.builder.test.model.LargeAmountColumnEntity} interface instead.

@@ -32,9 +32,10 @@ import com.liferay.portal.tools.service.builder.test.service.base.LargeAmountCol
 public class LargeAmountColumnEntityServiceImpl
 	extends LargeAmountColumnEntityServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.portal.tools.service.builder.test.service.LargeAmountColumnEntityServiceUtil</code> to access the large amount column entity remote service.
 	 */
+
 }

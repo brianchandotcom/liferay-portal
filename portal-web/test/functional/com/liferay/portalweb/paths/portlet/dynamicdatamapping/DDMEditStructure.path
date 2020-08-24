@@ -154,12 +154,12 @@
 </tr>
 <tr>
 	<td>FORM_FIELD_CONTAINER</td>
-	<td>//div[contains(@class,'ddm-field-container')]//p[.='${key_fieldFieldLabel}']/../../div</td>
+	<td>//div[contains(@class,'ddm-field-container')]//label[.='${key_fieldFieldLabel}']/../../div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FORM_FIELD_CONTAINER_LABEL</td>
-	<td>//div[contains(@class,'ddm-field')]//p[.='${key_fieldFieldLabel}']</td>
+	<td>//div[contains(@class,'ddm-field')]//label[.='${key_fieldFieldLabel}']</td>
 	<td></td>
 </tr>
 <tr>

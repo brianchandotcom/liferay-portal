@@ -824,9 +824,7 @@ definition {
 
 		RecycleBin.emptyCP();
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}");
 
 		AssertTextNotPresent(value1 = "${webContentTitle}");
 	}

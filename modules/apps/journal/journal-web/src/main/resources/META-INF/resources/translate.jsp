@@ -61,7 +61,6 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 		cssClass="container-view"
 	>
 		<div class="sheet translate-body-form">
-
 			<c:choose>
 				<c:when test="<%= journalTranslateDisplayContext.isAvailableTargetLanguageIdsEmpty() %>">
 					<clay:alert
@@ -69,145 +68,142 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 					/>
 				</c:when>
 				<c:otherwise>
-
-
-			<clay:row>
-				<clay:col
-					md="6"
-				>
-
-					<%
-					String sourceLanguageIdTitle = journalTranslateDisplayContext.getLanguageIdTitle(journalTranslateDisplayContext.getSourceLanguageId());
-					%>
-
-					<clay:icon
-						symbol="<%= StringUtil.toLowerCase(sourceLanguageIdTitle) %>"
-					/>
-
-					<span class="ml-1"> <%= sourceLanguageIdTitle %> </span>
-
-					<div class="separator"><!-- --></div>
-				</clay:col>
-
-				<clay:col
-					md="6"
-				>
-
-					<%
-					String targetLanguageIdTitle = journalTranslateDisplayContext.getLanguageIdTitle(journalTranslateDisplayContext.getTargetLanguageId());
-					%>
-
-					<clay:icon
-						symbol="<%= StringUtil.toLowerCase(targetLanguageIdTitle) %>"
-					/>
-
-					<span class="ml-1"> <%= targetLanguageIdTitle %> </span>
-
-					<div class="separator"><!-- --></div>
-				</clay:col>
-			</clay:row>
-
-			<%
-			for (InfoFieldSetEntry infoFieldSetEntry : journalTranslateDisplayContext.getInfoFieldSetEntries()) {
-				List<InfoField> infoFields = journalTranslateDisplayContext.getInfoFields(infoFieldSetEntry);
-
-				if (ListUtil.isEmpty(infoFields)) {
-					continue;
-				}
-
-				String infoFieldSetLabel = journalTranslateDisplayContext.getInfoFieldSetLabel(infoFieldSetEntry, locale);
-
-				if (Validator.isNotNull(infoFieldSetLabel)) {
-			%>
-
-					<clay:row>
-						<clay:col
-							md="6"
-						>
-							<div class="fieldset-title">
-								<%= infoFieldSetLabel %>
-							</div>
-						</clay:col>
-
-						<clay:col
-							md="6"
-						>
-							<div class="fieldset-title">
-								<%= infoFieldSetLabel %>
-							</div>
-						</clay:col>
-					</clay:row>
-
-				<%
-				}
-
-				for (InfoField<TextInfoFieldType> infoField : infoFields) {
-					boolean html = journalTranslateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.HTML);
-					String label = journalTranslateDisplayContext.getInfoFieldLabel(infoField);
-					boolean multiline = journalTranslateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.MULTILINE);
-				%>
-
 					<clay:row>
 						<clay:col
 							md="6"
 						>
 
 							<%
-							String sourceContent = journalTranslateDisplayContext.getSourceStringValue(infoField, journalTranslateDisplayContext.getSourceLocale());
-							String sourceContentDir = LanguageUtil.get(journalTranslateDisplayContext.getSourceLocale(), "lang.dir");
+							String sourceLanguageIdTitle = journalTranslateDisplayContext.getLanguageIdTitle(journalTranslateDisplayContext.getSourceLanguageId());
 							%>
 
-							<c:choose>
-								<c:when test="<%= html %>">
-									<label class="control-label">
-										<%= label %>
-									</label>
+							<clay:icon
+								symbol="<%= StringUtil.toLowerCase(sourceLanguageIdTitle) %>"
+							/>
 
-									<div class="translate-editor-preview" dir="<%= sourceContentDir %>">
-										<%= sourceContent %>
+							<span class="ml-1"> <%= sourceLanguageIdTitle %> </span>
+
+							<div class="separator"><!-- --></div>
+						</clay:col>
+
+						<clay:col
+							md="6"
+						>
+
+							<%
+							String targetLanguageIdTitle = journalTranslateDisplayContext.getLanguageIdTitle(journalTranslateDisplayContext.getTargetLanguageId());
+							%>
+
+							<clay:icon
+								symbol="<%= StringUtil.toLowerCase(targetLanguageIdTitle) %>"
+							/>
+
+							<span class="ml-1"> <%= targetLanguageIdTitle %> </span>
+
+							<div class="separator"><!-- --></div>
+						</clay:col>
+					</clay:row>
+
+					<%
+					for (InfoFieldSetEntry infoFieldSetEntry : journalTranslateDisplayContext.getInfoFieldSetEntries()) {
+						List<InfoField> infoFields = journalTranslateDisplayContext.getInfoFields(infoFieldSetEntry);
+
+						if (ListUtil.isEmpty(infoFields)) {
+							continue;
+						}
+
+						String infoFieldSetLabel = journalTranslateDisplayContext.getInfoFieldSetLabel(infoFieldSetEntry, locale);
+
+						if (Validator.isNotNull(infoFieldSetLabel)) {
+					%>
+
+							<clay:row>
+								<clay:col
+									md="6"
+								>
+									<div class="fieldset-title">
+										<%= infoFieldSetLabel %>
 									</div>
-								</c:when>
-								<c:otherwise>
-									<aui:input dir="<%= sourceContentDir %>" label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" type='<%= multiline ? "textarea" : "text" %>' value="<%= sourceContent %>" />
-								</c:otherwise>
-							</c:choose>
-						</clay:col>
+								</clay:col>
 
-						<clay:col
-							md="6"
-						>
+								<clay:col
+									md="6"
+								>
+									<div class="fieldset-title">
+										<%= infoFieldSetLabel %>
+									</div>
+								</clay:col>
+							</clay:row>
 
-							<%
-							String id = "infoField--" + infoField.getName() + "--";
-							String targetContent = journalTranslateDisplayContext.getTargetStringValue(infoField, journalTranslateDisplayContext.getTargetLocale());
-							%>
+						<%
+						}
 
-							<c:choose>
-								<c:when test="<%= html %>">
-									<liferay-editor:editor
-										contents="<%= targetContent %>"
-										contentsLanguageId="<%= journalTranslateDisplayContext.getTargetLanguageId() %>"
-										name="<%= id %>"
-										onChangeMethod="onInputChange"
-										placeholder="<%= label %>"
-										toolbarSet="simple"
-									/>
-								</c:when>
-								<c:otherwise>
-									<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= id %>" onChange='<%= liferayPortletResponse.getNamespace() + "onInputChange();" %>' type='<%= multiline ? "textarea" : "text" %>' value="<%= targetContent %>" />
-								</c:otherwise>
-							</c:choose>
-						</clay:col>
-					</clay:row>
+						for (InfoField<TextInfoFieldType> infoField : infoFields) {
+							boolean html = journalTranslateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.HTML);
+							String label = journalTranslateDisplayContext.getInfoFieldLabel(infoField);
+							boolean multiline = journalTranslateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.MULTILINE);
+						%>
 
-			<%
-				}
-			}
-			%>
+							<clay:row>
+								<clay:col
+									md="6"
+								>
+
+									<%
+									String sourceContent = journalTranslateDisplayContext.getSourceStringValue(infoField, journalTranslateDisplayContext.getSourceLocale());
+									String sourceContentDir = LanguageUtil.get(journalTranslateDisplayContext.getSourceLocale(), "lang.dir");
+									%>
+
+									<c:choose>
+										<c:when test="<%= html %>">
+											<label class="control-label">
+												<%= label %>
+											</label>
+
+											<div class="translate-editor-preview" dir="<%= sourceContentDir %>">
+												<%= sourceContent %>
+											</div>
+										</c:when>
+										<c:otherwise>
+											<aui:input dir="<%= sourceContentDir %>" label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" type='<%= multiline ? "textarea" : "text" %>' value="<%= sourceContent %>" />
+										</c:otherwise>
+									</c:choose>
+								</clay:col>
+
+								<clay:col
+									md="6"
+								>
+
+									<%
+									String id = "infoField--" + infoField.getName() + "--";
+									String targetContent = journalTranslateDisplayContext.getTargetStringValue(infoField, journalTranslateDisplayContext.getTargetLocale());
+									%>
+
+									<c:choose>
+										<c:when test="<%= html %>">
+											<liferay-editor:editor
+												contents="<%= targetContent %>"
+												contentsLanguageId="<%= journalTranslateDisplayContext.getTargetLanguageId() %>"
+												name="<%= id %>"
+												onChangeMethod="onInputChange"
+												placeholder="<%= label %>"
+												toolbarSet="simple"
+											/>
+										</c:when>
+										<c:otherwise>
+											<aui:input dir='<%= LanguageUtil.get(journalTranslateDisplayContext.getTargetLocale(), "lang.dir") %>' label="<%= label %>" name="<%= id %>" onChange='<%= liferayPortletResponse.getNamespace() + "onInputChange();" %>' type='<%= multiline ? "textarea" : "text" %>' value="<%= targetContent %>" />
+										</c:otherwise>
+									</c:choose>
+								</clay:col>
+							</clay:row>
+
+					<%
+						}
+					}
+					%>
 
 				</c:otherwise>
 			</c:choose>
-
 		</div>
 	</clay:container-fluid>
 </aui:form>

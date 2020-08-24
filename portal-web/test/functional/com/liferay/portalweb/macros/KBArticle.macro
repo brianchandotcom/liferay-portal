@@ -416,11 +416,10 @@ definition {
 				key_kbFolderName = "${kbFolderName}",
 				locator1 = "KnowledgeBaseSelectParent#FOLDER_TITLE_LINK",
 				value1 = "${kbFolderName}");
-
-			SelectFrame(value1 = "relative=top");
 		}
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		else {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		}
 
 		Click(
 			key_kbArticleTitle = "${kbArticleTitle}",

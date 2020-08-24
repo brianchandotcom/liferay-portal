@@ -16,10 +16,12 @@ package com.liferay.content.dashboard.web.internal.data.provider;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.content.dashboard.web.internal.model.AssetCategoryMetric;
 import com.liferay.content.dashboard.web.internal.model.AssetVocabularyMetric;
 import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardSearchContextBuilder;
 import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
@@ -96,7 +98,9 @@ public class ContentDashboardDataProvider {
 
 		return _toAssetVocabularyMetric(
 			assetCategoryTitlesMap, assetVocabulary,
-			_getBuckets(_getTermsAggregation(assetCategoryTitlesMap.keySet())));
+			_getBuckets(
+				_getTermsAggregation(
+					assetVocabulary, assetCategoryTitlesMap.keySet())));
 	}
 
 	private AssetVocabularyMetric _getAssetVocabularyMetric(
@@ -109,10 +113,11 @@ public class ContentDashboardDataProvider {
 			_getAssetCategoryTitlesMap(childAssetVocabulary, _locale);
 
 		TermsAggregation termsAggregation = _getTermsAggregation(
-			assetCategoryTitlesMap.keySet());
+			assetVocabulary, assetCategoryTitlesMap.keySet());
 
 		termsAggregation.addChildAggregation(
-			_getTermsAggregation(childAssetCategoryTitlesMap.keySet()));
+			_getTermsAggregation(
+				childAssetVocabulary, childAssetCategoryTitlesMap.keySet()));
 
 		return new AssetVocabularyMetric(
 			String.valueOf(assetVocabulary.getVocabularyId()),
@@ -138,10 +143,21 @@ public class ContentDashboardDataProvider {
 	}
 
 	private TermsAggregation _getTermsAggregation(
-		Set<String> assetCategoryIds) {
+		AssetVocabulary assetVocabulary, Set<String> assetCategoryIds) {
 
-		TermsAggregation termsAggregation = _aggregations.terms(
-			"categories", "assetCategoryIds");
+		TermsAggregation termsAggregation = null;
+
+		if ((assetVocabulary != null) &&
+			(assetVocabulary.getVisibilityType() ==
+				AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL)) {
+
+			termsAggregation = _aggregations.terms(
+				"categories", Field.ASSET_INTERNAL_CATEGORY_IDS);
+		}
+		else {
+			termsAggregation = _aggregations.terms(
+				"categories", Field.ASSET_CATEGORY_IDS);
+		}
 
 		termsAggregation.setIncludeExcludeClause(
 			new IncludeExcludeClauseImpl(

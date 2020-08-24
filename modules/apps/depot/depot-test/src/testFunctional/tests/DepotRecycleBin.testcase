@@ -109,13 +109,9 @@ definition {
 	@description = "This ensures that the web content can be deleted after the recycle bin is disabled."
 	@priority = "5"
 	test DeleteWCAfterDisabling {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+		DepotNavigator.openDepotAdmin();
 
-		ProductMenuHelper.openProductMenu();
-
-		AssertVisible(
-			key_category = "Recycle Bin",
-			locator1 = "ProductMenu#CATEGORY_COLLAPSED");
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",

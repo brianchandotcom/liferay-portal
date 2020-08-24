@@ -28,14 +28,18 @@ export const ColorPickerField = ({field, onValueSelect, value}) => {
 
 	const [color, setColor] = useControlledState(frontendTokens[value]?.value);
 
-	const colorsToNames = Object.values(frontendTokens)
-		.filter((token) => token.editorType === COLOR_PICKER_TYPE)
-		.reduce((acc, token) => {
-			const tokenValue = token.value.replace('#', '');
-			acc[tokenValue] = token.name;
+	const colorTokens = Object.values(frontendTokens).filter(
+		(token) => token.editorType === COLOR_PICKER_TYPE
+	);
 
-			return acc;
-		}, {});
+	const colorsToNames = colorTokens.reduce((acc, token) => {
+		const tokenValue = token.value.replace('#', '');
+		acc[tokenValue] = token.name;
+
+		return acc;
+	}, {});
+
+	const colors = colorTokens.map((token) => token.value.replace('#', ''));
 
 	return (
 		<ClayForm.Group small>
@@ -43,7 +47,7 @@ export const ColorPickerField = ({field, onValueSelect, value}) => {
 			<ClayInput.Group>
 				<ClayInput.GroupItem prepend shrink>
 					<ClayColorPicker
-						colors={Object.keys(colorsToNames)}
+						colors={colors}
 						onValueChange={(nextColor) => {
 							setColor(nextColor);
 

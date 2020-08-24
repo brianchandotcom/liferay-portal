@@ -134,7 +134,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		sb.append("join DDMStructureVersion on DDMStructure.structureid = ");
 		sb.append("DDMStructureVersion.structureid where ");
 		sb.append("DDMStructure.version = DDMStructureVersion.version and ");
-		sb.append("DDMStructure.classnameId = ? and DDMStructure.structureId ");
+		sb.append("DDMStructure.classNameId = ? and DDMStructure.structureId ");
 		sb.append("in (");
 
 		Iterator<Long> iterator = _structureIds.iterator();
@@ -200,7 +200,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		sb.append("DDMStructureVersion.structureVersionId inner join ");
 		sb.append("DDMStructure on DDMStructure.structureId = ");
 		sb.append("DDMStructureVersion.structureId where ");
-		sb.append("DDMStructure.classnameId = ?");
+		sb.append("DDMStructure.classNameId = ?");
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
 			PreparedStatement ps2 =
@@ -320,7 +320,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		sb.append("DDMStructureVersion.definition from DDMStructure inner ");
 		sb.append("join DDMStructureVersion on DDMStructure.structureId = ");
 		sb.append("DDMStructureVersion.structureId where ");
-		sb.append("DDMStructure.classnameId = ?");
+		sb.append("DDMStructure.classNameId = ?");
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
 			PreparedStatement ps2 =

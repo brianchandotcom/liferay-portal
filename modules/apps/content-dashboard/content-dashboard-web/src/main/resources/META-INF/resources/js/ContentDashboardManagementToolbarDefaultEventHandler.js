@@ -14,6 +14,7 @@
 
 import {
 	DefaultEventHandler,
+	ItemSelectorDialog,
 	addParams,
 	navigate,
 	openSelectionModal,
@@ -45,33 +46,37 @@ class ContentDashboardManagementToolbarDefaultEventHandler extends DefaultEventH
 	}
 
 	selectAssetCategory(itemData) {
-		openSelectionModal({
+		const itemSelectorDialog = new ItemSelectorDialog({
 			buttonAddLabel: Liferay.Language.get('select'),
-			multiple: true,
-			onSelect: (selectedItem) => {
-				if (selectedItem) {
-					const assetCategories = Object.keys(selectedItem).filter(
-						(key) => !selectedItem[key].unchecked
-					);
-
-					var redirectURL = itemData.redirectURL;
-
-					assetCategories.forEach((assetCategory) => {
-						redirectURL = addParams(
-							this.namespace +
-								'assetCategoryId=' +
-								selectedItem[assetCategory].categoryId,
-							redirectURL
-						);
-					});
-
-					navigate(redirectURL);
-				}
-			},
-			selectEventName: this.ns('selectedAssetCategory'),
+			eventName: this.ns('selectedAssetCategory'),
 			title: itemData.dialogTitle,
 			url: itemData.selectAssetCategoryURL,
 		});
+
+		itemSelectorDialog.on('selectedItemChange', (event) => {
+			const selectedItem = event.selectedItem;
+
+			if (selectedItem) {
+				const assetCategories = Object.keys(selectedItem).filter(
+					(key) => !selectedItem[key].unchecked
+				);
+
+				var redirectURL = itemData.redirectURL;
+
+				assetCategories.forEach((assetCategory) => {
+					redirectURL = addParams(
+						this.namespace +
+							'assetCategoryId=' +
+							selectedItem[assetCategory].categoryId,
+						redirectURL
+					);
+				});
+
+				navigate(redirectURL);
+			}
+		});
+
+		itemSelectorDialog.open();
 	}
 
 	selectAssetTag(itemData) {

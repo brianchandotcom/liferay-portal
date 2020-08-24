@@ -35,8 +35,6 @@ import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Bryan Engler
@@ -242,10 +240,7 @@ public class CrossClusterReplicationConfigurationModelListener
 	@Reference
 	protected ConfigurationAdmin configurationAdmin;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
+	@Reference
 	protected CrossClusterReplicationHelper crossClusterReplicationHelper;
 
 	@Reference

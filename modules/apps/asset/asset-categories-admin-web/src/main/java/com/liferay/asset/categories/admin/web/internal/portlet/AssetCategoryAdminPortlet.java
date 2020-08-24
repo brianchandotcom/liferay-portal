@@ -256,13 +256,9 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 			// Add vocabulary
 
-			int visibilityType =
-				AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC;
-
-			if (ParamUtil.getBoolean(actionRequest, "internalUse")) {
-				visibilityType =
-					AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL;
-			}
+			int visibilityType = ParamUtil.getInteger(
+				actionRequest, "visibilityType",
+				AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
 
 			vocabulary = _assetVocabularyService.addVocabulary(
 				serviceContext.getScopeGroupId(), StringPool.BLANK, titleMap,

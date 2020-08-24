@@ -17,15 +17,9 @@
 <%@ include file="/render_fragment_layout/init.jsp" %>
 
 <%
-Map<String, Object> fieldValues = (Map<String, Object>)request.getAttribute("liferay-layout:render-fragment-layout:fieldValues");
-LayoutStructure layoutStructure = (LayoutStructure)request.getAttribute("liferay-layout:render-fragment-layout:layoutStructure");
-String mode = (String)request.getAttribute("liferay-layout:render-fragment-layout:mode");
-long previewClassNameId = (long)request.getAttribute("liferay-layout:render-fragment-layout:previewClassNameId");
-long previewClassPK = (long)request.getAttribute("liferay-layout:render-fragment-layout:previewClassPK");
-int previewType = (int)request.getAttribute("liferay-layout:render-fragment-layout:previewType");
-String previewVersion = (String)request.getAttribute("liferay-layout:render-fragment-layout:previewVersion");
 RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = (RenderFragmentLayoutDisplayContext)request.getAttribute("liferay-layout:render-fragment-layout:renderFragmentLayoutDisplayContext");
-long[] segmentsExperienceIds = (long[])request.getAttribute("liferay-layout:render-fragment-layout:segmentsExperienceIds");
+
+LayoutStructure layoutStructure = renderFragmentLayoutDisplayContext.getLayoutStructure();
 
 List<String> childrenItemIds = (List<String>)request.getAttribute("render_layout_structure.jsp-childrenItemIds");
 
@@ -50,7 +44,7 @@ for (String childrenItemId : childrenItemIds) {
 				<c:when test="<%= infoListRenderer != null %>">
 
 					<%
-					infoListRenderer.render(renderFragmentLayoutDisplayContext.getCollection(collectionStyledLayoutStructureItem, segmentsExperienceIds), renderFragmentLayoutDisplayContext.getInfoListRendererContext(collectionStyledLayoutStructureItem.getListItemStyle(), collectionStyledLayoutStructureItem.getTemplateKey()));
+					infoListRenderer.render(renderFragmentLayoutDisplayContext.getCollection(collectionStyledLayoutStructureItem), renderFragmentLayoutDisplayContext.getInfoListRendererContext(collectionStyledLayoutStructureItem.getListItemStyle(), collectionStyledLayoutStructureItem.getTemplateKey()));
 					%>
 
 				</c:when>
@@ -63,7 +57,7 @@ for (String childrenItemId : childrenItemIds) {
 						try {
 							request.setAttribute(LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER, renderFragmentLayoutDisplayContext.getLayoutDisplayPageProvider(collectionStyledLayoutStructureItem));
 
-							for (Object collectionObject : renderFragmentLayoutDisplayContext.getCollection(collectionStyledLayoutStructureItem, segmentsExperienceIds)) {
+							for (Object collectionObject : renderFragmentLayoutDisplayContext.getCollection(collectionStyledLayoutStructureItem)) {
 								request.setAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT, collectionObject);
 								request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 						%>
@@ -174,21 +168,7 @@ for (String childrenItemId : childrenItemIds) {
 
 			FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
 
-			DefaultFragmentRendererContext defaultFragmentRendererContext = new DefaultFragmentRendererContext(fragmentEntryLink);
-
-			defaultFragmentRendererContext.setDisplayObject(request.getAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT));
-			defaultFragmentRendererContext.setFieldValues(fieldValues);
-			defaultFragmentRendererContext.setLocale(locale);
-			defaultFragmentRendererContext.setMode(mode);
-			defaultFragmentRendererContext.setPreviewClassNameId(previewClassNameId);
-			defaultFragmentRendererContext.setPreviewClassPK(previewClassPK);
-			defaultFragmentRendererContext.setPreviewType(previewType);
-			defaultFragmentRendererContext.setPreviewVersion(previewVersion);
-			defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
-
-			if (LayoutStructureItemUtil.hasAncestor(fragmentStyledLayoutStructureItem.getItemId(), LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM, layoutStructure)) {
-				defaultFragmentRendererContext.setUseCachedContent(false);
-			}
+			DefaultFragmentRendererContext defaultFragmentRendererContext = renderFragmentLayoutDisplayContext.getDefaultFragmentRendererContext(fragmentEntryLink, fragmentStyledLayoutStructureItem.getItemId());
 			%>
 
 			<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>

@@ -16,6 +16,8 @@ package com.liferay.layout.taglib.internal.display.context;
 
 import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.info.constants.InfoDisplayWebKeys;
@@ -41,8 +43,11 @@ import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.layout.util.structure.StyledLayoutStructureItem;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
@@ -75,6 +80,7 @@ import com.liferay.taglib.servlet.PipingServletResponse;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -104,13 +110,29 @@ public class RenderFragmentLayoutDisplayContext {
 		_layoutListRetrieverTracker = layoutListRetrieverTracker;
 		_listObjectReferenceFactoryTracker = listObjectReferenceFactoryTracker;
 
+		_fieldValues = (Map<String, Object>)_httpServletRequest.getAttribute(
+			"liferay-layout:render-fragment-layout:fieldValues");
+		_layoutStructure = (LayoutStructure)_httpServletRequest.getAttribute(
+			"liferay-layout:render-fragment-layout:layoutStructure");
+		_mode = (String)_httpServletRequest.getAttribute(
+			"liferay-layout:render-fragment-layout:mode");
+		_previewClassNameId = (long)_httpServletRequest.getAttribute(
+			"liferay-layout:render-fragment-layout:previewClassNameId");
+		_previewClassPK = (long)_httpServletRequest.getAttribute(
+			"liferay-layout:render-fragment-layout:previewClassPK");
+		_previewType = (int)_httpServletRequest.getAttribute(
+			"liferay-layout:render-fragment-layout:previewType");
+		_previewVersion = (String)_httpServletRequest.getAttribute(
+			"liferay-layout:render-fragment-layout:previewVersion");
+		_segmentsExperienceIds = (long[])_httpServletRequest.getAttribute(
+			"liferay-layout:render-fragment-layout:segmentsExperienceIds");
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
 	public List<Object> getCollection(
-		CollectionStyledLayoutStructureItem collectionStyledLayoutStructureItem,
-		long[] segmentsExperienceIds) {
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem) {
 
 		JSONObject collectionJSONObject =
 			collectionStyledLayoutStructureItem.getCollectionJSONObject();
@@ -139,7 +161,7 @@ public class RenderFragmentLayoutDisplayContext {
 			new DefaultLayoutListRetrieverContext();
 
 		defaultLayoutListRetrieverContext.setSegmentsExperienceIdsOptional(
-			segmentsExperienceIds);
+			_segmentsExperienceIds);
 		defaultLayoutListRetrieverContext.setPagination(
 			Pagination.of(
 				collectionStyledLayoutStructureItem.getNumberOfItems(), 0));
@@ -438,6 +460,36 @@ public class RenderFragmentLayoutDisplayContext {
 		return cssClassSB.toString();
 	}
 
+	public DefaultFragmentRendererContext getDefaultFragmentRendererContext(
+		FragmentEntryLink fragmentEntryLink, String itemId) {
+
+		DefaultFragmentRendererContext defaultFragmentRendererContext =
+			new DefaultFragmentRendererContext(fragmentEntryLink);
+
+		defaultFragmentRendererContext.setDisplayObject(
+			_httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT));
+		defaultFragmentRendererContext.setFieldValues(_fieldValues);
+		defaultFragmentRendererContext.setLocale(_themeDisplay.getLocale());
+		defaultFragmentRendererContext.setMode(_mode);
+		defaultFragmentRendererContext.setPreviewClassNameId(
+			_previewClassNameId);
+		defaultFragmentRendererContext.setPreviewClassPK(_previewClassPK);
+		defaultFragmentRendererContext.setPreviewType(_previewType);
+		defaultFragmentRendererContext.setPreviewVersion(_previewVersion);
+		defaultFragmentRendererContext.setSegmentsExperienceIds(
+			_segmentsExperienceIds);
+
+		if (LayoutStructureItemUtil.hasAncestor(
+				itemId, LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM,
+				_layoutStructure)) {
+
+			defaultFragmentRendererContext.setUseCachedContent(false);
+		}
+
+		return defaultFragmentRendererContext;
+	}
+
 	public InfoListRenderer<?> getInfoListRenderer(
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem) {
@@ -484,6 +536,10 @@ public class RenderFragmentLayoutDisplayContext {
 
 		return _layoutDisplayPageProviderTracker.
 			getLayoutDisplayPageProviderByClassName(className);
+	}
+
+	public LayoutStructure getLayoutStructure() {
+		return _layoutStructure;
 	}
 
 	public String getPortletFooterPaths() {
@@ -971,6 +1027,7 @@ public class RenderFragmentLayoutDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RenderFragmentLayoutDisplayContext.class);
 
+	private final Map<String, Object> _fieldValues;
 	private final FrontendTokenDefinitionRegistry
 		_frontendTokenDefinitionRegistry;
 	private final HttpServletRequest _httpServletRequest;
@@ -980,9 +1037,16 @@ public class RenderFragmentLayoutDisplayContext {
 	private final LayoutDisplayPageProviderTracker
 		_layoutDisplayPageProviderTracker;
 	private final LayoutListRetrieverTracker _layoutListRetrieverTracker;
+	private final LayoutStructure _layoutStructure;
 	private final ListObjectReferenceFactoryTracker
 		_listObjectReferenceFactoryTracker;
+	private final String _mode;
 	private List<Portlet> _portlets;
+	private final long _previewClassNameId;
+	private final long _previewClassPK;
+	private final int _previewType;
+	private final String _previewVersion;
+	private final long[] _segmentsExperienceIds;
 	private final ThemeDisplay _themeDisplay;
 
 }

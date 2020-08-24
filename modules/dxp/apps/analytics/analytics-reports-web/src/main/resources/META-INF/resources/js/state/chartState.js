@@ -14,22 +14,22 @@ import {useContext, useReducer} from 'react';
 import ConnectionContext from '../context/ConnectionContext';
 
 const ADD_DATA_SET_ITEMS = 'add-data-keys';
+const CHANGE_TIME_SPAN_KEY = 'change-time-span-key';
 const NEXT_TIME_SPAN = 'next-time-span';
 const PREV_TIME_SPAN = 'previous-time-span';
-const CHANGE_TIME_SPAN_OPTION = 'change-time-span-option';
 const SET_LOADING = 'set-loading';
 
 const FALLBACK_DATA_SET_ITEM = {histogram: [], value: null};
 
-export const useChartState = ({defaultTimeSpanOption, publishDate}) => {
+export const useChartState = ({publishDate, timeSpanKey}) => {
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
 
 	const [state, dispatch] = useReducer(reducer, {
 		dataSet: {histogram: [], keyList: [], totals: []},
 		loading: true,
 		publishDate,
+		timeSpanKey,
 		timeSpanOffset: 0,
-		timeSpanOption: defaultTimeSpanOption,
 	});
 
 	const actions = {
@@ -39,8 +39,8 @@ export const useChartState = ({defaultTimeSpanOption, publishDate}) => {
 				type: ADD_DATA_SET_ITEMS,
 				validAnalyticsConnection,
 			}),
-		changeTimeSpanOption: (payload) =>
-			dispatch({payload, type: CHANGE_TIME_SPAN_OPTION}),
+		changeTimeSpanKey: (payload) =>
+			dispatch({payload, type: CHANGE_TIME_SPAN_KEY}),
 		nextTimeSpan: () => dispatch({type: NEXT_TIME_SPAN}),
 		previousTimeSpan: () => dispatch({type: PREV_TIME_SPAN}),
 		setLoading: () => dispatch({type: SET_LOADING}),
@@ -53,7 +53,7 @@ export const useChartState = ({defaultTimeSpanOption, publishDate}) => {
  * {
 		"loading": false,
 		"timeSpanOffset": 1,
-		"timeSpanOption": "last-7-days",
+		"timeSpanKey": "last-7-days",
 		"dataSet": {
 			"keyList": [
 				"analyticsReportsHistoricalReads",
@@ -96,6 +96,13 @@ function reducer(state, action) {
 				);
 			}, state);
 			break;
+		case CHANGE_TIME_SPAN_KEY:
+			nextState = {
+				...state,
+				timeSpanKey: action.payload.key,
+				timeSpanOffset: 0,
+			};
+			break;
 		case NEXT_TIME_SPAN:
 			nextState = {
 				...state,
@@ -106,13 +113,6 @@ function reducer(state, action) {
 			nextState = {
 				...state,
 				timeSpanOffset: state.timeSpanOffset + 1,
-			};
-			break;
-		case CHANGE_TIME_SPAN_OPTION:
-			nextState = {
-				...state,
-				timeSpanOffset: 0,
-				timeSpanOption: action.payload.key,
 			};
 			break;
 		case SET_LOADING:

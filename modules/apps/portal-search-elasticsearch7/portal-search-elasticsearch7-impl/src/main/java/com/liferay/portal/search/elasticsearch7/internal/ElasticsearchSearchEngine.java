@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.ccr.CrossClusterReplicationHelper;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch7.internal.index.CompanyIndexCreator;
 import com.liferay.portal.search.elasticsearch7.internal.index.IndexFactory;
@@ -58,6 +59,8 @@ import org.elasticsearch.common.Strings;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -116,6 +119,11 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		_companyIndexCreator.registerCompanyId(companyId);
 
 		waitForYellowStatus();
+
+		if (_crossClusterReplicationHelper != null) {
+			_crossClusterReplicationHelper.follow(
+				_indexNameBuilder.getIndexName(companyId));
+		}
 	}
 
 	@Override
@@ -133,6 +141,11 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	@Override
 	public void removeCompany(long companyId) {
 		super.removeCompany(companyId);
+
+		if (_crossClusterReplicationHelper != null) {
+			_crossClusterReplicationHelper.unfollow(
+				_indexNameBuilder.getIndexName(companyId));
+		}
 
 		try {
 			RestHighLevelClient restHighLevelClient =
@@ -199,6 +212,12 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		_companyIndexCreator = companyIndexCreator;
 	}
 
+	public void unsetCrossClusterReplicationHelper(
+		CrossClusterReplicationHelper crossClusterReplicationHelper) {
+
+		_crossClusterReplicationHelper = null;
+	}
+
 	public void unsetElasticsearchConnectionManager(
 		ElasticsearchConnectionManager elasticsearchConnectionManager) {
 
@@ -248,6 +267,16 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		CompanyIndexCreator companyIndexCreator) {
 
 		_companyIndexCreator = companyIndexCreator;
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void setCrossClusterReplicationHelper(
+		CrossClusterReplicationHelper crossClusterReplicationHelper) {
+
+		_crossClusterReplicationHelper = crossClusterReplicationHelper;
 	}
 
 	@Reference
@@ -343,6 +372,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		ElasticsearchSearchEngine.class);
 
 	private CompanyIndexCreator _companyIndexCreator;
+	private CrossClusterReplicationHelper _crossClusterReplicationHelper;
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private IndexFactory _indexFactory;
 	private IndexNameBuilder _indexNameBuilder;

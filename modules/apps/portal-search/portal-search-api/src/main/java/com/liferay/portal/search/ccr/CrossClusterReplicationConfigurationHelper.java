@@ -12,30 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.search.configuration;
+package com.liferay.portal.search.ccr;
+
+import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Bryan Engler
- * @deprecated As of Athanasius (7.3.x), replaced by {@link
- *             com.liferay.portal.search.elasticsearch.cross.cluster.replication.internal.configuration.CrossClusterReplicationConfigurationWrapper}
  */
-@Deprecated
 @ProviderType
-public interface CrossClusterReplicationConfigurationWrapper {
+public interface CrossClusterReplicationConfigurationHelper {
 
-	public String[] getCCRLocalClusterConnectionConfigurations();
+	public List<String> getLocalClusterConnectionIds();
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getCCRLocalClusterConnectionConfigurations()}
-	 */
-	@Deprecated
-	public String getCCRLocalClusterConnectionId();
+	public Map<String, String> getLocalClusterConnectionIdsMap();
 
-	public String getRemoteClusterAlias();
-
-	public boolean isCCREnabled();
+	public boolean isCrossClusterReplicationEnabled();
 
 }

@@ -1097,10 +1097,11 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-98073."
-	@ignore = "true"
 	@priority = "5"
 	test CreateReadUpdateDeleteImageField {
+		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredImageField";
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Forms");

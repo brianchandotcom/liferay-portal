@@ -35,7 +35,7 @@ CommerceAccount commerceAccount = commerceAccountDisplayContext.getCurrentCommer
 
 <c:if test="<%= commerceAccountDisplayContext.hasCommerceAccountModelPermissions(CommerceAccountActionKeys.MANAGE_ORGANIZATIONS) %>">
 	<div class="commerce-cta is-visible">
-		<aui:button cssClass="btn-lg btn-primary js-invite-user" onClick='<%= liferayPortletResponse.getNamespace() + "openAddOrganizationsModal();" %>' value="add-organizations" />
+		<aui:button cssClass="btn-lg js-invite-user" primary='<%= true %>' onClick='<%= liferayPortletResponse.getNamespace() + "openAddOrganizationsModal();" %>' value="add-organizations" />
 	</div>
 
 	<commerce-ui:add-organizations-modal

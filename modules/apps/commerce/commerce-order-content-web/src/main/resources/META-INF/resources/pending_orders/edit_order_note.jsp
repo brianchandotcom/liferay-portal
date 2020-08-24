@@ -59,7 +59,7 @@ CommerceOrderNote commerceOrderNote = commerceOrderContentDisplayContext.getComm
 	</div>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg btn-primary" type="submit" />
+		<aui:button cssClass="btn-lg" primary="<%= true %>" type="submit" />
 
 		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>

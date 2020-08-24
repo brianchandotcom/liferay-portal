@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.search.ccr.CrossClusterReplicationHelper;
-import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -50,14 +48,10 @@ public class SearchEngineInitializer implements Runnable {
 
 	public SearchEngineInitializer(
 		BundleContext bundleContext, long companyId,
-		CrossClusterReplicationHelper crossClusterReplicationHelper,
-		IndexNameBuilder indexNameBuilder,
 		PortalExecutorManager portalExecutorManager) {
 
 		_bundleContext = bundleContext;
 		_companyId = companyId;
-		_crossClusterReplicationHelper = crossClusterReplicationHelper;
-		_indexNameBuilder = indexNameBuilder;
 		_portalExecutorManager = portalExecutorManager;
 	}
 
@@ -115,19 +109,9 @@ public class SearchEngineInitializer implements Runnable {
 		stopWatch.start();
 
 		try {
-			if (_crossClusterReplicationHelper != null) {
-				_crossClusterReplicationHelper.unfollow(
-					_indexNameBuilder.getIndexName(_companyId));
-			}
-
 			SearchEngineHelperUtil.removeCompany(_companyId);
 
 			SearchEngineHelperUtil.initialize(_companyId);
-
-			if (_crossClusterReplicationHelper != null) {
-				_crossClusterReplicationHelper.follow(
-					_indexNameBuilder.getIndexName(_companyId));
-			}
 
 			long backgroundTaskId =
 				BackgroundTaskThreadLocal.getBackgroundTaskId();
@@ -220,10 +204,8 @@ public class SearchEngineInitializer implements Runnable {
 
 	private final BundleContext _bundleContext;
 	private final long _companyId;
-	private final CrossClusterReplicationHelper _crossClusterReplicationHelper;
 	private boolean _finished;
 	private ServiceTrackerList<Indexer<?>, Indexer<?>> _indexers;
-	private final IndexNameBuilder _indexNameBuilder;
 	private final PortalExecutorManager _portalExecutorManager;
 	private final Set<String> _usedSearchEngineIds = new HashSet<>();
 

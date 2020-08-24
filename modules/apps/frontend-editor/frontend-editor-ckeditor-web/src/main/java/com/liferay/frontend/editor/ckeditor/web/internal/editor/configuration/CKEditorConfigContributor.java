@@ -80,7 +80,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 		);
 
 		String extraPlugins =
-			"addimages,autogrow,itemselector,lfrpopup," +
+			"addimages,autogrow,filebrowser,itemselector,lfrpopup," +
 				"media,stylescombo,videoembed";
 
 		boolean inlineEdit = GetterUtil.getBoolean(

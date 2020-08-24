@@ -312,6 +312,7 @@
 				selectEventName: editor.name + 'selectItem',
 				title: Liferay.Language.get('select-item'),
 				url,
+				zIndex: CKEDITOR.getNextZIndex(),
 			});
 		},
 

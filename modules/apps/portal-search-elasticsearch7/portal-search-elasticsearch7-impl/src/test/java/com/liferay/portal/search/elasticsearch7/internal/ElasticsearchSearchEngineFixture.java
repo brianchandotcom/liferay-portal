@@ -24,7 +24,6 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch7.internal.index.CompanyIdIndexNameBuilder;
-import com.liferay.portal.search.elasticsearch7.internal.index.CompanyIndexCreator;
 import com.liferay.portal.search.elasticsearch7.internal.index.CompanyIndexFactory;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.ElasticsearchEngineAdapterFixture;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -89,20 +88,6 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 		_elasticsearchConnectionFixture.destroyNode();
 	}
 
-	protected static CompanyIndexCreator createCompanyIndexCreator(
-		ElasticsearchConnectionManager elasticsearchConnectionManager1,
-		IndexNameBuilder indexNameBuilder, Map<String, Object> properites) {
-
-		return new CompanyIndexCreator() {
-			{
-				elasticsearchConnectionManager =
-					elasticsearchConnectionManager1;
-				indexFactory = createCompanyIndexFactory(
-					indexNameBuilder, properites);
-			}
-		};
-	}
-
 	protected static CompanyIndexFactory createCompanyIndexFactory(
 		IndexNameBuilder indexNameBuilder, Map<String, Object> properites) {
 
@@ -157,10 +142,6 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 
 		return new ElasticsearchSearchEngine() {
 			{
-				setCompanyIndexCreator(
-					createCompanyIndexCreator(
-						elasticsearchConnectionManager, indexNameBuilder,
-						properites));
 				setElasticsearchConnectionManager(
 					elasticsearchConnectionManager);
 				setIndexFactory(

@@ -25,4 +25,8 @@ public interface IndexFactory {
 
 	public void deleteIndices(IndicesClient indicesClient, long companyId);
 
+	public void registerCompanyId(long companyId);
+
+	public void unregisterCompanyId(long companyId);
+
 }

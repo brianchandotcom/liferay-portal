@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayColorPicker from '@clayui/color-picker';
 import ClayForm, {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
@@ -58,9 +59,28 @@ export const ColorPickerField = ({field, onValueSelect, value}) => {
 					/>
 				</ClayInput.GroupItem>
 				<ClayInput.GroupItem append>
-					<ClayInput readOnly value={frontendTokens[value]?.label} />
+					<ClayInput
+						readOnly
+						value={
+							frontendTokens[value]
+								? frontendTokens[value].label
+								: ''
+						}
+					/>
 				</ClayInput.GroupItem>
 			</ClayInput.Group>
+
+			<ClayButton
+				className="mt-2"
+				displayType="secondary"
+				onClick={() => {
+					setColor('');
+
+					onValueSelect(field.name, '');
+				}}
+			>
+				{Liferay.Language.get('clear')}
+			</ClayButton>
 		</ClayForm.Group>
 	);
 };

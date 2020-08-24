@@ -79,7 +79,7 @@ definition {
 	macro selectParentCP {
 		var key_kbArticleTitle = "${kbFolderName}";
 
-		SelectFrame(locator1 = "KnowledgeBaseSelectParent#IFRAME");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if ("${kbFolderName}" == "Home") {
 			Click(locator1 = "KnowledgeBaseSelectParent#BREADCRUMB_HOME");

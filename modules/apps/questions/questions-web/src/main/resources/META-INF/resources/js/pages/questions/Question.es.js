@@ -70,6 +70,12 @@ export default withRouter(
 		const [page, setPage] = useState(1);
 		const [pageSize, setPageSize] = useState(20);
 
+		sectionTitle =
+			sectionTitle || sectionTitle === '0'
+				? sectionTitle
+				: question.messageBoardSection &&
+				  question.messageBoardSection.title;
+
 		const {
 			loading,
 			data: {messageBoardThreadByFriendlyUrlPath: question = {}} = {},
@@ -214,18 +220,19 @@ export default withRouter(
 							<div className="col-md-10">
 								<div className="align-items-end flex-column-reverse flex-md-row row">
 									<div className="c-mt-4 c-mt-md-0 col-md-8">
-										{!!question.messageBoardSection
-											.numberOfMessageBoardSections && (
-											<Link
-												to={`/questions/${question.messageBoardSection.title}`}
-											>
-												<SectionLabel
-													section={
-														question.messageBoardSection
-													}
-												/>
-											</Link>
-										)}
+										{!!question.messageBoardSection &&
+											!!question.messageBoardSection
+												.numberOfMessageBoardSections && (
+												<Link
+													to={`/questions/${sectionTitle}`}
+												>
+													<SectionLabel
+														section={
+															question.messageBoardSection
+														}
+													/>
+												</Link>
+											)}
 
 										<h1
 											className={classNames(
@@ -316,10 +323,7 @@ export default withRouter(
 
 								<div className="c-mt-4">
 									<TagList
-										sectionTitle={
-											question.messageBoardSection &&
-											question.messageBoardSection.title
-										}
+										sectionTitle={sectionTitle}
 										tags={question.keywords}
 									/>
 								</div>

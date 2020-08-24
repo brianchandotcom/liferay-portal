@@ -1951,7 +1951,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			private static final Map<String, String> _attributeNames;
 
 			static {
-				Map<String, String> attributeNames = new LinkedHashMap<>();
+				Map<String, String> attributeNames = new HashMap<>();
 
 				<#list entity.badEntityColumns as entityColumn>
 					attributeNames.put("${entityColumn.DBName}", "${entityColumn.name}");
@@ -1973,7 +1973,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			private static final Map<String, Long> _columnBitmasks;
 
 			static {
-				Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+				Map<String, Long> columnBitmasks = new HashMap<>();
 
 				<#assign columnBitmask = 1 />
 

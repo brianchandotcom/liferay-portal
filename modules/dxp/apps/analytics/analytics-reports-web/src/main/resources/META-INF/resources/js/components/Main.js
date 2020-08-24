@@ -20,6 +20,7 @@ import Translation from './Translation';
 
 export default function Main({
 	author,
+	canonicalURL,
 	chartDataProviders,
 	languageTag,
 	onSelectedLanguageClick,
@@ -38,6 +39,7 @@ export default function Main({
 		<div className="c-p-3">
 			<BasicInformation
 				author={author}
+				canonicalURL={canonicalURL}
 				languageTag={languageTag}
 				publishDate={pagePublishDate}
 				title={pageTitle}
@@ -100,6 +102,7 @@ export default function Main({
 
 Main.proptypes = {
 	author: PropTypes.object.isRequired,
+	canonicalURL: PropTypes.string.isRequired,
 	chartDataProviders: PropTypes.arrayOf(PropTypes.func.isRequired).isRequired,
 	languageTag: PropTypes.string.isRequired,
 	onSelectedLanguageClick: PropTypes.func.isRequired,

@@ -21,6 +21,7 @@ import Main from './Main';
 
 export default function Navigation({
 	author,
+	canonicalURL,
 	endpoints,
 	languageTag,
 	namespace,
@@ -136,6 +137,7 @@ export default function Navigation({
 				<div>
 					<Main
 						author={author}
+						canonicalURL={canonicalURL}
 						chartDataProviders={[
 							getHistoricalViews,
 							getHistoricalReads,
@@ -173,6 +175,7 @@ export default function Navigation({
 
 Navigation.proptypes = {
 	author: PropTypes.object.isRequired,
+	canonicalURL: PropTypes.string.isRequired,
 	endpoints: PropTypes.object.isRequired,
 	languageTag: PropTypes.string.isRequired,
 	namespace: PropTypes.string.isRequired,

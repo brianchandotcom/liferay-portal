@@ -38,7 +38,13 @@ function Author({author: {authorId, name, url}}) {
 	);
 }
 
-function BasicInformation({author, languageTag, publishDate, title}) {
+function BasicInformation({
+	author,
+	canonicalURL,
+	languageTag,
+	publishDate,
+	title,
+}) {
 	const formattedPublishDate = Intl.DateTimeFormat(languageTag, {
 		day: 'numeric',
 		month: 'long',
@@ -56,6 +62,22 @@ function BasicInformation({author, languageTag, publishDate, title}) {
 							title={title}
 						>
 							<span className="text-truncate">{title}</span>
+						</span>
+					</ClayTooltipProvider>
+				</ClayLayout.ContentCol>
+			</ClayLayout.ContentRow>
+
+			<ClayLayout.ContentRow>
+				<ClayLayout.ContentCol expand>
+					<ClayTooltipProvider>
+						<span
+							className="text-truncate-inline"
+							data-tooltip-align="top"
+							title={canonicalURL}
+						>
+							<span className="c-mb-2 c-mt-1 text-secondary text-truncate text-truncate-reverse">
+								{canonicalURL}
+							</span>
 						</span>
 					</ClayTooltipProvider>
 				</ClayLayout.ContentCol>
@@ -87,6 +109,7 @@ Author.propTypes = {
 
 BasicInformation.propTypes = {
 	author: PropTypes.object.isRequired,
+	canonicalURL: PropTypes.string.isRequired,
 	languageTag: PropTypes.string.isRequired,
 	publishDate: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,

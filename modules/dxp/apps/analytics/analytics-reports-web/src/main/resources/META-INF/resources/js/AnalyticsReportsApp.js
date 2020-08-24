@@ -135,6 +135,7 @@ export default function ({context}) {
 					<div className="analytics-reports-app">
 						<Navigation
 							author={state.data.author}
+							canonicalURL={state.data.canonicalURL}
 							endpoints={state.data.endpoints}
 							languageTag={state.data.languageTag}
 							namespace={state.data.namespace}

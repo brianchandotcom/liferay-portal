@@ -11,11 +11,9 @@ definition {
 
 		Click(locator1 = "Button#CHANGE");
 
-		SelectFrame(value1 = "relative=top");
+		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
 
-		WaitForElementPresent(locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_DIALOG");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(depotName)) {
 			var key_rowEntry = "${webContentTitle}";
@@ -30,7 +28,9 @@ definition {
 				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
 				value1 = "Asset Library");
 
-			LexiconCard.clickCard(card = "${depotName}");
+			Click(
+				key_card = "${depotName}",
+				locator1 = "Card#CARD_TITLE");
 
 			Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 
@@ -370,7 +370,9 @@ definition {
 				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
 				value1 = "Asset Library");
 
-			LexiconCard.clickCard(card = "${depotName}");
+			Click(
+				key_card = "${depotName}",
+				locator1 = "Card#CARD_TITLE");
 
 			Click(locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 

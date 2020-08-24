@@ -71,6 +71,50 @@ class ChangeTrackingChangesView extends React.Component {
 			}
 
 			model.typeName = this.typeNames[model.modelClassNameId.toString()];
+
+			if (model.ctEntryId) {
+				model.userName = this.userInfo[
+					model.userId.toString()
+				].userName;
+
+				let key;
+
+				if (model.siteName === this.globalSiteName) {
+					if (model.changeType === 'added') {
+						key = Liferay.Language.get('x-added-a-x-x-ago');
+					}
+					else if (model.changeType === 'deleted') {
+						key = Liferay.Language.get('x-deleted-a-x-x-ago');
+					}
+					else {
+						key = Liferay.Language.get('x-modified-a-x-x-ago');
+					}
+
+					model.description = this._format(key, [
+						model.userName,
+						model.typeName,
+						model.timeDescription,
+					]);
+				}
+				else {
+					if (model.changeType === 'added') {
+						key = Liferay.Language.get('x-added-a-x-in-x-x-ago');
+					}
+					else if (model.changeType === 'deleted') {
+						key = Liferay.Language.get('x-deleted-a-x-in-x-x-ago');
+					}
+					else {
+						key = Liferay.Language.get('x-modified-a-x-in-x-x-ago');
+					}
+
+					model.description = this._format(key, [
+						model.userName,
+						model.typeName,
+						model.siteName,
+						model.timeDescription,
+					]);
+				}
+			}
 		}
 
 		for (let i = 0; i < this.rootDisplayClasses.length; i++) {
@@ -341,6 +385,30 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 
 		return filterNodes;
+	}
+
+	_format(key, args) {
+		const SPLIT_REGEX = /({\d+})/g;
+
+		const keyArray = key
+			.split(SPLIT_REGEX)
+			.filter((val) => val.length !== 0);
+
+		for (let i = 0; i < args.length; i++) {
+			const arg = args[i];
+
+			const indexKey = `{${i}}`;
+
+			let argIndex = keyArray.indexOf(indexKey);
+
+			while (argIndex >= 0) {
+				keyArray.splice(argIndex, 1, arg);
+
+				argIndex = keyArray.indexOf(indexKey);
+			}
+		}
+
+		return keyArray.join('');
 	}
 
 	_getBreadcrumbItems(node, filterClass, nodeId, viewType) {
@@ -695,7 +763,7 @@ class ChangeTrackingChangesView extends React.Component {
 						<ClayTable.Cell>
 							<span
 								className="lfr-portal-tooltip"
-								title={this._getUserName(node)}
+								title={node.userName}
 							>
 								<span className="rounded-circle sticker sticker-primary">
 									<span className="sticker-overlay">
@@ -720,7 +788,7 @@ class ChangeTrackingChangesView extends React.Component {
 						<ClayTable.Cell>
 							<span
 								className="lfr-portal-tooltip"
-								title={this._getUserName(node)}
+								title={node.userName}
 							>
 								<span className={userPortraitCss}>
 									<span className="inline-item">
@@ -768,7 +836,11 @@ class ChangeTrackingChangesView extends React.Component {
 
 			if (this.state.viewType === 'changes') {
 				cells.push(
-					<ClayTable.Cell>{node.timeDescription}</ClayTable.Cell>
+					<ClayTable.Cell>
+						{this._format(Liferay.Language.get('x-ago'), [
+							node.timeDescription,
+						])}
+					</ClayTable.Cell>
 				);
 			}
 
@@ -776,10 +848,6 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 
 		return rows;
-	}
-
-	_getUserName(node) {
-		return this.userInfo[node.userId.toString()].userName;
 	}
 
 	_getViewTypes() {

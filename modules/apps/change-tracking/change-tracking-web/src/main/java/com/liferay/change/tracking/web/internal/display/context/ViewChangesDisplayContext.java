@@ -570,6 +570,19 @@ public class ViewChangesDisplayContext {
 				modelInfo._site = _isSite(model);
 			}
 			else {
+				String changeType = "modified";
+
+				if (ctEntry.getChangeType() ==
+						CTConstants.CT_CHANGE_TYPE_ADDITION) {
+
+					changeType = "added";
+				}
+				else if (ctEntry.getChangeType() ==
+							CTConstants.CT_CHANGE_TYPE_DELETION) {
+
+					changeType = "deleted";
+				}
+
 				long ctCollectionId =
 					_ctDisplayRendererRegistry.getCtCollectionId(
 						_ctCollection, ctEntry);
@@ -586,11 +599,9 @@ public class ViewChangesDisplayContext {
 				modelInfo._ctEntry = true;
 
 				modelInfo._jsonObject = JSONUtil.put(
-					"ctEntryId", ctEntry.getCtEntryId()
+					"changeType", changeType
 				).put(
-					"description",
-					_ctDisplayRendererRegistry.getEntryDescription(
-						_httpServletRequest, ctEntry)
+					"ctEntryId", ctEntry.getCtEntryId()
 				).put(
 					"hideable",
 					_ctDisplayRendererRegistry.isHideable(
@@ -605,16 +616,10 @@ public class ViewChangesDisplayContext {
 					"modifiedTime", modifiedDate.getTime()
 				).put(
 					"timeDescription",
-					_language.format(
-						_httpServletRequest, "x-ago",
-						new Object[] {
-							_language.getTimeDescription(
-								_httpServletRequest,
-								System.currentTimeMillis() -
-									modifiedDate.getTime(),
-								true)
-						},
-						false)
+					_language.getTimeDescription(
+						_httpServletRequest,
+						System.currentTimeMillis() - modifiedDate.getTime(),
+						true)
 				).put(
 					"title",
 					_ctDisplayRendererRegistry.getTitle(

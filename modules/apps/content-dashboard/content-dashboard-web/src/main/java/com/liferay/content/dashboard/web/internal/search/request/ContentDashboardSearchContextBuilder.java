@@ -120,6 +120,8 @@ public class ContentDashboardSearchContextBuilder {
 			searchContext.setGroupIds(null);
 		}
 
+		searchContext.setIncludeInternalAssetCategories(true);
+
 		if (_sort != null) {
 			searchContext.setSorts(_sort);
 		}

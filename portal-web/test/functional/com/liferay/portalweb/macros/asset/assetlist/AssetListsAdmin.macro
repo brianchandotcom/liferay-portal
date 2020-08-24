@@ -127,7 +127,21 @@ definition {
 			locator1 = "APConfiguration#FILTER_CATEGORIZATION_SELECT",
 			value1 = "Tags");
 
-		AssetCategorization.selectTag(tagNameList = "${tagNameList}");
+		Click(locator1 = "AssetCategorization#TAGS_SELECT_BUTTON");
+
+		Modal.selectFrameSpecific(modalTitle = "Tags");
+
+		for (var tagName : list "${tagNameList}") {
+			Check(
+				key_rowEntry = "${tagName}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
+		}
+
+		SelectFrameTop();
+
+		AssertClick(
+			locator1 = "Button#DONE",
+			value1 = "Done");
 
 		PortletEntry.save();
 	}

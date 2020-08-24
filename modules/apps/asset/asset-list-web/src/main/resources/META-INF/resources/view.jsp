@@ -92,9 +92,9 @@ AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContex
 							<%
 							String assetEntryTypeLabel = ResourceActionsUtil.getModelResource(locale, assetListEntry.getAssetEntryType());
 
-							long classTypeId = GetterUtil.getLong(assetListEntry.getAssetEntrySubtype());
+							long classTypeId = GetterUtil.getLong(assetListEntry.getAssetEntrySubtype(), -1);
 
-							if (classTypeId > 0) {
+							if (classTypeId >= 0) {
 								AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetListEntry.getAssetEntryType());
 
 								if ((assetRendererFactory != null) && assetRendererFactory.isSupportsClassTypes()) {

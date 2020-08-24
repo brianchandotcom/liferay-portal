@@ -251,9 +251,9 @@ public class ContentPageLayoutEditorDisplayContext
 			themeDisplay.getLocale(), assetListEntry.getAssetEntryType());
 
 		long classTypeId = GetterUtil.getLong(
-			assetListEntry.getAssetEntrySubtype());
+			assetListEntry.getAssetEntrySubtype(), -1);
 
-		if (classTypeId > 0) {
+		if (classTypeId >= 0) {
 			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
 					getAssetRendererFactoryByClassName(

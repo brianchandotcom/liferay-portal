@@ -228,9 +228,9 @@ public class AssetListItemSelectorView
 
 				private String _getAssetEntrySubtypeSubtypeLabel() {
 					long classTypeId = GetterUtil.getLong(
-						assetListEntry.getAssetEntrySubtype());
+						assetListEntry.getAssetEntrySubtype(), -1);
 
-					if (classTypeId <= 0) {
+					if (classTypeId < 0) {
 						return StringPool.BLANK;
 					}
 

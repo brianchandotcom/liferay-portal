@@ -163,9 +163,9 @@ public class CollectionsVerticalCard extends BaseVerticalCard {
 
 	private String _getAssetEntrySubtypeSubtypeLabel() {
 		long classTypeId = GetterUtil.getLong(
-			_assetListEntry.getAssetEntrySubtype());
+			_assetListEntry.getAssetEntrySubtype(), -1);
 
-		if (classTypeId <= 0) {
+		if (classTypeId < 0) {
 			return StringPool.BLANK;
 		}
 

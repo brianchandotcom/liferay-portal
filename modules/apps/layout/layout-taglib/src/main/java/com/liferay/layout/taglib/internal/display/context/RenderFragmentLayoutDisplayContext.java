@@ -170,6 +170,27 @@ public class RenderFragmentLayoutDisplayContext {
 			listObjectReference, defaultLayoutListRetrieverContext);
 	}
 
+	public LayoutDisplayPageProvider<?> getCollectionLayoutDisplayPageProvider(
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem) {
+
+		ListObjectReference listObjectReference = _getListObjectReference(
+			collectionStyledLayoutStructureItem.getCollectionJSONObject());
+
+		if (listObjectReference == null) {
+			return null;
+		}
+
+		String className = listObjectReference.getItemType();
+
+		if (Objects.equals(className, DLFileEntry.class.getName())) {
+			className = FileEntry.class.getName();
+		}
+
+		return _layoutDisplayPageProviderTracker.
+			getLayoutDisplayPageProviderByClassName(className);
+	}
+
 	public String getContainerLinkHref(
 			ContainerStyledLayoutStructureItem
 				containerStyledLayoutStructureItem,
@@ -515,27 +536,6 @@ public class RenderFragmentLayoutDisplayContext {
 		defaultInfoListRendererContext.setTemplateKey(templateKey);
 
 		return defaultInfoListRendererContext;
-	}
-
-	public LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
-		CollectionStyledLayoutStructureItem
-			collectionStyledLayoutStructureItem) {
-
-		ListObjectReference listObjectReference = _getListObjectReference(
-			collectionStyledLayoutStructureItem.getCollectionJSONObject());
-
-		if (listObjectReference == null) {
-			return null;
-		}
-
-		String className = listObjectReference.getItemType();
-
-		if (Objects.equals(className, DLFileEntry.class.getName())) {
-			className = FileEntry.class.getName();
-		}
-
-		return _layoutDisplayPageProviderTracker.
-			getLayoutDisplayPageProviderByClassName(className);
 	}
 
 	public LayoutStructure getLayoutStructure() {

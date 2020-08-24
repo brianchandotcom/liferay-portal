@@ -55,7 +55,7 @@ for (String childrenItemId : childrenItemIds) {
 						LayoutDisplayPageProvider<?> currentLayoutDisplayPageProvider = (LayoutDisplayPageProvider<?>)request.getAttribute(LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER);
 
 						try {
-							request.setAttribute(LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER, renderFragmentLayoutDisplayContext.getLayoutDisplayPageProvider(collectionStyledLayoutStructureItem));
+							request.setAttribute(LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER, renderFragmentLayoutDisplayContext.getCollectionLayoutDisplayPageProvider(collectionStyledLayoutStructureItem));
 
 							for (Object collectionObject : renderFragmentLayoutDisplayContext.getCollection(collectionStyledLayoutStructureItem)) {
 								request.setAttribute(InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT, collectionObject);

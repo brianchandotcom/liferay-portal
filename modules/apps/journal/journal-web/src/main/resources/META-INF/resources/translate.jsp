@@ -37,12 +37,14 @@ renderResponse.setTitle(journalTranslateDisplayContext.getTitle());
 		<clay:container-fluid>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
-					<div class="tbar-section text-left">
-						<react:component
-							module="js/translate/TranslateLanguagesSelector"
-							props="<%= journalTranslateDisplayContext.getTranslateLanguagesSelectorData() %>"
-						/>
-					</div>
+					<c:if test="<%= !journalTranslateDisplayContext.isAvailableTargetLanguageIdsEmpty() %>">
+						<div class="tbar-section text-left">
+							<react:component
+								module="js/translate/TranslateLanguagesSelector"
+								props="<%= journalTranslateDisplayContext.getTranslateLanguagesSelectorData() %>"
+							/>
+						</div>
+					</c:if>
 				</li>
 				<li class="tbar-item">
 					<div class="metadata-type-button-row tbar-section text-right">

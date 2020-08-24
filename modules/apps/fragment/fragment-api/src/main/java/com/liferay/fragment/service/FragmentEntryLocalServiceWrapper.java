@@ -635,6 +635,18 @@ public class FragmentEntryLocalServiceWrapper
 
 	@Override
 	public FragmentEntry updateFragmentEntry(
+			long userId, long fragmentEntryId, long fragmentCollectionId,
+			String name, String css, String html, String js, boolean cacheable,
+			String configuration, long previewFileEntryId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _fragmentEntryLocalService.updateFragmentEntry(
+			userId, fragmentEntryId, fragmentCollectionId, name, css, html, js,
+			cacheable, configuration, previewFileEntryId, status);
+	}
+
+	@Override
+	public FragmentEntry updateFragmentEntry(
 			long userId, long fragmentEntryId, String name, String css,
 			String html, String js, boolean cacheable, String configuration,
 			long previewFileEntryId, int status)

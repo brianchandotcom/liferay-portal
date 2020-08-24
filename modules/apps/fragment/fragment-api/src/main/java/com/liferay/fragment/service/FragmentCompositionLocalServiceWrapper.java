@@ -522,6 +522,18 @@ public class FragmentCompositionLocalServiceWrapper
 
 	@Override
 	public FragmentComposition updateFragmentComposition(
+			long userId, long fragmentCompositionId, long fragmentCollectionId,
+			String name, String description, String data,
+			long previewFileEntryId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _fragmentCompositionLocalService.updateFragmentComposition(
+			userId, fragmentCompositionId, fragmentCollectionId, name,
+			description, data, previewFileEntryId, status);
+	}
+
+	@Override
+	public FragmentComposition updateFragmentComposition(
 			long userId, long fragmentCompositionId, String name,
 			String description, String data, long previewFileEntryId,
 			int status)

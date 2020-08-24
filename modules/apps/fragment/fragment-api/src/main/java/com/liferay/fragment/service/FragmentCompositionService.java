@@ -115,6 +115,12 @@ public interface FragmentCompositionService extends BaseService {
 		throws PortalException;
 
 	public FragmentComposition updateFragmentComposition(
+			long fragmentCompositionId, long fragmentCollectionId, String name,
+			String description, String data, long previewFileEntryId,
+			int status)
+		throws PortalException;
+
+	public FragmentComposition updateFragmentComposition(
 			long fragmentCompositionId, String name)
 		throws PortalException;
 

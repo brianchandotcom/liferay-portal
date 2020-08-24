@@ -603,6 +603,17 @@ public class FragmentEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
+			long userId, long fragmentEntryId, long fragmentCollectionId,
+			String name, String css, String html, String js, boolean cacheable,
+			String configuration, long previewFileEntryId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateFragmentEntry(
+			userId, fragmentEntryId, fragmentCollectionId, name, css, html, js,
+			cacheable, configuration, previewFileEntryId, status);
+	}
+
+	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 			long userId, long fragmentEntryId, String name, String css,
 			String html, String js, boolean cacheable, String configuration,
 			long previewFileEntryId, int status)

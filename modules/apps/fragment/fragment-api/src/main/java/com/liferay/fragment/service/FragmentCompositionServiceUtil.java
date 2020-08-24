@@ -146,6 +146,18 @@ public class FragmentCompositionServiceUtil {
 	}
 
 	public static com.liferay.fragment.model.FragmentComposition
+			updateFragmentComposition(
+				long fragmentCompositionId, long fragmentCollectionId,
+				String name, String description, String data,
+				long previewFileEntryId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateFragmentComposition(
+			fragmentCompositionId, fragmentCollectionId, name, description,
+			data, previewFileEntryId, status);
+	}
+
+	public static com.liferay.fragment.model.FragmentComposition
 			updateFragmentComposition(long fragmentCompositionId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

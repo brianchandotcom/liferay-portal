@@ -54,7 +54,7 @@ for (String childrenItemId : childrenItemIds) {
 					<clay:row>
 
 						<%
-						LayoutDisplayPageProvider<?> currentLayoutDisplayPageProvider = (LayoutDisplayPageProvider)request.getAttribute(LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER);
+						LayoutDisplayPageProvider<?> currentLayoutDisplayPageProvider = (LayoutDisplayPageProvider<?>)request.getAttribute(LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER);
 
 						try {
 							request.setAttribute(LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER, portletLayoutDisplayContext.getCollectionLayoutDisplayPageProvider(collectionStyledLayoutStructureItem));

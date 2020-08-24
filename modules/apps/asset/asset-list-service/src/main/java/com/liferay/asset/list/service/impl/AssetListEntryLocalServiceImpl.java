@@ -520,9 +520,9 @@ public class AssetListEntryLocalServiceImpl
 			}
 
 			long defaultAssetClassTypeId = GetterUtil.getLong(
-				anyAssetClassTypeString);
+				anyAssetClassTypeString, -1);
 
-			if (defaultAssetClassTypeId <= 0) {
+			if (defaultAssetClassTypeId < 0) {
 				return StringPool.BLANK;
 			}
 

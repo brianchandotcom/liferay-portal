@@ -172,6 +172,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 <liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="saveFormInstance" var="autoSaveFormInstanceURL" />
 
 <liferay-portlet:runtime
+	persistSettings="<%= false %>"
 	portletName="<%= DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_REPORT %>"
 	queryString='<%= "formInstanceId=" + formInstanceId %>'
 />

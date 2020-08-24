@@ -182,6 +182,8 @@ class ChangeTrackingChangesView extends React.Component {
 				const siteNameB = b.siteName;
 				const titleA = a.title;
 				const titleB = b.title;
+				const typeNameA = a.typeName.toUpperCase();
+				const typeNameB = b.typeName.toUpperCase();
 
 				if (
 					siteNameA < siteNameB ||
@@ -205,6 +207,14 @@ class ChangeTrackingChangesView extends React.Component {
 					}
 
 					return -1;
+				}
+
+				if (typeNameA < typeNameB) {
+					return -1;
+				}
+
+				if (typeNameA > typeNameB) {
+					return 1;
 				}
 
 				if (titleA < titleB) {
@@ -308,58 +318,6 @@ class ChangeTrackingChangesView extends React.Component {
 					}
 
 					return -1;
-				}
-
-				return 0;
-			});
-		}
-		else if (this._getColumn() === 'site') {
-			nodes.sort((a, b) => {
-				const siteNameA = a.siteName;
-				const siteNameB = b.siteName;
-				const titleA = a.title;
-				const titleB = b.title;
-				const typeNameA = a.typeName.toUpperCase();
-				const typeNameB = b.typeName.toUpperCase();
-
-				if (typeNameA < typeNameB) {
-					return -1;
-				}
-
-				if (typeNameA > typeNameB) {
-					return 1;
-				}
-
-				if (
-					siteNameA < siteNameB ||
-					(siteNameA === this.globalSiteName &&
-						siteNameB !== this.globalSiteName)
-				) {
-					if (ascending) {
-						return -1;
-					}
-
-					return 1;
-				}
-
-				if (
-					siteNameA > siteNameB ||
-					(siteNameA !== this.globalSiteName &&
-						siteNameB === this.globalSiteName)
-				) {
-					if (ascending) {
-						return 1;
-					}
-
-					return -1;
-				}
-
-				if (titleA < titleB) {
-					return -1;
-				}
-
-				if (titleA > titleB) {
-					return 1;
 				}
 
 				return 0;

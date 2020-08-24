@@ -59,14 +59,13 @@ export default withRouter(({history}) => {
 	}
 
 	return (
-		<section className="c-mt-3 questions-section questions-section-cards">
+		<section className="c-mt-3 questions-section">
 			{!context.showSectionLanding && (
 				<Redirect to={'/questions/' + context.rootTopic} />
 			)}
 
 			<div className="questions-container">
 				<div className="row">
-					{loading && <ClayLoadingIndicator />}
 					{!loading && (
 						<>
 							{sections &&
@@ -76,6 +75,7 @@ export default withRouter(({history}) => {
 									<div className="c-mb-4 col-lg-4 col-md-6 col-xl-3">
 										<div className="questions-card text-decoration-none text-secondary">
 											<ClayCard
+												className="questions-new-section"
 												onClick={() =>
 													setTopicModalVisibility(
 														true
@@ -84,7 +84,6 @@ export default withRouter(({history}) => {
 											>
 												<ClayCard.Body>
 													<ClayEmptyState
-														className="questions-new-section"
 														description=""
 														imgSrc={
 															context.includeContextPath +
@@ -93,7 +92,7 @@ export default withRouter(({history}) => {
 														title=""
 													>
 														<ClayIcon symbol="plus" />
-														<span className="c-ml-3">
+														<span className="c-ml-3 text-truncate">
 															{Liferay.Language.get(
 																'new-topic'
 															)}
@@ -116,7 +115,7 @@ export default withRouter(({history}) => {
 											to={`/questions/${section.title}`}
 										>
 											<ClayCard>
-												<ClayCard.Body className="questions-section-cards">
+												<ClayCard.Body>
 													<ClayCard.Description
 														className="text-dark"
 														displayType="title"
@@ -127,7 +126,7 @@ export default withRouter(({history}) => {
 													<ClayCard.Description
 														className="c-mt-3 flex-grow-1"
 														displayType="text"
-														truncate={false}
+														truncate={true}
 													>
 														{descriptionTruncate(
 															section.description
@@ -135,7 +134,7 @@ export default withRouter(({history}) => {
 													</ClayCard.Description>
 
 													<ClayCard.Description
-														className="c-mt-4 small"
+														className="c-mt-4 justify-content-end small"
 														displayType="text"
 														truncate={false}
 													>
@@ -149,7 +148,6 @@ export default withRouter(({history}) => {
 																]
 															)}
 														</span>
-
 														<button className="btn btn-link btn-sm d-xl-none float-right font-weight-bold p-0">
 															View Topic
 														</button>
@@ -190,7 +188,8 @@ export default withRouter(({history}) => {
 						currentSectionId={0}
 						onClose={() => setTopicModalVisibility(false)}
 						onCreateNavigateTo={() => {
-							historyPushParser(`/`);
+							historyPushParser(`/tmp`);
+							history.goBack();
 						}}
 						visible={topicModalVisibility}
 					/>

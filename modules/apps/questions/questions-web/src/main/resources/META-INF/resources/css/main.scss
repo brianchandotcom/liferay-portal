@@ -121,14 +121,17 @@
 
 	.card {
 		border-radius: 0.5rem;
-		box-shadow: none;
-		height: 100%;
+		box-shadow: 0 0.1rem 0.1rem rgba($dark, 0.16);
+		height: 200px;
 		margin-bottom: 0;
 		transition: box-shadow 300ms ease-in-out;
 		will-change: box-shadow;
 	}
 
 	.card-body {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
 		padding: 1.5rem;
 	}
 
@@ -144,17 +147,33 @@
 	}
 
 	.questions-new-section {
-		margin: 0 80px;
+		background-color: $light;
 
-		.c-empty-state-footer {
-			margin-top: -50px;
+		.c-empty-state {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			justify-content: flex-end;
+			margin-bottom: 0;
+			margin-top: 0;
+
+			.c-empty-state-title {
+				display: none;
+			}
+
+			.c-empty-state-text {
+				display: none;
+			}
+
+			.c-empty-state-footer {
+				align-items: center;
+				display: flex;
+
+				.lexicon-icon {
+					margin: 0;
+				}
+			}
 		}
-	}
-
-	.questions-section-cards {
-		display: flex;
-		flex-direction: column;
-		height: 100%;
 	}
 }
 

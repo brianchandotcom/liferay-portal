@@ -14,33 +14,51 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useState} from 'react';
 
 import ConnectionContext from '../context/ConnectionContext';
-import {StoreContext, useHistoricalWarning, useWarning} from '../context/store';
+import {StoreContext} from '../context/store';
+import APIService from '../utils/APIService';
 import Detail from './Detail';
 import Main from './Main';
 
 export default function Navigation({
-	api,
-	authorName,
-	authorPortraitURL,
-	authorUserId,
-	defaultTimeRange,
-	defaultTimeSpanKey,
+	author,
+	endpoints: {
+		getAnalyticsReportsHistoricalReadsURL,
+		getAnalyticsReportsHistoricalViewsURL,
+		getAnalyticsReportsTotalReadsURL,
+		getAnalyticsReportsTotalViewsURL,
+	},
 	languageTag,
-	languages,
+	namespace,
+	onSelectedLanguageClick = () => {},
+	page,
 	pagePublishDate,
 	pageTitle,
+	timeSpanKey,
+	timeRange,
 	timeSpanOptions,
 	trafficSources,
+	viewURLs,
 }) {
+	const [{historicalWarning, publishedToday, warning}] = useContext(
+		StoreContext
+	);
+
+	const {validAnalyticsConnection} = useContext(ConnectionContext);
+
 	const [currentPage, setCurrentPage] = useState({view: 'main'});
 
 	const [trafficSourceName, setTrafficSourceName] = useState('');
 
-	const {validAnalyticsConnection} = useContext(ConnectionContext);
-
-	const [hasWarning] = useWarning();
-
-	const [hasHistoricalWarning] = useHistoricalWarning();
+	const api = APIService({
+		endpoints: {
+			getAnalyticsReportsHistoricalReadsURL,
+			getAnalyticsReportsHistoricalViewsURL,
+			getAnalyticsReportsTotalReadsURL,
+			getAnalyticsReportsTotalViewsURL,
+		},
+		namespace,
+		page,
+	});
 
 	const {getHistoricalReads, getHistoricalViews} = api;
 
@@ -93,8 +111,6 @@ export default function Navigation({
 		return Promise.resolve(trafficSource?.value ?? '-');
 	}, [trafficSourceName, trafficSources]);
 
-	const [{publishedToday}] = useContext(StoreContext);
-
 	return (
 		<>
 			{!validAnalyticsConnection && (
@@ -103,7 +119,7 @@ export default function Navigation({
 				</ClayAlert>
 			)}
 
-			{validAnalyticsConnection && (hasWarning || hasHistoricalWarning) && (
+			{validAnalyticsConnection && (historicalWarning || warning) && (
 				<ClayAlert displayType="warning" variant="stripe">
 					{Liferay.Language.get(
 						'some-data-is-temporarily-unavailable'
@@ -113,8 +129,8 @@ export default function Navigation({
 
 			{validAnalyticsConnection &&
 				publishedToday &&
-				!hasWarning &&
-				!hasHistoricalWarning && (
+				!historicalWarning &&
+				!warning && (
 					<ClayAlert
 						displayType="info"
 						title={Liferay.Language.get('no-data-is-available-yet')}
@@ -129,24 +145,23 @@ export default function Navigation({
 			{currentPage.view === 'main' && (
 				<div>
 					<Main
-						authorName={authorName}
-						authorPortraitURL={authorPortraitURL}
-						authorUserId={authorUserId}
+						author={author}
 						chartDataProviders={[
 							getHistoricalViews,
 							getHistoricalReads,
 						]}
-						defaultTimeRange={defaultTimeRange}
-						defaultTimeSpanOption={defaultTimeSpanKey}
-						languages={languages}
 						languageTag={languageTag}
+						onSelectedLanguageClick={onSelectedLanguageClick}
 						onTrafficSourceClick={handleTrafficSourceClick}
 						pagePublishDate={pagePublishDate}
 						pageTitle={pageTitle}
+						timeRange={timeRange}
+						timeSpanKey={timeSpanKey}
 						timeSpanOptions={timeSpanOptions}
 						totalReadsDataProvider={handleTotalReads}
 						totalViewsDataProvider={handleTotalViews}
 						trafficSources={trafficSources}
+						viewURLs={viewURLs}
 					/>
 				</div>
 			)}
@@ -167,20 +182,20 @@ export default function Navigation({
 }
 
 Navigation.proptypes = {
-	api: PropTypes.object.isRequired,
-	authorName: PropTypes.string.isRequired,
-	authorPortraitURL: PropTypes.string.isRequired,
-	authorUserId: PropTypes.string.isRequired,
-	defaultTimeRange: PropTypes.objectOf(
+	author: PropTypes.object.isRequired,
+	endpoints: PropTypes.object.isRequired,
+	languageTag: PropTypes.string.isRequired,
+	namespace: PropTypes.string.isRequired,
+	onSelectedLanguageClick: PropTypes.func.isRequired,
+	page: PropTypes.objectOf(
 		PropTypes.shape({
-			endDate: PropTypes.string.isRequired,
-			startDate: PropTypes.string.isRequired,
+			plid: PropTypes.number.isRequired,
 		})
 	).isRequired,
-	defaultTimeSpanKey: PropTypes.string.isRequired,
-	languageTag: PropTypes.string.isRequired,
-	pagePublishDate: PropTypes.number.isRequired,
+	pagePublishDate: PropTypes.string.isRequired,
 	pageTitle: PropTypes.string.isRequired,
+	timeRange: PropTypes.object.isRequired,
+	timeSpanKey: PropTypes.string.isRequired,
 	timeSpanOptions: PropTypes.arrayOf(
 		PropTypes.shape({
 			key: PropTypes.string.isRequired,
@@ -188,4 +203,12 @@ Navigation.proptypes = {
 		})
 	).isRequired,
 	trafficSources: PropTypes.array.isRequired,
+	viewURLs: PropTypes.arrayOf(
+		PropTypes.shape({
+			default: PropTypes.bool.isRequired,
+			languageId: PropTypes.string.isRequired,
+			selected: PropTypes.bool.isRequired,
+			viewURL: PropTypes.string.isRequired,
+		})
+	).isRequired,
 };

@@ -23,7 +23,7 @@ export default function TimeSpanSelector({
 	onNextTimeSpanClick,
 	onPreviousTimeSpanClick,
 	onTimeSpanChange,
-	timeSpanOption,
+	timeSpanKey,
 	timeSpanOptions,
 }) {
 	const {validAnalyticsConnection} = useContext(ConnectionContext);
@@ -35,7 +35,7 @@ export default function TimeSpanSelector({
 				className="bg-white"
 				disabled={!validAnalyticsConnection}
 				onChange={onTimeSpanChange}
-				value={timeSpanOption}
+				value={timeSpanKey}
 			>
 				{timeSpanOptions.map((option) => {
 					return (
@@ -90,7 +90,7 @@ TimeSpanSelector.proptypes = {
 	onNextTimeSpanClick: PropTypes.func.isRequired,
 	onPreviousTimeSpanClick: PropTypes.func.isRequired,
 	onTimeSpanChange: PropTypes.func.isRequired,
-	timeSpanOption: PropTypes.string.isRequired,
+	timeSpanKey: PropTypes.string.isRequired,
 	timeSpanOptions: PropTypes.arrayOf(
 		PropTypes.shape({
 			key: PropTypes.string.isRequired,

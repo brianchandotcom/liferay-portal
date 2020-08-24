@@ -15,12 +15,34 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
-export default function Translation({languages}) {
+import {useChartState} from '../state/chartState';
+
+export default function Translation({
+	defaultLanguage,
+	onSelectedLanguageClick,
+	publishDate,
+	timeSpanKey,
+	viewURLs,
+}) {
 	const [active, setActive] = useState(false);
 
-	const defaultLanguage = languages.find((language) => language.default);
+	const selectedLanguage = useMemo(() => {
+		return (
+			viewURLs.find((language) => language.selected).languageId ||
+			defaultLanguage
+		);
+	}, [defaultLanguage, viewURLs]);
+
+	const {state: chartState} = useChartState({
+		publishDate,
+		timeSpanKey,
+	});
+
+	const timeSpanOffset = useMemo(() => {
+		return chartState.timeSpanOffset;
+	}, [chartState]);
 
 	return (
 		<ClayLayout.ContentRow>
@@ -43,23 +65,30 @@ export default function Translation({languages}) {
 							displayType="secondary"
 							small
 						>
-							<ClayIcon
-								symbol={defaultLanguage.languageId.toLowerCase()}
-							/>
+							<ClayIcon symbol={selectedLanguage.toLowerCase()} />
 							<span
 								className="d-block font-weight-normal"
-								style={{fontSize: 9}}
+								style={{fontSize: '9px'}}
 							>
-								{defaultLanguage.languageId}
+								{selectedLanguage}
 							</span>
 						</ClayButton>
 					}
 				>
 					<ClayDropDown.ItemList>
-						{Object.values(languages).map((language, index) => (
+						{Object.values(viewURLs).map((language, index) => (
 							<ClayDropDown.Item
+								active={
+									language.selected && language.languageId
+								}
 								key={index}
-								onClick={() => {}}
+								onClick={() => {
+									onSelectedLanguageClick(
+										language.viewURL,
+										timeSpanKey,
+										timeSpanOffset
+									);
+								}}
 								symbolLeft={language.languageId.toLowerCase()}
 							>
 								<ClayLayout.ContentRow>
@@ -94,10 +123,16 @@ export default function Translation({languages}) {
 }
 
 Translation.propTypes = {
-	languages: PropTypes.arrayOf(
+	defaultLanguage: PropTypes.string.isRequired,
+	onSelectedLanguageClick: PropTypes.func.isRequired,
+	publishDate: PropTypes.string.isRequired,
+	timeSpanKey: PropTypes.string.isRequired,
+	viewURLs: PropTypes.arrayOf(
 		PropTypes.shape({
 			default: PropTypes.bool.isRequired,
 			languageId: PropTypes.string.isRequired,
+			selected: PropTypes.bool.isRequired,
+			viewURL: PropTypes.string.isRequired,
 		})
 	).isRequired,
 };

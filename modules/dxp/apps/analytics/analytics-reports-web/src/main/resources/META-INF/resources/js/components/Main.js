@@ -19,35 +19,38 @@ import TrafficSources from './TrafficSources';
 import Translation from './Translation';
 
 export default function Main({
-	authorName,
-	authorPortraitURL,
-	authorUserId,
+	author,
 	chartDataProviders,
-	defaultTimeRange,
-	defaultTimeSpanOption,
 	languageTag,
-	languages,
+	onSelectedLanguageClick,
 	onTrafficSourceClick,
 	pagePublishDate,
 	pageTitle,
+	timeRange,
+	timeSpanKey,
 	timeSpanOptions,
 	totalReadsDataProvider,
 	totalViewsDataProvider,
 	trafficSources,
+	viewURLs,
 }) {
 	return (
 		<div className="c-p-3">
 			<BasicInformation
-				authorName={authorName}
-				authorPortraitURL={authorPortraitURL}
-				authorUserId={authorUserId}
+				author={author}
 				languageTag={languageTag}
 				publishDate={pagePublishDate}
 				title={pageTitle}
 			/>
 
 			<div className="mt-4">
-				<Translation languages={languages} />
+				<Translation
+					defaultLanguage={languageTag}
+					onSelectedLanguageClick={onSelectedLanguageClick}
+					publishDate={pagePublishDate}
+					timeSpanKey={timeSpanKey}
+					viewURLs={viewURLs}
+				/>
 			</div>
 
 			<h5 className="mt-3 sheet-subtitle">
@@ -77,10 +80,10 @@ export default function Main({
 
 			<Chart
 				dataProviders={chartDataProviders}
-				defaultTimeRange={defaultTimeRange}
-				defaultTimeSpanOption={defaultTimeSpanOption}
 				languageTag={languageTag}
 				publishDate={pagePublishDate}
+				timeRange={timeRange}
+				timeSpanKey={timeSpanKey}
 				timeSpanOptions={timeSpanOptions}
 			/>
 
@@ -96,16 +99,15 @@ export default function Main({
 }
 
 Main.proptypes = {
-	authorName: PropTypes.string.isRequired,
-	authorPortraitURL: PropTypes.string.isRequired,
-	authorUserId: PropTypes.string.isRequired,
+	author: PropTypes.object.isRequired,
 	chartDataProviders: PropTypes.arrayOf(PropTypes.func.isRequired).isRequired,
-	defaultTimeRange: PropTypes.object.isRequired,
-	defaultTimeSpanOption: PropTypes.string.isRequired,
 	languageTag: PropTypes.string.isRequired,
+	onSelectedLanguageClick: PropTypes.func.isRequired,
 	onTrafficSourceClick: PropTypes.func.isRequired,
-	pagePublishDate: PropTypes.number.isRequired,
+	pagePublishDate: PropTypes.string.isRequired,
 	pageTitle: PropTypes.string.isRequired,
+	timeRange: PropTypes.object.isRequired,
+	timeSpanKey: PropTypes.string.isRequired,
 	timeSpanOptions: PropTypes.arrayOf(
 		PropTypes.shape({
 			key: PropTypes.string,
@@ -115,4 +117,12 @@ Main.proptypes = {
 	totalReadsDataProvider: PropTypes.func.isRequired,
 	totalViewsDataProvider: PropTypes.func.isRequired,
 	trafficSources: PropTypes.array.isRequired,
+	viewURLs: PropTypes.arrayOf(
+		PropTypes.shape({
+			default: PropTypes.bool.isRequired,
+			languageId: PropTypes.string.isRequired,
+			selected: PropTypes.bool.isRequired,
+			viewURL: PropTypes.string.isRequired,
+		})
+	).isRequired,
 };

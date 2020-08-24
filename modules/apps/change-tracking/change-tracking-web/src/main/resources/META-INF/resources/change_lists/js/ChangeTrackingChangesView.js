@@ -178,17 +178,10 @@ class ChangeTrackingChangesView extends React.Component {
 
 		if (this._getColumn() === 'site') {
 			nodes.sort((a, b) => {
-				const siteNameA = a.siteName;
-				const siteNameB = b.siteName;
-				const titleA = a.title;
-				const titleB = b.title;
-				const typeNameA = a.typeName.toUpperCase();
-				const typeNameB = b.typeName.toUpperCase();
-
 				if (
-					siteNameA < siteNameB ||
-					(siteNameA === this.globalSiteName &&
-						siteNameB !== this.globalSiteName)
+					a.siteName < b.siteName ||
+					(a.siteName === this.globalSiteName &&
+						b.siteName !== this.globalSiteName)
 				) {
 					if (ascending) {
 						return -1;
@@ -198,9 +191,9 @@ class ChangeTrackingChangesView extends React.Component {
 				}
 
 				if (
-					siteNameA > siteNameB ||
-					(siteNameA !== this.globalSiteName &&
-						siteNameB === this.globalSiteName)
+					a.siteName > b.siteName ||
+					(a.siteName !== this.globalSiteName &&
+						b.siteName === this.globalSiteName)
 				) {
 					if (ascending) {
 						return 1;
@@ -208,6 +201,9 @@ class ChangeTrackingChangesView extends React.Component {
 
 					return -1;
 				}
+
+				const typeNameA = a.typeName.toUpperCase();
+				const typeNameB = b.typeName.toUpperCase();
 
 				if (typeNameA < typeNameB) {
 					return -1;
@@ -217,11 +213,11 @@ class ChangeTrackingChangesView extends React.Component {
 					return 1;
 				}
 
-				if (titleA < titleB) {
+				if (a.title < b.title) {
 					return -1;
 				}
 
-				if (titleA > titleB) {
+				if (a.title > b.title) {
 					return 1;
 				}
 
@@ -230,8 +226,6 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 		else if (this._getColumn() === 'title') {
 			nodes.sort((a, b) => {
-				const titleA = a.title;
-				const titleB = b.title;
 				const typeNameA = a.typeName.toUpperCase();
 				const typeNameB = b.typeName.toUpperCase();
 
@@ -243,7 +237,7 @@ class ChangeTrackingChangesView extends React.Component {
 					return 1;
 				}
 
-				if (titleA < titleB) {
+				if (a.title < b.title) {
 					if (ascending) {
 						return -1;
 					}
@@ -251,12 +245,52 @@ class ChangeTrackingChangesView extends React.Component {
 					return 1;
 				}
 
-				if (titleA > titleB) {
+				if (a.title > b.title) {
 					if (ascending) {
 						return 1;
 					}
 
 					return -1;
+				}
+
+				return 0;
+			});
+		}
+		else if (this._getColumn() === 'user') {
+			nodes.sort((a, b) => {
+				if (a.userName < b.userName) {
+					if (ascending) {
+						return -1;
+					}
+
+					return 1;
+				}
+
+				if (a.userName > b.userName) {
+					if (ascending) {
+						return 1;
+					}
+
+					return -1;
+				}
+
+				const typeNameA = a.typeName.toUpperCase();
+				const typeNameB = b.typeName.toUpperCase();
+
+				if (typeNameA < typeNameB) {
+					return -1;
+				}
+
+				if (typeNameA > typeNameB) {
+					return 1;
+				}
+
+				if (a.title < b.title) {
+					return -1;
+				}
+
+				if (a.title > b.title) {
+					return 1;
 				}
 
 				return 0;
@@ -1046,6 +1080,14 @@ class ChangeTrackingChangesView extends React.Component {
 			label: Liferay.Language.get('title'),
 			onClick: () => this._handleSortColumnChange('title'),
 		});
+
+		if (this.state.viewType === 'changes') {
+			items.push({
+				active: this._getColumn() === 'user',
+				label: Liferay.Language.get('user'),
+				onClick: () => this._handleSortColumnChange('user'),
+			});
+		}
 
 		const dropdownItems = [
 			{

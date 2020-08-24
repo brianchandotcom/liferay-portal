@@ -42,6 +42,7 @@ import com.liferay.product.navigation.control.menu.web.internal.constants.Produc
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -66,8 +67,8 @@ public class PortletHeaderDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<Map<String, String>> getApps() throws PortalException {
-		List<Map<String, String>> apps = new ArrayList<>();
+	public List<Map<String, Object>> getApps() throws PortalException {
+		List<Map<String, Object>> apps = new ArrayList<>();
 
 		List<PanelApp> panelApps = getPanelApps();
 
@@ -76,7 +77,10 @@ public class PortletHeaderDisplayContext {
 				_themeDisplay.getCompanyId(), panelApp.getPortletId());
 
 			apps.add(
-				HashMapBuilder.put(
+				HashMapBuilder.<String, Object>put(
+					"active",
+					Objects.equals(panelApp.getPortletId(), getPortletId())
+				).put(
 					"href",
 					String.valueOf(panelApp.getPortletURL(_httpServletRequest))
 				).put(

@@ -432,7 +432,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-91000 and LPS-95002. User can edit number of columns a section has as well as padding options."
+	@description = "This is a test for LPS-91000, LPS-95002 and LPS-115224. User can edit number of columns a section has as well as padding options. The Fixed Width of Container should work in view mode."
 	@priority = "5"
 	test ChangeLayoutElementProperties {
 		property portal.acceptance = "true";
@@ -483,14 +483,6 @@ definition {
 				spaceBetweenColumns = "false");
 		}
 
-		task ("Edit the Container's properties") {
-			PageEditor.editLayoutContainer(
-				containerWidth = "Fixed Width",
-				paddingBottom = "4",
-				paddingTop = "2",
-				panel = "Styles");
-		}
-
 		task ("Assert the Row has exactly 3 columns and no space between columns") {
 			PageEditor.viewGridStyle(
 				columnCount = "3",
@@ -498,12 +490,62 @@ definition {
 				spaceBetweenColumns = "false");
 		}
 
+		task ("Edit the Container's properties") {
+			PageEditor.editLayoutContainer(
+				backgroundColor = "287D3C",
+				containerWidth = "Fixed Width",
+				paddingBottom = "4",
+				paddingTop = "2",
+				panel = "Styles");
+		}
+
+		task ("Assert the Margin Left and Margin Right fields are disabled") {
+			AssertNotEditable(
+				key_borderBottom = "Margin",
+				key_fieldLabel = "Left",
+				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD");
+
+			AssertNotEditable(
+				key_borderBottom = "Margin",
+				key_fieldLabel = "Right",
+				locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD");
+		}
+
 		task ("Assert the Container has Fixed Width, padding bottom 4 and padding top 2") {
 			PageEditor.viewContainerStyle(
+				backgroundColor = "rgb(40, 125, 60)",
 				containerWidth = "Fixed Width",
 				paddingBottom = "4",
 				paddingTop = "2",
 				position = "1");
+		}
+
+		task ("Assert Fixed Width of Container works in view mode") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			var screenWidth	= selenium.getElementWidth("//body");
+
+			var containerWidth	= selenium.getElementWidth("//div[contains(@class,'container')][contains(@class,'pb-4 pt-2')]");
+
+			TestUtils.assertNotEquals(
+				actual = "${containerWidth}",
+				expected = "${screenWidth}");
+
+			AssertVisible(locator1 = "//div[contains(@class,'container')][contains(@class,'pb-4 pt-2')]");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-4 pt-2')]",
+				locator2 = "background-color",
+				value1 = "rgba(40, 125, 60, 1)");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-4 pt-2')]",
+				locator2 = "max-width",
+				value1 = "${containerWidth}px");
 		}
 	}
 

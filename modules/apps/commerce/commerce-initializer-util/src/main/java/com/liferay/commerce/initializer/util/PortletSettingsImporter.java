@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
@@ -218,9 +219,17 @@ public class PortletSettingsImporter {
 					value = group.getName(serviceContext.getLanguageId());
 				}
 
+				String vocabularyName = value;
+
+				if (value != null) {
+					vocabularyName = value.trim();
+
+					vocabularyName = StringUtil.toLowerCase(vocabularyName);
+				}
+
 				AssetVocabulary assetVocabulary =
 					_assetVocabularyLocalService.getGroupVocabulary(
-						assetVocabularyGroupId, value);
+						assetVocabularyGroupId, vocabularyName);
 
 				value = String.valueOf(assetVocabulary.getVocabularyId());
 			}

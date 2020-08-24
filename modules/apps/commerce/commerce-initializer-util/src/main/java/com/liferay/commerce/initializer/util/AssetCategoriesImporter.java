@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -263,9 +264,17 @@ public class AssetCategoriesImporter {
 			String name, ServiceContext serviceContext)
 		throws Exception {
 
+		String vocabularyName = name;
+
+		if (name != null) {
+			vocabularyName = name.trim();
+
+			vocabularyName = StringUtil.toLowerCase(vocabularyName);
+		}
+
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.fetchGroupVocabulary(
-				serviceContext.getScopeGroupId(), name);
+				serviceContext.getScopeGroupId(), vocabularyName);
 
 		if (assetVocabulary == null) {
 			assetVocabulary = _assetVocabularyLocalService.addVocabulary(

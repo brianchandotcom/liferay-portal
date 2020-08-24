@@ -303,8 +303,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			}
 			else {
 				fragmentEntry = _fragmentEntryService.updateFragmentEntry(
-					fragmentEntry.getFragmentEntryId(), name, css, html, js,
-					cacheable, configuration,
+					fragmentEntry.getFragmentEntryId(), fragmentCollectionId,
+					name, css, html, js, cacheable, configuration,
 					fragmentEntry.getPreviewFileEntryId(), status);
 			}
 
@@ -676,8 +676,8 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			else {
 				fragmentComposition =
 					_fragmentCompositionService.updateFragmentComposition(
-						fragmentComposition.getFragmentCompositionId(), name,
-						description, definitionData,
+						fragmentComposition.getFragmentCompositionId(),
+						fragmentCollectionId, name, description, definitionData,
 						fragmentComposition.getPreviewFileEntryId(),
 						fragmentComposition.getStatus());
 			}

@@ -97,9 +97,9 @@ const mockCurrentPage = {
 		helpMessage:
 			'This number refers to the volume of people that find your page through a search engine.',
 		name: 'organic',
-		share: 0,
+		share: 90,
 		title: 'Organic',
-		value: 0,
+		value: 278256,
 	},
 	view: 'traffic-source-detail',
 };

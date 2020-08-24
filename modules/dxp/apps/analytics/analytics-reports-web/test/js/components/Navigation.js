@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, render, wait} from '@testing-library/react';
+import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import Navigation from '../../../src/main/resources/META-INF/resources/js/components/Navigation';
@@ -18,7 +18,7 @@ import {StoreContextProvider} from '../../../src/main/resources/META-INF/resourc
 
 import '@testing-library/jest-dom/extend-expect';
 
-const mockApi = {
+const mockEndpoints = {
 	getHistoricalReads: jest.fn(() =>
 		Promise.resolve({
 			analyticsReportsHistoricalReads: {
@@ -140,10 +140,6 @@ const mockTimeSpanOptions = [
 		key: 'last-7-days',
 		label: 'Last 7 Days',
 	},
-	{
-		key: 'last-24-hours',
-		label: 'Last 24 Hours',
-	},
 ];
 
 const mockTrafficSources = [
@@ -164,6 +160,47 @@ const mockTrafficSources = [
 	},
 ];
 
+const mockViewURLs = [
+	{
+		default: true,
+		languageId: 'en-US',
+		selected: true,
+		viewURL: 'http://localhost:8080/en/web/guest/-/basic-web-content',
+	},
+	{
+		default: false,
+		languageId: 'es-ES',
+		selected: false,
+		viewURL: 'http://localhost:8080/es/web/guest/-/contenido-web-basico',
+	},
+];
+
+const mockData = {
+	author: {
+		alt: 'Test Test',
+		authorId: '20125',
+	},
+	canonicalURL: 'http://localhost:8080/-/basic-web-content',
+	endpoints: mockEndpoints,
+	languageTag: 'en-US',
+	namespace:
+		'_com_liferay_analytics_reports_web_internal_portlet_AnalyticsReportsPortlet_',
+	page: {
+		plid: 19,
+	},
+	publishDate: '2020-08-23',
+	timeRange: {
+		endDate: '2020-08-23',
+		startDate: '2020-08-17',
+	},
+	timeSpanKey: 'last-7-days',
+	timeSpans: mockTimeSpanOptions,
+	title: 'Basic Web Content',
+	trafficSources: mockTrafficSources,
+	validAnalyticsConnection: true,
+	viewURLs: mockViewURLs,
+};
+
 describe('Navigation', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
@@ -172,14 +209,17 @@ describe('Navigation', () => {
 
 	it('displays an alert error message if there is no valid connection', () => {
 		const testProps = {
-			authorName: 'John Tester',
-			authorPortraitURL: '',
-			authorUserId: '',
-			defaultTimeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
-			defaultTimeSpanKey: 'last-7-days',
+			author: {
+				alt: 'John Tester',
+				authorId: '',
+				url: '',
+			},
 			languageTag: 'en-US',
-			pagePublishDate: 1581957977840,
+			page: {plid: 20},
+			pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
 			pageTitle: 'A testing page',
+			timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
+			timeSpanKey: 'last-7-days',
 		};
 
 		const {getByText} = render(
@@ -189,17 +229,18 @@ describe('Navigation', () => {
 				}}
 			>
 				<Navigation
-					api={{}}
-					authorName={testProps.authorName}
-					authorPortraitURL={testProps.authorPortraitURL}
-					authorUserId={testProps.authorUserId}
-					defaultTimeRange={testProps.defaultTimeRange}
-					defaultTimeSpanKey={testProps.defaultTimeSpanKey}
+					author={testProps.author}
+					endpoints={{}}
 					languageTag={testProps.languageTag}
+					onSelectedLanguageClick={() => {}}
+					page={testProps.page}
 					pagePublishDate={testProps.pagePublishDate}
 					pageTitle={testProps.pageTitle}
+					timeRange={testProps.timeRange}
+					timeSpanKey={testProps.timeSpanKey}
 					timeSpanOptions={mockTimeSpanOptions}
 					trafficSources={mockTrafficSources}
+					viewURLs={mockViewURLs}
 				/>
 			</ConnectionContext.Provider>
 		);
@@ -208,40 +249,44 @@ describe('Navigation', () => {
 	});
 
 	it('displays an alert warning message if some data is temporarily unavailable', async () => {
+		global.fetch = jest.fn(() =>
+			Promise.resolve({
+				json: () => Promise.resolve(mockData),
+			})
+		);
+
 		const testProps = {
-			authorName: 'John Tester',
-			authorPortraitURL: '',
-			authorUserId: '',
-			defaultTimeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
-			defaultTimeSpanKey: 'last-7-days',
+			author: {
+				alt: 'John Tester',
+				authorId: '',
+				url: '',
+			},
 			languageTag: 'en-US',
-			pagePublishDate: 1581957977840,
+			page: {plid: 20},
+			pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
 			pageTitle: 'A testing page',
+			timeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
+			timeSpanKey: 'last-7-days',
 		};
 
 		const {getByText} = render(
 			<StoreContextProvider>
 				<Navigation
-					api={mockApi}
-					authorName={testProps.authorName}
-					authorPortraitURL={testProps.authorPortraitURL}
-					authorUserId={testProps.authorUserId}
-					defaultTimeRange={testProps.defaultTimeRange}
-					defaultTimeSpanKey={testProps.defaultTimeSpanKey}
+					author={testProps.author}
+					endpoints={mockEndpoints}
 					languageTag={testProps.languageTag}
+					onSelectedLanguageClick={() => {}}
+					page={testProps.page}
 					pagePublishDate={testProps.pagePublishDate}
 					pageTitle={testProps.pageTitle}
+					timeRange={testProps.timeRange}
+					timeSpanKey={testProps.timeSpanKey}
 					timeSpanOptions={mockTimeSpanOptions}
 					trafficSources={mockTrafficSources}
+					viewURLs={mockViewURLs}
 				/>
 			</StoreContextProvider>
 		);
-
-		await wait(() => expect(mockApi.getTotalReads).toHaveBeenCalled());
-		await wait(() => expect(mockApi.getTotalViews).toHaveBeenCalled());
-
-		await wait(() => expect(mockApi.getHistoricalReads).toHaveBeenCalled());
-		await wait(() => expect(mockApi.getHistoricalViews).toHaveBeenCalled());
 
 		expect(
 			getByText('some-data-is-temporarily-unavailable')

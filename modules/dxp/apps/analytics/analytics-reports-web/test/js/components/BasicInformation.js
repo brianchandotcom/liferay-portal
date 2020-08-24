@@ -21,18 +21,20 @@ describe('BasicInformation', () => {
 
 	it('renders author, publish date and title', () => {
 		const testProps = {
-			authorName: 'John Tester',
-			authorPortraitURL: '',
-			authorUserId: '',
-			publishDate: 1581957977840,
+			author: {
+				alt: 'John Tester',
+				authorId: '',
+				url: '',
+			},
+			languageTag: 'en-US',
+			publishDate: 'Thu Feb 17 08:17:57 GMT 2020',
 			title: 'A testing page',
 		};
 
 		const {getByText} = render(
 			<BasicInformation
-				authorName={testProps.authorName}
-				authorPortraitURL={testProps.authorPortraitURL}
-				authorUserId={testProps.authorUserId}
+				author={testProps.author}
+				languageTag={testProps.languageTag}
 				publishDate={testProps.publishDate}
 				title={testProps.title}
 			/>
@@ -41,7 +43,7 @@ describe('BasicInformation', () => {
 		expect(getByText(testProps.title)).toBeInTheDocument();
 
 		expect(
-			getByText('authored-by-' + testProps.authorName)
+			getByText('authored-by-' + testProps.author.alt)
 		).toBeInTheDocument();
 
 		const formattedPublishDate = 'February 17, 2020';

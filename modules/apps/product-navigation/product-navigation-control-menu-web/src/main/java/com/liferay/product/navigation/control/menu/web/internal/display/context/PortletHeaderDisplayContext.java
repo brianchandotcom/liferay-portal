@@ -70,12 +70,7 @@ public class PortletHeaderDisplayContext {
 	public List<Map<String, Object>> getApps() throws PortalException {
 		List<Map<String, Object>> apps = new ArrayList<>();
 
-		List<PanelApp> panelApps = getPanelApps();
-
-		for (PanelApp panelApp : panelApps) {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				_themeDisplay.getCompanyId(), panelApp.getPortletId());
-
+		for (PanelApp panelApp : getPanelApps()) {
 			apps.add(
 				HashMapBuilder.<String, Object>put(
 					"active",
@@ -85,8 +80,15 @@ public class PortletHeaderDisplayContext {
 					String.valueOf(panelApp.getPortletURL(_httpServletRequest))
 				).put(
 					"label",
-					PortalUtil.getPortletTitle(
-						portlet, _themeDisplay.getLocale())
+					() -> {
+						Portlet portlet =
+							PortletLocalServiceUtil.getPortletById(
+								_themeDisplay.getCompanyId(),
+								panelApp.getPortletId());
+
+						return PortalUtil.getPortletTitle(
+							portlet, _themeDisplay.getLocale());
+					}
 				).build());
 		}
 

@@ -29,6 +29,7 @@ import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
@@ -554,13 +555,16 @@ public class LayoutsSEODisplayContext {
 	}
 
 	private String _getTypeLabel(String className) {
-		InfoItemClassDetails infoItemClassDetails =
+		InfoItemDetailsProvider infoItemClassDetailsProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
-				InfoItemClassDetails.class, className);
+				InfoItemDetailsProvider.class, className);
 
-		if (infoItemClassDetails == null) {
+		if (infoItemClassDetailsProvider == null) {
 			return StringPool.BLANK;
 		}
+
+		InfoItemClassDetails infoItemClassDetails =
+			infoItemClassDetailsProvider.getInfoItemClassDetails();
 
 		return infoItemClassDetails.getLabel(_themeDisplay.getLocale());
 	}

@@ -172,7 +172,7 @@ definition {
 
 		BlogsNavigator.gotoSelectFile();
 
-		ItemSelector.viewCurrentSiteFilter(
+		ItemSelector.viewCurrentSiteFilterResults(
 			imageFileName = "Document_2.jpg",
 			navTab = "Documents and Media",
 			noImageFileName = "Document_1.jpg");
@@ -439,6 +439,47 @@ definition {
 			locationName = "Test Depot Name",
 			navTab = "Documents and Media",
 			titleList = "Document_1.jpg,Document_2.jpg,DM Folder Name");
+	}
+
+	@description = "This test covers LPS-118808. It ensures that an image in the depot folder can be viewed through everywhere filter on a connected site."
+	@priority = "4"
+	test ViewFolderImageViaFilterResults {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-depot-name");
+
+		DMFolder.addCP(dmFolderName = "DM Folder Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			folderName = "DM Folder Name",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		BlogsNavigator.gotoAddEntry();
+
+		BlogsNavigator.gotoSelectFile();
+
+		ItemSelector.viewEverywhereFilterResults(
+			dmFolderName = "DM Folder Name",
+			imageFileName = "Document_2.jpg",
+			navTab = "Documents and Media");
 	}
 
 	@description = "This ensures that the location info of depot web content can be viewed through WCD on a connected site."

@@ -143,22 +143,22 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 			var allowedPriceContributorTypeNames =
 				'<%= StringUtil.merge(CPConstants.PRODUCT_OPTION_PRICE_CONTRIBUTOR_FIELD_TYPES, StringPool.COMMA) %>';
 			var allowedPriceContributorFieldTypeSelectOptions = allowedPriceContributorTypeNames.split(
-				StringPool.COMMA
+				'<%= StringPool.COMMA %>'
 			);
 			var allowedSkuContributorTypeNames =
 				'<%= StringUtil.merge(CPConstants.PRODUCT_OPTION_SKU_CONTRIBUTOR_FIELD_TYPES, StringPool.COMMA) %>';
 			var allowedSkuContributorFieldTypeSelectOptions = allowedSkuContributorTypeNames.split(
-				StringPool.COMMA
+				'<%= StringPool.COMMA %>'
 			);
 			var availableTypeNames =
 				'<%= cpDefinitionOptionRelDisplayContext.getDDMFormFieldTypeNames() %>';
 			var availableFieldTypeSelectOptions = availableTypeNames.split(
-				StringPool.COMMA
+				'<%= StringPool.COMMA %>'
 			);
 			var multipleValuesTypeNames =
 				'<%= StringUtil.merge(CPConstants.PRODUCT_OPTION_MULTIPLE_VALUES_FIELD_TYPES, StringPool.COMMA) %>';
 			var multipleValuesFieldTypeSelectOptions = multipleValuesTypeNames.split(
-				StringPool.COMMA
+				'<%= StringPool.COMMA %>'
 			);
 
 			var formFieldTypeSelect = document.getElementById(

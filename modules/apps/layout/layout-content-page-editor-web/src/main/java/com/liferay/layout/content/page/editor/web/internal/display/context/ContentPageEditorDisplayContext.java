@@ -330,7 +330,7 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/content_layout/edit_fragment_entry_link")
 			).put(
-				"frontendTokens", _getFrontendTokensJSONObject()
+				"frontendTokens", _getFrontendTokens()
 			).put(
 				"getAvailableListItemRenderersURL",
 				getResourceURL(
@@ -1454,9 +1454,10 @@ public class ContentPageEditorDisplayContext {
 		return _fragmentEntryLinks;
 	}
 
-	private JSONObject _getFrontendTokensJSONObject() throws Exception {
-		JSONObject frontendTokensJSONObject =
-			JSONFactoryUtil.createJSONObject();
+	private Map<String, Map<String, Object>> _getFrontendTokens()
+		throws Exception {
+
+		Map<String, Map<String, Object>> frontendTokens = new LinkedHashMap<>();
 
 		JSONObject frontendTokenValuesJSONObject =
 			JSONFactoryUtil.createJSONObject();
@@ -1517,7 +1518,7 @@ public class ContentPageEditorDisplayContext {
 							"defaultValue");
 					}
 
-					frontendTokensJSONObject.put(
+					frontendTokens.put(
 						name,
 						HashMapBuilder.put(
 							"editorType",
@@ -1533,7 +1534,7 @@ public class ContentPageEditorDisplayContext {
 			}
 		}
 
-		return frontendTokensJSONObject;
+		return frontendTokens;
 	}
 
 	private ItemSelectorCriterion _getImageItemSelectorCriterion() {

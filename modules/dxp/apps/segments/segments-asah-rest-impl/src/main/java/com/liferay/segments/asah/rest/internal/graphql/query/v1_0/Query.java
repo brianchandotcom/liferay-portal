@@ -21,15 +21,12 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.aggregation.Aggregation;
-import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.segments.asah.rest.dto.v1_0.Experiment;
 import com.liferay.segments.asah.rest.resource.v1_0.ExperimentResource;
 
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
@@ -79,7 +76,6 @@ public class Query {
 
 		public ExperimentPage(Page experimentPage) {
 			actions = experimentPage.getActions();
-			facets = experimentPage.getFacets();
 			items = experimentPage.getItems();
 			lastPage = experimentPage.getLastPage();
 			page = experimentPage.getPage();
@@ -89,9 +85,6 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Experiment> items;
@@ -146,8 +139,6 @@ public class Query {
 		_experimentResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
-	private BiFunction<Object, List<String>, Aggregation>
-		_aggregationBiFunction;
 	private com.liferay.portal.kernel.model.Company _company;
 	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private GroupLocalService _groupLocalService;

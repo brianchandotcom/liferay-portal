@@ -30,15 +30,12 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.aggregation.Aggregation;
-import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
@@ -277,7 +274,6 @@ public class Query {
 
 		public FormPage(Page formPage) {
 			actions = formPage.getActions();
-			facets = formPage.getFacets();
 			items = formPage.getItems();
 			lastPage = formPage.getLastPage();
 			page = formPage.getPage();
@@ -287,9 +283,6 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Form> items;
@@ -313,7 +306,6 @@ public class Query {
 
 		public FormDocumentPage(Page formDocumentPage) {
 			actions = formDocumentPage.getActions();
-			facets = formDocumentPage.getFacets();
 			items = formDocumentPage.getItems();
 			lastPage = formDocumentPage.getLastPage();
 			page = formDocumentPage.getPage();
@@ -323,9 +315,6 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<FormDocument> items;
@@ -349,7 +338,6 @@ public class Query {
 
 		public FormRecordPage(Page formRecordPage) {
 			actions = formRecordPage.getActions();
-			facets = formRecordPage.getFacets();
 			items = formRecordPage.getItems();
 			lastPage = formRecordPage.getLastPage();
 			page = formRecordPage.getPage();
@@ -359,9 +347,6 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<FormRecord> items;
@@ -385,7 +370,6 @@ public class Query {
 
 		public FormStructurePage(Page formStructurePage) {
 			actions = formStructurePage.getActions();
-			facets = formStructurePage.getFacets();
 			items = formStructurePage.getItems();
 			lastPage = formStructurePage.getLastPage();
 			page = formStructurePage.getPage();
@@ -395,9 +379,6 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<FormStructure> items;
@@ -501,8 +482,6 @@ public class Query {
 		_formStructureResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
-	private BiFunction<Object, List<String>, Aggregation>
-		_aggregationBiFunction;
 	private com.liferay.portal.kernel.model.Company _company;
 	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private GroupLocalService _groupLocalService;

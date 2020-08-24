@@ -36,15 +36,12 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.aggregation.Aggregation;
-import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
@@ -859,7 +856,6 @@ public class Query {
 
 		public AssigneePage(Page assigneePage) {
 			actions = assigneePage.getActions();
-			facets = assigneePage.getFacets();
 			items = assigneePage.getItems();
 			lastPage = assigneePage.getLastPage();
 			page = assigneePage.getPage();
@@ -869,9 +865,6 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Assignee> items;
@@ -895,7 +888,6 @@ public class Query {
 
 		public TransitionPage(Page transitionPage) {
 			actions = transitionPage.getActions();
-			facets = transitionPage.getFacets();
 			items = transitionPage.getItems();
 			lastPage = transitionPage.getLastPage();
 			page = transitionPage.getPage();
@@ -905,9 +897,6 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Transition> items;
@@ -931,7 +920,6 @@ public class Query {
 
 		public WorkflowDefinitionPage(Page workflowDefinitionPage) {
 			actions = workflowDefinitionPage.getActions();
-			facets = workflowDefinitionPage.getFacets();
 			items = workflowDefinitionPage.getItems();
 			lastPage = workflowDefinitionPage.getLastPage();
 			page = workflowDefinitionPage.getPage();
@@ -941,9 +929,6 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<WorkflowDefinition> items;
@@ -967,7 +952,6 @@ public class Query {
 
 		public WorkflowInstancePage(Page workflowInstancePage) {
 			actions = workflowInstancePage.getActions();
-			facets = workflowInstancePage.getFacets();
 			items = workflowInstancePage.getItems();
 			lastPage = workflowInstancePage.getLastPage();
 			page = workflowInstancePage.getPage();
@@ -977,9 +961,6 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<WorkflowInstance> items;
@@ -1003,7 +984,6 @@ public class Query {
 
 		public WorkflowLogPage(Page workflowLogPage) {
 			actions = workflowLogPage.getActions();
-			facets = workflowLogPage.getFacets();
 			items = workflowLogPage.getItems();
 			lastPage = workflowLogPage.getLastPage();
 			page = workflowLogPage.getPage();
@@ -1013,9 +993,6 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<WorkflowLog> items;
@@ -1039,7 +1016,6 @@ public class Query {
 
 		public WorkflowTaskPage(Page workflowTaskPage) {
 			actions = workflowTaskPage.getActions();
-			facets = workflowTaskPage.getFacets();
 			items = workflowTaskPage.getItems();
 			lastPage = workflowTaskPage.getLastPage();
 			page = workflowTaskPage.getPage();
@@ -1049,9 +1025,6 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<WorkflowTask> items;
@@ -1075,7 +1048,6 @@ public class Query {
 
 		public WorkflowTaskTransitionsPage(Page workflowTaskTransitionsPage) {
 			actions = workflowTaskTransitionsPage.getActions();
-			facets = workflowTaskTransitionsPage.getFacets();
 			items = workflowTaskTransitionsPage.getItems();
 			lastPage = workflowTaskTransitionsPage.getLastPage();
 			page = workflowTaskTransitionsPage.getPage();
@@ -1085,9 +1057,6 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<WorkflowTaskTransitions> items;
@@ -1246,8 +1215,6 @@ public class Query {
 		_workflowTaskTransitionsResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
-	private BiFunction<Object, List<String>, Aggregation>
-		_aggregationBiFunction;
 	private com.liferay.portal.kernel.model.Company _company;
 	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private GroupLocalService _groupLocalService;

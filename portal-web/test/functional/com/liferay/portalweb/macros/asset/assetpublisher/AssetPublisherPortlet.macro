@@ -676,36 +676,6 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro editConfigureTagsFilterPG {
-		AssetPublisherPortlet.gotoConfigurationPG();
-
-		Navigator.gotoNavTab(navTab = "Asset Selection");
-
-		Panel.expandPanel(panel = "Filter");
-
-		if (isSet(queryAndOperator)) {
-			Select(
-				locator1 = "APConfiguration#FILTER_QUERY_AND_OPERATOR",
-				value1 = "${queryAndOperator}");
-		}
-
-		if (isSet(queryContains)) {
-			Select(
-				locator1 = "APConfiguration#FILTER_QUERY_CONTAINS",
-				value1 = "${queryContains}");
-		}
-
-		Select(
-			locator1 = "APConfiguration#FILTER_CATEGORIZATION_SELECT",
-			value1 = "Tags");
-
-		AssetCategorization.selectTag(tagNameList = "${tagNameList}");
-
-		PortletEntry.save();
-
-		IFrame.selectTopFrame();
-	}
-
 	macro enableRSSSubscription {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

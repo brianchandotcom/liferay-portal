@@ -30,7 +30,7 @@ export default function Translation({
 
 	const selectedLanguage = useMemo(() => {
 		return (
-			viewURLs.find((language) => language.selected).languageId ||
+			viewURLs.find((language) => language.selected)?.languageId ||
 			defaultLanguage
 		);
 	}, [defaultLanguage, viewURLs]);

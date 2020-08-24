@@ -245,15 +245,15 @@ public class ViewChangesDisplayContext {
 			if (!siteNamesJSONObject.has(String.valueOf(groupId))) {
 				Group group = _groupLocalService.fetchGroup(groupId);
 
-				if (group != null) {
+				if (group == null) {
 					siteNamesJSONObject.put(
 						String.valueOf(groupId),
-						group.getName(_themeDisplay.getLocale()));
+						_language.get(_themeDisplay.getLocale(), "global"));
 				}
 				else {
 					siteNamesJSONObject.put(
 						String.valueOf(groupId),
-						_language.get(_themeDisplay.getLocale(), "global"));
+						group.getName(_themeDisplay.getLocale()));
 				}
 			}
 		}

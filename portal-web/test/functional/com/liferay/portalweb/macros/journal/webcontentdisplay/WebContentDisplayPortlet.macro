@@ -209,9 +209,13 @@ definition {
 			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
 			value1 = "Select");
 
-		SelectFrame(value1 = "relative=top");
+		WaitForElementPresent(
+			key_title = "Select Web Content",
+			locator1 = "IFrame#MODAL_ANY");
 
-		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(
+			key_title = "Select Web Content",
+			locator1 = "IFrame#MODAL_ANY");
 
 		var searchTerm = "${webContentTitle}";
 
@@ -260,9 +264,13 @@ definition {
 			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
 			value1 = "Select");
 
-		SelectFrame(value1 = "relative=top");
+		WaitForElementPresent(
+			key_title = "Select Web Content",
+			locator1 = "IFrame#MODAL_ANY");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(
+			key_title = "Select Web Content",
+			locator1 = "IFrame#MODAL_ANY");
 
 		Search.searchCP(searchTerm = "${webContentTitle}");
 
@@ -288,9 +296,13 @@ definition {
 			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
 			value1 = "Select");
 
-		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
+		WaitForElementPresent(
+			key_title = "Select Web Content",
+			locator1 = "IFrame#MODAL_ANY");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(
+			key_title = "Select Web Content",
+			locator1 = "IFrame#MODAL_ANY");
 
 		Click(
 			key_breadcrumbName = "Sites",
@@ -337,9 +349,13 @@ definition {
 			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
 			value1 = "Select");
 
-		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
+		WaitForElementPresent(
+			key_title = "Select Web Content",
+			locator1 = "IFrame#MODAL_ANY");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(
+			key_title = "Select Web Content",
+			locator1 = "IFrame#MODAL_ANY");
 
 		if (isSet(depotName)) {
 			var key_rowEntry = "${webContentTitle}";

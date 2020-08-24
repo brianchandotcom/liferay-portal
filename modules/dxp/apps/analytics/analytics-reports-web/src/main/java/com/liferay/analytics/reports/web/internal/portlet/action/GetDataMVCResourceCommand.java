@@ -279,7 +279,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 				DateTimeFormatter.ISO_DATE.format(timeRange.getStartLocalDate())
 			)
 		).put(
-			"timeSpanKey", timeRange.getTimeSpan()
+			"timeSpanKey", _getTimeSpanKey(timeRange)
 		).put(
 			"timeSpans", _getTimeSpansJSONArray(resourceBundle)
 		).put(
@@ -342,6 +342,12 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			resourceRequest, "timeSpanOffset");
 
 		return timeSpan.toTimeRange(timeSpanOffset);
+	}
+
+	private String _getTimeSpanKey(TimeRange timeRange) {
+		TimeSpan timeSpan = timeRange.getTimeSpan();
+
+		return timeSpan.getKey();
 	}
 
 	private JSONArray _getTimeSpansJSONArray(ResourceBundle resourceBundle) {

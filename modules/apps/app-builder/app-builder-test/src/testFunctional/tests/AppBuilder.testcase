@@ -2847,6 +2847,7 @@ definition {
 	@description = "View details of an entry in an App"
 	@priority = "5"
 	test ViewEntryDetails {
+		property portal.acceptance = "true";
 
 		var myFormViewName = "My Registration form";
 		var myTableViewName = "My display table";

@@ -81,6 +81,7 @@ export function ViewDataLayoutPageValues({
 						{fieldGroup.fields.map((field) => (
 							<FieldPreview
 								dataDefinition={{
+									...dataDefinition,
 									dataDefinitionFields:
 										fieldGroup.nestedDataDefinitionFields,
 								}}

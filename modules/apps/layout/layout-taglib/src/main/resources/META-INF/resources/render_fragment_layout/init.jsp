@@ -35,7 +35,6 @@ page import="com.liferay.layout.util.structure.LayoutStructure" %><%@
 page import="com.liferay.layout.util.structure.LayoutStructureItem" %><%@
 page import="com.liferay.layout.util.structure.RootLayoutStructureItem" %><%@
 page import="com.liferay.layout.util.structure.RowStyledLayoutStructureItem" %><%@
-page import="com.liferay.layout.util.structure.StyledLayoutStructureItem" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.util.List" %>

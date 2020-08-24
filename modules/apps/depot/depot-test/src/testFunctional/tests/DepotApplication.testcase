@@ -312,9 +312,9 @@ definition {
 
 		Click(locator1 = "Button#CHANGE");
 
-		SelectFrame(value1 = "relative=top");
+		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
 
-		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		AssertClick(
 			key_breadcrumbName = "Sites and Libraries",
@@ -326,7 +326,9 @@ definition {
 			locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
 			value1 = "Asset Library");
 
-		LexiconCard.clickCard(card = "Test Depot Name");
+		Click(
+			key_card = "Test Depot Name",
+			locator1 = "Card#CARD_TITLE");
 
 		AssertElementNotPresent(
 			key_contentName = "WC Depot Title",

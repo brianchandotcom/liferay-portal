@@ -239,38 +239,21 @@ public class ViewChangesDisplayContext {
 
 		JSONObject siteNamesJSONObject = JSONFactoryUtil.createJSONObject();
 
-		if (ctClosure != null) {
-			long groupClassNameId = _portal.getClassNameId(Group.class);
+		for (ModelInfo modelInfo : modelInfoMap.values()) {
+			long groupId = modelInfo._jsonObject.getLong("groupId");
 
-			for (long groupId :
-					classNameIdClassPKsMap.getOrDefault(
-						groupClassNameId, Collections.emptySet())) {
+			if (!siteNamesJSONObject.has(String.valueOf(groupId))) {
+				Group group = _groupLocalService.fetchGroup(groupId);
 
-				ModelInfo modelInfo = modelInfoMap.get(
-					new ModelInfoKey(groupClassNameId, groupId));
-
-				siteNamesJSONObject.put(
-					String.valueOf(groupId),
-					modelInfo._jsonObject.getString("title"));
-			}
-		}
-		else {
-			for (ModelInfo modelInfo : modelInfoMap.values()) {
-				long groupId = modelInfo._jsonObject.getLong("groupId");
-
-				if (!siteNamesJSONObject.has(String.valueOf(groupId))) {
-					Group group = _groupLocalService.fetchGroup(groupId);
-
-					if (group != null) {
-						siteNamesJSONObject.put(
-							String.valueOf(groupId),
-							group.getName(_themeDisplay.getLocale()));
-					}
-					else {
-						siteNamesJSONObject.put(
-							String.valueOf(groupId),
-							_language.get(_themeDisplay.getLocale(), "global"));
-					}
+				if (group != null) {
+					siteNamesJSONObject.put(
+						String.valueOf(groupId),
+						group.getName(_themeDisplay.getLocale()));
+				}
+				else {
+					siteNamesJSONObject.put(
+						String.valueOf(groupId),
+						_language.get(_themeDisplay.getLocale(), "global"));
 				}
 			}
 		}

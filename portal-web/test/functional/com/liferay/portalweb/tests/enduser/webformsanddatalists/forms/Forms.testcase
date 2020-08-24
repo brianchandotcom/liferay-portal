@@ -225,8 +225,7 @@ definition {
 
 		FormFields.viewRequiredAsterisk();
 
-		FormsAdminNavigator.gotoEditField(
-			fieldName = "${selectRepeatableName1}");
+		FormsAdminNavigator.gotoEditField(fieldName = "${selectRepeatableName1}");
 
 		Form.gotoAdvancedTab();
 
@@ -241,7 +240,8 @@ definition {
 			fieldPositionNumber = "4");
 
 		FormsAdminNavigator.gotoEditField(
-			fieldName = "Text Field Required", fieldPositionNumber = "2");
+			fieldName = "Text Field Required",
+			fieldPositionNumber = "2");
 
 		Form.gotoAdvancedTab();
 
@@ -250,7 +250,8 @@ definition {
 		Form.closeSidebar();
 
 		FormsAdminNavigator.gotoEditField(
-			fieldName = "Select Repeatable", fieldPositionNumber = "2");
+			fieldName = "Select Repeatable",
+			fieldPositionNumber = "2");
 
 		Form.gotoAdvancedTab();
 

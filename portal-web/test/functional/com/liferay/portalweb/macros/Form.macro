@@ -521,8 +521,7 @@ definition {
 	macro selectTranslation {
 		var key_localizedLanguage = "${localizedLanguage}";
 
-		ScrollWebElementIntoView(
-			locator1 = "Translation#UNSELECTED_LOCALE_ICON");
+		ScrollWebElementIntoView(locator1 = "Translation#UNSELECTED_LOCALE_ICON");
 
 		Click(locator1 = "Translation#UNSELECTED_LOCALE_ICON");
 	}

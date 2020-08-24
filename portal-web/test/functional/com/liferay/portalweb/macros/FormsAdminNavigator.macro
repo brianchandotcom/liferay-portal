@@ -73,8 +73,7 @@ definition {
 		var key_fieldPositionNumber = "${fieldPositionNumber}";
 
 		if (isSet(key_fieldPositionNumber)) {
-			ScrollWebElementIntoView(
-				locator1 = "Form#FIELD_BODY_IN_SPECIFIC_POSITION");
+			ScrollWebElementIntoView(locator1 = "Form#FIELD_BODY_IN_SPECIFIC_POSITION");
 
 			Click(locator1 = "Form#FIELD_BODY_IN_SPECIFIC_POSITION");
 		}

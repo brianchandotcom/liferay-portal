@@ -557,8 +557,6 @@ definition {
 		AppBuilderAdmin.deleteEntry(itemName = "my custom object");
 	}
 
-
-
 	@description = "Delete an existing Form View with no active publishing through the kebab/action menu"
 	@priority = "5"
 	test DeleteFormViewThroughActionMenu {

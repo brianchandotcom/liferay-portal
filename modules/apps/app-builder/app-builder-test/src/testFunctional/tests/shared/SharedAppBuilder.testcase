@@ -1043,148 +1043,6 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "5");
 	}
 
-	@description = "Reuse my object's existing fields when creating a new form view"
-	@priority = "5"
-	test ReuseExistingFormViewFields {
-		property test.name.skip.portal.instance = "AppBuilder#ReuseExistingFormViewFields";
-		property portal.acceptance = "true";
-
-		AppBuilderAdmin.addCustomObject(
-			customObjectName = "my custom object",
-			isCreatingFormView = "true",
-			isCreatingViaPlusIcon = "true");
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
-		FormViewBuilder.setFieldLabel(fieldLabel = "Full name");
-		FormViewBuilder.setFieldRequired();
-		FormViewBuilder.closeSidebar();
-		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Full name");
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
-		FormViewBuilder.setFieldLabel(fieldLabel = "Nickname");
-		FormViewBuilder.closeSidebar();
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
-		FormViewBuilder.setFieldLabel(fieldLabel = "Number of children");
-		FormViewBuilder.setFieldRequired();
-		FormViewBuilder.closeSidebar();
-		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Number of children");
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Select from List");
-		FormViewBuilder.setFieldLabel(fieldLabel = "Occupation");
-		FormViewBuilder.setFieldRequired();
-		for (var number : list "1,2,3") {
-			FormViewBuilder.editOptionsRow(
-				optionName = "Select ${number}",
-				optionValue = "Occupation ${number}",
-				rowNumber = "${number}");
-		}
-		FormViewBuilder.closeSidebar();
-		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Occupation");
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Single Selection");
-		FormViewBuilder.setFieldLabel(fieldLabel = "Marital Status");
-		FormViewBuilder.setFieldRequired();
-		for (var number : list "1,2,3") {
-			FormViewBuilder.editOptionsRow(
-				optionName = "Option ${number}",
-				optionValue = "Marital Status ${number}",
-				rowNumber = "${number}");
-		}
-		FormViewBuilder.closeSidebar();
-		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Marital Status");
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Date");
-		FormViewBuilder.setFieldLabel(fieldLabel = "Date of birth");
-		FormViewBuilder.setFieldRequired();
-		FormViewBuilder.closeSidebar();
-		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Date of birth");
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "Multiple Selection");
-		FormViewBuilder.setFieldLabel(fieldLabel = "Hobbies");
-		for (var number : list "1,2,3") {
-			FormViewBuilder.editOptionsRow(
-				optionName = "Multiple ${number}",
-				optionValue = "Hobby ${number}",
-				rowNumber = "${number}");
-		}
-		FormViewBuilder.setFieldRequired();
-		FormViewBuilder.closeSidebar();
-		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Hobbies");
-
-		FormViewBuilder.setName(formViewName = "Registration Form");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.add();
-
-		FormViewBuilder.addFormView(
-			fieldType = "Text",
-			formViewName = "My Form View");
-
-		AppBuilderAdmin.openItem(itemName = "My Form View");
-
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Hobbies");
-
-		FormViewBuilder.setFieldLabel(fieldLabel = "Hobbies edited");
-
-		FormViewBuilder.validateFormMultipleSelectionField(
-			fieldLabel = "Hobby 2",
-			fieldName = "Hobbies edited");
-
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Marital Status");
-		FormViewBuilder.validateFormMultipleSelectionField(
-			fieldLabel = "Marital Status 3",
-			fieldName = "Marital Status");
-		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Marital Status");
-
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Occupation");
-		FormViewBuilder.validateSelectFromListField(
-			optionValue = "Occupation 2",
-			rowNumber = "2");
-		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Occupation");
-
-		FormViewBuilder.editFieldInObject(
-			fieldLabel = "Testing Changed Name",
-			fieldName = "Nickname");
-
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Full name");
-		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Full name");
-
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Number of children");
-		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Number of children");
-
-		FormViewBuilder.addFieldToObject(fieldName = "Text");
-
-		FormViewBuilder.addFieldToObject(fieldName = "Select from List");
-
-		FormViewBuilder.searchObjectField(fieldValue = "Date of birth");
-		FormViewBuilder.validateSearchResult(fieldLabel = "Date of birth");
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Date of birth");
-		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Date of birth");
-
-		FormViewBuilder.save();
-
-		AppBuilderAdmin.openItem(itemName = "My Form View");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Occupation");
-		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Occupation");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Marital Status");
-		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Marital Status");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Full name");
-		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Full name");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Number of children");
-		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Number of children");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "Date of birth");
-		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Date of birth");
-	}
-
 	@description = "Delete fields from the Form View through the Delete options and assert its affect on other Form and Table views"
 	@priority = "5"
 	test DeleteFormViewFieldFromObject {
@@ -1351,6 +1209,148 @@ definition {
 		}
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+	}
+
+	@description = "Reuse my object's existing fields when creating a new form view"
+	@priority = "5"
+	test ReuseExistingFormViewFields {
+		property test.name.skip.portal.instance = "AppBuilder#ReuseExistingFormViewFields";
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Full name");
+		FormViewBuilder.setFieldRequired();
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Full name");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Nickname");
+		FormViewBuilder.closeSidebar();
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Number of children");
+		FormViewBuilder.setFieldRequired();
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Number of children");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Select from List");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Occupation");
+		FormViewBuilder.setFieldRequired();
+		for (var number : list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Select ${number}",
+				optionValue = "Occupation ${number}",
+				rowNumber = "${number}");
+		}
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Occupation");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Single Selection");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Marital Status");
+		FormViewBuilder.setFieldRequired();
+		for (var number : list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Option ${number}",
+				optionValue = "Marital Status ${number}",
+				rowNumber = "${number}");
+		}
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Marital Status");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Date");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Date of birth");
+		FormViewBuilder.setFieldRequired();
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Date of birth");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Multiple Selection");
+		FormViewBuilder.setFieldLabel(fieldLabel = "Hobbies");
+		for (var number : list "1,2,3") {
+			FormViewBuilder.editOptionsRow(
+				optionName = "Multiple ${number}",
+				optionValue = "Hobby ${number}",
+				rowNumber = "${number}");
+		}
+		FormViewBuilder.setFieldRequired();
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Hobbies");
+
+		FormViewBuilder.setName(formViewName = "Registration Form");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.add();
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text",
+			formViewName = "My Form View");
+
+		AppBuilderAdmin.openItem(itemName = "My Form View");
+
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Hobbies");
+
+		FormViewBuilder.setFieldLabel(fieldLabel = "Hobbies edited");
+
+		FormViewBuilder.validateFormMultipleSelectionField(
+			fieldLabel = "Hobby 2",
+			fieldName = "Hobbies edited");
+
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Marital Status");
+		FormViewBuilder.validateFormMultipleSelectionField(
+			fieldLabel = "Marital Status 3",
+			fieldName = "Marital Status");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Marital Status");
+
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Occupation");
+		FormViewBuilder.validateSelectFromListField(
+			optionValue = "Occupation 2",
+			rowNumber = "2");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Occupation");
+
+		FormViewBuilder.editFieldInObject(
+			fieldLabel = "Testing Changed Name",
+			fieldName = "Nickname");
+
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Full name");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Full name");
+
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Number of children");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Number of children");
+
+		FormViewBuilder.addFieldToObject(fieldName = "Text");
+
+		FormViewBuilder.addFieldToObject(fieldName = "Select from List");
+
+		FormViewBuilder.searchObjectField(fieldValue = "Date of birth");
+		FormViewBuilder.validateSearchResult(fieldLabel = "Date of birth");
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Date of birth");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Date of birth");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.openItem(itemName = "My Form View");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Occupation");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Occupation");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Marital Status");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Marital Status");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Full name");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Full name");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Number of children");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Number of children");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Date of birth");
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Date of birth");
 	}
 
 }

@@ -17,7 +17,9 @@ package com.liferay.analytics.reports.test.util;
 import com.liferay.analytics.reports.info.item.AnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.test.MockObject;
 import com.liferay.analytics.reports.test.analytics.reports.info.item.MockAnalyticsReportsInfoItem;
+import com.liferay.analytics.reports.test.info.item.provider.MockInfoItemFieldValuesProvider;
 import com.liferay.analytics.reports.test.layout.display.page.MockLayoutDisplayPageProvider;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.model.ClassName;
@@ -48,6 +50,8 @@ public class MockObjectUtil {
 
 		ServiceRegistration<AnalyticsReportsInfoItem<MockObject>>
 			analyticsReportsInfoItemServiceRegistration = null;
+		ServiceRegistration<InfoItemFieldValuesProvider<MockObject>>
+			infoItemFieldValuesProviderServiceRegistration = null;
 		ServiceRegistration<LayoutDisplayPageProvider<MockObject>>
 			layoutDisplayPageProviderServiceRegistration = null;
 
@@ -57,6 +61,12 @@ public class MockObjectUtil {
 					(Class<AnalyticsReportsInfoItem<MockObject>>)
 						(Class<?>)AnalyticsReportsInfoItem.class,
 					new MockAnalyticsReportsInfoItem(),
+					new HashMapDictionary<>());
+			infoItemFieldValuesProviderServiceRegistration =
+				bundleContext.registerService(
+					(Class<InfoItemFieldValuesProvider<MockObject>>)
+						(Class<?>)InfoItemFieldValuesProvider.class,
+					new MockInfoItemFieldValuesProvider(),
 					new HashMapDictionary<>());
 			layoutDisplayPageProviderServiceRegistration =
 				bundleContext.registerService(
@@ -70,6 +80,10 @@ public class MockObjectUtil {
 		finally {
 			if (analyticsReportsInfoItemServiceRegistration != null) {
 				analyticsReportsInfoItemServiceRegistration.unregister();
+			}
+
+			if (infoItemFieldValuesProviderServiceRegistration != null) {
+				infoItemFieldValuesProviderServiceRegistration.unregister();
 			}
 
 			if (layoutDisplayPageProviderServiceRegistration != null) {

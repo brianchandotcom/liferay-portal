@@ -107,12 +107,12 @@
 												vocabularyURL.setParameter("vocabularyId", String.valueOf(vocabulary.getVocabularyId()));
 												%>
 
-												<a class="nav-link text-truncate <%= (assetCategoriesDisplayContext.getVocabularyId() == vocabulary.getVocabularyId()) ? "active" : StringPool.BLANK %>" href="<%= vocabularyURL.toString() %>">
-													<%= HtmlUtil.escape(vocabulary.getTitle(locale)) %>
+												<a class="d-flex nav-link <%= (assetCategoriesDisplayContext.getVocabularyId() == vocabulary.getVocabularyId()) ? "active" : StringPool.BLANK %>" href="<%= vocabularyURL.toString() %>">
+													<span class="text-truncate"><%= HtmlUtil.escape(vocabulary.getTitle(locale)) %></span>
 
 													<liferay-ui:icon
 														icon="lock"
-														iconCssClass="text-muted"
+														iconCssClass="ml-1 text-muted"
 														markupView="lexicon"
 														message="this-vocabulary-can-only-be-edited-from-the-global-site"
 													/>
@@ -120,7 +120,7 @@
 													<c:if test="<%= vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL %>">
 														<liferay-ui:icon
 															icon="low-vision"
-															iconCssClass="text-muted"
+															iconCssClass="ml-1 text-muted"
 															markupView="lexicon"
 															message="for-internal-use-only"
 														/>
@@ -152,13 +152,13 @@
 												vocabularyURL.setParameter("vocabularyId", String.valueOf(vocabulary.getVocabularyId()));
 												%>
 
-												<a class="nav-link text-truncate <%= (assetCategoriesDisplayContext.getVocabularyId() == vocabulary.getVocabularyId()) ? "active" : StringPool.BLANK %>" href="<%= vocabularyURL.toString() %>">
-													<%= HtmlUtil.escape(vocabulary.getTitle(locale)) %>
+												<a class="d-flex nav-link <%= (assetCategoriesDisplayContext.getVocabularyId() == vocabulary.getVocabularyId()) ? "active" : StringPool.BLANK %>" href="<%= vocabularyURL.toString() %>">
+													<span class="text-truncate"><%= HtmlUtil.escape(vocabulary.getTitle(locale)) %></span>
 
 													<c:if test="<%= vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL %>">
 														<liferay-ui:icon
 															icon="low-vision"
-															iconCssClass="text-muted"
+															iconCssClass="ml-1 text-muted"
 															markupView="lexicon"
 															message="for-internal-use-only"
 														/>

@@ -1138,11 +1138,7 @@ definition {
 			locator1 = "FormFields#FIELD_HELPER_EDIT",
 			value1 = "Help Text");
 
-		Form.gotoPropertiesTab();
-
-		Type.clickAtType(
-			locator1 = "FormFields#FIELD_NAME_EDIT",
-			value1 = "Image Field Name");
+		Form.gotoAdvancedTab();
 
 		Click(locator1 = "FormFields#UPLOAD_PREDEFINED_VALUE");
 

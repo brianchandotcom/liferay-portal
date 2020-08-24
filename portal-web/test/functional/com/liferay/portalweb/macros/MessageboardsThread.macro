@@ -509,12 +509,12 @@ definition {
 			if ("${replyCount}" == "1") {
 				AssertTextEquals.assertPartialText(
 					locator1 = "MessageBoards#THREAD_LIST_REPLIES",
-					value1 = "${replyCount} Reply");
+					value1 = "${replyCount}");
 			}
 			else {
 				AssertTextEquals.assertPartialText(
 					locator1 = "MessageBoards#THREAD_LIST_REPLIES",
-					value1 = "${replyCount} Replies");
+					value1 = "${replyCount}");
 			}
 
 			AssertClick(
@@ -996,12 +996,12 @@ definition {
 		if ("${replyCount}" == "1") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "MessageBoards#THREAD_LIST_REPLIES",
-				value1 = "${replyCount} Reply");
+				value1 = "${replyCount}");
 		}
 		else {
 			AssertTextEquals.assertPartialText(
 				locator1 = "MessageBoards#THREAD_LIST_REPLIES",
-				value1 = "${replyCount} Replies");
+				value1 = "${replyCount}");
 		}
 
 		AssertElementPresent(locator1 = "MessageBoards#THREAD_LIST_VIEWS");
@@ -1358,7 +1358,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#THREAD_LIST_REPLIES",
-			value1 = "${replyCount} Reply");
+			value1 = "${replyCount}");
 
 		if ("${guestReply}" == "true") {
 			AssertTextEquals.assertPartialText(
@@ -1459,7 +1459,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#THREAD_LIST_REPLIES",
-			value1 = "1 Reply");
+			value1 = "1");
 
 		AssertClick(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",

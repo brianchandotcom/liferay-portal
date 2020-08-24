@@ -116,11 +116,7 @@ definition {
 	macro selectTag {
 		Click(locator1 = "AssetCategorization#TAGS_SELECT_BUTTON");
 
-		SelectFrameTop();
-
-		if (IsElementPresent(locator1 = "IFrame#SELECT_TAG")) {
-			SelectFrame(locator1 = "IFrame#SELECT_TAG");
-		}
+		Modal.selectFrameSpecific(modalTitle = "Tags");
 
 		for (var tagName : list "${tagNameList}") {
 			Check(
@@ -130,18 +126,11 @@ definition {
 
 		SelectFrameTop();
 
-		if (IsElementPresent(locator1 = "Button#DONE")) {
-			AssertClick(
-				locator1 = "Button#DONE",
-				value1 = "Done");
-		}
-		else {
-			Click(locator1 = "Icon#CLOSE");
-		}
+		Modal.selectFrameSpecific(modalTitle = "Asset Publisher");
 
-		if (IsElementPresent(locator1 = "IFrame#MODAL_IFRAME")) {
-			IFrame.selectModalFrame();
-		}
+		AssertClick(
+			locator1 = "Button#DONE",
+			value1 = "Done");
 
 		AssertTextEquals(
 			key_tagName = "${tagName}",

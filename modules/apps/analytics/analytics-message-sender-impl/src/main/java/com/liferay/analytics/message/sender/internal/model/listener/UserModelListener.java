@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 public class UserModelListener extends BaseEntityModelListener<User> {
 
 	@Override
-	public List<String> getAttributeNames() {
+	public List<String> getAttributeNames(long companyId) {
 		return getUserAttributeNames();
 	}
 

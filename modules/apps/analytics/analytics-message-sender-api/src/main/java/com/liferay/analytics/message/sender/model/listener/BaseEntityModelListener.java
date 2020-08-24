@@ -153,7 +153,10 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 			return;
 		}
 
-		addAnalyticsMessage("add", getAttributeNames(), model);
+		ShardedModel shardedModel = (ShardedModel)model;
+
+		addAnalyticsMessage(
+			"add", getAttributeNames(shardedModel.getCompanyId()), model);
 	}
 
 	@Override
@@ -186,16 +189,20 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 			return;
 		}
 
+		ShardedModel shardedModel = (ShardedModel)model;
+
 		try {
 			List<String> modifiedAttributeNames = _getModifiedAttributeNames(
-				getAttributeNames(), model,
+				getAttributeNames(shardedModel.getCompanyId()), model,
 				getModel((long)model.getPrimaryKeyObj()));
 
 			if (modifiedAttributeNames.isEmpty()) {
 				return;
 			}
 
-			addAnalyticsMessage("update", getAttributeNames(), model);
+			addAnalyticsMessage(
+				"update", getAttributeNames(shardedModel.getCompanyId()),
+				model);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
@@ -214,7 +221,7 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
 			(T model) -> addAnalyticsMessage(
-				"add", getAttributeNames(), model));
+				"add", getAttributeNames(companyId), model));
 
 		actionableDynamicQuery.performActions();
 	}

@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 public class GroupModelListener extends BaseEntityModelListener<Group> {
 
 	@Override
-	public List<String> getAttributeNames() {
+	public List<String> getAttributeNames(long companyId) {
 		return _attributeNames;
 	}
 

@@ -42,7 +42,7 @@ public class ExpandoRowModelListener
 	extends BaseEntityModelListener<ExpandoRow> {
 
 	@Override
-	public List<String> getAttributeNames() {
+	public List<String> getAttributeNames(long companyId) {
 		return Collections.singletonList("modifiedDate");
 	}
 

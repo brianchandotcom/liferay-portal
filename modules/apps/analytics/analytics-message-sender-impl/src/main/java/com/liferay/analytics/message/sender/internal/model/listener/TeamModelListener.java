@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 public class TeamModelListener extends BaseEntityModelListener<Team> {
 
 	@Override
-	public List<String> getAttributeNames() {
+	public List<String> getAttributeNames(long companyId) {
 		return _attributeNames;
 	}
 

@@ -38,7 +38,7 @@ public class OrganizationModelListener
 	extends BaseEntityModelListener<Organization> {
 
 	@Override
-	public List<String> getAttributeNames() {
+	public List<String> getAttributeNames(long companyId) {
 		return getOrganizationAttributeNames();
 	}
 

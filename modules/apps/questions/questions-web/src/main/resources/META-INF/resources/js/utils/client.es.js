@@ -828,7 +828,7 @@ export const getSectionBySectionTitleQuery = gql`
 			flatten: true
 			pageSize: 1
 			siteKey: $siteKey
-			sort: "title:desc"
+			sort: "title:asc"
 		) {
 			actions
 			items {
@@ -895,7 +895,7 @@ export const getSectionQuery = gql`
 
 export const getSectionsQuery = gql`
 	query messageBoardSections($siteKey: String!) {
-		messageBoardSections(siteKey: $siteKey, sort: "title:desc") {
+		messageBoardSections(siteKey: $siteKey, sort: "title:asc") {
 			actions
 			items {
 				description

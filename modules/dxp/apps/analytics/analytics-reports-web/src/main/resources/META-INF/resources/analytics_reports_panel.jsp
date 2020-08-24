@@ -23,9 +23,7 @@ AnalyticsReportsDisplayContext analyticsReportsDisplayContext = (AnalyticsReport
 <c:choose>
 	<c:when test="<%= AnalyticsReportsUtil.isAnalyticsSynced(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId()) %>">
 		<div id="<portlet:namespace />-analytics-reports-root">
-			<div class="inline-item my-5 p-5 w-100">
-				<span aria-hidden="true" class="loading-animation"></span>
-			</div>
+			<span aria-hidden="true" class="loading-animation loading-animation-sm"></span>
 
 			<react:component
 				module="js/AnalyticsReportsApp"

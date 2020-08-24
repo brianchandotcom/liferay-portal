@@ -305,9 +305,8 @@ export default function Chart({
 				<div className={lineChartWrapperClasses}>
 					{chartState.loading && (
 						<ClayLoadingIndicator
-							style={{
-								left: `${CHART_SIZES.yAxisWidth}px`,
-							}}
+							className="chart-loading-indicator"
+							small
 						/>
 					)}
 

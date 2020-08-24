@@ -130,6 +130,9 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 		public DisplayBuilder<T> display(String languageKey, Object value);
 
 		public DisplayBuilder<T> display(
+			String languageKey, String value, boolean escape);
+
+		public DisplayBuilder<T> display(
 			String languageKey,
 			UnsafeSupplier<Object, Exception> unsafeSupplier);
 
@@ -183,6 +186,35 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 				else {
 					writer.write(HtmlUtil.escape(String.valueOf(value)));
 				}
+
+				writer.write("</td></tr>");
+			}
+			catch (IOException ioException) {
+				throw new UncheckedIOException(ioException);
+			}
+
+			return this;
+		}
+
+		@Override
+		public DisplayBuilder<T> display(
+			String languageKey, String value, boolean escape) {
+
+			HttpServletResponse httpServletResponse =
+				_displayContext.getHttpServletResponse();
+
+			try {
+				Writer writer = httpServletResponse.getWriter();
+
+				writer.write("<tr><td>");
+				writer.write(LanguageUtil.get(_resourceBundle, languageKey));
+				writer.write("</td><td style=\"white-space: pre-line;\">");
+
+				if (escape) {
+					value = HtmlUtil.escape(value);
+				}
+
+				writer.write(value);
 
 				writer.write("</td></tr>");
 			}

@@ -16,11 +16,11 @@ package com.liferay.journal.web.internal.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
-import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -36,8 +36,6 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -93,37 +91,15 @@ public class JournalArticleCTDisplayRenderer
 	}
 
 	@Override
-	public void render(DisplayContext<JournalArticle> displayContext)
-		throws Exception {
-
-		super.render(displayContext);
-
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher("/ct_display/render.jsp");
-
-		HttpServletRequest httpServletRequest =
-			displayContext.getHttpServletRequest();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		httpServletRequest.setAttribute(
-			WebKeys.JOURNAL_ARTICLE_DISPLAY,
-			_journalContent.getDisplay(
-				displayContext.getModel(), "", "",
-				_language.getLanguageId(httpServletRequest), 1, null,
-				themeDisplay));
-
-		requestDispatcher.include(
-			httpServletRequest, displayContext.getHttpServletResponse());
-	}
-
-	@Override
 	protected void buildDisplay(DisplayBuilder<JournalArticle> displayBuilder) {
 		JournalArticle journalArticle = displayBuilder.getModel();
 
 		Locale locale = displayBuilder.getLocale();
+
+		JournalArticleDisplay journalContentDisplay =
+			_journalContent.getDisplay(
+				journalArticle, "", "", _language.getLanguageId(locale), 1,
+				null, null);
 
 		displayBuilder.display(
 			"name", journalArticle.getTitle(locale)
@@ -161,7 +137,7 @@ public class JournalArticleCTDisplayRenderer
 				return ddmTemplate.getName(locale);
 			}
 		).display(
-			"content", ""
+			"content", journalContentDisplay.getContent(), false
 		);
 	}
 
@@ -176,8 +152,5 @@ public class JournalArticleCTDisplayRenderer
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.journal.web)")
-	private ServletContext _servletContext;
 
 }

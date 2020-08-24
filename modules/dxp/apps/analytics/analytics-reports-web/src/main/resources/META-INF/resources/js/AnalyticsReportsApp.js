@@ -38,10 +38,14 @@ const dataReducer = (state, action) => {
 
 		case 'SET_DATA':
 			return {
-				data: action.data,
+				data: {
+					...action.data,
+					publishedToday:
+						new Date().toDateString() ===
+						new Date(action.data?.publishDate).toDateString(),
+				},
 				error: action.data?.error,
 				loading: false,
-				publishedToday: action.publishedToday,
 			};
 
 		default:
@@ -53,7 +57,6 @@ const initialState = {
 	data: null,
 	error: null,
 	loading: false,
-	publishedToday: false,
 };
 
 export default function ({context}) {
@@ -79,9 +82,6 @@ export default function ({context}) {
 				response.json().then((data) =>
 					safeDispatch({
 						data: data.context,
-						publishedToday:
-							new Date().toDateString() ===
-							new Date(data.context.publishDate).toDateString(),
 						type: 'SET_DATA',
 					})
 				)
@@ -129,7 +129,7 @@ export default function ({context}) {
 			>
 				<StoreContextProvider
 					value={{
-						publishedToday: state.publishedToday,
+						publishedToday: state.data.publishedToday,
 					}}
 				>
 					<div className="analytics-reports-app">

@@ -40,10 +40,6 @@ export default function Translation({
 		timeSpanKey,
 	});
 
-	const timeSpanOffset = useMemo(() => {
-		return chartState.timeSpanOffset;
-	}, [chartState]);
-
 	return (
 		<ClayLayout.ContentRow>
 			<ClayLayout.ContentCol expand>
@@ -86,7 +82,7 @@ export default function Translation({
 									onSelectedLanguageClick(
 										language.viewURL,
 										timeSpanKey,
-										timeSpanOffset
+										chartState.timeSpanOffset
 									);
 								}}
 								symbolLeft={language.languageId.toLowerCase()}

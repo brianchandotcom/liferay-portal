@@ -21,12 +21,7 @@ import Main from './Main';
 
 export default function Navigation({
 	author,
-	endpoints: {
-		getAnalyticsReportsHistoricalReadsURL,
-		getAnalyticsReportsHistoricalViewsURL,
-		getAnalyticsReportsTotalReadsURL,
-		getAnalyticsReportsTotalViewsURL,
-	},
+	endpoints,
 	languageTag,
 	namespace,
 	onSelectedLanguageClick = () => {},
@@ -50,12 +45,7 @@ export default function Navigation({
 	const [trafficSourceName, setTrafficSourceName] = useState('');
 
 	const api = APIService({
-		endpoints: {
-			getAnalyticsReportsHistoricalReadsURL,
-			getAnalyticsReportsHistoricalViewsURL,
-			getAnalyticsReportsTotalReadsURL,
-			getAnalyticsReportsTotalViewsURL,
-		},
+		endpoints,
 		namespace,
 		page,
 	});

@@ -11,16 +11,16 @@
 
 import {fetch} from 'frontend-js-web';
 
-function APIService({endpoints, namespace, page}) {
-	const {
+function APIService({
+	endpoints: {
 		getAnalyticsReportsHistoricalReadsURL,
 		getAnalyticsReportsHistoricalViewsURL,
 		getAnalyticsReportsTotalReadsURL,
 		getAnalyticsReportsTotalViewsURL,
-	} = endpoints;
-
-	const {plid} = page;
-
+	},
+	namespace,
+	page: {plid},
+}) {
 	function getHistoricalReads({timeSpanKey, timeSpanOffset}) {
 		const body = {plid, timeSpanKey, timeSpanOffset};
 

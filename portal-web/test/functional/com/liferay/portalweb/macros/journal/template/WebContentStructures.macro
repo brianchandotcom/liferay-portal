@@ -121,9 +121,14 @@ definition {
 
 		Button.clickSave();
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
+		if (isSet(depotName)) {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${depotName}");
+		}
+		else {
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Web Content");
+		}
 
 		Navigator.gotoNavItem(navItem = "Structures");
 

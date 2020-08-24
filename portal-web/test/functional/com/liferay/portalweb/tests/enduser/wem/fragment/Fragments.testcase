@@ -350,7 +350,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98241. Contributed fragment components Heading can be configured."
+	@description = "This is a test for LPS-98241 and LPS-115224. Contributed fragment components Heading can be configured. The common fragment styles settings of fragment should be shown in view mode."
 	@priority = "4"
 	test ConfigureBasicComponentHeading {
 		task ("Add a content page") {
@@ -390,7 +390,24 @@ definition {
 				textColor = "rgb(108, 117, 125)");
 		}
 
+		task ("Assert the fragment styles are shown in view mode") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertVisible(locator1 = "//div[contains(@class,'text-right')][//h2[contains(@class,'component-heading')]]");
+
+			AssertCssValue(
+				locator1 = "//div[contains(@class,'text-right')][//h2[contains(@class,'component-heading')]]",
+				locator2 = "color",
+				value1 = "rgba(108, 117, 125, 1)");
+		}
+
 		task ("Remove the fragment") {
+			ContentPages.clickPencil();
+
 			PageEditor.removeFragment(fragmentName = "Heading");
 		}
 

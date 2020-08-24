@@ -570,14 +570,14 @@ public class ViewChangesDisplayContext {
 				).put(
 					"modelKey", modelInfo._modelKey
 				).put(
-					"site", _isSite(model)
-				).put(
 					"title",
 					_ctDisplayRendererRegistry.getTitle(
 						CTConstants.CT_COLLECTION_ID_PRODUCTION,
 						CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
 						_themeDisplay.getLocale(), model, modelClassNameId)
 				);
+
+				modelInfo._site = _isSite(model);
 			}
 			else {
 				long ctCollectionId =
@@ -613,8 +613,6 @@ public class ViewChangesDisplayContext {
 					"modelKey", modelInfo._modelKey
 				).put(
 					"modifiedTime", modifiedDate.getTime()
-				).put(
-					"site", _isSite(model)
 				).put(
 					"timeDescription",
 					_language.format(
@@ -671,6 +669,8 @@ public class ViewChangesDisplayContext {
 							"dropdownItems", dropdownItemsJSONArray);
 					}
 				}
+
+				modelInfo._site = _isSite(model);
 			}
 		}
 	}
@@ -682,7 +682,7 @@ public class ViewChangesDisplayContext {
 		ModelInfo groupModelInfo = modelInfoMap.get(
 			new ModelInfoKey(groupClassNameId, groupId));
 
-		if (!groupModelInfo._jsonObject.getBoolean("site")) {
+		if (!groupModelInfo._site) {
 			return;
 		}
 
@@ -742,6 +742,7 @@ public class ViewChangesDisplayContext {
 		private boolean _ctEntry;
 		private JSONObject _jsonObject;
 		private final int _modelKey;
+		private boolean _site;
 
 	}
 

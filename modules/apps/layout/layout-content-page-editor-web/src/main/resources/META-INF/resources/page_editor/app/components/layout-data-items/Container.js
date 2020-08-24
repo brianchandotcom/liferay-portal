@@ -50,15 +50,19 @@ const Container = React.forwardRef(
 			marginRight,
 			marginTop,
 			maxHeight,
+			maxWidth,
 			minHeight,
+			minWidth,
 			opacity,
 			overflow,
 			paddingBottom,
 			paddingLeft,
 			paddingRight,
 			paddingTop,
+			shadow,
 			textAlign,
 			textColor,
+			width,
 		} = itemConfig.styles;
 
 		const {widthType} = itemConfig;
@@ -110,6 +114,13 @@ const Container = React.forwardRef(
 		style.minHeight = minHeight;
 		style.opacity = opacity;
 		style.overflow = overflow;
+
+		if (!withinTopper) {
+			style.boxShadow = getFrontendTokenValue(shadow);
+			style.maxWidth = maxWidth;
+			style.minWidth = minWidth;
+			style.width = width;
+		}
 
 		if (backgroundImageValue) {
 			style.backgroundImage = `url(${backgroundImageValue})`;

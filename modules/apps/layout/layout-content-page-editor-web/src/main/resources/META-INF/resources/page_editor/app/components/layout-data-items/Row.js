@@ -28,132 +28,148 @@ import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import loadBackgroundImage from '../../utils/loadBackgroundImage';
 import {useCustomRowContext} from '../ResizeContext';
 
-const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
-	const customRow = useCustomRowContext();
-	const selectedViewportSize = useSelector(
-		(state) => state.selectedViewportSize
-	);
+const Row = React.forwardRef(
+	({children, className, item, layoutData, withinTopper = false}, ref) => {
+		const customRow = useCustomRowContext();
+		const selectedViewportSize = useSelector(
+			(state) => state.selectedViewportSize
+		);
 
-	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
-	const {modulesPerRow, reverseOrder} = itemConfig;
+		const itemConfig = getResponsiveConfig(
+			item.config,
+			selectedViewportSize
+		);
+		const {modulesPerRow, reverseOrder} = itemConfig;
 
-	const {
-		backgroundColor,
-		backgroundImage,
-		borderColor,
-		borderRadius,
-		borderWidth,
-		fontFamily,
-		fontSize,
-		fontWeight,
-		height,
-		marginBottom,
-		marginLeft,
-		marginRight,
-		marginTop,
-		maxHeight,
-		minHeight,
-		opacity,
-		overflow,
-		paddingBottom,
-		paddingLeft,
-		paddingRight,
-		paddingTop,
-		shadow,
-		textAlign,
-		textColor,
-	} = itemConfig.styles;
+		const {
+			backgroundColor,
+			backgroundImage,
+			borderColor,
+			borderRadius,
+			borderWidth,
+			fontFamily,
+			fontSize,
+			fontWeight,
+			height,
+			marginBottom,
+			marginLeft,
+			marginRight,
+			marginTop,
+			maxHeight,
+			maxWidth,
+			minHeight,
+			minWidth,
+			opacity,
+			overflow,
+			paddingBottom,
+			paddingLeft,
+			paddingRight,
+			paddingTop,
+			shadow,
+			textAlign,
+			textColor,
+			width,
+		} = itemConfig.styles;
 
-	const [backgroundImageValue, setBackgroundImageValue] = useState('');
+		const [backgroundImageValue, setBackgroundImageValue] = useState('');
 
-	useEffect(() => {
-		loadBackgroundImage(backgroundImage).then(setBackgroundImageValue);
-	}, [backgroundImage]);
+		useEffect(() => {
+			loadBackgroundImage(backgroundImage).then(setBackgroundImageValue);
+		}, [backgroundImage]);
 
-	const style = {};
+		const style = {};
 
-	style.backgroundColor = getFrontendTokenValue(backgroundColor);
-	style.border = `solid ${borderWidth}px`;
-	style.borderColor = getFrontendTokenValue(borderColor);
-	style.borderRadius = getFrontendTokenValue(borderRadius);
-	style.boxShadow = getFrontendTokenValue(shadow);
-	style.color = getFrontendTokenValue(textColor);
-	style.fontFamily = getFrontendTokenValue(fontFamily);
-	style.fontSize = getFrontendTokenValue(fontSize);
-	style.fontWeight = getFrontendTokenValue(fontWeight);
-	style.height = height;
-	style.maxHeight = maxHeight;
-	style.minHeight = minHeight;
-	style.opacity = opacity;
-	style.overflow = overflow;
+		style.backgroundColor = getFrontendTokenValue(backgroundColor);
+		style.border = `solid ${borderWidth}px`;
+		style.borderColor = getFrontendTokenValue(borderColor);
+		style.borderRadius = getFrontendTokenValue(borderRadius);
+		style.boxShadow = getFrontendTokenValue(shadow);
+		style.color = getFrontendTokenValue(textColor);
+		style.fontFamily = getFrontendTokenValue(fontFamily);
+		style.fontSize = getFrontendTokenValue(fontSize);
+		style.fontWeight = getFrontendTokenValue(fontWeight);
+		style.height = height;
+		style.maxHeight = maxHeight;
+		style.minHeight = minHeight;
+		style.opacity = opacity;
+		style.overflow = overflow;
 
-	if (backgroundImageValue) {
-		style.backgroundImage = `url(${backgroundImageValue})`;
-		style.backgroundPosition = '50% 50%';
-		style.backgroundRepeat = 'no-repeat';
-		style.backgroundSize = 'cover';
+		if (!withinTopper) {
+			style.maxWidth = maxWidth;
+			style.minWidth = minWidth;
+			style.width = width;
+		}
+
+		if (backgroundImageValue) {
+			style.backgroundImage = `url(${backgroundImageValue})`;
+			style.backgroundPosition = '50% 50%';
+			style.backgroundRepeat = 'no-repeat';
+			style.backgroundSize = 'cover';
+		}
+
+		const rowContent = (
+			<ClayLayout.Row
+				className={classNames(
+					className,
+					`mb-${marginBottom}`,
+					`mt-${marginTop}`,
+					`pb-${paddingBottom}`,
+					`pl-${paddingLeft}`,
+					`pr-${paddingRight}`,
+					`pt-${paddingTop}`,
+					{
+						empty:
+							item.config.numberOfColumns === modulesPerRow &&
+							!item.children.some(
+								(childId) =>
+									layoutData.items[childId].children.length
+							) &&
+							!height,
+						'flex-column': customRow && modulesPerRow === 1,
+						'flex-column-reverse':
+							item.config.numberOfColumns === 2 &&
+							modulesPerRow === 1 &&
+							reverseOrder,
+						[`ml-${marginLeft}`]: marginLeft !== '0',
+						[`mr-${marginRight}`]: marginRight !== '0',
+						'no-gutters': !item.config.gutters,
+						[textAlign]: textAlign !== 'none',
+					}
+				)}
+				ref={ref}
+				style={style}
+			>
+				{children}
+			</ClayLayout.Row>
+		);
+
+		const masterLayoutData = useSelector(
+			(state) => state.masterLayout?.masterLayoutData
+		);
+
+		const masterParent = useMemo(() => {
+			const dropZone =
+				masterLayoutData &&
+				masterLayoutData.items[masterLayoutData.rootItems.dropZone];
+
+			return dropZone
+				? getItemParent(dropZone, masterLayoutData)
+				: undefined;
+		}, [masterLayoutData]);
+
+		const shouldAddContainer = useSelector(
+			(state) => !getItemParent(item, state.layoutData) && !masterParent
+		);
+
+		return shouldAddContainer ? (
+			<ClayLayout.ContainerFluid className="p-0" size={false}>
+				{rowContent}
+			</ClayLayout.ContainerFluid>
+		) : (
+			rowContent
+		);
 	}
-
-	const rowContent = (
-		<ClayLayout.Row
-			className={classNames(
-				className,
-				`mb-${marginBottom}`,
-				`mt-${marginTop}`,
-				`pb-${paddingBottom}`,
-				`pl-${paddingLeft}`,
-				`pr-${paddingRight}`,
-				`pt-${paddingTop}`,
-				{
-					empty:
-						item.config.numberOfColumns === modulesPerRow &&
-						!item.children.some(
-							(childId) =>
-								layoutData.items[childId].children.length
-						) &&
-						!height,
-					'flex-column': customRow && modulesPerRow === 1,
-					'flex-column-reverse':
-						item.config.numberOfColumns === 2 &&
-						modulesPerRow === 1 &&
-						reverseOrder,
-					[`ml-${marginLeft}`]: marginLeft !== '0',
-					[`mr-${marginRight}`]: marginRight !== '0',
-					'no-gutters': !item.config.gutters,
-					[textAlign]: textAlign !== 'none',
-				}
-			)}
-			ref={ref}
-			style={style}
-		>
-			{children}
-		</ClayLayout.Row>
-	);
-
-	const masterLayoutData = useSelector(
-		(state) => state.masterLayout?.masterLayoutData
-	);
-
-	const masterParent = useMemo(() => {
-		const dropZone =
-			masterLayoutData &&
-			masterLayoutData.items[masterLayoutData.rootItems.dropZone];
-
-		return dropZone ? getItemParent(dropZone, masterLayoutData) : undefined;
-	}, [masterLayoutData]);
-
-	const shouldAddContainer = useSelector(
-		(state) => !getItemParent(item, state.layoutData) && !masterParent
-	);
-
-	return shouldAddContainer ? (
-		<ClayLayout.ContainerFluid className="p-0" size={false}>
-			{rowContent}
-		</ClayLayout.ContainerFluid>
-	) : (
-		rowContent
-	);
-});
+);
 
 Row.propTypes = {
 	item: getLayoutDataItemPropTypes({

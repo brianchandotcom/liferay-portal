@@ -670,7 +670,7 @@
 				"dataType": "string",
 				"dependencies": [
 				],
-				"label": "text-body",
+				"label": "text-color",
 				"name": "textColor",
 				"responsive": false,
 				"type": "colorPicker"

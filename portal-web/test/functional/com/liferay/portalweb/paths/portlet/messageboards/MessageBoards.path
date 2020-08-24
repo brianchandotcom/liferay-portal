@@ -176,7 +176,7 @@
 </tr>
 <tr>
 	<td>THREAD_LIST_REPLIES</td>
-	<td>//div[@data-qa-id='rowItemContent'][contains(.,'${key_threadSubject}')]//div[2][contains(.,'${key_repliesCount}')] | //div[@data-qa-id='rowItemContent'][contains(.,'${key_threadSubject}')]//div[3][contains(.,'${key_repliesCount}')]</td>
+	<td>//div[@data-qa-id='rowItemContent'][contains(.,'${key_threadSubject}')]//div[2][contains(.,'${key_repliesCount}')] | //div[@data-qa-id='rowItemContent'][contains(.,'${key_threadSubject}')]//span[contains(.,'${key_repliesCount}')]</td>
 	<td></td>
 </tr>
 <tr>

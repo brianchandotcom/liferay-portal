@@ -50,6 +50,7 @@ import com.liferay.dynamic.data.mapping.util.comparator.StructureLayoutNameCompa
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -268,7 +269,7 @@ public class DataLayoutResourceImpl
 		ddmFormTemplateContext.remove("fieldTypes");
 
 		return Response.ok(
-			ddmFormTemplateContext
+			JSONFactoryUtil.looseSerializeDeep(ddmFormTemplateContext)
 		).build();
 	}
 

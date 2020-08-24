@@ -49,11 +49,13 @@ import com.liferay.portal.kernel.service.PortletItemLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -586,8 +588,13 @@ public class AddContentPanelDisplayContext {
 	}
 
 	private String _getRedirectURL() throws Exception {
-		return PortalUtil.getLayoutFullURL(
+		String redirectURL = PortalUtil.getLayoutFullURL(
 			_themeDisplay.getLayout(), _themeDisplay);
+
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		return HttpUtil.addParameter(
+			redirectURL, "portletResource", portletDisplay.getId());
 	}
 
 	private List<Map<String, Object>> _getWidgetCategories(

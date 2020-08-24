@@ -168,8 +168,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			if (Validator.isNotNull(redirect)) {
 				if (cmd.equals(Constants.ADD) && (entry != null)) {
-					String portletId = ParamUtil.getString(
-						actionRequest, "referringPortletResource");
+					String portletId = _http.getParameter(
+						redirect, "portletResource", false);
 
 					String namespace = _portal.getPortletNamespace(portletId);
 

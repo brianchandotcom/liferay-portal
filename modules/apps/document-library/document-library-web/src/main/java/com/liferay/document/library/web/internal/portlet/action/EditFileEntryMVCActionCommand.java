@@ -304,8 +304,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 					if (Validator.isNotNull(redirect)) {
 						if (cmd.equals(Constants.ADD) && (fileEntry != null)) {
-							String portletResource = ParamUtil.getString(
-								actionRequest, "referringPortletResource");
+							String portletResource = _http.getParameter(
+								redirect, "portletResource", false);
 
 							String namespace = _portal.getPortletNamespace(
 								portletResource);

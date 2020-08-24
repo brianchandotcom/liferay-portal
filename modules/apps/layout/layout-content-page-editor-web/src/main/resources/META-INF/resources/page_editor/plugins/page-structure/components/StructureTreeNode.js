@@ -76,7 +76,7 @@ export default function StructureTreeNode({node}) {
 		name: node.name,
 		origin: ITEM_ACTIVATION_ORIGINS.structureTree,
 		parentId: node.parentItemId,
-		type: node.type,
+		type: node.type || node.itemType,
 	};
 
 	const {isOverTarget, targetPosition, targetRef} = useDropTarget(

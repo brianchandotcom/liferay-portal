@@ -198,11 +198,11 @@ function visit(
 				expanded: childId === activeItemId,
 				icon: EDITABLE_TYPE_ICONS[type],
 				id: childId,
+				itemType: ITEM_TYPES.editable,
 				name: EDITABLE_TYPE_LABELS[type],
 				onHoverNode,
 				parentId: item.parentId,
 				removable: false,
-				type: ITEM_TYPES.editable,
 			});
 		});
 

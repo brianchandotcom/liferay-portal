@@ -133,6 +133,10 @@ definition {
 		Navigator.gotoNavItem(navItem = "Asset Libraries");
 
 		SiteSelector.selectSite(site = "${depotName}");
+
+		Click(
+			key_breadcrumbName = "Asset Libraries",
+			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
 	}
 
 	macro gotoEdit {

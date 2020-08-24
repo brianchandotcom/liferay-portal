@@ -14,7 +14,6 @@
 
 package com.liferay.analytics.settings.internal.model;
 
-import com.liferay.analytics.message.sender.util.AnalyticsExpandoBridgeUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserWrapper;
 
@@ -34,10 +33,6 @@ public class AnalyticsUserImpl extends UserWrapper {
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> modelAttributes = super.getModelAttributes();
-
-		modelAttributes.put(
-			"expando",
-			AnalyticsExpandoBridgeUtil.getAttributes(super.getExpandoBridge()));
 
 		modelAttributes.put("memberships", _memberships);
 

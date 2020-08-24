@@ -533,6 +533,12 @@ public class WorkflowDefinitionDisplayContext {
 			new WorkflowDefinitionScopePredicate(
 				WorkflowDefinitionConstants.SCOPE_ALL);
 
+		if ((status == WorkflowConstants.STATUS_ANY) &&
+			Validator.isNull(title) && Validator.isNull(description)) {
+
+			return predicate;
+		}
+
 		predicate = predicate.and(new WorkflowDefinitionTitlePredicate(title));
 
 		if (andOperator) {
@@ -551,18 +557,9 @@ public class WorkflowDefinitionDisplayContext {
 		List<WorkflowDefinition> workflowDefinitions, String description,
 		String title, int status, boolean andOperator) {
 
-		if ((status == WorkflowConstants.STATUS_ANY) &&
-			Validator.isNull(title) && Validator.isNull(description)) {
-
-			return workflowDefinitions;
-		}
-
-		Predicate<WorkflowDefinition> predicate = createPredicate(
-			description, title, status, andOperator);
-
 		return ListUtil.filter(
 			workflowDefinitions,
-			workflowDefinition -> predicate.test(workflowDefinition));
+			createPredicate(description, title, status, andOperator));
 	}
 
 	protected String getConfigureAssignementLink() {

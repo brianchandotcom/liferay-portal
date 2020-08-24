@@ -232,7 +232,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 						}
 
 						if (folder != null) {
-							PortletURL viewFolderURL = EntryURLUtil.getFolderPortletURL(folder, portletURL, liferayPortletRequest, liferayPortletResponse);
+							PortletURL viewFolderURL = EntryURLUtil.getFolderPortletURL(folder, liferayPortletRequest, liferayPortletResponse, portletURL);
 						%>
 
 							<liferay-ui:search-container-column-text
@@ -315,7 +315,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 								row.setCssClass("entry-card lfr-asset-folder");
 
 								if (folder != null) {
-									PortletURL viewFolderURL = EntryURLUtil.getFolderPortletURL(folder, portletURL, liferayPortletRequest, liferayPortletResponse);
+									PortletURL viewFolderURL = EntryURLUtil.getFolderPortletURL(folder, liferayPortletRequest, liferayPortletResponse, portletURL);
 								%>
 
 									<liferay-ui:search-container-column-text
@@ -460,7 +460,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 
 								<%
 								if (folder != null) {
-									PortletURL viewFolderURL = EntryURLUtil.getFolderPortletURL(folder, portletURL, liferayPortletRequest, liferayPortletResponse);
+									PortletURL viewFolderURL = EntryURLUtil.getFolderPortletURL(folder, liferayPortletRequest, liferayPortletResponse, portletURL);
 								%>
 
 									<liferay-ui:search-container-column-icon

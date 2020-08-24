@@ -41,9 +41,9 @@ import javax.portlet.PortletURL;
 public class EntryURLUtil {
 
 	public static PortletURL getFolderPortletURL(
-			Folder folder, PortletURL portletURL,
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
+			Folder folder, LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			PortletURL portletURL)
 		throws PortalException, PortletException {
 
 		ThemeDisplay themeDisplay =

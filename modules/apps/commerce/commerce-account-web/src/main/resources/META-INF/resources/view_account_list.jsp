@@ -38,7 +38,7 @@ request.setAttribute("view.jsp-filterPerAccount", false);
 
 <c:if test="<%= commerceAccountDisplayContext.hasAddAccountPermissions() %>">
 	<div class="commerce-cta is-visible">
-		<aui:button cssClass="btn-lg js-invite-user" primary='<%= true %>' onClick='<%= liferayPortletResponse.getNamespace() + "openAddAccountModal();" %>' value="add-account" />
+		<aui:button cssClass="btn-lg js-invite-user" onClick='<%= liferayPortletResponse.getNamespace() + "openAddAccountModal();" %>' primary="<%= true %>" value="add-account" />
 	</div>
 
 	<portlet:actionURL name="editCommerceAccount" var="editCommerceAccountActionURL" />

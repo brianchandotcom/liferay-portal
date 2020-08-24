@@ -63,11 +63,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rachael Koestartyo
  */
+@ProviderType
 public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 	extends BaseModelListener<T> implements EntityModelListener<T> {
 
@@ -238,8 +240,35 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 
 	protected abstract String getPrimaryKeyName();
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getUserAttributeNames(long)}
+	 */
+	@Deprecated
 	protected List<String> getUserAttributeNames() {
-		return _userAttributeNames;
+		return null;
+	}
+
+	protected List<String> getUserAttributeNames(long companyId) {
+		AnalyticsConfiguration analyticsConfiguration =
+			analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
+
+		if (ArrayUtil.isEmpty(analyticsConfiguration.syncedUserFieldNames())) {
+			return _userAttributeNames;
+		}
+
+		List<String> attributeNames = new ArrayList<>();
+
+		attributeNames.add("expando");
+
+		for (String name : _userAttributeNames) {
+			if (ArrayUtil.contains(
+					analyticsConfiguration.syncedUserFieldNames(), name)) {
+
+				attributeNames.add(name);
+			}
+		}
+
+		return attributeNames;
 	}
 
 	protected boolean isCustomField(String className, long tableId) {

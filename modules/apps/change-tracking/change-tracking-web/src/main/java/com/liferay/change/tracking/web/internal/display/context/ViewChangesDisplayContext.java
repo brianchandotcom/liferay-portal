@@ -242,17 +242,19 @@ public class ViewChangesDisplayContext {
 		for (ModelInfo modelInfo : modelInfoMap.values()) {
 			long groupId = modelInfo._jsonObject.getLong("groupId");
 
-			if (!siteNamesJSONObject.has(String.valueOf(groupId))) {
+			String groupIdString = String.valueOf(groupId);
+
+			if (!siteNamesJSONObject.has(groupIdString)) {
 				Group group = _groupLocalService.fetchGroup(groupId);
 
 				if (group == null) {
 					siteNamesJSONObject.put(
-						String.valueOf(groupId),
+						groupIdString,
 						_language.get(_themeDisplay.getLocale(), "global"));
 				}
 				else {
 					siteNamesJSONObject.put(
-						String.valueOf(groupId),
+						groupIdString,
 						group.getName(_themeDisplay.getLocale()));
 				}
 			}

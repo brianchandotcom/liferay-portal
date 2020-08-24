@@ -1185,4 +1185,172 @@ definition {
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Date of birth");
 	}
 
+	@description = "Delete fields from the Form View through the Delete options and assert its affect on other Form and Table views"
+	@priority = "5"
+	test DeleteFormViewFieldFromObject {
+		property test.name.skip.portal.instance = "AppBuilder#DeleteFormViewFieldFromObject";
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.setName(formViewName = "My Form View 1");
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Select from List");
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.add();
+
+		TableViewBuilder.setName(tableViewName = "My Table View");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Text");
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "Select from List");
+
+		TableViewBuilder.save();
+
+		FormViewBuilder.switchToFormViewTab();
+		AppBuilderAdmin.add();
+
+		FormViewBuilder.setName(formViewName = "My Form View 2");
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Date");
+		FormViewBuilder.closeSidebar();
+		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "Text");
+		FormViewBuilder.save();
+
+		FormViewBuilder.switchToFormViewTab();
+
+		AppBuilderAdmin.openItem(itemName = "My Form View 1");
+
+		FormViewBuilder.fieldEllipsisDelete(fieldLabel = "Text");
+
+		FormViewBuilder.validateDeleteUsedObjectMessage();
+		FormViewBuilder.validateUsedFormView(formViewName = "My Form View 1");
+		FormViewBuilder.validateUsedFormView(formViewName = "My Form View 2");
+		FormViewBuilder.validateUsedTableView(tableViewName = "My Table View");
+
+		FormViewBuilder.deleteButtonInDeleteFromObject();
+
+		FormViewBuilder.validateNoFieldLabel(fieldLabel = "Text");
+		FormViewBuilder.validateNoObjectFieldName(fieldName = "Text");
+
+		FormViewBuilder.deleteFromObjectViaX(fieldName = "Select from List");
+
+		FormViewBuilder.validateDeleteUsedObjectMessage();
+		FormViewBuilder.validateUsedFormView(formViewName = "My Form View 1");
+		FormViewBuilder.validateUsedTableView(tableViewName = "My Table View");
+
+		FormViewBuilder.deleteButtonInDeleteFromObject();
+
+		FormViewBuilder.validateNoFieldLabel(fieldLabel = "Select from List");
+		FormViewBuilder.validateNoObjectFieldName(fieldName = "Select from List");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Numeric");
+
+		FormViewBuilder.fieldEllipsisDelete(fieldLabel = "Numeric");
+
+		FormViewBuilder.validateDeleteObjectMessage();
+
+		FormViewBuilder.deleteButtonInDeleteFromObject();
+
+		FormViewBuilder.validateNoFieldLabel(fieldLabel = "Numeric");
+		FormViewBuilder.validateNoObjectFieldName(fieldName = "Numeric");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Multiple Selection");
+
+		FormViewBuilder.deleteFromObjectViaX(fieldName = "Multiple Selection");
+
+		FormViewBuilder.validateDeleteObjectMessage();
+
+		FormViewBuilder.cancelButtonInDeleteFromObject();
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Multiple Selection");
+		FormViewBuilder.validateObjectFieldName(fieldName = "Multiple Selection");
+
+		FormViewBuilder.deleteFromObjectViaX(fieldName = "Multiple Selection");
+
+		FormViewBuilder.validateDeleteObjectMessage();
+
+		FormViewBuilder.deleteButtonInDeleteFromObject();
+
+		FormViewBuilder.validateNoFieldLabel(fieldLabel = "Multiple Selection");
+		FormViewBuilder.validateNoObjectFieldName(fieldName = "Multiple Selection");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Single Selection");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.openItem(itemName = "My Form View 2");
+
+		FormViewBuilder.validateNoObjectFieldName(fieldName = "Text");
+		FormViewBuilder.validateNoObjectFieldName(fieldName = "Select from List");
+		FormViewBuilder.validateNoObjectFieldName(fieldName = "Numeric");
+		FormViewBuilder.validateNoObjectFieldName(fieldName = "Multiple Selection");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Date");
+
+		FormViewBuilder.save();
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.openItem(itemName = "My Table View");
+
+		TableViewBuilder.validateNoColumnLabel(columnLabel = "Text");
+		TableViewBuilder.validateNoColumnLabelAtSidebar(columnLabel = "Text");
+
+		TableViewBuilder.validateNoColumnLabel(columnLabel = "Select from List");
+		TableViewBuilder.validateNoColumnLabelAtSidebar(columnLabel = "Select from List");
+
+		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "Single Selection");
+	}
+
+	@description = "Remove fields from the Form View through the 'Remove' option"
+	@priority = "5"
+	test RemoveFormViewFields {
+		property portal.acceptance = "true";
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.setName(formViewName = "Form View Title 1");
+
+		for (var fieldType : list "Text,Select from List,Single Selection,Multiple Selection,Date,Numeric,Upload") {
+
+			FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
+
+			FormViewBuilder.closeSidebar();
+		}
+
+		FormViewBuilder.save();
+
+		FormViewBuilder.openFormView(formViewName = "Form View Title 1");
+
+		for (var fieldLabel : list "Text,Select from List,Single Selection,Multiple Selection,Date,Numeric,Upload") {
+
+			FormViewBuilder.fieldEllipsisAction(
+				fieldLabel = "${fieldLabel}",
+				selectAction = "Remove");
+		}
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+		FormViewBuilder.save();
+
+		FormViewBuilder.openFormView(formViewName = "Form View Title 1");
+
+		for (var fieldType : list "Select from List,Single Selection,Multiple Selection,Date,Numeric,Upload") {
+
+			FormViewBuilder.validateNoFieldLabel(fieldLabel = "${fieldType}");
+
+			FormViewBuilder.validateObjectFieldName(fieldName = "${fieldType}");
+		}
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+	}
+
 }

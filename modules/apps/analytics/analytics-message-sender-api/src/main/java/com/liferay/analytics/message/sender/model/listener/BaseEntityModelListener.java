@@ -369,10 +369,29 @@ public abstract class BaseEntityModelListener<T extends BaseModel<T>>
 
 		for (String includeAttributeName : includeAttributeNames) {
 			if (includeAttributeName.equals("expando")) {
-				jsonObject.put(
-					"expando",
-					AnalyticsExpandoBridgeUtil.getAttributes(
-						baseModel.getExpandoBridge()));
+				if (StringUtil.equals(
+						baseModel.getModelClassName(), User.class.getName())) {
+
+					ShardedModel shardedModel = (ShardedModel)baseModel;
+
+					AnalyticsConfiguration analyticsConfiguration =
+						analyticsConfigurationTracker.getAnalyticsConfiguration(
+							shardedModel.getCompanyId());
+
+					jsonObject.put(
+						"expando",
+						AnalyticsExpandoBridgeUtil.getAttributes(
+							baseModel.getExpandoBridge(),
+							Arrays.asList(
+								analyticsConfiguration.
+									syncedUserFieldNames())));
+				}
+				else {
+					jsonObject.put(
+						"expando",
+						AnalyticsExpandoBridgeUtil.getAttributes(
+							baseModel.getExpandoBridge(), null));
+				}
 
 				continue;
 			}

@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-HttpServletRequest originalServletRequest = (HttpServletRequest)request.getAttribute(PortletLayoutTypeControllerWebKeys.ORIGINAL_HTTP_SERVLET_REQUEST);
-
 PortletLayoutDisplayContext portletLayoutDisplayContext = (PortletLayoutDisplayContext)request.getAttribute(PortletLayoutDisplayContext.class.getName());
 
 LayoutStructure layoutStructure = portletLayoutDisplayContext.getLayoutStructure();
@@ -147,6 +145,8 @@ for (String childrenItemId : childrenItemIds) {
 			String langType = LayoutTemplateLocalServiceUtil.getLangType(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId());
 
 			if (Validator.isNotNull(templateContent)) {
+				HttpServletRequest originalServletRequest = (HttpServletRequest)request.getAttribute(PortletLayoutTypeControllerWebKeys.ORIGINAL_HTTP_SERVLET_REQUEST);
+
 				RuntimePageUtil.processTemplate(originalServletRequest, response, new StringTemplateResource(templateId, templateContent), langType);
 			}
 			%>

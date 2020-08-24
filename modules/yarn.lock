@@ -1289,10 +1289,10 @@
     "@clayui/layout" "^3.2.0"
     classnames "^2.2.6"
 
-"@clayui/modal@3.6.5":
-  version "3.6.5"
-  resolved "https://registry.yarnpkg.com/@clayui/modal/-/modal-3.6.5.tgz#10cce5c10a479995590af4955e8773ce0cad3a97"
-  integrity sha512-TBBRfcMrxlX5GGKt+TjZAryY+mmyL/7LUKV8gWezAmoSFM4Ukej6hCUcadgKgQkV5Up9HotFcxzDQ7rzVVujmg==
+"@clayui/modal@3.7.0":
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/@clayui/modal/-/modal-3.7.0.tgz#f67ac09f681ffe73f54dfb1297f8855d73ab2302"
+  integrity sha512-LgYKgGuCkJ7H0VpzxXLKqQ+Pv9dzDVakSMaws+kL1qnNeBbQBOMwIYL0Ehl4FRrsAiNhPyVU0eDW4fh0F2UFow==
   dependencies:
     "@clayui/button" "^3.4.0"
     "@clayui/icon" "^3.0.5"

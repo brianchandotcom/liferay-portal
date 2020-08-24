@@ -1909,9 +1909,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			</#if>
 
 			<#if entity.badEntityColumns?size != 0>
-				if (_attributeNames.containsKey(columnName)) {
-					columnName = _attributeNames.get(columnName);
-				}
+				columnName = _attributeNames.getOrDefault(columnName, columnName);
 			</#if>
 
 			Function<${entity.name}, Object> function =

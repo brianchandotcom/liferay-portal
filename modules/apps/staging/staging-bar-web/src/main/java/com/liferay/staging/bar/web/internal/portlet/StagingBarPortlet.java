@@ -203,11 +203,11 @@ public class StagingBarPortlet extends MVCPortlet {
 		String remoteURL = null;
 		String stagingURL = null;
 
-		Object originalAssetEntry = httpServletRequest.getAttribute(
-			WebKeys.LAYOUT_ASSET_ENTRY);
-		long originalScopeGroupId = themeDisplay.getScopeGroupId();
-
 		if (themeDisplay.isShowStagingIcon()) {
+			Object originalAssetEntry = httpServletRequest.getAttribute(
+				WebKeys.LAYOUT_ASSET_ENTRY);
+			long originalScopeGroupId = themeDisplay.getScopeGroupId();
+
 			if (liveGroup != null) {
 				liveLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 					layout.getUuid(), liveGroup.getGroupId(),

@@ -68,6 +68,21 @@ public class SingleIndexToMultipleIndexImporterImpl
 		}
 	}
 
+	@Override
+	public boolean needImport() {
+		for (Company company : _companyService.getCompanies()) {
+			RankingIndexName rankingIndexName =
+				_rankingIndexNameBuilder.getRankingIndexName(
+					company.getCompanyId());
+
+			if (!_rankingIndexReader.isExists(rankingIndexName)) {
+				return true;
+			}
+		}
+
+		return _rankingIndexReader.isExists(SINGLE_INDEX_NAME);
+	}
+
 	protected static Map<String, List<Document>> groupDocumentByIndex(
 		List<Document> documents) {
 

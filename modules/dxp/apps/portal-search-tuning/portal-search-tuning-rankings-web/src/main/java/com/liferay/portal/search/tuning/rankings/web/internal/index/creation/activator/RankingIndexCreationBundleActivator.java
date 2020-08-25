@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.tuning.rankings.web.internal.background.task.RankingIndexCreationBackgroundTaskExecutor;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.importer.SingleIndexToMultipleIndexImporter;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -47,7 +48,9 @@ public class RankingIndexCreationBundleActivator {
 			return;
 		}
 
-		_addBackgroundTask();
+		if (_singleIndexToMultipleIndexImporter.needImport()) {
+			_addBackgroundTask();
+		}
 	}
 
 	@Reference
@@ -80,5 +83,9 @@ public class RankingIndexCreationBundleActivator {
 	@Reference
 	private RankingIndexCreationBackgroundTaskExecutor
 		_rankingIndexRenameBackgroundTaskExecutor;
+
+	@Reference
+	private SingleIndexToMultipleIndexImporter
+		_singleIndexToMultipleIndexImporter;
 
 }

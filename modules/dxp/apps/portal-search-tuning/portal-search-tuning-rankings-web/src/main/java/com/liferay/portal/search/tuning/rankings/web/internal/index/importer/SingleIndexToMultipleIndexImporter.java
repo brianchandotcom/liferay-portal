@@ -21,4 +21,6 @@ public interface SingleIndexToMultipleIndexImporter {
 
 	public void importRankings();
 
+	public boolean needImport();
+
 }

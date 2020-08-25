@@ -631,7 +631,7 @@ definition {
 		SearchAdministration.assertEngineVendorAndVersions(
 			clientVersion = "7.9.0",
 			engineVendor = "Elasticsearch",
-			serverVersion = "7.9.0");
+			serverVersion = "7.7.0");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchAdmin#CONNECTION_ID",

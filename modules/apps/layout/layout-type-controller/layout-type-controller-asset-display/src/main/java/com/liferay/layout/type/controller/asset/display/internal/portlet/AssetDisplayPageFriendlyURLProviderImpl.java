@@ -85,9 +85,7 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 				themeDisplay));
 
 		sb.append(layoutDisplayPageProvider.getURLSeparator());
-		sb.append(
-			layoutDisplayPageObjectProvider.getURLTitle(
-				themeDisplay.getLocale()));
+		sb.append(layoutDisplayPageObjectProvider.getURLTitle(locale));
 
 		return sb.toString();
 	}

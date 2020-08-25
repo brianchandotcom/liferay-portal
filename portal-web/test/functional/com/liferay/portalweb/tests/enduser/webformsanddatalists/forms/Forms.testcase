@@ -4597,9 +4597,7 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "1");
 
-		Form.editFieldLabelMetal(
-			fieldName = "Text",
-			fieldValue = ",-+!@#$%^*()=.?/;:{}[]\|");
+		Form.editFieldLabelMetal(fieldValue = ",-+!@#$%^*()=.?/;:{}[]\|");
 
 		FormFields.editFieldName(fieldValue = "_,-+!@#$%^*()=.?/;:{}[]\|");
 
@@ -4607,9 +4605,7 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "2");
 
-		Form.editFieldLabelMetal(
-			fieldName = "JumpSheExclaimed",
-			fieldValue = "Jump, She exclaimed!");
+		Form.editFieldLabelMetal(fieldValue = "Jump, She exclaimed!");
 
 		FormFields.editFieldName(fieldValue = "Jump, She exclaimed!");
 

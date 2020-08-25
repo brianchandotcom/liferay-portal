@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE</td>
-	<td>//p[contains(.,'${key_fieldLabel}')]//following-sibling::div//div[contains(@id,'cke')]/iframe</td>
+	<td>//label[contains(.,'${key_fieldLabel}')]//following-sibling::div//div[contains(@id,'cke')]/iframe</td>
 	<td></td>
 </tr>
 <tr>

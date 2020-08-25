@@ -8,12 +8,12 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.BigDecimalEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.BigDecimalEntryPersistence" />
-	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.EagerBlobEntityLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.EagerBlobEntityLocalService" />
-	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.EagerBlobEntityServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.EagerBlobEntityService" />
-	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.EagerBlobEntityPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.EagerBlobEntityPersistence" />
-	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LazyBlobEntityLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LazyBlobEntityLocalService" />
-	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LazyBlobEntityServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LazyBlobEntityService" />
-	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LazyBlobEntityPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LazyBlobEntityPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.EagerBlobEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.EagerBlobEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.EagerBlobEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.EagerBlobEntryService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.EagerBlobEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.EagerBlobEntryPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LazyBlobEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LazyBlobEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LazyBlobEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LazyBlobEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LocalizedEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LocalizedEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LocalizedEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LocalizedEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LocalizedEntryLocalizationPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LocalizedEntryLocalizationPersistence" />
@@ -22,6 +22,9 @@
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LVEntryLocalizationPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryLocalizationPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LVEntryLocalizationVersionPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryLocalizationVersionPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LVEntryVersionPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryVersionPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.ManyColumnsEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.ManyColumnsEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.ManyColumnsEntryServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.ManyColumnsEntryService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.ManyColumnsEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.ManyColumnsEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.NestedSetsTreeEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.NestedSetsTreeEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.NestedSetsTreeEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.NestedSetsTreeEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.UADPartialEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.UADPartialEntryLocalService" />

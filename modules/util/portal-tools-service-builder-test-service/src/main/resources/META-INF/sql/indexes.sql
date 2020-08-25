@@ -5,6 +5,8 @@ create index IX_867C5A9 on BigDecimalEntry (bigDecimalValue);
 
 create unique index IX_24660854 on EagerBlobEntity (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create unique index IX_6E042099 on EagerBlobEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
+
 create index IX_C28A6270 on LVEntry (groupId, head);
 create unique index IX_70D6DE35 on LVEntry (groupId, uniqueGroupKey[$COLUMN_LENGTH:75$], head);
 create unique index IX_50CAD09D on LVEntry (headId);
@@ -27,6 +29,8 @@ create unique index IX_E9BD379C on LVEntryVersion (uuid_[$COLUMN_LENGTH:75$], gr
 create index IX_FA76694A on LVEntryVersion (uuid_[$COLUMN_LENGTH:75$], version);
 
 create unique index IX_BF2FC0D0 on LazyBlobEntity (uuid_[$COLUMN_LENGTH:75$], groupId);
+
+create unique index IX_F723689D on LazyBlobEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create unique index IX_2E833843 on LocalizedEntryLocalization (localizedEntryId, languageId[$COLUMN_LENGTH:75$]);
 

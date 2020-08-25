@@ -6,15 +6,15 @@
 		<field name="companyId" type="long" />
 		<field name="bigDecimalValue" type="BigDecimal" />
 	</model>
-	<model name="com.liferay.portal.tools.service.builder.test.model.EagerBlobEntity">
+	<model name="com.liferay.portal.tools.service.builder.test.model.EagerBlobEntry">
 		<field name="uuid" type="String" />
-		<field name="eagerBlobEntityId" type="long" />
+		<field name="eagerBlobEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="blob" type="Blob" />
 	</model>
-	<model name="com.liferay.portal.tools.service.builder.test.model.LazyBlobEntity">
+	<model name="com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry">
 		<field name="uuid" type="String" />
-		<field name="lazyBlobEntityId" type="long" />
+		<field name="lazyBlobEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="blob1" type="Blob" />
 		<field name="blob2" type="Blob" />
@@ -70,6 +70,73 @@
 		<field name="companyId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="uniqueGroupKey" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.ManyColumnsEntry">
+		<field name="manyColumnsEntryId" type="long" />
+		<field name="column1" type="int" />
+		<field name="column2" type="int" />
+		<field name="column3" type="int" />
+		<field name="column4" type="int" />
+		<field name="column5" type="int" />
+		<field name="column6" type="int" />
+		<field name="column7" type="int" />
+		<field name="column8" type="int" />
+		<field name="column9" type="int" />
+		<field name="column10" type="int" />
+		<field name="column11" type="int" />
+		<field name="column12" type="int" />
+		<field name="column13" type="int" />
+		<field name="column14" type="int" />
+		<field name="column15" type="int" />
+		<field name="column16" type="int" />
+		<field name="column17" type="int" />
+		<field name="column18" type="int" />
+		<field name="column19" type="int" />
+		<field name="column20" type="int" />
+		<field name="column21" type="int" />
+		<field name="column22" type="int" />
+		<field name="column23" type="int" />
+		<field name="column24" type="int" />
+		<field name="column25" type="int" />
+		<field name="column26" type="int" />
+		<field name="column27" type="int" />
+		<field name="column28" type="int" />
+		<field name="column29" type="int" />
+		<field name="column30" type="int" />
+		<field name="column31" type="int" />
+		<field name="column32" type="int" />
+		<field name="column33" type="int" />
+		<field name="column34" type="int" />
+		<field name="column35" type="int" />
+		<field name="column36" type="int" />
+		<field name="column37" type="int" />
+		<field name="column38" type="int" />
+		<field name="column39" type="int" />
+		<field name="column40" type="int" />
+		<field name="column41" type="int" />
+		<field name="column42" type="int" />
+		<field name="column43" type="int" />
+		<field name="column44" type="int" />
+		<field name="column45" type="int" />
+		<field name="column46" type="int" />
+		<field name="column47" type="int" />
+		<field name="column48" type="int" />
+		<field name="column49" type="int" />
+		<field name="column50" type="int" />
+		<field name="column51" type="int" />
+		<field name="column52" type="int" />
+		<field name="column53" type="int" />
+		<field name="column54" type="int" />
+		<field name="column55" type="int" />
+		<field name="column56" type="int" />
+		<field name="column57" type="int" />
+		<field name="column58" type="int" />
+		<field name="column59" type="int" />
+		<field name="column60" type="int" />
+		<field name="column61" type="int" />
+		<field name="column62" type="int" />
+		<field name="column63" type="int" />
+		<field name="column64" type="int" />
 	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.NestedSetsTreeEntry">
 		<field name="nestedSetsTreeEntryId" type="long" />

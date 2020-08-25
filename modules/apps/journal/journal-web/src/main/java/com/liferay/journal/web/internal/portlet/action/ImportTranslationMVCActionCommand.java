@@ -15,16 +15,14 @@
 package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleService;
-import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
@@ -35,7 +33,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.exception.XLIFFFileException;
 import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
-import com.liferay.translation.service.TranslationEntryService;
 
 import java.io.InputStream;
 
@@ -77,20 +74,22 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 			_checkExceededSizeLimit(uploadPortletRequest);
 
-			String contentType = uploadPortletRequest.getContentType("file");
-
-			_checkContentType(contentType);
+			_checkContentType(uploadPortletRequest.getContentType("file"));
 
 			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 					"file")) {
 
-				_translationEntryService.addOrUpdateTranslationEntry(
-					themeDisplay.getScopeGroupId(),
-					new InfoItemReference(
-						JournalArticle.class.getName(),
-						article.getResourcePrimKey()),
-					StreamUtil.toString(inputStream), contentType,
-					ServiceContextFactory.getInstance(actionRequest));
+				InfoItemFieldValues infoItemFieldValues =
+					_translationInfoItemFieldValuesImporter.
+						importInfoItemFieldValues(
+							themeDisplay.getScopeGroupId(),
+							new InfoItemReference(
+								JournalArticle.class.getName(),
+								article.getResourcePrimKey()),
+							inputStream);
+
+				_journalArticleInfoItemFieldValuesUpdater.
+					updateFromInfoItemFieldValues(article, infoItemFieldValues);
 			}
 		}
 		catch (Exception exception) {
@@ -149,13 +148,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 		_journalArticleInfoItemFieldValuesUpdater;
 
 	@Reference
-	private JournalArticleService _journalArticleService;
-
-	@Reference
 	private Portal _portal;
-
-	@Reference
-	private TranslationEntryService _translationEntryService;
 
 	@Reference
 	private TranslationInfoItemFieldValuesImporter

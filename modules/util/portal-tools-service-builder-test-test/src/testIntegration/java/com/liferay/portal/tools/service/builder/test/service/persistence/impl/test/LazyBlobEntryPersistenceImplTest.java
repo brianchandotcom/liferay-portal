@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
-import com.liferay.portal.tools.service.builder.test.model.LazyBlobEntity;
-import com.liferay.portal.tools.service.builder.test.service.persistence.LazyBlobEntityPersistence;
+import com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry;
+import com.liferay.portal.tools.service.builder.test.service.persistence.LazyBlobEntryPersistence;
 
 import java.io.ByteArrayInputStream;
 
@@ -40,7 +40,7 @@ import org.junit.runner.RunWith;
  * @author Tina Tian
  */
 @RunWith(Arquillian.class)
-public class LazyBlobEntityPersistenceImplTest {
+public class LazyBlobEntryPersistenceImplTest {
 
 	@ClassRule
 	@Rule
@@ -56,44 +56,44 @@ public class LazyBlobEntityPersistenceImplTest {
 		Session session = null;
 
 		try {
-			LazyBlobEntity lazyBlobEntity = _lazyBlobEntityPersistence.create(
+			LazyBlobEntry lazyBlobEntry = _lazyBlobEntryPersistence.create(
 				RandomTestUtil.nextLong());
 
-			lazyBlobEntity.setUuid(RandomTestUtil.randomString());
-			lazyBlobEntity.setGroupId(RandomTestUtil.nextLong());
+			lazyBlobEntry.setUuid(RandomTestUtil.randomString());
+			lazyBlobEntry.setGroupId(RandomTestUtil.nextLong());
 
 			Blob blob = new OutputBlob(
 				new ByteArrayInputStream(new byte[0]), 0);
 
-			lazyBlobEntity.setBlob1(blob);
-			lazyBlobEntity.setBlob2(blob);
+			lazyBlobEntry.setBlob1(blob);
+			lazyBlobEntry.setBlob2(blob);
 
-			lazyBlobEntity = _lazyBlobEntityPersistence.update(lazyBlobEntity);
+			lazyBlobEntry = _lazyBlobEntryPersistence.update(lazyBlobEntry);
 
-			session = _lazyBlobEntityPersistence.getCurrentSession();
+			session = _lazyBlobEntryPersistence.getCurrentSession();
 
 			Object sessionObject = session.get(
-				lazyBlobEntity.getClass(), lazyBlobEntity.getPrimaryKey());
+				lazyBlobEntry.getClass(), lazyBlobEntry.getPrimaryKey());
 
-			LazyBlobEntity existingLazyBlobEntity =
-				_lazyBlobEntityPersistence.findByPrimaryKey(
-					lazyBlobEntity.getPrimaryKey());
+			LazyBlobEntry existingLazyBlobEntry =
+				_lazyBlobEntryPersistence.findByPrimaryKey(
+					lazyBlobEntry.getPrimaryKey());
 
-			Assert.assertEquals(sessionObject, existingLazyBlobEntity);
-			Assert.assertNotSame(sessionObject, existingLazyBlobEntity);
+			Assert.assertEquals(sessionObject, existingLazyBlobEntry);
+			Assert.assertNotSame(sessionObject, existingLazyBlobEntry);
 
-			existingLazyBlobEntity.setGroupId(RandomTestUtil.nextLong());
+			existingLazyBlobEntry.setGroupId(RandomTestUtil.nextLong());
 
-			existingLazyBlobEntity = _lazyBlobEntityPersistence.update(
-				existingLazyBlobEntity);
+			existingLazyBlobEntry = _lazyBlobEntryPersistence.update(
+				existingLazyBlobEntry);
 
-			LazyBlobEntity newExistingLazyBlobEntity =
-				_lazyBlobEntityPersistence.findByPrimaryKey(
-					lazyBlobEntity.getPrimaryKey());
+			LazyBlobEntry newExistingLazyBlobEntry =
+				_lazyBlobEntryPersistence.findByPrimaryKey(
+					lazyBlobEntry.getPrimaryKey());
 
 			Assert.assertEquals(
-				existingLazyBlobEntity.getGroupId(),
-				newExistingLazyBlobEntity.getGroupId());
+				existingLazyBlobEntry.getGroupId(),
+				newExistingLazyBlobEntry.getGroupId());
 		}
 		finally {
 			if (session != null) {
@@ -103,6 +103,6 @@ public class LazyBlobEntityPersistenceImplTest {
 	}
 
 	@Inject
-	private LazyBlobEntityPersistence _lazyBlobEntityPersistence;
+	private LazyBlobEntryPersistence _lazyBlobEntryPersistence;
 
 }

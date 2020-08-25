@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.tools.service.builder.test.model.LazyBlobEntity;
-import com.liferay.portal.tools.service.builder.test.service.LazyBlobEntityLocalService;
+import com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry;
+import com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryLocalService;
 
 import java.io.InputStream;
 
@@ -40,7 +40,7 @@ import org.junit.runner.RunWith;
  * @author Kyle Miho
  */
 @RunWith(Arquillian.class)
-public class LazyBlobEntityLocalServiceBaseImplTest {
+public class LazyBlobEntryLocalServiceBaseImplTest {
 
 	@ClassRule
 	@Rule
@@ -54,35 +54,35 @@ public class LazyBlobEntityLocalServiceBaseImplTest {
 
 	@Test
 	public void testEmptyBlobReturnsEmptyInputStream() throws Exception {
-		LazyBlobEntity lazyBlobEntity =
-			_lazyBlobEntityLocalService.addLazyBlobEntity(
+		LazyBlobEntry lazyBlobEntry =
+			_lazyBlobEntryLocalService.addLazyBlobEntry(
 				_group.getGroupId(), new byte[0],
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		InputStream inputStream =
-			_lazyBlobEntityLocalService.openBlob1InputStream(
-				lazyBlobEntity.getLazyBlobEntityId());
+			_lazyBlobEntryLocalService.openBlob1InputStream(
+				lazyBlobEntry.getLazyBlobEntryId());
 
 		Assert.assertEquals(0, inputStream.available());
 	}
 
 	@Test
 	public void testOpenBlobInputStream() throws Exception {
-		LazyBlobEntity lazyBlobEntity =
-			_lazyBlobEntityLocalService.addLazyBlobEntity(
+		LazyBlobEntry lazyBlobEntry =
+			_lazyBlobEntryLocalService.addLazyBlobEntry(
 				_group.getGroupId(), _BYTES,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		InputStream inputStream =
-			_lazyBlobEntityLocalService.openBlob1InputStream(
-				lazyBlobEntity.getLazyBlobEntityId());
+			_lazyBlobEntryLocalService.openBlob1InputStream(
+				lazyBlobEntry.getLazyBlobEntryId());
 
 		Assert.assertEquals(_BYTE_SIZE, inputStream.available());
 	}
 
 	@Test(expected = SystemException.class)
-	public void testOpenBlobInputStreamWithInvalidBlobEntityId() {
-		_lazyBlobEntityLocalService.openBlob1InputStream(
+	public void testOpenBlobInputStreamWithInvalidBlobEntryId() {
+		_lazyBlobEntryLocalService.openBlob1InputStream(
 			RandomTestUtil.randomLong());
 	}
 
@@ -100,6 +100,6 @@ public class LazyBlobEntityLocalServiceBaseImplTest {
 	private Group _group;
 
 	@Inject
-	private LazyBlobEntityLocalService _lazyBlobEntityLocalService;
+	private LazyBlobEntryLocalService _lazyBlobEntryLocalService;
 
 }

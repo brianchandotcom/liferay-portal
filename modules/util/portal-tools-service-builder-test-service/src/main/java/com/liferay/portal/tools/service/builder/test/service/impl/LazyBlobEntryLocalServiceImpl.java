@@ -14,6 +14,10 @@
 
 package com.liferay.portal.tools.service.builder.test.service.impl;
 
+import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry;
 import com.liferay.portal.tools.service.builder.test.service.base.LazyBlobEntryLocalServiceBaseImpl;
 
 /**
@@ -32,10 +36,28 @@ import com.liferay.portal.tools.service.builder.test.service.base.LazyBlobEntryL
 public class LazyBlobEntryLocalServiceImpl
 	extends LazyBlobEntryLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryLocalServiceUtil</code>.
-	 */
+	@Override
+	public LazyBlobEntry addLazyBlobEntry(
+		long groupId, byte[] bytes, ServiceContext serviceContext) {
+
+		long lazyBlobEntryId = counterLocalService.increment();
+
+		LazyBlobEntry lazyBlobEntry = lazyBlobEntryPersistence.create(
+			lazyBlobEntryId);
+
+		lazyBlobEntry.setUuid(serviceContext.getUuid());
+		lazyBlobEntry.setGroupId(groupId);
+
+		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+			new UnsyncByteArrayInputStream(bytes);
+
+		OutputBlob outputBlob = new OutputBlob(
+			unsyncByteArrayInputStream, bytes.length);
+
+		lazyBlobEntry.setBlob1(outputBlob);
+		lazyBlobEntry.setBlob2(outputBlob);
+
+		return lazyBlobEntryPersistence.update(lazyBlobEntry);
+	}
 
 }

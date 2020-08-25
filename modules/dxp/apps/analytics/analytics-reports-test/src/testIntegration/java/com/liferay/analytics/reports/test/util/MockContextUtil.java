@@ -62,7 +62,7 @@ public class MockContextUtil {
 				bundleContext.registerService(
 					(Class<AnalyticsReportsInfoItem<MockObject>>)
 						(Class<?>)AnalyticsReportsInfoItem.class,
-					new MockAnalyticsReportsInfoItem(),
+					mockContext.getAnalyticsReportsInfoItem(),
 					new HashMapDictionary<>());
 			infoItemFieldValuesProviderServiceRegistration =
 				bundleContext.registerService(
@@ -104,6 +104,12 @@ public class MockContextUtil {
 			return new Builder(classNameLocalService);
 		}
 
+		public AnalyticsReportsInfoItem<MockObject>
+			getAnalyticsReportsInfoItem() {
+
+			return _analyticsReportsInfoItem;
+		}
+
 		public ClassNameLocalService getClassNameLocalService() {
 			return _classNameLocalService;
 		}
@@ -114,18 +120,43 @@ public class MockContextUtil {
 				_classNameLocalService = classNameLocalService;
 			}
 
-			public MockContext build() {
-				return new MockContext(_classNameLocalService);
+			public Builder analyticsReportsInfoItem(
+				AnalyticsReportsInfoItem<MockObject> analyticsReportsInfoItem) {
+
+				_analyticsReportsInfoItem = analyticsReportsInfoItem;
+
+				return this;
 			}
 
+			public MockContext build() {
+				return new MockContext(
+					_analyticsReportsInfoItem, _classNameLocalService);
+			}
+
+			private AnalyticsReportsInfoItem<MockObject>
+				_analyticsReportsInfoItem;
 			private final ClassNameLocalService _classNameLocalService;
 
 		}
 
-		private MockContext(ClassNameLocalService classNameLocalService) {
+		private MockContext(
+			AnalyticsReportsInfoItem<MockObject> analyticsReportsInfoItem,
+			ClassNameLocalService classNameLocalService) {
+
+			if (analyticsReportsInfoItem == null) {
+				_analyticsReportsInfoItem =
+					MockAnalyticsReportsInfoItem.builder(
+					).build();
+			}
+			else {
+				_analyticsReportsInfoItem = analyticsReportsInfoItem;
+			}
+
 			_classNameLocalService = classNameLocalService;
 		}
 
+		private final AnalyticsReportsInfoItem<MockObject>
+			_analyticsReportsInfoItem;
 		private final ClassNameLocalService _classNameLocalService;
 
 	}

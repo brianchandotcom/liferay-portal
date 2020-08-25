@@ -29,11 +29,11 @@ public class SimpleURLToCORSSupportMapperPerformanceTest {
 
 	@Test
 	public void testGet() {
-		long start = System.currentTimeMillis();
-
 		KeyValuePair[] keyValuePairs = _createKeyValuePairs();
 		BaseURLToCORSSupportMapper urlToCORSSupportMapper =
 			createURLToCORSSupportMapper(_createCORSSupports());
+
+		long start = System.currentTimeMillis();
 
 		for (int i = 0; i < 100000; i++) {
 			for (KeyValuePair keyValuePair : keyValuePairs) {

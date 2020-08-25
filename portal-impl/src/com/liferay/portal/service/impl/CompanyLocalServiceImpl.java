@@ -103,6 +103,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.IDN;
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1401,6 +1404,23 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		throws CompanyVirtualHostException {
 
 		if (Validator.isNotNull(virtualHostname)) {
+			try {
+				if (Validator.isIPv6Address(virtualHostname)) {
+					Inet6Address address = (Inet6Address)InetAddress.getByName(
+						virtualHostname);
+
+					virtualHostname = address.getHostAddress();
+				}
+			}
+			catch (UnknownHostException unknownHostException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(unknownHostException, unknownHostException);
+				}
+
+				throw new CompanyVirtualHostException(
+					"Virtual hostname is not a valid IPv6 address");
+			}
+
 			VirtualHost virtualHost = virtualHostPersistence.fetchByHostname(
 				virtualHostname);
 

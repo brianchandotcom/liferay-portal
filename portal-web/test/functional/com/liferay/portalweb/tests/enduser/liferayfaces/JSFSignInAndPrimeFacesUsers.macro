@@ -1,0 +1,259 @@
+definition {
+
+	macro editUsers {
+		Type(
+			key_name = "lastName",
+			locator1 = "JSFSignInAndPrimeFacesUsers#DETAIL_PAGE_INPUT_FIELD",
+			value1 = "${lastName}");
+
+		Type(
+			key_name = "firstName",
+			locator1 = "JSFSignInAndPrimeFacesUsers#DETAIL_PAGE_INPUT_FIELD",
+			value1 = "${firstName}");
+
+		Type(
+			key_name = "emailAddress",
+			locator1 = "JSFSignInAndPrimeFacesUsers#DETAIL_PAGE_INPUT_FIELD",
+			value1 = "${emailAddress}");
+
+		Click(locator1 = "BridgeDemos#SUBMIT_BUTTON");
+
+		AssertTextEquals(
+			key_cellName = "lastName",
+			locator1 = "JSFSignInAndPrimeFacesUsers#USER_CELL_NAME",
+			value1 = "${lastName}");
+
+		AssertTextEquals(
+			key_cellName = "firstName",
+			locator1 = "JSFSignInAndPrimeFacesUsers#USER_CELL_NAME",
+			value1 = "${firstName}");
+
+		AssertTextEquals(
+			key_cellName = "email",
+			locator1 = "JSFSignInAndPrimeFacesUsers#USER_CELL_NAME",
+			value1 = "${emailAddress}");
+	}
+
+	macro filterUsers {
+		Click(
+			key_name = "${name}",
+			locator1 = "JSFSignInAndPrimeFacesUsers#SORT_BUTTON");
+
+		if ("${sort}" == "ascending") {
+			AssertElementPresent(locator1 = "JSFSignInAndPrimeFacesUsers#SORTED_ASCENDING_ICON");
+		}
+		else {
+			AssertElementPresent(locator1 = "JSFSignInAndPrimeFacesUsers#SORTED_DESCENDING_ICON_");
+
+		}
+
+		if (isSet(filterName)) {
+			Type(
+				key_name = "${name}",
+				locator1 = "JSFSignInAndPrimeFacesUsers#COLUMN_FILTER",
+				value1 = "${filterName}");
+		}
+
+		AssertTextEquals.assertPartialText(
+			key_row = "1",
+			locator1 = "JSFSignInAndPrimeFacesUsers#SCREEN_NAME",
+			value1 = "${screenName1}");
+
+		if (isSet(screenName2)) {
+			AssertTextEquals.assertPartialText(
+				key_row = "2",
+				locator1 = "JSFSignInAndPrimeFacesUsers#SCREEN_NAME",
+				value1 = "${screenName2}");
+		}
+
+		if (isSet(screenName3)) {
+			AssertTextEquals.assertPartialText(
+				key_row = "3",
+				locator1 = "JSFSignInAndPrimeFacesUsers#SCREEN_NAME",
+				value1 = "${screenName3}");
+		}
+	}
+
+	macro goToEditUsers {
+		AssertClick.assertPartialTextClickAt(
+			key_row = "1",
+			locator1 = "JSFSignInAndPrimeFacesUsers#SCREEN_NAME",
+			value1 = "${screenName}");
+
+		AssertElementPresent(
+			key_name = "firstName",
+			locator1 = "JSFSignInAndPrimeFacesUsers#DETAIL_PAGE_INPUT_FIELD");
+	}
+
+	macro setRowsPerPage {
+		Click(locator1 = "JSFSignInAndPrimeFacesUsers#PREFERENCE_LINK");
+
+		Type(
+			locator1 = "JSFSignInAndPrimeFacesUsers#ROWS_PER_PAGE_INPUT",
+			value1 = "3");
+
+		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
+	}
+
+	macro sortUsers {
+		Click(
+			key_name = "screenName",
+			locator1 = "JSFSignInAndPrimeFacesUsers#SORT_BUTTON");
+
+		if ("${sort}" == "ascending") {
+			AssertElementPresent(locator1 = "JSFSignInAndPrimeFacesUsers#SORTED_ASCENDING_ICON");
+		}
+		else {
+			AssertElementPresent(locator1 = "JSFSignInAndPrimeFacesUsers#SORTED_DESCENDING_ICON_");
+
+		}
+
+		AssertTextEquals.assertPartialText(
+			key_row = "1",
+			locator1 = "JSFSignInAndPrimeFacesUsers#SCREEN_NAME",
+			value1 = "${screenName1}");
+
+		AssertTextEquals.assertPartialText(
+			key_row = "2",
+			locator1 = "JSFSignInAndPrimeFacesUsers#SCREEN_NAME",
+			value1 = "${screenName2}");
+
+		AssertTextEquals.assertPartialText(
+			key_row = "3",
+			locator1 = "JSFSignInAndPrimeFacesUsers#SCREEN_NAME",
+			value1 = "${screenName3}");
+
+		Click(
+			key_buttonLabel = "Last Page",
+			locator1 = "JSFSignInAndPrimeFacesUsers#PAGINATOR_BUTTON");
+
+		AssertTextEquals.assertPartialText(
+			key_row = "1",
+			locator1 = "JSFSignInAndPrimeFacesUsers#SCREEN_NAME",
+			value1 = "${screenName4}");
+	}
+
+	macro uploadPortrait {
+		Click(locator1 = "JSFSignInAndPrimeFacesUsers#CHOOSE_BUTTON");
+
+		UploadCommonFile.uploadCommonFileHidden(
+			locator1 = "TextInput#FILE",
+			value1 = "${fileName}");
+
+		Click(locator1 = "BridgeDemos#SUBMIT_BUTTON");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=1_WAR_primefacesusersportlet");
+
+		JSFSignInAndPrimeFacesUsers.filterUsers(
+			filterName = "${filterName}",
+			name = "screenName",
+			screenName1 = "${screenName1}",
+			sort = "ascending");
+
+		JSFSignInAndPrimeFacesUsers.goToEditUsers(screenName = "${screenName1}");
+
+		SikuliAssertElementPresent(locator1 = "JSFSignInAndPrimeFacesUsers#PORTRAINT");
+	}
+
+	macro validateUserField {
+		Type(
+			key_name = "emailAddress",
+			locator1 = "JSFSignInAndPrimeFacesUsers#DETAIL_PAGE_INPUT_FIELD",
+			value1 = "${emailAddress}");
+
+		Click(locator1 = "BridgeDemos#SUBMIT_BUTTON");
+
+		AssertTextEquals(
+			key_name = "emailAddress",
+			locator1 = "JSFSignInAndPrimeFacesUsers#ERROR_MESSAGE",
+			value1 = "Invalid Email Address");
+
+		for (var key_name : list "${name}") {
+			Type(
+				key_name = "${key_name}",
+				locator1 = "JSFSignInAndPrimeFacesUsers#DETAIL_PAGE_INPUT_FIELD",
+				value1 = "");
+
+			Click(locator1 = "BridgeDemos#SUBMIT_BUTTON");
+
+			AssertTextEquals(
+				key_name = "${key_name}",
+				locator1 = "JSFSignInAndPrimeFacesUsers#ERROR_MESSAGE",
+				value1 = "Value is required");
+		}
+	}
+
+	macro viewPaginator {
+		Click(
+			key_buttonLabel = "Next Page",
+			locator1 = "JSFSignInAndPrimeFacesUsers#PAGINATOR_BUTTON");
+
+		AssertElementPresent(
+			key_pageNum = "2",
+			locator1 = "JSFSignInAndPrimeFacesUsers#PAGE_BUTTON_ACTIVE");
+
+		AssertTextEquals(
+			key_cellName = "screenName",
+			locator1 = "JSFSignInAndPrimeFacesUsers#USER_CELL_NAME",
+			value1 = "${screenName2}");
+
+		Click(
+			key_buttonLabel = "3",
+			locator1 = "JSFSignInAndPrimeFacesUsers#PAGINATOR_BUTTON");
+
+		AssertElementPresent(
+			key_pageNum = "3",
+			locator1 = "JSFSignInAndPrimeFacesUsers#PAGE_BUTTON_ACTIVE");
+
+		AssertTextEquals(
+			key_cellName = "screenName",
+			locator1 = "JSFSignInAndPrimeFacesUsers#USER_CELL_NAME",
+			value1 = "${screenName3}");
+
+		Click(
+			key_buttonLabel = "Previous Page",
+			locator1 = "JSFSignInAndPrimeFacesUsers#PAGINATOR_BUTTON");
+
+		AssertElementPresent(
+			key_pageNum = "2",
+			locator1 = "JSFSignInAndPrimeFacesUsers#PAGE_BUTTON_ACTIVE");
+
+		AssertTextEquals(
+			key_cellName = "screenName",
+			locator1 = "JSFSignInAndPrimeFacesUsers#USER_CELL_NAME",
+			value1 = "${screenName2}");
+
+		Click(
+			key_buttonLabel = "Last Page",
+			locator1 = "JSFSignInAndPrimeFacesUsers#PAGINATOR_BUTTON");
+
+		AssertElementPresent(
+			key_buttonLabel = "Next Page",
+			locator1 = "JSFSignInAndPrimeFacesUsers#PAGE_BUTTON_DISABLE");
+		AssertElementPresent(
+			key_buttonLabel = "Last Page",
+			locator1 = "JSFSignInAndPrimeFacesUsers#PAGE_BUTTON_DISABLE");
+
+		AssertTextEquals(
+			key_cellName = "screenName",
+			locator1 = "JSFSignInAndPrimeFacesUsers#USER_CELL_NAME",
+			value1 = "${screenName3}");
+
+		Click(
+			key_buttonLabel = "First Page",
+			locator1 = "JSFSignInAndPrimeFacesUsers#PAGINATOR_BUTTON");
+
+		AssertElementPresent(
+			key_buttonLabel = "First Page",
+			locator1 = "JSFSignInAndPrimeFacesUsers#PAGE_BUTTON_DISABLE");
+		AssertElementPresent(
+			key_buttonLabel = "Previous Page",
+			locator1 = "JSFSignInAndPrimeFacesUsers#PAGE_BUTTON_DISABLE");
+
+		AssertTextEquals(
+			key_cellName = "screenName",
+			locator1 = "JSFSignInAndPrimeFacesUsers#USER_CELL_NAME",
+			value1 = "${screenName1}");
+	}
+
+}

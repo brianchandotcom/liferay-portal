@@ -72,29 +72,32 @@ definition {
 
 	@priority = "5"
 	test PrimeFacesUsersSmoke {
+
+		// UsersPagination and UsersSort
+
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=1_WAR_primefacesusersportlet");
 
-		PrimeFacesUsersPortlet.setRowsPerPage();
+		JSFSignInAndPrimeFacesUsers.setRowsPerPage();
 
-		PrimeFacesUsersPortlet.viewPaginator(
+		JSFSignInAndPrimeFacesUsers.viewPaginator(
 			screenName1 = "benjamin.adams",
-			screenName2 = "john.braxton",
+			screenName2 = "carter.braxton",
 			screenName3 = "philip.livingston");
 
-		PrimeFacesUsersPortlet.sortUsers(
+		JSFSignInAndPrimeFacesUsers.sortUsers(
 			screenName1 = "benjamin.adams",
 			screenName2 = "carter.braxton",
 			screenName3 = "john.adams",
 			screenName4 = "philip.livingston",
 			sort = "ascending");
 
-		PrimeFacesUsersPortlet.sortUsers(
+		JSFSignInAndPrimeFacesUsers.sortUsers(
 			screenName1 = "test",
 			screenName2 = "philip.livingston",
 			screenName3 = "josiah.bartlett",
 			screenName4 = "carter.braxton");
 
-		PrimeFacesUsersPortlet.filterUsers(
+		JSFSignInAndPrimeFacesUsers.filterUsers(
 			filterName = "John",
 			name = "firstName",
 			screenName1 = "john.franklin",
@@ -102,25 +105,78 @@ definition {
 			screenName3 = "john.adams",
 			sort = "ascending");
 
-		PrimeFacesUsersPortlet.filterUsers(
+		JSFSignInAndPrimeFacesUsers.filterUsers(
 			name = "firstName",
 			screenName1 = "john.franklin",
 			screenName2 = "john.braxton",
 			screenName3 = "john.adams");
 
+		// UsersFilter
+
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=1_WAR_primefacesusersportlet");
 
-		PrimeFacesUsersPortlet.filterUsers(
+		JSFSignInAndPrimeFacesUsers.filterUsers(
 			filterName = "adams",
 			name = "lastName",
 			screenName1 = "benjamin.adams",
 			screenName2 = "john.adams",
 			sort = "ascending");
 
-		PrimeFacesUsersPortlet.filterUsers(
+		JSFSignInAndPrimeFacesUsers.filterUsers(
 			name = "lastName",
 			screenName1 = "benjamin.adams",
 			screenName2 = "john.adams");
+
+		// DetailViewErrorMessages
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=1_WAR_primefacesusersportlet");
+
+		JSFSignInAndPrimeFacesUsers.filterUsers(
+			filterName = "john.adams",
+			name = "screenName",
+			screenName1 = "john.adams",
+			sort = "ascending");
+
+		JSFSignInAndPrimeFacesUsers.goToEditUsers(screenName = "john.adams");
+
+		JSFSignInAndPrimeFacesUsers.validateUserField(
+			emailAddress = "john.adamsliferay.com",
+			name = "firstName,lastName,emailAddress");
+
+		// DetailViewChangeUserAttributes
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=1_WAR_primefacesusersportlet");
+
+		JSFSignInAndPrimeFacesUsers.filterUsers(
+			filterName = "john.adams",
+			name = "screenName",
+			screenName1 = "john.adams",
+			sort = "ascending");
+
+		JSFSignInAndPrimeFacesUsers.goToEditUsers(screenName = "john.adams");
+
+		JSFSignInAndPrimeFacesUsers.uploadPortrait(
+			fileName = "Document_1.jpeg",
+			filterName = "john.adams",
+			name = "screenName",
+			screenName1 = "john.adams");
+
+		// DetailViewChangeUserAttributes
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=1_WAR_primefacesusersportlet");
+
+		JSFSignInAndPrimeFacesUsers.filterUsers(
+			filterName = "john.adams",
+			name = "screenName",
+			screenName1 = "john.adams",
+			sort = "ascending");
+
+		JSFSignInAndPrimeFacesUsers.goToEditUsers(screenName = "john.adams");
+
+		JSFSignInAndPrimeFacesUsers.editUsers(
+			emailAddress = "johnny.adamsy@liferay.com",
+			firstName = "Johnny",
+			lastName = "Adamsy");
 	}
 
 }

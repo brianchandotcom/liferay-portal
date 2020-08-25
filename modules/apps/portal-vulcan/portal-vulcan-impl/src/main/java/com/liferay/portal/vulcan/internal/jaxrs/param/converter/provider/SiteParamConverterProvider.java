@@ -109,8 +109,8 @@ public class SiteParamConverterProvider
 	}
 
 	private boolean _checkGroup(Group group) {
-		if ((group != null) &&
-			(_isDepotOrSite(group) || _isDepotOrSite(group.getLiveGroup()))) {
+		if (_isDepotOrSite(group) ||
+			((group != null) && _isDepotOrSite(group.getLiveGroup()))) {
 
 			return true;
 		}
@@ -179,7 +179,10 @@ public class SiteParamConverterProvider
 	}
 
 	private boolean _isDepotOrSite(Group group) {
-		if ((group.getType() == GroupConstants.TYPE_DEPOT) || group.isSite()) {
+		if ((group != null) &&
+			((group.getType() == GroupConstants.TYPE_DEPOT) ||
+			 group.isSite())) {
+
 			return true;
 		}
 

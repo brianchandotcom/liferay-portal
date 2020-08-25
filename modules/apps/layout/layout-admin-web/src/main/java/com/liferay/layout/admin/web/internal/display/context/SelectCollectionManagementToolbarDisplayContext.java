@@ -80,11 +80,11 @@ public class SelectCollectionManagementToolbarDisplayContext
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			_getAddAssetListEntryDropdownItemUnsafeConsumer(
 				AssetListEntryTypeConstants.TYPE_MANUAL_LABEL,
-				"manual-selection", AssetListEntryTypeConstants.TYPE_MANUAL)
+				"manual-collection", AssetListEntryTypeConstants.TYPE_MANUAL)
 		).addPrimaryDropdownItem(
 			_getAddAssetListEntryDropdownItemUnsafeConsumer(
 				AssetListEntryTypeConstants.TYPE_DYNAMIC_LABEL,
-				"dynamic-selection", AssetListEntryTypeConstants.TYPE_DYNAMIC)
+				"dynamic-collection", AssetListEntryTypeConstants.TYPE_DYNAMIC)
 		).build();
 	}
 

@@ -30,7 +30,7 @@ String orderByCol = cpSearchResultsDisplayContext.getOrderByCol();
 			<liferay-ui:message arguments="<%= cpCatalogEntrySearchContainer.getTotal() %>" key="x-products-available" />
 		</p>
 
-		<button aria-expanded="false" aria-haspopup="true" class="btn btn-default commerce-order-by dropdown-toggle" data-toggle="dropdown" type="button">
+		<button aria-expanded="false" aria-haspopup="true" class="btn btn-default commerce-order-by dropdown-toggle" data-toggle="dropdown" onclick="<portlet:namespace/>toggleDropdown()" type="button">
 			<c:set var="orderByColArgument">
 				<span class="ml-1">
 					<liferay-ui:message key="<%= orderByCol %>" />
@@ -42,7 +42,7 @@ String orderByCol = cpSearchResultsDisplayContext.getOrderByCol();
 			<aui:icon image="caret-double-l" markupView="lexicon" />
 		</button>
 
-		<div class="dropdown-menu dropdown-menu-right">
+		<div class="dropdown-menu dropdown-menu-right" id="<portlet:namespace/>commerce-dropdown-order-by">
 
 			<%
 			String[] sortOptions = {"relevance", "price-low-to-high", "price-high-to-low", "new-items", "name-ascending", "name-descending"};
@@ -91,4 +91,19 @@ String orderByCol = cpSearchResultsDisplayContext.getOrderByCol();
 		},
 		['liferay-portlet-url']
 	);
+
+	Liferay.provide(window, '<portlet:namespace />toggleDropdown', function () {
+		var dropdownElement = window.document.querySelector(
+			'#<portlet:namespace/>commerce-dropdown-order-by'
+		);
+
+		if (dropdownElement) {
+			if (dropdownElement.classList.contains('show')) {
+				dropdownElement.classList.remove('show');
+			}
+			else {
+				dropdownElement.classList.add('show');
+			}
+		}
+	});
 </aui:script>

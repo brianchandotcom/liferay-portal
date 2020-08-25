@@ -15,12 +15,16 @@
 package com.liferay.commerce.shipping.engine.fixed.web.internal;
 
 import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceAddressRestrictionLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
@@ -34,6 +38,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -152,9 +157,35 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 				continue;
 			}
 
+			CommerceChannel commerceChannel =
+				_commerceChannelService.getCommerceChannelByOrderGroupId(
+					commerceOrder.getGroupId());
+
+			CommerceCurrency commerceCurrency =
+				commerceOrder.getCommerceCurrency();
+
+			String commerceCurrencyCode = commerceCurrency.getCode();
+
+			BigDecimal amount = commerceShippingFixedOption.getAmount();
+
+			if (!commerceCurrencyCode.equals(
+					commerceChannel.getCommerceCurrencyCode())) {
+
+				CommerceCurrency commerceChannelCurrency =
+					_commerceCurrencyService.getCommerceCurrency(
+						commerceOrder.getCompanyId(),
+						commerceChannel.getCommerceCurrencyCode());
+
+				amount = amount.divide(
+					commerceChannelCurrency.getRate(),
+					RoundingMode.valueOf(
+						commerceChannelCurrency.getRoundingMode()));
+
+				amount = amount.multiply(commerceCurrency.getRate());
+			}
+
 			commerceShippingOptions.add(
-				new CommerceShippingOption(
-					name, name, commerceShippingFixedOption.getAmount()));
+				new CommerceShippingOption(name, name, amount));
 		}
 
 		return commerceShippingOptions;
@@ -171,6 +202,12 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 	@Reference
 	private CommerceAddressRestrictionLocalService
 		_commerceAddressRestrictionLocalService;
+
+	@Reference
+	private CommerceChannelService _commerceChannelService;
+
+	@Reference
+	private CommerceCurrencyService _commerceCurrencyService;
 
 	@Reference
 	private CommerceShippingFixedOptionLocalService

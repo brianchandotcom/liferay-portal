@@ -56,7 +56,9 @@ import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.model.Dimensions;
 import com.liferay.commerce.product.constants.CPMeasurementUnitConstants;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
+import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.shipping.engine.fedex.internal.configuration.FedExCommerceShippingEngineGroupServiceConfiguration;
 import com.liferay.commerce.shipping.engine.fedex.internal.constants.FedExCommerceShippingEngineConstants;
 import com.liferay.commerce.shipping.origin.locator.CommerceShippingOriginLocator;
@@ -79,6 +81,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -106,6 +109,7 @@ public class FedExCommerceShippingOptionHelper {
 	}
 
 	public FedExCommerceShippingOptionHelper(
+			CommerceChannelService commerceChannelService,
 			CommerceContext commerceContext, CommerceOrder commerceOrder,
 			CommerceCurrencyLocalService commerceCurrencyLocalService,
 			CommerceShippingHelper commerceShippingHelper,
@@ -115,6 +119,7 @@ public class FedExCommerceShippingOptionHelper {
 			ResourceBundle resourceBundle)
 		throws Exception {
 
+		_commerceChannelService = commerceChannelService;
 		_commerceContext = commerceContext;
 		_commerceOrder = commerceOrder;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
@@ -206,6 +211,31 @@ public class FedExCommerceShippingOptionHelper {
 
 			for (BigDecimal amountCur : amounts) {
 				amount = amount.add(amountCur);
+			}
+
+			CommerceChannel commerceChannel =
+				_commerceChannelService.getCommerceChannelByOrderGroupId(
+					_commerceOrder.getGroupId());
+
+			CommerceCurrency commerceCurrency =
+				_commerceOrder.getCommerceCurrency();
+
+			String commerceCurrencyCode = commerceCurrency.getCode();
+
+			if (!commerceCurrencyCode.equals(
+					commerceChannel.getCommerceCurrencyCode())) {
+
+				CommerceCurrency commerceChannelCurrency =
+					_commerceCurrencyLocalService.getCommerceCurrency(
+						_commerceOrder.getCompanyId(),
+						commerceChannel.getCommerceCurrencyCode());
+
+				amount = amount.divide(
+					commerceChannelCurrency.getRate(),
+					RoundingMode.valueOf(
+						commerceChannelCurrency.getRoundingMode()));
+
+				amount = amount.multiply(commerceCurrency.getRate());
 			}
 
 			commerceShippingOptions.add(
@@ -789,6 +819,7 @@ public class FedExCommerceShippingOptionHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FedExCommerceShippingOptionHelper.class);
 
+	private final CommerceChannelService _commerceChannelService;
 	private final CommerceContext _commerceContext;
 	private final CommerceCurrency _commerceCurrency;
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;

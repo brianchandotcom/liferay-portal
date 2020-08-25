@@ -15,6 +15,7 @@
 package com.liferay.analytics.reports.web.internal.portlet.action.test;
 
 import com.liferay.analytics.reports.test.MockObject;
+import com.liferay.analytics.reports.test.analytics.reports.info.item.MockAnalyticsReportsInfoItem;
 import com.liferay.analytics.reports.test.util.MockContextUtil;
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockHttpUtil;
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockThemeDisplayUtil;
@@ -58,6 +59,7 @@ import com.liferay.portal.util.PrefsPropsImpl;
 
 import java.io.ByteArrayOutputStream;
 
+import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Objects;
 
@@ -261,6 +263,73 @@ public class GetDataMVCResourceCommandTest {
 					viewURL.contains(
 						"param_languageId=" +
 							LocaleUtil.toLanguageId(LocaleUtil.getDefault())));
+			});
+	}
+
+	@Test
+	public void testGetViewURLsWithMultipleLocales() throws Exception {
+		MockContextUtil.testWithMockContext(
+			MockContextUtil.MockContext.builder(
+				_classNameLocalService
+			).analyticsReportsInfoItem(
+				MockAnalyticsReportsInfoItem.builder(
+				).locales(
+					Arrays.asList(LocaleUtil.SPAIN, LocaleUtil.US)
+				).build()
+			).build(),
+			() -> {
+				MockLiferayResourceResponse mockLiferayResourceResponse =
+					new MockLiferayResourceResponse();
+
+				_mvcResourceCommand.serveResource(
+					_getMockLiferayResourceRequest(),
+					mockLiferayResourceResponse);
+
+				ByteArrayOutputStream byteArrayOutputStream =
+					(ByteArrayOutputStream)
+						mockLiferayResourceResponse.getPortletOutputStream();
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					new String(byteArrayOutputStream.toByteArray()));
+
+				JSONObject contextJSONObject = jsonObject.getJSONObject(
+					"context");
+
+				JSONArray jsonArray = contextJSONObject.getJSONArray(
+					"viewURLs");
+
+				Assert.assertEquals(
+					String.valueOf(jsonArray), jsonArray.length(), 2);
+
+				JSONObject viewURLJSONObject1 = jsonArray.getJSONObject(0);
+
+				Assert.assertEquals(
+					Boolean.TRUE, viewURLJSONObject1.getBoolean("default"));
+				Assert.assertEquals(
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
+					viewURLJSONObject1.getString("languageId"));
+
+				String viewURL1 = viewURLJSONObject1.getString("viewURL");
+
+				Assert.assertTrue(
+					viewURL1.contains(
+						"param_languageId=" +
+							LocaleUtil.toLanguageId(LocaleUtil.SPAIN)));
+
+				JSONObject viewURLJSONObject2 = jsonArray.getJSONObject(1);
+
+				Assert.assertEquals(
+					Boolean.FALSE, viewURLJSONObject2.getBoolean("default"));
+				Assert.assertEquals(
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
+					viewURLJSONObject2.getString("languageId"));
+
+				String viewURL2 = viewURLJSONObject2.getString("viewURL");
+
+				Assert.assertTrue(
+					viewURL2.contains(
+						"param_languageId=" +
+							LocaleUtil.toLanguageId(LocaleUtil.US)));
 			});
 	}
 

@@ -185,60 +185,6 @@ public class AnalyticsReportsDisplayContextTest {
 	}
 
 	@Test
-	public void testGetPropsViewURLsWithMultipleLocales() throws Exception {
-		AnalyticsReportsDataProvider analyticsReportsDataProvider =
-			_getAnalyticsReportsDataProvider(
-				Collections.emptyList(), RandomTestUtil.randomInt(),
-				RandomTestUtil.randomDouble(), Collections.emptyList(),
-				RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
-				true);
-
-		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem =
-			_getAnalyticsReportsItem(LocaleUtil.SPAIN, LocaleUtil.US);
-
-		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
-			new AnalyticsReportsDisplayContext(
-				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, _getLayoutDisplayPageObjectProvider(), new PortalImpl(),
-				new MockLiferayPortletRenderRequest(),
-				new MockLiferayPortletRenderResponse(), _getResourceBundle(),
-				_getThemeDisplay(_getLayout()), null);
-
-		Map<String, Object> data = analyticsReportsDisplayContext.getData();
-
-		Map<String, Object> props = (Map<String, Object>)data.get("props");
-
-		JSONArray jsonArray = (JSONArray)props.get("viewURLs");
-
-		Assert.assertEquals(String.valueOf(jsonArray), 2, jsonArray.length());
-
-		JSONObject jsonObject1 = jsonArray.getJSONObject(0);
-
-		Assert.assertEquals(Boolean.TRUE, jsonObject1.getBoolean("default"));
-		Assert.assertEquals(
-			LocaleUtil.toBCP47LanguageId(LocaleUtil.SPAIN),
-			jsonObject1.getString("languageId"));
-
-		Http http = new HttpImpl();
-
-		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
-			http.getParameter(
-				jsonObject1.getString("viewURL"), "param_languageId"));
-
-		JSONObject jsonObject2 = jsonArray.getJSONObject(1);
-
-		Assert.assertEquals(Boolean.FALSE, jsonObject2.getBoolean("default"));
-		Assert.assertEquals(
-			LocaleUtil.toBCP47LanguageId(LocaleUtil.US),
-			jsonObject2.getString("languageId"));
-		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.US),
-			http.getParameter(
-				jsonObject2.getString("viewURL"), "param_languageId"));
-	}
-
-	@Test
 	public void testGetPropsWithInvalidAnalyticsConnection() throws Exception {
 		long organicTrafficAmount = RandomTestUtil.randomInt();
 		double organicTrafficShare = RandomTestUtil.randomDouble();

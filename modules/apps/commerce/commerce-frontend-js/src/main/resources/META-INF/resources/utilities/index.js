@@ -12,6 +12,21 @@
  * details.
  */
 
+import createOdataFilter from './odata';
+
+export function getData(apiUrl, query) {
+	let url = apiUrl;
+
+	if (query) {
+		url += (url.includes('?') ? '&' : '?') + `search=${query}`;
+	}
+
+	return fetch(url, {
+		...fetchParams,
+		method: 'GET'
+	}).then(data => data.json());
+}
+
 export function liferayNavigate(url) {
 	if (Liferay.SPA) {
 		Liferay.SPA.app.navigate(url);
@@ -21,6 +36,9 @@ export function liferayNavigate(url) {
 }
 
 export function getValueFromItem(item, fieldName) {
+	if (!fieldName) {
+		return null;
+	}
 	if (Array.isArray(fieldName)) {
 		return fieldName.reduce((acc, key) => {
 			if (key === 'LANG') {
@@ -35,22 +53,40 @@ export function getValueFromItem(item, fieldName) {
 	return item[fieldName];
 }
 
-export function executeAsyncAction(url, method = 'GET') {
+export function excludeFromList(matchingList, againstList) {
+	const matcher = JSON.stringify(matchingList);
+
+	return againstList.filter(item => !matcher.includes(JSON.stringify(item)));
+}
+
+export function executeAsyncAction(url, method = 'GET', body = null) {
 	return fetch(url, {
 		...fetchParams,
+		body,
 		method
 	});
 }
 
 export function formatActionUrl(url, item) {
-	const regex = new RegExp('{(.*?)}', 'mg');
+	var regex = new RegExp('{(.*?)}', 'mg');
 
-	return url.replace(regex, matched =>
+	var replacedUrl = url.replace(regex, matched =>
 		getValueFromItem(
 			item,
 			matched.substring(1, matched.length - 1).split('|')
 		)
 	);
+
+	regex = new RegExp('(%7B.*?%7D)', 'mg');
+
+	replacedUrl = replacedUrl.replace(regex, matched =>
+		getValueFromItem(
+			item,
+			matched.substring(3, matched.length - 3).split('|')
+		)
+	);
+
+	return replacedUrl;
 }
 
 export function getRandomId() {
@@ -59,7 +95,21 @@ export function getRandomId() {
 		.substr(2, 9);
 }
 
+export function getAcceptLanguageHeaderParam() {
+	const browserLang = navigator.language || navigator.userLanguage;
+	const themeLang = Liferay.ThemeDisplay.getLanguageId().replace('_', '-');
+
+	if (browserLang === themeLang) {
+		return browserLang;
+	}
+
+	return `${browserLang}, ${themeLang};q=0.8`;
+}
+
 export const fetchHeaders = new Headers({
+	Accept: 'application/json',
+	'Accept-Language': getAcceptLanguageHeaderParam(),
+	'Content-Type': 'application/json',
 	'x-csrf-token': Liferay.authToken
 });
 
@@ -93,15 +143,56 @@ export function loadData(
 ) {
 	const authString = `p_auth=${window.Liferay.authToken}`;
 	const currentUrlString = `&currentUrl=${encodeURIComponent(currentUrl)}`;
-	const pagination = `&pageSize=${delta}&page=${page}`;
+	const paginationString = `&pageSize=${delta}&page=${page}`;
 	const searchParamString = searchParam ? `&search=${searchParam}` : '';
 	const sortingString = sorting.length
-		? `&orderBy=${JSON.stringify(sorting)}`
+		? `&sort=${sorting
+				.map(item => `${item.key}:${item.direction}`)
+				.join(',')}`
 		: ``;
+	const filtersString = filters.length
+		? `&filter=${createOdataFilter(filters)}`
+		: '';
 
 	const url = `${apiUrl}${
 		apiUrl.indexOf('?') > -1 ? '&' : '?'
-	}${authString}${currentUrlString}${pagination}${sortingString}${searchParamString}`;
+	}${authString}${currentUrlString}${paginationString}${sortingString}${filtersString}${searchParamString}`;
 
 	return executeAsyncAction(url, 'GET').then(response => response.json());
+}
+
+export function serializeParameters(parameters) {
+	return Array.isArray(parameters) ? `?${parameters.join('&')}` : '';
+}
+
+export function sortByKey(items, keyName) {
+	const arrangedItems = items.reduce(
+		(data, item) => {
+			if (typeof item[keyName] === 'number') {
+				return {
+					...data,
+					sorted: {
+						...data.sorted,
+						[item[keyName]]: item
+					}
+				};
+			} else {
+				return {
+					...data,
+					unsortable: data.unsortable.concat(item)
+				};
+			}
+		},
+		{
+			sorted: {},
+			unsortable: []
+		}
+	);
+
+	const sortedItems = [
+		...Object.values(arrangedItems.sorted),
+		...arrangedItems.unsortable
+	];
+
+	return sortedItems;
 }

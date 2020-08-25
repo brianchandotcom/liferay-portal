@@ -830,7 +830,7 @@ public class WabBundleProcessor {
 			}
 			else {
 				StringBundler sb = new StringBundler(
-					annotatedClasses.size() * 2 + 1);
+					(annotatedClasses.size() * 2) + 1);
 
 				sb.append("annotated.classes=");
 

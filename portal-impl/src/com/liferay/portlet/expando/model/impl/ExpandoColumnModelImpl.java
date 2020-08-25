@@ -621,16 +621,16 @@ public class ExpandoColumnModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ExpandoColumn)) {
+		if (!(object instanceof ExpandoColumn)) {
 			return false;
 		}
 
-		ExpandoColumn expandoColumn = (ExpandoColumn)obj;
+		ExpandoColumn expandoColumn = (ExpandoColumn)object;
 
 		long primaryKey = expandoColumn.getPrimaryKey();
 

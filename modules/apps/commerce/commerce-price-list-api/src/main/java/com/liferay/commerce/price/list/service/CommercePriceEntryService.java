@@ -112,6 +112,10 @@ public interface CommercePriceEntryService extends BaseService {
 			OrderByComparator<CommercePriceEntry> orderByComparator)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceEntry> getCommercePriceEntriesByCompanyId(
 			long companyId, int start, int end)
@@ -121,6 +125,10 @@ public interface CommercePriceEntryService extends BaseService {
 	public int getCommercePriceEntriesCount(long commercePriceListId)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommercePriceEntriesCountByCompanyId(long companyId)
 		throws PortalException;
@@ -134,6 +142,10 @@ public interface CommercePriceEntryService extends BaseService {
 			long cpInstanceId, int start, int end)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceEntry> getInstanceCommercePriceEntries(
 			long cpInstanceId, int start, int end,
@@ -160,6 +172,18 @@ public interface CommercePriceEntryService extends BaseService {
 	public CommercePriceEntry updateCommercePriceEntry(
 			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommercePriceEntry updateCommercePriceEntry(
+			long commercePriceEntryId, BigDecimal price,
+			boolean discountDiscovery, BigDecimal discountLevel1,
+			BigDecimal discountLevel2, BigDecimal discountLevel3,
+			BigDecimal discountLevel4, boolean bulkPricing,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommercePriceEntry updateCommercePriceEntry(

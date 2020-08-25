@@ -12,6 +12,8 @@
  * details.
  */
 
+import {CLOSE_MODAL, IS_LOADING_MODAL} from '../eventsDefinitions';
+import {showErrorNotification} from '../notifications';
 import {CLAY_MODAL_SIZES_MAP, MODAL_HEIGHT_MAP} from './constants';
 
 export function resolveModalSize(modalTarget) {
@@ -45,4 +47,40 @@ export function openPermissionsModal(uri) {
 		title: Liferay.Language.get('permissions'),
 		uri
 	});
+}
+
+export function closeAndRedirect(redirectURL) {
+	const t_Liferay = window.top.Liferay;
+
+	const modalSettings = {
+		successNotification: {
+			message: Liferay.Language.get(
+				'your-request-completed-successfully'
+			),
+			showSuccessNotification: true
+		}
+	};
+
+	if (redirectURL) {
+		modalSettings.redirectURL = redirectURL.toString();
+	}
+
+	t_Liferay.fire(CLOSE_MODAL, modalSettings);
+}
+
+export function isSubmitting() {
+	const t_Liferay = window.top.Liferay;
+
+	t_Liferay.fire(IS_LOADING_MODAL, {isLoading: true});
+}
+
+export function onSubmitFail(reason = {}) {
+	const t_Liferay = window.top.Liferay,
+		{title = ''} = reason,
+		errorMessage =
+			title || Liferay.Language.get('an-unexpected-error-occurred');
+
+	t_Liferay.fire(IS_LOADING_MODAL, {isLoading: false});
+
+	showErrorNotification(errorMessage);
 }

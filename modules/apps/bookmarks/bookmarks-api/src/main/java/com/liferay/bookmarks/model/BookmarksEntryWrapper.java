@@ -932,17 +932,17 @@ public class BookmarksEntryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof BookmarksEntryWrapper)) {
+		if (!(object instanceof BookmarksEntryWrapper)) {
 			return false;
 		}
 
 		BookmarksEntryWrapper bookmarksEntryWrapper =
-			(BookmarksEntryWrapper)obj;
+			(BookmarksEntryWrapper)object;
 
 		if (Objects.equals(
 				_bookmarksEntry, bookmarksEntryWrapper._bookmarksEntry)) {

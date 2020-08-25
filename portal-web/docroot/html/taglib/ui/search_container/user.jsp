@@ -33,7 +33,7 @@ User user2 = UserLocalServiceUtil.fetchUser(userId);
 
 	<c:if test="<%= showDetails %>">
 		<div class="user-details">
-			<div class='row <%= (date == null) ? "line" : StringPool.BLANK %>'>
+			<div class="row <%= (date == null) ? "line" : StringPool.BLANK %>">
 				<span class="col-md-12 user-name"><%= HtmlUtil.escape((user2 != null) ? user2.getFullName() : LanguageUtil.get(resourceBundle, "anonymous")) %></span>
 			</div>
 

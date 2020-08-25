@@ -562,17 +562,17 @@ public class JournalArticleResourceModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof JournalArticleResource)) {
+		if (!(object instanceof JournalArticleResource)) {
 			return false;
 		}
 
 		JournalArticleResource journalArticleResource =
-			(JournalArticleResource)obj;
+			(JournalArticleResource)object;
 
 		long primaryKey = journalArticleResource.getPrimaryKey();
 

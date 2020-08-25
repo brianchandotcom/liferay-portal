@@ -891,16 +891,16 @@ public class JournalFeedWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof JournalFeedWrapper)) {
+		if (!(object instanceof JournalFeedWrapper)) {
 			return false;
 		}
 
-		JournalFeedWrapper journalFeedWrapper = (JournalFeedWrapper)obj;
+		JournalFeedWrapper journalFeedWrapper = (JournalFeedWrapper)object;
 
 		if (Objects.equals(_journalFeed, journalFeedWrapper._journalFeed)) {
 			return true;

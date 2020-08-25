@@ -55,7 +55,8 @@ public class SoyTemplateResourceImpl implements SoyTemplateResource {
 			return templateId;
 		}
 
-		StringBundler sb = new StringBundler(_templateResources.size() * 2 - 1);
+		StringBundler sb = new StringBundler(
+			(_templateResources.size() * 2) - 1);
 
 		for (TemplateResource templateResource : _templateResources) {
 			if (sb.index() > 0) {

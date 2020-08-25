@@ -31,73 +31,71 @@ productSkusURL.setParameter("cpDefinitionId", String.valueOf(cpDefinitionId));
 productSkusURL.setParameter("screenNavigationCategoryKey", "skus");
 %>
 
-<c:if test="<%= cpInstanceCommercePriceEntryDisplayContext.hasManageCommercePriceListPermission() %>">
-	<portlet:actionURL name="editCPInstanceCommercePriceEntry" var="addCommercePriceEntryURL" />
+<portlet:actionURL name="editCPInstanceCommercePriceEntry" var="addCommercePriceEntryURL" />
 
-	<aui:form action="<%= addCommercePriceEntryURL %>" cssClass="hide" name="addCommercePriceEntryFm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
+<aui:form action="<%= addCommercePriceEntryURL %>" cssClass="hide" name="addCommercePriceEntryFm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="cpInstanceId" type="hidden" value="<%= cpInstanceId %>" />
+	<aui:input name="commercePriceListIds" type="hidden" value="" />
+</aui:form>
+
+<div id="<portlet:namespace />entriesContainer">
+	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="cpInstanceId" type="hidden" value="<%= cpInstanceId %>" />
-		<aui:input name="commercePriceListIds" type="hidden" value="" />
+		<aui:input name="deleteCommercePriceEntryIds" type="hidden" />
+
+		<liferay-ui:error exception="<%= DuplicateCommercePriceEntryException.class %>" message="one-or-more-selected-entries-already-exist" />
+
+		<%
+		Map<String, String> contextParams = new HashMap<>();
+
+		contextParams.put("cpInstanceId", String.valueOf(cpInstanceId));
+		%>
+
+		<commerce-ui:dataset-display
+			clayCreationMenu="<%= cpInstanceCommercePriceEntryDisplayContext.getClayCreationMenu() %>"
+			contextParams="<%= contextParams %>"
+			dataProviderKey="<%= CommercePriceListDataSetConstants.COMMERCE_DATA_SET_KEY_INSTANCE_PRICE_ENTRIES %>"
+			formId="fm"
+			id="<%= CommercePriceListDataSetConstants.COMMERCE_DATA_SET_KEY_INSTANCE_PRICE_ENTRIES %>"
+			itemsPerPage="<%= 10 %>"
+			namespace="<%= renderResponse.getNamespace() %>"
+			pageNumber="<%= 1 %>"
+			portletURL="<%= portletURL %>"
+			style="stacked"
+		/>
 	</aui:form>
+</div>
 
-	<div id="<portlet:namespace />entriesContainer">
-		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="deleteCommercePriceEntryIds" type="hidden" />
+<aui:script use="liferay-item-selector-dialog">
+	Liferay.on('<portlet:namespace />addCommercePriceEntry', function() {
+		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+			eventName: 'priceListsSelectItem',
+			on: {
+				selectedItemChange: function(event) {
+					var selectedItems = event.newVal;
 
-			<liferay-ui:error exception="<%= DuplicateCommercePriceEntryException.class %>" message="one-or-more-selected-entries-already-exist" />
+					if (selectedItems) {
+						$('#<portlet:namespace />commercePriceListIds').val(
+							selectedItems
+						);
 
-			<%
-			Map<String, String> contextParams = new HashMap<>();
+						var addCommercePriceEntryFm = $(
+							'#<portlet:namespace />addCommercePriceEntryFm'
+						);
 
-			contextParams.put("cpInstanceId", String.valueOf(cpInstanceId));
-			%>
-
-			<commerce-ui:dataset-display
-				clayCreationMenu="<%= cpInstanceCommercePriceEntryDisplayContext.getClayCreationMenu() %>"
-				contextParams="<%= contextParams %>"
-				dataProviderKey="<%= CommercePriceListDataSetConstants.COMMERCE_DATA_SET_KEY_INSTANCE_PRICE_ENTRIES %>"
-				formId="fm"
-				id="<%= CommercePriceListDataSetConstants.COMMERCE_DATA_SET_KEY_INSTANCE_PRICE_ENTRIES %>"
-				itemsPerPage="<%= 10 %>"
-				namespace="<%= renderResponse.getNamespace() %>"
-				pageNumber="<%= 1 %>"
-				portletURL="<%= portletURL %>"
-				style="stacked"
-			/>
-		</aui:form>
-	</div>
-
-	<aui:script use="liferay-item-selector-dialog">
-		Liferay.on('<portlet:namespace />addCommercePriceEntry', function() {
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-				eventName: 'priceListsSelectItem',
-				on: {
-					selectedItemChange: function(event) {
-						var selectedItems = event.newVal;
-
-						if (selectedItems) {
-							$('#<portlet:namespace />commercePriceListIds').val(
-								selectedItems
-							);
-
-							var addCommercePriceEntryFm = $(
-								'#<portlet:namespace />addCommercePriceEntryFm'
-							);
-
-							submitForm(addCommercePriceEntryFm);
-						}
+						submitForm(addCommercePriceEntryFm);
 					}
-				},
-				title:
-					'<liferay-ui:message arguments="<%= HtmlUtil.escape(cpInstance.getSku()) %>" key="add-x-to-price-list" />',
-				url:
-					'<%= cpInstanceCommercePriceEntryDisplayContext.getItemSelectorUrl() %>'
-			});
-
-			itemSelectorDialog.open();
+				}
+			},
+			title:
+				'<liferay-ui:message arguments="<%= HtmlUtil.escape(cpInstance.getSku()) %>" key="add-x-to-price-list" />',
+			url:
+				'<%= cpInstanceCommercePriceEntryDisplayContext.getItemSelectorUrl() %>'
 		});
-	</aui:script>
-</c:if>
+
+		itemSelectorDialog.open();
+	});
+</aui:script>

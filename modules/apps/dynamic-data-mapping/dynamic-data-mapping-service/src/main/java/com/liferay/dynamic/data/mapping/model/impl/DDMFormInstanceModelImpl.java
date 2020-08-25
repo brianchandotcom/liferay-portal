@@ -1348,16 +1348,16 @@ public class DDMFormInstanceModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMFormInstance)) {
+		if (!(object instanceof DDMFormInstance)) {
 			return false;
 		}
 
-		DDMFormInstance ddmFormInstance = (DDMFormInstance)obj;
+		DDMFormInstance ddmFormInstance = (DDMFormInstance)object;
 
 		long primaryKey = ddmFormInstance.getPrimaryKey();
 

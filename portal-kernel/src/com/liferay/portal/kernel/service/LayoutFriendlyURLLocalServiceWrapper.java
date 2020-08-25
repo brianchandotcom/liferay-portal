@@ -34,6 +34,10 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	/**
 	 * Adds the layout friendly url to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect LayoutFriendlyURLLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param layoutFriendlyURL the layout friendly url
 	 * @return the layout friendly url that was added
 	 */
@@ -92,6 +96,10 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	/**
 	 * Deletes the layout friendly url from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect LayoutFriendlyURLLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param layoutFriendlyURL the layout friendly url
 	 * @return the layout friendly url that was removed
 	 */
@@ -107,6 +115,10 @@ public class LayoutFriendlyURLLocalServiceWrapper
 
 	/**
 	 * Deletes the layout friendly url with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect LayoutFriendlyURLLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param layoutFriendlyURLId the primary key of the layout friendly url
 	 * @return the layout friendly url that was removed
@@ -492,6 +504,10 @@ public class LayoutFriendlyURLLocalServiceWrapper
 
 	/**
 	 * Updates the layout friendly url in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect LayoutFriendlyURLLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param layoutFriendlyURL the layout friendly url
 	 * @return the layout friendly url that was updated

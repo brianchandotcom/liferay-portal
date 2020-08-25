@@ -107,7 +107,9 @@ public abstract class BaseAddressResourceTestCase {
 
 		AddressResource.Builder builder = AddressResource.builder();
 
-		addressResource = builder.locale(
+		addressResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

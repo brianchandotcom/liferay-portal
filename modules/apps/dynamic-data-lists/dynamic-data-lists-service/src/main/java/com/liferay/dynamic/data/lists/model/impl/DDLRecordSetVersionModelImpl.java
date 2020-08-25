@@ -1422,16 +1422,16 @@ public class DDLRecordSetVersionModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDLRecordSetVersion)) {
+		if (!(object instanceof DDLRecordSetVersion)) {
 			return false;
 		}
 
-		DDLRecordSetVersion ddlRecordSetVersion = (DDLRecordSetVersion)obj;
+		DDLRecordSetVersion ddlRecordSetVersion = (DDLRecordSetVersion)object;
 
 		long primaryKey = ddlRecordSetVersion.getPrimaryKey();
 

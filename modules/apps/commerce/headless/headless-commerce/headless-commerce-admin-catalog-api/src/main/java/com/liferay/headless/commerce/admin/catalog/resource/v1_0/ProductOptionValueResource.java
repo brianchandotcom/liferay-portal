@@ -26,6 +26,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -52,6 +53,10 @@ public interface ProductOptionValueResource {
 
 	public ProductOptionValue postProductOptionIdProductOptionValue(
 			Long id, ProductOptionValue productOptionValue)
+		throws Exception;
+
+	public Response postProductOptionIdProductOptionValueBatch(
+			Long id, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

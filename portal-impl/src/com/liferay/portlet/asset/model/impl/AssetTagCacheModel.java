@@ -36,16 +36,16 @@ public class AssetTagCacheModel
 	implements CacheModel<AssetTag>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AssetTagCacheModel)) {
+		if (!(object instanceof AssetTagCacheModel)) {
 			return false;
 		}
 
-		AssetTagCacheModel assetTagCacheModel = (AssetTagCacheModel)obj;
+		AssetTagCacheModel assetTagCacheModel = (AssetTagCacheModel)object;
 
 		if (tagId == assetTagCacheModel.tagId) {
 			return true;

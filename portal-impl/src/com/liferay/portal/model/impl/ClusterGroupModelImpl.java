@@ -481,16 +481,16 @@ public class ClusterGroupModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ClusterGroup)) {
+		if (!(object instanceof ClusterGroup)) {
 			return false;
 		}
 
-		ClusterGroup clusterGroup = (ClusterGroup)obj;
+		ClusterGroup clusterGroup = (ClusterGroup)object;
 
 		long primaryKey = clusterGroup.getPrimaryKey();
 

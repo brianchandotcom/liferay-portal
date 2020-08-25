@@ -1595,17 +1595,17 @@ public class CPDefinitionOptionRelModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionOptionRel)) {
+		if (!(object instanceof CPDefinitionOptionRel)) {
 			return false;
 		}
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
-			(CPDefinitionOptionRel)obj;
+			(CPDefinitionOptionRel)object;
 
 		long primaryKey = cpDefinitionOptionRel.getPrimaryKey();
 

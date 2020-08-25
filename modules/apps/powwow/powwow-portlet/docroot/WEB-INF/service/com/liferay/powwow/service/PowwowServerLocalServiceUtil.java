@@ -48,6 +48,10 @@ public class PowwowServerLocalServiceUtil {
 	/**
 	 * Adds the powwow server to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect PowwowServerLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param powwowServer the powwow server
 	 * @return the powwow server that was added
 	 */
@@ -87,6 +91,10 @@ public class PowwowServerLocalServiceUtil {
 	/**
 	 * Deletes the powwow server with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect PowwowServerLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param powwowServerId the primary key of the powwow server
 	 * @return the powwow server that was removed
 	 * @throws PortalException if a powwow server with the primary key could not be found
@@ -100,6 +108,10 @@ public class PowwowServerLocalServiceUtil {
 
 	/**
 	 * Deletes the powwow server from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect PowwowServerLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param powwowServer the powwow server
 	 * @return the powwow server that was removed
@@ -306,6 +318,10 @@ public class PowwowServerLocalServiceUtil {
 
 	/**
 	 * Updates the powwow server in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect PowwowServerLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param powwowServer the powwow server
 	 * @return the powwow server that was updated

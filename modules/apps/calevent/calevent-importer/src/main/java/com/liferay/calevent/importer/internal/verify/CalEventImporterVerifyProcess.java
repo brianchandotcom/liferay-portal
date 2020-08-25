@@ -997,7 +997,8 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 		long startTime = startDate.getTime();
 
 		long endTime =
-			startTime + durationHour * Time.HOUR + durationMinute * Time.MINUTE;
+			startTime + (durationHour * Time.HOUR) +
+				(durationMinute * Time.MINUTE);
 
 		if (allDay) {
 			endTime = endTime - 1;

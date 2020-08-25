@@ -98,6 +98,27 @@ public class Product implements Cloneable {
 
 	protected Attachment[] attachments;
 
+	public Catalog getCatalog() {
+		return catalog;
+	}
+
+	public void setCatalog(Catalog catalog) {
+		this.catalog = catalog;
+	}
+
+	public void setCatalog(
+		UnsafeSupplier<Catalog, Exception> catalogUnsafeSupplier) {
+
+		try {
+			catalog = catalogUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Catalog catalog;
+
 	public Long getCatalogId() {
 		return catalogId;
 	}
@@ -546,6 +567,27 @@ public class Product implements Cloneable {
 
 	protected ProductSpecification[] productSpecifications;
 
+	public Integer getProductStatus() {
+		return productStatus;
+	}
+
+	public void setProductStatus(Integer productStatus) {
+		this.productStatus = productStatus;
+	}
+
+	public void setProductStatus(
+		UnsafeSupplier<Integer, Exception> productStatusUnsafeSupplier) {
+
+		try {
+			productStatus = productStatusUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer productStatus;
+
 	public String getProductType() {
 		return productType;
 	}
@@ -566,6 +608,27 @@ public class Product implements Cloneable {
 	}
 
 	protected String productType;
+
+	public String getProductTypeI18n() {
+		return productTypeI18n;
+	}
+
+	public void setProductTypeI18n(String productTypeI18n) {
+		this.productTypeI18n = productTypeI18n;
+	}
+
+	public void setProductTypeI18n(
+		UnsafeSupplier<String, Exception> productTypeI18nUnsafeSupplier) {
+
+		try {
+			productTypeI18n = productTypeI18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String productTypeI18n;
 
 	public RelatedProduct[] getRelatedProducts() {
 		return relatedProducts;
@@ -722,6 +785,27 @@ public class Product implements Cloneable {
 
 	protected ProductTaxConfiguration taxConfiguration;
 
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+
+	public void setThumbnail(
+		UnsafeSupplier<String, Exception> thumbnailUnsafeSupplier) {
+
+		try {
+			thumbnail = thumbnailUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String thumbnail;
+
 	public Map<String, String> getUrls() {
 		return urls;
 	}
@@ -742,6 +826,27 @@ public class Product implements Cloneable {
 	}
 
 	protected Map<String, String> urls;
+
+	public Status getWorkflowStatusInfo() {
+		return workflowStatusInfo;
+	}
+
+	public void setWorkflowStatusInfo(Status workflowStatusInfo) {
+		this.workflowStatusInfo = workflowStatusInfo;
+	}
+
+	public void setWorkflowStatusInfo(
+		UnsafeSupplier<Status, Exception> workflowStatusInfoUnsafeSupplier) {
+
+		try {
+			workflowStatusInfo = workflowStatusInfoUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Status workflowStatusInfo;
 
 	@Override
 	public Product clone() throws CloneNotSupportedException {

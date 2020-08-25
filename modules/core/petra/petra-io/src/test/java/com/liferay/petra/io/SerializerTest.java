@@ -379,7 +379,7 @@ public class SerializerTest {
 		newBytes = (byte[])_getBufferMethod.invoke(serializer, _COUNT + 1);
 
 		Assert.assertEquals(
-			Arrays.toString(newBytes), bytes.length * 2 + 1, newBytes.length);
+			Arrays.toString(newBytes), (bytes.length * 2) + 1, newBytes.length);
 
 		for (int i = 0; i < bytes.length; i++) {
 			Assert.assertEquals(bytes[i], newBytes[i]);
@@ -423,7 +423,7 @@ public class SerializerTest {
 
 		Assert.assertEquals(0, bufferQueue.getCount());
 		Assert.assertEquals(
-			chars.length * 2 + 5, unsyncByteArrayOutputStream.size());
+			(chars.length * 2) + 5, unsyncByteArrayOutputStream.size());
 	}
 
 	@Test
@@ -883,7 +883,7 @@ public class SerializerTest {
 		byteBuffer = serializer.toByteBuffer();
 
 		Assert.assertEquals(
-			6 + nonAsciiString.length() * 2, byteBuffer.limit());
+			6 + (nonAsciiString.length() * 2), byteBuffer.limit());
 		Assert.assertEquals(SerializationConstants.TC_STRING, byteBuffer.get());
 		Assert.assertEquals(0, byteBuffer.get());
 		Assert.assertEquals(nonAsciiString.length(), byteBuffer.getInt());
@@ -965,7 +965,7 @@ public class SerializerTest {
 		serializer.writeString(nonAsciiString);
 
 		Assert.assertEquals(
-			_indexField.getInt(serializer), 5 + nonAsciiString.length() * 2);
+			_indexField.getInt(serializer), 5 + (nonAsciiString.length() * 2));
 		Assert.assertFalse(
 			BigEndianCodec.getBoolean((byte[])_bufferField.get(serializer), 0));
 

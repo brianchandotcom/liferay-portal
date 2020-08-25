@@ -50,7 +50,7 @@ public interface OrderResource {
 	}
 
 	public Page<Order> getOrdersPage(
-			Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Order postOrder(Order order) throws Exception;

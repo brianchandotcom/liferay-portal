@@ -770,17 +770,17 @@ public class CPMeasurementUnitWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPMeasurementUnitWrapper)) {
+		if (!(object instanceof CPMeasurementUnitWrapper)) {
 			return false;
 		}
 
 		CPMeasurementUnitWrapper cpMeasurementUnitWrapper =
-			(CPMeasurementUnitWrapper)obj;
+			(CPMeasurementUnitWrapper)object;
 
 		if (Objects.equals(
 				_cpMeasurementUnit,

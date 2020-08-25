@@ -201,7 +201,8 @@ public class CommerceShippingMethodClayTable
 						commerceShippingEngine.getName(
 							themeDisplay.getLocale())),
 					CommerceChannelClayTableUtil.getLabelField(
-						_isActive(commerceShippingMethod))));
+						_isActive(commerceShippingMethod),
+						themeDisplay.getLocale())));
 		}
 
 		return shippingMethods;

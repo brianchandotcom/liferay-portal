@@ -80,6 +80,8 @@ public interface CPTaxCategoryLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public int countCPTaxCategoriesByCompanyId(long companyId, String keyword);
+
 	/**
 	 * Creates a new cp tax category with the primary key. Does not add the cp tax category to the database.
 	 *
@@ -189,6 +191,9 @@ public interface CPTaxCategoryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPTaxCategory fetchCPTaxCategory(long CPTaxCategoryId);
+
+	public List<CPTaxCategory> findCPTaxCategoriesByCompanyId(
+		long companyId, String keyword, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

@@ -81,6 +81,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
@@ -181,14 +182,14 @@ public class MiniumSiteInitializer implements SiteInitializer {
 
 			updateLogo(serviceContext);
 
-			createRoles(serviceContext);
-
 			CommerceCatalog commerceCatalog = createCatalog(serviceContext);
 
 			long catalogGroupId = commerceCatalog.getGroupId();
 
 			CommerceChannel commerceChannel = createChannel(
 				commerceCatalog, serviceContext);
+
+			createRoles(serviceContext, commerceChannel.getCommerceChannelId());
 
 			configureB2BSite(commerceChannel.getGroupId(), serviceContext);
 
@@ -346,12 +347,16 @@ public class MiniumSiteInitializer implements SiteInitializer {
 			serviceContext);
 	}
 
-	protected void createRoles(ServiceContext serviceContext) throws Exception {
+	protected void createRoles(
+			ServiceContext serviceContext, long commerceChannelId)
+		throws Exception {
+
 		JSONArray jsonArray = _getJSONArray("roles.json");
 
 		_cpFileImporter.createRoles(jsonArray, serviceContext);
 
 		updateUserRole(serviceContext);
+		updateOperationManagerRole(serviceContext, commerceChannelId);
 	}
 
 	@Deactivate
@@ -494,6 +499,20 @@ public class MiniumSiteInitializer implements SiteInitializer {
 
 		_cpFileImporter.updateLogo(file, true, true, serviceContext);
 		_cpFileImporter.updateLogo(file, false, true, serviceContext);
+	}
+
+	protected void updateOperationManagerRole(
+			ServiceContext serviceContext, long commerceChannelId)
+		throws PortalException {
+
+		ModelPermissions modelPermissions = new ModelPermissions();
+
+		modelPermissions.addRolePermissions("Operations Manager", "VIEW");
+
+		_resourcePermissionLocalService.addModelResourcePermissions(
+			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
+			serviceContext.getUserId(), CommerceChannel.class.getName(),
+			String.valueOf(commerceChannelId), modelPermissions);
 	}
 
 	protected void updateThemeSetting(

@@ -23,14 +23,13 @@ import com.liferay.commerce.product.asset.categories.navigation.web.internal.con
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
-import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
-import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -57,7 +56,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			AssetVocabularyService assetVocabularyService,
 			CommerceMediaResolver commerceMediaResolver,
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
-			CPFriendlyURLEntryLocalService cpFriendlyURLEntryLocalService,
+			FriendlyURLEntryLocalService friendlyURLEntryLocalService,
 			Portal portal)
 		throws ConfigurationException {
 
@@ -66,7 +65,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 		_assetVocabularyService = assetVocabularyService;
 		_commerceMediaResolver = commerceMediaResolver;
 		_cpAttachmentFileEntryService = cpAttachmentFileEntryService;
-		_cpFriendlyURLEntryLocalService = cpFriendlyURLEntryLocalService;
+		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
 		_portal = portal;
 
 		ThemeDisplay themeDisplay =
@@ -216,39 +215,27 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			return StringPool.BLANK;
 		}
 
+		String groupFriendlyUrl = _portal.getGroupFriendlyURL(
+			themeDisplay.getLayoutSet(), themeDisplay);
+
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
+
+		FriendlyURLEntry friendlyURLEntry = null;
+
+		try {
+			friendlyURLEntry =
+				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+					classNameId, categoryId);
+		}
+		catch (Exception e) {
+			return StringPool.BLANK;
+		}
 
 		String languageId = LanguageUtil.getLanguageId(
 			themeDisplay.getLocale());
 
-		CPFriendlyURLEntry cpFriendlyURLEntry =
-			_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
-				GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId, categoryId,
-				languageId, true);
-
-		if (cpFriendlyURLEntry == null) {
-			String defaultLanguageId = LanguageUtil.getLanguageId(
-				themeDisplay.getSiteDefaultLocale());
-
-			if (languageId.equals(defaultLanguageId)) {
-				return StringPool.BLANK;
-			}
-
-			cpFriendlyURLEntry =
-				_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
-					GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
-					categoryId, defaultLanguageId, true);
-
-			if (cpFriendlyURLEntry == null) {
-				return StringPool.BLANK;
-			}
-		}
-
-		String groupFriendlyUrl = _portal.getGroupFriendlyURL(
-			themeDisplay.getLayoutSet(), themeDisplay);
-
 		return groupFriendlyUrl + CPConstants.SEPARATOR_ASSET_CATEGORY_URL +
-			cpFriendlyURLEntry.getUrlTitle();
+			friendlyURLEntry.getUrlTitle(languageId);
 	}
 
 	public String getRootAssetCategoryId() {
@@ -376,9 +363,8 @@ public class CPAssetCategoriesNavigationDisplayContext {
 	private final CPAssetCategoriesNavigationPortletInstanceConfiguration
 		_cpAssetCategoriesNavigationPortletInstanceConfiguration;
 	private final CPAttachmentFileEntryService _cpAttachmentFileEntryService;
-	private final CPFriendlyURLEntryLocalService
-		_cpFriendlyURLEntryLocalService;
 	private long _displayStyleGroupId;
+	private final FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private final Portal _portal;
 

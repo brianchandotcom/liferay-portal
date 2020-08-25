@@ -51,7 +51,6 @@ definition {
 	}
 
 	@description = "This will be ignored until LRCI-1050 is fixed."
-	@ignore = "true"
 	@priority = "4"
 	test FacebookSSOSmoke {
 		property dummy.socket.proxy.disabled = "true";
@@ -97,8 +96,8 @@ definition {
 		property test.name.skip.portal.instance = "Login#GoogleSSOSmoke";
 		var googleClientID = PropsUtil.get("google.client.id.2");
 		var googleClientSecret = PropsUtil.get("google.client.secret.2");
-		var userEmailAddress = PropsUtil.get("email.address.1");
-		var userPassword = PropsUtil.get("email.password.1");
+		var userEmailAddress = PropsUtil.get("email.address.2");
+		var userPassword = PropsUtil.get("email.password.2");
 
 		User.firstLoginPG();
 
@@ -166,8 +165,8 @@ definition {
 
 		var openIDConnectClientID = PropsUtil.get("google.client.id.3");
 		var openIDConnectClientSecret = PropsUtil.get("google.client.secret.3");
-		var userEmailAddress = PropsUtil.get("email.address.1");
-		var userPassword = PropsUtil.get("email.password.1");
+		var userEmailAddress = PropsUtil.get("email.address.2");
+		var userPassword = PropsUtil.get("email.password.2");
 
 		User.firstLoginPG();
 

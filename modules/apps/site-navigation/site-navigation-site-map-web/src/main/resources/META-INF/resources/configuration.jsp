@@ -52,7 +52,7 @@ List<LayoutDescription> layoutDescriptions = siteNavigationSiteMapDisplayContext
 					for (LayoutDescription layoutDescription : layoutDescriptions) {
 						Layout layoutDescriptionLayout = LayoutLocalServiceUtil.fetchLayout(layoutDescription.getPlid());
 
-						if (layoutDescriptionLayout != null) {
+						if ((layoutDescriptionLayout != null) && !"asset_display".equals(layoutDescriptionLayout.getType())) {
 					%>
 
 							<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= Objects.equals(layoutDescriptionLayout.getUuid(), siteNavigationSiteMapPortletInstanceConfiguration.rootLayoutUuid()) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
@@ -79,7 +79,7 @@ List<LayoutDescription> layoutDescriptions = siteNavigationSiteMapDisplayContext
 
 				</aui:select>
 
-				<div class='<%= Validator.isNotNull(siteNavigationSiteMapPortletInstanceConfiguration.rootLayoutUuid()) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />includeRootInTreeContainer">
+				<div class="<%= Validator.isNotNull(siteNavigationSiteMapPortletInstanceConfiguration.rootLayoutUuid()) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />includeRootInTreeContainer">
 					<aui:input name="preferences--includeRootInTree--" type="toggle-switch" value="<%= siteNavigationSiteMapDisplayContext.isIncludeRootInTree() %>" />
 				</div>
 

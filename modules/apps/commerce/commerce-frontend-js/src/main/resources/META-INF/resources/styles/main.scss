@@ -5,12 +5,14 @@
 @import '../components/gallery/gallery';
 @import '../components/info_box/info_box';
 @import '../components/item_finder/item_finder';
+@import '../components/mini_cart/mini_cart';
 @import '../components/modal/modal';
 @import '../components/price/price';
 @import '../components/quantity_selector/quantity_selector';
 @import '../components/side_panel/side_panel';
 @import '../components/summary/summary';
 @import '../components/step_tracker/step_tracker';
+@import '../components/data_renderers/data_renderers';
 
 .cell-comment {
 	cursor: pointer;

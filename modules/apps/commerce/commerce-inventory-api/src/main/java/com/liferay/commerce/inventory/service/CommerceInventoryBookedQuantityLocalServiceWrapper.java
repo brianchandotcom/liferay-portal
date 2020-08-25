@@ -51,6 +51,10 @@ public class CommerceInventoryBookedQuantityLocalServiceWrapper
 	/**
 	 * Adds the commerce inventory booked quantity to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceInventoryBookedQuantityLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceInventoryBookedQuantity the commerce inventory booked quantity
 	 * @return the commerce inventory booked quantity that was added
 	 */
@@ -100,6 +104,10 @@ public class CommerceInventoryBookedQuantityLocalServiceWrapper
 	/**
 	 * Deletes the commerce inventory booked quantity from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceInventoryBookedQuantityLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceInventoryBookedQuantity the commerce inventory booked quantity
 	 * @return the commerce inventory booked quantity that was removed
 	 */
@@ -116,6 +124,10 @@ public class CommerceInventoryBookedQuantityLocalServiceWrapper
 
 	/**
 	 * Deletes the commerce inventory booked quantity with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceInventoryBookedQuantityLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceInventoryBookedQuantityId the primary key of the commerce inventory booked quantity
 	 * @return the commerce inventory booked quantity that was removed
@@ -375,6 +387,10 @@ public class CommerceInventoryBookedQuantityLocalServiceWrapper
 
 	/**
 	 * Updates the commerce inventory booked quantity in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceInventoryBookedQuantityLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceInventoryBookedQuantity the commerce inventory booked quantity
 	 * @return the commerce inventory booked quantity that was updated

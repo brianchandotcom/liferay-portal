@@ -553,16 +553,16 @@ public class SyncDeviceWrapper implements ModelWrapper<SyncDevice>, SyncDevice {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SyncDeviceWrapper)) {
+		if (!(object instanceof SyncDeviceWrapper)) {
 			return false;
 		}
 
-		SyncDeviceWrapper syncDeviceWrapper = (SyncDeviceWrapper)obj;
+		SyncDeviceWrapper syncDeviceWrapper = (SyncDeviceWrapper)object;
 
 		if (Objects.equals(_syncDevice, syncDeviceWrapper._syncDevice)) {
 			return true;

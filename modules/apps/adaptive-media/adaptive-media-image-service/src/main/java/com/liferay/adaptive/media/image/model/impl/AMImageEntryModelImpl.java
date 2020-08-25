@@ -764,16 +764,16 @@ public class AMImageEntryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AMImageEntry)) {
+		if (!(object instanceof AMImageEntry)) {
 			return false;
 		}
 
-		AMImageEntry amImageEntry = (AMImageEntry)obj;
+		AMImageEntry amImageEntry = (AMImageEntry)object;
 
 		long primaryKey = amImageEntry.getPrimaryKey();
 

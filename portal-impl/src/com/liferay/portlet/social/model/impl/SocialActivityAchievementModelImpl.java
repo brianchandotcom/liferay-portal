@@ -663,17 +663,17 @@ public class SocialActivityAchievementModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SocialActivityAchievement)) {
+		if (!(object instanceof SocialActivityAchievement)) {
 			return false;
 		}
 
 		SocialActivityAchievement socialActivityAchievement =
-			(SocialActivityAchievement)obj;
+			(SocialActivityAchievement)object;
 
 		long primaryKey = socialActivityAchievement.getPrimaryKey();
 

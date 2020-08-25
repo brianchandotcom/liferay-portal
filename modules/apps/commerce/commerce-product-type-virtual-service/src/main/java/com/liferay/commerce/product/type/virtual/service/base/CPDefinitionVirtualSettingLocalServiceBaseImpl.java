@@ -83,6 +83,10 @@ public abstract class CPDefinitionVirtualSettingLocalServiceBaseImpl
 	/**
 	 * Adds the cp definition virtual setting to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CPDefinitionVirtualSettingLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param cpDefinitionVirtualSetting the cp definition virtual setting
 	 * @return the cp definition virtual setting that was added
 	 */
@@ -115,6 +119,10 @@ public abstract class CPDefinitionVirtualSettingLocalServiceBaseImpl
 	/**
 	 * Deletes the cp definition virtual setting with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CPDefinitionVirtualSettingLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param CPDefinitionVirtualSettingId the primary key of the cp definition virtual setting
 	 * @return the cp definition virtual setting that was removed
 	 * @throws PortalException if a cp definition virtual setting with the primary key could not be found
@@ -131,6 +139,10 @@ public abstract class CPDefinitionVirtualSettingLocalServiceBaseImpl
 
 	/**
 	 * Deletes the cp definition virtual setting from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CPDefinitionVirtualSettingLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param cpDefinitionVirtualSetting the cp definition virtual setting
 	 * @return the cp definition virtual setting that was removed
@@ -528,6 +540,10 @@ public abstract class CPDefinitionVirtualSettingLocalServiceBaseImpl
 
 	/**
 	 * Updates the cp definition virtual setting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CPDefinitionVirtualSettingLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param cpDefinitionVirtualSetting the cp definition virtual setting
 	 * @return the cp definition virtual setting that was updated

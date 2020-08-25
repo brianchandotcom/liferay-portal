@@ -119,6 +119,9 @@ public interface CPDefinitionService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CPDefinition copyCPDefinition(long cpDefinitionId, long groupId)
+		throws PortalException;
+
 	public void deleteAssetCategoryCPDefinition(
 			long cpDefinitionId, long categoryId, ServiceContext serviceContext)
 		throws PortalException;

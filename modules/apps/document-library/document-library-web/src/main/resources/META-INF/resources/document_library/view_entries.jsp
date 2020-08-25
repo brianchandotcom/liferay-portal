@@ -215,111 +215,116 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:otherwise>
-							<c:if test='<%= ArrayUtil.contains(entryColumns, "name") %>'>
 
-								<%
-								PortletURL rowURL = liferayPortletResponse.createRenderURL();
+							<%
+							for (int i = 0; i < entryColumns.length; i++) {
+								String curEntryColumn = entryColumns[i];
+							%>
 
-								rowURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
-								rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
-								rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
-								%>
-
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-expand table-cell-minw-200 table-title"
-									name="title"
-								>
-									<aui:a href="<%= rowURL.toString() %>"><%= latestFileVersion.getTitle() %></aui:a>
-
-									<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
-										<aui:icon cssClass="inline-item inline-item-after" image="lock" markupView="lexicon" message="locked" />
-									</c:if>
-
-									<c:if test="<%= fileShortcut != null %>">
-										<aui:icon cssClass="inline-item inline-item-after" image="shortcut" markupView="lexicon" message="shortcut" />
-									</c:if>
-								</liferay-ui:search-container-column-text>
-							</c:if>
-
-							<c:if test='<%= ArrayUtil.contains(entryColumns, "description") %>'>
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-expand table-cell-minw-200"
-									name="description"
-									value="<%= StringUtil.shorten(fileEntry.getDescription(), 100) %>"
-								/>
-							</c:if>
-
-							<c:if test='<%= ArrayUtil.contains(entryColumns, "document-type") %>'>
 								<c:choose>
-									<c:when test="<%= latestFileVersion.getModel() instanceof DLFileVersion %>">
+									<c:when test='<%= curEntryColumn.equals("name") %>'>
 
 										<%
-										DLFileVersion latestDLFileVersion = (DLFileVersion)latestFileVersion.getModel();
+										PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
-										DLFileEntryType dlFileEntryType = latestDLFileVersion.getDLFileEntryType();
+										rowURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
+										rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
+										rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 										%>
 
 										<liferay-ui:search-container-column-text
-											cssClass="table-cell-expand-smaller table-cell-minw-150"
-											name="document-type"
-											value="<%= HtmlUtil.escape(dlFileEntryType.getName(locale)) %>"
+											cssClass="table-cell-expand table-cell-minw-200 table-title"
+											name="title"
+										>
+											<aui:a href="<%= rowURL.toString() %>"><%= latestFileVersion.getTitle() %></aui:a>
+
+											<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
+												<aui:icon cssClass="inline-item inline-item-after" image="lock" markupView="lexicon" message="locked" />
+											</c:if>
+
+											<c:if test="<%= fileShortcut != null %>">
+												<aui:icon cssClass="inline-item inline-item-after" image="shortcut" markupView="lexicon" message="shortcut" />
+											</c:if>
+										</liferay-ui:search-container-column-text>
+									</c:when>
+									<c:when test='<%= curEntryColumn.equals("description") %>'>
+										<liferay-ui:search-container-column-text
+											cssClass="table-cell-expand table-cell-minw-200"
+											name="description"
+											value="<%= StringUtil.shorten(fileEntry.getDescription(), 100) %>"
 										/>
 									</c:when>
-									<c:otherwise>
+									<c:when test='<%= curEntryColumn.equals("document-type") %>'>
+										<c:choose>
+											<c:when test="<%= latestFileVersion.getModel() instanceof DLFileVersion %>">
+
+												<%
+												DLFileVersion latestDLFileVersion = (DLFileVersion)latestFileVersion.getModel();
+
+												DLFileEntryType dlFileEntryType = latestDLFileVersion.getDLFileEntryType();
+												%>
+
+												<liferay-ui:search-container-column-text
+													cssClass="table-cell-expand-smaller table-cell-minw-150"
+													name="document-type"
+													value="<%= HtmlUtil.escape(dlFileEntryType.getName(locale)) %>"
+												/>
+											</c:when>
+											<c:otherwise>
+												<liferay-ui:search-container-column-text
+													cssClass="table-cell-expand-smaller table-cell-minw-150"
+													name="document-type"
+													value="--"
+												/>
+											</c:otherwise>
+										</c:choose>
+									</c:when>
+									<c:when test='<%= curEntryColumn.equals("size") %>'>
 										<liferay-ui:search-container-column-text
-											cssClass="table-cell-expand-smaller table-cell-minw-150"
-											name="document-type"
-											value="--"
+											cssClass="table-cell-expand-smallest"
+											name="size"
+											value="<%= TextFormatter.formatStorageSize(latestFileVersion.getSize(), locale) %>"
 										/>
-									</c:otherwise>
+									</c:when>
+									<c:when test='<%= curEntryColumn.equals("status") %>'>
+										<liferay-ui:search-container-column-status
+											cssClass="table-cell-expand-smallest"
+											name="status"
+											status="<%= latestFileVersion.getStatus() %>"
+										/>
+									</c:when>
+									<c:when test='<%= curEntryColumn.equals("downloads") %>'>
+										<liferay-ui:search-container-column-text
+											cssClass="table-cell-expand-smallest"
+											name="downloads"
+											value="<%= String.valueOf(fileEntry.getReadCount()) %>"
+										/>
+									</c:when>
+									<c:when test='<%= curEntryColumn.equals("create-date") %>'>
+										<liferay-ui:search-container-column-date
+											cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
+											name="create-date"
+											value="<%= fileEntry.getCreateDate() %>"
+										/>
+									</c:when>
+									<c:when test='<%= curEntryColumn.equals("modified-date") %>'>
+										<liferay-ui:search-container-column-date
+											cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
+											name="modified-date"
+											value="<%= latestFileVersion.getModifiedDate() %>"
+										/>
+									</c:when>
+									<c:when test='<%= curEntryColumn.equals("action") %>'>
+										<liferay-ui:search-container-column-jsp
+											path="/document_library/file_entry_action.jsp"
+										/>
+									</c:when>
 								</c:choose>
-							</c:if>
 
-							<c:if test='<%= ArrayUtil.contains(entryColumns, "size") %>'>
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-expand-smallest"
-									name="size"
-									value="<%= TextFormatter.formatStorageSize(latestFileVersion.getSize(), locale) %>"
-								/>
-							</c:if>
+							<%
+							}
+							%>
 
-							<c:if test='<%= ArrayUtil.contains(entryColumns, "status") %>'>
-								<liferay-ui:search-container-column-status
-									cssClass="table-cell-expand-smallest"
-									name="status"
-									status="<%= latestFileVersion.getStatus() %>"
-								/>
-							</c:if>
-
-							<c:if test='<%= ArrayUtil.contains(entryColumns, "downloads") %>'>
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-expand-smallest"
-									name="downloads"
-									value="<%= String.valueOf(fileEntry.getReadCount()) %>"
-								/>
-							</c:if>
-
-							<c:if test='<%= ArrayUtil.contains(entryColumns, "create-date") %>'>
-								<liferay-ui:search-container-column-date
-									cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
-									name="create-date"
-									value="<%= fileEntry.getCreateDate() %>"
-								/>
-							</c:if>
-
-							<c:if test='<%= ArrayUtil.contains(entryColumns, "modified-date") %>'>
-								<liferay-ui:search-container-column-date
-									cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
-									name="modified-date"
-									value="<%= latestFileVersion.getModifiedDate() %>"
-								/>
-							</c:if>
-
-							<c:if test='<%= ArrayUtil.contains(entryColumns, "action") %>'>
-								<liferay-ui:search-container-column-jsp
-									path="/document_library/file_entry_action.jsp"
-								/>
-							</c:if>
 						</c:otherwise>
 					</c:choose>
 				</c:when>
@@ -401,85 +406,90 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 							</liferay-ui:search-container-column-text>
 						</c:when>
 						<c:otherwise>
-							<c:if test='<%= ArrayUtil.contains(entryColumns, "name") %>'>
 
-								<%
-								PortletURL rowURL = liferayPortletResponse.createRenderURL();
+							<%
+							for (int i = 0; i < entryColumns.length; i++) {
+								String curEntryColumn = entryColumns[i];
+							%>
 
-								rowURL.setParameter("mvcRenderCommandName", "/document_library/view_folder");
-								rowURL.setParameter("redirect", currentURL);
-								rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
-								%>
+								<c:choose>
+									<c:when test='<%= curEntryColumn.equals("name") %>'>
 
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-expand table-cell-minw-200 table-title"
-									href="<%= rowURL %>"
-									name="title"
-									value="<%= curFolder.getName() %>"
-								/>
-							</c:if>
+										<%
+										PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
-							<c:if test='<%= ArrayUtil.contains(entryColumns, "description") %>'>
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-expand table-cell-minw-200"
-									name="description"
-									value="<%= StringUtil.shorten(curFolder.getDescription(), 100) %>"
-								/>
-							</c:if>
+										rowURL.setParameter("mvcRenderCommandName", "/document_library/view_folder");
+										rowURL.setParameter("redirect", currentURL);
+										rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+										%>
 
-							<c:if test='<%= ArrayUtil.contains(entryColumns, "document-type") %>'>
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-expand-smaller"
-									name="document-type"
-									value="--"
-								/>
-							</c:if>
+										<liferay-ui:search-container-column-text
+											cssClass="table-cell-expand table-cell-minw-200 table-title"
+											href="<%= rowURL %>"
+											name="title"
+											value="<%= curFolder.getName() %>"
+										/>
+									</c:when>
+									<c:when test='<%= curEntryColumn.equals("description") %>'>
+										<liferay-ui:search-container-column-text
+											cssClass="table-cell-expand table-cell-minw-200"
+											name="description"
+											value="<%= StringUtil.shorten(curFolder.getDescription(), 100) %>"
+										/>
+									</c:when>
+									<c:when test='<%= curEntryColumn.equals("document-type") %>'>
+										<liferay-ui:search-container-column-text
+											cssClass="table-cell-expand-smaller"
+											name="document-type"
+											value="--"
+										/>
+									</c:when>
+									<c:when test='<%= curEntryColumn.equals("size") %>'>
+										<liferay-ui:search-container-column-text
+											cssClass="table-cell-expand-smallest"
+											name="size"
+											value="--"
+										/>
+									</c:when>
+									<c:when test='<%= curEntryColumn.equals("status") %>'>
+										<liferay-ui:search-container-column-text
+											cssClass="table-cell-expand-smallest"
+											name="status"
+											value="--"
+										/>
+									</c:when>
+									<c:when test='<%= curEntryColumn.equals("downloads") %>'>
+										<liferay-ui:search-container-column-text
+											cssClass="table-cell-expand-smallest"
+											name="downloads"
+											value="--"
+										/>
+									</c:when>
+									<c:when test='<%= curEntryColumn.equals("create-date") %>'>
+										<liferay-ui:search-container-column-date
+											cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
+											name="create-date"
+											value="<%= curFolder.getCreateDate() %>"
+										/>
+									</c:when>
+									<c:when test='<%= curEntryColumn.equals("modified-date") %>'>
+										<liferay-ui:search-container-column-date
+											cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
+											name="modified-date"
+											value="<%= curFolder.getLastPostDate() %>"
+										/>
+									</c:when>
+									<c:when test='<%= curEntryColumn.equals("action") %>'>
+										<liferay-ui:search-container-column-jsp
+											path="/document_library/folder_action.jsp"
+										/>
+									</c:when>
+								</c:choose>
 
-							<c:if test='<%= ArrayUtil.contains(entryColumns, "size") %>'>
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-expand-smallest"
-									name="size"
-									value="--"
-								/>
-							</c:if>
+							<%
+							}
+							%>
 
-							<c:if test='<%= ArrayUtil.contains(entryColumns, "status") %>'>
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-expand-smallest"
-									name="status"
-									value="--"
-								/>
-							</c:if>
-
-							<c:if test='<%= ArrayUtil.contains(entryColumns, "downloads") %>'>
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-expand-smallest"
-									name="downloads"
-									value="--"
-								/>
-							</c:if>
-
-							<c:if test='<%= ArrayUtil.contains(entryColumns, "create-date") %>'>
-								<liferay-ui:search-container-column-date
-									cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
-									name="create-date"
-									value="<%= curFolder.getCreateDate() %>"
-								/>
-							</c:if>
-
-							<c:if test='<%= ArrayUtil.contains(entryColumns, "modified-date") %>'>
-								<liferay-ui:search-container-column-date
-									cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
-									name="modified-date"
-									value="<%= curFolder.getLastPostDate() %>"
-								/>
-							</c:if>
-
-							<c:if test='<%= ArrayUtil.contains(entryColumns, "action") %>'>
-								<liferay-ui:search-container-column-jsp
-									path="/document_library/folder_action.jsp"
-								/>
-							</c:if>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>

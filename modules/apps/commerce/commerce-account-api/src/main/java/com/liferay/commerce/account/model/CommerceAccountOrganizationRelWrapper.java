@@ -420,18 +420,18 @@ public class CommerceAccountOrganizationRelWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceAccountOrganizationRelWrapper)) {
+		if (!(object instanceof CommerceAccountOrganizationRelWrapper)) {
 			return false;
 		}
 
 		CommerceAccountOrganizationRelWrapper
 			commerceAccountOrganizationRelWrapper =
-				(CommerceAccountOrganizationRelWrapper)obj;
+				(CommerceAccountOrganizationRelWrapper)object;
 
 		if (Objects.equals(
 				_commerceAccountOrganizationRel,

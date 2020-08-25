@@ -1,6 +1,6 @@
 Bundle-Name: ${manifest.bundle.name}
 Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
-Bundle-Version: 5.2.9
+Bundle-Version: 5.2.10
 Export-Package:\
 	com.liferay.portal.lar.test,\
 	com.liferay.portal.osgi.util.test,\

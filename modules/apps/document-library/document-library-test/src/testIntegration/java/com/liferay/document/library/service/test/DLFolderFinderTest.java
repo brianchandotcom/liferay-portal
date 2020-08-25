@@ -329,7 +329,7 @@ public class DLFolderFinderTest {
 				FileShortcut fileShortcut = (FileShortcut)result;
 
 				Assert.assertEquals(
-					this._fileShortcut.getFileShortcutId(),
+					_fileShortcut.getFileShortcutId(),
 					fileShortcut.getFileShortcutId());
 			}
 			else if (result instanceof DLFolder) {

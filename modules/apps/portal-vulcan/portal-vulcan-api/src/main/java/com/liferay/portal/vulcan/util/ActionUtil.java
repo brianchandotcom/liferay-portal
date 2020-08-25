@@ -14,21 +14,18 @@
 
 package com.liferay.portal.vulcan.util;
 
-import static com.liferay.portal.vulcan.yaml.graphql.GraphQLNamingUtil.getGraphQLMutationName;
-
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.liferay.OAuth2ProviderScopeLiferayAccessControlContext;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.vulcan.yaml.graphql.GraphQLNamingUtil;
+import com.liferay.portal.vulcan.graphql.util.GraphQLNamingUtil;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-
-import java.net.URI;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -47,7 +44,7 @@ import javax.ws.rs.core.UriInfo;
 public class ActionUtil {
 
 	public static Map<String, String> addAction(
-		String actionName, Class clazz, GroupedModel groupedModel,
+		String actionName, Class<?> clazz, GroupedModel groupedModel,
 		String methodName, Object object, UriInfo uriInfo) {
 
 		return addAction(
@@ -64,7 +61,7 @@ public class ActionUtil {
 	 */
 	@Deprecated
 	public static Map<String, String> addAction(
-		String actionName, Class clazz, GroupedModel groupedModel,
+		String actionName, Class<?> clazz, GroupedModel groupedModel,
 		String methodName, UriInfo uriInfo) {
 
 		return addAction(
@@ -74,15 +71,36 @@ public class ActionUtil {
 			uriInfo);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #addAction(String, Class, Long, String, Object,
+	 *             ModelResourcePermission, UriInfo)}
+	 */
+	@Deprecated
 	public static Map<String, String> addAction(
-		String actionName, Class clazz, Long id, String methodName,
+		String actionName, Class<?> clazz, Long id, String methodName,
 		Object object, Long ownerId, String permissionName, Long siteId,
 		UriInfo uriInfo) {
 
 		try {
 			return _addAction(
-				actionName, clazz, id, methodName, object, ownerId,
+				actionName, clazz, id, methodName, null, object, ownerId,
 				permissionName, siteId, uriInfo);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
+	public static Map<String, String> addAction(
+		String actionName, Class<?> clazz, Long id, String methodName,
+		Object object, ModelResourcePermission<?> modelResourcePermission,
+		UriInfo uriInfo) {
+
+		try {
+			return _addAction(
+				actionName, clazz, id, methodName, modelResourcePermission,
+				object, null, null, null, uriInfo);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -96,7 +114,7 @@ public class ActionUtil {
 	 */
 	@Deprecated
 	public static Map<String, String> addAction(
-		String actionName, Class clazz, Long id, String methodName,
+		String actionName, Class<?> clazz, Long id, String methodName,
 		String permissionName, Long siteId, UriInfo uriInfo) {
 
 		return addAction(
@@ -111,7 +129,7 @@ public class ActionUtil {
 	 */
 	@Deprecated
 	public static Map<String, String> addAction(
-		String actionName, Class clazz, Long id, String methodName,
+		String actionName, Class<?> clazz, Long id, String methodName,
 		String permissionName, Object object, Long siteId, UriInfo uriInfo) {
 
 		return addAction(
@@ -120,9 +138,9 @@ public class ActionUtil {
 	}
 
 	private static Map<String, String> _addAction(
-			String actionName, Class clazz, Long id, String methodName,
-			Object object, Long ownerId, String permissionName, Long siteId,
-			UriInfo uriInfo)
+			String actionName, Class<?> clazz, Long id, String methodName,
+			ModelResourcePermission<?> modelResourcePermission, Object object,
+			Long ownerId, String permissionName, Long siteId, UriInfo uriInfo)
 		throws Exception {
 
 		if (uriInfo == null) {
@@ -142,17 +160,30 @@ public class ActionUtil {
 			}
 		}
 
-		List<String> modelResourceActions =
-			ResourceActionsUtil.getModelResourceActions(permissionName);
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
-		if (!modelResourceActions.contains(actionName) ||
-			!_hasPermission(
-				actionName, id, ownerId,
-				PermissionThreadLocal.getPermissionChecker(), permissionName,
-				siteId)) {
+		if (modelResourcePermission == null) {
+			List<String> modelResourceActions =
+				ResourceActionsUtil.getModelResourceActions(permissionName);
+
+			if (!modelResourceActions.contains(actionName) ||
+				!_hasPermission(
+					actionName, id, ownerId, permissionChecker, permissionName,
+					siteId)) {
+
+				return null;
+			}
+		}
+		else if (!modelResourcePermission.contains(
+					permissionChecker, id, actionName)) {
 
 			return null;
 		}
+
+		Method method = _getMethod(clazz, methodName);
+
+		String httpMethodName = _getHttpMethodName(clazz, method);
 
 		if ((object != null) &&
 			OAuth2ProviderScopeLiferayAccessControlContext.
@@ -160,18 +191,12 @@ public class ActionUtil {
 
 			ScopeChecker scopeChecker = (ScopeChecker)object;
 
-			if (!scopeChecker.checkScope(methodName)) {
+			if (!scopeChecker.checkScope(httpMethodName)) {
 				return null;
 			}
 		}
 
-		Method method = _getMethod(clazz, methodName);
-
-		String httpMethodName = _getHttpMethodName(clazz, method);
-
-		URI baseURI = uriInfo.getBaseUri();
-
-		String baseURIString = baseURI.toString();
+		String baseURIString = UriInfoUtil.getBasePath(uriInfo);
 
 		if (baseURIString.contains("/graphql")) {
 			String operation = null;
@@ -193,7 +218,8 @@ public class ActionUtil {
 				type = "query";
 			}
 			else {
-				operation = getGraphQLMutationName(methodName);
+				operation = GraphQLNamingUtil.getGraphQLMutationName(
+					methodName);
 				type = "mutation";
 			}
 
@@ -206,7 +232,8 @@ public class ActionUtil {
 
 		return HashMapBuilder.put(
 			"href",
-			uriInfo.getBaseUriBuilder(
+			UriInfoUtil.getBaseUriBuilder(
+				uriInfo
 			).path(
 				_getVersion(uriInfo)
 			).path(
@@ -217,8 +244,8 @@ public class ActionUtil {
 		).build();
 	}
 
-	private static String _getHttpMethodName(Class clazz, Method method)
-		throws NoSuchMethodException {
+	private static String _getHttpMethodName(Class<?> clazz, Method method)
+		throws Exception {
 
 		Class<?> superClass = clazz.getSuperclass();
 
@@ -242,7 +269,7 @@ public class ActionUtil {
 		return null;
 	}
 
-	private static Method _getMethod(Class clazz, String methodName) {
+	private static Method _getMethod(Class<?> clazz, String methodName) {
 		for (Method method : clazz.getMethods()) {
 			if (!methodName.equals(method.getName())) {
 				continue;

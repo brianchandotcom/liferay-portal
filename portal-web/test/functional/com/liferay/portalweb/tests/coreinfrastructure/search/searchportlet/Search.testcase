@@ -173,68 +173,6 @@ definition {
 		}
 	}
 
-	@priority = "4"
-	test AssertSearchFunctionalityWhenSettingIndexOnStartupToTrue {
-		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Search#AssertSearchFunctionalityWhenSettingIndexOnStartupToTrue";
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Guest",
-			title = "WC WebContent Title");
-
-		JSONDocument.addFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Asset Publisher Page");
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/asset-publisher-page");
-
-		Portlet.addPG(portletName = "Asset Publisher");
-
-		Portlet.shutdownServer();
-
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "prepare-portal-ext-properties -Dindex.on.startup=true");
-
-		Portlet.startServer(
-			deleteindexdata = "true",
-			deleteLiferayHome = "true");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/guest/asset-publisher-page");
-
-		//workaround LPS-114163
-
-		/*AssetPublisherPortlet.viewAssetPG(
-			assetContent = "WC WebContent Content",
-			assetTitle = "WC WebContent Title");
-
-		AssetPublisherPortlet.viewAssetPG(
-			assetContent = "Blogs Entry Content",
-			assetTitle = "Blogs Entry Title");*/
-
-		AssetPublisherPortlet.viewAssetPG(
-			assetContent = "DM Document Description",
-			assetTitle = "DM Document Title");
-
-		SearchPortlets.searchEmbedded(searchTerm = "test");
-
-		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "DM Document Title/Document,test test/User",
-			searchTerm = "test");
-	}
-
 	@description = "This is a use case for LPS-89561."
 	@priority = "4"
 	test AssertSearchURLWhenModifyingPagination {
@@ -506,6 +444,7 @@ definition {
 		AssertChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Blogs Entry");
 	}
 
+	@description = "This is a use case for LPS-95798."
 	test SearchAfterViewingResultDetails {
 		JSONWebcontent.addWebContent(
 			content = "Web Content",
@@ -2114,14 +2053,6 @@ definition {
 		AssertElementPresent(locator1 = "Message#ERROR_SELECT_VALID_DATE_RANGE");
 
 		AssertVisible(locator1 = "Button#SEARCH_DISABLED");
-
-		// Workaround for LPS-82584
-
-		Click(locator1 = "Link#CLEAR");
-
-		Click(
-			locator1 = "Search#MODIFIED_FACET_SELECTION",
-			range = "Custom Range");
 
 		Click(locator1 = "Search#CUSTOM_RANGE_FROM");
 

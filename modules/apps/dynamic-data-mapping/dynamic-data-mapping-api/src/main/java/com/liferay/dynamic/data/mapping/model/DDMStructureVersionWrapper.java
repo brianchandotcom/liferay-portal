@@ -1088,17 +1088,17 @@ public class DDMStructureVersionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMStructureVersionWrapper)) {
+		if (!(object instanceof DDMStructureVersionWrapper)) {
 			return false;
 		}
 
 		DDMStructureVersionWrapper ddmStructureVersionWrapper =
-			(DDMStructureVersionWrapper)obj;
+			(DDMStructureVersionWrapper)object;
 
 		if (Objects.equals(
 				_ddmStructureVersion,

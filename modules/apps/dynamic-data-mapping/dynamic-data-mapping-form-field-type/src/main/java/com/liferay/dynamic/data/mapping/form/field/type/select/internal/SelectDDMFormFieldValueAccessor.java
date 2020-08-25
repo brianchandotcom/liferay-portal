@@ -73,7 +73,7 @@ public class SelectDDMFormFieldValueAccessor
 		try {
 			JSONArray jsonArray = jsonFactory.createJSONArray(value.toString());
 
-			StringBundler sb = new StringBundler(jsonArray.length() * 2 - 1);
+			StringBundler sb = new StringBundler((jsonArray.length() * 2) - 1);
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				sb.append(jsonArray.get(i));

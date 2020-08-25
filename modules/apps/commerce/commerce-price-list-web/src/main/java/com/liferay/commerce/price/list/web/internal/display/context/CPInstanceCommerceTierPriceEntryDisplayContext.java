@@ -17,7 +17,6 @@ package com.liferay.commerce.price.list.web.internal.display.context;
 import com.liferay.commerce.frontend.ClayCreationMenu;
 import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
-import com.liferay.commerce.price.list.constants.CommercePriceListActionKeys;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
@@ -30,7 +29,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -200,12 +198,6 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 			cpRequestHelper.getCompanyId(),
 			CommerceTierPriceEntry.class.getName(),
 			getCommerceTierPriceEntryId(), null);
-	}
-
-	public boolean hasManageCommercePriceListPermission() {
-		return PortalPermissionUtil.contains(
-			cpRequestHelper.getPermissionChecker(),
-			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 	}
 
 	private String _getAddCommerceTierPriceEntryURL() throws Exception {

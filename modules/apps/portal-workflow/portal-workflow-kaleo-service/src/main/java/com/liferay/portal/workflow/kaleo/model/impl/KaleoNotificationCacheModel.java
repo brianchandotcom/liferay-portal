@@ -36,17 +36,17 @@ public class KaleoNotificationCacheModel
 	implements CacheModel<KaleoNotification>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoNotificationCacheModel)) {
+		if (!(object instanceof KaleoNotificationCacheModel)) {
 			return false;
 		}
 
 		KaleoNotificationCacheModel kaleoNotificationCacheModel =
-			(KaleoNotificationCacheModel)obj;
+			(KaleoNotificationCacheModel)object;
 
 		if (kaleoNotificationId ==
 				kaleoNotificationCacheModel.kaleoNotificationId) {

@@ -1463,7 +1463,7 @@ public class JournalDisplayContext {
 
 		Map<Locale, String> titleMap = _article.getTitleMap();
 
-		StringBundler sb = new StringBundler(2 + 8 * titleMap.size());
+		StringBundler sb = new StringBundler(2 + (8 * titleMap.size()));
 
 		sb.append("{");
 

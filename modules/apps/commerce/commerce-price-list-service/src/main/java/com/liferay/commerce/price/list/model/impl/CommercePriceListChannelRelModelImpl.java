@@ -923,17 +923,17 @@ public class CommercePriceListChannelRelModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommercePriceListChannelRel)) {
+		if (!(object instanceof CommercePriceListChannelRel)) {
 			return false;
 		}
 
 		CommercePriceListChannelRel commercePriceListChannelRel =
-			(CommercePriceListChannelRel)obj;
+			(CommercePriceListChannelRel)object;
 
 		long primaryKey = commercePriceListChannelRel.getPrimaryKey();
 

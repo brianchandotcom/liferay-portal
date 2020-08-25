@@ -1071,16 +1071,16 @@ public class KaleoActionModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoAction)) {
+		if (!(object instanceof KaleoAction)) {
 			return false;
 		}
 
-		KaleoAction kaleoAction = (KaleoAction)obj;
+		KaleoAction kaleoAction = (KaleoAction)object;
 
 		long primaryKey = kaleoAction.getPrimaryKey();
 

@@ -854,17 +854,17 @@ public class LayoutSetPrototypeWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof LayoutSetPrototypeWrapper)) {
+		if (!(object instanceof LayoutSetPrototypeWrapper)) {
 			return false;
 		}
 
 		LayoutSetPrototypeWrapper layoutSetPrototypeWrapper =
-			(LayoutSetPrototypeWrapper)obj;
+			(LayoutSetPrototypeWrapper)object;
 
 		if (Objects.equals(
 				_layoutSetPrototype,

@@ -37,17 +37,17 @@ public class PasswordTrackerCacheModel
 	implements CacheModel<PasswordTracker>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof PasswordTrackerCacheModel)) {
+		if (!(object instanceof PasswordTrackerCacheModel)) {
 			return false;
 		}
 
 		PasswordTrackerCacheModel passwordTrackerCacheModel =
-			(PasswordTrackerCacheModel)obj;
+			(PasswordTrackerCacheModel)object;
 
 		if ((passwordTrackerId ==
 				passwordTrackerCacheModel.passwordTrackerId) &&

@@ -29,8 +29,4 @@
 		</header>
 	</c:if>
 
-	<%
-	String contentClasses = "modal-iframe-content" + (Validator.isNotNull(contentCssClasses) ? StringPool.SPACE + contentCssClasses : StringPool.BLANK);
-	%>
-
-	<div class="<%= contentClasses %>">
+	<div class="<%= "modal-iframe-content" + (Validator.isNotNull(contentCssClasses) ? StringPool.SPACE + contentCssClasses : StringPool.BLANK) %>">

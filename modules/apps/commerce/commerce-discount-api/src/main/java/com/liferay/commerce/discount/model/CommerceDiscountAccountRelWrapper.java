@@ -159,6 +159,14 @@ public class CommerceDiscountAccountRelWrapper
 			commerceDiscountAccountRel);
 	}
 
+	@Override
+	public com.liferay.commerce.account.model.CommerceAccount
+			getCommerceAccount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceDiscountAccountRel.getCommerceAccount();
+	}
+
 	/**
 	 * Returns the commerce account ID of this commerce discount account rel.
 	 *
@@ -167,6 +175,13 @@ public class CommerceDiscountAccountRelWrapper
 	@Override
 	public long getCommerceAccountId() {
 		return _commerceDiscountAccountRel.getCommerceAccountId();
+	}
+
+	@Override
+	public CommerceDiscount getCommerceDiscount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceDiscountAccountRel.getCommerceDiscount();
 	}
 
 	/**
@@ -519,17 +534,17 @@ public class CommerceDiscountAccountRelWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceDiscountAccountRelWrapper)) {
+		if (!(object instanceof CommerceDiscountAccountRelWrapper)) {
 			return false;
 		}
 
 		CommerceDiscountAccountRelWrapper commerceDiscountAccountRelWrapper =
-			(CommerceDiscountAccountRelWrapper)obj;
+			(CommerceDiscountAccountRelWrapper)object;
 
 		if (Objects.equals(
 				_commerceDiscountAccountRel,

@@ -1106,17 +1106,17 @@ public class SiteNavigationMenuItemModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SiteNavigationMenuItem)) {
+		if (!(object instanceof SiteNavigationMenuItem)) {
 			return false;
 		}
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
-			(SiteNavigationMenuItem)obj;
+			(SiteNavigationMenuItem)object;
 
 		long primaryKey = siteNavigationMenuItem.getPrimaryKey();
 

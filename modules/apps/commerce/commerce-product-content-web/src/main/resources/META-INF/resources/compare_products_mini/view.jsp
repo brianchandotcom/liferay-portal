@@ -34,8 +34,6 @@ CPDataSourceResult cpDataSourceResult = cpCompareContentMiniDisplayContext.getCP
 		Map<String, Object> contextObjects = new HashMap<>();
 
 		contextObjects.put("cpCompareContentMiniDisplayContext", cpCompareContentMiniDisplayContext);
-
-		List<CPCatalogEntry> cpCatalogEntries = cpDataSourceResult.getCPCatalogEntries();
 		%>
 
 		<liferay-ddm:template-renderer
@@ -43,7 +41,7 @@ CPDataSourceResult cpDataSourceResult = cpCompareContentMiniDisplayContext.getCP
 			contextObjects="<%= contextObjects %>"
 			displayStyle="<%= cpCompareContentMiniDisplayContext.getDisplayStyle() %>"
 			displayStyleGroupId="<%= cpCompareContentMiniDisplayContext.getDisplayStyleGroupId() %>"
-			entries="<%= cpCatalogEntries %>"
+			entries="<%= cpDataSourceResult.getCPCatalogEntries() %>"
 		/>
 	</c:when>
 	<c:when test="<%= cpCompareContentMiniDisplayContext.isSelectionStyleCustomRenderer() %>">

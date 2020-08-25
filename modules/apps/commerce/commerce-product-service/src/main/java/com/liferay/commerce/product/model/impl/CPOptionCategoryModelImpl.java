@@ -1184,16 +1184,16 @@ public class CPOptionCategoryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPOptionCategory)) {
+		if (!(object instanceof CPOptionCategory)) {
 			return false;
 		}
 
-		CPOptionCategory cpOptionCategory = (CPOptionCategory)obj;
+		CPOptionCategory cpOptionCategory = (CPOptionCategory)object;
 
 		long primaryKey = cpOptionCategory.getPrimaryKey();
 

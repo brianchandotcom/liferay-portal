@@ -476,17 +476,17 @@ public class CommerceDiscountRelWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceDiscountRelWrapper)) {
+		if (!(object instanceof CommerceDiscountRelWrapper)) {
 			return false;
 		}
 
 		CommerceDiscountRelWrapper commerceDiscountRelWrapper =
-			(CommerceDiscountRelWrapper)obj;
+			(CommerceDiscountRelWrapper)object;
 
 		if (Objects.equals(
 				_commerceDiscountRel,

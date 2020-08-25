@@ -5,7 +5,7 @@
 		</div>
 	</#if>
 <#else>
-	<div aria-label='<@liferay.language key="site-pages" />' class="minium-tabs">
+	<div aria-label="<@liferay.language key="site-pages" />" class="minium-tabs">
 		<#list entries as navItem>
 
 			<#assign

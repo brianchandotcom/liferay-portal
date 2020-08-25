@@ -107,6 +107,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -2476,6 +2477,24 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		sites.addAll(getUserSitesGroups(userId));
 
 		return new ArrayList<>(sites);
+	}
+
+	@Override
+	public List<Group> getUserSitesGroups(long userId, int start, int end)
+		throws PortalException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		return groupFinder.findByCompanyId(
+			user.getCompanyId(),
+			LinkedHashMapBuilder.<String, Object>put(
+				"inherit", Boolean.TRUE
+			).put(
+				"site", Boolean.TRUE
+			).put(
+				"usersGroups", userId
+			).build(),
+			start, end, new GroupNameComparator(true));
 	}
 
 	/**

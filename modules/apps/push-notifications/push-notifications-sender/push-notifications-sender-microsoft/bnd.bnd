@@ -1,3 +1,7 @@
 Bundle-Name: Liferay Push Notifications Sender Microsoft
 Bundle-SymbolicName: com.liferay.push.notifications.sender.microsoft
-Bundle-Version: 2.0.5
+Bundle-Version: 2.0.7
+Import-Package:\
+	com.liferay.portal.kernel.json.*;version="[7.0.0,8.0.0)",\
+	\
+	*

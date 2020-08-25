@@ -37,3 +37,8 @@ e4abc511ef525d02307a76efe6e32533d9b9e43a^..6d293c60de9b89d9607bb5ceacefcd2a181ac
 # Bundle Version 7.1.10.7
 #
 2facc23668ec59a0c914cac8aabaacd12e4d4693^..0ce2959c621bb7bc0a3f556ebadbe7cd43a7ed1f=LPS-105380
+
+#
+# Bundle Version 7.1.10.8
+#
+0ce2959c621bb7bc0a3f556ebadbe7cd43a7ed1f^..50e93f483a9070cd2936a46bf81e7e67c5f8ffc2=LPS-77699 LPS-105380

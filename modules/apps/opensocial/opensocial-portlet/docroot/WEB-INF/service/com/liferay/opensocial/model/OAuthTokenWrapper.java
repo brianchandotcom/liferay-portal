@@ -584,16 +584,16 @@ public class OAuthTokenWrapper implements ModelWrapper<OAuthToken>, OAuthToken {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof OAuthTokenWrapper)) {
+		if (!(object instanceof OAuthTokenWrapper)) {
 			return false;
 		}
 
-		OAuthTokenWrapper oAuthTokenWrapper = (OAuthTokenWrapper)obj;
+		OAuthTokenWrapper oAuthTokenWrapper = (OAuthTokenWrapper)object;
 
 		if (Objects.equals(_oAuthToken, oAuthTokenWrapper._oAuthToken)) {
 			return true;

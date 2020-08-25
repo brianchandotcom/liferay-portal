@@ -42,7 +42,7 @@ public class BulkException extends Exception {
 
 	@Override
 	public String getMessage() {
-		StringBuilder sb = new StringBuilder(7 * _causes.size() + 4);
+		StringBuilder sb = new StringBuilder((7 * _causes.size()) + 4);
 
 		sb.append("{message = ");
 		sb.append(super.getMessage());

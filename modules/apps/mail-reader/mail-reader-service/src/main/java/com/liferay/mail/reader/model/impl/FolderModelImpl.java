@@ -686,16 +686,16 @@ public class FolderModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Folder)) {
+		if (!(object instanceof Folder)) {
 			return false;
 		}
 
-		Folder folder = (Folder)obj;
+		Folder folder = (Folder)object;
 
 		long primaryKey = folder.getPrimaryKey();
 

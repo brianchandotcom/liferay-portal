@@ -77,7 +77,7 @@ public class PBKDF2PasswordEncryptor
 			byte[] secretKeyBytes = secretKey.getEncoded();
 
 			ByteBuffer byteBuffer = ByteBuffer.allocate(
-				2 * 4 + saltBytes.length + secretKeyBytes.length);
+				(2 * 4) + saltBytes.length + secretKeyBytes.length);
 
 			byteBuffer.putInt(pbkdf2EncryptionConfiguration.getKeySize());
 			byteBuffer.putInt(pbkdf2EncryptionConfiguration.getRounds());

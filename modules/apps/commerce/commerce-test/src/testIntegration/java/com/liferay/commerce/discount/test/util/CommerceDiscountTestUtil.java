@@ -41,6 +41,55 @@ import java.util.Calendar;
  */
 public class CommerceDiscountTestUtil {
 
+	public static CommerceDiscount addAccountAndChannelDiscount(
+			long groupId, long commerceAccountId, long commerceChannelId,
+			String level, long cpDefinitionId)
+		throws Exception {
+
+		CommerceDiscount commerceDiscount = addPercentageCommerceDiscount(
+			groupId, BigDecimal.valueOf(RandomTestUtil.randomDouble()), level,
+			CommerceDiscountConstants.TARGET_PRODUCT, cpDefinitionId);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		CommerceDiscountAccountRelLocalServiceUtil.
+			addCommerceDiscountAccountRel(
+				commerceDiscount.getCommerceDiscountId(), commerceAccountId,
+				serviceContext);
+
+		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
+			CommerceDiscount.class.getName(),
+			commerceDiscount.getCommerceDiscountId(), commerceChannelId,
+			serviceContext);
+
+		return commerceDiscount;
+	}
+
+	public static CommerceDiscount addAccountAndChannelOrderDiscount(
+			long groupId, long commerceAccountId, long commerceChannelId,
+			String type)
+		throws Exception {
+
+		CommerceDiscount commerceDiscount = addFixedCommerceDiscount(
+			groupId, RandomTestUtil.randomDouble(), type, null);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		CommerceDiscountAccountRelLocalServiceUtil.
+			addCommerceDiscountAccountRel(
+				commerceDiscount.getCommerceDiscountId(), commerceAccountId,
+				serviceContext);
+
+		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
+			CommerceDiscount.class.getName(),
+			commerceDiscount.getCommerceDiscountId(), commerceChannelId,
+			serviceContext);
+
+		return commerceDiscount;
+	}
+
 	public static CommerceDiscount addAccountDiscount(
 			long groupId, long commerceAccountId, String level,
 			long cpDefinitionId)
@@ -57,6 +106,59 @@ public class CommerceDiscountTestUtil {
 			addCommerceDiscountAccountRel(
 				commerceDiscount.getCommerceDiscountId(), commerceAccountId,
 				serviceContext);
+
+		return commerceDiscount;
+	}
+
+	public static CommerceDiscount addAccountGroupAndChannelDiscount(
+			long groupId, long[] commerceAccountGroupIds,
+			long commerceChannelId, String level, long cpDefinitionId)
+		throws Exception {
+
+		CommerceDiscount commerceDiscount = addPercentageCommerceDiscount(
+			groupId, BigDecimal.valueOf(RandomTestUtil.randomDouble()), level,
+			CommerceDiscountConstants.TARGET_PRODUCT, cpDefinitionId);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		for (long commerceAccountGroupId : commerceAccountGroupIds) {
+			CommerceDiscountCommerceAccountGroupRelLocalServiceUtil.
+				addCommerceDiscountCommerceAccountGroupRel(
+					commerceDiscount.getCommerceDiscountId(),
+					commerceAccountGroupId, serviceContext);
+		}
+
+		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
+			CommerceDiscount.class.getName(),
+			commerceDiscount.getCommerceDiscountId(), commerceChannelId,
+			serviceContext);
+
+		return commerceDiscount;
+	}
+
+	public static CommerceDiscount addAccountGroupAndChannelOrderDiscount(
+			long groupId, long[] commerceAccountGroupIds,
+			long commerceChannelId, String type)
+		throws Exception {
+
+		CommerceDiscount commerceDiscount = addFixedCommerceDiscount(
+			groupId, RandomTestUtil.randomDouble(), type, null);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		for (long commerceAccountGroupId : commerceAccountGroupIds) {
+			CommerceDiscountCommerceAccountGroupRelLocalServiceUtil.
+				addCommerceDiscountCommerceAccountGroupRel(
+					commerceDiscount.getCommerceDiscountId(),
+					commerceAccountGroupId, serviceContext);
+		}
+
+		CommerceChannelRelLocalServiceUtil.addCommerceChannelRel(
+			CommerceDiscount.class.getName(),
+			commerceDiscount.getCommerceDiscountId(), commerceChannelId,
+			serviceContext);
 
 		return commerceDiscount;
 	}
@@ -174,21 +276,48 @@ public class CommerceDiscountTestUtil {
 	}
 
 	public static CommerceDiscount addCouponDiscount(
-			long groupId, double amount, String couponCode, String target,
-			long... targetIds)
+			long groupId, double amount, String couponCode,
+			String limitationType, int limitationTimes,
+			int limitationTimesPerAccount, String target, long... targetIds)
 		throws Exception {
 
 		CommerceDiscount commerceDiscount = addFixedCommerceDiscount(
 			groupId, amount, target, targetIds);
 
-		commerceDiscount.setUseCouponCode(true);
-		commerceDiscount.setCouponCode(couponCode);
-		commerceDiscount.setLimitationType(
-			CommerceDiscountConstants.LIMITATION_TYPE_LIMITED);
-		commerceDiscount.setLimitationTimes(1);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		User user = UserLocalServiceUtil.getDefaultUser(
+			serviceContext.getCompanyId());
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(user.getTimeZone());
 
 		return CommerceDiscountLocalServiceUtil.updateCommerceDiscount(
-			commerceDiscount);
+			commerceDiscount.getCommerceDiscountId(),
+			commerceDiscount.getTitle(), commerceDiscount.getTarget(), true,
+			couponCode, commerceDiscount.isUsePercentage(),
+			commerceDiscount.getMaximumDiscountAmount(),
+			commerceDiscount.getLevel(), commerceDiscount.getLevel1(),
+			commerceDiscount.getLevel2(), commerceDiscount.getLevel3(),
+			commerceDiscount.getLevel4(), limitationType, limitationTimes,
+			limitationTimesPerAccount, commerceDiscount.isRulesConjunction(),
+			commerceDiscount.isActive(), calendar.get(Calendar.MONTH),
+			calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.YEAR),
+			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
+			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
+			calendar.get(Calendar.MINUTE), true, serviceContext);
+	}
+
+	public static CommerceDiscount addCouponDiscount(
+			long groupId, double amount, String couponCode, String target,
+			long... targetIds)
+		throws Exception {
+
+		return addCouponDiscount(
+			groupId, amount, couponCode,
+			CommerceDiscountConstants.LIMITATION_TYPE_LIMITED, 1, 0, target,
+			targetIds);
 	}
 
 	public static CommerceDiscountCommerceAccountGroupRel

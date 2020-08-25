@@ -317,17 +317,17 @@ public class ResourceActionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ResourceActionWrapper)) {
+		if (!(object instanceof ResourceActionWrapper)) {
 			return false;
 		}
 
 		ResourceActionWrapper resourceActionWrapper =
-			(ResourceActionWrapper)obj;
+			(ResourceActionWrapper)object;
 
 		if (Objects.equals(
 				_resourceAction, resourceActionWrapper._resourceAction)) {

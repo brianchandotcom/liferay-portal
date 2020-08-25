@@ -35,16 +35,16 @@ public class GroupCacheModel
 	implements CacheModel<Group>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof GroupCacheModel)) {
+		if (!(object instanceof GroupCacheModel)) {
 			return false;
 		}
 
-		GroupCacheModel groupCacheModel = (GroupCacheModel)obj;
+		GroupCacheModel groupCacheModel = (GroupCacheModel)object;
 
 		if ((groupId == groupCacheModel.groupId) &&
 			(mvccVersion == groupCacheModel.mvccVersion)) {

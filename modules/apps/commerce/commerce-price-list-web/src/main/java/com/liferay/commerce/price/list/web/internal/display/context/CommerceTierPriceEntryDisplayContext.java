@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -51,10 +52,14 @@ public class CommerceTierPriceEntryDisplayContext
 
 	public CommerceTierPriceEntryDisplayContext(
 		CommercePriceListActionHelper commercePriceListActionHelper,
+		ModelResourcePermission<CommercePriceList>
+			commercePriceListModelResourcePermission,
 		CommerceTierPriceEntryService commerceTierPriceEntryService,
 		HttpServletRequest httpServletRequest) {
 
-		super(commercePriceListActionHelper, httpServletRequest);
+		super(
+			commercePriceListActionHelper,
+			commercePriceListModelResourcePermission, httpServletRequest);
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 

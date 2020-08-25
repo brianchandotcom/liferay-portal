@@ -179,7 +179,7 @@ public class ItemSelectorCriterionSerializerImpl
 				(List<ItemSelectorReturnType>)object;
 
 			StringBundler sb = new StringBundler(
-				desiredItemSelectorReturnTypes.size() * 2 + 1);
+				(desiredItemSelectorReturnTypes.size() * 2) + 1);
 
 			sb.append(StringPool.QUOTE);
 

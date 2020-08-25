@@ -32,14 +32,12 @@ int status = WorkflowConstants.STATUS_APPROVED;
 if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
 	status = WorkflowConstants.STATUS_ANY;
 }
-
-PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 %>
 
 <liferay-ui:search-container
 	curParam="cur1"
 	headerNames="folder,num-of-folders,num-of-images"
-	iteratorURL="<%= portletURL %>"
+	iteratorURL='<%= (PortletURL)request.getAttribute("view.jsp-portletURL") %>'
 	total="<%= DLAppServiceUtil.getFoldersCount(repositoryId, folderId) %>"
 >
 	<liferay-ui:search-container-results

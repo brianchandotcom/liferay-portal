@@ -172,6 +172,13 @@ public class CommercePriceModifierRelWrapper
 		return _commercePriceModifierRel.getClassPK();
 	}
 
+	@Override
+	public CommercePriceModifier getCommercePriceModifier()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePriceModifierRel.getCommercePriceModifier();
+	}
+
 	/**
 	 * Returns the commerce price modifier ID of this commerce price modifier rel.
 	 *
@@ -476,17 +483,17 @@ public class CommercePriceModifierRelWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommercePriceModifierRelWrapper)) {
+		if (!(object instanceof CommercePriceModifierRelWrapper)) {
 			return false;
 		}
 
 		CommercePriceModifierRelWrapper commercePriceModifierRelWrapper =
-			(CommercePriceModifierRelWrapper)obj;
+			(CommercePriceModifierRelWrapper)object;
 
 		if (Objects.equals(
 				_commercePriceModifierRel,

@@ -21,13 +21,14 @@ public class ProductOption {
 
 	public ProductOption(
 		long cpDefinitionOptionRelId, String fieldType, String name,
-		double position, String required, int values) {
+		double position, String required, String skuContributor, int values) {
 
 		_cpDefinitionOptionRelId = cpDefinitionOptionRelId;
 		_fieldType = fieldType;
 		_name = name;
 		_position = position;
 		_required = required;
+		_skuContributor = skuContributor;
 		_values = values;
 	}
 
@@ -51,6 +52,10 @@ public class ProductOption {
 		return _required;
 	}
 
+	public String getSkuContributor() {
+		return _skuContributor;
+	}
+
 	public int getValues() {
 		return _values;
 	}
@@ -60,6 +65,7 @@ public class ProductOption {
 	private final String _name;
 	private final double _position;
 	private final String _required;
+	private final String _skuContributor;
 	private final int _values;
 
 }

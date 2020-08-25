@@ -961,16 +961,16 @@ public class CommerceRegionModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceRegion)) {
+		if (!(object instanceof CommerceRegion)) {
 			return false;
 		}
 
-		CommerceRegion commerceRegion = (CommerceRegion)obj;
+		CommerceRegion commerceRegion = (CommerceRegion)object;
 
 		long primaryKey = commerceRegion.getPrimaryKey();
 

@@ -144,6 +144,13 @@ public class CommercePricingClassCPDefinitionRelWrapper
 			commercePricingClassCPDefinitionRel);
 	}
 
+	@Override
+	public CommercePricingClass getCommercePricingClass()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePricingClassCPDefinitionRel.getCommercePricingClass();
+	}
+
 	/**
 	 * Returns the commerce pricing class cp definition rel ID of this commerce pricing class cp definition rel.
 	 *
@@ -450,18 +457,18 @@ public class CommercePricingClassCPDefinitionRelWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommercePricingClassCPDefinitionRelWrapper)) {
+		if (!(object instanceof CommercePricingClassCPDefinitionRelWrapper)) {
 			return false;
 		}
 
 		CommercePricingClassCPDefinitionRelWrapper
 			commercePricingClassCPDefinitionRelWrapper =
-				(CommercePricingClassCPDefinitionRelWrapper)obj;
+				(CommercePricingClassCPDefinitionRelWrapper)object;
 
 		if (Objects.equals(
 				_commercePricingClassCPDefinitionRel,

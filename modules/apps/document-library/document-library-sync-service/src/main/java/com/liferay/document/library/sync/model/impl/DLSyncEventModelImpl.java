@@ -548,16 +548,16 @@ public class DLSyncEventModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DLSyncEvent)) {
+		if (!(object instanceof DLSyncEvent)) {
 			return false;
 		}
 
-		DLSyncEvent dlSyncEvent = (DLSyncEvent)obj;
+		DLSyncEvent dlSyncEvent = (DLSyncEvent)object;
 
 		long primaryKey = dlSyncEvent.getPrimaryKey();
 

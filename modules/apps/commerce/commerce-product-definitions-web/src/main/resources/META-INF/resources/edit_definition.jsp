@@ -44,7 +44,7 @@ request.setAttribute("view.jsp-showSearch", false);
 	actions="<%= cpDefinitionsDisplayContext.getHeaderActionModels() %>"
 	bean="<%= cpDefinition %>"
 	beanIdLabel="id"
-	dropdownItems="<%= cpDefinitionsDisplayContext.getDropdownItems() %>"
+	dropdownItems="<%= cpDefinitionsDisplayContext.getClayMenuActionItems() %>"
 	externalReferenceCode="<%= (cProduct == null) ? StringPool.BLANK : cProduct.getExternalReferenceCode() %>"
 	externalReferenceCodeEditUrl="<%= (cProduct == null) ? StringPool.BLANK : editCProductExternalReferenceCodeURL %>"
 	model="<%= CPDefinition.class %>"

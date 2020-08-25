@@ -405,17 +405,17 @@ public class DDMStorageLinkWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMStorageLinkWrapper)) {
+		if (!(object instanceof DDMStorageLinkWrapper)) {
 			return false;
 		}
 
 		DDMStorageLinkWrapper ddmStorageLinkWrapper =
-			(DDMStorageLinkWrapper)obj;
+			(DDMStorageLinkWrapper)object;
 
 		if (Objects.equals(
 				_ddmStorageLink, ddmStorageLinkWrapper._ddmStorageLink)) {

@@ -37,7 +37,7 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 
 	<aui:input checked="<%= !journalContentDisplayContext.isDefaultTemplate() %>" id='<%= refererPortletName + "ddmTemplateTypeCustom" %>' label="use-a-specific-template" name='<%= refererPortletName + "ddmTemplateType" %>' type="radio" useNamespace="<%= false %>" value="custom" />
 
-	<div id='<%= refererPortletName + "customDDMTemplateContainer" %>'>
+	<div id="<%= refererPortletName + "customDDMTemplateContainer" %>">
 		<div class="template-preview-content">
 			<c:choose>
 				<c:when test="<%= journalContentDisplayContext.isDefaultTemplate() %>">

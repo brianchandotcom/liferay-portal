@@ -2,7 +2,7 @@ definition {
 
 	macro editOrderItemDetails {
 		Click(
-			key_productName = "${orderItemName}",
+			key_productSKU = "${orderItemSKU}",
 			locator1 = "CommerceOrders#ORDER_ITEMS_PRODUCT_DETAILS");
 
 		SelectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -37,7 +37,11 @@ definition {
 
 		Button.clickSave();
 
-		IFrame.closeFrame();
+		KeyPress(
+			locator1 = "Icon#CLOSE",
+			value1 = "\ESCAPE");
+
+		IFrame.selectTopFrame();
 	}
 
 	macro viewOrdersEntry {
@@ -87,13 +91,13 @@ definition {
 		AssertTextEquals(
 			key_paymentMethod = "${productUnitPrice}",
 			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_UNIT_PRICE",
-			value1 = "$${productUnitPrice}");
+			value1 = "$ ${productUnitPrice}");
 
 		if (isSet(productDiscount)) {
 			AssertTextEquals(
 				key_paymentMethod = "${productDiscount}",
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_DISCOUNT",
-				value1 = "$${productDiscount}");
+				value1 = "$ ${productDiscount}");
 		}
 
 		AssertTextEquals(
@@ -104,7 +108,7 @@ definition {
 		AssertTextEquals(
 			key_paymentMethod = "${productPrice}",
 			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_PRICE",
-			value1 = "$${productPrice}");
+			value1 = "$ ${productPrice}");
 
 		if (isSet(paymentMethod)) {
 			Click(

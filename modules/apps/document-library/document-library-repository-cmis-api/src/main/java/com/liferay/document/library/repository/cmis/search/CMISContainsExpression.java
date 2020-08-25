@@ -32,7 +32,7 @@ public class CMISContainsExpression extends CMISJunction {
 
 		List<CMISCriterion> cmisCriterions = list();
 
-		StringBundler sb = new StringBundler(cmisCriterions.size() * 2 + 1);
+		StringBundler sb = new StringBundler((cmisCriterions.size() * 2) + 1);
 
 		sb.append("CONTAINS('");
 

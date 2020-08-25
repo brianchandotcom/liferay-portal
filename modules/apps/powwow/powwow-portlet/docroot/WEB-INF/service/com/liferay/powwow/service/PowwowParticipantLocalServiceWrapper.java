@@ -48,6 +48,10 @@ public class PowwowParticipantLocalServiceWrapper
 	/**
 	 * Adds the powwow participant to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect PowwowParticipantLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param powwowParticipant the powwow participant
 	 * @return the powwow participant that was added
 	 */
@@ -88,6 +92,10 @@ public class PowwowParticipantLocalServiceWrapper
 	/**
 	 * Deletes the powwow participant with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect PowwowParticipantLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param powwowParticipantId the primary key of the powwow participant
 	 * @return the powwow participant that was removed
 	 * @throws PortalException if a powwow participant with the primary key could not be found
@@ -103,6 +111,10 @@ public class PowwowParticipantLocalServiceWrapper
 
 	/**
 	 * Deletes the powwow participant from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect PowwowParticipantLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param powwowParticipant the powwow participant
 	 * @return the powwow participant that was removed
@@ -352,6 +364,10 @@ public class PowwowParticipantLocalServiceWrapper
 
 	/**
 	 * Updates the powwow participant in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect PowwowParticipantLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param powwowParticipant the powwow participant
 	 * @return the powwow participant that was updated

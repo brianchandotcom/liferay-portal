@@ -520,17 +520,17 @@ public class WorkflowInstanceLinkWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof WorkflowInstanceLinkWrapper)) {
+		if (!(object instanceof WorkflowInstanceLinkWrapper)) {
 			return false;
 		}
 
 		WorkflowInstanceLinkWrapper workflowInstanceLinkWrapper =
-			(WorkflowInstanceLinkWrapper)obj;
+			(WorkflowInstanceLinkWrapper)object;
 
 		if (Objects.equals(
 				_workflowInstanceLink,

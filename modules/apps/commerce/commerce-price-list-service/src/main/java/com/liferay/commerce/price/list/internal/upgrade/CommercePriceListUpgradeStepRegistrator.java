@@ -20,10 +20,13 @@ import com.liferay.commerce.price.list.internal.upgrade.v2_0_0.CommercePriceList
 import com.liferay.commerce.price.list.internal.upgrade.v2_0_0.CommerceTierPriceEntryUpgradeProcess;
 import com.liferay.commerce.price.list.internal.upgrade.v2_1_0.CommercePriceListChannelRelUpgradeProcess;
 import com.liferay.commerce.price.list.internal.upgrade.v2_1_0.CommercePriceListDiscountRelUpgradeProcess;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -77,6 +80,12 @@ public class CommercePriceListUpgradeStepRegistrator
 			new com.liferay.commerce.price.list.internal.upgrade.v2_1_1.
 				CommercePriceListUpgradeProcess());
 
+		registry.register(
+			_SCHEMA_VERSION_2_1_1, _SCHEMA_VERSION_2_1_2,
+			new com.liferay.commerce.price.list.internal.upgrade.v2_1_2.
+				CommercePriceListUpgradeProcess(
+					_resourceActionLocalService, _resourceLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("COMMERCE PRICE LIST UPGRADE STEP REGISTRATOR FINISHED");
 		}
@@ -94,13 +103,24 @@ public class CommercePriceListUpgradeStepRegistrator
 
 	private static final String _SCHEMA_VERSION_2_1_1 = "2.1.1";
 
+	private static final String _SCHEMA_VERSION_2_1_2 = "2.1.2";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommercePriceListUpgradeStepRegistrator.class);
+
+	@Reference
+	private CommercePriceListLocalService _commercePriceListLocalService;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 }

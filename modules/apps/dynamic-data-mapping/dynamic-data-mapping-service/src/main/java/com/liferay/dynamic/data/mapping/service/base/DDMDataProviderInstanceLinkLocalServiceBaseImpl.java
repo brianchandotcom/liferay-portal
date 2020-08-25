@@ -73,6 +73,10 @@ public abstract class DDMDataProviderInstanceLinkLocalServiceBaseImpl
 	/**
 	 * Adds the ddm data provider instance link to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDMDataProviderInstanceLinkLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param ddmDataProviderInstanceLink the ddm data provider instance link
 	 * @return the ddm data provider instance link that was added
 	 */
@@ -105,6 +109,10 @@ public abstract class DDMDataProviderInstanceLinkLocalServiceBaseImpl
 	/**
 	 * Deletes the ddm data provider instance link with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDMDataProviderInstanceLinkLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param dataProviderInstanceLinkId the primary key of the ddm data provider instance link
 	 * @return the ddm data provider instance link that was removed
 	 * @throws PortalException if a ddm data provider instance link with the primary key could not be found
@@ -121,6 +129,10 @@ public abstract class DDMDataProviderInstanceLinkLocalServiceBaseImpl
 
 	/**
 	 * Deletes the ddm data provider instance link from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDMDataProviderInstanceLinkLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param ddmDataProviderInstanceLink the ddm data provider instance link
 	 * @return the ddm data provider instance link that was removed
@@ -351,6 +363,10 @@ public abstract class DDMDataProviderInstanceLinkLocalServiceBaseImpl
 
 	/**
 	 * Updates the ddm data provider instance link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDMDataProviderInstanceLinkLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param ddmDataProviderInstanceLink the ddm data provider instance link
 	 * @return the ddm data provider instance link that was updated

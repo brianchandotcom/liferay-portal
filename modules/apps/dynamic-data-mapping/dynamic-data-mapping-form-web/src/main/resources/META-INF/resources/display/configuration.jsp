@@ -42,10 +42,10 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 	<div class="portlet-configuration-body-content">
 		<div class="container-fluid-1280">
 			<div class="alert alert-info">
-				<span class='displaying-help-message-holder <%= (selFormInstance == null) ? StringPool.BLANK : "hide" %>'>
+				<span class="displaying-help-message-holder <%= (selFormInstance == null) ? StringPool.BLANK : "hide" %>">
 					<liferay-ui:message key="please-select-a-form-from-the-list-below" />
 				</span>
-				<span class='displaying-form-instance-id-holder <%= (selFormInstance == null) ? "hide" : StringPool.BLANK %>'>
+				<span class="displaying-form-instance-id-holder <%= (selFormInstance == null) ? "hide" : StringPool.BLANK %>">
 					<liferay-ui:message key="displaying-form" />: <span class="displaying-form-instance-id"><%= (selFormInstance != null) ? HtmlUtil.escape(selFormInstance.getName(locale)) : StringPool.BLANK %></span>
 				</span>
 			</div>

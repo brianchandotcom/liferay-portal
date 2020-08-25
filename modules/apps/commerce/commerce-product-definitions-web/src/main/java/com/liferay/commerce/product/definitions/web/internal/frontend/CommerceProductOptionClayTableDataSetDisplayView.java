@@ -15,14 +15,9 @@
 package com.liferay.commerce.product.definitions.web.internal.frontend;
 
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
 import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -33,30 +28,15 @@ import org.osgi.service.component.annotations.Reference;
 	service = ClayDataSetDisplayView.class
 )
 public class CommerceProductOptionClayTableDataSetDisplayView
-	extends ClayTableDataSetDisplayView {
+	extends BaseClayTableDataSetDisplayView {
 
 	@Override
-	public ClayTableSchema getClayTableSchema() {
-		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
-
-		ClayTableSchemaField nameField = clayTableSchemaBuilder.addField(
-			"name", "name");
-
-		nameField.setContentRenderer("actionLink");
-
+	protected void addFields(ClayTableSchemaBuilder clayTableSchemaBuilder) {
 		clayTableSchemaBuilder.addField("fieldType", "field-type");
-
+		clayTableSchemaBuilder.addField("skuContributor", "sku-contributor");
 		clayTableSchemaBuilder.addField("required", "is-required");
-
 		clayTableSchemaBuilder.addField("position", "position");
-
 		clayTableSchemaBuilder.addField("values", "values");
-
-		return clayTableSchemaBuilder.build();
 	}
-
-	@Reference
-	private ClayTableSchemaBuilderFactory _clayTableSchemaBuilderFactory;
 
 }

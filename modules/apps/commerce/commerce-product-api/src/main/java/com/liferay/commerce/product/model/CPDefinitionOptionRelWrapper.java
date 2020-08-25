@@ -212,6 +212,14 @@ public class CPDefinitionOptionRelWrapper
 	}
 
 	@Override
+	public CPDefinitionOptionValueRel
+		fetchPreselectedCPDefinitionOptionValueRel() {
+
+		return _cpDefinitionOptionRel.
+			fetchPreselectedCPDefinitionOptionValueRel();
+	}
+
+	@Override
 	public String[] getAvailableLanguageIds() {
 		return _cpDefinitionOptionRel.getAvailableLanguageIds();
 	}
@@ -1069,17 +1077,17 @@ public class CPDefinitionOptionRelWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionOptionRelWrapper)) {
+		if (!(object instanceof CPDefinitionOptionRelWrapper)) {
 			return false;
 		}
 
 		CPDefinitionOptionRelWrapper cpDefinitionOptionRelWrapper =
-			(CPDefinitionOptionRelWrapper)obj;
+			(CPDefinitionOptionRelWrapper)object;
 
 		if (Objects.equals(
 				_cpDefinitionOptionRel,

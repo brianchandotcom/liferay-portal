@@ -53,6 +53,10 @@ public class ExpandoTableLocalServiceWrapper
 	/**
 	 * Adds the expando table to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ExpandoTableLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param expandoTable the expando table
 	 * @return the expando table that was added
 	 */
@@ -95,6 +99,10 @@ public class ExpandoTableLocalServiceWrapper
 	/**
 	 * Deletes the expando table from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ExpandoTableLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param expandoTable the expando table
 	 * @return the expando table that was removed
 	 */
@@ -107,6 +115,10 @@ public class ExpandoTableLocalServiceWrapper
 
 	/**
 	 * Deletes the expando table with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ExpandoTableLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param tableId the primary key of the expando table
 	 * @return the expando table that was removed
@@ -424,6 +436,10 @@ public class ExpandoTableLocalServiceWrapper
 
 	/**
 	 * Updates the expando table in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ExpandoTableLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param expandoTable the expando table
 	 * @return the expando table that was updated

@@ -792,16 +792,16 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AddressWrapper)) {
+		if (!(object instanceof AddressWrapper)) {
 			return false;
 		}
 
-		AddressWrapper addressWrapper = (AddressWrapper)obj;
+		AddressWrapper addressWrapper = (AddressWrapper)object;
 
 		if (Objects.equals(_address, addressWrapper._address)) {
 			return true;

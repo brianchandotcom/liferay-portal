@@ -1,6 +1,6 @@
 Bundle-Activator: com.liferay.knowledge.base.internal.activator.KnowledgeBaseServiceBundleActivator
 Bundle-Name: Liferay Knowledge Base Service
 Bundle-SymbolicName: com.liferay.knowledge.base.service
-Bundle-Version: 2.0.56
+Bundle-Version: 2.0.58
 Liferay-Require-SchemaVersion: 2.0.2
 Liferay-Service: true

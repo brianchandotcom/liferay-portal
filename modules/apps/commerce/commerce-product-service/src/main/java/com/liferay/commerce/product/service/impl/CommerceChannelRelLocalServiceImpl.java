@@ -74,6 +74,15 @@ public class CommerceChannelRelLocalServiceImpl
 	}
 
 	@Override
+	public CommerceChannelRel fetchCommerceChannelRel(
+		String className, long classPK, long commerceChannelId) {
+
+		return commerceChannelRelPersistence.fetchByC_C_C(
+			classNameLocalService.getClassNameId(className), classPK,
+			commerceChannelId);
+	}
+
+	@Override
 	public List<CommerceChannelRel> getCommerceChannelRels(
 		long commerceChannelId, int start, int end,
 		OrderByComparator<CommerceChannelRel> orderByComparator) {

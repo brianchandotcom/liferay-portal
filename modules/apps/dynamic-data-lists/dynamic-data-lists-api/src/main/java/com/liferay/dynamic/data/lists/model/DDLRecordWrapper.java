@@ -723,16 +723,16 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDLRecordWrapper)) {
+		if (!(object instanceof DDLRecordWrapper)) {
 			return false;
 		}
 
-		DDLRecordWrapper ddlRecordWrapper = (DDLRecordWrapper)obj;
+		DDLRecordWrapper ddlRecordWrapper = (DDLRecordWrapper)object;
 
 		if (Objects.equals(_ddlRecord, ddlRecordWrapper._ddlRecord)) {
 			return true;

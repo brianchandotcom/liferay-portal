@@ -36,6 +36,10 @@ public class AssetVocabularyLocalServiceWrapper
 	/**
 	 * Adds the asset vocabulary to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AssetVocabularyLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param assetVocabulary the asset vocabulary
 	 * @return the asset vocabulary that was added
 	 */
@@ -115,6 +119,10 @@ public class AssetVocabularyLocalServiceWrapper
 	/**
 	 * Deletes the asset vocabulary from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AssetVocabularyLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param assetVocabulary the asset vocabulary
 	 * @return the asset vocabulary that was removed
 	 */
@@ -128,6 +136,10 @@ public class AssetVocabularyLocalServiceWrapper
 
 	/**
 	 * Deletes the asset vocabulary with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AssetVocabularyLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param vocabularyId the primary key of the asset vocabulary
 	 * @return the asset vocabulary that was removed
@@ -581,6 +593,10 @@ public class AssetVocabularyLocalServiceWrapper
 
 	/**
 	 * Updates the asset vocabulary in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AssetVocabularyLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param assetVocabulary the asset vocabulary
 	 * @return the asset vocabulary that was updated

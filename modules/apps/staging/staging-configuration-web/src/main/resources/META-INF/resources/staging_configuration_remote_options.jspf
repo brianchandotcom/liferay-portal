@@ -24,7 +24,7 @@ if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 }
 %>
 
-<div class='<%= showRemoteOptions ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />remoteStagingOptions">
+<div class="<%= showRemoteOptions ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />remoteStagingOptions">
 	<%@ include file="/error_auth_exception.jspf" %>
 
 	<%@ include file="/error_remote_export_exception.jspf" %>
@@ -51,13 +51,8 @@ if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 		<aui:input label='<%= LanguageUtil.get(request, "remote-site-id") %>' name="remoteGroupId" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteGroupId") %>' />
 
 		<div class="form-group">
-
-			<%
-			boolean secureConnection = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("secureConnection"));
-			%>
-
 			<liferay-staging:checkbox
-				checked="<%= secureConnection %>"
+				checked='<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("secureConnection")) %>'
 				label="use-a-secure-network-connection"
 				name="secureConnection"
 			/>
@@ -73,7 +68,7 @@ if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 			/>
 		</div>
 
-		<div class='<%= overrideRemoteSiteURL ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />remoteSiteURLContainer">
+		<div class="<%= overrideRemoteSiteURL ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />remoteSiteURLContainer">
 			<aui:input helpMessage="remote-site-url-help-message" label="remote-site-url" name="remoteSiteURL" size="20" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteSiteURL") %>' />
 		</div>
 	</div>

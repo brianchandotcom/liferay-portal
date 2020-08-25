@@ -270,7 +270,8 @@ public class CommercePendingOrderItemDataSetDataProvider
 			CommerceOrderItem commerceOrderItem, Locale locale)
 		throws PortalException {
 
-		StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
+		StringJoiner stringJoiner = new StringJoiner(
+			StringPool.COMMA_AND_SPACE);
 
 		List<KeyValuePair> commerceOptionValueKeyValuePairs =
 			_cpInstanceHelper.getKeyValuePairs(

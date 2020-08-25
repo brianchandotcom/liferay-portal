@@ -109,7 +109,7 @@ public class CommerceInventoryWarehouseServiceImpl
 
 		_commerceInventoryWarehouseModelResourcePermission.check(
 			getPermissionChecker(), commerceInventoryWarehouseId,
-			ActionKeys.UPDATE);
+			ActionKeys.VIEW);
 
 		return commerceInventoryWarehouseLocalService.
 			getCommerceInventoryWarehouse(commerceInventoryWarehouseId);
@@ -168,7 +168,8 @@ public class CommerceInventoryWarehouseServiceImpl
 		throws PortalException {
 
 		PortalPermissionUtil.check(
-			getPermissionChecker(), CommerceInventoryActionKeys.ADD_WAREHOUSE);
+			getPermissionChecker(),
+			CommerceInventoryActionKeys.MANAGE_INVENTORY);
 
 		return commerceInventoryWarehouseLocalService.
 			getCommerceInventoryWarehouses(companyId, groupId, active);

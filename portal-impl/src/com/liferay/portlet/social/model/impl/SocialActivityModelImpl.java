@@ -1071,16 +1071,16 @@ public class SocialActivityModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SocialActivity)) {
+		if (!(object instanceof SocialActivity)) {
 			return false;
 		}
 
-		SocialActivity socialActivity = (SocialActivity)obj;
+		SocialActivity socialActivity = (SocialActivity)object;
 
 		long primaryKey = socialActivity.getPrimaryKey();
 

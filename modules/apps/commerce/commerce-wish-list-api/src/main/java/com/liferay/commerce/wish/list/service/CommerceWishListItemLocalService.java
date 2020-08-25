@@ -65,6 +65,10 @@ public interface CommerceWishListItemLocalService
 	/**
 	 * Adds the commerce wish list item to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceWishListItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceWishListItem the commerce wish list item
 	 * @return the commerce wish list item that was added
 	 */
@@ -99,6 +103,10 @@ public interface CommerceWishListItemLocalService
 	/**
 	 * Deletes the commerce wish list item from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceWishListItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceWishListItem the commerce wish list item
 	 * @return the commerce wish list item that was removed
 	 */
@@ -108,6 +116,10 @@ public interface CommerceWishListItemLocalService
 
 	/**
 	 * Deletes the commerce wish list item with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceWishListItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceWishListItemId the primary key of the commerce wish list item
 	 * @return the commerce wish list item that was removed
@@ -289,6 +301,10 @@ public interface CommerceWishListItemLocalService
 
 	/**
 	 * Updates the commerce wish list item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceWishListItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceWishListItem the commerce wish list item
 	 * @return the commerce wish list item that was updated

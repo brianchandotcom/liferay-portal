@@ -36,17 +36,17 @@ public class CPDefinitionLinkCacheModel
 	implements CacheModel<CPDefinitionLink>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionLinkCacheModel)) {
+		if (!(object instanceof CPDefinitionLinkCacheModel)) {
 			return false;
 		}
 
 		CPDefinitionLinkCacheModel cpDefinitionLinkCacheModel =
-			(CPDefinitionLinkCacheModel)obj;
+			(CPDefinitionLinkCacheModel)object;
 
 		if (CPDefinitionLinkId ==
 				cpDefinitionLinkCacheModel.CPDefinitionLinkId) {

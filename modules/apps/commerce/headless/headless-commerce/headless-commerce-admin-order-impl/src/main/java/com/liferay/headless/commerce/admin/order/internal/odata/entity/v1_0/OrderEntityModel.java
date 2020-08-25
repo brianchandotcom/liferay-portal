@@ -15,6 +15,7 @@
 package com.liferay.headless.commerce.admin.order.internal.odata.entity.v1_0;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -32,9 +33,12 @@ public class OrderEntityModel implements EntityModel {
 
 	public OrderEntityModel() {
 		_entityFieldsMap = Stream.of(
-			new IntegerEntityField("accountId", locale -> "commerceAccountId"),
+			new CollectionEntityField(
+				new IntegerEntityField(
+					"accountId", locale -> "commerceAccountId")),
 			new IntegerEntityField("channelId", locale -> "commerceChannelId"),
-			new IntegerEntityField("orderStatus", locale -> "orderStatus"),
+			new CollectionEntityField(
+				new IntegerEntityField("orderStatus", locale -> "orderStatus")),
 			new IntegerEntityField("orderId", locale -> Field.ENTRY_CLASS_PK),
 			new DateTimeEntityField(
 				"createDate",

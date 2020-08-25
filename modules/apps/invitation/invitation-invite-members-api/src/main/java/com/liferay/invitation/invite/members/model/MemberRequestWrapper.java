@@ -551,16 +551,17 @@ public class MemberRequestWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MemberRequestWrapper)) {
+		if (!(object instanceof MemberRequestWrapper)) {
 			return false;
 		}
 
-		MemberRequestWrapper memberRequestWrapper = (MemberRequestWrapper)obj;
+		MemberRequestWrapper memberRequestWrapper =
+			(MemberRequestWrapper)object;
 
 		if (Objects.equals(
 				_memberRequest, memberRequestWrapper._memberRequest)) {

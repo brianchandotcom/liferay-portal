@@ -594,16 +594,16 @@ public class KBFolderWrapper implements KBFolder, ModelWrapper<KBFolder> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KBFolderWrapper)) {
+		if (!(object instanceof KBFolderWrapper)) {
 			return false;
 		}
 
-		KBFolderWrapper kbFolderWrapper = (KBFolderWrapper)obj;
+		KBFolderWrapper kbFolderWrapper = (KBFolderWrapper)object;
 
 		if (Objects.equals(_kbFolder, kbFolderWrapper._kbFolder)) {
 			return true;

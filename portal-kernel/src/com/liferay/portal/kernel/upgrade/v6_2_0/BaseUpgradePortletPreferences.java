@@ -37,7 +37,7 @@ public abstract class BaseUpgradePortletPreferences
 			String[]... joinTables)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(9 * joinTables.length + 5);
+		StringBundler sb = new StringBundler((9 * joinTables.length) + 5);
 
 		sb.append("delete from PortletPreferences where ownerType = ");
 		sb.append(String.valueOf(ownerType));

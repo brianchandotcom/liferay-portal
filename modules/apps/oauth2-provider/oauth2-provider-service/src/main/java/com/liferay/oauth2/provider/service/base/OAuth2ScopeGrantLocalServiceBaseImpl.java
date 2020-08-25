@@ -74,6 +74,10 @@ public abstract class OAuth2ScopeGrantLocalServiceBaseImpl
 	/**
 	 * Adds the o auth2 scope grant to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect OAuth2ScopeGrantLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param oAuth2ScopeGrant the o auth2 scope grant
 	 * @return the o auth2 scope grant that was added
 	 */
@@ -102,6 +106,10 @@ public abstract class OAuth2ScopeGrantLocalServiceBaseImpl
 	/**
 	 * Deletes the o auth2 scope grant with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect OAuth2ScopeGrantLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param oAuth2ScopeGrantId the primary key of the o auth2 scope grant
 	 * @return the o auth2 scope grant that was removed
 	 * @throws PortalException if a o auth2 scope grant with the primary key could not be found
@@ -116,6 +124,10 @@ public abstract class OAuth2ScopeGrantLocalServiceBaseImpl
 
 	/**
 	 * Deletes the o auth2 scope grant from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect OAuth2ScopeGrantLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param oAuth2ScopeGrant the o auth2 scope grant
 	 * @return the o auth2 scope grant that was removed
@@ -332,6 +344,10 @@ public abstract class OAuth2ScopeGrantLocalServiceBaseImpl
 
 	/**
 	 * Updates the o auth2 scope grant in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect OAuth2ScopeGrantLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param oAuth2ScopeGrant the o auth2 scope grant
 	 * @return the o auth2 scope grant that was updated

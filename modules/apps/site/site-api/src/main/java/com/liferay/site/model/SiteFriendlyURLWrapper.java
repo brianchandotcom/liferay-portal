@@ -506,17 +506,17 @@ public class SiteFriendlyURLWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SiteFriendlyURLWrapper)) {
+		if (!(object instanceof SiteFriendlyURLWrapper)) {
 			return false;
 		}
 
 		SiteFriendlyURLWrapper siteFriendlyURLWrapper =
-			(SiteFriendlyURLWrapper)obj;
+			(SiteFriendlyURLWrapper)object;
 
 		if (Objects.equals(
 				_siteFriendlyURL, siteFriendlyURLWrapper._siteFriendlyURL)) {

@@ -33,16 +33,16 @@ import java.io.ObjectOutput;
 public class CounterCacheModel implements CacheModel<Counter>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CounterCacheModel)) {
+		if (!(object instanceof CounterCacheModel)) {
 			return false;
 		}
 
-		CounterCacheModel counterCacheModel = (CounterCacheModel)obj;
+		CounterCacheModel counterCacheModel = (CounterCacheModel)object;
 
 		if (name.equals(counterCacheModel.name)) {
 			return true;

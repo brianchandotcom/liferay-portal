@@ -22,16 +22,14 @@ Map<String, Object> contextObjects = new HashMap<>();
 CommerceOrderContentDisplayContext commerceOrderContentDisplayContext = (CommerceOrderContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 contextObjects.put("commerceOrderContentDisplayContext", commerceOrderContentDisplayContext);
-
-List<CommerceOrder> commerceOrders = commerceOrderContentDisplayContext.getCommerceOrders();
 %>
 
 <liferay-ddm:template-renderer
 	className="<%= CommerceOrderContentPortlet.class.getName() %>"
 	contextObjects="<%= contextObjects %>"
-	displayStyle="<%= commerceOrderContentDisplayContext.getDisplayStyle() %>"
-	displayStyleGroupId="<%= commerceOrderContentDisplayContext.getDisplayStyleGroupId() %>"
-	entries="<%= commerceOrders %>"
+	displayStyle="<%= commerceOrderContentDisplayContext.getDisplayStyle(CommercePortletKeys.COMMERCE_ORDER_CONTENT) %>"
+	displayStyleGroupId="<%= commerceOrderContentDisplayContext.getDisplayStyleGroupId(CommercePortletKeys.COMMERCE_ORDER_CONTENT) %>"
+	entries="<%= commerceOrderContentDisplayContext.getCommerceOrders() %>"
 >
 	<div class="container-fluid-1280" id="<portlet:namespace />ordersContainer">
 		<div class="commerce-orders-container" id="<portlet:namespace />entriesContainer">

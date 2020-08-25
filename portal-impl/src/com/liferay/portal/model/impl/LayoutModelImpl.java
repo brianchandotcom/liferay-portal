@@ -2314,16 +2314,16 @@ public class LayoutModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Layout)) {
+		if (!(object instanceof Layout)) {
 			return false;
 		}
 
-		Layout layout = (Layout)obj;
+		Layout layout = (Layout)object;
 
 		long primaryKey = layout.getPrimaryKey();
 

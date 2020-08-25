@@ -144,6 +144,10 @@ public interface CPDefinitionLocalService
 	public CPDefinition copyCPDefinition(long cpDefinitionId)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CPDefinition copyCPDefinition(long cpDefinitionId, long groupId)
+		throws PortalException;
+
 	/**
 	 * Creates a new cp definition with the primary key. Does not add the cp definition to the database.
 	 *

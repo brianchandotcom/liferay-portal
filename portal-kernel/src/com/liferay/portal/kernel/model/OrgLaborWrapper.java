@@ -700,16 +700,16 @@ public class OrgLaborWrapper implements ModelWrapper<OrgLabor>, OrgLabor {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof OrgLaborWrapper)) {
+		if (!(object instanceof OrgLaborWrapper)) {
 			return false;
 		}
 
-		OrgLaborWrapper orgLaborWrapper = (OrgLaborWrapper)obj;
+		OrgLaborWrapper orgLaborWrapper = (OrgLaborWrapper)object;
 
 		if (Objects.equals(_orgLabor, orgLaborWrapper._orgLabor)) {
 			return true;

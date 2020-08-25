@@ -1815,7 +1815,7 @@ public class LanguageImpl implements Language, Serializable {
 		Format numberFormat = null;
 		int pos = 0;
 		StringBuilder sb = new StringBuilder(
-			16 * arguments.length + pattern.length());
+			(16 * arguments.length) + pattern.length());
 
 		int start = pattern.indexOf(CharPool.OPEN_CURLY_BRACE);
 

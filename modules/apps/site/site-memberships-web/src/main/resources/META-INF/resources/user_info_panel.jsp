@@ -118,7 +118,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 			%>
 
 			<c:if test="<%= Validator.isNotNull(portraitURL) %>">
-				<img alt='<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />' class="crop-img img-rounded" src="<%= portraitURL %>" />
+				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="crop-img img-rounded" src="<%= portraitURL %>" />
 			</c:if>
 
 			<h5><liferay-ui:message key="email" /></h5>

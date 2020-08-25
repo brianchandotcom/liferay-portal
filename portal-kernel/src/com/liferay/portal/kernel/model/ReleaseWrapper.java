@@ -494,16 +494,16 @@ public class ReleaseWrapper implements ModelWrapper<Release>, Release {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ReleaseWrapper)) {
+		if (!(object instanceof ReleaseWrapper)) {
 			return false;
 		}
 
-		ReleaseWrapper releaseWrapper = (ReleaseWrapper)obj;
+		ReleaseWrapper releaseWrapper = (ReleaseWrapper)object;
 
 		if (Objects.equals(_release, releaseWrapper._release)) {
 			return true;

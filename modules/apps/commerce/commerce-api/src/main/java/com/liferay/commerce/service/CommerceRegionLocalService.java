@@ -69,6 +69,10 @@ public interface CommerceRegionLocalService
 	/**
 	 * Adds the commerce region to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceRegionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceRegion the commerce region
 	 * @return the commerce region that was added
 	 */
@@ -92,6 +96,10 @@ public interface CommerceRegionLocalService
 	/**
 	 * Deletes the commerce region from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceRegionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceRegion the commerce region
 	 * @return the commerce region that was removed
 	 * @throws PortalException
@@ -103,6 +111,10 @@ public interface CommerceRegionLocalService
 
 	/**
 	 * Deletes the commerce region with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceRegionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceRegionId the primary key of the commerce region
 	 * @return the commerce region that was removed
@@ -307,6 +319,10 @@ public interface CommerceRegionLocalService
 
 	/**
 	 * Updates the commerce region in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceRegionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceRegion the commerce region
 	 * @return the commerce region that was updated

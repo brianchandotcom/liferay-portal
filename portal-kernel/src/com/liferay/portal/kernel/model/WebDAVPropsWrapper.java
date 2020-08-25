@@ -453,16 +453,16 @@ public class WebDAVPropsWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof WebDAVPropsWrapper)) {
+		if (!(object instanceof WebDAVPropsWrapper)) {
 			return false;
 		}
 
-		WebDAVPropsWrapper webDAVPropsWrapper = (WebDAVPropsWrapper)obj;
+		WebDAVPropsWrapper webDAVPropsWrapper = (WebDAVPropsWrapper)object;
 
 		if (Objects.equals(_webDAVProps, webDAVPropsWrapper._webDAVProps)) {
 			return true;

@@ -118,6 +118,20 @@ public class DocumentSerDes {
 			sb.append("\"");
 		}
 
+		if (document.getContentValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentValue\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(document.getContentValue()));
+
+			sb.append("\"");
+		}
+
 		if (document.getCreator() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -200,6 +214,16 @@ public class DocumentSerDes {
 			sb.append("\"documentFolderId\": ");
 
 			sb.append(document.getDocumentFolderId());
+		}
+
+		if (document.getDocumentType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"documentType\": ");
+
+			sb.append(String.valueOf(document.getDocumentType()));
 		}
 
 		if (document.getEncodingFormat() != null) {
@@ -427,6 +451,13 @@ public class DocumentSerDes {
 			map.put("contentUrl", String.valueOf(document.getContentUrl()));
 		}
 
+		if (document.getContentValue() == null) {
+			map.put("contentValue", null);
+		}
+		else {
+			map.put("contentValue", String.valueOf(document.getContentValue()));
+		}
+
 		if (document.getCreator() == null) {
 			map.put("creator", null);
 		}
@@ -473,6 +504,13 @@ public class DocumentSerDes {
 			map.put(
 				"documentFolderId",
 				String.valueOf(document.getDocumentFolderId()));
+		}
+
+		if (document.getDocumentType() == null) {
+			map.put("documentType", null);
+		}
+		else {
+			map.put("documentType", String.valueOf(document.getDocumentType()));
 		}
 
 		if (document.getEncodingFormat() == null) {
@@ -613,6 +651,11 @@ public class DocumentSerDes {
 					document.setContentUrl((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "contentValue")) {
+				if (jsonParserFieldValue != null) {
+					document.setContentValue((String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				if (jsonParserFieldValue != null) {
 					document.setCreator(
@@ -652,6 +695,12 @@ public class DocumentSerDes {
 				if (jsonParserFieldValue != null) {
 					document.setDocumentFolderId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "documentType")) {
+				if (jsonParserFieldValue != null) {
+					document.setDocumentType(
+						DocumentTypeSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {

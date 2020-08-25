@@ -1292,16 +1292,16 @@ public class DDMTemplateWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMTemplateWrapper)) {
+		if (!(object instanceof DDMTemplateWrapper)) {
 			return false;
 		}
 
-		DDMTemplateWrapper ddmTemplateWrapper = (DDMTemplateWrapper)obj;
+		DDMTemplateWrapper ddmTemplateWrapper = (DDMTemplateWrapper)object;
 
 		if (Objects.equals(_ddmTemplate, ddmTemplateWrapper._ddmTemplate)) {
 			return true;

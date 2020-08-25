@@ -1011,17 +1011,17 @@ public class CommerceAvailabilityEstimateModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceAvailabilityEstimate)) {
+		if (!(object instanceof CommerceAvailabilityEstimate)) {
 			return false;
 		}
 
 		CommerceAvailabilityEstimate commerceAvailabilityEstimate =
-			(CommerceAvailabilityEstimate)obj;
+			(CommerceAvailabilityEstimate)object;
 
 		long primaryKey = commerceAvailabilityEstimate.getPrimaryKey();
 

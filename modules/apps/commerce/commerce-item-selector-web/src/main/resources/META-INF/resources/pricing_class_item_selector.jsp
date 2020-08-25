@@ -60,7 +60,7 @@ PortletURL portletURL = commercePricingClassItemSelectorViewDisplayContext.getPo
 
 <div class="container-fluid-1280" id="<portlet:namespace />commercePricingClassSelectorWrapper">
 	<liferay-ui:search-container
-		id="commercePricingClass"
+		id="commercePricingClasses"
 		searchContainer="<%= commercePricingClassItemSelectorViewDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
@@ -71,8 +71,12 @@ PortletURL portletURL = commercePricingClassItemSelectorViewDisplayContext.getPo
 		>
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				property="name"
-			/>
+				name="title"
+			>
+				<div class="commerce-pricing-class-title" data-id="<%= commercePricingClass.getCommercePricingClassId() %>">
+					<%= HtmlUtil.escape(commercePricingClass.getTitle(themeDisplay.getLanguageId())) %>
+				</div>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"

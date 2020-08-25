@@ -20,8 +20,4 @@
 
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 
-<%
-String path = (String)request.getAttribute(WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_PATH);
-%>
-
-<liferay-util:include page="<%= path %>" />
+<liferay-util:include page="<%= (String)request.getAttribute(WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_PATH) %>" />

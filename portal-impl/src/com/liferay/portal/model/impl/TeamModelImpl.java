@@ -883,16 +883,16 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Team)) {
+		if (!(object instanceof Team)) {
 			return false;
 		}
 
-		Team team = (Team)obj;
+		Team team = (Team)object;
 
 		long primaryKey = team.getPrimaryKey();
 

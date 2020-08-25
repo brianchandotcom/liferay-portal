@@ -371,7 +371,7 @@ public abstract class BaseBuildAutoUpgradeTestCase {
 		throws IOException;
 
 	protected String toCreateSQL(Object[][] tableColumns) {
-		StringBundler sb = new StringBundler(tableColumns.length * 5 + 1);
+		StringBundler sb = new StringBundler((tableColumns.length * 5) + 1);
 
 		sb.append("create table BuildAutoUpgradeTestEntity (");
 

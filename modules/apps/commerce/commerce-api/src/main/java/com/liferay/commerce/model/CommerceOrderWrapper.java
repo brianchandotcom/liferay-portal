@@ -1127,6 +1127,14 @@ public class CommerceOrderWrapper
 		return _commerceOrder.getShippingWithTaxAmount();
 	}
 
+	@Override
+	public com.liferay.commerce.currency.model.CommerceMoney
+			getShippingWithTaxAmountMoney()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrder.getShippingWithTaxAmountMoney();
+	}
+
 	/**
 	 * Returns the status of this commerce order.
 	 *
@@ -1306,6 +1314,14 @@ public class CommerceOrderWrapper
 	@Override
 	public BigDecimal getSubtotalWithTaxAmount() {
 		return _commerceOrder.getSubtotalWithTaxAmount();
+	}
+
+	@Override
+	public com.liferay.commerce.currency.model.CommerceMoney
+			getSubtotalWithTaxAmountMoney()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrder.getSubtotalWithTaxAmountMoney();
 	}
 
 	/**
@@ -2527,16 +2543,17 @@ public class CommerceOrderWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceOrderWrapper)) {
+		if (!(object instanceof CommerceOrderWrapper)) {
 			return false;
 		}
 
-		CommerceOrderWrapper commerceOrderWrapper = (CommerceOrderWrapper)obj;
+		CommerceOrderWrapper commerceOrderWrapper =
+			(CommerceOrderWrapper)object;
 
 		if (Objects.equals(
 				_commerceOrder, commerceOrderWrapper._commerceOrder)) {

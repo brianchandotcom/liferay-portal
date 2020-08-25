@@ -116,7 +116,14 @@ public class CommerceChannelDisplayContext
 		_cpTaxCategoryLocalService = cpTaxCategoryLocalService;
 	}
 
-	public long getActiveShippingTaxCategory() throws PortalException {
+	public int getAccountCartMaxAllowed() throws PortalException {
+		CommerceOrderFieldsConfiguration commerceOrderFieldsConfiguration =
+			getCommerceOrderFieldsConfiguration();
+
+		return commerceOrderFieldsConfiguration.accountCartMaxAllowed();
+	}
+
+	public CPTaxCategory getActiveShippingTaxCategory() throws PortalException {
 		CommerceChannel commerceChannel = getCommerceChannel();
 
 		CommerceShippingTaxConfiguration commerceShippingTaxConfiguration =
@@ -126,7 +133,8 @@ public class CommerceChannelDisplayContext
 					commerceChannel.getGroupId(),
 					CommerceConstants.TAX_SERVICE_NAME));
 
-		return commerceShippingTaxConfiguration.taxCategoryId();
+		return _cpTaxCategoryLocalService.fetchCPTaxCategory(
+			commerceShippingTaxConfiguration.taxCategoryId());
 	}
 
 	public List<WorkflowDefinition> getActiveWorkflowDefinitions()
@@ -250,6 +258,16 @@ public class CommerceChannelDisplayContext
 				getCommerceAccountGroupServiceConfiguration();
 
 		return commerceAccountGroupServiceConfiguration.commerceSiteType();
+	}
+
+	public PortletURL getEditCommerceChannelRenderURL() {
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			cpRequestHelper.getRequest(), CPPortletKeys.COMMERCE_CHANNELS,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcRenderCommandName", "editCommerceChannel");
+
+		return portletURL;
 	}
 
 	public List<HeaderActionModel> getHeaderActionModels() {
@@ -414,6 +432,26 @@ public class CommerceChannelDisplayContext
 		return _commerceAccountGroupServiceConfiguration;
 	}
 
+	protected CommerceOrderFieldsConfiguration
+			getCommerceOrderFieldsConfiguration()
+		throws PortalException {
+
+		if (_commerceOrderFieldsConfiguration != null) {
+			return _commerceOrderFieldsConfiguration;
+		}
+
+		CommerceChannel commerceChannel = getCommerceChannel();
+
+		_commerceOrderFieldsConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderFieldsConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceChannel.getGroupId(),
+					CommerceConstants.ORDER_FIELDS_SERVICE_NAME));
+
+		return _commerceOrderFieldsConfiguration;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceChannelDisplayContext.class);
 
@@ -427,6 +465,7 @@ public class CommerceChannelDisplayContext
 	private final CommerceChannelService _commerceChannelService;
 	private final CommerceChannelTypeRegistry _commerceChannelTypeRegistry;
 	private final CommerceCurrencyService _commerceCurrencyService;
+	private CommerceOrderFieldsConfiguration _commerceOrderFieldsConfiguration;
 	private final CommercePaymentMethodRegistry _commercePaymentMethodRegistry;
 	private final ConfigurationProvider _configurationProvider;
 	private final CPTaxCategoryLocalService _cpTaxCategoryLocalService;

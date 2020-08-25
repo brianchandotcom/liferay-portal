@@ -838,16 +838,17 @@ public class CommerceAccountGroupModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceAccountGroup)) {
+		if (!(object instanceof CommerceAccountGroup)) {
 			return false;
 		}
 
-		CommerceAccountGroup commerceAccountGroup = (CommerceAccountGroup)obj;
+		CommerceAccountGroup commerceAccountGroup =
+			(CommerceAccountGroup)object;
 
 		long primaryKey = commerceAccountGroup.getPrimaryKey();
 

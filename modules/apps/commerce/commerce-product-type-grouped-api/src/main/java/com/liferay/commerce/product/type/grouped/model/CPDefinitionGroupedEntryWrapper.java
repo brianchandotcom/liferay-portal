@@ -570,17 +570,17 @@ public class CPDefinitionGroupedEntryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionGroupedEntryWrapper)) {
+		if (!(object instanceof CPDefinitionGroupedEntryWrapper)) {
 			return false;
 		}
 
 		CPDefinitionGroupedEntryWrapper cpDefinitionGroupedEntryWrapper =
-			(CPDefinitionGroupedEntryWrapper)obj;
+			(CPDefinitionGroupedEntryWrapper)object;
 
 		if (Objects.equals(
 				_cpDefinitionGroupedEntry,

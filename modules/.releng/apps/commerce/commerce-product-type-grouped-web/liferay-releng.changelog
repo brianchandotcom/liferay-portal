@@ -27,3 +27,8 @@ cfe8760bd32a66efd9be43769de270b66c72454e^..6c8a91f3650c70b5d8e4aa3308df227ef88e0
 # Bundle Version 1.0.27
 #
 e7c539b85c6651ae35caa932ce9c2e0ae8c7ec38^..defe1d6c6e95a5ca265bb8e0ccafd11b891eaea3=COMMERCE-3224
+
+#
+# Bundle Version 1.0.31
+#
+defe1d6c6e95a5ca265bb8e0ccafd11b891eaea3^..cb743c4f93440c8ed4f7094e0d802d6c225f201a=LPS-77699

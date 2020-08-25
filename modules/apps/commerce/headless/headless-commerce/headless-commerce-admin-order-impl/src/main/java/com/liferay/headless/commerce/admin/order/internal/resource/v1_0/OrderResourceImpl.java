@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
+import com.liferay.commerce.account.exception.NoSuchAccountException;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.constants.CommerceOrderConstants;
@@ -44,26 +45,36 @@ import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+
 import java.math.BigDecimal;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -119,7 +130,12 @@ public class OrderResourceImpl
 	@Override
 	public Order getOrder(Long id) throws Exception {
 		return _orderHelper.toOrder(
-			GetterUtil.getLong(id), contextAcceptLanguage.getPreferredLocale());
+			GetterUtil.getLong(id), contextAcceptLanguage.getPreferredLocale(),
+			contextAcceptLanguage.isAcceptAllLanguages(), contextUser,
+			contextUriInfo,
+			_getActions(
+				_commerceOrderService.getCommerceOrder(
+					GetterUtil.getLong(id))));
 	}
 
 	@Override
@@ -138,20 +154,29 @@ public class OrderResourceImpl
 
 		return _orderHelper.toOrder(
 			commerceOrder.getCommerceOrderId(),
-			contextAcceptLanguage.getPreferredLocale());
+			contextAcceptLanguage.getPreferredLocale(),
+			contextAcceptLanguage.isAcceptAllLanguages(), contextUser,
+			contextUriInfo, _getActions(commerceOrder));
 	}
 
 	@Override
 	public Page<Order> getOrdersPage(
-			Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _orderHelper.getOrdersPage(
-			contextCompany.getCompanyId(), filter, pagination, StringPool.BLANK,
-			sorts,
+			contextCompany.getCompanyId(), filter, pagination, search, sorts,
 			document -> _orderHelper.toOrder(
 				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)),
-				contextAcceptLanguage.getPreferredLocale()));
+				contextAcceptLanguage.getPreferredLocale(),
+				contextAcceptLanguage.isAcceptAllLanguages(), contextUser,
+				contextUriInfo,
+				_getActions(
+					_commerceOrderService.getCommerceOrder(
+						GetterUtil.getLong(
+							GetterUtil.getLong(
+								document.get(Field.ENTRY_CLASS_PK)))))),
+			true);
 	}
 
 	@Override
@@ -191,7 +216,109 @@ public class OrderResourceImpl
 
 		return _orderHelper.toOrder(
 			commerceOrder.getCommerceOrderId(),
-			contextAcceptLanguage.getPreferredLocale());
+			contextAcceptLanguage.getPreferredLocale(),
+			contextAcceptLanguage.isAcceptAllLanguages(), contextUser,
+			contextUriInfo, _getActions(commerceOrder));
+	}
+
+	private Map<String, String> _addAction(
+			String actionId, long commerceOrderId, UriInfo uriInfo,
+			String methodName, Class clazz)
+		throws NoSuchMethodException, PortalException {
+
+		if (!_commerceOrderModelResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(), commerceOrderId,
+				actionId)) {
+
+			return null;
+		}
+
+		Method method = _getMethod(clazz, methodName);
+
+		String httpMethodName = _getHttpMethodName(clazz, method);
+
+		return HashMapBuilder.put(
+			"href",
+			uriInfo.getBaseUriBuilder(
+			).path(
+				_getVersion(uriInfo)
+			).path(
+				clazz.getSuperclass(), methodName
+			).toTemplate()
+		).put(
+			"method", httpMethodName
+		).build();
+	}
+
+	private Map<String, Map<String, String>> _getActions(
+			CommerceOrder commerceOrder)
+		throws NoSuchMethodException, PortalException {
+
+		return HashMapBuilder.<String, Map<String, String>>put(
+			"delete",
+			_addAction(
+				ActionKeys.DELETE, commerceOrder.getCommerceOrderId(),
+				contextUriInfo, "deleteOrder", getClass())
+		).put(
+			"get",
+			_addAction(
+				ActionKeys.VIEW, commerceOrder.getCommerceOrderId(),
+				contextUriInfo, "getOrder", getClass())
+		).put(
+			"update",
+			_addAction(
+				ActionKeys.UPDATE, commerceOrder.getCommerceOrderId(),
+				contextUriInfo, "patchOrder", getClass())
+		).build();
+	}
+
+	private String _getHttpMethodName(Class clazz, Method method)
+		throws NoSuchMethodException {
+
+		Class<?> superClass = clazz.getSuperclass();
+
+		Method superMethod = superClass.getMethod(
+			method.getName(), method.getParameterTypes());
+
+		for (Annotation annotation : superMethod.getAnnotations()) {
+			Class<? extends Annotation> annotationType =
+				annotation.annotationType();
+
+			Annotation[] annotations = annotationType.getAnnotationsByType(
+				HttpMethod.class);
+
+			if (annotations.length > 0) {
+				HttpMethod httpMethod = (HttpMethod)annotations[0];
+
+				return httpMethod.value();
+			}
+		}
+
+		return null;
+	}
+
+	private Method _getMethod(Class clazz, String methodName) {
+		for (Method method : clazz.getMethods()) {
+			if (!methodName.equals(method.getName())) {
+				continue;
+			}
+
+			return method;
+		}
+
+		return null;
+	}
+
+	private String _getVersion(UriInfo uriInfo) {
+		String version = "";
+
+		List<String> matchedURIs = uriInfo.getMatchedURIs();
+
+		if (!matchedURIs.isEmpty()) {
+			version = matchedURIs.get(matchedURIs.size() - 1);
+		}
+
+		return version;
 	}
 
 	private CommerceOrder _updateNestedResources(
@@ -282,6 +409,15 @@ public class OrderResourceImpl
 				order.getShippingAmount(), commerceOrder.getShippingAmount()),
 			(BigDecimal)GetterUtil.getNumber(
 				order.getTotal(), commerceOrder.getTotal()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getSubtotalWithTaxAmount(),
+				commerceOrder.getSubtotalWithTaxAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getShippingWithTaxAmount(),
+				commerceOrder.getShippingWithTaxAmount()),
+			(BigDecimal)GetterUtil.getNumber(
+				order.getTotalWithTaxAmount(),
+				commerceOrder.getTotalWithTaxAmount()),
 			GetterUtil.getString(
 				order.getAdvanceStatus(), commerceOrder.getAdvanceStatus()),
 			GetterUtil.getString(
@@ -349,11 +485,17 @@ public class OrderResourceImpl
 				order.getAccountId());
 		}
 
-		if (Validator.isNotNull(order.getAccountExternalReferenceCode())) {
+		if ((commerceAccount == null) &&
+			Validator.isNotNull(order.getAccountExternalReferenceCode())) {
+
 			commerceAccount =
 				_commerceAccountService.fetchByExternalReferenceCode(
 					commerceChannel.getCompanyId(),
 					order.getAccountExternalReferenceCode());
+		}
+
+		if (commerceAccount == null) {
+			throw new NoSuchAccountException();
 		}
 
 		CommerceOrder commerceOrder = _commerceOrderService.upsertCommerceOrder(
@@ -365,6 +507,8 @@ public class OrderResourceImpl
 			order.getPaymentMethod(), commerceShippingMethodId,
 			order.getShippingOption(), order.getPurchaseOrderNumber(),
 			order.getSubtotal(), order.getShippingAmount(), order.getTotal(),
+			order.getSubtotalWithTaxAmount(), order.getShippingWithTaxAmount(),
+			order.getTotalWithTaxAmount(),
 			GetterUtil.getInteger(
 				order.getPaymentStatus(),
 				CommerceOrderConstants.PAYMENT_STATUS_PENDING),
@@ -436,6 +580,12 @@ public class OrderResourceImpl
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"
+	)
+	private ModelResourcePermission<CommerceOrder>
+		_commerceOrderModelResourcePermission;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

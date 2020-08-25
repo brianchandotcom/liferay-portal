@@ -42,18 +42,18 @@ definition {
 		AssertElementPresent(locator1 = "CommerceEntry#NAME_FIELD");
 	}
 
+	macro gotoSpeedwellAccountDropdownItem {
+		Click(locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DROPDOWN");
+
+		Click(
+			key_dropdownItem = "${dropdownItem}",
+			locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DROPDOWN_ITEM");
+	}
+
 	macro gotoSpeedwellDashboardItem {
 		Click(
 			key_dashboardItem = "${dashboardItem}",
 			locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DASHBOARD_ITEM");
-	}
-
-	macro gotoSpeedwellMyAccountPage {
-		Click(locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DROPDOWN");
-
-		Click(
-			key_dropdownItem = "My Account",
-			locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DROPDOWN_ITEM");
 	}
 
 	macro gotoSpeedwellTopbarItem {

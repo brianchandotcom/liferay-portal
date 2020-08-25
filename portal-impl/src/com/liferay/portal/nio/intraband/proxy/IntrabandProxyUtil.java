@@ -868,7 +868,7 @@ public class IntrabandProxyUtil {
 			String[] proxyMethodsSignatures) {
 
 			StringBundler sb = new StringBundler(
-				proxyMethodsSignatures.length * 4 + 1);
+				(proxyMethodsSignatures.length * 4) + 1);
 
 			sb.append(StringPool.OPEN_CURLY_BRACE);
 

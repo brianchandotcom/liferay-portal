@@ -49,8 +49,11 @@ import java.util.Map;
  *
  * @author Marco Leo
  * @see CPFriendlyURLEntryLocalServiceUtil
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ com.liferay.friendly.url.service.impl.FriendlyURLEntryLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 @Transactional(
 	isolation = Isolation.PORTAL,

@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -150,6 +151,16 @@ public class CPDefinitionOptionRelDisplayContext
 		}
 
 		return ddmFormFieldType.getName();
+	}
+
+	public String getDDMFormFieldTypeNames() throws PortalException {
+		CPOptionConfiguration cpOptionConfiguration =
+			_configurationProvider.getConfiguration(
+				CPOptionConfiguration.class,
+				new SystemSettingsLocator(CPConstants.CP_OPTION_SERVICE_NAME));
+
+		return String.join(
+			StringPool.COMMA, cpOptionConfiguration.ddmFormFieldTypesAllowed());
 	}
 
 	public List<DDMFormFieldType> getDDMFormFieldTypes()

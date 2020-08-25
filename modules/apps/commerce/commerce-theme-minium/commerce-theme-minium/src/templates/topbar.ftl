@@ -40,7 +40,7 @@
 
 			<#if show_mini_cart>
 				<div class="minium-topbar__cart-wrapper">
-					<@liferay_commerce_ui["mini-cart"] />
+					<@liferay_commerce_ui["mini-cart"] spritemap="${themeDisplay.getPathThemeImages()}/icons.svg" />
 				</div>
 			</#if>
 		</div>

@@ -36,18 +36,18 @@ public class CPDefinitionVirtualSettingCacheModel
 	implements CacheModel<CPDefinitionVirtualSetting>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionVirtualSettingCacheModel)) {
+		if (!(object instanceof CPDefinitionVirtualSettingCacheModel)) {
 			return false;
 		}
 
 		CPDefinitionVirtualSettingCacheModel
 			cpDefinitionVirtualSettingCacheModel =
-				(CPDefinitionVirtualSettingCacheModel)obj;
+				(CPDefinitionVirtualSettingCacheModel)object;
 
 		if (CPDefinitionVirtualSettingId ==
 				cpDefinitionVirtualSettingCacheModel.

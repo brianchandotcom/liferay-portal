@@ -73,35 +73,31 @@
 		iframeFooter = window.document.querySelector('.modal-iframe-footer'),
 		iframeForm = iframeContent.querySelector('form');
 
-	function handleSubmit() {
-		window.top.Liferay.fire(events.IS_LOADING_MODAL, {isLoading: true});
-
-		var form = Liferay.Form.get(iframeForm.id);
-
-		if (!form || !form.formValidator || !form.formValidator.validate) {
-			return window.top.Liferay.fire(events.IS_LOADING_MODAL, {
-				isLoading: false
-			});
-		}
-
-		form.formValidator.validate();
-
-		if (form.formValidator.hasErrors()) {
-			return window.top.Liferay.fire(events.IS_LOADING_MODAL, {
-				isLoading: false
-			});
-		}
-
-		return submitForm(form.form);
-	}
-
 	if (iframeForm) {
 		iframeForm.appendChild(iframeFooter);
 
-		iframeForm.addEventListener('submit', function(event) {
-			event.preventDefault();
+		iframeForm.addEventListener('submit', function(e) {
+			window.top.Liferay.fire(events.IS_LOADING_MODAL, {isLoading: true});
 
-			return handleSubmit();
+			var form = Liferay.Form.get(iframeForm.id);
+
+			if (!form || !form.formValidator || !form.formValidator.validate) {
+				e.preventDefault();
+				return window.top.Liferay.fire(events.IS_LOADING_MODAL, {
+					isLoading: false
+				});
+			}
+
+			form.formValidator.validate();
+
+			if (form.formValidator.hasErrors()) {
+				e.preventDefault();
+				return window.top.Liferay.fire(events.IS_LOADING_MODAL, {
+					isLoading: false
+				});
+			}
+
+			return;
 		});
 	}
 

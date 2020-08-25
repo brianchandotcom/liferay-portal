@@ -36,17 +36,17 @@ public class CommerceAccountGroupCacheModel
 	implements CacheModel<CommerceAccountGroup>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceAccountGroupCacheModel)) {
+		if (!(object instanceof CommerceAccountGroupCacheModel)) {
 			return false;
 		}
 
 		CommerceAccountGroupCacheModel commerceAccountGroupCacheModel =
-			(CommerceAccountGroupCacheModel)obj;
+			(CommerceAccountGroupCacheModel)object;
 
 		if (commerceAccountGroupId ==
 				commerceAccountGroupCacheModel.commerceAccountGroupId) {

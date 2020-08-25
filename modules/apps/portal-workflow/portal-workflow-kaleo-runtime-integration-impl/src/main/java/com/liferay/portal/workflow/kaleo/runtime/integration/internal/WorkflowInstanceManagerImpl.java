@@ -85,6 +85,20 @@ public class WorkflowInstanceManagerImpl implements WorkflowInstanceManager {
 	}
 
 	@Override
+	public WorkflowInstance getWorkflowInstance(
+			long companyId, long userId, long workflowInstanceId)
+		throws WorkflowException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(companyId);
+		serviceContext.setUserId(userId);
+
+		return _workflowEngine.getWorkflowInstance(
+			workflowInstanceId, serviceContext);
+	}
+
+	@Override
 	public int getWorkflowInstanceCount(
 			long companyId, Long userId, String assetClassName,
 			Long assetClassPK, Boolean completed)

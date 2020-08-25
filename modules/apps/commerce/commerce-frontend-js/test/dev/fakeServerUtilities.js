@@ -479,6 +479,61 @@ function defineServerResponses(app) {
 			totalItems: 2
 		});
 	});
+
+	let timeoutOn = false;
+	let processEnded = false;
+	let success = false;
+
+	app.delete('/o/fake-bulk-action/v1.0/products/0/batch', (req, res) => {
+		if (!timeoutOn) {
+			timeoutOn = true;
+			success = !success;
+			setTimeout(() => {
+				timeoutOn = false;
+				processEnded = true;
+			}, 2000);
+		}
+
+		return res.json({
+			className:
+				'com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product',
+			contentType: 'JSON',
+			errorMessage: '',
+			executeStatus: 'INITIAL',
+			id: 110,
+			operation: 'DELETE'
+		});
+	});
+
+	app.get('/o/fake-batch-engine/v1.0/import-task/:id', (req, res) => {
+		if (processEnded && !timeoutOn) {
+			processEnded = false;
+
+			return res.json({
+				className:
+					'com.liferay.headless.commerce.admin.order.dto.v1_0.Order',
+				contentType: 'JSON',
+				endTime: '2020-06-08T15:08:02Z',
+				errorMessage: 'Error: chocoPenguins are not defined',
+				executeStatus: success ? 'COMPLETED' : 'FAILED',
+				id: req.params.id,
+				operation: 'DELETE',
+				startTime: '2020-06-08T15:08:01Z'
+			});
+		}
+
+		return res.json({
+			className:
+				'com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product',
+			contentType: 'JSON',
+			endTime: '2020-06-08T15:13:34Z',
+			errorMessage: '',
+			executeStatus: 'STARTED',
+			id: req.params.id,
+			operation: 'DELETE',
+			startTime: '2020-06-08T15:13:34Z'
+		});
+	});
 }
 
 module.exports = {

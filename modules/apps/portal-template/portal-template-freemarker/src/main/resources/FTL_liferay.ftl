@@ -19,9 +19,11 @@ LPS-30525.
 </#if>
 
 <#if themeDisplay??>
-	<#assign css_main_file = htmlUtil.escape(portalUtil.getStaticResourceURL(request, "${themeDisplay.getPathThemeCss()}/main.css")) />
-	<#assign is_signed_in = themeDisplay.isSignedIn() />
-	<#assign js_main_file = htmlUtil.escape(portalUtil.getStaticResourceURL(request, "${themeDisplay.getPathThemeJavaScript()}/main.js")) />
+	<#assign
+		css_main_file = htmlUtil.escape(portalUtil.getStaticResourceURL(request, "${themeDisplay.getPathThemeCss()}/main.css"))
+		is_signed_in = themeDisplay.isSignedIn()
+		js_main_file = htmlUtil.escape(portalUtil.getStaticResourceURL(request, "${themeDisplay.getPathThemeJavaScript()}/main.js"))
+	/>
 
 	<#if !is_setup_complete>
 		<#assign is_setup_complete = themeDisplay.isImpersonated() />

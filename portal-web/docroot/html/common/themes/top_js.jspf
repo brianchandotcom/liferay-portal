@@ -382,7 +382,7 @@
 	long jsLoaderModulesLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_JS_LOADER_MODULES);
 	%>
 
-	<script src='<%= HtmlUtil.escape(themeDisplay.getCDNDynamicResourcesHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_JS_LOADER_MODULES) + "/js_loader_modules?t=" + jsLoaderModulesLastModified) %>' type="text/javascript"></script>
+	<script src="<%= HtmlUtil.escape(themeDisplay.getCDNDynamicResourcesHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_JS_LOADER_MODULES) + "/js_loader_modules?t=" + jsLoaderModulesLastModified) %>" type="text/javascript"></script>
 </c:if>
 
 <liferay-util:dynamic-include key="/html/common/themes/top_js.jspf#resources" />
@@ -393,7 +393,7 @@
 	long jsBundleConfigLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_JS_BUNDLE_CONFIG);
 	%>
 
-	<script data-senna-track="temporary" src='<%= HtmlUtil.escape(themeDisplay.getCDNDynamicResourcesHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_JS_BUNDLE_CONFIG) + "/js_bundle_config?t=" + jsBundleConfigLastModified) %>' type="text/javascript"></script>
+	<script data-senna-track="temporary" src="<%= HtmlUtil.escape(themeDisplay.getCDNDynamicResourcesHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_JS_BUNDLE_CONFIG) + "/js_bundle_config?t=" + jsBundleConfigLastModified) %>" type="text/javascript"></script>
 </c:if>
 
 <script data-senna-track="temporary" type="text/javascript">
@@ -436,23 +436,25 @@
 String liferayAnalyticsChannelId = null;
 
 if (group != null) {
-	if (Objects.equals(group.getGroupKey(), "Forms")) {
-		Group tempGroup = GroupLocalServiceUtil.fetchGroup(GetterUtil.getLong(request.getAttribute("refererGroupId")));
+	liferayAnalyticsChannelId = group.getTypeSettingsProperty("analyticsChannelId");
 
-		liferayAnalyticsChannelId = tempGroup.getTypeSettingsProperty("analyticsChannelId");
-	}
-	else {
-		liferayAnalyticsChannelId = group.getTypeSettingsProperty("analyticsChannelId");
+	if (Objects.equals(group.getGroupKey(), "Forms")) {
+		Group refererGroup = GroupLocalServiceUtil.fetchGroup(GetterUtil.getLong(request.getAttribute("refererGroupId")));
+
+		if (refererGroup != null) {
+			liferayAnalyticsChannelId = refererGroup.getTypeSettingsProperty("analyticsChannelId");
+		}
 	}
 }
 else {
-	if (Objects.equals(liveGroup.getGroupKey(), "Forms")) {
-		Group tempGroup = GroupLocalServiceUtil.fetchGroup(GetterUtil.getLong(request.getAttribute("refererGroupId")));
+	liferayAnalyticsChannelId = liveGroup.getTypeSettingsProperty("analyticsChannelId");
 
-		liferayAnalyticsChannelId = tempGroup.getTypeSettingsProperty("analyticsChannelId");
-	}
-	else {
-		liferayAnalyticsChannelId = liveGroup.getTypeSettingsProperty("analyticsChannelId");
+	if (Objects.equals(liveGroup.getGroupKey(), "Forms")) {
+		Group refererGroup = GroupLocalServiceUtil.fetchGroup(GetterUtil.getLong(request.getAttribute("refererGroupId")));
+
+		if (refererGroup != null) {
+			liferayAnalyticsChannelId = refererGroup.getTypeSettingsProperty("analyticsChannelId");
+		}
 	}
 }
 
@@ -485,17 +487,15 @@ String[] liferayAnalyticsGroupIds = PrefsPropsUtil.getStringArray(company.getCom
 				endpointUrl: '<%= HtmlUtil.escapeJS(liferayAnalyticsEndpointURL) %>'
 			};
 
-			Analytics.create(config);
+			var dxpMiddleware = function(request) {
+				request.context.canonicalUrl = themeDisplay.getCanonicalURL();
+				request.context.channelId = liferayAnalyticsChannelId;
+				request.context.groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
 
-			Analytics.registerMiddleware(
-				function(request) {
-					request.context.canonicalUrl = themeDisplay.getCanonicalURL();
-					request.context.channelId = liferayAnalyticsChannelId;
-					request.context.groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
+				return request;
+			};
 
-					return request;
-				}
-			);
+			Analytics.create(config, [dxpMiddleware]);
 
 			if (themeDisplay.isSignedIn()) {
 				Analytics.setIdentity(
@@ -517,15 +517,7 @@ String[] liferayAnalyticsGroupIds = PrefsPropsUtil.getStringArray(company.getCom
 						var groupId = themeDisplay.getScopeGroupIdOrLiveGroupId();
 
 						if (!themeDisplay.isControlPanel() && (liferayAnalyticsGroupIds.indexOf(groupId) >= 0)) {
-							Analytics.create(config);
-
-							Analytics.registerMiddleware(function (request) {
-								request.context.canonicalUrl = themeDisplay.getCanonicalURL();
-								request.context.channelId = liferayAnalyticsChannelId;
-								request.context.groupId = groupId;
-
-								return request;
-							});
+							Analytics.create(config, [dxpMiddleware]);
 
 							if (themeDisplay.isSignedIn()) {
 								Analytics.setIdentity(

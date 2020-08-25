@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Document Library Sync API
 Bundle-SymbolicName: com.liferay.document.library.sync.api
-Bundle-Version: 1.0.13
+Bundle-Version: 1.0.15
 Export-Package:\
 	com.liferay.document.library.sync.constants,\
 	com.liferay.document.library.sync.exception,\

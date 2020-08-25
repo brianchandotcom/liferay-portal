@@ -85,7 +85,7 @@ public class URLCodec {
 
 				sb.append(charBuffer);
 
-				i += byteBuffer.capacity() * 3 - 1;
+				i += (byteBuffer.capacity() * 3) - 1;
 			}
 			else if (c == CharPool.PLUS) {
 				if (sb == null) {
@@ -240,14 +240,14 @@ public class URLCodec {
 			}
 		}
 
-		if (encodedString.length() < (start + count * 3)) {
+		if (encodedString.length() < (start + (count * 3))) {
 			throw new IllegalArgumentException(
 				"Invalid URL encoding " + encodedString);
 		}
 
 		ByteBuffer byteBuffer = ByteBuffer.allocate(count);
 
-		for (int i = start; i < (start + count * 3); i += 3) {
+		for (int i = start; i < (start + (count * 3)); i += 3) {
 			int high = _charToHex(encodedString.charAt(i + 1));
 			int low = _charToHex(encodedString.charAt(i + 2));
 

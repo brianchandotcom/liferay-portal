@@ -1428,16 +1428,16 @@ public class CommerceAccountModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceAccount)) {
+		if (!(object instanceof CommerceAccount)) {
 			return false;
 		}
 
-		CommerceAccount commerceAccount = (CommerceAccount)obj;
+		CommerceAccount commerceAccount = (CommerceAccount)object;
 
 		long primaryKey = commerceAccount.getPrimaryKey();
 

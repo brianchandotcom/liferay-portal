@@ -80,6 +80,38 @@ public class RenderedContent {
 	protected String renderedContentURL;
 
 	@Schema(
+		description = "optional field with the rendered content, can be embedded with nestedFields"
+	)
+	public String getRenderedContentValue() {
+		return renderedContentValue;
+	}
+
+	public void setRenderedContentValue(String renderedContentValue) {
+		this.renderedContentValue = renderedContentValue;
+	}
+
+	@JsonIgnore
+	public void setRenderedContentValue(
+		UnsafeSupplier<String, Exception> renderedContentValueUnsafeSupplier) {
+
+		try {
+			renderedContentValue = renderedContentValueUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "optional field with the rendered content, can be embedded with nestedFields"
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String renderedContentValue;
+
+	@Schema(
 		description = "The name of the template used to render the content."
 	)
 	public String getTemplateName() {
@@ -182,6 +214,20 @@ public class RenderedContent {
 			sb.append("\"");
 		}
 
+		if (renderedContentValue != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"renderedContentValue\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(renderedContentValue));
+
+			sb.append("\"");
+		}
+
 		if (templateName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -223,6 +269,16 @@ public class RenderedContent {
 		return string.replaceAll("\"", "\\\\\"");
 	}
 
+	private static boolean _isArray(Object value) {
+		if (value == null) {
+			return false;
+		}
+
+		Class<?> clazz = value.getClass();
+
+		return clazz.isArray();
+	}
+
 	private static String _toJSON(Map<String, ?> map) {
 		StringBuilder sb = new StringBuilder("{");
 
@@ -241,9 +297,7 @@ public class RenderedContent {
 
 			Object value = entry.getValue();
 
-			Class<?> clazz = value.getClass();
-
-			if (clazz.isArray()) {
+			if (_isArray(value)) {
 				sb.append("[");
 
 				Object[] valueArray = (Object[])value;

@@ -802,17 +802,17 @@ public class CPOptionCategoryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPOptionCategoryWrapper)) {
+		if (!(object instanceof CPOptionCategoryWrapper)) {
 			return false;
 		}
 
 		CPOptionCategoryWrapper cpOptionCategoryWrapper =
-			(CPOptionCategoryWrapper)obj;
+			(CPOptionCategoryWrapper)object;
 
 		if (Objects.equals(
 				_cpOptionCategory, cpOptionCategoryWrapper._cpOptionCategory)) {

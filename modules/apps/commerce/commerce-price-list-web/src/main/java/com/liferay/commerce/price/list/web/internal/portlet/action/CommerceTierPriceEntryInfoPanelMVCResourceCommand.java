@@ -16,11 +16,13 @@ package com.liferay.commerce.price.list.web.internal.portlet.action;
 
 import com.liferay.commerce.price.list.constants.CommercePriceListPortletKeys;
 import com.liferay.commerce.price.list.constants.CommercePriceListWebKeys;
+import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.commerce.price.list.web.internal.display.context.CommerceTierPriceEntryDisplayContext;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -53,6 +55,7 @@ public class CommerceTierPriceEntryInfoPanelMVCResourceCommand
 			commerceTierPriceEntryDisplayContext =
 				new CommerceTierPriceEntryDisplayContext(
 					_commercePriceListActionHelper,
+					_commercePriceListModelResourcePermission,
 					_commerceTierPriceEntryService,
 					_portal.getHttpServletRequest(resourceRequest));
 
@@ -72,6 +75,12 @@ public class CommerceTierPriceEntryInfoPanelMVCResourceCommand
 
 	@Reference
 	private CommercePriceListActionHelper _commercePriceListActionHelper;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.price.list.model.CommercePriceList)"
+	)
+	private ModelResourcePermission<CommercePriceList>
+		_commercePriceListModelResourcePermission;
 
 	@Reference
 	private CommerceTierPriceEntryService _commerceTierPriceEntryService;

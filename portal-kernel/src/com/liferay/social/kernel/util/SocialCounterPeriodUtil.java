@@ -43,7 +43,7 @@ public class SocialCounterPeriodUtil {
 	}
 
 	public static Date getDate(int activityDay) {
-		return new Date(_BASE_TIME + activityDay * Time.DAY);
+		return new Date(_BASE_TIME + (activityDay * Time.DAY));
 	}
 
 	public static int getEndPeriod() {
@@ -73,7 +73,7 @@ public class SocialCounterPeriodUtil {
 			return getActivityDay(calendar);
 		}
 
-		return getEndPeriod() - offset * getPeriodLength();
+		return getEndPeriod() - (offset * getPeriodLength());
 	}
 
 	public static int getEndPeriod(long time) {
@@ -107,14 +107,14 @@ public class SocialCounterPeriodUtil {
 
 			Calendar calendar2 = new GregorianCalendar();
 
-			calendar2.setTimeInMillis(_BASE_TIME + activityDay * Time.DAY);
+			calendar2.setTimeInMillis(_BASE_TIME + (activityDay * Time.DAY));
 
 			int monthDelta =
 				calendar.get(Calendar.MONTH) - calendar2.get(Calendar.MONTH);
 			int yearDelta =
 				calendar.get(Calendar.YEAR) - calendar2.get(Calendar.YEAR);
 
-			return -(yearDelta * 12 + monthDelta);
+			return -((yearDelta * 12) + monthDelta);
 		}
 
 		return -((getStartPeriod() - activityDay) / getPeriodLength());
@@ -211,7 +211,7 @@ public class SocialCounterPeriodUtil {
 			return getActivityDay(calendarTime.getTime());
 		}
 
-		return getStartPeriod() + offset * getPeriodLength();
+		return getStartPeriod() + (offset * getPeriodLength());
 	}
 
 	public static int getStartPeriod(long time) {

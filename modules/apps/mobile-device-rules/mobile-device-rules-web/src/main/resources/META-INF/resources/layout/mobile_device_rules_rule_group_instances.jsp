@@ -19,10 +19,6 @@
 <%
 String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
-
-int ruleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK);
-
-PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_header.jspf-portletURL");
 %>
 
 <liferay-ui:search-container
@@ -30,8 +26,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("mobile_device_rules_he
 	deltaConfigurable="<%= false %>"
 	emptyResultsMessage="none"
 	id="rules"
-	iteratorURL="<%= portletURL %>"
-	total="<%= ruleGroupInstancesCount %>"
+	iteratorURL='<%= (PortletURL)request.getAttribute("mobile_device_rules_header.jspf-portletURL") %>'
+	total="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) %>"
 >
 	<liferay-ui:search-container-results
 		results="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstances(className, classPK, searchContainer.getStart(), searchContainer.getEnd(), RuleGroupInstancePriorityComparator.INSTANCE_ASCENDING) %>"

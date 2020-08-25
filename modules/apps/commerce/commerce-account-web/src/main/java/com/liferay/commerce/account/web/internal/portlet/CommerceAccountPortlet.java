@@ -56,6 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.user.admin.configuration.UserFileUploadsConfiguration",
 	immediate = true,
 	property = {
+		"com.liferay.fragment.entry.processor.portlet.alias=commerce-account-portlet",
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.autopropagated-parameters=commerceAccountId",
 		"com.liferay.portlet.css-class-wrapper=portlet-commerce-account-admin",

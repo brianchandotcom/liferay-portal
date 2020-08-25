@@ -35,8 +35,8 @@ CommerceOrderContentDisplayContext commerceOrderContentDisplayContext = (Commerc
 					<div class="display-template">
 						<liferay-ddm:template-selector
 							className="<%= CommerceOrderContentPortlet.class.getName() %>"
-							displayStyle="<%= commerceOrderContentDisplayContext.getDisplayStyle() %>"
-							displayStyleGroupId="<%= commerceOrderContentDisplayContext.getDisplayStyleGroupId() %>"
+							displayStyle="<%= commerceOrderContentDisplayContext.getDisplayStyle(CommercePortletKeys.COMMERCE_ORDER_CONTENT) %>"
+							displayStyleGroupId="<%= commerceOrderContentDisplayContext.getDisplayStyleGroupId(CommercePortletKeys.COMMERCE_ORDER_CONTENT) %>"
 							refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
 							showEmptyOption="<%= true %>"
 						/>

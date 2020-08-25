@@ -870,17 +870,17 @@ public class CommerceAddressRestrictionModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceAddressRestriction)) {
+		if (!(object instanceof CommerceAddressRestriction)) {
 			return false;
 		}
 
 		CommerceAddressRestriction commerceAddressRestriction =
-			(CommerceAddressRestriction)obj;
+			(CommerceAddressRestriction)object;
 
 		long primaryKey = commerceAddressRestriction.getPrimaryKey();
 

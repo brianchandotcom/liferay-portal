@@ -18,6 +18,7 @@ export default function debounce(func, wait, immediate) {
 	return () => {
 		const context = this;
 		const args = arguments;
+
 		function later() {
 			timeout = null;
 			if (!immediate) func.apply(context, args);
@@ -27,5 +28,21 @@ export default function debounce(func, wait, immediate) {
 		clearTimeout(timeout);
 		timeout = setTimeout(later, wait);
 		if (callNow) func.apply(context, args);
+	};
+}
+
+export function debouncePromise(inner, ms = 0) {
+	let timer = null;
+	let resolves = [];
+
+	return function(...args) {
+		clearTimeout(timer);
+		timer = setTimeout(() => {
+			const result = inner(...args);
+			resolves.forEach(r => r(result));
+			resolves = [];
+		}, ms);
+
+		return new Promise(r => resolves.push(r));
 	};
 }

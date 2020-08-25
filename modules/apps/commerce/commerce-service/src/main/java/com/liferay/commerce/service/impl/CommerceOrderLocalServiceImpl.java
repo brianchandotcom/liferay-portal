@@ -16,6 +16,8 @@ package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.configuration.CommerceOrderConfiguration;
+import com.liferay.commerce.configuration.CommerceOrderFieldsConfiguration;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceDestinationNames;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.context.CommerceContext;
@@ -24,7 +26,11 @@ import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.discount.CommerceDiscountValue;
 import com.liferay.commerce.discount.exception.CommerceDiscountCouponCodeException;
+import com.liferay.commerce.discount.exception.CommerceDiscountLimitationTimesException;
+import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
+import com.liferay.commerce.discount.service.CommerceDiscountUsageEntryLocalService;
+import com.liferay.commerce.exception.CommerceOrderAccountLimitException;
 import com.liferay.commerce.exception.CommerceOrderBillingAddressException;
 import com.liferay.commerce.exception.CommerceOrderDateException;
 import com.liferay.commerce.exception.CommerceOrderPurchaseOrderNumberException;
@@ -56,6 +62,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -70,6 +77,8 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -172,6 +181,7 @@ public class CommerceOrderLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
+		validateAccountOrdersLimit(groupId, commerceAccountId);
 		validateGuestOrders();
 
 		if (commerceCurrencyId <= 0) {
@@ -204,9 +214,9 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setSubtotal(subtotal);
 		commerceOrder.setShippingAmount(shippingAmount);
 		commerceOrder.setTotal(total);
-		commerceOrder.setTotal(totalWithTaxAmount);
 		commerceOrder.setSubtotalWithTaxAmount(subtotalWithTaxAmount);
 		commerceOrder.setShippingWithTaxAmount(shippingWithTaxAmount);
+		commerceOrder.setTotalWithTaxAmount(totalWithTaxAmount);
 		commerceOrder.setPaymentStatus(paymentStatus);
 		commerceOrder.setOrderStatus(orderStatus);
 		commerceOrder.setManuallyAdjusted(false);
@@ -221,9 +231,10 @@ public class CommerceOrderLocalServiceImpl
 		// Workflow
 
 		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			commerceOrder.getCompanyId(), commerceOrder.getGroupId(), userId,
-			CommerceOrder.class.getName(), commerceOrder.getCommerceOrderId(),
-			commerceOrder, serviceContext, new HashMap<>());
+			commerceOrder.getCompanyId(), commerceOrder.getScopeGroupId(),
+			userId, CommerceOrder.class.getName(),
+			commerceOrder.getCommerceOrderId(), commerceOrder, serviceContext,
+			new HashMap<>());
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -309,14 +320,37 @@ public class CommerceOrderLocalServiceImpl
 
 		boolean hasDiscounts = false;
 
-		if (_commerceDiscountLocalService.getCommerceDiscountsCount(
-				commerceOrder.getCompanyId(), couponCode) == 0) {
+		if (_commerceDiscountLocalService.getActiveCommerceDiscountsCount(
+				commerceOrder.getCompanyId(), couponCode, true) == 0) {
 
 			hasDiscounts = true;
 		}
 
 		if (hasDiscounts && Validator.isNotNull(couponCode)) {
 			throw new CommerceDiscountCouponCodeException();
+		}
+
+		if (Validator.isNotNull(couponCode)) {
+			CommerceDiscount commerceDiscount =
+				_commerceDiscountLocalService.getActiveCommerceDiscount(
+					commerceOrder.getCompanyId(), couponCode, true);
+
+			long commerceAccountId = 0;
+
+			CommerceAccount commerceAccount =
+				commerceContext.getCommerceAccount();
+
+			if (commerceAccount != null) {
+				commerceAccountId = commerceAccount.getCommerceAccountId();
+			}
+
+			if (!_commerceDiscountUsageEntryLocalService.
+					validateDiscountLimitationUsage(
+						commerceAccountId,
+						commerceDiscount.getCommerceDiscountId())) {
+
+				throw new CommerceDiscountLimitationTimesException();
+			}
 		}
 
 		commerceOrder.setCouponCode(couponCode);
@@ -674,7 +708,7 @@ public class CommerceOrderLocalServiceImpl
 				}
 
 				if (found) {
-					break;
+					continue;
 				}
 			}
 
@@ -942,6 +976,100 @@ public class CommerceOrderLocalServiceImpl
 			zip, commerceRegionId, commerceCountryId, phoneNumber,
 			CommerceOrder::getBillingAddressId,
 			CommerceOrder::setBillingAddressId, serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceOrder updateCommerceOrder(
+			long commerceOrderId, long billingAddressId, long shippingAddressId,
+			String commercePaymentMethodKey, long commerceShippingMethodId,
+			String shippingOptionName, String purchaseOrderNumber,
+			BigDecimal subtotal, BigDecimal shippingAmount, BigDecimal total,
+			BigDecimal subtotalWithTaxAmount, BigDecimal shippingWithTaxAmount,
+			BigDecimal totalWithTaxAmount, String advanceStatus,
+			String externalReferenceCode, CommerceContext commerceContext)
+		throws PortalException {
+
+		if (subtotal == null) {
+			subtotal = BigDecimal.ZERO;
+		}
+
+		if (shippingAmount == null) {
+			shippingAmount = BigDecimal.ZERO;
+		}
+
+		if (total == null) {
+			total = BigDecimal.ZERO;
+		}
+
+		if (subtotalWithTaxAmount == null) {
+			subtotalWithTaxAmount = BigDecimal.ZERO;
+		}
+
+		if (shippingWithTaxAmount == null) {
+			shippingWithTaxAmount = BigDecimal.ZERO;
+		}
+
+		if (totalWithTaxAmount == null) {
+			totalWithTaxAmount = BigDecimal.ZERO;
+		}
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		commerceOrder.setBillingAddressId(billingAddressId);
+		commerceOrder.setShippingAddressId(shippingAddressId);
+		commerceOrder.setCommercePaymentMethodKey(commercePaymentMethodKey);
+		commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
+		commerceOrder.setShippingOptionName(shippingOptionName);
+		commerceOrder.setPurchaseOrderNumber(purchaseOrderNumber);
+		commerceOrder.setSubtotal(subtotal);
+		commerceOrder.setSubtotalWithTaxAmount(subtotalWithTaxAmount);
+
+		if (commerceContext != null) {
+			CommerceOrderPriceCalculation commerceOrderPriceCalculation =
+				_commerceOrderPriceCalculationFactory.
+					getCommerceOrderPriceCalculation();
+
+			CommerceOrderPrice commerceOrderPrice =
+				commerceOrderPriceCalculation.getCommerceOrderPrice(
+					commerceOrder, false, commerceContext);
+
+			CommerceDiscountValue shippingDiscountValue =
+				commerceOrderPrice.getShippingDiscountValue();
+
+			if (shippingDiscountValue != null) {
+				CommerceMoney shippingDiscountAmount =
+					shippingDiscountValue.getDiscountAmount();
+
+				shippingAmount = shippingAmount.subtract(
+					shippingDiscountAmount.getPrice());
+			}
+
+			CommerceDiscountValue shippingDiscountValueWithTaxAmount =
+				commerceOrderPrice.getShippingDiscountValueWithTaxAmount();
+
+			if (shippingDiscountValueWithTaxAmount != null) {
+				CommerceMoney shippingDiscountWithTaxAmount =
+					shippingDiscountValueWithTaxAmount.getDiscountAmount();
+
+				shippingWithTaxAmount = shippingWithTaxAmount.subtract(
+					shippingDiscountWithTaxAmount.getPrice());
+			}
+		}
+
+		commerceOrder.setShippingAmount(shippingAmount);
+		commerceOrder.setTotal(total);
+		commerceOrder.setShippingWithTaxAmount(shippingWithTaxAmount);
+		commerceOrder.setTotalWithTaxAmount(totalWithTaxAmount);
+		commerceOrder.setAdvanceStatus(advanceStatus);
+		commerceOrder.setExternalReferenceCode(externalReferenceCode);
+
+		return commerceOrderPersistence.update(commerceOrder);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1498,6 +1626,65 @@ public class CommerceOrderLocalServiceImpl
 			long shippingAddressId, String commercePaymentMethodKey,
 			long commerceShippingMethodId, String shippingOptionName,
 			String purchaseOrderNumber, BigDecimal subtotal,
+			BigDecimal shippingAmount, BigDecimal total,
+			BigDecimal subtotalWithTaxAmount, BigDecimal shippingWithTaxAmount,
+			BigDecimal totalWithTaxAmount, int paymentStatus, int orderStatus,
+			String advanceStatus, String externalReferenceCode,
+			CommerceContext commerceContext, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
+
+		// Update
+
+		CommerceOrder commerceOrder = null;
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			commerceOrder = commerceOrderPersistence.fetchByC_ERC(
+				serviceContext.getCompanyId(), externalReferenceCode);
+		}
+
+		if (commerceOrder != null) {
+			commerceOrderLocalService.updateCommerceOrder(
+				commerceOrder.getCommerceOrderId(), billingAddressId,
+				shippingAddressId, commercePaymentMethodKey,
+				commerceShippingMethodId, shippingOptionName,
+				purchaseOrderNumber, subtotal, shippingAmount, total,
+				subtotalWithTaxAmount, shippingWithTaxAmount,
+				totalWithTaxAmount, advanceStatus, externalReferenceCode,
+				commerceContext);
+
+			commerceOrderLocalService.updatePaymentStatus(
+				userId, commerceOrder.getCommerceOrderId(), paymentStatus);
+
+			return commerceOrderLocalService.updateOrderStatus(
+				commerceOrder.getCommerceOrderId(), paymentStatus);
+		}
+
+		// Add
+
+		commerceOrder = commerceOrderLocalService.addCommerceOrder(
+			userId, groupId, commerceAccountId, commerceCurrencyId,
+			billingAddressId, shippingAddressId, commercePaymentMethodKey,
+			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,
+			subtotal, shippingAmount, total, subtotalWithTaxAmount,
+			shippingWithTaxAmount, totalWithTaxAmount, paymentStatus,
+			orderStatus, serviceContext);
+
+		commerceOrder.setExternalReferenceCode(externalReferenceCode);
+
+		return commerceOrderPersistence.update(commerceOrder);
+	}
+
+	@Override
+	public CommerceOrder upsertCommerceOrder(
+			long userId, long groupId, long commerceAccountId,
+			long commerceCurrencyId, long billingAddressId,
+			long shippingAddressId, String commercePaymentMethodKey,
+			long commerceShippingMethodId, String shippingOptionName,
+			String purchaseOrderNumber, BigDecimal subtotal,
 			BigDecimal shippingAmount, BigDecimal total, int paymentStatus,
 			int orderStatus, String advanceStatus, String externalReferenceCode,
 			CommerceContext commerceContext, ServiceContext serviceContext)
@@ -1737,6 +1924,34 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrder, commerceAddress.getCommerceAddressId());
 
 		return commerceOrderPersistence.update(commerceOrder);
+	}
+
+	protected void validateAccountOrdersLimit(
+			long channelGroupId, long commerceAccountId)
+		throws PortalException {
+
+		Group group = groupLocalService.getGroup(channelGroupId);
+
+		int pendingCommerceOrdersCount =
+			(int)commerceOrderLocalService.getCommerceOrdersCount(
+				group.getCompanyId(), channelGroupId,
+				new long[] {commerceAccountId}, StringPool.BLANK,
+				new int[] {CommerceOrderConstants.ORDER_STATUS_OPEN}, false);
+
+		CommerceOrderFieldsConfiguration commerceOrderFieldsConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderFieldsConfiguration.class,
+				new GroupServiceSettingsLocator(
+					channelGroupId,
+					CommerceConstants.ORDER_FIELDS_SERVICE_NAME));
+
+		if ((commerceOrderFieldsConfiguration.accountCartMaxAllowed() > 0) &&
+			(pendingCommerceOrdersCount >=
+				commerceOrderFieldsConfiguration.accountCartMaxAllowed())) {
+
+			throw new CommerceOrderAccountLimitException(
+				"The account carts limit was reached");
+		}
 	}
 
 	protected void validateCheckout(CommerceOrder commerceOrder)
@@ -1984,6 +2199,10 @@ public class CommerceOrderLocalServiceImpl
 	@ServiceReference(type = CommerceDiscountLocalService.class)
 	private CommerceDiscountLocalService _commerceDiscountLocalService;
 
+	@ServiceReference(type = CommerceDiscountUsageEntryLocalService.class)
+	private CommerceDiscountUsageEntryLocalService
+		_commerceDiscountUsageEntryLocalService;
+
 	@ServiceReference(type = CommerceOrderConfiguration.class)
 	private CommerceOrderConfiguration _commerceOrderConfiguration;
 
@@ -1994,8 +2213,14 @@ public class CommerceOrderLocalServiceImpl
 	@ServiceReference(type = CommerceShippingHelper.class)
 	private CommerceShippingHelper _commerceShippingHelper;
 
+	@ServiceReference(type = ConfigurationProvider.class)
+	private ConfigurationProvider _configurationProvider;
+
 	@ServiceReference(type = JsonHelper.class)
 	private JsonHelper _jsonHelper;
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 	@ServiceReference(type = WorkflowTaskManager.class)
 	private WorkflowTaskManager _workflowTaskManager;

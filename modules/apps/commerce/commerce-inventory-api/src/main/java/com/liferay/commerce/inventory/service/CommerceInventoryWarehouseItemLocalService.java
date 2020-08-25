@@ -66,6 +66,10 @@ public interface CommerceInventoryWarehouseItemLocalService
 	/**
 	 * Adds the commerce inventory warehouse item to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceInventoryWarehouseItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceInventoryWarehouseItem the commerce inventory warehouse item
 	 * @return the commerce inventory warehouse item that was added
 	 */
@@ -98,6 +102,10 @@ public interface CommerceInventoryWarehouseItemLocalService
 	/**
 	 * Deletes the commerce inventory warehouse item from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceInventoryWarehouseItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceInventoryWarehouseItem the commerce inventory warehouse item
 	 * @return the commerce inventory warehouse item that was removed
 	 */
@@ -107,6 +115,10 @@ public interface CommerceInventoryWarehouseItemLocalService
 
 	/**
 	 * Deletes the commerce inventory warehouse item with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceInventoryWarehouseItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceInventoryWarehouseItemId the primary key of the commerce inventory warehouse item
 	 * @return the commerce inventory warehouse item that was removed
@@ -349,6 +361,10 @@ public interface CommerceInventoryWarehouseItemLocalService
 
 	/**
 	 * Updates the commerce inventory warehouse item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceInventoryWarehouseItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceInventoryWarehouseItem the commerce inventory warehouse item
 	 * @return the commerce inventory warehouse item that was updated

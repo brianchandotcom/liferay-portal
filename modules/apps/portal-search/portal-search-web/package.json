@@ -5,5 +5,5 @@
 		"format": "liferay-npm-scripts fix",
 		"test_DISABLED": "karma start"
 	},
-	"version": "3.0.77"
+	"version": "3.0.79"
 }

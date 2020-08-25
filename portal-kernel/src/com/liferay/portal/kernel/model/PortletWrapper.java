@@ -3845,16 +3845,16 @@ public class PortletWrapper implements ModelWrapper<Portlet>, Portlet {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof PortletWrapper)) {
+		if (!(object instanceof PortletWrapper)) {
 			return false;
 		}
 
-		PortletWrapper portletWrapper = (PortletWrapper)obj;
+		PortletWrapper portletWrapper = (PortletWrapper)object;
 
 		if (Objects.equals(_portlet, portletWrapper._portlet)) {
 			return true;

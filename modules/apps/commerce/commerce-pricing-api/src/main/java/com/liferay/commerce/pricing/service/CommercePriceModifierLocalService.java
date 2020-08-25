@@ -72,6 +72,10 @@ public interface CommercePriceModifierLocalService
 	/**
 	 * Adds the commerce price modifier to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceModifierLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePriceModifier the commerce price modifier
 	 * @return the commerce price modifier that was added
 	 */
@@ -101,6 +105,17 @@ public interface CommercePriceModifierLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommercePriceModifier addCommercePriceModifier(
+			long groupId, String title, String target, long commercePriceListId,
+			String modifierType, BigDecimal modifierAmount, double priority,
+			boolean active, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, String externalReferenceCode,
+			boolean neverExpire, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Creates a new commerce price modifier with the primary key. Does not add the commerce price modifier to the database.
 	 *
@@ -114,6 +129,10 @@ public interface CommercePriceModifierLocalService
 	/**
 	 * Deletes the commerce price modifier from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceModifierLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePriceModifier the commerce price modifier
 	 * @return the commerce price modifier that was removed
 	 * @throws PortalException
@@ -126,6 +145,10 @@ public interface CommercePriceModifierLocalService
 
 	/**
 	 * Deletes the commerce price modifier with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceModifierLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commercePriceModifierId the primary key of the commerce price modifier
 	 * @return the commerce price modifier that was removed
@@ -295,6 +318,11 @@ public interface CommercePriceModifierLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceModifier> getCommercePriceModifiers(
+		long commercePriceListId, int start, int end,
+		OrderByComparator<CommercePriceModifier> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommercePriceModifier> getCommercePriceModifiers(
 		long companyId, String target);
 
 	/**
@@ -334,6 +362,9 @@ public interface CommercePriceModifierLocalService
 	public int getCommercePriceModifiersCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommercePriceModifiersCount(long commercePriceListId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
@@ -361,6 +392,10 @@ public interface CommercePriceModifierLocalService
 
 	/**
 	 * Updates the commerce price modifier in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceModifierLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commercePriceModifier the commerce price modifier
 	 * @return the commerce price modifier that was updated

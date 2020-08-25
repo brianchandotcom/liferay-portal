@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Headless Commerce Admin Channel API
+Bundle-SymbolicName: com.liferay.headless.commerce.admin.channel.api
+Bundle-Version: 2.0.3
+Export-Package:\
+	com.liferay.headless.commerce.admin.channel.dto.v1_0,\
+	com.liferay.headless.commerce.admin.channel.resource.v1_0
+Import-Package:\
+	com.liferay.portal.vulcan.accept.language;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.graphql.annotation;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.pagination;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.util;version="[2.3.0,3.0.0)",\
+	\
+	*

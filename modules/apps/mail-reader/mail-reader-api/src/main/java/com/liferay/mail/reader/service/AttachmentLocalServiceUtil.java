@@ -41,6 +41,10 @@ public class AttachmentLocalServiceUtil {
 	/**
 	 * Adds the attachment to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AttachmentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param attachment the attachment
 	 * @return the attachment that was added
 	 */
@@ -74,6 +78,10 @@ public class AttachmentLocalServiceUtil {
 	/**
 	 * Deletes the attachment from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AttachmentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param attachment the attachment
 	 * @return the attachment that was removed
 	 */
@@ -85,6 +93,10 @@ public class AttachmentLocalServiceUtil {
 
 	/**
 	 * Deletes the attachment with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AttachmentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param attachmentId the primary key of the attachment
 	 * @return the attachment that was removed
@@ -297,6 +309,10 @@ public class AttachmentLocalServiceUtil {
 
 	/**
 	 * Updates the attachment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AttachmentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param attachment the attachment
 	 * @return the attachment that was updated

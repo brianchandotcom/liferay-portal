@@ -444,17 +444,17 @@ public class CommerceAccountUserRelWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceAccountUserRelWrapper)) {
+		if (!(object instanceof CommerceAccountUserRelWrapper)) {
 			return false;
 		}
 
 		CommerceAccountUserRelWrapper commerceAccountUserRelWrapper =
-			(CommerceAccountUserRelWrapper)obj;
+			(CommerceAccountUserRelWrapper)object;
 
 		if (Objects.equals(
 				_commerceAccountUserRel,

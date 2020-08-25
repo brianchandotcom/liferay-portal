@@ -11,6 +11,7 @@
 *.iws
 *.swp
 *~
+.DS_Store
 .ant-targets-build.xml
 .ant_targets
 .eslintrc
@@ -47,6 +48,7 @@
 /modules/.releng/dxp/apps/lcs/*
 /modules/dxp/apps/lcs/*
 /modules/node_modules_cache
+/modules/private/node_modules_cache
 /nbproject/private
 /out
 /portal-client/*.ipr

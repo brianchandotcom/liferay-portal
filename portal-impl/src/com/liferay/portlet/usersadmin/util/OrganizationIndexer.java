@@ -232,6 +232,7 @@ public class OrganizationIndexer extends BaseIndexer<Organization> {
 			Field.ORGANIZATION_ID, organization.getOrganizationId());
 		document.addKeyword(Field.TREE_PATH, organization.buildTreePath());
 		document.addKeyword(Field.TYPE, organization.getType());
+		document.addTextSortable(Field.TYPE, organization.getType());
 		document.addTextSortable(
 			"nameTreePath", buildNameTreePath(organization));
 		document.addKeyword(
@@ -250,7 +251,8 @@ public class OrganizationIndexer extends BaseIndexer<Organization> {
 			return "name";
 		}
 		else if (orderByCol.equals("type")) {
-			return "type";
+			return Field.getSortableFieldName(
+				StringBundler.concat("type", StringPool.UNDERLINE, "String"));
 		}
 
 		return orderByCol;

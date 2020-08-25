@@ -17,8 +17,10 @@ package com.liferay.portal.vulcan.yaml.openapi;
 import java.util.Map;
 
 /**
- * @author Peter Shin
+ * @author     Peter Shin
+ * @deprecated As of Athanasius (7.3.x)
  */
+@Deprecated
 public class OpenAPIYAML {
 
 	public Components getComponents() {

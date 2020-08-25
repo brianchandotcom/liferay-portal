@@ -1339,16 +1339,16 @@ public class JournalFeedModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof JournalFeed)) {
+		if (!(object instanceof JournalFeed)) {
 			return false;
 		}
 
-		JournalFeed journalFeed = (JournalFeed)obj;
+		JournalFeed journalFeed = (JournalFeed)object;
 
 		long primaryKey = journalFeed.getPrimaryKey();
 

@@ -383,17 +383,17 @@ public class SyncDLFileVersionDiffWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SyncDLFileVersionDiffWrapper)) {
+		if (!(object instanceof SyncDLFileVersionDiffWrapper)) {
 			return false;
 		}
 
 		SyncDLFileVersionDiffWrapper syncDLFileVersionDiffWrapper =
-			(SyncDLFileVersionDiffWrapper)obj;
+			(SyncDLFileVersionDiffWrapper)object;
 
 		if (Objects.equals(
 				_syncDLFileVersionDiff,

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Account Service
 Bundle-SymbolicName: com.liferay.commerce.account.service
-Bundle-Version: 1.0.41
+Bundle-Version: 1.0.44
 Import-Package:\
 	com.liferay.counter.kernel.service;version="[1.0.0,3.0.0)",\
 	com.liferay.expando.kernel.model;version="[1.1.0,3.0.0)",\

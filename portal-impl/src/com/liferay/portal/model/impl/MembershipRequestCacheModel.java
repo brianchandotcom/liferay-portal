@@ -37,17 +37,17 @@ public class MembershipRequestCacheModel
 	implements CacheModel<MembershipRequest>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MembershipRequestCacheModel)) {
+		if (!(object instanceof MembershipRequestCacheModel)) {
 			return false;
 		}
 
 		MembershipRequestCacheModel membershipRequestCacheModel =
-			(MembershipRequestCacheModel)obj;
+			(MembershipRequestCacheModel)object;
 
 		if ((membershipRequestId ==
 				membershipRequestCacheModel.membershipRequestId) &&

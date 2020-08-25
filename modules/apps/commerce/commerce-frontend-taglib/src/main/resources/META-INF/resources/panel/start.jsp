@@ -122,5 +122,5 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 		</h4>
 	</c:if>
 
-	<div class='collapse<%= collapsed ? StringPool.BLANK : StringPool.SPACE + "show" %>' id="<%= randomNamespace %>collapse">
+	<div class="collapse<%= collapsed ? StringPool.BLANK : StringPool.SPACE + "show" %>" id="<%= randomNamespace %>collapse">
 		<div class="<%= bodyCssClasses %>">

@@ -62,6 +62,10 @@ public interface SkuResource {
 
 	public Sku postProductIdSku(Long id, Sku sku) throws Exception;
 
+	public Response postProductIdSkuBatch(
+			Long id, String callbackURL, Object object)
+		throws Exception;
+
 	public Page<Sku> getSkusPage(
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;

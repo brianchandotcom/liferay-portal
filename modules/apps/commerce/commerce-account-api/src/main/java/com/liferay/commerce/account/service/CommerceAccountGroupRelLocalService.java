@@ -65,6 +65,10 @@ public interface CommerceAccountGroupRelLocalService
 	/**
 	 * Adds the commerce account group rel to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAccountGroupRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceAccountGroupRel the commerce account group rel
 	 * @return the commerce account group rel that was added
 	 */
@@ -90,6 +94,10 @@ public interface CommerceAccountGroupRelLocalService
 	/**
 	 * Deletes the commerce account group rel from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAccountGroupRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceAccountGroupRel the commerce account group rel
 	 * @return the commerce account group rel that was removed
 	 */
@@ -99,6 +107,10 @@ public interface CommerceAccountGroupRelLocalService
 
 	/**
 	 * Deletes the commerce account group rel with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAccountGroupRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceAccountGroupRelId the primary key of the commerce account group rel
 	 * @return the commerce account group rel that was removed
@@ -264,6 +276,10 @@ public interface CommerceAccountGroupRelLocalService
 
 	/**
 	 * Updates the commerce account group rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAccountGroupRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceAccountGroupRel the commerce account group rel
 	 * @return the commerce account group rel that was updated

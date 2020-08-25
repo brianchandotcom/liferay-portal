@@ -453,6 +453,8 @@ public class ThemeUtil {
 				httpServletResponse, writer);
 		}
 
+		template.prepareTaglib(httpServletRequest, httpServletResponse);
+
 		template.put(TemplateConstants.WRITER, writer);
 
 		// Merge templates

@@ -20,18 +20,19 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
-import com.liferay.commerce.product.model.CPFriendlyURLEntry;
-import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -215,21 +216,23 @@ public class AssetCategoriesImporter {
 
 		// Commerce product friendly URL entry
 
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			_portal.getDefaultCompanyId());
+
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
 
-		List<CPFriendlyURLEntry> cpFriendlyURLEntries =
-			_cpFriendlyURLEntryLocalService.getCPFriendlyURLEntries(
-				GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
+		List<FriendlyURLEntry> friendlyURLEntries =
+			_friendlyURLEntryLocalService.getFriendlyURLEntries(
+				companyGroup.getGroupId(), classNameId,
 				assetCategory.getCategoryId());
 
-		if (cpFriendlyURLEntries.isEmpty()) {
-			Map<Locale, String> urlTitleMap = _getUniqueUrlTitles(
+		if (friendlyURLEntries.isEmpty()) {
+			Map<String, String> urlTitleMap = _getUniqueUrlTitles(
 				assetCategory);
 
-			_cpFriendlyURLEntryLocalService.addCPFriendlyURLEntries(
-				GroupConstants.DEFAULT_LIVE_GROUP_ID,
-				serviceContext.getCompanyId(), AssetCategory.class,
-				assetCategory.getCategoryId(), urlTitleMap);
+			_friendlyURLEntryLocalService.addFriendlyURLEntry(
+				companyGroup.getGroupId(), classNameId,
+				assetCategory.getCategoryId(), urlTitleMap, serviceContext);
 		}
 
 		// Commerce product attachment file entry
@@ -279,24 +282,25 @@ public class AssetCategoriesImporter {
 		return assetVocabulary;
 	}
 
-	private Map<Locale, String> _getUniqueUrlTitles(
-		AssetCategory assetCategory) {
+	private Map<String, String> _getUniqueUrlTitles(AssetCategory assetCategory)
+		throws Exception {
 
-		Map<Locale, String> urlTitleMap = new HashMap<>();
+		Map<String, String> urlTitleMap = new HashMap<>();
 
 		Map<Locale, String> titleMap = assetCategory.getTitleMap();
 
-		long classNameId = _portal.getClassNameId(AssetCategory.class);
-
 		for (Map.Entry<Locale, String> titleEntry : titleMap.entrySet()) {
-			String languageId = LocaleUtil.toLanguageId(titleEntry.getKey());
+			Group companyGroup = _groupLocalService.getCompanyGroup(
+				_portal.getDefaultCompanyId());
 
-			String urlTitle = _cpFriendlyURLEntryLocalService.buildUrlTitle(
-				GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
-				assetCategory.getCategoryId(), languageId,
-				titleEntry.getValue());
+			long classNameId = _portal.getClassNameId(AssetCategory.class);
 
-			urlTitleMap.put(titleEntry.getKey(), urlTitle);
+			String urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
+				companyGroup.getGroupId(), classNameId,
+				assetCategory.getCategoryId(), titleEntry.getValue());
+
+			urlTitleMap.put(
+				LocaleUtil.toLanguageId(titleEntry.getKey()), urlTitle);
 		}
 
 		return urlTitleMap;
@@ -312,7 +316,10 @@ public class AssetCategoriesImporter {
 	private CPAttachmentFileEntryCreator _cpAttachmentFileEntryCreator;
 
 	@Reference
-	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

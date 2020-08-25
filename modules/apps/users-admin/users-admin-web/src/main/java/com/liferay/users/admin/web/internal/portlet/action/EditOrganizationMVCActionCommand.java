@@ -125,7 +125,9 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 					organization.getOrganizationId());
 			}
 
-			sendRedirect(actionRequest, actionResponse, redirect);
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+
+			sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			String mvcPath = "/edit_organization.jsp";

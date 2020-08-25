@@ -105,7 +105,7 @@ public abstract class BasePortletLayoutFinder implements PortletLayoutFinder {
 				(long)plidAndPortletId[0], (String)plidAndPortletId[1]);
 		}
 
-		StringBundler sb = new StringBundler(portletIds.length * 2 + 5);
+		StringBundler sb = new StringBundler((portletIds.length * 2) + 5);
 
 		sb.append("{groupId=");
 		sb.append(groupId);

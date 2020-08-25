@@ -1,14 +1,15 @@
-<#assign count = 0 />
+<#assign count = 0
+/>
 
 <#if entries?has_content>
 	<div class="row">
-		<#list entries as curDocument>
+		<#list entries as curCPCatalogEntry>
 			<#assign
-				image = cpSearchResultsDisplayContext.getProductDefaultImage(curDocument, themeDisplay)
+				image = curCPCatalogEntry.getDefaultImageFileUrl()
 
-				friendlyURL = cpSearchResultsDisplayContext.getProductFriendlyURL(curDocument)
+				friendlyURL = cpContentHelper.getFriendlyURL(curCPCatalogEntry, themeDisplay)
 
-				name = cpSearchResultsDisplayContext.getName(curDocument)
+				name = curCPCatalogEntry.getName()
 			/>
 
 			<div class="col-md-4">

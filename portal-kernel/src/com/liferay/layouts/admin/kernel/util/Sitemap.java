@@ -32,6 +32,8 @@ import java.util.Map;
 @ProviderType
 public interface Sitemap {
 
+	public static final int MAXIMUM_ENTRIES = 50000;
+
 	public void addURLElement(
 		Element element, String url, UnicodeProperties typeSettingsProperties,
 		Date modifiedDate, String canonicalURL,

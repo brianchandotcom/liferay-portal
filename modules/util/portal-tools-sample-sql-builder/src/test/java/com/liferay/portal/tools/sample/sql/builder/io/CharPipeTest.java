@@ -775,7 +775,9 @@ public class CharPipeTest {
 
 		int range = time / 2;
 
-		int waitTime = new Random().nextInt(range) + range;
+		Random random = new Random();
+
+		int waitTime = random.nextInt(range) + range;
 
 		Thread.sleep(waitTime);
 	}

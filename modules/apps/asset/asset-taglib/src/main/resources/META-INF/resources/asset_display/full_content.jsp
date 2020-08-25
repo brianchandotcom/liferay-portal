@@ -18,11 +18,9 @@
 
 <%
 AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.ASSET_RENDERER);
-
-boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 %>
 
-<c:if test="<%= showHeader %>">
+<c:if test='<%= ParamUtil.getBoolean(request, "showHeader") %>'>
 	<liferay-ui:header
 		title="<%= assetRenderer.getTitle(locale) %>"
 	/>

@@ -611,16 +611,16 @@ public class AuditEventWrapper implements AuditEvent, ModelWrapper<AuditEvent> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AuditEventWrapper)) {
+		if (!(object instanceof AuditEventWrapper)) {
 			return false;
 		}
 
-		AuditEventWrapper auditEventWrapper = (AuditEventWrapper)obj;
+		AuditEventWrapper auditEventWrapper = (AuditEventWrapper)object;
 
 		if (Objects.equals(_auditEvent, auditEventWrapper._auditEvent)) {
 			return true;

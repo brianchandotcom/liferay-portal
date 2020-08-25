@@ -630,16 +630,16 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AppWrapper)) {
+		if (!(object instanceof AppWrapper)) {
 			return false;
 		}
 
-		AppWrapper appWrapper = (AppWrapper)obj;
+		AppWrapper appWrapper = (AppWrapper)object;
 
 		if (Objects.equals(_app, appWrapper._app)) {
 			return true;

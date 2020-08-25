@@ -84,6 +84,10 @@ public abstract class CommerceNotificationAttachmentLocalServiceBaseImpl
 	/**
 	 * Adds the commerce notification attachment to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceNotificationAttachmentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceNotificationAttachment the commerce notification attachment
 	 * @return the commerce notification attachment that was added
 	 */
@@ -116,6 +120,10 @@ public abstract class CommerceNotificationAttachmentLocalServiceBaseImpl
 	/**
 	 * Deletes the commerce notification attachment with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceNotificationAttachmentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceNotificationAttachmentId the primary key of the commerce notification attachment
 	 * @return the commerce notification attachment that was removed
 	 * @throws PortalException if a commerce notification attachment with the primary key could not be found
@@ -132,6 +140,10 @@ public abstract class CommerceNotificationAttachmentLocalServiceBaseImpl
 
 	/**
 	 * Deletes the commerce notification attachment from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceNotificationAttachmentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceNotificationAttachment the commerce notification attachment
 	 * @return the commerce notification attachment that was removed
@@ -507,6 +519,10 @@ public abstract class CommerceNotificationAttachmentLocalServiceBaseImpl
 
 	/**
 	 * Updates the commerce notification attachment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceNotificationAttachmentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceNotificationAttachment the commerce notification attachment
 	 * @return the commerce notification attachment that was updated

@@ -128,12 +128,12 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_UNIT_PRICE",
-			value1 = "$${productUnitPrice}");
+			value1 = "$ ${productUnitPrice}");
 
 		if (isSet(productDiscount)) {
 			AssertTextEquals(
 				locator1 = "CommerceAccelerators#ORDER_DETAILS_DISCOUNT",
-				value1 = "$${productDiscount}");
+				value1 = "$ ${productDiscount}");
 		}
 
 		AssertTextEquals(
@@ -142,7 +142,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CommerceAccelerators#ORDER_DETAILS_PRICE",
-			value1 = "$${productPrice}");
+			value1 = "$ ${productPrice}");
 	}
 
 	macro viewAllAccountsFromAccountSelector {

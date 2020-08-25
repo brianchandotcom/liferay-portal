@@ -195,7 +195,7 @@ public class UpdatePasswordAction extends Action {
 
 		Map<String, String[]> parameterMap = request.getParameterMap();
 
-		StringBundler sb = new StringBundler(7 + parameterMap.size() * 5);
+		StringBundler sb = new StringBundler(7 + (parameterMap.size() * 5));
 
 		sb.append("<html><body onload=\"document.fm.submit();\">");
 		sb.append("<form action=\"");

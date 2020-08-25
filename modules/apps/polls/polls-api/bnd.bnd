@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Polls API
 Bundle-SymbolicName: com.liferay.polls.api
-Bundle-Version: 5.0.15
+Bundle-Version: 5.0.17
 Export-Package:\
 	com.liferay.polls.constants,\
 	com.liferay.polls.exception,\

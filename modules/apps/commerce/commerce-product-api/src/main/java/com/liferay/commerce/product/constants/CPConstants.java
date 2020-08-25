@@ -30,9 +30,20 @@ public class CPConstants {
 
 	public static final String MONTHLY_SUBSCRIPTION_TYPE = "monthly";
 
+	public static final String[] PRODUCT_OPTION_MULTIPLE_VALUES_FIELD_TYPES = {
+		"select", "radio", "checkbox", "checkbox_multiple"
+	};
+
+	public static final String[] PRODUCT_OPTION_PRICE_CONTRIBUTOR_FIELD_TYPES =
+		{"select", "radio"};
+
 	public static final String PRODUCT_OPTION_PRICE_TYPE_DYNAMIC = "dynamic";
 
 	public static final String PRODUCT_OPTION_PRICE_TYPE_STATIC = "static";
+
+	public static final String[] PRODUCT_OPTION_SKU_CONTRIBUTOR_FIELD_TYPES = {
+		"select", "radio"
+	};
 
 	public static final String RESOURCE_NAME = "com.liferay.commerce.product";
 

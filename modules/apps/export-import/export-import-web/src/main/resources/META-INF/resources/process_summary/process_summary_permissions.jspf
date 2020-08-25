@@ -18,11 +18,9 @@
 Group currentScopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
 
 boolean global = currentScopeGroup.isCompany();
-
-boolean permissions = MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PERMISSIONS);
 %>
 
-<c:if test="<%= permissions %>">
+<c:if test="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PERMISSIONS) %>">
 	<div class="process-summary-section">
 
 		<%

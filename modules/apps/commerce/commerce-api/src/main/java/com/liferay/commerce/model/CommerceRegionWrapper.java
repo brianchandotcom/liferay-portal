@@ -577,17 +577,17 @@ public class CommerceRegionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceRegionWrapper)) {
+		if (!(object instanceof CommerceRegionWrapper)) {
 			return false;
 		}
 
 		CommerceRegionWrapper commerceRegionWrapper =
-			(CommerceRegionWrapper)obj;
+			(CommerceRegionWrapper)object;
 
 		if (Objects.equals(
 				_commerceRegion, commerceRegionWrapper._commerceRegion)) {

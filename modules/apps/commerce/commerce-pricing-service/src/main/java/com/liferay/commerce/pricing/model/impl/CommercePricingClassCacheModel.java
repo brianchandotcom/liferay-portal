@@ -36,17 +36,17 @@ public class CommercePricingClassCacheModel
 	implements CacheModel<CommercePricingClass>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommercePricingClassCacheModel)) {
+		if (!(object instanceof CommercePricingClassCacheModel)) {
 			return false;
 		}
 
 		CommercePricingClassCacheModel commercePricingClassCacheModel =
-			(CommercePricingClassCacheModel)obj;
+			(CommercePricingClassCacheModel)object;
 
 		if (commercePricingClassId ==
 				commercePricingClassCacheModel.commercePricingClassId) {
@@ -64,7 +64,7 @@ public class CommercePricingClassCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -72,8 +72,6 @@ public class CommercePricingClassCacheModel
 		sb.append(externalReferenceCode);
 		sb.append(", commercePricingClassId=");
 		sb.append(commercePricingClassId);
-		sb.append(", groupId=");
-		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -117,7 +115,6 @@ public class CommercePricingClassCacheModel
 
 		commercePricingClassImpl.setCommercePricingClassId(
 			commercePricingClassId);
-		commercePricingClassImpl.setGroupId(groupId);
 		commercePricingClassImpl.setCompanyId(companyId);
 		commercePricingClassImpl.setUserId(userId);
 
@@ -176,8 +173,6 @@ public class CommercePricingClassCacheModel
 
 		commercePricingClassId = objectInput.readLong();
 
-		groupId = objectInput.readLong();
-
 		companyId = objectInput.readLong();
 
 		userId = objectInput.readLong();
@@ -206,8 +201,6 @@ public class CommercePricingClassCacheModel
 		}
 
 		objectOutput.writeLong(commercePricingClassId);
-
-		objectOutput.writeLong(groupId);
 
 		objectOutput.writeLong(companyId);
 
@@ -243,7 +236,6 @@ public class CommercePricingClassCacheModel
 	public String uuid;
 	public String externalReferenceCode;
 	public long commercePricingClassId;
-	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;

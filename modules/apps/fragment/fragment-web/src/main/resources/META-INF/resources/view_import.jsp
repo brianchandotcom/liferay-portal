@@ -39,8 +39,8 @@ long fragmentCollectionId = ParamUtil.getLong(request, "fragmentCollectionId");
 
 		<c:if test="<%= ListUtil.isNotEmpty(invalidFragmentEntriesNames) %>">
 			<clay:alert
-				closeable="true"
-				destroyOnHide="true"
+				closeable="<%= true %>"
+				destroyOnHide="<%= true %>"
 				message='<%= LanguageUtil.format(request, "the-following-fragments-have-validation-issues.-they-have-been-left-in-draft-status-x", "<strong>" + StringUtil.merge(invalidFragmentEntriesNames, StringPool.COMMA_AND_SPACE) + "</strong>", false) %>'
 				title='<%= LanguageUtil.get(request, "info") %>'
 			/>

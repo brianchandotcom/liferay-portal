@@ -1215,16 +1215,16 @@ public class CPMeasurementUnitModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPMeasurementUnit)) {
+		if (!(object instanceof CPMeasurementUnit)) {
 			return false;
 		}
 
-		CPMeasurementUnit cpMeasurementUnit = (CPMeasurementUnit)obj;
+		CPMeasurementUnit cpMeasurementUnit = (CPMeasurementUnit)object;
 
 		long primaryKey = cpMeasurementUnit.getPrimaryKey();
 

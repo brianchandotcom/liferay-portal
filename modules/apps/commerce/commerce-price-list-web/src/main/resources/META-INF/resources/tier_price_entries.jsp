@@ -59,7 +59,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 %>
 
-<c:if test="<%= commerceTierPriceEntryDisplayContext.hasManageCommercePriceListPermission() %>">
+<c:if test="<%= commerceTierPriceEntryDisplayContext.hasPermission(commercePriceListId,
+	ActionKeys.VIEW) %>">
 	<%@ include file="/breadcrumb.jspf" %>
 	<%@ include file="/price_entry_navbar.jspf" %>
 
@@ -89,14 +90,16 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 				<portlet:param name="commercePriceListId" value="<%= String.valueOf(commercePriceListId) %>" />
 			</liferay-portlet:renderURL>
 
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(request, "add-tier-price-entry") %>'
-					url="<%= addCommerceTierPriceEntryURL.toString() %>"
-				/>
-			</liferay-frontend:add-menu>
+			<c:if test="<%= commerceTierPriceEntryDisplayContext.hasPermission(commercePriceListId, ActionKeys.UPDATE) %>">
+				<liferay-frontend:add-menu
+					inline="<%= true %>"
+				>
+					<liferay-frontend:add-menu-item
+						title='<%= LanguageUtil.get(request, "add-tier-price-entry") %>'
+						url="<%= addCommerceTierPriceEntryURL.toString() %>"
+					/>
+				</liferay-frontend:add-menu>
+			</c:if>
 		</liferay-frontend:management-bar-buttons>
 
 		<liferay-frontend:management-bar-filters>
@@ -121,11 +124,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 				/>
 			</c:if>
 
-			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceTierPriceEntries();" %>'
-				icon="times"
-				label="delete"
-			/>
+			<c:if test="<%= commerceTierPriceEntryDisplayContext.hasPermission(commercePriceListId, ActionKeys.UPDATE) %>">
+				<liferay-frontend:management-bar-button
+					href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceTierPriceEntries();" %>'
+					icon="times"
+					label="delete"
+				/>
+			</c:if>
 		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 

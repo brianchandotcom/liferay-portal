@@ -123,6 +123,10 @@ public class CommerceProductOptionDataSetDataProvider
 					LanguageUtil.get(
 						locale,
 						cpDefinitionOptionRel.isRequired() ? "yes" : "no"),
+					LanguageUtil.get(
+						locale,
+						cpDefinitionOptionRel.isSkuContributor() ? "yes" :
+							"no"),
 					cpDefinitionOptionRel.
 						getCPDefinitionOptionValueRelsCount()));
 		}

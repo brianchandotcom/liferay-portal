@@ -12,14 +12,13 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import Icon from '@clayui/icon';
-import ClayPanel from '@clayui/panel';
-import classNames from 'classnames';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 
-import {renderFilter} from '../../utilities/filters';
 import getAppContext from './Context';
+import {Filter} from './filters/index';
 
 function FiltersDropdown() {
 	const [active, setActive] = useState(false);
@@ -28,6 +27,14 @@ function FiltersDropdown() {
 	const [visibleFilters, setVisibleFilter] = useState(
 		state.filters.filter(filter => !filter.invisible)
 	);
+	const [activeFilterId, setActiveFilterId] = useState(null);
+	const activeFilter = useMemo(() => {
+		return (
+			activeFilterId &&
+			visibleFilters.find(filter => filter.id === activeFilterId)
+		);
+	}, [visibleFilters, activeFilterId]);
+	const {actions} = getAppContext();
 
 	useEffect(() => {
 		const results = state.filters.filter(filter => {
@@ -59,7 +66,7 @@ function FiltersDropdown() {
 					type="button"
 				>
 					<span className="navbar-text-truncate">
-						{Liferay.Language.get('set-filters')}
+						{Liferay.Language.get('filter')}
 					</span>
 					{active ? (
 						<Icon className="ml-2" symbol="caret-top" />
@@ -69,36 +76,51 @@ function FiltersDropdown() {
 				</button>
 			}
 		>
-			<ClayDropDown.Search
-				onChange={e => setQuery(e.target.value)}
-				value={query}
-			/>
-			{visibleFilters.length ? (
-				<ClayDropDown.ItemList>
-					{visibleFilters.map(item => (
-						<ClayPanel
-							className={classNames(
-								`mb-0 filter-panel-head`,
-								item.value && 'active'
-							)}
-							collapsable
-							displayTitle={item.label}
-							key={item.id}
-							showCollapseIcon={true}
-						>
-							<ClayPanel.Body className="filter-body">
-								{renderFilter(
-									item,
-									item.value ? 'edit' : 'add'
-								)}
-							</ClayPanel.Body>
-						</ClayPanel>
-					))}
-				</ClayDropDown.ItemList>
+			{activeFilterId ? (
+				<>
+					<li className="dropdown-subheader">
+						<ClayButtonWithIcon
+							className="btn-filter-navigation"
+							displayType="unstyled"
+							onClick={() => setActiveFilterId(null)}
+							small
+							symbol="angle-left"
+						/>
+						{activeFilter.label}
+					</li>
+					<Filter {...{...activeFilter, actions}} />
+				</>
 			) : (
-				<div className="dropdown-section text-muted">
-					{Liferay.Language.get('no-filters-were-found')}
-				</div>
+				<>
+					<li className="dropdown-subheader">
+						{Liferay.Language.get('filters')}
+					</li>
+					<ClayDropDown.Search
+						onChange={e => setQuery(e.target.value)}
+						value={query}
+					/>
+					<ClayDropDown.Divider className="m-0" />
+					{visibleFilters.length ? (
+						<ClayDropDown.ItemList>
+							{visibleFilters.map(item => (
+								<ClayDropDown.Item
+									active={
+										item.value !== undefined &&
+										item.value !== null
+									}
+									key={item.id}
+									onClick={() => setActiveFilterId(item.id)}
+								>
+									{item.label}
+								</ClayDropDown.Item>
+							))}
+						</ClayDropDown.ItemList>
+					) : (
+						<div className="dropdown-section text-muted">
+							{Liferay.Language.get('no-filters-were-found')}
+						</div>
+					)}
+				</>
 			)}
 		</ClayDropDown>
 	) : null;

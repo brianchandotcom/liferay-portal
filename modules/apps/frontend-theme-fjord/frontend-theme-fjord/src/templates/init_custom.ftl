@@ -24,6 +24,8 @@
 </#if>
 
 <#if use_a_retina_logo>
-	<#assign company_logo_height = company_logo_height/2 />
-	<#assign company_logo_width = company_logo_width/2 />
+	<#assign
+		company_logo_height = company_logo_height/2
+		company_logo_width = company_logo_width/2
+	/>
 </#if>

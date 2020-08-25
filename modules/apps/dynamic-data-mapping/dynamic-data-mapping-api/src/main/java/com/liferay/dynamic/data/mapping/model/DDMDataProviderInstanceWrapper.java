@@ -809,17 +809,17 @@ public class DDMDataProviderInstanceWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMDataProviderInstanceWrapper)) {
+		if (!(object instanceof DDMDataProviderInstanceWrapper)) {
 			return false;
 		}
 
 		DDMDataProviderInstanceWrapper ddmDataProviderInstanceWrapper =
-			(DDMDataProviderInstanceWrapper)obj;
+			(DDMDataProviderInstanceWrapper)object;
 
 		if (Objects.equals(
 				_ddmDataProviderInstance,

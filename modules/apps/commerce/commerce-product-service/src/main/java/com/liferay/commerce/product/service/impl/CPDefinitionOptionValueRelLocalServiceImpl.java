@@ -75,6 +75,7 @@ import java.util.Objects;
 
 /**
  * @author Marco Leo
+ * @author Igor Beslic
  */
 public class CPDefinitionOptionValueRelLocalServiceImpl
 	extends CPDefinitionOptionValueRelLocalServiceBaseImpl {
@@ -144,6 +145,10 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		cpDefinitionOptionValueRel.setPriority(priority);
 		cpDefinitionOptionValueRel.setKey(key);
 		cpDefinitionOptionValueRel.setExpandoBridgeAttributes(serviceContext);
+
+		if (cpDefinitionOptionRel.isPriceTypeStatic()) {
+			cpDefinitionOptionValueRel.setPrice(BigDecimal.ZERO);
+		}
 
 		_validateLinkedCPDefinitionOptionValueRel(cpDefinitionOptionValueRel);
 		_validatePriceableCPDefinitionOptionValue(
@@ -246,6 +251,23 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		return cpDefinitionOptionValueRelPersistence.fetchByC_K(
 			cpDefinitionOptionRelId, key);
+	}
+
+	@Override
+	public CPDefinitionOptionValueRel
+		fetchPreselectedCPDefinitionOptionValueRel(
+			long cpDefinitionOptionRelId) {
+
+		List<CPDefinitionOptionValueRel>
+			preselectedCPDefinitionOptionValueRels =
+				cpDefinitionOptionValueRelPersistence.findByCDORI_P(
+					cpDefinitionOptionRelId, true);
+
+		if (preselectedCPDefinitionOptionValueRels.isEmpty()) {
+			return null;
+		}
+
+		return preselectedCPDefinitionOptionValueRels.get(0);
 	}
 
 	@Override
@@ -393,6 +415,19 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 	}
 
 	@Override
+	public boolean hasPreselectedCPDefinitionOptionValueRel(
+		long cpDefinitionOptionRelId) {
+
+		if (cpDefinitionOptionValueRelPersistence.countByCDORI_P(
+				cpDefinitionOptionRelId, true) == 0) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public void importCPDefinitionOptionRels(
 			long cpDefinitionOptionRelId, ServiceContext serviceContext)
 		throws PortalException {
@@ -490,12 +525,43 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		return searchCPOptions(searchContext);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
+	/**
+	 * @param      cpDefinitionOptionValueRelId
+	 * @param      nameMap
+	 * @param      priority
+	 * @param      key
+	 * @param      cpInstanceId
+	 * @param      quantity
+	 * @param      price
+	 * @param      serviceContext
+	 * @return
+	 *
+	 * @throws     PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link
+	 *             #updateCPDefinitionOptionValueRel(long, Map, double, String,
+	 *             long, int, boolean, BigDecimal, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
 			long cpDefinitionOptionValueRelId, Map<Locale, String> nameMap,
 			double priority, String key, long cpInstanceId, int quantity,
 			BigDecimal price, ServiceContext serviceContext)
+		throws PortalException {
+
+		return cpDefinitionOptionValueRelLocalService.
+			updateCPDefinitionOptionValueRel(
+				cpDefinitionOptionValueRelId, nameMap, priority, key,
+				cpInstanceId, quantity, false, price, serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
+			long cpDefinitionOptionValueRelId, Map<Locale, String> nameMap,
+			double priority, String key, long cpInstanceId, int quantity,
+			boolean preselected, BigDecimal price,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition option value rel
@@ -553,6 +619,14 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			cpDefinitionOptionValueRelPersistence.update(
 				cpDefinitionOptionValueRel);
 
+		if (preselected) {
+			cpDefinitionOptionValueRel =
+				updateCPDefinitionOptionValueRelPreselected(
+					cpDefinitionOptionValueRel.
+						getCPDefinitionOptionValueRelId(),
+					preselected);
+		}
+
 		// Commerce product definition
 
 		reindexCPDefinition(cpDefinitionOptionRel);
@@ -560,6 +634,20 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		return cpDefinitionOptionValueRel;
 	}
 
+	/**
+	 * @param      cpDefinitionOptionValueRelId
+	 * @param      nameMap
+	 * @param      priority
+	 * @param      key
+	 * @param      serviceContext
+	 * @return
+	 *
+	 * @throws     PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link
+	 *             #updateCPDefinitionOptionValueRel(long, Map, double, String,
+	 *             long, int, boolean, BigDecimal, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
 			long cpDefinitionOptionValueRelId, Map<Locale, String> nameMap,
@@ -569,7 +657,40 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		return cpDefinitionOptionValueRelLocalService.
 			updateCPDefinitionOptionValueRel(
 				cpDefinitionOptionValueRelId, nameMap, priority, key, 0, 0,
-				BigDecimal.ZERO, serviceContext);
+				false, null, serviceContext);
+	}
+
+	@Override
+	public CPDefinitionOptionValueRel
+		updateCPDefinitionOptionValueRelPreselected(
+			long cpDefinitionOptionValueRelId, boolean preselected) {
+
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+			cpDefinitionOptionValueRelPersistence.fetchByPrimaryKey(
+				cpDefinitionOptionValueRelId);
+
+		if (!preselected) {
+			cpDefinitionOptionValueRel.setPreselected(false);
+
+			return cpDefinitionOptionValueRelPersistence.update(
+				cpDefinitionOptionValueRel);
+		}
+
+		CPDefinitionOptionValueRel curPreselectedCPDefinitionOptionValueRel =
+			fetchPreselectedCPDefinitionOptionValueRel(
+				cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
+
+		if (curPreselectedCPDefinitionOptionValueRel != null) {
+			curPreselectedCPDefinitionOptionValueRel.setPreselected(false);
+
+			cpDefinitionOptionValueRelPersistence.update(
+				curPreselectedCPDefinitionOptionValueRel);
+		}
+
+		cpDefinitionOptionValueRel.setPreselected(true);
+
+		return cpDefinitionOptionValueRelPersistence.update(
+			cpDefinitionOptionValueRel);
 	}
 
 	protected SearchContext buildSearchContext(

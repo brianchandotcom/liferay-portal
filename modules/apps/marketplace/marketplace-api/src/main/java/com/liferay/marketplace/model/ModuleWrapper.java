@@ -378,16 +378,16 @@ public class ModuleWrapper implements ModelWrapper<Module>, Module {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ModuleWrapper)) {
+		if (!(object instanceof ModuleWrapper)) {
 			return false;
 		}
 
-		ModuleWrapper moduleWrapper = (ModuleWrapper)obj;
+		ModuleWrapper moduleWrapper = (ModuleWrapper)object;
 
 		if (Objects.equals(_module, moduleWrapper._module)) {
 			return true;

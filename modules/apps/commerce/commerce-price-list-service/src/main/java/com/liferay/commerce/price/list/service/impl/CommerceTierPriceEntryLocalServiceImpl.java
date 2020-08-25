@@ -498,8 +498,8 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		Calendar now = new GregorianCalendar();
 
 		return updateCommerceTierPriceEntry(
-			commerceTierPriceEntryId, price, null, minQuantity, true, true,
-			null, null, null, null, now.get(Calendar.MONTH),
+			commerceTierPriceEntryId, price, promoPrice, minQuantity, true,
+			true, null, null, null, null, now.get(Calendar.MONTH),
 			now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.YEAR),
 			now.get(Calendar.HOUR), now.get(Calendar.MINUTE), 0, 0, 0, 0, 0,
 			true, serviceContext);

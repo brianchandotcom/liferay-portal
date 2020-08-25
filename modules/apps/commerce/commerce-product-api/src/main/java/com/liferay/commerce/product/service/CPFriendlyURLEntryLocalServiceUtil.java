@@ -28,8 +28,11 @@ import org.osgi.util.tracker.ServiceTracker;
  *
  * @author Marco Leo
  * @see CPFriendlyURLEntryLocalService
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ com.liferay.friendly.url.service.impl.FriendlyURLEntryLocalServiceImpl}
  * @generated
  */
+@Deprecated
 public class CPFriendlyURLEntryLocalServiceUtil {
 
 	/*

@@ -32,7 +32,7 @@ public class CMISFullTextConjunction extends CMISJunction {
 
 		List<CMISCriterion> cmisCriterions = list();
 
-		StringBundler sb = new StringBundler(cmisCriterions.size() * 2 + 1);
+		StringBundler sb = new StringBundler((cmisCriterions.size() * 2) + 1);
 
 		if (cmisCriterions.size() > 1) {
 			sb.append(StringPool.OPEN_PARENTHESIS);

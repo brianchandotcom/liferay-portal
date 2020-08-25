@@ -53,6 +53,7 @@ public class CPDefinitionOptionValueRelSoap implements Serializable {
 		soapModel.setPriority(model.getPriority());
 		soapModel.setKey(model.getKey());
 		soapModel.setQuantity(model.getQuantity());
+		soapModel.setPreselected(model.isPreselected());
 		soapModel.setPrice(model.getPrice());
 
 		return soapModel;
@@ -239,6 +240,18 @@ public class CPDefinitionOptionValueRelSoap implements Serializable {
 		_quantity = quantity;
 	}
 
+	public boolean getPreselected() {
+		return _preselected;
+	}
+
+	public boolean isPreselected() {
+		return _preselected;
+	}
+
+	public void setPreselected(boolean preselected) {
+		_preselected = preselected;
+	}
+
 	public BigDecimal getPrice() {
 		return _price;
 	}
@@ -262,6 +275,7 @@ public class CPDefinitionOptionValueRelSoap implements Serializable {
 	private double _priority;
 	private String _key;
 	private int _quantity;
+	private boolean _preselected;
 	private BigDecimal _price;
 
 }

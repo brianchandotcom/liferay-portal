@@ -13,63 +13,163 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayCheckbox} from '@clayui/form';
+import ClayDropDown from '@clayui/drop-down';
+import {ClayCheckbox, ClayToggle} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
-import getAppContext from '../Context';
+import {isValuesArrayChanged} from '../../../utilities/filters';
 
+export const formatValue = (value, items, exclude) => {
+	const formattedValue = value
+		? value
+				.map(v => {
+					return items.reduce(
+						(found, item) =>
+							found || (item.value === v ? item.label : null),
+						null
+					);
+				})
+				.join(', ')
+		: '';
+
+	return (
+		(exclude ? `(${Liferay.Language.get('exclude')}) ` : '') +
+		formattedValue
+	);
+};
+
+function getOdataString(values, key, exclude = false) {
+	if (!values || !values.length) return null;
+	return `${key}/any(x:${values
+		.map(
+			v =>
+				`(x ${exclude ? 'ne' : 'eq'} ${
+					typeof v === 'string' ? `'${v}'` : v
+				})`
+		)
+		.join(exclude ? ' and ' : ' or ')})`;
+}
 function CheckboxesFilter(props) {
-	const {actions} = getAppContext();
-	const [value, setValue] = useState(props.value);
+	const [itemsValues, setItemsValues] = useState(
+		(props.value && props.value.itemsValues) || []
+	);
+	const [exclude, setExclude] = useState(
+		props.value ? props.value.exclude : false
+	);
 
-	function selectCheckbox(itemValue) {
-		if (!value) {
-			return setValue([itemValue]);
+	function selectCheckbox(selected) {
+		if (itemsValues.includes(selected)) {
+			return setItemsValues(itemsValues.filter(v => v !== selected));
 		}
 
-		if (!value.includes(itemValue)) {
-			return setValue(value.concat(itemValue));
-		} else if (value.length === 1) {
-			return setValue(undefined);
-		} else {
-			return setValue(value.filter(v => v !== itemValue));
-		}
+		return setItemsValues(itemsValues.concat(selected));
+	}
+
+	useEffect(() => {
+		setItemsValues(props.value ? props.value.itemsValues : []);
+		setExclude(props.value ? props.value.exclude : false);
+	}, [props.value]);
+
+	let actionType = 'edit';
+
+	if (props.value && props.value.itemsValues && !itemsValues.length) {
+		actionType = 'delete';
+	}
+
+	if (!props.value) {
+		actionType = 'add';
+	}
+
+	let submitDisabled = true;
+
+	if (
+		actionType === 'delete' ||
+		(!props.value && itemsValues.length) ||
+		(props.value &&
+			isValuesArrayChanged(props.value.itemsValues, itemsValues)) ||
+		(props.value && itemsValues.length && props.value.exclude !== exclude)
+	) {
+		submitDisabled = false;
 	}
 
 	return (
 		<>
-			{props.items.map((item, i) => {
-				let checked = false;
+			<ClayDropDown.Caption className="pb-0">
+				<div className="row">
+					<div className="col">
+						<label htmlFor={`autocomplete-exclude-${props.id}`}>
+							{Liferay.Language.get('exclude')}
+						</label>
+					</div>
+					<div className="col-auto">
+						<ClayToggle
+							id={`autocomplete-exclude-${props.id}`}
+							onToggle={() => setExclude(!exclude)}
+							toggled={exclude}
+						/>
+					</div>
+				</div>
+			</ClayDropDown.Caption>
+			<ClayDropDown.Divider />
+			<ClayDropDown.Caption>
+				<div className="inline-scroller mx-n2 px-2 mb-n2">
+					{props.items.map((item, i) => {
+						let checked = false;
 
-				if (value) {
-					checked = value.reduce(
-						(acc, el) => acc || el === item.value,
-						false
-					);
-				}
+						if (itemsValues) {
+							checked = itemsValues.reduce(
+								(acc, el) => acc || el === item.value,
+								false
+							);
+						}
 
-				return (
-					<ClayCheckbox
-						aria-label={item.label}
-						checked={checked}
-						key={i}
-						label={item.label}
-						onChange={() => selectCheckbox(item.value)}
-					/>
-				);
-			})}
-			<div className="mt-3">
+						return (
+							<ClayCheckbox
+								aria-label={item.label}
+								checked={checked}
+								key={i}
+								label={item.label}
+								onChange={() => selectCheckbox(item.value)}
+							/>
+						);
+					})}
+				</div>
+			</ClayDropDown.Caption>
+			<ClayDropDown.Divider />
+			<ClayDropDown.Caption>
 				<ClayButton
-					className="btn-sm"
-					disabled={value === props.value}
-					onClick={() => actions.updateFilterValue(props.id, value)}
+					disabled={submitDisabled}
+					onClick={() =>
+						actionType !== 'delete'
+							? props.actions.updateFilterState(
+									props.id,
+									{
+										exclude,
+										itemsValues
+									},
+									formatValue(
+										itemsValues,
+										props.items,
+										exclude
+									),
+									getOdataString(
+										itemsValues,
+										props.id,
+										exclude
+									)
+							  )
+							: props.actions.updateFilterState(props.id)
+					}
+					small
 				>
-					{props.panelType === 'edit'
-						? Liferay.Language.get('edit-filter')
-						: Liferay.Language.get('add-filter')}
+					{actionType === 'add' && Liferay.Language.get('add-filter')}
+					{actionType === 'edit' &&
+						Liferay.Language.get('edit-filter')}
+					{actionType === 'delete' &&
+						Liferay.Language.get('delete-filter')}
 				</ClayButton>
-			</div>
+			</ClayDropDown.Caption>
 		</>
 	);
 }
@@ -84,21 +184,13 @@ CheckboxesFilter.propTypes = {
 		})
 	),
 	label: PropTypes.string.isRequired,
-	operator: PropTypes.oneOf([
-		'eq',
-		'ne',
-		'gt',
-		'ge',
-		'lt',
-		'le',
-		'and',
-		'or',
-		'not'
-	]).isRequired,
 	type: PropTypes.oneOf(['checkbox']).isRequired,
-	value: PropTypes.arrayOf(
-		PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-	)
+	value: PropTypes.shape({
+		exclude: PropTypes.bool,
+		itemsValues: PropTypes.arrayOf(
+			PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+		)
+	})
 };
 
 export default CheckboxesFilter;

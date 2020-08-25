@@ -54,7 +54,7 @@ public class AverageStatistics extends BaseStatistics {
 				span = _countStatistics.getCount();
 			}
 
-			_averageTime = (_averageTime * span + duration) / (span + 1);
+			_averageTime = ((_averageTime * span) + duration) / (span + 1);
 		}
 
 		setLastSampleTime(System.currentTimeMillis());

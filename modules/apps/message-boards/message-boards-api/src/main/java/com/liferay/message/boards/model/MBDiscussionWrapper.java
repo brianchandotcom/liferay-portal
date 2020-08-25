@@ -547,16 +547,16 @@ public class MBDiscussionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MBDiscussionWrapper)) {
+		if (!(object instanceof MBDiscussionWrapper)) {
 			return false;
 		}
 
-		MBDiscussionWrapper mbDiscussionWrapper = (MBDiscussionWrapper)obj;
+		MBDiscussionWrapper mbDiscussionWrapper = (MBDiscussionWrapper)object;
 
 		if (Objects.equals(_mbDiscussion, mbDiscussionWrapper._mbDiscussion)) {
 			return true;

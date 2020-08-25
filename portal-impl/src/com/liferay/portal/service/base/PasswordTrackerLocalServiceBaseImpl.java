@@ -76,6 +76,10 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	/**
 	 * Adds the password tracker to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect PasswordTrackerLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param passwordTracker the password tracker
 	 * @return the password tracker that was added
 	 */
@@ -102,6 +106,10 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	/**
 	 * Deletes the password tracker with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect PasswordTrackerLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param passwordTrackerId the primary key of the password tracker
 	 * @return the password tracker that was removed
 	 * @throws PortalException if a password tracker with the primary key could not be found
@@ -116,6 +124,10 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 
 	/**
 	 * Deletes the password tracker from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect PasswordTrackerLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param passwordTracker the password tracker
 	 * @return the password tracker that was removed
@@ -329,6 +341,10 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 
 	/**
 	 * Updates the password tracker in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect PasswordTrackerLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param passwordTracker the password tracker
 	 * @return the password tracker that was updated

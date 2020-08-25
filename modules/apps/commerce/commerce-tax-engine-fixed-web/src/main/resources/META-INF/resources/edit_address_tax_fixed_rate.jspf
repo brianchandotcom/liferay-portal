@@ -27,6 +27,7 @@ if (commerceTaxFixedRateAddressRel != null) {
 
 <aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceTaxFixedRateAddressRel == null) ? Constants.ADD : Constants.UPDATE %>" />
 <aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+<aui:input name="commerceChannelId" type="hidden" value="<%= commerceTaxFixedRateAddressRelsDisplayContext.getCommerceChannelId() %>" />
 <aui:input name="commerceTaxFixedRateAddressRelId" type="hidden" value="<%= commerceTaxFixedRateAddressRelId %>" />
 <aui:input name="commerceTaxMethodId" type="hidden" value="<%= commerceTaxMethodId %>" />
 
@@ -50,7 +51,7 @@ if (commerceTaxFixedRateAddressRel != null) {
 	</div>
 
 	<div class="col-md-6">
-		<aui:input label='<%= commerceTaxMethod.isPercentage() ? "rate" : "amount" %>' name="rate" suffix="<%= commerceTaxFixedRateAddressRelsDisplayContext.getCommerceCurrencyCode() %>" value="<%= commerceTaxFixedRateAddressRelsDisplayContext.getLocalizedPercentage((commerceTaxFixedRateAddressRel == null) ? 0 : commerceTaxFixedRateAddressRel.getRate(), locale) %>">
+		<aui:input label='<%= commerceTaxMethod.isPercentage() ? "rate" : "amount" %>' name="rate" suffix="<%= commerceTaxMethod.isPercentage() ? StringPool.PERCENT : commerceTaxFixedRateAddressRelsDisplayContext.getCommerceCurrencyCode() %>" value="<%= commerceTaxFixedRateAddressRelsDisplayContext.getLocalizedRate(commerceTaxMethod.isPercentage(), (commerceTaxFixedRateAddressRel == null) ? 0 : commerceTaxFixedRateAddressRel.getRate(), locale) %>">
 			<aui:validator name="min">0</aui:validator>
 		</aui:input>
 	</div>

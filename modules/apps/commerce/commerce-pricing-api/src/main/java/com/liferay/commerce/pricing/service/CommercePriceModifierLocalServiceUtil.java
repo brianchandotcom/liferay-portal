@@ -41,6 +41,10 @@ public class CommercePriceModifierLocalServiceUtil {
 	/**
 	 * Adds the commerce price modifier to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceModifierLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePriceModifier the commerce price modifier
 	 * @return the commerce price modifier that was added
 	 */
@@ -95,6 +99,29 @@ public class CommercePriceModifierLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static com.liferay.commerce.pricing.model.CommercePriceModifier
+			addCommercePriceModifier(
+				long groupId, String title, String target,
+				long commercePriceListId, String modifierType,
+				java.math.BigDecimal modifierAmount, double priority,
+				boolean active, int displayDateMonth, int displayDateDay,
+				int displayDateYear, int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, String externalReferenceCode,
+				boolean neverExpire,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCommercePriceModifier(
+			groupId, title, target, commercePriceListId, modifierType,
+			modifierAmount, priority, active, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, externalReferenceCode,
+			neverExpire, serviceContext);
+	}
+
 	/**
 	 * Creates a new commerce price modifier with the primary key. Does not add the commerce price modifier to the database.
 	 *
@@ -111,6 +138,10 @@ public class CommercePriceModifierLocalServiceUtil {
 	/**
 	 * Deletes the commerce price modifier from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceModifierLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePriceModifier the commerce price modifier
 	 * @return the commerce price modifier that was removed
 	 * @throws PortalException
@@ -126,6 +157,10 @@ public class CommercePriceModifierLocalServiceUtil {
 
 	/**
 	 * Deletes the commerce price modifier with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceModifierLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commercePriceModifierId the primary key of the commerce price modifier
 	 * @return the commerce price modifier that was removed
@@ -355,6 +390,18 @@ public class CommercePriceModifierLocalServiceUtil {
 
 	public static java.util.List
 		<com.liferay.commerce.pricing.model.CommercePriceModifier>
+			getCommercePriceModifiers(
+				long commercePriceListId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.commerce.pricing.model.CommercePriceModifier>
+						orderByComparator) {
+
+		return getService().getCommercePriceModifiers(
+			commercePriceListId, start, end, orderByComparator);
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.pricing.model.CommercePriceModifier>
 			getCommercePriceModifiers(long companyId, String target) {
 
 		return getService().getCommercePriceModifiers(companyId, target);
@@ -407,6 +454,10 @@ public class CommercePriceModifierLocalServiceUtil {
 		return getService().getCommercePriceModifiersCount();
 	}
 
+	public static int getCommercePriceModifiersCount(long commercePriceListId) {
+		return getService().getCommercePriceModifiersCount(commercePriceListId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -452,6 +503,10 @@ public class CommercePriceModifierLocalServiceUtil {
 
 	/**
 	 * Updates the commerce price modifier in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceModifierLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commercePriceModifier the commerce price modifier
 	 * @return the commerce price modifier that was updated

@@ -52,7 +52,9 @@ definition {
 				panel = "Control Panel",
 				portlet = "Users and Organizations");
 
-			User.tearDownSpecificUser(userScreenName = "${userScreenName}");
+			if (IsElementPresent(key_rowEntry = "${userScreenName}", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME")) {
+				User.tearDownSpecificUser(userScreenName = "${userScreenName}");
+			}
 		}
 
 		ProductMenu.gotoPortlet(
@@ -112,16 +114,15 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Commerce",
 			panel = "Control Panel",
-			portlet = "Price Lists");
+			portlet = "Pricing");
+
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Price Lists");
 
 		while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
 			CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected price lists?");
 		}
 
-		ProductMenu.gotoPortlet(
-			category = "Commerce",
-			panel = "Control Panel",
-			portlet = "Discounts");
+		CommerceNavigator.gotoCommercePortletNavItem(navItem = "Discounts");
 
 		while (IsElementNotPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER")) {
 			CommerceProducts.deleteEntries(deleteMessage = "Are you sure you want to delete the selected discounts?");

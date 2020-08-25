@@ -105,7 +105,7 @@ ${Application['org.apache.catalina.resources'].getContext().getInstanceManager()
 			webContentTitle = "WC Title");
 
 		Portlet.viewBody(
-			portletBody = "Denied access to method or field newInstance of class org.apache.catalina.core.DefaultInstanceManager",
+			portletBody = "Denied access to method or field newInstance",
 			portletName = "WC Title");
 
 		Navigator.gotoSitePage(
@@ -118,7 +118,7 @@ ${Application['org.apache.catalina.resources'].getContext().getInstanceManager()
 			webContentTitle = "WC Title 2");
 
 		Portlet.viewBody(
-			portletBody = "Denied access to method or field getContext of class org.apache.catalina.webresources.StandardRoot",
+			portletBody = "Denied access to method or field getContext",
 			portletName = "WC Title 2");
 	}
 
@@ -228,11 +228,10 @@ $request.servletContext.getAttribute("org.apache.tomcat.InstanceManager"))
 
 		WebContent.addStructuredPGViaWCD(
 			structureName = "WC Structure Name",
-			templateName = "WC Template Name",
 			webContentTitle = "WC Title");
 
 		Portlet.viewBody(
-			portletBody = "Denied access to method or field getAttributeNames of class org.apache.catalina.core.ApplicationContextFacade",
+			portletBody = "Denied access to method or field getAttributeNames",
 			portletName = "WC Title");
 	}
 
@@ -281,7 +280,6 @@ $request.servletContext.getAttribute("org.apache.tomcat.InstanceManager"))
 
 		WebContent.addStructuredPGViaWCD(
 			structureName = "WC Structure Name",
-			templateName = "WC Template Name",
 			webContentTitle = "WC Title");
 
 		Portlet.viewBody(

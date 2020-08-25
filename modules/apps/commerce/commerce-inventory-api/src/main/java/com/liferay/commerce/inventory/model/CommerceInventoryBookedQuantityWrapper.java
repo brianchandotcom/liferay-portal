@@ -524,18 +524,18 @@ public class CommerceInventoryBookedQuantityWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceInventoryBookedQuantityWrapper)) {
+		if (!(object instanceof CommerceInventoryBookedQuantityWrapper)) {
 			return false;
 		}
 
 		CommerceInventoryBookedQuantityWrapper
 			commerceInventoryBookedQuantityWrapper =
-				(CommerceInventoryBookedQuantityWrapper)obj;
+				(CommerceInventoryBookedQuantityWrapper)object;
 
 		if (Objects.equals(
 				_commerceInventoryBookedQuantity,

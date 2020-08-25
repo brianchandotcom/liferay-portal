@@ -17,6 +17,7 @@ package com.liferay.commerce.product.ddm.internal;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.media.CommerceMediaResolver;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.ddm.DDMHelper;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
@@ -43,14 +44,15 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -363,9 +365,24 @@ public class DDMHelperImpl implements DDMHelper {
 
 		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
 
-		if (cpDefinitionOptionRel.isSkuContributor()) {
+		CPDefinitionOptionValueRel preselectedCPDefinitionOptionValueRel =
+			cpDefinitionOptionRel.fetchPreselectedCPDefinitionOptionValueRel();
+
+		if (preselectedCPDefinitionOptionValueRel != null) {
 			ddmFormField.setPredefinedValue(
-				_getDDMFormFieldPredefinedValue(ddmFormFieldOptions));
+				_getDDMFormFieldPredefinedValue(
+					ddmFormFieldOptions,
+					_isArrayValueCPDefinitionOptionRelFieldType(
+						cpDefinitionOptionRel),
+					preselectedCPDefinitionOptionValueRel.getKey()));
+		}
+		else if (cpDefinitionOptionRel.isSkuContributor()) {
+			ddmFormField.setPredefinedValue(
+				_getDDMFormFieldPredefinedValue(
+					ddmFormFieldOptions,
+					_isArrayValueCPDefinitionOptionRelFieldType(
+						cpDefinitionOptionRel),
+					null));
 		}
 
 		return ddmFormField;
@@ -389,7 +406,8 @@ public class DDMHelperImpl implements DDMHelper {
 	}
 
 	private LocalizedValue _getDDMFormFieldPredefinedValue(
-		DDMFormFieldOptions ddmFormFieldOptions) {
+		DDMFormFieldOptions ddmFormFieldOptions, boolean arrayValueFieldType,
+		String optionValueKey) {
 
 		Map<String, LocalizedValue> options = ddmFormFieldOptions.getOptions();
 
@@ -402,14 +420,40 @@ public class DDMHelperImpl implements DDMHelper {
 
 			LocalizedValue curLocalizedValue = entry.getValue();
 
-			localizedValue.addString(
-				curLocalizedValue.getDefaultLocale(), entry.getKey());
+			if (arrayValueFieldType) {
+				localizedValue.addString(
+					curLocalizedValue.getDefaultLocale(),
+					String.format("[\"%s\"]", entry.getKey()));
+			}
+			else {
+				localizedValue.addString(
+					curLocalizedValue.getDefaultLocale(), entry.getKey());
+			}
 
-			return localizedValue;
+			if (Validator.isNull(optionValueKey)) {
+				return localizedValue;
+			}
+
+			if (Objects.equals(optionValueKey, entry.getKey())) {
+				return localizedValue;
+			}
 		}
 
 		throw new IllegalArgumentException(
 			"Provided DDM field options miss valid field value");
+	}
+
+	private boolean _isArrayValueCPDefinitionOptionRelFieldType(
+		CPDefinitionOptionRel cpDefinitionOptionRel) {
+
+		if (ArrayUtil.contains(
+				_ARRAY_VALUE_FIELD_TYPE,
+				cpDefinitionOptionRel.getDDMFormFieldTypeName())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isDDMFormFieldRequired(
@@ -440,10 +484,8 @@ public class DDMHelperImpl implements DDMHelper {
 	private boolean _isIterableCPDefinitionOptionRelFieldType(
 		CPDefinitionOptionRel cpDefinitionOptionRel) {
 
-		List<String> iterableFieldTypes = Arrays.asList(
-			"select", "radio", "checkbox", "checkbox_multiple");
-
-		if (iterableFieldTypes.contains(
+		if (ArrayUtil.contains(
+				CPConstants.PRODUCT_OPTION_MULTIPLE_VALUES_FIELD_TYPES,
 				cpDefinitionOptionRel.getDDMFormFieldTypeName())) {
 
 			return true;
@@ -490,6 +532,10 @@ public class DDMHelperImpl implements DDMHelper {
 
 		return _ddmFormRenderer.render(ddmForm, ddmFormRenderingContext);
 	}
+
+	private static final String[] _ARRAY_VALUE_FIELD_TYPE = {
+		"select", "checkbox", "checkbox_multiple"
+	};
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;

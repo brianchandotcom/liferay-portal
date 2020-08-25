@@ -30,7 +30,7 @@ CommerceOrderItem commerceOrderItem = commerceOrderEditDisplayContext.getCommerc
 >
 	<aui:form action="<%= editCommerceOrderItemActionURL %>" method="post" name="fm">
 		<aui:fieldset>
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="customFields" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 			<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrderItem.getCommerceOrderId() %>" />
 			<aui:input name="commerceOrderItemId" type="hidden" value="<%= commerceOrderItem.getCommerceOrderItemId() %>" />

@@ -134,6 +134,13 @@ public class CPDefinitionServiceUtil {
 			externalReferenceCode, serviceContext);
 	}
 
+	public static com.liferay.commerce.product.model.CPDefinition
+			copyCPDefinition(long cpDefinitionId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().copyCPDefinition(cpDefinitionId, groupId);
+	}
+
 	public static void deleteAssetCategoryCPDefinition(
 			long cpDefinitionId, long categoryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

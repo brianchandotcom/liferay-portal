@@ -1543,16 +1543,16 @@ public class ContactModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Contact)) {
+		if (!(object instanceof Contact)) {
 			return false;
 		}
 
-		Contact contact = (Contact)obj;
+		Contact contact = (Contact)object;
 
 		long primaryKey = contact.getPrimaryKey();
 

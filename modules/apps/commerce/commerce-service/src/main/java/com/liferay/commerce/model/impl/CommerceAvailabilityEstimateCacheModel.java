@@ -36,18 +36,18 @@ public class CommerceAvailabilityEstimateCacheModel
 	implements CacheModel<CommerceAvailabilityEstimate>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceAvailabilityEstimateCacheModel)) {
+		if (!(object instanceof CommerceAvailabilityEstimateCacheModel)) {
 			return false;
 		}
 
 		CommerceAvailabilityEstimateCacheModel
 			commerceAvailabilityEstimateCacheModel =
-				(CommerceAvailabilityEstimateCacheModel)obj;
+				(CommerceAvailabilityEstimateCacheModel)object;
 
 		if (commerceAvailabilityEstimateId ==
 				commerceAvailabilityEstimateCacheModel.

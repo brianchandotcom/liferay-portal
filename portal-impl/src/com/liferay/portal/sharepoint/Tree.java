@@ -35,7 +35,7 @@ public class Tree implements ResponseElement {
 
 	@Override
 	public String parse() {
-		StringBundler sb = new StringBundler(_children.size() * 4 + 4);
+		StringBundler sb = new StringBundler((_children.size() * 4) + 4);
 
 		sb.append(OPEN_UL);
 		sb.append(StringPool.NEW_LINE);

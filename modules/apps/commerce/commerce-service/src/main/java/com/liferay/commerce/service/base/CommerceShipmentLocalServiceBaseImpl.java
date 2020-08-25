@@ -94,6 +94,10 @@ public abstract class CommerceShipmentLocalServiceBaseImpl
 	/**
 	 * Adds the commerce shipment to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceShipmentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceShipment the commerce shipment
 	 * @return the commerce shipment that was added
 	 */
@@ -122,6 +126,10 @@ public abstract class CommerceShipmentLocalServiceBaseImpl
 	/**
 	 * Deletes the commerce shipment with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceShipmentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceShipmentId the primary key of the commerce shipment
 	 * @return the commerce shipment that was removed
 	 * @throws PortalException if a commerce shipment with the primary key could not be found
@@ -136,6 +144,10 @@ public abstract class CommerceShipmentLocalServiceBaseImpl
 
 	/**
 	 * Deletes the commerce shipment from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceShipmentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceShipment the commerce shipment
 	 * @return the commerce shipment that was removed
@@ -352,6 +364,10 @@ public abstract class CommerceShipmentLocalServiceBaseImpl
 
 	/**
 	 * Updates the commerce shipment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceShipmentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceShipment the commerce shipment
 	 * @return the commerce shipment that was updated

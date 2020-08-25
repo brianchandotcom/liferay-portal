@@ -36,17 +36,17 @@ public class CommerceShipmentItemCacheModel
 	implements CacheModel<CommerceShipmentItem>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceShipmentItemCacheModel)) {
+		if (!(object instanceof CommerceShipmentItemCacheModel)) {
 			return false;
 		}
 
 		CommerceShipmentItemCacheModel commerceShipmentItemCacheModel =
-			(CommerceShipmentItemCacheModel)obj;
+			(CommerceShipmentItemCacheModel)object;
 
 		if (commerceShipmentItemId ==
 				commerceShipmentItemCacheModel.commerceShipmentItemId) {

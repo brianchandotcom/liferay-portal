@@ -130,6 +130,805 @@ public class CommerceDiscountUsageEntryUtil {
 	}
 
 	/**
+	 * Returns all the commerce discount usage entries where commerceDiscountId = &#63;.
+	 *
+	 * @param commerceDiscountId the commerce discount ID
+	 * @return the matching commerce discount usage entries
+	 */
+	public static List<CommerceDiscountUsageEntry> findByCommerceDiscountId(
+		long commerceDiscountId) {
+
+		return getPersistence().findByCommerceDiscountId(commerceDiscountId);
+	}
+
+	/**
+	 * Returns a range of all the commerce discount usage entries where commerceDiscountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param start the lower bound of the range of commerce discount usage entries
+	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
+	 * @return the range of matching commerce discount usage entries
+	 */
+	public static List<CommerceDiscountUsageEntry> findByCommerceDiscountId(
+		long commerceDiscountId, int start, int end) {
+
+		return getPersistence().findByCommerceDiscountId(
+			commerceDiscountId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce discount usage entries where commerceDiscountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param start the lower bound of the range of commerce discount usage entries
+	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce discount usage entries
+	 */
+	public static List<CommerceDiscountUsageEntry> findByCommerceDiscountId(
+		long commerceDiscountId, int start, int end,
+		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
+
+		return getPersistence().findByCommerceDiscountId(
+			commerceDiscountId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce discount usage entries where commerceDiscountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param start the lower bound of the range of commerce discount usage entries
+	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce discount usage entries
+	 */
+	public static List<CommerceDiscountUsageEntry> findByCommerceDiscountId(
+		long commerceDiscountId, int start, int end,
+		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByCommerceDiscountId(
+			commerceDiscountId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first commerce discount usage entry in the ordered set where commerceDiscountId = &#63;.
+	 *
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce discount usage entry
+	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
+	 */
+	public static CommerceDiscountUsageEntry findByCommerceDiscountId_First(
+			long commerceDiscountId,
+			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
+		throws com.liferay.commerce.discount.exception.
+			NoSuchDiscountUsageEntryException {
+
+		return getPersistence().findByCommerceDiscountId_First(
+			commerceDiscountId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce discount usage entry in the ordered set where commerceDiscountId = &#63;.
+	 *
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
+	 */
+	public static CommerceDiscountUsageEntry fetchByCommerceDiscountId_First(
+		long commerceDiscountId,
+		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
+
+		return getPersistence().fetchByCommerceDiscountId_First(
+			commerceDiscountId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce discount usage entry in the ordered set where commerceDiscountId = &#63;.
+	 *
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce discount usage entry
+	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
+	 */
+	public static CommerceDiscountUsageEntry findByCommerceDiscountId_Last(
+			long commerceDiscountId,
+			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
+		throws com.liferay.commerce.discount.exception.
+			NoSuchDiscountUsageEntryException {
+
+		return getPersistence().findByCommerceDiscountId_Last(
+			commerceDiscountId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce discount usage entry in the ordered set where commerceDiscountId = &#63;.
+	 *
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
+	 */
+	public static CommerceDiscountUsageEntry fetchByCommerceDiscountId_Last(
+		long commerceDiscountId,
+		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
+
+		return getPersistence().fetchByCommerceDiscountId_Last(
+			commerceDiscountId, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce discount usage entries before and after the current commerce discount usage entry in the ordered set where commerceDiscountId = &#63;.
+	 *
+	 * @param commerceDiscountUsageEntryId the primary key of the current commerce discount usage entry
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce discount usage entry
+	 * @throws NoSuchDiscountUsageEntryException if a commerce discount usage entry with the primary key could not be found
+	 */
+	public static CommerceDiscountUsageEntry[]
+			findByCommerceDiscountId_PrevAndNext(
+				long commerceDiscountUsageEntryId, long commerceDiscountId,
+				OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
+		throws com.liferay.commerce.discount.exception.
+			NoSuchDiscountUsageEntryException {
+
+		return getPersistence().findByCommerceDiscountId_PrevAndNext(
+			commerceDiscountUsageEntryId, commerceDiscountId,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce discount usage entries where commerceDiscountId = &#63; from the database.
+	 *
+	 * @param commerceDiscountId the commerce discount ID
+	 */
+	public static void removeByCommerceDiscountId(long commerceDiscountId) {
+		getPersistence().removeByCommerceDiscountId(commerceDiscountId);
+	}
+
+	/**
+	 * Returns the number of commerce discount usage entries where commerceDiscountId = &#63;.
+	 *
+	 * @param commerceDiscountId the commerce discount ID
+	 * @return the number of matching commerce discount usage entries
+	 */
+	public static int countByCommerceDiscountId(long commerceDiscountId) {
+		return getPersistence().countByCommerceDiscountId(commerceDiscountId);
+	}
+
+	/**
+	 * Returns all the commerce discount usage entries where commerceAccountId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @return the matching commerce discount usage entries
+	 */
+	public static List<CommerceDiscountUsageEntry> findByA_D(
+		long commerceAccountId, long commerceDiscountId) {
+
+		return getPersistence().findByA_D(
+			commerceAccountId, commerceDiscountId);
+	}
+
+	/**
+	 * Returns a range of all the commerce discount usage entries where commerceAccountId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param start the lower bound of the range of commerce discount usage entries
+	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
+	 * @return the range of matching commerce discount usage entries
+	 */
+	public static List<CommerceDiscountUsageEntry> findByA_D(
+		long commerceAccountId, long commerceDiscountId, int start, int end) {
+
+		return getPersistence().findByA_D(
+			commerceAccountId, commerceDiscountId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce discount usage entries where commerceAccountId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param start the lower bound of the range of commerce discount usage entries
+	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce discount usage entries
+	 */
+	public static List<CommerceDiscountUsageEntry> findByA_D(
+		long commerceAccountId, long commerceDiscountId, int start, int end,
+		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
+
+		return getPersistence().findByA_D(
+			commerceAccountId, commerceDiscountId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce discount usage entries where commerceAccountId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param start the lower bound of the range of commerce discount usage entries
+	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce discount usage entries
+	 */
+	public static List<CommerceDiscountUsageEntry> findByA_D(
+		long commerceAccountId, long commerceDiscountId, int start, int end,
+		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByA_D(
+			commerceAccountId, commerceDiscountId, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce discount usage entry
+	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
+	 */
+	public static CommerceDiscountUsageEntry findByA_D_First(
+			long commerceAccountId, long commerceDiscountId,
+			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
+		throws com.liferay.commerce.discount.exception.
+			NoSuchDiscountUsageEntryException {
+
+		return getPersistence().findByA_D_First(
+			commerceAccountId, commerceDiscountId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
+	 */
+	public static CommerceDiscountUsageEntry fetchByA_D_First(
+		long commerceAccountId, long commerceDiscountId,
+		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
+
+		return getPersistence().fetchByA_D_First(
+			commerceAccountId, commerceDiscountId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce discount usage entry
+	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
+	 */
+	public static CommerceDiscountUsageEntry findByA_D_Last(
+			long commerceAccountId, long commerceDiscountId,
+			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
+		throws com.liferay.commerce.discount.exception.
+			NoSuchDiscountUsageEntryException {
+
+		return getPersistence().findByA_D_Last(
+			commerceAccountId, commerceDiscountId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
+	 */
+	public static CommerceDiscountUsageEntry fetchByA_D_Last(
+		long commerceAccountId, long commerceDiscountId,
+		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
+
+		return getPersistence().fetchByA_D_Last(
+			commerceAccountId, commerceDiscountId, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce discount usage entries before and after the current commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceDiscountUsageEntryId the primary key of the current commerce discount usage entry
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce discount usage entry
+	 * @throws NoSuchDiscountUsageEntryException if a commerce discount usage entry with the primary key could not be found
+	 */
+	public static CommerceDiscountUsageEntry[] findByA_D_PrevAndNext(
+			long commerceDiscountUsageEntryId, long commerceAccountId,
+			long commerceDiscountId,
+			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
+		throws com.liferay.commerce.discount.exception.
+			NoSuchDiscountUsageEntryException {
+
+		return getPersistence().findByA_D_PrevAndNext(
+			commerceDiscountUsageEntryId, commerceAccountId, commerceDiscountId,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce discount usage entries where commerceAccountId = &#63; and commerceDiscountId = &#63; from the database.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceDiscountId the commerce discount ID
+	 */
+	public static void removeByA_D(
+		long commerceAccountId, long commerceDiscountId) {
+
+		getPersistence().removeByA_D(commerceAccountId, commerceDiscountId);
+	}
+
+	/**
+	 * Returns the number of commerce discount usage entries where commerceAccountId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @return the number of matching commerce discount usage entries
+	 */
+	public static int countByA_D(
+		long commerceAccountId, long commerceDiscountId) {
+
+		return getPersistence().countByA_D(
+			commerceAccountId, commerceDiscountId);
+	}
+
+	/**
+	 * Returns all the commerce discount usage entries where commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @return the matching commerce discount usage entries
+	 */
+	public static List<CommerceDiscountUsageEntry> findByO_D(
+		long commerceOrderId, long commerceDiscountId) {
+
+		return getPersistence().findByO_D(commerceOrderId, commerceDiscountId);
+	}
+
+	/**
+	 * Returns a range of all the commerce discount usage entries where commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param start the lower bound of the range of commerce discount usage entries
+	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
+	 * @return the range of matching commerce discount usage entries
+	 */
+	public static List<CommerceDiscountUsageEntry> findByO_D(
+		long commerceOrderId, long commerceDiscountId, int start, int end) {
+
+		return getPersistence().findByO_D(
+			commerceOrderId, commerceDiscountId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce discount usage entries where commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param start the lower bound of the range of commerce discount usage entries
+	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce discount usage entries
+	 */
+	public static List<CommerceDiscountUsageEntry> findByO_D(
+		long commerceOrderId, long commerceDiscountId, int start, int end,
+		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
+
+		return getPersistence().findByO_D(
+			commerceOrderId, commerceDiscountId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce discount usage entries where commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param start the lower bound of the range of commerce discount usage entries
+	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce discount usage entries
+	 */
+	public static List<CommerceDiscountUsageEntry> findByO_D(
+		long commerceOrderId, long commerceDiscountId, int start, int end,
+		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByO_D(
+			commerceOrderId, commerceDiscountId, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first commerce discount usage entry in the ordered set where commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce discount usage entry
+	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
+	 */
+	public static CommerceDiscountUsageEntry findByO_D_First(
+			long commerceOrderId, long commerceDiscountId,
+			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
+		throws com.liferay.commerce.discount.exception.
+			NoSuchDiscountUsageEntryException {
+
+		return getPersistence().findByO_D_First(
+			commerceOrderId, commerceDiscountId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce discount usage entry in the ordered set where commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
+	 */
+	public static CommerceDiscountUsageEntry fetchByO_D_First(
+		long commerceOrderId, long commerceDiscountId,
+		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
+
+		return getPersistence().fetchByO_D_First(
+			commerceOrderId, commerceDiscountId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce discount usage entry in the ordered set where commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce discount usage entry
+	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
+	 */
+	public static CommerceDiscountUsageEntry findByO_D_Last(
+			long commerceOrderId, long commerceDiscountId,
+			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
+		throws com.liferay.commerce.discount.exception.
+			NoSuchDiscountUsageEntryException {
+
+		return getPersistence().findByO_D_Last(
+			commerceOrderId, commerceDiscountId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce discount usage entry in the ordered set where commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
+	 */
+	public static CommerceDiscountUsageEntry fetchByO_D_Last(
+		long commerceOrderId, long commerceDiscountId,
+		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
+
+		return getPersistence().fetchByO_D_Last(
+			commerceOrderId, commerceDiscountId, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce discount usage entries before and after the current commerce discount usage entry in the ordered set where commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceDiscountUsageEntryId the primary key of the current commerce discount usage entry
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce discount usage entry
+	 * @throws NoSuchDiscountUsageEntryException if a commerce discount usage entry with the primary key could not be found
+	 */
+	public static CommerceDiscountUsageEntry[] findByO_D_PrevAndNext(
+			long commerceDiscountUsageEntryId, long commerceOrderId,
+			long commerceDiscountId,
+			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
+		throws com.liferay.commerce.discount.exception.
+			NoSuchDiscountUsageEntryException {
+
+		return getPersistence().findByO_D_PrevAndNext(
+			commerceDiscountUsageEntryId, commerceOrderId, commerceDiscountId,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce discount usage entries where commerceOrderId = &#63; and commerceDiscountId = &#63; from the database.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 */
+	public static void removeByO_D(
+		long commerceOrderId, long commerceDiscountId) {
+
+		getPersistence().removeByO_D(commerceOrderId, commerceDiscountId);
+	}
+
+	/**
+	 * Returns the number of commerce discount usage entries where commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @return the number of matching commerce discount usage entries
+	 */
+	public static int countByO_D(
+		long commerceOrderId, long commerceDiscountId) {
+
+		return getPersistence().countByO_D(commerceOrderId, commerceDiscountId);
+	}
+
+	/**
+	 * Returns all the commerce discount usage entries where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @return the matching commerce discount usage entries
+	 */
+	public static List<CommerceDiscountUsageEntry> findByA_O_D(
+		long commerceAccountId, long commerceOrderId, long commerceDiscountId) {
+
+		return getPersistence().findByA_O_D(
+			commerceAccountId, commerceOrderId, commerceDiscountId);
+	}
+
+	/**
+	 * Returns a range of all the commerce discount usage entries where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param start the lower bound of the range of commerce discount usage entries
+	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
+	 * @return the range of matching commerce discount usage entries
+	 */
+	public static List<CommerceDiscountUsageEntry> findByA_O_D(
+		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
+		int start, int end) {
+
+		return getPersistence().findByA_O_D(
+			commerceAccountId, commerceOrderId, commerceDiscountId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce discount usage entries where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param start the lower bound of the range of commerce discount usage entries
+	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce discount usage entries
+	 */
+	public static List<CommerceDiscountUsageEntry> findByA_O_D(
+		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
+		int start, int end,
+		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
+
+		return getPersistence().findByA_O_D(
+			commerceAccountId, commerceOrderId, commerceDiscountId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce discount usage entries where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountUsageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param start the lower bound of the range of commerce discount usage entries
+	 * @param end the upper bound of the range of commerce discount usage entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce discount usage entries
+	 */
+	public static List<CommerceDiscountUsageEntry> findByA_O_D(
+		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
+		int start, int end,
+		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByA_O_D(
+			commerceAccountId, commerceOrderId, commerceDiscountId, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce discount usage entry
+	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
+	 */
+	public static CommerceDiscountUsageEntry findByA_O_D_First(
+			long commerceAccountId, long commerceOrderId,
+			long commerceDiscountId,
+			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
+		throws com.liferay.commerce.discount.exception.
+			NoSuchDiscountUsageEntryException {
+
+		return getPersistence().findByA_O_D_First(
+			commerceAccountId, commerceOrderId, commerceDiscountId,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
+	 */
+	public static CommerceDiscountUsageEntry fetchByA_O_D_First(
+		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
+		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
+
+		return getPersistence().fetchByA_O_D_First(
+			commerceAccountId, commerceOrderId, commerceDiscountId,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce discount usage entry
+	 * @throws NoSuchDiscountUsageEntryException if a matching commerce discount usage entry could not be found
+	 */
+	public static CommerceDiscountUsageEntry findByA_O_D_Last(
+			long commerceAccountId, long commerceOrderId,
+			long commerceDiscountId,
+			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
+		throws com.liferay.commerce.discount.exception.
+			NoSuchDiscountUsageEntryException {
+
+		return getPersistence().findByA_O_D_Last(
+			commerceAccountId, commerceOrderId, commerceDiscountId,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce discount usage entry, or <code>null</code> if a matching commerce discount usage entry could not be found
+	 */
+	public static CommerceDiscountUsageEntry fetchByA_O_D_Last(
+		long commerceAccountId, long commerceOrderId, long commerceDiscountId,
+		OrderByComparator<CommerceDiscountUsageEntry> orderByComparator) {
+
+		return getPersistence().fetchByA_O_D_Last(
+			commerceAccountId, commerceOrderId, commerceDiscountId,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce discount usage entries before and after the current commerce discount usage entry in the ordered set where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceDiscountUsageEntryId the primary key of the current commerce discount usage entry
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce discount usage entry
+	 * @throws NoSuchDiscountUsageEntryException if a commerce discount usage entry with the primary key could not be found
+	 */
+	public static CommerceDiscountUsageEntry[] findByA_O_D_PrevAndNext(
+			long commerceDiscountUsageEntryId, long commerceAccountId,
+			long commerceOrderId, long commerceDiscountId,
+			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
+		throws com.liferay.commerce.discount.exception.
+			NoSuchDiscountUsageEntryException {
+
+		return getPersistence().findByA_O_D_PrevAndNext(
+			commerceDiscountUsageEntryId, commerceAccountId, commerceOrderId,
+			commerceDiscountId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce discount usage entries where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63; from the database.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 */
+	public static void removeByA_O_D(
+		long commerceAccountId, long commerceOrderId, long commerceDiscountId) {
+
+		getPersistence().removeByA_O_D(
+			commerceAccountId, commerceOrderId, commerceDiscountId);
+	}
+
+	/**
+	 * Returns the number of commerce discount usage entries where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
+	 *
+	 * @param commerceAccountId the commerce account ID
+	 * @param commerceOrderId the commerce order ID
+	 * @param commerceDiscountId the commerce discount ID
+	 * @return the number of matching commerce discount usage entries
+	 */
+	public static int countByA_O_D(
+		long commerceAccountId, long commerceOrderId, long commerceDiscountId) {
+
+		return getPersistence().countByA_O_D(
+			commerceAccountId, commerceOrderId, commerceDiscountId);
+	}
+
+	/**
 	 * Caches the commerce discount usage entry in the entity cache if it is enabled.
 	 *
 	 * @param commerceDiscountUsageEntry the commerce discount usage entry

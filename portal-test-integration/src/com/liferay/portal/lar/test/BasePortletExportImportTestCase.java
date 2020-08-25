@@ -573,7 +573,7 @@ public abstract class BasePortletExportImportTestCase
 
 		if (scopeType.equals("layout")) {
 			preferenceMap.put(
-				"lfrScopeLayoutUuid", new String[] {this.layout.getUuid()});
+				"lfrScopeLayoutUuid", new String[] {layout.getUuid()});
 		}
 
 		preferenceMap.put("lfrScopeType", new String[] {scopeType});

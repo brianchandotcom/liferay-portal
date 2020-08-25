@@ -483,7 +483,7 @@ public class TaxonomyVocabularyResourceImpl
 					assetVocabulary.getAvailableLanguageIds());
 				creator = CreatorUtil.toCreator(
 					_portal,
-					_userLocalService.getUser(assetVocabulary.getUserId()));
+					_userLocalService.fetchUser(assetVocabulary.getUserId()));
 				dateCreated = assetVocabulary.getCreateDate();
 				dateModified = assetVocabulary.getModifiedDate();
 				description = assetVocabulary.getDescription(

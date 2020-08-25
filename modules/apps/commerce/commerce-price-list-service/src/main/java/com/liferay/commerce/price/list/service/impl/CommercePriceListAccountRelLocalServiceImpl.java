@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -123,6 +124,21 @@ public class CommercePriceListAccountRelLocalServiceImpl
 
 		return commercePriceListAccountRelPersistence.findByCommercePriceListId(
 			commercePriceListId);
+	}
+
+	@Override
+	public List<CommercePriceListAccountRel> getCommercePriceListAccountRels(
+		long commercePriceListId, int start, int end,
+		OrderByComparator<CommercePriceListAccountRel> orderByComparator) {
+
+		return commercePriceListAccountRelPersistence.findByCommercePriceListId(
+			commercePriceListId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommercePriceListAccountRelsCount(long commercePriceListId) {
+		return commercePriceListAccountRelPersistence.
+			countByCommercePriceListId(commercePriceListId);
 	}
 
 	protected void reindexCommercePriceList(long commercePriceListId)

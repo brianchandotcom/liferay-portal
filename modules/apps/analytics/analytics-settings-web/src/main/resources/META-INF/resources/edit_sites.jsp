@@ -56,10 +56,10 @@ if (cur > 0) {
 	displayStyleURL.setParameter("cur", String.valueOf(cur));
 }
 
-GroupDisplayContext groupDisplayContext = new GroupDisplayContext("/analytics/edit_synced_sites", renderRequest, renderResponse);
+GroupDisplayContext groupDisplayContext = new GroupDisplayContext("/analytics_settings/edit_synced_sites", renderRequest, renderResponse);
 %>
 
-<portlet:actionURL name="/analytics/edit_synced_sites" var="editSyncedSitesURL" />
+<portlet:actionURL name="/analytics_settings/edit_synced_sites" var="editSyncedSitesURL" />
 
 <div class="container-fluid-1280 mt-4 portlet-analytics-settings sheet sheet-lg">
 	<h2 class="autofit-row">

@@ -57,6 +57,16 @@ public class CommerceChannelServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CommerceChannel
+			fetchByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelService.fetchByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceChannel
 			fetchCommerceChannel(long commerceChannelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

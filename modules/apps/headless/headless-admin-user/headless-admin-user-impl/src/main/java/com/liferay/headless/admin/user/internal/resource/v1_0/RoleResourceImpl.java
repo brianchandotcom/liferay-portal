@@ -80,7 +80,7 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 				availableLanguages = LocaleUtil.toW3cLanguageIds(
 					role.getAvailableLanguageIds());
 				creator = CreatorUtil.toCreator(
-					_portal, _userLocalService.getUserById(role.getUserId()));
+					_portal, _userLocalService.fetchUser(role.getUserId()));
 				dateCreated = role.getCreateDate();
 				dateModified = role.getModifiedDate();
 				description = role.getDescription(

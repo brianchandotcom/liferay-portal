@@ -168,12 +168,12 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									</span>
 								</header>
 
-								<div class="lfr-discussion-message-body" id='<%= namespace + randomNamespace + "discussionMessage" + index %>'>
+								<div class="lfr-discussion-message-body" id="<%= namespace + randomNamespace + "discussionMessage" + index %>">
 									<%= discussionComment.getTranslatedBody(themeDisplay.getPathThemeImages()) %>
 								</div>
 
 								<c:if test="<%= commentTreeDisplayContext.isEditControlsVisible() %>">
-									<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= index %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
+									<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= index %>" style="<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>">
 										<liferay-ui:input-editor
 											autoCreate="<%= false %>"
 											configKey="commentEditor"
@@ -281,7 +281,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			</div>
 		</div>
 
-		<div class='<%= (depth < 3) ? "card-tab" : StringPool.BLANK %> lfr-discussion lfr-discussion-form-reply' id='<%= namespace + randomNamespace + "postReplyForm" + index %>' style="display: none;">
+		<div class="<%= (depth < 3) ? "card-tab" : StringPool.BLANK %> lfr-discussion lfr-discussion-form-reply" id="<%= namespace + randomNamespace + "postReplyForm" + index %>" style="display: none;">
 			<div class="card list-group-card panel">
 				<div class="panel-body">
 					<div class="lfr-discussion-details">

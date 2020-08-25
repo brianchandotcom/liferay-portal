@@ -16,6 +16,7 @@ package com.liferay.portal.action;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
@@ -52,13 +53,16 @@ public class UpdateLanguageAction extends Action {
 	@Override
 	public ActionForward execute(
 			ActionMapping actionMapping, ActionForm actionForm,
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		String languageId = ParamUtil.getString(request, "languageId");
+		String languageId = ParamUtil.getString(
+			httpServletRequest, "languageId");
 
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
@@ -66,7 +70,7 @@ public class UpdateLanguageAction extends Action {
 				themeDisplay.getSiteGroupId(), locale)) {
 
 			boolean persistState = ParamUtil.getBoolean(
-				request, "persistState", true);
+				httpServletRequest, "persistState", true);
 
 			if (themeDisplay.isSignedIn() && persistState) {
 				User user = themeDisplay.getUser();
@@ -74,7 +78,7 @@ public class UpdateLanguageAction extends Action {
 				Contact contact = user.getContact();
 
 				AdminUtil.updateUser(
-					request, user.getUserId(), user.getScreenName(),
+					httpServletRequest, user.getUserId(), user.getScreenName(),
 					user.getEmailAddress(), user.getFacebookId(),
 					user.getOpenId(), languageId, user.getTimeZoneId(),
 					user.getGreeting(), user.getComments(), contact.getSmsSn(),
@@ -82,47 +86,63 @@ public class UpdateLanguageAction extends Action {
 					contact.getSkypeSn(), contact.getTwitterSn());
 			}
 
-			HttpSession session = request.getSession();
+			HttpSession session = httpServletRequest.getSession();
 
 			session.setAttribute(Globals.LOCALE_KEY, locale);
 
-			LanguageUtil.updateCookie(request, response, locale);
+			LanguageUtil.updateCookie(
+				httpServletRequest, httpServletResponse, locale);
 		}
 
 		// Send redirect
 
-		String redirect = PortalUtil.escapeRedirect(
-			ParamUtil.getString(request, "redirect"));
+		httpServletResponse.sendRedirect(
+			getRedirect(httpServletRequest, themeDisplay, locale));
 
-		String layoutURL = StringPool.BLANK;
+		return null;
+	}
+
+	public String getRedirect(
+			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay,
+			Locale locale)
+		throws PortalException {
+
+		String redirect = PortalUtil.escapeRedirect(
+			ParamUtil.getString(httpServletRequest, "redirect"));
+
+		String layoutURL = redirect;
+
+		String friendlyURLSeparatorPart = StringPool.BLANK;
 		String queryString = StringPool.BLANK;
 
-		int pos = redirect.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
+		int posQuestion = redirect.indexOf(StringPool.QUESTION);
 
-		if (pos == -1) {
-			pos = redirect.indexOf(StringPool.QUESTION);
+		if (posQuestion != -1) {
+			queryString = redirect.substring(posQuestion);
+			layoutURL = redirect.substring(0, posQuestion);
 		}
 
-		if (pos != -1) {
-			layoutURL = redirect.substring(0, pos);
-			queryString = redirect.substring(pos);
-		}
-		else {
-			layoutURL = redirect;
+		int posFriendlyURLSeparator = layoutURL.indexOf(
+			Portal.FRIENDLY_URL_SEPARATOR);
+
+		if (posFriendlyURLSeparator != -1) {
+			friendlyURLSeparatorPart = layoutURL.substring(
+				posFriendlyURLSeparator);
+			layoutURL = layoutURL.substring(0, posFriendlyURLSeparator);
 		}
 
 		if (themeDisplay.isI18n()) {
 			String i18nPath = themeDisplay.getI18nPath();
 
-			if (redirect.startsWith(i18nPath)) {
-				layoutURL = redirect.substring(i18nPath.length());
+			if (layoutURL.startsWith(i18nPath)) {
+				layoutURL = layoutURL.substring(i18nPath.length());
 			}
 		}
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (isFriendlyURLResolver(layoutURL)) {
-			redirect = layoutURL;
+		if (isFriendlyURLResolver(layoutURL) || layout.isTypeControlPanel()) {
+			redirect = layoutURL + friendlyURLSeparatorPart;
 		}
 		else if (layoutURL.equals(StringPool.SLASH) ||
 				 isGroupFriendlyURL(
@@ -137,15 +157,14 @@ public class UpdateLanguageAction extends Action {
 			}
 
 			if (!redirect.endsWith(StringPool.SLASH) &&
-				!queryString.startsWith(StringPool.SLASH)) {
+				!friendlyURLSeparatorPart.startsWith(StringPool.SLASH)) {
 
 				redirect += StringPool.SLASH;
 			}
-		}
-		else if (layout.isTypeControlPanel() && themeDisplay.isI18n()) {
-			String i18nPath = themeDisplay.getI18nPath();
 
-			redirect = redirect.substring(i18nPath.length());
+			if (Validator.isNotNull(friendlyURLSeparatorPart)) {
+				redirect += friendlyURLSeparatorPart;
+			}
 		}
 		else {
 			if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
@@ -156,15 +175,17 @@ public class UpdateLanguageAction extends Action {
 				redirect = PortalUtil.getLayoutFriendlyURL(
 					layout, themeDisplay, locale);
 			}
+
+			if (Validator.isNotNull(friendlyURLSeparatorPart)) {
+				redirect += friendlyURLSeparatorPart;
+			}
 		}
 
 		if (Validator.isNotNull(queryString)) {
 			redirect = redirect + queryString;
 		}
 
-		response.sendRedirect(redirect);
-
-		return null;
+		return redirect;
 	}
 
 	protected boolean isFriendlyURLResolver(String layoutURL) {

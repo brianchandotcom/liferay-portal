@@ -35,16 +35,16 @@ public class ListTypeCacheModel
 	implements CacheModel<ListType>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ListTypeCacheModel)) {
+		if (!(object instanceof ListTypeCacheModel)) {
 			return false;
 		}
 
-		ListTypeCacheModel listTypeCacheModel = (ListTypeCacheModel)obj;
+		ListTypeCacheModel listTypeCacheModel = (ListTypeCacheModel)object;
 
 		if ((listTypeId == listTypeCacheModel.listTypeId) &&
 			(mvccVersion == listTypeCacheModel.mvccVersion)) {

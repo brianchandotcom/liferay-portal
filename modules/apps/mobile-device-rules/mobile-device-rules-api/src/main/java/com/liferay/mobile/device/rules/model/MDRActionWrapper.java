@@ -936,16 +936,16 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MDRActionWrapper)) {
+		if (!(object instanceof MDRActionWrapper)) {
 			return false;
 		}
 
-		MDRActionWrapper mdrActionWrapper = (MDRActionWrapper)obj;
+		MDRActionWrapper mdrActionWrapper = (MDRActionWrapper)object;
 
 		if (Objects.equals(_mdrAction, mdrActionWrapper._mdrAction)) {
 			return true;

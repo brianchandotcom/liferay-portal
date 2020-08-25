@@ -77,6 +77,10 @@ public abstract class CommerceShippingFixedOptionLocalServiceBaseImpl
 	/**
 	 * Adds the commerce shipping fixed option to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceShippingFixedOptionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceShippingFixedOption the commerce shipping fixed option
 	 * @return the commerce shipping fixed option that was added
 	 */
@@ -109,6 +113,10 @@ public abstract class CommerceShippingFixedOptionLocalServiceBaseImpl
 	/**
 	 * Deletes the commerce shipping fixed option with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceShippingFixedOptionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceShippingFixedOptionId the primary key of the commerce shipping fixed option
 	 * @return the commerce shipping fixed option that was removed
 	 * @throws PortalException if a commerce shipping fixed option with the primary key could not be found
@@ -125,6 +133,10 @@ public abstract class CommerceShippingFixedOptionLocalServiceBaseImpl
 
 	/**
 	 * Deletes the commerce shipping fixed option from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceShippingFixedOptionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceShippingFixedOption the commerce shipping fixed option
 	 * @return the commerce shipping fixed option that was removed
@@ -355,6 +367,10 @@ public abstract class CommerceShippingFixedOptionLocalServiceBaseImpl
 
 	/**
 	 * Updates the commerce shipping fixed option in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceShippingFixedOptionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceShippingFixedOption the commerce shipping fixed option
 	 * @return the commerce shipping fixed option that was updated

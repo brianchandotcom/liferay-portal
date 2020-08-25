@@ -256,7 +256,7 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 
 			sb.append(getUserCSV(user));
 
-			percentage = Math.min(10 + (i * 90) / total, 99);
+			percentage = Math.min(10 + ((i * 90) / total), 99);
 
 			progressTracker.setPercent(percentage);
 		}

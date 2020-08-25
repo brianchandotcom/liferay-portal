@@ -13,19 +13,33 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 import {
 	formatDateObject,
-	getDateFromDateString
+	formatDateRangeObject,
+	getDateFromDateString,
+	convertObjectDateToIsoString
 } from '../../../utilities/dates';
-import getAppContext from '../Context';
 
+function getOdataString(value, key) {
+	if (value.from && value.to) {
+		return `${key} ge ${convertObjectDateToIsoString(
+			value.from,
+			'from'
+		)}) and (${key} le ${convertObjectDateToIsoString(value.to, 'to')}`;
+	}
+	if (value.from) {
+		return `${key} ge ${convertObjectDateToIsoString(value.from, 'from')}`;
+	}
+	if (value.to) {
+		return `${key} le ${convertObjectDateToIsoString(value.to, 'to')}`;
+	}
+}
 function DateRangeFilter(props) {
-	const {actions} = getAppContext();
-
 	const [fromValue, setFromValue] = useState(
 		props.value && props.value.from && formatDateObject(props.value.from)
 	);
@@ -33,116 +47,130 @@ function DateRangeFilter(props) {
 		props.value && props.value.to && formatDateObject(props.value.to)
 	);
 
-	useEffect(() => {
-		setFromValue(() =>
-			props.value && props.value.from
-				? formatDateObject(props.value.from)
-				: ''
-		);
-		setToValue(() =>
-			props.value && props.value.to
-				? formatDateObject(props.value.to)
-				: ''
-		);
-	}, [props.value]);
+	let actionType = 'edit';
+
+	if (props.value && !fromValue && !toValue) {
+		actionType = 'delete';
+	}
+
+	if (!props.value) {
+		actionType = 'add';
+	}
+
+	let submitDisabled = true;
+
+	if (
+		actionType === 'delete' ||
+		((!props.value || !props.value.from) && fromValue) ||
+		((!props.value || !props.value.to) && toValue) ||
+		(props.value &&
+			props.value.from &&
+			fromValue !== formatDateObject(props.value.from)) ||
+		(props.value &&
+			props.value.to &&
+			toValue !== formatDateObject(props.value.to))
+	) {
+		submitDisabled = false;
+	}
 
 	return (
-		<div className="form-group">
-			<ClayForm.Group className="form-group-sm">
-				<label htmlFor="basicInput">
-					{Liferay.Language.get('from')}
-				</label>
-				<input
-					className="form-control"
-					max={toValue || (props.max && formatDateObject(props.max))}
-					min={props.min && formatDateObject(props.min)}
-					onChange={e => setFromValue(e.target.value)}
-					pattern="\d{4}-\d{2}-\d{2}"
-					placeholder={props.placeholder || 'yyyy-mm-dd'}
-					type="date"
-					value={fromValue}
-				/>
-			</ClayForm.Group>
-			<ClayForm.Group className="form-group-sm mt-2">
-				<label htmlFor="basicInput">{Liferay.Language.get('to')}</label>
-				<input
-					className="form-control"
-					max={props.max && formatDateObject(props.max)}
-					min={
-						fromValue || (props.min && formatDateObject(props.min))
-					}
-					onChange={e => setToValue(e.target.value)}
-					pattern="\d{4}-\d{2}-\d{2}"
-					placeholder={props.placeholder || 'yyyy-mm-dd'}
-					type="date"
-					value={toValue}
-				/>
-			</ClayForm.Group>
-
-			<div className="mt-3">
+		<>
+			<ClayDropDown.Caption>
+				<div className="form-group">
+					<ClayForm.Group className="form-group-sm">
+						<label htmlFor={`from-${props.id}`}>
+							{Liferay.Language.get('from')}
+						</label>
+						<input
+							className="form-control"
+							id={`from-${props.id}`}
+							max={
+								toValue ||
+								(props.max && formatDateObject(props.max))
+							}
+							min={props.min && formatDateObject(props.min)}
+							onChange={e => setFromValue(e.target.value)}
+							pattern="\d{4}-\d{2}-\d{2}"
+							placeholder={props.placeholder || 'yyyy-mm-dd'}
+							type="date"
+							value={fromValue || ''}
+						/>
+					</ClayForm.Group>
+					<ClayForm.Group className="form-group-sm mt-2">
+						<label htmlFor={`to-${props.id}`}>
+							{Liferay.Language.get('to')}
+						</label>
+						<input
+							className="form-control"
+							id={`to-${props.id}`}
+							max={props.max && formatDateObject(props.max)}
+							min={
+								fromValue ||
+								(props.min && formatDateObject(props.min))
+							}
+							onChange={e => setToValue(e.target.value)}
+							pattern="\d{4}-\d{2}-\d{2}"
+							placeholder={props.placeholder || 'yyyy-mm-dd'}
+							type="date"
+							value={toValue || ''}
+						/>
+					</ClayForm.Group>
+				</div>
+			</ClayDropDown.Caption>
+			<ClayDropDown.Divider />
+			<ClayDropDown.Caption>
 				<ClayButton
-					className="btn-sm"
-					disabled={
-						fromValue ===
-							(props.value && props.value.from
-								? formatDateObject(props.value.from)
-								: '') &&
-						toValue ===
-							(props.value && props.value.to
-								? formatDateObject(props.value.to)
-								: '')
-					}
+					disabled={submitDisabled}
 					onClick={() => {
-						if (!fromValue && !toValue) {
-							actions.updateFilterValue(props.id, null);
+						if (actionType === 'delete') {
+							props.actions.updateFilterState(props.id);
 						} else {
-							actions.updateFilterValue(props.id, {
+							const newValue = {
 								from: fromValue
 									? getDateFromDateString(fromValue)
 									: null,
 								to: toValue
 									? getDateFromDateString(toValue)
 									: null
-							});
+							};
+							props.actions.updateFilterState(
+								props.id,
+								newValue,
+								formatDateRangeObject(newValue),
+								getOdataString(newValue, props.id)
+							);
 						}
 					}}
+					small
 				>
-					{props.panelType === 'edit'
-						? Liferay.Language.get('edit-filter')
-						: Liferay.Language.get('add-filter')}
+					{actionType === 'add' && Liferay.Language.get('add-filter')}
+					{actionType === 'edit' &&
+						Liferay.Language.get('edit-filter')}
+					{actionType === 'delete' &&
+						Liferay.Language.get('delete-filter')}
 				</ClayButton>
-			</div>
-		</div>
+			</ClayDropDown.Caption>
+		</>
 	);
 }
+
+const dateShape = PropTypes.shape({
+	day: PropTypes.number,
+	month: PropTypes.number,
+	year: PropTypes.number
+});
 
 DateRangeFilter.propTypes = {
 	id: PropTypes.string.isRequired,
 	invisible: PropTypes.bool,
 	label: PropTypes.string.isRequired,
-	max: PropTypes.shape({
-		day: PropTypes.number,
-		month: PropTypes.number,
-		year: PropTypes.number
-	}),
-	min: PropTypes.shape({
-		day: PropTypes.number,
-		month: PropTypes.number,
-		year: PropTypes.number
-	}),
+	max: dateShape,
+	min: dateShape,
 	placeholder: PropTypes.string,
 	type: PropTypes.oneOf(['dateRange']).isRequired,
 	value: PropTypes.shape({
-		from: PropTypes.shape({
-			day: PropTypes.number,
-			month: PropTypes.number,
-			year: PropTypes.number
-		}),
-		to: PropTypes.shape({
-			day: PropTypes.number,
-			month: PropTypes.number,
-			year: PropTypes.number
-		})
+		from: dateShape,
+		to: dateShape
 	})
 };
 

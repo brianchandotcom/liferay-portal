@@ -121,8 +121,8 @@ public class PostgreSQLDB extends BaseDB {
 			StringBundler sb = new StringBundler(3);
 
 			sb.append("select indexname, tablename, indexdef from pg_indexes ");
-			sb.append("where indexname like 'liferay_%' or indexname like ");
-			sb.append("'ix_%'");
+			sb.append("where schemaname = current_schema() and (indexname ");
+			sb.append("like 'liferay_%' or indexname like 'ix_%')");
 
 			String sql = sb.toString();
 

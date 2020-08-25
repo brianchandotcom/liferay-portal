@@ -339,17 +339,17 @@ public class FriendlyURLEntryMappingWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof FriendlyURLEntryMappingWrapper)) {
+		if (!(object instanceof FriendlyURLEntryMappingWrapper)) {
 			return false;
 		}
 
 		FriendlyURLEntryMappingWrapper friendlyURLEntryMappingWrapper =
-			(FriendlyURLEntryMappingWrapper)obj;
+			(FriendlyURLEntryMappingWrapper)object;
 
 		if (Objects.equals(
 				_friendlyURLEntryMapping,

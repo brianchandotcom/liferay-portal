@@ -1057,16 +1057,16 @@ public class DDLRecordSetWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDLRecordSetWrapper)) {
+		if (!(object instanceof DDLRecordSetWrapper)) {
 			return false;
 		}
 
-		DDLRecordSetWrapper ddlRecordSetWrapper = (DDLRecordSetWrapper)obj;
+		DDLRecordSetWrapper ddlRecordSetWrapper = (DDLRecordSetWrapper)object;
 
 		if (Objects.equals(_ddlRecordSet, ddlRecordSetWrapper._ddlRecordSet)) {
 			return true;

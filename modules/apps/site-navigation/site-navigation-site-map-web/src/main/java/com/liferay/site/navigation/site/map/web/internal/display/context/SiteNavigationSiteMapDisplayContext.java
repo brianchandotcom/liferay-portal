@@ -226,7 +226,7 @@ public class SiteNavigationSiteMapDisplayContext {
 			return;
 		}
 
-		if ((rootLayout != null) &&
+		if ((rootLayout != null) && !_isAssetDisplayPage(rootLayout) &&
 			!LayoutPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), rootLayout,
 				ActionKeys.VIEW)) {
@@ -258,6 +258,7 @@ public class SiteNavigationSiteMapDisplayContext {
 		else {
 			for (Layout curLayout : layouts) {
 				if ((showHiddenPages || !curLayout.isHidden()) &&
+					!_isAssetDisplayPage(curLayout) &&
 					LayoutPermissionUtil.contains(
 						themeDisplay.getPermissionChecker(), curLayout,
 						ActionKeys.VIEW)) {
@@ -298,6 +299,10 @@ public class SiteNavigationSiteMapDisplayContext {
 		}
 
 		sb.append("</ul>");
+	}
+
+	private boolean _isAssetDisplayPage(Layout layout) {
+		return "asset-display".equals(layout.getType());
 	}
 
 	private Long _displayStyleGroupId;

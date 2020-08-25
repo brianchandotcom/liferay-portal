@@ -34,17 +34,17 @@ public class AnnouncementsDeliveryCacheModel
 	implements CacheModel<AnnouncementsDelivery>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AnnouncementsDeliveryCacheModel)) {
+		if (!(object instanceof AnnouncementsDeliveryCacheModel)) {
 			return false;
 		}
 
 		AnnouncementsDeliveryCacheModel announcementsDeliveryCacheModel =
-			(AnnouncementsDeliveryCacheModel)obj;
+			(AnnouncementsDeliveryCacheModel)object;
 
 		if (deliveryId == announcementsDeliveryCacheModel.deliveryId) {
 			return true;

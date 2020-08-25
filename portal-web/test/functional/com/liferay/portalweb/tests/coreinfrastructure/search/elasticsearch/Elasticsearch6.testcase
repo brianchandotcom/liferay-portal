@@ -27,6 +27,96 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test AssertIndexOnStartup {
+		property test.name.skip.portal.instance = "Elasticsearch6#AssertIndexOnStartup";
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Asset Publisher Page");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/asset-publisher-page");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		Portlet.shutdownServer();
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		var elasticsearchDeleted = FileUtil.delete("${liferayHome}/data/elasticsearch6");
+
+		if ("${elasticsearchDeleted}" == "true") {
+			echo("Deleted ${liferayHome}/data/elasticsearch6");
+		}
+		else {
+			fail("Failed to delete elasticsearch6 directory");
+		}
+
+		var newProperty = "index.on.startup=true";
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=${newProperty}");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/asset-publisher-page");
+
+		// Workaround for LPS-113094 and LPS-114163
+
+		VerifyElementPresent(
+			key_assetTitle = "Blogs Entry Title",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		VerifyElementPresent(
+			key_assetTitle = "DM Document Title",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		VerifyElementPresent(
+			key_assetTitle = "WC WebContent Title",
+			locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		// Workaround for LPS-89026, LPS-113094, and LPS-114163
+
+		VerifyElementPresent(
+			key_searchAssetTitle = "Blogs Entry Title",
+			key_searchAssetType = "Blogs Entry",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
+
+		VerifyElementPresent(
+			key_searchAssetTitle = "DM Document Title",
+			key_searchAssetType = "Document",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
+
+		VerifyElementPresent(
+			key_searchAssetTitle = "Test Test",
+			key_searchAssetType = "User",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
+
+		VerifyElementPresent(
+			key_searchAssetTitle = "WC WebContent Title",
+			key_searchAssetType = "Web Content Article",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
+	}
+
 	@ignore = "true"
 	@priority = "3"
 	test AssertSystemSettingsPropogateToModule {

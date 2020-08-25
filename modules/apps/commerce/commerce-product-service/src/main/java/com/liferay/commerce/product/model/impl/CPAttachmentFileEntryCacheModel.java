@@ -36,17 +36,17 @@ public class CPAttachmentFileEntryCacheModel
 	implements CacheModel<CPAttachmentFileEntry>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPAttachmentFileEntryCacheModel)) {
+		if (!(object instanceof CPAttachmentFileEntryCacheModel)) {
 			return false;
 		}
 
 		CPAttachmentFileEntryCacheModel cpAttachmentFileEntryCacheModel =
-			(CPAttachmentFileEntryCacheModel)obj;
+			(CPAttachmentFileEntryCacheModel)object;
 
 		if (CPAttachmentFileEntryId ==
 				cpAttachmentFileEntryCacheModel.CPAttachmentFileEntryId) {

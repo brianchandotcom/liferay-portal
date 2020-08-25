@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Product Content Web
 Bundle-SymbolicName: com.liferay.commerce.product.content.web
-Bundle-Version: 1.0.41
+Bundle-Version: 1.0.44
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Provide-Capability:\
 	soy;\

@@ -453,7 +453,7 @@ public class EntityCacheImpl
 
 		@Override
 		public int hashCode() {
-			return _className.hashCode() * 11 + _primaryKey.hashCode();
+			return (_className.hashCode() * 11) + _primaryKey.hashCode();
 		}
 
 		private static final long serialVersionUID = 1L;

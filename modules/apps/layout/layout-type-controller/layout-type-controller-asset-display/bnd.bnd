@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Layout Type Controller Asset Display
 Bundle-SymbolicName: com.liferay.layout.type.controller.asset.display
-Bundle-Version: 1.0.18
+Bundle-Version: 1.0.19
 Import-Package:\
 	com.liferay.portal.kernel.portlet;version="[7.3.0,8.5)",\
 	\

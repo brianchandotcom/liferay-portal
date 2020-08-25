@@ -214,7 +214,7 @@ public class DigesterImpl implements Digester {
 		try {
 			messageDigest = MessageDigest.getInstance(algorithm);
 
-			StringBundler sb = new StringBundler(text.length * 2 - 1);
+			StringBundler sb = new StringBundler((text.length * 2) - 1);
 
 			for (String t : text) {
 				if (sb.length() > 0) {

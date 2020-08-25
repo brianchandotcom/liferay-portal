@@ -37,6 +37,10 @@ public class ResourceTypePermissionLocalServiceWrapper
 	/**
 	 * Adds the resource type permission to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ResourceTypePermissionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param resourceTypePermission the resource type permission
 	 * @return the resource type permission that was added
 	 */
@@ -79,6 +83,10 @@ public class ResourceTypePermissionLocalServiceWrapper
 	/**
 	 * Deletes the resource type permission with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ResourceTypePermissionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param resourceTypePermissionId the primary key of the resource type permission
 	 * @return the resource type permission that was removed
 	 * @throws PortalException if a resource type permission with the primary key could not be found
@@ -94,6 +102,10 @@ public class ResourceTypePermissionLocalServiceWrapper
 
 	/**
 	 * Deletes the resource type permission from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ResourceTypePermissionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param resourceTypePermission the resource type permission
 	 * @return the resource type permission that was removed
@@ -397,6 +409,10 @@ public class ResourceTypePermissionLocalServiceWrapper
 
 	/**
 	 * Updates the resource type permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ResourceTypePermissionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param resourceTypePermission the resource type permission
 	 * @return the resource type permission that was updated

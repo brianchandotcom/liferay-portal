@@ -591,17 +591,17 @@ public class MDRRuleGroupInstanceWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MDRRuleGroupInstanceWrapper)) {
+		if (!(object instanceof MDRRuleGroupInstanceWrapper)) {
 			return false;
 		}
 
 		MDRRuleGroupInstanceWrapper mdrRuleGroupInstanceWrapper =
-			(MDRRuleGroupInstanceWrapper)obj;
+			(MDRRuleGroupInstanceWrapper)object;
 
 		if (Objects.equals(
 				_mdrRuleGroupInstance,

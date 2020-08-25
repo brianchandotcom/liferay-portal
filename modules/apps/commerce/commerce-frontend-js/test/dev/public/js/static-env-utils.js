@@ -14,7 +14,21 @@
 
 window.Liferay = {
 	Language: {
-		get: v => v
+		get(v) {
+			const charZero = v.charAt(0).toUpperCase(),
+				rest = v
+					.substring(1, v.length)
+					.split('-')
+					.join(' ');
+
+			return `${charZero}${rest}`;
+		}
+	},
+	ThemeDisplay: {
+		getCanonicalURL: () => '/',
+		getDefaultLanguageId: () => 'en_US',
+		getLanguageId: () => 'it_IT',
+		getPathThemeImages: () => '/assets'
 	},
 	component: () => {},
 	detach: (name, fn) => {
@@ -34,10 +48,8 @@ window.Liferay = {
 		window.addEventListener(name, fn);
 	},
 	staticEnvHeaders: new Headers({
-		Authorization: `Basic ${window.btoa('test@liferay.com:test')}`
+		Accept: 'application/json',
+		Authorization: `Basic ${window.btoa('test@liferay.com:test')}`,
+		'Content-Type': 'application/json'
 	})
-};
-
-window.themeDisplay = {
-	getLanguageId: () => 'en_US'
 };

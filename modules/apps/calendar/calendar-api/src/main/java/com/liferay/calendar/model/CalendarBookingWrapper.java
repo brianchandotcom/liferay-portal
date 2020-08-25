@@ -1519,17 +1519,17 @@ public class CalendarBookingWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CalendarBookingWrapper)) {
+		if (!(object instanceof CalendarBookingWrapper)) {
 			return false;
 		}
 
 		CalendarBookingWrapper calendarBookingWrapper =
-			(CalendarBookingWrapper)obj;
+			(CalendarBookingWrapper)object;
 
 		if (Objects.equals(
 				_calendarBooking, calendarBookingWrapper._calendarBooking)) {

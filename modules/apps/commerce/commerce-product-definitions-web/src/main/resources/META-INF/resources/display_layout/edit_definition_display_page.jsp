@@ -109,7 +109,7 @@ if (cpDisplayLayout != null) {
 
 				<aui:field-wrapper helpMessage="product-display-page-help" label="product-display-page">
 					<p class="text-default">
-						<span class='<%= Validator.isNull(layoutBreadcrumb) ? "hide" : StringPool.BLANK %>' id="<portlet:namespace />displayPageItemRemove" role="button">
+						<span class="<%= Validator.isNull(layoutBreadcrumb) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
 							<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
 						</span>
 						<span id="<portlet:namespace />displayPageNameInput">

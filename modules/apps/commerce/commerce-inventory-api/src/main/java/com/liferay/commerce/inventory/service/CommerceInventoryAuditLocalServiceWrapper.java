@@ -37,6 +37,10 @@ public class CommerceInventoryAuditLocalServiceWrapper
 	/**
 	 * Adds the commerce inventory audit to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceInventoryAuditLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceInventoryAudit the commerce inventory audit
 	 * @return the commerce inventory audit that was added
 	 */
@@ -83,6 +87,10 @@ public class CommerceInventoryAuditLocalServiceWrapper
 	/**
 	 * Deletes the commerce inventory audit from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceInventoryAuditLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceInventoryAudit the commerce inventory audit
 	 * @return the commerce inventory audit that was removed
 	 */
@@ -98,6 +106,10 @@ public class CommerceInventoryAuditLocalServiceWrapper
 
 	/**
 	 * Deletes the commerce inventory audit with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceInventoryAuditLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceInventoryAuditId the primary key of the commerce inventory audit
 	 * @return the commerce inventory audit that was removed
@@ -326,6 +338,10 @@ public class CommerceInventoryAuditLocalServiceWrapper
 
 	/**
 	 * Updates the commerce inventory audit in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceInventoryAuditLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceInventoryAudit the commerce inventory audit
 	 * @return the commerce inventory audit that was updated

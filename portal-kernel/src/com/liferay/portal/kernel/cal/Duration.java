@@ -144,9 +144,9 @@ public class Duration implements Cloneable, Serializable {
 	 * @return long
 	 */
 	public long getInterval() {
-		return _seconds * _MILLIS_PER_SECOND + _minutes * _MILLIS_PER_MINUTE +
-			_hours * _MILLIS_PER_HOUR + _days * _MILLIS_PER_DAY +
-				_weeks * _MILLIS_PER_WEEK;
+		return (_seconds * _MILLIS_PER_SECOND) +
+			(_minutes * _MILLIS_PER_MINUTE) + (_hours * _MILLIS_PER_HOUR) +
+				(_days * _MILLIS_PER_DAY) + (_weeks * _MILLIS_PER_WEEK);
 	}
 
 	/**

@@ -164,6 +164,9 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 
 		newCPDefinitionOptionValueRel.setQuantity(RandomTestUtil.nextInt());
 
+		newCPDefinitionOptionValueRel.setPreselected(
+			RandomTestUtil.randomBoolean());
+
 		newCPDefinitionOptionValueRel.setPrice(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
@@ -224,6 +227,9 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 		Assert.assertEquals(
 			existingCPDefinitionOptionValueRel.getQuantity(),
 			newCPDefinitionOptionValueRel.getQuantity());
+		Assert.assertEquals(
+			existingCPDefinitionOptionValueRel.isPreselected(),
+			newCPDefinitionOptionValueRel.isPreselected());
 		Assert.assertEquals(
 			existingCPDefinitionOptionValueRel.getPrice(),
 			newCPDefinitionOptionValueRel.getPrice());
@@ -305,6 +311,14 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCDORI_P() throws Exception {
+		_persistence.countByCDORI_P(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByCDORI_P(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CPDefinitionOptionValueRel newCPDefinitionOptionValueRel =
 			addCPDefinitionOptionValueRel();
@@ -339,7 +353,8 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "CPDefinitionOptionRelId", true,
 			"CPInstanceUuid", true, "CProductId", true, "name", true,
-			"priority", true, "key", true, "quantity", true, "price", true);
+			"priority", true, "key", true, "quantity", true, "preselected",
+			true, "price", true);
 	}
 
 	@Test
@@ -662,6 +677,9 @@ public class CPDefinitionOptionValueRelPersistenceTest {
 		cpDefinitionOptionValueRel.setKey(RandomTestUtil.randomString());
 
 		cpDefinitionOptionValueRel.setQuantity(RandomTestUtil.nextInt());
+
+		cpDefinitionOptionValueRel.setPreselected(
+			RandomTestUtil.randomBoolean());
 
 		cpDefinitionOptionValueRel.setPrice(
 			new BigDecimal(RandomTestUtil.nextDouble()));

@@ -801,16 +801,16 @@ public class PowwowServerModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof PowwowServer)) {
+		if (!(object instanceof PowwowServer)) {
 			return false;
 		}
 
-		PowwowServer powwowServer = (PowwowServer)obj;
+		PowwowServer powwowServer = (PowwowServer)object;
 
 		long primaryKey = powwowServer.getPrimaryKey();
 

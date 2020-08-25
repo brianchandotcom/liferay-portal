@@ -391,16 +391,16 @@ public class RSVEntryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof RSVEntry)) {
+		if (!(object instanceof RSVEntry)) {
 			return false;
 		}
 
-		RSVEntry rsvEntry = (RSVEntry)obj;
+		RSVEntry rsvEntry = (RSVEntry)object;
 
 		long primaryKey = rsvEntry.getPrimaryKey();
 

@@ -36,17 +36,17 @@ public class CPDisplayLayoutCacheModel
 	implements CacheModel<CPDisplayLayout>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDisplayLayoutCacheModel)) {
+		if (!(object instanceof CPDisplayLayoutCacheModel)) {
 			return false;
 		}
 
 		CPDisplayLayoutCacheModel cpDisplayLayoutCacheModel =
-			(CPDisplayLayoutCacheModel)obj;
+			(CPDisplayLayoutCacheModel)object;
 
 		if (CPDisplayLayoutId == cpDisplayLayoutCacheModel.CPDisplayLayoutId) {
 			return true;

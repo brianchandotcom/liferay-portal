@@ -36,17 +36,17 @@ public class CommerceInventoryAuditCacheModel
 	implements CacheModel<CommerceInventoryAudit>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceInventoryAuditCacheModel)) {
+		if (!(object instanceof CommerceInventoryAuditCacheModel)) {
 			return false;
 		}
 
 		CommerceInventoryAuditCacheModel commerceInventoryAuditCacheModel =
-			(CommerceInventoryAuditCacheModel)obj;
+			(CommerceInventoryAuditCacheModel)object;
 
 		if (commerceInventoryAuditId ==
 				commerceInventoryAuditCacheModel.commerceInventoryAuditId) {

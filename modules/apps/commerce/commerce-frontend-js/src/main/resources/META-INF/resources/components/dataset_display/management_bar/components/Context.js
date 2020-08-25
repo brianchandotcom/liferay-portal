@@ -15,7 +15,6 @@
 import React, {createContext, useContext, useReducer} from 'react';
 
 import {actions} from '../actions/index';
-import applyMiddleware from '../middleware/index';
 import reducer, {initialState} from '../reducers/index';
 
 export const StoreContext = createContext(null);
@@ -36,10 +35,7 @@ export function StoreProvider({children, ...stateProps}) {
 		...stateProps
 	});
 
-	const serializedActions = serializeActions(
-		actions,
-		applyMiddleware(dispatch)
-	);
+	const serializedActions = serializeActions(actions, dispatch);
 
 	return (
 		<StoreContext.Provider value={{actions: serializedActions, state}}>
@@ -47,8 +43,6 @@ export function StoreProvider({children, ...stateProps}) {
 		</StoreContext.Provider>
 	);
 }
-
-export const StoreConsumer = StoreContext.Consumer;
 
 export function useAppState() {
 	return useContext(StoreContext);

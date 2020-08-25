@@ -630,16 +630,16 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoNodeWrapper)) {
+		if (!(object instanceof KaleoNodeWrapper)) {
 			return false;
 		}
 
-		KaleoNodeWrapper kaleoNodeWrapper = (KaleoNodeWrapper)obj;
+		KaleoNodeWrapper kaleoNodeWrapper = (KaleoNodeWrapper)object;
 
 		if (Objects.equals(_kaleoNode, kaleoNodeWrapper._kaleoNode)) {
 			return true;

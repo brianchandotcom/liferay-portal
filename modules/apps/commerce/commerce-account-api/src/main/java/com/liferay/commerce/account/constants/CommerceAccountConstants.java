@@ -41,7 +41,7 @@ public class CommerceAccountConstants {
 	public static final int ACCOUNT_TYPE_PERSONAL = 1;
 
 	public static final int[] ACCOUNT_TYPES = {
-		ACCOUNT_TYPE_PERSONAL, ACCOUNT_TYPE_BUSINESS
+		ACCOUNT_TYPE_GUEST, ACCOUNT_TYPE_PERSONAL, ACCOUNT_TYPE_BUSINESS
 	};
 
 	public static final long DEFAULT_PARENT_ACCOUNT_ID = 0;

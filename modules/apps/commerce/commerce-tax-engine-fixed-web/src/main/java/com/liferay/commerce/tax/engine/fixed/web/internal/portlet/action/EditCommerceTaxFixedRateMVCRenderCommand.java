@@ -16,6 +16,7 @@ package com.liferay.commerce.tax.engine.fixed.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -71,7 +72,8 @@ public class EditCommerceTaxFixedRateMVCRenderCommand
 						_commerceChannelModelResourcePermission,
 						_commerceCurrencyLocalService,
 						_commerceTaxFixedRateService, _commerceTaxMethodService,
-						_cpTaxCategoryService, renderRequest);
+						_cpTaxCategoryService, _percentageFormatter,
+						renderRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -117,6 +119,9 @@ public class EditCommerceTaxFixedRateMVCRenderCommand
 
 	@Reference
 	private CPTaxCategoryService _cpTaxCategoryService;
+
+	@Reference
+	private PercentageFormatter _percentageFormatter;
 
 	@Reference
 	private Portal _portal;

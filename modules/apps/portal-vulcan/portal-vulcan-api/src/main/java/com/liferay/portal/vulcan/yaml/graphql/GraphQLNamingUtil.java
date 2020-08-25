@@ -19,8 +19,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.List;
 
 /**
- * @author Javier Gamarra
+ * @author     Javier Gamarra
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ *             com.liferay.portal.vulcan.graphql.util.GraphQLNamingUtil}
  */
+@Deprecated
 public class GraphQLNamingUtil {
 
 	public static String getGraphQLMutationName(String methodName) {
@@ -43,7 +46,8 @@ public class GraphQLNamingUtil {
 
 		if (returnType.contains("Collection<") ||
 			(returnType.contains("Page<") &&
-			 (methodName.lastIndexOf("Page") != -1))) {
+			 (methodName.lastIndexOf("Page") != -1) &&
+			 methodName.contains("Page"))) {
 
 			methodName = methodName.substring(
 				0, methodName.lastIndexOf("Page"));

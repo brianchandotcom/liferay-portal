@@ -65,7 +65,7 @@ if (layoutBranch != null) {
 	<liferay-util:param name="navigationName" value="<%= title %>" />
 </liferay-util:include>
 
-<div class="container-fluid-1280" data-namespace="<portlet:namespace />" id='<portlet:namespace /><%= (layoutBranch != null) ? "updateBranch" : "addBranch" %>'>
+<div class="container-fluid-1280" data-namespace="<portlet:namespace />" id="<portlet:namespace /><%= (layoutBranch != null) ? "updateBranch" : "addBranch" %>">
 	<aui:model-context bean="<%= layoutBranch %>" model="<%= LayoutBranch.class %>" />
 
 	<portlet:actionURL name="editLayoutBranch" var="editLayoutBranchURL">

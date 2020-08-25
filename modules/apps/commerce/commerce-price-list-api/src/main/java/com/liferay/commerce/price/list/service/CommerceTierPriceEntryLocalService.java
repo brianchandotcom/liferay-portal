@@ -76,6 +76,10 @@ public interface CommerceTierPriceEntryLocalService
 	/**
 	 * Adds the commerce tier price entry to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceTierPriceEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceTierPriceEntry the commerce tier price entry
 	 * @return the commerce tier price entry that was added
 	 */
@@ -148,6 +152,10 @@ public interface CommerceTierPriceEntryLocalService
 	/**
 	 * Deletes the commerce tier price entry from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceTierPriceEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceTierPriceEntry the commerce tier price entry
 	 * @return the commerce tier price entry that was removed
 	 * @throws PortalException
@@ -160,6 +168,10 @@ public interface CommerceTierPriceEntryLocalService
 
 	/**
 	 * Deletes the commerce tier price entry with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceTierPriceEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceTierPriceEntryId the primary key of the commerce tier price entry
 	 * @return the commerce tier price entry that was removed
@@ -383,6 +395,10 @@ public interface CommerceTierPriceEntryLocalService
 
 	/**
 	 * Updates the commerce tier price entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceTierPriceEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceTierPriceEntry the commerce tier price entry
 	 * @return the commerce tier price entry that was updated

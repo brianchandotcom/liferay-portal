@@ -667,6 +667,21 @@ public interface CPInstanceModel
 		long deliveryMaxSubscriptionCycles);
 
 	/**
+	 * Returns the unspsc of this cp instance.
+	 *
+	 * @return the unspsc of this cp instance
+	 */
+	@AutoEscape
+	public String getUnspsc();
+
+	/**
+	 * Sets the unspsc of this cp instance.
+	 *
+	 * @param unspsc the unspsc of this cp instance
+	 */
+	public void setUnspsc(String unspsc);
+
+	/**
 	 * Returns the status of this cp instance.
 	 *
 	 * @return the status of this cp instance

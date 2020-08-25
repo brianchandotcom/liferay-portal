@@ -1132,16 +1132,17 @@ public class DLFileVersionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DLFileVersionWrapper)) {
+		if (!(object instanceof DLFileVersionWrapper)) {
 			return false;
 		}
 
-		DLFileVersionWrapper dlFileVersionWrapper = (DLFileVersionWrapper)obj;
+		DLFileVersionWrapper dlFileVersionWrapper =
+			(DLFileVersionWrapper)object;
 
 		if (Objects.equals(
 				_dlFileVersion, dlFileVersionWrapper._dlFileVersion)) {

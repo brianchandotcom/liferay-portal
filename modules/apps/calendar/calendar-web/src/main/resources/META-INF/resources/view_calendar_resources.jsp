@@ -30,7 +30,7 @@ CalendarResourceDisplayTerms displayTerms = new CalendarResourceDisplayTerms(ren
 	searchActionURL="<%= calendarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= calendarDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm"
-	selectable="false"
+	selectable="<%= false %>"
 />
 
 <liferay-portlet:renderURL varImpl="iteratorURL">

@@ -38,18 +38,18 @@ public class CommerceShippingFixedOptionCacheModel
 	implements CacheModel<CommerceShippingFixedOption>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceShippingFixedOptionCacheModel)) {
+		if (!(object instanceof CommerceShippingFixedOptionCacheModel)) {
 			return false;
 		}
 
 		CommerceShippingFixedOptionCacheModel
 			commerceShippingFixedOptionCacheModel =
-				(CommerceShippingFixedOptionCacheModel)obj;
+				(CommerceShippingFixedOptionCacheModel)object;
 
 		if (commerceShippingFixedOptionId ==
 				commerceShippingFixedOptionCacheModel.

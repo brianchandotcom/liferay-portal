@@ -67,6 +67,8 @@ public class AddStructureMVCActionCommand extends DDMBaseMVCActionCommand {
 
 		DDMForm ddmForm = _ddm.getDDMForm(actionRequest);
 
+		ActionUtil.validateFieldNames(ddmForm);
+
 		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
 
 		String storageType = ParamUtil.getString(actionRequest, "storageType");

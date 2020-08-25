@@ -74,6 +74,10 @@ public interface CommerceOrderLocalService
 	/**
 	 * Adds the commerce order to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceOrder the commerce order
 	 * @return the commerce order that was added
 	 */
@@ -141,6 +145,10 @@ public interface CommerceOrderLocalService
 	/**
 	 * Deletes the commerce order from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceOrder the commerce order
 	 * @return the commerce order that was removed
 	 * @throws PortalException
@@ -151,6 +159,10 @@ public interface CommerceOrderLocalService
 
 	/**
 	 * Deletes the commerce order with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceOrderId the primary key of the commerce order
 	 * @return the commerce order that was removed
@@ -514,11 +526,26 @@ public interface CommerceOrderLocalService
 	/**
 	 * Updates the commerce order in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceOrder the commerce order
 	 * @return the commerce order that was updated
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateCommerceOrder(CommerceOrder commerceOrder);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceOrder updateCommerceOrder(
+			long commerceOrderId, long billingAddressId, long shippingAddressId,
+			String commercePaymentMethodKey, long commerceShippingMethodId,
+			String shippingOptionName, String purchaseOrderNumber,
+			BigDecimal subtotal, BigDecimal shippingAmount, BigDecimal total,
+			BigDecimal subtotalWithTaxAmount, BigDecimal shippingWithTaxAmount,
+			BigDecimal totalWithTaxAmount, String advanceStatus,
+			String externalReferenceCode, CommerceContext commerceContext)
+		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateCommerceOrder(
@@ -685,6 +712,19 @@ public interface CommerceOrderLocalService
 		throws PortalException;
 
 	public CommerceOrder updateUser(long commerceOrderId, long userId)
+		throws PortalException;
+
+	public CommerceOrder upsertCommerceOrder(
+			long userId, long groupId, long commerceAccountId,
+			long commerceCurrencyId, long billingAddressId,
+			long shippingAddressId, String commercePaymentMethodKey,
+			long commerceShippingMethodId, String shippingOptionName,
+			String purchaseOrderNumber, BigDecimal subtotal,
+			BigDecimal shippingAmount, BigDecimal total,
+			BigDecimal subtotalWithTaxAmount, BigDecimal shippingWithTaxAmount,
+			BigDecimal totalWithTaxAmount, int paymentStatus, int orderStatus,
+			String advanceStatus, String externalReferenceCode,
+			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrder upsertCommerceOrder(

@@ -34,16 +34,17 @@ public class TestEntityCacheModel
 	implements CacheModel<TestEntity>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof TestEntityCacheModel)) {
+		if (!(object instanceof TestEntityCacheModel)) {
 			return false;
 		}
 
-		TestEntityCacheModel testEntityCacheModel = (TestEntityCacheModel)obj;
+		TestEntityCacheModel testEntityCacheModel =
+			(TestEntityCacheModel)object;
 
 		if (id == testEntityCacheModel.id) {
 			return true;

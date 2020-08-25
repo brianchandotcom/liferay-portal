@@ -18,15 +18,11 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.payment.engine.CommerceSubscriptionEngine;
 import com.liferay.commerce.payment.method.paypal.internal.constants.PayPalCommercePaymentMethodConstants;
-import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.payment.util.CommercePaymentHttpHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
 
@@ -67,18 +63,8 @@ public class CommercePaymentMethodPayPalServlet extends HttpServlet {
 				PortalSessionThreadLocal.setHttpSession(httpSession);
 			}
 
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(
-					_portal.getUser(httpServletRequest));
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-			long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
-			String uuid = ParamUtil.getString(httpServletRequest, "uuid");
-
 			CommerceOrder commerceOrder =
-				_commerceOrderService.getCommerceOrderByUuidAndGroupId(
-					uuid, groupId);
+				_commercePaymentHttpHelper.getCommerceOrder(httpServletRequest);
 
 			String paymentId = ParamUtil.getString(
 				httpServletRequest, "paymentId");
@@ -119,15 +105,12 @@ public class CommercePaymentMethodPayPalServlet extends HttpServlet {
 		CommercePaymentMethodPayPalServlet.class);
 
 	@Reference
-	private CommerceOrderService _commerceOrderService;
-
-	@Reference
 	private CommercePaymentEngine _commercePaymentEngine;
 
 	@Reference
-	private CommerceSubscriptionEngine _commerceSubscriptionEngine;
+	private CommercePaymentHttpHelper _commercePaymentHttpHelper;
 
 	@Reference
-	private Portal _portal;
+	private CommerceSubscriptionEngine _commerceSubscriptionEngine;
 
 }

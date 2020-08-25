@@ -515,7 +515,8 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 
 		// Clear out buffer
 
-		Assert.assertEquals(size * 2 - 1, unsyncBufferedReader.skip(size * 2));
+		Assert.assertEquals(
+			(size * 2) - 1, unsyncBufferedReader.skip(size * 2));
 
 		// Mark a large size for EOF
 
@@ -555,7 +556,7 @@ public class UnsyncBufferedReaderTest extends BaseReaderTestCase {
 
 	static {
 		for (int i = 0; i < _SIZE; i++) {
-			_BUFFER[i] = (char)(i % 26 + 'a');
+			_BUFFER[i] = (char)((i % 26) + 'a');
 		}
 	}
 

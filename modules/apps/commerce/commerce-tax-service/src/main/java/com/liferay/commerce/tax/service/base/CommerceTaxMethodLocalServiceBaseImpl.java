@@ -74,6 +74,10 @@ public abstract class CommerceTaxMethodLocalServiceBaseImpl
 	/**
 	 * Adds the commerce tax method to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceTaxMethodLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceTaxMethod the commerce tax method
 	 * @return the commerce tax method that was added
 	 */
@@ -102,6 +106,10 @@ public abstract class CommerceTaxMethodLocalServiceBaseImpl
 	/**
 	 * Deletes the commerce tax method with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceTaxMethodLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceTaxMethodId the primary key of the commerce tax method
 	 * @return the commerce tax method that was removed
 	 * @throws PortalException if a commerce tax method with the primary key could not be found
@@ -116,6 +124,10 @@ public abstract class CommerceTaxMethodLocalServiceBaseImpl
 
 	/**
 	 * Deletes the commerce tax method from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceTaxMethodLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceTaxMethod the commerce tax method
 	 * @return the commerce tax method that was removed
@@ -333,6 +345,10 @@ public abstract class CommerceTaxMethodLocalServiceBaseImpl
 
 	/**
 	 * Updates the commerce tax method in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceTaxMethodLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceTaxMethod the commerce tax method
 	 * @return the commerce tax method that was updated

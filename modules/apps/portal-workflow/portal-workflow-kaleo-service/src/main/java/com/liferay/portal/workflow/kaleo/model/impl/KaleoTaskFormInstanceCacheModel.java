@@ -36,17 +36,17 @@ public class KaleoTaskFormInstanceCacheModel
 	implements CacheModel<KaleoTaskFormInstance>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoTaskFormInstanceCacheModel)) {
+		if (!(object instanceof KaleoTaskFormInstanceCacheModel)) {
 			return false;
 		}
 
 		KaleoTaskFormInstanceCacheModel kaleoTaskFormInstanceCacheModel =
-			(KaleoTaskFormInstanceCacheModel)obj;
+			(KaleoTaskFormInstanceCacheModel)object;
 
 		if (kaleoTaskFormInstanceId ==
 				kaleoTaskFormInstanceCacheModel.kaleoTaskFormInstanceId) {

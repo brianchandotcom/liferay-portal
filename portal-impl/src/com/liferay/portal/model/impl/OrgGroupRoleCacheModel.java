@@ -36,17 +36,17 @@ public class OrgGroupRoleCacheModel
 	implements CacheModel<OrgGroupRole>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof OrgGroupRoleCacheModel)) {
+		if (!(object instanceof OrgGroupRoleCacheModel)) {
 			return false;
 		}
 
 		OrgGroupRoleCacheModel orgGroupRoleCacheModel =
-			(OrgGroupRoleCacheModel)obj;
+			(OrgGroupRoleCacheModel)object;
 
 		if (orgGroupRolePK.equals(orgGroupRoleCacheModel.orgGroupRolePK) &&
 			(mvccVersion == orgGroupRoleCacheModel.mvccVersion)) {

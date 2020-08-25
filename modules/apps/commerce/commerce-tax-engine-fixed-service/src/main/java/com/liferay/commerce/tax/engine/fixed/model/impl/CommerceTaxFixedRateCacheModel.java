@@ -36,17 +36,17 @@ public class CommerceTaxFixedRateCacheModel
 	implements CacheModel<CommerceTaxFixedRate>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceTaxFixedRateCacheModel)) {
+		if (!(object instanceof CommerceTaxFixedRateCacheModel)) {
 			return false;
 		}
 
 		CommerceTaxFixedRateCacheModel commerceTaxFixedRateCacheModel =
-			(CommerceTaxFixedRateCacheModel)obj;
+			(CommerceTaxFixedRateCacheModel)object;
 
 		if (commerceTaxFixedRateId ==
 				commerceTaxFixedRateCacheModel.commerceTaxFixedRateId) {

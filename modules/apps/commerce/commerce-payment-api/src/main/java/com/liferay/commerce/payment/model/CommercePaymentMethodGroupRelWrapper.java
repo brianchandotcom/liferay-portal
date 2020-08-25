@@ -867,18 +867,18 @@ public class CommercePaymentMethodGroupRelWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommercePaymentMethodGroupRelWrapper)) {
+		if (!(object instanceof CommercePaymentMethodGroupRelWrapper)) {
 			return false;
 		}
 
 		CommercePaymentMethodGroupRelWrapper
 			commercePaymentMethodGroupRelWrapper =
-				(CommercePaymentMethodGroupRelWrapper)obj;
+				(CommercePaymentMethodGroupRelWrapper)object;
 
 		if (Objects.equals(
 				_commercePaymentMethodGroupRel,

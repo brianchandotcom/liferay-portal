@@ -38,7 +38,7 @@ else {
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= commercePriceListDisplayContext.hasManageCommercePriceListPermission() %>">
+	<c:if test="<%= commercePriceListDisplayContext.hasPermission(commercePriceList.getCommercePriceListId(), ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="editCommercePriceList" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -49,7 +49,9 @@ else {
 			message="edit"
 			url="<%= editURL %>"
 		/>
+	</c:if>
 
+	<c:if test="<%= commercePriceListDisplayContext.hasPermission(commercePriceList.getCommercePriceListId(), ActionKeys.DELETE) %>">
 		<portlet:actionURL name="editCommercePriceList" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -58,6 +60,23 @@ else {
 
 		<liferay-ui:icon-delete
 			url="<%= deleteURL %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= commercePriceListDisplayContext.hasPermission(commercePriceList.getCommercePriceListId(), ActionKeys.PERMISSIONS) %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= CommercePriceList.class.getName() %>"
+			modelResourceDescription="<%= commercePriceList.getName() %>"
+			resourcePrimKey="<%= String.valueOf(commercePriceList.getCommercePriceListId()) %>"
+			var="permissionsPriceListURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
+
+		<liferay-ui:icon
+			message="permissions"
+			method="get"
+			url="<%= permissionsPriceListURL %>"
+			useDialog="<%= true %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

@@ -14,12 +14,14 @@
 
 package com.liferay.commerce.price.list.service.impl;
 
-import com.liferay.commerce.price.list.constants.CommercePriceListActionKeys;
+import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRel;
 import com.liferay.commerce.price.list.service.base.CommercePriceListCommerceAccountGroupRelServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -37,9 +39,8 @@ public class CommercePriceListCommerceAccountGroupRelServiceImpl
 				int order, ServiceContext serviceContext)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
-			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
+		_commercePriceListModelResourcePermission.check(
+			getPermissionChecker(), commercePriceListId, ActionKeys.UPDATE);
 
 		return commercePriceListCommerceAccountGroupRelLocalService.
 			addCommercePriceListCommerceAccountGroupRel(
@@ -52,13 +53,20 @@ public class CommercePriceListCommerceAccountGroupRelServiceImpl
 			long commercePriceListCommerceAccountGroupRelId)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
+		CommercePriceListCommerceAccountGroupRel
+			commercePriceListCommerceAccountGroupRel =
+				commercePriceListCommerceAccountGroupRelLocalService.
+					getCommercePriceListCommerceAccountGroupRel(
+						commercePriceListCommerceAccountGroupRelId);
+
+		_commercePriceListModelResourcePermission.check(
 			getPermissionChecker(),
-			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
+			commercePriceListCommerceAccountGroupRel.getCommercePriceListId(),
+			ActionKeys.UPDATE);
 
 		commercePriceListCommerceAccountGroupRelLocalService.
 			deleteCommercePriceListCommerceAccountGroupRel(
-				commercePriceListCommerceAccountGroupRelId);
+				commercePriceListCommerceAccountGroupRel);
 	}
 
 	@Override
@@ -67,9 +75,8 @@ public class CommercePriceListCommerceAccountGroupRelServiceImpl
 				long commercePriceListId, long commerceAccountGroupId)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
-			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
+		_commercePriceListModelResourcePermission.check(
+			getPermissionChecker(), commercePriceListId, ActionKeys.VIEW);
 
 		return commercePriceListCommerceAccountGroupRelLocalService.
 			fetchCommercePriceListCommerceAccountGroupRel(
@@ -82,13 +89,18 @@ public class CommercePriceListCommerceAccountGroupRelServiceImpl
 				long commercePriceListCommerceAccoungGroupRelId)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
-			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
+		CommercePriceListCommerceAccountGroupRel
+			commercePriceListCommerceAccountGroupRel =
+				commercePriceListCommerceAccountGroupRelLocalService.
+					getCommercePriceListCommerceAccountGroupRel(
+						commercePriceListCommerceAccoungGroupRelId);
 
-		return commercePriceListCommerceAccountGroupRelLocalService.
-			getCommercePriceListCommerceAccountGroupRel(
-				commercePriceListCommerceAccoungGroupRelId);
+		_commercePriceListModelResourcePermission.check(
+			getPermissionChecker(),
+			commercePriceListCommerceAccountGroupRel.getCommercePriceListId(),
+			ActionKeys.VIEW);
+
+		return commercePriceListCommerceAccountGroupRel;
 	}
 
 	@Override
@@ -97,9 +109,8 @@ public class CommercePriceListCommerceAccountGroupRelServiceImpl
 				long commercePriceListId)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
-			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
+		_commercePriceListModelResourcePermission.check(
+			getPermissionChecker(), commercePriceListId, ActionKeys.VIEW);
 
 		return commercePriceListCommerceAccountGroupRelLocalService.
 			getCommercePriceListCommerceAccountGroupRels(commercePriceListId);
@@ -113,9 +124,8 @@ public class CommercePriceListCommerceAccountGroupRelServiceImpl
 					orderByComparator)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
-			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
+		_commercePriceListModelResourcePermission.check(
+			getPermissionChecker(), commercePriceListId, ActionKeys.VIEW);
 
 		return commercePriceListCommerceAccountGroupRelLocalService.
 			getCommercePriceListCommerceAccountGroupRels(
@@ -127,9 +137,8 @@ public class CommercePriceListCommerceAccountGroupRelServiceImpl
 			long commercePriceListId)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(),
-			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
+		_commercePriceListModelResourcePermission.check(
+			getPermissionChecker(), commercePriceListId, ActionKeys.VIEW);
 
 		return commercePriceListCommerceAccountGroupRelLocalService.
 			getCommercePriceListCommerceAccountGroupRelsCount(
@@ -143,14 +152,28 @@ public class CommercePriceListCommerceAccountGroupRelServiceImpl
 				ServiceContext serviceContext)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
+		CommercePriceListCommerceAccountGroupRel
+			commercePriceListCommerceAccountGroupRel =
+				commercePriceListCommerceAccountGroupRelLocalService.
+					getCommercePriceListCommerceAccountGroupRel(
+						commercePriceListCommerceAccountGroupRelId);
+
+		_commercePriceListModelResourcePermission.check(
 			getPermissionChecker(),
-			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
+			commercePriceListCommerceAccountGroupRel.getCommercePriceListId(),
+			ActionKeys.UPDATE);
 
 		return commercePriceListCommerceAccountGroupRelLocalService.
 			updateCommercePriceListCommerceAccountGroupRel(
 				commercePriceListCommerceAccountGroupRelId, order,
 				serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<CommercePriceList>
+		_commercePriceListModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CommercePriceListCommerceAccountGroupRelServiceImpl.class,
+				"_commercePriceListModelResourcePermission",
+				CommercePriceList.class);
 
 }

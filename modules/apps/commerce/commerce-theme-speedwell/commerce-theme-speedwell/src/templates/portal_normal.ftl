@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <#include init />
-<html class="${root_css_class}" dir='<@liferay.language key="lang.dir" />' lang="${w3c_language_id}">
+<html class="${root_css_class}" dir="<@liferay.language key="lang.dir" />" lang="${w3c_language_id}">
 	<head>
 		<title>${the_title} - ${company_name}</title>
 
@@ -11,7 +11,7 @@
 		<@liferay_util["include"] page=top_head_include />
 	</head>
 
-	<body class="speedwell ${css_class}">
+	<body class="speedwell ${css_class}" id="content">
 		<div id="wrapper">
 			<div class="liferay-top">
 				<@liferay_ui["quick-access"] contentId="#main-content" />

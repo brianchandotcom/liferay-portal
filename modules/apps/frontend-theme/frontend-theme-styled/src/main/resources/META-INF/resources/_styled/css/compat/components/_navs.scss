@@ -49,4 +49,18 @@
 	.nav-tabs, .nav-underline {
 		flex-direction: row;
 	}
+
+	.nav-underline {
+		.tab {
+			@extend .nav-item;
+
+			a {
+				@extend .nav-link;
+			}
+
+			&.active a {
+				@extend .active;
+			}
+		}
+	}
 }

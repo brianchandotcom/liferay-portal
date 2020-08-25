@@ -127,6 +127,29 @@ public class CommercePriceListChannelRelServiceSoap {
 	}
 
 	public static
+		com.liferay.commerce.price.list.model.CommercePriceListChannelRelSoap
+				getCommercePriceListChannelRel(
+					long commercePriceListChannelRelId)
+			throws RemoteException {
+
+		try {
+			com.liferay.commerce.price.list.model.CommercePriceListChannelRel
+				returnValue =
+					CommercePriceListChannelRelServiceUtil.
+						getCommercePriceListChannelRel(
+							commercePriceListChannelRelId);
+
+			return com.liferay.commerce.price.list.model.
+				CommercePriceListChannelRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
 		com.liferay.commerce.price.list.model.CommercePriceListChannelRelSoap[]
 				getCommercePriceListChannelRels(long commercePriceListId)
 			throws RemoteException {
@@ -141,6 +164,52 @@ public class CommercePriceListChannelRelServiceSoap {
 
 			return com.liferay.commerce.price.list.model.
 				CommercePriceListChannelRelSoap.toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.price.list.model.CommercePriceListChannelRelSoap[]
+				getCommercePriceListChannelRels(
+					long commercePriceListId, int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.commerce.price.list.model.
+							CommercePriceListChannelRel> orderByComparator)
+			throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.commerce.price.list.model.
+					CommercePriceListChannelRel> returnValue =
+						CommercePriceListChannelRelServiceUtil.
+							getCommercePriceListChannelRels(
+								commercePriceListId, start, end,
+								orderByComparator);
+
+			return com.liferay.commerce.price.list.model.
+				CommercePriceListChannelRelSoap.toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getCommercePriceListChannelRelsCount(
+			long commercePriceListId)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CommercePriceListChannelRelServiceUtil.
+					getCommercePriceListChannelRelsCount(commercePriceListId);
+
+			return returnValue;
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

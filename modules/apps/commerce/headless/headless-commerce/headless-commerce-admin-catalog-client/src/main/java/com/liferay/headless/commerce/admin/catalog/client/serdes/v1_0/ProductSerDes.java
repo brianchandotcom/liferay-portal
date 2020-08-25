@@ -106,6 +106,16 @@ public class ProductSerDes {
 			sb.append("]");
 		}
 
+		if (product.getCatalog() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"catalog\": ");
+
+			sb.append(String.valueOf(product.getCatalog()));
+		}
+
 		if (product.getCatalogId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -385,6 +395,16 @@ public class ProductSerDes {
 			sb.append("]");
 		}
 
+		if (product.getProductStatus() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productStatus\": ");
+
+			sb.append(product.getProductStatus());
+		}
+
 		if (product.getProductType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -395,6 +415,20 @@ public class ProductSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(product.getProductType()));
+
+			sb.append("\"");
+		}
+
+		if (product.getProductTypeI18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productTypeI18n\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(product.getProductTypeI18n()));
 
 			sb.append("\"");
 		}
@@ -503,6 +537,20 @@ public class ProductSerDes {
 			sb.append(String.valueOf(product.getTaxConfiguration()));
 		}
 
+		if (product.getThumbnail() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"thumbnail\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(product.getThumbnail()));
+
+			sb.append("\"");
+		}
+
 		if (product.getUrls() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -511,6 +559,16 @@ public class ProductSerDes {
 			sb.append("\"urls\": ");
 
 			sb.append(_toJSON(product.getUrls()));
+		}
+
+		if (product.getWorkflowStatusInfo() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"workflowStatusInfo\": ");
+
+			sb.append(String.valueOf(product.getWorkflowStatusInfo()));
 		}
 
 		sb.append("}");
@@ -553,6 +611,13 @@ public class ProductSerDes {
 		}
 		else {
 			map.put("attachments", String.valueOf(product.getAttachments()));
+		}
+
+		if (product.getCatalog() == null) {
+			map.put("catalog", null);
+		}
+		else {
+			map.put("catalog", String.valueOf(product.getCatalog()));
 		}
 
 		if (product.getCatalogId() == null) {
@@ -718,11 +783,28 @@ public class ProductSerDes {
 				String.valueOf(product.getProductSpecifications()));
 		}
 
+		if (product.getProductStatus() == null) {
+			map.put("productStatus", null);
+		}
+		else {
+			map.put(
+				"productStatus", String.valueOf(product.getProductStatus()));
+		}
+
 		if (product.getProductType() == null) {
 			map.put("productType", null);
 		}
 		else {
 			map.put("productType", String.valueOf(product.getProductType()));
+		}
+
+		if (product.getProductTypeI18n() == null) {
+			map.put("productTypeI18n", null);
+		}
+		else {
+			map.put(
+				"productTypeI18n",
+				String.valueOf(product.getProductTypeI18n()));
 		}
 
 		if (product.getRelatedProducts() == null) {
@@ -784,11 +866,27 @@ public class ProductSerDes {
 				String.valueOf(product.getTaxConfiguration()));
 		}
 
+		if (product.getThumbnail() == null) {
+			map.put("thumbnail", null);
+		}
+		else {
+			map.put("thumbnail", String.valueOf(product.getThumbnail()));
+		}
+
 		if (product.getUrls() == null) {
 			map.put("urls", null);
 		}
 		else {
 			map.put("urls", String.valueOf(product.getUrls()));
+		}
+
+		if (product.getWorkflowStatusInfo() == null) {
+			map.put("workflowStatusInfo", null);
+		}
+		else {
+			map.put(
+				"workflowStatusInfo",
+				String.valueOf(product.getWorkflowStatusInfo()));
 		}
 
 		return map;
@@ -832,6 +930,12 @@ public class ProductSerDes {
 						).toArray(
 							size -> new Attachment[size]
 						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "catalog")) {
+				if (jsonParserFieldValue != null) {
+					product.setCatalog(
+						CatalogSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "catalogId")) {
@@ -986,9 +1090,20 @@ public class ProductSerDes {
 						));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "productStatus")) {
+				if (jsonParserFieldValue != null) {
+					product.setProductStatus(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "productType")) {
 				if (jsonParserFieldValue != null) {
 					product.setProductType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "productTypeI18n")) {
+				if (jsonParserFieldValue != null) {
+					product.setProductTypeI18n((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "relatedProducts")) {
@@ -1051,10 +1166,23 @@ public class ProductSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "thumbnail")) {
+				if (jsonParserFieldValue != null) {
+					product.setThumbnail((String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "urls")) {
 				if (jsonParserFieldValue != null) {
 					product.setUrls(
 						(Map)ProductSerDes.toMap((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "workflowStatusInfo")) {
+
+				if (jsonParserFieldValue != null) {
+					product.setWorkflowStatusInfo(
+						StatusSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else {

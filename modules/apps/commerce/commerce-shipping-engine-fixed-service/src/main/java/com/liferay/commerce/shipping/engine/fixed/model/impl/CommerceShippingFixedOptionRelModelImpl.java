@@ -1240,17 +1240,17 @@ public class CommerceShippingFixedOptionRelModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceShippingFixedOptionRel)) {
+		if (!(object instanceof CommerceShippingFixedOptionRel)) {
 			return false;
 		}
 
 		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
-			(CommerceShippingFixedOptionRel)obj;
+			(CommerceShippingFixedOptionRel)object;
 
 		long primaryKey = commerceShippingFixedOptionRel.getPrimaryKey();
 

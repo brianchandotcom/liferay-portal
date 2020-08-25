@@ -1364,17 +1364,17 @@ public class ExportImportConfigurationModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ExportImportConfiguration)) {
+		if (!(object instanceof ExportImportConfiguration)) {
 			return false;
 		}
 
 		ExportImportConfiguration exportImportConfiguration =
-			(ExportImportConfiguration)obj;
+			(ExportImportConfiguration)object;
 
 		long primaryKey = exportImportConfiguration.getPrimaryKey();
 

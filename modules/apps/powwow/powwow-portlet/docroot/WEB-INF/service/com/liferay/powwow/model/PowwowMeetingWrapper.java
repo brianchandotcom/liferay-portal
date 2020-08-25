@@ -618,16 +618,17 @@ public class PowwowMeetingWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof PowwowMeetingWrapper)) {
+		if (!(object instanceof PowwowMeetingWrapper)) {
 			return false;
 		}
 
-		PowwowMeetingWrapper powwowMeetingWrapper = (PowwowMeetingWrapper)obj;
+		PowwowMeetingWrapper powwowMeetingWrapper =
+			(PowwowMeetingWrapper)object;
 
 		if (Objects.equals(
 				_powwowMeeting, powwowMeetingWrapper._powwowMeeting)) {

@@ -567,16 +567,16 @@ public class ServiceComponentModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ServiceComponent)) {
+		if (!(object instanceof ServiceComponent)) {
 			return false;
 		}
 
-		ServiceComponent serviceComponent = (ServiceComponent)obj;
+		ServiceComponent serviceComponent = (ServiceComponent)object;
 
 		long primaryKey = serviceComponent.getPrimaryKey();
 

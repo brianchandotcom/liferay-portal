@@ -713,6 +713,8 @@ public class CommerceOrderEngineTest {
 			_commerceShipment2.getCommerceShipmentId(),
 			CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED);
 
+		Thread.sleep(1000);
+
 		_commerceOrder = _commerceOrderLocalService.fetchCommerceOrder(
 			_commerceOrder.getCommerceOrderId());
 
@@ -726,6 +728,8 @@ public class CommerceOrderEngineTest {
 		_commerceShipment2 = _commerceShipmentLocalService.updateStatus(
 			_commerceShipment2.getCommerceShipmentId(),
 			CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED);
+
+		Thread.sleep(1000);
 
 		_commerceOrder = _commerceOrderLocalService.fetchCommerceOrder(
 			_commerceOrder.getCommerceOrderId());

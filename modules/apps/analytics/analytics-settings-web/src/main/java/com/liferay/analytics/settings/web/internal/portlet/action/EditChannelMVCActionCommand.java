@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + AnalyticsSettingsPortletKeys.ANALYTICS_ADMIN_PORTLET,
-		"mvc.command.name=/analytics/edit_channel"
+		"mvc.command.name=/analytics_settings/edit_channel"
 	},
 	service = MVCActionCommand.class
 )

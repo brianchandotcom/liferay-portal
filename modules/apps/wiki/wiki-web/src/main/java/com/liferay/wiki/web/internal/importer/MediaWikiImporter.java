@@ -427,7 +427,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 					inputStreamOVPs.clear();
 
-					percentage = Math.min(50 + (i * 50) / total, 99);
+					percentage = Math.min(50 + ((i * 50) / total), 99);
 
 					if (progressTracker != null) {
 						progressTracker.setPercent(percentage);
@@ -501,7 +501,7 @@ public class MediaWikiImporter implements WikiImporter {
 			title = _wikiPageTitleValidator.normalize(title);
 
 			percentage = Math.min(
-				10 + (i * (maxPercentage - percentage)) / pageElements.size(),
+				10 + ((i * (maxPercentage - percentage)) / pageElements.size()),
 				maxPercentage);
 
 			progressTracker.setPercent(percentage);

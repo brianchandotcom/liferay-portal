@@ -35,17 +35,17 @@ public class UserNotificationDeliveryCacheModel
 	implements CacheModel<UserNotificationDelivery>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof UserNotificationDeliveryCacheModel)) {
+		if (!(object instanceof UserNotificationDeliveryCacheModel)) {
 			return false;
 		}
 
 		UserNotificationDeliveryCacheModel userNotificationDeliveryCacheModel =
-			(UserNotificationDeliveryCacheModel)obj;
+			(UserNotificationDeliveryCacheModel)object;
 
 		if ((userNotificationDeliveryId ==
 				userNotificationDeliveryCacheModel.

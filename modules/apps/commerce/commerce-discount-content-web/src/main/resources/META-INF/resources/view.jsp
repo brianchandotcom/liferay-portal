@@ -32,6 +32,7 @@ if (commerceOrder != null) {
 
 <aui:form action="<%= applyCommerceDiscountCouponCodeActionURL %>" method="post" name="fm">
 	<liferay-ui:error exception="<%= CommerceDiscountCouponCodeException.class %>" message="please-enter-a-valid-coupon-code" />
+	<liferay-ui:error exception="<%= CommerceDiscountLimitationTimesException.class %>" message="the-inserted-coupon-code-has-reached-its-usage-limit" />
 
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 

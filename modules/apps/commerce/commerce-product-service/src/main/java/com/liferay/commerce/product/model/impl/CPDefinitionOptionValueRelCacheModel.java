@@ -38,18 +38,18 @@ public class CPDefinitionOptionValueRelCacheModel
 	implements CacheModel<CPDefinitionOptionValueRel>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionOptionValueRelCacheModel)) {
+		if (!(object instanceof CPDefinitionOptionValueRelCacheModel)) {
 			return false;
 		}
 
 		CPDefinitionOptionValueRelCacheModel
 			cpDefinitionOptionValueRelCacheModel =
-				(CPDefinitionOptionValueRelCacheModel)obj;
+				(CPDefinitionOptionValueRelCacheModel)object;
 
 		if (CPDefinitionOptionValueRelId ==
 				cpDefinitionOptionValueRelCacheModel.
@@ -68,7 +68,7 @@ public class CPDefinitionOptionValueRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -100,6 +100,8 @@ public class CPDefinitionOptionValueRelCacheModel
 		sb.append(key);
 		sb.append(", quantity=");
 		sb.append(quantity);
+		sb.append(", preselected=");
+		sb.append(preselected);
 		sb.append(", price=");
 		sb.append(price);
 		sb.append("}");
@@ -176,6 +178,7 @@ public class CPDefinitionOptionValueRelCacheModel
 		}
 
 		cpDefinitionOptionValueRelImpl.setQuantity(quantity);
+		cpDefinitionOptionValueRelImpl.setPreselected(preselected);
 		cpDefinitionOptionValueRelImpl.setPrice(price);
 
 		cpDefinitionOptionValueRelImpl.resetOriginalValues();
@@ -210,6 +213,8 @@ public class CPDefinitionOptionValueRelCacheModel
 		key = objectInput.readUTF();
 
 		quantity = objectInput.readInt();
+
+		preselected = objectInput.readBoolean();
 		price = (BigDecimal)objectInput.readObject();
 	}
 
@@ -268,6 +273,8 @@ public class CPDefinitionOptionValueRelCacheModel
 		}
 
 		objectOutput.writeInt(quantity);
+
+		objectOutput.writeBoolean(preselected);
 		objectOutput.writeObject(price);
 	}
 
@@ -286,6 +293,7 @@ public class CPDefinitionOptionValueRelCacheModel
 	public double priority;
 	public String key;
 	public int quantity;
+	public boolean preselected;
 	public BigDecimal price;
 
 }

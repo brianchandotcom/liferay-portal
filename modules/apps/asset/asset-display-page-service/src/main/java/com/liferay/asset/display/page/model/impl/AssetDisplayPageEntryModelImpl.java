@@ -987,17 +987,17 @@ public class AssetDisplayPageEntryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AssetDisplayPageEntry)) {
+		if (!(object instanceof AssetDisplayPageEntry)) {
 			return false;
 		}
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
-			(AssetDisplayPageEntry)obj;
+			(AssetDisplayPageEntry)object;
 
 		long primaryKey = assetDisplayPageEntry.getPrimaryKey();
 

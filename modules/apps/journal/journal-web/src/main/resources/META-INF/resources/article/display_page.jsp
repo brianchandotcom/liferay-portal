@@ -84,9 +84,9 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeSpecific() %>" label="use-a-specific-display-page-for-the-web-content" name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_SPECIFIC %>" />
 
-			<div class='<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeSpecific() ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />displayPageContainer">
+			<div class="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeSpecific() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />displayPageContainer">
 				<p class="text-default">
-					<span class='<%= Validator.isNull(editArticleDisplayPageDisplayContext.getDisplayPageName()) ? "hide" : StringPool.BLANK %>' id="<portlet:namespace />displayPageItemRemove" role="button">
+					<span class="<%= Validator.isNull(editArticleDisplayPageDisplayContext.getDisplayPageName()) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
 						<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
 					</span>
 					<span id="<portlet:namespace />displayPageNameInput">

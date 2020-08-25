@@ -776,6 +776,34 @@ definition {
 		);
 	}
 
+	@priority = "5"
+	test HotDeploySAMLApp {
+		property hot.deploy.osgi.app.includes = "saml";
+		property osgi.app.includes = "";
+		property test.name.skip.portal.instance = "SAML#HotDeploySAMLApp";
+
+		AssertConsoleTextNotPresent(value1 = "The portal instance needs to be restarted");
+
+		AssertConsoleTextPresent(value1 = "STARTED Liferay Connector to SAML 2.0");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "SSO",
+			configurationName = "SAML Configuration",
+			configurationScope = "System Scope");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "SAML Admin");
+
+		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+	}
+
 	@priority = "4"
 	test SPInitiatedSSOWithScreenNameIdentifier {
 		property test.name.skip.portal.instance = "SPInitiatedSSOWithScreenNameIdentifier";

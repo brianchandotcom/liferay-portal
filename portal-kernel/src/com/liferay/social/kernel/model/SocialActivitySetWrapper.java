@@ -521,17 +521,17 @@ public class SocialActivitySetWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SocialActivitySetWrapper)) {
+		if (!(object instanceof SocialActivitySetWrapper)) {
 			return false;
 		}
 
 		SocialActivitySetWrapper socialActivitySetWrapper =
-			(SocialActivitySetWrapper)obj;
+			(SocialActivitySetWrapper)object;
 
 		if (Objects.equals(
 				_socialActivitySet,

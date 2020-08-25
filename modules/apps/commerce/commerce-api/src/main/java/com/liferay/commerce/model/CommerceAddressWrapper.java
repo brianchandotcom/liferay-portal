@@ -948,17 +948,17 @@ public class CommerceAddressWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceAddressWrapper)) {
+		if (!(object instanceof CommerceAddressWrapper)) {
 			return false;
 		}
 
 		CommerceAddressWrapper commerceAddressWrapper =
-			(CommerceAddressWrapper)obj;
+			(CommerceAddressWrapper)object;
 
 		if (Objects.equals(
 				_commerceAddress, commerceAddressWrapper._commerceAddress)) {

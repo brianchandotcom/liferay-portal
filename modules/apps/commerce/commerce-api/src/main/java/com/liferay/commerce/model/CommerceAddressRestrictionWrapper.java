@@ -513,17 +513,17 @@ public class CommerceAddressRestrictionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceAddressRestrictionWrapper)) {
+		if (!(object instanceof CommerceAddressRestrictionWrapper)) {
 			return false;
 		}
 
 		CommerceAddressRestrictionWrapper commerceAddressRestrictionWrapper =
-			(CommerceAddressRestrictionWrapper)obj;
+			(CommerceAddressRestrictionWrapper)object;
 
 		if (Objects.equals(
 				_commerceAddressRestriction,

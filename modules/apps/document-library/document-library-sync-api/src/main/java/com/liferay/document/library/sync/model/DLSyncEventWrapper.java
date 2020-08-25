@@ -348,16 +348,16 @@ public class DLSyncEventWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DLSyncEventWrapper)) {
+		if (!(object instanceof DLSyncEventWrapper)) {
 			return false;
 		}
 
-		DLSyncEventWrapper dlSyncEventWrapper = (DLSyncEventWrapper)obj;
+		DLSyncEventWrapper dlSyncEventWrapper = (DLSyncEventWrapper)object;
 
 		if (Objects.equals(_dlSyncEvent, dlSyncEventWrapper._dlSyncEvent)) {
 			return true;

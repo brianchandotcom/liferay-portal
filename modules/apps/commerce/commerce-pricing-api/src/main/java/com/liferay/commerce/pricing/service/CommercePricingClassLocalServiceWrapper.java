@@ -36,6 +36,10 @@ public class CommercePricingClassLocalServiceWrapper
 	/**
 	 * Adds the commerce pricing class to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePricingClassLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePricingClass the commerce pricing class
 	 * @return the commerce pricing class that was added
 	 */
@@ -52,12 +56,27 @@ public class CommercePricingClassLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.pricing.model.CommercePricingClass
 			addCommercePricingClass(
-				long userId, long groupId, String title, String description,
+				long userId, java.util.Map<java.util.Locale, String> titleMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePricingClassLocalService.addCommercePricingClass(
-			userId, groupId, title, description, serviceContext);
+			userId, titleMap, descriptionMap, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.pricing.model.CommercePricingClass
+			addCommercePricingClass(
+				long userId, java.util.Map<java.util.Locale, String> titleMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				String externalReferenceCode,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePricingClassLocalService.addCommercePricingClass(
+			userId, titleMap, descriptionMap, externalReferenceCode,
+			serviceContext);
 	}
 
 	/**
@@ -77,6 +96,10 @@ public class CommercePricingClassLocalServiceWrapper
 	/**
 	 * Deletes the commerce pricing class from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePricingClassLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePricingClass the commerce pricing class
 	 * @return the commerce pricing class that was removed
 	 * @throws PortalException
@@ -94,6 +117,10 @@ public class CommercePricingClassLocalServiceWrapper
 
 	/**
 	 * Deletes the commerce pricing class with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePricingClassLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commercePricingClassId the primary key of the commerce pricing class
 	 * @return the commerce pricing class that was removed
@@ -255,18 +282,19 @@ public class CommercePricingClassLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the commerce pricing class matching the UUID and group.
+	 * Returns the commerce pricing class with the matching UUID and company.
 	 *
 	 * @param uuid the commerce pricing class's UUID
-	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
 	 * @return the matching commerce pricing class, or <code>null</code> if a matching commerce pricing class could not be found
 	 */
 	@Override
 	public com.liferay.commerce.pricing.model.CommercePricingClass
-		fetchCommercePricingClassByUuidAndGroupId(String uuid, long groupId) {
+		fetchCommercePricingClassByUuidAndCompanyId(
+			String uuid, long companyId) {
 
 		return _commercePricingClassLocalService.
-			fetchCommercePricingClassByUuidAndGroupId(uuid, groupId);
+			fetchCommercePricingClassByUuidAndCompanyId(uuid, companyId);
 	}
 
 	@Override
@@ -299,20 +327,29 @@ public class CommercePricingClassLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the commerce pricing class matching the UUID and group.
+	 * Returns the commerce pricing class with the matching UUID and company.
 	 *
 	 * @param uuid the commerce pricing class's UUID
-	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
 	 * @return the matching commerce pricing class
 	 * @throws PortalException if a matching commerce pricing class could not be found
 	 */
 	@Override
 	public com.liferay.commerce.pricing.model.CommercePricingClass
-			getCommercePricingClassByUuidAndGroupId(String uuid, long groupId)
+			getCommercePricingClassByUuidAndCompanyId(
+				String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePricingClassLocalService.
-			getCommercePricingClassByUuidAndGroupId(uuid, groupId);
+			getCommercePricingClassByUuidAndCompanyId(uuid, companyId);
+	}
+
+	@Override
+	public int getCommercePricingClassCountByCPDefinitionId(
+		long cpDefinitionId, String title) {
+
+		return _commercePricingClassLocalService.
+			getCommercePricingClassCountByCPDefinitionId(cpDefinitionId, title);
 	}
 
 	/**
@@ -349,47 +386,6 @@ public class CommercePricingClassLocalServiceWrapper
 	}
 
 	/**
-	 * Returns all the commerce pricing classes matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the commerce pricing classes
-	 * @param companyId the primary key of the company
-	 * @return the matching commerce pricing classes, or an empty list if no matches were found
-	 */
-	@Override
-	public java.util.List
-		<com.liferay.commerce.pricing.model.CommercePricingClass>
-			getCommercePricingClassesByUuidAndCompanyId(
-				String uuid, long companyId) {
-
-		return _commercePricingClassLocalService.
-			getCommercePricingClassesByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of commerce pricing classes matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the commerce pricing classes
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of commerce pricing classes
-	 * @param end the upper bound of the range of commerce pricing classes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching commerce pricing classes, or an empty list if no matches were found
-	 */
-	@Override
-	public java.util.List
-		<com.liferay.commerce.pricing.model.CommercePricingClass>
-			getCommercePricingClassesByUuidAndCompanyId(
-				String uuid, long companyId, int start, int end,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.commerce.pricing.model.CommercePricingClass>
-						orderByComparator) {
-
-		return _commercePricingClassLocalService.
-			getCommercePricingClassesByUuidAndCompanyId(
-				uuid, companyId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns the number of commerce pricing classes.
 	 *
 	 * @return the number of commerce pricing classes
@@ -404,6 +400,14 @@ public class CommercePricingClassLocalServiceWrapper
 	public int getCommercePricingClassesCount(long companyId) {
 		return _commercePricingClassLocalService.getCommercePricingClassesCount(
 			companyId);
+	}
+
+	@Override
+	public int getCommercePricingClassesCount(
+		long cpDefinitionId, String title) {
+
+		return _commercePricingClassLocalService.getCommercePricingClassesCount(
+			cpDefinitionId, title);
 	}
 
 	@Override
@@ -446,8 +450,35 @@ public class CommercePricingClassLocalServiceWrapper
 			primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.commerce.pricing.model.CommercePricingClass>
+				searchCommercePricingClasses(
+					long companyId, String keywords, int start, int end,
+					com.liferay.portal.kernel.search.Sort sort)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePricingClassLocalService.searchCommercePricingClasses(
+			companyId, keywords, start, end, sort);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.pricing.model.CommercePricingClass>
+			searchCommercePricingClassesByCPDefinitionId(
+				long cpDefinitionId, String title, int start, int end) {
+
+		return _commercePricingClassLocalService.
+			searchCommercePricingClassesByCPDefinitionId(
+				cpDefinitionId, title, start, end);
+	}
+
 	/**
 	 * Updates the commerce pricing class in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePricingClassLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commercePricingClass the commerce pricing class
 	 * @return the commerce pricing class that was updated
@@ -465,26 +496,40 @@ public class CommercePricingClassLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.pricing.model.CommercePricingClass
 			updateCommercePricingClass(
-				long commercePricingClassId, long userId, long groupId,
-				String title, String description,
+				long commercePricingClassId, long userId,
+				java.util.Map<java.util.Locale, String> titleMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePricingClassLocalService.updateCommercePricingClass(
-			commercePricingClassId, userId, groupId, title, description,
+			commercePricingClassId, userId, titleMap, descriptionMap,
 			serviceContext);
 	}
 
 	@Override
 	public com.liferay.commerce.pricing.model.CommercePricingClass
+			updateCommercePricingClassExternalReferenceCode(
+				long commercePricingClassId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePricingClassLocalService.
+			updateCommercePricingClassExternalReferenceCode(
+				commercePricingClassId, externalReferenceCode);
+	}
+
+	@Override
+	public com.liferay.commerce.pricing.model.CommercePricingClass
 			upsertCommercePricingClass(
-				long commercePricingClassId, long userId, long groupId,
-				String title, String description, String externalReferenceCode,
+				long commercePricingClassId, long userId,
+				java.util.Map<java.util.Locale, String> titleMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				String externalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePricingClassLocalService.upsertCommercePricingClass(
-			commercePricingClassId, userId, groupId, title, description,
+			commercePricingClassId, userId, titleMap, descriptionMap,
 			externalReferenceCode, serviceContext);
 	}
 

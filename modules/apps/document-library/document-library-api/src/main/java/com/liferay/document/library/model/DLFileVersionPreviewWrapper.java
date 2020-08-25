@@ -327,17 +327,17 @@ public class DLFileVersionPreviewWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DLFileVersionPreviewWrapper)) {
+		if (!(object instanceof DLFileVersionPreviewWrapper)) {
 			return false;
 		}
 
 		DLFileVersionPreviewWrapper dlFileVersionPreviewWrapper =
-			(DLFileVersionPreviewWrapper)obj;
+			(DLFileVersionPreviewWrapper)object;
 
 		if (Objects.equals(
 				_dlFileVersionPreview,

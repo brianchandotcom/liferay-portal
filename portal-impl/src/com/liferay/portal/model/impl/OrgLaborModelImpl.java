@@ -1038,16 +1038,16 @@ public class OrgLaborModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof OrgLabor)) {
+		if (!(object instanceof OrgLabor)) {
 			return false;
 		}
 
-		OrgLabor orgLabor = (OrgLabor)obj;
+		OrgLabor orgLabor = (OrgLabor)object;
 
 		long primaryKey = orgLabor.getPrimaryKey();
 

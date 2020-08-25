@@ -1296,16 +1296,16 @@ public class WikiNodeModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof WikiNode)) {
+		if (!(object instanceof WikiNode)) {
 			return false;
 		}
 
-		WikiNode wikiNode = (WikiNode)obj;
+		WikiNode wikiNode = (WikiNode)object;
 
 		long primaryKey = wikiNode.getPrimaryKey();
 

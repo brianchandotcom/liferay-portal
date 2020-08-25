@@ -1641,17 +1641,17 @@ public class JournalArticleWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof JournalArticleWrapper)) {
+		if (!(object instanceof JournalArticleWrapper)) {
 			return false;
 		}
 
 		JournalArticleWrapper journalArticleWrapper =
-			(JournalArticleWrapper)obj;
+			(JournalArticleWrapper)object;
 
 		if (Objects.equals(
 				_journalArticle, journalArticleWrapper._journalArticle)) {

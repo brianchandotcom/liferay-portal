@@ -157,6 +157,9 @@ components:
                     items:
                         $ref: "#/components/schemas/CartComment"
                     type: array
+                orderStatusInfo:
+                    $ref: "#/components/schemas/Status"
+                    readOnly: true
                 orderUUID:
                     readOnly: true
                     type: string
@@ -169,6 +172,9 @@ components:
                     format: int32
                     readOnly: true
                     type: integer
+                paymentStatusInfo:
+                    $ref: "#/components/schemas/Status"
+                    readOnly: true
                 paymentStatusLabel:
                     readOnly: true
                     type: string
@@ -193,6 +199,9 @@ components:
                     $ref: "#/components/schemas/Summary"
                 useAsBilling:
                     type: boolean
+                workflowStatusInfo:
+                    $ref: "#/components/schemas/Status"
+                    readOnly: true
             type: object
         CartComment:
             properties:
@@ -349,6 +358,19 @@ components:
                     format: int32
                     type: integer
             type: object
+        Status:
+            properties:
+                code:
+                    format: int32
+                    readOnly: true
+                    type: integer
+                label:
+                    example: black
+                    type: string
+                label_i18n:
+                    example: black
+                    type: string
+            type: object
         Summary:
             properties:
                 currency:
@@ -406,7 +428,7 @@ components:
 info:
     description:
         "Headless Delivery Commerce Cart API. A Java client JAR is available for use with the group ID 'com.liferay',
-        artifact ID 'com.liferay.headless.commerce.delivery.cart.client', and version '1.0.9'."
+        artifact ID 'com.liferay.headless.commerce.delivery.cart.client', and version '1.0.15'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html

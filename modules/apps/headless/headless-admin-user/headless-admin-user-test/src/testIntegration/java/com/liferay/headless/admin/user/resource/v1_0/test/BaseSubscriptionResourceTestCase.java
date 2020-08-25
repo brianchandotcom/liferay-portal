@@ -109,7 +109,9 @@ public abstract class BaseSubscriptionResourceTestCase {
 
 		SubscriptionResource.Builder builder = SubscriptionResource.builder();
 
-		subscriptionResource = builder.locale(
+		subscriptionResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

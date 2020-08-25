@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Store CMIS
 Bundle-SymbolicName: com.liferay.portal.store.cmis
-Bundle-Version: 3.0.16
+Bundle-Version: 3.0.17
 Import-Package:\
 	!com.sun.msv.*,\
 	!com.sun.xml.*,\

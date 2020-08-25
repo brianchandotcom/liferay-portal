@@ -807,16 +807,16 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MBBan)) {
+		if (!(object instanceof MBBan)) {
 			return false;
 		}
 
-		MBBan mbBan = (MBBan)obj;
+		MBBan mbBan = (MBBan)object;
 
 		long primaryKey = mbBan.getPrimaryKey();
 

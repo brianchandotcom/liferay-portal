@@ -12,11 +12,12 @@
  * details.
  */
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import PropTypes from 'prop-types';
-import React, {useState, useEffect} from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 
+import AJAX from '../../utilities/AJAX/index';
 import {DATASET_DISPLAY_UPDATED} from '../../utilities/eventsDefinitions';
-import {fetchParams} from '../../utilities/index';
 
 function SummaryItemDividerVariant() {
 	return (
@@ -28,7 +29,7 @@ function SummaryItemDividerVariant() {
 
 const baseItemDefaultProps = {
 	label: PropTypes.string,
-	value: PropTypes.string
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
 function SummaryItemBase(props) {
@@ -85,11 +86,11 @@ function SummaryItem(props) {
 		case 'big':
 			ItemVariant = SummaryItemBigVariant;
 			break;
-		case 'danger':
-			ItemVariant = SummaryItemDangerVariant;
-			break;
 		case 'divider':
 			ItemVariant = SummaryItemDividerVariant;
+			break;
+		case 'danger':
+			ItemVariant = SummaryItemDangerVariant;
 			break;
 		default:
 			ItemVariant = SummaryItemBase;
@@ -103,43 +104,62 @@ SummaryItem.propTypes = {
 	style: PropTypes.string
 };
 
-function Summary(props) {
+function Summary({
+	apiUrl,
+	dataMapper,
+	datasetDisplayId,
+	isLoading,
+	summaryData,
+	...props
+}) {
 	const [items, updateItems] = useState(props.items);
 
+	const mapDataToLayout = useCallback(
+			data =>
+				typeof dataMapper === 'function' ? dataMapper(data) : data,
+			[dataMapper]
+		),
+		refreshData = useCallback(
+			({id = null}) => {
+				if (!id || datasetDisplayId !== id) {
+					return AJAX.GET(apiUrl).then(data =>
+						updateItems(mapDataToLayout(data))
+					);
+				}
+			},
+			[apiUrl, datasetDisplayId, mapDataToLayout]
+		);
+
 	useEffect(() => {
-		function getData() {
-			fetch(props.apiUrl, {
-				...fetchParams,
-				method: 'GET'
-			})
-				.then(data => data.json())
-				.then(
-					data => (props.dataMapper && props.dataMapper(data)) || data
-				)
-				.then(updateItems);
+		if (!!apiUrl && !!datasetDisplayId) {
+			Liferay.on(DATASET_DISPLAY_UPDATED, refreshData);
+
+			refreshData({});
+
+			return () => Liferay.detach(DATASET_DISPLAY_UPDATED, refreshData);
+		}
+		return () => {};
+	}, [apiUrl, datasetDisplayId, refreshData]);
+
+	useEffect(() => {
+		if (!!summaryData && Object.keys(summaryData).length > 0) {
+			updateItems(mapDataToLayout(summaryData));
 		}
 
-		function refreshItems(payload) {
-			if (
-				!props.datasetDisplayId ||
-				!props.apiUrl ||
-				payload.id !== props.datasetDisplayId
-			) {
-				return;
-			}
-			return getData();
-		}
-
-		getData();
-		Liferay.on(DATASET_DISPLAY_UPDATED, refreshItems);
-		return () => Liferay.detach(DATASET_DISPLAY_UPDATED, refreshItems);
-	}, [props.dataMapper, props.apiUrl, props.datasetDisplayId, props]);
+		return () => {};
+	}, [mapDataToLayout, summaryData]);
 
 	return (
 		<div className="row summary-table text-right">
 			{items.map((item, i) => (
 				<SummaryItem key={i} {...item} />
 			))}
+
+			{isLoading && (
+				<div className={'summary-table-loader'}>
+					<ClayLoadingIndicator />
+				</div>
+			)}
 		</div>
 	);
 }
@@ -148,23 +168,25 @@ Summary.propTypes = {
 	apiUrl: PropTypes.string,
 	dataMapper: PropTypes.func,
 	datasetDisplayId: PropTypes.string,
-	items: PropTypes.array.isRequired
+	isLoading: PropTypes.bool,
+	items: PropTypes.array,
+	summaryData: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
 };
 
 Summary.defaultProps = {
 	dataMapper: jsonData => {
-		const values = [
+		return [
 			{
 				label: Liferay.Language.get('subtotal'),
 				value: jsonData.subtotalFormatted
 			},
 			{
 				label: Liferay.Language.get('line-item-discount'),
-				value: jsonData.subtotalDiscountAmountFormatted
+				value: jsonData.subtotalDiscountValueFormatted
 			},
 			{
 				label: Liferay.Language.get('order-discount'),
-				value: jsonData.totalDiscountAmountFormatted
+				value: jsonData.totalDiscountValueFormatted
 			},
 			{
 				label: Liferay.Language.get('promotion-code'),
@@ -172,15 +194,15 @@ Summary.defaultProps = {
 			},
 			{
 				label: Liferay.Language.get('tax'),
-				value: jsonData.taxAmountFormatted
+				value: jsonData.taxValueFormatted
 			},
 			{
 				label: Liferay.Language.get('shipping-and-handling'),
-				value: jsonData.shippingAmountFormatted
+				value: jsonData.shippingValueFormatted
 			},
 			{
 				label: Liferay.Language.get('shipping-and-handling-discount'),
-				value: jsonData.shippingDiscountAmountFormatted
+				value: jsonData.shippingDiscountValueFormatted
 			},
 			{
 				style: 'divider'
@@ -191,8 +213,8 @@ Summary.defaultProps = {
 				value: jsonData.totalFormatted
 			}
 		];
-		return values;
 	},
+	isLoading: false,
 	items: []
 };
 

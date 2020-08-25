@@ -982,17 +982,17 @@ public class CommerceInventoryWarehouseItemModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceInventoryWarehouseItem)) {
+		if (!(object instanceof CommerceInventoryWarehouseItem)) {
 			return false;
 		}
 
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
-			(CommerceInventoryWarehouseItem)obj;
+			(CommerceInventoryWarehouseItem)object;
 
 		long primaryKey = commerceInventoryWarehouseItem.getPrimaryKey();
 

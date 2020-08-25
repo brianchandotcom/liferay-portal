@@ -1281,17 +1281,17 @@ public class CommercePaymentMethodGroupRelModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommercePaymentMethodGroupRel)) {
+		if (!(object instanceof CommercePaymentMethodGroupRel)) {
 			return false;
 		}
 
 		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
-			(CommercePaymentMethodGroupRel)obj;
+			(CommercePaymentMethodGroupRel)object;
 
 		long primaryKey = commercePaymentMethodGroupRel.getPrimaryKey();
 

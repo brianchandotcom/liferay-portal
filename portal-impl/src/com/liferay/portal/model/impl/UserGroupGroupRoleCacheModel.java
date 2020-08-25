@@ -36,17 +36,17 @@ public class UserGroupGroupRoleCacheModel
 	implements CacheModel<UserGroupGroupRole>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof UserGroupGroupRoleCacheModel)) {
+		if (!(object instanceof UserGroupGroupRoleCacheModel)) {
 			return false;
 		}
 
 		UserGroupGroupRoleCacheModel userGroupGroupRoleCacheModel =
-			(UserGroupGroupRoleCacheModel)obj;
+			(UserGroupGroupRoleCacheModel)object;
 
 		if (userGroupGroupRolePK.equals(
 				userGroupGroupRoleCacheModel.userGroupGroupRolePK) &&

@@ -72,12 +72,19 @@ public interface CatalogResource {
 	public Response patchCatalog(Long id, Catalog catalog) throws Exception;
 
 	public Page<Catalog> getCatalogsPage(
-			Filter filter, Pagination pagination, Sort[] sorts)
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public Catalog postCatalog(Catalog catalog) throws Exception;
 
 	public Response postCatalogBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public Catalog getProductByExternalReferenceCodeCatalog(
+			String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public Catalog getProductIdCatalog(Long id, Pagination pagination)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -65,6 +65,10 @@ public interface CommercePricingClassCPDefinitionRelLocalService
 	/**
 	 * Adds the commerce pricing class cp definition rel to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePricingClassCPDefinitionRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePricingClassCPDefinitionRel the commerce pricing class cp definition rel
 	 * @return the commerce pricing class cp definition rel that was added
 	 */
@@ -94,6 +98,10 @@ public interface CommercePricingClassCPDefinitionRelLocalService
 	/**
 	 * Deletes the commerce pricing class cp definition rel from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePricingClassCPDefinitionRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePricingClassCPDefinitionRel the commerce pricing class cp definition rel
 	 * @return the commerce pricing class cp definition rel that was removed
 	 * @throws PortalException
@@ -107,6 +115,10 @@ public interface CommercePricingClassCPDefinitionRelLocalService
 
 	/**
 	 * Deletes the commerce pricing class cp definition rel with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePricingClassCPDefinitionRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param CommercePricingClassCPDefinitionRelId the primary key of the commerce pricing class cp definition rel
 	 * @return the commerce pricing class cp definition rel that was removed
@@ -201,6 +213,11 @@ public interface CommercePricingClassCPDefinitionRelLocalService
 			long CommercePricingClassCPDefinitionRelId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePricingClassCPDefinitionRel
+		fetchCommercePricingClassCPDefinitionRel(
+			long commercePricingClassId, long cpDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -259,6 +276,10 @@ public interface CommercePricingClassCPDefinitionRelLocalService
 		long commercePricingClassId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommercePricingClassCPDefinitionRelsCount(
+		long commercePricingClassId, String name, String languageId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getCPDefinitionIds(long commercePricingClassId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -279,8 +300,18 @@ public interface CommercePricingClassCPDefinitionRelLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommercePricingClassCPDefinitionRel>
+		searchByCommercePricingClassId(
+			long commercePricingClassId, String name, String languageId,
+			int start, int end);
+
 	/**
 	 * Updates the commerce pricing class cp definition rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePricingClassCPDefinitionRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commercePricingClassCPDefinitionRel the commerce pricing class cp definition rel
 	 * @return the commerce pricing class cp definition rel that was updated

@@ -2,7 +2,7 @@
 
 <#include init />
 
-<html class="${root_css_class}" dir='<@liferay.language key="lang.dir" />' lang="${w3c_language_id}">
+<html class="${root_css_class}" dir="<@liferay.language key="lang.dir" />" lang="${w3c_language_id}">
 	<head>
 		<title>${the_title} - ${company_name}</title>
 
@@ -23,11 +23,11 @@
 				<header id="banner" role="banner">
 					<div class="container-fluid container-fluid-max-xl">
 						<nav class="navbar ${nav_collapse}">
-							<a class="navbar-brand ${logo_css_class}" href="${site_default_url}" rel="home" title='<@liferay.language_format arguments="${site_name}" key="go-to-x" />'>
+							<a class="navbar-brand ${logo_css_class}" href="${site_default_url}" rel="home" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
 								<img alt="${logo_description}" height="${company_logo_height}" src="${site_logo}" width="${company_logo_width}" />
 
 								<#if show_site_name>
-									<span class="site-name" title='<@liferay.language_format arguments="${site_name}" key="go-to-x" />'>
+									<span class="site-name" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
 										${site_name}
 									</span>
 								</#if>

@@ -1501,7 +1501,7 @@ public class DataFactory {
 	public DDMStructureLayoutModel newDDLDDMStructureLayoutModel(
 		long groupId, DDMStructureVersionModel ddmStructureVersionModel) {
 
-		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 4);
+		StringBundler sb = new StringBundler(3 + (_maxDDLCustomFieldCount * 4));
 
 		sb.append("{\"defaultLanguageId\": \"en_US\", \"pages\": [{\"rows\": ");
 		sb.append("[");
@@ -1526,7 +1526,7 @@ public class DataFactory {
 	}
 
 	public DDMStructureModel newDDLDDMStructureModel(long groupId) {
-		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 9);
+		StringBundler sb = new StringBundler(3 + (_maxDDLCustomFieldCount * 9));
 
 		sb.append("{\"availableLanguageIds\": [\"en_US\"],");
 		sb.append("\"defaultLanguageId\": \"en_US\", \"fields\": [");
@@ -1663,7 +1663,7 @@ public class DataFactory {
 	public DDMContentModel newDDMContentModel(
 		DDLRecordModel ddlRecordModel, int currentIndex) {
 
-		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 7);
+		StringBundler sb = new StringBundler(3 + (_maxDDLCustomFieldCount * 7));
 
 		sb.append("{\"availableLanguageIds\": [\"en_US\"],");
 		sb.append("\"defaultLanguageId\": \"en_US\", \"fieldValues\": [");
@@ -2982,11 +2982,11 @@ public class DataFactory {
 			(index + _maxAssetEntryToAssetCategoryCount) %
 				assetCategoryModels.size());
 		AssetCategoryModel assetCategoryModel2 = assetCategoryModels.get(
-			(index + _maxAssetEntryToAssetCategoryCount * 2) %
+			(index + (_maxAssetEntryToAssetCategoryCount * 2)) %
 				assetCategoryModels.size());
 
 		int lastIndex =
-			(index + _maxAssetEntryToAssetCategoryCount * 3) %
+			(index + (_maxAssetEntryToAssetCategoryCount * 3)) %
 				assetCategoryModels.size();
 
 		AssetCategoryModel assetCategoryModel3 = assetCategoryModels.get(
@@ -3011,11 +3011,12 @@ public class DataFactory {
 		AssetTagModel assetTagModel1 = assetTagModels.get(
 			(index + _maxAssetEntryToAssetTagCount) % assetTagModels.size());
 		AssetTagModel assetTagModel2 = assetTagModels.get(
-			(index + _maxAssetEntryToAssetTagCount * 2) %
+			(index + (_maxAssetEntryToAssetTagCount * 2)) %
 				assetTagModels.size());
 
 		int lastIndex =
-			(index + _maxAssetEntryToAssetTagCount * 3) % assetTagModels.size();
+			(index + (_maxAssetEntryToAssetTagCount * 3)) %
+				assetTagModels.size();
 
 		AssetTagModel assetTagModel3 = assetTagModels.get(lastIndex);
 

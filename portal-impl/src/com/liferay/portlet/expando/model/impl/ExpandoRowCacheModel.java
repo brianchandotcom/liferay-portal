@@ -36,16 +36,17 @@ public class ExpandoRowCacheModel
 	implements CacheModel<ExpandoRow>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ExpandoRowCacheModel)) {
+		if (!(object instanceof ExpandoRowCacheModel)) {
 			return false;
 		}
 
-		ExpandoRowCacheModel expandoRowCacheModel = (ExpandoRowCacheModel)obj;
+		ExpandoRowCacheModel expandoRowCacheModel =
+			(ExpandoRowCacheModel)object;
 
 		if (rowId == expandoRowCacheModel.rowId) {
 			return true;

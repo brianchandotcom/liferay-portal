@@ -77,6 +77,10 @@ public abstract class SystemEventLocalServiceBaseImpl
 	/**
 	 * Adds the system event to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SystemEventLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param systemEvent the system event
 	 * @return the system event that was added
 	 */
@@ -103,6 +107,10 @@ public abstract class SystemEventLocalServiceBaseImpl
 	/**
 	 * Deletes the system event with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SystemEventLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param systemEventId the primary key of the system event
 	 * @return the system event that was removed
 	 * @throws PortalException if a system event with the primary key could not be found
@@ -117,6 +125,10 @@ public abstract class SystemEventLocalServiceBaseImpl
 
 	/**
 	 * Deletes the system event from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SystemEventLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param systemEvent the system event
 	 * @return the system event that was removed
@@ -328,6 +340,10 @@ public abstract class SystemEventLocalServiceBaseImpl
 
 	/**
 	 * Updates the system event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SystemEventLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param systemEvent the system event
 	 * @return the system event that was updated

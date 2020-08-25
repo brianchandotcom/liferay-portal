@@ -50,7 +50,7 @@ public class Differ {
 			_modifiedReadableByteChannel, _blockLength);
 
 		_deltaByteChannelWriter.resizeBuffer(
-			_blockLength * DeltaUtil.BUFFER_FACTOR + 5);
+			(_blockLength * DeltaUtil.BUFFER_FACTOR) + 5);
 
 		_deltaByteBuffer = _deltaByteChannelWriter.getBuffer();
 

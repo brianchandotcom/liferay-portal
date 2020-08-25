@@ -15,23 +15,14 @@
 package com.liferay.analytics.message.sender.internal;
 
 import com.liferay.analytics.message.sender.client.AnalyticsMessageSenderClient;
-import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
-import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
-import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.CompanyService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.permission.PermissionCheckerUtil;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -41,31 +32,25 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rachael Koestartyo
  */
 @Component(immediate = true, service = AnalyticsMessageSenderClient.class)
 public class AnalyticsMessageSenderClientImpl
-	implements AnalyticsMessageSenderClient {
+	extends BaseAnalyticsClientImpl implements AnalyticsMessageSenderClient {
 
 	@Override
 	public Object send(String body, long companyId) throws Exception {
-		if (!_analyticsConfigurationTracker.isActive()) {
+		if (!isEnabled(companyId)) {
 			return null;
 		}
 
 		AnalyticsConfiguration analyticsConfiguration =
-			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
-
-		if (analyticsConfiguration.liferayAnalyticsEndpointURL() == null) {
-			return null;
-		}
+			analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
 
 		HttpUriRequest httpUriRequest = _buildHttpUriRequest(
 			body, analyticsConfiguration.liferayAnalyticsDataSourceId(),
@@ -80,16 +65,12 @@ public class AnalyticsMessageSenderClientImpl
 
 	@Override
 	public void validateConnection(long companyId) throws Exception {
-		if (!_analyticsConfigurationTracker.isActive()) {
+		if (!isEnabled(companyId)) {
 			return;
 		}
 
 		AnalyticsConfiguration analyticsConfiguration =
-			_analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
-
-		if (analyticsConfiguration.liferayAnalyticsEndpointURL() == null) {
-			return;
-		}
+			analyticsConfigurationTracker.getAnalyticsConfiguration(companyId);
 
 		HttpUriRequest httpUriRequest = _buildHttpUriRequest(
 			null, analyticsConfiguration.liferayAnalyticsDataSourceId(),
@@ -117,7 +98,8 @@ public class AnalyticsMessageSenderClientImpl
 			HttpPost httpPost = new HttpPost(url);
 
 			if (Validator.isNotNull(body)) {
-				httpPost.setEntity(new StringEntity(body));
+				httpPost.setEntity(
+					new StringEntity(body, StandardCharsets.UTF_8));
 			}
 
 			httpUriRequest = httpPost;
@@ -134,59 +116,12 @@ public class AnalyticsMessageSenderClientImpl
 		return httpUriRequest;
 	}
 
-	private void _disconnectDataSource(long companyId) {
-		PermissionCheckerUtil.setThreadValues(
-			_userLocalService.fetchUserByScreenName(
-				companyId,
-				AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN));
-
-		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-
-		unicodeProperties.setProperty("liferayAnalyticsConnectionType", "");
-		unicodeProperties.setProperty("liferayAnalyticsDataSourceId", "");
-		unicodeProperties.setProperty("liferayAnalyticsEndpointURL", "");
-		unicodeProperties.setProperty(
-			"liferayAnalyticsFaroBackendSecuritySignature", "");
-		unicodeProperties.setProperty("liferayAnalyticsFaroBackendURL", "");
-		unicodeProperties.setProperty("liferayAnalyticsGroupIds", "");
-		unicodeProperties.setProperty("liferayAnalyticsURL", "");
-
-		try {
-			_companyService.updatePreferences(companyId, unicodeProperties);
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to remove analytics preferences for company " +
-						companyId,
-					e);
-			}
-		}
-
-		try {
-			_analyticsConfigurationTracker.deleteCompanyConfiguration(
-				companyId);
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to remove analytics configuration for company " +
-						companyId,
-					e);
-			}
-		}
-	}
-
 	private CloseableHttpResponse _execute(
 			long companyId, HttpUriRequest httpUriRequest)
 		throws Exception {
 
-		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
-
-		httpClientBuilder.useSystemProperties();
-
 		try (CloseableHttpClient closeableHttpClient =
-				httpClientBuilder.build()) {
+				getCloseableHttpClient()) {
 
 			CloseableHttpResponse closeableHttpResponse =
 				closeableHttpClient.execute(httpUriRequest);
@@ -202,45 +137,11 @@ public class AnalyticsMessageSenderClientImpl
 					closeableHttpResponse.getEntity(),
 					Charset.defaultCharset()));
 
-			String message = responseJSONObject.getString("message");
-
-			if (message.equals("INVALID_TOKEN")) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Disconnecting data source for company ", companyId,
-							". Cause: ", message));
-				}
-
-				_disconnectDataSource(companyId);
-
-				_analyticsMessageLocalService.deleteAnalyticsMessages(
-					companyId);
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Deleted all analytics messages for company " +
-							companyId);
-				}
-			}
+			processInvalidTokenMessage(
+				companyId, responseJSONObject.getString("message"));
 
 			return closeableHttpResponse;
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AnalyticsMessageSenderClientImpl.class);
-
-	@Reference
-	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;
-
-	@Reference
-	private AnalyticsMessageLocalService _analyticsMessageLocalService;
-
-	@Reference
-	private CompanyService _companyService;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

@@ -1384,16 +1384,16 @@ public class MBMailingListModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MBMailingList)) {
+		if (!(object instanceof MBMailingList)) {
 			return false;
 		}
 
-		MBMailingList mbMailingList = (MBMailingList)obj;
+		MBMailingList mbMailingList = (MBMailingList)object;
 
 		long primaryKey = mbMailingList.getPrimaryKey();
 

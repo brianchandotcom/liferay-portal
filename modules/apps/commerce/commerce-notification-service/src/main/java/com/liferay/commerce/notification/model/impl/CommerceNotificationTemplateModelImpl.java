@@ -1698,17 +1698,17 @@ public class CommerceNotificationTemplateModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceNotificationTemplate)) {
+		if (!(object instanceof CommerceNotificationTemplate)) {
 			return false;
 		}
 
 		CommerceNotificationTemplate commerceNotificationTemplate =
-			(CommerceNotificationTemplate)obj;
+			(CommerceNotificationTemplate)object;
 
 		long primaryKey = commerceNotificationTemplate.getPrimaryKey();
 

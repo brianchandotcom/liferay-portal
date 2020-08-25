@@ -34,17 +34,17 @@ public class SocialActivityCounterCacheModel
 	implements CacheModel<SocialActivityCounter>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SocialActivityCounterCacheModel)) {
+		if (!(object instanceof SocialActivityCounterCacheModel)) {
 			return false;
 		}
 
 		SocialActivityCounterCacheModel socialActivityCounterCacheModel =
-			(SocialActivityCounterCacheModel)obj;
+			(SocialActivityCounterCacheModel)object;
 
 		if (activityCounterId ==
 				socialActivityCounterCacheModel.activityCounterId) {

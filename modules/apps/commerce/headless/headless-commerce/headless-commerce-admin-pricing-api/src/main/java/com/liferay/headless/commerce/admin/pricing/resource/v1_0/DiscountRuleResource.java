@@ -75,6 +75,10 @@ public interface DiscountRuleResource {
 			Long id, DiscountRule discountRule)
 		throws Exception;
 
+	public Response postDiscountIdDiscountRuleBatch(
+			Long id, String callbackURL, Object object)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

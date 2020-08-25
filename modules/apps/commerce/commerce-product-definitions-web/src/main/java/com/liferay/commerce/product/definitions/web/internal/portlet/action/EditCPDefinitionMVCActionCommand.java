@@ -27,7 +27,6 @@ import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionExcepti
 import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
 import com.liferay.commerce.product.exception.CPDefinitionNameDefaultLanguageException;
-import com.liferay.commerce.product.exception.CPFriendlyURLEntryException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCatalogException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -38,6 +37,7 @@ import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.service.CPDAvailabilityEstimateService;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
+import com.liferay.friendly.url.exception.FriendlyURLLengthException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -209,7 +209,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 					 t instanceof CPDefinitionMetaKeywordsException ||
 					 t instanceof CPDefinitionMetaTitleException ||
 					 t instanceof CPDefinitionNameDefaultLanguageException ||
-					 t instanceof CPFriendlyURLEntryException ||
+					 t instanceof FriendlyURLLengthException ||
 					 t instanceof NoSuchCatalogException ||
 					 t instanceof NoSuchCPDefinitionInventoryException ||
 					 t instanceof NumberFormatException) {

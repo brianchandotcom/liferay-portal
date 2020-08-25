@@ -792,18 +792,18 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommercePricingClassCPDefinitionRel)) {
+		if (!(object instanceof CommercePricingClassCPDefinitionRel)) {
 			return false;
 		}
 
 		CommercePricingClassCPDefinitionRel
 			commercePricingClassCPDefinitionRel =
-				(CommercePricingClassCPDefinitionRel)obj;
+				(CommercePricingClassCPDefinitionRel)object;
 
 		long primaryKey = commercePricingClassCPDefinitionRel.getPrimaryKey();
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -69,6 +70,9 @@ public class ProductHelper {
 
 						searchContext.setGroupIds(commerceCatalogGroupIds);
 					}
+
+					searchContext.setAttribute(
+						Field.STATUS, WorkflowConstants.STATUS_ANY);
 				}
 
 			},

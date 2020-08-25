@@ -29,7 +29,10 @@ import java.util.Locale;
  * @author Marco Leo
  * @author Andrea Di Giorgi
  * @author Alessio Antonio Rendina
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ * 					 com.liferay.friendly.url.model.impl.FriendlyURLEntryImpl}
  */
+@Deprecated
 public class CPFriendlyURLEntryImpl extends CPFriendlyURLEntryBaseImpl {
 
 	public static int validate(String urlTitle) {

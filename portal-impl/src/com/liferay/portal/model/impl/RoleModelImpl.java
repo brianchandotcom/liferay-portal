@@ -1332,16 +1332,16 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Role)) {
+		if (!(object instanceof Role)) {
 			return false;
 		}
 
-		Role role = (Role)obj;
+		Role role = (Role)object;
 
 		long primaryKey = role.getPrimaryKey();
 

@@ -38,18 +38,18 @@ public class CommerceInventoryReplenishmentItemCacheModel
 			   MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceInventoryReplenishmentItemCacheModel)) {
+		if (!(object instanceof CommerceInventoryReplenishmentItemCacheModel)) {
 			return false;
 		}
 
 		CommerceInventoryReplenishmentItemCacheModel
 			commerceInventoryReplenishmentItemCacheModel =
-				(CommerceInventoryReplenishmentItemCacheModel)obj;
+				(CommerceInventoryReplenishmentItemCacheModel)object;
 
 		if ((commerceInventoryReplenishmentItemId ==
 				commerceInventoryReplenishmentItemCacheModel.

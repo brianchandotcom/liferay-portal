@@ -113,7 +113,9 @@ public abstract class BaseCartResourceTestCase {
 
 		CartResource.Builder builder = CartResource.builder();
 
-		cartResource = builder.locale(
+		cartResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}
@@ -671,6 +673,14 @@ public abstract class BaseCartResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("orderStatusInfo", additionalAssertFieldName)) {
+				if (cart.getOrderStatusInfo() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("orderUUID", additionalAssertFieldName)) {
 				if (cart.getOrderUUID() == null) {
 					valid = false;
@@ -699,6 +709,16 @@ public abstract class BaseCartResourceTestCase {
 
 			if (Objects.equals("paymentStatus", additionalAssertFieldName)) {
 				if (cart.getPaymentStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"paymentStatusInfo", additionalAssertFieldName)) {
+
+				if (cart.getPaymentStatusInfo() == null) {
 					valid = false;
 				}
 
@@ -785,6 +805,16 @@ public abstract class BaseCartResourceTestCase {
 
 			if (Objects.equals("useAsBilling", additionalAssertFieldName)) {
 				if (cart.getUseAsBilling() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"workflowStatusInfo", additionalAssertFieldName)) {
+
+				if (cart.getWorkflowStatusInfo() == null) {
 					valid = false;
 				}
 
@@ -1030,6 +1060,17 @@ public abstract class BaseCartResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("orderStatusInfo", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						cart1.getOrderStatusInfo(),
+						cart2.getOrderStatusInfo())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("orderUUID", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						cart1.getOrderUUID(), cart2.getOrderUUID())) {
@@ -1066,6 +1107,19 @@ public abstract class BaseCartResourceTestCase {
 			if (Objects.equals("paymentStatus", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						cart1.getPaymentStatus(), cart2.getPaymentStatus())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"paymentStatusInfo", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						cart1.getPaymentStatusInfo(),
+						cart2.getPaymentStatusInfo())) {
 
 					return false;
 				}
@@ -1174,6 +1228,19 @@ public abstract class BaseCartResourceTestCase {
 			if (Objects.equals("useAsBilling", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						cart1.getUseAsBilling(), cart2.getUseAsBilling())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"workflowStatusInfo", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						cart1.getWorkflowStatusInfo(),
+						cart2.getWorkflowStatusInfo())) {
 
 					return false;
 				}
@@ -1430,6 +1497,11 @@ public abstract class BaseCartResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("orderStatusInfo")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("orderUUID")) {
 			sb.append("'");
 			sb.append(String.valueOf(cart.getOrderUUID()));
@@ -1455,6 +1527,11 @@ public abstract class BaseCartResourceTestCase {
 		}
 
 		if (entityFieldName.equals("paymentStatus")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("paymentStatusInfo")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1523,6 +1600,11 @@ public abstract class BaseCartResourceTestCase {
 		}
 
 		if (entityFieldName.equals("useAsBilling")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("workflowStatusInfo")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

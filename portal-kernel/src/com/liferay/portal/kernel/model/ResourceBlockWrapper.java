@@ -372,16 +372,17 @@ public class ResourceBlockWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ResourceBlockWrapper)) {
+		if (!(object instanceof ResourceBlockWrapper)) {
 			return false;
 		}
 
-		ResourceBlockWrapper resourceBlockWrapper = (ResourceBlockWrapper)obj;
+		ResourceBlockWrapper resourceBlockWrapper =
+			(ResourceBlockWrapper)object;
 
 		if (Objects.equals(
 				_resourceBlock, resourceBlockWrapper._resourceBlock)) {

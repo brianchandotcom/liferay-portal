@@ -860,16 +860,16 @@ public class TrashEntryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof TrashEntry)) {
+		if (!(object instanceof TrashEntry)) {
 			return false;
 		}
 
-		TrashEntry trashEntry = (TrashEntry)obj;
+		TrashEntry trashEntry = (TrashEntry)object;
 
 		long primaryKey = trashEntry.getPrimaryKey();
 

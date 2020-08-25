@@ -881,17 +881,17 @@ public class CommerceNotificationAttachmentModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceNotificationAttachment)) {
+		if (!(object instanceof CommerceNotificationAttachment)) {
 			return false;
 		}
 
 		CommerceNotificationAttachment commerceNotificationAttachment =
-			(CommerceNotificationAttachment)obj;
+			(CommerceNotificationAttachment)object;
 
 		long primaryKey = commerceNotificationAttachment.getPrimaryKey();
 

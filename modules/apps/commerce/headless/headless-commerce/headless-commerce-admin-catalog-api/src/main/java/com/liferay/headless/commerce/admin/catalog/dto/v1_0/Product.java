@@ -147,6 +147,35 @@ public class Product {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Attachment[] attachments;
 
+	@Schema
+	@Valid
+	public Catalog getCatalog() {
+		return catalog;
+	}
+
+	public void setCatalog(Catalog catalog) {
+		this.catalog = catalog;
+	}
+
+	@JsonIgnore
+	public void setCatalog(
+		UnsafeSupplier<Catalog, Exception> catalogUnsafeSupplier) {
+
+		try {
+			catalog = catalogUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Catalog catalog;
+
 	@DecimalMin("0")
 	@Schema
 	public Long getCatalogId() {
@@ -758,6 +787,34 @@ public class Product {
 	protected ProductSpecification[] productSpecifications;
 
 	@Schema
+	public Integer getProductStatus() {
+		return productStatus;
+	}
+
+	public void setProductStatus(Integer productStatus) {
+		this.productStatus = productStatus;
+	}
+
+	@JsonIgnore
+	public void setProductStatus(
+		UnsafeSupplier<Integer, Exception> productStatusUnsafeSupplier) {
+
+		try {
+			productStatus = productStatusUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Integer productStatus;
+
+	@Schema
 	public String getProductType() {
 		return productType;
 	}
@@ -785,6 +842,34 @@ public class Product {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String productType;
+
+	@Schema
+	public String getProductTypeI18n() {
+		return productTypeI18n;
+	}
+
+	public void setProductTypeI18n(String productTypeI18n) {
+		this.productTypeI18n = productTypeI18n;
+	}
+
+	@JsonIgnore
+	public void setProductTypeI18n(
+		UnsafeSupplier<String, Exception> productTypeI18nUnsafeSupplier) {
+
+		try {
+			productTypeI18n = productTypeI18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String productTypeI18n;
 
 	@Schema
 	@Valid
@@ -997,6 +1082,34 @@ public class Product {
 	protected ProductTaxConfiguration taxConfiguration;
 
 	@Schema
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+
+	@JsonIgnore
+	public void setThumbnail(
+		UnsafeSupplier<String, Exception> thumbnailUnsafeSupplier) {
+
+		try {
+			thumbnail = thumbnailUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String thumbnail;
+
+	@Schema
 	@Valid
 	public Map<String, String> getUrls() {
 		return urls;
@@ -1024,6 +1137,35 @@ public class Product {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> urls;
+
+	@Schema
+	@Valid
+	public Status getWorkflowStatusInfo() {
+		return workflowStatusInfo;
+	}
+
+	public void setWorkflowStatusInfo(Status workflowStatusInfo) {
+		this.workflowStatusInfo = workflowStatusInfo;
+	}
+
+	@JsonIgnore
+	public void setWorkflowStatusInfo(
+		UnsafeSupplier<Status, Exception> workflowStatusInfoUnsafeSupplier) {
+
+		try {
+			workflowStatusInfo = workflowStatusInfoUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Status workflowStatusInfo;
 
 	@Override
 	public boolean equals(Object object) {
@@ -1093,6 +1235,16 @@ public class Product {
 			}
 
 			sb.append("]");
+		}
+
+		if (catalog != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"catalog\": ");
+
+			sb.append(String.valueOf(catalog));
 		}
 
 		if (catalogId != null) {
@@ -1369,6 +1521,16 @@ public class Product {
 			sb.append("]");
 		}
 
+		if (productStatus != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productStatus\": ");
+
+			sb.append(productStatus);
+		}
+
 		if (productType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1379,6 +1541,20 @@ public class Product {
 			sb.append("\"");
 
 			sb.append(_escape(productType));
+
+			sb.append("\"");
+		}
+
+		if (productTypeI18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productTypeI18n\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(productTypeI18n));
 
 			sb.append("\"");
 		}
@@ -1487,6 +1663,20 @@ public class Product {
 			sb.append(String.valueOf(taxConfiguration));
 		}
 
+		if (thumbnail != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"thumbnail\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(thumbnail));
+
+			sb.append("\"");
+		}
+
 		if (urls != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1495,6 +1685,16 @@ public class Product {
 			sb.append("\"urls\": ");
 
 			sb.append(_toJSON(urls));
+		}
+
+		if (workflowStatusInfo != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"workflowStatusInfo\": ");
+
+			sb.append(String.valueOf(workflowStatusInfo));
 		}
 
 		sb.append("}");
@@ -1512,6 +1712,16 @@ public class Product {
 		String string = String.valueOf(object);
 
 		return string.replaceAll("\"", "\\\\\"");
+	}
+
+	private static boolean _isArray(Object value) {
+		if (value == null) {
+			return false;
+		}
+
+		Class<?> clazz = value.getClass();
+
+		return clazz.isArray();
 	}
 
 	private static String _toJSON(Map<String, ?> map) {
@@ -1532,9 +1742,7 @@ public class Product {
 
 			Object value = entry.getValue();
 
-			Class<?> clazz = value.getClass();
-
-			if (clazz.isArray()) {
+			if (_isArray(value)) {
 				sb.append("[");
 
 				Object[] valueArray = (Object[])value;

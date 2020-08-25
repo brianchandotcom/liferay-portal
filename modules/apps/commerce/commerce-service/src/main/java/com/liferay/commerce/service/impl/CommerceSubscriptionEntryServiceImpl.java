@@ -17,7 +17,7 @@ package com.liferay.commerce.service.impl;
 import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.base.CommerceSubscriptionEntryServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -146,7 +146,7 @@ public class CommerceSubscriptionEntryServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_SUBSCRIPTIONS);
 
 		List<CommerceChannel> commerceChannels =
-			_commerceChannelService.searchCommerceChannels(companyId);
+			_commerceChannelLocalService.searchCommerceChannels(companyId);
 
 		Stream<CommerceChannel> stream = commerceChannels.stream();
 
@@ -237,7 +237,7 @@ public class CommerceSubscriptionEntryServiceImpl
 			commerceSubscriptionEntryId, subscriptionStatus);
 	}
 
-	@ServiceReference(type = CommerceChannelService.class)
-	private CommerceChannelService _commerceChannelService;
+	@ServiceReference(type = CommerceChannelLocalService.class)
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 }

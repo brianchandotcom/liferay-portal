@@ -38,6 +38,10 @@ public class CommerceAddressRestrictionLocalServiceWrapper
 	/**
 	 * Adds the commerce address restriction to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAddressRestrictionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceAddressRestriction the commerce address restriction
 	 * @return the commerce address restriction that was added
 	 */
@@ -96,6 +100,10 @@ public class CommerceAddressRestrictionLocalServiceWrapper
 	/**
 	 * Deletes the commerce address restriction from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAddressRestrictionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceAddressRestriction the commerce address restriction
 	 * @return the commerce address restriction that was removed
 	 */
@@ -111,6 +119,10 @@ public class CommerceAddressRestrictionLocalServiceWrapper
 
 	/**
 	 * Deletes the commerce address restriction with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAddressRestrictionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceAddressRestrictionId the primary key of the commerce address restriction
 	 * @return the commerce address restriction that was removed
@@ -387,6 +399,10 @@ public class CommerceAddressRestrictionLocalServiceWrapper
 
 	/**
 	 * Updates the commerce address restriction in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAddressRestrictionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceAddressRestriction the commerce address restriction
 	 * @return the commerce address restriction that was updated

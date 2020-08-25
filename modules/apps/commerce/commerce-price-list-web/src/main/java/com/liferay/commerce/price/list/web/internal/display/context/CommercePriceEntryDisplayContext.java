@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -54,9 +55,13 @@ public class CommercePriceEntryDisplayContext
 	public CommercePriceEntryDisplayContext(
 		CommercePriceListActionHelper commercePriceListActionHelper,
 		CommercePriceEntryService commercePriceEntryService,
+		ModelResourcePermission<CommercePriceList>
+			commercePriceListModelResourcePermission,
 		ItemSelector itemSelector, HttpServletRequest httpServletRequest) {
 
-		super(commercePriceListActionHelper, httpServletRequest);
+		super(
+			commercePriceListActionHelper,
+			commercePriceListModelResourcePermission, httpServletRequest);
 
 		_commercePriceEntryService = commercePriceEntryService;
 		_itemSelector = itemSelector;

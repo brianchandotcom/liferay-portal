@@ -768,17 +768,17 @@ public class FriendlyURLEntryLocalizationModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof FriendlyURLEntryLocalization)) {
+		if (!(object instanceof FriendlyURLEntryLocalization)) {
 			return false;
 		}
 
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			(FriendlyURLEntryLocalization)obj;
+			(FriendlyURLEntryLocalization)object;
 
 		long primaryKey = friendlyURLEntryLocalization.getPrimaryKey();
 

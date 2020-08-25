@@ -572,6 +572,43 @@ public class CommerceOrderItemLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public CommerceOrderItem updateCommerceOrderItemDeliveryDate(
+			long commerceOrderItemId, Date requestedDeliveryDate)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
+
+		if ((requestedDeliveryDate != null) &&
+			requestedDeliveryDate.before(new Date())) {
+
+			throw new CommerceOrderItemRequestedDeliveryDateException();
+		}
+
+		commerceOrderItem.setRequestedDeliveryDate(requestedDeliveryDate);
+
+		return commerceOrderItemPersistence.update(commerceOrderItem);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceOrderItem updateCommerceOrderItemInfo(
+			long commerceOrderItemId, String deliveryGroup,
+			long shippingAddressId, String printedNote)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
+
+		commerceOrderItem.setDeliveryGroup(deliveryGroup);
+		commerceOrderItem.setShippingAddressId(shippingAddressId);
+		commerceOrderItem.setPrintedNote(printedNote);
+
+		return commerceOrderItemPersistence.update(commerceOrderItem);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CommerceOrderItem updateCommerceOrderItemInfo(
 			long commerceOrderItemId, String deliveryGroup,
 			long shippingAddressId, String printedNote,
@@ -786,6 +823,22 @@ public class CommerceOrderItemLocalServiceImpl
 		commerceOrderItem.setManuallyAdjusted(true);
 
 		return commerceOrderItemPersistence.update(commerceOrderItem);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceOrderItem updateCustomFields(
+			long commerceOrderItemId, ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemLocalService.getCommerceOrderItem(
+				commerceOrderItemId);
+
+		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
+
+		return commerceOrderItemLocalService.updateCommerceOrderItem(
+			commerceOrderItem);
 	}
 
 	@Override
@@ -1460,39 +1513,46 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrderItem.getBookedQuantityId(), quantity,
 			commerceOrderItem.getQuantity());
 
-		if (commerceProductPrice == null) {
-			commerceProductPrice = _getCommerceProductPrice(
-				commerceOrderItem.getCPDefinitionId(),
-				commerceOrderItem.getCPInstanceId(),
-				commerceOrderItem.getJson(), quantity, commerceContext);
-		}
+		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
 		validate(
-			serviceContext.getLocale(), commerceOrderItem.getCommerceOrder(),
+			serviceContext.getLocale(), commerceOrder,
 			commerceOrderItem.getCPDefinition(),
 			commerceOrderItem.fetchCPInstance(), quantity);
 
-		updateWorkflow(commerceOrderItem.getCommerceOrder(), serviceContext);
+		updateWorkflow(commerceOrder, serviceContext);
 
 		commerceOrderItem.setQuantity(quantity);
 		commerceOrderItem.setJson(json);
 
-		_setCommerceOrderItemPrice(commerceOrderItem, commerceProductPrice);
+		if (commerceOrder.isOpen()) {
+			if (commerceProductPrice == null) {
+				commerceProductPrice = _getCommerceProductPrice(
+					commerceOrderItem.getCPDefinitionId(),
+					commerceOrderItem.getCPInstanceId(),
+					commerceOrderItem.getJson(), quantity, commerceContext);
+			}
+
+			_setCommerceOrderItemPrice(commerceOrderItem, commerceProductPrice);
+
+			_setCommerceOrderItemDiscountValue(
+				commerceOrderItem, commerceProductPrice.getDiscountValue(),
+				false);
+
+			_setCommerceOrderItemDiscountValue(
+				commerceOrderItem,
+				commerceProductPrice.getDiscountValueWithTaxAmount(), true);
+		}
 
 		commerceOrderItem.setExpandoBridgeAttributes(serviceContext);
-
-		_setCommerceOrderItemDiscountValue(
-			commerceOrderItem, commerceProductPrice.getDiscountValue(), false);
-
-		_setCommerceOrderItemDiscountValue(
-			commerceOrderItem,
-			commerceProductPrice.getDiscountValueWithTaxAmount(), true);
 
 		commerceOrderItem = commerceOrderItemPersistence.update(
 			commerceOrderItem);
 
-		commerceOrderLocalService.recalculatePrice(
-			commerceOrderItem.getCommerceOrderId(), commerceContext);
+		if (commerceOrder.isOpen()) {
+			commerceOrderLocalService.recalculatePrice(
+				commerceOrderItem.getCommerceOrderId(), commerceContext);
+		}
 
 		return commerceOrderItem;
 	}

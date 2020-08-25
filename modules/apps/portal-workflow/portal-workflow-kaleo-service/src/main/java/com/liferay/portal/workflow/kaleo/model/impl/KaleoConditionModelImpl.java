@@ -823,16 +823,16 @@ public class KaleoConditionModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoCondition)) {
+		if (!(object instanceof KaleoCondition)) {
 			return false;
 		}
 
-		KaleoCondition kaleoCondition = (KaleoCondition)obj;
+		KaleoCondition kaleoCondition = (KaleoCondition)object;
 
 		long primaryKey = kaleoCondition.getPrimaryKey();
 

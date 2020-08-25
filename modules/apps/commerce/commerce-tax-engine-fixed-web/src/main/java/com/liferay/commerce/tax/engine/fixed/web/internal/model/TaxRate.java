@@ -19,7 +19,7 @@ package com.liferay.commerce.tax.engine.fixed.web.internal.model;
  */
 public class TaxRate {
 
-	public TaxRate(String name, double rate, long taxRateId) {
+	public TaxRate(String name, String rate, long taxRateId) {
 		_name = name;
 		_rate = rate;
 		_taxRateId = taxRateId;
@@ -29,7 +29,7 @@ public class TaxRate {
 		return _name;
 	}
 
-	public double getRate() {
+	public String getRate() {
 		return _rate;
 	}
 
@@ -38,7 +38,7 @@ public class TaxRate {
 	}
 
 	private final String _name;
-	private final double _rate;
+	private final String _rate;
 	private final long _taxRateId;
 
 }

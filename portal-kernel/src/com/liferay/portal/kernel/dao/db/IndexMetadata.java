@@ -98,7 +98,7 @@ public class IndexMetadata extends Index implements Comparable<IndexMetadata> {
 	}
 
 	public String getCreateSQL(int[] lengths) {
-		int sbSize = 8 + _columnNames.length * 2;
+		int sbSize = 8 + (_columnNames.length * 2);
 
 		if (lengths != null) {
 			sbSize += _columnNames.length * 3;

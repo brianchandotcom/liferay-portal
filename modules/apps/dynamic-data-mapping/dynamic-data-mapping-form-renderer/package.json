@@ -8,5 +8,5 @@
 	"scripts": {
 		"build": "liferay-npm-scripts build"
 	},
-	"version": "3.0.52"
+	"version": "3.0.53"
 }

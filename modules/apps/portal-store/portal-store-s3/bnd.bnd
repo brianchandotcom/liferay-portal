@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Store S3
 Bundle-SymbolicName: com.liferay.portal.store.s3
-Bundle-Version: 3.0.41
+Bundle-Version: 3.0.43
 Import-Package:\
 	!com.sun.org.apache.xerces.internal.jaxp,\
 	!com.sun.org.apache.xml.internal.dtm,\

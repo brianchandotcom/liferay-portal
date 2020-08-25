@@ -109,7 +109,9 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 		WorkflowTaskResource.Builder builder = WorkflowTaskResource.builder();
 
-		workflowTaskResource = builder.locale(
+		workflowTaskResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

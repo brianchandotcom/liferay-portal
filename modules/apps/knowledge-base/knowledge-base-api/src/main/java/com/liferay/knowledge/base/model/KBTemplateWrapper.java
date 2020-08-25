@@ -504,16 +504,16 @@ public class KBTemplateWrapper implements KBTemplate, ModelWrapper<KBTemplate> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KBTemplateWrapper)) {
+		if (!(object instanceof KBTemplateWrapper)) {
 			return false;
 		}
 
-		KBTemplateWrapper kbTemplateWrapper = (KBTemplateWrapper)obj;
+		KBTemplateWrapper kbTemplateWrapper = (KBTemplateWrapper)object;
 
 		if (Objects.equals(_kbTemplate, kbTemplateWrapper._kbTemplate)) {
 			return true;

@@ -293,11 +293,11 @@ while (manageableCalendarsIterator.hasNext()) {
 		<aui:fieldset markupView="lexicon">
 			<aui:input defaultLanguageId="<%= themeDisplay.getLanguageId() %>" name="title" />
 
-			<div class='<%= allDay ? "allday-class-active" : "" %>' id="<portlet:namespace />startDateContainer">
+			<div class="<%= allDay ? "allday-class-active" : "" %>" id="<portlet:namespace />startDateContainer">
 				<aui:input ignoreRequestValue="<%= true %>" label="starts" name="startTime" timeFormat="<%= timeFormat %>" value="<%= startTimeJCalendar %>" />
 			</div>
 
-			<div class='<%= allDay ? "allday-class-active" : "" %>' id="<portlet:namespace />endDateContainer">
+			<div class="<%= allDay ? "allday-class-active" : "" %>" id="<portlet:namespace />endDateContainer">
 				<aui:input ignoreRequestValue="<%= true %>" label="ends" name="endTime" timeFormat="<%= timeFormat %>" value="<%= endTimeJCalendar %>" />
 			</div>
 
@@ -504,7 +504,7 @@ while (manageableCalendarsIterator.hasNext()) {
 	</div>
 
 	<aui:button-row>
-		<div class='alert alert-info <%= (hasWorkflowDefinitionLink && approved) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />approvalProcessAlert">
+		<div class="alert alert-info <%= (hasWorkflowDefinitionLink && approved) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />approvalProcessAlert">
 			<liferay-ui:message arguments="<%= ResourceActionsUtil.getModelResource(locale, CalendarBooking.class.getName()) %>" key="this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again" translateArguments="<%= false %>" />
 		</div>
 

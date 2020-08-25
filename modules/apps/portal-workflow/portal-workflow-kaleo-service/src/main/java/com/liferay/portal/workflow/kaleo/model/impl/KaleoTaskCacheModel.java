@@ -36,16 +36,16 @@ public class KaleoTaskCacheModel
 	implements CacheModel<KaleoTask>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoTaskCacheModel)) {
+		if (!(object instanceof KaleoTaskCacheModel)) {
 			return false;
 		}
 
-		KaleoTaskCacheModel kaleoTaskCacheModel = (KaleoTaskCacheModel)obj;
+		KaleoTaskCacheModel kaleoTaskCacheModel = (KaleoTaskCacheModel)object;
 
 		if (kaleoTaskId == kaleoTaskCacheModel.kaleoTaskId) {
 			return true;

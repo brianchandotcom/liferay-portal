@@ -86,12 +86,13 @@ public class DDMFormValuesHelperImpl implements DDMFormValuesHelper {
 	}
 
 	/**
-	 * @param json1
-	 * @param json2
+	 * @param      json1
+	 * @param      json2
 	 * @return
 	 *
-	 * @throws PortalException
-	 * @deprecated As of Athanasius (7.3.x), use {@link JsonHelper#equals(String, String)}
+	 * @throws     PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link
+	 *             JsonHelper#equals(String, String)}
 	 */
 	@Deprecated
 	@Override

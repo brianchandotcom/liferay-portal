@@ -21,6 +21,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -29,6 +31,10 @@ import javax.ws.rs.core.UriInfo;
  */
 public class DefaultDTOConverterContext implements DTOConverterContext {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public DefaultDTOConverterContext(
 		boolean acceptAllLanguages, DTOConverterRegistry dtoConverterRegistry,
 		Object id, Locale locale, UriInfo uriInfo, User user) {
@@ -40,12 +46,14 @@ public class DefaultDTOConverterContext implements DTOConverterContext {
 
 	public DefaultDTOConverterContext(
 		boolean acceptAllLanguages, Map<String, Map<String, String>> actions,
-		DTOConverterRegistry dtoConverterRegistry, Object id, Locale locale,
+		DTOConverterRegistry dtoConverterRegistry,
+		HttpServletRequest httpServletRequest, Object id, Locale locale,
 		UriInfo uriInfo, User user) {
 
 		_acceptAllLanguages = acceptAllLanguages;
 		_actions = actions;
 		_dtoConverterRegistry = dtoConverterRegistry;
+		_httpServletRequest = httpServletRequest;
 		_id = id;
 		_locale = locale;
 		_uriInfo = uriInfo;
@@ -53,22 +61,46 @@ public class DefaultDTOConverterContext implements DTOConverterContext {
 	}
 
 	public DefaultDTOConverterContext(
+		boolean acceptAllLanguages, Map<String, Map<String, String>> actions,
 		DTOConverterRegistry dtoConverterRegistry, Object id, Locale locale,
 		UriInfo uriInfo, User user) {
 
-		this(false, dtoConverterRegistry, id, locale, uriInfo, user);
-	}
-
-	public DefaultDTOConverterContext(Object id, Locale locale) {
-		this(id, locale, null, null);
+		this(
+			acceptAllLanguages, actions, dtoConverterRegistry, null, id, locale,
+			uriInfo, user);
 	}
 
 	public DefaultDTOConverterContext(
-		Object id, Locale locale, UriInfo uriInfo) {
+		DTOConverterRegistry dtoConverterRegistry, Object id, Locale locale,
+		UriInfo uriInfo, User user) {
 
-		this(id, locale, uriInfo, null);
+		this(
+			false, new HashMap<>(), dtoConverterRegistry, id, locale, uriInfo,
+			user);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public DefaultDTOConverterContext(Object id, Locale locale) {
+		this(false, new HashMap<>(), null, id, locale, null, null);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
+	public DefaultDTOConverterContext(
+		Object id, Locale locale, UriInfo uriInfo) {
+
+		this(false, new HashMap<>(), null, id, locale, uriInfo, null);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public DefaultDTOConverterContext(
 		Object id, Locale locale, UriInfo uriInfo, User user) {
 
@@ -83,6 +115,11 @@ public class DefaultDTOConverterContext implements DTOConverterContext {
 	@Override
 	public DTOConverterRegistry getDTOConverterRegistry() {
 		return _dtoConverterRegistry;
+	}
+
+	@Override
+	public HttpServletRequest getHttpServletRequest() {
+		return _httpServletRequest;
 	}
 
 	@Override
@@ -122,9 +159,10 @@ public class DefaultDTOConverterContext implements DTOConverterContext {
 	private final boolean _acceptAllLanguages;
 	private final Map<String, Map<String, String>> _actions;
 	private final DTOConverterRegistry _dtoConverterRegistry;
+	private final HttpServletRequest _httpServletRequest;
 	private final Object _id;
 	private final Locale _locale;
-	private UriInfo _uriInfo;
+	private final UriInfo _uriInfo;
 	private final User _user;
 
 }

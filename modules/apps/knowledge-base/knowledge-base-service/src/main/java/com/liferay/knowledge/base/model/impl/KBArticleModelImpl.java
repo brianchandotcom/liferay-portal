@@ -1742,16 +1742,16 @@ public class KBArticleModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KBArticle)) {
+		if (!(object instanceof KBArticle)) {
 			return false;
 		}
 
-		KBArticle kbArticle = (KBArticle)obj;
+		KBArticle kbArticle = (KBArticle)object;
 
 		long primaryKey = kbArticle.getPrimaryKey();
 

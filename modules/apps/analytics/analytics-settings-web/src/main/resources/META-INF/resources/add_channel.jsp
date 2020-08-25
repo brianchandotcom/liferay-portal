@@ -58,7 +58,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "add-new-property"), currentURL);
 %>
 
-<portlet:actionURL name="/analytics/add_channel" var="addChannelURL" />
+<portlet:actionURL name="/analytics_settings/add_channel" var="addChannelURL" />
 
 <div class="container-fluid container-fluid-max-xl">
 	<div class="col-12">

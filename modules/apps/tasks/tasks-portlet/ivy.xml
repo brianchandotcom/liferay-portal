@@ -11,7 +11,7 @@
 	</info>
 
 	<dependencies defaultconf="default">
-		<dependency name="com.liferay.portal.dao.orm.custom.sql.api" org="com.liferay" rev="1.0.0-20180412.172333-1" />
+		<dependency name="com.liferay.portal.dao.orm.custom.sql.api" org="com.liferay" rev="1.0.0" />
 		<dependency name="com.liferay.portal.spring.extender" org="com.liferay" rev="2.0.0" />
 	</dependencies>
 </ivy-module>

@@ -308,17 +308,17 @@ public class DDMDataProviderInstanceLinkWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMDataProviderInstanceLinkWrapper)) {
+		if (!(object instanceof DDMDataProviderInstanceLinkWrapper)) {
 			return false;
 		}
 
 		DDMDataProviderInstanceLinkWrapper ddmDataProviderInstanceLinkWrapper =
-			(DDMDataProviderInstanceLinkWrapper)obj;
+			(DDMDataProviderInstanceLinkWrapper)object;
 
 		if (Objects.equals(
 				_ddmDataProviderInstanceLink,

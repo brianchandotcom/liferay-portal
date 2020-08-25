@@ -407,16 +407,16 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ImageWrapper)) {
+		if (!(object instanceof ImageWrapper)) {
 			return false;
 		}
 
-		ImageWrapper imageWrapper = (ImageWrapper)obj;
+		ImageWrapper imageWrapper = (ImageWrapper)object;
 
 		if (Objects.equals(_image, imageWrapper._image)) {
 			return true;

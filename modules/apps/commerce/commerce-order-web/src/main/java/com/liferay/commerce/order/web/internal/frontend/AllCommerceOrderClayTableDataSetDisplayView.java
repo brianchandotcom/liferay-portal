@@ -41,30 +41,34 @@ public class AllCommerceOrderClayTableDataSetDisplayView
 			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
 
 		ClayTableSchemaField orderIdField = clayTableSchemaBuilder.addField(
-			"orderId", "order-id");
+			"id", "order-id");
 
 		orderIdField.setContentRenderer("actionLink");
 
-		clayTableSchemaBuilder.addField("account", "account");
+		clayTableSchemaBuilder.addField("account.name", "account");
 
-		clayTableSchemaBuilder.addField("accountCode", "account-number");
+		clayTableSchemaBuilder.addField("accountId", "account-number");
 
-		clayTableSchemaBuilder.addField("channel", "channel");
+		clayTableSchemaBuilder.addField("channel.name", "channel");
 
-		clayTableSchemaBuilder.addField("amount", "amount");
+		clayTableSchemaBuilder.addField("totalFormatted", "amount");
 
-		clayTableSchemaBuilder.addField("createDate", "create-date");
+		ClayTableSchemaField dateClayTableSchemaField =
+			clayTableSchemaBuilder.addField("createDate", "create-date");
+
+		dateClayTableSchemaField.setContentRenderer("date");
+		dateClayTableSchemaField.setSortable(true);
 
 		ClayTableSchemaField orderStatusField = clayTableSchemaBuilder.addField(
-			"orderStatus", "order-status");
+			"orderStatusInfo", "order-status");
 
-		orderStatusField.setContentRenderer("label");
+		orderStatusField.setContentRenderer("status");
 
 		ClayTableSchemaField fulfillmentWorkflowField =
 			clayTableSchemaBuilder.addField(
-				"fulfillmentWorkflow", "acceptance-workflow-status");
+				"workflowStatusInfo", "acceptance-workflow-status");
 
-		fulfillmentWorkflowField.setContentRenderer("label");
+		fulfillmentWorkflowField.setContentRenderer("status");
 
 		return clayTableSchemaBuilder.build();
 	}

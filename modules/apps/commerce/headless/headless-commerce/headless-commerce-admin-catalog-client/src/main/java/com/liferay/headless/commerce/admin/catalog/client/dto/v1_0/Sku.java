@@ -409,6 +409,27 @@ public class Sku implements Cloneable {
 
 	protected String sku;
 
+	public String getUnspsc() {
+		return unspsc;
+	}
+
+	public void setUnspsc(String unspsc) {
+		this.unspsc = unspsc;
+	}
+
+	public void setUnspsc(
+		UnsafeSupplier<String, Exception> unspscUnsafeSupplier) {
+
+		try {
+			unspsc = unspscUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String unspsc;
+
 	public Double getWeight() {
 		return weight;
 	}

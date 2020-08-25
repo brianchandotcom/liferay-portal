@@ -126,7 +126,7 @@ public class LocalProcessExecutor implements ProcessExecutor {
 	private static String _buildThreadName(
 		ProcessCallable<?> processCallable, List<String> arguments) {
 
-		StringBundler sb = new StringBundler(arguments.size() * 2 + 2);
+		StringBundler sb = new StringBundler((arguments.size() * 2) + 2);
 
 		sb.append(processCallable);
 		sb.append(StringPool.OPEN_BRACKET);

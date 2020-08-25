@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Checkout Web
 Bundle-SymbolicName: com.liferay.commerce.checkout.web
-Bundle-Version: 2.0.27
+Bundle-Version: 2.0.30
 Import-Package:\
 	com.liferay.taglib.util;version="[7.4.0,9.0.0)",\
 	\

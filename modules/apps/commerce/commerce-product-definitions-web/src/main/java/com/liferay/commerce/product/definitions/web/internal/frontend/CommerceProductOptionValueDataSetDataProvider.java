@@ -85,6 +85,9 @@ public class CommerceProductOptionValueDataSetDataProvider
 		long cpDefinitionOptionRelId = ParamUtil.getLong(
 			httpServletRequest, "cpDefinitionOptionRelId");
 
+		CommerceCurrency commerceCurrency = _getCommerceCurrency(
+			cpDefinitionOptionRelId);
+
 		Locale locale = _portal.getLocale(httpServletRequest);
 
 		BaseModelSearchResult<CPDefinitionOptionValueRel>
@@ -99,28 +102,22 @@ public class CommerceProductOptionValueDataSetDataProvider
 		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
 				cpDefinitionOptionValueRels) {
 
-			CommerceCatalog commerceCatalog =
-				_commerceCatalogService.fetchCommerceCatalogByGroupId(
-					cpDefinitionOptionValueRel.getGroupId());
-
-			CommerceCurrency commerceCurrency =
-				_commerceCurrencyService.getCommerceCurrency(
-					commerceCatalog.getCompanyId(),
-					commerceCatalog.getCommerceCurrencyCode());
-
-			BigDecimal price = _getPrice(cpDefinitionOptionValueRel);
-
 			productOptionValues.add(
 				new ProductOptionValue(
 					cpDefinitionOptionValueRel.
 						getCPDefinitionOptionValueRelId(),
 					_commercePriceFormatter.format(
-						commerceCurrency, price, locale),
+						commerceCurrency, _getPrice(cpDefinitionOptionValueRel),
+						locale),
 					cpDefinitionOptionValueRel.getKey(),
 					HtmlUtil.escape(
 						cpDefinitionOptionValueRel.getName(
 							LanguageUtil.getLanguageId(locale))),
 					cpDefinitionOptionValueRel.getPriority(),
+					LanguageUtil.get(
+						locale,
+						cpDefinitionOptionValueRel.isPreselected() ? "yes" :
+							"no"),
 					_getSku(cpDefinitionOptionValueRel)));
 		}
 
@@ -142,6 +139,22 @@ public class CommerceProductOptionValueDataSetDataProvider
 				cpDefinitionOptionRel.getCompanyId(),
 				cpDefinitionOptionRel.getGroupId(), cpDefinitionOptionRelId,
 				keywords, start, end, sort);
+	}
+
+	private CommerceCurrency _getCommerceCurrency(long cpDefinitionOptionRelId)
+		throws PortalException {
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			_cpDefinitionOptionRelService.getCPDefinitionOptionRel(
+				cpDefinitionOptionRelId);
+
+		CommerceCatalog commerceCatalog =
+			_commerceCatalogService.fetchCommerceCatalogByGroupId(
+				cpDefinitionOptionRel.getGroupId());
+
+		return _commerceCurrencyService.getCommerceCurrency(
+			commerceCatalog.getCompanyId(),
+			commerceCatalog.getCommerceCurrencyCode());
 	}
 
 	private BigDecimal _getPrice(

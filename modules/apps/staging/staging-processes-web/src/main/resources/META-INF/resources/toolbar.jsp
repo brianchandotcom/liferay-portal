@@ -27,6 +27,8 @@ String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
+boolean hasPublishStagingPermission = GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.PUBLISH_STAGING);
+
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
@@ -39,11 +41,12 @@ portletURL.setParameter("searchContainerId", String.valueOf(searchContainerId));
 %>
 
 <clay:management-toolbar
-	actionDropdownItems="<%= stagingProcessesWebToolbarDisplayContext.getActionDropdownItems() %>"
-	creationMenu="<%= stagingProcessesWebToolbarDisplayContext.getCreationMenu(GroupPermissionUtil.contains(permissionChecker, stagingGroupId, ActionKeys.PUBLISH_STAGING)) %>"
+	actionDropdownItems="<%= stagingProcessesWebToolbarDisplayContext.getActionDropdownItems(hasPublishStagingPermission) %>"
+	creationMenu="<%= stagingProcessesWebToolbarDisplayContext.getCreationMenu(hasPublishStagingPermission) %>"
 	filterDropdownItems="<%= stagingProcessesWebToolbarDisplayContext.getFilterDropdownItems() %>"
 	searchContainerId="<%= searchContainerId %>"
-	showCreationMenu='<%= tabs1.equals("processes") %>'
+	selectable="<%= hasPublishStagingPermission %>"
+	showCreationMenu='<%= tabs1.equals("processes") && hasPublishStagingPermission %>'
 	showSearch="<%= false %>"
 	sortingOrder="<%= stagingProcessesWebToolbarDisplayContext.getSortingOrder() %>"
 	sortingURL="<%= stagingProcessesWebToolbarDisplayContext.getSortingURL() %>"

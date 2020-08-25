@@ -435,7 +435,7 @@ if (portletTitleBasedNavigation) {
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="versioning">
 						<aui:input label="customize-the-version-number-increment-and-describe-my-changes" name="updateVersionDetails" type="toggle-switch" value="<%= updateVersionDetails %>" />
 
-						<div id="<portlet:namespace />versionDetails" style='<%= updateVersionDetails ? StringPool.BLANK : "display: none" %>'>
+						<div id="<portlet:namespace />versionDetails" style="<%= updateVersionDetails ? StringPool.BLANK : "display: none" %>">
 							<aui:input checked="<%= majorVersion %>" label="major-version" name="majorVersion" type="radio" value="<%= true %>" />
 
 							<aui:input checked="<%= !majorVersion %>" label="minor-version" name="majorVersion" type="radio" value="<%= false %>" />

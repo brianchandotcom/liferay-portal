@@ -313,16 +313,16 @@ public class ExpandoTableWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ExpandoTableWrapper)) {
+		if (!(object instanceof ExpandoTableWrapper)) {
 			return false;
 		}
 
-		ExpandoTableWrapper expandoTableWrapper = (ExpandoTableWrapper)obj;
+		ExpandoTableWrapper expandoTableWrapper = (ExpandoTableWrapper)object;
 
 		if (Objects.equals(_expandoTable, expandoTableWrapper._expandoTable)) {
 			return true;

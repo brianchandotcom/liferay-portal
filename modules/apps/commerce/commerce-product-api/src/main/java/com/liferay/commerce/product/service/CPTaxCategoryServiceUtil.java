@@ -48,10 +48,27 @@ public class CPTaxCategoryServiceUtil {
 			nameMap, descriptionMap, serviceContext);
 	}
 
+	public static int countCPTaxCategoriesByCompanyId(
+			long companyId, String keyword)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().countCPTaxCategoriesByCompanyId(companyId, keyword);
+	}
+
 	public static void deleteCPTaxCategory(long cpTaxCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		getService().deleteCPTaxCategory(cpTaxCategoryId);
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.product.model.CPTaxCategory>
+				findCPTaxCategoriesByCompanyId(
+					long companyId, String keyword, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().findCPTaxCategoriesByCompanyId(
+			companyId, keyword, start, end);
 	}
 
 	public static java.util.List

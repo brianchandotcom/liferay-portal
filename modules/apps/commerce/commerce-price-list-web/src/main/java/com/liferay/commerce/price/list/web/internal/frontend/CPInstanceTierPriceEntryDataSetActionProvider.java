@@ -16,8 +16,8 @@ package com.liferay.commerce.price.list.web.internal.frontend;
 
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetAction;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetActionProvider;
-import com.liferay.commerce.price.list.constants.CommercePriceListActionKeys;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.commerce.price.list.web.internal.model.InstanceTierPriceEntry;
@@ -32,7 +32,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -81,9 +82,13 @@ public class CPInstanceTierPriceEntryDataSetActionProvider
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (PortalPermissionUtil.contains(
+		CommercePriceEntry commercePriceEntry =
+			commerceTierPriceEntry.getCommercePriceEntry();
+
+		if (_commercePriceListModelResourcePermission.contains(
 				themeDisplay.getPermissionChecker(),
-				CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS)) {
+				commercePriceEntry.getCommercePriceListId(),
+				ActionKeys.UPDATE)) {
 
 			PortletURL editURL = _getInstanceTierPriceEntryEditURL(
 				commerceTierPriceEntry, httpServletRequest);
@@ -96,6 +101,12 @@ public class CPInstanceTierPriceEntryDataSetActionProvider
 			editClayDataSetAction.setTarget("modal");
 
 			clayDataSetActions.add(editClayDataSetAction);
+		}
+
+		if (_commercePriceListModelResourcePermission.contains(
+				themeDisplay.getPermissionChecker(),
+				commercePriceEntry.getCommercePriceListId(),
+				ActionKeys.DELETE)) {
 
 			PortletURL deleteURL = _getInstanceTierPriceEntryDeleteURL(
 				commerceTierPriceEntry, httpServletRequest);
@@ -192,6 +203,12 @@ public class CPInstanceTierPriceEntryDataSetActionProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPInstanceTierPriceEntryDataSetActionProvider.class);
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.price.list.model.CommercePriceList)"
+	)
+	private ModelResourcePermission<CommercePriceList>
+		_commercePriceListModelResourcePermission;
 
 	@Reference
 	private CommerceTierPriceEntryService _commerceTierPriceEntryService;

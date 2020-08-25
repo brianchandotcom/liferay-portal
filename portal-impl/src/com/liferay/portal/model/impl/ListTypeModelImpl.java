@@ -510,16 +510,16 @@ public class ListTypeModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ListType)) {
+		if (!(object instanceof ListType)) {
 			return false;
 		}
 
-		ListType listType = (ListType)obj;
+		ListType listType = (ListType)object;
 
 		long primaryKey = listType.getPrimaryKey();
 

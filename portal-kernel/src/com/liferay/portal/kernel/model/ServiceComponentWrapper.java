@@ -360,17 +360,17 @@ public class ServiceComponentWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ServiceComponentWrapper)) {
+		if (!(object instanceof ServiceComponentWrapper)) {
 			return false;
 		}
 
 		ServiceComponentWrapper serviceComponentWrapper =
-			(ServiceComponentWrapper)obj;
+			(ServiceComponentWrapper)object;
 
 		if (Objects.equals(
 				_serviceComponent, serviceComponentWrapper._serviceComponent)) {

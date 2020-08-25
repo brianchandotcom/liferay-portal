@@ -572,17 +572,17 @@ public class ResourceBlockPermissionModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ResourceBlockPermission)) {
+		if (!(object instanceof ResourceBlockPermission)) {
 			return false;
 		}
 
 		ResourceBlockPermission resourceBlockPermission =
-			(ResourceBlockPermission)obj;
+			(ResourceBlockPermission)object;
 
 		long primaryKey = resourceBlockPermission.getPrimaryKey();
 

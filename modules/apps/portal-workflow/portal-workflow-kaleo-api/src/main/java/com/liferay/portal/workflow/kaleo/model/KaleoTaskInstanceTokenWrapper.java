@@ -788,17 +788,17 @@ public class KaleoTaskInstanceTokenWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoTaskInstanceTokenWrapper)) {
+		if (!(object instanceof KaleoTaskInstanceTokenWrapper)) {
 			return false;
 		}
 
 		KaleoTaskInstanceTokenWrapper kaleoTaskInstanceTokenWrapper =
-			(KaleoTaskInstanceTokenWrapper)obj;
+			(KaleoTaskInstanceTokenWrapper)object;
 
 		if (Objects.equals(
 				_kaleoTaskInstanceToken,

@@ -36,16 +36,17 @@ public class TasksEntryCacheModel
 	implements CacheModel<TasksEntry>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof TasksEntryCacheModel)) {
+		if (!(object instanceof TasksEntryCacheModel)) {
 			return false;
 		}
 
-		TasksEntryCacheModel tasksEntryCacheModel = (TasksEntryCacheModel)obj;
+		TasksEntryCacheModel tasksEntryCacheModel =
+			(TasksEntryCacheModel)object;
 
 		if (tasksEntryId == tasksEntryCacheModel.tasksEntryId) {
 			return true;

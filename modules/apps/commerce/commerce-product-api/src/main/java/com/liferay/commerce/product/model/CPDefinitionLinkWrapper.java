@@ -562,17 +562,17 @@ public class CPDefinitionLinkWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionLinkWrapper)) {
+		if (!(object instanceof CPDefinitionLinkWrapper)) {
 			return false;
 		}
 
 		CPDefinitionLinkWrapper cpDefinitionLinkWrapper =
-			(CPDefinitionLinkWrapper)obj;
+			(CPDefinitionLinkWrapper)object;
 
 		if (Objects.equals(
 				_cpDefinitionLink, cpDefinitionLinkWrapper._cpDefinitionLink)) {

@@ -151,7 +151,7 @@ public class JournalArticleScheduledTest {
 	protected Calendar getCalendar(Date date, int when) {
 		Calendar calendar = new GregorianCalendar();
 
-		calendar.setTime(new Date(date.getTime() + Time.MINUTE * when * 5));
+		calendar.setTime(new Date(date.getTime() + (Time.MINUTE * when * 5)));
 
 		return calendar;
 	}

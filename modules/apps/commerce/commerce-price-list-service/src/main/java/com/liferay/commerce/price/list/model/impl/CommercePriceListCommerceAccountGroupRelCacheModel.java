@@ -37,12 +37,12 @@ public class CommercePriceListCommerceAccountGroupRelCacheModel
 			   Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof
+		if (!(object instanceof
 				CommercePriceListCommerceAccountGroupRelCacheModel)) {
 
 			return false;
@@ -50,7 +50,7 @@ public class CommercePriceListCommerceAccountGroupRelCacheModel
 
 		CommercePriceListCommerceAccountGroupRelCacheModel
 			commercePriceListCommerceAccountGroupRelCacheModel =
-				(CommercePriceListCommerceAccountGroupRelCacheModel)obj;
+				(CommercePriceListCommerceAccountGroupRelCacheModel)object;
 
 		if (commercePriceListCommerceAccountGroupRelId ==
 				commercePriceListCommerceAccountGroupRelCacheModel.

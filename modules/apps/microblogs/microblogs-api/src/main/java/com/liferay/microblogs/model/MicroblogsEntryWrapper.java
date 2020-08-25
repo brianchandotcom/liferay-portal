@@ -546,17 +546,17 @@ public class MicroblogsEntryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MicroblogsEntryWrapper)) {
+		if (!(object instanceof MicroblogsEntryWrapper)) {
 			return false;
 		}
 
 		MicroblogsEntryWrapper microblogsEntryWrapper =
-			(MicroblogsEntryWrapper)obj;
+			(MicroblogsEntryWrapper)object;
 
 		if (Objects.equals(
 				_microblogsEntry, microblogsEntryWrapper._microblogsEntry)) {

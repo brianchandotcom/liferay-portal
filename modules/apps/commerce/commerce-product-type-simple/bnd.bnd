@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Commerce Product Type Simple
 Bundle-SymbolicName: com.liferay.commerce.product.type.simple
-Bundle-Version: 1.0.30
+Bundle-Version: 1.0.32
 Export-Package: com.liferay.commerce.product.type.simple.constants
 Web-ContextPath: /commerce-product-type-simple

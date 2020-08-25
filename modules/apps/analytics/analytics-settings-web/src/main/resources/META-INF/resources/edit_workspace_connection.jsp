@@ -68,27 +68,9 @@ if (analyticsConfiguration != null) {
 PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
-<portlet:actionURL name="/analytics/edit_workspace_connection" var="editWorkspaceConnectionURL" />
+<portlet:actionURL name="/analytics_settings/edit_workspace_connection" var="editWorkspaceConnectionURL" />
 
 <div class="container-fluid-1280 mt-4 portlet-analytics-settings sheet sheet-lg">
-	<c:if test="<%= AnalyticsSettingsUtil.isAnalyticsEnabledWithOAuth(themeDisplay.getCompanyId()) %>">
-		<aui:alert type="warning">
-			<div class="mb-2">
-				<liferay-ui:message key="this-dxp-instance-is-already-connected-with-oauth" />
-
-				<strong>
-					<a href="https://help.liferay.com/hc/articles/360038812191-Setup-a-DXP-Data-Source-using-Token-based-Connection">
-						<liferay-ui:message key="read-about-using-the-new-token-based-connection-here" />
-					</a>
-				</strong>
-			</div>
-
-			<div>
-				<liferay-ui:message key="you-will-be-able-to-upgrade-to-the-new-token-based-connection" />
-			</div>
-		</aui:alert>
-	</c:if>
-
 	<h2 class="autofit-row">
 		<span class="autofit-col autofit-col-expand">
 			<liferay-ui:message key="connect-analytics-cloud" />

@@ -228,7 +228,7 @@ public class StringUtil {
 
 		for (int i = 0; i < bytes.length; i++) {
 			chars[i * 2] = HEX_DIGITS[(bytes[i] & 0xFF) >> 4];
-			chars[i * 2 + 1] = HEX_DIGITS[bytes[i] & 0x0F];
+			chars[(i * 2) + 1] = HEX_DIGITS[bytes[i] & 0x0F];
 		}
 
 		return new String(chars);
@@ -1691,7 +1691,7 @@ public class StringUtil {
 			return String.valueOf(array[0]);
 		}
 
-		StringBundler sb = new StringBundler(2 * array.length - 1);
+		StringBundler sb = new StringBundler((2 * array.length) - 1);
 
 		for (int i = 0; i < array.length; i++) {
 			if (i != 0) {
@@ -1740,7 +1740,7 @@ public class StringUtil {
 			return String.valueOf(array[0]);
 		}
 
-		StringBundler sb = new StringBundler(2 * array.length - 1);
+		StringBundler sb = new StringBundler((2 * array.length) - 1);
 
 		for (int i = 0; i < array.length; i++) {
 			if (i != 0) {
@@ -1838,7 +1838,7 @@ public class StringUtil {
 			return String.valueOf(array[0]);
 		}
 
-		StringBundler sb = new StringBundler(2 * array.length - 1);
+		StringBundler sb = new StringBundler((2 * array.length) - 1);
 
 		for (int i = 0; i < array.length; i++) {
 			if (i != 0) {
@@ -1887,7 +1887,7 @@ public class StringUtil {
 			return String.valueOf(array[0]);
 		}
 
-		StringBundler sb = new StringBundler(2 * array.length - 1);
+		StringBundler sb = new StringBundler((2 * array.length) - 1);
 
 		for (int i = 0; i < array.length; i++) {
 			if (i != 0) {
@@ -1936,7 +1936,7 @@ public class StringUtil {
 			return String.valueOf(array[0]);
 		}
 
-		StringBundler sb = new StringBundler(2 * array.length - 1);
+		StringBundler sb = new StringBundler((2 * array.length) - 1);
 
 		for (int i = 0; i < array.length; i++) {
 			if (i != 0) {
@@ -1985,7 +1985,7 @@ public class StringUtil {
 			return String.valueOf(array[0]);
 		}
 
-		StringBundler sb = new StringBundler(2 * array.length - 1);
+		StringBundler sb = new StringBundler((2 * array.length) - 1);
 
 		for (int i = 0; i < array.length; i++) {
 			if (i != 0) {
@@ -2034,7 +2034,7 @@ public class StringUtil {
 			return String.valueOf(array[0]);
 		}
 
-		StringBundler sb = new StringBundler(2 * array.length - 1);
+		StringBundler sb = new StringBundler((2 * array.length) - 1);
 
 		for (int i = 0; i < array.length; i++) {
 			if (i != 0) {
@@ -2085,7 +2085,7 @@ public class StringUtil {
 			return String.valueOf(array[0]);
 		}
 
-		StringBundler sb = new StringBundler(2 * array.length - 1);
+		StringBundler sb = new StringBundler((2 * array.length) - 1);
 
 		for (int i = 0; i < array.length; i++) {
 			if (i != 0) {
@@ -3198,7 +3198,7 @@ public class StringUtil {
 			return new StringBundler(s);
 		}
 
-		StringBundler sb = new StringBundler(values.size() * 2 + 1);
+		StringBundler sb = new StringBundler((values.size() * 2) + 1);
 
 		int pos = 0;
 

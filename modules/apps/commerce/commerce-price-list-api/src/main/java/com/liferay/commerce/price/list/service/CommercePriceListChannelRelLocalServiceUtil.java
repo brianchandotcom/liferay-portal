@@ -41,6 +41,10 @@ public class CommercePriceListChannelRelLocalServiceUtil {
 	/**
 	 * Adds the commerce price list channel rel to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceListChannelRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePriceListChannelRel the commerce price list channel rel
 	 * @return the commerce price list channel rel that was added
 	 */
@@ -84,6 +88,10 @@ public class CommercePriceListChannelRelLocalServiceUtil {
 	/**
 	 * Deletes the commerce price list channel rel from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceListChannelRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePriceListChannelRel the commerce price list channel rel
 	 * @return the commerce price list channel rel that was removed
 	 * @throws PortalException
@@ -101,6 +109,10 @@ public class CommercePriceListChannelRelLocalServiceUtil {
 
 	/**
 	 * Deletes the commerce price list channel rel with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceListChannelRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param CommercePriceListChannelRelId the primary key of the commerce price list channel rel
 	 * @return the commerce price list channel rel that was removed
@@ -319,6 +331,18 @@ public class CommercePriceListChannelRelLocalServiceUtil {
 			commercePriceListId);
 	}
 
+	public static java.util.List
+		<com.liferay.commerce.price.list.model.CommercePriceListChannelRel>
+			getCommercePriceListChannelRels(
+				long commercePriceListId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.commerce.price.list.model.
+						CommercePriceListChannelRel> orderByComparator) {
+
+		return getService().getCommercePriceListChannelRels(
+			commercePriceListId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of commerce price list channel rels.
 	 *
@@ -326,6 +350,13 @@ public class CommercePriceListChannelRelLocalServiceUtil {
 	 */
 	public static int getCommercePriceListChannelRelsCount() {
 		return getService().getCommercePriceListChannelRelsCount();
+	}
+
+	public static int getCommercePriceListChannelRelsCount(
+		long commercePriceListId) {
+
+		return getService().getCommercePriceListChannelRelsCount(
+			commercePriceListId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
@@ -364,6 +395,10 @@ public class CommercePriceListChannelRelLocalServiceUtil {
 
 	/**
 	 * Updates the commerce price list channel rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceListChannelRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commercePriceListChannelRel the commerce price list channel rel
 	 * @return the commerce price list channel rel that was updated

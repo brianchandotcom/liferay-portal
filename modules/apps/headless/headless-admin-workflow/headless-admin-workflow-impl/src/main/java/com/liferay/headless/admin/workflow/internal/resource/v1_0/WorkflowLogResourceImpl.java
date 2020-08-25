@@ -71,7 +71,7 @@ public class WorkflowLogResourceImpl extends BaseWorkflowLogResourceImpl {
 			{
 				auditPerson = CreatorUtil.toCreator(
 					_portal,
-					_userLocalService.getUser(workflowLog.getAuditUserId()));
+					_userLocalService.fetchUser(workflowLog.getAuditUserId()));
 				commentLog = workflowLog.getComment();
 				dateCreated = workflowLog.getCreateDate();
 				id = workflowLog.getWorkflowLogId();

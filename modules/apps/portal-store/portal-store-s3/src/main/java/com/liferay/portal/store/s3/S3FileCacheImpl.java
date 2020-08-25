@@ -151,6 +151,10 @@ public class S3FileCacheImpl implements S3FileCache {
 	}
 
 	protected void cleanUpCacheFiles(Path cacheDirPath, long lastModified) {
+		if (Files.notExists(cacheDirPath)) {
+			return;
+		}
+
 		try {
 			Files.walkFileTree(
 				cacheDirPath,

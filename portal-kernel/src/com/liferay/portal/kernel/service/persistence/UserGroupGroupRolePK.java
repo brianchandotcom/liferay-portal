@@ -117,16 +117,16 @@ public class UserGroupGroupRolePK
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof UserGroupGroupRolePK)) {
+		if (!(object instanceof UserGroupGroupRolePK)) {
 			return false;
 		}
 
-		UserGroupGroupRolePK pk = (UserGroupGroupRolePK)obj;
+		UserGroupGroupRolePK pk = (UserGroupGroupRolePK)object;
 
 		if ((userGroupId == pk.userGroupId) && (groupId == pk.groupId) &&
 			(roleId == pk.roleId)) {

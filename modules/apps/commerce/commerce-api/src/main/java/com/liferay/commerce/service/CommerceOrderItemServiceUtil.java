@@ -235,6 +235,25 @@ public class CommerceOrderItemServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrderItem
+			updateCommerceOrderItemDeliveryDate(
+				long commerceOrderItemId, java.util.Date requestedDeliveryDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommerceOrderItemDeliveryDate(
+			commerceOrderItemId, requestedDeliveryDate);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderItem
+			updateCommerceOrderItemInfo(
+				long commerceOrderItemId, String deliveryGroup,
+				long shippingAddressId, String printedNote)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommerceOrderItemInfo(
+			commerceOrderItemId, deliveryGroup, shippingAddressId, printedNote);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderItem
 			updateCommerceOrderItemInfo(
 				long commerceOrderItemId, String deliveryGroup,
 				long shippingAddressId, String printedNote,
@@ -340,6 +359,16 @@ public class CommerceOrderItemServiceUtil {
 
 		return getService().updateCommerceOrderItemUnitPrice(
 			commerceOrderItemId, unitPrice, quantity);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderItem
+			updateCustomFields(
+				long commerceOrderItemId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCustomFields(
+			commerceOrderItemId, serviceContext);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrderItem

@@ -51,6 +51,68 @@ public class ContentField {
 		return ObjectMapperUtil.readValue(ContentField.class, json);
 	}
 
+	@Schema
+	@Valid
+	public ContentFieldValue getContentFieldValue() {
+		return contentFieldValue;
+	}
+
+	public void setContentFieldValue(ContentFieldValue contentFieldValue) {
+		this.contentFieldValue = contentFieldValue;
+	}
+
+	@JsonIgnore
+	public void setContentFieldValue(
+		UnsafeSupplier<ContentFieldValue, Exception>
+			contentFieldValueUnsafeSupplier) {
+
+		try {
+			contentFieldValue = contentFieldValueUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ContentFieldValue contentFieldValue;
+
+	@Schema
+	@Valid
+	public Map<String, ContentFieldValue> getContentFieldValue_i18n() {
+		return contentFieldValue_i18n;
+	}
+
+	public void setContentFieldValue_i18n(
+		Map<String, ContentFieldValue> contentFieldValue_i18n) {
+
+		this.contentFieldValue_i18n = contentFieldValue_i18n;
+	}
+
+	@JsonIgnore
+	public void setContentFieldValue_i18n(
+		UnsafeSupplier<Map<String, ContentFieldValue>, Exception>
+			contentFieldValue_i18nUnsafeSupplier) {
+
+		try {
+			contentFieldValue_i18n = contentFieldValue_i18nUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, ContentFieldValue> contentFieldValue_i18n;
+
 	@Schema(description = "The field type (e.g., image, text, etc.).")
 	public String getDataType() {
 		return dataType;
@@ -265,63 +327,6 @@ public class ContentField {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean repeatable;
 
-	@Schema
-	@Valid
-	public Value getValue() {
-		return value;
-	}
-
-	public void setValue(Value value) {
-		this.value = value;
-	}
-
-	@JsonIgnore
-	public void setValue(UnsafeSupplier<Value, Exception> valueUnsafeSupplier) {
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Value value;
-
-	@Schema
-	@Valid
-	public Map<String, Object> getValue_i18n() {
-		return value_i18n;
-	}
-
-	public void setValue_i18n(Map<String, Object> value_i18n) {
-		this.value_i18n = value_i18n;
-	}
-
-	@JsonIgnore
-	public void setValue_i18n(
-		UnsafeSupplier<Map<String, Object>, Exception>
-			value_i18nUnsafeSupplier) {
-
-		try {
-			value_i18n = value_i18nUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, Object> value_i18n;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -348,6 +353,26 @@ public class ContentField {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (contentFieldValue != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentFieldValue\": ");
+
+			sb.append(String.valueOf(contentFieldValue));
+		}
+
+		if (contentFieldValue_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentFieldValue_i18n\": ");
+
+			sb.append(_toJSON(contentFieldValue_i18n));
+		}
 
 		if (dataType != null) {
 			if (sb.length() > 1) {
@@ -445,26 +470,6 @@ public class ContentField {
 			sb.append(repeatable);
 		}
 
-		if (value != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"value\": ");
-
-			sb.append(String.valueOf(value));
-		}
-
-		if (value_i18n != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"value_i18n\": ");
-
-			sb.append(_toJSON(value_i18n));
-		}
-
 		sb.append("}");
 
 		return sb.toString();
@@ -480,6 +485,16 @@ public class ContentField {
 		String string = String.valueOf(object);
 
 		return string.replaceAll("\"", "\\\\\"");
+	}
+
+	private static boolean _isArray(Object value) {
+		if (value == null) {
+			return false;
+		}
+
+		Class<?> clazz = value.getClass();
+
+		return clazz.isArray();
 	}
 
 	private static String _toJSON(Map<String, ?> map) {
@@ -500,9 +515,7 @@ public class ContentField {
 
 			Object value = entry.getValue();
 
-			Class<?> clazz = value.getClass();
-
-			if (clazz.isArray()) {
+			if (_isArray(value)) {
 				sb.append("[");
 
 				Object[] valueArray = (Object[])value;

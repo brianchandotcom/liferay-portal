@@ -876,16 +876,16 @@ public class ResourcePermissionModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ResourcePermission)) {
+		if (!(object instanceof ResourcePermission)) {
 			return false;
 		}
 
-		ResourcePermission resourcePermission = (ResourcePermission)obj;
+		ResourcePermission resourcePermission = (ResourcePermission)object;
 
 		long primaryKey = resourcePermission.getPrimaryKey();
 

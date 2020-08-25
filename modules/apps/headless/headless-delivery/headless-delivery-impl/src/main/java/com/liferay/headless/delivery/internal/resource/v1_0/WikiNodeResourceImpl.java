@@ -165,8 +165,7 @@ public class WikiNodeResourceImpl
 			{
 				actions = (Map)_getActions(wikiNode);
 				creator = CreatorUtil.toCreator(
-					_portal,
-					_userLocalService.getUserById(wikiNode.getUserId()));
+					_portal, _userLocalService.fetchUser(wikiNode.getUserId()));
 				dateCreated = wikiNode.getCreateDate();
 				dateModified = wikiNode.getModifiedDate();
 				description = wikiNode.getDescription();

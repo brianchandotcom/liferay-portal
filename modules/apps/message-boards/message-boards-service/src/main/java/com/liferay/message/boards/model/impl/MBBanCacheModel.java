@@ -35,16 +35,16 @@ import java.util.Date;
 public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MBBanCacheModel)) {
+		if (!(object instanceof MBBanCacheModel)) {
 			return false;
 		}
 
-		MBBanCacheModel mbBanCacheModel = (MBBanCacheModel)obj;
+		MBBanCacheModel mbBanCacheModel = (MBBanCacheModel)object;
 
 		if (banId == mbBanCacheModel.banId) {
 			return true;

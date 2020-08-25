@@ -238,7 +238,7 @@ public class SolrQuerySuggester implements QuerySuggester {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(6 * values.length - 2);
+		StringBundler sb = new StringBundler((6 * values.length) - 2);
 
 		for (int i = 0; i < values.length; i++) {
 			sb.append(field);

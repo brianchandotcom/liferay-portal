@@ -1132,17 +1132,17 @@ public class CalendarNotificationTemplateModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CalendarNotificationTemplate)) {
+		if (!(object instanceof CalendarNotificationTemplate)) {
 			return false;
 		}
 
 		CalendarNotificationTemplate calendarNotificationTemplate =
-			(CalendarNotificationTemplate)obj;
+			(CalendarNotificationTemplate)object;
 
 		long primaryKey = calendarNotificationTemplate.getPrimaryKey();
 

@@ -474,16 +474,16 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof EntryWrapper)) {
+		if (!(object instanceof EntryWrapper)) {
 			return false;
 		}
 
-		EntryWrapper entryWrapper = (EntryWrapper)obj;
+		EntryWrapper entryWrapper = (EntryWrapper)object;
 
 		if (Objects.equals(_entry, entryWrapper._entry)) {
 			return true;

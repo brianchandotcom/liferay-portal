@@ -494,17 +494,17 @@ public class CommerceAccountGroupWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceAccountGroupWrapper)) {
+		if (!(object instanceof CommerceAccountGroupWrapper)) {
 			return false;
 		}
 
 		CommerceAccountGroupWrapper commerceAccountGroupWrapper =
-			(CommerceAccountGroupWrapper)obj;
+			(CommerceAccountGroupWrapper)object;
 
 		if (Objects.equals(
 				_commerceAccountGroup,

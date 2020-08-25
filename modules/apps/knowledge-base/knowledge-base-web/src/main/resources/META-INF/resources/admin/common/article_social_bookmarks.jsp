@@ -20,8 +20,6 @@
 KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
 KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
-
-PortletURL viewKBArticleURL = kbArticleURLHelper.createViewURL(kbArticle);
 %>
 
 <liferay-social-bookmarks:bookmarks
@@ -31,5 +29,5 @@ PortletURL viewKBArticleURL = kbArticleURLHelper.createViewURL(kbArticle);
 	target="_blank"
 	title="<%= kbArticle.getTitle() %>"
 	types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(socialBookmarksTypes) %>"
-	urlImpl="<%= viewKBArticleURL %>"
+	urlImpl="<%= kbArticleURLHelper.createViewURL(kbArticle) %>"
 />

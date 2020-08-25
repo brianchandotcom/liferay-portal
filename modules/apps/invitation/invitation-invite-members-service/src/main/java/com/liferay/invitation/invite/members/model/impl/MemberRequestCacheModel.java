@@ -36,17 +36,17 @@ public class MemberRequestCacheModel
 	implements CacheModel<MemberRequest>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MemberRequestCacheModel)) {
+		if (!(object instanceof MemberRequestCacheModel)) {
 			return false;
 		}
 
 		MemberRequestCacheModel memberRequestCacheModel =
-			(MemberRequestCacheModel)obj;
+			(MemberRequestCacheModel)object;
 
 		if (memberRequestId == memberRequestCacheModel.memberRequestId) {
 			return true;

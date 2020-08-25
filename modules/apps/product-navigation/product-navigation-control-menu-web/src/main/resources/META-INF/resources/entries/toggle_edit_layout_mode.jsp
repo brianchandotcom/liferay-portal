@@ -49,12 +49,12 @@ if (Objects.equals(mode, Constants.EDIT)) {
 		<span class="toggle-switch-handle" data-label-off="" data-label-on="">
 			<span class="button-icon button-icon-on toggle-switch-icon">
 				<svg aria-hidden="true" class="lexicon-icon lexicon-icon-unlock">
-					<use xlink:href='<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg#cog" %>'></use>
+					<use xlink:href="<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg#cog" %>"></use>
 				</svg>
 			</span>
 			<span class="button-icon button-icon-off toggle-switch-icon">
 				<svg aria-hidden="true" class="lexicon-icon lexicon-icon-lock">
-					<use xlink:href='<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg#view" %>'></use>
+					<use xlink:href="<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg#view" %>"></use>
 				</svg>
 			</span>
 		</span>

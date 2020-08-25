@@ -98,9 +98,8 @@ public class CommercePricingClassLocalServiceTest {
 
 		CommercePricingClass commercePricingClass =
 			_commercePricingClassLocalService.addCommercePricingClass(
-				_user.getUserId(), _user.getGroupId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				_serviceContext);
+				_user.getUserId(), RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), _serviceContext);
 
 		CPInstance cpInstance = CPTestUtil.addCPInstance(catalog.getGroupId());
 
@@ -149,9 +148,8 @@ public class CommercePricingClassLocalServiceTest {
 		Assert.assertEquals(0, commercePricingClassCount);
 
 		_commercePricingClassLocalService.addCommercePricingClass(
-			_user.getUserId(), _user.getGroupId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			_serviceContext);
+			_user.getUserId(), RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), _serviceContext);
 
 		commercePricingClassCount =
 			_commercePricingClassLocalService.getCommercePricingClassesCount(
@@ -173,8 +171,8 @@ public class CommercePricingClassLocalServiceTest {
 		);
 
 		_commercePricingClassLocalService.addCommercePricingClass(
-			_user.getUserId(), _user.getGroupId(), null,
-			RandomTestUtil.randomString(), _serviceContext);
+			_user.getUserId(), null, RandomTestUtil.randomLocaleStringMap(),
+			_serviceContext);
 	}
 
 	@Test
@@ -196,9 +194,8 @@ public class CommercePricingClassLocalServiceTest {
 
 		CommercePricingClass commercePricingClass =
 			_commercePricingClassLocalService.addCommercePricingClass(
-				_user.getUserId(), _user.getGroupId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				_serviceContext);
+				_user.getUserId(), RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), _serviceContext);
 
 		CPInstance cpInstance = CPTestUtil.addCPInstance(catalog.getGroupId());
 

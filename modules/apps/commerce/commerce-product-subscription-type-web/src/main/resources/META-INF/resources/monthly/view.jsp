@@ -38,7 +38,7 @@ int selectedMonthlyMode = monthlyCPSubscriptionTypeDisplayContext.getSelectedMon
 
 		</aui:select>
 
-		<div class='<%= (selectedMonthlyMode == CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_MONTH) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />monthDayInputContainer">
+		<div class="<%= (selectedMonthlyMode == CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_MONTH) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />monthDayInputContainer">
 			<aui:input label="on" name="subscriptionTypeSettings--monthDay--" value="<%= monthlyCPSubscriptionTypeDisplayContext.getMonthDay() %>">
 				<aui:validator name="digits" />
 				<aui:validator name="max">31</aui:validator>
@@ -86,7 +86,7 @@ int selectedMonthlyMode = monthlyCPSubscriptionTypeDisplayContext.getSelectedMon
 
 		</aui:select>
 
-		<div class='<%= (selectedMonthlyMode == CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_MONTH) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />deliveryMonthDayInputContainer">
+		<div class="<%= (selectedMonthlyMode == CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_MONTH) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />deliveryMonthDayInputContainer">
 			<aui:input label="on" name="deliverySubscriptionTypeSettings--deliveryMonthDay--" value="<%= monthlyCPSubscriptionTypeDisplayContext.getMonthDay() %>">
 				<aui:validator name="digits" />
 				<aui:validator name="max">31</aui:validator>

@@ -501,17 +501,17 @@ public class AssetEntryAssetCategoryRelModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AssetEntryAssetCategoryRel)) {
+		if (!(object instanceof AssetEntryAssetCategoryRel)) {
 			return false;
 		}
 
 		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
-			(AssetEntryAssetCategoryRel)obj;
+			(AssetEntryAssetCategoryRel)object;
 
 		long primaryKey = assetEntryAssetCategoryRel.getPrimaryKey();
 

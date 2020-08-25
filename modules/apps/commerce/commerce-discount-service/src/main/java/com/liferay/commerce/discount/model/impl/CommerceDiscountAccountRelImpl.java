@@ -14,24 +14,31 @@
 
 package com.liferay.commerce.discount.model.impl;
 
+import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.service.CommerceAccountLocalServiceUtil;
+import com.liferay.commerce.discount.model.CommerceDiscount;
+import com.liferay.commerce.discount.service.CommerceDiscountLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
- * The extended model implementation for the CommerceDiscountAccountRel service. Represents a row in the &quot;CommerceDiscountAccountRel&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.commerce.discount.model.CommerceDiscountAccountRel</code> interface.
- * </p>
- *
- * @author Marco Leo
+ * @author Riccardo Alberti
  */
 public class CommerceDiscountAccountRelImpl
 	extends CommerceDiscountAccountRelBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a commerce discount account rel model instance should use the {@link com.liferay.commerce.discount.model.CommerceDiscountAccountRel} interface instead.
-	 */
 	public CommerceDiscountAccountRelImpl() {
+	}
+
+	@Override
+	public CommerceAccount getCommerceAccount() throws PortalException {
+		return CommerceAccountLocalServiceUtil.getCommerceAccount(
+			getCommerceAccountId());
+	}
+
+	@Override
+	public CommerceDiscount getCommerceDiscount() throws PortalException {
+		return CommerceDiscountLocalServiceUtil.getCommerceDiscount(
+			getCommerceDiscountId());
 	}
 
 }

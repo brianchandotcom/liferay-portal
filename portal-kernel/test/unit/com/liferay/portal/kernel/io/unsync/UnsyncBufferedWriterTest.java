@@ -161,7 +161,7 @@ public class UnsyncBufferedWriterTest {
 		unsyncBufferedWriter.newLine();
 
 		Assert.assertEquals(
-			lineSeparator.length() * 2 + 1, unsyncBufferedWriter.count);
+			(lineSeparator.length() * 2) + 1, unsyncBufferedWriter.count);
 
 		unsyncBufferedWriter.flush();
 

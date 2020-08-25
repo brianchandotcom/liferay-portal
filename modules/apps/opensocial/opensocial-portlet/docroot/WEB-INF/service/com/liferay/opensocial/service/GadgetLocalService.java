@@ -70,6 +70,10 @@ public interface GadgetLocalService
 	/**
 	 * Adds the gadget to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect GadgetLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param gadget the gadget
 	 * @return the gadget that was added
 	 */
@@ -93,6 +97,10 @@ public interface GadgetLocalService
 	/**
 	 * Deletes the gadget from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect GadgetLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param gadget the gadget
 	 * @return the gadget that was removed
 	 * @throws PortalException
@@ -103,6 +111,10 @@ public interface GadgetLocalService
 
 	/**
 	 * Deletes the gadget with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect GadgetLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param gadgetId the primary key of the gadget
 	 * @return the gadget that was removed
@@ -298,6 +310,10 @@ public interface GadgetLocalService
 
 	/**
 	 * Updates the gadget in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect GadgetLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param gadget the gadget
 	 * @return the gadget that was updated

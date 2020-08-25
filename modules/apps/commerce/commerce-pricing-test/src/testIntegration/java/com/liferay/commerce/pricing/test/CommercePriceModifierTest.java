@@ -128,9 +128,8 @@ public class CommercePriceModifierTest {
 
 		CommercePricingClass commercePricingClass =
 			_commercePricingClassLocalService.addCommercePricingClass(
-				_user.getUserId(), _user.getGroupId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				_serviceContext);
+				_user.getUserId(), RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), _serviceContext);
 
 		_commercePricingClassCPDefinitionRelLocalService.
 			addCommercePricingClassCPDefinitionRel(

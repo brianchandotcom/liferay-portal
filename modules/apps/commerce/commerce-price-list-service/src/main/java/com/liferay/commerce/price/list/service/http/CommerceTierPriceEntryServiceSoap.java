@@ -194,6 +194,10 @@ public class CommerceTierPriceEntryServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static
 		com.liferay.commerce.price.list.model.CommerceTierPriceEntrySoap[]
 				fetchCommerceTierPriceEntries(
@@ -309,6 +313,10 @@ public class CommerceTierPriceEntryServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static int getCommerceTierPriceEntriesCountByCompanyId(
 			long companyId)
 		throws RemoteException {

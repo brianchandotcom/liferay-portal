@@ -1223,7 +1223,8 @@ public abstract class BaseAssetSearchTestCase {
 
 		for (int i = 0; i < size; i++) {
 			Date date = new Date(
-				startDate.getTime() + (RandomUtil.nextInt(365) + 1) * Time.DAY);
+				startDate.getTime() +
+					((RandomUtil.nextInt(365) + 1) * Time.DAY));
 
 			Calendar calendar = new GregorianCalendar();
 

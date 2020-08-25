@@ -9,6 +9,12 @@
 		border: 0;
 	}
 
+	.table-responsive {
+		tr:first-child td {
+			border-top: none;
+		}
+	}
+
 	&.has-focus .list-group-item {
 		&.is-selected::before {
 			background-color: var(--primary);

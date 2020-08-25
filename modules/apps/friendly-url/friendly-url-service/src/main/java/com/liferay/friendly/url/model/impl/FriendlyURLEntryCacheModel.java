@@ -37,17 +37,17 @@ public class FriendlyURLEntryCacheModel
 	implements CacheModel<FriendlyURLEntry>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof FriendlyURLEntryCacheModel)) {
+		if (!(object instanceof FriendlyURLEntryCacheModel)) {
 			return false;
 		}
 
 		FriendlyURLEntryCacheModel friendlyURLEntryCacheModel =
-			(FriendlyURLEntryCacheModel)obj;
+			(FriendlyURLEntryCacheModel)object;
 
 		if ((friendlyURLEntryId ==
 				friendlyURLEntryCacheModel.friendlyURLEntryId) &&

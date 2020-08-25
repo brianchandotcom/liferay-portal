@@ -648,16 +648,16 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMContentWrapper)) {
+		if (!(object instanceof DDMContentWrapper)) {
 			return false;
 		}
 
-		DDMContentWrapper ddmContentWrapper = (DDMContentWrapper)obj;
+		DDMContentWrapper ddmContentWrapper = (DDMContentWrapper)object;
 
 		if (Objects.equals(_ddmContent, ddmContentWrapper._ddmContent)) {
 			return true;

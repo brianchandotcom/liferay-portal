@@ -57,8 +57,11 @@ import java.util.function.Function;
  *
  * @author Marco Leo
  * @see CPFriendlyURLEntryImpl
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ com.liferay.friendly.url.model.impl.FriendlyURLEntryImpl}
  * @generated
  */
+@Deprecated
 public class CPFriendlyURLEntryModelImpl
 	extends BaseModelImpl<CPFriendlyURLEntry>
 	implements CPFriendlyURLEntryModel {
@@ -981,16 +984,16 @@ public class CPFriendlyURLEntryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPFriendlyURLEntry)) {
+		if (!(object instanceof CPFriendlyURLEntry)) {
 			return false;
 		}
 
-		CPFriendlyURLEntry cpFriendlyURLEntry = (CPFriendlyURLEntry)obj;
+		CPFriendlyURLEntry cpFriendlyURLEntry = (CPFriendlyURLEntry)object;
 
 		long primaryKey = cpFriendlyURLEntry.getPrimaryKey();
 

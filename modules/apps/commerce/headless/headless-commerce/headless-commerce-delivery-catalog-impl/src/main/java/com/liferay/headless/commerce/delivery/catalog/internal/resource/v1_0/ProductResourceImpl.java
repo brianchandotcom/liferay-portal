@@ -31,7 +31,6 @@ import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converte
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.ProductDTOConverterContext;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.ProductResource;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
@@ -49,8 +48,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.validation.constraints.NotNull;
-
-import javax.ws.rs.core.Context;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -131,9 +128,6 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			_toProducts(cpDataSourceResult), pagination,
 			cpDataSourceResult.getLength());
 	}
-
-	@Context
-	protected Company contextCompany;
 
 	private Long _getAccountId(Long accountId, CommerceChannel commerceChannel)
 		throws PortalException {

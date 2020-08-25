@@ -16,12 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-WikiPage wikiPage = BaseWikiEngine.getWikiPage(request);
-%>
-
 <liferay-ui:input-field
-	bean="<%= wikiPage %>"
+	bean="<%= BaseWikiEngine.getWikiPage(request) %>"
 	field="content"
 	model="<%= WikiPage.class %>"
 />

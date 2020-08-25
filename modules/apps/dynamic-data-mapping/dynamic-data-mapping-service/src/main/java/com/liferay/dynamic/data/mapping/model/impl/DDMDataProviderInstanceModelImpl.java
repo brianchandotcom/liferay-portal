@@ -1216,17 +1216,17 @@ public class DDMDataProviderInstanceModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMDataProviderInstance)) {
+		if (!(object instanceof DDMDataProviderInstance)) {
 			return false;
 		}
 
 		DDMDataProviderInstance ddmDataProviderInstance =
-			(DDMDataProviderInstance)obj;
+			(DDMDataProviderInstance)object;
 
 		long primaryKey = ddmDataProviderInstance.getPrimaryKey();
 

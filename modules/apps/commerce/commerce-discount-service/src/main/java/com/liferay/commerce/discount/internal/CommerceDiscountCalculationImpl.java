@@ -20,38 +20,26 @@ import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.model.CommerceMoneyFactory;
 import com.liferay.commerce.discount.CommerceDiscountCalculation;
 import com.liferay.commerce.discount.CommerceDiscountValue;
-import com.liferay.commerce.discount.internal.search.CommerceDiscountIndexer;
+import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleType;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeRegistry;
-import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleLocalService;
-import com.liferay.commerce.discount.target.CommerceDiscountTarget;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.QueryConfig;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.io.Serializable;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -65,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = CommerceDiscountCalculation.class
 )
 public class CommerceDiscountCalculationImpl
-	implements CommerceDiscountCalculation {
+	extends BaseCommerceDiscountCalculation {
 
 	@Override
 	public CommerceDiscountValue getOrderShippingCommerceDiscountValue(
@@ -77,15 +65,9 @@ public class CommerceDiscountCalculationImpl
 			return null;
 		}
 
-		SearchContext searchContext = buildSearchContext(
-			commerceOrder.getCompanyId(), 0, 0,
-			commerceOrder.getCommerceOrderId(),
-			commerceContext.getCommerceAccountGroupIds(),
-			commerceOrder.getCouponCode(),
-			CommerceDiscountTarget.Type.APPLY_TO_SHIPPING);
-
 		return _getCommerceDiscountValue(
-			shippingAmount, 1, commerceContext, searchContext);
+			commerceOrder, shippingAmount, commerceContext,
+			CommerceDiscountConstants.TARGET_SHIPPING);
 	}
 
 	@Override
@@ -98,15 +80,9 @@ public class CommerceDiscountCalculationImpl
 			return null;
 		}
 
-		SearchContext searchContext = buildSearchContext(
-			commerceOrder.getCompanyId(), 0, 0,
-			commerceOrder.getCommerceOrderId(),
-			commerceContext.getCommerceAccountGroupIds(),
-			commerceOrder.getCouponCode(),
-			CommerceDiscountTarget.Type.APPLY_TO_SUBTOTAL);
-
 		return _getCommerceDiscountValue(
-			subtotalAmount, 1, commerceContext, searchContext);
+			commerceOrder, subtotalAmount, commerceContext,
+			CommerceDiscountConstants.TARGET_SUBTOTAL);
 	}
 
 	@Override
@@ -119,15 +95,9 @@ public class CommerceDiscountCalculationImpl
 			return null;
 		}
 
-		SearchContext searchContext = buildSearchContext(
-			commerceOrder.getCompanyId(), 0, 0,
-			commerceOrder.getCommerceOrderId(),
-			commerceContext.getCommerceAccountGroupIds(),
-			commerceOrder.getCouponCode(),
-			CommerceDiscountTarget.Type.APPLY_TO_TOTAL);
-
 		return _getCommerceDiscountValue(
-			totalAmount, 1, commerceContext, searchContext);
+			commerceOrder, totalAmount, commerceContext,
+			CommerceDiscountConstants.TARGET_TOTAL);
 	}
 
 	@Override
@@ -138,6 +108,16 @@ public class CommerceDiscountCalculationImpl
 
 		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
+
+		List<CommerceDiscount> commerceDiscounts =
+			getProductCommerceDiscountByHierarchy(
+				cpInstance.getCompanyId(), commerceContext.getCommerceAccount(),
+				commerceContext.getCommerceChannelId(),
+				cpInstance.getCPDefinitionId());
+
+		if (commerceDiscounts.isEmpty()) {
+			return null;
+		}
 
 		String couponCode = null;
 
@@ -150,13 +130,9 @@ public class CommerceDiscountCalculationImpl
 			couponCode = commerceOrder.getCouponCode();
 		}
 
-		SearchContext searchContext = buildSearchContext(
-			cpInstance.getCompanyId(), cpInstance.getCPDefinitionId(),
-			cpInstanceId, 0, commerceContext.getCommerceAccountGroupIds(),
-			couponCode, CommerceDiscountTarget.Type.APPLY_TO_PRODUCT);
-
 		return _getCommerceDiscountValue(
-			productUnitPrice, quantity, commerceContext, searchContext);
+			productUnitPrice, quantity, couponCode, commerceContext,
+			commerceDiscounts);
 	}
 
 	@Override
@@ -169,61 +145,18 @@ public class CommerceDiscountCalculationImpl
 			cpInstanceId, quantity, productUnitPrice, commerceContext);
 	}
 
-	protected SearchContext buildSearchContext(
-		long companyId, long cpDefinitionId, long cpInstanceId,
-		long commerceOrderId, long[] commerceAccountGroupIds, String couponCode,
-		CommerceDiscountTarget.Type commerceDiscountTargetType) {
-
-		SearchContext searchContext = new SearchContext();
-
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		attributes.put(CommerceDiscountIndexer.FIELD_ACTIVE, true);
-		attributes.put(CommerceDiscountIndexer.FIELD_COUPON_CODE, couponCode);
-		attributes.put(
-			CommerceDiscountIndexer.FIELD_TARGET_TYPE,
-			commerceDiscountTargetType.toString());
-		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-		attributes.put("commerceAccountGroupIds", commerceAccountGroupIds);
-		attributes.put("commerceOrderId", commerceOrderId);
-		attributes.put("cpDefinitionId", cpDefinitionId);
-		attributes.put("cpInstanceId", cpInstanceId);
-
-		searchContext.setAttributes(attributes);
-
-		searchContext.setCompanyId(companyId);
-		searchContext.setStart(QueryUtil.ALL_POS);
-		searchContext.setEnd(QueryUtil.ALL_POS);
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setScoreEnabled(false);
-
-		return searchContext;
-	}
-
 	private CommerceDiscountValue _getCommerceDiscountValue(
-			BigDecimal amount, int quantity, CommerceContext commerceContext,
-			SearchContext searchContext)
+			BigDecimal amount, int quantity, String couponCode,
+			CommerceContext commerceContext,
+			List<CommerceDiscount> commerceDiscounts)
 		throws PortalException {
-
-		BaseModelSearchResult<CommerceDiscount> baseModelSearchResult =
-			_commerceDiscountLocalService.searchCommerceDiscounts(
-				searchContext);
 
 		List<CommerceDiscountValue> commerceDiscountValues = new ArrayList<>();
 
 		CommerceCurrency commerceCurrency =
 			commerceContext.getCommerceCurrency();
 
-		String couponCode = GetterUtil.getString(
-			searchContext.getAttribute(
-				CommerceDiscountIndexer.FIELD_COUPON_CODE));
-
-		for (CommerceDiscount commerceDiscount :
-				baseModelSearchResult.getBaseModels()) {
-
+		for (CommerceDiscount commerceDiscount : commerceDiscounts) {
 			String discountCouponCode = commerceDiscount.getCouponCode();
 
 			if (!Validator.isBlank(discountCouponCode) &&
@@ -338,6 +271,30 @@ public class CommerceDiscountCalculationImpl
 			values);
 	}
 
+	private CommerceDiscountValue _getCommerceDiscountValue(
+			CommerceOrder commerceOrder, BigDecimal amount,
+			CommerceContext commerceContext, String discountType)
+		throws PortalException {
+
+		if ((amount == null) || (amount.compareTo(BigDecimal.ZERO) <= 0)) {
+			return null;
+		}
+
+		List<CommerceDiscount> commerceDiscounts =
+			getOrderCommerceDiscountByHierarchy(
+				commerceOrder.getCompanyId(),
+				commerceContext.getCommerceAccount(),
+				commerceContext.getCommerceChannelId(), discountType);
+
+		if (commerceDiscounts.isEmpty()) {
+			return null;
+		}
+
+		return _getCommerceDiscountValue(
+			amount, 1, commerceOrder.getCouponCode(), commerceContext,
+			commerceDiscounts);
+	}
+
 	private BigDecimal _getDiscountAmount(
 		BigDecimal amount, BigDecimal percentage) {
 
@@ -405,9 +362,6 @@ public class CommerceDiscountCalculationImpl
 	}
 
 	private static final BigDecimal _ONE_HUNDRED = BigDecimal.valueOf(100);
-
-	@Reference
-	private CommerceDiscountLocalService _commerceDiscountLocalService;
 
 	@Reference
 	private CommerceDiscountRuleLocalService _commerceDiscountRuleLocalService;

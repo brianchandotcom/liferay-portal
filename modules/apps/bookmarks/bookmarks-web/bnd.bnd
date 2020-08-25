@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Bookmarks Web
 Bundle-SymbolicName: com.liferay.bookmarks.web
-Bundle-Version: 2.0.37
+Bundle-Version: 2.0.38
 Liferay-JS-Config: /META-INF/resources/bookmarks/js/config.js
 Web-ContextPath: /bookmarks-web
 -includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class

@@ -32,7 +32,7 @@ String cssClass = (String)request.getAttribute("liferay-commerce:order-transitio
 			String transitionName = transitionOVP.getValue();
 		%>
 
-			<button class='<%= cssClass + " transition-link" %>' data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= transitionOVP.getValue() %>" data-workflowTaskId="<%= transitionOVP.getKey() %>" type="button">
+			<button class="<%= cssClass + " transition-link" %>" data-commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>" data-transitionName="<%= transitionOVP.getValue() %>" data-workflowTaskId="<%= transitionOVP.getKey() %>" type="button">
 				<%= LanguageUtil.get(request, transitionName) %>
 			</button>
 

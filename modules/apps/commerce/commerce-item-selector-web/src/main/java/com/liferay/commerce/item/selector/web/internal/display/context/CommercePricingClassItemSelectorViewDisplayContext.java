@@ -65,7 +65,7 @@ public class CommercePricingClassItemSelectorViewDisplayContext
 		searchContainer = new SearchContainer<>(
 			cpRequestHelper.getRenderRequest(), getPortletURL(), null, null);
 
-		searchContainer.setEmptyResultsMessage("there-are-no-pricing-classes");
+		searchContainer.setEmptyResultsMessage("there-are-no-product-groups");
 
 		searchContainer.setOrderByCol(getOrderByCol());
 

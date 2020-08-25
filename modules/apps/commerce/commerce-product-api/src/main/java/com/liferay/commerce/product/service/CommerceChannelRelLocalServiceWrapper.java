@@ -230,6 +230,15 @@ public class CommerceChannelRelLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CommerceChannelRel
+		fetchCommerceChannelRel(
+			String className, long classPK, long commerceChannelId) {
+
+		return _commerceChannelRelLocalService.fetchCommerceChannelRel(
+			className, classPK, commerceChannelId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

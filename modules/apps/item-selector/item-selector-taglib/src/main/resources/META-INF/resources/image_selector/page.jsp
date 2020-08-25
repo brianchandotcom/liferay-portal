@@ -39,21 +39,21 @@ if (fileEntryId != 0) {
 }
 %>
 
-<div class='drop-zone <%= (fileEntryId == 0) ? "drop-enabled" : StringPool.BLANK %> <%= !draggableImage.equals("none") ? "draggable-image " + draggableImage : StringPool.BLANK %> taglib-image-selector' id="<%= randomNamespace %>taglibImageSelector">
+<div class="drop-zone <%= (fileEntryId == 0) ? "drop-enabled" : StringPool.BLANK %> <%= !draggableImage.equals("none") ? "draggable-image " + draggableImage : StringPool.BLANK %> taglib-image-selector" id="<%= randomNamespace %>taglibImageSelector">
 	<aui:input name='<%= paramName + "Id" %>' type="hidden" value="<%= fileEntryId %>" />
 	<aui:input name='<%= paramName + "CropRegion" %>' type="hidden" value="<%= cropRegion %>" />
 
 	<div class="image-wrapper">
-		<img alt='<liferay-ui:message escapeAttribute="<%= true %>" key="current-image" />' class='current-image <%= Validator.isNull(imageURL) ? "hide" : StringPool.BLANK %>' id="<%= randomNamespace %>image" src="<%= HtmlUtil.escape(Validator.isNotNull(imageURL) ? imageURL : StringPool.BLANK) %>" />
+		<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="current-image" />" class="current-image <%= Validator.isNull(imageURL) ? "hide" : StringPool.BLANK %>" id="<%= randomNamespace %>image" src="<%= HtmlUtil.escape(Validator.isNotNull(imageURL) ? imageURL : StringPool.BLANK) %>" />
 	</div>
 
 	<liferay-util:buffer
 		var="selectFileLink"
 	>
-		<a class="browse-image btn btn-default" href="javascript:;" id='<%= randomNamespace + "browseImage" %>'><liferay-ui:message key="select-file" /></a>
+		<a class="browse-image btn btn-default" href="javascript:;" id="<%= randomNamespace + "browseImage" %>"><liferay-ui:message key="select-file" /></a>
 	</liferay-util:buffer>
 
-	<div class='browse-image-controls <%= (fileEntryId != 0) ? "hide" : StringPool.BLANK %>'>
+	<div class="browse-image-controls <%= (fileEntryId != 0) ? "hide" : StringPool.BLANK %>">
 		<div class="drag-drop-label">
 			<c:choose>
 				<c:when test="<%= Validator.isNotNull(itemSelectorEventName) && Validator.isNotNull(itemSelectorURL) %>">
@@ -109,7 +109,7 @@ if (fileEntryId != 0) {
 		<aui:button id='<%= randomNamespace + "cancelUpload" %>' primary="<%= true %>" useNamespace="<%= false %>" value="cancel" />
 	</div>
 
-	<div class='change-image-controls <%= (fileEntryId != 0) ? StringPool.BLANK : "hide" %>'>
+	<div class="change-image-controls <%= (fileEntryId != 0) ? StringPool.BLANK : "hide" %>">
 		<aui:button cssClass="browse-image btn-monospaced btn-sm" icon="icon-refresh" />
 
 		<aui:button cssClass="btn-monospaced btn-sm" icon="icon-trash" id='<%= randomNamespace + "removeImage" %>' useNamespace="<%= false %>" />

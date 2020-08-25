@@ -1,0 +1,22 @@
+Bundle-Name: Liferay Headless Commerce Admin Channel Implementation
+Bundle-SymbolicName: com.liferay.headless.commerce.admin.channel.impl
+Bundle-Version: 1.0.9
+Import-Package:\
+	com.liferay.asset.kernel.model;version="[1.5.0,3.0.0)",\
+	com.liferay.expando.kernel.model;version="[1.1.0,3.0.0)",\
+	com.liferay.portal.kernel.exception;version="[7.5.0,9.0.0)",\
+	com.liferay.portal.kernel.json;version="[7.7.0,9.0.0)",\
+	com.liferay.portal.kernel.model;version="[2.0.0,4.0.0)",\
+	com.liferay.portal.kernel.search;version="[7.7.0,9.0.0)",\
+	com.liferay.portal.kernel.security.auth;version="[1.2.0,3.0.0)",\
+	com.liferay.portal.kernel.security.permission;version="[1.8.0,3.0.0)",\
+	com.liferay.portal.kernel.service;version="[1.43.0,3.0.0)",\
+	com.liferay.portal.kernel.util;version="[8.27.0,10.0.0)",\
+	com.liferay.portal.kernel.workflow;version="[7.4.0,9.0.0)",\
+	com.liferay.portal.vulcan.accept.language;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.dto.converter;version="[1.0.0,2.4.0)",\
+	com.liferay.portal.vulcan.fields;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.pagination;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.util;version="[1.1.0,3.0.0)",\
+	\
+	*

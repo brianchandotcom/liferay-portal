@@ -499,17 +499,17 @@ public class CPDAvailabilityEstimateWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDAvailabilityEstimateWrapper)) {
+		if (!(object instanceof CPDAvailabilityEstimateWrapper)) {
 			return false;
 		}
 
 		CPDAvailabilityEstimateWrapper cpdAvailabilityEstimateWrapper =
-			(CPDAvailabilityEstimateWrapper)obj;
+			(CPDAvailabilityEstimateWrapper)object;
 
 		if (Objects.equals(
 				_cpdAvailabilityEstimate,

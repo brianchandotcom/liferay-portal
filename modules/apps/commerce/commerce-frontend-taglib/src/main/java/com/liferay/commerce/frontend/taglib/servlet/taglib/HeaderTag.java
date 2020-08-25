@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.frontend.taglib.servlet.taglib;
 
+import com.liferay.commerce.frontend.ClayMenuActionItem;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -54,7 +54,7 @@ public class HeaderTag extends IncludeTag {
 		return _cssClasses;
 	}
 
-	public List<DropdownItem> getDropdownItems() {
+	public List<ClayMenuActionItem> getDropdownItems() {
 		return _dropdownItems;
 	}
 
@@ -122,7 +122,7 @@ public class HeaderTag extends IncludeTag {
 		_cssClasses = cssClasses;
 	}
 
-	public void setDropdownItems(List<DropdownItem> dropdownItems) {
+	public void setDropdownItems(List<ClayMenuActionItem> dropdownItems) {
 		_dropdownItems = dropdownItems;
 	}
 
@@ -255,7 +255,7 @@ public class HeaderTag extends IncludeTag {
 	private Object _bean;
 	private String _beanIdLabel;
 	private String _cssClasses;
-	private List<DropdownItem> _dropdownItems;
+	private List<ClayMenuActionItem> _dropdownItems;
 	private String _externalReferenceCode;
 	private String _externalReferenceCodeEditUrl;
 	private boolean _fullWidth;

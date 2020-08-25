@@ -1240,17 +1240,17 @@ public class PasswordPolicyWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof PasswordPolicyWrapper)) {
+		if (!(object instanceof PasswordPolicyWrapper)) {
 			return false;
 		}
 
 		PasswordPolicyWrapper passwordPolicyWrapper =
-			(PasswordPolicyWrapper)obj;
+			(PasswordPolicyWrapper)object;
 
 		if (Objects.equals(
 				_passwordPolicy, passwordPolicyWrapper._passwordPolicy)) {

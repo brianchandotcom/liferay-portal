@@ -63,7 +63,7 @@ public class GeoLocationPoint {
 
 		value = Double.doubleToLongBits(_longitude);
 
-		return 31 * hashCode + (int)(value ^ (value >>> 32));
+		return (31 * hashCode) + (int)(value ^ (value >>> 32));
 	}
 
 	private final double _latitude;

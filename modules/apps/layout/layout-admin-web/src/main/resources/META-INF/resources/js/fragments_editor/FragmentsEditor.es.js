@@ -1,6 +1,7 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
+import debounce from 'metal-debounce';
 
 import './dialogs/SelectMappingDialog.es';
 import './dialogs/SelectMappingTypeDialog.es';
@@ -16,6 +17,11 @@ import templates from './FragmentsEditor.soy';
  */
 
 class FragmentsEditor extends Component {
+
+	created() {
+		this._handleEditableChanged = debounce(this._handleEditableChanged.bind(this), 500);
+		}
+
 	/**
 	 * @inheritDoc
 	 * @review
@@ -41,28 +47,26 @@ class FragmentsEditor extends Component {
 	 */
 
 	_deleteFragmentEntryLink(fragmentEntryLinkId) {
-		if (!this._dirty) {
-			this._dirty = true;
+		this._dirty = true;
 
-			const formData = new FormData();
+		const formData = new FormData();
 
-			formData.append(
-				`${this.portletNamespace}fragmentEntryLinkId`,
-				fragmentEntryLinkId
+		formData.append(
+			`${this.portletNamespace}fragmentEntryLinkId`,
+			fragmentEntryLinkId
+		);
+
+		fetch(this.deleteFragmentEntryLinkURL, {
+			body: formData,
+			credentials: 'include',
+			method: 'POST'
+		}).then(() => {
+			this._lastSaveDate = new Date().toLocaleTimeString(
+				Liferay.ThemeDisplay.getBCP47LanguageId()
 			);
 
-			fetch(this.deleteFragmentEntryLinkURL, {
-				body: formData,
-				credentials: 'include',
-				method: 'POST'
-			}).then(() => {
-				this._lastSaveDate = new Date().toLocaleTimeString(
-					Liferay.ThemeDisplay.getBCP47LanguageId()
-				);
-
-				this._dirty = false;
-			});
-		}
+			this._dirty = false;
+		});
 	}
 
 	/**
@@ -240,96 +244,94 @@ class FragmentsEditor extends Component {
 	 */
 
 	_handleFragmentEntryClick(event) {
-		if (!this._dirty) {
-			this._dirty = true;
+		this._dirty = true;
 
-			const formData = new FormData();
-			const position = this._getNewFragmentEntryLinkPosition();
+		const formData = new FormData();
+		const position = this._getNewFragmentEntryLinkPosition();
 
-			formData.append(
-				`${this.portletNamespace}fragmentId`,
-				event.fragmentEntryId
-			);
+		formData.append(
+			`${this.portletNamespace}fragmentId`,
+			event.fragmentEntryId
+		);
 
-			formData.append(
-				`${this.portletNamespace}classNameId`,
-				this.classNameId
-			);
+		formData.append(
+			`${this.portletNamespace}classNameId`,
+			this.classNameId
+		);
 
-			formData.append(`${this.portletNamespace}classPK`, this.classPK);
+		formData.append(`${this.portletNamespace}classPK`, this.classPK);
 
-			formData.append(`${this.portletNamespace}position`, position);
+		formData.append(`${this.portletNamespace}position`, position);
 
-			fetch(this.addFragmentEntryLinkURL, {
-				body: formData,
-				credentials: 'include',
-				method: 'POST'
+		fetch(this.addFragmentEntryLinkURL, {
+			body: formData,
+			credentials: 'include',
+			method: 'POST'
+		})
+			.then(response => {
+				return response.json();
 			})
-				.then(response => {
-					return response.json();
-				})
-				.then(response => {
-					if (!response.fragmentEntryLinkId) {
-						throw new Error();
+			.then(response => {
+				if (!response.fragmentEntryLinkId) {
+					throw new Error();
+				}
+
+				this.fragmentEntryLinks = [
+					...this.fragmentEntryLinks,
+					{
+						config: {},
+						content: '',
+						editableValues: JSON.parse(response.editableValues),
+						fragmentEntryId: event.fragmentEntryId,
+						fragmentEntryLinkId: response.fragmentEntryLinkId,
+						name: event.fragmentName,
+						position
 					}
+				];
 
-					this.fragmentEntryLinks = [
-						...this.fragmentEntryLinks,
-						{
-							config: {},
-							content: '',
-							editableValues: JSON.parse(response.editableValues),
-							fragmentEntryId: event.fragmentEntryId,
-							fragmentEntryLinkId: response.fragmentEntryLinkId,
-							name: event.fragmentName,
-							position
+				this._focusFragmentEntryLink(response.fragmentEntryLinkId);
+
+				return this._fetchFragmentContent(
+					response.fragmentEntryLinkId
+				)
+					.then(content => {
+						const index = this._getFragmentEntryLinkIndex(
+							response.fragmentEntryLinkId
+						);
+
+						if (index !== -1) {
+							const newFragmentEntryLinks = [
+								...this.fragmentEntryLinks
+							];
+
+							const newFragmentEntryLink = Object.assign(
+								{},
+								newFragmentEntryLinks[index],
+								{content}
+							);
+
+							newFragmentEntryLinks[
+								index
+							] = newFragmentEntryLink;
+							this.fragmentEntryLinks = newFragmentEntryLinks;
 						}
-					];
+					})
+					.then(() => {
+						this._lastSaveDate = new Date().toLocaleTimeString(
+							Liferay.ThemeDisplay.getBCP47LanguageId()
+						);
 
-					this._focusFragmentEntryLink(response.fragmentEntryLinkId);
+						this._dirty = false;
 
-					return this._fetchFragmentContent(
-						response.fragmentEntryLinkId
-					)
-						.then(content => {
-							const index = this._getFragmentEntryLinkIndex(
-								response.fragmentEntryLinkId
-							);
+						if (this.refs.sidebar) {
+							this.refs.sidebar.toggleAddedTab(true);
+						}
 
-							if (index !== -1) {
-								const newFragmentEntryLinks = [
-									...this.fragmentEntryLinks
-								];
-
-								const newFragmentEntryLink = Object.assign(
-									{},
-									newFragmentEntryLinks[index],
-									{content}
-								);
-
-								newFragmentEntryLinks[
-									index
-								] = newFragmentEntryLink;
-								this.fragmentEntryLinks = newFragmentEntryLinks;
-							}
-						})
-						.then(() => {
-							this._lastSaveDate = new Date().toLocaleTimeString(
-								Liferay.ThemeDisplay.getBCP47LanguageId()
-							);
-
-							this._dirty = false;
-
-							if (this.refs.sidebar) {
-								this.refs.sidebar.toggleAddedTab(true);
-							}
-
-							this._focusFragmentEntryLink(
-								response.fragmentEntryLinkId
-							);
-						});
-				});
-		}
+						this._focusFragmentEntryLink(
+							response.fragmentEntryLinkId
+						);
+					});
+			});
 	}
 
 	/**
@@ -623,40 +625,38 @@ class FragmentsEditor extends Component {
 	 */
 
 	_updateFragmentEntryLink(fragmentEntryLink) {
-		if (!this._dirty) {
-			this._dirty = true;
+		this._dirty = true;
 
-			const formData = new FormData();
+		const formData = new FormData();
 
-			formData.append(
-				`${this.portletNamespace}fragmentEntryLinkId`,
-				fragmentEntryLink.fragmentEntryLinkId
+		formData.append(
+			`${this.portletNamespace}fragmentEntryLinkId`,
+			fragmentEntryLink.fragmentEntryLinkId
+		);
+
+		formData.append(
+			`${this.portletNamespace}editableValues`,
+			JSON.stringify(fragmentEntryLink.editableValues)
+		);
+
+		fetch(this.editFragmentEntryLinkURL, {
+			body: formData,
+			credentials: 'include',
+			method: 'POST'
+		}).then(() => {
+			this._lastSaveDate = new Date().toLocaleTimeString(
+				Liferay.ThemeDisplay.getBCP47LanguageId()
 			);
 
-			formData.append(
-				`${this.portletNamespace}editableValues`,
-				JSON.stringify(fragmentEntryLink.editableValues)
+			this._translationStatus = this._getTranslationStatus(
+				Object.keys(this.availableLanguages).filter(
+					languageId => languageId !== '_INJECTED_DATA_'
+				),
+				this._getEditableValues()
 			);
 
-			fetch(this.editFragmentEntryLinkURL, {
-				body: formData,
-				credentials: 'include',
-				method: 'POST'
-			}).then(() => {
-				this._lastSaveDate = new Date().toLocaleTimeString(
-					Liferay.ThemeDisplay.getBCP47LanguageId()
-				);
-
-				this._translationStatus = this._getTranslationStatus(
-					Object.keys(this.availableLanguages).filter(
-						languageId => languageId !== '_INJECTED_DATA_'
-					),
-					this._getEditableValues()
-				);
-
-				this._dirty = false;
-			});
-		}
+			this._dirty = false;
+		});
 	}
 }
 

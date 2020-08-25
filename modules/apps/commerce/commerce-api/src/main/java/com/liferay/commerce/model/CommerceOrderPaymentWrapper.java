@@ -513,17 +513,17 @@ public class CommerceOrderPaymentWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceOrderPaymentWrapper)) {
+		if (!(object instanceof CommerceOrderPaymentWrapper)) {
 			return false;
 		}
 
 		CommerceOrderPaymentWrapper commerceOrderPaymentWrapper =
-			(CommerceOrderPaymentWrapper)obj;
+			(CommerceOrderPaymentWrapper)object;
 
 		if (Objects.equals(
 				_commerceOrderPayment,

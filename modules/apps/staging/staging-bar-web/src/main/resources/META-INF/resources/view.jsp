@@ -181,7 +181,7 @@ if (liveLayout != null) {
 						<div class="control-menu-level-2-heading visible-xs">
 							<liferay-ui:message key="staging-options" />
 
-							<button aria-label='<%= LanguageUtil.get(request, "close") %>' class="close" id="closeStagingOptions" type="button">
+							<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" id="closeStagingOptions" type="button">
 								<aui:icon image="times" markupView="lexicon" />
 							</button>
 						</div>

@@ -637,17 +637,17 @@ public class SyncDLFileVersionDiffModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SyncDLFileVersionDiff)) {
+		if (!(object instanceof SyncDLFileVersionDiff)) {
 			return false;
 		}
 
 		SyncDLFileVersionDiff syncDLFileVersionDiff =
-			(SyncDLFileVersionDiff)obj;
+			(SyncDLFileVersionDiff)object;
 
 		long primaryKey = syncDLFileVersionDiff.getPrimaryKey();
 

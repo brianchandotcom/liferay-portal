@@ -31,8 +31,8 @@ public class DistanceCalculator {
 
 		double a =
 			Math.pow(Math.sin(latitudeDifference / 2), 2) +
-				Math.pow(Math.sin(longitudeDifference / 2), 2) *
-					Math.cos(latitude1) * Math.cos(latitude2);
+				(Math.pow(Math.sin(longitudeDifference / 2), 2) *
+					Math.cos(latitude1) * Math.cos(latitude2));
 
 		double c = 2 * Math.asin(Math.sqrt(a));
 

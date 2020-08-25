@@ -20,8 +20,10 @@ import com.liferay.commerce.frontend.Pagination;
 import com.liferay.commerce.frontend.model.ImageField;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.web.internal.model.PaymentMethod;
+import com.liferay.commerce.payment.engine.CommercePaymentEngine;
+import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
-import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
+import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
@@ -59,8 +61,8 @@ public class CommercePaymentMethodDataSetDataProvider
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderId);
 
-		return _commercePaymentMethodGroupRelService.
-			getCommercePaymentMethodGroupRelsCount(commerceOrder.getGroupId());
+		return _commercePaymentEngine.getCommercePaymentMethodGroupRelsCount(
+			commerceOrder.getGroupId());
 	}
 
 	@Override
@@ -81,23 +83,26 @@ public class CommercePaymentMethodDataSetDataProvider
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			commerceOrderId);
 
-		List<CommercePaymentMethodGroupRel> commercePaymentMethodGroupRels =
-			_commercePaymentMethodGroupRelService.
-				getCommercePaymentMethodGroupRels(
-					commerceOrder.getGroupId(), pagination.getStartPosition(),
-					pagination.getEndPosition(), null);
+		List<CommercePaymentMethod> commercePaymentMethods =
+			_commercePaymentEngine.getEnabledCommercePaymentMethodsForOrder(
+				commerceOrder.getGroupId(), commerceOrderId);
 
-		for (CommercePaymentMethodGroupRel commercePaymentMethodGroupRel :
-				commercePaymentMethodGroupRels) {
+		for (CommercePaymentMethod commercePaymentMethod :
+				commercePaymentMethods) {
+
+			CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+				_commercePaymentMethodGroupRelLocalService.
+					getCommercePaymentMethodGroupRel(
+						commerceOrder.getGroupId(),
+						commercePaymentMethod.getKey());
 
 			paymentMethods.add(
 				new PaymentMethod(
-					commercePaymentMethodGroupRel.getDescription(
-						themeDisplay.getLanguageId()),
-					commercePaymentMethodGroupRel.getEngineKey(),
+					commercePaymentMethod.getDescription(
+						themeDisplay.getLocale()),
+					commercePaymentMethod.getKey(),
 					_getThumbnail(commercePaymentMethodGroupRel, themeDisplay),
-					commercePaymentMethodGroupRel.getName(
-						themeDisplay.getLanguageId())));
+					commercePaymentMethod.getName(themeDisplay.getLocale())));
 		}
 
 		return paymentMethods;
@@ -123,7 +128,10 @@ public class CommercePaymentMethodDataSetDataProvider
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference
-	private CommercePaymentMethodGroupRelService
-		_commercePaymentMethodGroupRelService;
+	private CommercePaymentEngine _commercePaymentEngine;
+
+	@Reference
+	private CommercePaymentMethodGroupRelLocalService
+		_commercePaymentMethodGroupRelLocalService;
 
 }

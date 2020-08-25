@@ -732,16 +732,16 @@ public class PortletPreferencesModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof PortletPreferences)) {
+		if (!(object instanceof PortletPreferences)) {
 			return false;
 		}
 
-		PortletPreferences portletPreferences = (PortletPreferences)obj;
+		PortletPreferences portletPreferences = (PortletPreferences)object;
 
 		long primaryKey = portletPreferences.getPrimaryKey();
 

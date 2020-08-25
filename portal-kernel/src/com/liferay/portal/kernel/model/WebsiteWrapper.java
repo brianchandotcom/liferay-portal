@@ -612,16 +612,16 @@ public class WebsiteWrapper implements ModelWrapper<Website>, Website {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof WebsiteWrapper)) {
+		if (!(object instanceof WebsiteWrapper)) {
 			return false;
 		}
 
-		WebsiteWrapper websiteWrapper = (WebsiteWrapper)obj;
+		WebsiteWrapper websiteWrapper = (WebsiteWrapper)object;
 
 		if (Objects.equals(_website, websiteWrapper._website)) {
 			return true;

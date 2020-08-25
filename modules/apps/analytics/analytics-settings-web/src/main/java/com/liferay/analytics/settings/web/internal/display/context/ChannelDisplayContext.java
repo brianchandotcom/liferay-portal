@@ -14,8 +14,6 @@
 
 package com.liferay.analytics.settings.web.internal.display.context;
 
-import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
-import com.liferay.analytics.settings.web.internal.constants.AnalyticsSettingsWebKeys;
 import com.liferay.analytics.settings.web.internal.model.Channel;
 import com.liferay.analytics.settings.web.internal.search.ChannelSearch;
 import com.liferay.analytics.settings.web.internal.util.AnalyticsSettingsUtil;
@@ -52,14 +50,20 @@ public class ChannelDisplayContext {
 	public ChannelDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		_analyticsConfiguration =
-			(AnalyticsConfiguration)renderRequest.getAttribute(
-				AnalyticsSettingsWebKeys.ANALYTICS_CONFIGURATION);
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
 
 	public ChannelSearch getChannelSearch() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!AnalyticsSettingsUtil.isAnalyticsEnabled(
+				themeDisplay.getCompanyId())) {
+
+			return null;
+		}
+
 		try {
 			ChannelSearch channelSearch = new ChannelSearch(
 				_renderRequest, getPortletURL());
@@ -122,8 +126,8 @@ public class ChannelDisplayContext {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"mvcRenderCommandName", "/view_configuration_screen");
-		portletURL.setParameter("configurationScreenKey", "synced-sites");
+			"mvcRenderCommandName", "/analytics_settings/view");
+		portletURL.setParameter("tabs1", "synced-sites");
 
 		return portletURL;
 	}
@@ -146,7 +150,6 @@ public class ChannelDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ChannelDisplayContext.class);
 
-	private final AnalyticsConfiguration _analyticsConfiguration;
 	private String _keywords;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

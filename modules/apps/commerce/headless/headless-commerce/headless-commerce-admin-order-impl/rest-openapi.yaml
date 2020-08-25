@@ -1,5 +1,41 @@
 components:
     schemas:
+        Account:
+            properties:
+                customFields:
+                    additionalProperties: true
+                    type: object
+                emailAddress:
+                    format: email
+                    type: string
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                logoId:
+                    example: 20078
+                    format: int64
+                    minimum: 0
+                    type: integer
+                name:
+                    example: Account Name
+                    type: string
+                root:
+                    example: true
+                    type: boolean
+                taxId:
+                    example: Abcd1234
+                    type: string
+                type:
+                    example: 1
+                    format: int32
+                    maximum: 2
+                    minimum: 0
+                    type: integer
         BillingAddress:
             properties:
                 city:
@@ -58,6 +94,25 @@ components:
                 - name
                 - street1
             type: object
+        Channel:
+            properties:
+                currencyCode:
+                    example: USD
+                    type: string
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
+                id:
+                    example: 31130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                name:
+                    example: Alessio Antonio Rendina
+                    type: string
+                type:
+                    type: string
+            type: object
         Error:
             properties:
                 errorCode:
@@ -90,6 +145,9 @@ components:
             type: object
         Order:
             properties:
+                account:
+                    $ref: "#/components/schemas/Account"
+                    readOnly: true
                 accountExternalReferenceCode:
                     example: AAB-34098-789-N
                     type: string
@@ -98,6 +156,13 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 advanceStatus:
                     example: trasmitted
                     type: string
@@ -108,6 +173,12 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
+                channel:
+                    $ref: "#/components/schemas/Channel"
+                    readOnly: true
+                channelExternalReferenceCode:
+                    example: AAB-34098-789-N
+                    type: string
                 channelId:
                     example: 30130
                     format: int64
@@ -155,6 +226,9 @@ components:
                     format: int32
                     minimum: 0
                     type: integer
+                orderStatusInfo:
+                    $ref: "#/components/schemas/Status"
+                    readOnly: true
                 paymentMethod:
                     example: paypal
                     type: string
@@ -163,6 +237,9 @@ components:
                     format: int32
                     minimum: 0
                     type: integer
+                paymentStatusInfo:
+                    $ref: "#/components/schemas/Status"
+                    readOnly: true
                 printedNote:
                     example: Order printed note
                     type: string
@@ -202,7 +279,17 @@ components:
                     format: double
                     minimum: 0
                     type: number
+                shippingDiscountPercentageLevel1WithTaxAmount:
+                    example: 20
+                    format: double
+                    minimum: 0
+                    type: number
                 shippingDiscountPercentageLevel2:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                shippingDiscountPercentageLevel2WithTaxAmount:
                     example: 0
                     format: double
                     minimum: 0
@@ -212,23 +299,50 @@ components:
                     format: double
                     minimum: 0
                     type: number
+                shippingDiscountPercentageLevel3WithTaxAmount:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
                 shippingDiscountPercentageLevel4:
                     example: 0
                     format: double
                     minimum: 0
                     type: number
+                shippingDiscountPercentageLevel4WithTaxAmount:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                shippingDiscountWithTaxAmount:
+                    format: double
+                    type: number
+                shippingDiscountWithTaxAmountFormatted:
+                    type: string
                 shippingMethod:
                     example: fixed
                     type: string
                 shippingOption:
                     example: by Air
                     type: string
+                shippingWithTaxAmount:
+                    example: 12
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                shippingWithTaxAmountFormatted:
+                    type: string
+                shippingWithTaxAmountValue:
+                    example: 12
+                    format: double
+                    minimum: 0
+                    type: number
                 subtotal:
                     format: bigdecimal
                     type: number
                 subtotalAmount:
                     format: double
-                    readonly: true
+                    readOnly: true
                     type: number
                 subtotalDiscountAmount:
                     format: double
@@ -240,7 +354,17 @@ components:
                     format: double
                     minimum: 0
                     type: number
+                subtotalDiscountPercentageLevel1WithTaxAmount:
+                    example: 20
+                    format: double
+                    minimum: 0
+                    type: number
                 subtotalDiscountPercentageLevel2:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                subtotalDiscountPercentageLevel2WithTaxAmount:
                     example: 0
                     format: double
                     minimum: 0
@@ -250,13 +374,37 @@ components:
                     format: double
                     minimum: 0
                     type: number
+                subtotalDiscountPercentageLevel3WithTaxAmount:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
                 subtotalDiscountPercentageLevel4:
                     example: 0
                     format: double
                     minimum: 0
                     type: number
+                subtotalDiscountPercentageLevel4WithTaxAmount:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                subtotalDiscountWithTaxAmount:
+                    format: double
+                    type: number
+                subtotalDiscountWithTaxAmountFormatted:
+                    type: string
                 subtotalFormatted:
                     type: string
+                subtotalWithTaxAmount:
+                    format: bigdecimal
+                    type: number
+                subtotalWithTaxAmountFormatted:
+                    type: string
+                subtotalWithTaxAmountValue:
+                    format: double
+                    readOnly: true
+                    type: number
                 taxAmount:
                     example: 11
                     format: double
@@ -273,7 +421,7 @@ components:
                     example: 113
                     format: double
                     minimum: 0
-                    readonly: true
+                    readOnly: true
                     type: number
                 totalDiscountAmount:
                     example: 11
@@ -287,7 +435,17 @@ components:
                     format: double
                     minimum: 0
                     type: number
+                totalDiscountPercentageLevel1WithTaxAmount:
+                    example: 20
+                    format: double
+                    minimum: 0
+                    type: number
                 totalDiscountPercentageLevel2:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                totalDiscountPercentageLevel2WithTaxAmount:
                     example: 0
                     format: double
                     minimum: 0
@@ -297,15 +455,48 @@ components:
                     format: double
                     minimum: 0
                     type: number
+                totalDiscountPercentageLevel3WithTaxAmount:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
                 totalDiscountPercentageLevel4:
                     example: 0
                     format: double
                     minimum: 0
                     type: number
+                totalDiscountPercentageLevel4WithTaxAmount:
+                    example: 0
+                    format: double
+                    minimum: 0
+                    type: number
+                totalDiscountWithTaxAmount:
+                    example: 11
+                    format: double
+                    minimum: 0
+                    type: number
+                totalDiscountWithTaxAmountFormatted:
+                    type: string
                 totalFormatted:
                     type: string
+                totalWithTaxAmount:
+                    example: 113
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                totalWithTaxAmountFormatted:
+                    type: string
+                totalWithTaxAmountValue:
+                    example: 113
+                    format: double
+                    minimum: 0
+                    readOnly: true
+                    type: number
                 transactionId:
                     type: string
+                workflowStatusInfo:
+                    $ref: "#/components/schemas/Status"
+                    readOnly: true
             required:
                 - channelId
                 - currencyCode
@@ -333,7 +524,17 @@ components:
                     format: bigdecimal
                     minimum: 0
                     type: number
+                discountPercentageLevel1WithTaxAmount:
+                    example: 20
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
                 discountPercentageLevel2:
+                    example: 0
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                discountPercentageLevel2WithTaxAmount:
                     example: 0
                     format: bigdecimal
                     minimum: 0
@@ -343,8 +544,23 @@ components:
                     format: bigdecimal
                     minimum: 0
                     type: number
+                discountPercentageLevel3WithTaxAmount:
+                    example: 0
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
                 discountPercentageLevel4:
                     example: 0
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                discountPercentageLevel4WithTaxAmount:
+                    example: 0
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                discountWithTaxAmount:
+                    example: 2
                     format: bigdecimal
                     minimum: 0
                     type: number
@@ -352,6 +568,11 @@ components:
                     example: AB-34098-789-N
                     type: string
                 finalPrice:
+                    example: 200
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                finalPriceWithTaxAmount:
                     example: 200
                     format: bigdecimal
                     minimum: 0
@@ -381,6 +602,11 @@ components:
                     example: Order item printed note
                     type: string
                 promoPrice:
+                    example: 101
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                promoPriceWithTaxAmount:
                     example: 101
                     format: bigdecimal
                     minimum: 0
@@ -421,6 +647,11 @@ components:
                     example: true
                     type: boolean
                 unitPrice:
+                    example: 101
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                unitPriceWithTaxAmount:
                     example: 101
                     format: bigdecimal
                     minimum: 0
@@ -509,6 +740,19 @@ components:
                 - name
                 - street1
             type: object
+        Status:
+            properties:
+                code:
+                    format: int32
+                    readOnly: true
+                    type: integer
+                label:
+                    example: black
+                    type: string
+                label_i18n:
+                    example: black
+                    type: string
+            type: object
     securitySchemes:
         BasicAuth:
             scheme: basic
@@ -532,7 +776,7 @@ info:
         name: Commerce Team
     description:
         "Liferay Commerce Admin Order API. A Java client JAR is available for use with the group ID 'com.liferay',
-        artifact ID 'com.liferay.headless.commerce.admin.order.client', and version '1.0.4'."
+        artifact ID 'com.liferay.headless.commerce.admin.order.client', and version '1.0.12'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -1238,6 +1482,11 @@ paths:
                   schema:
                       type: integer
                 - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
                   name: sort
                   required: false
                   schema:
@@ -1535,6 +1784,71 @@ paths:
             summary: Updates an Order by external reference code.
             tags:
                 - Order
+    /orders/by-externalReferenceCode/{externalReferenceCode}/account:
+        get:
+            operationId: getOrderByExternalReferenceCodeAccount
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a billing Address related to an Order.
+            tags:
+                - Account
     /orders/by-externalReferenceCode/{externalReferenceCode}/billingAddress:
         get:
             operationId: getOrderByExternalReferenceCodeBillingAddress
@@ -1669,6 +1983,71 @@ paths:
             summary: Updates a billing Address related to an Order.
             tags:
                 - BillingAddress
+    /orders/by-externalReferenceCode/{externalReferenceCode}/channel:
+        get:
+            operationId: getOrderByExternalReferenceCodeChannel
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          The resource external reference code
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Channel"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Channel"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a channel related to an Order.
+            tags:
+                - Channel
     /orders/by-externalReferenceCode/{externalReferenceCode}/orderItems:
         get:
             operationId: getOrderByExternalReferenceCodeOrderItemsPage
@@ -2290,6 +2669,72 @@ paths:
             summary: Updates an Order by ID.
             tags:
                 - Order
+    /orders/{id}/account:
+        get:
+            operationId: getOrderIdAccount
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Account"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a billing Address related to an Order.
+            tags:
+                - Account
     /orders/{id}/billingAddress:
         get:
             operationId: getOrderIdBillingAddress
@@ -2426,6 +2871,72 @@ paths:
             summary: Updates a billing Address related to an Order.
             tags:
                 - BillingAddress
+    /orders/{id}/channel:
+        get:
+            operationId: getOrderIdChannel
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      description:
+                          The resource Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Channel"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Channel"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: Gets a channel related to an Order.
+            tags:
+                - Channel
     /orders/{id}/orderItems:
         get:
             operationId: getOrderIdOrderItemsPage

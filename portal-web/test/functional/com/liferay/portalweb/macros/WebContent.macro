@@ -326,6 +326,14 @@ definition {
 				value1 = "${webContentTextBox}");
 		}
 
+		if (isSet(templateName)) {
+			if (IsTextNotEqual(locator1 = "WCEditWebContent#SELECTED_TEMPLATE", value1 = "${templateName}")) {
+				WebContent.selectTemplateCP(
+					structureName = "${structureName}",
+					templateName = "${templateName}");
+			}
+		}
+
 		Click(locator1 = "Button#PUBLISH");
 
 		SelectFrame(value1 = "relative=top");

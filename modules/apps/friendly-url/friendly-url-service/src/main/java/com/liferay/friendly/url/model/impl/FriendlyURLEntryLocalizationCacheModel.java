@@ -36,18 +36,18 @@ public class FriendlyURLEntryLocalizationCacheModel
 			   MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof FriendlyURLEntryLocalizationCacheModel)) {
+		if (!(object instanceof FriendlyURLEntryLocalizationCacheModel)) {
 			return false;
 		}
 
 		FriendlyURLEntryLocalizationCacheModel
 			friendlyURLEntryLocalizationCacheModel =
-				(FriendlyURLEntryLocalizationCacheModel)obj;
+				(FriendlyURLEntryLocalizationCacheModel)object;
 
 		if ((friendlyURLEntryLocalizationId ==
 				friendlyURLEntryLocalizationCacheModel.

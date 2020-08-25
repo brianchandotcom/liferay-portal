@@ -319,17 +319,17 @@ public class PortalPreferencesWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof PortalPreferencesWrapper)) {
+		if (!(object instanceof PortalPreferencesWrapper)) {
 			return false;
 		}
 
 		PortalPreferencesWrapper portalPreferencesWrapper =
-			(PortalPreferencesWrapper)obj;
+			(PortalPreferencesWrapper)object;
 
 		if (Objects.equals(
 				_portalPreferences,

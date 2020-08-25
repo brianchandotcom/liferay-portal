@@ -272,13 +272,15 @@
 		}
 
 		[class*='-icon'] {
+			height: 40%;
 			left: 50%;
-			margin-top: 0;
+			margin-left: -20%;
+			margin-top: -20%;
 			opacity: 0.5;
 			position: absolute;
 			top: 50%;
-			transform: translate(-50%, -50%);
 			transition: opacity 0.1s ease-in;
+			width: 40%;
 			z-index: 1;
 		}
 

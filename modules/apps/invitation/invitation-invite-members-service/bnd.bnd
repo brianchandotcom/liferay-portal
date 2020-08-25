@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Invitation Invite Members Service
 Bundle-SymbolicName: com.liferay.invitation.invite.members.service
-Bundle-Version: 4.0.31
+Bundle-Version: 4.0.34
 Liferay-Require-SchemaVersion: 1.0.1
 Liferay-Service: true

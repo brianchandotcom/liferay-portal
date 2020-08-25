@@ -45,6 +45,9 @@ import com.liferay.commerce.product.util.CPVersionContributorRegistryUtil;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -53,7 +56,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
@@ -71,6 +73,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -269,18 +272,24 @@ public class CPDefinitionLocalServiceImpl
 				cpInstanceServiceContext);
 		}
 
-		// Commerce product friendly URL
+		// Friendly URL
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			PortalUtil.getDefaultCompanyId());
+
+		Map<String, String> newURLTitleMap = new HashMap<>();
 
 		if (MapUtil.isEmpty(urlTitleMap)) {
-			urlTitleMap = _getUniqueUrlTitles(cpDefinition, nameMap);
+			newURLTitleMap = _getUniqueUrlTitles(cpDefinition, nameMap);
 		}
 		else {
-			urlTitleMap = _getUniqueUrlTitles(cpDefinition, urlTitleMap);
+			newURLTitleMap = _getUniqueUrlTitles(cpDefinition, urlTitleMap);
 		}
 
-		cpFriendlyURLEntryLocalService.addCPFriendlyURLEntries(
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, serviceContext.getCompanyId(),
-			CProduct.class, cProduct.getCProductId(), urlTitleMap);
+		_friendlyURLEntryLocalService.addFriendlyURLEntry(
+			companyGroup.getGroupId(),
+			classNameLocalService.getClassNameId(CProduct.class),
+			cProduct.getCProductId(), newURLTitleMap, serviceContext);
 
 		// Asset
 
@@ -348,6 +357,17 @@ public class CPDefinitionLocalServiceImpl
 	public CPDefinition copyCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
+		CPDefinition cpDefinition = cpDefinitionLocalService.getCPDefinition(
+			cpDefinitionId);
+
+		return copyCPDefinition(cpDefinitionId, cpDefinition.getGroupId());
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CPDefinition copyCPDefinition(long cpDefinitionId, long groupId)
+		throws PortalException {
+
 		// CPDefinition
 
 		CPDefinition originalCPDefinition =
@@ -356,22 +376,38 @@ public class CPDefinitionLocalServiceImpl
 		CPDefinition newCPDefinition =
 			(CPDefinition)originalCPDefinition.clone();
 
-		if (originalCPDefinition.isPublished()) {
-			originalCPDefinition.setPublished(false);
-
-			originalCPDefinition = cpDefinitionPersistence.update(
-				originalCPDefinition);
-		}
-
-		newCPDefinition.setUuid(PortalUUIDUtil.generate());
-
 		long newCPDefinitionId = counterLocalService.increment();
 
 		newCPDefinition.setCPDefinitionId(newCPDefinitionId);
 
-		newCPDefinition.setVersion(
-			cProductLocalService.increment(
-				originalCPDefinition.getCProductId()));
+		if (originalCPDefinition.isPublished() &&
+			cpDefinitionLocalService.isVersionable(originalCPDefinition)) {
+
+			originalCPDefinition.setPublished(false);
+
+			originalCPDefinition = cpDefinitionPersistence.update(
+				originalCPDefinition);
+
+			newCPDefinition.setVersion(
+				cProductLocalService.increment(
+					originalCPDefinition.getCProductId()));
+		}
+		else {
+			CProduct originalCProduct = originalCPDefinition.getCProduct();
+
+			CProduct newCProduct = (CProduct)originalCProduct.clone();
+
+			newCProduct.setCProductId(counterLocalService.increment());
+			newCProduct.setUuid(PortalUUIDUtil.generate());
+			newCProduct.setPublishedCPDefinitionId(newCPDefinitionId);
+
+			newCPDefinition.setCProductId(newCProduct.getCProductId());
+
+			cProductPersistence.update(newCProduct);
+		}
+
+		newCPDefinition.setGroupId(groupId);
+		newCPDefinition.setUuid(PortalUUIDUtil.generate());
 
 		newCPDefinition = cpDefinitionPersistence.update(newCPDefinition);
 
@@ -408,6 +444,16 @@ public class CPDefinitionLocalServiceImpl
 			newCPDefinitionLocalization.setCpDefinitionLocalizationId(
 				counterLocalService.increment());
 			newCPDefinitionLocalization.setCPDefinitionId(newCPDefinitionId);
+
+			if (originalCPDefinition.getCProductId() !=
+					newCPDefinition.getCProductId()) {
+
+				newCPDefinitionLocalization.setName(
+					LanguageUtil.format(
+						LocaleUtil.fromLanguageId(
+							newCPDefinitionLocalization.getLanguageId()),
+						"copy-of-x", newCPDefinitionLocalization.getName()));
+			}
 
 			cpDefinitionLocalizationPersistence.update(
 				newCPDefinitionLocalization);
@@ -680,8 +726,11 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product friendly URL entries
 
-		cpFriendlyURLEntryLocalService.deleteCPFriendlyURLEntries(
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, CProduct.class,
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			PortalUtil.getDefaultCompanyId());
+
+		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
+			companyGroup.getGroupId(), CProduct.class,
 			cpDefinition.getCProductId());
 
 		// Commerce product display layout
@@ -1131,29 +1180,52 @@ public class CPDefinitionLocalServiceImpl
 			return Collections.emptyMap();
 		}
 
-		long classNameId = classNameLocalService.getClassNameId(CProduct.class);
+		Map<Locale, String> urlTitleMap = new HashMap<>();
 
-		return cpFriendlyURLEntryLocalService.getUrlTitleMap(
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
-			cpDefinition.getCProductId());
+		try {
+			FriendlyURLEntry friendlyURLEntry =
+				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+					classNameLocalService.getClassNameId(CProduct.class),
+					cpDefinition.getCProductId());
+
+			List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizations =
+				_friendlyURLEntryLocalService.getFriendlyURLEntryLocalizations(
+					friendlyURLEntry.getFriendlyURLEntryId());
+
+			for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
+					friendlyURLEntryLocalizations) {
+
+				urlTitleMap.put(
+					LocaleUtil.fromLanguageId(
+						friendlyURLEntryLocalization.getLanguageId()),
+					friendlyURLEntryLocalization.getUrlTitle());
+			}
+		}
+		catch (Exception e) {
+			return Collections.emptyMap();
+		}
+
+		return urlTitleMap;
 	}
 
 	@Override
 	public String getUrlTitleMapAsXML(long cpDefinitionId)
 		throws PortalException {
 
-		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
-			cpDefinitionId);
+		try {
+			CPDefinition cpDefinition =
+				cpDefinitionPersistence.findByPrimaryKey(cpDefinitionId);
 
-		long classNameId = classNameLocalService.getClassNameId(CProduct.class);
+			FriendlyURLEntry friendlyURLEntry =
+				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+					classNameLocalService.getClassNameId(CProduct.class),
+					cpDefinition.getCProductId());
 
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
-
-		String defaultLanguageId = LanguageUtil.getLanguageId(defaultLocale);
-
-		return cpFriendlyURLEntryLocalService.getUrlTitleMapAsXML(
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
-			cpDefinition.getCProductId(), defaultLanguageId);
+			return friendlyURLEntry.getUrlTitleMapAsXML();
+		}
+		catch (Exception e) {
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
@@ -1419,11 +1491,13 @@ public class CPDefinitionLocalServiceImpl
 
 		cpDefinition = cpDefinitionPersistence.update(cpDefinition);
 
+		Map<String, String> newUrlTitleMap = new HashMap<>();
+
 		if (MapUtil.isEmpty(urlTitleMap)) {
-			urlTitleMap = _getUniqueUrlTitles(cpDefinition, nameMap);
+			newUrlTitleMap = _getUniqueUrlTitles(cpDefinition, nameMap);
 		}
 		else {
-			urlTitleMap = _getUniqueUrlTitles(cpDefinition, urlTitleMap);
+			newUrlTitleMap = _getUniqueUrlTitles(cpDefinition, urlTitleMap);
 		}
 
 		// Commerce product definition localization
@@ -1435,9 +1509,29 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product friendly URL entries
 
-		cpFriendlyURLEntryLocalService.addCPFriendlyURLEntries(
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, serviceContext.getCompanyId(),
-			CProduct.class, cpDefinition.getCProductId(), urlTitleMap);
+		long classNameId = classNameLocalService.getClassNameId(CProduct.class);
+
+		long classPK = cpDefinition.getCProductId();
+
+		try {
+			FriendlyURLEntry friendlyURLEntry =
+				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+					classNameId, classPK);
+
+			_friendlyURLEntryLocalService.updateFriendlyURLEntry(
+				friendlyURLEntry.getFriendlyURLEntryId(),
+				friendlyURLEntry.getClassNameId(),
+				friendlyURLEntry.getClassPK(),
+				friendlyURLEntry.getDefaultLanguageId(), newUrlTitleMap);
+		}
+		catch (Exception e) {
+			Group companyGroup = _groupLocalService.getCompanyGroup(
+				PortalUtil.getDefaultCompanyId());
+
+			_friendlyURLEntryLocalService.addFriendlyURLEntry(
+				companyGroup.getGroupId(), classNameId, classPK, newUrlTitleMap,
+				serviceContext);
+		}
 
 		// Asset
 
@@ -1994,38 +2088,38 @@ public class CPDefinitionLocalServiceImpl
 			long userId, long cpDefinitionId, boolean ignoreSKUCombinations)
 		throws PortalException {
 
-		if (!ignoreSKUCombinations) {
+		if (ignoreSKUCombinations) {
 			int cpInstancesCount =
 				cpInstanceLocalService.getCPDefinitionInstancesCount(
 					cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
 
-			if (cpInstancesCount > 1) {
-				throw new CPDefinitionIgnoreSKUCombinationsException();
-			}
-		}
-		else {
-			int cpDefinitionOptionRelsCount =
-				cpDefinitionOptionRelLocalService.
-					getCPDefinitionOptionRelsCount(cpDefinitionId, true);
-
-			if (cpDefinitionOptionRelsCount == 0) {
+			if (cpInstancesCount <= 1) {
 				return;
 			}
 
-			List<CPInstance> cpInstances =
-				cpInstanceLocalService.getCPDefinitionInstances(
-					cpDefinitionId, WorkflowConstants.STATUS_APPROVED,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			throw new CPDefinitionIgnoreSKUCombinationsException();
+		}
 
-			for (CPInstance cpInstance : cpInstances) {
-				if (!cpInstanceOptionValueRelLocalService.
-						hasCPInstanceOptionValueRel(
-							cpInstance.getCPInstanceId())) {
+		int cpDefinitionOptionRelsCount =
+			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
+				cpDefinitionId, true);
 
-					cpInstanceLocalService.updateStatus(
-						userId, cpInstance.getCPInstanceId(),
-						WorkflowConstants.STATUS_INACTIVE);
-				}
+		if (cpDefinitionOptionRelsCount == 0) {
+			return;
+		}
+
+		List<CPInstance> cpInstances =
+			cpInstanceLocalService.getCPDefinitionInstances(
+				cpDefinitionId, WorkflowConstants.STATUS_APPROVED,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (CPInstance cpInstance : cpInstances) {
+			if (!cpInstanceOptionValueRelLocalService.
+					hasCPInstanceOptionValueRel(cpInstance.getCPInstanceId())) {
+
+				cpInstanceLocalService.updateStatus(
+					userId, cpInstance.getCPInstanceId(),
+					WorkflowConstants.STATUS_INACTIVE);
 			}
 		}
 	}
@@ -2309,11 +2403,14 @@ public class CPDefinitionLocalServiceImpl
 			languageId, "_ATTRIBUTE_", optionKey, "_VALUES_NAMES");
 	}
 
-	private Map<Locale, String> _getUniqueUrlTitles(
+	private Map<String, String> _getUniqueUrlTitles(
 			CPDefinition cpDefinition, Map<Locale, String> urlTitleMap)
 		throws PortalException {
 
-		Map<Locale, String> newUrlTitleMap = new HashMap<>();
+		Map<String, String> newURLTitleMap = new HashMap<>();
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			PortalUtil.getDefaultCompanyId());
 
 		long classNameId = classNameLocalService.getClassNameId(CProduct.class);
 
@@ -2321,20 +2418,16 @@ public class CPDefinitionLocalServiceImpl
 			String urlTitle = urlTitleMap.get(titleEntry.getKey());
 
 			if (Validator.isNotNull(urlTitle)) {
-				urlTitle = titleEntry.getValue();
+				urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
+					companyGroup.getGroupId(), classNameId,
+					cpDefinition.getCProductId(), titleEntry.getValue());
 
-				String languageId = LanguageUtil.getLanguageId(
-					titleEntry.getKey());
-
-				urlTitle = cpFriendlyURLEntryLocalService.buildUrlTitle(
-					GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
-					cpDefinition.getCProductId(), languageId, urlTitle);
-
-				newUrlTitleMap.put(titleEntry.getKey(), urlTitle);
+				newURLTitleMap.put(
+					LocaleUtil.toLanguageId(titleEntry.getKey()), urlTitle);
 			}
 		}
 
-		return newUrlTitleMap;
+		return newURLTitleMap;
 	}
 
 	private boolean _isVersioningEnabled() {
@@ -2400,5 +2493,11 @@ public class CPDefinitionLocalServiceImpl
 
 	@ServiceReference(type = DDMStructureLocalService.class)
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@ServiceReference(type = FriendlyURLEntryLocalService.class)
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@ServiceReference(type = GroupLocalService.class)
+	private GroupLocalService _groupLocalService;
 
 }

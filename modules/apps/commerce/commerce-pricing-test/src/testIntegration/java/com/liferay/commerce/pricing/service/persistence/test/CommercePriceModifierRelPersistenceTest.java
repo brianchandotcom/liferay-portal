@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -205,6 +206,15 @@ public class CommercePriceModifierRelPersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByCN_CPK(0L, 0L);
+	}
+
+	@Test
+	public void testCountByCPM_CN_CPK() throws Exception {
+		_persistence.countByCPM_CN_CPK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByCPM_CN_CPK(0L, 0L, 0L);
 	}
 
 	@Test
@@ -479,6 +489,35 @@ public class CommercePriceModifierRelPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		CommercePriceModifierRel newCommercePriceModifierRel =
+			addCommercePriceModifierRel();
+
+		_persistence.clearCache();
+
+		CommercePriceModifierRel existingCommercePriceModifierRel =
+			_persistence.findByPrimaryKey(
+				newCommercePriceModifierRel.getPrimaryKey());
+
+		Assert.assertEquals(
+			Long.valueOf(
+				existingCommercePriceModifierRel.getCommercePriceModifierId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingCommercePriceModifierRel,
+				"getOriginalCommercePriceModifierId", new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingCommercePriceModifierRel.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingCommercePriceModifierRel, "getOriginalClassNameId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingCommercePriceModifierRel.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(
+				existingCommercePriceModifierRel, "getOriginalClassPK",
+				new Class<?>[0]));
 	}
 
 	protected CommercePriceModifierRel addCommercePriceModifierRel()

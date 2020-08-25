@@ -1026,17 +1026,17 @@ public class DDLRecordSetVersionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDLRecordSetVersionWrapper)) {
+		if (!(object instanceof DDLRecordSetVersionWrapper)) {
 			return false;
 		}
 
 		DDLRecordSetVersionWrapper ddlRecordSetVersionWrapper =
-			(DDLRecordSetVersionWrapper)obj;
+			(DDLRecordSetVersionWrapper)object;
 
 		if (Objects.equals(
 				_ddlRecordSetVersion,

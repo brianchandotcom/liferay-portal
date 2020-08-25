@@ -608,18 +608,18 @@ public class CommerceTaxFixedRateAddressRelWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceTaxFixedRateAddressRelWrapper)) {
+		if (!(object instanceof CommerceTaxFixedRateAddressRelWrapper)) {
 			return false;
 		}
 
 		CommerceTaxFixedRateAddressRelWrapper
 			commerceTaxFixedRateAddressRelWrapper =
-				(CommerceTaxFixedRateAddressRelWrapper)obj;
+				(CommerceTaxFixedRateAddressRelWrapper)object;
 
 		if (Objects.equals(
 				_commerceTaxFixedRateAddressRel,

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.sso.cas.internal.servlet.filter;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -41,6 +42,7 @@ import org.jasig.cas.client.authentication.AttributePrincipal;
 import org.jasig.cas.client.util.CommonUtils;
 import org.jasig.cas.client.validation.Assertion;
 import org.jasig.cas.client.validation.Cas20ProxyTicketValidator;
+import org.jasig.cas.client.validation.TicketValidationException;
 import org.jasig.cas.client.validation.TicketValidator;
 
 import org.osgi.service.component.annotations.Component;
@@ -218,7 +220,8 @@ public class CASFilter extends BaseFilter {
 
 		if (Validator.isNull(serviceURL)) {
 			serviceURL = CommonUtils.constructServiceUrl(
-				request, response, serviceURL, serverName, "ticket", false);
+				request, response, serviceURL, serverName, "service", "ticket",
+				true);
 		}
 
 		String ticket = ParamUtil.getString(request, "ticket");
@@ -235,7 +238,29 @@ public class CASFilter extends BaseFilter {
 
 		TicketValidator ticketValidator = getTicketValidator(companyId);
 
-		Assertion assertion = ticketValidator.validate(ticket, serviceURL);
+		Assertion assertion = null;
+
+		try {
+			assertion = ticketValidator.validate(ticket, serviceURL);
+		}
+		catch (TicketValidationException ticketValidationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					ticketValidationException.getMessage(),
+					ticketValidationException);
+			}
+			else if (_log.isInfoEnabled()) {
+				_log.info(ticketValidationException.getMessage());
+			}
+
+			_portal.sendError(
+				new PortalException(
+					"Unable to validate CAS ticket: " + ticket,
+					ticketValidationException),
+				request, response);
+
+			return;
+		}
 
 		if (assertion != null) {
 			AttributePrincipal attributePrincipal = assertion.getPrincipal();

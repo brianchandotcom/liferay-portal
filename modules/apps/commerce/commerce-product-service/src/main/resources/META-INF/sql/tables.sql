@@ -157,6 +157,7 @@ create table CPDefinitionOptionValueRel (
 	priority DOUBLE,
 	key_ VARCHAR(75) null,
 	quantity INTEGER,
+	preselected BOOLEAN,
 	price DECIMAL(30, 16) null
 );
 
@@ -228,6 +229,7 @@ create table CPInstance (
 	deliverySubscriptionType VARCHAR(75) null,
 	deliverySubTypeSettings VARCHAR(75) null,
 	deliveryMaxSubscriptionCycles LONG,
+	unspsc VARCHAR(75) null,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,

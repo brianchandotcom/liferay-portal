@@ -1456,17 +1456,17 @@ public class CommerceNotificationQueueEntryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceNotificationQueueEntry)) {
+		if (!(object instanceof CommerceNotificationQueueEntry)) {
 			return false;
 		}
 
 		CommerceNotificationQueueEntry commerceNotificationQueueEntry =
-			(CommerceNotificationQueueEntry)obj;
+			(CommerceNotificationQueueEntry)object;
 
 		long primaryKey = commerceNotificationQueueEntry.getPrimaryKey();
 

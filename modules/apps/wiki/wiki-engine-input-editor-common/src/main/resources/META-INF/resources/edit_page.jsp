@@ -41,7 +41,7 @@ String content = BeanParamUtil.getString(wikiPage, request, "content");
 
 	<c:if test="<%= baseWikiEngine.isHelpPageDefined() %>">
 		<div align="right">
-			<a href="javascript:;" id='<%= renderResponse.getNamespace() + "toggle_id_wiki_editor_help" %>'><liferay-ui:message key="show-syntax-help" /> &raquo;</a>
+			<a href="javascript:;" id="<%= renderResponse.getNamespace() + "toggle_id_wiki_editor_help" %>"><liferay-ui:message key="show-syntax-help" /> &raquo;</a>
 		</div>
 
 		<%

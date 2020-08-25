@@ -41,6 +41,10 @@ public class CommerceTaxFixedRateAddressRelLocalServiceUtil {
 	/**
 	 * Adds the commerce tax fixed rate address rel to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceTaxFixedRateAddressRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceTaxFixedRateAddressRel the commerce tax fixed rate address rel
 	 * @return the commerce tax fixed rate address rel that was added
 	 */
@@ -105,6 +109,10 @@ public class CommerceTaxFixedRateAddressRelLocalServiceUtil {
 	/**
 	 * Deletes the commerce tax fixed rate address rel from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceTaxFixedRateAddressRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceTaxFixedRateAddressRel the commerce tax fixed rate address rel
 	 * @return the commerce tax fixed rate address rel that was removed
 	 */
@@ -121,6 +129,10 @@ public class CommerceTaxFixedRateAddressRelLocalServiceUtil {
 
 	/**
 	 * Deletes the commerce tax fixed rate address rel with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceTaxFixedRateAddressRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceTaxFixedRateAddressRelId the primary key of the commerce tax fixed rate address rel
 	 * @return the commerce tax fixed rate address rel that was removed
@@ -421,6 +433,10 @@ public class CommerceTaxFixedRateAddressRelLocalServiceUtil {
 
 	/**
 	 * Updates the commerce tax fixed rate address rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceTaxFixedRateAddressRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceTaxFixedRateAddressRel the commerce tax fixed rate address rel
 	 * @return the commerce tax fixed rate address rel that was updated

@@ -15,8 +15,6 @@
 package com.liferay.commerce.internal.inventory;
 
 import com.liferay.commerce.inventory.CommerceInventoryChecker;
-import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
-import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -36,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = CommerceInventoryChecker.class
 )
 public class CPInstanceOptionValueRelCommerceInventoryCheckerImpl
-	implements CommerceInventoryChecker<CPInstanceOptionValueRel> {
+	extends BaseCommerceInventoryChecker<CPInstanceOptionValueRel> {
 
 	@Override
 	public List<CPInstanceOptionValueRel> filterByAvailability(
@@ -44,11 +42,11 @@ public class CPInstanceOptionValueRelCommerceInventoryCheckerImpl
 
 		List<CPInstanceOptionValueRel> filtered = new ArrayList<>();
 
-		for (CPInstanceOptionValueRel cpDefinitionOptionValueRel :
+		for (CPInstanceOptionValueRel cpInstanceOptionValueRel :
 				cpInstanceOptionValueRels) {
 
-			if (isAvailable(cpDefinitionOptionValueRel)) {
-				filtered.add(cpDefinitionOptionValueRel);
+			if (isAvailable(cpInstanceOptionValueRel)) {
+				filtered.add(cpInstanceOptionValueRel);
 			}
 		}
 
@@ -60,24 +58,11 @@ public class CPInstanceOptionValueRelCommerceInventoryCheckerImpl
 		CPInstanceOptionValueRel cpInstanceOptionValueRel =
 			(CPInstanceOptionValueRel)baseModel;
 
-		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
-			cpInstanceOptionValueRel.getCPInstanceId());
-
-		if (cpInstance == null) {
-			return false;
-		}
-
-		if (_commerceInventoryEngine.hasStockQuantity(
-				cpInstance.getCompanyId(), cpInstance.getSku(), 1)) {
-
-			return true;
-		}
-
-		return false;
+		return isAvailable(
+			_cpInstanceLocalService.fetchCPInstance(
+				cpInstanceOptionValueRel.getCPInstanceId()),
+			1);
 	}
-
-	@Reference
-	private CommerceInventoryEngine _commerceInventoryEngine;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

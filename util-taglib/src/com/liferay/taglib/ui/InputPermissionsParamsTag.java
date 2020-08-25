@@ -159,7 +159,7 @@ public class InputPermissionsParamsTag extends TagSupport {
 			else {
 				Group group = themeDisplay.getScopeGroup();
 
-				if (!group.hasPrivateLayouts() &&
+				if (!_hasPrivateLayoutsExceptControlPanel(group) &&
 					guestDefaultActions.contains(ActionKeys.VIEW)) {
 
 					return RoleConstants.GUEST;
@@ -204,6 +204,13 @@ public class InputPermissionsParamsTag extends TagSupport {
 
 	public void setModelName(String modelName) {
 		_modelName = modelName;
+	}
+
+	private static boolean _hasPrivateLayoutsExceptControlPanel(Group group) {
+		List<Layout> privateLayouts =
+			LayoutLocalServiceUtil.getLayouts(group.getGroupId(), true);
+
+		return !privateLayouts.isEmpty();
 	}
 
 	private String _modelName;

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend JS Minifier
 Bundle-SymbolicName: com.liferay.frontend.js.minifier
-Bundle-Version: 1.0.14
+Bundle-Version: 1.0.15
 Import-Package:\
 	!com.google.javascript.refactoring,\
 	\

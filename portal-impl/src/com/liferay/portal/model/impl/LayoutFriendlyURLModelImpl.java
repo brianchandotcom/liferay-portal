@@ -952,16 +952,16 @@ public class LayoutFriendlyURLModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof LayoutFriendlyURL)) {
+		if (!(object instanceof LayoutFriendlyURL)) {
 			return false;
 		}
 
-		LayoutFriendlyURL layoutFriendlyURL = (LayoutFriendlyURL)obj;
+		LayoutFriendlyURL layoutFriendlyURL = (LayoutFriendlyURL)object;
 
 		long primaryKey = layoutFriendlyURL.getPrimaryKey();
 

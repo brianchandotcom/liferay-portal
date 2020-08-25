@@ -2265,16 +2265,16 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof LayoutWrapper)) {
+		if (!(object instanceof LayoutWrapper)) {
 			return false;
 		}
 
-		LayoutWrapper layoutWrapper = (LayoutWrapper)obj;
+		LayoutWrapper layoutWrapper = (LayoutWrapper)object;
 
 		if (Objects.equals(_layout, layoutWrapper._layout)) {
 			return true;

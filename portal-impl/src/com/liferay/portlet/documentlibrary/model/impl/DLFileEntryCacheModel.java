@@ -36,17 +36,17 @@ public class DLFileEntryCacheModel
 	implements CacheModel<DLFileEntry>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DLFileEntryCacheModel)) {
+		if (!(object instanceof DLFileEntryCacheModel)) {
 			return false;
 		}
 
 		DLFileEntryCacheModel dlFileEntryCacheModel =
-			(DLFileEntryCacheModel)obj;
+			(DLFileEntryCacheModel)object;
 
 		if (fileEntryId == dlFileEntryCacheModel.fileEntryId) {
 			return true;

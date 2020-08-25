@@ -692,16 +692,16 @@ public class UserTrackerModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof UserTracker)) {
+		if (!(object instanceof UserTracker)) {
 			return false;
 		}
 
-		UserTracker userTracker = (UserTracker)obj;
+		UserTracker userTracker = (UserTracker)object;
 
 		long primaryKey = userTracker.getPrimaryKey();
 

@@ -38,18 +38,18 @@ public class CommerceInventoryWarehouseCacheModel
 			   MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceInventoryWarehouseCacheModel)) {
+		if (!(object instanceof CommerceInventoryWarehouseCacheModel)) {
 			return false;
 		}
 
 		CommerceInventoryWarehouseCacheModel
 			commerceInventoryWarehouseCacheModel =
-				(CommerceInventoryWarehouseCacheModel)obj;
+				(CommerceInventoryWarehouseCacheModel)object;
 
 		if ((commerceInventoryWarehouseId ==
 				commerceInventoryWarehouseCacheModel.

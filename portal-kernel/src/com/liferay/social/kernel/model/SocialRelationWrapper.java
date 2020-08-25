@@ -376,17 +376,17 @@ public class SocialRelationWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SocialRelationWrapper)) {
+		if (!(object instanceof SocialRelationWrapper)) {
 			return false;
 		}
 
 		SocialRelationWrapper socialRelationWrapper =
-			(SocialRelationWrapper)obj;
+			(SocialRelationWrapper)object;
 
 		if (Objects.equals(
 				_socialRelation, socialRelationWrapper._socialRelation)) {

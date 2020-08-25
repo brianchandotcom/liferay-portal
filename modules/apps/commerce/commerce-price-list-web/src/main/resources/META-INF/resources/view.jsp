@@ -26,102 +26,105 @@ portletURL.setParameter("searchContainerId", "commercePriceLists");
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
-<c:if test="<%= commercePriceListDisplayContext.hasManageCommercePriceListPermission() %>">
-	<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="searchContainerId" value="commercePriceLists" />
-	</liferay-util:include>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	navigationItems="<%= PricingNavigationItemRegistryUtil.getNavigationItems(renderRequest) %>"
+/>
 
-	<div id="<portlet:namespace />priceListsContainer">
-		<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-			<c:if test="<%= commercePriceListDisplayContext.isShowInfoPanel() %>">
-				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="commercePriceListInfoPanel" var="sidebarPanelURL" />
+<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="searchContainerId" value="commercePriceLists" />
+</liferay-util:include>
 
-				<liferay-frontend:sidebar-panel
-					resourceURL="<%= sidebarPanelURL %>"
-					searchContainerId="commercePriceLists"
-				>
-					<liferay-util:include page="/price_list_info_panel.jsp" servletContext="<%= application %>" />
-				</liferay-frontend:sidebar-panel>
-			</c:if>
+<div id="<portlet:namespace />priceListsContainer">
+	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+		<c:if test="<%= commercePriceListDisplayContext.isShowInfoPanel() %>">
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="commercePriceListInfoPanel" var="sidebarPanelURL" />
 
-			<div class="sidenav-content">
-				<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-					<aui:input name="<%= Constants.CMD %>" type="hidden" />
-					<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-					<aui:input name="deleteCommercePriceListIds" type="hidden" />
+			<liferay-frontend:sidebar-panel
+				resourceURL="<%= sidebarPanelURL %>"
+				searchContainerId="commercePriceLists"
+			>
+				<liferay-util:include page="/price_list_info_panel.jsp" servletContext="<%= application %>" />
+			</liferay-frontend:sidebar-panel>
+		</c:if>
 
-					<div class="price-lists-container" id="<portlet:namespace />entriesContainer">
-						<liferay-ui:search-container
-							id="commercePriceLists"
-							searchContainer="<%= commercePriceListDisplayContext.getSearchContainer() %>"
+		<div class="sidenav-content">
+			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+				<aui:input name="<%= Constants.CMD %>" type="hidden" />
+				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+				<aui:input name="deleteCommercePriceListIds" type="hidden" />
+
+				<div class="price-lists-container" id="<portlet:namespace />entriesContainer">
+					<liferay-ui:search-container
+						id="commercePriceLists"
+						searchContainer="<%= commercePriceListDisplayContext.getSearchContainer() %>"
+					>
+						<liferay-ui:search-container-row
+							className="com.liferay.commerce.price.list.model.CommercePriceList"
+							cssClass="entry-display-style"
+							keyProperty="commercePriceListId"
+							modelVar="commercePriceList"
 						>
-							<liferay-ui:search-container-row
-								className="com.liferay.commerce.price.list.model.CommercePriceList"
-								cssClass="entry-display-style"
-								keyProperty="commercePriceListId"
-								modelVar="commercePriceList"
-							>
 
-								<%
-								PortletURL rowURL = renderResponse.createRenderURL();
+							<%
+							PortletURL rowURL = renderResponse.createRenderURL();
 
-								rowURL.setParameter("mvcRenderCommandName", "editCommercePriceList");
-								rowURL.setParameter("redirect", currentURL);
-								rowURL.setParameter("commercePriceListId", String.valueOf(commercePriceList.getCommercePriceListId()));
+							rowURL.setParameter("mvcRenderCommandName", "editCommercePriceList");
+							rowURL.setParameter("redirect", currentURL);
+							rowURL.setParameter("commercePriceListId", String.valueOf(commercePriceList.getCommercePriceListId()));
 
-								CommerceCatalog commerceCatalog = commercePriceListDisplayContext.fetchCommerceCatalog(commercePriceList);
-								%>
+							CommerceCatalog commerceCatalog = commercePriceListDisplayContext.fetchCommerceCatalog(commercePriceList);
+							%>
 
-								<liferay-ui:search-container-column-text
-									cssClass="important table-cell-content"
-									href="<%= rowURL %>"
-									property="name"
-								/>
-
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-content"
-									name="author"
-									property="userName"
-								/>
-
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-content"
-									name="catalog"
-									value="<%= (commerceCatalog == null) ? StringPool.BLANK : HtmlUtil.escape(commerceCatalog.getName()) %>"
-								/>
-
-								<liferay-ui:search-container-column-date
-									cssClass="table-cell-content"
-									name="create-date"
-									property="createDate"
-								/>
-
-								<liferay-ui:search-container-column-date
-									cssClass="table-cell-content"
-									name="display-date"
-									property="displayDate"
-								/>
-
-								<liferay-ui:search-container-column-status
-									cssClass="table-cell-content"
-									name="status"
-									status="<%= commercePriceList.getStatus() %>"
-								/>
-
-								<liferay-ui:search-container-column-jsp
-									cssClass="entry-action-column"
-									path="/price_list_action.jsp"
-								/>
-							</liferay-ui:search-container-row>
-
-							<liferay-ui:search-iterator
-								displayStyle="list"
-								markupView="lexicon"
+							<liferay-ui:search-container-column-text
+								cssClass="important table-cell-content"
+								href="<%= rowURL %>"
+								property="name"
 							/>
-						</liferay-ui:search-container>
-					</div>
-				</aui:form>
-			</div>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								name="author"
+								property="userName"
+							/>
+
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
+								name="catalog"
+								value="<%= (commerceCatalog == null) ? StringPool.BLANK : HtmlUtil.escape(commerceCatalog.getName()) %>"
+							/>
+
+							<liferay-ui:search-container-column-date
+								cssClass="table-cell-content"
+								name="create-date"
+								property="createDate"
+							/>
+
+							<liferay-ui:search-container-column-date
+								cssClass="table-cell-content"
+								name="display-date"
+								property="displayDate"
+							/>
+
+							<liferay-ui:search-container-column-status
+								cssClass="table-cell-content"
+								name="status"
+								status="<%= commercePriceList.getStatus() %>"
+							/>
+
+							<liferay-ui:search-container-column-jsp
+								cssClass="entry-action-column"
+								path="/price_list_action.jsp"
+							/>
+						</liferay-ui:search-container-row>
+
+						<liferay-ui:search-iterator
+							displayStyle="list"
+							markupView="lexicon"
+						/>
+					</liferay-ui:search-container>
+				</div>
+			</aui:form>
 		</div>
 	</div>
-</c:if>
+</div>

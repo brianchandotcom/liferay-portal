@@ -225,7 +225,7 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 					"getUpdatePortletPreferencesWhereClause");
 		}
 
-		StringBundler sb = new StringBundler(portletIds.length * 5 - 1);
+		StringBundler sb = new StringBundler((portletIds.length * 5) - 1);
 
 		for (int i = 0; i < portletIds.length; i++) {
 			String portletId = portletIds[i];

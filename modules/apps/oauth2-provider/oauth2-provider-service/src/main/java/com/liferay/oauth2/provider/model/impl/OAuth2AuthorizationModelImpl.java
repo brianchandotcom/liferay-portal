@@ -1086,16 +1086,16 @@ public class OAuth2AuthorizationModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof OAuth2Authorization)) {
+		if (!(object instanceof OAuth2Authorization)) {
 			return false;
 		}
 
-		OAuth2Authorization oAuth2Authorization = (OAuth2Authorization)obj;
+		OAuth2Authorization oAuth2Authorization = (OAuth2Authorization)object;
 
 		long primaryKey = oAuth2Authorization.getPrimaryKey();
 

@@ -1261,7 +1261,7 @@ public abstract class BaseDB implements DB {
 		"SPECIFIC_TIMESTAMP_\\d+");
 
 	static {
-		StringBundler sb = new StringBundler(TEMPLATE.length * 5 - 6);
+		StringBundler sb = new StringBundler((TEMPLATE.length * 5) - 6);
 
 		for (int i = 0; i < TEMPLATE.length; i++) {
 			String variable = TEMPLATE[i];

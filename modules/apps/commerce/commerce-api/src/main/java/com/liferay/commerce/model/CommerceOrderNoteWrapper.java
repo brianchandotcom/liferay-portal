@@ -523,17 +523,17 @@ public class CommerceOrderNoteWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceOrderNoteWrapper)) {
+		if (!(object instanceof CommerceOrderNoteWrapper)) {
 			return false;
 		}
 
 		CommerceOrderNoteWrapper commerceOrderNoteWrapper =
-			(CommerceOrderNoteWrapper)obj;
+			(CommerceOrderNoteWrapper)object;
 
 		if (Objects.equals(
 				_commerceOrderNote,

@@ -34,4 +34,6 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 		selectedLanguageId="<%= journalEditArticleDisplayContext.getSelectedLanguageId() %>"
 		xml="<%= (article != null) ? HttpUtil.decodeURL(article.getFriendlyURLsXML()) : StringPool.BLANK %>"
 	/>
+
+	<p class="text-muted"><liferay-ui:message key="changing-the-friendly-url-will-affect-all-web-content-article-versions-even-when-saving-it-as-a-draft" /></p>
 </div>

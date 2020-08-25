@@ -42,6 +42,7 @@ import java.io.Serializable;
 
 import java.math.BigDecimal;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -71,6 +72,10 @@ public interface CommerceOrderItemLocalService
 	/**
 	 * Adds the commerce order item to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceOrderItem the commerce order item
 	 * @return the commerce order item that was added
 	 */
@@ -99,6 +104,10 @@ public interface CommerceOrderItemLocalService
 	/**
 	 * Deletes the commerce order item from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceOrderItem the commerce order item
 	 * @return the commerce order item that was removed
 	 * @throws PortalException
@@ -116,6 +125,10 @@ public interface CommerceOrderItemLocalService
 
 	/**
 	 * Deletes the commerce order item with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceOrderItemId the primary key of the commerce order item
 	 * @return the commerce order item that was removed
@@ -359,6 +372,10 @@ public interface CommerceOrderItemLocalService
 	/**
 	 * Updates the commerce order item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceOrderItem the commerce order item
 	 * @return the commerce order item that was updated
 	 */
@@ -380,6 +397,17 @@ public interface CommerceOrderItemLocalService
 	public CommerceOrderItem updateCommerceOrderItem(
 			long commerceOrderItemId, long bookedQuantityId)
 		throws NoSuchOrderItemException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceOrderItem updateCommerceOrderItemDeliveryDate(
+			long commerceOrderItemId, Date requestedDeliveryDate)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceOrderItem updateCommerceOrderItemInfo(
+			long commerceOrderItemId, String deliveryGroup,
+			long shippingAddressId, String printedNote)
+		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem updateCommerceOrderItemInfo(
@@ -445,6 +473,11 @@ public interface CommerceOrderItemLocalService
 	public CommerceOrderItem updateCommerceOrderItemUnitPrice(
 			long userId, long commerceOrderItemId, BigDecimal unitPrice,
 			int quantity)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceOrderItem updateCustomFields(
+			long commerceOrderItemId, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrderItem upsertCommerceOrderItem(

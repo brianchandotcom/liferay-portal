@@ -343,8 +343,8 @@ public class CPQuery {
 					AssetCategoryLocalServiceUtil.getCategory(categoryId);
 
 				leftRightIds[3 * i] = category.getGroupId();
-				leftRightIds[3 * i + 1] = category.getLeftCategoryId();
-				leftRightIds[3 * i + 2] = category.getRightCategoryId();
+				leftRightIds[(3 * i) + 1] = category.getLeftCategoryId();
+				leftRightIds[(3 * i) + 2] = category.getRightCategoryId();
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

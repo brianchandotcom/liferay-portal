@@ -42,11 +42,10 @@ public class DateParamConverter implements ParamConverter<Date> {
 
 	@Override
 	public String toString(Date date) {
-		return new SimpleDateFormat(
-			_PATTERN_DATE_TIME
-		).format(
-			date
-		);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+			_PATTERN_DATE_TIME);
+
+		return simpleDateFormat.format(date);
 	}
 
 	private String _getPattern(String string) {

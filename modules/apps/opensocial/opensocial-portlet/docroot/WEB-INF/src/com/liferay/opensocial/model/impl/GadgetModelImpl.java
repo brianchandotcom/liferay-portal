@@ -726,16 +726,16 @@ public class GadgetModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Gadget)) {
+		if (!(object instanceof Gadget)) {
 			return false;
 		}
 
-		Gadget gadget = (Gadget)obj;
+		Gadget gadget = (Gadget)object;
 
 		long primaryKey = gadget.getPrimaryKey();
 

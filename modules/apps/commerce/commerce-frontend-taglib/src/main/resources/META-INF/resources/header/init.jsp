@@ -25,10 +25,12 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.frontend.model.HeaderActionModel" %><%@
+<%@ page import="com.liferay.commerce.frontend.ClayMenuActionItem" %><%@
+page import="com.liferay.commerce.frontend.model.HeaderActionModel" %><%@
 page import="com.liferay.commerce.frontend.util.HeaderHelperUtil" %><%@
-page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.json.JSONSerializer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.BaseModel" %><%@
 page import="com.liferay.portal.kernel.model.WorkflowedModel" %><%@
@@ -54,7 +56,7 @@ List<HeaderActionModel> actions = (List<HeaderActionModel>)request.getAttribute(
 Object bean = request.getAttribute("liferay-commerce:header:bean");
 String beanIdLabel = (String)request.getAttribute("liferay-commerce:header:beanIdLabel");
 String cssClasses = (String)request.getAttribute("liferay-commerce:header:cssClasses");
-List<DropdownItem> dropdownItems = (List<DropdownItem>)request.getAttribute("liferay-commerce:header:dropdownItems");
+List<ClayMenuActionItem> dropdownItems = (List<ClayMenuActionItem>)request.getAttribute("liferay-commerce:header:dropdownItems");
 String externalReferenceCode = (String)request.getAttribute("liferay-commerce:header:externalReferenceCode");
 String externalReferenceCodeEditUrl = (String)request.getAttribute("liferay-commerce:header:externalReferenceCodeEditUrl");
 boolean fullWidth = (boolean)request.getAttribute("liferay-commerce:header:fullWidth");
@@ -75,4 +77,6 @@ if (beanBaseModel != null) {
 }
 
 WorkflowTask reviewWorkflowTask = HeaderHelperUtil.getReviewWorkflowTask(themeDisplay.getCompanyId(), themeDisplay.getUserId(), beanId, model.getName());
+
+JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 %>

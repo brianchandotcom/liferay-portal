@@ -944,17 +944,17 @@ public class KaleoDefinitionVersionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoDefinitionVersionWrapper)) {
+		if (!(object instanceof KaleoDefinitionVersionWrapper)) {
 			return false;
 		}
 
 		KaleoDefinitionVersionWrapper kaleoDefinitionVersionWrapper =
-			(KaleoDefinitionVersionWrapper)obj;
+			(KaleoDefinitionVersionWrapper)object;
 
 		if (Objects.equals(
 				_kaleoDefinitionVersion,

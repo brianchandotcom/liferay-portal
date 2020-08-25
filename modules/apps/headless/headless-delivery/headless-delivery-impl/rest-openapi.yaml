@@ -124,6 +124,13 @@ components:
                             format: uri
                             readOnly: true
                             type: string
+                        contentValue:
+                            # @review
+                            description:
+                                "optional field with the content of the image in Base64,
+                                can be embedded with nestedFields"
+                            readOnly: true
+                            type: string
                         imageId:
                             description:
                                 The image's ID. This can be used to retrieve more information in the `Document` API.
@@ -184,6 +191,12 @@ components:
                 contentUrl:
                     description:
                         The image's relative URL.
+                    readOnly: true
+                    type: string
+                contentValue:
+                    # @review
+                    description:
+                        optional field with the content of the image in Base64, can be embedded with nestedFields
                     readOnly: true
                     type: string
                 encodingFormat:
@@ -284,6 +297,12 @@ components:
                     format: uri
                     readOnly: true
                     type: string
+                contentValue:
+                    # @review
+                    description:
+                        optional field with the content of the document in Base64, can be embedded with nestedFields
+                    readOnly: true
+                    type: string
                 description:
                     description:
                         The document's description.
@@ -314,10 +333,46 @@ components:
                         The document's title.
                     type: string
             type: object
+        ContentElement:
+            # @review
+            properties:
+                content:
+                    description:
+                        The content's fields.
+                    readOnly: true
+                    type: object
+                contentType:
+                    description:
+                        The content set element's type.
+                    readOnly: true
+                    type: string
+                id:
+                    description:
+                        The content set element's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                title:
+                    description:
+                        The content's title.
+                    readOnly: true
+                    type: string
+                title_i18n:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
         ContentField:
             description:
-                Represents the value of each field in structured content. Fields can contain different information types (e.g., geolocation, documents, etc.).
+                Represents the value of each field in structured content. Fields can contain different information types
+                (e.g., documents, geolocation, etc.).
             properties:
+                contentFieldValue:
+                    $ref: "#/components/schemas/ContentFieldValue"
+                contentFieldValue_i18n:
+                    additionalProperties:
+                        $ref: "#/components/schemas/ContentFieldValue"
+                    type: object
                 dataType:
                     description:
                         The field type (e.g., image, text, etc.).
@@ -352,63 +407,62 @@ components:
                         A flag that indicates whether this field can be rendered multiple times.
                     readOnly: true
                     type: boolean
-                value:
+        ContentFieldValue:
+            description:
+                # @review
+                Represents the value of a content field. Can contain different information types
+                (e.g., geolocation, documents, etc.).
+            properties:
+                data:
+                    description:
+                        The field's content for simple types.
+                    type: string
+                document:
+                    allOf:
+                        - $ref: "#/components/schemas/ContentDocument"
+                    description:
+                        A content document element.
+                geo:
+                    description:
+                        A point determined by latitude and longitude.
                     properties:
-                        data:
+                        latitude:
                             description:
-                                The field's content for simple types.
-                            type: string
-                        document:
-                            allOf:
-                                - $ref: "#/components/schemas/ContentDocument"
+                                The latitude of a point in space.
+                            format: double
+                            type: number
+                        longitude:
                             description:
-                                A content document element.
-                        geo:
-                            description:
-                                A point determined by latitude and longitude.
-                            properties:
-                                latitude:
-                                    description:
-                                        The latitude of a point in space.
-                                    format: double
-                                    type: number
-                                longitude:
-                                    description:
-                                        The longitude of a point in space.
-                                    format: double
-                                    type: number
-                            type: object
-                        image:
-                            allOf:
-                                - $ref: "#/components/schemas/ContentDocument"
-                            description:
-                                A content document element that stores an image file.
-                        link:
-                            description:
-                                A link to a page on the server.
-                            format: uri
-                            type: string
-                        structuredContentLink:
-                            description:
-                                A link to structured content on the server.
-                            properties:
-                                contentType:
-                                    readOnly: true
-                                    type: string
-                                id:
-                                    description:
-                                        The resource's ID.
-                                    format: int64
-                                    type: integer
-                                title:
-                                    description:
-                                        The resource's title.
-                                    type: string
-                            type: object
+                                The longitude of a point in space.
+                            format: double
+                            type: number
                     type: object
-                value_i18n:
-                    additionalProperties:
-                        type: object
+                image:
+                    allOf:
+                        - $ref: "#/components/schemas/ContentDocument"
+                    description:
+                        A content document element that stores an image file.
+                link:
+                    description:
+                        A link to a page on the server.
+                    format: uri
+                    type: string
+                structuredContentLink:
+                    description:
+                        A link to structured content on the server.
+                    properties:
+                        contentType:
+                            readOnly: true
+                            type: string
+                        id:
+                            description:
+                                The resource's ID.
+                            format: int64
+                            type: integer
+                        title:
+                            description:
+                                The resource's title.
+                            type: string
                     type: object
         ContentSetElement:
             description:
@@ -711,6 +765,13 @@ components:
                                     The image's relative URL.
                                 format: uri
                                 type: string
+                            contentValue:
+                                # @review
+                                description:
+                                    "optional field with the content of the image in Base64,
+                                    can be embedded with nestedFields"
+                                readOnly: true
+                                type: string
                             height:
                                 description:
                                     The image's height in pixels.
@@ -743,6 +804,12 @@ components:
                     format: binary
                     readOnly: true
                     type: string
+                contentValue:
+                    # @review
+                    description:
+                        optional field with the content of the document in Base64, can be embedded with nestedFields
+                    readOnly: true
+                    type: string
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -773,8 +840,33 @@ components:
                     description:
                         The ID of the `DocumentFolder` where this document is stored.
                     format: int64
-                    readOnly: true
                     type: integer
+                documentType:
+                    properties:
+                        availableLanguages:
+                            items:
+                                type: string
+                            readOnly: true
+                            type: array
+                        contentFields:
+                            items:
+                                $ref: "#/components/schemas/ContentField"
+                            type: array
+                        description:
+                            type: string
+                        description_i18n:
+                            additionalProperties:
+                                type: string
+                            readOnly: true
+                            type: object
+                        name:
+                            type: string
+                        name_i18n:
+                            additionalProperties:
+                                type: string
+                            readOnly: true
+                            type: object
+                    type: object
                 encodingFormat:
                     description:
                         The document's content type (e.g., `application/pdf`, etc.).
@@ -1065,6 +1157,12 @@ components:
                         The file's relative URL.
                     readOnly: true
                     type: string
+                contentValue:
+                    # @review
+                    description:
+                        optional field with the content of the document in Base64, can be embedded with nestedFields
+                    readOnly: true
+                    type: string
                 encodingFormat:
                     description:
                         The file's media type (e.g., application/pdf, etc.).
@@ -1192,6 +1290,12 @@ components:
                 contentUrl:
                     description:
                         The file's relative URL.
+                    readOnly: true
+                    type: string
+                contentValue:
+                    # @review
+                    description:
+                        optional field with the content of the document in Base64, can be embedded with nestedFields
                     readOnly: true
                     type: string
                 encodingFormat:
@@ -1717,6 +1821,11 @@ components:
                                     An absolute URL to the rendered content.
                                 format: uri
                                 type: string
+                            renderedContentValue:
+                                # @review
+                                description:
+                                    optional field with the rendered content, can be embedded with nestedFields
+                                type: string
                             templateName:
                                 description:
                                     The name of the template used to render the content.
@@ -2060,6 +2169,12 @@ components:
                         The file's relative URL.
                     readOnly: true
                     type: string
+                contentValue:
+                    # @review
+                    description:
+                        optional field with the content of the document in Base64, can be embedded with nestedFields
+                    readOnly: true
+                    type: string
                 encodingFormat:
                     description:
                         The file's media format (e.g., application/pdf, etc.).
@@ -2090,7 +2205,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.delivery.client', and version '1.0.0'."
+        'com.liferay.headless.delivery.client', and version '1.0.3'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -5298,6 +5413,52 @@ paths:
                     description:
                         ""
             tags: ["BlogPosting"]
+    "/sites/{siteId}/content-elements":
+        get:
+            operationId: getSiteContentElementsPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentElement"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentElement"
+                                type: array
+                    description:
+                        ""
+            tags: ["ContentElement"]
     "/sites/{siteId}/content-sets/by-key/{key}/content-set-elements":
         get:
             description:

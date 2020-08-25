@@ -636,16 +636,16 @@ public class DLFileRankModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DLFileRank)) {
+		if (!(object instanceof DLFileRank)) {
 			return false;
 		}
 
-		DLFileRank dlFileRank = (DLFileRank)obj;
+		DLFileRank dlFileRank = (DLFileRank)object;
 
 		long primaryKey = dlFileRank.getPrimaryKey();
 

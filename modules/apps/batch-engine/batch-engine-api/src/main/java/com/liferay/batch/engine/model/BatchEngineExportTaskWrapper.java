@@ -715,17 +715,17 @@ public class BatchEngineExportTaskWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof BatchEngineExportTaskWrapper)) {
+		if (!(object instanceof BatchEngineExportTaskWrapper)) {
 			return false;
 		}
 
 		BatchEngineExportTaskWrapper batchEngineExportTaskWrapper =
-			(BatchEngineExportTaskWrapper)obj;
+			(BatchEngineExportTaskWrapper)object;
 
 		if (Objects.equals(
 				_batchEngineExportTask,

@@ -115,7 +115,7 @@ public class StringUtilTest {
 				hexString.charAt(i * 2),
 				StringUtil.HEX_DIGITS[(data[i] & 0xFF) >> 4]);
 			Assert.assertEquals(
-				hexString.charAt(i * 2 + 1),
+				hexString.charAt((i * 2) + 1),
 				StringUtil.HEX_DIGITS[data[i] & 0x0F]);
 		}
 	}

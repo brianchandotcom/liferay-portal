@@ -430,17 +430,17 @@ public class AnnouncementsDeliveryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AnnouncementsDeliveryWrapper)) {
+		if (!(object instanceof AnnouncementsDeliveryWrapper)) {
 			return false;
 		}
 
 		AnnouncementsDeliveryWrapper announcementsDeliveryWrapper =
-			(AnnouncementsDeliveryWrapper)obj;
+			(AnnouncementsDeliveryWrapper)object;
 
 		if (Objects.equals(
 				_announcementsDelivery,

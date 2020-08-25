@@ -1226,16 +1226,16 @@ public class FragmentEntryLinkModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof FragmentEntryLink)) {
+		if (!(object instanceof FragmentEntryLink)) {
 			return false;
 		}
 
-		FragmentEntryLink fragmentEntryLink = (FragmentEntryLink)obj;
+		FragmentEntryLink fragmentEntryLink = (FragmentEntryLink)object;
 
 		long primaryKey = fragmentEntryLink.getPrimaryKey();
 

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Product Taglib
 Bundle-SymbolicName: com.liferay.commerce.product.taglib
-Bundle-Version: 1.1.13
+Bundle-Version: 1.1.14
 Export-Package: com.liferay.commerce.product.taglib.servlet.taglib
 Import-Package:\
 	com.liferay.taglib.util;version="[7.4.0,9.0.0)",\

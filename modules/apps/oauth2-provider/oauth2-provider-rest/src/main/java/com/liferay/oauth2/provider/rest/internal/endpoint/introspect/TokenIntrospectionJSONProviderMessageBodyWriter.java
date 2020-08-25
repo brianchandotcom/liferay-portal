@@ -170,7 +170,7 @@ public class TokenIntrospectionJSONProviderMessageBodyWriter
 	}
 
 	protected void append(StringBundler sb, String key, List<String> value) {
-		StringBundler arraySB = new StringBundler((value.size() * 3 - 1) + 2);
+		StringBundler arraySB = new StringBundler(((value.size() * 3) - 1) + 2);
 
 		arraySB.append("[");
 

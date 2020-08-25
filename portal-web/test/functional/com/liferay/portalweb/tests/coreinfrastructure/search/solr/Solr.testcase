@@ -92,18 +92,26 @@ definition {
 			searchAssetType = "Message Boards Message");
 	}
 
-	@description = "This smoke test is to ensure that Liferay is successfully running on a remote SolrCloud with 2 nodes by asserting console logging for ZooKeeper and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal."
+	@description = "This smoke test is to ensure that Liferay is successfully running on a remote SolrCloud with 2 nodes by asserting console logging for ZooKeeper and performing searches in portal."
 	@priority = "4"
 	test SolrWithSolrCloudSmokeTest {
 		property dummy.socket.proxy.disabled = "true";
 		property solr.solrcloud.enabled = "true";
 		property test.name.skip.portal.instance = "Solr#SolrWithSolrCloudSmokeTest";
 
-		// LRQA-44617
+		AssertConsoleTextPresent(value1 = "zkClient has connected");
 
-		// <execute macro="Solr#viewSolrwithSolrCloudEnabledInConsole" />
+		AssertConsoleTextPresent(value1 = "Updated live nodes from ZooKeeper");
 
-		Solr.viewLiferayCloudDashboard(cloudCollectionName = "liferay");
+		AssertConsoleTextPresent(value1 = "Cluster at localhost:9983 ready");
+
+		Navigator.openSpecificURL(url = "http://localhost:8983/solr/#/~cloud");
+
+		AssertVisible(locator1 = "SolrAdminDashboard#MENU_CLOUD");
+
+		AssertVisible(
+			key_cloudCollectionName = "liferay",
+			locator1 = "SolrAdminDashboard#CLOUD_COLLECTION");
 
 		Navigator.openURL();
 

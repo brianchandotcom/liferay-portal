@@ -104,6 +104,32 @@ definition {
 		AssertChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Blogs Entry");
 	}
 
+	@description = "This is a use case for LPS-95798."
+	test SearchAfterViewingResultDetails {
+		JSONWebcontent.addWebContent(
+			content = "Web Content",
+			groupName = "Guest",
+			title = "First WC");
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content",
+			groupName = "Guest",
+			title = "Second WC");
+
+		SearchPortlets.searchEmbedded(searchTerm = "First");
+
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "First WC");
+
+		SearchPortlets.viewResultDetails(searchAssetTitle = "First WC");
+
+		SearchPortlets.searchEmbedded(searchTerm = "Second");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Second WC",
+			searchAssetType = "Web Content Article",
+			searchTerm = "Second");
+	}
+
 	@priority = "4"
 	test SearchBlogsEntry {
 		Navigator.openURL();
@@ -1532,14 +1558,6 @@ definition {
 		AssertElementPresent(locator1 = "Message#ERROR_SELECT_VALID_DATE_RANGE");
 
 		AssertVisible(locator1 = "Button#SEARCH_DISABLED");
-
-		// Workaround for LPS-82584
-
-		Click(locator1 = "Link#CLEAR");
-
-		Click(
-			locator1 = "Search#MODIFIED_FACET_SELECTION",
-			range = "Custom Range");
 
 		Click(locator1 = "Search#CUSTOM_RANGE_FROM");
 

@@ -441,7 +441,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 					"' where name = '", oldName, "'"));
 		}
 		else {
-			StringBundler sb = new StringBundler(5 + 3 * actionIds.size());
+			StringBundler sb = new StringBundler(5 + (3 * actionIds.size()));
 
 			sb.append("update ResourceAction set name = '");
 			sb.append(newName);

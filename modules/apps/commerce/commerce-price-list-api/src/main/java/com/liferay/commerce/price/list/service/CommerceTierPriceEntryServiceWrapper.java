@@ -106,6 +106,10 @@ public class CommerceTierPriceEntryServiceWrapper
 			companyId, externalReferenceCode);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public java.util.List
 		<com.liferay.commerce.price.list.model.CommerceTierPriceEntry>
@@ -159,6 +163,10 @@ public class CommerceTierPriceEntryServiceWrapper
 			commercePriceEntryId);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public int getCommerceTierPriceEntriesCountByCompanyId(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -98,7 +98,7 @@ public class FileSystemHook extends BaseHook {
 		}
 
 		StringBundler sb = new StringBundler(
-			fileNameFragmentLength / 2 + fileNameFragmentLength);
+			(fileNameFragmentLength / 2) + fileNameFragmentLength);
 
 		for (int i = 0; i < fileNameFragmentLength; i += 2) {
 			if ((i + 2) < fileNameFragmentLength) {

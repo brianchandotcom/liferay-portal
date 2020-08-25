@@ -20,11 +20,7 @@
 
 <%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
 
-<%
-boolean showUserDetails = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:user-display:showUserDetails"));
-%>
-
-	<c:if test="<%= showUserDetails %>">
+<c:if test='<%= GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:user-display:showUserDetails")) %>'>
 		</div>
 	</c:if>
 </div>

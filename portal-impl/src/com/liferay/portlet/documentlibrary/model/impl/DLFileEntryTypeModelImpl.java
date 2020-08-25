@@ -1196,16 +1196,16 @@ public class DLFileEntryTypeModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DLFileEntryType)) {
+		if (!(object instanceof DLFileEntryType)) {
 			return false;
 		}
 
-		DLFileEntryType dlFileEntryType = (DLFileEntryType)obj;
+		DLFileEntryType dlFileEntryType = (DLFileEntryType)object;
 
 		long primaryKey = dlFileEntryType.getPrimaryKey();
 

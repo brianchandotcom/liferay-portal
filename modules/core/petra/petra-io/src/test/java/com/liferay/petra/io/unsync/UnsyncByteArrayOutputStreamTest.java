@@ -139,12 +139,10 @@ public class UnsyncByteArrayOutputStreamTest extends BaseOutputStreamTestCase {
 		String charsetName1 = "UTF-16BE";
 		String charsetName2 = "UTF-16LE";
 
+		String s = new String(_BUFFER, charsetName1);
+
 		Assert.assertFalse(
-			new String(
-				_BUFFER, charsetName1
-			).equals(
-				unsyncByteArrayOutputStream.toString(charsetName2)
-			));
+			s.equals(unsyncByteArrayOutputStream.toString(charsetName2)));
 
 		Assert.assertEquals(
 			new String(_BUFFER, charsetName1),

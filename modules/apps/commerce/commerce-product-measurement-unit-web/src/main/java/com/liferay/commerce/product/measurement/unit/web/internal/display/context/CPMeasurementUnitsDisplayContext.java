@@ -30,11 +30,13 @@ import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -87,18 +89,21 @@ public class CPMeasurementUnitsDisplayContext {
 			_renderRequest, "toolbarItem",
 			"view-all-dimension-product-measurement-units");
 
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", themeDisplay.getLocale(), getClass());
+
 		NavigationItem dimensionCPMeasurementUnitsNavigationItem =
 			getNavigationItem(
 				toolbarItem.equals(
 					"view-all-dimension-product-measurement-units"),
 				viewDimensionProductMeasurementUnitsURL,
-				LanguageUtil.get(themeDisplay.getLocale(), "dimensions"));
+				LanguageUtil.get(resourceBundle, "dimensions"));
 
 		NavigationItem weightCPMeasurementUnitsNavigationItem =
 			getNavigationItem(
 				toolbarItem.equals("view-all-weight-product-measurement-units"),
 				viewWeightProductMeasurementUnitsURL,
-				LanguageUtil.get(themeDisplay.getLocale(), "weight"));
+				LanguageUtil.get(resourceBundle, "weight"));
 
 		navigationItems.add(dimensionCPMeasurementUnitsNavigationItem);
 		navigationItems.add(weightCPMeasurementUnitsNavigationItem);

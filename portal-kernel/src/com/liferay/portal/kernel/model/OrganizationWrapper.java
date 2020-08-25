@@ -863,16 +863,16 @@ public class OrganizationWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof OrganizationWrapper)) {
+		if (!(object instanceof OrganizationWrapper)) {
 			return false;
 		}
 
-		OrganizationWrapper organizationWrapper = (OrganizationWrapper)obj;
+		OrganizationWrapper organizationWrapper = (OrganizationWrapper)object;
 
 		if (Objects.equals(_organization, organizationWrapper._organization)) {
 			return true;

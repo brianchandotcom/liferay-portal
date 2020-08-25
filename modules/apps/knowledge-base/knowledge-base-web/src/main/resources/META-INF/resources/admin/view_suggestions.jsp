@@ -69,7 +69,7 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 	itemsTotal="<%= kbSuggestionListManagementToolbarDisplayContext.getTotal() %>"
 	searchContainerId="kbComments"
 	selectable="<%= true %>"
-	showSearch="false"
+	showSearch="<%= false %>"
 	sortingOrder="<%= kbSuggestionListManagementToolbarDisplayContext.getOrderByType() %>"
 	sortingURL="<%= String.valueOf(kbSuggestionListManagementToolbarDisplayContext.getSortingURL()) %>"
 />

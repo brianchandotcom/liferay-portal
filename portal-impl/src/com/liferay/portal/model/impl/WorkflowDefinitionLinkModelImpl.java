@@ -961,17 +961,17 @@ public class WorkflowDefinitionLinkModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof WorkflowDefinitionLink)) {
+		if (!(object instanceof WorkflowDefinitionLink)) {
 			return false;
 		}
 
 		WorkflowDefinitionLink workflowDefinitionLink =
-			(WorkflowDefinitionLink)obj;
+			(WorkflowDefinitionLink)object;
 
 		long primaryKey = workflowDefinitionLink.getPrimaryKey();
 

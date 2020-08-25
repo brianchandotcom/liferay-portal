@@ -94,6 +94,10 @@ public abstract class KaleoTaskAssignmentInstanceLocalServiceBaseImpl
 	/**
 	 * Adds the kaleo task assignment instance to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect KaleoTaskAssignmentInstanceLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param kaleoTaskAssignmentInstance the kaleo task assignment instance
 	 * @return the kaleo task assignment instance that was added
 	 */
@@ -126,6 +130,10 @@ public abstract class KaleoTaskAssignmentInstanceLocalServiceBaseImpl
 	/**
 	 * Deletes the kaleo task assignment instance with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect KaleoTaskAssignmentInstanceLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param kaleoTaskAssignmentInstanceId the primary key of the kaleo task assignment instance
 	 * @return the kaleo task assignment instance that was removed
 	 * @throws PortalException if a kaleo task assignment instance with the primary key could not be found
@@ -142,6 +150,10 @@ public abstract class KaleoTaskAssignmentInstanceLocalServiceBaseImpl
 
 	/**
 	 * Deletes the kaleo task assignment instance from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect KaleoTaskAssignmentInstanceLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param kaleoTaskAssignmentInstance the kaleo task assignment instance
 	 * @return the kaleo task assignment instance that was removed
@@ -372,6 +384,10 @@ public abstract class KaleoTaskAssignmentInstanceLocalServiceBaseImpl
 
 	/**
 	 * Updates the kaleo task assignment instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect KaleoTaskAssignmentInstanceLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param kaleoTaskAssignmentInstance the kaleo task assignment instance
 	 * @return the kaleo task assignment instance that was updated

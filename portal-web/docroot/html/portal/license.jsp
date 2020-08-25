@@ -388,7 +388,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 
 								<div id="node_<%= clusterNode.getClusterNodeId() %>_serverInfo">
 									<div style="text-align: center;">
-										<img alt='<liferay-ui:message escapeAttribute="<%= true %>" key="loading" />' src="<%= themeDisplay.getPathThemeImages() %>/aui/loading_indicator.gif" />
+										<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="loading" />" src="<%= themeDisplay.getPathThemeImages() %>/aui/loading_indicator.gif" />
 									</div>
 								</div>
 							</td>
@@ -427,7 +427,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 
 								<div id="node_<%= clusterNode.getClusterNodeId() %>_licenseProperties">
 									<div style="text-align: center;">
-										<img alt='<liferay-ui:message escapeAttribute="<%= true %>" key="loading" />' src="<%= themeDisplay.getPathThemeImages() %>/aui/loading_indicator.gif" />
+										<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="loading" />" src="<%= themeDisplay.getPathThemeImages() %>/aui/loading_indicator.gif" />
 									</div>
 								</div>
 							</td>
@@ -713,12 +713,12 @@ dateFormatDateTime.setTimeZone(timeZone);
 
 		<c:choose>
 			<c:when test="<%= orderProducts != null %>">
-				<input class="btn btn-default" type="submit" value='<liferay-ui:message key="register" />' />
+				<input class="btn btn-default" type="submit" value="<liferay-ui:message key="register" />" />
 
-				<input onClick="location.href='<%= HtmlUtil.escapeJS(themeDisplay.getURLCurrent()) %>';" type="button" value='<liferay-ui:message key="cancel" />' />
+				<input onClick="location.href='<%= HtmlUtil.escapeJS(themeDisplay.getURLCurrent()) %>';" type="button" value="<liferay-ui:message key="cancel" />" />
 			</c:when>
 			<c:otherwise>
-				<input class="btn btn-default" type="submit" value='<liferay-ui:message key="query" />' />
+				<input class="btn btn-default" type="submit" value="<liferay-ui:message key="query" />" />
 			</c:otherwise>
 		</c:choose>
 	</form>

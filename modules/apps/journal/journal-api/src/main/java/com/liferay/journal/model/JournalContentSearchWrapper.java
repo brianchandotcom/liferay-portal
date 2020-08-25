@@ -390,17 +390,17 @@ public class JournalContentSearchWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof JournalContentSearchWrapper)) {
+		if (!(object instanceof JournalContentSearchWrapper)) {
 			return false;
 		}
 
 		JournalContentSearchWrapper journalContentSearchWrapper =
-			(JournalContentSearchWrapper)obj;
+			(JournalContentSearchWrapper)object;
 
 		if (Objects.equals(
 				_journalContentSearch,

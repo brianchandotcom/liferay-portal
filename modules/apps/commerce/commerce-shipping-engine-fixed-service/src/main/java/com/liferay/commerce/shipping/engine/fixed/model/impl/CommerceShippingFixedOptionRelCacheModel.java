@@ -38,18 +38,18 @@ public class CommerceShippingFixedOptionRelCacheModel
 	implements CacheModel<CommerceShippingFixedOptionRel>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceShippingFixedOptionRelCacheModel)) {
+		if (!(object instanceof CommerceShippingFixedOptionRelCacheModel)) {
 			return false;
 		}
 
 		CommerceShippingFixedOptionRelCacheModel
 			commerceShippingFixedOptionRelCacheModel =
-				(CommerceShippingFixedOptionRelCacheModel)obj;
+				(CommerceShippingFixedOptionRelCacheModel)object;
 
 		if (commerceShippingFixedOptionRelId ==
 				commerceShippingFixedOptionRelCacheModel.

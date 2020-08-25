@@ -804,16 +804,16 @@ public class WeDeployAuthAppModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof WeDeployAuthApp)) {
+		if (!(object instanceof WeDeployAuthApp)) {
 			return false;
 		}
 
-		WeDeployAuthApp weDeployAuthApp = (WeDeployAuthApp)obj;
+		WeDeployAuthApp weDeployAuthApp = (WeDeployAuthApp)object;
 
 		long primaryKey = weDeployAuthApp.getPrimaryKey();
 

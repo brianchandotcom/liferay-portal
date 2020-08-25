@@ -36,17 +36,17 @@ public class HtmlPreviewEntryCacheModel
 	implements CacheModel<HtmlPreviewEntry>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof HtmlPreviewEntryCacheModel)) {
+		if (!(object instanceof HtmlPreviewEntryCacheModel)) {
 			return false;
 		}
 
 		HtmlPreviewEntryCacheModel htmlPreviewEntryCacheModel =
-			(HtmlPreviewEntryCacheModel)obj;
+			(HtmlPreviewEntryCacheModel)object;
 
 		if (htmlPreviewEntryId ==
 				htmlPreviewEntryCacheModel.htmlPreviewEntryId) {

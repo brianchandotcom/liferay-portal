@@ -23,6 +23,7 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-media-api")
 	compileOnly project(":apps:commerce:commerce-pricing-api")
 	compileOnly project(":apps:commerce:commerce-product-api")
+	compileOnly project(":apps:friendly-url:friendly-url-api")
 
 	testCompile group: "org.mockito", name: "mockito-core", version: "1.10.8"
 }

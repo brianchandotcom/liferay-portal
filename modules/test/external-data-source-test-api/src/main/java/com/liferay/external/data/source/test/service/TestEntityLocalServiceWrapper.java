@@ -35,6 +35,10 @@ public class TestEntityLocalServiceWrapper
 	/**
 	 * Adds the test entity to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect TestEntityLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param testEntity the test entity
 	 * @return the test entity that was added
 	 */
@@ -72,6 +76,10 @@ public class TestEntityLocalServiceWrapper
 	/**
 	 * Deletes the test entity with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect TestEntityLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param id the primary key of the test entity
 	 * @return the test entity that was removed
 	 * @throws PortalException if a test entity with the primary key could not be found
@@ -86,6 +94,10 @@ public class TestEntityLocalServiceWrapper
 
 	/**
 	 * Deletes the test entity from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect TestEntityLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param testEntity the test entity
 	 * @return the test entity that was removed
@@ -276,6 +288,10 @@ public class TestEntityLocalServiceWrapper
 
 	/**
 	 * Updates the test entity in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect TestEntityLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param testEntity the test entity
 	 * @return the test entity that was updated

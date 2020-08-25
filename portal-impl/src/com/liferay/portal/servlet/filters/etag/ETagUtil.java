@@ -64,7 +64,7 @@ public class ETagUtil {
 		int hashCode = 0;
 
 		for (int i = 0; i < length; i++) {
-			hashCode = 31 * hashCode + data[offset++];
+			hashCode = (31 * hashCode) + data[offset++];
 		}
 
 		return hashCode;

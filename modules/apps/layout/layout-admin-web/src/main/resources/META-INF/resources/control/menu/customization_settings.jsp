@@ -71,7 +71,7 @@ data.put("qa-id", "customizations");
 			<div class="control-menu-level-2-heading visible-xs">
 				<liferay-ui:message key="customization-options" />
 
-				<button aria-label='<%= LanguageUtil.get(request, "close") %>' class="close" id="<%= portletNamespace %>closeCustomizationOptions" type="button">
+				<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" id="<%= portletNamespace %>closeCustomizationOptions" type="button">
 					<aui:icon image="times" markupView="lexicon" />
 				</button>
 			</div>
@@ -111,7 +111,7 @@ data.put("qa-id", "customizations");
 
 						<div class="hide layout-customizable-controls-container" id="<%= portletNamespace %>layoutCustomizableControls">
 							<div class="layout-customizable-controls">
-								<span title='<liferay-ui:message key="customizable-help" />'>
+								<span title="<liferay-ui:message key="customizable-help" />">
 									<aui:input cssClass="layout-customizable-checkbox" helpMessage="customizable-help" id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label="" labelOff="not-customizable" labelOn="customizable" name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="toggle-switch" useNamespace="<%= false %>" />
 								</span>
 							</div>

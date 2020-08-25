@@ -36,6 +36,7 @@ import com.liferay.commerce.product.internal.upgrade.v2_1_0.CommerceCatalogSyste
 import com.liferay.commerce.product.internal.upgrade.v2_1_0.SubscriptionUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v2_2_0.CPDefinitionOptionValueRelUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v2_3_0.CommerceChannelUpgradeProcess;
+import com.liferay.commerce.product.internal.upgrade.v2_5_0.FriendlyURLEntryUpgradeProcess;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,6 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Ethan Bustad
  * @author Alessio Antonio Rendina
+ * @author Igor Beslic
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class CommerceProductUpgradeStepRegistrator
@@ -164,6 +166,20 @@ public class CommerceProductUpgradeStepRegistrator
 			_SCHEMA_VERSION_2_2_2, _SCHEMA_VERSION_2_3_0,
 			new CommerceChannelUpgradeProcess());
 
+		registry.register(
+			_SCHEMA_VERSION_2_3_0, _SCHEMA_VERSION_2_4_0,
+			new com.liferay.commerce.product.internal.upgrade.v2_4_0.
+				CPDefinitionOptionValueRelUpgradeProcess());
+
+		registry.register(
+			_SCHEMA_VERSION_2_4_0, _SCHEMA_VERSION_2_5_0,
+			new FriendlyURLEntryUpgradeProcess(_groupLocalService));
+
+		registry.register(
+			_SCHEMA_VERSION_2_5_0, _SCHEMA_VERSION_2_6_0,
+			new com.liferay.commerce.product.internal.upgrade.v2_6_0.
+				CPInstanceUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("COMMERCE PRODUCT UPGRADE STEP REGISTRATOR FINISHED");
 		}
@@ -210,6 +226,12 @@ public class CommerceProductUpgradeStepRegistrator
 	private static final String _SCHEMA_VERSION_2_2_2 = "2.2.2";
 
 	private static final String _SCHEMA_VERSION_2_3_0 = "2.3.0";
+
+	private static final String _SCHEMA_VERSION_2_4_0 = "2.4.0";
+
+	private static final String _SCHEMA_VERSION_2_5_0 = "2.5.0";
+
+	private static final String _SCHEMA_VERSION_2_6_0 = "2.6.0";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceProductUpgradeStepRegistrator.class);

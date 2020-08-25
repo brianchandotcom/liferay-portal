@@ -429,16 +429,16 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof GadgetWrapper)) {
+		if (!(object instanceof GadgetWrapper)) {
 			return false;
 		}
 
-		GadgetWrapper gadgetWrapper = (GadgetWrapper)obj;
+		GadgetWrapper gadgetWrapper = (GadgetWrapper)object;
 
 		if (Objects.equals(_gadget, gadgetWrapper._gadget)) {
 			return true;

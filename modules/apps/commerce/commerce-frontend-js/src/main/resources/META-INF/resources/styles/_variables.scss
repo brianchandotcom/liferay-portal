@@ -1,7 +1,20 @@
-$danger: #da1414;
-$error-l1: lighten($danger, 28%);
+$warning-secondary: #ff8f39;
+$warning-primary: #863a00;
+
+$danger-secondary: #f48989;
+$danger-primary: #da1414;
+
+$success-secondary: #5aca76;
+$success-primary: #287d3d;
+
+$info-secondary: #89a7e0;
+$info-primary: #2e5aac;
+
+$error-l1: lighten($danger-primary, 28%);
+$gray-100: #f7f8f9;
+$gray-200: #f1f2f5;
+$gray-400: #cdced9;
 $gray-600: #6b6c7e;
-$info: #2e5aac;
 $secondary-text: $gray-600;
 $spacer: 1rem;
 
@@ -22,3 +35,11 @@ $info-bc: #eef2fa;
 $step-tracker-completed: #6fcf97;
 $step-tracker-active: #6b6c7e;
 $step-tracker-inactive: #cdced9;
+
+// Animations
+
+$ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+
+// Liferay
+
+$liferay-sidebars-width: 320px;

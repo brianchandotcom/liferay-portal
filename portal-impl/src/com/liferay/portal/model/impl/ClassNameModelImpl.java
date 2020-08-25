@@ -489,16 +489,16 @@ public class ClassNameModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ClassName)) {
+		if (!(object instanceof ClassName)) {
 			return false;
 		}
 
-		ClassName className = (ClassName)obj;
+		ClassName className = (ClassName)object;
 
 		long primaryKey = className.getPrimaryKey();
 

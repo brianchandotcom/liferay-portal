@@ -778,17 +778,17 @@ public class FragmentEntryLinkWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof FragmentEntryLinkWrapper)) {
+		if (!(object instanceof FragmentEntryLinkWrapper)) {
 			return false;
 		}
 
 		FragmentEntryLinkWrapper fragmentEntryLinkWrapper =
-			(FragmentEntryLinkWrapper)obj;
+			(FragmentEntryLinkWrapper)object;
 
 		if (Objects.equals(
 				_fragmentEntryLink,

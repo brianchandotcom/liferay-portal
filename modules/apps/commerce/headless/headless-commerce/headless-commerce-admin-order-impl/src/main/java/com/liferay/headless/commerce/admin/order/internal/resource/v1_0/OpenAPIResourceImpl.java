@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 @Generated("")
 @OpenAPIDefinition(
-	info = @Info(description = "Liferay Commerce Admin Order API. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.commerce.admin.order.client', and version '1.0.4'.", license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "Liferay Commerce Admin Order API", version = "v1.0")
+	info = @Info(description = "Liferay Commerce Admin Order API. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.commerce.admin.order.client', and version '1.0.12'.", license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "Liferay Commerce Admin Order API", version = "v1.0")
 )
 @Path("/v1.0")
 public class OpenAPIResourceImpl {
@@ -57,6 +57,17 @@ public class OpenAPIResourceImpl {
 	@Produces({MediaType.APPLICATION_JSON, "application/yaml"})
 	public Response getOpenAPI(@PathParam("type") String type)
 		throws Exception {
+
+		try {
+			Class<? extends OpenAPIResource> clazz =
+				_openAPIResource.getClass();
+
+			clazz.getMethod(
+				"getOpenAPI", Set.class, String.class, UriInfo.class);
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			return _openAPIResource.getOpenAPI(_resourceClasses, type);
+		}
 
 		return _openAPIResource.getOpenAPI(_resourceClasses, type, _uriInfo);
 	}
@@ -69,7 +80,11 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
+			add(AccountResourceImpl.class);
+
 			add(BillingAddressResourceImpl.class);
+
+			add(ChannelResourceImpl.class);
 
 			add(OrderResourceImpl.class);
 

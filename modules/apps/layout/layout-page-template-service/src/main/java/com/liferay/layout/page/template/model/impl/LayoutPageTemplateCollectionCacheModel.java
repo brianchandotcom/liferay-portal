@@ -36,18 +36,18 @@ public class LayoutPageTemplateCollectionCacheModel
 	implements CacheModel<LayoutPageTemplateCollection>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof LayoutPageTemplateCollectionCacheModel)) {
+		if (!(object instanceof LayoutPageTemplateCollectionCacheModel)) {
 			return false;
 		}
 
 		LayoutPageTemplateCollectionCacheModel
 			layoutPageTemplateCollectionCacheModel =
-				(LayoutPageTemplateCollectionCacheModel)obj;
+				(LayoutPageTemplateCollectionCacheModel)object;
 
 		if (layoutPageTemplateCollectionId ==
 				layoutPageTemplateCollectionCacheModel.

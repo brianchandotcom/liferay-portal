@@ -39,17 +39,17 @@ public class BackgroundTaskCacheModel
 	implements CacheModel<BackgroundTask>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof BackgroundTaskCacheModel)) {
+		if (!(object instanceof BackgroundTaskCacheModel)) {
 			return false;
 		}
 
 		BackgroundTaskCacheModel backgroundTaskCacheModel =
-			(BackgroundTaskCacheModel)obj;
+			(BackgroundTaskCacheModel)object;
 
 		if ((backgroundTaskId == backgroundTaskCacheModel.backgroundTaskId) &&
 			(mvccVersion == backgroundTaskCacheModel.mvccVersion)) {

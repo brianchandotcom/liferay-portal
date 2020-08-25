@@ -47,6 +47,10 @@ public class DDMDataProviderInstanceLinkLocalServiceWrapper
 	/**
 	 * Adds the ddm data provider instance link to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDMDataProviderInstanceLinkLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param ddmDataProviderInstanceLink the ddm data provider instance link
 	 * @return the ddm data provider instance link that was added
 	 */
@@ -109,6 +113,10 @@ public class DDMDataProviderInstanceLinkLocalServiceWrapper
 	/**
 	 * Deletes the ddm data provider instance link from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDMDataProviderInstanceLinkLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param ddmDataProviderInstanceLink the ddm data provider instance link
 	 * @return the ddm data provider instance link that was removed
 	 */
@@ -124,6 +132,10 @@ public class DDMDataProviderInstanceLinkLocalServiceWrapper
 
 	/**
 	 * Deletes the ddm data provider instance link with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDMDataProviderInstanceLinkLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param dataProviderInstanceLinkId the primary key of the ddm data provider instance link
 	 * @return the ddm data provider instance link that was removed
@@ -357,6 +369,10 @@ public class DDMDataProviderInstanceLinkLocalServiceWrapper
 
 	/**
 	 * Updates the ddm data provider instance link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDMDataProviderInstanceLinkLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param ddmDataProviderInstanceLink the ddm data provider instance link
 	 * @return the ddm data provider instance link that was updated

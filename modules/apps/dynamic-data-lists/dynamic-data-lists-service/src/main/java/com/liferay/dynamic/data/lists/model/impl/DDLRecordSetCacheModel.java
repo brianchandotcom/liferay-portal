@@ -36,17 +36,17 @@ public class DDLRecordSetCacheModel
 	implements CacheModel<DDLRecordSet>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDLRecordSetCacheModel)) {
+		if (!(object instanceof DDLRecordSetCacheModel)) {
 			return false;
 		}
 
 		DDLRecordSetCacheModel ddlRecordSetCacheModel =
-			(DDLRecordSetCacheModel)obj;
+			(DDLRecordSetCacheModel)object;
 
 		if (recordSetId == ddlRecordSetCacheModel.recordSetId) {
 			return true;

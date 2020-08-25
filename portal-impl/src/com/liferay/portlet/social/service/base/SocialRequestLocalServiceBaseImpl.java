@@ -75,6 +75,10 @@ public abstract class SocialRequestLocalServiceBaseImpl
 	/**
 	 * Adds the social request to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SocialRequestLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param socialRequest the social request
 	 * @return the social request that was added
 	 */
@@ -101,6 +105,10 @@ public abstract class SocialRequestLocalServiceBaseImpl
 	/**
 	 * Deletes the social request with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SocialRequestLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param requestId the primary key of the social request
 	 * @return the social request that was removed
 	 * @throws PortalException if a social request with the primary key could not be found
@@ -115,6 +123,10 @@ public abstract class SocialRequestLocalServiceBaseImpl
 
 	/**
 	 * Deletes the social request from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SocialRequestLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param socialRequest the social request
 	 * @return the social request that was removed
@@ -388,6 +400,10 @@ public abstract class SocialRequestLocalServiceBaseImpl
 
 	/**
 	 * Updates the social request in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SocialRequestLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param socialRequest the social request
 	 * @return the social request that was updated

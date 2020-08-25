@@ -58,6 +58,10 @@ public class ReadingTimeEntryLocalServiceUtil {
 	/**
 	 * Adds the reading time entry to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ReadingTimeEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param readingTimeEntry the reading time entry
 	 * @return the reading time entry that was added
 	 */
@@ -101,6 +105,10 @@ public class ReadingTimeEntryLocalServiceUtil {
 	/**
 	 * Deletes the reading time entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ReadingTimeEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param readingTimeEntryId the primary key of the reading time entry
 	 * @return the reading time entry that was removed
 	 * @throws PortalException if a reading time entry with the primary key could not be found
@@ -121,6 +129,10 @@ public class ReadingTimeEntryLocalServiceUtil {
 
 	/**
 	 * Deletes the reading time entry from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ReadingTimeEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param readingTimeEntry the reading time entry
 	 * @return the reading time entry that was removed
@@ -410,6 +422,10 @@ public class ReadingTimeEntryLocalServiceUtil {
 
 	/**
 	 * Updates the reading time entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ReadingTimeEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param readingTimeEntry the reading time entry
 	 * @return the reading time entry that was updated

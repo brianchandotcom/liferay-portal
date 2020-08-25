@@ -962,17 +962,17 @@ public class DDMFormInstanceWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMFormInstanceWrapper)) {
+		if (!(object instanceof DDMFormInstanceWrapper)) {
 			return false;
 		}
 
 		DDMFormInstanceWrapper ddmFormInstanceWrapper =
-			(DDMFormInstanceWrapper)obj;
+			(DDMFormInstanceWrapper)object;
 
 		if (Objects.equals(
 				_ddmFormInstance, ddmFormInstanceWrapper._ddmFormInstance)) {

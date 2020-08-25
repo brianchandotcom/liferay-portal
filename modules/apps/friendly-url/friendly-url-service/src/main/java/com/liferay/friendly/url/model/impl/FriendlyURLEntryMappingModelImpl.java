@@ -556,17 +556,17 @@ public class FriendlyURLEntryMappingModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof FriendlyURLEntryMapping)) {
+		if (!(object instanceof FriendlyURLEntryMapping)) {
 			return false;
 		}
 
 		FriendlyURLEntryMapping friendlyURLEntryMapping =
-			(FriendlyURLEntryMapping)obj;
+			(FriendlyURLEntryMapping)object;
 
 		long primaryKey = friendlyURLEntryMapping.getPrimaryKey();
 

@@ -20,13 +20,12 @@ import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryL
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.order.web.internal.display.context.CommerceOrderEditDisplayContext;
-import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
+import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShipmentService;
-import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -65,9 +64,8 @@ public class EditCommerceOrderPurchaseOrderNumberMVCRenderCommand
 					_commerceOrderEngine, _commerceOrderService,
 					_commerceOrderItemService, _commerceOrderNoteService,
 					_commerceOrderStatusRegistry,
-					_commercePaymentMethodGroupRelService,
-					_commerceShipmentService, _commerceShippingHelper,
-					renderRequest);
+					_commercePaymentMethodGroupRelLocalService,
+					_commerceShipmentService, renderRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -111,13 +109,10 @@ public class EditCommerceOrderPurchaseOrderNumberMVCRenderCommand
 	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
 
 	@Reference
-	private CommercePaymentMethodGroupRelService
-		_commercePaymentMethodGroupRelService;
+	private CommercePaymentMethodGroupRelLocalService
+		_commercePaymentMethodGroupRelLocalService;
 
 	@Reference
 	private CommerceShipmentService _commerceShipmentService;
-
-	@Reference
-	private CommerceShippingHelper _commerceShippingHelper;
 
 }

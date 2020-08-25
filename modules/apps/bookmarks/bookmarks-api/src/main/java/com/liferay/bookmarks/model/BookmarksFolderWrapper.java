@@ -920,17 +920,17 @@ public class BookmarksFolderWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof BookmarksFolderWrapper)) {
+		if (!(object instanceof BookmarksFolderWrapper)) {
 			return false;
 		}
 
 		BookmarksFolderWrapper bookmarksFolderWrapper =
-			(BookmarksFolderWrapper)obj;
+			(BookmarksFolderWrapper)object;
 
 		if (Objects.equals(
 				_bookmarksFolder, bookmarksFolderWrapper._bookmarksFolder)) {

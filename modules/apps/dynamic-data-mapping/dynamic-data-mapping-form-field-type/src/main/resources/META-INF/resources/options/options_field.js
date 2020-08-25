@@ -383,16 +383,16 @@ AUI.add(
 						mainOption.set('errorMessage', event.newVal);
 					},
 
-					_afterOptionKeyChange: function() {
+					_afterOptionKeyChange: function(event) {
 						var instance = this;
 
 						if (instance._skipOptionChange) {
 							return;
 						}
 
-						var value = instance.getValue();
+						var options = instance.getValue();
 
-						instance._setValue(value);
+						instance._setValue(options, event.newVal);
 					},
 
 					_afterOptionNormalizeKey: function(key, option) {
@@ -437,14 +437,16 @@ AUI.add(
 							instance.addOption();
 						}
 
-						var value = instance.getValue();
+						var options = instance.getValue();
 
-						if (value.length > 0 && instance.get('required')) {
+						if (options.length > 0 && instance.get('required')) {
 							instance.set('errorMessage', '');
 							instance.set('valid', true);
 						}
 
-						instance._setValue(value);
+						var index = instance._getNodeIndex(event.target.get('container'));
+
+						instance._setValue(options, options[index].value);
 					},
 
 					_afterRenderOption: function(event) {
@@ -732,22 +734,20 @@ AUI.add(
 						return context;
 					},
 
-					_setValue: function(optionValues) {
+					_setValue: function(options, optionValue) {
 						var instance = this;
 
 						var value = instance.get('value');
 
 						var editingLanguageId = instance._getCurrentEditingLanguageId();
 
-						var hasNewOption = value[editingLanguageId].length !== optionValues.length;
-
-						if (hasNewOption) {
-							instance._updateOtherLanguagesValues(editingLanguageId, optionValues[optionValues.length -1], value);
-						}
-
-						value[editingLanguageId] = optionValues;
+						value[editingLanguageId] = options;
 
 						instance.set('value', value);
+
+						if (optionValue) {
+							instance._updateOtherLanguagesValues(optionValue, options);
+						}
 					},
 
 					_sortableListValueFn: function() {
@@ -801,12 +801,62 @@ AUI.add(
 						}
 					},
 
-					_updateOtherLanguagesValues: function(editingLanguageId, option, value) {
-						 AObject.keys(value).forEach(function(languageId) {
-							 if(languageId !== editingLanguageId) {
-								 value[languageId].push(option);
-							 }
-						 });
+					_getOptionIndex: function(optionValue, options) {
+						var instance = this;
+
+						if (!options) {
+							options = instance.getValue();
+						}
+
+						var optionsValues = options.map(function(option) {
+							return option.value;
+						});
+
+						return optionsValues.indexOf(optionValue);
+					},
+
+					_updateOtherLanguagesValues: function(optionValue, options) {
+						var instance = this;
+
+						var defaultLanguageId = instance._getDefaultLanguageId();
+
+						var editingLanguageId = instance._getCurrentEditingLanguageId();
+
+						var fieldValue = instance.get('value');
+
+						var index = instance._getOptionIndex(optionValue, options);
+
+						AObject.keys(fieldValue).forEach(function(languageId) {
+							if (languageId !== defaultLanguageId) {
+								if(languageId !== editingLanguageId) {
+									var updatedTranslation = {
+										label: fieldValue[defaultLanguageId][index].label,
+										value: optionValue
+									};
+
+									if (!fieldValue[languageId][index]) {
+										updatedTranslation.keepSyncedWithDefault = true;
+
+										fieldValue[languageId].push(updatedTranslation);
+									}
+									else {
+										if (!fieldValue[languageId][index].keepSyncedWithDefault) {
+											updatedTranslation.label = fieldValue[languageId][index].label;
+										}
+										else {
+											updatedTranslation.keepSyncedWithDefault = fieldValue[languageId][index].keepSyncedWithDefault;
+										}
+
+										fieldValue[languageId].splice(index, 1, updatedTranslation);
+									}
+								}
+								else {
+									delete fieldValue[languageId][index].keepSyncedWithDefault;
+								}
+							}
+						});
+
+						instance.set('value', fieldValue);
 					}
 				}
 			}

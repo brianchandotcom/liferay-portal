@@ -347,16 +347,16 @@ public class RegionWrapper implements ModelWrapper<Region>, Region {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof RegionWrapper)) {
+		if (!(object instanceof RegionWrapper)) {
 			return false;
 		}
 
-		RegionWrapper regionWrapper = (RegionWrapper)obj;
+		RegionWrapper regionWrapper = (RegionWrapper)object;
 
 		if (Objects.equals(_region, regionWrapper._region)) {
 			return true;

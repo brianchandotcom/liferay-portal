@@ -1366,6 +1366,65 @@ public interface CommerceDiscountPersistence
 	public int filterCountByLtE_S(Date expirationDate, int status);
 
 	/**
+	 * Returns the commerce discount where companyId = &#63; and couponCode = &#63; and active = &#63; or throws a <code>NoSuchDiscountException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param couponCode the coupon code
+	 * @param active the active
+	 * @return the matching commerce discount
+	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
+	 */
+	public CommerceDiscount findByC_C_A(
+			long companyId, String couponCode, boolean active)
+		throws NoSuchDiscountException;
+
+	/**
+	 * Returns the commerce discount where companyId = &#63; and couponCode = &#63; and active = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param couponCode the coupon code
+	 * @param active the active
+	 * @return the matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
+	 */
+	public CommerceDiscount fetchByC_C_A(
+		long companyId, String couponCode, boolean active);
+
+	/**
+	 * Returns the commerce discount where companyId = &#63; and couponCode = &#63; and active = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param couponCode the coupon code
+	 * @param active the active
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
+	 */
+	public CommerceDiscount fetchByC_C_A(
+		long companyId, String couponCode, boolean active,
+		boolean useFinderCache);
+
+	/**
+	 * Removes the commerce discount where companyId = &#63; and couponCode = &#63; and active = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param couponCode the coupon code
+	 * @param active the active
+	 * @return the commerce discount that was removed
+	 */
+	public CommerceDiscount removeByC_C_A(
+			long companyId, String couponCode, boolean active)
+		throws NoSuchDiscountException;
+
+	/**
+	 * Returns the number of commerce discounts where companyId = &#63; and couponCode = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param couponCode the coupon code
+	 * @param active the active
+	 * @return the number of matching commerce discounts
+	 */
+	public int countByC_C_A(long companyId, String couponCode, boolean active);
+
+	/**
 	 * Returns the commerce discount where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchDiscountException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID

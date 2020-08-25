@@ -82,8 +82,8 @@ public class CalendarBookingStagedModelDataHandlerTest
 				calendar.getCalendarId(), calendarBooking.getTitleMap(),
 				calendarBooking.getDescriptionMap(),
 				calendarBooking.getLocation(),
-				calendarBooking.getStartTime() + Time.DAY * 2,
-				calendarBooking.getEndTime() + Time.DAY * 2,
+				calendarBooking.getStartTime() + (Time.DAY * 2),
+				calendarBooking.getEndTime() + (Time.DAY * 2),
 				calendarBooking.isAllDay(), null, false, 0, null, 0, null,
 				serviceContext);
 

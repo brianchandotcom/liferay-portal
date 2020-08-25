@@ -123,7 +123,7 @@
 										%>
 
 											<span class="badge badge-secondary">
-												<span class='badge-item<c:if test="<%= !scopeAliases.contains(relatedScopeAlias) %>"> global-scope-alias-reference</c:if>'><%= HtmlUtil.escapeAttribute(relatedScopeAlias) %></span>
+												<span class="badge-item<c:if test="<%= !scopeAliases.contains(relatedScopeAlias) %>"> global-scope-alias-reference</c:if>"><%= HtmlUtil.escapeAttribute(relatedScopeAlias) %></span>
 											</span>
 
 										<%

@@ -57,7 +57,7 @@ public class TierPriceDTOConverter
 				customFields = expandoBridge.getAttributes();
 				externalReferenceCode =
 					commerceTierPriceEntry.getExternalReferenceCode();
-				id = commercePriceEntry.getCommercePriceEntryId();
+				id = commerceTierPriceEntry.getCommerceTierPriceEntryId();
 				minimumQuantity = commerceTierPriceEntry.getMinQuantity();
 				price = commerceTierPriceEntry.getPrice();
 				priceEntryExternalReferenceCode =

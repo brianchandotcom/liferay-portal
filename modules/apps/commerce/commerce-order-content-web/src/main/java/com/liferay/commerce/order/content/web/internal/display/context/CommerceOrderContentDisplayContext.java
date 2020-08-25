@@ -31,6 +31,7 @@ import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.commerce.order.content.web.internal.portlet.configuration.CommerceOpenOrderContentPortletInstanceConfiguration;
 import com.liferay.commerce.order.content.web.internal.portlet.configuration.CommerceOrderContentPortletInstanceConfiguration;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -115,11 +117,7 @@ public class CommerceOrderContentDisplayContext {
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
-		PortletDisplay portletDisplay = _cpRequestHelper.getPortletDisplay();
-
-		_commerceOrderContentPortletInstanceConfiguration =
-			portletDisplay.getPortletInstanceConfiguration(
-				CommerceOrderContentPortletInstanceConfiguration.class);
+		_portletDisplay = _cpRequestHelper.getPortletDisplay();
 
 		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
 
@@ -365,24 +363,66 @@ public class CommerceOrderContentDisplayContext {
 			CommerceShipmentConstants.getShipmentStatusLabel(status));
 	}
 
-	public String getDisplayStyle() {
-		return _commerceOrderContentPortletInstanceConfiguration.displayStyle();
+	public String getDisplayStyle(String portletId)
+		throws ConfigurationException {
+
+		if (Validator.isNull(portletId)) {
+			return StringPool.BLANK;
+		}
+		else if (portletId.equals(
+					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT)) {
+
+			CommerceOpenOrderContentPortletInstanceConfiguration
+				commerceOpenOrderContentPortletInstanceConfiguration =
+					_portletDisplay.getPortletInstanceConfiguration(
+						CommerceOpenOrderContentPortletInstanceConfiguration.
+							class);
+
+			return commerceOpenOrderContentPortletInstanceConfiguration.
+				displayStyle();
+		}
+		else if (portletId.equals(CommercePortletKeys.COMMERCE_ORDER_CONTENT)) {
+			CommerceOrderContentPortletInstanceConfiguration
+				commerceOrderContentPortletInstanceConfiguration =
+					_portletDisplay.getPortletInstanceConfiguration(
+						CommerceOrderContentPortletInstanceConfiguration.class);
+
+			return commerceOrderContentPortletInstanceConfiguration.
+				displayStyle();
+		}
+
+		return StringPool.BLANK;
 	}
 
-	public long getDisplayStyleGroupId() {
-		if (_displayStyleGroupId > 0) {
-			return _displayStyleGroupId;
-		}
+	public long getDisplayStyleGroupId(String portletId)
+		throws ConfigurationException {
 
-		_displayStyleGroupId =
-			_commerceOrderContentPortletInstanceConfiguration.
+		if (Validator.isNull(portletId)) {
+			return _cpRequestHelper.getScopeGroupId();
+		}
+		else if (portletId.equals(
+					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT)) {
+
+			CommerceOpenOrderContentPortletInstanceConfiguration
+				commerceOpenOrderContentPortletInstanceConfiguration =
+					_portletDisplay.getPortletInstanceConfiguration(
+						CommerceOpenOrderContentPortletInstanceConfiguration.
+							class);
+
+			return commerceOpenOrderContentPortletInstanceConfiguration.
 				displayStyleGroupId();
+		}
+		else if (portletId.equals(CommercePortletKeys.COMMERCE_ORDER_CONTENT)) {
+			CommerceOrderContentPortletInstanceConfiguration
+				commerceOrderContentPortletInstanceConfiguration =
+					_portletDisplay.getPortletInstanceConfiguration(
+						CommerceOrderContentPortletInstanceConfiguration.class);
 
-		if (_displayStyleGroupId <= 0) {
-			_displayStyleGroupId = _cpRequestHelper.getScopeGroupId();
+			return commerceOrderContentPortletInstanceConfiguration.
+				displayStyleGroupId();
 		}
 
-		return _displayStyleGroupId;
+		return _cpRequestHelper.getScopeGroupId();
 	}
 
 	public List<DropdownItem> getDropdownItems() {
@@ -519,8 +559,6 @@ public class CommerceOrderContentDisplayContext {
 	private final CommerceAddressService _commerceAddressService;
 	private final CommerceChannelLocalService _commerceChannelLocalService;
 	private final CommerceContext _commerceContext;
-	private final CommerceOrderContentPortletInstanceConfiguration
-		_commerceOrderContentPortletInstanceConfiguration;
 	private final Format _commerceOrderDateFormatDate;
 	private final Format _commerceOrderDateFormatTime;
 	private CommerceOrderNote _commerceOrderNote;
@@ -533,11 +571,11 @@ public class CommerceOrderContentDisplayContext {
 		_commercePaymentMethodGroupRelService;
 	private final CommerceShipmentItemService _commerceShipmentItemService;
 	private final CPRequestHelper _cpRequestHelper;
-	private long _displayStyleGroupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final ModelResourcePermission<CommerceOrder>
 		_modelResourcePermission;
 	private final PercentageFormatter _percentageFormatter;
+	private final PortletDisplay _portletDisplay;
 	private final PortletResourcePermission _portletResourcePermission;
 
 }

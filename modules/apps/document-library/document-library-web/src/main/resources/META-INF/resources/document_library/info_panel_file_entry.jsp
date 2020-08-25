@@ -78,7 +78,7 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 
 			<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
 				<div class="aspect-ratio aspect-ratio-16-to-9 sidebar-panel thumbnail">
-					<img alt='<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />' class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= DLUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay) %>" />
+					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= DLUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay) %>" />
 				</div>
 			</c:if>
 

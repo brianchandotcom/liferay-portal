@@ -211,6 +211,14 @@ public class CommerceChannelLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CommerceChannel
+		fetchByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return getService().fetchByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceChannel
 		fetchCommerceChannel(long commerceChannelId) {
 
 		return getService().fetchCommerceChannel(commerceChannelId);

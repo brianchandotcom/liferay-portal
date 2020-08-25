@@ -223,6 +223,15 @@ public class CommerceChannelLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CommerceChannel
+		fetchByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _commerceChannelLocalService.fetchByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceChannel
 		fetchCommerceChannel(long commerceChannelId) {
 
 		return _commerceChannelLocalService.fetchCommerceChannel(

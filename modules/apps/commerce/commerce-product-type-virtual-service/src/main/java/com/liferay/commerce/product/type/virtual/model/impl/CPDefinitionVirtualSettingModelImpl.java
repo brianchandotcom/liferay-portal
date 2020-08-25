@@ -1651,17 +1651,17 @@ public class CPDefinitionVirtualSettingModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionVirtualSetting)) {
+		if (!(object instanceof CPDefinitionVirtualSetting)) {
 			return false;
 		}
 
 		CPDefinitionVirtualSetting cpDefinitionVirtualSetting =
-			(CPDefinitionVirtualSetting)obj;
+			(CPDefinitionVirtualSetting)object;
 
 		long primaryKey = cpDefinitionVirtualSetting.getPrimaryKey();
 

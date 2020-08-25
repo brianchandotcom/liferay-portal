@@ -362,16 +362,17 @@ public class UserGroupRoleWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof UserGroupRoleWrapper)) {
+		if (!(object instanceof UserGroupRoleWrapper)) {
 			return false;
 		}
 
-		UserGroupRoleWrapper userGroupRoleWrapper = (UserGroupRoleWrapper)obj;
+		UserGroupRoleWrapper userGroupRoleWrapper =
+			(UserGroupRoleWrapper)object;
 
 		if (Objects.equals(
 				_userGroupRole, userGroupRoleWrapper._userGroupRole)) {

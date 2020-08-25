@@ -516,12 +516,12 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof
+		if (!(object instanceof
 				CommerceNotificationTemplateCommerceAccountGroupRelWrapper)) {
 
 			return false;
@@ -529,7 +529,8 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 
 		CommerceNotificationTemplateCommerceAccountGroupRelWrapper
 			commerceNotificationTemplateCommerceAccountGroupRelWrapper =
-				(CommerceNotificationTemplateCommerceAccountGroupRelWrapper)obj;
+				(CommerceNotificationTemplateCommerceAccountGroupRelWrapper)
+					object;
 
 		if (Objects.equals(
 				_commerceNotificationTemplateCommerceAccountGroupRel,

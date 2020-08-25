@@ -39,6 +39,10 @@ public class AssetTagStatsLocalServiceWrapper
 	/**
 	 * Adds the asset tag stats to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AssetTagStatsLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param assetTagStats the asset tag stats
 	 * @return the asset tag stats that was added
 	 */
@@ -79,6 +83,10 @@ public class AssetTagStatsLocalServiceWrapper
 	/**
 	 * Deletes the asset tag stats from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AssetTagStatsLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param assetTagStats the asset tag stats
 	 * @return the asset tag stats that was removed
 	 */
@@ -91,6 +99,10 @@ public class AssetTagStatsLocalServiceWrapper
 
 	/**
 	 * Deletes the asset tag stats with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AssetTagStatsLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param tagStatsId the primary key of the asset tag stats
 	 * @return the asset tag stats that was removed
@@ -381,6 +393,10 @@ public class AssetTagStatsLocalServiceWrapper
 
 	/**
 	 * Updates the asset tag stats in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AssetTagStatsLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param assetTagStats the asset tag stats
 	 * @return the asset tag stats that was updated

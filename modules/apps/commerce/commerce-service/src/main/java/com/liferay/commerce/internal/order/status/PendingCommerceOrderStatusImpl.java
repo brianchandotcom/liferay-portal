@@ -79,7 +79,7 @@ public class PendingCommerceOrderStatusImpl implements CommerceOrderStatus {
 			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 			commerceOrder = WorkflowHandlerRegistryUtil.startWorkflowInstance(
-				commerceOrder.getCompanyId(), commerceOrder.getGroupId(),
+				commerceOrder.getCompanyId(), commerceOrder.getScopeGroupId(),
 				userId, CommerceOrder.class.getName(),
 				commerceOrder.getCommerceOrderId(), commerceOrder,
 				serviceContext, new HashMap<>());

@@ -454,17 +454,17 @@ public class ChangesetCollectionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ChangesetCollectionWrapper)) {
+		if (!(object instanceof ChangesetCollectionWrapper)) {
 			return false;
 		}
 
 		ChangesetCollectionWrapper changesetCollectionWrapper =
-			(ChangesetCollectionWrapper)obj;
+			(ChangesetCollectionWrapper)object;
 
 		if (Objects.equals(
 				_changesetCollection,

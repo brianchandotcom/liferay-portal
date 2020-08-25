@@ -57,6 +57,12 @@ public class CPTaxCategoryLocalServiceWrapper
 			nameMap, descriptionMap, serviceContext);
 	}
 
+	@Override
+	public int countCPTaxCategoriesByCompanyId(long companyId, String keyword) {
+		return _cpTaxCategoryLocalService.countCPTaxCategoriesByCompanyId(
+			companyId, keyword);
+	}
+
 	/**
 	 * Creates a new cp tax category with the primary key. Does not add the cp tax category to the database.
 	 *
@@ -212,6 +218,15 @@ public class CPTaxCategoryLocalServiceWrapper
 		long CPTaxCategoryId) {
 
 		return _cpTaxCategoryLocalService.fetchCPTaxCategory(CPTaxCategoryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPTaxCategory>
+		findCPTaxCategoriesByCompanyId(
+			long companyId, String keyword, int start, int end) {
+
+		return _cpTaxCategoryLocalService.findCPTaxCategoriesByCompanyId(
+			companyId, keyword, start, end);
 	}
 
 	@Override

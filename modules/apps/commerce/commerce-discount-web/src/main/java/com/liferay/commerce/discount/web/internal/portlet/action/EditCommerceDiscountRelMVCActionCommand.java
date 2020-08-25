@@ -22,6 +22,7 @@ import com.liferay.commerce.discount.exception.NoSuchDiscountException;
 import com.liferay.commerce.discount.exception.NoSuchDiscountRelException;
 import com.liferay.commerce.discount.model.CommerceDiscountRel;
 import com.liferay.commerce.discount.service.CommerceDiscountRelService;
+import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -84,7 +85,9 @@ public class EditCommerceDiscountRelMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceDiscountRel.class.getName(), actionRequest);
 
-		if (className.equals(CPDefinition.class.getName())) {
+		if (className.equals(CPDefinition.class.getName()) ||
+			className.equals(CommercePricingClass.class.getName())) {
+
 			for (long addClassPK : classPKs) {
 				_commerceDiscountRelService.addCommerceDiscountRel(
 					commerceDiscountId, className, addClassPK, serviceContext);

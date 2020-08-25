@@ -1038,16 +1038,16 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoLogWrapper)) {
+		if (!(object instanceof KaleoLogWrapper)) {
 			return false;
 		}
 
-		KaleoLogWrapper kaleoLogWrapper = (KaleoLogWrapper)obj;
+		KaleoLogWrapper kaleoLogWrapper = (KaleoLogWrapper)object;
 
 		if (Objects.equals(_kaleoLog, kaleoLogWrapper._kaleoLog)) {
 			return true;

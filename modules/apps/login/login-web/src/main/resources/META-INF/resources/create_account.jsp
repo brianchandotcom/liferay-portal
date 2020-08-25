@@ -33,7 +33,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 
 <c:if test="<%= Validator.isNotNull(openId) %>">
 	<div class="alert alert-info">
-		<liferay-ui:message arguments="<%= openId %>" key="you-are-about-to-create-an-account-with-openid-x" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments="<%= HtmlUtil.escape(openId) %>" key="you-are-about-to-create-an-account-with-openid-x" translateArguments="<%= false %>" />
 	</div>
 </c:if>
 

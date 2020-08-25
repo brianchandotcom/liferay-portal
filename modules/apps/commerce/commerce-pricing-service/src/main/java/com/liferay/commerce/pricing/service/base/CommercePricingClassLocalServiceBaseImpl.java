@@ -19,8 +19,11 @@ import com.liferay.commerce.pricing.service.CommercePricingClassLocalService;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierPersistence;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelPersistence;
+import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelPersistence;
+import com.liferay.commerce.pricing.service.persistence.CommercePricingClassFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassPersistence;
+import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -84,6 +87,10 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 	/**
 	 * Adds the commerce pricing class to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePricingClassLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePricingClass the commerce pricing class
 	 * @return the commerce pricing class that was added
 	 */
@@ -114,6 +121,10 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 	/**
 	 * Deletes the commerce pricing class with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePricingClassLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePricingClassId the primary key of the commerce pricing class
 	 * @return the commerce pricing class that was removed
 	 * @throws PortalException if a commerce pricing class with the primary key could not be found
@@ -129,6 +140,10 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 
 	/**
 	 * Deletes the commerce pricing class from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePricingClassLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commercePricingClass the commerce pricing class
 	 * @return the commerce pricing class that was removed
@@ -241,17 +256,18 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the commerce pricing class matching the UUID and group.
+	 * Returns the commerce pricing class with the matching UUID and company.
 	 *
 	 * @param uuid the commerce pricing class's UUID
-	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
 	 * @return the matching commerce pricing class, or <code>null</code> if a matching commerce pricing class could not be found
 	 */
 	@Override
-	public CommercePricingClass fetchCommercePricingClassByUuidAndGroupId(
-		String uuid, long groupId) {
+	public CommercePricingClass fetchCommercePricingClassByUuidAndCompanyId(
+		String uuid, long companyId) {
 
-		return commercePricingClassPersistence.fetchByUUID_G(uuid, groupId);
+		return commercePricingClassPersistence.fetchByUuid_C_First(
+			uuid, companyId, null);
 	}
 
 	/**
@@ -379,9 +395,6 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 		exportActionableDynamicQuery.setCompanyId(
 			portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setGroupId(
-			portletDataContext.getScopeGroupId());
-
 		exportActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod
 				<CommercePricingClass>() {
@@ -430,54 +443,20 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns all the commerce pricing classes matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the commerce pricing classes
-	 * @param companyId the primary key of the company
-	 * @return the matching commerce pricing classes, or an empty list if no matches were found
-	 */
-	@Override
-	public List<CommercePricingClass>
-		getCommercePricingClassesByUuidAndCompanyId(
-			String uuid, long companyId) {
-
-		return commercePricingClassPersistence.findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of commerce pricing classes matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the commerce pricing classes
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of commerce pricing classes
-	 * @param end the upper bound of the range of commerce pricing classes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching commerce pricing classes, or an empty list if no matches were found
-	 */
-	@Override
-	public List<CommercePricingClass>
-		getCommercePricingClassesByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			OrderByComparator<CommercePricingClass> orderByComparator) {
-
-		return commercePricingClassPersistence.findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce pricing class matching the UUID and group.
+	 * Returns the commerce pricing class with the matching UUID and company.
 	 *
 	 * @param uuid the commerce pricing class's UUID
-	 * @param groupId the primary key of the group
+	 * @param companyId the primary key of the company
 	 * @return the matching commerce pricing class
 	 * @throws PortalException if a matching commerce pricing class could not be found
 	 */
 	@Override
-	public CommercePricingClass getCommercePricingClassByUuidAndGroupId(
-			String uuid, long groupId)
+	public CommercePricingClass getCommercePricingClassByUuidAndCompanyId(
+			String uuid, long companyId)
 		throws PortalException {
 
-		return commercePricingClassPersistence.findByUUID_G(uuid, groupId);
+		return commercePricingClassPersistence.findByUuid_C_First(
+			uuid, companyId, null);
 	}
 
 	/**
@@ -510,6 +489,10 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 
 	/**
 	 * Updates the commerce pricing class in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePricingClassLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commercePricingClass the commerce pricing class
 	 * @return the commerce pricing class that was updated
@@ -687,6 +670,26 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce pricing class finder.
+	 *
+	 * @return the commerce pricing class finder
+	 */
+	public CommercePricingClassFinder getCommercePricingClassFinder() {
+		return commercePricingClassFinder;
+	}
+
+	/**
+	 * Sets the commerce pricing class finder.
+	 *
+	 * @param commercePricingClassFinder the commerce pricing class finder
+	 */
+	public void setCommercePricingClassFinder(
+		CommercePricingClassFinder commercePricingClassFinder) {
+
+		this.commercePricingClassFinder = commercePricingClassFinder;
+	}
+
+	/**
 	 * Returns the commerce pricing class cp definition rel local service.
 	 *
 	 * @return the commerce pricing class cp definition rel local service
@@ -734,6 +737,30 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 
 		this.commercePricingClassCPDefinitionRelPersistence =
 			commercePricingClassCPDefinitionRelPersistence;
+	}
+
+	/**
+	 * Returns the commerce pricing class cp definition rel finder.
+	 *
+	 * @return the commerce pricing class cp definition rel finder
+	 */
+	public CommercePricingClassCPDefinitionRelFinder
+		getCommercePricingClassCPDefinitionRelFinder() {
+
+		return commercePricingClassCPDefinitionRelFinder;
+	}
+
+	/**
+	 * Sets the commerce pricing class cp definition rel finder.
+	 *
+	 * @param commercePricingClassCPDefinitionRelFinder the commerce pricing class cp definition rel finder
+	 */
+	public void setCommercePricingClassCPDefinitionRelFinder(
+		CommercePricingClassCPDefinitionRelFinder
+			commercePricingClassCPDefinitionRelFinder) {
+
+		this.commercePricingClassCPDefinitionRelFinder =
+			commercePricingClassCPDefinitionRelFinder;
 	}
 
 	/**
@@ -865,6 +892,49 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 		this.userPersistence = userPersistence;
 	}
 
+	/**
+	 * Returns the expando row local service.
+	 *
+	 * @return the expando row local service
+	 */
+	public com.liferay.expando.kernel.service.ExpandoRowLocalService
+		getExpandoRowLocalService() {
+
+		return expandoRowLocalService;
+	}
+
+	/**
+	 * Sets the expando row local service.
+	 *
+	 * @param expandoRowLocalService the expando row local service
+	 */
+	public void setExpandoRowLocalService(
+		com.liferay.expando.kernel.service.ExpandoRowLocalService
+			expandoRowLocalService) {
+
+		this.expandoRowLocalService = expandoRowLocalService;
+	}
+
+	/**
+	 * Returns the expando row persistence.
+	 *
+	 * @return the expando row persistence
+	 */
+	public ExpandoRowPersistence getExpandoRowPersistence() {
+		return expandoRowPersistence;
+	}
+
+	/**
+	 * Sets the expando row persistence.
+	 *
+	 * @param expandoRowPersistence the expando row persistence
+	 */
+	public void setExpandoRowPersistence(
+		ExpandoRowPersistence expandoRowPersistence) {
+
+		this.expandoRowPersistence = expandoRowPersistence;
+	}
+
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register(
 			"com.liferay.commerce.pricing.model.CommercePricingClass",
@@ -950,6 +1020,9 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 	@BeanReference(type = CommercePricingClassPersistence.class)
 	protected CommercePricingClassPersistence commercePricingClassPersistence;
 
+	@BeanReference(type = CommercePricingClassFinder.class)
+	protected CommercePricingClassFinder commercePricingClassFinder;
+
 	@BeanReference(
 		type = com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelLocalService.class
 	)
@@ -960,6 +1033,10 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 	@BeanReference(type = CommercePricingClassCPDefinitionRelPersistence.class)
 	protected CommercePricingClassCPDefinitionRelPersistence
 		commercePricingClassCPDefinitionRelPersistence;
+
+	@BeanReference(type = CommercePricingClassCPDefinitionRelFinder.class)
+	protected CommercePricingClassCPDefinitionRelFinder
+		commercePricingClassCPDefinitionRelFinder;
 
 	@ServiceReference(
 		type = com.liferay.counter.kernel.service.CounterLocalService.class
@@ -990,6 +1067,15 @@ public abstract class CommercePricingClassLocalServiceBaseImpl
 
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+
+	@ServiceReference(
+		type = com.liferay.expando.kernel.service.ExpandoRowLocalService.class
+	)
+	protected com.liferay.expando.kernel.service.ExpandoRowLocalService
+		expandoRowLocalService;
+
+	@ServiceReference(type = ExpandoRowPersistence.class)
+	protected ExpandoRowPersistence expandoRowPersistence;
 
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry

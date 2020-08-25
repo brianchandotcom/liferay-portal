@@ -17,7 +17,9 @@
 	<bean class="com.liferay.commerce.pricing.service.impl.CommercePricingClassLocalServiceImpl" id="com.liferay.commerce.pricing.service.CommercePricingClassLocalService" />
 	<bean class="com.liferay.commerce.pricing.service.impl.CommercePricingClassServiceImpl" id="com.liferay.commerce.pricing.service.CommercePricingClassService" />
 	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePricingClassPersistenceImpl" id="com.liferay.commerce.pricing.service.persistence.CommercePricingClassPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePricingClassFinderImpl" id="com.liferay.commerce.pricing.service.persistence.CommercePricingClassFinder" parent="basePersistence" />
 	<bean class="com.liferay.commerce.pricing.service.impl.CommercePricingClassCPDefinitionRelLocalServiceImpl" id="com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelLocalService" />
 	<bean class="com.liferay.commerce.pricing.service.impl.CommercePricingClassCPDefinitionRelServiceImpl" id="com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelService" />
 	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePricingClassCPDefinitionRelPersistenceImpl" id="com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.pricing.service.persistence.impl.CommercePricingClassCPDefinitionRelFinderImpl" id="com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelFinder" parent="basePersistence" />
 </beans>

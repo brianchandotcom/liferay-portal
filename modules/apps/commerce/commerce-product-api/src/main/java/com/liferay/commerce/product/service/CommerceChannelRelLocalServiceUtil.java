@@ -214,6 +214,14 @@ public class CommerceChannelRelLocalServiceUtil {
 		return getService().fetchCommerceChannelRel(commerceChannelRelId);
 	}
 
+	public static com.liferay.commerce.product.model.CommerceChannelRel
+		fetchCommerceChannelRel(
+			String className, long classPK, long commerceChannelId) {
+
+		return getService().fetchCommerceChannelRel(
+			className, classPK, commerceChannelId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

@@ -16,7 +16,7 @@ package com.liferay.commerce.account.item.selector.web.internal;
 
 import com.liferay.commerce.account.item.selector.criterion.CommerceAccountGroupItemSelectorCriterion;
 import com.liferay.commerce.account.item.selector.web.internal.display.context.CommerceAccountGroupItemSelectorViewDisplayContext;
-import com.liferay.commerce.account.service.CommerceAccountGroupService;
+import com.liferay.commerce.account.service.CommerceAccountGroupLocalService;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -95,7 +95,7 @@ public class CommerceAccountGroupItemSelectorView
 		CommerceAccountGroupItemSelectorViewDisplayContext
 			commerceAccountGroupItemSelectorViewDisplayContext =
 				new CommerceAccountGroupItemSelectorViewDisplayContext(
-					_commerceAccountGroupService, httpServletRequest,
+					_commerceAccountGroupLocalService, httpServletRequest,
 					portletURL, itemSelectedEventName);
 
 		httpServletRequest.setAttribute(
@@ -119,7 +119,7 @@ public class CommerceAccountGroupItemSelectorView
 				}));
 
 	@Reference
-	private CommerceAccountGroupService _commerceAccountGroupService;
+	private CommerceAccountGroupLocalService _commerceAccountGroupLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.account.item.selector.web)"

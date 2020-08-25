@@ -309,15 +309,16 @@ export default class SidePanel extends React.Component {
 				});
 			}
 
-			const submitButton = iframeDocument.querySelector(
-				'[type="submit"]'
+			const submitters = iframeDocument.querySelectorAll(
+				'[type="submit"], .form-submitter'
 			);
-
-			if (submitButton) {
-				submitButton.addEventListener(
-					'click',
-					this.handleIframeClickOnSubmit
-				);
+			if (submitters && submitters.length) {
+				submitters.forEach(submitter => {
+					submitter.addEventListener(
+						'click',
+						this.handleIframeClickOnSubmit
+					);
+				});
 			}
 		} catch (error) {
 			throw new Error(

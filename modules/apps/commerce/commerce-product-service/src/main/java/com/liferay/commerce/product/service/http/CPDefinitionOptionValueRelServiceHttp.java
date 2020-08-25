@@ -597,7 +597,8 @@ public class CPDefinitionOptionValueRelServiceHttp {
 			updateCPDefinitionOptionValueRel(
 				HttpPrincipal httpPrincipal, long cpDefinitionOptionValueRelId,
 				java.util.Map<java.util.Locale, String> nameMap,
-				double priority, String key,
+				double priority, String key, long cpInstanceId, int quantity,
+				boolean preselected, java.math.BigDecimal price,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -609,7 +610,98 @@ public class CPDefinitionOptionValueRelServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpDefinitionOptionValueRelId, nameMap, priority, key,
+				cpInstanceId, quantity, preselected, price, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.product.model.
+				CPDefinitionOptionValueRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel
+			updateCPDefinitionOptionValueRel(
+				HttpPrincipal httpPrincipal, long cpDefinitionOptionValueRelId,
+				java.util.Map<java.util.Locale, String> nameMap,
+				double priority, String key,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPDefinitionOptionValueRelServiceUtil.class,
+				"updateCPDefinitionOptionValueRel",
+				_updateCPDefinitionOptionValueRelParameterTypes13);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpDefinitionOptionValueRelId, nameMap, priority, key,
 				serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.product.model.
+				CPDefinitionOptionValueRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel
+			updateCPDefinitionOptionValueRelPreselected(
+				HttpPrincipal httpPrincipal, long cpDefinitionOptionValueRelId,
+				boolean preselected)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CPDefinitionOptionValueRelServiceUtil.class,
+				"updateCPDefinitionOptionValueRelPreselected",
+				_updateCPDefinitionOptionValueRelPreselectedParameterTypes14);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, cpDefinitionOptionValueRelId, preselected);
 
 			Object returnObj = null;
 
@@ -698,7 +790,16 @@ public class CPDefinitionOptionValueRelServiceHttp {
 	private static final Class<?>[]
 		_updateCPDefinitionOptionValueRelParameterTypes12 = new Class[] {
 			long.class, java.util.Map.class, double.class, String.class,
+			long.class, int.class, boolean.class, java.math.BigDecimal.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
+	private static final Class<?>[]
+		_updateCPDefinitionOptionValueRelParameterTypes13 = new Class[] {
+			long.class, java.util.Map.class, double.class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[]
+		_updateCPDefinitionOptionValueRelPreselectedParameterTypes14 =
+			new Class[] {long.class, boolean.class};
 
 }

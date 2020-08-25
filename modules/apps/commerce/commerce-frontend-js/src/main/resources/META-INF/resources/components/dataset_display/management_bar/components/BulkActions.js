@@ -14,15 +14,16 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 
 import {OPEN_SIDE_PANEL} from '../../../../utilities/eventsDefinitions';
 import {getOpenedSidePanel} from '../../../../utilities/sidePanels';
 import DatasetDisplayContext from '../../DatasetDisplayContext';
 
-function submit(action, method = 'get', formId, form) {
+function submit(action, method = 'post', formId, form) {
 	let queriedForm;
 
 	if (formId) {
@@ -40,14 +41,12 @@ function submit(action, method = 'get', formId, form) {
 	queriedForm.submit();
 }
 
-function getQueryString(key, values = []) {
-	return `?${key}=${values.join(',')}`;
-}
-
 function getRichPayload(payload, key, values = []) {
 	const richPayload = {
 		...payload,
-		url: payload.baseUrl + getQueryString(key, values)
+		url: `${payload.baseUrl}${
+			payload.baseUrl.includes('?') ? '&' : '?'
+		}${key}=${values.join(',')}`
 	};
 	return richPayload;
 }
@@ -58,38 +57,54 @@ function BulkActions(props) {
 		setCurrentSidePanelActionPayload
 	] = useState(null);
 
-	function handleActionClick(
-		actionDefinition,
+	const {
+		actionLoading,
+		executeAsyncBulkAction,
 		formId,
 		formRef,
+		highlightItems,
 		loadData,
 		sidePanelId
-	) {
-		if (actionDefinition.target === 'sidePanel') {
-			const sidePanelActionPayload = {
-				baseUrl: actionDefinition.href,
-				id: sidePanelId,
-				onAfterSubmit: () => loadData(),
-				slug: actionDefinition.slug || null
-			};
+	} = useContext(DatasetDisplayContext);
 
-			Liferay.fire(
-				OPEN_SIDE_PANEL,
-				getRichPayload(
-					sidePanelActionPayload,
-					props.selectedItemsKey,
-					props.selectedItemsValue
-				)
-			);
+	function handleSidePanelAction(action) {
+		const sidePanelActionPayload = {
+			baseUrl: action.href,
+			id: sidePanelId,
+			onAfterSubmit: () => loadData(),
+			slug: action.slug || null
+		};
 
-			setCurrentSidePanelActionPayload(sidePanelActionPayload);
-		} else {
-			submit(
-				actionDefinition.href,
-				actionDefinition.method || 'post',
-				formId,
-				formRef
-			);
+		Liferay.fire(
+			OPEN_SIDE_PANEL,
+			getRichPayload(
+				sidePanelActionPayload,
+				props.selectedItemsKey,
+				props.selectedItemsValue
+			)
+		);
+
+		highlightItems(props.selectedItemsValue);
+		setCurrentSidePanelActionPayload(sidePanelActionPayload);
+	}
+
+	function handleAsyncAction(action) {
+		executeAsyncBulkAction(action.href, action.method, action.bodyKeys);
+	}
+
+	function handleActionClick(e, action) {
+		e.preventDefault();
+		switch (action.target) {
+			case 'sidePanel':
+				handleSidePanelAction(action);
+				break;
+			case 'async':
+			case 'headless':
+				handleAsyncAction(action);
+				break;
+			default:
+				submit(action.href, action.method || 'post', formId, formRef);
+				break;
 		}
 	}
 
@@ -123,74 +138,78 @@ function BulkActions(props) {
 	);
 
 	return props.selectedItemsValue.length ? (
-		<DatasetDisplayContext.Consumer>
-			{({formId, formRef, loadData, sidePanelId}) => (
-				<nav className="management-bar management-bar-primary navbar navbar-expand-md pb-2 pt-2 subnav-tbar">
-					<div
-						className={classNames(
-							'container-fluid container-fluid-max-xl py-1',
-							!props.fluid && 'px-0'
+		<nav className="management-bar management-bar-primary navbar navbar-expand-md pb-2 pt-2 subnav-tbar">
+			<div
+				className={classNames(
+					'container-fluid container-fluid-max-xl py-1',
+					props.fluid && 'px-0'
+				)}
+			>
+				<ul className="navbar-nav">
+					<li className="nav-item">
+						<span className="text-truncate">
+							{props.selectedItemsValue.length}{' '}
+							{Liferay.Language.get('of')} {props.totalItemsCount}{' '}
+							{Liferay.Language.get('items-selected')}
+						</span>
+						{props.selectedItemsValue.length ===
+							props.totalItemsCount && (
+							<ClayLink
+								className="ml-3"
+								href="#"
+								onClick={e => {
+									e.preventDefault();
+									props.selectAllItems();
+								}}
+							>
+								{Liferay.Language.get('select-all')}
+							</ClayLink>
 						)}
-					>
-						<ul className="navbar-nav">
-							<li className="nav-item">
-								<span className="text-truncate">
-									{props.selectedItemsValue.length}{' '}
-									{Liferay.Language.get('of')}{' '}
-									{props.totalItemsCount}{' '}
-									{Liferay.Language.get('items-selected')}
-								</span>
-								<ClayLink
-									className="ml-3"
-									href="#"
-									onClick={e => {
-										e.preventDefault();
-										props.selectAllItems();
-									}}
-								>
-									{Liferay.Language.get('select-all')}
-								</ClayLink>
-							</li>
-						</ul>
-						<div className="bulk-actions">
-							{props.bulkActions.map((actionDefinition, i) => (
-								<button
-									className={classNames(
-										'btn btn-monospaced btn-link',
-										i > 0 && 'ml-1'
-									)}
-									key={actionDefinition.label}
-									onClick={() =>
-										handleActionClick(
-											actionDefinition,
-											formId,
-											formRef,
-											loadData,
-											sidePanelId
-										)
-									}
-									type="button"
-								>
-									<ClayIcon symbol={actionDefinition.icon} />
-								</button>
-							))}
-						</div>
-					</div>
-				</nav>
-			)}
-		</DatasetDisplayContext.Consumer>
+					</li>
+				</ul>
+				<div className="bulk-actions">
+					{props.bulkActions.map((action, i) => (
+						<button
+							className={classNames(
+								'btn btn-monospaced btn-link',
+								i > 0 && 'ml-1'
+							)}
+							disabled={actionLoading}
+							key={action.label}
+							onClick={e => handleActionClick(e, action)}
+							type="button"
+						>
+							{actionLoading ? (
+								<ClayLoadingIndicator small />
+							) : (
+								<ClayIcon symbol={action.icon} />
+							)}
+						</button>
+					))}
+				</div>
+			</div>
+		</nav>
 	) : null;
 }
 
 BulkActions.propTypes = {
 	bulkActions: PropTypes.arrayOf(
-		PropTypes.shape({
-			href: PropTypes.string.isRequired,
-			icon: PropTypes.string.isRequired,
-			label: PropTypes.string.isRequired,
-			method: PropTypes.string,
-			target: PropTypes.oneOf(['sidePanel', 'modal'])
-		})
+		PropTypes.oneOfType([
+			PropTypes.shape({
+				href: PropTypes.string.isRequired,
+				icon: PropTypes.string.isRequired,
+				label: PropTypes.string.isRequired,
+				target: PropTypes.oneOf(['sidePanel', 'link'])
+			}),
+			PropTypes.shape({
+				bodyKeys: PropTypes.arrayOf(PropTypes.string),
+				href: PropTypes.string.isRequired,
+				icon: PropTypes.string.isRequired,
+				label: PropTypes.string.isRequired,
+				method: PropTypes.string,
+				target: PropTypes.oneOf(['async'])
+			})
+		])
 	),
 	selectedItemsKey: PropTypes.string.isRequired,
 	selectedItemsValue: PropTypes.array.isRequired,

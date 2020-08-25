@@ -383,11 +383,13 @@ public class DDMFormEmailNotificationSender {
 			"content.Language", locale, getClass());
 	}
 
-	protected String getSiteName(long groupId, Locale locale) {
+	protected String getSiteName(long groupId, Locale locale)
+		throws PortalException {
+
 		Group siteGroup = _groupLocalService.fetchGroup(groupId);
 
 		if (siteGroup != null) {
-			return siteGroup.getName(locale);
+			return siteGroup.getDescriptiveName(locale);
 		}
 
 		return StringPool.BLANK;

@@ -14,9 +14,17 @@
 
 package com.liferay.commerce.product.content.web.internal.portlet.action;
 
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.configuration.CommercePriceConfiguration;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.frontend.model.PriceModel;
+import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
@@ -27,9 +35,11 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -72,6 +82,7 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "cpDefinitionId");
 		String ddmFormValues = ParamUtil.getString(
 			actionRequest, "ddmFormValues");
+		int quantity = ParamUtil.getInteger(actionRequest, "quantity", 1);
 
 		CommerceContext commerceContext =
 			(CommerceContext)actionRequest.getAttribute(
@@ -107,6 +118,25 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 					cpInstance.getManufacturerPartNumber());
 
 				jsonObject.put("sku", cpInstance.getSku());
+
+				CommercePriceConfiguration commercePriceConfiguration =
+					_configurationProvider.getConfiguration(
+						CommercePriceConfiguration.class,
+						new SystemSettingsLocator(
+							CommerceConstants.PRICE_SERVICE_NAME));
+
+				jsonObject.put(
+					"displayDiscountLevels",
+					commercePriceConfiguration.displayDiscountLevels());
+
+				PriceModel priceModel = _productHelper.getPrice(
+					cpInstance.getCPInstanceId(), quantity, commerceContext,
+					themeDisplay.getLocale());
+
+				jsonObject.put(
+					"prices",
+					_jsonFactory.createJSONObject(
+						_OBJECT_MAPPER.writeValueAsString(priceModel)));
 
 				List<CPContentContributor> cpContentContributors =
 					_cpContentContributorRegistry.getCPContentContributors();
@@ -159,11 +189,21 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		httpServletResponse.flushBuffer();
 	}
 
+	private static final ObjectMapper _OBJECT_MAPPER = new ObjectMapper() {
+		{
+			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+			disable(SerializationFeature.INDENT_OUTPUT);
+		}
+	};
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CheckCPInstanceMVCActionCommand.class);
 
 	@Reference
 	private CommerceProductViewPermission _commerceProductViewPermission;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CPContentContributorRegistry _cpContentContributorRegistry;
@@ -176,5 +216,8 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ProductHelper _productHelper;
 
 }

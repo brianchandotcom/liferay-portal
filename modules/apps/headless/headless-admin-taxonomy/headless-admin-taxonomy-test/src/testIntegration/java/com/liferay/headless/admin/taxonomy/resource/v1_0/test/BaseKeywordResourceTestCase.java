@@ -120,7 +120,9 @@ public abstract class BaseKeywordResourceTestCase {
 
 		KeywordResource.Builder builder = KeywordResource.builder();
 
-		keywordResource = builder.locale(
+		keywordResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

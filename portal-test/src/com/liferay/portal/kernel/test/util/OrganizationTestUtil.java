@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.test.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.ListType;
@@ -83,6 +84,15 @@ public class OrganizationTestUtil {
 
 		return OrganizationLocalServiceUtil.addOrganization(
 			TestPropsValues.getUserId(), parentOrganizationId, name, site);
+	}
+
+	public static Organization addOrganization(String type) throws Exception {
+		return OrganizationLocalServiceUtil.addOrganization(
+			TestPropsValues.getUserId(),
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			RandomTestUtil.randomString(), type, 0, 0,
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
+			false, null);
 	}
 
 	public static OrgLabor addOrgLabor(Organization organization)

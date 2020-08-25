@@ -78,6 +78,10 @@ public class WeDeployAuthTokenLocalServiceUtil {
 	/**
 	 * Adds the we deploy auth token to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect WeDeployAuthTokenLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param weDeployAuthToken the we deploy auth token
 	 * @return the we deploy auth token that was added
 	 */
@@ -117,6 +121,10 @@ public class WeDeployAuthTokenLocalServiceUtil {
 	/**
 	 * Deletes the we deploy auth token with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect WeDeployAuthTokenLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param weDeployAuthTokenId the primary key of the we deploy auth token
 	 * @return the we deploy auth token that was removed
 	 * @throws PortalException if a we deploy auth token with the primary key could not be found
@@ -131,6 +139,10 @@ public class WeDeployAuthTokenLocalServiceUtil {
 
 	/**
 	 * Deletes the we deploy auth token from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect WeDeployAuthTokenLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param weDeployAuthToken the we deploy auth token
 	 * @return the we deploy auth token that was removed
@@ -320,6 +332,10 @@ public class WeDeployAuthTokenLocalServiceUtil {
 
 	/**
 	 * Updates the we deploy auth token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect WeDeployAuthTokenLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param weDeployAuthToken the we deploy auth token
 	 * @return the we deploy auth token that was updated

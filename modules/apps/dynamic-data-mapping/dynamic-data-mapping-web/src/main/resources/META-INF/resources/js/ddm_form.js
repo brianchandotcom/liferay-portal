@@ -202,13 +202,6 @@ AUI.add(
 				if (instance.get('readOnly')) {
 					retVal = true;
 				}
-				else {
-					var form = instance.getForm();
-
-					if (!instance.get('localizable') && form.getDefaultLocale() != instance.get('displayLocale')) {
-						retVal = true;
-					}
-				}
 
 				return retVal;
 			},
@@ -548,7 +541,18 @@ AUI.add(
 						var fields = [];
 
 						if (definition && definition.fields) {
-							fields = definition.fields;
+							definition.fields.forEach(
+								function (field, indexField) {
+									fields.push(field);
+									if (field.nestedFields) {
+										field.nestedFields.forEach(
+											function (nestedField, indexNestedfield) {
+												fields.push(nestedField);
+											}
+										);
+									}
+								}
+							);
 						}
 
 						return AArray.find(
@@ -853,10 +857,6 @@ AUI.add(
 								if (!A.Object.isEmpty(localizationMap)) {
 									value = localizationMap[instance.get('displayLocale')];
 								}
-							}
-
-							if (Lang.isUndefined(value)) {
-								value = instance.getValue();
 							}
 
 							if (Lang.isUndefined(value)) {
@@ -1351,7 +1351,7 @@ AUI.add(
 
 						var parsedValue = instance.getParsedValue(instance.getValue());
 
-						var titleNode = A.one('#' + instance.getInputName() + 'Title');
+						var titleNode = A.one('input[name=' + instance.getInputName() + 'Title]');
 
 						titleNode.val(parsedValue.title || '');
 
@@ -1481,7 +1481,7 @@ AUI.add(
 
 						clearButtonNode.attr('disabled', readOnly);
 
-						var altNode = container.one('#' + instance.getInputName() + 'Alt');
+						var altNode = container.one('input[name=' + instance.getInputName() + 'Alt]');
 
 						if (altNode) {
 							altNode.set('readOnly', readOnly);
@@ -1580,7 +1580,7 @@ AUI.add(
 
 						var parsedValue = instance.getParsedValue(instance.getValue());
 
-						var titleNode = A.one('#' + instance.getInputName() + 'Title');
+						var titleNode = A.one('input[name=' + instance.getInputName() + 'Title]');
 
 						var parsedTitleMap = instance.getParsedValue(
 							parsedValue.titleMap
@@ -1888,7 +1888,7 @@ AUI.add(
 
 						var inputName = instance.getInputName();
 
-						var layoutNameNode = container.one('#' + inputName + 'LayoutName');
+						var layoutNameNode = container.one('input[name=' + inputName + 'LayoutName]');
 
 						var parsedValue = instance.getParsedValue(value);
 
@@ -2832,11 +2832,11 @@ AUI.add(
 
 						var notEmpty = instance.isNotEmpty(parsedValue);
 
-						var altNode = A.one('#' + instance.getInputName() + 'Alt');
+						var altNode = A.one('input[name=' + instance.getInputName() + 'Alt]');
 
 						altNode.attr('disabled', !notEmpty);
 
-						var titleNode = A.one('#' + instance.getInputName() + 'Title');
+						var titleNode = A.one('input[name=' + instance.getInputName() + 'Title]');
 
 						if (notEmpty) {
 							altNode.val(parsedValue.alt || '');
@@ -2918,7 +2918,7 @@ AUI.add(
 						var parsedValue = instance.getParsedValue(ImageField.superclass.getValue.apply(instance, arguments));
 
 						if (instance.isNotEmpty(parsedValue)) {
-							var altNode = A.one('#' + instance.getInputName() + 'Alt');
+							var altNode = A.one('input[name=' + instance.getInputName() + 'Alt]');
 
 							parsedValue.alt = altNode.val();
 
@@ -2949,7 +2949,7 @@ AUI.add(
 								parsedValue.name = parsedValue.title;
 							}
 
-							var altNode = A.one('#' + instance.getInputName() + 'Alt');
+							var altNode = A.one('input[name=' + instance.getInputName() + 'Alt]');
 
 							altNode.val(parsedValue.alt);
 
@@ -3076,7 +3076,7 @@ AUI.add(
 							)
 						);
 
-						var locationNode = A.one('#' + inputName + 'Location');
+						var locationNode = A.one('input[name=' + inputName + 'Location]');
 
 						locationNode.html(event.newVal.address);
 					}
@@ -3131,7 +3131,19 @@ AUI.add(
 								else {
 									var localizationMap = instance.get('localizationMap');
 
-									if (value === localizationMap[instance.get('displayLocale')]) {
+									if (
+										value ===
+											localizationMap[
+												instance.get('displayLocale')
+											] ||
+										(!localizationMap[
+											instance.get('displayLocale')
+										] &&
+											value ===
+												localizationMap[
+													instance.getDefaultLocale()
+												])
+									) {
 										editor.setHTML(value);
 									}
 								}
@@ -3504,12 +3516,16 @@ AUI.add(
 					},
 
 					fillEmptyLocales: function(instance, fields, availableLanguageIds) {
+						var defaultLocale = instance.getDefaultLocale();
+	
+						if (availableLanguageIds.indexOf(defaultLocale) === -1) {
+							availableLanguageIds.push(defaultLocale);
+						}
+
 						fields.forEach(
 							function(field) {
 								if (field.get('localizable')) {
 									var localizationMap = field.get('localizationMap');
-
-									var defaultLocale = field.getDefaultLocale();
 
 									availableLanguageIds.forEach(
 										function(locale) {

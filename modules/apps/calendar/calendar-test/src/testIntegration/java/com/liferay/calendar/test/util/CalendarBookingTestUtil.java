@@ -210,7 +210,7 @@ public class CalendarBookingTestUtil {
 
 		long startTime = System.currentTimeMillis();
 
-		long endTime = startTime + Time.HOUR * 10;
+		long endTime = startTime + (Time.HOUR * 10);
 
 		return addMasterCalendarBooking(
 			user, calendar, childCalendarIds, startTime, endTime,
@@ -463,10 +463,11 @@ public class CalendarBookingTestUtil {
 			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
-		long endTime = calendarBooking.getEndTime() + Time.DAY * instanceIndex;
+		long endTime =
+			calendarBooking.getEndTime() + (Time.DAY * instanceIndex);
 
 		long startTime =
-			calendarBooking.getStartTime() + Time.DAY * instanceIndex;
+			calendarBooking.getStartTime() + (Time.DAY * instanceIndex);
 
 		return CalendarBookingLocalServiceUtil.updateCalendarBookingInstance(
 			calendarBooking.getUserId(), calendarBooking.getCalendarBookingId(),
@@ -496,10 +497,11 @@ public class CalendarBookingTestUtil {
 			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
-		long endTime = calendarBooking.getEndTime() + Time.DAY * instanceIndex;
+		long endTime =
+			calendarBooking.getEndTime() + (Time.DAY * instanceIndex);
 
 		long startTime =
-			calendarBooking.getStartTime() + Time.DAY * instanceIndex;
+			calendarBooking.getStartTime() + (Time.DAY * instanceIndex);
 
 		return CalendarBookingLocalServiceUtil.updateCalendarBookingInstance(
 			calendarBooking.getUserId(), calendarBooking.getCalendarBookingId(),

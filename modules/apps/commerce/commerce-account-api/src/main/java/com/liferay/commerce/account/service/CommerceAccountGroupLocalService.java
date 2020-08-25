@@ -68,6 +68,10 @@ public interface CommerceAccountGroupLocalService
 	/**
 	 * Adds the commerce account group to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAccountGroupLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceAccountGroup the commerce account group
 	 * @return the commerce account group that was added
 	 */
@@ -97,6 +101,10 @@ public interface CommerceAccountGroupLocalService
 	/**
 	 * Deletes the commerce account group from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAccountGroupLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceAccountGroup the commerce account group
 	 * @return the commerce account group that was removed
 	 * @throws PortalException
@@ -109,6 +117,10 @@ public interface CommerceAccountGroupLocalService
 
 	/**
 	 * Deletes the commerce account group with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAccountGroupLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceAccountGroupId the primary key of the commerce account group
 	 * @return the commerce account group that was removed
@@ -294,6 +306,10 @@ public interface CommerceAccountGroupLocalService
 
 	/**
 	 * Updates the commerce account group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAccountGroupLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceAccountGroup the commerce account group
 	 * @return the commerce account group that was updated

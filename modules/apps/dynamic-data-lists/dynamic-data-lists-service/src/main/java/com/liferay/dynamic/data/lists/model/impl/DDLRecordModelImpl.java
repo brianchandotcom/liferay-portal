@@ -1070,16 +1070,16 @@ public class DDLRecordModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDLRecord)) {
+		if (!(object instanceof DDLRecord)) {
 			return false;
 		}
 
-		DDLRecord ddlRecord = (DDLRecord)obj;
+		DDLRecord ddlRecord = (DDLRecord)object;
 
 		long primaryKey = ddlRecord.getPrimaryKey();
 

@@ -841,17 +841,17 @@ public class CommerceInventoryAuditModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceInventoryAudit)) {
+		if (!(object instanceof CommerceInventoryAudit)) {
 			return false;
 		}
 
 		CommerceInventoryAudit commerceInventoryAudit =
-			(CommerceInventoryAudit)obj;
+			(CommerceInventoryAudit)object;
 
 		long primaryKey = commerceInventoryAudit.getPrimaryKey();
 

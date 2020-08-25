@@ -108,7 +108,9 @@ public abstract class BaseRoleResourceTestCase {
 
 		RoleResource.Builder builder = RoleResource.builder();
 
-		roleResource = builder.locale(
+		roleResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

@@ -119,7 +119,9 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		WikiPageResource.Builder builder = WikiPageResource.builder();
 
-		wikiPageResource = builder.locale(
+		wikiPageResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

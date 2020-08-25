@@ -107,8 +107,7 @@ public class MessageBoardMessageDTOConverter
 
 						return CreatorUtil.toCreator(
 							_portal,
-							_userLocalService.getUserById(
-								mbMessage.getUserId()));
+							_userLocalService.fetchUser(mbMessage.getUserId()));
 					});
 			}
 		};

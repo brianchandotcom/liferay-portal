@@ -173,7 +173,7 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 				throw new CaptchaConfigurationException();
 			}
 
-			StringBundler sb = new StringBundler(jsonArray.length() * 2 - 1);
+			StringBundler sb = new StringBundler((jsonArray.length() * 2) - 1);
 
 			for (int i = 0; i < jsonArray.length(); i++) {
 				sb.append(jsonArray.getString(i));

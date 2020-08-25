@@ -1445,16 +1445,16 @@ public class JournalFolderModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof JournalFolder)) {
+		if (!(object instanceof JournalFolder)) {
 			return false;
 		}
 
-		JournalFolder journalFolder = (JournalFolder)obj;
+		JournalFolder journalFolder = (JournalFolder)object;
 
 		long primaryKey = journalFolder.getPrimaryKey();
 

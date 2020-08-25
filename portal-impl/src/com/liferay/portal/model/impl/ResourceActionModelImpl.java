@@ -524,16 +524,16 @@ public class ResourceActionModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ResourceAction)) {
+		if (!(object instanceof ResourceAction)) {
 			return false;
 		}
 
-		ResourceAction resourceAction = (ResourceAction)obj;
+		ResourceAction resourceAction = (ResourceAction)object;
 
 		long primaryKey = resourceAction.getPrimaryKey();
 

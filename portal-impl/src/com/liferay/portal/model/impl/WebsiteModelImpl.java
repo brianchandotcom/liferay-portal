@@ -986,16 +986,16 @@ public class WebsiteModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Website)) {
+		if (!(object instanceof Website)) {
 			return false;
 		}
 
-		Website website = (Website)obj;
+		Website website = (Website)object;
 
 		long primaryKey = website.getPrimaryKey();
 

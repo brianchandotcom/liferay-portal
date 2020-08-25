@@ -36,18 +36,18 @@ public class CommercePaymentMethodGroupRelCacheModel
 	implements CacheModel<CommercePaymentMethodGroupRel>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommercePaymentMethodGroupRelCacheModel)) {
+		if (!(object instanceof CommercePaymentMethodGroupRelCacheModel)) {
 			return false;
 		}
 
 		CommercePaymentMethodGroupRelCacheModel
 			commercePaymentMethodGroupRelCacheModel =
-				(CommercePaymentMethodGroupRelCacheModel)obj;
+				(CommercePaymentMethodGroupRelCacheModel)object;
 
 		if (commercePaymentMethodGroupRelId ==
 				commercePaymentMethodGroupRelCacheModel.

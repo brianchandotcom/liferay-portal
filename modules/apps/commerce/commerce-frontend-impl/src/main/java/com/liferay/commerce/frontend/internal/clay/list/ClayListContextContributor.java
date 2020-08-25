@@ -17,8 +17,10 @@ package com.liferay.commerce.frontend.internal.clay.list;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetContentRendererContextContributor;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.commerce.frontend.clay.list.ClayListDataSetDisplayView;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -60,7 +62,18 @@ public class ClayListContextContributor
 			"description", clayListDataSetDisplayView.getDescription());
 		schemaJSONObject.put(
 			"thumbnail", clayListDataSetDisplayView.getThumbnail());
-		schemaJSONObject.put("title", clayListDataSetDisplayView.getTitle());
+
+		String title = clayListDataSetDisplayView.getTitle();
+
+		if (title.contains(StringPool.PERIOD)) {
+			schemaJSONObject.put(
+				"title", StringUtil.split(title, StringPool.PERIOD));
+		}
+		else {
+			schemaJSONObject.put("title", title);
+		}
+
+		schemaJSONObject.put("title", title);
 
 		context.put("schema", schemaJSONObject);
 

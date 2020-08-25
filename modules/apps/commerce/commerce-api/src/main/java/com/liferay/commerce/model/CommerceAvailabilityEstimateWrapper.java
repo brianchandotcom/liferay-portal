@@ -642,18 +642,18 @@ public class CommerceAvailabilityEstimateWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceAvailabilityEstimateWrapper)) {
+		if (!(object instanceof CommerceAvailabilityEstimateWrapper)) {
 			return false;
 		}
 
 		CommerceAvailabilityEstimateWrapper
 			commerceAvailabilityEstimateWrapper =
-				(CommerceAvailabilityEstimateWrapper)obj;
+				(CommerceAvailabilityEstimateWrapper)object;
 
 		if (Objects.equals(
 				_commerceAvailabilityEstimate,

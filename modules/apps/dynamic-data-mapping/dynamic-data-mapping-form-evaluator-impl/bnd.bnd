@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Dynamic Data Mapping Form Evaluator Implementation
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.form.evaluator.impl
-Bundle-Version: 1.0.26
+Bundle-Version: 1.0.27
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.dynamic.data.mapping.lang)";\

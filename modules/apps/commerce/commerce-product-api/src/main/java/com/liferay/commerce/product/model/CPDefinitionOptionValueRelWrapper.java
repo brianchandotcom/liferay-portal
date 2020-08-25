@@ -77,6 +77,7 @@ public class CPDefinitionOptionValueRelWrapper
 		attributes.put("priority", getPriority());
 		attributes.put("key", getKey());
 		attributes.put("quantity", getQuantity());
+		attributes.put("preselected", isPreselected());
 		attributes.put("price", getPrice());
 
 		return attributes;
@@ -174,6 +175,12 @@ public class CPDefinitionOptionValueRelWrapper
 
 		if (quantity != null) {
 			setQuantity(quantity);
+		}
+
+		Boolean preselected = (Boolean)attributes.get("preselected");
+
+		if (preselected != null) {
+			setPreselected(preselected);
 		}
 
 		BigDecimal price = (BigDecimal)attributes.get("price");
@@ -391,6 +398,16 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 	/**
+	 * Returns the preselected of this cp definition option value rel.
+	 *
+	 * @return the preselected of this cp definition option value rel
+	 */
+	@Override
+	public boolean getPreselected() {
+		return _cpDefinitionOptionValueRel.getPreselected();
+	}
+
+	/**
 	 * Returns the price of this cp definition option value rel.
 	 *
 	 * @return the price of this cp definition option value rel
@@ -493,6 +510,16 @@ public class CPDefinitionOptionValueRelWrapper
 	@Override
 	public boolean isNew() {
 		return _cpDefinitionOptionValueRel.isNew();
+	}
+
+	/**
+	 * Returns <code>true</code> if this cp definition option value rel is preselected.
+	 *
+	 * @return <code>true</code> if this cp definition option value rel is preselected; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPreselected() {
+		return _cpDefinitionOptionValueRel.isPreselected();
 	}
 
 	@Override
@@ -701,6 +728,16 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 	/**
+	 * Sets whether this cp definition option value rel is preselected.
+	 *
+	 * @param preselected the preselected of this cp definition option value rel
+	 */
+	@Override
+	public void setPreselected(boolean preselected) {
+		_cpDefinitionOptionValueRel.setPreselected(preselected);
+	}
+
+	/**
 	 * Sets the price of this cp definition option value rel.
 	 *
 	 * @param price the price of this cp definition option value rel
@@ -815,17 +852,17 @@ public class CPDefinitionOptionValueRelWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionOptionValueRelWrapper)) {
+		if (!(object instanceof CPDefinitionOptionValueRelWrapper)) {
 			return false;
 		}
 
 		CPDefinitionOptionValueRelWrapper cpDefinitionOptionValueRelWrapper =
-			(CPDefinitionOptionValueRelWrapper)obj;
+			(CPDefinitionOptionValueRelWrapper)object;
 
 		if (Objects.equals(
 				_cpDefinitionOptionValueRel,

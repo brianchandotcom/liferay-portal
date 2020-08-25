@@ -15,18 +15,22 @@
 package com.liferay.commerce.channel.web.internal.frontend.util;
 
 import com.liferay.commerce.frontend.model.LabelField;
+import com.liferay.portal.kernel.language.LanguageUtil;
+
+import java.util.Locale;
 
 /**
  * @author Alessio Antonio Rendina
  */
 public class CommerceChannelClayTableUtil {
 
-	public static LabelField getLabelField(boolean success) {
+	public static LabelField getLabelField(boolean success, Locale locale) {
 		if (success) {
-			return new LabelField("success", "active");
+			return new LabelField(
+				"success", LanguageUtil.get(locale, "active"));
 		}
 
-		return new LabelField("danger", "inactive");
+		return new LabelField("danger", LanguageUtil.get(locale, "inactive"));
 	}
 
 }

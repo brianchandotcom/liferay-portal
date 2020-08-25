@@ -545,17 +545,17 @@ public class CommerceWishListItemWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceWishListItemWrapper)) {
+		if (!(object instanceof CommerceWishListItemWrapper)) {
 			return false;
 		}
 
 		CommerceWishListItemWrapper commerceWishListItemWrapper =
-			(CommerceWishListItemWrapper)obj;
+			(CommerceWishListItemWrapper)object;
 
 		if (Objects.equals(
 				_commerceWishListItem,

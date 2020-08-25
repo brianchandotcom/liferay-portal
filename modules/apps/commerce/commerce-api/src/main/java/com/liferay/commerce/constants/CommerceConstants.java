@@ -21,6 +21,9 @@ package com.liferay.commerce.constants;
  */
 public class CommerceConstants {
 
+	public static final String ORDER_FIELDS_SERVICE_NAME =
+		"com.liferay.commerce.order.fields";
+
 	public static final String ORDER_SERVICE_NAME =
 		"com.liferay.commerce.order";
 

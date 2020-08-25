@@ -43,6 +43,13 @@ public interface WorkflowInstanceManager {
 			long companyId, long workflowInstanceId)
 		throws WorkflowException;
 
+	public default WorkflowInstance getWorkflowInstance(
+			long companyId, long userId, long workflowInstanceId)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public int getWorkflowInstanceCount(
 			long companyId, Long userId, String assetClassName,
 			Long assetClassPK, Boolean completed)

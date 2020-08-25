@@ -148,6 +148,7 @@ class AddToCartButton extends Component {
 
 	attached() {
 		window.Liferay.on('accountSelected', this._handleAccountChange, this);
+
 		window.Liferay.on(
 			'productRemovedFromCart',
 			this._handleCartProductRemoval,
@@ -218,8 +219,8 @@ class AddToCartButton extends Component {
 		resetInputQuantity.call(this);
 	}
 
-	_handleCartProductRemoval(e) {
-		if (e.productId === this.productId || e.productId === ALL) {
+	_handleCartProductRemoval({skuId}) {
+		if (skuId === parseInt(this.productId, 10) || skuId === ALL) {
 			this.quantity = 0;
 			resetInputQuantity.call(this);
 		}

@@ -35,16 +35,16 @@ import java.util.Date;
 public class MessageCacheModel implements CacheModel<Message>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MessageCacheModel)) {
+		if (!(object instanceof MessageCacheModel)) {
 			return false;
 		}
 
-		MessageCacheModel messageCacheModel = (MessageCacheModel)obj;
+		MessageCacheModel messageCacheModel = (MessageCacheModel)object;
 
 		if (messageId == messageCacheModel.messageId) {
 			return true;

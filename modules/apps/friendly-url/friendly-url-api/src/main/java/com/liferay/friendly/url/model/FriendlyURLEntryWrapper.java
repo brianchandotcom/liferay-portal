@@ -512,17 +512,17 @@ public class FriendlyURLEntryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof FriendlyURLEntryWrapper)) {
+		if (!(object instanceof FriendlyURLEntryWrapper)) {
 			return false;
 		}
 
 		FriendlyURLEntryWrapper friendlyURLEntryWrapper =
-			(FriendlyURLEntryWrapper)obj;
+			(FriendlyURLEntryWrapper)object;
 
 		if (Objects.equals(
 				_friendlyURLEntry, friendlyURLEntryWrapper._friendlyURLEntry)) {

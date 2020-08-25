@@ -553,16 +553,16 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof LockWrapper)) {
+		if (!(object instanceof LockWrapper)) {
 			return false;
 		}
 
-		LockWrapper lockWrapper = (LockWrapper)obj;
+		LockWrapper lockWrapper = (LockWrapper)object;
 
 		if (Objects.equals(_lock, lockWrapper._lock)) {
 			return true;

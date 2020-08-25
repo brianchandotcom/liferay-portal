@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Google Merchant
 Bundle-SymbolicName: com.liferay.commerce.google.merchant
-Bundle-Version: 1.0.7
+Bundle-Version: 1.0.9
 Import-Package:\
 	!com.mchange.v2.c3p0.*,\
 	\

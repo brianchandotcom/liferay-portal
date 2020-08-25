@@ -7,6 +7,14 @@ definition {
 	property testray.main.component.name = "Commerce";
 
 	setUp {
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-commerce-license-li");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
@@ -41,7 +49,6 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	test CreateNewChannel {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CPCommerceChannels#CreateNewChannel";

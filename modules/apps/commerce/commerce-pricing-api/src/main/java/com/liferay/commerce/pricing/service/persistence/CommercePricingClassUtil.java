@@ -279,6 +279,74 @@ public class CommercePricingClassUtil {
 	}
 
 	/**
+	 * Returns all the commerce pricing classes that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching commerce pricing classes that the user has permission to view
+	 */
+	public static List<CommercePricingClass> filterFindByUuid(String uuid) {
+		return getPersistence().filterFindByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the commerce pricing classes that the user has permission to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePricingClassModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce pricing classes
+	 * @param end the upper bound of the range of commerce pricing classes (not inclusive)
+	 * @return the range of matching commerce pricing classes that the user has permission to view
+	 */
+	public static List<CommercePricingClass> filterFindByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().filterFindByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce pricing classes that the user has permissions to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePricingClassModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce pricing classes
+	 * @param end the upper bound of the range of commerce pricing classes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce pricing classes that the user has permission to view
+	 */
+	public static List<CommercePricingClass> filterFindByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CommercePricingClass> orderByComparator) {
+
+		return getPersistence().filterFindByUuid(
+			uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce pricing classes before and after the current commerce pricing class in the ordered set of commerce pricing classes that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param commercePricingClassId the primary key of the current commerce pricing class
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce pricing class
+	 * @throws NoSuchPricingClassException if a commerce pricing class with the primary key could not be found
+	 */
+	public static CommercePricingClass[] filterFindByUuid_PrevAndNext(
+			long commercePricingClassId, String uuid,
+			OrderByComparator<CommercePricingClass> orderByComparator)
+		throws com.liferay.commerce.pricing.exception.
+			NoSuchPricingClassException {
+
+		return getPersistence().filterFindByUuid_PrevAndNext(
+			commercePricingClassId, uuid, orderByComparator);
+	}
+
+	/**
 	 * Removes all the commerce pricing classes where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -298,70 +366,13 @@ public class CommercePricingClassUtil {
 	}
 
 	/**
-	 * Returns the commerce pricing class where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchPricingClassException</code> if it could not be found.
+	 * Returns the number of commerce pricing classes that the user has permission to view where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching commerce pricing class
-	 * @throws NoSuchPricingClassException if a matching commerce pricing class could not be found
+	 * @return the number of matching commerce pricing classes that the user has permission to view
 	 */
-	public static CommercePricingClass findByUUID_G(String uuid, long groupId)
-		throws com.liferay.commerce.pricing.exception.
-			NoSuchPricingClassException {
-
-		return getPersistence().findByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns the commerce pricing class where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching commerce pricing class, or <code>null</code> if a matching commerce pricing class could not be found
-	 */
-	public static CommercePricingClass fetchByUUID_G(
-		String uuid, long groupId) {
-
-		return getPersistence().fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns the commerce pricing class where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching commerce pricing class, or <code>null</code> if a matching commerce pricing class could not be found
-	 */
-	public static CommercePricingClass fetchByUUID_G(
-		String uuid, long groupId, boolean useFinderCache) {
-
-		return getPersistence().fetchByUUID_G(uuid, groupId, useFinderCache);
-	}
-
-	/**
-	 * Removes the commerce pricing class where uuid = &#63; and groupId = &#63; from the database.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the commerce pricing class that was removed
-	 */
-	public static CommercePricingClass removeByUUID_G(String uuid, long groupId)
-		throws com.liferay.commerce.pricing.exception.
-			NoSuchPricingClassException {
-
-		return getPersistence().removeByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns the number of commerce pricing classes where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the number of matching commerce pricing classes
-	 */
-	public static int countByUUID_G(String uuid, long groupId) {
-		return getPersistence().countByUUID_G(uuid, groupId);
+	public static int filterCountByUuid(String uuid) {
+		return getPersistence().filterCountByUuid(uuid);
 	}
 
 	/**
@@ -533,6 +544,80 @@ public class CommercePricingClassUtil {
 	}
 
 	/**
+	 * Returns all the commerce pricing classes that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching commerce pricing classes that the user has permission to view
+	 */
+	public static List<CommercePricingClass> filterFindByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().filterFindByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the commerce pricing classes that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePricingClassModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce pricing classes
+	 * @param end the upper bound of the range of commerce pricing classes (not inclusive)
+	 * @return the range of matching commerce pricing classes that the user has permission to view
+	 */
+	public static List<CommercePricingClass> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().filterFindByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce pricing classes that the user has permissions to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePricingClassModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce pricing classes
+	 * @param end the upper bound of the range of commerce pricing classes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce pricing classes that the user has permission to view
+	 */
+	public static List<CommercePricingClass> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CommercePricingClass> orderByComparator) {
+
+		return getPersistence().filterFindByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce pricing classes before and after the current commerce pricing class in the ordered set of commerce pricing classes that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param commercePricingClassId the primary key of the current commerce pricing class
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce pricing class
+	 * @throws NoSuchPricingClassException if a commerce pricing class with the primary key could not be found
+	 */
+	public static CommercePricingClass[] filterFindByUuid_C_PrevAndNext(
+			long commercePricingClassId, String uuid, long companyId,
+			OrderByComparator<CommercePricingClass> orderByComparator)
+		throws com.liferay.commerce.pricing.exception.
+			NoSuchPricingClassException {
+
+		return getPersistence().filterFindByUuid_C_PrevAndNext(
+			commercePricingClassId, uuid, companyId, orderByComparator);
+	}
+
+	/**
 	 * Removes all the commerce pricing classes where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -554,176 +639,14 @@ public class CommercePricingClassUtil {
 	}
 
 	/**
-	 * Returns all the commerce pricing classes where groupId = &#63;.
+	 * Returns the number of commerce pricing classes that the user has permission to view where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param groupId the group ID
-	 * @return the matching commerce pricing classes
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching commerce pricing classes that the user has permission to view
 	 */
-	public static List<CommercePricingClass> findByGroupId(long groupId) {
-		return getPersistence().findByGroupId(groupId);
-	}
-
-	/**
-	 * Returns a range of all the commerce pricing classes where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePricingClassModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of commerce pricing classes
-	 * @param end the upper bound of the range of commerce pricing classes (not inclusive)
-	 * @return the range of matching commerce pricing classes
-	 */
-	public static List<CommercePricingClass> findByGroupId(
-		long groupId, int start, int end) {
-
-		return getPersistence().findByGroupId(groupId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce pricing classes where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePricingClassModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of commerce pricing classes
-	 * @param end the upper bound of the range of commerce pricing classes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce pricing classes
-	 */
-	public static List<CommercePricingClass> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<CommercePricingClass> orderByComparator) {
-
-		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce pricing classes where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePricingClassModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of commerce pricing classes
-	 * @param end the upper bound of the range of commerce pricing classes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching commerce pricing classes
-	 */
-	public static List<CommercePricingClass> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<CommercePricingClass> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Returns the first commerce pricing class in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching commerce pricing class
-	 * @throws NoSuchPricingClassException if a matching commerce pricing class could not be found
-	 */
-	public static CommercePricingClass findByGroupId_First(
-			long groupId,
-			OrderByComparator<CommercePricingClass> orderByComparator)
-		throws com.liferay.commerce.pricing.exception.
-			NoSuchPricingClassException {
-
-		return getPersistence().findByGroupId_First(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the first commerce pricing class in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching commerce pricing class, or <code>null</code> if a matching commerce pricing class could not be found
-	 */
-	public static CommercePricingClass fetchByGroupId_First(
-		long groupId,
-		OrderByComparator<CommercePricingClass> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_First(
-			groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce pricing class in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class
-	 * @throws NoSuchPricingClassException if a matching commerce pricing class could not be found
-	 */
-	public static CommercePricingClass findByGroupId_Last(
-			long groupId,
-			OrderByComparator<CommercePricingClass> orderByComparator)
-		throws com.liferay.commerce.pricing.exception.
-			NoSuchPricingClassException {
-
-		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last commerce pricing class in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce pricing class, or <code>null</code> if a matching commerce pricing class could not be found
-	 */
-	public static CommercePricingClass fetchByGroupId_Last(
-		long groupId,
-		OrderByComparator<CommercePricingClass> orderByComparator) {
-
-		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the commerce pricing classes before and after the current commerce pricing class in the ordered set where groupId = &#63;.
-	 *
-	 * @param commercePricingClassId the primary key of the current commerce pricing class
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce pricing class
-	 * @throws NoSuchPricingClassException if a commerce pricing class with the primary key could not be found
-	 */
-	public static CommercePricingClass[] findByGroupId_PrevAndNext(
-			long commercePricingClassId, long groupId,
-			OrderByComparator<CommercePricingClass> orderByComparator)
-		throws com.liferay.commerce.pricing.exception.
-			NoSuchPricingClassException {
-
-		return getPersistence().findByGroupId_PrevAndNext(
-			commercePricingClassId, groupId, orderByComparator);
-	}
-
-	/**
-	 * Removes all the commerce pricing classes where groupId = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 */
-	public static void removeByGroupId(long groupId) {
-		getPersistence().removeByGroupId(groupId);
-	}
-
-	/**
-	 * Returns the number of commerce pricing classes where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the number of matching commerce pricing classes
-	 */
-	public static int countByGroupId(long groupId) {
-		return getPersistence().countByGroupId(groupId);
+	public static int filterCountByUuid_C(String uuid, long companyId) {
+		return getPersistence().filterCountByUuid_C(uuid, companyId);
 	}
 
 	/**
@@ -884,6 +807,76 @@ public class CommercePricingClassUtil {
 	}
 
 	/**
+	 * Returns all the commerce pricing classes that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching commerce pricing classes that the user has permission to view
+	 */
+	public static List<CommercePricingClass> filterFindByCompanyId(
+		long companyId) {
+
+		return getPersistence().filterFindByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the commerce pricing classes that the user has permission to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePricingClassModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce pricing classes
+	 * @param end the upper bound of the range of commerce pricing classes (not inclusive)
+	 * @return the range of matching commerce pricing classes that the user has permission to view
+	 */
+	public static List<CommercePricingClass> filterFindByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().filterFindByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce pricing classes that the user has permissions to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommercePricingClassModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce pricing classes
+	 * @param end the upper bound of the range of commerce pricing classes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce pricing classes that the user has permission to view
+	 */
+	public static List<CommercePricingClass> filterFindByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<CommercePricingClass> orderByComparator) {
+
+		return getPersistence().filterFindByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce pricing classes before and after the current commerce pricing class in the ordered set of commerce pricing classes that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param commercePricingClassId the primary key of the current commerce pricing class
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce pricing class
+	 * @throws NoSuchPricingClassException if a commerce pricing class with the primary key could not be found
+	 */
+	public static CommercePricingClass[] filterFindByCompanyId_PrevAndNext(
+			long commercePricingClassId, long companyId,
+			OrderByComparator<CommercePricingClass> orderByComparator)
+		throws com.liferay.commerce.pricing.exception.
+			NoSuchPricingClassException {
+
+		return getPersistence().filterFindByCompanyId_PrevAndNext(
+			commercePricingClassId, companyId, orderByComparator);
+	}
+
+	/**
 	 * Removes all the commerce pricing classes where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -900,6 +893,16 @@ public class CommercePricingClassUtil {
 	 */
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns the number of commerce pricing classes that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching commerce pricing classes that the user has permission to view
+	 */
+	public static int filterCountByCompanyId(long companyId) {
+		return getPersistence().filterCountByCompanyId(companyId);
 	}
 
 	/**

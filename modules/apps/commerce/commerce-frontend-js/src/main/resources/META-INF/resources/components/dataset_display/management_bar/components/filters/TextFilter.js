@@ -13,52 +13,78 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import getAppContext from '../Context';
+function getOdataString(value, key) {
+	return `${key} eq '${value}'`;
+}
 
 function TextFilter(props) {
-	const {actions} = getAppContext();
 	const [value, setValue] = useState(props.value);
 
+	let actionType = 'edit';
+
+	if (props.value && !value) {
+		actionType = 'delete';
+	}
+
+	if (!props.value && value) {
+		actionType = 'add';
+	}
+
 	return (
-		<div className="form-group">
-			<div className="input-group">
-				<div
-					className={classNames('input-group-item', {
-						'input-group-prepend': props.inputText
-					})}
-				>
-					<input
-						aria-label={props.label}
-						className="form-control"
-						onChange={e => setValue(e.target.value)}
-						type="text"
-						value={value || ''}
-					/>
-				</div>
-				{props.inputText && (
-					<div className="input-group-append input-group-item input-group-item-shrink">
-						<span className="input-group-text">
-							{props.inputText}
-						</span>
+		<>
+			<ClayDropDown.Caption>
+				<div className="form-group">
+					<div className="input-group">
+						<div
+							className={classNames('input-group-item', {
+								'input-group-prepend': props.inputText
+							})}
+						>
+							<input
+								aria-label={props.label}
+								className="form-control"
+								onChange={e => setValue(e.target.value)}
+								type="text"
+								value={value || ''}
+							/>
+						</div>
+						{props.inputText && (
+							<div className="input-group-append input-group-item input-group-item-shrink">
+								<span className="input-group-text">
+									{props.inputText}
+								</span>
+							</div>
+						)}
 					</div>
-				)}
-			</div>
-			<div className="mt-3">
+				</div>
+			</ClayDropDown.Caption>
+			<ClayDropDown.Divider />
+			<ClayDropDown.Caption>
 				<ClayButton
-					className="btn-sm"
-					disabled={value === props.value}
-					onClick={() => actions.updateFilterValue(props.id, value)}
+					disabled={(!props.value && value) || props.value !== value}
+					onClick={() =>
+						props.actions.updateFilterState(
+							props.id,
+							value,
+							value,
+							getOdataString(value, props.id)
+						)
+					}
+					small
 				>
-					{props.panelType === 'edit'
-						? Liferay.Language.get('edit-filter')
-						: Liferay.Language.get('add-filter')}
+					{actionType === 'add' && Liferay.Language.get('add-filter')}
+					{actionType === 'edit' &&
+						Liferay.Language.get('edit-filter')}
+					{actionType === 'delete' &&
+						Liferay.Language.get('delete-filter')}
 				</ClayButton>
-			</div>
-		</div>
+			</ClayDropDown.Caption>
+		</>
 	);
 }
 
@@ -67,7 +93,6 @@ TextFilter.propTypes = {
 	inputText: PropTypes.string,
 	invisible: PropTypes.bool,
 	label: PropTypes.string.isRequired,
-	operator: PropTypes.oneOf(['eq', 'startswith']).isRequired,
 	type: PropTypes.oneOf(['text']).isRequired,
 	value: PropTypes.string
 };

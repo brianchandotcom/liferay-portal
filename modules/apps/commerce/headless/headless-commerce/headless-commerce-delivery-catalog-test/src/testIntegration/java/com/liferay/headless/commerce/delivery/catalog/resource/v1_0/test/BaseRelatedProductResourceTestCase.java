@@ -109,7 +109,9 @@ public abstract class BaseRelatedProductResourceTestCase {
 		RelatedProductResource.Builder builder =
 			RelatedProductResource.builder();
 
-		relatedProductResource = builder.locale(
+		relatedProductResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

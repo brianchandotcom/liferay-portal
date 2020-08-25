@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Search Elasticsearch 6 Implementation
 Bundle-SymbolicName: com.liferay.portal.search.elasticsearch6.impl
-Bundle-Version: 2.0.64
+Bundle-Version: 2.0.66
 Import-Package:\
 	!com.barchart.udt.*,\
 	\

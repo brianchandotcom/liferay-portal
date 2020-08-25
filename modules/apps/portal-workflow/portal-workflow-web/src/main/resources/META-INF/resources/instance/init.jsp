@@ -34,7 +34,6 @@ page import="com.liferay.portal.kernel.workflow.WorkflowInstance" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowLog" %><%@
 page import="com.liferay.portal.workflow.web.internal.dao.search.WorkflowInstanceResultRowSplitter" %><%@
 page import="com.liferay.portal.workflow.web.internal.display.context.MyWorkflowInstanceEditDisplayContext" %><%@
-page import="com.liferay.portal.workflow.web.internal.display.context.MyWorkflowInstanceViewDisplayContext" %><%@
 page import="com.liferay.portal.workflow.web.internal.display.context.WorkflowInstanceEditDisplayContext" %><%@
 page import="com.liferay.portal.workflow.web.internal.display.context.WorkflowInstanceViewDisplayContext" %><%@
 page import="com.liferay.taglib.search.DateSearchEntry" %><%@
@@ -45,14 +44,7 @@ page import="com.liferay.taglib.search.ResultRow" %>
 <liferay-theme:defineObjects />
 
 <%
-WorkflowInstanceViewDisplayContext workflowInstanceViewDisplayContext = null;
-
-if (portletName.equals(WorkflowPortletKeys.USER_WORKFLOW)) {
-	workflowInstanceViewDisplayContext = new MyWorkflowInstanceViewDisplayContext(liferayPortletRequest, liferayPortletResponse);
-}
-else {
-	workflowInstanceViewDisplayContext = new WorkflowInstanceViewDisplayContext(liferayPortletRequest, liferayPortletResponse);
-}
+WorkflowInstanceViewDisplayContext workflowInstanceViewDisplayContext = (WorkflowInstanceViewDisplayContext)renderRequest.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <%@ include file="/instance/init-ext.jsp" %>

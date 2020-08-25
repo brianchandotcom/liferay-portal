@@ -34,7 +34,7 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 				%>
 
 				<div class="pull-right staging-links">
-					<span class='<%= Validator.isNull(siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL()) ? "active" : StringPool.BLANK %>'>
+					<span class="<%= Validator.isNull(siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL()) ? "active" : StringPool.BLANK %>">
 						<aui:a data="<%= data %>" href="<%= siteAdministrationPanelCategoryDisplayContext.getStagingGroupURL() %>" label="staging" />
 					</span>
 					<span class="links-separator"> |</span>
@@ -46,7 +46,7 @@ SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDis
 						String liveGroupURL = siteAdministrationPanelCategoryDisplayContext.getLiveGroupURL();
 					%>
 
-						<span class='<%= Validator.isNull(liveGroupURL) ? "active" : StringPool.BLANK %>'>
+						<span class="<%= Validator.isNull(liveGroupURL) ? "active" : StringPool.BLANK %>">
 							<aui:a data="<%= data %>" href="<%= liveGroupURL %>" label="<%= siteAdministrationPanelCategoryDisplayContext.getLiveGroupLabel() %>" />
 						</span>
 

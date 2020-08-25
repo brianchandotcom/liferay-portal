@@ -16,12 +16,8 @@
 
 <%@ include file="/message_boards/init.jsp" %>
 
-<%
-SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("view.jsp-threadEntriesSearchContainer");
-%>
-
 <liferay-ui:search-container
-	searchContainer="<%= entriesSearchContainer %>"
+	searchContainer='<%= (SearchContainer)request.getAttribute("view.jsp-threadEntriesSearchContainer") %>'
 >
 	<liferay-ui:search-container-row
 		className="Object"

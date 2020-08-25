@@ -681,17 +681,17 @@ public class KaleoTaskFormInstanceWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoTaskFormInstanceWrapper)) {
+		if (!(object instanceof KaleoTaskFormInstanceWrapper)) {
 			return false;
 		}
 
 		KaleoTaskFormInstanceWrapper kaleoTaskFormInstanceWrapper =
-			(KaleoTaskFormInstanceWrapper)obj;
+			(KaleoTaskFormInstanceWrapper)object;
 
 		if (Objects.equals(
 				_kaleoTaskFormInstance,

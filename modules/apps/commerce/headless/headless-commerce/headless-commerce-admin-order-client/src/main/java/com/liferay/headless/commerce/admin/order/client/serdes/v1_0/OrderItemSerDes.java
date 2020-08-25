@@ -115,6 +115,16 @@ public class OrderItemSerDes {
 			sb.append(orderItem.getDiscountPercentageLevel1());
 		}
 
+		if (orderItem.getDiscountPercentageLevel1WithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discountPercentageLevel1WithTaxAmount\": ");
+
+			sb.append(orderItem.getDiscountPercentageLevel1WithTaxAmount());
+		}
+
 		if (orderItem.getDiscountPercentageLevel2() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -123,6 +133,16 @@ public class OrderItemSerDes {
 			sb.append("\"discountPercentageLevel2\": ");
 
 			sb.append(orderItem.getDiscountPercentageLevel2());
+		}
+
+		if (orderItem.getDiscountPercentageLevel2WithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discountPercentageLevel2WithTaxAmount\": ");
+
+			sb.append(orderItem.getDiscountPercentageLevel2WithTaxAmount());
 		}
 
 		if (orderItem.getDiscountPercentageLevel3() != null) {
@@ -135,6 +155,16 @@ public class OrderItemSerDes {
 			sb.append(orderItem.getDiscountPercentageLevel3());
 		}
 
+		if (orderItem.getDiscountPercentageLevel3WithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discountPercentageLevel3WithTaxAmount\": ");
+
+			sb.append(orderItem.getDiscountPercentageLevel3WithTaxAmount());
+		}
+
 		if (orderItem.getDiscountPercentageLevel4() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -143,6 +173,26 @@ public class OrderItemSerDes {
 			sb.append("\"discountPercentageLevel4\": ");
 
 			sb.append(orderItem.getDiscountPercentageLevel4());
+		}
+
+		if (orderItem.getDiscountPercentageLevel4WithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discountPercentageLevel4WithTaxAmount\": ");
+
+			sb.append(orderItem.getDiscountPercentageLevel4WithTaxAmount());
+		}
+
+		if (orderItem.getDiscountWithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"discountWithTaxAmount\": ");
+
+			sb.append(orderItem.getDiscountWithTaxAmount());
 		}
 
 		if (orderItem.getExternalReferenceCode() != null) {
@@ -167,6 +217,16 @@ public class OrderItemSerDes {
 			sb.append("\"finalPrice\": ");
 
 			sb.append(orderItem.getFinalPrice());
+		}
+
+		if (orderItem.getFinalPriceWithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"finalPriceWithTaxAmount\": ");
+
+			sb.append(orderItem.getFinalPriceWithTaxAmount());
 		}
 
 		if (orderItem.getId() != null) {
@@ -235,6 +295,16 @@ public class OrderItemSerDes {
 			sb.append("\"promoPrice\": ");
 
 			sb.append(orderItem.getPromoPrice());
+		}
+
+		if (orderItem.getPromoPriceWithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"promoPriceWithTaxAmount\": ");
+
+			sb.append(orderItem.getPromoPriceWithTaxAmount());
 		}
 
 		if (orderItem.getQuantity() != null) {
@@ -351,6 +421,16 @@ public class OrderItemSerDes {
 			sb.append(orderItem.getUnitPrice());
 		}
 
+		if (orderItem.getUnitPriceWithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitPriceWithTaxAmount\": ");
+
+			sb.append(orderItem.getUnitPriceWithTaxAmount());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -415,6 +495,16 @@ public class OrderItemSerDes {
 				String.valueOf(orderItem.getDiscountPercentageLevel1()));
 		}
 
+		if (orderItem.getDiscountPercentageLevel1WithTaxAmount() == null) {
+			map.put("discountPercentageLevel1WithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"discountPercentageLevel1WithTaxAmount",
+				String.valueOf(
+					orderItem.getDiscountPercentageLevel1WithTaxAmount()));
+		}
+
 		if (orderItem.getDiscountPercentageLevel2() == null) {
 			map.put("discountPercentageLevel2", null);
 		}
@@ -422,6 +512,16 @@ public class OrderItemSerDes {
 			map.put(
 				"discountPercentageLevel2",
 				String.valueOf(orderItem.getDiscountPercentageLevel2()));
+		}
+
+		if (orderItem.getDiscountPercentageLevel2WithTaxAmount() == null) {
+			map.put("discountPercentageLevel2WithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"discountPercentageLevel2WithTaxAmount",
+				String.valueOf(
+					orderItem.getDiscountPercentageLevel2WithTaxAmount()));
 		}
 
 		if (orderItem.getDiscountPercentageLevel3() == null) {
@@ -433,6 +533,16 @@ public class OrderItemSerDes {
 				String.valueOf(orderItem.getDiscountPercentageLevel3()));
 		}
 
+		if (orderItem.getDiscountPercentageLevel3WithTaxAmount() == null) {
+			map.put("discountPercentageLevel3WithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"discountPercentageLevel3WithTaxAmount",
+				String.valueOf(
+					orderItem.getDiscountPercentageLevel3WithTaxAmount()));
+		}
+
 		if (orderItem.getDiscountPercentageLevel4() == null) {
 			map.put("discountPercentageLevel4", null);
 		}
@@ -440,6 +550,25 @@ public class OrderItemSerDes {
 			map.put(
 				"discountPercentageLevel4",
 				String.valueOf(orderItem.getDiscountPercentageLevel4()));
+		}
+
+		if (orderItem.getDiscountPercentageLevel4WithTaxAmount() == null) {
+			map.put("discountPercentageLevel4WithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"discountPercentageLevel4WithTaxAmount",
+				String.valueOf(
+					orderItem.getDiscountPercentageLevel4WithTaxAmount()));
+		}
+
+		if (orderItem.getDiscountWithTaxAmount() == null) {
+			map.put("discountWithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"discountWithTaxAmount",
+				String.valueOf(orderItem.getDiscountWithTaxAmount()));
 		}
 
 		if (orderItem.getExternalReferenceCode() == null) {
@@ -456,6 +585,15 @@ public class OrderItemSerDes {
 		}
 		else {
 			map.put("finalPrice", String.valueOf(orderItem.getFinalPrice()));
+		}
+
+		if (orderItem.getFinalPriceWithTaxAmount() == null) {
+			map.put("finalPriceWithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"finalPriceWithTaxAmount",
+				String.valueOf(orderItem.getFinalPriceWithTaxAmount()));
 		}
 
 		if (orderItem.getId() == null) {
@@ -500,6 +638,15 @@ public class OrderItemSerDes {
 		}
 		else {
 			map.put("promoPrice", String.valueOf(orderItem.getPromoPrice()));
+		}
+
+		if (orderItem.getPromoPriceWithTaxAmount() == null) {
+			map.put("promoPriceWithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"promoPriceWithTaxAmount",
+				String.valueOf(orderItem.getPromoPriceWithTaxAmount()));
 		}
 
 		if (orderItem.getQuantity() == null) {
@@ -584,6 +731,15 @@ public class OrderItemSerDes {
 			map.put("unitPrice", String.valueOf(orderItem.getUnitPrice()));
 		}
 
+		if (orderItem.getUnitPriceWithTaxAmount() == null) {
+			map.put("unitPriceWithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"unitPriceWithTaxAmount",
+				String.valueOf(orderItem.getUnitPriceWithTaxAmount()));
+		}
+
 		return map;
 	}
 
@@ -637,10 +793,28 @@ public class OrderItemSerDes {
 				}
 			}
 			else if (Objects.equals(
+						jsonParserFieldName,
+						"discountPercentageLevel1WithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					orderItem.setDiscountPercentageLevel1WithTaxAmount(
+						(BigDecimal)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "discountPercentageLevel2")) {
 
 				if (jsonParserFieldValue != null) {
 					orderItem.setDiscountPercentageLevel2(
+						(BigDecimal)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"discountPercentageLevel2WithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					orderItem.setDiscountPercentageLevel2WithTaxAmount(
 						(BigDecimal)jsonParserFieldValue);
 				}
 			}
@@ -653,10 +827,36 @@ public class OrderItemSerDes {
 				}
 			}
 			else if (Objects.equals(
+						jsonParserFieldName,
+						"discountPercentageLevel3WithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					orderItem.setDiscountPercentageLevel3WithTaxAmount(
+						(BigDecimal)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "discountPercentageLevel4")) {
 
 				if (jsonParserFieldValue != null) {
 					orderItem.setDiscountPercentageLevel4(
+						(BigDecimal)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"discountPercentageLevel4WithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					orderItem.setDiscountPercentageLevel4WithTaxAmount(
+						(BigDecimal)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "discountWithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					orderItem.setDiscountWithTaxAmount(
 						(BigDecimal)jsonParserFieldValue);
 				}
 			}
@@ -671,6 +871,14 @@ public class OrderItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "finalPrice")) {
 				if (jsonParserFieldValue != null) {
 					orderItem.setFinalPrice((BigDecimal)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "finalPriceWithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					orderItem.setFinalPriceWithTaxAmount(
+						(BigDecimal)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -707,6 +915,14 @@ public class OrderItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "promoPrice")) {
 				if (jsonParserFieldValue != null) {
 					orderItem.setPromoPrice((BigDecimal)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "promoPriceWithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					orderItem.setPromoPriceWithTaxAmount(
+						(BigDecimal)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "quantity")) {
@@ -769,6 +985,14 @@ public class OrderItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "unitPrice")) {
 				if (jsonParserFieldValue != null) {
 					orderItem.setUnitPrice((BigDecimal)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "unitPriceWithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					orderItem.setUnitPriceWithTaxAmount(
+						(BigDecimal)jsonParserFieldValue);
 				}
 			}
 			else {

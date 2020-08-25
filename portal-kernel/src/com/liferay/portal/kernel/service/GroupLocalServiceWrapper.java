@@ -31,6 +31,10 @@ public class GroupLocalServiceWrapper
 	/**
 	 * Adds the group to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect GroupLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param group the group
 	 * @return the group that was added
 	 */
@@ -292,6 +296,10 @@ public class GroupLocalServiceWrapper
 	/**
 	 * Deletes the group from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect GroupLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param group the group
 	 * @return the group that was removed
 	 * @throws PortalException
@@ -306,6 +314,10 @@ public class GroupLocalServiceWrapper
 
 	/**
 	 * Deletes the group with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect GroupLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param groupId the primary key of the group
 	 * @return the group that was removed
@@ -1760,6 +1772,14 @@ public class GroupLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Group>
+			getUserSitesGroups(long userId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _groupLocalService.getUserSitesGroups(userId, start, end);
+	}
+
+	@Override
 	public boolean hasOrganizationGroup(long organizationId, long groupId) {
 		return _groupLocalService.hasOrganizationGroup(organizationId, groupId);
 	}
@@ -2963,6 +2983,10 @@ public class GroupLocalServiceWrapper
 
 	/**
 	 * Updates the group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect GroupLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param group the group
 	 * @return the group that was updated

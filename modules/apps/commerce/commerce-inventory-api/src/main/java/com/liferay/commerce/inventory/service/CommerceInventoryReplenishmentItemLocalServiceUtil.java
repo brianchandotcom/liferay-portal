@@ -41,6 +41,10 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	/**
 	 * Adds the commerce inventory replenishment item to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceInventoryReplenishmentItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceInventoryReplenishmentItem the commerce inventory replenishment item
 	 * @return the commerce inventory replenishment item that was added
 	 */
@@ -85,6 +89,10 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	/**
 	 * Deletes the commerce inventory replenishment item from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceInventoryReplenishmentItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceInventoryReplenishmentItem the commerce inventory replenishment item
 	 * @return the commerce inventory replenishment item that was removed
 	 */
@@ -101,6 +109,10 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 
 	/**
 	 * Deletes the commerce inventory replenishment item with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceInventoryReplenishmentItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceInventoryReplenishmentItemId the primary key of the commerce inventory replenishment item
 	 * @return the commerce inventory replenishment item that was removed
@@ -327,6 +339,10 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 
 	/**
 	 * Updates the commerce inventory replenishment item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceInventoryReplenishmentItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceInventoryReplenishmentItem the commerce inventory replenishment item
 	 * @return the commerce inventory replenishment item that was updated

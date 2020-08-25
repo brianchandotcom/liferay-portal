@@ -434,7 +434,7 @@ components:
 info:
     description:
         "Headless Commerce Delivery Catalog API. A Java client JAR is available for use with the group ID 'com.liferay',
-        artifact ID 'com.liferay.headless.commerce.delivery.catalog.client', and version '1.0.7'."
+        artifact ID 'com.liferay.headless.commerce.delivery.catalog.client', and version '1.0.12'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -869,7 +869,7 @@ paths:
                         Unexpected error
             summary: Gets a list of Images related to a Product.
             tags: ["Attachment"]
-    /channels/{channelId}/products/{productId}/options:
+    /channels/{channelId}/products/{productId}/product-options:
         get:
             operationId: getChannelProductOptionsPage
             parameters:

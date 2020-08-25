@@ -20,7 +20,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.option.CommerceOptionValue;
 import com.liferay.commerce.product.option.CommerceOptionValueHelper;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
-import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
+import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.util.JsonHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -68,7 +68,7 @@ public class CommerceOptionValueHelperImpl
 			Long key = entry.getKey();
 			List<Long> value = entry.getValue();
 
-			for (long cpDefinitionOpionValueRelId : value) {
+			for (long cpDefinitionOptionValueRelId : value) {
 				CPDefinitionOptionRel cpDefinitionOptionRel =
 					_cpDefinitionOptionRelLocalService.
 						fetchCPDefinitionOptionRel(key);
@@ -78,9 +78,9 @@ public class CommerceOptionValueHelperImpl
 				}
 
 				CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-					_cpDefinitionOptionValueRelService.
+					_cpDefinitionOptionValueRelLocalService.
 						fetchCPDefinitionOptionValueRel(
-							cpDefinitionOpionValueRelId);
+							cpDefinitionOptionValueRelId);
 
 				if (cpDefinitionOptionValueRel == null) {
 					continue;
@@ -141,7 +141,7 @@ public class CommerceOptionValueHelperImpl
 
 		List<CommerceOptionValue> commerceOptionValues = new ArrayList<>();
 
-		JSONArray commerceOptionValuesJSONArray = _jsonFactory.createJSONArray(
+		JSONArray commerceOptionValuesJSONArray = _jsonHelper.getJSONArray(
 			json);
 
 		for (int i = 0; i < commerceOptionValuesJSONArray.length(); i++) {
@@ -195,8 +195,8 @@ public class CommerceOptionValueHelperImpl
 		_cpDefinitionOptionRelLocalService;
 
 	@Reference
-	private CPDefinitionOptionValueRelService
-		_cpDefinitionOptionValueRelService;
+	private CPDefinitionOptionValueRelLocalService
+		_cpDefinitionOptionValueRelLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

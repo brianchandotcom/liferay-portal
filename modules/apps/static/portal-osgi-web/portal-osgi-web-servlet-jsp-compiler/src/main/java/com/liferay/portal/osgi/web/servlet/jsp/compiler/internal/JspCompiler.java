@@ -206,7 +206,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 		if (_log.isInfoEnabled()) {
 			StringBundler sb = new StringBundler(
-				_bundleWiringPackageNames.size() * 4 + 6);
+				(_bundleWiringPackageNames.size() * 4) + 6);
 
 			sb.append("JSP compiler for bundle ");
 			sb.append(bundle.getSymbolicName());

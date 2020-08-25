@@ -95,16 +95,16 @@ public class CommerceAccountUserRelPK
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceAccountUserRelPK)) {
+		if (!(object instanceof CommerceAccountUserRelPK)) {
 			return false;
 		}
 
-		CommerceAccountUserRelPK pk = (CommerceAccountUserRelPK)obj;
+		CommerceAccountUserRelPK pk = (CommerceAccountUserRelPK)object;
 
 		if ((commerceAccountId == pk.commerceAccountId) &&
 			(commerceAccountUserId == pk.commerceAccountUserId)) {

@@ -13,7 +13,7 @@
 		}
 	},
 	"dependencies": {
-		"alloyeditor": "2.11.6",
+		"alloyeditor": "2.11.7",
 		"create-react-class": "15.6.3"
 	},
 	"name": "frontend-editor-alloyeditor-web",
@@ -21,5 +21,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "2.0.48"
+	"version": "2.0.50"
 }

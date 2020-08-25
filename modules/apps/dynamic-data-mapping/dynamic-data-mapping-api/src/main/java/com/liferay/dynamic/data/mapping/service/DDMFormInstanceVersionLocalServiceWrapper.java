@@ -37,6 +37,10 @@ public class DDMFormInstanceVersionLocalServiceWrapper
 	/**
 	 * Adds the ddm form instance version to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDMFormInstanceVersionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param ddmFormInstanceVersion the ddm form instance version
 	 * @return the ddm form instance version that was added
 	 */
@@ -73,6 +77,10 @@ public class DDMFormInstanceVersionLocalServiceWrapper
 	/**
 	 * Deletes the ddm form instance version from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDMFormInstanceVersionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param ddmFormInstanceVersion the ddm form instance version
 	 * @return the ddm form instance version that was removed
 	 */
@@ -88,6 +96,10 @@ public class DDMFormInstanceVersionLocalServiceWrapper
 
 	/**
 	 * Deletes the ddm form instance version with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDMFormInstanceVersionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param formInstanceVersionId the primary key of the ddm form instance version
 	 * @return the ddm form instance version that was removed
@@ -364,6 +376,10 @@ public class DDMFormInstanceVersionLocalServiceWrapper
 
 	/**
 	 * Updates the ddm form instance version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDMFormInstanceVersionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param ddmFormInstanceVersion the ddm form instance version
 	 * @return the ddm form instance version that was updated

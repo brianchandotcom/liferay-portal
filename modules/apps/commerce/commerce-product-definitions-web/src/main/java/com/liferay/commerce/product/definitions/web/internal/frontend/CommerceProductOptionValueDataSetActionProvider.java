@@ -56,7 +56,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTION_VALUES,
+	property = {
+		"commerce.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTION_VALUES,
+		"commerce.data.provider.key=" + CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_OPTION_VALUES_STATIC
+	},
 	service = ClayDataSetActionProvider.class
 )
 public class CommerceProductOptionValueDataSetActionProvider
@@ -108,6 +111,23 @@ public class CommerceProductOptionValueDataSetActionProvider
 				StringPool.BLANK, false, false);
 
 			clayDataSetActions.add(deleteClayDataSetAction);
+
+			PortletURL updatePreselectedURL =
+				_getProductOptionValueUpdatePreselectedURL(
+					cpDefinitionOptionValueRel.
+						getCPDefinitionOptionValueRelId(),
+					httpServletRequest);
+
+			ClayDataSetAction updatePreselectedClayDataSetAction =
+				new ClayDataSetAction(
+					StringPool.BLANK, updatePreselectedURL.toString(),
+					StringPool.BLANK,
+					LanguageUtil.get(httpServletRequest, "toggle-default"),
+					StringPool.BLANK, false, false);
+
+			updatePreselectedClayDataSetAction.setId("updatePreselected");
+
+			clayDataSetActions.add(updatePreselectedClayDataSetAction);
 		}
 
 		return clayDataSetActions;
@@ -169,6 +189,29 @@ public class CommerceProductOptionValueDataSetActionProvider
 		catch (WindowStateException wse) {
 			_log.error(wse, wse);
 		}
+
+		return portletURL;
+	}
+
+	private PortletURL _getProductOptionValueUpdatePreselectedURL(
+		long cpDefinitionOptionValueRelId,
+		HttpServletRequest httpServletRequest) {
+
+		PortletURL portletURL = _portal.getControlPanelPortletURL(
+			_portal.getOriginalServletRequest(httpServletRequest),
+			CPPortletKeys.CP_DEFINITIONS, PortletRequest.ACTION_PHASE);
+
+		String redirect = ParamUtil.getString(
+			httpServletRequest, "currentUrl",
+			_portal.getCurrentURL(httpServletRequest));
+
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "editProductDefinitionOptionValueRel");
+		portletURL.setParameter(Constants.CMD, "updatePreselected");
+		portletURL.setParameter("redirect", redirect);
+		portletURL.setParameter(
+			"cpDefinitionOptionValueRelId",
+			String.valueOf(cpDefinitionOptionValueRelId));
 
 		return portletURL;
 	}

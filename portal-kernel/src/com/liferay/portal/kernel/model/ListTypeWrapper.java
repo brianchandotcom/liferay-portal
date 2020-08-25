@@ -288,16 +288,16 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ListTypeWrapper)) {
+		if (!(object instanceof ListTypeWrapper)) {
 			return false;
 		}
 
-		ListTypeWrapper listTypeWrapper = (ListTypeWrapper)obj;
+		ListTypeWrapper listTypeWrapper = (ListTypeWrapper)object;
 
 		if (Objects.equals(_listType, listTypeWrapper._listType)) {
 			return true;

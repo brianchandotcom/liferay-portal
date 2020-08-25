@@ -29,4 +29,7 @@ public interface CommerceSubscriptionEntryFinder {
 	public java.util.List<com.liferay.commerce.model.CommerceSubscriptionEntry>
 		findByNextIterationDate(java.util.Date nextIterationDate);
 
+	public java.util.List<com.liferay.commerce.model.CommerceSubscriptionEntry>
+		findByA_S(long commerceAccountId, long subscriptionStatus);
+
 }

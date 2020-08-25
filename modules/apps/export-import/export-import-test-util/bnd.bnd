@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Export Import Test Utilities
 Bundle-SymbolicName: com.liferay.exportimport.test.util
-Bundle-Version: 1.3.9
+Bundle-Version: 1.3.11
 Export-Package:\
 	com.liferay.exportimport.test.util,\
 	com.liferay.exportimport.test.util.constants,\

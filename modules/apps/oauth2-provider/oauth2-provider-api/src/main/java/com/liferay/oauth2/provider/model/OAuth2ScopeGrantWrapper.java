@@ -357,17 +357,17 @@ public class OAuth2ScopeGrantWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof OAuth2ScopeGrantWrapper)) {
+		if (!(object instanceof OAuth2ScopeGrantWrapper)) {
 			return false;
 		}
 
 		OAuth2ScopeGrantWrapper oAuth2ScopeGrantWrapper =
-			(OAuth2ScopeGrantWrapper)obj;
+			(OAuth2ScopeGrantWrapper)object;
 
 		if (Objects.equals(
 				_oAuth2ScopeGrant, oAuth2ScopeGrantWrapper._oAuth2ScopeGrant)) {

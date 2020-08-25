@@ -36,6 +36,10 @@ public class CommercePriceListLocalServiceWrapper
 	/**
 	 * Adds the commerce price list to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceListLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePriceList the commerce price list
 	 * @return the commerce price list that was added
 	 */
@@ -276,6 +280,10 @@ public class CommercePriceListLocalServiceWrapper
 	/**
 	 * Deletes the commerce price list from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceListLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePriceList the commerce price list
 	 * @return the commerce price list that was removed
 	 * @throws PortalException
@@ -293,6 +301,10 @@ public class CommercePriceListLocalServiceWrapper
 
 	/**
 	 * Deletes the commerce price list with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceListLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commercePriceListId the primary key of the commerce price list
 	 * @return the commerce price list that was removed
@@ -703,6 +715,14 @@ public class CommercePriceListLocalServiceWrapper
 
 	@Override
 	public int getCommercePriceListsCount(
+		long commercePricingClassId, String name) {
+
+		return _commercePriceListLocalService.getCommercePriceListsCount(
+			commercePricingClassId, name);
+	}
+
+	@Override
+	public int getCommercePriceListsCount(
 		long[] groupIds, long companyId, int status) {
 
 		return _commercePriceListLocalService.getCommercePriceListsCount(
@@ -756,6 +776,16 @@ public class CommercePriceListLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List
+		<com.liferay.commerce.price.list.model.CommercePriceList>
+			searchByCommercePricingClassId(
+				long commercePricingClassId, String name, int start, int end) {
+
+		return _commercePriceListLocalService.searchByCommercePricingClassId(
+			commercePricingClassId, name, start, end);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.commerce.price.list.model.CommercePriceList>
 				searchCommercePriceLists(
@@ -770,6 +800,10 @@ public class CommercePriceListLocalServiceWrapper
 
 	/**
 	 * Updates the commerce price list in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceListLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commercePriceList the commerce price list
 	 * @return the commerce price list that was updated

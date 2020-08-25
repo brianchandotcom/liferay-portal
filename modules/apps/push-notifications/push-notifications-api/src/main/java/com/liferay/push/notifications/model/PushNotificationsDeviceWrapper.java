@@ -377,17 +377,17 @@ public class PushNotificationsDeviceWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof PushNotificationsDeviceWrapper)) {
+		if (!(object instanceof PushNotificationsDeviceWrapper)) {
 			return false;
 		}
 
 		PushNotificationsDeviceWrapper pushNotificationsDeviceWrapper =
-			(PushNotificationsDeviceWrapper)obj;
+			(PushNotificationsDeviceWrapper)object;
 
 		if (Objects.equals(
 				_pushNotificationsDevice,

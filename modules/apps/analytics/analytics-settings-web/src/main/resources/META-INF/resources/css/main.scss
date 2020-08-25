@@ -37,4 +37,26 @@
 	.sync-options {
 		display: inline-block;
 	}
+
+	.sync-sites {
+		.input-group-input {
+			width: 92%;
+		}
+
+		.management-bar-collapse.collapse {
+			width: 95%;
+		}
+
+		.management-bar-nav {
+			width: 100%;
+		}
+
+		.management-bar-nav > li {
+			float: none;
+		}
+
+		.management-bar-nav > li > .form {
+			padding-left: 0;
+		}
+	}
 }

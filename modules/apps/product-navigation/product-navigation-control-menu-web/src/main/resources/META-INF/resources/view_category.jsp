@@ -225,7 +225,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 							</c:when>
 							<c:otherwise>
 								<div>
-									<a href='<liferay-portlet:renderURL portletName="<%= portlet.getRootPortletId() %>" windowState="<%= WindowState.MAXIMIZED.toString() %>"></liferay-portlet:renderURL>'><%= PortalUtil.getPortletTitle(portlet, application, locale) %></a>
+									<a href="<liferay-portlet:renderURL portletName="<%= portlet.getRootPortletId() %>" windowState="<%= WindowState.MAXIMIZED.toString() %>"></liferay-portlet:renderURL>"><%= PortalUtil.getPortletTitle(portlet, application, locale) %></a>
 								</div>
 							</c:otherwise>
 						</c:choose>

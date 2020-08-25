@@ -448,16 +448,16 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AttachmentWrapper)) {
+		if (!(object instanceof AttachmentWrapper)) {
 			return false;
 		}
 
-		AttachmentWrapper attachmentWrapper = (AttachmentWrapper)obj;
+		AttachmentWrapper attachmentWrapper = (AttachmentWrapper)object;
 
 		if (Objects.equals(_attachment, attachmentWrapper._attachment)) {
 			return true;

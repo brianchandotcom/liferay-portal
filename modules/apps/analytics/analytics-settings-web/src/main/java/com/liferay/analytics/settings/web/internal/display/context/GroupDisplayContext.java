@@ -110,7 +110,8 @@ public class GroupDisplayContext {
 		groupSearch.setResults(groups);
 
 		if (StringUtil.equalsIgnoreCase(
-				_mvcRenderCommandName, "/analytics/edit_synced_sites")) {
+				_mvcRenderCommandName,
+				"/analytics_settings/edit_synced_sites")) {
 
 			groupSearch.setRowChecker(
 				new GroupChecker(
@@ -152,6 +153,16 @@ public class GroupDisplayContext {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcRenderCommandName", _mvcRenderCommandName);
+
+		if (StringUtil.equalsIgnoreCase(
+				_mvcRenderCommandName, "/analytics_settings/edit_channel")) {
+
+			portletURL.setParameter(
+				"channelId", ParamUtil.getString(_renderRequest, "channelId"));
+			portletURL.setParameter(
+				"channelName",
+				ParamUtil.getString(_renderRequest, "channelName"));
+		}
 
 		return portletURL;
 	}

@@ -63,4 +63,11 @@ public interface CommercePriceListChannelRel
 
 			};
 
+	public com.liferay.commerce.product.model.CommerceChannel
+			getCommerceChannel()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public CommercePriceList getCommercePriceList()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

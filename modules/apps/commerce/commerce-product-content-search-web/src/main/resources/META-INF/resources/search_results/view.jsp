@@ -19,10 +19,6 @@
 <%
 CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-Map<String, Object> contextObjects = new HashMap<>();
-
-contextObjects.put("cpSearchResultsDisplayContext", cpSearchResultsDisplayContext);
-
 SearchContainer<CPCatalogEntry> cpCatalogEntrySearchContainer = cpSearchResultsDisplayContext.getSearchContainer();
 
 List<CPCatalogEntry> results = cpCatalogEntrySearchContainer.getResults();
@@ -35,6 +31,14 @@ List<CPCatalogEntry> results = cpCatalogEntrySearchContainer.getResults();
 		</div>
 	</c:when>
 	<c:when test="<%= cpSearchResultsDisplayContext.isSelectionStyleADT() %>">
+
+		<%
+		Map<String, Object> contextObjects = new HashMap<>();
+
+		contextObjects.put("cpContentHelper", request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER));
+		contextObjects.put("cpSearchResultsDisplayContext", cpSearchResultsDisplayContext);
+		%>
+
 		<liferay-ddm:template-renderer
 			className="<%= CPSearchResultsPortlet.class.getName() %>"
 			contextObjects="<%= contextObjects %>"

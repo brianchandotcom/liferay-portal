@@ -18,15 +18,15 @@ import PropTypes from 'prop-types';
 import React, {useState, useEffect, useContext} from 'react';
 
 import {getValueFromItem} from '../../../../utilities/index';
-import DatasetDisplayContext from '../../DatasetDisplayContext';
-import ActionsDropdownRenderer from '../../data_renderer/ActionsDropdownRenderer';
-import CheckboxRenderer from '../../data_renderer/CheckboxRenderer';
-import CommentRenderer from '../../data_renderer/CommentRenderer';
-import RadioRenderer from '../../data_renderer/RadioRenderer';
+import ActionsDropdownRenderer from '../../../data_renderers/ActionsDropdownRenderer';
+import CheckboxRenderer from '../../../data_renderers/CheckboxRenderer';
+import CommentRenderer from '../../../data_renderers/CommentRenderer';
+import RadioRenderer from '../../../data_renderers/RadioRenderer';
 import {
 	getDataRendererById,
 	getDataRendererByUrl
-} from '../../data_renderer/index';
+} from '../../../data_renderers/index';
+import DatasetDisplayContext from '../../DatasetDisplayContext';
 import TableHeadRow from './TableHeadRow';
 
 function CustomTableCell(props) {
@@ -81,24 +81,21 @@ function CustomTableCell(props) {
 	);
 }
 
-function getItemFields(item, fields, itemId, itemActions) {
+function getItemFields(item, fields, itemId, itemsActions) {
 	return fields.map((field, i) => {
-		const fieldName = field.fieldName;
-		const {actionItems, ...otherProps} = item;
-		const rawValue = getValueFromItem(item, fieldName);
+		const {actionItems, comments} = item;
+		const rawValue = getValueFromItem(item, field.fieldName);
 		const formattedValue = field.mapData
 			? field.mapData(rawValue)
 			: rawValue;
-		const comment = otherProps.comments
-			? otherProps.comments[field.fieldName]
-			: null;
+		const comment = comments ? comments[field.fieldName] : null;
 		return (
 			<CustomTableCell
-				actions={itemActions || actionItems}
+				actions={itemsActions || actionItems}
 				comment={comment}
 				itemData={item}
 				itemId={itemId}
-				key={fieldName || i}
+				key={field.fieldName || i}
 				options={field}
 				value={formattedValue}
 				view={{
@@ -112,6 +109,7 @@ function getItemFields(item, fields, itemId, itemActions) {
 
 function Table(props) {
 	const {
+		actionLoading,
 		highlightedItemsValue,
 		nestedItemsKey,
 		nestedItemsReferenceKey,
@@ -125,7 +123,7 @@ function Table(props) {
 	} = useContext(DatasetDisplayContext);
 
 	const showActionItems = Boolean(
-		(props.itemActions && props.itemActions.length) ||
+		(props.itemsActions && props.itemsActions.length) ||
 			props.items.find(el => el.actionItems)
 	);
 
@@ -181,6 +179,7 @@ function Table(props) {
 															String(itemId)
 													)
 												}
+												disabled={actionLoading}
 												onChange={() =>
 													selectItems(itemId)
 												}
@@ -192,15 +191,15 @@ function Table(props) {
 										item,
 										props.schema.fields,
 										itemId,
-										props.itemActions
+										props.itemsActions
 									)}
 									{showActionItems && (
 										<ClayTable.Cell className="dataset-item-actions-wrapper">
-											{(props.itemActions ||
+											{(props.itemsActions ||
 												item.actionItems) && (
 												<ActionsDropdownRenderer
 													actions={
-														props.itemActions ||
+														props.itemsActions ||
 														item.actionItems
 													}
 													itemData={item}
@@ -230,7 +229,7 @@ function Table(props) {
 													nestedItem,
 													props.schema.fields,
 													nestedItem[nestedItemsKey],
-													props.itemActions
+													props.itemsActions
 												)}
 												{showActionItems ? (
 													<ClayTable.Cell />
@@ -248,8 +247,8 @@ function Table(props) {
 }
 
 Table.propTypes = {
-	itemActions: PropTypes.array,
 	items: PropTypes.arrayOf(PropTypes.object),
+	itemsActions: PropTypes.array,
 	schema: PropTypes.shape({
 		fields: PropTypes.arrayOf(
 			PropTypes.shape({

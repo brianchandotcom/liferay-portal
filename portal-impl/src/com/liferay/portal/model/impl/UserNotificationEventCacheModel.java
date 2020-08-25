@@ -35,17 +35,17 @@ public class UserNotificationEventCacheModel
 	implements CacheModel<UserNotificationEvent>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof UserNotificationEventCacheModel)) {
+		if (!(object instanceof UserNotificationEventCacheModel)) {
 			return false;
 		}
 
 		UserNotificationEventCacheModel userNotificationEventCacheModel =
-			(UserNotificationEventCacheModel)obj;
+			(UserNotificationEventCacheModel)object;
 
 		if ((userNotificationEventId ==
 				userNotificationEventCacheModel.userNotificationEventId) &&

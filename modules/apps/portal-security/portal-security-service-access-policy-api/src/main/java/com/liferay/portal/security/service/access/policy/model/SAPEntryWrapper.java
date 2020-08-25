@@ -709,16 +709,16 @@ public class SAPEntryWrapper implements ModelWrapper<SAPEntry>, SAPEntry {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SAPEntryWrapper)) {
+		if (!(object instanceof SAPEntryWrapper)) {
 			return false;
 		}
 
-		SAPEntryWrapper sapEntryWrapper = (SAPEntryWrapper)obj;
+		SAPEntryWrapper sapEntryWrapper = (SAPEntryWrapper)object;
 
 		if (Objects.equals(_sapEntry, sapEntryWrapper._sapEntry)) {
 			return true;

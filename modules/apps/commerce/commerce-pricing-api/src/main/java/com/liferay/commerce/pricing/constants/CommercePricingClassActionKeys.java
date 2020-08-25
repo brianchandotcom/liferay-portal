@@ -19,10 +19,7 @@ package com.liferay.commerce.pricing.constants;
  */
 public class CommercePricingClassActionKeys {
 
-	public static final String MANAGE_COMMERCE_PRICING_CLASSES =
-		"MANAGE_COMMERCE_PRICING_CLASSES";
-
-	public static final String VIEW_COMMERCE_PRICING_CLASSES =
-		"VIEW_COMMERCE_PRICING_CLASSES";
+	public static final String ADD_COMMERCE_PRICING_CLASS =
+		"ADD_COMMERCE_PRICING_CLASS";
 
 }

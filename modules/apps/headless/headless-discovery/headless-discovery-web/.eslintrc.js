@@ -13,5 +13,12 @@
  */
 
 module.exports = {
-	extends: ['liferay/react']
+	globals: {
+		global: true,
+	},
+	rules: {
+		'liferay-portal/no-global-fetch': 'off',
+		'liferay-portal/no-react-dom-render': 'off',
+		'no-unused-vars': 'off',
+	},
 };

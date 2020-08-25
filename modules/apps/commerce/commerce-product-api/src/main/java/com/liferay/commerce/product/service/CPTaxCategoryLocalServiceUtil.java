@@ -62,6 +62,12 @@ public class CPTaxCategoryLocalServiceUtil {
 			nameMap, descriptionMap, serviceContext);
 	}
 
+	public static int countCPTaxCategoriesByCompanyId(
+		long companyId, String keyword) {
+
+		return getService().countCPTaxCategoriesByCompanyId(companyId, keyword);
+	}
+
 	/**
 	 * Creates a new cp tax category with the primary key. Does not add the cp tax category to the database.
 	 *
@@ -207,6 +213,15 @@ public class CPTaxCategoryLocalServiceUtil {
 		fetchCPTaxCategory(long CPTaxCategoryId) {
 
 		return getService().fetchCPTaxCategory(CPTaxCategoryId);
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.product.model.CPTaxCategory>
+			findCPTaxCategoriesByCompanyId(
+				long companyId, String keyword, int start, int end) {
+
+		return getService().findCPTaxCategoriesByCompanyId(
+			companyId, keyword, start, end);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery

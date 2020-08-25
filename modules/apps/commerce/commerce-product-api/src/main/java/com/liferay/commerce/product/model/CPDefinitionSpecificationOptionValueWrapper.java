@@ -789,18 +789,18 @@ public class CPDefinitionSpecificationOptionValueWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionSpecificationOptionValueWrapper)) {
+		if (!(object instanceof CPDefinitionSpecificationOptionValueWrapper)) {
 			return false;
 		}
 
 		CPDefinitionSpecificationOptionValueWrapper
 			cpDefinitionSpecificationOptionValueWrapper =
-				(CPDefinitionSpecificationOptionValueWrapper)obj;
+				(CPDefinitionSpecificationOptionValueWrapper)object;
 
 		if (Objects.equals(
 				_cpDefinitionSpecificationOptionValue,

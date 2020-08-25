@@ -44,7 +44,7 @@ public class Patcher {
 		int blockLength = deltaByteBuffer.getInt();
 
 		deltaByteChannelReader.resizeBuffer(
-			blockLength * DeltaUtil.BUFFER_FACTOR + 5);
+			(blockLength * DeltaUtil.BUFFER_FACTOR) + 5);
 
 		deltaByteBuffer = deltaByteChannelReader.getBuffer();
 

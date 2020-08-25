@@ -16,6 +16,7 @@ package com.liferay.commerce.tax.engine.fixed.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.constants.CommerceTaxScreenNavigationConstants;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -121,7 +122,7 @@ public class CommerceTaxMethodFixedRatesScreenNavigationEntry
 					_commerceChannelModelResourcePermission,
 					_commerceCurrencyLocalService, _commerceTaxFixedRateService,
 					_commerceTaxMethodService, _cpTaxCategoryService,
-					renderRequest);
+					_percentageFormatter, renderRequest);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -155,6 +156,9 @@ public class CommerceTaxMethodFixedRatesScreenNavigationEntry
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private PercentageFormatter _percentageFormatter;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.tax.engine.fixed.web)"

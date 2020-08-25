@@ -779,6 +779,40 @@ public class CommerceOrderServiceSoap {
 				long commerceShippingMethodId, String shippingOptionName,
 				String purchaseOrderNumber, java.math.BigDecimal subtotal,
 				java.math.BigDecimal shippingAmount, java.math.BigDecimal total,
+				java.math.BigDecimal subtotalWithTaxAmount,
+				java.math.BigDecimal shippingWithTaxAmount,
+				java.math.BigDecimal totalWithTaxAmount, String advanceStatus,
+				String externalReferenceCode,
+				com.liferay.commerce.context.CommerceContext commerceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.model.CommerceOrder returnValue =
+				CommerceOrderServiceUtil.updateCommerceOrder(
+					commerceOrderId, billingAddressId, shippingAddressId,
+					commercePaymentMethodKey, commerceShippingMethodId,
+					shippingOptionName, purchaseOrderNumber, subtotal,
+					shippingAmount, total, subtotalWithTaxAmount,
+					shippingWithTaxAmount, totalWithTaxAmount, advanceStatus,
+					externalReferenceCode, commerceContext);
+
+			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderSoap
+			updateCommerceOrder(
+				long commerceOrderId, long billingAddressId,
+				long shippingAddressId, String commercePaymentMethodKey,
+				long commerceShippingMethodId, String shippingOptionName,
+				String purchaseOrderNumber, java.math.BigDecimal subtotal,
+				java.math.BigDecimal shippingAmount, java.math.BigDecimal total,
 				String advanceStatus,
 				com.liferay.commerce.context.CommerceContext commerceContext)
 		throws RemoteException {
@@ -1230,6 +1264,45 @@ public class CommerceOrderServiceSoap {
 		try {
 			com.liferay.commerce.model.CommerceOrder returnValue =
 				CommerceOrderServiceUtil.updateUser(commerceOrderId, userId);
+
+			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderSoap
+			upsertCommerceOrder(
+				long userId, long groupId, long commerceAccountId,
+				long commerceCurrencyId, long billingAddressId,
+				long shippingAddressId, String commercePaymentMethodKey,
+				long commerceShippingMethodId, String shippingOptionName,
+				String purchaseOrderNumber, java.math.BigDecimal subtotal,
+				java.math.BigDecimal shippingAmount, java.math.BigDecimal total,
+				java.math.BigDecimal subtotalWithTaxAmount,
+				java.math.BigDecimal shippingWithTaxAmount,
+				java.math.BigDecimal totalWithTaxAmount, int paymentStatus,
+				int orderStatus, String advanceStatus,
+				String externalReferenceCode,
+				com.liferay.commerce.context.CommerceContext commerceContext,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.model.CommerceOrder returnValue =
+				CommerceOrderServiceUtil.upsertCommerceOrder(
+					userId, groupId, commerceAccountId, commerceCurrencyId,
+					billingAddressId, shippingAddressId,
+					commercePaymentMethodKey, commerceShippingMethodId,
+					shippingOptionName, purchaseOrderNumber, subtotal,
+					shippingAmount, total, subtotalWithTaxAmount,
+					shippingWithTaxAmount, totalWithTaxAmount, paymentStatus,
+					orderStatus, advanceStatus, externalReferenceCode,
+					commerceContext, serviceContext);
 
 			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(
 				returnValue);

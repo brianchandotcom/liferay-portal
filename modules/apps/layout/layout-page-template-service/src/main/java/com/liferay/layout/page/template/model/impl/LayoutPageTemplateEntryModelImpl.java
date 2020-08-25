@@ -1539,17 +1539,17 @@ public class LayoutPageTemplateEntryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof LayoutPageTemplateEntry)) {
+		if (!(object instanceof LayoutPageTemplateEntry)) {
 			return false;
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			(LayoutPageTemplateEntry)obj;
+			(LayoutPageTemplateEntry)object;
 
 		long primaryKey = layoutPageTemplateEntry.getPrimaryKey();
 

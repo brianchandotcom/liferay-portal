@@ -516,16 +516,16 @@ public class PortalPreferencesModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof PortalPreferences)) {
+		if (!(object instanceof PortalPreferences)) {
 			return false;
 		}
 
-		PortalPreferences portalPreferences = (PortalPreferences)obj;
+		PortalPreferences portalPreferences = (PortalPreferences)object;
 
 		long primaryKey = portalPreferences.getPrimaryKey();
 

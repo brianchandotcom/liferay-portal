@@ -276,16 +276,16 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ClassNameWrapper)) {
+		if (!(object instanceof ClassNameWrapper)) {
 			return false;
 		}
 
-		ClassNameWrapper classNameWrapper = (ClassNameWrapper)obj;
+		ClassNameWrapper classNameWrapper = (ClassNameWrapper)object;
 
 		if (Objects.equals(_className, classNameWrapper._className)) {
 			return true;

@@ -865,16 +865,16 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MDRRuleWrapper)) {
+		if (!(object instanceof MDRRuleWrapper)) {
 			return false;
 		}
 
-		MDRRuleWrapper mdrRuleWrapper = (MDRRuleWrapper)obj;
+		MDRRuleWrapper mdrRuleWrapper = (MDRRuleWrapper)object;
 
 		if (Objects.equals(_mdrRule, mdrRuleWrapper._mdrRule)) {
 			return true;

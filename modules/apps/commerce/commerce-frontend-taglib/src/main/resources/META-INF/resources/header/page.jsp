@@ -30,7 +30,7 @@ if (bean instanceof WorkflowedModel) {
 String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletKeys.MY_WORKFLOW_TASK);
 %>
 
-<div class='bg-white border-bottom commerce-header<%= fullWidth ? " container-fluid" : StringPool.BLANK %><%= Validator.isNotNull(wrapperCssClasses) ? StringPool.SPACE + wrapperCssClasses : StringPool.BLANK %> side-panel-top-anchor '>
+<div class="bg-white border-bottom commerce-header<%= fullWidth ? " container-fluid" : StringPool.BLANK %><%= Validator.isNotNull(wrapperCssClasses) ? StringPool.SPACE + wrapperCssClasses : StringPool.BLANK %> side-panel-top-anchor ">
 	<div class="container<%= Validator.isNotNull(cssClasses) ? StringPool.SPACE + cssClasses : StringPool.BLANK %>">
 		<div class="d-lg-flex py-2">
 			<div class="align-items-center d-flex flex-grow-1">
@@ -314,14 +314,22 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 						</div>
 					</c:if>
 
-					<c:if test=" <%= (Validator.isNotNull(dropdownItems) && !dropdownItems.isEmpty()) || Validator.isNotNull(previewUrl) %>">
+					<c:if test="<%= Validator.isNotNull(dropdownItems) || Validator.isNotNull(previewUrl) %>">
 						<div class="align-items-center border-left col-auto d-flex pl-3">
-							<c:if test=" <%= Validator.isNotNull(dropdownItems) && !dropdownItems.isEmpty() %>">
-								<clay:dropdown-menu
-									buttonType="button"
-									dropdownItems="<%= dropdownItems %>"
-									icon="ellipsis-v"
-								/>
+							<c:if test="<%= Validator.isNotNull(dropdownItems) && (dropdownItems.size() > 0) %>">
+								<div id="dropdown-header-container">
+									<liferay-ui:icon
+										icon="ellipsis-v"
+										markupView="lexicon"
+									/>
+								</div>
+
+								<aui:script require="commerce-frontend-js/components/dropdown/entry as dropdown">
+									dropdown.default('dropdown-header', 'dropdown-header-container', {
+										items: <%= jsonSerializer.serializeDeep(dropdownItems) %>,
+										spritemap: '<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>'
+									});
+								</aui:script>
 							</c:if>
 
 							<c:if test="<%= Validator.isNotNull(previewUrl) %>">

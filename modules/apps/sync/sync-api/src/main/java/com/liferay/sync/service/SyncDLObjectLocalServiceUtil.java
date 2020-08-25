@@ -86,6 +86,10 @@ public class SyncDLObjectLocalServiceUtil {
 	/**
 	 * Adds the sync dl object to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SyncDLObjectLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param syncDLObject the sync dl object
 	 * @return the sync dl object that was added
 	 */
@@ -121,6 +125,10 @@ public class SyncDLObjectLocalServiceUtil {
 	/**
 	 * Deletes the sync dl object with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SyncDLObjectLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param syncDLObjectId the primary key of the sync dl object
 	 * @return the sync dl object that was removed
 	 * @throws PortalException if a sync dl object with the primary key could not be found
@@ -134,6 +142,10 @@ public class SyncDLObjectLocalServiceUtil {
 
 	/**
 	 * Deletes the sync dl object from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SyncDLObjectLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param syncDLObject the sync dl object
 	 * @return the sync dl object that was removed
@@ -350,6 +362,10 @@ public class SyncDLObjectLocalServiceUtil {
 
 	/**
 	 * Updates the sync dl object in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SyncDLObjectLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param syncDLObject the sync dl object
 	 * @return the sync dl object that was updated

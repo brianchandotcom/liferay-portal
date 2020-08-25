@@ -19,8 +19,11 @@ import com.liferay.commerce.pricing.service.CommercePricingClassService;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierPersistence;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelPersistence;
+import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelPersistence;
+import com.liferay.commerce.pricing.service.persistence.CommercePricingClassFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassPersistence;
+import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -289,6 +292,26 @@ public abstract class CommercePricingClassServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce pricing class finder.
+	 *
+	 * @return the commerce pricing class finder
+	 */
+	public CommercePricingClassFinder getCommercePricingClassFinder() {
+		return commercePricingClassFinder;
+	}
+
+	/**
+	 * Sets the commerce pricing class finder.
+	 *
+	 * @param commercePricingClassFinder the commerce pricing class finder
+	 */
+	public void setCommercePricingClassFinder(
+		CommercePricingClassFinder commercePricingClassFinder) {
+
+		this.commercePricingClassFinder = commercePricingClassFinder;
+	}
+
+	/**
 	 * Returns the commerce pricing class cp definition rel local service.
 	 *
 	 * @return the commerce pricing class cp definition rel local service
@@ -362,6 +385,30 @@ public abstract class CommercePricingClassServiceBaseImpl
 
 		this.commercePricingClassCPDefinitionRelPersistence =
 			commercePricingClassCPDefinitionRelPersistence;
+	}
+
+	/**
+	 * Returns the commerce pricing class cp definition rel finder.
+	 *
+	 * @return the commerce pricing class cp definition rel finder
+	 */
+	public CommercePricingClassCPDefinitionRelFinder
+		getCommercePricingClassCPDefinitionRelFinder() {
+
+		return commercePricingClassCPDefinitionRelFinder;
+	}
+
+	/**
+	 * Sets the commerce pricing class cp definition rel finder.
+	 *
+	 * @param commercePricingClassCPDefinitionRelFinder the commerce pricing class cp definition rel finder
+	 */
+	public void setCommercePricingClassCPDefinitionRelFinder(
+		CommercePricingClassCPDefinitionRelFinder
+			commercePricingClassCPDefinitionRelFinder) {
+
+		this.commercePricingClassCPDefinitionRelFinder =
+			commercePricingClassCPDefinitionRelFinder;
 	}
 
 	/**
@@ -535,6 +582,49 @@ public abstract class CommercePricingClassServiceBaseImpl
 		this.userPersistence = userPersistence;
 	}
 
+	/**
+	 * Returns the expando row local service.
+	 *
+	 * @return the expando row local service
+	 */
+	public com.liferay.expando.kernel.service.ExpandoRowLocalService
+		getExpandoRowLocalService() {
+
+		return expandoRowLocalService;
+	}
+
+	/**
+	 * Sets the expando row local service.
+	 *
+	 * @param expandoRowLocalService the expando row local service
+	 */
+	public void setExpandoRowLocalService(
+		com.liferay.expando.kernel.service.ExpandoRowLocalService
+			expandoRowLocalService) {
+
+		this.expandoRowLocalService = expandoRowLocalService;
+	}
+
+	/**
+	 * Returns the expando row persistence.
+	 *
+	 * @return the expando row persistence
+	 */
+	public ExpandoRowPersistence getExpandoRowPersistence() {
+		return expandoRowPersistence;
+	}
+
+	/**
+	 * Sets the expando row persistence.
+	 *
+	 * @param expandoRowPersistence the expando row persistence
+	 */
+	public void setExpandoRowPersistence(
+		ExpandoRowPersistence expandoRowPersistence) {
+
+		this.expandoRowPersistence = expandoRowPersistence;
+	}
+
 	public void afterPropertiesSet() {
 	}
 
@@ -635,6 +725,9 @@ public abstract class CommercePricingClassServiceBaseImpl
 	@BeanReference(type = CommercePricingClassPersistence.class)
 	protected CommercePricingClassPersistence commercePricingClassPersistence;
 
+	@BeanReference(type = CommercePricingClassFinder.class)
+	protected CommercePricingClassFinder commercePricingClassFinder;
+
 	@BeanReference(
 		type = com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelLocalService.class
 	)
@@ -652,6 +745,10 @@ public abstract class CommercePricingClassServiceBaseImpl
 	@BeanReference(type = CommercePricingClassCPDefinitionRelPersistence.class)
 	protected CommercePricingClassCPDefinitionRelPersistence
 		commercePricingClassCPDefinitionRelPersistence;
+
+	@BeanReference(type = CommercePricingClassCPDefinitionRelFinder.class)
+	protected CommercePricingClassCPDefinitionRelFinder
+		commercePricingClassCPDefinitionRelFinder;
 
 	@ServiceReference(
 		type = com.liferay.counter.kernel.service.CounterLocalService.class
@@ -693,5 +790,14 @@ public abstract class CommercePricingClassServiceBaseImpl
 
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+
+	@ServiceReference(
+		type = com.liferay.expando.kernel.service.ExpandoRowLocalService.class
+	)
+	protected com.liferay.expando.kernel.service.ExpandoRowLocalService
+		expandoRowLocalService;
+
+	@ServiceReference(type = ExpandoRowPersistence.class)
+	protected ExpandoRowPersistence expandoRowPersistence;
 
 }

@@ -36,16 +36,17 @@ public class AssetEntryCacheModel
 	implements CacheModel<AssetEntry>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AssetEntryCacheModel)) {
+		if (!(object instanceof AssetEntryCacheModel)) {
 			return false;
 		}
 
-		AssetEntryCacheModel assetEntryCacheModel = (AssetEntryCacheModel)obj;
+		AssetEntryCacheModel assetEntryCacheModel =
+			(AssetEntryCacheModel)object;
 
 		if (entryId == assetEntryCacheModel.entryId) {
 			return true;

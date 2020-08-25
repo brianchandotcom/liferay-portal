@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Dynamic Data Mapping Form Field Type
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.form.field.type
-Bundle-Version: 3.0.53
+Bundle-Version: 3.0.56
 Liferay-JS-Config: /META-INF/resources/config.js
 Provide-Capability:\
 	liferay.resource.bundle;\

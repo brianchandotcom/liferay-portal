@@ -701,16 +701,16 @@ public class ReleaseModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Release)) {
+		if (!(object instanceof Release)) {
 			return false;
 		}
 
-		Release release = (Release)obj;
+		Release release = (Release)object;
 
 		long primaryKey = release.getPrimaryKey();
 

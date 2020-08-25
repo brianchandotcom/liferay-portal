@@ -85,7 +85,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 				}
 				%>
 
-				<div class='<%= primary ? "hide" : StringPool.BLANK %>' id="<portlet:namespace />rateOptions">
+				<div class="<%= primary ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />rateOptions">
 					<aui:input label="<%= taglibLabel %>" name="rate" />
 				</div>
 

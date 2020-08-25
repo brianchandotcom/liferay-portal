@@ -43,7 +43,7 @@ public class JoinFunction implements DDMExpressionFunction {
 
 		JSONArray jsonArray = (JSONArray)parameters[0];
 
-		StringBundler sb = new StringBundler(jsonArray.length() * 2 - 1);
+		StringBundler sb = new StringBundler((jsonArray.length() * 2) - 1);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			sb.append(GetterUtil.getString(jsonArray.get(i)));

@@ -262,7 +262,7 @@ public class SyncHelperImpl implements SyncHelper {
 			new JcaX509v3CertificateBuilder(
 				x500Name, new BigInteger(64, new SecureRandom()),
 				new Date(System.currentTimeMillis() - Time.YEAR),
-				new Date(System.currentTimeMillis() + Time.YEAR * 1000),
+				new Date(System.currentTimeMillis() + (Time.YEAR * 1000)),
 				x500Name, keyPair.getPublic());
 
 		PrivateKey privateKey = keyPair.getPrivate();

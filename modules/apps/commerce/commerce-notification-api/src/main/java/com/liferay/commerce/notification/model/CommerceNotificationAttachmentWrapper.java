@@ -550,18 +550,18 @@ public class CommerceNotificationAttachmentWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceNotificationAttachmentWrapper)) {
+		if (!(object instanceof CommerceNotificationAttachmentWrapper)) {
 			return false;
 		}
 
 		CommerceNotificationAttachmentWrapper
 			commerceNotificationAttachmentWrapper =
-				(CommerceNotificationAttachmentWrapper)obj;
+				(CommerceNotificationAttachmentWrapper)object;
 
 		if (Objects.equals(
 				_commerceNotificationAttachment,

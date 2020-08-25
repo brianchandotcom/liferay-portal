@@ -145,6 +145,32 @@ public class OrderItem implements Cloneable {
 
 	protected BigDecimal discountPercentageLevel1;
 
+	public BigDecimal getDiscountPercentageLevel1WithTaxAmount() {
+		return discountPercentageLevel1WithTaxAmount;
+	}
+
+	public void setDiscountPercentageLevel1WithTaxAmount(
+		BigDecimal discountPercentageLevel1WithTaxAmount) {
+
+		this.discountPercentageLevel1WithTaxAmount =
+			discountPercentageLevel1WithTaxAmount;
+	}
+
+	public void setDiscountPercentageLevel1WithTaxAmount(
+		UnsafeSupplier<BigDecimal, Exception>
+			discountPercentageLevel1WithTaxAmountUnsafeSupplier) {
+
+		try {
+			discountPercentageLevel1WithTaxAmount =
+				discountPercentageLevel1WithTaxAmountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected BigDecimal discountPercentageLevel1WithTaxAmount;
+
 	public BigDecimal getDiscountPercentageLevel2() {
 		return discountPercentageLevel2;
 	}
@@ -169,6 +195,32 @@ public class OrderItem implements Cloneable {
 	}
 
 	protected BigDecimal discountPercentageLevel2;
+
+	public BigDecimal getDiscountPercentageLevel2WithTaxAmount() {
+		return discountPercentageLevel2WithTaxAmount;
+	}
+
+	public void setDiscountPercentageLevel2WithTaxAmount(
+		BigDecimal discountPercentageLevel2WithTaxAmount) {
+
+		this.discountPercentageLevel2WithTaxAmount =
+			discountPercentageLevel2WithTaxAmount;
+	}
+
+	public void setDiscountPercentageLevel2WithTaxAmount(
+		UnsafeSupplier<BigDecimal, Exception>
+			discountPercentageLevel2WithTaxAmountUnsafeSupplier) {
+
+		try {
+			discountPercentageLevel2WithTaxAmount =
+				discountPercentageLevel2WithTaxAmountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected BigDecimal discountPercentageLevel2WithTaxAmount;
 
 	public BigDecimal getDiscountPercentageLevel3() {
 		return discountPercentageLevel3;
@@ -195,6 +247,32 @@ public class OrderItem implements Cloneable {
 
 	protected BigDecimal discountPercentageLevel3;
 
+	public BigDecimal getDiscountPercentageLevel3WithTaxAmount() {
+		return discountPercentageLevel3WithTaxAmount;
+	}
+
+	public void setDiscountPercentageLevel3WithTaxAmount(
+		BigDecimal discountPercentageLevel3WithTaxAmount) {
+
+		this.discountPercentageLevel3WithTaxAmount =
+			discountPercentageLevel3WithTaxAmount;
+	}
+
+	public void setDiscountPercentageLevel3WithTaxAmount(
+		UnsafeSupplier<BigDecimal, Exception>
+			discountPercentageLevel3WithTaxAmountUnsafeSupplier) {
+
+		try {
+			discountPercentageLevel3WithTaxAmount =
+				discountPercentageLevel3WithTaxAmountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected BigDecimal discountPercentageLevel3WithTaxAmount;
+
 	public BigDecimal getDiscountPercentageLevel4() {
 		return discountPercentageLevel4;
 	}
@@ -219,6 +297,54 @@ public class OrderItem implements Cloneable {
 	}
 
 	protected BigDecimal discountPercentageLevel4;
+
+	public BigDecimal getDiscountPercentageLevel4WithTaxAmount() {
+		return discountPercentageLevel4WithTaxAmount;
+	}
+
+	public void setDiscountPercentageLevel4WithTaxAmount(
+		BigDecimal discountPercentageLevel4WithTaxAmount) {
+
+		this.discountPercentageLevel4WithTaxAmount =
+			discountPercentageLevel4WithTaxAmount;
+	}
+
+	public void setDiscountPercentageLevel4WithTaxAmount(
+		UnsafeSupplier<BigDecimal, Exception>
+			discountPercentageLevel4WithTaxAmountUnsafeSupplier) {
+
+		try {
+			discountPercentageLevel4WithTaxAmount =
+				discountPercentageLevel4WithTaxAmountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected BigDecimal discountPercentageLevel4WithTaxAmount;
+
+	public BigDecimal getDiscountWithTaxAmount() {
+		return discountWithTaxAmount;
+	}
+
+	public void setDiscountWithTaxAmount(BigDecimal discountWithTaxAmount) {
+		this.discountWithTaxAmount = discountWithTaxAmount;
+	}
+
+	public void setDiscountWithTaxAmount(
+		UnsafeSupplier<BigDecimal, Exception>
+			discountWithTaxAmountUnsafeSupplier) {
+
+		try {
+			discountWithTaxAmount = discountWithTaxAmountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected BigDecimal discountWithTaxAmount;
 
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
@@ -261,6 +387,29 @@ public class OrderItem implements Cloneable {
 	}
 
 	protected BigDecimal finalPrice;
+
+	public BigDecimal getFinalPriceWithTaxAmount() {
+		return finalPriceWithTaxAmount;
+	}
+
+	public void setFinalPriceWithTaxAmount(BigDecimal finalPriceWithTaxAmount) {
+		this.finalPriceWithTaxAmount = finalPriceWithTaxAmount;
+	}
+
+	public void setFinalPriceWithTaxAmount(
+		UnsafeSupplier<BigDecimal, Exception>
+			finalPriceWithTaxAmountUnsafeSupplier) {
+
+		try {
+			finalPriceWithTaxAmount =
+				finalPriceWithTaxAmountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected BigDecimal finalPriceWithTaxAmount;
 
 	public Long getId() {
 		return id;
@@ -389,6 +538,29 @@ public class OrderItem implements Cloneable {
 	}
 
 	protected BigDecimal promoPrice;
+
+	public BigDecimal getPromoPriceWithTaxAmount() {
+		return promoPriceWithTaxAmount;
+	}
+
+	public void setPromoPriceWithTaxAmount(BigDecimal promoPriceWithTaxAmount) {
+		this.promoPriceWithTaxAmount = promoPriceWithTaxAmount;
+	}
+
+	public void setPromoPriceWithTaxAmount(
+		UnsafeSupplier<BigDecimal, Exception>
+			promoPriceWithTaxAmountUnsafeSupplier) {
+
+		try {
+			promoPriceWithTaxAmount =
+				promoPriceWithTaxAmountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected BigDecimal promoPriceWithTaxAmount;
 
 	public Integer getQuantity() {
 		return quantity;
@@ -598,6 +770,28 @@ public class OrderItem implements Cloneable {
 	}
 
 	protected BigDecimal unitPrice;
+
+	public BigDecimal getUnitPriceWithTaxAmount() {
+		return unitPriceWithTaxAmount;
+	}
+
+	public void setUnitPriceWithTaxAmount(BigDecimal unitPriceWithTaxAmount) {
+		this.unitPriceWithTaxAmount = unitPriceWithTaxAmount;
+	}
+
+	public void setUnitPriceWithTaxAmount(
+		UnsafeSupplier<BigDecimal, Exception>
+			unitPriceWithTaxAmountUnsafeSupplier) {
+
+		try {
+			unitPriceWithTaxAmount = unitPriceWithTaxAmountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected BigDecimal unitPriceWithTaxAmount;
 
 	@Override
 	public OrderItem clone() throws CloneNotSupportedException {

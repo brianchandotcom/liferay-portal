@@ -944,17 +944,17 @@ public class CommerceInventoryReplenishmentItemModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceInventoryReplenishmentItem)) {
+		if (!(object instanceof CommerceInventoryReplenishmentItem)) {
 			return false;
 		}
 
 		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			(CommerceInventoryReplenishmentItem)obj;
+			(CommerceInventoryReplenishmentItem)object;
 
 		long primaryKey = commerceInventoryReplenishmentItem.getPrimaryKey();
 

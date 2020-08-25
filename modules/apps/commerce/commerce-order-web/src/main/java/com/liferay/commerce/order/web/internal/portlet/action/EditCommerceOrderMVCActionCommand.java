@@ -27,6 +27,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
+import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShipmentService;
@@ -464,8 +465,11 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		int paymentStatus = ParamUtil.getInteger(
 			actionRequest, "paymentStatus");
 
-		_commerceOrderService.updatePaymentStatus(
-			commerceOrderId, paymentStatus);
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			commerceOrderId);
+
+		_commercePaymentEngine.updateOrderPaymentStatus(
+			commerceOrderId, paymentStatus, commerceOrder.getTransactionId());
 	}
 
 	protected void updatePrintedNote(ActionRequest actionRequest)
@@ -596,6 +600,9 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommercePaymentEngine _commercePaymentEngine;
 
 	@Reference
 	private CommerceShipmentService _commerceShipmentService;

@@ -533,16 +533,16 @@ public class TeamWrapper implements ModelWrapper<Team>, Team {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof TeamWrapper)) {
+		if (!(object instanceof TeamWrapper)) {
 			return false;
 		}
 
-		TeamWrapper teamWrapper = (TeamWrapper)obj;
+		TeamWrapper teamWrapper = (TeamWrapper)object;
 
 		if (Objects.equals(_team, teamWrapper._team)) {
 			return true;

@@ -1201,17 +1201,17 @@ public class CommerceVirtualOrderItemModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceVirtualOrderItem)) {
+		if (!(object instanceof CommerceVirtualOrderItem)) {
 			return false;
 		}
 
 		CommerceVirtualOrderItem commerceVirtualOrderItem =
-			(CommerceVirtualOrderItem)obj;
+			(CommerceVirtualOrderItem)object;
 
 		long primaryKey = commerceVirtualOrderItem.getPrimaryKey();
 

@@ -545,7 +545,7 @@ public class CalendarBookingFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(calendarIds.length * 2 + 1);
+		StringBundler sb = new StringBundler((calendarIds.length * 2) + 1);
 
 		sb.append(" (");
 
@@ -568,7 +568,7 @@ public class CalendarBookingFinderImpl
 		}
 
 		StringBundler sb = new StringBundler(
-			calendarResourceIds.length * 2 + 1);
+			(calendarResourceIds.length * 2) + 1);
 
 		sb.append(" (");
 
@@ -620,7 +620,7 @@ public class CalendarBookingFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(statuses.length * 2 + 1);
+		StringBundler sb = new StringBundler((statuses.length * 2) + 1);
 
 		sb.append("AND (");
 

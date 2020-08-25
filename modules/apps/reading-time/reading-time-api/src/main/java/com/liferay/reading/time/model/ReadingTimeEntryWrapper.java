@@ -522,17 +522,17 @@ public class ReadingTimeEntryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ReadingTimeEntryWrapper)) {
+		if (!(object instanceof ReadingTimeEntryWrapper)) {
 			return false;
 		}
 
 		ReadingTimeEntryWrapper readingTimeEntryWrapper =
-			(ReadingTimeEntryWrapper)obj;
+			(ReadingTimeEntryWrapper)object;
 
 		if (Objects.equals(
 				_readingTimeEntry, readingTimeEntryWrapper._readingTimeEntry)) {

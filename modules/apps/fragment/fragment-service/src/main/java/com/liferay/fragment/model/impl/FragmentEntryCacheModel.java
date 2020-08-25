@@ -36,17 +36,17 @@ public class FragmentEntryCacheModel
 	implements CacheModel<FragmentEntry>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof FragmentEntryCacheModel)) {
+		if (!(object instanceof FragmentEntryCacheModel)) {
 			return false;
 		}
 
 		FragmentEntryCacheModel fragmentEntryCacheModel =
-			(FragmentEntryCacheModel)obj;
+			(FragmentEntryCacheModel)object;
 
 		if (fragmentEntryId == fragmentEntryCacheModel.fragmentEntryId) {
 			return true;

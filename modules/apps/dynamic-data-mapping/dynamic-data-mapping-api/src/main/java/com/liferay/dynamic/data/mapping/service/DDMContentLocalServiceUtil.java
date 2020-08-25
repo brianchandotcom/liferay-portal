@@ -50,6 +50,10 @@ public class DDMContentLocalServiceUtil {
 	/**
 	 * Adds the ddm content to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDMContentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param ddmContent the ddm content
 	 * @return the ddm content that was added
 	 */
@@ -85,6 +89,10 @@ public class DDMContentLocalServiceUtil {
 	/**
 	 * Deletes the ddm content from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDMContentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param ddmContent the ddm content
 	 * @return the ddm content that was removed
 	 */
@@ -97,6 +105,10 @@ public class DDMContentLocalServiceUtil {
 
 	/**
 	 * Deletes the ddm content with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDMContentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param contentId the primary key of the ddm content
 	 * @return the ddm content that was removed
@@ -399,6 +411,10 @@ public class DDMContentLocalServiceUtil {
 
 	/**
 	 * Updates the ddm content in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDMContentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param ddmContent the ddm content
 	 * @return the ddm content that was updated

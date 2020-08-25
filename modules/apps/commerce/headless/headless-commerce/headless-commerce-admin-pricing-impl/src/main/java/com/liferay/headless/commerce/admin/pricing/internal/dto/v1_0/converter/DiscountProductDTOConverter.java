@@ -17,8 +17,9 @@ package com.liferay.headless.commerce.admin.pricing.internal.dto.v1_0.converter;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountRel;
 import com.liferay.commerce.discount.service.CommerceDiscountRelService;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CProduct;
-import com.liferay.commerce.product.service.CProductLocalService;
+import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.DiscountProduct;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -48,8 +49,10 @@ public class DiscountProductDTOConverter
 			_commerceDiscountRelService.getCommerceDiscountRel(
 				(Long)dtoConverterContext.getId());
 
-		CProduct cProduct = _cProductLocalService.getCProduct(
+		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			commerceDiscountRel.getClassPK());
+
+		CProduct cProduct = cpDefinition.getCProduct();
 
 		CommerceDiscount commerceDiscount =
 			commerceDiscountRel.getCommerceDiscount();
@@ -71,6 +74,6 @@ public class DiscountProductDTOConverter
 	private CommerceDiscountRelService _commerceDiscountRelService;
 
 	@Reference
-	private CProductLocalService _cProductLocalService;
+	private CPDefinitionService _cpDefinitionService;
 
 }

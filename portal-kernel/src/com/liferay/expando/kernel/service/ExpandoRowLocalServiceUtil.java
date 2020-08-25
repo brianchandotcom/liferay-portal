@@ -39,6 +39,10 @@ public class ExpandoRowLocalServiceUtil {
 	/**
 	 * Adds the expando row to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ExpandoRowLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param expandoRow the expando row
 	 * @return the expando row that was added
 	 */
@@ -70,6 +74,10 @@ public class ExpandoRowLocalServiceUtil {
 	/**
 	 * Deletes the expando row from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ExpandoRowLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param expandoRow the expando row
 	 * @return the expando row that was removed
 	 */
@@ -81,6 +89,10 @@ public class ExpandoRowLocalServiceUtil {
 
 	/**
 	 * Deletes the expando row with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ExpandoRowLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param rowId the primary key of the expando row
 	 * @return the expando row that was removed
@@ -404,6 +416,10 @@ public class ExpandoRowLocalServiceUtil {
 
 	/**
 	 * Updates the expando row in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ExpandoRowLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param expandoRow the expando row
 	 * @return the expando row that was updated

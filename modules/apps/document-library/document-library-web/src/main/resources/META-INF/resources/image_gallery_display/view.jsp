@@ -55,8 +55,6 @@ Map<String, Object> contextObjects = new HashMap<String, Object>();
 contextObjects.put("dlPortletInstanceSettings", dlPortletInstanceSettings);
 
 String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
-
-List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderId, mediaGalleryMimeTypes, status, 0, SearchContainer.MAX_DELTA, null);
 %>
 
 <liferay-ddm:template-renderer
@@ -64,7 +62,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 	contextObjects="<%= contextObjects %>"
 	displayStyle="<%= displayStyle %>"
 	displayStyleGroupId="<%= displayStyleGroupId %>"
-	entries="<%= fileEntries %>"
+	entries="<%= DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderId, mediaGalleryMimeTypes, status, 0, SearchContainer.MAX_DELTA, null) %>"
 >
 
 	<%

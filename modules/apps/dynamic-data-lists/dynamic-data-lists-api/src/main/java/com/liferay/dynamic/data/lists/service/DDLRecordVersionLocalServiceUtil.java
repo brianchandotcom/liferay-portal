@@ -41,6 +41,10 @@ public class DDLRecordVersionLocalServiceUtil {
 	/**
 	 * Adds the ddl record version to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDLRecordVersionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param ddlRecordVersion the ddl record version
 	 * @return the ddl record version that was added
 	 */
@@ -67,6 +71,10 @@ public class DDLRecordVersionLocalServiceUtil {
 	/**
 	 * Deletes the ddl record version from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDLRecordVersionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param ddlRecordVersion the ddl record version
 	 * @return the ddl record version that was removed
 	 */
@@ -80,6 +88,10 @@ public class DDLRecordVersionLocalServiceUtil {
 
 	/**
 	 * Deletes the ddl record version with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDLRecordVersionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param recordVersionId the primary key of the ddl record version
 	 * @return the ddl record version that was removed
@@ -373,6 +385,10 @@ public class DDLRecordVersionLocalServiceUtil {
 
 	/**
 	 * Updates the ddl record version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DDLRecordVersionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param ddlRecordVersion the ddl record version
 	 * @return the ddl record version that was updated

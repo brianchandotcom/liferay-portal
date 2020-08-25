@@ -22,11 +22,13 @@ import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter.Ord
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -34,7 +36,10 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Stream;
+
+import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,7 +53,8 @@ public class OrderHelper {
 	public Page<Order> getOrdersPage(
 			long companyId, Filter filter, Pagination pagination, String search,
 			Sort[] sorts,
-			UnsafeFunction<Document, Order, Exception> transformUnsafeFunction)
+			UnsafeFunction<Document, Order, Exception> transformUnsafeFunction,
+			boolean useSearchResultPermissionFilter)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -62,6 +68,10 @@ public class OrderHelper {
 					SearchContext searchContext = (SearchContext)o;
 
 					searchContext.setCompanyId(companyId);
+
+					searchContext.setAttribute(
+						"useSearchResultPermissionFilter",
+						useSearchResultPermissionFilter);
 
 					long[] commerceChannelGroupIds =
 						_getCommerceChannelGroupIds(companyId);
@@ -82,6 +92,18 @@ public class OrderHelper {
 			new DefaultDTOConverterContext(commerceOrderId, locale));
 	}
 
+	public Order toOrder(
+			long commerceOrderId, Locale locale, boolean isAcceptAllLanguages,
+			User contextUser, UriInfo contextUriInfo,
+			Map<String, Map<String, String>> actions)
+		throws Exception {
+
+		return _orderDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				isAcceptAllLanguages, actions, _dtoConverterRegistry,
+				commerceOrderId, locale, contextUriInfo, contextUser));
+	}
+
 	private long[] _getCommerceChannelGroupIds(long companyId)
 		throws PortalException {
 
@@ -97,6 +119,9 @@ public class OrderHelper {
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private OrderDTOConverter _orderDTOConverter;

@@ -22,11 +22,16 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -44,14 +49,42 @@ import java.util.Map;
  */
 public class WorkflowTaskPermissionChecker {
 
+	public void check(
+			long groupId, WorkflowTask workflowTask,
+			PermissionChecker permissionChecker)
+		throws PortalException {
+
+		if (!hasPermission(groupId, workflowTask, permissionChecker)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, WorkflowTask.class.getName(),
+				workflowTask.getWorkflowTaskId(), ActionKeys.VIEW);
+		}
+	}
+
 	public boolean hasPermission(
 		long groupId, WorkflowTask workflowTask,
 		PermissionChecker permissionChecker) {
 
 		if (permissionChecker.isOmniadmin() ||
-			permissionChecker.isCompanyAdmin() ||
-			(workflowTask.isCompleted() &&
-			 hasAssetViewPermission(workflowTask, permissionChecker))) {
+			permissionChecker.isCompanyAdmin()) {
+
+			return true;
+		}
+
+		int userNotificationEventsCount =
+			UserNotificationEventLocalServiceUtil.
+				getUserNotificationEventsCount(
+					permissionChecker.getUserId(), PortletKeys.MY_WORKFLOW_TASK,
+					HashMapBuilder.put(
+						"workflowInstanceId",
+						String.valueOf(workflowTask.getWorkflowInstanceId())
+					).put(
+						"workflowTaskId",
+						String.valueOf(workflowTask.getWorkflowTaskId())
+					).build());
+
+		if (hasAssetViewPermission(workflowTask, permissionChecker) &&
+			((userNotificationEventsCount > 0) || workflowTask.isCompleted())) {
 
 			return true;
 		}

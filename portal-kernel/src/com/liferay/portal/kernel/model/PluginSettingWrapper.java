@@ -430,16 +430,17 @@ public class PluginSettingWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof PluginSettingWrapper)) {
+		if (!(object instanceof PluginSettingWrapper)) {
 			return false;
 		}
 
-		PluginSettingWrapper pluginSettingWrapper = (PluginSettingWrapper)obj;
+		PluginSettingWrapper pluginSettingWrapper =
+			(PluginSettingWrapper)object;
 
 		if (Objects.equals(
 				_pluginSetting, pluginSettingWrapper._pluginSetting)) {

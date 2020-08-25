@@ -333,7 +333,7 @@ public class SocialActivityCounterFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(names.length * 2 - 1);
+		StringBundler sb = new StringBundler((names.length * 2) - 1);
 
 		for (int i = 0; i < names.length; i++) {
 			sb.append(StringPool.QUESTION);

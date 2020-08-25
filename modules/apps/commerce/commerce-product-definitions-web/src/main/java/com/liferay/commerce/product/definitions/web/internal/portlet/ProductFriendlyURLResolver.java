@@ -23,20 +23,19 @@ import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
@@ -47,7 +46,6 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -85,50 +83,24 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 		String languageId = LanguageUtil.getLanguageId(locale);
 
-		String urlTitle = friendlyURL.substring(
-			CPConstants.SEPARATOR_PRODUCT_URL.length());
-
-		urlTitle = FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			_portal.getDefaultCompanyId());
 
 		long classNameId = _portal.getClassNameId(CProduct.class);
 
-		CPFriendlyURLEntry cpFriendlyURLEntry =
-			_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
-				GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId, languageId,
-				urlTitle);
+		String urlTitle = friendlyURL.substring(
+			CPConstants.SEPARATOR_PRODUCT_URL.length());
 
-		if (cpFriendlyURLEntry == null) {
-			String siteDefaultLanguageId = LanguageUtil.getLanguageId(
-				_portal.getSiteDefaultLocale(groupId));
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
+				companyGroup.getGroupId(), classNameId, urlTitle);
 
-			cpFriendlyURLEntry =
-				_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
-					GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
-					siteDefaultLanguageId, urlTitle);
-		}
-
-		if (cpFriendlyURLEntry == null) {
-			List<CPFriendlyURLEntry> cpFriendlyURLEntries =
-				_cpFriendlyURLEntryLocalService.getCPFriendlyURLEntries(
-					GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
-					urlTitle);
-
-			cpFriendlyURLEntry = cpFriendlyURLEntries.get(0);
-		}
-
-		if (cpFriendlyURLEntry == null) {
+		if (friendlyURLEntry == null) {
 			return null;
 		}
 
-		if (!cpFriendlyURLEntry.isMain()) {
-			cpFriendlyURLEntry =
-				_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
-					GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
-					cpFriendlyURLEntry.getClassPK(), languageId, true);
-		}
-
 		CProduct cProduct = _cProductLocalService.getCProduct(
-			cpFriendlyURLEntry.getClassPK());
+			friendlyURLEntry.getClassPK());
 
 		CPCatalogEntry cpCatalogEntry = _cpDefinitionHelper.getCPCatalogEntry(
 			_getCommerceAccountId(groupId, httpServletRequest), groupId,
@@ -212,56 +184,35 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		String languageId = LanguageUtil.getLanguageId(
 			_portal.getLocale(httpServletRequest));
 
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			_portal.getDefaultCompanyId());
+
 		String urlTitle = friendlyURL.substring(
 			CPConstants.SEPARATOR_PRODUCT_URL.length());
 
-		urlTitle = FriendlyURLNormalizerUtil.normalizeWithEncoding(urlTitle);
-
 		long classNameId = _portal.getClassNameId(CProduct.class);
 
-		CPFriendlyURLEntry cpFriendlyURLEntry =
-			_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
-				GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId, languageId,
-				urlTitle);
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
+				companyGroup.getGroupId(), classNameId, urlTitle);
 
-		if (cpFriendlyURLEntry == null) {
-			String siteDefaultLanguageId = LanguageUtil.getLanguageId(
-				_portal.getSiteDefaultLocale(groupId));
-
-			cpFriendlyURLEntry =
-				_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
-					GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
-					siteDefaultLanguageId, urlTitle);
+		if (friendlyURLEntry == null) {
+			return null;
 		}
 
-		if (cpFriendlyURLEntry == null) {
-			List<CPFriendlyURLEntry> cpFriendlyURLEntries =
-				_cpFriendlyURLEntryLocalService.getCPFriendlyURLEntries(
-					GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
-					urlTitle);
-
-			if (cpFriendlyURLEntries.isEmpty()) {
-				return null;
-			}
-
-			cpFriendlyURLEntry = cpFriendlyURLEntries.get(0);
-		}
-
-		if (!cpFriendlyURLEntry.isMain()) {
-			cpFriendlyURLEntry =
-				_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
-					GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
-					cpFriendlyURLEntry.getClassPK(), languageId, true);
+		if (Validator.isBlank(friendlyURLEntry.getUrlTitle(languageId))) {
+			return null;
 		}
 
 		CProduct cProduct = _cProductLocalService.getCProduct(
-			cpFriendlyURLEntry.getClassPK());
+			friendlyURLEntry.getClassPK());
 
 		Layout layout = getProductLayout(
 			groupId, privateLayout, cProduct.getPublishedCPDefinitionId());
 
 		return new LayoutFriendlyURLComposite(
-			layout, getURLSeparator() + cpFriendlyURLEntry.getUrlTitle());
+			layout,
+			getURLSeparator() + friendlyURLEntry.getUrlTitle(languageId));
 	}
 
 	@Override
@@ -424,10 +375,10 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
-	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
+	private CProductLocalService _cProductLocalService;
 
 	@Reference
-	private CProductLocalService _cProductLocalService;
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

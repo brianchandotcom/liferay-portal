@@ -37,16 +37,16 @@ public class LockCacheModel
 	implements CacheModel<Lock>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof LockCacheModel)) {
+		if (!(object instanceof LockCacheModel)) {
 			return false;
 		}
 
-		LockCacheModel lockCacheModel = (LockCacheModel)obj;
+		LockCacheModel lockCacheModel = (LockCacheModel)object;
 
 		if ((lockId == lockCacheModel.lockId) &&
 			(mvccVersion == lockCacheModel.mvccVersion)) {

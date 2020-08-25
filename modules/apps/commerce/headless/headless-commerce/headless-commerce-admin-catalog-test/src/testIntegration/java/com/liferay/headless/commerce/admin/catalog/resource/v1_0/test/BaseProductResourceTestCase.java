@@ -119,7 +119,9 @@ public abstract class BaseProductResourceTestCase {
 
 		ProductResource.Builder builder = ProductResource.builder();
 
-		productResource = builder.locale(
+		productResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}
@@ -192,6 +194,8 @@ public abstract class BaseProductResourceTestCase {
 		product.setDefaultSku(regex);
 		product.setExternalReferenceCode(regex);
 		product.setProductType(regex);
+		product.setProductTypeI18n(regex);
+		product.setThumbnail(regex);
 
 		String json = ProductSerDes.toJSON(product);
 
@@ -202,6 +206,8 @@ public abstract class BaseProductResourceTestCase {
 		Assert.assertEquals(regex, product.getDefaultSku());
 		Assert.assertEquals(regex, product.getExternalReferenceCode());
 		Assert.assertEquals(regex, product.getProductType());
+		Assert.assertEquals(regex, product.getProductTypeI18n());
+		Assert.assertEquals(regex, product.getThumbnail());
 	}
 
 	@Test
@@ -589,6 +595,26 @@ public abstract class BaseProductResourceTestCase {
 	}
 
 	@Test
+	public void testPostProductByExternalReferenceCodeClone() throws Exception {
+		Product randomProduct = randomProduct();
+
+		Product postProduct =
+			testPostProductByExternalReferenceCodeClone_addProduct(
+				randomProduct);
+
+		assertEquals(randomProduct, postProduct);
+		assertValid(postProduct);
+	}
+
+	protected Product testPostProductByExternalReferenceCodeClone_addProduct(
+			Product product)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteProduct() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Product product = testDeleteProduct_addProduct();
@@ -706,6 +732,23 @@ public abstract class BaseProductResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
+	@Test
+	public void testPostProductClone() throws Exception {
+		Product randomProduct = randomProduct();
+
+		Product postProduct = testPostProductClone_addProduct(randomProduct);
+
+		assertEquals(randomProduct, postProduct);
+		assertValid(postProduct);
+	}
+
+	protected Product testPostProductClone_addProduct(Product product)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
@@ -790,6 +833,14 @@ public abstract class BaseProductResourceTestCase {
 
 			if (Objects.equals("attachments", additionalAssertFieldName)) {
 				if (product.getAttachments() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("catalog", additionalAssertFieldName)) {
+				if (product.getCatalog() == null) {
 					valid = false;
 				}
 
@@ -960,8 +1011,24 @@ public abstract class BaseProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("productStatus", additionalAssertFieldName)) {
+				if (product.getProductStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("productType", additionalAssertFieldName)) {
 				if (product.getProductType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("productTypeI18n", additionalAssertFieldName)) {
+				if (product.getProductTypeI18n() == null) {
 					valid = false;
 				}
 
@@ -1028,8 +1095,26 @@ public abstract class BaseProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("thumbnail", additionalAssertFieldName)) {
+				if (product.getThumbnail() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("urls", additionalAssertFieldName)) {
 				if (product.getUrls() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"workflowStatusInfo", additionalAssertFieldName)) {
+
+				if (product.getWorkflowStatusInfo() == null) {
 					valid = false;
 				}
 
@@ -1150,6 +1235,16 @@ public abstract class BaseProductResourceTestCase {
 			if (Objects.equals("attachments", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						product1.getAttachments(), product2.getAttachments())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("catalog", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						product1.getCatalog(), product2.getCatalog())) {
 
 					return false;
 				}
@@ -1378,9 +1473,31 @@ public abstract class BaseProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("productStatus", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						product1.getProductStatus(),
+						product2.getProductStatus())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("productType", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						product1.getProductType(), product2.getProductType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("productTypeI18n", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						product1.getProductTypeI18n(),
+						product2.getProductTypeI18n())) {
 
 					return false;
 				}
@@ -1467,8 +1584,31 @@ public abstract class BaseProductResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("thumbnail", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						product1.getThumbnail(), product2.getThumbnail())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("urls", additionalAssertFieldName)) {
 				if (!equals((Map)product1.getUrls(), (Map)product2.getUrls())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"workflowStatusInfo", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						product1.getWorkflowStatusInfo(),
+						product2.getWorkflowStatusInfo())) {
+
 					return false;
 				}
 
@@ -1568,6 +1708,11 @@ public abstract class BaseProductResourceTestCase {
 		}
 
 		if (entityFieldName.equals("attachments")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("catalog")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1787,9 +1932,22 @@ public abstract class BaseProductResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("productStatus")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("productType")) {
 			sb.append("'");
 			sb.append(String.valueOf(product.getProductType()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("productTypeI18n")) {
+			sb.append("'");
+			sb.append(String.valueOf(product.getProductTypeI18n()));
 			sb.append("'");
 
 			return sb.toString();
@@ -1830,7 +1988,20 @@ public abstract class BaseProductResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("thumbnail")) {
+			sb.append("'");
+			sb.append(String.valueOf(product.getThumbnail()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("urls")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("workflowStatusInfo")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1892,7 +2063,12 @@ public abstract class BaseProductResourceTestCase {
 				modifiedDate = RandomTestUtil.nextDate();
 				neverExpire = RandomTestUtil.randomBoolean();
 				productId = RandomTestUtil.randomLong();
+				productStatus = RandomTestUtil.randomInt();
 				productType = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				productTypeI18n = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				thumbnail = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 			}
 		};

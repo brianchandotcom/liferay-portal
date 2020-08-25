@@ -34,17 +34,17 @@ public class JournalArticleResourceCacheModel
 	implements CacheModel<JournalArticleResource>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof JournalArticleResourceCacheModel)) {
+		if (!(object instanceof JournalArticleResourceCacheModel)) {
 			return false;
 		}
 
 		JournalArticleResourceCacheModel journalArticleResourceCacheModel =
-			(JournalArticleResourceCacheModel)obj;
+			(JournalArticleResourceCacheModel)object;
 
 		if (resourcePrimKey ==
 				journalArticleResourceCacheModel.resourcePrimKey) {

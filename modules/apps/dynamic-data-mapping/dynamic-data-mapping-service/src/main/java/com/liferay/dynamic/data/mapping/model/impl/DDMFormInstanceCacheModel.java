@@ -36,17 +36,17 @@ public class DDMFormInstanceCacheModel
 	implements CacheModel<DDMFormInstance>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMFormInstanceCacheModel)) {
+		if (!(object instanceof DDMFormInstanceCacheModel)) {
 			return false;
 		}
 
 		DDMFormInstanceCacheModel ddmFormInstanceCacheModel =
-			(DDMFormInstanceCacheModel)obj;
+			(DDMFormInstanceCacheModel)object;
 
 		if (formInstanceId == ddmFormInstanceCacheModel.formInstanceId) {
 			return true;

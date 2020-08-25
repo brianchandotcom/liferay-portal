@@ -1252,17 +1252,17 @@ public class CommerceShippingMethodModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceShippingMethod)) {
+		if (!(object instanceof CommerceShippingMethod)) {
 			return false;
 		}
 
 		CommerceShippingMethod commerceShippingMethod =
-			(CommerceShippingMethod)obj;
+			(CommerceShippingMethod)object;
 
 		long primaryKey = commerceShippingMethod.getPrimaryKey();
 

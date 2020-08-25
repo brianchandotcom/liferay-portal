@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Wiki Engine Text
 Bundle-SymbolicName: com.liferay.wiki.engine.text
-Bundle-Version: 3.0.3
+Bundle-Version: 3.0.5
 Web-ContextPath: /wiki-engine-text

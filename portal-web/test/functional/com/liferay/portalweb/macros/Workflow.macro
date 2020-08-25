@@ -968,7 +968,7 @@ definition {
 			locator1 = "WorkflowSubmissionsTask#PREVIEW_CONTENT",
 			value1 = "${workflowAssetContent}");
 
-		SiteAdmin.viewPortletTitle(portletTitle = "${workflowDefinition}");
+		SiteAdmin.viewPortletTitle(portletTitle = "${workflowDefinition}: ${workflowAssetTitle}");
 	}
 
 	macro viewNoDuplicateTaskAssignedToMyRoles {

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Journal Web
 Bundle-SymbolicName: com.liferay.journal.web
-Bundle-Version: 2.0.88
+Bundle-Version: 2.0.91
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Provide-Capability:\
 	liferay.resource.bundle;\

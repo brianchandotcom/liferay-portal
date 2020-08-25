@@ -34,14 +34,16 @@ public class ArithmeticEvaluationTest {
 
 	@Test
 	public void testCombinedDecimalExpression() throws Exception {
-		int expected = -((1 + 3) - 4 * (2 - (2 + (4 - 5)) * (5 - 2) * 5) + 1);
+		int expected =
+			-((1 + 3) - (4 * (2 - ((2 + (4 - 5)) * (5 - 2) * 5))) + 1);
 
 		int actual = _evaluateInt(
 			"-((1 + 3) - 4 * (2 - (2 + (4 - 5)) * (5 - 2) * 5) + 1)");
 
 		Assert.assertEquals(expected, actual);
 
-		expected = 1 * 2 - 5 * 4 - 3 - 5 * 2 * 5 - 5 + 7 - 10 - 4 * 3 - 2 + 1;
+		expected =
+			(1 * 2) - (5 * 4) - 3 - (5 * 2 * 5) - 5 + 7 - 10 - (4 * 3) - 2 + 1;
 
 		actual = _evaluateInt(
 			"1 * 2 - 5 * 4 - 3 - 5 * 2 * 5 - 5 + 7 - 10 - 4 * 3 - 2 + 1");
@@ -52,7 +54,9 @@ public class ArithmeticEvaluationTest {
 	@Test
 	public void testCombinedFloatingPointExpression() throws Exception {
 		double expected =
-			-(-2.5 + 4 * (2.1 + ((11 + 3.2) - 2) * (.5 + 6) - (2.6 * 1.1 - 4)));
+			-(-2.5 +
+				(4 *
+					(2.1 + (((11 + 3.2) - 2) * (.5 + 6)) - ((2.6 * 1.1) - 4))));
 
 		double actual = _evaluateDouble(
 			"-(-2.5 + 4 * (2.1 + ((11 + 3.2) - 2) * (.5 + 6) - (2.6 * 1.1 - " +

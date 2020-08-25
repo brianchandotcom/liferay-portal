@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.headless.delivery.dto.v1_0.ContentDocument;
 import com.liferay.headless.delivery.dto.v1_0.ContentField;
+import com.liferay.headless.delivery.dto.v1_0.ContentFieldValue;
 import com.liferay.headless.delivery.dto.v1_0.Geo;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentLink;
 import com.liferay.journal.model.JournalArticle;
@@ -52,15 +53,15 @@ import javax.ws.rs.BadRequestException;
 public class DDMValueUtil {
 
 	public static Value toDDMValue(
-		ContentField contentFieldValue, DDMFormField ddmFormField,
+		ContentField contentField, DDMFormField ddmFormField,
 		DLAppService dlAppService, long groupId,
 		JournalArticleService journalArticleService,
 		LayoutLocalService layoutLocalService, Locale locale) {
 
-		com.liferay.headless.delivery.dto.v1_0.Value value =
-			contentFieldValue.getValue();
+		ContentFieldValue contentFieldValue =
+			contentField.getContentFieldValue();
 
-		if (value == null) {
+		if (contentFieldValue == null) {
 			throw new BadRequestException(
 				"No value is specified for field " + ddmFormField.getName());
 		}
@@ -70,7 +71,7 @@ public class DDMValueUtil {
 
 			if (Objects.equals(DDMFormFieldType.DATE, ddmFormField.getType())) {
 				localizedValue.addString(
-					locale, _toDateString(value.getData(), locale));
+					locale, _toDateString(contentFieldValue.getData(), locale));
 			}
 			else if (Objects.equals(
 						DDMFormFieldType.DOCUMENT_LIBRARY,
@@ -78,7 +79,8 @@ public class DDMValueUtil {
 
 				String valueString = StringPool.BLANK;
 
-				ContentDocument contentDocument = value.getDocument();
+				ContentDocument contentDocument =
+					contentFieldValue.getDocument();
 
 				if ((contentDocument != null) &&
 					(contentDocument.getId() != null)) {
@@ -95,7 +97,7 @@ public class DDMValueUtil {
 
 				String valueString = StringPool.BLANK;
 
-				ContentDocument contentDocument = value.getImage();
+				ContentDocument contentDocument = contentFieldValue.getImage();
 
 				if ((contentDocument != null) &&
 					(contentDocument.getId() != null)) {
@@ -114,7 +116,7 @@ public class DDMValueUtil {
 				String valueString = StringPool.BLANK;
 
 				StructuredContentLink structuredContentLink =
-					value.getStructuredContentLink();
+					contentFieldValue.getStructuredContentLink();
 
 				if ((structuredContentLink != null) &&
 					(structuredContentLink.getId() != null)) {
@@ -149,9 +151,10 @@ public class DDMValueUtil {
 
 				String valueString = StringPool.BLANK;
 
-				if (value.getLink() != null) {
+				if (contentFieldValue.getLink() != null) {
 					Layout layout = _getLayout(
-						groupId, layoutLocalService, value.getLink());
+						groupId, layoutLocalService,
+						contentFieldValue.getLink());
 
 					valueString = JSONUtil.put(
 						"groupId", layout.getGroupId()
@@ -168,7 +171,7 @@ public class DDMValueUtil {
 			}
 			else {
 				localizedValue.addString(
-					locale, GetterUtil.getString(value.getData()));
+					locale, GetterUtil.getString(contentFieldValue.getData()));
 			}
 
 			return localizedValue;
@@ -177,7 +180,7 @@ public class DDMValueUtil {
 		if (Objects.equals(
 				DDMFormFieldType.GEOLOCATION, ddmFormField.getType())) {
 
-			Geo geo = value.getGeo();
+			Geo geo = contentFieldValue.getGeo();
 
 			if (Objects.isNull(geo) || Objects.isNull(geo.getLatitude()) ||
 				Objects.isNull(geo.getLongitude())) {
@@ -193,7 +196,8 @@ public class DDMValueUtil {
 				).toString());
 		}
 
-		return new UnlocalizedValue(GetterUtil.getString(value.getData()));
+		return new UnlocalizedValue(
+			GetterUtil.getString(contentFieldValue.getData()));
 	}
 
 	private static Layout _getLayout(

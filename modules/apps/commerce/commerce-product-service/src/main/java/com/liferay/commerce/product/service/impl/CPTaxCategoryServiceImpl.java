@@ -46,6 +46,18 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 	}
 
 	@Override
+	public int countCPTaxCategoriesByCompanyId(long companyId, String keyword)
+		throws PortalException {
+
+		PortalPermissionUtil.check(
+			getPermissionChecker(),
+			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
+
+		return cpTaxCategoryLocalService.countCPTaxCategoriesByCompanyId(
+			companyId, keyword);
+	}
+
+	@Override
 	public void deleteCPTaxCategory(long cpTaxCategoryId)
 		throws PortalException {
 
@@ -54,6 +66,19 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
 		cpTaxCategoryLocalService.deleteCPTaxCategory(cpTaxCategoryId);
+	}
+
+	@Override
+	public List<CPTaxCategory> findCPTaxCategoriesByCompanyId(
+			long companyId, String keyword, int start, int end)
+		throws PortalException {
+
+		PortalPermissionUtil.check(
+			getPermissionChecker(),
+			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
+
+		return cpTaxCategoryLocalService.findCPTaxCategoriesByCompanyId(
+			companyId, keyword, start, end);
 	}
 
 	@Override

@@ -15,7 +15,9 @@
 package com.liferay.commerce.tax.engine.fixed.web.internal.display.context;
 
 import com.liferay.commerce.constants.CommerceTaxScreenNavigationConstants;
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
@@ -24,6 +26,7 @@ import com.liferay.commerce.product.util.comparator.CPTaxCategoryCreateDateCompa
 import com.liferay.commerce.tax.engine.fixed.web.internal.display.context.util.CommerceTaxFixedRateRequestHelper;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -32,7 +35,12 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.math.BigDecimal;
+
+import java.text.NumberFormat;
+
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -50,7 +58,7 @@ public class BaseCommerceTaxFixedRateDisplayContext {
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		CommerceTaxMethodService commerceTaxMethodService,
 		CPTaxCategoryService cpTaxCategoryService,
-		RenderRequest renderRequest) {
+		PercentageFormatter percentageFormatter, RenderRequest renderRequest) {
 
 		this.commerceChannelLocalService = commerceChannelLocalService;
 		this.commerceChannelModelResourcePermission =
@@ -58,6 +66,7 @@ public class BaseCommerceTaxFixedRateDisplayContext {
 		this.commerceCurrencyLocalService = commerceCurrencyLocalService;
 		this.commerceTaxMethodService = commerceTaxMethodService;
 		this.cpTaxCategoryService = cpTaxCategoryService;
+		this.percentageFormatter = percentageFormatter;
 
 		commerceTaxFixedRateRequestHelper =
 			new CommerceTaxFixedRateRequestHelper(renderRequest);
@@ -116,6 +125,46 @@ public class BaseCommerceTaxFixedRateDisplayContext {
 		return ParamUtil.getLong(
 			commerceTaxFixedRateRequestHelper.getRequest(),
 			"commerceTaxMethodId");
+	}
+
+	public String getLocalizedPercentage(double percentage, Locale locale)
+		throws PortalException {
+
+		CommerceChannel commerceChannel =
+			commerceChannelLocalService.getCommerceChannel(
+				getCommerceChannelId());
+
+		CommerceCurrency commerceCurrency =
+			commerceCurrencyLocalService.getCommerceCurrency(
+				commerceChannel.getCompanyId(),
+				commerceChannel.getCommerceCurrencyCode());
+
+		String localizedPercentage = percentageFormatter.getLocalizedPercentage(
+			locale, commerceCurrency.getMaxFractionDigits(),
+			commerceCurrency.getMinFractionDigits(),
+			new BigDecimal(percentage));
+
+		return localizedPercentage.replace(
+			StringPool.PERCENT, StringPool.BLANK);
+	}
+
+	public String getLocalizedRate(
+			boolean isPercentage, double rate, Locale locale)
+		throws PortalException {
+
+		if (isPercentage) {
+			return getLocalizedPercentage(rate, locale);
+		}
+
+		return getLocalizedRate(rate, locale);
+	}
+
+	public String getLocalizedRate(double rate, Locale locale)
+		throws PortalException {
+
+		NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
+
+		return numberFormat.format(rate);
 	}
 
 	public PortletURL getPortletURL() throws PortalException {
@@ -191,6 +240,7 @@ public class BaseCommerceTaxFixedRateDisplayContext {
 		commerceTaxFixedRateRequestHelper;
 	protected final CommerceTaxMethodService commerceTaxMethodService;
 	protected final CPTaxCategoryService cpTaxCategoryService;
+	protected final PercentageFormatter percentageFormatter;
 
 	private CommerceTaxMethod _commerceTaxMethod;
 

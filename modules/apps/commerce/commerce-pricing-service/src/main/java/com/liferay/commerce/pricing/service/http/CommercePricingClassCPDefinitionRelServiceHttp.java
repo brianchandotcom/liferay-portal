@@ -99,6 +99,188 @@ public class CommercePricingClassCPDefinitionRelServiceHttp {
 		}
 	}
 
+	public static
+		com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel
+				deleteCommercePricingClassCPDefinitionRel(
+					HttpPrincipal httpPrincipal,
+					com.liferay.commerce.pricing.model.
+						CommercePricingClassCPDefinitionRel
+							commercePricingClassCPDefinitionRel)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommercePricingClassCPDefinitionRelServiceUtil.class,
+				"deleteCommercePricingClassCPDefinitionRel",
+				_deleteCommercePricingClassCPDefinitionRelParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commercePricingClassCPDefinitionRel);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.pricing.model.
+				CommercePricingClassCPDefinitionRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static
+		com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel
+				deleteCommercePricingClassCPDefinitionRel(
+					HttpPrincipal httpPrincipal,
+					long commercePricingClassCPDefinitionRelId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommercePricingClassCPDefinitionRelServiceUtil.class,
+				"deleteCommercePricingClassCPDefinitionRel",
+				_deleteCommercePricingClassCPDefinitionRelParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commercePricingClassCPDefinitionRelId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.pricing.model.
+				CommercePricingClassCPDefinitionRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static
+		com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel
+				fetchCommercePricingClassCPDefinitionRel(
+					HttpPrincipal httpPrincipal, long commercePricingClassId,
+					long cpDefinitionId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommercePricingClassCPDefinitionRelServiceUtil.class,
+				"fetchCommercePricingClassCPDefinitionRel",
+				_fetchCommercePricingClassCPDefinitionRelParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commercePricingClassId, cpDefinitionId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.pricing.model.
+				CommercePricingClassCPDefinitionRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static
+		com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel
+				getCommercePricingClassCPDefinitionRel(
+					HttpPrincipal httpPrincipal,
+					long commercePricingClassCPDefinitionRelId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommercePricingClassCPDefinitionRelServiceUtil.class,
+				"getCommercePricingClassCPDefinitionRel",
+				_getCommercePricingClassCPDefinitionRelParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commercePricingClassCPDefinitionRelId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.pricing.model.
+				CommercePricingClassCPDefinitionRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static java.util.List
 		<com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel>
 				getCommercePricingClassCPDefinitionRelByClassId(
@@ -109,7 +291,7 @@ public class CommercePricingClassCPDefinitionRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePricingClassCPDefinitionRelServiceUtil.class,
 				"getCommercePricingClassCPDefinitionRelByClassId",
-				_getCommercePricingClassCPDefinitionRelByClassIdParameterTypes1);
+				_getCommercePricingClassCPDefinitionRelByClassIdParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePricingClassId);
@@ -144,6 +326,132 @@ public class CommercePricingClassCPDefinitionRelServiceHttp {
 		}
 	}
 
+	public static java.util.List
+		<com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel>
+				getCommercePricingClassCPDefinitionRels(
+					HttpPrincipal httpPrincipal, long commercePricingClassId,
+					int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.commerce.pricing.model.
+							CommercePricingClassCPDefinitionRel>
+								orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommercePricingClassCPDefinitionRelServiceUtil.class,
+				"getCommercePricingClassCPDefinitionRels",
+				_getCommercePricingClassCPDefinitionRelsParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commercePricingClassId, start, end,
+				orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.pricing.model.
+					CommercePricingClassCPDefinitionRel>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getCommercePricingClassCPDefinitionRelsCount(
+			HttpPrincipal httpPrincipal, long commercePricingClassId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommercePricingClassCPDefinitionRelServiceUtil.class,
+				"getCommercePricingClassCPDefinitionRelsCount",
+				_getCommercePricingClassCPDefinitionRelsCountParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commercePricingClassId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getCommercePricingClassCPDefinitionRelsCount(
+		HttpPrincipal httpPrincipal, long commercePricingClassId, String name,
+		String languageId) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommercePricingClassCPDefinitionRelServiceUtil.class,
+				"getCommercePricingClassCPDefinitionRelsCount",
+				_getCommercePricingClassCPDefinitionRelsCountParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commercePricingClassId, name, languageId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static long[] getCPDefinitionIds(
 			HttpPrincipal httpPrincipal, long commercePricingClassId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -151,7 +459,7 @@ public class CommercePricingClassCPDefinitionRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommercePricingClassCPDefinitionRelServiceUtil.class,
-				"getCPDefinitionIds", _getCPDefinitionIdsParameterTypes2);
+				"getCPDefinitionIds", _getCPDefinitionIdsParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePricingClassId);
@@ -184,6 +492,53 @@ public class CommercePricingClassCPDefinitionRelServiceHttp {
 		}
 	}
 
+	public static java.util.List
+		<com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel>
+				searchByCommercePricingClassId(
+					HttpPrincipal httpPrincipal, long commercePricingClassId,
+					String name, String languageId, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommercePricingClassCPDefinitionRelServiceUtil.class,
+				"searchByCommercePricingClassId",
+				_searchByCommercePricingClassIdParameterTypes10);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commercePricingClassId, name, languageId, start,
+				end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.pricing.model.
+					CommercePricingClassCPDefinitionRel>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		CommercePricingClassCPDefinitionRelServiceHttp.class);
 
@@ -193,9 +548,41 @@ public class CommercePricingClassCPDefinitionRelServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
-		_getCommercePricingClassCPDefinitionRelByClassIdParameterTypes1 =
+		_deleteCommercePricingClassCPDefinitionRelParameterTypes1 =
+			new Class[] {
+				com.liferay.commerce.pricing.model.
+					CommercePricingClassCPDefinitionRel.class
+			};
+	private static final Class<?>[]
+		_deleteCommercePricingClassCPDefinitionRelParameterTypes2 =
 			new Class[] {long.class};
-	private static final Class<?>[] _getCPDefinitionIdsParameterTypes2 =
+	private static final Class<?>[]
+		_fetchCommercePricingClassCPDefinitionRelParameterTypes3 = new Class[] {
+			long.class, long.class
+		};
+	private static final Class<?>[]
+		_getCommercePricingClassCPDefinitionRelParameterTypes4 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[]
+		_getCommercePricingClassCPDefinitionRelByClassIdParameterTypes5 =
+			new Class[] {long.class};
+	private static final Class<?>[]
+		_getCommercePricingClassCPDefinitionRelsParameterTypes6 = new Class[] {
+			long.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[]
+		_getCommercePricingClassCPDefinitionRelsCountParameterTypes7 =
+			new Class[] {long.class};
+	private static final Class<?>[]
+		_getCommercePricingClassCPDefinitionRelsCountParameterTypes8 =
+			new Class[] {long.class, String.class, String.class};
+	private static final Class<?>[] _getCPDefinitionIdsParameterTypes9 =
 		new Class[] {long.class};
+	private static final Class<?>[]
+		_searchByCommercePricingClassIdParameterTypes10 = new Class[] {
+			long.class, String.class, String.class, int.class, int.class
+		};
 
 }

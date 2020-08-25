@@ -3446,16 +3446,16 @@ public class CommerceOrderModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceOrder)) {
+		if (!(object instanceof CommerceOrder)) {
 			return false;
 		}
 
-		CommerceOrder commerceOrder = (CommerceOrder)obj;
+		CommerceOrder commerceOrder = (CommerceOrder)object;
 
 		long primaryKey = commerceOrder.getPrimaryKey();
 

@@ -17,11 +17,13 @@ package com.liferay.portal.util;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpSession;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -30,6 +32,13 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Miguel Pastor
  */
 public class PortalImplUnitTest {
+
+	@BeforeClass
+	public static void setUpClass() {
+		HttpUtil httpUtil = new HttpUtil();
+
+		httpUtil.setHttp(new HttpImpl());
+	}
 
 	@Test
 	public void testGetForwardedHost() {
@@ -430,6 +439,81 @@ public class PortalImplUnitTest {
 		mockHttpServletRequest.setSecure(true);
 
 		Assert.assertTrue(_portalImpl.isSecure(mockHttpServletRequest));
+	}
+
+	@Test
+	public void testIsValidResourceId() {
+		Assert.assertTrue(_portalImpl.isValidResourceId("/view.jsp"));
+		Assert.assertTrue(_portalImpl.isValidResourceId("%2fview.jsp"));
+		Assert.assertTrue(_portalImpl.isValidResourceId("%252fview.jsp"));
+
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("/META-INF/MANIFEST.MF"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%2fMETA-INF%2fMANIFEST.MF"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%252fMETA-INF%252fMANIFEST.MF"));
+
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("/META-INF\\MANIFEST.MF"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%2fMETA-INF%5cMANIFEST.MF"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%252fMETA-INF%255cMANIFEST.MF"));
+
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("\\META-INF/MANIFEST.MF"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%5cMETA-INF%2fMANIFEST.MF"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%255cMETA-INF%252fMANIFEST.MF"));
+
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("\\META-INF\\MANIFEST.MF"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%5cMETA-INF%5cMANIFEST.MF"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%255cMETA-INF%255cMANIFEST.MF"));
+
+		Assert.assertFalse(_portalImpl.isValidResourceId("/WEB-INF/web.xml"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%2fWEB-INF%2fweb.xml"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%252fWEB-INF%252fweb.xml"));
+
+		Assert.assertFalse(_portalImpl.isValidResourceId("/WEB-INF\\web.xml"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%2fWEB-INF%5cweb.xml"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%252fWEB-INF%255cweb.xml"));
+
+		Assert.assertFalse(_portalImpl.isValidResourceId("\\WEB-INF/web.xml"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%5cWEB-INF%2fweb.xml"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%255cWEB-INF%252fweb.xml"));
+
+		Assert.assertFalse(_portalImpl.isValidResourceId("\\WEB-INF\\web.xml"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%5cWEB-INF%5cweb.xml"));
+		Assert.assertFalse(
+			_portalImpl.isValidResourceId("%255cWEB-INF%255cweb.xml"));
+
+		Assert.assertTrue(_portalImpl.isValidResourceId("%25252525252525252f"));
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("%");
+
+		for (int i = 0; i < 100000; i++) {
+			sb.append("25");
+		}
+
+		sb.append("2f");
+
+		Assert.assertFalse(_portalImpl.isValidResourceId(sb.toString()));
+
+		Assert.assertFalse(_portalImpl.isValidResourceId("%view.jsp"));
 	}
 
 	@Test

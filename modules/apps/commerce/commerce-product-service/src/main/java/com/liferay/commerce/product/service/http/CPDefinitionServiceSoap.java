@@ -65,6 +65,25 @@ import java.util.Map;
  */
 public class CPDefinitionServiceSoap {
 
+	public static com.liferay.commerce.product.model.CPDefinitionSoap
+			copyCPDefinition(long cpDefinitionId, long groupId)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.product.model.CPDefinition returnValue =
+				CPDefinitionServiceUtil.copyCPDefinition(
+					cpDefinitionId, groupId);
+
+			return com.liferay.commerce.product.model.CPDefinitionSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static void deleteAssetCategoryCPDefinition(
 			long cpDefinitionId, long categoryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

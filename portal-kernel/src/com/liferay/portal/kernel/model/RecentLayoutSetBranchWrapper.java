@@ -397,17 +397,17 @@ public class RecentLayoutSetBranchWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof RecentLayoutSetBranchWrapper)) {
+		if (!(object instanceof RecentLayoutSetBranchWrapper)) {
 			return false;
 		}
 
 		RecentLayoutSetBranchWrapper recentLayoutSetBranchWrapper =
-			(RecentLayoutSetBranchWrapper)obj;
+			(RecentLayoutSetBranchWrapper)object;
 
 		if (Objects.equals(
 				_recentLayoutSetBranch,

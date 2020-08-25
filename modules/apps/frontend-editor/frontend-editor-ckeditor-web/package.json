@@ -4,5 +4,5 @@
 		"liferay-module-config-generator": "^1.3.3"
 	},
 	"name": "frontend-editor-ckeditor-web",
-	"version": "2.0.49"
+	"version": "2.0.54"
 }

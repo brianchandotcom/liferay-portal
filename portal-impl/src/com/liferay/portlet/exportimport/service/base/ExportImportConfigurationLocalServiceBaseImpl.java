@@ -77,6 +77,10 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	/**
 	 * Adds the export import configuration to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ExportImportConfigurationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param exportImportConfiguration the export import configuration
 	 * @return the export import configuration that was added
 	 */
@@ -109,6 +113,10 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	/**
 	 * Deletes the export import configuration with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ExportImportConfigurationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param exportImportConfigurationId the primary key of the export import configuration
 	 * @return the export import configuration that was removed
 	 * @throws PortalException if a export import configuration with the primary key could not be found
@@ -125,6 +133,10 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 
 	/**
 	 * Deletes the export import configuration from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ExportImportConfigurationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param exportImportConfiguration the export import configuration
 	 * @return the export import configuration that was removed
@@ -355,6 +367,10 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 
 	/**
 	 * Updates the export import configuration in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ExportImportConfigurationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param exportImportConfiguration the export import configuration
 	 * @return the export import configuration that was updated

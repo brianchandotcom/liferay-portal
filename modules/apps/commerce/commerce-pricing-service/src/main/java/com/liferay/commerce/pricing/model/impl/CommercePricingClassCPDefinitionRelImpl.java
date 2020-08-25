@@ -14,24 +14,25 @@
 
 package com.liferay.commerce.pricing.model.impl;
 
+import com.liferay.commerce.pricing.model.CommercePricingClass;
+import com.liferay.commerce.pricing.service.CommercePricingClassLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
- * The extended model implementation for the CommercePricingClassCPDefinitionRel service. Represents a row in the &quot;CPricingClassCPDefinitionRel&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel</code> interface.
- * </p>
- *
  * @author Riccardo Alberti
  */
 public class CommercePricingClassCPDefinitionRelImpl
 	extends CommercePricingClassCPDefinitionRelBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a commerce pricing class cp definition rel model instance should use the {@link com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel} interface instead.
-	 */
 	public CommercePricingClassCPDefinitionRelImpl() {
+	}
+
+	@Override
+	public CommercePricingClass getCommercePricingClass()
+		throws PortalException {
+
+		return CommercePricingClassLocalServiceUtil.getCommercePricingClass(
+			getCommercePricingClassId());
 	}
 
 }

@@ -800,16 +800,17 @@ public class CommerceDiscountRuleModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceDiscountRule)) {
+		if (!(object instanceof CommerceDiscountRule)) {
 			return false;
 		}
 
-		CommerceDiscountRule commerceDiscountRule = (CommerceDiscountRule)obj;
+		CommerceDiscountRule commerceDiscountRule =
+			(CommerceDiscountRule)object;
 
 		long primaryKey = commerceDiscountRule.getPrimaryKey();
 

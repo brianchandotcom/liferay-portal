@@ -86,7 +86,7 @@ public class HttpAuthorizationHeader {
 			return SCHEME_BASIC + StringPool.SPACE + encodedUserNameAndPassword;
 		}
 
-		StringBundler sb = new StringBundler(_authParameters.size() * 6 + 2);
+		StringBundler sb = new StringBundler((_authParameters.size() * 6) + 2);
 
 		sb.append(_scheme);
 		sb.append(StringPool.SPACE);

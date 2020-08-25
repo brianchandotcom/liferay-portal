@@ -478,17 +478,17 @@ public class WeDeployAuthAppWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof WeDeployAuthAppWrapper)) {
+		if (!(object instanceof WeDeployAuthAppWrapper)) {
 			return false;
 		}
 
 		WeDeployAuthAppWrapper weDeployAuthAppWrapper =
-			(WeDeployAuthAppWrapper)obj;
+			(WeDeployAuthAppWrapper)object;
 
 		if (Objects.equals(
 				_weDeployAuthApp, weDeployAuthAppWrapper._weDeployAuthApp)) {

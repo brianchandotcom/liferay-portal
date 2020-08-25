@@ -826,18 +826,18 @@ public class CommerceNotificationQueueEntryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceNotificationQueueEntryWrapper)) {
+		if (!(object instanceof CommerceNotificationQueueEntryWrapper)) {
 			return false;
 		}
 
 		CommerceNotificationQueueEntryWrapper
 			commerceNotificationQueueEntryWrapper =
-				(CommerceNotificationQueueEntryWrapper)obj;
+				(CommerceNotificationQueueEntryWrapper)object;
 
 		if (Objects.equals(
 				_commerceNotificationQueueEntry,

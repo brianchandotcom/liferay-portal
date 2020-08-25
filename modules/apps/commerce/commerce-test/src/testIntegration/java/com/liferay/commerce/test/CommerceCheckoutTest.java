@@ -24,6 +24,7 @@ import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.exception.CommerceOrderGuestCheckoutException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
@@ -131,40 +132,11 @@ public class CommerceCheckoutTest {
 			"The guest should be able to place the order"
 		);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_company.getCompanyId(), _group.getGroupId(),
-				_user.getUserId());
-
-		User user = UserTestUtil.addUser(_company);
-
-		serviceContext.setUserId(user.getUserId());
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
-
-		PrincipalThreadLocal.setName(user.getUserId());
-
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		User user = _company.getDefaultUser();
 
 		CommerceAccount commerceAccount =
-			_commerceAccountLocalService.addCommerceAccount(
-				RandomTestUtil.randomString(),
-				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
-				user.getEmailAddress(), StringPool.BLANK,
-				CommerceAccountConstants.ACCOUNT_TYPE_GUEST, true, null,
-				serviceContext);
-
-		Role role = RoleTestUtil.addRole(
-			CommerceAccountConstants.ROLE_NAME_ACCOUNT_ADMINISTRATOR,
-			RoleConstants.TYPE_SITE, "com.liferay.commerce.order",
-			ResourceConstants.SCOPE_GROUP_TEMPLATE,
-			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-			CommerceOrderActionKeys.CHECKOUT_OPEN_COMMERCE_ORDERS);
-
-		CommerceAccountUserRelLocalServiceUtil.addCommerceAccountUserRel(
-			commerceAccount.getCommerceAccountId(), user.getUserId(),
-			new long[] {role.getRoleId()}, serviceContext);
+			_commerceAccountLocalService.getGuestCommerceAccount(
+				_company.getCompanyId());
 
 		CommerceOrder commerceOrder =
 			CommerceOrderLocalServiceUtil.addCommerceOrder(
@@ -182,7 +154,6 @@ public class CommerceCheckoutTest {
 			commerceOrder.getOrderStatus(),
 			CommerceOrderConstants.ORDER_STATUS_PENDING);
 		Assert.assertTrue(commerceOrder.isGuestOrder());
-		Assert.assertNotEquals(commerceOrder.getUserId(), user.getUserId());
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
@@ -256,7 +227,7 @@ public class CommerceCheckoutTest {
 			commerceOrder, user2.getUserId());
 	}
 
-	@Test(expected = PrincipalException.MustHavePermission.class)
+	@Test(expected = CommerceOrderGuestCheckoutException.class)
 	public void testGuestUserCheckoutWithGuestCheckoutDisabled()
 		throws Exception {
 
@@ -287,40 +258,11 @@ public class CommerceCheckoutTest {
 
 		modifiableSettings.store();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_company.getCompanyId(), _group.getGroupId(),
-				_user.getUserId());
-
-		User user = UserTestUtil.addUser(_company);
-
-		serviceContext.setUserId(user.getUserId());
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
-
-		PrincipalThreadLocal.setName(user.getUserId());
-
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		User user = _company.getDefaultUser();
 
 		CommerceAccount commerceAccount =
-			_commerceAccountLocalService.addCommerceAccount(
-				RandomTestUtil.randomString(),
-				CommerceAccountConstants.DEFAULT_PARENT_ACCOUNT_ID,
-				user.getEmailAddress(), StringPool.BLANK,
-				CommerceAccountConstants.ACCOUNT_TYPE_GUEST, true, null,
-				serviceContext);
-
-		Role role = RoleTestUtil.addRole(
-			CommerceAccountConstants.ROLE_NAME_ACCOUNT_ADMINISTRATOR,
-			RoleConstants.TYPE_SITE, "com.liferay.commerce.order",
-			ResourceConstants.SCOPE_GROUP_TEMPLATE,
-			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-			CommerceOrderActionKeys.CHECKOUT_OPEN_COMMERCE_ORDERS);
-
-		CommerceAccountUserRelLocalServiceUtil.addCommerceAccountUserRel(
-			commerceAccount.getCommerceAccountId(), user.getUserId(),
-			new long[] {role.getRoleId()}, serviceContext);
+			_commerceAccountLocalService.getGuestCommerceAccount(
+				_company.getCompanyId());
 
 		CommerceOrder commerceOrder =
 			CommerceOrderLocalServiceUtil.addCommerceOrder(
@@ -333,6 +275,11 @@ public class CommerceCheckoutTest {
 
 		_commerceOrderEngine.checkoutCommerceOrder(
 			commerceOrder, user.getUserId());
+
+		Assert.assertNotEquals(
+			commerceOrder.getOrderStatus(),
+			CommerceOrderConstants.ORDER_STATUS_PENDING);
+		Assert.assertTrue(commerceOrder.isGuestOrder());
 	}
 
 	@Test

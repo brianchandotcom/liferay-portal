@@ -30,14 +30,17 @@ import java.util.Locale;
 public class RelatedContentUtil {
 
 	public static RelatedContent[] toRelatedContents(
-			AssetEntryLocalService assetEntryLocalService,
-			AssetLinkLocalService assetLinkLocalService,
-			DTOConverterRegistry dtoConverterRegistry, String className,
-			long classPK, Locale locale)
-		throws Exception {
+		AssetEntryLocalService assetEntryLocalService,
+		AssetLinkLocalService assetLinkLocalService,
+		DTOConverterRegistry dtoConverterRegistry, String className,
+		long classPK, Locale locale) {
 
-		AssetEntry assetEntry = assetEntryLocalService.getEntry(
+		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
 			className, classPK);
+
+		if (assetEntry == null) {
+			return null;
+		}
 
 		return TransformUtil.transformToArray(
 			assetLinkLocalService.getDirectLinks(assetEntry.getEntryId()),

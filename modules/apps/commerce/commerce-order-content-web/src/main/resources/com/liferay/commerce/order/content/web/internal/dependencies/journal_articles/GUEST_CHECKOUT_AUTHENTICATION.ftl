@@ -1,5 +1,5 @@
 <#if commerceOrderHttpHelper.isGuestCheckoutEnabled(request)>
-	<#if themeDisplay.isSignedIn() && !permissionChecker.isOmniadmin()>
+	<#if themeDisplay.isSignedIn()>
 
 		<#-- Instant redirect, when the page is hit directly or refreshed -->
 

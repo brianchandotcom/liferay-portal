@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Headless Commerce Delivery Catalog Implementation
 Bundle-SymbolicName: com.liferay.headless.commerce.delivery.catalog.impl
-Bundle-Version: 1.0.14
+Bundle-Version: 1.0.22
 Import-Package:\
 	com.liferay.asset.kernel.model;version="[1.5.0,3.0.0)",\
 	com.liferay.expando.kernel.model;version="[1.1.0,3.0.0)",\
@@ -14,6 +14,7 @@ Import-Package:\
 	com.liferay.portal.kernel.util;version="[8.27.0,10.0.0)",\
 	com.liferay.portal.kernel.workflow;version="[7.4.0,9.0.0)",\
 	com.liferay.portal.vulcan.accept.language;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.dto.converter;version="[1.0.0,2.4.0)",\
 	com.liferay.portal.vulcan.fields;version="[1.0.0,2.0.0)",\
 	com.liferay.portal.vulcan.pagination;version="[1.0.0,2.0.0)",\
 	com.liferay.portal.vulcan.resource; version="[1.1.0,2.0.0)",\

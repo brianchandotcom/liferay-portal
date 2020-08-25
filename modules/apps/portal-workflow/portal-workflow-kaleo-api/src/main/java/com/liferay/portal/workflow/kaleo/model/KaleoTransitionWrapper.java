@@ -669,17 +669,17 @@ public class KaleoTransitionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoTransitionWrapper)) {
+		if (!(object instanceof KaleoTransitionWrapper)) {
 			return false;
 		}
 
 		KaleoTransitionWrapper kaleoTransitionWrapper =
-			(KaleoTransitionWrapper)obj;
+			(KaleoTransitionWrapper)object;
 
 		if (Objects.equals(
 				_kaleoTransition, kaleoTransitionWrapper._kaleoTransition)) {

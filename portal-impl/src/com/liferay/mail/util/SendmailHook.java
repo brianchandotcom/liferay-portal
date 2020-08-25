@@ -173,7 +173,7 @@ public class SendmailHook implements Hook {
 			return;
 		}
 
-		StringBundler sb = new StringBundler(blocked.size() * 9 + 3);
+		StringBundler sb = new StringBundler((blocked.size() * 9) + 3);
 
 		sb.append("ORGMAIL /var/spool/mail/$LOGNAME\n");
 		sb.append("MAILDIR $HOME/\n");

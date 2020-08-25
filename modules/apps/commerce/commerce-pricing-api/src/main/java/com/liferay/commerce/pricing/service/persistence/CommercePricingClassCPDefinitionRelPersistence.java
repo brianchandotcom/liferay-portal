@@ -350,6 +350,60 @@ public interface CommercePricingClassCPDefinitionRelPersistence
 	public int countByCPDefinitionId(long CPDefinitionId);
 
 	/**
+	 * Returns the commerce pricing class cp definition rel where commercePricingClassId = &#63; and CPDefinitionId = &#63; or throws a <code>NoSuchPricingClassCPDefinitionRelException</code> if it could not be found.
+	 *
+	 * @param commercePricingClassId the commerce pricing class ID
+	 * @param CPDefinitionId the cp definition ID
+	 * @return the matching commerce pricing class cp definition rel
+	 * @throws NoSuchPricingClassCPDefinitionRelException if a matching commerce pricing class cp definition rel could not be found
+	 */
+	public CommercePricingClassCPDefinitionRel findByC_C(
+			long commercePricingClassId, long CPDefinitionId)
+		throws NoSuchPricingClassCPDefinitionRelException;
+
+	/**
+	 * Returns the commerce pricing class cp definition rel where commercePricingClassId = &#63; and CPDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param commercePricingClassId the commerce pricing class ID
+	 * @param CPDefinitionId the cp definition ID
+	 * @return the matching commerce pricing class cp definition rel, or <code>null</code> if a matching commerce pricing class cp definition rel could not be found
+	 */
+	public CommercePricingClassCPDefinitionRel fetchByC_C(
+		long commercePricingClassId, long CPDefinitionId);
+
+	/**
+	 * Returns the commerce pricing class cp definition rel where commercePricingClassId = &#63; and CPDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param commercePricingClassId the commerce pricing class ID
+	 * @param CPDefinitionId the cp definition ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching commerce pricing class cp definition rel, or <code>null</code> if a matching commerce pricing class cp definition rel could not be found
+	 */
+	public CommercePricingClassCPDefinitionRel fetchByC_C(
+		long commercePricingClassId, long CPDefinitionId,
+		boolean useFinderCache);
+
+	/**
+	 * Removes the commerce pricing class cp definition rel where commercePricingClassId = &#63; and CPDefinitionId = &#63; from the database.
+	 *
+	 * @param commercePricingClassId the commerce pricing class ID
+	 * @param CPDefinitionId the cp definition ID
+	 * @return the commerce pricing class cp definition rel that was removed
+	 */
+	public CommercePricingClassCPDefinitionRel removeByC_C(
+			long commercePricingClassId, long CPDefinitionId)
+		throws NoSuchPricingClassCPDefinitionRelException;
+
+	/**
+	 * Returns the number of commerce pricing class cp definition rels where commercePricingClassId = &#63; and CPDefinitionId = &#63;.
+	 *
+	 * @param commercePricingClassId the commerce pricing class ID
+	 * @param CPDefinitionId the cp definition ID
+	 * @return the number of matching commerce pricing class cp definition rels
+	 */
+	public int countByC_C(long commercePricingClassId, long CPDefinitionId);
+
+	/**
 	 * Caches the commerce pricing class cp definition rel in the entity cache if it is enabled.
 	 *
 	 * @param commercePricingClassCPDefinitionRel the commerce pricing class cp definition rel

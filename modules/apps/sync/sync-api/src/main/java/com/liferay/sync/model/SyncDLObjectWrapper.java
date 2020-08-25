@@ -1005,16 +1005,16 @@ public class SyncDLObjectWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SyncDLObjectWrapper)) {
+		if (!(object instanceof SyncDLObjectWrapper)) {
 			return false;
 		}
 
-		SyncDLObjectWrapper syncDLObjectWrapper = (SyncDLObjectWrapper)obj;
+		SyncDLObjectWrapper syncDLObjectWrapper = (SyncDLObjectWrapper)object;
 
 		if (Objects.equals(_syncDLObject, syncDLObjectWrapper._syncDLObject)) {
 			return true;

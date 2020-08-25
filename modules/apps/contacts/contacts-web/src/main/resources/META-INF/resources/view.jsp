@@ -115,7 +115,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 											List<Group> groups = user.getGroups();
 											%>
 
-											<optgroup label='<liferay-ui:message key="members-of" />'>
+											<optgroup label="<liferay-ui:message key="members-of" />">
 
 												<%
 												for (Group curGroup : groups) {
@@ -264,7 +264,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 
 										<div class="lfr-contact-grid-item" data-userId="" data-viewSummaryURL="<%= viewContactSummaryURL %>">
 											<div class="lfr-contact-thumb">
-												<img alt="<%= HtmlUtil.escapeAttribute(fullName) %>" src='<%= themeDisplay.getPathImage() + "/user_male_portrait?img_id=0&t=" %>' />
+												<img alt="<%= HtmlUtil.escapeAttribute(fullName) %>" src="<%= themeDisplay.getPathImage() + "/user_male_portrait?img_id=0&t=" %>" />
 											</div>
 
 											<div class="lfr-contact-info">

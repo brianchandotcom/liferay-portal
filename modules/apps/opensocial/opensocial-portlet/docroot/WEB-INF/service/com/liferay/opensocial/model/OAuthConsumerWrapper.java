@@ -440,16 +440,17 @@ public class OAuthConsumerWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof OAuthConsumerWrapper)) {
+		if (!(object instanceof OAuthConsumerWrapper)) {
 			return false;
 		}
 
-		OAuthConsumerWrapper oAuthConsumerWrapper = (OAuthConsumerWrapper)obj;
+		OAuthConsumerWrapper oAuthConsumerWrapper =
+			(OAuthConsumerWrapper)object;
 
 		if (Objects.equals(
 				_oAuthConsumer, oAuthConsumerWrapper._oAuthConsumer)) {

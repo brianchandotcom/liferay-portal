@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Workflow Web
 Bundle-SymbolicName: com.liferay.portal.workflow.web
-Bundle-Version: 1.0.46
+Bundle-Version: 1.0.49
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.portal.workflow.lang)";\

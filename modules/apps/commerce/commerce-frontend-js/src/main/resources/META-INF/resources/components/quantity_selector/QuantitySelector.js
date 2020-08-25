@@ -15,10 +15,18 @@
 import ClayIcon, {ClayIconSpriteContext} from '@clayui/icon';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {createRef, useEffect, useState} from 'react';
+
+import throttle from '../../utilities/throttle';
+
+const THROTTLE_TIMEOUT = 1000;
 
 function QuantitySelector(props) {
-	const [currentQuantity, setCurrentQuantity] = useState(props.quantity);
+	const [currentQuantity, setCurrentQuantity] = useState(
+		!!props.minQuantity && props.minQuantity > props.quantity
+			? props.minQuantity
+			: props.quantity
+	);
 	const [nextAvailable, setNextAvailable] = useState(
 		currentQuantity + props.multipleQuantity <= props.maxQuantity
 	);
@@ -26,13 +34,19 @@ function QuantitySelector(props) {
 		currentQuantity - props.multipleQuantity >= props.minQuantity
 	);
 
+	const inputRef = createRef();
+
 	useEffect(() => {
 		setCurrentQuantity(props.quantity);
 	}, [props.quantity, setCurrentQuantity]);
 
 	useEffect(() => {
-		if (props.updateQuantity) props.updateQuantity(currentQuantity);
-	}, [currentQuantity, props, props.updateQuantity]);
+		if (props.updateQuantity) {
+			props.updateQuantity(currentQuantity);
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [currentQuantity, props.quantity]);
 
 	useEffect(() => {
 		setNextAvailable(
@@ -58,28 +72,45 @@ function QuantitySelector(props) {
 		}
 	}
 
-	function increaseQuantity() {
-		if (nextAvailable)
-			setCurrentQuantity(currentQuantity + props.multipleQuantity);
+	function _increaseQuantity() {
+		if (nextAvailable) {
+			updateCurrentQuantity(currentQuantity + props.multipleQuantity);
+		}
 	}
 
-	function decreaseQuantity() {
-		if (prevAvailable)
-			setCurrentQuantity(currentQuantity - props.multipleQuantity);
+	function _decreaseQuantity() {
+		if (prevAvailable) {
+			updateCurrentQuantity(currentQuantity - props.multipleQuantity);
+		}
 	}
 
-	function handleInputChange(e) {
-		return updateCurrentQuantity(parseInt(e.target.value, 10));
+	function handleInputChange() {
+		const {value} = inputRef.current;
+
+		return updateCurrentQuantity(parseInt(value, 10));
 	}
 
 	function handleInputKeyUp(e) {
-		if (e.keyCode == 38) return increaseQuantity();
-		if (e.keyCode == 40) return decreaseQuantity();
+		switch (e.key) {
+			case 'ArrowUp':
+				increaseQuantity();
+				break;
+			case 'ArrowDown':
+				decreaseQuantity();
+				break;
+			case 'Enter':
+			default:
+				break;
+		}
 	}
 
-	function handleSelectChange(e) {
-		e.preventDefault();
-		setCurrentQuantity(e.target.value);
+	const decreaseQuantity = throttle(_decreaseQuantity, THROTTLE_TIMEOUT),
+		increaseQuantity = throttle(_increaseQuantity, THROTTLE_TIMEOUT);
+
+	function handleSelectChange() {
+		const {value} = inputRef.current;
+
+		setCurrentQuantity(value);
 	}
 
 	let btnSizeClass;
@@ -106,6 +137,7 @@ function QuantitySelector(props) {
 						)}
 						name={props.inputName}
 						onChange={handleSelectChange}
+						ref={inputRef}
 						value={currentQuantity}
 					>
 						{props.allowedQuantities.map(val => (
@@ -145,6 +177,7 @@ function QuantitySelector(props) {
 							min={props.minQuantity}
 							name={props.inputName}
 							onChange={handleInputChange}
+							ref={inputRef}
 							step={props.multipleQuantity}
 							type="number"
 							value={currentQuantity}
@@ -172,6 +205,7 @@ function QuantitySelector(props) {
 							)}
 							disabled={props.disabled || !prevAvailable}
 							onClick={decreaseQuantity}
+							type={'button'}
 						>
 							<ClayIcon symbol="hr" />
 						</button>
@@ -184,9 +218,13 @@ function QuantitySelector(props) {
 								formControlSizeClass
 							)}
 							disabled={props.disabled}
+							max={props.maxQuantity}
+							min={props.minQuantity}
 							name={props.inputName}
 							onChange={handleInputChange}
 							onKeyUp={handleInputKeyUp}
+							ref={inputRef}
+							step={props.multipleQuantity}
 							type="text"
 							value={currentQuantity}
 						/>
@@ -200,6 +238,7 @@ function QuantitySelector(props) {
 							)}
 							disabled={props.disabled || !nextAvailable}
 							onClick={increaseQuantity}
+							type={'button'}
 						>
 							<ClayIcon symbol="plus" />
 						</button>
@@ -229,7 +268,7 @@ QuantitySelector.propTypes = {
 	multipleQuantity: PropTypes.number,
 	prependedIcon: PropTypes.string,
 	prependedText: PropTypes.string,
-	quantity: PropTypes.number.isRequired,
+	quantity: PropTypes.number,
 	size: PropTypes.oneOf(['large', 'medium', 'small']),
 	spritemap: PropTypes.string,
 	style: PropTypes.oneOf(['default', 'simple']),

@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Site Service
 Bundle-SymbolicName: com.liferay.site.service
-Bundle-Version: 1.0.29
+Bundle-Version: 1.0.31
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true

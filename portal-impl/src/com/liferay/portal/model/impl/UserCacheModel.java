@@ -37,16 +37,16 @@ public class UserCacheModel
 	implements CacheModel<User>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof UserCacheModel)) {
+		if (!(object instanceof UserCacheModel)) {
 			return false;
 		}
 
-		UserCacheModel userCacheModel = (UserCacheModel)obj;
+		UserCacheModel userCacheModel = (UserCacheModel)object;
 
 		if ((userId == userCacheModel.userId) &&
 			(mvccVersion == userCacheModel.mvccVersion)) {

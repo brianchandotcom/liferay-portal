@@ -36,6 +36,10 @@ public class CommerceWishListLocalServiceWrapper
 	/**
 	 * Adds the commerce wish list to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceWishListLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceWishList the commerce wish list
 	 * @return the commerce wish list that was added
 	 */
@@ -77,6 +81,10 @@ public class CommerceWishListLocalServiceWrapper
 	/**
 	 * Deletes the commerce wish list from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceWishListLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceWishList the commerce wish list
 	 * @return the commerce wish list that was removed
 	 */
@@ -92,6 +100,10 @@ public class CommerceWishListLocalServiceWrapper
 
 	/**
 	 * Deletes the commerce wish list with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceWishListLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceWishListId the primary key of the commerce wish list
 	 * @return the commerce wish list that was removed
@@ -451,6 +463,10 @@ public class CommerceWishListLocalServiceWrapper
 
 	/**
 	 * Updates the commerce wish list in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceWishListLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceWishList the commerce wish list
 	 * @return the commerce wish list that was updated

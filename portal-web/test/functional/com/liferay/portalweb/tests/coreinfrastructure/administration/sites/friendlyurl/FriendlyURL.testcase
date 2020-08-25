@@ -1,0 +1,186 @@
+@component-name = "portal-friendly-url"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Friendly URL";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@priority = "4"
+	test EditFriendlyURL {
+		JSONLayout.addPublicLayout(
+			friendlyURL = "/home",
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/home");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/home");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page");
+
+		Type(
+			locator1 = "TextInput#FRIENDLY_URL",
+			value1 = "/test");
+
+		Button.clickSave();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/home");
+
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+			value1 = "Not Found");
+	}
+
+	@priority = "4"
+	test VerifyFriendlyURLsOnlyDisplayLocaleOnce {
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+
+		ProductMenu.gotoPortlet(
+			category = "Build",
+			panel = "Site Administration",
+			portlet = "Pages");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page");
+
+		Click(locator1 = "Dropdown#FRIENDLY_URL_LOCALE");
+
+		MenuItem.click(menuItem = "hu-HU");
+
+		Type(
+			locator1 = "TextInput#TEXT",
+			value1 = "Test Page");
+
+		Type(
+			locator1 = "TextInput#FRIENDLY_URL",
+			value1 = "/teszt-page");
+
+		Button.clickSave();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "hu/web/test-site-name/test-page");
+
+		AssertLocation(value1 = "${portalURL}/hu/web/test-site-name/teszt-page");
+	}
+
+	@priority = "4"
+	test ViewFriendlyURLWithSharedLocalesButDifferentLanguages {
+		property custom.properties = "locale.prepend.friendly.url.style=2${line.separator}locales.enabled=en_US,fr_FR,fr_CA";
+		property test.name.skip.portal.instance = "FriendlyURL#ViewFriendlyURLWithSharedLocalesButDifferentLanguages";
+
+		for (var siteName : list "USA Site Name,France Site Name,Canada Site Name") {
+			JSONGroup.addGroup(groupName = "${siteName}");
+
+			JSONLayout.addPublicLayout(
+				groupName = "${siteName}",
+				layoutName = "Test Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "${siteName}",
+				layoutName = "Test Page",
+				widgetName = "Language Selector");
+		}
+
+		Site.openSiteSettingsAdmin(siteURLKey = "france-site-name");
+
+		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "French (France)");
+
+		Navigator.gotoNavTab(navTab = "General");
+
+		PortletEntry.inputName(name = "France Site Name");
+
+		PortletEntry.save();
+
+		Site.openSiteSettingsAdmin(siteURLKey = "canada-site-name");
+
+		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "French (Canada)");
+
+		Navigator.gotoNavTab(navTab = "General");
+
+		PortletEntry.inputName(name = "Canada Site Name");
+
+		PortletEntry.save();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "/web/usa-site-name/test-page");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "fr_FR",
+			textIcon = "français (France)-France");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "/web/france-site-name/test-page");
+
+		AssertLocation(value1 = "${portalURL}/fr/web/france-site-name/test-page");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "fr_CA",
+			textIcon = "français (Canada)-Canada");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "/web/canada-site-name/test-page");
+
+		AssertLocation(value1 = "${portalURL}/fr-CA/web/canada-site-name/test-page");
+	}
+
+	@description = "This is a use case for LRQA-52002. FriendlyURLS should support Unicode characters."
+	@priority = "4"
+	test ViewFriendlyURLWithUnicodeChars {
+		JSONLayout.addPublicLayout(
+			friendlyURL = "/⚽⚽⚽",
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page",
+			widgetName = "Asset Publisher");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/⚽⚽⚽");
+
+		task ("Assert navigation occurs with no errors by asserting added Widget.") {
+			AssertElementPresent(
+				key_portletName = "Asset Publisher",
+				locator1 = "Portlet#TITLE");
+		}
+	}
+
+}

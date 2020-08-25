@@ -25,6 +25,7 @@
 		<field name="level4" type="BigDecimal" />
 		<field name="limitationType" type="String" />
 		<field name="limitationTimes" type="int" />
+		<field name="limitationTimesPerAccount" type="int" />
 		<field name="numberOfUse" type="int" />
 		<field name="rulesConjunction" type="boolean" />
 		<field name="active" type="boolean" />

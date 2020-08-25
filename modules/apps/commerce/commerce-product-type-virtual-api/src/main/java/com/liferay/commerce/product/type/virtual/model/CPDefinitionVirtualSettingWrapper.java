@@ -1096,17 +1096,17 @@ public class CPDefinitionVirtualSettingWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionVirtualSettingWrapper)) {
+		if (!(object instanceof CPDefinitionVirtualSettingWrapper)) {
 			return false;
 		}
 
 		CPDefinitionVirtualSettingWrapper cpDefinitionVirtualSettingWrapper =
-			(CPDefinitionVirtualSettingWrapper)obj;
+			(CPDefinitionVirtualSettingWrapper)object;
 
 		if (Objects.equals(
 				_cpDefinitionVirtualSetting,

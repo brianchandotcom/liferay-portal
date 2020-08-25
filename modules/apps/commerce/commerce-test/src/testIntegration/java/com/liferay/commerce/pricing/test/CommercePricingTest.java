@@ -412,8 +412,8 @@ public class CommercePricingTest {
 
 		CommercePricingClass commercePricingClass =
 			_commercePricingClassLocalService.addCommercePricingClass(
-				_user.getUserId(), _user.getGroupId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				_user.getUserId(), RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
 				ServiceContextTestUtil.getServiceContext());
 
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(

@@ -874,7 +874,7 @@ public class LocalizationImpl implements Localization {
 
 			xmlStreamWriter.writeStartElement(_ROOT);
 
-			StringBundler sb = new StringBundler(2 * map.size() - 1);
+			StringBundler sb = new StringBundler((2 * map.size()) - 1);
 
 			sb.append(defaultLanguageId);
 

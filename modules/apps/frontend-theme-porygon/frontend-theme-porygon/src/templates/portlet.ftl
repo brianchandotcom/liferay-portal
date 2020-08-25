@@ -64,7 +64,7 @@
 				<#if portlet_display.isShowBackIcon()>
 					<div class="autofit-col">
 						<div class="autofit-section">
-							<a class="icon-monospaced portlet-icon-back text-default" href="${portlet_back_url}" title='<@liferay.language key="return-to-full-page" />'>
+							<a class="icon-monospaced portlet-icon-back text-default" href="${portlet_back_url}" title="<@liferay.language key="return-to-full-page" />">
 								<@liferay_ui["icon"]
 									icon="angle-left"
 									markupView="lexicon"

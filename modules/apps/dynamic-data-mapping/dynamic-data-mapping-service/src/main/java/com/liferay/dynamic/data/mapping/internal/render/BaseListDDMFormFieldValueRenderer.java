@@ -58,10 +58,12 @@ public abstract class BaseListDDMFormFieldValueRenderer
 						ddmFormFieldValue, jsonArray.getString(i));
 
 					if (label == null) {
-						continue;
+						sb.append(jsonArray.getString(i));
+					}
+					else {
+						sb.append(label.getString(locale));
 					}
 
-					sb.append(label.getString(locale));
 					sb.append(StringPool.COMMA_AND_SPACE);
 				}
 

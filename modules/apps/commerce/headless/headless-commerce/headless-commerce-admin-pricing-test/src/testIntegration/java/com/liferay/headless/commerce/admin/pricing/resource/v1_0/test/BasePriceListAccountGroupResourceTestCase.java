@@ -113,7 +113,9 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 		PriceListAccountGroupResource.Builder builder =
 			PriceListAccountGroupResource.builder();
 
-		priceListAccountGroupResource = builder.locale(
+		priceListAccountGroupResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

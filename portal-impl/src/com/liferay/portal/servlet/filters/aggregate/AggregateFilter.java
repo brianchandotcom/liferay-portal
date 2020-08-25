@@ -425,7 +425,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 					response.setContentType(contentType);
 				}
 				else if (resourcePath.endsWith(_CSS_EXTENSION)) {
-					response.setContentType(ContentTypes.TEXT_CSS);
+					response.setContentType(ContentTypes.TEXT_CSS_UTF8);
 				}
 				else if (resourcePath.endsWith(_JAVASCRIPT_EXTENSION)) {
 					response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
@@ -445,10 +445,11 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 				content = getCssContent(request, response, resourcePath);
 
-				response.setContentType(ContentTypes.TEXT_CSS);
+				response.setContentType(ContentTypes.TEXT_CSS_UTF8);
 
 				if (!_isLegacyIe(request)) {
-					FileUtil.write(cacheContentTypeFile, ContentTypes.TEXT_CSS);
+					FileUtil.write(
+						cacheContentTypeFile, ContentTypes.TEXT_CSS_UTF8);
 				}
 			}
 			else if (resourcePath.endsWith(_JAVASCRIPT_EXTENSION)) {

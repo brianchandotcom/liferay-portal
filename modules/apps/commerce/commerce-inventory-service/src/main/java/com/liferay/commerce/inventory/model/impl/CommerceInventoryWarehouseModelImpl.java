@@ -1360,17 +1360,17 @@ public class CommerceInventoryWarehouseModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceInventoryWarehouse)) {
+		if (!(object instanceof CommerceInventoryWarehouse)) {
 			return false;
 		}
 
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			(CommerceInventoryWarehouse)obj;
+			(CommerceInventoryWarehouse)object;
 
 		long primaryKey = commerceInventoryWarehouse.getPrimaryKey();
 

@@ -128,9 +128,8 @@ public class WorkflowInstanceEditDisplayContext
 	}
 
 	public String getHeaderTitle() throws PortalException {
-		return LanguageUtil.get(
-			workflowInstanceRequestHelper.getRequest(),
-			getWorkflowDefinitionName());
+		return getWorkflowDefinitionName() + ": " +
+			getTaskContentTitleMessage();
 	}
 
 	public String getIconCssClass() {

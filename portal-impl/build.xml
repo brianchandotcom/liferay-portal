@@ -564,205 +564,23 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	</target>
 
 	<target name="format-source">
-		<java
-			classname="com.liferay.portal.tools.GitUtil"
-			classpathref="project.classpath"
-			dir="${project.dir}"
-			fork="true"
-			newenvironment="true"
-			outputProperty="baseline.current.branch.file.names"
-			resultproperty="baseline.current.branch.result"
-		>
-			<arg value="git.type=current-branch" />
-			<arg value="git.working.branch.name=${git.working.branch.name}" />
-		</java>
-
-		<if>
-			<or>
-				<equals arg1="${baseline.current.branch.file.names}" arg2="" />
-				<not>
-					<equals arg1="${baseline.current.branch.result}" arg2="0" />
-				</not>
-			</or>
-			<then>
-				<antcall target="format-source-all" />
-			</then>
-			<else>
-				<echo>
-Running SourceFormatter on added/modified files in the current branch only. Please run the following command to run SourceFormatter on all files:
-
-ant format-source-all
-				</echo>
-
-				<antcall target="format-source-current-branch" />
-			</else>
-		</if>
+		<antcall target="format-source-files">
+			<param name="format.source.default.task" value="true" />
+		</antcall>
 	</target>
 
 	<target name="format-source-all">
-		<property location="${project.dir}/modules" name="source.formatter.modules.dir.absolute.path" />
-
-		<if>
-			<not>
-				<isset property="env.JENKINS_HOME" />
-			</not>
-			<then>
-				<var name="source.formatter.gradle.args" value="" />
-				<var name="source.formatter.gradle.task" value="formatSource" />
-
-				<if>
-					<isset property="source.file.extensions" />
-					<then>
-						<var name="source.formatter.gradle.args" value="${source.formatter.gradle.args} -DformatSource.file.extensions=${source.file.extensions}" />
-					</then>
-				</if>
-
-				<if>
-					<isset property="source.files" />
-					<then>
-						<var name="source.formatter.gradle.args" value="${source.formatter.gradle.args} -DformatSource.file.names=${source.files}" />
-					</then>
-				</if>
-
-				<if>
-					<istrue value="${source.formatter.show.debug.information}" />
-					<then>
-						<var name="source.formatter.gradle.args" value="${source.formatter.gradle.args} -Psource.formatter.show.debug.information=true" />
-					</then>
-				</if>
-
-				<if>
-					<istrue value="${jvm.debug}" />
-					<then>
-						<var name="source.formatter.gradle.args" value="${source.formatter.gradle.args} --jvm-debug" />
-					</then>
-				</if>
-
-				<if>
-					<istrue value="${format.current.branch}" />
-					<then>
-						<var name="source.formatter.gradle.task" value="formatSourceCurrentBranch" />
-					</then>
-				</if>
-
-				<if>
-					<istrue value="${format.latest.author}" />
-					<then>
-						<var name="source.formatter.gradle.task" value="formatSourceLatestAuthor" />
-					</then>
-				</if>
-
-				<if>
-					<istrue value="${format.local.changes}" />
-					<then>
-						<var name="source.formatter.gradle.task" value="formatSourceLocalChanges" />
-					</then>
-				</if>
-
-				<echo>
-Please run the following command from ${source.formatter.modules.dir.absolute.path} to show status updates during the Source Formatter execution:
-
-../gradlew -b util.gradle ${source.formatter.gradle.task}${source.formatter.gradle.args}
-				</echo>
-			</then>
-		</if>
-
-		<path id="source.formatter.classpath">
-			<fileset
-				dir="${sdk.dir}/dependencies/com.liferay.source.formatter/lib"
-				includes="*.jar"
-			/>
-			<path refid="project.classpath" />
-		</path>
-
-		<if>
-			<not>
-				<isset property="source.formatter.dir" />
-			</not>
-			<then>
-				<property name="source.formatter.dir" value="${project.dir}" />
-			</then>
-		</if>
-
-		<java
-			classname="com.liferay.source.formatter.SourceFormatter"
-			classpathref="source.formatter.classpath"
-			dir="${source.formatter.dir}"
-			failonerror="true"
-			fork="true"
-			newenvironment="true"
-		>
-			<jvmarg if:true="${jvm.debug}" value="${jpda.settings}" />
-			<jvmarg value="-Xmx512m" />
-			<jvmarg value="-Xss2048k" />
-			<jvmarg value="-Dsource.formatter.check.registry.in.test.classes=${source.formatter.check.registry.in.test.classes}" />
-			<jvmarg value="-Dsource.formatter.excludes=${source.formatter.excludes}" />
-			<arg value="format.current.branch=${format.current.branch}" />
-			<arg value="format.latest.author=${format.latest.author}" />
-			<arg value="format.local.changes=${format.local.changes}" />
-			<arg value="git.working.branch.name=${git.working.branch.name}" />
-			<arg value="include.subrepositories=${source.formatter.include.subrepositories}" />
-			<arg value="max.line.length=${source.formatter.max.line.length}" />
-			<arg value="processor.thread.count=${source.formatter.processor.thread.count}" />
-			<arg value="show.debug.information=${source.formatter.show.debug.information}" />
-			<arg value="show.documentation=${source.formatter.show.documentation}" />
-			<arg value="source.auto.fix=${source.auto.fix}" />
-			<arg value="source.base.dir=${source.base.dir}" />
-			<arg value="source.check.name=${source.check.name}" />
-			<arg value="source.file.extensions=${source.file.extensions}" />
-			<arg value="source.files=${source.files}" />
-			<arg value="source.print.errors=${source.print.errors}" />
-			<arg value="source.throw.exception=${source.throw.exception}" />
-		</java>
-
-		<delete file="ServiceBuilder.temp" />
-
-		<if>
-			<and>
-				<not>
-					<or>
-						<isset property="skip.node.task" />
-						<isset property="source.file.extensions" />
-						<isset property="source.files" />
-					</or>
-				</not>
-				<resourcecount count="0" when="greater">
-					<fileset
-						dir="${project.dir}/modules"
-						excludes="**/.gradle/,**/bin/,**/build/,**/classes/,**/node_modules/,**/tmp/"
-						includes="**/yarn-*.js"
-					/>
-				</resourcecount>
-			</and>
-			<then>
-				<if>
-					<and>
-						<isset property="source.auto.fix" />
-						<isfalse value="${source.auto.fix}" />
-					</and>
-					<then>
-						<gradle-execute dir="${project.dir}/modules" task=":yarnCheckFormat">
-							<env key="LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME" value="${git.working.branch.name}" />
-						</gradle-execute>
-					</then>
-					<else>
-						<gradle-execute dir="${project.dir}/modules" task=":yarnFormat">
-							<env key="LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME" value="${git.working.branch.name}" />
-						</gradle-execute>
-					</else>
-				</if>
-			</then>
-		</if>
+		<antcall target="format-source-files" />
 	</target>
 
 	<target name="format-source-bnd">
-		<antcall target="format-source-all">
+		<antcall target="format-source-files">
 			<param name="source.file.extensions" value="bnd,gradle,json" />
 		</antcall>
 	</target>
 
 	<target name="format-source-current-branch">
-		<antcall target="format-source-all">
+		<antcall target="format-source-files">
 			<param name="format.current.branch" value="true" />
 		</antcall>
 	</target>
@@ -774,13 +592,187 @@ Please run the following command from ${source.formatter.modules.dir.absolute.pa
 	</target>
 
 	<target name="format-source-debug">
-		<antcall target="format-source-all">
+		<antcall target="format-source-files">
 			<param name="source.formatter.show.debug.information" value="true" />
 		</antcall>
 	</target>
 
+	<target name="format-source-files">
+		<exec executable="git" failonerror="true" outputproperty="current.branch.name">
+			<arg value="rev-parse" />
+			<arg value="--abbrev-ref" />
+			<arg value="HEAD" />
+		</exec>
+
+		<path id="source.formatter.classpath">
+			<fileset
+				dir="${sdk.dir}/dependencies/com.liferay.source.formatter/lib"
+				includes="*.jar"
+			/>
+			<path refid="project.classpath" />
+		</path>
+
+		<if>
+			<equals arg1="${current.branch.name}" arg2="${git.working.branch.name}" />
+			<then>
+				<if>
+					<isset property="format.current.branch" />
+					<then>
+						<property name="source.formatter.message" value="The current branch is the same as the working branch (${git.working.branch.name}).${line.separator}Not executing Source Formatter task." />
+						<property name="source.formatter.skip" value="true" />
+					</then>
+				</if>
+			</then>
+			<else>
+				<java
+					classname="com.liferay.portal.tools.GitUtil"
+					classpathref="source.formatter.classpath"
+					dir="${project.dir}"
+					fork="true"
+					newenvironment="true"
+					outputProperty="baseline.current.branch.file.names"
+					resultproperty="baseline.current.branch.result"
+				>
+					<arg value="git.type=current-branch" />
+					<arg value="git.working.branch.name=${git.working.branch.name}" />
+				</java>
+
+				<if>
+					<and>
+						<not>
+							<equals arg1="${baseline.current.branch.file.names}" arg2="" />
+						</not>
+						<equals arg1="${baseline.current.branch.result}" arg2="0" />
+					</and>
+					<then>
+						<if>
+							<isset property="format.source.default.task" />
+							<then>
+								<property name="format.current.branch" value="true" />
+								<property name="source.formatter.message" value="Running SourceFormatter on added/modified files in the current branch (${current.branch.name}) only. Please run the following command to run SourceFormatter on all files:${line.separator}${line.separator}ant format-source-all" />
+							</then>
+						</if>
+					</then>
+					<else>
+						<if>
+							<isset property="format.source.default.task" />
+							<then>
+								<property name="source.formatter.message" value="There are no modified files on the current branch (${current.branch.name}).${line.separator}Executing Source Formatter task on all files." />
+							</then>
+							<else>
+								<if>
+									<isset property="format.current.branch" />
+									<then>
+										<property name="source.formatter.message" value="There are no modified files on the current branch (${current.branch.name}).${line.separator}Not executing Source Formatter task." />
+										<property name="source.formatter.skip" value="true" />
+									</then>
+								</if>
+							</else>
+						</if>
+					</else>
+				</if>
+			</else>
+		</if>
+
+		<if>
+			<isset property="source.formatter.message" />
+			<then>
+				<echo></echo>
+				<echo>${source.formatter.message}</echo>
+				<echo></echo>
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset property="source.formatter.skip" />
+			</not>
+			<then>
+				<if>
+					<not>
+						<isset property="source.formatter.dir" />
+					</not>
+					<then>
+						<property name="source.formatter.dir" value="${project.dir}" />
+					</then>
+				</if>
+
+				<java
+					classname="com.liferay.source.formatter.SourceFormatter"
+					classpathref="source.formatter.classpath"
+					dir="${source.formatter.dir}"
+					failonerror="true"
+					fork="true"
+					newenvironment="true"
+				>
+					<jvmarg if:true="${jvm.debug}" value="${jpda.settings}" />
+					<jvmarg value="-Xmx512m" />
+					<jvmarg value="-Xss2048k" />
+					<jvmarg value="-Dsource.formatter.check.registry.in.test.classes=${source.formatter.check.registry.in.test.classes}" />
+					<jvmarg value="-Dsource.formatter.excludes=${source.formatter.excludes}" />
+					<arg value="format.current.branch=${format.current.branch}" />
+					<arg value="format.latest.author=${format.latest.author}" />
+					<arg value="format.local.changes=${format.local.changes}" />
+					<arg value="git.working.branch.name=${git.working.branch.name}" />
+					<arg value="include.subrepositories=${source.formatter.include.subrepositories}" />
+					<arg value="max.line.length=${source.formatter.max.line.length}" />
+					<arg value="processor.thread.count=${source.formatter.processor.thread.count}" />
+					<arg value="show.debug.information=${source.formatter.show.debug.information}" />
+					<arg value="show.documentation=${source.formatter.show.documentation}" />
+					<arg value="source.auto.fix=${source.auto.fix}" />
+					<arg value="source.base.dir=${source.base.dir}" />
+					<arg value="source.check.name=${source.check.name}" />
+					<arg value="source.fail.on.auto.fix=${source.fail.on.auto.fix}" />
+					<arg value="source.fail.on.has.warning=${source.fail.on.has.warning}" />
+					<arg value="source.file.extensions=${source.file.extensions}" />
+					<arg value="source.files=${source.files}" />
+					<arg value="source.print.errors=${source.print.errors}" />
+				</java>
+
+				<delete file="ServiceBuilder.temp" />
+
+				<if>
+					<and>
+						<not>
+							<or>
+								<isset property="skip.node.task" />
+								<isset property="source.file.extensions" />
+								<isset property="source.files" />
+							</or>
+						</not>
+						<resourcecount count="0" when="greater">
+							<fileset
+								dir="${project.dir}/modules"
+								excludes="**/.gradle/,**/bin/,**/build/,**/classes/,**/node_modules/,**/tmp/"
+								includes="**/yarn.lock"
+							/>
+						</resourcecount>
+					</and>
+					<then>
+						<if>
+							<and>
+								<isset property="source.auto.fix" />
+								<isfalse value="${source.auto.fix}" />
+							</and>
+							<then>
+								<gradle-execute dir="${project.dir}/modules" task=":portalYarnCheckFormat">
+									<env key="LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME" value="${git.working.branch.name}" />
+								</gradle-execute>
+							</then>
+							<else>
+								<gradle-execute dir="${project.dir}/modules" task=":portalYarnFormat">
+									<env key="LIFERAY_NPM_SCRIPTS_WORKING_BRANCH_NAME" value="${git.working.branch.name}" />
+								</gradle-execute>
+							</else>
+						</if>
+					</then>
+				</if>
+			</then>
+		</if>
+	</target>
+
 	<target name="format-source-latest-author">
-		<antcall target="format-source-all">
+		<antcall target="format-source-files">
 			<param name="format.latest.author" value="true" />
 		</antcall>
 	</target>
@@ -792,7 +784,7 @@ Please run the following command from ${source.formatter.modules.dir.absolute.pa
 	</target>
 
 	<target name="format-source-local-changes">
-		<antcall target="format-source-all">
+		<antcall target="format-source-files">
 			<param name="format.local.changes" value="true" />
 		</antcall>
 	</target>

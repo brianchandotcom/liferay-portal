@@ -38,17 +38,17 @@ public class CommerceDiscountCacheModel
 	implements CacheModel<CommerceDiscount>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceDiscountCacheModel)) {
+		if (!(object instanceof CommerceDiscountCacheModel)) {
 			return false;
 		}
 
 		CommerceDiscountCacheModel commerceDiscountCacheModel =
-			(CommerceDiscountCacheModel)obj;
+			(CommerceDiscountCacheModel)object;
 
 		if (commerceDiscountId ==
 				commerceDiscountCacheModel.commerceDiscountId) {
@@ -66,7 +66,7 @@ public class CommerceDiscountCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(63);
+		StringBundler sb = new StringBundler(65);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -110,6 +110,8 @@ public class CommerceDiscountCacheModel
 		sb.append(limitationType);
 		sb.append(", limitationTimes=");
 		sb.append(limitationTimes);
+		sb.append(", limitationTimesPerAccount=");
+		sb.append(limitationTimesPerAccount);
 		sb.append(", numberOfUse=");
 		sb.append(numberOfUse);
 		sb.append(", rulesConjunction=");
@@ -225,6 +227,8 @@ public class CommerceDiscountCacheModel
 		}
 
 		commerceDiscountImpl.setLimitationTimes(limitationTimes);
+		commerceDiscountImpl.setLimitationTimesPerAccount(
+			limitationTimesPerAccount);
 		commerceDiscountImpl.setNumberOfUse(numberOfUse);
 		commerceDiscountImpl.setRulesConjunction(rulesConjunction);
 		commerceDiscountImpl.setActive(active);
@@ -303,6 +307,8 @@ public class CommerceDiscountCacheModel
 		limitationType = objectInput.readUTF();
 
 		limitationTimes = objectInput.readInt();
+
+		limitationTimesPerAccount = objectInput.readInt();
 
 		numberOfUse = objectInput.readInt();
 
@@ -399,6 +405,8 @@ public class CommerceDiscountCacheModel
 
 		objectOutput.writeInt(limitationTimes);
 
+		objectOutput.writeInt(limitationTimesPerAccount);
+
 		objectOutput.writeInt(numberOfUse);
 
 		objectOutput.writeBoolean(rulesConjunction);
@@ -443,6 +451,7 @@ public class CommerceDiscountCacheModel
 	public BigDecimal level4;
 	public String limitationType;
 	public int limitationTimes;
+	public int limitationTimesPerAccount;
 	public int numberOfUse;
 	public boolean rulesConjunction;
 	public boolean active;

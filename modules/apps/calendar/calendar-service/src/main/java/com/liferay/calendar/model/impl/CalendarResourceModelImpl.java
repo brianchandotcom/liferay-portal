@@ -1395,16 +1395,16 @@ public class CalendarResourceModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CalendarResource)) {
+		if (!(object instanceof CalendarResource)) {
 			return false;
 		}
 
-		CalendarResource calendarResource = (CalendarResource)obj;
+		CalendarResource calendarResource = (CalendarResource)object;
 
 		long primaryKey = calendarResource.getPrimaryKey();
 

@@ -1961,16 +1961,16 @@ public class AssetEntryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AssetEntry)) {
+		if (!(object instanceof AssetEntry)) {
 			return false;
 		}
 
-		AssetEntry assetEntry = (AssetEntry)obj;
+		AssetEntry assetEntry = (AssetEntry)object;
 
 		long primaryKey = assetEntry.getPrimaryKey();
 

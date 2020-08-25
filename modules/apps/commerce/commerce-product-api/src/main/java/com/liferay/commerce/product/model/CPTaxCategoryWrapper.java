@@ -690,16 +690,17 @@ public class CPTaxCategoryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPTaxCategoryWrapper)) {
+		if (!(object instanceof CPTaxCategoryWrapper)) {
 			return false;
 		}
 
-		CPTaxCategoryWrapper cpTaxCategoryWrapper = (CPTaxCategoryWrapper)obj;
+		CPTaxCategoryWrapper cpTaxCategoryWrapper =
+			(CPTaxCategoryWrapper)object;
 
 		if (Objects.equals(
 				_cpTaxCategory, cpTaxCategoryWrapper._cpTaxCategory)) {

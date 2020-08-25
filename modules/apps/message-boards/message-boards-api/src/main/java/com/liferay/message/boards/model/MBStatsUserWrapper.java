@@ -389,16 +389,16 @@ public class MBStatsUserWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MBStatsUserWrapper)) {
+		if (!(object instanceof MBStatsUserWrapper)) {
 			return false;
 		}
 
-		MBStatsUserWrapper mbStatsUserWrapper = (MBStatsUserWrapper)obj;
+		MBStatsUserWrapper mbStatsUserWrapper = (MBStatsUserWrapper)object;
 
 		if (Objects.equals(_mbStatsUser, mbStatsUserWrapper._mbStatsUser)) {
 			return true;

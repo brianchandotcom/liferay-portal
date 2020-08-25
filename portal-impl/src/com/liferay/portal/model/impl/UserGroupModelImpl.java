@@ -1000,16 +1000,16 @@ public class UserGroupModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof UserGroup)) {
+		if (!(object instanceof UserGroup)) {
 			return false;
 		}
 
-		UserGroup userGroup = (UserGroup)obj;
+		UserGroup userGroup = (UserGroup)object;
 
 		long primaryKey = userGroup.getPrimaryKey();
 

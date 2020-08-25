@@ -1099,7 +1099,7 @@ public class Recurrence implements Serializable {
 			return "null";
 		}
 
-		StringBundler sb = new StringBundler(2 * a.length + 1);
+		StringBundler sb = new StringBundler((2 * a.length) + 1);
 
 		sb.append("[");
 

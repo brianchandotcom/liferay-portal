@@ -81,7 +81,7 @@ public class ThreadLocalCacheAdvice
 			return StringUtil.toHexString(arguments[0]);
 		}
 
-		StringBundler sb = new StringBundler(arguments.length * 2 - 1);
+		StringBundler sb = new StringBundler((arguments.length * 2) - 1);
 
 		for (int i = 0; i < arguments.length; i++) {
 			sb.append(StringUtil.toHexString(arguments[i]));

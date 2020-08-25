@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>MINI_CART_BUTTON</td>
-	<td>//div[contains(@class,'mini-cart-wrapper')]/button</td>
+	<td>//div[contains(@class,'mini-cart')]/button[contains(@class,'mini-cart-opener')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -98,6 +98,7 @@
 	<td>//div/button[contains(.,'Sort By')]</td>
 	<td></td>
 </tr>
+<!--SPEEDWELL-->
 <tr>
 	<td>SPEEDWELL_ACCOUNT_DASHBOARD_ITEM</td>
 	<td>//div[contains(@class,'account-dashboard')]//h3[contains(.,'${key_dashboardItem}')]</td>
@@ -111,6 +112,11 @@
 <tr>
 	<td>SPEEDWELL_ACCOUNT_DROPDOWN_ITEM</td>
 	<td>//div[contains(@class,'speedwell-user-nav__')]//div[contains(.,'${key_dropdownItem}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPEEDWELL_MY_ORDERS_ORDER_ACCOUNT</td>
+	<td>//tbody/tr//td[3][contains(.,'${key_accountName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -184,6 +190,57 @@
 	<td>//li[contains(@class,'commerce-total')]//div[contains(@class,'commerce-value') and contains (.,'${key_totalValue}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>GUEST_CHECKOUT_EMAIL</td>
+	<td>//div[contains(@class,'form-group')]//input[contains(@name,'email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_CHECKOUT_CHECK_EMAIL_LABEL</td>
+	<td>//div[contains(@class,'form-group')]//label[normalize-space(text()) = 'Email']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKOUT_CHECK_SHIPPING_ADDRESS_LABEL</td>
+	<td>//div[@class='multi-step-indicator-label' and contains(.,'Shipping Address')]</td>
+	<td></td>
+</tr>
+<!--MINICART-->
+<tr>
+	<td>MINI_CART_CLOSE</td>
+	<td>//button[@class='mini-cart-close']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_ITEM_NAME</td>
+	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSKU}')]/../h5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_ITEM_SKU</td>
+	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSKU}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_ITEM_QUANTITY</td>
+	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSKU}')]/../../../div[@class='mini-cart-item-quantity']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_ITEM_PRICE_VALUE</td>
+	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSKU}')]/../../..//span[@class='price-value']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_SUMMARY_TABLE_ITEM</td>
+	<td>//div[contains(@class,'summary-table')]//span[contains(.,'${key_summaryTableItem}')]/following::span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_SUMMARY_TABLE_TOTAL</td>
+	<td>//div[contains(@class,'summary-table')]//*[contains(.,'Total')]/following::h4</td>
+	<td></td>
+</tr>
 <!--ORDERS-->
 <tr>
 	<td>ORDER_DETAILS_DISCOUNT</td>
@@ -192,7 +249,7 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_NAME</td>
-	<td>//tbody//td[2]</td>
+	<td>//tbody//td[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -207,7 +264,7 @@
 </tr>
 <tr>
 	<td>ORDER_DETAILS_SKU</td>
-	<td>//tbody//td[1]</td>
+	<td>//tbody//td[3]</td>
 	<td></td>
 </tr>
 <tr>

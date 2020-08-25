@@ -85,7 +85,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 											layoutPageTemplateCollectionURL.setParameter("tabs1", "page-templates");
 											%>
 
-											<a class='nav-link truncate-text <%= (layoutPageTemplateCollection.getLayoutPageTemplateCollectionId() == layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) ? "active" : StringPool.BLANK %>' href="<%= layoutPageTemplateCollectionURL.toString() %>">
+											<a class="nav-link truncate-text <%= (layoutPageTemplateCollection.getLayoutPageTemplateCollectionId() == layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= layoutPageTemplateCollectionURL.toString() %>">
 												<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>
 											</a>
 										</li>

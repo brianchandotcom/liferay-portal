@@ -19,6 +19,7 @@ import com.liferay.commerce.price.list.service.base.CommercePriceListChannelRelL
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -107,6 +108,21 @@ public class CommercePriceListChannelRelLocalServiceImpl
 
 		return commercePriceListChannelRelPersistence.findByCommercePriceListId(
 			commercePriceListId);
+	}
+
+	@Override
+	public List<CommercePriceListChannelRel> getCommercePriceListChannelRels(
+		long commercePriceListId, int start, int end,
+		OrderByComparator<CommercePriceListChannelRel> orderByComparator) {
+
+		return commercePriceListChannelRelPersistence.findByCommercePriceListId(
+			commercePriceListId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommercePriceListChannelRelsCount(long commercePriceListId) {
+		return commercePriceListChannelRelPersistence.
+			countByCommercePriceListId(commercePriceListId);
 	}
 
 }

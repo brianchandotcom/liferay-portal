@@ -38,16 +38,17 @@ public class CPInstanceCacheModel
 	implements CacheModel<CPInstance>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPInstanceCacheModel)) {
+		if (!(object instanceof CPInstanceCacheModel)) {
 			return false;
 		}
 
-		CPInstanceCacheModel cpInstanceCacheModel = (CPInstanceCacheModel)obj;
+		CPInstanceCacheModel cpInstanceCacheModel =
+			(CPInstanceCacheModel)object;
 
 		if (CPInstanceId == cpInstanceCacheModel.CPInstanceId) {
 			return true;
@@ -63,7 +64,7 @@ public class CPInstanceCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(83);
+		StringBundler sb = new StringBundler(85);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -139,6 +140,8 @@ public class CPInstanceCacheModel
 		sb.append(deliverySubscriptionTypeSettings);
 		sb.append(", deliveryMaxSubscriptionCycles=");
 		sb.append(deliveryMaxSubscriptionCycles);
+		sb.append(", unspsc=");
+		sb.append(unspsc);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -300,6 +303,14 @@ public class CPInstanceCacheModel
 
 		cpInstanceImpl.setDeliveryMaxSubscriptionCycles(
 			deliveryMaxSubscriptionCycles);
+
+		if (unspsc == null) {
+			cpInstanceImpl.setUnspsc("");
+		}
+		else {
+			cpInstanceImpl.setUnspsc(unspsc);
+		}
+
 		cpInstanceImpl.setStatus(status);
 		cpInstanceImpl.setStatusByUserId(statusByUserId);
 
@@ -381,6 +392,7 @@ public class CPInstanceCacheModel
 		deliverySubscriptionTypeSettings = objectInput.readUTF();
 
 		deliveryMaxSubscriptionCycles = objectInput.readLong();
+		unspsc = objectInput.readUTF();
 
 		status = objectInput.readInt();
 
@@ -513,6 +525,13 @@ public class CPInstanceCacheModel
 
 		objectOutput.writeLong(deliveryMaxSubscriptionCycles);
 
+		if (unspsc == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(unspsc);
+		}
+
 		objectOutput.writeInt(status);
 
 		objectOutput.writeLong(statusByUserId);
@@ -564,6 +583,7 @@ public class CPInstanceCacheModel
 	public String deliverySubscriptionType;
 	public String deliverySubscriptionTypeSettings;
 	public long deliveryMaxSubscriptionCycles;
+	public String unspsc;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

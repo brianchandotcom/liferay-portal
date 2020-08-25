@@ -872,16 +872,16 @@ public class WikiNodeWrapper implements ModelWrapper<WikiNode>, WikiNode {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof WikiNodeWrapper)) {
+		if (!(object instanceof WikiNodeWrapper)) {
 			return false;
 		}
 
-		WikiNodeWrapper wikiNodeWrapper = (WikiNodeWrapper)obj;
+		WikiNodeWrapper wikiNodeWrapper = (WikiNodeWrapper)object;
 
 		if (Objects.equals(_wikiNode, wikiNodeWrapper._wikiNode)) {
 			return true;

@@ -337,17 +337,17 @@ public class BrowserTrackerWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof BrowserTrackerWrapper)) {
+		if (!(object instanceof BrowserTrackerWrapper)) {
 			return false;
 		}
 
 		BrowserTrackerWrapper browserTrackerWrapper =
-			(BrowserTrackerWrapper)obj;
+			(BrowserTrackerWrapper)object;
 
 		if (Objects.equals(
 				_browserTracker, browserTrackerWrapper._browserTracker)) {

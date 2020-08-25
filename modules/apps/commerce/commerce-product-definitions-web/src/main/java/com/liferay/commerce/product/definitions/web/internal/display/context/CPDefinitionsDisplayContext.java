@@ -20,9 +20,11 @@ import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
 import com.liferay.commerce.frontend.ClayCreationMenu;
 import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
+import com.liferay.commerce.frontend.clay.data.set.ClayHeadlessDataSetActionTemplate;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
+import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.item.selector.criterion.CommerceChannelItemSelectorCriterion;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CProduct;
@@ -32,7 +34,6 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.type.CPType;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -40,11 +41,16 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.CustomAttributesUtil;
@@ -56,6 +62,7 @@ import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 import javax.portlet.RenderURL;
@@ -187,13 +194,14 @@ public class CPDefinitionsDisplayContext
 		return clayCreationMenu;
 	}
 
-	public ClayCreationMenu getClayCreationMenu() {
+	public ClayCreationMenu getClayCreationMenu() throws Exception {
 		ClayCreationMenu clayCreationMenu = new ClayCreationMenu();
 
 		RenderURL renderURL = liferayPortletResponse.createRenderURL();
 
-		renderURL.setParameter("mvcRenderCommandName", "editProductDefinition");
+		renderURL.setParameter("mvcRenderCommandName", "addProductDefinition");
 		renderURL.setParameter("backURL", cpRequestHelper.getCurrentURL());
+		renderURL.setWindowState(LiferayWindowState.POP_UP);
 
 		for (CPType cpType : getCPTypes()) {
 			renderURL.setParameter("productTypeName", cpType.getName());
@@ -201,13 +209,72 @@ public class CPDefinitionsDisplayContext
 			ClayCreationMenuActionItem clayCreationMenuActionItem =
 				new ClayCreationMenuActionItem(
 					renderURL.toString(),
-					cpType.getLabel(cpRequestHelper.getLocale()));
+					cpType.getLabel(cpRequestHelper.getLocale()),
+					ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL);
 
 			clayCreationMenu.addClayCreationMenuActionItem(
 				clayCreationMenuActionItem);
 		}
 
 		return clayCreationMenu;
+	}
+
+	public List<ClayHeadlessDataSetActionTemplate>
+			getClayHeadlessDataSetActionTemplates()
+		throws PortalException {
+
+		List<ClayHeadlessDataSetActionTemplate>
+			clayHeadlessDataSetActionTemplates = new ArrayList<>();
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			httpServletRequest, CPDefinition.class.getName(),
+			PortletProvider.Action.MANAGE);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "editProductDefinition");
+		portletURL.setParameter("cpDefinitionId", "{id}");
+		portletURL.setParameter(
+			"screenNavigationCategoryKey",
+			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_DETAILS);
+
+		clayHeadlessDataSetActionTemplates.add(
+			new ClayHeadlessDataSetActionTemplate(
+				portletURL.toString(), "view", "view",
+				LanguageUtil.get(httpServletRequest, "view"), "get", null,
+				null));
+
+		clayHeadlessDataSetActionTemplates.add(
+			new ClayHeadlessDataSetActionTemplate(
+				"/o/headless-commerce-admin-catalog/v1.0/products/{productId}",
+				"trash", "delete",
+				LanguageUtil.get(httpServletRequest, "delete"), "delete",
+				"delete", "async"));
+
+		return clayHeadlessDataSetActionTemplates;
+	}
+
+	public List<ClayMenuActionItem> getClayMenuActionItems() throws Exception {
+		List<ClayMenuActionItem> clayMenuActionItems = new ArrayList<>();
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			cpRequestHelper.getRenderRequest(), cpRequestHelper.getPortletId(),
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "duplicateCPDefinition");
+		portletURL.setParameter(
+			"cpDefinitionId",
+			ParamUtil.getString(httpServletRequest, "cpDefinitionId"));
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		ClayMenuActionItem clayMenuActionItem = new ClayMenuActionItem(
+			portletURL.toString(), null,
+			LanguageUtil.get(httpServletRequest, "duplicate"),
+			ClayMenuActionItem.CLAY_MENU_ACTION_ITEM_TARGET_MODAL);
+
+		clayMenuActionItems.add(clayMenuActionItem);
+
+		return clayMenuActionItems;
 	}
 
 	public long[] getCommerceAccountGroupRelCommerceAccountGroupIds()
@@ -265,10 +332,6 @@ public class CPDefinitionsDisplayContext
 		}
 
 		return cpDefinition.getCProduct();
-	}
-
-	public List<DropdownItem> getDropdownItems() {
-		return Collections.emptyList();
 	}
 
 	public List<HeaderActionModel> getHeaderActionModels()

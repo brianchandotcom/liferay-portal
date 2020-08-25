@@ -34,18 +34,18 @@ public class JournalArticleLocalizationCacheModel
 	implements CacheModel<JournalArticleLocalization>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof JournalArticleLocalizationCacheModel)) {
+		if (!(object instanceof JournalArticleLocalizationCacheModel)) {
 			return false;
 		}
 
 		JournalArticleLocalizationCacheModel
 			journalArticleLocalizationCacheModel =
-				(JournalArticleLocalizationCacheModel)obj;
+				(JournalArticleLocalizationCacheModel)object;
 
 		if (articleLocalizationId ==
 				journalArticleLocalizationCacheModel.articleLocalizationId) {

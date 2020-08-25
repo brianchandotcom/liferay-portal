@@ -34,6 +34,11 @@ module.exports = [
 		page: 'summary.html'
 	},
 	{
+		entry: 'Dropdown',
+		name: 'Dropdown',
+		page: 'dropdown.html'
+	},
+	{
 		entry: 'Gallery',
 		name: 'Gallery',
 		page: 'gallery.html'
@@ -42,6 +47,11 @@ module.exports = [
 		entry: 'Modal',
 		name: 'Modal',
 		page: 'modal.html'
+	},
+	{
+		entry: 'MiniCart',
+		name: 'Mini Cart',
+		page: 'mini-cart.html'
 	},
 	{
 		entry: 'SidePanel',

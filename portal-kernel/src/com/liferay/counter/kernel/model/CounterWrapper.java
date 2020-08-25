@@ -237,16 +237,16 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CounterWrapper)) {
+		if (!(object instanceof CounterWrapper)) {
 			return false;
 		}
 
-		CounterWrapper counterWrapper = (CounterWrapper)obj;
+		CounterWrapper counterWrapper = (CounterWrapper)object;
 
 		if (Objects.equals(_counter, counterWrapper._counter)) {
 			return true;

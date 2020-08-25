@@ -36,6 +36,10 @@ public class CommercePriceEntryLocalServiceWrapper
 	/**
 	 * Adds the commerce price entry to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePriceEntry the commerce price entry
 	 * @return the commerce price entry that was added
 	 */
@@ -213,6 +217,10 @@ public class CommercePriceEntryLocalServiceWrapper
 	/**
 	 * Deletes the commerce price entry from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePriceEntry the commerce price entry
 	 * @return the commerce price entry that was removed
 	 * @throws PortalException
@@ -230,6 +238,10 @@ public class CommercePriceEntryLocalServiceWrapper
 
 	/**
 	 * Deletes the commerce price entry with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commercePriceEntryId the primary key of the commerce price entry
 	 * @return the commerce price entry that was removed
@@ -716,6 +728,10 @@ public class CommercePriceEntryLocalServiceWrapper
 	/**
 	 * Updates the commerce price entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePriceEntry the commerce price entry
 	 * @return the commerce price entry that was updated
 	 */
@@ -727,6 +743,32 @@ public class CommercePriceEntryLocalServiceWrapper
 
 		return _commercePriceEntryLocalService.updateCommercePriceEntry(
 			commercePriceEntry);
+	}
+
+	@Override
+	public com.liferay.commerce.price.list.model.CommercePriceEntry
+			updateCommercePriceEntry(
+				long commercePriceEntryId, java.math.BigDecimal price,
+				java.math.BigDecimal promoPrice, boolean discountDiscovery,
+				java.math.BigDecimal discountLevel1,
+				java.math.BigDecimal discountLevel2,
+				java.math.BigDecimal discountLevel3,
+				java.math.BigDecimal discountLevel4, boolean bulkPricing,
+				int displayDateMonth, int displayDateDay, int displayDateYear,
+				int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePriceEntryLocalService.updateCommercePriceEntry(
+			commercePriceEntryId, price, promoPrice, discountDiscovery,
+			discountLevel1, discountLevel2, discountLevel3, discountLevel4,
+			bulkPricing, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	@Override

@@ -796,16 +796,16 @@ public class CommerceDiscountRelModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceDiscountRel)) {
+		if (!(object instanceof CommerceDiscountRel)) {
 			return false;
 		}
 
-		CommerceDiscountRel commerceDiscountRel = (CommerceDiscountRel)obj;
+		CommerceDiscountRel commerceDiscountRel = (CommerceDiscountRel)object;
 
 		long primaryKey = commerceDiscountRel.getPrimaryKey();
 

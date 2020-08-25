@@ -253,10 +253,10 @@ public class KBFolderLocalServiceTest {
 			new Date(date.getTime() + Time.SECOND));
 		KBArticle kbArticle2 = addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			new Date(date.getTime() + Time.SECOND * 3));
+			new Date(date.getTime() + (Time.SECOND * 3)));
 		KBArticle kbArticle3 = addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			new Date(date.getTime() + Time.SECOND * 2));
+			new Date(date.getTime() + (Time.SECOND * 2)));
 
 		List<Object> kbFolderAndKBArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
@@ -397,10 +397,10 @@ public class KBFolderLocalServiceTest {
 			new Date(date.getTime() + Time.SECOND));
 		KBArticle kbArticle2 = addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			new Date(date.getTime() + Time.SECOND * 3));
+			new Date(date.getTime() + (Time.SECOND * 3)));
 		KBArticle kbArticle3 = addKBArticle(
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			new Date(date.getTime() + Time.SECOND * 2));
+			new Date(date.getTime() + (Time.SECOND * 2)));
 
 		List<Object> kbFolderAndKBArticles =
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(

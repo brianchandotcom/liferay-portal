@@ -26,14 +26,20 @@ ext {
 		"com.liferay.css.builder.version": "3.0.2",
 		"com.liferay.gradle.plugins.css.builder.version": "3.0.3",
 		"com.liferay.gradle.plugins.theme.builder.version": "2.0.7",
-		"com.liferay.gradle.plugins.version": "5.0.35",
-		"com.liferay.gradle.plugins.workspace.version": "2.2.12",
-		"com.liferay.portal.tools.bundle.support.version": "3.5.5",
-		"com.liferay.portal.tools.service.builder.version": "1.0.338",
+		"com.liferay.gradle.plugins.version": "9.0.0",
+		"com.liferay.gradle.plugins.workspace.version": "2.5.3",
+		"com.liferay.portal.tools.bundle.support.version": "3.6.0",
+		"com.liferay.portal.tools.service.builder.version": "1.0.345",
+		"com.liferay.portal.tools.rest.builder.version": "1.0.114",
 		"com.liferay.portal.tools.soy.builder.version": "3.0.4",
-		"com.liferay.portal.tools.theme.builder.version": "1.1.8"
+		"com.liferay.portal.tools.theme.builder.version": "1.1.8",
+		"com.liferay.portal.vulcan.api.version": "7.6.1"
 	]
 }
+
+task portalYarnCheckFormat
+task portalYarnFormat
+task portalYarnInstall
 
 if (Boolean.getBoolean("gradle.build.scan.enabled")) {
 	apply plugin: "com.gradle.build-scan"
@@ -77,6 +83,28 @@ if (Boolean.getBoolean("build.bnd.print.enabled")) {
 	bndPrintJarFiles = new ConcurrentSkipListSet<File>()
 }
 
+if (FileUtil.exists(rootProject, "private/yarn.lock")) {
+	gradle.beforeProject {
+		if (it.path.equals(":private")) {
+			configure(it) {
+				apply plugin: "com.liferay.yarn.defaults.plugin"
+			}
+		}
+	}
+
+	portalYarnCheckFormat {
+		dependsOn ":private:packageRunCheckFormat"
+	}
+
+	portalYarnFormat {
+		dependsOn ":private:packageRunFormat"
+	}
+
+	portalYarnInstall {
+		dependsOn ":private:yarnInstall"
+	}
+}
+
 buildDir = new File(rootDir.parentFile, "build")
 
 for (String gradleVersion in ["5.6.4"]) {
@@ -112,6 +140,18 @@ for (String gradleVersion in ["5.6.4"]) {
 		includeEmptyDirs = false
 		into new File(buildDir, "gradle-${gradleVersion}-sources")
 	}
+}
+
+portalYarnCheckFormat {
+	dependsOn ":packageRunCheckFormat"
+}
+
+portalYarnFormat {
+	dependsOn ":packageRunFormat"
+}
+
+portalYarnInstall {
+	dependsOn ":yarnInstall"
 }
 
 gradle.beforeProject {
@@ -313,6 +353,26 @@ gradle.beforeProject {
 			if (System.getenv("JENKINS_HOME")) {
 				startTestableTomcat {
 					deleteLiferayHome = false
+				}
+			}
+		}
+
+		pluginManager.withPlugin("com.liferay.portal.tools.rest.builder") {
+			File dir = new File(rootDir.parentFile, "modules/util/portal-tools-rest-builder")
+
+			if (dir.exists() && !GradleUtil.getProperty(project, "com.liferay.portal.tools.rest.builder.ignore.local", true)) {
+				buildREST {
+					dependsOn ":util:portal-tools-rest-builder:deploy"
+				}
+			}
+		}
+
+		pluginManager.withPlugin("com.liferay.portal.tools.service.builder") {
+			File dir = new File(rootDir.parentFile, "modules/util/portal-tools-service-builder")
+
+			if (dir.exists() && !GradleUtil.getProperty(project, "com.liferay.portal.tools.service.builder.ignore.local", true)) {
+				buildService {
+					dependsOn ":util:portal-tools-service-builder:deploy"
 				}
 			}
 		}

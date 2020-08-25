@@ -380,6 +380,29 @@ AUI.add(
 						return '#' + namespace + id + '_' + languageId;
 					},
 
+					_moveDefaultLanguageFlagToFirstPosition: function(defaultLanguageId) {
+						var instance = this;
+
+						var flags = instance._flags.getDOMNode();
+
+						var defaultLanguageFlag = flags.querySelector(
+							'[data-languageid="' + defaultLanguageId + '"]'
+						);
+
+						if (defaultLanguageFlag) {
+							var languageNode = defaultLanguageFlag.parentElement;
+						}
+
+						if (languageNode) {
+							flags.removeChild(languageNode);
+
+							flags.insertBefore(
+								languageNode,
+								flags.firstElementChild
+							);
+						}
+					},
+
 					_onDefaultLocaleChanged: function(event) {
 						var instance = this;
 
@@ -397,6 +420,10 @@ AUI.add(
 
 						instance._updateTranslationStatus(defaultLanguageId);
 						instance._updateTranslationStatus(prevDefaultLanguageId);
+
+						instance._moveDefaultLanguageFlagToFirstPosition(
+							defaultLanguageId
+						);
 
 						Liferay.fire(
 							'inputLocalized:localeChanged',

@@ -1496,16 +1496,16 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof GroupWrapper)) {
+		if (!(object instanceof GroupWrapper)) {
 			return false;
 		}
 
-		GroupWrapper groupWrapper = (GroupWrapper)obj;
+		GroupWrapper groupWrapper = (GroupWrapper)object;
 
 		if (Objects.equals(_group, groupWrapper._group)) {
 			return true;

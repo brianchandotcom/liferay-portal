@@ -328,16 +328,16 @@ public class OrgGroupRoleWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof OrgGroupRoleWrapper)) {
+		if (!(object instanceof OrgGroupRoleWrapper)) {
 			return false;
 		}
 
-		OrgGroupRoleWrapper orgGroupRoleWrapper = (OrgGroupRoleWrapper)obj;
+		OrgGroupRoleWrapper orgGroupRoleWrapper = (OrgGroupRoleWrapper)object;
 
 		if (Objects.equals(_orgGroupRole, orgGroupRoleWrapper._orgGroupRole)) {
 			return true;

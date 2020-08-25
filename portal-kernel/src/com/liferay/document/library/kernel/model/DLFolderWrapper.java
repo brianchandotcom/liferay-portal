@@ -1133,16 +1133,16 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DLFolderWrapper)) {
+		if (!(object instanceof DLFolderWrapper)) {
 			return false;
 		}
 
-		DLFolderWrapper dlFolderWrapper = (DLFolderWrapper)obj;
+		DLFolderWrapper dlFolderWrapper = (DLFolderWrapper)object;
 
 		if (Objects.equals(_dlFolder, dlFolderWrapper._dlFolder)) {
 			return true;

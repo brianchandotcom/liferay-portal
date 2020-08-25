@@ -36,17 +36,17 @@ public class AnnouncementsFlagCacheModel
 	implements CacheModel<AnnouncementsFlag>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AnnouncementsFlagCacheModel)) {
+		if (!(object instanceof AnnouncementsFlagCacheModel)) {
 			return false;
 		}
 
 		AnnouncementsFlagCacheModel announcementsFlagCacheModel =
-			(AnnouncementsFlagCacheModel)obj;
+			(AnnouncementsFlagCacheModel)object;
 
 		if (flagId == announcementsFlagCacheModel.flagId) {
 			return true;

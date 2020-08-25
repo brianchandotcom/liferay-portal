@@ -179,7 +179,7 @@
 				</tr>
 			</tbody>
 
-			<tbody class='<%= (recurrenceType != Recurrence.DAILY) ? "hide" : StringPool.BLANK %>' id="<portlet:namespace />recurrenceTypeDailyTable">
+			<tbody class="<%= (recurrenceType != Recurrence.DAILY) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />recurrenceTypeDailyTable">
 				<tr>
 					<th class="staging-scheduler-title">
 						<liferay-ui:message key="recur-every" />:
@@ -206,7 +206,7 @@
 				</tr>
 			</tbody>
 
-			<tbody class='<%= (recurrenceType != Recurrence.WEEKLY) ? "hide" : StringPool.BLANK %>' id="<portlet:namespace />recurrenceTypeWeeklyTable">
+			<tbody class="<%= (recurrenceType != Recurrence.WEEKLY) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />recurrenceTypeWeeklyTable">
 				<tr>
 					<th class="staging-scheduler-title">
 						<liferay-ui:message key="repeat-every" />:
@@ -252,7 +252,7 @@
 				</tr>
 			</tbody>
 
-			<tbody class='<%= (recurrenceType != Recurrence.MONTHLY) ? "hide" : StringPool.BLANK %>' id="<portlet:namespace />recurrenceTypeMonthlyTable">
+			<tbody class="<%= (recurrenceType != Recurrence.MONTHLY) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />recurrenceTypeMonthlyTable">
 				<tr>
 					<th class="staging-scheduler-title">
 						<liferay-ui:message key="repeat-type" />:
@@ -318,7 +318,7 @@
 				</tr>
 			</tbody>
 
-			<tbody class='<%= (recurrenceType != Recurrence.YEARLY) ? "hide" : StringPool.BLANK %>' id="<portlet:namespace />recurrenceTypeYearlyTable">
+			<tbody class="<%= (recurrenceType != Recurrence.YEARLY) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />recurrenceTypeYearlyTable">
 				<tr>
 					<th class="staging-scheduler-title">
 						<liferay-ui:message key="repeat-type" />:
@@ -424,7 +424,7 @@
 				</tr>
 			</tbody>
 
-			<tbody class='<%= (recurrenceType != Recurrence.NO_RECURRENCE) ? "hide" : StringPool.BLANK %>' id="<portlet:namespace />recurrenceTypeNeverTable">
+			<tbody class="<%= (recurrenceType != Recurrence.NO_RECURRENCE) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />recurrenceTypeNeverTable">
 				<tr>
 					<th class="staging-scheduler-title">
 					</th>

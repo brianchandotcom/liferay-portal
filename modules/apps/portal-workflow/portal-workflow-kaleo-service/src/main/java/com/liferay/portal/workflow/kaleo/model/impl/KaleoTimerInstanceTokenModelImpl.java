@@ -1241,17 +1241,17 @@ public class KaleoTimerInstanceTokenModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoTimerInstanceToken)) {
+		if (!(object instanceof KaleoTimerInstanceToken)) {
 			return false;
 		}
 
 		KaleoTimerInstanceToken kaleoTimerInstanceToken =
-			(KaleoTimerInstanceToken)obj;
+			(KaleoTimerInstanceToken)object;
 
 		long primaryKey = kaleoTimerInstanceToken.getPrimaryKey();
 

@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Commerce Channel Web
 Bundle-SymbolicName: com.liferay.commerce.channel.web
-Bundle-Version: 1.0.25
+Bundle-Version: 1.0.31
 Web-ContextPath: /commerce-channel-web

@@ -21,6 +21,7 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -225,6 +226,10 @@ public abstract class BaseCartResourceImpl
 			existingCart.setNotes(cart.getNotes());
 		}
 
+		if (cart.getOrderStatusInfo() != null) {
+			existingCart.setOrderStatusInfo(cart.getOrderStatusInfo());
+		}
+
 		if (cart.getOrderUUID() != null) {
 			existingCart.setOrderUUID(cart.getOrderUUID());
 		}
@@ -239,6 +244,10 @@ public abstract class BaseCartResourceImpl
 
 		if (cart.getPaymentStatus() != null) {
 			existingCart.setPaymentStatus(cart.getPaymentStatus());
+		}
+
+		if (cart.getPaymentStatusInfo() != null) {
+			existingCart.setPaymentStatusInfo(cart.getPaymentStatusInfo());
 		}
 
 		if (cart.getPaymentStatusLabel() != null) {
@@ -269,12 +278,12 @@ public abstract class BaseCartResourceImpl
 			existingCart.setShippingOption(cart.getShippingOption());
 		}
 
-		if (cart.getStatus() != null) {
-			existingCart.setStatus(cart.getStatus());
-		}
-
 		if (cart.getUseAsBilling() != null) {
 			existingCart.setUseAsBilling(cart.getUseAsBilling());
+		}
+
+		if (cart.getWorkflowStatusInfo() != null) {
+			existingCart.setWorkflowStatusInfo(cart.getWorkflowStatusInfo());
 		}
 
 		preparePatch(cart, existingCart);
@@ -537,6 +546,15 @@ public abstract class BaseCartResourceImpl
 		return ActionUtil.addAction(
 			actionName, getClass(), id, methodName, contextScopeChecker,
 			ownerId, permissionName, siteId, contextUriInfo);
+	}
+
+	protected Map<String, String> addAction(
+		String actionName, Long id, String methodName,
+		ModelResourcePermission modelResourcePermission) {
+
+		return ActionUtil.addAction(
+			actionName, getClass(), id, methodName, contextScopeChecker,
+			modelResourcePermission, contextUriInfo);
 	}
 
 	protected Map<String, String> addAction(

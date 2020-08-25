@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.text.NumberFormat;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -108,7 +110,7 @@ public class EditCommerceTaxFixedRateMVCActionCommand
 	}
 
 	protected void updateCommerceTaxFixedRate(ActionRequest actionRequest)
-		throws PortalException {
+		throws Exception {
 
 		long commerceTaxFixedRateId = ParamUtil.getLong(
 			actionRequest, "commerceTaxFixedRateId");
@@ -117,7 +119,12 @@ public class EditCommerceTaxFixedRateMVCActionCommand
 		long cpTaxCategoryId = ParamUtil.getLong(
 			actionRequest, "CPTaxCategoryId");
 
-		double rate = ParamUtil.getDouble(actionRequest, "rate");
+		String localizedRate = ParamUtil.getString(actionRequest, "rate");
+
+		NumberFormat numberFormat = NumberFormat.getNumberInstance(
+			_portal.getLocale(actionRequest));
+
+		Number rate = numberFormat.parse(localizedRate);
 
 		CommerceTaxFixedRate commerceTaxFixedRate =
 			_commerceTaxFixedRateService.fetchCommerceTaxFixedRate(
@@ -130,7 +137,7 @@ public class EditCommerceTaxFixedRateMVCActionCommand
 
 		if (commerceTaxFixedRateId > 0) {
 			_commerceTaxFixedRateService.updateCommerceTaxFixedRate(
-				commerceTaxFixedRateId, rate);
+				commerceTaxFixedRateId, rate.doubleValue());
 		}
 		else {
 			CommerceTaxMethod commerceTaxMethod =
@@ -141,7 +148,7 @@ public class EditCommerceTaxFixedRateMVCActionCommand
 				_portal.getUserId(actionRequest),
 				commerceTaxMethod.getGroupId(),
 				commerceTaxMethod.getCommerceTaxMethodId(), cpTaxCategoryId,
-				rate);
+				rate.doubleValue());
 		}
 	}
 

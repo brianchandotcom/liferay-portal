@@ -36,6 +36,10 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 	/**
 	 * Adds the announcements delivery to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AnnouncementsDeliveryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param announcementsDelivery the announcements delivery
 	 * @return the announcements delivery that was added
 	 */
@@ -74,6 +78,10 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 	/**
 	 * Deletes the announcements delivery from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AnnouncementsDeliveryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param announcementsDelivery the announcements delivery
 	 * @return the announcements delivery that was removed
 	 */
@@ -89,6 +97,10 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 
 	/**
 	 * Deletes the announcements delivery with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AnnouncementsDeliveryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param deliveryId the primary key of the announcements delivery
 	 * @return the announcements delivery that was removed
@@ -350,6 +362,10 @@ public class AnnouncementsDeliveryLocalServiceWrapper
 
 	/**
 	 * Updates the announcements delivery in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AnnouncementsDeliveryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param announcementsDelivery the announcements delivery
 	 * @return the announcements delivery that was updated

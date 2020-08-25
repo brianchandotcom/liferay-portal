@@ -36,17 +36,17 @@ public class ChangesetCollectionCacheModel
 	implements CacheModel<ChangesetCollection>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ChangesetCollectionCacheModel)) {
+		if (!(object instanceof ChangesetCollectionCacheModel)) {
 			return false;
 		}
 
 		ChangesetCollectionCacheModel changesetCollectionCacheModel =
-			(ChangesetCollectionCacheModel)obj;
+			(ChangesetCollectionCacheModel)object;
 
 		if (changesetCollectionId ==
 				changesetCollectionCacheModel.changesetCollectionId) {

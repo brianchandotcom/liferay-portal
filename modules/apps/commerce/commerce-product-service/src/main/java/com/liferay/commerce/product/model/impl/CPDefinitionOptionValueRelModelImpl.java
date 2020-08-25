@@ -93,7 +93,7 @@ public class CPDefinitionOptionValueRelModelImpl
 		{"CPInstanceUuid", Types.VARCHAR}, {"CProductId", Types.BIGINT},
 		{"name", Types.VARCHAR}, {"priority", Types.DOUBLE},
 		{"key_", Types.VARCHAR}, {"quantity", Types.INTEGER},
-		{"price", Types.DECIMAL}
+		{"preselected", Types.BOOLEAN}, {"price", Types.DECIMAL}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -115,11 +115,12 @@ public class CPDefinitionOptionValueRelModelImpl
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("preselected", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("price", Types.DECIMAL);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDefinitionOptionValueRel (uuid_ VARCHAR(75) null,CPDefinitionOptionValueRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionOptionRelId LONG,CPInstanceUuid VARCHAR(75) null,CProductId LONG,name STRING null,priority DOUBLE,key_ VARCHAR(75) null,quantity INTEGER,price DECIMAL(30, 16) null)";
+		"create table CPDefinitionOptionValueRel (uuid_ VARCHAR(75) null,CPDefinitionOptionValueRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionOptionRelId LONG,CPInstanceUuid VARCHAR(75) null,CProductId LONG,name STRING null,priority DOUBLE,key_ VARCHAR(75) null,quantity INTEGER,preselected BOOLEAN,price DECIMAL(30, 16) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionOptionValueRel";
@@ -161,9 +162,11 @@ public class CPDefinitionOptionValueRelModelImpl
 
 	public static final long KEY_COLUMN_BITMASK = 16L;
 
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long PRESELECTED_COLUMN_BITMASK = 32L;
 
-	public static final long PRIORITY_COLUMN_BITMASK = 64L;
+	public static final long UUID_COLUMN_BITMASK = 64L;
+
+	public static final long PRIORITY_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -197,6 +200,7 @@ public class CPDefinitionOptionValueRelModelImpl
 		model.setPriority(soapModel.getPriority());
 		model.setKey(soapModel.getKey());
 		model.setQuantity(soapModel.getQuantity());
+		model.setPreselected(soapModel.isPreselected());
 		model.setPrice(soapModel.getPrice());
 
 		return model;
@@ -752,6 +756,32 @@ public class CPDefinitionOptionValueRelModelImpl
 
 			});
 		attributeGetterFunctions.put(
+			"preselected",
+			new Function<CPDefinitionOptionValueRel, Object>() {
+
+				@Override
+				public Object apply(
+					CPDefinitionOptionValueRel cpDefinitionOptionValueRel) {
+
+					return cpDefinitionOptionValueRel.getPreselected();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"preselected",
+			new BiConsumer<CPDefinitionOptionValueRel, Object>() {
+
+				@Override
+				public void accept(
+					CPDefinitionOptionValueRel cpDefinitionOptionValueRel,
+					Object preselectedObject) {
+
+					cpDefinitionOptionValueRel.setPreselected(
+						(Boolean)preselectedObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
 			"price",
 			new Function<CPDefinitionOptionValueRel, Object>() {
 
@@ -1155,6 +1185,35 @@ public class CPDefinitionOptionValueRelModelImpl
 
 	@JSON
 	@Override
+	public boolean getPreselected() {
+		return _preselected;
+	}
+
+	@JSON
+	@Override
+	public boolean isPreselected() {
+		return _preselected;
+	}
+
+	@Override
+	public void setPreselected(boolean preselected) {
+		_columnBitmask |= PRESELECTED_COLUMN_BITMASK;
+
+		if (!_setOriginalPreselected) {
+			_setOriginalPreselected = true;
+
+			_originalPreselected = _preselected;
+		}
+
+		_preselected = preselected;
+	}
+
+	public boolean getOriginalPreselected() {
+		return _originalPreselected;
+	}
+
+	@JSON
+	@Override
 	public BigDecimal getPrice() {
 		return _price;
 	}
@@ -1292,6 +1351,7 @@ public class CPDefinitionOptionValueRelModelImpl
 		cpDefinitionOptionValueRelImpl.setPriority(getPriority());
 		cpDefinitionOptionValueRelImpl.setKey(getKey());
 		cpDefinitionOptionValueRelImpl.setQuantity(getQuantity());
+		cpDefinitionOptionValueRelImpl.setPreselected(isPreselected());
 		cpDefinitionOptionValueRelImpl.setPrice(getPrice());
 
 		cpDefinitionOptionValueRelImpl.resetOriginalValues();
@@ -1323,17 +1383,17 @@ public class CPDefinitionOptionValueRelModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionOptionValueRel)) {
+		if (!(object instanceof CPDefinitionOptionValueRel)) {
 			return false;
 		}
 
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			(CPDefinitionOptionValueRel)obj;
+			(CPDefinitionOptionValueRel)object;
 
 		long primaryKey = cpDefinitionOptionValueRel.getPrimaryKey();
 
@@ -1391,6 +1451,11 @@ public class CPDefinitionOptionValueRelModelImpl
 
 		cpDefinitionOptionValueRelModelImpl._originalKey =
 			cpDefinitionOptionValueRelModelImpl._key;
+
+		cpDefinitionOptionValueRelModelImpl._originalPreselected =
+			cpDefinitionOptionValueRelModelImpl._preselected;
+
+		cpDefinitionOptionValueRelModelImpl._setOriginalPreselected = false;
 
 		cpDefinitionOptionValueRelModelImpl._columnBitmask = 0;
 	}
@@ -1480,6 +1545,8 @@ public class CPDefinitionOptionValueRelModelImpl
 		}
 
 		cpDefinitionOptionValueRelCacheModel.quantity = getQuantity();
+
+		cpDefinitionOptionValueRelCacheModel.preselected = isPreselected();
 
 		cpDefinitionOptionValueRelCacheModel.price = getPrice();
 
@@ -1588,6 +1655,9 @@ public class CPDefinitionOptionValueRelModelImpl
 	private String _key;
 	private String _originalKey;
 	private int _quantity;
+	private boolean _preselected;
+	private boolean _originalPreselected;
+	private boolean _setOriginalPreselected;
 	private BigDecimal _price;
 	private long _columnBitmask;
 	private CPDefinitionOptionValueRel _escapedModel;

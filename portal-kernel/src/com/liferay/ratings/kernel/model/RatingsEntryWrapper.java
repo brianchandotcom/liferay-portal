@@ -493,16 +493,16 @@ public class RatingsEntryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof RatingsEntryWrapper)) {
+		if (!(object instanceof RatingsEntryWrapper)) {
 			return false;
 		}
 
-		RatingsEntryWrapper ratingsEntryWrapper = (RatingsEntryWrapper)obj;
+		RatingsEntryWrapper ratingsEntryWrapper = (RatingsEntryWrapper)object;
 
 		if (Objects.equals(_ratingsEntry, ratingsEntryWrapper._ratingsEntry)) {
 			return true;

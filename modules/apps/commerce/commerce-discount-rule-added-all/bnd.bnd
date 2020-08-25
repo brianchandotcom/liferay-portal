@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Commerce Discount Rule Added All
 Bundle-SymbolicName: com.liferay.commerce.discount.rule.added.all
-Bundle-Version: 1.0.30
+Bundle-Version: 1.0.32
 Web-ContextPath: /commerce-discount-rule-added-all

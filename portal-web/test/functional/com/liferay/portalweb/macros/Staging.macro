@@ -127,51 +127,16 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException: java.lang.NullPointerException");
 	}
 
-	macro addEventRepeatDaily {
-		Click(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
+	macro addCustomPublication {
+		Pause(locator1 = "3000");
 
-		SelectFrame(locator1 = "IFrame#DIALOG");
+		LexiconEntry.gotoAdd();
 
-		Click(locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION");
+		if (isSet(publishTemplateName)) {
+			var key_publishTemplateName = "${publishTemplateName}";
 
-		Click(locator1 = "StagingPublishToLive#DATE_SCHEDULE_RADIO");
-
-		Type(
-			locator1 = "StagingPublishToLive#DATE_SCHEDULE_TITLE_FIELD",
-			value1 = "${scheduleTitleName}");
-
-		Check(locator1 = "StagingPublishToLive#DATE_SCHEDULE_END_DATE_NO_END_DATE_RADIO");
-
-		Check(
-			key_frequency = "Daily",
-			locator1 = "StagingPublishToLive#DATE_SCHEDULE_REPEAT_RADIO");
-
-		AssertClick(
-			locator1 = "StagingPublishToLive#ADD_EVENT_BUTTON",
-			value1 = "Add Event");
-
-		Alert.viewSuccessMessage();
-
-		IFrame.closeFrame();
-
-		var key_siteName = "${siteName}";
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
-
-		Navigator.gotoNavItem(navItem = "Scheduled");
-
-		var key_scheduleTitleName = "${scheduleTitleName}";
-
-		AssertTextPresent(
-			locator1 = "StagingPublishToLive#SCHEDULED_TABLE_TITLE",
-			value1 = "${scheduleTitleName}");
-
-		AssertTextEquals(
-			locator1 = "StagingPublishToLive#SCHEDULED_TABLE_END_DATE",
-			value1 = "No End Date");
+			Click(locator1 = "Staging#STAGING_PUBLISH_TEMPLATE_LINK");
+		}
 	}
 
 	macro addPageVariationPG {
@@ -212,6 +177,50 @@ definition {
 			value1 = "${publishTemplateName}");
 
 		PortletEntry.inputDescription(description = "${publishTemplateDescription}");
+	}
+
+	macro addRepeatEvent {
+		Click(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		Click(locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION");
+
+		Type(
+			locator1 = "StagingPublishToLive#DATE_SCHEDULE_TITLE_FIELD",
+			value1 = "${scheduleTitleName}");
+
+		Click(locator1 = "StagingPublishToLive#DATE_SCHEDULE_RADIO");
+
+		if (isSet(endOnDate)) {
+			Click(locator1 = "StagingPublishToLive#DATE_SCHEDULE_END_DATE_END_BY_RADIO");
+		}
+		else {
+			Check(locator1 = "StagingPublishToLive#DATE_SCHEDULE_END_DATE_NO_END_DATE_RADIO");
+		}
+
+		Check(
+			key_frequency = "${frequency}",
+			locator1 = "StagingPublishToLive#DATE_SCHEDULE_REPEAT_RADIO");
+
+		AssertChecked(
+			key_frequency = "${frequency}",
+			locator1 = "StagingPublishToLive#DATE_SCHEDULE_REPEAT_RADIO");
+
+		AssertClick(
+			locator1 = "StagingPublishToLive#ADD_EVENT_BUTTON",
+			value1 = "Add Event");
+
+		if (isSet(failureExpected)) {
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "A wrong end date was specified, the scheduled process will never run.");
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	macro addSitePagesVariationPG {
@@ -696,9 +705,7 @@ definition {
 	}
 
 	macro publishCustomPublication {
-		Pause(locator1 = "3000");
-
-		LexiconEntry.gotoAdd();
+		Staging.addCustomPublication();
 
 		if ("${rangeAll}" == "true") {
 			Click(locator1 = "Radio#CHOOSE_CONTENT_ALL_CHANGE");
@@ -757,7 +764,11 @@ definition {
 			Staging.viewValidationError(validateErrorMessage = "${validateErrorMessage}");
 		}
 
-		IFrame.closeFrame();
+		SelectFrame(value1 = "relative=top");
+
+		if (IsElementPresent(locator1 = "IFrame#DIALOG")) {
+			IFrame.closeFrame();
+		}
 	}
 
 	macro publishToLiveNowViaPortletCP {
@@ -1156,6 +1167,14 @@ definition {
 			locator1 = "Select#DATE_RANGE_END_DATE_VALUE");
 	}
 
+	macro viewDefaultConfiguration {
+		for (var configurationName : list "${configurationNameList}") {
+			var key_checkboxName = "${configurationName}";
+
+			AssertChecked(locator1 = "StagingPublishToLive#STAGING_CONFIGURATION_CHECKBOX");
+		}
+	}
+
 	macro viewEditedSitePagesVariationPG {
 		var key_sitePagesVariationName = "${sitePagesVariationName}";
 
@@ -1344,6 +1363,22 @@ definition {
 					locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CHECKBOX_LABEL");
 			}
 		}
+	}
+
+	macro viewRepeatingEventDetails {
+		Staging.openStagingAdmin(siteURLKey = "${siteName}");
+
+		Navigator.gotoNavItem(navItem = "Scheduled");
+
+		var key_scheduleTitleName = "${scheduleTitleName}";
+
+		AssertTextPresent(
+			locator1 = "StagingPublishToLive#SCHEDULED_TABLE_TITLE",
+			value1 = "${scheduleTitleName}");
+
+		AssertTextEquals(
+			locator1 = "StagingPublishToLive#SCHEDULED_TABLE_END_DATE",
+			value1 = "${endDate}");
 	}
 
 	macro viewSitePagesVariationActiveCP {

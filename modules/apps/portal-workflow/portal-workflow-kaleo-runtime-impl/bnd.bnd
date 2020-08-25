@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Workflow Kaleo Runtime Implementation
 Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.runtime.impl
-Bundle-Version: 3.0.25
+Bundle-Version: 3.0.26
 Liferay-Require-SchemaVersion: 2.0.3
 Liferay-Service: true
 -dsannotations-options: inherit

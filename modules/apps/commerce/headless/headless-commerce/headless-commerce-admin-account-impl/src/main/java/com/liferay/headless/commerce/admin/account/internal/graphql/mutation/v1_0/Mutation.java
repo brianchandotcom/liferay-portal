@@ -372,6 +372,21 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createAccountIdAccountAddressBatch(
+			@GraphQLName("id") Long id,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountAddressResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountAddressResource ->
+				accountAddressResource.postAccountIdAccountAddressBatch(
+					id, callbackURL, object));
+	}
+
+	@GraphQLField
 	public AccountGroup createAccountGroup(
 			@GraphQLName("accountGroup") AccountGroup accountGroup)
 		throws Exception {
@@ -523,6 +538,21 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createAccountIdAccountMemberBatch(
+			@GraphQLName("id") Long id,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountMemberResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountMemberResource ->
+				accountMemberResource.postAccountIdAccountMemberBatch(
+					id, callbackURL, object));
+	}
+
+	@GraphQLField
 	public Response deleteAccountIdAccountMember(
 			@GraphQLName("id") Long id, @GraphQLName("userId") Long userId)
 		throws Exception {
@@ -594,6 +624,22 @@ public class Mutation {
 			accountOrganizationResource ->
 				accountOrganizationResource.postAccountIdAccountOrganization(
 					id, accountOrganization));
+	}
+
+	@GraphQLField
+	public Response createAccountIdAccountOrganizationBatch(
+			@GraphQLName("id") Long id,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_accountOrganizationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountOrganizationResource ->
+				accountOrganizationResource.
+					postAccountIdAccountOrganizationBatch(
+						id, callbackURL, object));
 	}
 
 	@GraphQLField

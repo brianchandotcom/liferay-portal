@@ -34,17 +34,17 @@ public class OAuth2ScopeGrantCacheModel
 	implements CacheModel<OAuth2ScopeGrant>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof OAuth2ScopeGrantCacheModel)) {
+		if (!(object instanceof OAuth2ScopeGrantCacheModel)) {
 			return false;
 		}
 
 		OAuth2ScopeGrantCacheModel oAuth2ScopeGrantCacheModel =
-			(OAuth2ScopeGrantCacheModel)obj;
+			(OAuth2ScopeGrantCacheModel)object;
 
 		if (oAuth2ScopeGrantId ==
 				oAuth2ScopeGrantCacheModel.oAuth2ScopeGrantId) {

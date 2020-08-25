@@ -19,15 +19,10 @@
 <div class="container-fluid-1280">
 	<div class="card main-content-card">
 		<div class="card-row card-row-padded">
-
-			<%
-			PortletURL portletURL = renderResponse.createRenderURL();
-			%>
-
 			<liferay-ui:search-container
 				emptyResultsMessage="there-are-no-gadgets"
 				headerNames="name"
-				iteratorURL="<%= portletURL %>"
+				iteratorURL="<%= renderResponse.createRenderURL() %>"
 				total="<%= GadgetLocalServiceUtil.getGadgetsCount(company.getCompanyId()) %>"
 			>
 				<liferay-ui:search-container-results

@@ -1311,18 +1311,18 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionSpecificationOptionValue)) {
+		if (!(object instanceof CPDefinitionSpecificationOptionValue)) {
 			return false;
 		}
 
 		CPDefinitionSpecificationOptionValue
 			cpDefinitionSpecificationOptionValue =
-				(CPDefinitionSpecificationOptionValue)obj;
+				(CPDefinitionSpecificationOptionValue)object;
 
 		long primaryKey = cpDefinitionSpecificationOptionValue.getPrimaryKey();
 

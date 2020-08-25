@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Flags Taglib
 Bundle-SymbolicName: com.liferay.flags.taglib
-Bundle-Version: 3.1.3
+Bundle-Version: 3.1.5
 Export-Package:\
 	com.liferay.flags.taglib.servlet.taglib,\
 	com.liferay.flags.taglib.servlet.taglib.soy

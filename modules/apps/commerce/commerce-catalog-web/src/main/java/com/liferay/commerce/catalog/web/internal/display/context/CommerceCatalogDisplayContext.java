@@ -15,7 +15,7 @@
 package com.liferay.commerce.catalog.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.frontend.ClayCreationMenu;
 import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
 import com.liferay.commerce.frontend.ClayMenuActionItem;
@@ -28,7 +28,6 @@ import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -75,7 +74,7 @@ public class CommerceCatalogDisplayContext {
 		CommerceCatalogService commerceCatalogService,
 		ModelResourcePermission<CommerceCatalog>
 			commerceCatalogModelResourcePermission,
-		CommerceCurrencyService commerceCurrencyService,
+		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		DLAppService dlAppService, ItemSelector itemSelector, Portal portal) {
 
 		_attachmentsConfiguration = attachmentsConfiguration;
@@ -83,7 +82,7 @@ public class CommerceCatalogDisplayContext {
 		_commerceCatalogService = commerceCatalogService;
 		_commerceCatalogModelResourcePermission =
 			commerceCatalogModelResourcePermission;
-		_commerceCurrencyService = commerceCurrencyService;
+		_commerceCurrencyLocalService = commerceCurrencyLocalService;
 		_dlAppService = dlAppService;
 		_itemSelector = itemSelector;
 		_portal = portal;
@@ -143,7 +142,7 @@ public class CommerceCatalogDisplayContext {
 	public List<CommerceCurrency> getCommerceCurrencies()
 		throws PortalException {
 
-		return _commerceCurrencyService.getCommerceCurrencies(
+		return _commerceCurrencyLocalService.getCommerceCurrencies(
 			cpRequestHelper.getCompanyId(), true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -165,7 +164,7 @@ public class CommerceCatalogDisplayContext {
 			commerceCatalog.getGroupId());
 	}
 
-	public List<DropdownItem> getDropdownItems() {
+	public List<ClayMenuActionItem> getDropdownItems() {
 		return Collections.emptyList();
 	}
 
@@ -308,7 +307,7 @@ public class CommerceCatalogDisplayContext {
 	private final ModelResourcePermission<CommerceCatalog>
 		_commerceCatalogModelResourcePermission;
 	private final CommerceCatalogService _commerceCatalogService;
-	private final CommerceCurrencyService _commerceCurrencyService;
+	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
 	private final DLAppService _dlAppService;
 	private final ItemSelector _itemSelector;
 	private final Portal _portal;

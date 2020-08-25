@@ -116,7 +116,7 @@ String searchURL = HttpUtil.removeParameter(searchBaseURL.toString(), liferayPor
 							<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(curPage.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
 						</c:when>
 						<c:otherwise>
-							<liferay-ui:message arguments="<%= new String[] {modifiedDateDescription} %>" key="modified-x-ago" />
+							<liferay-ui:message arguments="<%= modifiedDateDescription %>" key="modified-x-ago" />
 						</c:otherwise>
 					</c:choose>
 				</h5>

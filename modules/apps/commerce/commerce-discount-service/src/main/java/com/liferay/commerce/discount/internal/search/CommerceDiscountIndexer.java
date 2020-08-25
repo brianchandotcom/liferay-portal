@@ -97,6 +97,7 @@ public class CommerceDiscountIndexer extends BaseIndexer<CommerceDiscount> {
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.MODIFIED_DATE, Field.NAME, Field.UID);
 		setFilterSearch(true);
+		setPermissionAware(true);
 	}
 
 	@Override

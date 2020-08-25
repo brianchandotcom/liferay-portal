@@ -967,16 +967,17 @@ public class AssetCategoryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AssetCategoryWrapper)) {
+		if (!(object instanceof AssetCategoryWrapper)) {
 			return false;
 		}
 
-		AssetCategoryWrapper assetCategoryWrapper = (AssetCategoryWrapper)obj;
+		AssetCategoryWrapper assetCategoryWrapper =
+			(AssetCategoryWrapper)object;
 
 		if (Objects.equals(
 				_assetCategory, assetCategoryWrapper._assetCategory)) {

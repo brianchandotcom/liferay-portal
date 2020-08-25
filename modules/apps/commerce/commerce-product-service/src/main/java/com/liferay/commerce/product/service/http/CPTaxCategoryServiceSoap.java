@@ -94,11 +94,50 @@ public class CPTaxCategoryServiceSoap {
 		}
 	}
 
+	public static int countCPTaxCategoriesByCompanyId(
+			long companyId, String keyword)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CPTaxCategoryServiceUtil.countCPTaxCategoriesByCompanyId(
+					companyId, keyword);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static void deleteCPTaxCategory(long cpTaxCategoryId)
 		throws RemoteException {
 
 		try {
 			CPTaxCategoryServiceUtil.deleteCPTaxCategory(cpTaxCategoryId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPTaxCategorySoap[]
+			findCPTaxCategoriesByCompanyId(
+				long companyId, String keyword, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.commerce.product.model.CPTaxCategory>
+				returnValue =
+					CPTaxCategoryServiceUtil.findCPTaxCategoriesByCompanyId(
+						companyId, keyword, start, end);
+
+			return com.liferay.commerce.product.model.CPTaxCategorySoap.
+				toSoapModels(returnValue);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

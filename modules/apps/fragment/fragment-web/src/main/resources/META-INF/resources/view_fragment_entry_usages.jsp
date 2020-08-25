@@ -46,7 +46,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 								allNavigationURL.setParameter("navigation", "all");
 								%>
 
-								<a class='nav-link <%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "all") ? "active" : StringPool.BLANK %>' href="<%= allNavigationURL.toString() %>">
+								<a class="nav-link <%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "all") ? "active" : StringPool.BLANK %>" href="<%= allNavigationURL.toString() %>">
 									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getAllUsageCount() %>" key="all-x" />
 								</a>
 							</li>
@@ -58,7 +58,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 								pagesNavigationURL.setParameter("navigation", "pages");
 								%>
 
-								<a class='nav-link <%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "pages") ? "active" : StringPool.BLANK %>' href="<%= pagesNavigationURL.toString() %>">
+								<a class="nav-link <%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "pages") ? "active" : StringPool.BLANK %>" href="<%= pagesNavigationURL.toString() %>">
 									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getPagesUsageCount() %>" key="pages-x" />
 								</a>
 							</li>
@@ -70,7 +70,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 								pageTemplatesNavigationURL.setParameter("navigation", "page-templates");
 								%>
 
-								<a class='nav-link <%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "page-templates") ? "active" : StringPool.BLANK %>' href="<%= pageTemplatesNavigationURL.toString() %>">
+								<a class="nav-link <%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "page-templates") ? "active" : StringPool.BLANK %>" href="<%= pageTemplatesNavigationURL.toString() %>">
 									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getPageTemplatesUsageCount() %>" key="page-templates-x" />
 								</a>
 							</li>
@@ -82,7 +82,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 								displayPagesNavigationURL.setParameter("navigation", "display-pages");
 								%>
 
-								<a class='nav-link <%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "display-pages") ? "active" : StringPool.BLANK %>' href="<%= displayPagesNavigationURL.toString() %>">
+								<a class="nav-link <%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "display-pages") ? "active" : StringPool.BLANK %>" href="<%= displayPagesNavigationURL.toString() %>">
 									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getDisplayPagesUsageCount() %>" key="display-pages-x" />
 								</a>
 							</li>
@@ -152,7 +152,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 							<liferay-ui:search-container-column-text
 								name="using"
 							>
-								<span class='label <%= fragmentEntryLink.isLatestVersion() ? "label-success" : "label-info" %>'>
+								<span class="label <%= fragmentEntryLink.isLatestVersion() ? "label-success" : "label-info" %>">
 									<liferay-ui:message key='<%= fragmentEntryLink.isLatestVersion() ? "latest-version" : "a-previous-version" %>' />
 								</span>
 							</liferay-ui:search-container-column-text>

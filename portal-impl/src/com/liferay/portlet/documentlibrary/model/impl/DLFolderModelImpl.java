@@ -1683,16 +1683,16 @@ public class DLFolderModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DLFolder)) {
+		if (!(object instanceof DLFolder)) {
 			return false;
 		}
 
-		DLFolder dlFolder = (DLFolder)obj;
+		DLFolder dlFolder = (DLFolder)object;
 
 		long primaryKey = dlFolder.getPrimaryKey();
 

@@ -1967,7 +1967,7 @@ public class ArrayUtil {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(2 * array.length - 1);
+		StringBundler sb = new StringBundler((2 * array.length) - 1);
 
 		for (int i = 0; i < array.length; i++) {
 			Object bean = array[i];
@@ -2014,7 +2014,7 @@ public class ArrayUtil {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(2 * list.length - 1);
+		StringBundler sb = new StringBundler((2 * list.length) - 1);
 
 		for (int i = 0; i < list.length; i++) {
 			T bean = list[i];

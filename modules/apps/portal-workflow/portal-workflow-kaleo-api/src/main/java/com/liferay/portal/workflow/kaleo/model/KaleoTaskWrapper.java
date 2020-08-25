@@ -517,16 +517,16 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoTaskWrapper)) {
+		if (!(object instanceof KaleoTaskWrapper)) {
 			return false;
 		}
 
-		KaleoTaskWrapper kaleoTaskWrapper = (KaleoTaskWrapper)obj;
+		KaleoTaskWrapper kaleoTaskWrapper = (KaleoTaskWrapper)object;
 
 		if (Objects.equals(_kaleoTask, kaleoTaskWrapper._kaleoTask)) {
 			return true;

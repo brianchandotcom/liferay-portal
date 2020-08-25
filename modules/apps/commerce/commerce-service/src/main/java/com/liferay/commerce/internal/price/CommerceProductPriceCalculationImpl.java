@@ -15,8 +15,6 @@
 package com.liferay.commerce.internal.price;
 
 import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.model.CommerceAccountGroup;
-import com.liferay.commerce.account.service.CommerceAccountGroupLocalService;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
@@ -29,6 +27,8 @@ import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.price.CommerceProductPriceImpl;
 import com.liferay.commerce.price.CommerceProductPriceRequest;
+import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
+import com.liferay.commerce.price.list.discovery.CommercePriceListDiscovery;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
@@ -36,7 +36,6 @@ import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
-import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -45,7 +44,6 @@ import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.math.BigDecimal;
@@ -54,7 +52,6 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -461,24 +458,19 @@ public class CommerceProductPriceCalculationImpl
 
 		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
 
-		if (commerceAccount == null) {
-			return Optional.empty();
+		long commerceAccountId = 0;
+
+		if (commerceAccount != null) {
+			commerceAccountId = commerceAccount.getCommerceAccountId();
 		}
 
-		List<CommerceAccountGroup> commerceAccountGroups =
-			_commerceAccountGroupLocalService.
-				getCommerceAccountGroupsByCommerceAccountId(
-					commerceAccount.getCommerceAccountId());
+		CommercePriceList commercePriceList =
+			_commercePriceListDiscovery.getCommercePriceList(
+				groupId, commerceAccountId,
+				commerceContext.getCommerceChannelId(), null,
+				CommercePriceListConstants.TYPE_PRICE_LIST);
 
-		Stream<CommerceAccountGroup> stream = commerceAccountGroups.stream();
-
-		long[] commerceAccountGroupIds = stream.mapToLong(
-			CommerceAccountGroup::getCommerceAccountGroupId
-		).toArray();
-
-		return _commercePriceListLocalService.getCommercePriceList(
-			commerceAccount.getCompanyId(), groupId,
-			commerceAccount.getCommerceAccountId(), commerceAccountGroupIds);
+		return Optional.ofNullable(commercePriceList);
 	}
 
 	private Optional<BigDecimal> _getPriceListPrice(
@@ -578,9 +570,6 @@ public class CommerceProductPriceCalculationImpl
 	}
 
 	@Reference
-	private CommerceAccountGroupLocalService _commerceAccountGroupLocalService;
-
-	@Reference
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@Reference
@@ -598,6 +587,11 @@ public class CommerceProductPriceCalculationImpl
 	@Reference
 	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
 
+	@Reference(
+		target = "(commerce.price.list.discovery.key=" + CommercePricingConstants.ORDER_BY_HIERARCHY + ")"
+	)
+	private CommercePriceListDiscovery _commercePriceListDiscovery;
+
 	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;
 
@@ -607,8 +601,5 @@ public class CommerceProductPriceCalculationImpl
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
-
-	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
-	private PortletResourcePermission _portletResourcePermission;
 
 }

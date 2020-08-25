@@ -108,7 +108,9 @@ public abstract class BaseProductOptionResourceTestCase {
 
 		ProductOptionResource.Builder builder = ProductOptionResource.builder();
 
-		productOptionResource = builder.locale(
+		productOptionResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

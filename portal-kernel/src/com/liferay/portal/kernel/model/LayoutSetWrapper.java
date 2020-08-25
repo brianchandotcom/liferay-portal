@@ -752,16 +752,16 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof LayoutSetWrapper)) {
+		if (!(object instanceof LayoutSetWrapper)) {
 			return false;
 		}
 
-		LayoutSetWrapper layoutSetWrapper = (LayoutSetWrapper)obj;
+		LayoutSetWrapper layoutSetWrapper = (LayoutSetWrapper)object;
 
 		if (Objects.equals(_layoutSet, layoutSetWrapper._layoutSet)) {
 			return true;

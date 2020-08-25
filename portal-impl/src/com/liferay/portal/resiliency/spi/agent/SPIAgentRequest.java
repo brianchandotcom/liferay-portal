@@ -230,10 +230,10 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 
 	@Override
 	public String toString() {
-		int length = 20 + parameterMap.size() * 4;
+		int length = 20 + (parameterMap.size() * 4);
 
 		if (cookiesBytes != null) {
-			length += cookiesBytes.length * 2 - 1;
+			length += (cookiesBytes.length * 2) - 1;
 		}
 
 		StringBundler sb = new StringBundler(length);

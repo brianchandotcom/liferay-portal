@@ -92,12 +92,12 @@ public class FinderPath {
 	 */
 	@Deprecated
 	public Serializable encodeCacheKey(Object[] arguments) {
-		String[] keys = new String[arguments.length * 2 + 1];
+		String[] keys = new String[(arguments.length * 2) + 1];
 
 		keys[0] = _cacheKeyPrefix;
 
 		for (int i = 0; i < arguments.length; i++) {
-			int index = i * 2 + 1;
+			int index = (i * 2) + 1;
 
 			keys[index] = StringPool.PERIOD;
 			keys[index + 1] = StringUtil.toHexString(arguments[i]);
@@ -116,12 +116,12 @@ public class FinderPath {
 	 */
 	@Deprecated
 	public Serializable encodeLocalCacheKey(Object[] arguments) {
-		String[] keys = new String[arguments.length * 2 + 1];
+		String[] keys = new String[(arguments.length * 2) + 1];
 
 		keys[0] = _localCacheKeyPrefix;
 
 		for (int i = 0; i < arguments.length; i++) {
-			int index = i * 2 + 1;
+			int index = (i * 2) + 1;
 
 			keys[index] = StringPool.PERIOD;
 			keys[index + 1] = StringUtil.toHexString(arguments[i]);
@@ -167,7 +167,7 @@ public class FinderPath {
 	}
 
 	private void _initCacheKeyPrefix(String methodName, String[] params) {
-		StringBundler sb = new StringBundler(params.length * 2 + 3);
+		StringBundler sb = new StringBundler((params.length * 2) + 3);
 
 		sb.append(methodName);
 		sb.append(_PARAMS_SEPARATOR);

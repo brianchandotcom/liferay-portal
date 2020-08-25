@@ -1089,6 +1089,19 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-84418."
+	@ignore = "true"
+	@priority = "5"
+	test PublishWithImpossibleDateRange {
+		Navigator.openStagingSiteURL(siteName = "Site Name");
+
+		Staging.addRepeatEvent(
+			endOnDate = "true",
+			failureExpected = "true",
+			frequency = "Monthly",
+			scheduleTitleName = "Event Monthly Name");
+	}
+
 	@priority = "4"
 	test SearchPublishTemplate {
 		ProductMenu.gotoPortlet(

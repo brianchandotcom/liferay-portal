@@ -67,6 +67,10 @@ public interface CommercePriceListChannelRelLocalService
 	/**
 	 * Adds the commerce price list channel rel to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceListChannelRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePriceListChannelRel the commerce price list channel rel
 	 * @return the commerce price list channel rel that was added
 	 */
@@ -92,6 +96,10 @@ public interface CommercePriceListChannelRelLocalService
 	/**
 	 * Deletes the commerce price list channel rel from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceListChannelRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePriceListChannelRel the commerce price list channel rel
 	 * @return the commerce price list channel rel that was removed
 	 * @throws PortalException
@@ -103,6 +111,10 @@ public interface CommercePriceListChannelRelLocalService
 
 	/**
 	 * Deletes the commerce price list channel rel with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceListChannelRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param CommercePriceListChannelRelId the primary key of the commerce price list channel rel
 	 * @return the commerce price list channel rel that was removed
@@ -256,6 +268,11 @@ public interface CommercePriceListChannelRelLocalService
 	public List<CommercePriceListChannelRel> getCommercePriceListChannelRels(
 		long commercePriceListId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommercePriceListChannelRel> getCommercePriceListChannelRels(
+		long commercePriceListId, int start, int end,
+		OrderByComparator<CommercePriceListChannelRel> orderByComparator);
+
 	/**
 	 * Returns the number of commerce price list channel rels.
 	 *
@@ -263,6 +280,9 @@ public interface CommercePriceListChannelRelLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommercePriceListChannelRelsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommercePriceListChannelRelsCount(long commercePriceListId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -288,6 +308,10 @@ public interface CommercePriceListChannelRelLocalService
 
 	/**
 	 * Updates the commerce price list channel rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceListChannelRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commercePriceListChannelRel the commerce price list channel rel
 	 * @return the commerce price list channel rel that was updated

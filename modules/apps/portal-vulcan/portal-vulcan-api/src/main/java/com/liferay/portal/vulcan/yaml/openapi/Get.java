@@ -15,7 +15,9 @@
 package com.liferay.portal.vulcan.yaml.openapi;
 
 /**
- * @author Peter Shin
+ * @author     Peter Shin
+ * @deprecated As of Athanasius (7.3.x)
  */
+@Deprecated
 public class Get extends Operation {
 }

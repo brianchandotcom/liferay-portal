@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Changeset API
 Bundle-SymbolicName: com.liferay.changeset.api
-Bundle-Version: 1.2.13
+Bundle-Version: 1.2.15
 Export-Package:\
 	com.liferay.changeset.exception,\
 	com.liferay.changeset.model,\

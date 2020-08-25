@@ -139,6 +139,21 @@ public class RoleFinderTest {
 			exists);
 	}
 
+	@Test
+	public void testFindByU_G() {
+		long userId = RandomTestUtil.nextLong();
+
+		// See LPS-113146 for the magic number 2100
+
+		long[] groupIds = new long[2100];
+
+		for (int i = 0; i < groupIds.length; i++) {
+			groupIds[i] = RandomTestUtil.nextLong();
+		}
+
+		RoleFinderUtil.findByU_G(userId, groupIds);
+	}
+
 	protected static ResourceAction getModelResourceAction()
 		throws PortalException {
 

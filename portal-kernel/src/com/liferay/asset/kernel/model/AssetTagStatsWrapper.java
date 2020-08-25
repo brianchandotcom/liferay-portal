@@ -339,16 +339,17 @@ public class AssetTagStatsWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AssetTagStatsWrapper)) {
+		if (!(object instanceof AssetTagStatsWrapper)) {
 			return false;
 		}
 
-		AssetTagStatsWrapper assetTagStatsWrapper = (AssetTagStatsWrapper)obj;
+		AssetTagStatsWrapper assetTagStatsWrapper =
+			(AssetTagStatsWrapper)object;
 
 		if (Objects.equals(
 				_assetTagStats, assetTagStatsWrapper._assetTagStats)) {

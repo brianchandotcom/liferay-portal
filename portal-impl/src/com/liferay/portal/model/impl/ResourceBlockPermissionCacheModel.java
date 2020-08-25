@@ -37,17 +37,17 @@ public class ResourceBlockPermissionCacheModel
 	implements CacheModel<ResourceBlockPermission>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ResourceBlockPermissionCacheModel)) {
+		if (!(object instanceof ResourceBlockPermissionCacheModel)) {
 			return false;
 		}
 
 		ResourceBlockPermissionCacheModel resourceBlockPermissionCacheModel =
-			(ResourceBlockPermissionCacheModel)obj;
+			(ResourceBlockPermissionCacheModel)object;
 
 		if ((resourceBlockPermissionId ==
 				resourceBlockPermissionCacheModel.resourceBlockPermissionId) &&

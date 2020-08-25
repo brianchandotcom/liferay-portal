@@ -181,6 +181,51 @@ public class CommercePriceListAccountRelServiceHttp {
 		}
 	}
 
+	public static
+		com.liferay.commerce.price.list.model.CommercePriceListAccountRel
+				getCommercePriceListAccountRel(
+					HttpPrincipal httpPrincipal,
+					long commercePriceListAccountRelId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommercePriceListAccountRelServiceUtil.class,
+				"getCommercePriceListAccountRel",
+				_getCommercePriceListAccountRelParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commercePriceListAccountRelId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.price.list.model.
+				CommercePriceListAccountRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static java.util.List
 		<com.liferay.commerce.price.list.model.CommercePriceListAccountRel>
 				getCommercePriceListAccountRels(
@@ -191,7 +236,7 @@ public class CommercePriceListAccountRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceListAccountRelServiceUtil.class,
 				"getCommercePriceListAccountRels",
-				_getCommercePriceListAccountRelsParameterTypes3);
+				_getCommercePriceListAccountRelsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePriceListId);
@@ -226,6 +271,96 @@ public class CommercePriceListAccountRelServiceHttp {
 		}
 	}
 
+	public static java.util.List
+		<com.liferay.commerce.price.list.model.CommercePriceListAccountRel>
+				getCommercePriceListAccountRels(
+					HttpPrincipal httpPrincipal, long commercePriceListId,
+					int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.commerce.price.list.model.
+							CommercePriceListAccountRel> orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommercePriceListAccountRelServiceUtil.class,
+				"getCommercePriceListAccountRels",
+				_getCommercePriceListAccountRelsParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commercePriceListId, start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.price.list.model.
+					CommercePriceListAccountRel>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getCommercePriceListAccountRelsCount(
+			HttpPrincipal httpPrincipal, long commercePriceListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommercePriceListAccountRelServiceUtil.class,
+				"getCommercePriceListAccountRelsCount",
+				_getCommercePriceListAccountRelsCountParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commercePriceListId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		CommercePriceListAccountRelServiceHttp.class);
 
@@ -243,7 +378,20 @@ public class CommercePriceListAccountRelServiceHttp {
 			long.class, long.class
 		};
 	private static final Class<?>[]
-		_getCommercePriceListAccountRelsParameterTypes3 = new Class[] {
+		_getCommercePriceListAccountRelParameterTypes3 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[]
+		_getCommercePriceListAccountRelsParameterTypes4 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[]
+		_getCommercePriceListAccountRelsParameterTypes5 = new Class[] {
+			long.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[]
+		_getCommercePriceListAccountRelsCountParameterTypes6 = new Class[] {
 			long.class
 		};
 

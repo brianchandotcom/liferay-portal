@@ -41,6 +41,10 @@ public class CommerceCurrencyLocalServiceUtil {
 	/**
 	 * Adds the commerce currency to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceCurrencyLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceCurrency the commerce currency
 	 * @return the commerce currency that was added
 	 */
@@ -88,6 +92,10 @@ public class CommerceCurrencyLocalServiceUtil {
 	/**
 	 * Deletes the commerce currency from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceCurrencyLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceCurrency the commerce currency
 	 * @return the commerce currency that was removed
 	 */
@@ -101,6 +109,10 @@ public class CommerceCurrencyLocalServiceUtil {
 
 	/**
 	 * Deletes the commerce currency with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceCurrencyLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceCurrencyId the primary key of the commerce currency
 	 * @return the commerce currency that was removed
@@ -403,6 +415,10 @@ public class CommerceCurrencyLocalServiceUtil {
 
 	/**
 	 * Updates the commerce currency in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceCurrencyLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceCurrency the commerce currency
 	 * @return the commerce currency that was updated

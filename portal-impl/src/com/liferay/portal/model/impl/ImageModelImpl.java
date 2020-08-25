@@ -638,16 +638,16 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Image)) {
+		if (!(object instanceof Image)) {
 			return false;
 		}
 
-		Image image = (Image)obj;
+		Image image = (Image)object;
 
 		long primaryKey = image.getPrimaryKey();
 

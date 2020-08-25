@@ -985,16 +985,16 @@ public class CommerceChannelModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceChannel)) {
+		if (!(object instanceof CommerceChannel)) {
 			return false;
 		}
 
-		CommerceChannel commerceChannel = (CommerceChannel)obj;
+		CommerceChannel commerceChannel = (CommerceChannel)object;
 
 		long primaryKey = commerceChannel.getPrimaryKey();
 

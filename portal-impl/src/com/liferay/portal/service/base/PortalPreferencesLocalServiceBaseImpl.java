@@ -72,6 +72,10 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 	/**
 	 * Adds the portal preferences to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect PortalPreferencesLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param portalPreferences the portal preferences
 	 * @return the portal preferences that was added
 	 */
@@ -100,6 +104,10 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 	/**
 	 * Deletes the portal preferences with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect PortalPreferencesLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param portalPreferencesId the primary key of the portal preferences
 	 * @return the portal preferences that was removed
 	 * @throws PortalException if a portal preferences with the primary key could not be found
@@ -114,6 +122,10 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 
 	/**
 	 * Deletes the portal preferences from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect PortalPreferencesLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param portalPreferences the portal preferences
 	 * @return the portal preferences that was removed
@@ -331,6 +343,10 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 
 	/**
 	 * Updates the portal preferences in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect PortalPreferencesLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param portalPreferences the portal preferences
 	 * @return the portal preferences that was updated

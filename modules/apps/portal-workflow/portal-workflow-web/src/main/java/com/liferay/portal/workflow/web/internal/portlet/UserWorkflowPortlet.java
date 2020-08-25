@@ -14,16 +14,30 @@
 
 package com.liferay.portal.workflow.web.internal.portlet;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.web.internal.display.context.WorkflowNavigationDisplayContext;
+
+import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -66,6 +80,28 @@ public class UserWorkflowPortlet extends BaseWorkflowPortlet {
 	}
 
 	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		try {
+			checkWorkflowInstanceViewPermission(renderRequest);
+		}
+		catch (PortalException portalException) {
+			if (portalException instanceof PrincipalException ||
+				portalException instanceof WorkflowException) {
+
+				SessionErrors.add(renderRequest, portalException.getClass());
+			}
+			else {
+				throw new PortletException(portalException);
+			}
+		}
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Override
 	protected void addRenderRequestAttributes(RenderRequest renderRequest) {
 		super.addRenderRequestAttributes(renderRequest);
 
@@ -76,6 +112,47 @@ public class UserWorkflowPortlet extends BaseWorkflowPortlet {
 		renderRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_NAVIGATION_DISPLAY_CONTEXT,
 			workflowNavigationDisplayContext);
+	}
+
+	protected void checkWorkflowInstanceViewPermission(
+			RenderRequest renderRequest)
+		throws PortalException {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		long workflowInstanceId = ParamUtil.getLong(
+			renderRequest, "workflowInstanceId");
+
+		if (workflowInstanceId != 0) {
+			WorkflowInstance workflowInstance =
+				WorkflowInstanceManagerUtil.getWorkflowInstance(
+					permissionChecker.getCompanyId(),
+					permissionChecker.getUserId(), workflowInstanceId);
+
+			if (workflowInstance == null) {
+				throw new PrincipalException.MustHavePermission(
+					permissionChecker, WorkflowInstance.class.getName(),
+					workflowInstanceId, ActionKeys.VIEW);
+			}
+		}
+	}
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, PrincipalException.getNestedClasses()) ||
+			SessionErrors.contains(
+				renderRequest, WorkflowException.class.getName())) {
+
+			include("/instance/error.jsp", renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
 	}
 
 	@Reference(

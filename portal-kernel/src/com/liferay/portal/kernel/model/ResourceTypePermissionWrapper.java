@@ -395,17 +395,17 @@ public class ResourceTypePermissionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ResourceTypePermissionWrapper)) {
+		if (!(object instanceof ResourceTypePermissionWrapper)) {
 			return false;
 		}
 
 		ResourceTypePermissionWrapper resourceTypePermissionWrapper =
-			(ResourceTypePermissionWrapper)obj;
+			(ResourceTypePermissionWrapper)object;
 
 		if (Objects.equals(
 				_resourceTypePermission,

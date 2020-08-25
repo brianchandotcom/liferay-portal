@@ -589,17 +589,17 @@ public class UserNotificationEventWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof UserNotificationEventWrapper)) {
+		if (!(object instanceof UserNotificationEventWrapper)) {
 			return false;
 		}
 
 		UserNotificationEventWrapper userNotificationEventWrapper =
-			(UserNotificationEventWrapper)obj;
+			(UserNotificationEventWrapper)object;
 
 		if (Objects.equals(
 				_userNotificationEvent,

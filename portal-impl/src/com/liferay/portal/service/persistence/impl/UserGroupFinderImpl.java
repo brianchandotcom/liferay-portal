@@ -475,7 +475,7 @@ public class UserGroupFinderImpl
 				}
 				else {
 					StringBundler sb = new StringBundler(
-						userGroupIds.length * 2 + 1);
+						(userGroupIds.length * 2) + 1);
 
 					sb.append("WHERE (");
 

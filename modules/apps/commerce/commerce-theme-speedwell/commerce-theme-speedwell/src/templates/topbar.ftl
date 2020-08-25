@@ -80,7 +80,7 @@
 		</div>
 
 		<div class="speedwell-topbar__cart-wrapper speedwell-cart">
-			<@liferay_commerce_ui["mini-cart"] />
+			<@liferay_commerce_ui["mini-cart"] spritemap="${themeDisplay.getPathThemeImages()}/icons.svg" />
 		</div>
 	</#if>
 	</div>

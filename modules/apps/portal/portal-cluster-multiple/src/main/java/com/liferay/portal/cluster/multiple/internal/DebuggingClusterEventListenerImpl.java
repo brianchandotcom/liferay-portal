@@ -40,7 +40,7 @@ public class DebuggingClusterEventListenerImpl implements ClusterEventListener {
 
 		List<ClusterNode> clusterNodes = clusterEvent.getClusterNodes();
 
-		StringBundler sb = new StringBundler(clusterNodes.size() * 3 + 3);
+		StringBundler sb = new StringBundler((clusterNodes.size() * 3) + 3);
 
 		sb.append("Cluster event ");
 		sb.append(clusterEventType);

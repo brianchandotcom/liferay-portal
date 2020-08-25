@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.pricing.service.impl;
 
+import com.liferay.commerce.pricing.exception.DuplicateCommercePricingClassCPDefinitionRelException;
 import com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel;
 import com.liferay.commerce.pricing.service.base.CommercePricingClassCPDefinitionRelLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,6 +42,8 @@ public class CommercePricingClassCPDefinitionRelLocalServiceImpl
 		// Commerce pricing class cp definition rel
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
+
+		validate(commercePricingClassId, cpDefinitionId);
 
 		long commercePricingClassCPDefinitionRelId =
 			counterLocalService.increment();
@@ -109,6 +112,15 @@ public class CommercePricingClassCPDefinitionRelLocalServiceImpl
 	}
 
 	@Override
+	public CommercePricingClassCPDefinitionRel
+		fetchCommercePricingClassCPDefinitionRel(
+			long commercePricingClassId, long cpDefinitionId) {
+
+		return commercePricingClassCPDefinitionRelPersistence.fetchByC_C(
+			commercePricingClassId, cpDefinitionId);
+	}
+
+	@Override
 	public List<CommercePricingClassCPDefinitionRel>
 		getCommercePricingClassByCPDefinitionId(long cpDefinitionId) {
 
@@ -145,11 +157,44 @@ public class CommercePricingClassCPDefinitionRelLocalServiceImpl
 	}
 
 	@Override
+	public int getCommercePricingClassCPDefinitionRelsCount(
+		long commercePricingClassId, String name, String languageId) {
+
+		return commercePricingClassCPDefinitionRelFinder.
+			countByCommercePricingClassId(
+				commercePricingClassId, name, languageId);
+	}
+
+	@Override
 	public long[] getCPDefinitionIds(long commercePricingClassId) {
 		return ListUtil.toLongArray(
 			commercePricingClassCPDefinitionRelPersistence.
 				findByCommercePricingClassId(commercePricingClassId),
 			CommercePricingClassCPDefinitionRel::getCPDefinitionId);
+	}
+
+	@Override
+	public List<CommercePricingClassCPDefinitionRel>
+		searchByCommercePricingClassId(
+			long commercePricingClassId, String name, String languageId,
+			int start, int end) {
+
+		return commercePricingClassCPDefinitionRelFinder.
+			findByCommercePricingClassId(
+				commercePricingClassId, name, languageId, start, end);
+	}
+
+	protected void validate(long commercePricingClassId, long cpDefinitionId)
+		throws PortalException {
+
+		CommercePricingClassCPDefinitionRel
+			commercePricingClassCPDefinitionRel =
+				commercePricingClassCPDefinitionRelPersistence.fetchByC_C(
+					commercePricingClassId, cpDefinitionId);
+
+		if (commercePricingClassCPDefinitionRel != null) {
+			throw new DuplicateCommercePricingClassCPDefinitionRelException();
+		}
 	}
 
 }

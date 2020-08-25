@@ -21,8 +21,11 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  *
  * @author Marco Leo
  * @see CPFriendlyURLEntryLocalService
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ com.liferay.friendly.url.service.impl.FriendlyURLEntryLocalServiceImpl}
  * @generated
  */
+@Deprecated
 public class CPFriendlyURLEntryLocalServiceWrapper
 	implements CPFriendlyURLEntryLocalService,
 			   ServiceWrapper<CPFriendlyURLEntryLocalService> {

@@ -70,6 +70,10 @@ public interface DiscountCategoryResource {
 			Long id, DiscountCategory discountCategory)
 		throws Exception;
 
+	public Response postDiscountIdDiscountCategoryBatch(
+			Long id, String callbackURL, Object object)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

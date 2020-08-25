@@ -859,16 +859,17 @@ public class PollsQuestionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof PollsQuestionWrapper)) {
+		if (!(object instanceof PollsQuestionWrapper)) {
 			return false;
 		}
 
-		PollsQuestionWrapper pollsQuestionWrapper = (PollsQuestionWrapper)obj;
+		PollsQuestionWrapper pollsQuestionWrapper =
+			(PollsQuestionWrapper)object;
 
 		if (Objects.equals(
 				_pollsQuestion, pollsQuestionWrapper._pollsQuestion)) {

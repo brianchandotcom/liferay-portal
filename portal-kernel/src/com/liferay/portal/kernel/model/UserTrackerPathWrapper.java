@@ -345,17 +345,17 @@ public class UserTrackerPathWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof UserTrackerPathWrapper)) {
+		if (!(object instanceof UserTrackerPathWrapper)) {
 			return false;
 		}
 
 		UserTrackerPathWrapper userTrackerPathWrapper =
-			(UserTrackerPathWrapper)obj;
+			(UserTrackerPathWrapper)object;
 
 		if (Objects.equals(
 				_userTrackerPath, userTrackerPathWrapper._userTrackerPath)) {

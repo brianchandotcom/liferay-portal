@@ -928,17 +928,17 @@ public class LayoutPageTemplateEntryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof LayoutPageTemplateEntryWrapper)) {
+		if (!(object instanceof LayoutPageTemplateEntryWrapper)) {
 			return false;
 		}
 
 		LayoutPageTemplateEntryWrapper layoutPageTemplateEntryWrapper =
-			(LayoutPageTemplateEntryWrapper)obj;
+			(LayoutPageTemplateEntryWrapper)object;
 
 		if (Objects.equals(
 				_layoutPageTemplateEntry,

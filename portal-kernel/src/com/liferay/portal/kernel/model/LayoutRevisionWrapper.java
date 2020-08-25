@@ -1858,17 +1858,17 @@ public class LayoutRevisionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof LayoutRevisionWrapper)) {
+		if (!(object instanceof LayoutRevisionWrapper)) {
 			return false;
 		}
 
 		LayoutRevisionWrapper layoutRevisionWrapper =
-			(LayoutRevisionWrapper)obj;
+			(LayoutRevisionWrapper)object;
 
 		if (Objects.equals(
 				_layoutRevision, layoutRevisionWrapper._layoutRevision)) {

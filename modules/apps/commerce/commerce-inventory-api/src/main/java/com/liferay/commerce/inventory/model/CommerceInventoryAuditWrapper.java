@@ -485,17 +485,17 @@ public class CommerceInventoryAuditWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceInventoryAuditWrapper)) {
+		if (!(object instanceof CommerceInventoryAuditWrapper)) {
 			return false;
 		}
 
 		CommerceInventoryAuditWrapper commerceInventoryAuditWrapper =
-			(CommerceInventoryAuditWrapper)obj;
+			(CommerceInventoryAuditWrapper)object;
 
 		if (Objects.equals(
 				_commerceInventoryAudit,

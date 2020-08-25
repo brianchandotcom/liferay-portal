@@ -217,7 +217,7 @@ public class CustomJspBagRegistryUtil {
 			Log log = SanitizerLogWrapper.allowCRLF(_log);
 
 			StringBundler sb = new StringBundler(
-				conflictingCustomJsps.size() * 4 + 2);
+				(conflictingCustomJsps.size() * 4) + 2);
 
 			sb.append("Colliding JSP files in ");
 			sb.append(contextId);

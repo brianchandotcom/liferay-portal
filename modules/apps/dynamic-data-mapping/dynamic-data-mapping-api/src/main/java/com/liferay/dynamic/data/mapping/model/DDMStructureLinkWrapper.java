@@ -345,17 +345,17 @@ public class DDMStructureLinkWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMStructureLinkWrapper)) {
+		if (!(object instanceof DDMStructureLinkWrapper)) {
 			return false;
 		}
 
 		DDMStructureLinkWrapper ddmStructureLinkWrapper =
-			(DDMStructureLinkWrapper)obj;
+			(DDMStructureLinkWrapper)object;
 
 		if (Objects.equals(
 				_ddmStructureLink, ddmStructureLinkWrapper._ddmStructureLink)) {

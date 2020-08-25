@@ -1130,16 +1130,16 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MBThreadWrapper)) {
+		if (!(object instanceof MBThreadWrapper)) {
 			return false;
 		}
 
-		MBThreadWrapper mbThreadWrapper = (MBThreadWrapper)obj;
+		MBThreadWrapper mbThreadWrapper = (MBThreadWrapper)object;
 
 		if (Objects.equals(_mbThread, mbThreadWrapper._mbThread)) {
 			return true;

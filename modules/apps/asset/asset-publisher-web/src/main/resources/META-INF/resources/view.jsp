@@ -39,12 +39,7 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && assetPublisherD
 %>
 
 <div class="mb-4 subscribe-action">
-
-	<%
-	boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : assetPublisherDisplayContext.isEnableRSS();
-	%>
-
-	<c:if test="<%= enableRSS %>">
+	<c:if test="<%= !PortalUtil.isRSSFeedsEnabled() ? false : assetPublisherDisplayContext.isEnableRSS() %>">
 		<liferay-portlet:resourceURL id="getRSS" varImpl="rssURL" />
 
 		<div class="btn-group-item">

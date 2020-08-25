@@ -805,16 +805,16 @@ public class SiteFriendlyURLModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SiteFriendlyURL)) {
+		if (!(object instanceof SiteFriendlyURL)) {
 			return false;
 		}
 
-		SiteFriendlyURL siteFriendlyURL = (SiteFriendlyURL)obj;
+		SiteFriendlyURL siteFriendlyURL = (SiteFriendlyURL)object;
 
 		long primaryKey = siteFriendlyURL.getPrimaryKey();
 

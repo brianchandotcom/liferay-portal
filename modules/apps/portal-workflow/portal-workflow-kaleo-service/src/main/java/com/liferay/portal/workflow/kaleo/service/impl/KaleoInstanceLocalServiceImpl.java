@@ -225,6 +225,14 @@ public class KaleoInstanceLocalServiceImpl
 	}
 
 	@Override
+	public KaleoInstance fetchKaleoInstance(
+		long kaleoInstanceId, long companyId, long userId) {
+
+		return kaleoInstancePersistence.fetchByKII_C_U(
+			kaleoInstanceId, companyId, userId);
+	}
+
+	@Override
 	public List<KaleoInstance> getKaleoInstances(
 		Long userId, String assetClassName, Long assetClassPK,
 		Boolean completed, int start, int end,

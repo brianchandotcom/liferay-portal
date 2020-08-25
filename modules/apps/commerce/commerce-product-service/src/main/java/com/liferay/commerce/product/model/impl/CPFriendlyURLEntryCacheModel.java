@@ -30,23 +30,26 @@ import java.util.Date;
  * The cache model class for representing CPFriendlyURLEntry in entity cache.
  *
  * @author Marco Leo
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ com.liferay.friendly.url.model.impl.FriendlyURLEntryImpl}
  * @generated
  */
+@Deprecated
 public class CPFriendlyURLEntryCacheModel
 	implements CacheModel<CPFriendlyURLEntry>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPFriendlyURLEntryCacheModel)) {
+		if (!(object instanceof CPFriendlyURLEntryCacheModel)) {
 			return false;
 		}
 
 		CPFriendlyURLEntryCacheModel cpFriendlyURLEntryCacheModel =
-			(CPFriendlyURLEntryCacheModel)obj;
+			(CPFriendlyURLEntryCacheModel)object;
 
 		if (CPFriendlyURLEntryId ==
 				cpFriendlyURLEntryCacheModel.CPFriendlyURLEntryId) {

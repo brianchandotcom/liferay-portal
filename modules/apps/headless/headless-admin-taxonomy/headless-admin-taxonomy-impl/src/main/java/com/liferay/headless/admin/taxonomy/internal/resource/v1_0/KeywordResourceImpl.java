@@ -120,7 +120,7 @@ public class KeywordResourceImpl
 						if (assetTag.getUserId() != 0) {
 							return CreatorUtil.toCreator(
 								_portal,
-								_userLocalService.getUserById(
+								_userLocalService.fetchUser(
 									assetTag.getUserId()));
 						}
 

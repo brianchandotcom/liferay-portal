@@ -51,7 +51,7 @@ public class FormRecordUtil {
 			{
 				creator = CreatorUtil.toCreator(
 					portal,
-					userLocalService.getUser(
+					userLocalService.fetchUser(
 						ddmFormInstanceRecord.getUserId()));
 				dateCreated = ddmFormInstanceRecord.getCreateDate();
 				dateModified = ddmFormInstanceRecord.getModifiedDate();

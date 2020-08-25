@@ -112,7 +112,9 @@ public abstract class BaseTierPriceResourceTestCase {
 
 		TierPriceResource.Builder builder = TierPriceResource.builder();
 
-		tierPriceResource = builder.locale(
+		tierPriceResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

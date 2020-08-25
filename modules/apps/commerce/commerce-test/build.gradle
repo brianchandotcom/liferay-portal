@@ -22,6 +22,7 @@ dependencies {
 	testIntegrationCompile project(":apps:commerce:commerce-product-test-util")
 	testIntegrationCompile project(":apps:commerce:commerce-product-type-simple")
 	testIntegrationCompile project(":apps:commerce:commerce-service")
+	testIntegrationCompile project(":apps:commerce:commerce-tax-api")
 	testIntegrationCompile project(":apps:commerce:commerce-test-util")
 	testIntegrationCompile project(":apps:commerce:commerce-pricing-api")
 }

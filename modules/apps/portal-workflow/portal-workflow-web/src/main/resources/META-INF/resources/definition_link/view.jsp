@@ -27,8 +27,8 @@ boolean showStripeMessage = workflowDefinitionLinkDisplayContext.showStripeMessa
 <div class="container-fluid-1280 workflow-definition-link-container" id="<portlet:namespace />Container">
 	<c:if test="<%= showStripeMessage %>">
 		<clay:alert
-			closeable="true"
-			destroyOnHide="true"
+			closeable="<%= true %>"
+			destroyOnHide="<%= true %>"
 			message='<%= LanguageUtil.get(resourceBundle, "the-assets-from-documents-and-media-and-forms-are-assigned-within-their-respective-applications") %>'
 			title="Info"
 		/>

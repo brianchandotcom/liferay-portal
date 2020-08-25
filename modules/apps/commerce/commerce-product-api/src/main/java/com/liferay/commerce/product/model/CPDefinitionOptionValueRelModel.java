@@ -402,6 +402,27 @@ public interface CPDefinitionOptionValueRelModel
 	public void setQuantity(int quantity);
 
 	/**
+	 * Returns the preselected of this cp definition option value rel.
+	 *
+	 * @return the preselected of this cp definition option value rel
+	 */
+	public boolean getPreselected();
+
+	/**
+	 * Returns <code>true</code> if this cp definition option value rel is preselected.
+	 *
+	 * @return <code>true</code> if this cp definition option value rel is preselected; <code>false</code> otherwise
+	 */
+	public boolean isPreselected();
+
+	/**
+	 * Sets whether this cp definition option value rel is preselected.
+	 *
+	 * @param preselected the preselected of this cp definition option value rel
+	 */
+	public void setPreselected(boolean preselected);
+
+	/**
 	 * Returns the price of this cp definition option value rel.
 	 *
 	 * @return the price of this cp definition option value rel

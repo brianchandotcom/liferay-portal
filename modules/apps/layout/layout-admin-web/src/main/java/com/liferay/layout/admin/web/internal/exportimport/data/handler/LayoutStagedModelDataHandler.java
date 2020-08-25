@@ -184,7 +184,7 @@ public class LayoutStagedModelDataHandler
 			List<Layout> ancestorFolders = layout.getAncestors();
 
 			StringBundler sb = new StringBundler(
-				4 * ancestorFolders.size() + 1);
+				(4 * ancestorFolders.size()) + 1);
 
 			Collections.reverse(ancestorFolders);
 

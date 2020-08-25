@@ -54,11 +54,9 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 	<%
 	RequiredWorkflowDefinitionException rwde = (RequiredWorkflowDefinitionException)errorException;
-
-	Object[] messageArguments = workflowDefinitionDisplayContext.getMessageArguments(rwde.getWorkflowDefinitionLinks());
 	%>
 
-	<liferay-ui:message arguments="<%= messageArguments %>" key="<%= workflowDefinitionDisplayContext.getMessageKey(rwde.getWorkflowDefinitionLinks()) %>" translateArguments="<%= false %>" />
+	<liferay-ui:message arguments="<%= workflowDefinitionDisplayContext.getMessageArguments(rwde.getWorkflowDefinitionLinks()) %>" key="<%= workflowDefinitionDisplayContext.getMessageKey(rwde.getWorkflowDefinitionLinks()) %>" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
 <liferay-ui:error exception="<%= WorkflowException.class %>" message="an-error-occurred-in-the-workflow-engine" />
@@ -194,7 +192,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 										<liferay-ui:message key="total-modifications" />
 									</dt>
 									<dd class="sidebar-dd">
-										<liferay-ui:message arguments='<%= new String[] {workflowDefinitionDisplayContext.getWorkflowDefinitionCount(workflowDefinition) + ""} %>' key="x-revisions" translateArguments="<%= false %>" />
+										<liferay-ui:message arguments='<%= workflowDefinitionDisplayContext.getWorkflowDefinitionCount(workflowDefinition) + "" %>' key="x-revisions" translateArguments="<%= false %>" />
 									</dd>
 									<dt class="sidebar-dt"></dt>
 									<dd class="sidebar-dd"></dd>

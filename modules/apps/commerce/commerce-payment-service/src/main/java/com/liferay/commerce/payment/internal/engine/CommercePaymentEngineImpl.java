@@ -156,11 +156,13 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 			return _commercePaymentUtils.emptyResult(commerceOrderId);
 		}
 
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+
 		CommercePaymentRequest commercePaymentRequest =
 			_commercePaymentUtils.getCommercePaymentRequest(
-				_commerceOrderLocalService.getCommerceOrder(commerceOrderId),
-				_portal.getLocale(httpServletRequest), transactionId, null,
-				httpServletRequest, commercePaymentMethod);
+				commerceOrder, _portal.getLocale(httpServletRequest),
+				transactionId, null, httpServletRequest, commercePaymentMethod);
 
 		CommercePaymentResult commercePaymentResult =
 			commercePaymentMethod.completePayment(commercePaymentRequest);

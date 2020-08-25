@@ -12,7 +12,11 @@
  * details.
  */
 
+export const ADD_TO_ORDER = 'refreshCartUsingData';
 export const AUTOCOMPLETE_VALUE_UPDATED = 'autocomplete-updated';
+export const CART_PRODUCT_QUANTITY_CHANGED = 'quantity-changed-from-cart';
+export const CHANGE_ACCOUNT = 'accountSelected';
+export const CHANGE_ORDER = 'orderSelected';
 export const CLOSE_MODAL = 'close-modal';
 export const CLOSE_SIDE_PANEL = 'close-side-panel';
 export const CURRENT_PRODUCT_STATUS_CHANGED = 'current-product-status-changed';
@@ -24,11 +28,16 @@ export const IS_LOADING_MODAL = 'is-loading-modal';
 export const OPEN_MODAL = 'open-modal';
 export const OPEN_SIDE_PANEL = 'open-side-panel';
 export const PRODUCT_OPTIONS_CHANGED = 'product-options-changed';
+export const PRODUCT_REMOVED = 'productRemovedFromCart';
 export const SIDE_PANEL_CLOSED = 'side-panel-closed';
 export const UPDATE_DATASET_DISPLAY = 'update-dataset-display';
 
 export default {
+	ADD_TO_ORDER,
 	AUTOCOMPLETE_VALUE_UPDATED,
+	CART_PRODUCT_QUANTITY_CHANGED,
+	CHANGE_ACCOUNT,
+	CHANGE_ORDER,
 	CLOSE_MODAL,
 	CLOSE_SIDE_PANEL,
 	CURRENT_PRODUCT_STATUS_CHANGED,
@@ -40,6 +49,7 @@ export default {
 	OPEN_MODAL,
 	OPEN_SIDE_PANEL,
 	PRODUCT_OPTIONS_CHANGED,
+	PRODUCT_REMOVED,
 	SIDE_PANEL_CLOSED,
 	UPDATE_DATASET_DISPLAY
 };

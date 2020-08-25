@@ -479,7 +479,7 @@ public class FedExCommerceShippingOptionHelper {
 	private int _getPackageSize(
 		int fedExWidth, int fedExHeight, int fedExDepth) {
 
-		int girth = fedExHeight * 2 + fedExDepth * 2;
+		int girth = (fedExHeight * 2) + (fedExDepth * 2);
 
 		return girth + fedExWidth;
 	}

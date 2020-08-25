@@ -36,18 +36,18 @@ public class CommerceAddressRestrictionCacheModel
 	implements CacheModel<CommerceAddressRestriction>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceAddressRestrictionCacheModel)) {
+		if (!(object instanceof CommerceAddressRestrictionCacheModel)) {
 			return false;
 		}
 
 		CommerceAddressRestrictionCacheModel
 			commerceAddressRestrictionCacheModel =
-				(CommerceAddressRestrictionCacheModel)obj;
+				(CommerceAddressRestrictionCacheModel)object;
 
 		if (commerceAddressRestrictionId ==
 				commerceAddressRestrictionCacheModel.

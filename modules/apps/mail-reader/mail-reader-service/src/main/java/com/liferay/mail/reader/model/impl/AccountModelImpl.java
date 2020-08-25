@@ -1282,16 +1282,16 @@ public class AccountModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Account)) {
+		if (!(object instanceof Account)) {
 			return false;
 		}
 
-		Account account = (Account)obj;
+		Account account = (Account)object;
 
 		long primaryKey = account.getPrimaryKey();
 

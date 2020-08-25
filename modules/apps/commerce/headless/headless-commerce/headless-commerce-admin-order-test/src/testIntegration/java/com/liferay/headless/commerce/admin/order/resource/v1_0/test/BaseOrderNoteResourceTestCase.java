@@ -112,7 +112,9 @@ public abstract class BaseOrderNoteResourceTestCase {
 
 		OrderNoteResource.Builder builder = OrderNoteResource.builder();
 
-		orderNoteResource = builder.locale(
+		orderNoteResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

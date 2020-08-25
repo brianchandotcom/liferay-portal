@@ -933,12 +933,12 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof
+		if (!(object instanceof
 				CommerceNotificationTemplateCommerceAccountGroupRel)) {
 
 			return false;
@@ -946,7 +946,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 
 		CommerceNotificationTemplateCommerceAccountGroupRel
 			commerceNotificationTemplateCommerceAccountGroupRel =
-				(CommerceNotificationTemplateCommerceAccountGroupRel)obj;
+				(CommerceNotificationTemplateCommerceAccountGroupRel)object;
 
 		long primaryKey =
 			commerceNotificationTemplateCommerceAccountGroupRel.getPrimaryKey();

@@ -52,4 +52,54 @@ describe('Liferay.Util.formatXML', () => {
 
 		expect(formatXML(input, options)).toEqual(expectedOutput);
 	});
+
+	it('preserves original formatting inside CDATA blocks', () => {
+		const options = {newLine: '\n', tagIndent: '  '};
+
+		const input =
+			` <?xml xlmns:a="http://www.w3.org/TR/html4/" version="1.0" encoding="UTF-8"?>
+			<!DOCTYPE note>
+			
+			<a:note>  					<a:to>Foo</a:to>
+				<a:from>Bar</a:from><a:heading>FooBar</a:heading>
+								<a:body>FooBarBaz!</a:body>
+			</a:note>\n` +
+			'<script><![CDATA[<message> FooBarBaz </message> ]]></script>\n' +
+			'<script><![CDATA[\n' +
+			'    <#-- FooBarBaz -->\n' +
+			'    <#if foo && bar>\n' +
+			'      <#assign foo = "bar">\n' +
+			'    </#if>\n' +
+			'    <#if bar>\n' +
+			'            <#if baz><#assign bar = "baz">\n' +
+			'        </#if></#if>\n' +
+			'      ]]>\n' +
+			'        </script>';
+
+		const expectedOutput =
+			'<?xml xlmns:a="http://www.w3.org/TR/html4/" version="1.0" encoding="UTF-8"?>\n' +
+			'<!DOCTYPE note>\n' +
+			'<a:note>\n' +
+			'  <a:to>Foo</a:to>\n' +
+			'  <a:from>Bar</a:from>\n' +
+			'  <a:heading>FooBar</a:heading>\n' +
+			'  <a:body>FooBarBaz!</a:body>\n' +
+			'</a:note>\n' +
+			'<script>\n' +
+			'  <![CDATA[<message> FooBarBaz </message> ]]>\n' +
+			'</script>\n' +
+			'<script>\n' +
+			'  <![CDATA[\n' +
+			'    <#-- FooBarBaz -->\n' +
+			'    <#if foo && bar>\n' +
+			'      <#assign foo = "bar">\n' +
+			'    </#if>\n' +
+			'    <#if bar>\n' +
+			'            <#if baz><#assign bar = "baz">\n' +
+			'        </#if></#if>\n' +
+			'      ]]>\n' +
+			'</script>';
+
+		expect(formatXML(input, options)).toEqual(expectedOutput);
+	});
 });

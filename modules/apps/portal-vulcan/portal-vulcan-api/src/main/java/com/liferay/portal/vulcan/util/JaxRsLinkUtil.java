@@ -33,7 +33,7 @@ public class JaxRsLinkUtil {
 	public static String getJaxRsLink(
 		Class clazz, String methodName, UriInfo uriInfo, Object... values) {
 
-		String baseURIString = String.valueOf(uriInfo.getBaseUri());
+		String baseURIString = UriInfoUtil.getBasePath(uriInfo);
 
 		if (baseURIString.endsWith(StringPool.FORWARD_SLASH)) {
 			baseURIString = baseURIString.substring(
@@ -57,7 +57,7 @@ public class JaxRsLinkUtil {
 		String applicationPath, Class clazz, String methodName, UriInfo uriInfo,
 		Object... values) {
 
-		String baseURIString = String.valueOf(uriInfo.getBaseUri());
+		String baseURIString = UriInfoUtil.getBasePath(uriInfo);
 
 		if (baseURIString.endsWith(StringPool.FORWARD_SLASH)) {
 			baseURIString = baseURIString.substring(

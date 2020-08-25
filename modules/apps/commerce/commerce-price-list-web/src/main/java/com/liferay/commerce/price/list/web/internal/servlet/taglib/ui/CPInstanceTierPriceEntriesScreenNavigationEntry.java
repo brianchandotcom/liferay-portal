@@ -15,6 +15,7 @@
 package com.liferay.commerce.price.list.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.web.internal.display.context.CPInstanceCommerceTierPriceEntryDisplayContext;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
@@ -24,6 +25,10 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -81,6 +86,28 @@ public class CPInstanceTierPriceEntriesScreenNavigationEntry
 	}
 
 	@Override
+	public boolean isVisible(User user, CommercePriceEntry commercePriceEntry) {
+		if (commercePriceEntry == null) {
+			return false;
+		}
+
+		boolean hasPermission = false;
+
+		try {
+			hasPermission = _commercePriceListModelResourcePermission.contains(
+				PermissionThreadLocal.getPermissionChecker(),
+				commercePriceEntry.getCommercePriceListId(), ActionKeys.VIEW);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
+
+		return hasPermission;
+	}
+
+	@Override
 	public void render(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
@@ -114,6 +141,12 @@ public class CPInstanceTierPriceEntriesScreenNavigationEntry
 
 	@Reference
 	private CommercePriceListActionHelper _commercePriceListActionHelper;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.price.list.model.CommercePriceList)"
+	)
+	private ModelResourcePermission<CommercePriceList>
+		_commercePriceListModelResourcePermission;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

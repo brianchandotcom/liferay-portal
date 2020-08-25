@@ -17,14 +17,22 @@ package com.liferay.commerce.product.internal.model.listener;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
-import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
-import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,10 +49,14 @@ public class AssetCategoryModelListener
 		throws ModelListenerException {
 
 		try {
-			_cpFriendlyURLEntryLocalService.addCPFriendlyURLEntries(
-				GroupConstants.DEFAULT_LIVE_GROUP_ID,
-				assetCategory.getCompanyId(), AssetCategory.class,
-				assetCategory.getCategoryId(), assetCategory.getTitleMap());
+			Group companyGroup = _groupLocalService.getCompanyGroup(
+				_portal.getDefaultCompanyId());
+
+			_friendlyURLEntryLocalService.addFriendlyURLEntry(
+				companyGroup.getGroupId(),
+				_portal.getClassNameId(AssetCategory.class),
+				assetCategory.getCategoryId(),
+				_getUniqueUrlTitles(assetCategory), new ServiceContext());
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
@@ -62,7 +74,7 @@ public class AssetCategoryModelListener
 			_cpDisplayLayoutLocalService.deleteCPDisplayLayout(
 				AssetCategory.class, assetCategory.getCategoryId());
 
-			_cpFriendlyURLEntryLocalService.deleteCPFriendlyURLEntries(
+			_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
 				assetCategory.getGroupId(), AssetCategory.class,
 				assetCategory.getCategoryId());
 		}
@@ -71,6 +83,29 @@ public class AssetCategoryModelListener
 				_log.warn(pe, pe);
 			}
 		}
+	}
+
+	private Map<String, String> _getUniqueUrlTitles(AssetCategory assetCategory)
+		throws PortalException {
+
+		Map<String, String> urlTitleMap = new HashMap<>();
+
+		Map<Locale, String> titleMap = assetCategory.getTitleMap();
+
+		for (Map.Entry<Locale, String> titleEntry : titleMap.entrySet()) {
+			Group companyGroup = _groupLocalService.getCompanyGroup(
+				_portal.getDefaultCompanyId());
+
+			String urlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
+				companyGroup.getGroupId(),
+				_portal.getClassNameId(AssetCategory.class),
+				assetCategory.getCategoryId(), titleEntry.getValue());
+
+			urlTitleMap.put(
+				LocaleUtil.toLanguageId(titleEntry.getKey()), urlTitle);
+		}
+
+		return urlTitleMap;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -84,6 +119,12 @@ public class AssetCategoryModelListener
 	private CPDisplayLayoutLocalService _cpDisplayLayoutLocalService;
 
 	@Reference
-	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

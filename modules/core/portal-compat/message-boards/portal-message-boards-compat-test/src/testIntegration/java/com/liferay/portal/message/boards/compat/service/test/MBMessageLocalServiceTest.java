@@ -245,7 +245,7 @@ public class MBMessageLocalServiceTest {
 			parentMessage, false, new Date(date.getTime() + Time.SECOND));
 
 		MBMessage secondReplyMessage = addMessage(
-			parentMessage, false, new Date(date.getTime() + Time.SECOND * 2));
+			parentMessage, false, new Date(date.getTime() + (Time.SECOND * 2)));
 
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			PropsValues.INDEX_DATE_FORMAT_PATTERN);

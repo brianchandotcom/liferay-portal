@@ -112,7 +112,9 @@ public abstract class BasePriceListResourceTestCase {
 
 		PriceListResource.Builder builder = PriceListResource.builder();
 
-		priceListResource = builder.locale(
+		priceListResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

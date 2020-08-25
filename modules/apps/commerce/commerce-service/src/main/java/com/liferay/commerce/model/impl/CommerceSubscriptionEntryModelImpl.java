@@ -1763,17 +1763,17 @@ public class CommerceSubscriptionEntryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceSubscriptionEntry)) {
+		if (!(object instanceof CommerceSubscriptionEntry)) {
 			return false;
 		}
 
 		CommerceSubscriptionEntry commerceSubscriptionEntry =
-			(CommerceSubscriptionEntry)obj;
+			(CommerceSubscriptionEntry)object;
 
 		long primaryKey = commerceSubscriptionEntry.getPrimaryKey();
 

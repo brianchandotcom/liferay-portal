@@ -57,7 +57,7 @@ public class PrimitiveLongList {
 		if (minSize > oldSize) {
 			long[] previousElements = _elements;
 
-			int newCapacity = (oldSize * 3) / 2 + 1;
+			int newCapacity = ((oldSize * 3) / 2) + 1;
 
 			if (newCapacity < minSize) {
 				newCapacity = minSize;

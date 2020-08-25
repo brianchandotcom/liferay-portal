@@ -36,17 +36,17 @@ public class AssetVocabularyCacheModel
 	implements CacheModel<AssetVocabulary>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AssetVocabularyCacheModel)) {
+		if (!(object instanceof AssetVocabularyCacheModel)) {
 			return false;
 		}
 
 		AssetVocabularyCacheModel assetVocabularyCacheModel =
-			(AssetVocabularyCacheModel)obj;
+			(AssetVocabularyCacheModel)object;
 
 		if (vocabularyId == assetVocabularyCacheModel.vocabularyId) {
 			return true;

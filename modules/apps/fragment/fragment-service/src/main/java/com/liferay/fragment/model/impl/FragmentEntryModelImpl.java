@@ -1344,16 +1344,16 @@ public class FragmentEntryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof FragmentEntry)) {
+		if (!(object instanceof FragmentEntry)) {
 			return false;
 		}
 
-		FragmentEntry fragmentEntry = (FragmentEntry)obj;
+		FragmentEntry fragmentEntry = (FragmentEntry)object;
 
 		long primaryKey = fragmentEntry.getPrimaryKey();
 

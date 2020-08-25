@@ -1029,17 +1029,17 @@ public class CommerceCurrencyWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceCurrencyWrapper)) {
+		if (!(object instanceof CommerceCurrencyWrapper)) {
 			return false;
 		}
 
 		CommerceCurrencyWrapper commerceCurrencyWrapper =
-			(CommerceCurrencyWrapper)obj;
+			(CommerceCurrencyWrapper)object;
 
 		if (Objects.equals(
 				_commerceCurrency, commerceCurrencyWrapper._commerceCurrency)) {

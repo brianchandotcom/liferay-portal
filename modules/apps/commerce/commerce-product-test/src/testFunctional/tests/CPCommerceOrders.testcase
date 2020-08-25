@@ -7,6 +7,14 @@ definition {
 	property testray.main.component.name = "Commerce";
 
 	setUp {
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-commerce-license-li");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
@@ -69,11 +77,11 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = "2");
 
+		Refresh();
+
 		CommerceNavigator.gotoMiniCart();
 
-		Click(
-			key_button = "Checkout",
-			locator1 = "CommerceAccelerators#ANY_BUTTON");
+		Button.click(button = "Submit");
 
 		Pause(locator1 = "3000");
 
@@ -101,8 +109,8 @@ definition {
 		CommerceEntry.clickNoError(menuItem = "Edit");
 
 		CommerceOrders.editOrderItemDetails(
-			orderItemName = "ABS Sensor",
-			orderItemQuantity = "4");
+			orderItemQuantity = "4",
+			orderItemSKU = "MIN93015");
 
 		ProductMenu.gotoPortlet(
 			category = "Commerce",

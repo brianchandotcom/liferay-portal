@@ -36,17 +36,17 @@ public class MBMailingListCacheModel
 	implements CacheModel<MBMailingList>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MBMailingListCacheModel)) {
+		if (!(object instanceof MBMailingListCacheModel)) {
 			return false;
 		}
 
 		MBMailingListCacheModel mbMailingListCacheModel =
-			(MBMailingListCacheModel)obj;
+			(MBMailingListCacheModel)object;
 
 		if (mailingListId == mbMailingListCacheModel.mailingListId) {
 			return true;

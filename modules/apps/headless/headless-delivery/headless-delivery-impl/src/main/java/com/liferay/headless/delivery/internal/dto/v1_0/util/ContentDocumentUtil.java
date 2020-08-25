@@ -18,12 +18,18 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.headless.delivery.dto.v1_0.ContentDocument;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
+import java.util.Optional;
+
+import javax.ws.rs.core.UriInfo;
+
 /**
  * @author Javier Gamarra
  */
 public class ContentDocumentUtil {
 
-	public static ContentDocument toContentDocument(FileEntry fileEntry)
+	public static ContentDocument toContentDocument(
+			String fieldName, FileEntry fileEntry,
+			Optional<UriInfo> uriInfoOptional)
 		throws Exception {
 
 		return new ContentDocument() {
@@ -32,6 +38,9 @@ public class ContentDocumentUtil {
 				contentUrl = DLUtil.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), null, "", false,
 					false);
+				contentValue = ContentValueUtil.toContentValue(
+					fieldName + ".contentValue", fileEntry::getContentStream,
+					uriInfoOptional);
 				description = fileEntry.getDescription();
 				encodingFormat = fileEntry.getMimeType();
 				fileExtension = fileEntry.getExtension();

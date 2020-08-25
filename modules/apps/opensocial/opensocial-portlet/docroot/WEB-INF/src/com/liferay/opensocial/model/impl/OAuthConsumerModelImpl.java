@@ -667,16 +667,16 @@ public class OAuthConsumerModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof OAuthConsumer)) {
+		if (!(object instanceof OAuthConsumer)) {
 			return false;
 		}
 
-		OAuthConsumer oAuthConsumer = (OAuthConsumer)obj;
+		OAuthConsumer oAuthConsumer = (OAuthConsumer)object;
 
 		long primaryKey = oAuthConsumer.getPrimaryKey();
 

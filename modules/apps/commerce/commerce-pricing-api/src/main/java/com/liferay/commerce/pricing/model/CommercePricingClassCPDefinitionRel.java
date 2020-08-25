@@ -66,4 +66,7 @@ public interface CommercePricingClassCPDefinitionRel
 
 			};
 
+	public CommercePricingClass getCommercePricingClass()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

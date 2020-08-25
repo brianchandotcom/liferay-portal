@@ -303,17 +303,19 @@ public class SerializableObjectWrapperTest {
 	}
 
 	private void _testHashCode() throws Exception {
+		SerializableObjectWrapper serializableObjectWrapper =
+			new SerializableObjectWrapper(_ANOTHER_TEST_SERIALIZABLE);
+
 		Assert.assertNotEquals(
 			_testSerializableObjectWrapper.hashCode(),
-			new SerializableObjectWrapper(
-				_ANOTHER_TEST_SERIALIZABLE
-			).hashCode());
+			serializableObjectWrapper.hashCode());
+
+		serializableObjectWrapper = new SerializableObjectWrapper(
+			_TEST_SERIALIZABLE);
 
 		Assert.assertEquals(
 			_testSerializableObjectWrapper.hashCode(),
-			new SerializableObjectWrapper(
-				_TEST_SERIALIZABLE
-			).hashCode());
+			serializableObjectWrapper.hashCode());
 
 		SerializableObjectWrapper deserializedObject = _getDeserializedObject(
 			_testSerializableObjectWrapper);

@@ -475,16 +475,16 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof FolderWrapper)) {
+		if (!(object instanceof FolderWrapper)) {
 			return false;
 		}
 
-		FolderWrapper folderWrapper = (FolderWrapper)obj;
+		FolderWrapper folderWrapper = (FolderWrapper)object;
 
 		if (Objects.equals(_folder, folderWrapper._folder)) {
 			return true;

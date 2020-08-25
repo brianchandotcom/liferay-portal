@@ -15,6 +15,10 @@ button {
 	background-color: #fff;
 }
 
+body.has-control-menu.signed-in.has-edit-mode-menu .speedwell-topbar {
+	display: none;
+}
+
 body:not(.has-control-menu) {
 	.speedwell-topbar {
 		top: 0;

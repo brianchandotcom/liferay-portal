@@ -728,16 +728,16 @@ public class TicketModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Ticket)) {
+		if (!(object instanceof Ticket)) {
 			return false;
 		}
 
-		Ticket ticket = (Ticket)obj;
+		Ticket ticket = (Ticket)object;
 
 		long primaryKey = ticket.getPrimaryKey();
 

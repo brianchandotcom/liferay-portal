@@ -242,9 +242,10 @@ public class DDMFormImporter {
 			descriptionMap, DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT,
 			DDLRecordSetConstants.SCOPE_FORMS, serviceContext);
 
-		DDMForm settingsDDMForm = new DDMFormFactoryHelper(
-			DDLRecordSetSettings.class
-		).createDDMForm();
+		DDMFormFactoryHelper ddmFormFactoryHelper = new DDMFormFactoryHelper(
+			DDLRecordSetSettings.class);
+
+		DDMForm settingsDDMForm = ddmFormFactoryHelper.createDDMForm();
 
 		DDMFormValues ddmFormValues = new DDMFormValues(settingsDDMForm);
 

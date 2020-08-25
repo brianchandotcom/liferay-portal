@@ -39,6 +39,10 @@ public class ReleaseLocalServiceUtil {
 	/**
 	 * Adds the release to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ReleaseLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param release the release
 	 * @return the release that was added
 	 */
@@ -90,6 +94,10 @@ public class ReleaseLocalServiceUtil {
 	/**
 	 * Deletes the release with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ReleaseLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param releaseId the primary key of the release
 	 * @return the release that was removed
 	 * @throws PortalException if a release with the primary key could not be found
@@ -103,6 +111,10 @@ public class ReleaseLocalServiceUtil {
 
 	/**
 	 * Deletes the release from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ReleaseLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param release the release
 	 * @return the release that was removed
@@ -299,6 +311,10 @@ public class ReleaseLocalServiceUtil {
 
 	/**
 	 * Updates the release in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ReleaseLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param release the release
 	 * @return the release that was updated

@@ -85,6 +85,8 @@ AUI.add(
 							eventHandles.push(buttonRow.delegate(STR_CLICK, instance._onButtonClick, 'button', instance));
 						}
 
+						eventHandles.push(Liferay.on('inputLocalized:defaultLocaleChanged', instance._onDefaultLocaleChange.bind(instance)));
+
 						eventHandles.push(Liferay.on('inputLocalized:localeChanged', instance._onLocaleChange.bind(instance)));
 
 						instance._eventHandles = eventHandles;
@@ -167,6 +169,14 @@ AUI.add(
 						}
 					},
 
+					_onDefaultLocaleChange: function(event) {
+						var instance = this;
+
+						var article = instance.get(STR_ARTICLE);
+
+						article.defaultLanguageId = event.item.getAttribute('data-value');
+					},
+
 					_onFormChanged: function(event) {
 						var instance = this;
 
@@ -186,8 +196,12 @@ AUI.add(
 					},
 
 					_onLocaleChange: function(event) {
-						var defaultLanguageId = themeDisplay.getDefaultLanguageId();
 						var instance = this;
+
+						var article = instance.get(STR_ARTICLE);
+
+						var defaultLanguageId = article.defaultLanguageId;
+
 						var selectedLanguageId = event.item.getAttribute('data-value');
 
 						if (selectedLanguageId) {

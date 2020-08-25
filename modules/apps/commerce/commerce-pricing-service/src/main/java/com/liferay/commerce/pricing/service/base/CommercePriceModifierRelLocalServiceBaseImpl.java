@@ -19,7 +19,9 @@ import com.liferay.commerce.pricing.service.CommercePriceModifierRelLocalService
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierPersistence;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelPersistence;
+import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelPersistence;
+import com.liferay.commerce.pricing.service.persistence.CommercePricingClassFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -78,6 +80,10 @@ public abstract class CommercePriceModifierRelLocalServiceBaseImpl
 	/**
 	 * Adds the commerce price modifier rel to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceModifierRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePriceModifierRel the commerce price modifier rel
 	 * @return the commerce price modifier rel that was added
 	 */
@@ -110,6 +116,10 @@ public abstract class CommercePriceModifierRelLocalServiceBaseImpl
 	/**
 	 * Deletes the commerce price modifier rel with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceModifierRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePriceModifierRelId the primary key of the commerce price modifier rel
 	 * @return the commerce price modifier rel that was removed
 	 * @throws PortalException if a commerce price modifier rel with the primary key could not be found
@@ -126,6 +136,10 @@ public abstract class CommercePriceModifierRelLocalServiceBaseImpl
 
 	/**
 	 * Deletes the commerce price modifier rel from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceModifierRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commercePriceModifierRel the commerce price modifier rel
 	 * @return the commerce price modifier rel that was removed
@@ -359,6 +373,10 @@ public abstract class CommercePriceModifierRelLocalServiceBaseImpl
 	/**
 	 * Updates the commerce price modifier rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePriceModifierRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePriceModifierRel the commerce price modifier rel
 	 * @return the commerce price modifier rel that was updated
 	 */
@@ -534,6 +552,26 @@ public abstract class CommercePriceModifierRelLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce pricing class finder.
+	 *
+	 * @return the commerce pricing class finder
+	 */
+	public CommercePricingClassFinder getCommercePricingClassFinder() {
+		return commercePricingClassFinder;
+	}
+
+	/**
+	 * Sets the commerce pricing class finder.
+	 *
+	 * @param commercePricingClassFinder the commerce pricing class finder
+	 */
+	public void setCommercePricingClassFinder(
+		CommercePricingClassFinder commercePricingClassFinder) {
+
+		this.commercePricingClassFinder = commercePricingClassFinder;
+	}
+
+	/**
 	 * Returns the commerce pricing class cp definition rel local service.
 	 *
 	 * @return the commerce pricing class cp definition rel local service
@@ -581,6 +619,30 @@ public abstract class CommercePriceModifierRelLocalServiceBaseImpl
 
 		this.commercePricingClassCPDefinitionRelPersistence =
 			commercePricingClassCPDefinitionRelPersistence;
+	}
+
+	/**
+	 * Returns the commerce pricing class cp definition rel finder.
+	 *
+	 * @return the commerce pricing class cp definition rel finder
+	 */
+	public CommercePricingClassCPDefinitionRelFinder
+		getCommercePricingClassCPDefinitionRelFinder() {
+
+		return commercePricingClassCPDefinitionRelFinder;
+	}
+
+	/**
+	 * Sets the commerce pricing class cp definition rel finder.
+	 *
+	 * @param commercePricingClassCPDefinitionRelFinder the commerce pricing class cp definition rel finder
+	 */
+	public void setCommercePricingClassCPDefinitionRelFinder(
+		CommercePricingClassCPDefinitionRelFinder
+			commercePricingClassCPDefinitionRelFinder) {
+
+		this.commercePricingClassCPDefinitionRelFinder =
+			commercePricingClassCPDefinitionRelFinder;
 	}
 
 	/**
@@ -797,6 +859,9 @@ public abstract class CommercePriceModifierRelLocalServiceBaseImpl
 	@BeanReference(type = CommercePricingClassPersistence.class)
 	protected CommercePricingClassPersistence commercePricingClassPersistence;
 
+	@BeanReference(type = CommercePricingClassFinder.class)
+	protected CommercePricingClassFinder commercePricingClassFinder;
+
 	@BeanReference(
 		type = com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelLocalService.class
 	)
@@ -807,6 +872,10 @@ public abstract class CommercePriceModifierRelLocalServiceBaseImpl
 	@BeanReference(type = CommercePricingClassCPDefinitionRelPersistence.class)
 	protected CommercePricingClassCPDefinitionRelPersistence
 		commercePricingClassCPDefinitionRelPersistence;
+
+	@BeanReference(type = CommercePricingClassCPDefinitionRelFinder.class)
+	protected CommercePricingClassCPDefinitionRelFinder
+		commercePricingClassCPDefinitionRelFinder;
 
 	@ServiceReference(
 		type = com.liferay.counter.kernel.service.CounterLocalService.class

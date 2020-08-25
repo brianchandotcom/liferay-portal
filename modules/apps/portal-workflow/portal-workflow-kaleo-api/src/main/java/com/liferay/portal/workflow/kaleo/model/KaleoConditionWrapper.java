@@ -535,17 +535,17 @@ public class KaleoConditionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoConditionWrapper)) {
+		if (!(object instanceof KaleoConditionWrapper)) {
 			return false;
 		}
 
 		KaleoConditionWrapper kaleoConditionWrapper =
-			(KaleoConditionWrapper)obj;
+			(KaleoConditionWrapper)object;
 
 		if (Objects.equals(
 				_kaleoCondition, kaleoConditionWrapper._kaleoCondition)) {

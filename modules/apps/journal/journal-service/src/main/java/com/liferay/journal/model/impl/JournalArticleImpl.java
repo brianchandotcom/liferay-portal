@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
@@ -327,7 +328,10 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public Date getDisplayDate() {
-		if (!PropsValues.SCHEDULER_ENABLED) {
+		if (!PropsValues.SCHEDULER_ENABLED &&
+			!ExportImportThreadLocal.isExportInProcess() &&
+			!ExportImportThreadLocal.isImportInProcess()) {
+
 			return null;
 		}
 
@@ -352,7 +356,10 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public Date getExpirationDate() {
-		if (!PropsValues.SCHEDULER_ENABLED) {
+		if (!PropsValues.SCHEDULER_ENABLED &&
+			!ExportImportThreadLocal.isExportInProcess() &&
+			!ExportImportThreadLocal.isImportInProcess()) {
+
 			return null;
 		}
 
@@ -523,7 +530,10 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public Date getReviewDate() {
-		if (!PropsValues.SCHEDULER_ENABLED) {
+		if (!PropsValues.SCHEDULER_ENABLED &&
+			!ExportImportThreadLocal.isExportInProcess() &&
+			!ExportImportThreadLocal.isImportInProcess()) {
+
 			return null;
 		}
 

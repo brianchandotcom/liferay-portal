@@ -27,6 +27,8 @@ public class CPDefinitionScreenNavigationConstants {
 
 	public static final String CATEGORY_KEY_OPTIONS = "options";
 
+	public static final String CATEGORY_KEY_PRICING_CLASSES = "product-groups";
+
 	public static final String CATEGORY_KEY_PRODUCT_RELATIONS =
 		"product-relations";
 

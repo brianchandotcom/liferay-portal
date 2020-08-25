@@ -59,6 +59,15 @@ public class CommerceChannelServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CommerceChannel
+			fetchByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().fetchByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceChannel
 			fetchCommerceChannel(long commerceChannelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

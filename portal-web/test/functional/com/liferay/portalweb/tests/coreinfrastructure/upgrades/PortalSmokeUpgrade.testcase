@@ -50,6 +50,7 @@ definition {
 
 	@priority = "5"
 	test ViewPortalSmokeArchive6130 {
+		property custom.properties = "passwords.encryption.algorithm.legacy=SHA";
 		property data.archive.type = "data-archive-portal";
 		property portal.upgrades = "true";
 		property portal.version = "6.1.30";

@@ -94,6 +94,10 @@ public abstract class CommerceOrderPaymentLocalServiceBaseImpl
 	/**
 	 * Adds the commerce order payment to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderPaymentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceOrderPayment the commerce order payment
 	 * @return the commerce order payment that was added
 	 */
@@ -124,6 +128,10 @@ public abstract class CommerceOrderPaymentLocalServiceBaseImpl
 	/**
 	 * Deletes the commerce order payment with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderPaymentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceOrderPaymentId the primary key of the commerce order payment
 	 * @return the commerce order payment that was removed
 	 * @throws PortalException if a commerce order payment with the primary key could not be found
@@ -139,6 +147,10 @@ public abstract class CommerceOrderPaymentLocalServiceBaseImpl
 
 	/**
 	 * Deletes the commerce order payment from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderPaymentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceOrderPayment the commerce order payment
 	 * @return the commerce order payment that was removed
@@ -366,6 +378,10 @@ public abstract class CommerceOrderPaymentLocalServiceBaseImpl
 
 	/**
 	 * Updates the commerce order payment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderPaymentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceOrderPayment the commerce order payment
 	 * @return the commerce order payment that was updated

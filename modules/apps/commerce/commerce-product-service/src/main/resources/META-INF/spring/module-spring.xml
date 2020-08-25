@@ -70,4 +70,5 @@
 	<bean class="com.liferay.commerce.product.service.impl.CPTaxCategoryLocalServiceImpl" id="com.liferay.commerce.product.service.CPTaxCategoryLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPTaxCategoryServiceImpl" id="com.liferay.commerce.product.service.CPTaxCategoryService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPTaxCategoryPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPTaxCategoryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.product.service.persistence.impl.CPTaxCategoryFinderImpl" id="com.liferay.commerce.product.service.persistence.CPTaxCategoryFinder" parent="basePersistence" />
 </beans>

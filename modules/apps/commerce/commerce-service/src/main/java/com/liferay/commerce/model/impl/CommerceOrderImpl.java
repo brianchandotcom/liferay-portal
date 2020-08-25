@@ -151,9 +151,25 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 	}
 
 	@Override
+	public CommerceMoney getShippingWithTaxAmountMoney()
+		throws PortalException {
+
+		return CommerceMoneyFactoryUtil.create(
+			getCommerceCurrencyId(), getShippingWithTaxAmount());
+	}
+
+	@Override
 	public CommerceMoney getSubtotalMoney() throws PortalException {
 		return CommerceMoneyFactoryUtil.create(
 			getCommerceCurrencyId(), getSubtotal());
+	}
+
+	@Override
+	public CommerceMoney getSubtotalWithTaxAmountMoney()
+		throws PortalException {
+
+		return CommerceMoneyFactoryUtil.create(
+			getCommerceCurrencyId(), getSubtotalWithTaxAmount());
 	}
 
 	@Override

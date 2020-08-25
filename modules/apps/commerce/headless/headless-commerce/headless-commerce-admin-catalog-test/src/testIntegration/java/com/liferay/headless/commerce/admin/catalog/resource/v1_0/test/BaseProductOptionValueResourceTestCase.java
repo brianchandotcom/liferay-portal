@@ -109,7 +109,9 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		ProductOptionValueResource.Builder builder =
 			ProductOptionValueResource.builder();
 
-		productOptionValueResource = builder.locale(
+		productOptionValueResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

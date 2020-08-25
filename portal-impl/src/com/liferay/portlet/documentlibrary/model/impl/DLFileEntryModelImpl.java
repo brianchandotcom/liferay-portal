@@ -1917,16 +1917,16 @@ public class DLFileEntryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DLFileEntry)) {
+		if (!(object instanceof DLFileEntry)) {
 			return false;
 		}
 
-		DLFileEntry dlFileEntry = (DLFileEntry)obj;
+		DLFileEntry dlFileEntry = (DLFileEntry)object;
 
 		long primaryKey = dlFileEntry.getPrimaryKey();
 

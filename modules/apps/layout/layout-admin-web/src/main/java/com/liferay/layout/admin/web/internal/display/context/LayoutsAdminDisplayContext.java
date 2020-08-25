@@ -1143,6 +1143,13 @@ public class LayoutsAdminDisplayContext {
 		return true;
 	}
 
+	private static boolean _hasPrivateLayoutsExceptControlPanel(Group group) {
+		List<Layout> privateLayouts = LayoutLocalServiceUtil.getLayouts(
+			group.getGroupId(), true);
+
+		return !privateLayouts.isEmpty();
+	}
+
 	private JSONObject _getActionURLsJSONObject(Layout layout)
 		throws Exception {
 
@@ -1358,7 +1365,7 @@ public class LayoutsAdminDisplayContext {
 			firstColumnJSONArray.put(_getFirstColumn(false, active));
 		}
 
-		if (LayoutLocalServiceUtil.hasLayouts(getSelGroup(), true)) {
+		if (_hasPrivateLayoutsExceptControlPanel(getSelGroup())) {
 			boolean active = isPrivateLayout();
 
 			if (selLayout != null) {

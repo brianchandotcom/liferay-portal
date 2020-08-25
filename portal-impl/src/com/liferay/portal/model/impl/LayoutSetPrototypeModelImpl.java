@@ -1183,16 +1183,16 @@ public class LayoutSetPrototypeModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof LayoutSetPrototype)) {
+		if (!(object instanceof LayoutSetPrototype)) {
 			return false;
 		}
 
-		LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)obj;
+		LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)object;
 
 		long primaryKey = layoutSetPrototype.getPrimaryKey();
 

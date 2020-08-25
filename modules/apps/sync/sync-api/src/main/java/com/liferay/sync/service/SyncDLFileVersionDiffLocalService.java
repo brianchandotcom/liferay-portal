@@ -69,6 +69,10 @@ public interface SyncDLFileVersionDiffLocalService
 	/**
 	 * Adds the sync dl file version diff to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SyncDLFileVersionDiffLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param syncDLFileVersionDiff the sync dl file version diff
 	 * @return the sync dl file version diff that was added
 	 */
@@ -98,6 +102,10 @@ public interface SyncDLFileVersionDiffLocalService
 	/**
 	 * Deletes the sync dl file version diff with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SyncDLFileVersionDiffLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param syncDLFileVersionDiffId the primary key of the sync dl file version diff
 	 * @return the sync dl file version diff that was removed
 	 * @throws PortalException if a sync dl file version diff with the primary key could not be found
@@ -109,6 +117,10 @@ public interface SyncDLFileVersionDiffLocalService
 
 	/**
 	 * Deletes the sync dl file version diff from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SyncDLFileVersionDiffLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param syncDLFileVersionDiff the sync dl file version diff
 	 * @return the sync dl file version diff that was removed
@@ -257,6 +269,10 @@ public interface SyncDLFileVersionDiffLocalService
 
 	/**
 	 * Updates the sync dl file version diff in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SyncDLFileVersionDiffLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param syncDLFileVersionDiff the sync dl file version diff
 	 * @return the sync dl file version diff that was updated

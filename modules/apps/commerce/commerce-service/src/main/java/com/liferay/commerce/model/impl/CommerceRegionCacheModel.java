@@ -36,17 +36,17 @@ public class CommerceRegionCacheModel
 	implements CacheModel<CommerceRegion>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceRegionCacheModel)) {
+		if (!(object instanceof CommerceRegionCacheModel)) {
 			return false;
 		}
 
 		CommerceRegionCacheModel commerceRegionCacheModel =
-			(CommerceRegionCacheModel)obj;
+			(CommerceRegionCacheModel)object;
 
 		if (commerceRegionId == commerceRegionCacheModel.commerceRegionId) {
 			return true;

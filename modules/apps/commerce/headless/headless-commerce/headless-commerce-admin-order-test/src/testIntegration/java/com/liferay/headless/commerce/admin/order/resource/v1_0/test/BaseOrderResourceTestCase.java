@@ -25,8 +25,10 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
+import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.headless.commerce.admin.order.client.serdes.v1_0.OrderSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -46,6 +48,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -54,11 +57,14 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +76,7 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Level;
@@ -112,7 +119,9 @@ public abstract class BaseOrderResourceTestCase {
 
 		OrderResource.Builder builder = OrderResource.builder();
 
-		orderResource = builder.locale(
+		orderResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}
@@ -184,6 +193,7 @@ public abstract class BaseOrderResourceTestCase {
 
 		order.setAccountExternalReferenceCode(regex);
 		order.setAdvanceStatus(regex);
+		order.setChannelExternalReferenceCode(regex);
 		order.setCouponCode(regex);
 		order.setCurrencyCode(regex);
 		order.setExternalReferenceCode(regex);
@@ -192,13 +202,19 @@ public abstract class BaseOrderResourceTestCase {
 		order.setPurchaseOrderNumber(regex);
 		order.setShippingAmountFormatted(regex);
 		order.setShippingDiscountAmountFormatted(regex);
+		order.setShippingDiscountWithTaxAmountFormatted(regex);
 		order.setShippingMethod(regex);
 		order.setShippingOption(regex);
+		order.setShippingWithTaxAmountFormatted(regex);
 		order.setSubtotalDiscountAmountFormatted(regex);
+		order.setSubtotalDiscountWithTaxAmountFormatted(regex);
 		order.setSubtotalFormatted(regex);
+		order.setSubtotalWithTaxAmountFormatted(regex);
 		order.setTaxAmountFormatted(regex);
 		order.setTotalDiscountAmountFormatted(regex);
+		order.setTotalDiscountWithTaxAmountFormatted(regex);
 		order.setTotalFormatted(regex);
+		order.setTotalWithTaxAmountFormatted(regex);
 		order.setTransactionId(regex);
 
 		String json = OrderSerDes.toJSON(order);
@@ -209,6 +225,7 @@ public abstract class BaseOrderResourceTestCase {
 
 		Assert.assertEquals(regex, order.getAccountExternalReferenceCode());
 		Assert.assertEquals(regex, order.getAdvanceStatus());
+		Assert.assertEquals(regex, order.getChannelExternalReferenceCode());
 		Assert.assertEquals(regex, order.getCouponCode());
 		Assert.assertEquals(regex, order.getCurrencyCode());
 		Assert.assertEquals(regex, order.getExternalReferenceCode());
@@ -217,19 +234,247 @@ public abstract class BaseOrderResourceTestCase {
 		Assert.assertEquals(regex, order.getPurchaseOrderNumber());
 		Assert.assertEquals(regex, order.getShippingAmountFormatted());
 		Assert.assertEquals(regex, order.getShippingDiscountAmountFormatted());
+		Assert.assertEquals(
+			regex, order.getShippingDiscountWithTaxAmountFormatted());
 		Assert.assertEquals(regex, order.getShippingMethod());
 		Assert.assertEquals(regex, order.getShippingOption());
+		Assert.assertEquals(regex, order.getShippingWithTaxAmountFormatted());
 		Assert.assertEquals(regex, order.getSubtotalDiscountAmountFormatted());
+		Assert.assertEquals(
+			regex, order.getSubtotalDiscountWithTaxAmountFormatted());
 		Assert.assertEquals(regex, order.getSubtotalFormatted());
+		Assert.assertEquals(regex, order.getSubtotalWithTaxAmountFormatted());
 		Assert.assertEquals(regex, order.getTaxAmountFormatted());
 		Assert.assertEquals(regex, order.getTotalDiscountAmountFormatted());
+		Assert.assertEquals(
+			regex, order.getTotalDiscountWithTaxAmountFormatted());
 		Assert.assertEquals(regex, order.getTotalFormatted());
+		Assert.assertEquals(regex, order.getTotalWithTaxAmountFormatted());
 		Assert.assertEquals(regex, order.getTransactionId());
 	}
 
 	@Test
 	public void testGetOrdersPage() throws Exception {
-		Assert.assertTrue(false);
+		Page<Order> page = orderResource.getOrdersPage(
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Order order1 = testGetOrdersPage_addOrder(randomOrder());
+
+		Order order2 = testGetOrdersPage_addOrder(randomOrder());
+
+		page = orderResource.getOrdersPage(
+			null, null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(order1, order2), (List<Order>)page.getItems());
+		assertValid(page);
+
+		orderResource.deleteOrder(null);
+
+		orderResource.deleteOrder(null);
+	}
+
+	@Test
+	public void testGetOrdersPageWithFilterDateTimeEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Order order1 = randomOrder();
+
+		order1 = testGetOrdersPage_addOrder(order1);
+
+		for (EntityField entityField : entityFields) {
+			Page<Order> page = orderResource.getOrdersPage(
+				null, getFilterString(entityField, "between", order1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(order1),
+				(List<Order>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetOrdersPageWithFilterStringEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Order order1 = testGetOrdersPage_addOrder(randomOrder());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Order order2 = testGetOrdersPage_addOrder(randomOrder());
+
+		for (EntityField entityField : entityFields) {
+			Page<Order> page = orderResource.getOrdersPage(
+				null, getFilterString(entityField, "eq", order1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(order1),
+				(List<Order>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetOrdersPageWithPagination() throws Exception {
+		Order order1 = testGetOrdersPage_addOrder(randomOrder());
+
+		Order order2 = testGetOrdersPage_addOrder(randomOrder());
+
+		Order order3 = testGetOrdersPage_addOrder(randomOrder());
+
+		Page<Order> page1 = orderResource.getOrdersPage(
+			null, null, Pagination.of(1, 2), null);
+
+		List<Order> orders1 = (List<Order>)page1.getItems();
+
+		Assert.assertEquals(orders1.toString(), 2, orders1.size());
+
+		Page<Order> page2 = orderResource.getOrdersPage(
+			null, null, Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<Order> orders2 = (List<Order>)page2.getItems();
+
+		Assert.assertEquals(orders2.toString(), 1, orders2.size());
+
+		Page<Order> page3 = orderResource.getOrdersPage(
+			null, null, Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(order1, order2, order3),
+			(List<Order>)page3.getItems());
+	}
+
+	@Test
+	public void testGetOrdersPageWithSortDateTime() throws Exception {
+		testGetOrdersPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, order1, order2) -> {
+				BeanUtils.setProperty(
+					order1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetOrdersPageWithSortInteger() throws Exception {
+		testGetOrdersPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, order1, order2) -> {
+				BeanUtils.setProperty(order1, entityField.getName(), 0);
+				BeanUtils.setProperty(order2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetOrdersPageWithSortString() throws Exception {
+		testGetOrdersPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, order1, order2) -> {
+				Class<?> clazz = order1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						order1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						order2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanUtils.setProperty(
+						order1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanUtils.setProperty(
+						order2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanUtils.setProperty(
+						order1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanUtils.setProperty(
+						order2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetOrdersPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, Order, Order, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Order order1 = randomOrder();
+		Order order2 = randomOrder();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, order1, order2);
+		}
+
+		order1 = testGetOrdersPage_addOrder(order1);
+
+		order2 = testGetOrdersPage_addOrder(order2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Order> ascPage = orderResource.getOrdersPage(
+				null, null, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(order1, order2), (List<Order>)ascPage.getItems());
+
+			Page<Order> descPage = orderResource.getOrdersPage(
+				null, null, Pagination.of(1, 2),
+				entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(order2, order1),
+				(List<Order>)descPage.getItems());
+		}
+	}
+
+	protected Order testGetOrdersPage_addOrder(Order order) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -502,6 +747,9 @@ public abstract class BaseOrderResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
+
 	protected Order testGraphQLOrder_addOrder() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
@@ -562,6 +810,14 @@ public abstract class BaseOrderResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("account", additionalAssertFieldName)) {
+				if (order.getAccount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"accountExternalReferenceCode",
 					additionalAssertFieldName)) {
@@ -575,6 +831,14 @@ public abstract class BaseOrderResourceTestCase {
 
 			if (Objects.equals("accountId", additionalAssertFieldName)) {
 				if (order.getAccountId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (order.getActions() == null) {
 					valid = false;
 				}
 
@@ -599,6 +863,25 @@ public abstract class BaseOrderResourceTestCase {
 
 			if (Objects.equals("billingAddressId", additionalAssertFieldName)) {
 				if (order.getBillingAddressId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("channel", additionalAssertFieldName)) {
+				if (order.getChannel() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"channelExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (order.getChannelExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -697,6 +980,14 @@ public abstract class BaseOrderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("orderStatusInfo", additionalAssertFieldName)) {
+				if (order.getOrderStatusInfo() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("paymentMethod", additionalAssertFieldName)) {
 				if (order.getPaymentMethod() == null) {
 					valid = false;
@@ -707,6 +998,16 @@ public abstract class BaseOrderResourceTestCase {
 
 			if (Objects.equals("paymentStatus", additionalAssertFieldName)) {
 				if (order.getPaymentStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"paymentStatusInfo", additionalAssertFieldName)) {
+
+				if (order.getPaymentStatusInfo() == null) {
 					valid = false;
 				}
 
@@ -820,10 +1121,36 @@ public abstract class BaseOrderResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"shippingDiscountPercentageLevel1WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (order.getShippingDiscountPercentageLevel1WithTaxAmount() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"shippingDiscountPercentageLevel2",
 					additionalAssertFieldName)) {
 
 				if (order.getShippingDiscountPercentageLevel2() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"shippingDiscountPercentageLevel2WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (order.getShippingDiscountPercentageLevel2WithTaxAmount() ==
+						null) {
+
 					valid = false;
 				}
 
@@ -842,10 +1169,58 @@ public abstract class BaseOrderResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"shippingDiscountPercentageLevel3WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (order.getShippingDiscountPercentageLevel3WithTaxAmount() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"shippingDiscountPercentageLevel4",
 					additionalAssertFieldName)) {
 
 				if (order.getShippingDiscountPercentageLevel4() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"shippingDiscountPercentageLevel4WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (order.getShippingDiscountPercentageLevel4WithTaxAmount() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"shippingDiscountWithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (order.getShippingDiscountWithTaxAmount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"shippingDiscountWithTaxAmountFormatted",
+					additionalAssertFieldName)) {
+
+				if (order.getShippingDiscountWithTaxAmountFormatted() == null) {
 					valid = false;
 				}
 
@@ -862,6 +1237,37 @@ public abstract class BaseOrderResourceTestCase {
 
 			if (Objects.equals("shippingOption", additionalAssertFieldName)) {
 				if (order.getShippingOption() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"shippingWithTaxAmount", additionalAssertFieldName)) {
+
+				if (order.getShippingWithTaxAmount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"shippingWithTaxAmountFormatted",
+					additionalAssertFieldName)) {
+
+				if (order.getShippingWithTaxAmountFormatted() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"shippingWithTaxAmountValue", additionalAssertFieldName)) {
+
+				if (order.getShippingWithTaxAmountValue() == null) {
 					valid = false;
 				}
 
@@ -917,10 +1323,36 @@ public abstract class BaseOrderResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"subtotalDiscountPercentageLevel1WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (order.getSubtotalDiscountPercentageLevel1WithTaxAmount() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"subtotalDiscountPercentageLevel2",
 					additionalAssertFieldName)) {
 
 				if (order.getSubtotalDiscountPercentageLevel2() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"subtotalDiscountPercentageLevel2WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (order.getSubtotalDiscountPercentageLevel2WithTaxAmount() ==
+						null) {
+
 					valid = false;
 				}
 
@@ -939,6 +1371,19 @@ public abstract class BaseOrderResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"subtotalDiscountPercentageLevel3WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (order.getSubtotalDiscountPercentageLevel3WithTaxAmount() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"subtotalDiscountPercentageLevel4",
 					additionalAssertFieldName)) {
 
@@ -950,9 +1395,75 @@ public abstract class BaseOrderResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"subtotalDiscountPercentageLevel4WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (order.getSubtotalDiscountPercentageLevel4WithTaxAmount() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"subtotalDiscountWithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (order.getSubtotalDiscountWithTaxAmount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"subtotalDiscountWithTaxAmountFormatted",
+					additionalAssertFieldName)) {
+
+				if (order.getSubtotalDiscountWithTaxAmountFormatted() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"subtotalFormatted", additionalAssertFieldName)) {
 
 				if (order.getSubtotalFormatted() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"subtotalWithTaxAmount", additionalAssertFieldName)) {
+
+				if (order.getSubtotalWithTaxAmount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"subtotalWithTaxAmountFormatted",
+					additionalAssertFieldName)) {
+
+				if (order.getSubtotalWithTaxAmountFormatted() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"subtotalWithTaxAmountValue", additionalAssertFieldName)) {
+
+				if (order.getSubtotalWithTaxAmountValue() == null) {
 					valid = false;
 				}
 
@@ -1026,10 +1537,36 @@ public abstract class BaseOrderResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"totalDiscountPercentageLevel1WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (order.getTotalDiscountPercentageLevel1WithTaxAmount() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"totalDiscountPercentageLevel2",
 					additionalAssertFieldName)) {
 
 				if (order.getTotalDiscountPercentageLevel2() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"totalDiscountPercentageLevel2WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (order.getTotalDiscountPercentageLevel2WithTaxAmount() ==
+						null) {
+
 					valid = false;
 				}
 
@@ -1048,10 +1585,57 @@ public abstract class BaseOrderResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"totalDiscountPercentageLevel3WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (order.getTotalDiscountPercentageLevel3WithTaxAmount() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"totalDiscountPercentageLevel4",
 					additionalAssertFieldName)) {
 
 				if (order.getTotalDiscountPercentageLevel4() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"totalDiscountPercentageLevel4WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (order.getTotalDiscountPercentageLevel4WithTaxAmount() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"totalDiscountWithTaxAmount", additionalAssertFieldName)) {
+
+				if (order.getTotalDiscountWithTaxAmount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"totalDiscountWithTaxAmountFormatted",
+					additionalAssertFieldName)) {
+
+				if (order.getTotalDiscountWithTaxAmountFormatted() == null) {
 					valid = false;
 				}
 
@@ -1066,8 +1650,48 @@ public abstract class BaseOrderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"totalWithTaxAmount", additionalAssertFieldName)) {
+
+				if (order.getTotalWithTaxAmount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"totalWithTaxAmountFormatted", additionalAssertFieldName)) {
+
+				if (order.getTotalWithTaxAmountFormatted() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"totalWithTaxAmountValue", additionalAssertFieldName)) {
+
+				if (order.getTotalWithTaxAmountValue() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("transactionId", additionalAssertFieldName)) {
 				if (order.getTransactionId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"workflowStatusInfo", additionalAssertFieldName)) {
+
+				if (order.getWorkflowStatusInfo() == null) {
 					valid = false;
 				}
 
@@ -1164,6 +1788,16 @@ public abstract class BaseOrderResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("account", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						order1.getAccount(), order2.getAccount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"accountExternalReferenceCode",
 					additionalAssertFieldName)) {
@@ -1181,6 +1815,16 @@ public abstract class BaseOrderResourceTestCase {
 			if (Objects.equals("accountId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						order1.getAccountId(), order2.getAccountId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)order1.getActions(), (Map)order2.getActions())) {
 
 					return false;
 				}
@@ -1213,6 +1857,30 @@ public abstract class BaseOrderResourceTestCase {
 				if (!Objects.deepEquals(
 						order1.getBillingAddressId(),
 						order2.getBillingAddressId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("channel", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						order1.getChannel(), order2.getChannel())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"channelExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getChannelExternalReferenceCode(),
+						order2.getChannelExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1345,6 +2013,17 @@ public abstract class BaseOrderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("orderStatusInfo", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						order1.getOrderStatusInfo(),
+						order2.getOrderStatusInfo())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("paymentMethod", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						order1.getPaymentMethod(), order2.getPaymentMethod())) {
@@ -1358,6 +2037,19 @@ public abstract class BaseOrderResourceTestCase {
 			if (Objects.equals("paymentStatus", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						order1.getPaymentStatus(), order2.getPaymentStatus())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"paymentStatusInfo", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getPaymentStatusInfo(),
+						order2.getPaymentStatusInfo())) {
 
 					return false;
 				}
@@ -1504,12 +2196,44 @@ public abstract class BaseOrderResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"shippingDiscountPercentageLevel1WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.
+							getShippingDiscountPercentageLevel1WithTaxAmount(),
+						order2.
+							getShippingDiscountPercentageLevel1WithTaxAmount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"shippingDiscountPercentageLevel2",
 					additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
 						order1.getShippingDiscountPercentageLevel2(),
 						order2.getShippingDiscountPercentageLevel2())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"shippingDiscountPercentageLevel2WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.
+							getShippingDiscountPercentageLevel2WithTaxAmount(),
+						order2.
+							getShippingDiscountPercentageLevel2WithTaxAmount())) {
 
 					return false;
 				}
@@ -1532,12 +2256,72 @@ public abstract class BaseOrderResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"shippingDiscountPercentageLevel3WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.
+							getShippingDiscountPercentageLevel3WithTaxAmount(),
+						order2.
+							getShippingDiscountPercentageLevel3WithTaxAmount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"shippingDiscountPercentageLevel4",
 					additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
 						order1.getShippingDiscountPercentageLevel4(),
 						order2.getShippingDiscountPercentageLevel4())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"shippingDiscountPercentageLevel4WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.
+							getShippingDiscountPercentageLevel4WithTaxAmount(),
+						order2.
+							getShippingDiscountPercentageLevel4WithTaxAmount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"shippingDiscountWithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getShippingDiscountWithTaxAmount(),
+						order2.getShippingDiscountWithTaxAmount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"shippingDiscountWithTaxAmountFormatted",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getShippingDiscountWithTaxAmountFormatted(),
+						order2.getShippingDiscountWithTaxAmountFormatted())) {
 
 					return false;
 				}
@@ -1560,6 +2344,46 @@ public abstract class BaseOrderResourceTestCase {
 				if (!Objects.deepEquals(
 						order1.getShippingOption(),
 						order2.getShippingOption())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"shippingWithTaxAmount", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getShippingWithTaxAmount(),
+						order2.getShippingWithTaxAmount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"shippingWithTaxAmountFormatted",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getShippingWithTaxAmountFormatted(),
+						order2.getShippingWithTaxAmountFormatted())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"shippingWithTaxAmountValue", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getShippingWithTaxAmountValue(),
+						order2.getShippingWithTaxAmountValue())) {
 
 					return false;
 				}
@@ -1630,12 +2454,44 @@ public abstract class BaseOrderResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"subtotalDiscountPercentageLevel1WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.
+							getSubtotalDiscountPercentageLevel1WithTaxAmount(),
+						order2.
+							getSubtotalDiscountPercentageLevel1WithTaxAmount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"subtotalDiscountPercentageLevel2",
 					additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
 						order1.getSubtotalDiscountPercentageLevel2(),
 						order2.getSubtotalDiscountPercentageLevel2())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"subtotalDiscountPercentageLevel2WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.
+							getSubtotalDiscountPercentageLevel2WithTaxAmount(),
+						order2.
+							getSubtotalDiscountPercentageLevel2WithTaxAmount())) {
 
 					return false;
 				}
@@ -1658,6 +2514,22 @@ public abstract class BaseOrderResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"subtotalDiscountPercentageLevel3WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.
+							getSubtotalDiscountPercentageLevel3WithTaxAmount(),
+						order2.
+							getSubtotalDiscountPercentageLevel3WithTaxAmount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"subtotalDiscountPercentageLevel4",
 					additionalAssertFieldName)) {
 
@@ -1672,11 +2544,95 @@ public abstract class BaseOrderResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"subtotalDiscountPercentageLevel4WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.
+							getSubtotalDiscountPercentageLevel4WithTaxAmount(),
+						order2.
+							getSubtotalDiscountPercentageLevel4WithTaxAmount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"subtotalDiscountWithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getSubtotalDiscountWithTaxAmount(),
+						order2.getSubtotalDiscountWithTaxAmount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"subtotalDiscountWithTaxAmountFormatted",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getSubtotalDiscountWithTaxAmountFormatted(),
+						order2.getSubtotalDiscountWithTaxAmountFormatted())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"subtotalFormatted", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
 						order1.getSubtotalFormatted(),
 						order2.getSubtotalFormatted())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"subtotalWithTaxAmount", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getSubtotalWithTaxAmount(),
+						order2.getSubtotalWithTaxAmount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"subtotalWithTaxAmountFormatted",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getSubtotalWithTaxAmountFormatted(),
+						order2.getSubtotalWithTaxAmountFormatted())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"subtotalWithTaxAmountValue", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getSubtotalWithTaxAmountValue(),
+						order2.getSubtotalWithTaxAmountValue())) {
 
 					return false;
 				}
@@ -1767,12 +2723,42 @@ public abstract class BaseOrderResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"totalDiscountPercentageLevel1WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getTotalDiscountPercentageLevel1WithTaxAmount(),
+						order2.
+							getTotalDiscountPercentageLevel1WithTaxAmount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"totalDiscountPercentageLevel2",
 					additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
 						order1.getTotalDiscountPercentageLevel2(),
 						order2.getTotalDiscountPercentageLevel2())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"totalDiscountPercentageLevel2WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getTotalDiscountPercentageLevel2WithTaxAmount(),
+						order2.
+							getTotalDiscountPercentageLevel2WithTaxAmount())) {
 
 					return false;
 				}
@@ -1795,12 +2781,69 @@ public abstract class BaseOrderResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"totalDiscountPercentageLevel3WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getTotalDiscountPercentageLevel3WithTaxAmount(),
+						order2.
+							getTotalDiscountPercentageLevel3WithTaxAmount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"totalDiscountPercentageLevel4",
 					additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
 						order1.getTotalDiscountPercentageLevel4(),
 						order2.getTotalDiscountPercentageLevel4())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"totalDiscountPercentageLevel4WithTaxAmount",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getTotalDiscountPercentageLevel4WithTaxAmount(),
+						order2.
+							getTotalDiscountPercentageLevel4WithTaxAmount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"totalDiscountWithTaxAmount", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getTotalDiscountWithTaxAmount(),
+						order2.getTotalDiscountWithTaxAmount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"totalDiscountWithTaxAmountFormatted",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getTotalDiscountWithTaxAmountFormatted(),
+						order2.getTotalDiscountWithTaxAmountFormatted())) {
 
 					return false;
 				}
@@ -1819,9 +2862,61 @@ public abstract class BaseOrderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"totalWithTaxAmount", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getTotalWithTaxAmount(),
+						order2.getTotalWithTaxAmount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"totalWithTaxAmountFormatted", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getTotalWithTaxAmountFormatted(),
+						order2.getTotalWithTaxAmountFormatted())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"totalWithTaxAmountValue", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getTotalWithTaxAmountValue(),
+						order2.getTotalWithTaxAmountValue())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("transactionId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						order1.getTransactionId(), order2.getTransactionId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"workflowStatusInfo", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						order1.getWorkflowStatusInfo(),
+						order2.getWorkflowStatusInfo())) {
 
 					return false;
 				}
@@ -1911,6 +3006,11 @@ public abstract class BaseOrderResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("account")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("accountExternalReferenceCode")) {
 			sb.append("'");
 			sb.append(String.valueOf(order.getAccountExternalReferenceCode()));
@@ -1920,6 +3020,11 @@ public abstract class BaseOrderResourceTestCase {
 		}
 
 		if (entityFieldName.equals("accountId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("actions")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1940,6 +3045,19 @@ public abstract class BaseOrderResourceTestCase {
 		if (entityFieldName.equals("billingAddressId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("channel")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("channelExternalReferenceCode")) {
+			sb.append("'");
+			sb.append(String.valueOf(order.getChannelExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("channelId")) {
@@ -2117,6 +3235,11 @@ public abstract class BaseOrderResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("orderStatusInfo")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("paymentMethod")) {
 			sb.append("'");
 			sb.append(String.valueOf(order.getPaymentMethod()));
@@ -2126,6 +3249,11 @@ public abstract class BaseOrderResourceTestCase {
 		}
 
 		if (entityFieldName.equals("paymentStatus")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("paymentStatusInfo")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -2226,7 +3354,21 @@ public abstract class BaseOrderResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals(
+				"shippingDiscountPercentageLevel1WithTaxAmount")) {
+
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("shippingDiscountPercentageLevel2")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals(
+				"shippingDiscountPercentageLevel2WithTaxAmount")) {
+
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -2236,9 +3378,38 @@ public abstract class BaseOrderResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals(
+				"shippingDiscountPercentageLevel3WithTaxAmount")) {
+
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("shippingDiscountPercentageLevel4")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals(
+				"shippingDiscountPercentageLevel4WithTaxAmount")) {
+
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("shippingDiscountWithTaxAmount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("shippingDiscountWithTaxAmountFormatted")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(
+					order.getShippingDiscountWithTaxAmountFormatted()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("shippingMethod")) {
@@ -2255,6 +3426,25 @@ public abstract class BaseOrderResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("shippingWithTaxAmount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("shippingWithTaxAmountFormatted")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(order.getShippingWithTaxAmountFormatted()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("shippingWithTaxAmountValue")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("subtotal")) {
@@ -2286,7 +3476,21 @@ public abstract class BaseOrderResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals(
+				"subtotalDiscountPercentageLevel1WithTaxAmount")) {
+
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("subtotalDiscountPercentageLevel2")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals(
+				"subtotalDiscountPercentageLevel2WithTaxAmount")) {
+
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -2296,9 +3500,38 @@ public abstract class BaseOrderResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals(
+				"subtotalDiscountPercentageLevel3WithTaxAmount")) {
+
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("subtotalDiscountPercentageLevel4")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals(
+				"subtotalDiscountPercentageLevel4WithTaxAmount")) {
+
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("subtotalDiscountWithTaxAmount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("subtotalDiscountWithTaxAmountFormatted")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(
+					order.getSubtotalDiscountWithTaxAmountFormatted()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("subtotalFormatted")) {
@@ -2307,6 +3540,25 @@ public abstract class BaseOrderResourceTestCase {
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("subtotalWithTaxAmount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("subtotalWithTaxAmountFormatted")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(order.getSubtotalWithTaxAmountFormatted()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("subtotalWithTaxAmountValue")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("taxAmount")) {
@@ -2350,7 +3602,21 @@ public abstract class BaseOrderResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals(
+				"totalDiscountPercentageLevel1WithTaxAmount")) {
+
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("totalDiscountPercentageLevel2")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals(
+				"totalDiscountPercentageLevel2WithTaxAmount")) {
+
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -2360,9 +3626,37 @@ public abstract class BaseOrderResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals(
+				"totalDiscountPercentageLevel3WithTaxAmount")) {
+
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("totalDiscountPercentageLevel4")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals(
+				"totalDiscountPercentageLevel4WithTaxAmount")) {
+
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("totalDiscountWithTaxAmount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("totalDiscountWithTaxAmountFormatted")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(order.getTotalDiscountWithTaxAmountFormatted()));
+			sb.append("'");
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("totalFormatted")) {
@@ -2373,12 +3667,35 @@ public abstract class BaseOrderResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("totalWithTaxAmount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("totalWithTaxAmountFormatted")) {
+			sb.append("'");
+			sb.append(String.valueOf(order.getTotalWithTaxAmountFormatted()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("totalWithTaxAmountValue")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("transactionId")) {
 			sb.append("'");
 			sb.append(String.valueOf(order.getTransactionId()));
 			sb.append("'");
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("workflowStatusInfo")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(
@@ -2431,6 +3748,8 @@ public abstract class BaseOrderResourceTestCase {
 				advanceStatus = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				billingAddressId = RandomTestUtil.randomLong();
+				channelExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				channelId = RandomTestUtil.randomLong();
 				couponCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
@@ -2461,30 +3780,58 @@ public abstract class BaseOrderResourceTestCase {
 					RandomTestUtil.randomString());
 				shippingDiscountPercentageLevel1 =
 					RandomTestUtil.randomDouble();
+				shippingDiscountPercentageLevel1WithTaxAmount =
+					RandomTestUtil.randomDouble();
 				shippingDiscountPercentageLevel2 =
+					RandomTestUtil.randomDouble();
+				shippingDiscountPercentageLevel2WithTaxAmount =
 					RandomTestUtil.randomDouble();
 				shippingDiscountPercentageLevel3 =
 					RandomTestUtil.randomDouble();
+				shippingDiscountPercentageLevel3WithTaxAmount =
+					RandomTestUtil.randomDouble();
 				shippingDiscountPercentageLevel4 =
 					RandomTestUtil.randomDouble();
+				shippingDiscountPercentageLevel4WithTaxAmount =
+					RandomTestUtil.randomDouble();
+				shippingDiscountWithTaxAmount = RandomTestUtil.randomDouble();
+				shippingDiscountWithTaxAmountFormatted = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				shippingMethod = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				shippingOption = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				shippingWithTaxAmountFormatted = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				shippingWithTaxAmountValue = RandomTestUtil.randomDouble();
 				subtotalAmount = RandomTestUtil.randomDouble();
 				subtotalDiscountAmount = RandomTestUtil.randomDouble();
 				subtotalDiscountAmountFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				subtotalDiscountPercentageLevel1 =
 					RandomTestUtil.randomDouble();
+				subtotalDiscountPercentageLevel1WithTaxAmount =
+					RandomTestUtil.randomDouble();
 				subtotalDiscountPercentageLevel2 =
+					RandomTestUtil.randomDouble();
+				subtotalDiscountPercentageLevel2WithTaxAmount =
 					RandomTestUtil.randomDouble();
 				subtotalDiscountPercentageLevel3 =
 					RandomTestUtil.randomDouble();
+				subtotalDiscountPercentageLevel3WithTaxAmount =
+					RandomTestUtil.randomDouble();
 				subtotalDiscountPercentageLevel4 =
 					RandomTestUtil.randomDouble();
+				subtotalDiscountPercentageLevel4WithTaxAmount =
+					RandomTestUtil.randomDouble();
+				subtotalDiscountWithTaxAmount = RandomTestUtil.randomDouble();
+				subtotalDiscountWithTaxAmountFormatted = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				subtotalFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				subtotalWithTaxAmountFormatted = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				subtotalWithTaxAmountValue = RandomTestUtil.randomDouble();
 				taxAmount = RandomTestUtil.randomDouble();
 				taxAmountFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
@@ -2493,11 +3840,25 @@ public abstract class BaseOrderResourceTestCase {
 				totalDiscountAmountFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				totalDiscountPercentageLevel1 = RandomTestUtil.randomDouble();
+				totalDiscountPercentageLevel1WithTaxAmount =
+					RandomTestUtil.randomDouble();
 				totalDiscountPercentageLevel2 = RandomTestUtil.randomDouble();
+				totalDiscountPercentageLevel2WithTaxAmount =
+					RandomTestUtil.randomDouble();
 				totalDiscountPercentageLevel3 = RandomTestUtil.randomDouble();
+				totalDiscountPercentageLevel3WithTaxAmount =
+					RandomTestUtil.randomDouble();
 				totalDiscountPercentageLevel4 = RandomTestUtil.randomDouble();
+				totalDiscountPercentageLevel4WithTaxAmount =
+					RandomTestUtil.randomDouble();
+				totalDiscountWithTaxAmount = RandomTestUtil.randomDouble();
+				totalDiscountWithTaxAmountFormatted = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				totalFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				totalWithTaxAmountFormatted = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				totalWithTaxAmountValue = RandomTestUtil.randomDouble();
 				transactionId = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 			}

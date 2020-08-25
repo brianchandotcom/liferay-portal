@@ -117,6 +117,15 @@ public class CommercePriceModifierRelLocalServiceImpl
 	}
 
 	@Override
+	public CommercePriceModifierRel fetchCommercePriceModifierRel(
+		long commercePriceModifierId, String className, long classPK) {
+
+		return commercePriceModifierRelPersistence.fetchByCPM_CN_CPK(
+			commercePriceModifierId,
+			classNameLocalService.getClassNameId(className), classPK);
+	}
+
+	@Override
 	public long[] getClassPKs(long commercePriceModifierId, String className) {
 		return ListUtil.toLongArray(
 			commercePriceModifierRelPersistence.findByCPM_CN(

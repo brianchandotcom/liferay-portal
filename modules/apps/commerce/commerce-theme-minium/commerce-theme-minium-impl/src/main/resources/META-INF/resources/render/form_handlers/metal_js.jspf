@@ -155,19 +155,14 @@
 		document.querySelector('[data-text-cp-instance-subscription-info]').innerHTML = productData.subscriptionInfo || '';
 		document.querySelector('[data-text-cp-instance-delivery-subscription-info]').innerHTML = productData.deliverySubscriptionInfo || '';
 
-		var priceElement = document.querySelector('[data-text-cp-instance-price]');
-
-		if (productData.promoPrice != null) {
-			priceElement.innerHTML =
-			'<span class="price-value price-value-promo">' + productData.promoPrice + '</span>' +
-			'<span class="price-value price-value-inactive">' + productData.price + '</span>';
-		}
-		else if (productData.price != null) {
-			priceElement.innerHTML = '<span class="price-value">' + productData.price + '</span>';
-		}
-		else {
-			priceElement.innerHTML = '';
-		}
+		Liferay.fire(
+			"priceUpdated",
+			{
+				displayDiscountLevels: response.displayDiscountLevels,
+				id: '<%= "productDetail_" + cpCatalogEntry.getCPDefinitionId() %>',
+				prices: response.prices
+			}
+		);
 	}
 
 	function updateView(productsData) {

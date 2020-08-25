@@ -53,6 +53,16 @@ public class CommercePriceModifierRelServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.pricing.model.CommercePriceModifierRel
+			fetchCommercePriceModifierRel(
+				long commercePriceModifierId, String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePriceModifierRelService.fetchCommercePriceModifierRel(
+			commercePriceModifierId, className, classPK);
+	}
+
+	@Override
 	public long[] getClassPKs(long commercePriceModifierRelId, String className)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

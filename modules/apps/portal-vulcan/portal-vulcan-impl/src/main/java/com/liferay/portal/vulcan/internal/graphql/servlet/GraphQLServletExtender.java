@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.ExpressionConvert;
@@ -47,6 +48,7 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.configuration.VulcanConfiguration;
+import com.liferay.portal.vulcan.internal.configuration.util.ConfigurationUtil;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.ContextProviderUtil;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
@@ -463,22 +465,28 @@ public class GraphQLServletExtender {
 
 	private void _collectObjectFields(
 		GraphQLObjectType.Builder builder,
+		Map<String, Configuration> configurations,
 		Function<ServletData, Object> function,
 		ProcessingElementsContainer processingElementsContainer,
 		List<ServletData> servletDatas) {
 
 		Stream<ServletData> stream = servletDatas.stream();
 
-		Map<String, Optional<Method>> methods = stream.map(
-			function
-		).map(
-			Object::getClass
-		).map(
-			Class::getMethods
-		).flatMap(
-			Arrays::stream
-		).filter(
-			method -> Boolean.TRUE.equals(_getGraphQLFieldValue(method))
+		Map<String, Optional<Method>> methods = stream.flatMap(
+			servletData -> Stream.of(
+				function.apply(servletData)
+			).filter(
+				Objects::nonNull
+			).map(
+				Object::getClass
+			).map(
+				Class::getMethods
+			).flatMap(
+				Arrays::stream
+			).filter(
+				method -> _isMethodEnabled(
+					configurations, method, servletData.getPath())
+			)
 		).collect(
 			Collectors.groupingBy(
 				Method::getName,
@@ -948,12 +956,15 @@ public class GraphQLServletExtender {
 
 			graphQLObjectTypeBuilder.name("query");
 
+			Map<String, Configuration> configurations =
+				ConfigurationUtil.getConfigurations(_configurationAdmin);
+
 			_collectObjectFields(
-				mutationBuilder, ServletData::getMutation,
+				mutationBuilder, configurations, ServletData::getMutation,
 				processingElementsContainer, servletDatas);
 
 			_collectObjectFields(
-				graphQLObjectTypeBuilder, ServletData::getQuery,
+				graphQLObjectTypeBuilder, configurations, ServletData::getQuery,
 				processingElementsContainer, servletDatas);
 
 			_registerInterfaces(
@@ -1106,6 +1117,31 @@ public class GraphQLServletExtender {
 		return true;
 	}
 
+	private boolean _isMethodEnabled(
+		Map<String, Configuration> configurations, Method method, String path) {
+
+		String substring = path.substring(0, path.indexOf("-graphql"));
+
+		if (configurations.containsKey(substring)) {
+			Configuration configuration = configurations.get(substring);
+
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
+
+			String excludedOperationIds = GetterUtil.getString(
+				properties.get("excludedOperationIds"));
+
+			Set<String> excludedOperationIdsList = SetUtil.fromArray(
+				excludedOperationIds.split(","));
+
+			if (excludedOperationIdsList.contains(method.getName())) {
+				return false;
+			}
+		}
+
+		return Boolean.TRUE.equals(_getGraphQLFieldValue(method));
+	}
+
 	private void _registerInterfaces(
 		ProcessingElementsContainer processingElementsContainer,
 		GraphQLObjectType.Builder graphQLObjectTypeBuilder,
@@ -1185,7 +1221,9 @@ public class GraphQLServletExtender {
 
 			String typeName = graphQLOutputType.getName();
 
-			if ((typeName != null) && typeName.equals("Object")) {
+			if ((typeName != null) && typeName.equals("Object") &&
+				StringUtil.endsWith(graphQLFieldDefinition.getName(), "Id")) {
+
 				Class<? extends GraphQLFieldDefinition> fieldClass =
 					graphQLFieldDefinition.getClass();
 
@@ -1560,12 +1598,22 @@ public class GraphQLServletExtender {
 				DataFetchingEnvironmentImpl.newDataFetchingEnvironment(
 					dataFetchingEnvironment);
 
-			Method getIdMethod = clazz.getMethod("getId");
+			Method method = clazz.getMethod("getId");
+
+			Method[] methods = clazz.getMethods();
+
+			for (Method existingMethod : methods) {
+				if (StringUtil.equals(
+						existingMethod.getName(), "getContentId")) {
+
+					method = existingMethod;
+				}
+			}
 
 			return dataFetcher.get(
 				dataFetchingEnvironmentBuilder.arguments(
 					Collections.singletonMap(
-						fieldName + "Id", getIdMethod.invoke(source))
+						fieldName + "Id", method.invoke(source))
 				).build());
 		}
 
@@ -1687,7 +1735,7 @@ public class GraphQLServletExtender {
 				graphQLInputType.getName());
 		}
 
-		private Method _method;
+		private final Method _method;
 		private final ProcessingElementsContainer _processingElementsContainer;
 		private final TypeFunction _typeFunction;
 
@@ -1762,8 +1810,10 @@ public class GraphQLServletExtender {
 			GraphqlErrorBuilder graphqlErrorBuilder =
 				GraphqlErrorBuilder.newError();
 
+			String message = graphQLError.getMessage();
+
 			return graphqlErrorBuilder.message(
-				graphQLError.getMessage()
+				message.replace("%", "")
 			).extensions(
 				HashMapBuilder.put(
 					"code", (Object)status.getReasonPhrase()

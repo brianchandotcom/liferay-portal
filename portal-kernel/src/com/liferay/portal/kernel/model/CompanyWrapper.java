@@ -640,16 +640,16 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CompanyWrapper)) {
+		if (!(object instanceof CompanyWrapper)) {
 			return false;
 		}
 
-		CompanyWrapper companyWrapper = (CompanyWrapper)obj;
+		CompanyWrapper companyWrapper = (CompanyWrapper)object;
 
 		if (Objects.equals(_company, companyWrapper._company)) {
 			return true;

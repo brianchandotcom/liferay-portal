@@ -31,10 +31,20 @@ import java.util.Objects;
 /**
  * @author Marco Leo
  * @author Andrea Di Giorgi
+ * @author Igor Beslic
  */
 public class CPDefinitionOptionRelImpl extends CPDefinitionOptionRelBaseImpl {
 
 	public CPDefinitionOptionRelImpl() {
+	}
+
+	@Override
+	public CPDefinitionOptionValueRel
+		fetchPreselectedCPDefinitionOptionValueRel() {
+
+		return CPDefinitionOptionValueRelLocalServiceUtil.
+			fetchPreselectedCPDefinitionOptionValueRel(
+				getCPDefinitionOptionRelId());
 	}
 
 	@Override

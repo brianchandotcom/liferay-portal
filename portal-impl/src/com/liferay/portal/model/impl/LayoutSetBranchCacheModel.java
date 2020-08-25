@@ -37,17 +37,17 @@ public class LayoutSetBranchCacheModel
 	implements CacheModel<LayoutSetBranch>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof LayoutSetBranchCacheModel)) {
+		if (!(object instanceof LayoutSetBranchCacheModel)) {
 			return false;
 		}
 
 		LayoutSetBranchCacheModel layoutSetBranchCacheModel =
-			(LayoutSetBranchCacheModel)obj;
+			(LayoutSetBranchCacheModel)object;
 
 		if ((layoutSetBranchId ==
 				layoutSetBranchCacheModel.layoutSetBranchId) &&

@@ -15,8 +15,10 @@
 package com.liferay.portal.util;
 
 import com.liferay.layouts.admin.kernel.model.LayoutTypePortletConstants;
+import com.liferay.layouts.admin.kernel.util.Sitemap;
 import com.liferay.layouts.admin.kernel.util.SitemapURLProvider;
 import com.liferay.layouts.admin.kernel.util.SitemapUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -78,9 +80,21 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 				continue;
 			}
 
-			List<Layout> layouts = LayoutServiceUtil.getLayouts(
+			int start = QueryUtil.ALL_POS;
+			int end = QueryUtil.ALL_POS;
+
+			int count = LayoutServiceUtil.getLayoutsCount(
 				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 				entry.getKey());
+
+			if (count > Sitemap.MAXIMUM_ENTRIES) {
+				start = count - Sitemap.MAXIMUM_ENTRIES;
+				end = count;
+			}
+
+			List<Layout> layouts = LayoutServiceUtil.getLayouts(
+				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+				entry.getKey(), start, end);
 
 			for (Layout layout : layouts) {
 				visitLayout(element, layout, themeDisplay);

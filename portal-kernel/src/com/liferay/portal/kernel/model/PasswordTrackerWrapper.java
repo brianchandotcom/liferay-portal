@@ -365,17 +365,17 @@ public class PasswordTrackerWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof PasswordTrackerWrapper)) {
+		if (!(object instanceof PasswordTrackerWrapper)) {
 			return false;
 		}
 
 		PasswordTrackerWrapper passwordTrackerWrapper =
-			(PasswordTrackerWrapper)obj;
+			(PasswordTrackerWrapper)object;
 
 		if (Objects.equals(
 				_passwordTracker, passwordTrackerWrapper._passwordTracker)) {

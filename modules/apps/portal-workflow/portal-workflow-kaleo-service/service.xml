@@ -262,6 +262,11 @@
 			<finder-column name="className" />
 			<finder-column name="classPK" />
 		</finder>
+		<finder name="KII_C_U" return-type="KaleoInstance">
+			<finder-column name="kaleoInstanceId" />
+			<finder-column name="companyId" />
+			<finder-column name="userId" />
+		</finder>
 		<finder name="C_KDN_KDV_CD" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="kaleoDefinitionName" />

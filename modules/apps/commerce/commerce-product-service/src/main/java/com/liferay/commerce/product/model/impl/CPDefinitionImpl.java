@@ -31,14 +31,15 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalServiceUti
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalServiceUtil;
-import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalServiceUtil;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.commerce.product.service.CPTaxCategoryLocalServiceUtil;
 import com.liferay.commerce.product.service.CProductLocalServiceUtil;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -366,10 +367,19 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	public String getURL(String languageId) {
 		long classNameId = PortalUtil.getClassNameId(CProduct.class);
 
+		FriendlyURLEntry friendlyURLEntry = null;
+
+		try {
+			friendlyURLEntry =
+				FriendlyURLEntryLocalServiceUtil.getMainFriendlyURLEntry(
+					classNameId, getCProductId());
+		}
+		catch (Exception e) {
+			return StringPool.BLANK;
+		}
+
 		Map<String, String> languageIdToUrlTitleMap =
-			CPFriendlyURLEntryLocalServiceUtil.getLanguageIdToUrlTitleMap(
-				GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
-				getCProductId());
+			friendlyURLEntry.getLanguageIdToUrlTitleMap();
 
 		return languageIdToUrlTitleMap.get(languageId);
 	}

@@ -545,17 +545,17 @@ public class FragmentCollectionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof FragmentCollectionWrapper)) {
+		if (!(object instanceof FragmentCollectionWrapper)) {
 			return false;
 		}
 
 		FragmentCollectionWrapper fragmentCollectionWrapper =
-			(FragmentCollectionWrapper)obj;
+			(FragmentCollectionWrapper)object;
 
 		if (Objects.equals(
 				_fragmentCollection,

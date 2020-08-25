@@ -672,17 +672,17 @@ public class KaleoNotificationWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoNotificationWrapper)) {
+		if (!(object instanceof KaleoNotificationWrapper)) {
 			return false;
 		}
 
 		KaleoNotificationWrapper kaleoNotificationWrapper =
-			(KaleoNotificationWrapper)obj;
+			(KaleoNotificationWrapper)object;
 
 		if (Objects.equals(
 				_kaleoNotification,

@@ -17,7 +17,7 @@ package com.liferay.commerce.account.item.selector.web.internal.display.context;
 import com.liferay.commerce.account.item.selector.web.internal.display.context.util.CommerceAccountItemSelectorRequestHelper;
 import com.liferay.commerce.account.item.selector.web.internal.search.CommerceAccountGroupItemSelectorChecker;
 import com.liferay.commerce.account.model.CommerceAccountGroup;
-import com.liferay.commerce.account.service.CommerceAccountGroupService;
+import com.liferay.commerce.account.service.CommerceAccountGroupLocalService;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,11 +35,11 @@ import javax.servlet.http.HttpServletRequest;
 public class CommerceAccountGroupItemSelectorViewDisplayContext {
 
 	public CommerceAccountGroupItemSelectorViewDisplayContext(
-		CommerceAccountGroupService commerceAccountGroupService,
+		CommerceAccountGroupLocalService commerceAccountGroupLocalService,
 		HttpServletRequest httpServletRequest, PortletURL portletURL,
 		String itemSelectedEventName) {
 
-		_commerceAccountGroupService = commerceAccountGroupService;
+		_commerceAccountGroupLocalService = commerceAccountGroupLocalService;
 		_portletURL = portletURL;
 		_itemSelectedEventName = itemSelectedEventName;
 
@@ -97,12 +97,12 @@ public class CommerceAccountGroupItemSelectorViewDisplayContext {
 		_searchContainer.setRowChecker(rowChecker);
 
 		int total =
-			_commerceAccountGroupService.searchCommerceAccountsGroupCount(
+			_commerceAccountGroupLocalService.searchCommerceAccountsGroupCount(
 				_commerceAccountItemSelectorRequestHelper.getCompanyId(),
 				getKeywords());
 
 		List<CommerceAccountGroup> results =
-			_commerceAccountGroupService.searchCommerceAccountGroups(
+			_commerceAccountGroupLocalService.searchCommerceAccountGroups(
 				_commerceAccountItemSelectorRequestHelper.getCompanyId(),
 				getKeywords(), _searchContainer.getStart(),
 				_searchContainer.getEnd(), null);
@@ -131,7 +131,8 @@ public class CommerceAccountGroupItemSelectorViewDisplayContext {
 		return _keywords;
 	}
 
-	private final CommerceAccountGroupService _commerceAccountGroupService;
+	private final CommerceAccountGroupLocalService
+		_commerceAccountGroupLocalService;
 	private final CommerceAccountItemSelectorRequestHelper
 		_commerceAccountItemSelectorRequestHelper;
 	private final String _itemSelectedEventName;

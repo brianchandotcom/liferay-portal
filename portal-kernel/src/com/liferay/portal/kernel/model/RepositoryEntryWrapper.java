@@ -566,17 +566,17 @@ public class RepositoryEntryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof RepositoryEntryWrapper)) {
+		if (!(object instanceof RepositoryEntryWrapper)) {
 			return false;
 		}
 
 		RepositoryEntryWrapper repositoryEntryWrapper =
-			(RepositoryEntryWrapper)obj;
+			(RepositoryEntryWrapper)object;
 
 		if (Objects.equals(
 				_repositoryEntry, repositoryEntryWrapper._repositoryEntry)) {

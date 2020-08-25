@@ -1199,17 +1199,17 @@ public class CommerceShippingFixedOptionModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceShippingFixedOption)) {
+		if (!(object instanceof CommerceShippingFixedOption)) {
 			return false;
 		}
 
 		CommerceShippingFixedOption commerceShippingFixedOption =
-			(CommerceShippingFixedOption)obj;
+			(CommerceShippingFixedOption)object;
 
 		long primaryKey = commerceShippingFixedOption.getPrimaryKey();
 

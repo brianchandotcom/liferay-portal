@@ -111,6 +111,26 @@ public class CommerceChannelRelServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CommerceChannelRelSoap
+			fetchCommerceChannelRel(
+				String className, long classPK, long commerceChannelId)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.product.model.CommerceChannelRel returnValue =
+				CommerceChannelRelServiceUtil.fetchCommerceChannelRel(
+					className, classPK, commerceChannelId);
+
+			return com.liferay.commerce.product.model.CommerceChannelRelSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CommerceChannelRelSoap
 			getCommerceChannelRel(long commerceChannelRelId)
 		throws RemoteException {
 

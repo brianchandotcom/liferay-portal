@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Staging Bar Web
 Bundle-SymbolicName: com.liferay.staging.bar.web
-Bundle-Version: 2.0.28
+Bundle-Version: 2.0.29
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.staging.lang)";\

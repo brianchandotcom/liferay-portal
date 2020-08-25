@@ -412,6 +412,20 @@ public interface CommerceDiscountModel
 	public void setLimitationTimes(int limitationTimes);
 
 	/**
+	 * Returns the limitation times per account of this commerce discount.
+	 *
+	 * @return the limitation times per account of this commerce discount
+	 */
+	public int getLimitationTimesPerAccount();
+
+	/**
+	 * Sets the limitation times per account of this commerce discount.
+	 *
+	 * @param limitationTimesPerAccount the limitation times per account of this commerce discount
+	 */
+	public void setLimitationTimesPerAccount(int limitationTimesPerAccount);
+
+	/**
 	 * Returns the number of use of this commerce discount.
 	 *
 	 * @return the number of use of this commerce discount

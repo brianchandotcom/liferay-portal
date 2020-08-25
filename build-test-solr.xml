@@ -281,23 +281,6 @@ schema=schema.xml</echo>
 		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config">blacklistBundleSymbolicNames=&quot;com.liferay.portal.mobile.device.detection.fiftyonedegrees.api,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise,com.liferay.portal.mobile.device.detection.fiftyonedegrees.enterprise.test.data,com.liferay.portal.mobile.device.detection.fiftyonedegrees,com.liferay.portal.search.elasticsearch6.api,com.liferay.portal.search.elasticsearch6.impl,com.liferay.portal.search.elasticsearch6.xpack.security.impl,com.liferay.portal.search.elasticsearch6.xpack.monitoring.web,com.liferay.commerce.elasticsearch6,com.liferay.commerce.machine.learning.impl&quot;</echo>
 	</target>
 
-	<target name="prepare-solr-suite">
-		<antcall target="deploy-solr" />
-
-		<condition else="${env.TEST_BATCH_NAME}" property="test.batch.name" value="${test.batch.name}">
-			<isset property="test.batch.name" />
-		</condition>
-
-		<if>
-			<not>
-				<contains string="${test.batch.name}" substring="functional" />
-			</not>
-			<then>
-				<antcall target="start-solr" />
-			</then>
-		</if>
-	</target>
-
 	<target name="print-solr-indices">
 		<exec executable="curl" outputproperty="curl.output.solr.indices">
 			<arg line="http://localhost:8983/solr/liferay/select?q=*:*&amp;wt=json" />
@@ -312,6 +295,12 @@ schema=schema.xml</echo>
 		<echo></echo>
 		<echo>${curl.output.solr.indices}</echo>
 		<echo></echo>
+	</target>
+
+	<target name="set-up-solr">
+		<antcall target="deploy-solr" />
+
+		<antcall target="start-solr" />
 	</target>
 
 	<target name="start-solr">

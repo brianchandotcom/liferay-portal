@@ -2046,16 +2046,16 @@ public class UserWrapper implements ModelWrapper<User>, User {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof UserWrapper)) {
+		if (!(object instanceof UserWrapper)) {
 			return false;
 		}
 
-		UserWrapper userWrapper = (UserWrapper)obj;
+		UserWrapper userWrapper = (UserWrapper)object;
 
 		if (Objects.equals(_user, userWrapper._user)) {
 			return true;

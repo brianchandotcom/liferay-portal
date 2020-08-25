@@ -39,6 +39,10 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceWrapper
 	/**
 	 * Adds the commerce account group commerce account rel to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAccountGroupCommerceAccountRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceAccountGroupCommerceAccountRel the commerce account group commerce account rel
 	 * @return the commerce account group commerce account rel that was added
 	 */
@@ -109,6 +113,10 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceWrapper
 	/**
 	 * Deletes the commerce account group commerce account rel from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAccountGroupCommerceAccountRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceAccountGroupCommerceAccountRel the commerce account group commerce account rel
 	 * @return the commerce account group commerce account rel that was removed
 	 */
@@ -128,6 +136,10 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceWrapper
 
 	/**
 	 * Deletes the commerce account group commerce account rel with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAccountGroupCommerceAccountRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceAccountGroupCommerceAccountRelId the primary key of the commerce account group commerce account rel
 	 * @return the commerce account group commerce account rel that was removed
@@ -431,6 +443,10 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceWrapper
 
 	/**
 	 * Updates the commerce account group commerce account rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAccountGroupCommerceAccountRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceAccountGroupCommerceAccountRel the commerce account group commerce account rel
 	 * @return the commerce account group commerce account rel that was updated

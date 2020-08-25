@@ -235,7 +235,7 @@ public class HitsImpl implements Hits {
 			return sb.toString();
 		}
 
-		StringBundler sb = new StringBundler(2 * _docs.length + 4);
+		StringBundler sb = new StringBundler((2 * _docs.length) + 4);
 
 		sb.append(StringPool.OPEN_BRACKET);
 

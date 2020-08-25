@@ -46,7 +46,7 @@ if (selLayout != null) {
 <c:if test="<%= PortalUtil.isLayoutSitemapable(selLayout) %>">
 	<h4><liferay-ui:message key="sitemap" /></h4>
 
-	<div class='alert alert-warning layout-prototype-info-message <%= selLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>'>
+	<div class="alert alert-warning layout-prototype-info-message <%= selLayout.isLayoutPrototypeLinkActive() ? StringPool.BLANK : "hide" %>">
 		<liferay-ui:message arguments='<%= new String[] {"inherit-changes", "general"} %>' key="some-page-settings-are-unavailable-because-x-is-enabled" />
 	</div>
 

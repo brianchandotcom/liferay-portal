@@ -279,15 +279,7 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String decodePath(String path) {
-		if (Validator.isNull(path)) {
-			return path;
-		}
-
-		path = StringUtil.replace(path, CharPool.SLASH, _TEMP_SLASH);
-		path = decodeURL(path);
-		path = StringUtil.replace(path, _TEMP_SLASH, StringPool.SLASH);
-
-		return path;
+		return decodeURL(path);
 	}
 
 	@Override
@@ -375,9 +367,13 @@ public class HttpImpl implements Http {
 			return path;
 		}
 
-		path = StringUtil.replace(path, CharPool.SLASH, _TEMP_SLASH);
+		path = StringUtil.replace(
+			path, new char[] {CharPool.SLASH, CharPool.TILDE},
+			new String[] {_TEMP_SLASH, _TEMP_TILDE});
 		path = URLCodec.encodeURL(path, true);
-		path = StringUtil.replace(path, _TEMP_SLASH, StringPool.SLASH);
+		path = StringUtil.replace(
+			path, new String[] {_TEMP_SLASH, _TEMP_TILDE},
+			new String[] {StringPool.SLASH, StringPool.TILDE});
 
 		return path;
 	}
@@ -827,7 +823,7 @@ public class HttpImpl implements Http {
 			return StringPool.SLASH;
 		}
 
-		StringBundler sb = new StringBundler(parts.size() * 2 + 2);
+		StringBundler sb = new StringBundler((parts.size() * 2) + 2);
 
 		for (String part : parts) {
 			sb.append(StringPool.SLASH);
@@ -1579,7 +1575,7 @@ public class HttpImpl implements Http {
 
 		if (maxAge > 0) {
 			Date expiryDate = new Date(
-				System.currentTimeMillis() + maxAge * 1000L);
+				System.currentTimeMillis() + (maxAge * 1000L));
 
 			basicClientCookie.setExpiryDate(expiryDate);
 
@@ -2168,6 +2164,8 @@ public class HttpImpl implements Http {
 		PropsUtil.get(HttpImpl.class.getName() + ".proxy.username"));
 
 	private static final String _TEMP_SLASH = "_LIFERAY_TEMP_SLASH_";
+
+	private static final String _TEMP_TILDE = "_LIFERAY_TEMP_TILDE_";
 
 	private static final int _TIMEOUT = GetterUtil.getInteger(
 		PropsUtil.get(HttpImpl.class.getName() + ".timeout"), 5000);

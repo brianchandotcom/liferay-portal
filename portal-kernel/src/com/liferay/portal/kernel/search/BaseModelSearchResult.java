@@ -58,7 +58,7 @@ public class BaseModelSearchResult<T extends BaseModel<T>>
 			);
 		}
 
-		StringBundler sb = new StringBundler(2 * _baseModels.size() + 3);
+		StringBundler sb = new StringBundler((2 * _baseModels.size()) + 3);
 
 		sb.append("{baseModels={");
 

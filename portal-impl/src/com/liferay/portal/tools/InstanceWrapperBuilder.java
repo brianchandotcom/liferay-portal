@@ -280,7 +280,7 @@ public class InstanceWrapperBuilder {
 		}
 
 		StringBundler sb = new StringBundler(
-			actualTypeArguments.length * 2 + 3);
+			(actualTypeArguments.length * 2) + 3);
 
 		sb.append(type.getValue());
 		sb.append("<");

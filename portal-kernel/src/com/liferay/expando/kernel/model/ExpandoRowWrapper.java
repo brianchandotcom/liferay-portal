@@ -320,16 +320,16 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ExpandoRowWrapper)) {
+		if (!(object instanceof ExpandoRowWrapper)) {
 			return false;
 		}
 
-		ExpandoRowWrapper expandoRowWrapper = (ExpandoRowWrapper)obj;
+		ExpandoRowWrapper expandoRowWrapper = (ExpandoRowWrapper)object;
 
 		if (Objects.equals(_expandoRow, expandoRowWrapper._expandoRow)) {
 			return true;

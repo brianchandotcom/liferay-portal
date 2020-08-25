@@ -965,17 +965,17 @@ public class CPDefinitionGroupedEntryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionGroupedEntry)) {
+		if (!(object instanceof CPDefinitionGroupedEntry)) {
 			return false;
 		}
 
 		CPDefinitionGroupedEntry cpDefinitionGroupedEntry =
-			(CPDefinitionGroupedEntry)obj;
+			(CPDefinitionGroupedEntry)object;
 
 		long primaryKey = cpDefinitionGroupedEntry.getPrimaryKey();
 

@@ -473,17 +473,17 @@ public class BlogsStatsUserWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof BlogsStatsUserWrapper)) {
+		if (!(object instanceof BlogsStatsUserWrapper)) {
 			return false;
 		}
 
 		BlogsStatsUserWrapper blogsStatsUserWrapper =
-			(BlogsStatsUserWrapper)obj;
+			(BlogsStatsUserWrapper)object;
 
 		if (Objects.equals(
 				_blogsStatsUser, blogsStatsUserWrapper._blogsStatsUser)) {

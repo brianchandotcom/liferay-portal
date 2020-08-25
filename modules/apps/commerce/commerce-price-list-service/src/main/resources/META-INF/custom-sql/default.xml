@@ -1,6 +1,34 @@
 <?xml version="1.0"?>
 
 <custom-sql>
+	<sql id="com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder.countByCommercePricingClassId">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT CommercePriceList.commercePriceListId) AS COUNT_VALUE
+			FROM
+				CommercePriceList
+			INNER JOIN
+				CommercePriceModifier ON
+					CommercePriceList.commercePriceListId = CommercePriceModifier.commercePriceListId
+			INNER JOIN
+				CommercePriceModifierRel ON
+					CommercePriceModifier.commercePriceModifierId = CommercePriceModifierRel.commercePriceModifierId
+			WHERE
+				(CommercePriceModifierRel.classNameId = ?) AND
+				(CommercePriceModifierRel.classPK = ?) AND
+				(LOWER(CommercePriceList.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder.countByCPInstanceUuid">
+		<![CDATA[
+			SELECT
+				COUNT(CommercePriceEntry.*) AS COUNT_VALUE
+			FROM
+				CommercePriceEntry
+			WHERE
+				CommercePriceEntry.CPInstanceUuid = ?
+		]]>
+	</sql>
 	<sql id="com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder.findByExpirationDate">
 		<![CDATA[
 			SELECT
@@ -29,6 +57,34 @@
 				(CommercePriceList.status = 0)
 			ORDER BY
 				CommercePriceList.priority DESC
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder.findByCommercePricingClassId">
+		<![CDATA[
+			SELECT
+				DISTINCT CommercePriceList.*
+			FROM
+				CommercePriceList
+			INNER JOIN
+				CommercePriceModifier ON
+					CommercePriceList.commercePriceListId = CommercePriceModifier.commercePriceListId
+			INNER JOIN
+				CommercePriceModifierRel ON
+					CommercePriceModifier.commercePriceModifierId = CommercePriceModifierRel.commercePriceModifierId
+			WHERE
+				(CommercePriceModifierRel.classNameId = ?) AND
+				(CommercePriceModifierRel.classPK = ?) AND
+				(LOWER(CommercePriceList.name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder.findByCPInstanceUuid">
+		<![CDATA[
+			SELECT
+				CommercePriceEntry.*
+			FROM
+				CommercePriceEntry
+			WHERE
+				CommercePriceEntry.CPInstanceUuid = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.commerce.price.list.service.persistence.CommercePriceListFinder.findByAccountAndChannelId">

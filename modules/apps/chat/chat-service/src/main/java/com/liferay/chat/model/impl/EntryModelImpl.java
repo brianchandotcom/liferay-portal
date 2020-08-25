@@ -589,16 +589,16 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Entry)) {
+		if (!(object instanceof Entry)) {
 			return false;
 		}
 
-		Entry entry = (Entry)obj;
+		Entry entry = (Entry)object;
 
 		long primaryKey = entry.getPrimaryKey();
 

@@ -22,5 +22,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix"
 	},
-	"version": "2.0.35"
+	"version": "2.0.37"
 }

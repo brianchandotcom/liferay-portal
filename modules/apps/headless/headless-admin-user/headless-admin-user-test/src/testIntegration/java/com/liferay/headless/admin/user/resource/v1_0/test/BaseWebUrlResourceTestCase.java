@@ -107,7 +107,9 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		WebUrlResource.Builder builder = WebUrlResource.builder();
 
-		webUrlResource = builder.locale(
+		webUrlResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

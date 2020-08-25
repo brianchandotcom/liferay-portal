@@ -46,7 +46,8 @@ if (commercePriceEntry != null) {
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= commerceTierPriceEntryDisplayContext.hasManageCommercePriceListPermission() %>">
+	<c:if test="<%= commerceTierPriceEntryDisplayContext.hasPermission(commercePriceListId,
+		ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="editCommerceTierPriceEntry" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

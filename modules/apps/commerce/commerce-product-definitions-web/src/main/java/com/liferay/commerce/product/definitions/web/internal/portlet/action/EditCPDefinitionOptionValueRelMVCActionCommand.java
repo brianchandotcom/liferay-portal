@@ -89,6 +89,9 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 			else if (cmd.equals("deleteSku")) {
 				resetCPInstanceAndQuantity(actionRequest);
 			}
+			else if (cmd.equals("updatePreselected")) {
+				updatePreselected(actionRequest);
+			}
 		}
 		catch (Exception e) {
 			if (e instanceof CPDefinitionOptionValueRelCPInstanceException ||
@@ -100,7 +103,8 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 				SessionErrors.add(actionRequest, e.getClass());
 
 				actionResponse.setRenderParameter(
-					"mvcRenderCommandName", "editCPDefinitionOptionValueRel");
+					"mvcRenderCommandName",
+					"editProductDefinitionOptionValueRel");
 			}
 			else {
 				_log.error(e, e);
@@ -135,6 +139,8 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 		String key = ParamUtil.getString(actionRequest, "key");
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
+		boolean preselected = ParamUtil.getBoolean(
+			actionRequest, "preselected");
 		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "price", BigDecimal.ZERO);
 
@@ -156,7 +162,29 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 		return _cpDefinitionOptionValueRelService.
 			updateCPDefinitionOptionValueRel(
 				cpDefinitionOptionValueRelId, nameMap, priority, key,
-				cpInstanceId, quantity, price, serviceContext);
+				cpInstanceId, quantity, preselected, price, serviceContext);
+	}
+
+	protected CPDefinitionOptionValueRel updatePreselected(
+			ActionRequest actionRequest)
+		throws PortalException {
+
+		long cpDefinitionOptionValueRelId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionOptionValueRelId");
+
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+			_cpDefinitionOptionValueRelService.getCPDefinitionOptionValueRel(
+				cpDefinitionOptionValueRelId);
+
+		if (cpDefinitionOptionValueRel.isPreselected()) {
+			return _cpDefinitionOptionValueRelService.
+				updateCPDefinitionOptionValueRelPreselected(
+					cpDefinitionOptionValueRelId, false);
+		}
+
+		return _cpDefinitionOptionValueRelService.
+			updateCPDefinitionOptionValueRelPreselected(
+				cpDefinitionOptionValueRelId, true);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

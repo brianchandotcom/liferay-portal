@@ -41,6 +41,10 @@ public class CommerceOrderPaymentLocalServiceUtil {
 	/**
 	 * Adds the commerce order payment to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderPaymentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceOrderPayment the commerce order payment
 	 * @return the commerce order payment that was added
 	 */
@@ -86,6 +90,10 @@ public class CommerceOrderPaymentLocalServiceUtil {
 	/**
 	 * Deletes the commerce order payment from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderPaymentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceOrderPayment the commerce order payment
 	 * @return the commerce order payment that was removed
 	 */
@@ -99,6 +107,10 @@ public class CommerceOrderPaymentLocalServiceUtil {
 
 	/**
 	 * Deletes the commerce order payment with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderPaymentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceOrderPaymentId the primary key of the commerce order payment
 	 * @return the commerce order payment that was removed
@@ -315,6 +327,10 @@ public class CommerceOrderPaymentLocalServiceUtil {
 
 	/**
 	 * Updates the commerce order payment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderPaymentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceOrderPayment the commerce order payment
 	 * @return the commerce order payment that was updated

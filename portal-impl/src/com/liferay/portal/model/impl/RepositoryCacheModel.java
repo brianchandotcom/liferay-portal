@@ -37,16 +37,17 @@ public class RepositoryCacheModel
 	implements CacheModel<Repository>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof RepositoryCacheModel)) {
+		if (!(object instanceof RepositoryCacheModel)) {
 			return false;
 		}
 
-		RepositoryCacheModel repositoryCacheModel = (RepositoryCacheModel)obj;
+		RepositoryCacheModel repositoryCacheModel =
+			(RepositoryCacheModel)object;
 
 		if ((repositoryId == repositoryCacheModel.repositoryId) &&
 			(mvccVersion == repositoryCacheModel.mvccVersion)) {

@@ -774,16 +774,16 @@ public class ChangesetEntryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ChangesetEntry)) {
+		if (!(object instanceof ChangesetEntry)) {
 			return false;
 		}
 
-		ChangesetEntry changesetEntry = (ChangesetEntry)obj;
+		ChangesetEntry changesetEntry = (ChangesetEntry)object;
 
 		long primaryKey = changesetEntry.getPrimaryKey();
 

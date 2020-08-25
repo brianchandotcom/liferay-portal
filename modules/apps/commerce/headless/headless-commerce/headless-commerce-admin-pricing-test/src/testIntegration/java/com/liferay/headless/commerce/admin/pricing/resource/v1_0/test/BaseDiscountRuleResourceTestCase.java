@@ -112,7 +112,9 @@ public abstract class BaseDiscountRuleResourceTestCase {
 
 		DiscountRuleResource.Builder builder = DiscountRuleResource.builder();
 
-		discountRuleResource = builder.locale(
+		discountRuleResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

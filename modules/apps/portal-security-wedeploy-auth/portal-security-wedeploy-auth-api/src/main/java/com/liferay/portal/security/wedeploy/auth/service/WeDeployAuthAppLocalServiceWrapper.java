@@ -47,6 +47,10 @@ public class WeDeployAuthAppLocalServiceWrapper
 	/**
 	 * Adds the we deploy auth app to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect WeDeployAuthAppLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param weDeployAuthApp the we deploy auth app
 	 * @return the we deploy auth app that was added
 	 */
@@ -88,6 +92,10 @@ public class WeDeployAuthAppLocalServiceWrapper
 	/**
 	 * Deletes the we deploy auth app with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect WeDeployAuthAppLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param weDeployAuthAppId the primary key of the we deploy auth app
 	 * @return the we deploy auth app that was removed
 	 * @throws PortalException if a we deploy auth app with the primary key could not be found
@@ -103,6 +111,10 @@ public class WeDeployAuthAppLocalServiceWrapper
 
 	/**
 	 * Deletes the we deploy auth app from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect WeDeployAuthAppLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param weDeployAuthApp the we deploy auth app
 	 * @return the we deploy auth app that was removed
@@ -307,6 +319,10 @@ public class WeDeployAuthAppLocalServiceWrapper
 
 	/**
 	 * Updates the we deploy auth app in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect WeDeployAuthAppLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param weDeployAuthApp the we deploy auth app
 	 * @return the we deploy auth app that was updated

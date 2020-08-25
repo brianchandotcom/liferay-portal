@@ -238,7 +238,7 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 			sb = new StringBundler(14);
 		}
 		else {
-			sb = new StringBundler(17 + includeList.size() * 2);
+			sb = new StringBundler(17 + (includeList.size() * 2));
 		}
 
 		sb.append("UPDATE ");

@@ -628,17 +628,17 @@ public class SiteNavigationMenuItemWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SiteNavigationMenuItemWrapper)) {
+		if (!(object instanceof SiteNavigationMenuItemWrapper)) {
 			return false;
 		}
 
 		SiteNavigationMenuItemWrapper siteNavigationMenuItemWrapper =
-			(SiteNavigationMenuItemWrapper)obj;
+			(SiteNavigationMenuItemWrapper)object;
 
 		if (Objects.equals(
 				_siteNavigationMenuItem,

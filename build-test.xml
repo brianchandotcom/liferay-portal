@@ -272,13 +272,15 @@ module.framework.properties.osgi.console=11312</echo>
 
 			<echo file="${script.sh.file}"><![CDATA[@{script}]]></echo>
 
+			<get-operating-system-property property.name="operating.system.docker.shell.path" />
+
 			<execute>
 				<![CDATA[
 					docker exec @{container} mkdir -p /tmp
 
 					docker cp ${script.sh.file} @{container}:/tmp/script.sh
 
-					docker exec @{container} /bin/bash /tmp/script.sh
+					docker exec @{container} ${operating.system.docker.shell.path} /tmp/script.sh
 
 					docker exec @{container} rm -f /tmp/script.sh
 				]]>
@@ -1139,8 +1141,12 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 				</elseif>
 				<elseif>
 					<and>
-						<equals arg1="${operating.system.type}" arg2="centos" />
-						<equals arg1="${operating.system.centos.version}" arg2="8" />
+						<not>
+							<and>
+								<equals arg1="${operating.system.type}" arg2="centos" />
+								<equals arg1="${operating.system.centos.version}" arg2="7" />
+							</and>
+						</not>
 						<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
 					</and>
 					<then>
@@ -2147,101 +2153,6 @@ jdbc.default.password=${database.password}</echo>
 
 			<delete file="${basedir}/${patching.tool.latest.txt}" />
 			<delete file="${basedir}/${patching.tool.name}" />
-		</sequential>
-	</macrodef>
-
-	<macrodef name="prepare-portal-legacy-properties">
-		<attribute default="portal-impl/src/portal-ext.properties" name="portal.ext.properties.file.path" />
-		<attribute name="portal.major.version" />
-		<sequential>
-			<var name="portal.legacy.file.content" unset="true" />
-
-			<loadfile
-				property="portal.legacy.file.content"
-				srcFile="portal-impl/src/portal-legacy-@{portal.major.version}.properties"
-			/>
-
-			<propertyregex
-				input="${portal.legacy.file.content}"
-				override="true"
-				property="portal.legacy.file.content"
-				regexp="\$\{resource.repositories.root\}"
-				replace="$${liferay.home}"
-			/>
-
-			<propertyregex
-				input="${portal.legacy.file.content}"
-				override="true"
-				property="portal.legacy.file.content"
-				regexp="dl.store.cmis.*"
-				replace=""
-			/>
-
-			<propertyregex
-				input="${portal.legacy.file.content}"
-				override="true"
-				property="portal.legacy.file.content"
-				regexp="dl.store.jcr.fetch.delay=.*"
-				replace="dl.store.jcr.fetch.delay=500"
-			/>
-
-			<propertyregex
-				input="${portal.legacy.file.content}"
-				override="true"
-				property="portal.legacy.file.content"
-				regexp="dl.store.jcr.fetch.max.failures=.*"
-				replace="dl.store.jcr.fetch.max.failures=5"
-			/>
-
-			<propertyregex
-				input="${portal.legacy.file.content}"
-				override="true"
-				property="portal.legacy.file.content"
-				regexp="dl.store.jcr.move.version.labels=.*"
-				replace="dl.store.jcr.move.version.labels=false"
-			/>
-
-			<propertyregex
-				input="${portal.legacy.file.content}"
-				override="true"
-				property="portal.legacy.file.content"
-				regexp="dl.store.s3.*"
-				replace=""
-			/>
-
-			<propertyregex
-				input="${portal.legacy.file.content}"
-				override="true"
-				property="portal.legacy.file.content"
-				regexp="resource.repositories.root=.*"
-				replace=""
-			/>
-
-			<propertyregex
-				input="${portal.legacy.file.content}"
-				override="true"
-				property="portal.legacy.file.content"
-				regexp="permissions.user.check.algorithm=.*"
-				replace=""
-			/>
-
-			<propertyregex
-				input="${portal.legacy.file.content}"
-				override="true"
-				property="portal.legacy.file.content"
-				regexp="permissions.view.dynamic.inheritance=.*"
-				replace=""
-			/>
-
-			<echo append="true" file="@{portal.ext.properties.file.path}">
-
-##
-## From portal-legacy-@{portal.major.version}.properties
-##
-
-${portal.legacy.file.content}</echo>
-
-			<var name="portal.legacy.file.content" unset="true" />
 		</sequential>
 	</macrodef>
 
@@ -3845,6 +3756,45 @@ go</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="set-up-search-engine">
+		<sequential>
+			<get-testcase-property property.name="remote.elasticsearch.enabled" />
+			<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
+
+			<if>
+				<or>
+					<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
+					<equals arg1="${suite.search.engine}" arg2="remote-elasticsearch6" />
+				</or>
+				<then>
+					<ant antfile="build-test-elasticsearch6.xml" target="start-elasticsearch" />
+				</then>
+			</if>
+
+			<get-testcase-property property.name="solr.enabled" />
+
+			<if>
+				<equals arg1="${solr.enabled}" arg2="true" />
+				<then>
+					<ant antfile="build-test-solr.xml" target="start-solr" />
+				</then>
+				<elseif>
+					<isset property="env.CI_TEST_SUITE" />
+					<then>
+						<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
+
+						<if>
+							<equals arg1="${suite.search.engine}" arg2="solr" />
+							<then>
+								<ant antfile="build-test-solr.xml" target="set-up-solr" />
+							</then>
+						</if>
+					</then>
+				</elseif>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="setup-testable-jboss">
 		<sequential>
 			<setup-testable-jboss-jsp-configuration />
@@ -4425,8 +4375,12 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 									</then>
 									<elseif>
 										<and>
-											<equals arg1="${operating.system.type}" arg2="centos" />
-											<equals arg1="${operating.system.centos.version}" arg2="8" />
+											<not>
+												<and>
+													<equals arg1="${operating.system.type}" arg2="centos" />
+													<equals arg1="${operating.system.centos.version}" arg2="7" />
+												</and>
+											</not>
 											<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
 										</and>
 										<then>
@@ -4487,8 +4441,12 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 										</then>
 										<elseif>
 											<and>
-												<equals arg1="${operating.system.type}" arg2="centos" />
-												<equals arg1="${operating.system.centos.version}" arg2="8" />
+												<not>
+													<and>
+														<equals arg1="${operating.system.type}" arg2="centos" />
+														<equals arg1="${operating.system.centos.version}" arg2="7" />
+													</and>
+												</not>
 												<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
 											</and>
 											<then>
@@ -5405,6 +5363,34 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="stop-remote-search-engine">
+		<sequential>
+			<get-testcase-property property.name="remote.elasticsearch.enabled" />
+
+			<if>
+				<or>
+					<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
+					<equals arg1="${suite.search.engine}" arg2="remote-elasticsearch6" />
+				</or>
+				<then>
+					<ant antfile="build-test-elasticsearch6.xml" target="stop-elasticsearch" />
+				</then>
+			</if>
+
+			<get-testcase-property property.name="solr.enabled" />
+
+			<if>
+				<or>
+					<contains string="${env.CI_TEST_SUITE}" substring="solr" />
+					<equals arg1="${solr.enabled}" arg2="true" />
+				</or>
+				<then>
+					<ant antfile="build-test-solr.xml" target="stop-solr-core" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="uninstall-patches">
 		<attribute default="${app.server.parent.dir}/patching-tool" name="patching.tool.dir" />
 
@@ -5574,8 +5560,12 @@ war.path=${app.server.portal.dir}/</echo>
 				</elseif>
 				<elseif>
 					<and>
-						<equals arg1="${operating.system.type}" arg2="centos" />
-						<equals arg1="${operating.system.centos.version}" arg2="8" />
+						<not>
+							<and>
+								<equals arg1="${operating.system.type}" arg2="centos" />
+								<equals arg1="${operating.system.centos.version}" arg2="7" />
+							</and>
+						</not>
 						<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
 					</and>
 					<then>
@@ -6624,12 +6614,6 @@ go</echo>
 					<then>
 						<delete dir="${test.app.server.liferay.home}/osgi/state" />
 					</then>
-					<elseif>
-						<equals arg1="${delete.index.data}" arg2="true" />
-						<then>
-							<delete dir="${test.app.server.liferay.home}/data/elasticsearch6" />
-						</then>
-					</elseif>
 					<else>
 						<if>
 							<not>
@@ -6659,6 +6643,43 @@ go</echo>
 		</if>
 
 		<delete dir="/tmp/sprite" />
+	</target>
+
+	<target name="deploy-commerce-license-li">
+		<local name="start.date" />
+
+		<beanshell>
+			<![CDATA[
+				project.setProperty("start.date", String.valueOf(System.currentTimeMillis()));
+			]]>
+		</beanshell>
+
+		<if>
+			<and>
+				<isset property="commerce.license.owner" />
+				<isset property="osb.api.token" />
+			</and>
+			<then>
+				<exec executable="curl" outputproperty="commerce.license">
+					<arg value="https://customer-uat.liferay.com/api/jsonws/osb-portlet.licensekey/generate-commerce-license-key?owner=${commerce.license.owner}&amp;startDate=${start.date}&amp;licenseLifetime=2592000000" />
+					<arg value="-H" />
+					<arg value="OSB_API_Token:${osb.api.token}" />
+				</exec>
+			</then>
+			<else>
+				<fail message="Commerce license credentials were not set." />
+			</else>
+		</if>
+
+		<propertyregex
+			input="${commerce.license}"
+			override="true"
+			property="commerce.license"
+			regexp="&quot;(.*?)&quot;"
+			select="\1"
+		/>
+
+		<echo file="${liferay.home}/data/license/LiferayCommerce_enterprise.li">${commerce.license}</echo>
 	</target>
 
 	<target name="deploy-dependency-jars">
@@ -6988,6 +7009,20 @@ go</echo>
 											tofile="${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg"
 										/>
 									</then>
+									<elseif>
+										<and>
+											<available file="${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg" />
+											<equals arg1="${osgi.app.name}" arg2="commerce" />
+										</and>
+										<then>
+											<echo>Copying ${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg to ${liferay.home}/deploy/${Liferay-Releng-App-Title}.lpkg.</echo>
+
+											<copy
+												file="${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg"
+												tofile="${liferay.home}/deploy/${Liferay-Releng-App-Title}.lpkg"
+											/>
+										</then>
+									</elseif>
 									<elseif>
 										<available file="${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg" />
 										<then>
@@ -7562,6 +7597,184 @@ go</echo>
 			file="${changelog.dir}/git-build-log.html"
 			todir="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
 		/>
+	</target>
+
+	<target name="hot-deploy-osgi-apps">
+		<get-testcase-property property.name="hot.deploy.osgi.app.includes" />
+
+		<if>
+			<isset property="hot.deploy.osgi.app.includes" />
+			<then>
+				<for list="${hot.deploy.osgi.app.includes}" param="osgi.app.name">
+					<sequential>
+						<antelope:stringutil property="osgi.app.name" string="@{osgi.app.name}">
+							<antelope:trim />
+						</antelope:stringutil>
+
+						<local name="app.dir.includes" />
+
+						<condition else="apps/${osgi.app.name}" property="app.dir.includes" value="apps/${osgi.app.name},dxp/apps/${osgi.app.name}">
+							<equals arg1="${build.profile}" arg2="dxp" />
+						</condition>
+
+						<for param="app.dir">
+							<path>
+								<dirset
+									dir="modules"
+									includes="${app.dir.includes}"
+								/>
+							</path>
+							<sequential>
+								<local name="Liferay-Releng-App-Title" />
+
+								<property file="@{app.dir}/app.bnd" />
+
+								<if>
+									<available file="${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg" />
+									<then>
+										<delete file="${liferay.home}/osgi/marketplace/${Liferay-Releng-App-Title}.lpkg" />
+									</then>
+								</if>
+
+								<gradle-execute dir="@{app.dir}" task="clean" />
+
+								<if>
+									<available file="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg" />
+									<then>
+										<echo>Retrieving app from ${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg.</echo>
+
+										<unzip
+											dest="${liferay.home}/deploy-temp"
+											src="${project.dir}/plugins/dist/${Liferay-Releng-App-Title}.lpkg"
+										/>
+									</then>
+									<elseif>
+										<available file="${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg" />
+										<then>
+											<echo>Retrieving app from ${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg.</echo>
+
+											<unzip
+												dest="${liferay.home}/deploy-temp"
+												src="${project.dir}/plugins/marketplace/${Liferay-Releng-App-Title}.lpkg"
+											/>
+										</then>
+									</elseif>
+									<else>
+										<echo>Generating and hot deploying all relevant modules that make up ${Liferay-Releng-App-Title}.lpkg.</echo>
+
+										<for param="module.dir.path">
+											<path>
+												<dirset
+													dir="@{app.dir}"
+												>
+													<exclude name="**/*-test*" />
+													<present targetdir="@{app.dir}">
+														<mapper
+															from="*"
+															to="*/bnd.bnd"
+															type="glob"
+														/>
+													</present>
+												</dirset>
+											</path>
+											<sequential>
+												<if>
+													<contains string="${test.modules.force.deploy}" substring="@{osgi.app.name}" />
+													<then>
+														<echo file="@{module.dir.path}/.lfrbuild-portal" />
+													</then>
+												</if>
+											</sequential>
+										</for>
+
+										<gradle-execute dir="@{app.dir}" task="deploy">
+											<arg value="clean" />
+											<arg value="-Pliferay.home=${liferay.home}/osgi-temp" />
+										</gradle-execute>
+
+										<copy todir="${liferay.home}/osgi-temp/deploy">
+											<fileset dir="${liferay.home}/deploy">
+												<include name="${osgi.app.name}*hook*.war" />
+											</fileset>
+										</copy>
+
+										<delete>
+											<fileset
+												dir="${liferay.home}/deploy"
+												includes="${osgi.app.name}*hook*.war"
+											/>
+										</delete>
+
+										<ant antfile="build.xml" dir="modules" target="build-app-lpkg">
+											<property name="app.name" value="${osgi.app.name}" />
+											<property name="output.dir" value="${liferay.home}/deploy-temp" />
+											<property name="osgi.dir" value="${liferay.home}/osgi-temp/osgi" />
+										</ant>
+
+										<delete dir="${liferay.home}/osgi-temp" failonerror="false" />
+									</else>
+								</if>
+
+								<sleep seconds="5" />
+
+								<for param="lpkg.file.path">
+									<path>
+										<fileset
+											dir="${liferay.home}/deploy-temp"
+										>
+											<include name="*${Liferay-Releng-App-Title}*.lpkg" />
+										</fileset>
+									</path>
+									<sequential>
+										<echo>Disabling restart requirement for @{lpkg.file.path}</echo>
+
+										<unzip
+											dest="${liferay.home}/lpkg-unzip-temp"
+											src="@{lpkg.file.path}"
+										/>
+
+										<if>
+											<resourcecontains
+												resource="${liferay.home}/lpkg-unzip-temp/liferay-marketplace.properties"
+												substring="restart-required=true"
+											/>
+											<then>
+												<replace
+													file="${liferay.home}/lpkg-unzip-temp/liferay-marketplace.properties"
+												>
+													<replacetoken>restart-required=true</replacetoken>
+													<replacevalue>restart-required=false</replacevalue>
+												</replace>
+
+												<zip
+													destfile="@{lpkg.file.path}"
+													update="true"
+												>
+													<zipfileset
+														dir="${liferay.home}/lpkg-unzip-temp"
+														includes="liferay-marketplace.properties"
+													/>
+												</zip>
+											</then>
+										</if>
+
+										<delete dir="${liferay.home}/lpkg-unzip-temp" failonerror="false" />
+									</sequential>
+								</for>
+
+								<zip
+									basedir="${liferay.home}/deploy-temp"
+									destfile="${liferay.home}/deploy/${Liferay-Releng-App-Title}.lpkg"
+									includes="*.lpkg"
+								/>
+
+								<delete dir="${liferay.home}/deploy-temp" failonerror="false" />
+							</sequential>
+						</for>
+					</sequential>
+				</for>
+			</then>
+		</if>
 	</target>
 
 	<target name="install-patch">
@@ -8426,72 +8639,6 @@ javascript.fast.load=false</echo>
 
 module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.profile.names}</echo>
 
-		<get-testcase-property property.name="portal.version" />
-
-		<propertyregex
-			input="${portal.version}"
-			property="portal.major.version"
-			regexp="(\d+\.\d+)\.\d+"
-			select="\1"
-		/>
-
-		<if>
-			<equals arg1="${portal.major.version}" arg2="5.1" />
-			<then>
-				<prepare-portal-legacy-properties portal.major.version="5.1" />
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<equals arg1="${portal.major.version}" arg2="5.1" />
-				<equals arg1="${portal.major.version}" arg2="5.2" />
-			</or>
-			<then>
-				<prepare-portal-legacy-properties portal.major.version="5.2" />
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<equals arg1="${portal.major.version}" arg2="5.1" />
-				<equals arg1="${portal.major.version}" arg2="5.2" />
-				<equals arg1="${portal.major.version}" arg2="6.0" />
-			</or>
-			<then>
-				<prepare-portal-legacy-properties portal.major.version="6.0" />
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<equals arg1="${portal.major.version}" arg2="5.1" />
-				<equals arg1="${portal.major.version}" arg2="5.2" />
-				<equals arg1="${portal.major.version}" arg2="6.0" />
-				<equals arg1="${portal.major.version}" arg2="6.1" />
-			</or>
-			<then>
-				<prepare-portal-legacy-properties portal.major.version="6.1" />
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<equals arg1="${portal.major.version}" arg2="5.1" />
-				<equals arg1="${portal.major.version}" arg2="5.2" />
-				<equals arg1="${portal.major.version}" arg2="6.0" />
-				<equals arg1="${portal.major.version}" arg2="6.1" />
-				<equals arg1="${portal.major.version}" arg2="6.2" />
-			</or>
-			<then>
-				<prepare-portal-legacy-properties portal.major.version="6.2" />
-
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-upgrade.processes=${upgrade.processes.master}</echo>
-			</then>
-		</if>
-
 		<if>
 			<isset property="set.permission.algorithm.5" />
 			<then>
@@ -8626,15 +8773,6 @@ module.framework.properties.org.osgi.framework.bootdelegation=\
 
 session.cookie.use.full.hostname=true
 				</echo>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${index.on.startup}" arg2="true" />
-			<then>
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-index.on.startup=true</echo>
 			</then>
 		</if>
 
@@ -8860,6 +8998,15 @@ index.on.startup=true</echo>
 		</if>
 
 		<if>
+			<isset property="test.build.fix.pack.zip.url.latest.heavy" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.build.fix.pack.zip.url.latest.heavy=${test.build.fix.pack.zip.url.latest.heavy}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="test.build.fix.pack.zip.url.previous" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
@@ -8984,8 +9131,12 @@ index.on.startup=true</echo>
 
 		<if>
 			<and>
-				<equals arg1="${operating.system.type}" arg2="centos" />
-				<equals arg1="${operating.system.centos.version}" arg2="8" />
+				<not>
+					<and>
+						<equals arg1="${operating.system.type}" arg2="centos" />
+						<equals arg1="${operating.system.centos.version}" arg2="7" />
+					</and>
+				</not>
 				<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
 			</and>
 			<then>
@@ -12359,15 +12510,6 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
-		<get-testcase-property property.name="remote.elasticsearch.enabled" />
-
-		<if>
-			<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
-			<then>
-				<ant antfile="build-test-elasticsearch6.xml" target="start-elasticsearch" />
-			</then>
-		</if>
-
 		<get-testcase-property property.name="socks.proxy.enabled" />
 
 		<if>
@@ -12392,28 +12534,6 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 
 				<print-file file.name="${liferay.home}/osgi/modules/com.liferay.simple.socks.proxy.SocksProxyConfiguration.cfg" />
 			</then>
-		</if>
-
-		<get-testcase-property property.name="solr.enabled" />
-
-		<if>
-			<equals arg1="${solr.enabled}" arg2="true" />
-			<then>
-				<ant antfile="build-test-solr.xml" target="start-solr" />
-			</then>
-			<elseif>
-				<isset property="env.CI_TEST_SUITE" />
-				<then>
-					<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
-
-					<if>
-						<equals arg1="${suite.search.engine}" arg2="solr" />
-						<then>
-							<ant antfile="build-test-solr.xml" target="start-solr" />
-						</then>
-					</if>
-				</then>
-			</elseif>
 		</if>
 
 		<get-testcase-property property.name="test.smtp.server.enabled" />
@@ -12460,6 +12580,8 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 
 		<antcall target="deploy-osgi-apps" />
 
+		<antcall target="hot-deploy-osgi-apps" />
+
 		<antcall target="deploy-osgi-modules" />
 
 		<antcall target="deploy-specified-plugins">
@@ -12469,6 +12591,8 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		<antcall target="deploy-dependency-jars" />
 
 		<antcall target="deploy-extra-apps" />
+
+		<set-up-search-engine />
 
 		<get-testcase-property property.name="osgi.module.configuration.file.names" />
 		<get-testcase-property property.name="osgi.module.configurations" />
@@ -12902,36 +13026,7 @@ url=${short.hostname}:8080</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="remote.elasticsearch.enabled" />
-
-		<if>
-			<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
-			<then>
-				<ant antfile="build-test-elasticsearch6.xml" target="stop-elasticsearch" />
-			</then>
-		</if>
-
-		<get-testcase-property property.name="solr.enabled" />
-
-		<if>
-			<equals arg1="${solr.enabled}" arg2="true" />
-			<then>
-				<ant antfile="build-test-solr.xml" target="stop-solr-core" />
-			</then>
-			<elseif>
-				<isset property="env.CI_TEST_SUITE" />
-				<then>
-					<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
-
-					<if>
-						<equals arg1="${suite.search.engine}" arg2="solr" />
-						<then>
-							<ant antfile="build-test-solr.xml" target="stop-solr-core" />
-						</then>
-					</if>
-				</then>
-			</elseif>
-		</if>
+		<stop-remote-search-engine />
 
 		<antcall target="clean-up-web-xml" />
 	</target>

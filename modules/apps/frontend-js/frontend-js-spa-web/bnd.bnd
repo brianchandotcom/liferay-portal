@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend JS SPA Web
 Bundle-SymbolicName: com.liferay.frontend.js.spa.web
-Bundle-Version: 2.0.35
+Bundle-Version: 2.0.37
 Liferay-JS-Submodules-Bridge: senna
 Provide-Capability:\
 	osgi.extender;\

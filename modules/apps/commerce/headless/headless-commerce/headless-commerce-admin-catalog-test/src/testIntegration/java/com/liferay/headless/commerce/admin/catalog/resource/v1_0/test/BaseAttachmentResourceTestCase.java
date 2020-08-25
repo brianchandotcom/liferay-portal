@@ -109,7 +109,9 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		AttachmentResource.Builder builder = AttachmentResource.builder();
 
-		attachmentResource = builder.locale(
+		attachmentResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

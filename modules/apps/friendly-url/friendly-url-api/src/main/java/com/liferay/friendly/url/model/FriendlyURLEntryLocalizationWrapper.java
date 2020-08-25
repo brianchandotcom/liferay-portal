@@ -457,18 +457,18 @@ public class FriendlyURLEntryLocalizationWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof FriendlyURLEntryLocalizationWrapper)) {
+		if (!(object instanceof FriendlyURLEntryLocalizationWrapper)) {
 			return false;
 		}
 
 		FriendlyURLEntryLocalizationWrapper
 			friendlyURLEntryLocalizationWrapper =
-				(FriendlyURLEntryLocalizationWrapper)obj;
+				(FriendlyURLEntryLocalizationWrapper)object;
 
 		if (Objects.equals(
 				_friendlyURLEntryLocalization,

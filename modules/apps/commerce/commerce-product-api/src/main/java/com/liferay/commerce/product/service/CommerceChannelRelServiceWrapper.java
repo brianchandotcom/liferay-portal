@@ -60,6 +60,15 @@ public class CommerceChannelRelServiceWrapper
 
 	@Override
 	public com.liferay.commerce.product.model.CommerceChannelRel
+		fetchCommerceChannelRel(
+			String className, long classPK, long commerceChannelId) {
+
+		return _commerceChannelRelService.fetchCommerceChannelRel(
+			className, classPK, commerceChannelId);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CommerceChannelRel
 			getCommerceChannelRel(long commerceChannelRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

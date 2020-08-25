@@ -403,16 +403,16 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DLContentWrapper)) {
+		if (!(object instanceof DLContentWrapper)) {
 			return false;
 		}
 
-		DLContentWrapper dlContentWrapper = (DLContentWrapper)obj;
+		DLContentWrapper dlContentWrapper = (DLContentWrapper)object;
 
 		if (Objects.equals(_dlContent, dlContentWrapper._dlContent)) {
 			return true;

@@ -794,16 +794,16 @@ public class PortletItemModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof PortletItem)) {
+		if (!(object instanceof PortletItem)) {
 			return false;
 		}
 
-		PortletItem portletItem = (PortletItem)obj;
+		PortletItem portletItem = (PortletItem)object;
 
 		long primaryKey = portletItem.getPrimaryKey();
 

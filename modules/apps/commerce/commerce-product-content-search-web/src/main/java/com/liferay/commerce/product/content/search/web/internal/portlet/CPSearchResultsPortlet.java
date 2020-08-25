@@ -30,9 +30,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -44,14 +42,11 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
@@ -266,40 +261,6 @@ public class CPSearchResultsPortlet
 		QueryConfig queryConfig = portletSharedSearchSettings.getQueryConfig();
 
 		queryConfig.setHighlightEnabled(false);
-
-		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
-
-		String portletId = ParamUtil.getString(httpServletRequest, "p_p_id");
-
-		String orderByCol = ParamUtil.getString(
-			httpServletRequest,
-			StringBundler.concat(
-				StringPool.UNDERLINE, portletId, StringPool.UNDERLINE,
-				SearchContainer.DEFAULT_ORDER_BY_COL_PARAM));
-
-		if (orderByCol.equals("price-low-to-high")) {
-			searchContext.setSorts(
-				SortFactoryUtil.create(
-					CPField.BASE_PRICE, Sort.DOUBLE_TYPE, false));
-		}
-		else if (orderByCol.equals("price-high-to-low")) {
-			searchContext.setSorts(
-				SortFactoryUtil.create(
-					CPField.BASE_PRICE, Sort.DOUBLE_TYPE, true));
-		}
-		else if (orderByCol.equals("name-ascending")) {
-			searchContext.setSorts(SortFactoryUtil.create(Field.NAME, false));
-		}
-		else if (orderByCol.equals("name-descending")) {
-			searchContext.setSorts(SortFactoryUtil.create(Field.NAME, true));
-		}
-		else if (orderByCol.equals("new-items")) {
-			searchContext.setSorts(
-				SortFactoryUtil.create(Field.CREATE_DATE + "_sortable", true));
-		}
-		else {
-			searchContext.setSorts(SortFactoryUtil.getDefaultSorts());
-		}
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 

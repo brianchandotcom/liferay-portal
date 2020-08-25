@@ -439,8 +439,7 @@ public class MessageBoardThreadResourceImpl
 						MBMessage.class.getName(), mbMessage.getMessageId()));
 				articleBody = mbMessage.getBody();
 				creator = CreatorUtil.toCreator(
-					_portal,
-					_userLocalService.getUserById(mbThread.getUserId()));
+					_portal, _userLocalService.fetchUser(mbThread.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					MBMessage.class.getName(), mbMessage.getMessageId(),

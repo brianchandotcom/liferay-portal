@@ -62,7 +62,7 @@ public class AspectJNewEnvTestRule extends NewEnvTestRule {
 			return arguments;
 		}
 
-		StringBundler sb = new StringBundler(adviceClasses.length * 2 + 1);
+		StringBundler sb = new StringBundler((adviceClasses.length * 2) + 1);
 
 		sb.append("-DaspectClasses=");
 

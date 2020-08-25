@@ -78,7 +78,7 @@ public class ProcessUtil {
 	}
 
 	private static String _buildThreadNamePrefix(List<String> arguments) {
-		StringBundler sb = new StringBundler(arguments.size() * 2 + 1);
+		StringBundler sb = new StringBundler((arguments.size() * 2) + 1);
 
 		sb.append(StringPool.OPEN_BRACKET);
 

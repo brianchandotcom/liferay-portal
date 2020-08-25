@@ -586,16 +586,16 @@ public class EmailAddressWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof EmailAddressWrapper)) {
+		if (!(object instanceof EmailAddressWrapper)) {
 			return false;
 		}
 
-		EmailAddressWrapper emailAddressWrapper = (EmailAddressWrapper)obj;
+		EmailAddressWrapper emailAddressWrapper = (EmailAddressWrapper)object;
 
 		if (Objects.equals(_emailAddress, emailAddressWrapper._emailAddress)) {
 			return true;

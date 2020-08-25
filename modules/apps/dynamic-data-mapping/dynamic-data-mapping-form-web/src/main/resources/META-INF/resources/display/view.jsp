@@ -179,12 +179,16 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 				</div>
 
 				<aui:script use="aui-base">
+					function <portlet:namespace />clearInterval(intervalId) {
+						if (intervalId) {
+							clearInterval(intervalId);
+						}
+					}
+
 					var <portlet:namespace />intervalId;
 
 					function <portlet:namespace />clearPortletHandlers(event) {
-						if (<portlet:namespace />intervalId) {
-							clearInterval(<portlet:namespace />intervalId);
-						}
+						<portlet:namespace />clearInterval(<portlet:namespace />intervalId);
 
 						Liferay.detach('destroyPortlet', <portlet:namespace />clearPortletHandlers);
 					};
@@ -215,6 +219,10 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 								<portlet:param name="preview" value="<%= String.valueOf(ddmFormDisplayContext.isPreview()) %>" />
 							</liferay-portlet:resourceURL>
 
+							Liferay.on('sessionExpired', function (event) {
+								<portlet:namespace />clearInterval(<portlet:namespace />intervalId);
+							});
+
 							function <portlet:namespace />autoSave() {
 								A.io.request(
 									'<%= autoSaveFormInstanceRecordURL.toString() %>',
@@ -229,9 +237,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							}
 
 							function <portlet:namespace />startAutoSave() {
-								if (<portlet:namespace />intervalId) {
-									clearInterval(<portlet:namespace />intervalId);
-								}
+								<portlet:namespace />clearInterval(<portlet:namespace />intervalId);
 
 								<portlet:namespace />intervalId = setInterval(<portlet:namespace />autoSave, 60000);
 							}
@@ -260,9 +266,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 						</c:when>
 						<c:otherwise>
 							function <portlet:namespace />startAutoExtendSession() {
-								if (<portlet:namespace />intervalId) {
-									clearInterval(<portlet:namespace />intervalId);
-								}
+								<portlet:namespace />clearInterval(<portlet:namespace />intervalId);
 
 								var tenSeconds = 10000;
 

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Theme Speedwell Site Initializer
 Bundle-SymbolicName: com.liferay.commerce.theme.speedwell.site.initializer
-Bundle-Version: 1.0.19
+Bundle-Version: 1.0.22
 Import-Package:\
 	com.liferay.document.library.kernel.model;version="[1.0.0,3.0.0)",\
 	com.liferay.document.library.kernel.service;version="[1.7.0,3.0.0)",\

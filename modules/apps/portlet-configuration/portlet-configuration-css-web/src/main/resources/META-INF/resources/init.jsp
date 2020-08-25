@@ -30,6 +30,7 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Layout" %><%@
 page import="com.liferay.portal.kernel.model.PortletDecorator" %><%@
 page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.util.LayoutDescription" %><%@
 page import="com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSConstants" %><%@

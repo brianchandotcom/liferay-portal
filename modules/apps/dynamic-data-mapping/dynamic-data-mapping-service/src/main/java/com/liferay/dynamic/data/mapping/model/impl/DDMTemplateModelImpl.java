@@ -1841,16 +1841,16 @@ public class DDMTemplateModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMTemplate)) {
+		if (!(object instanceof DDMTemplate)) {
 			return false;
 		}
 
-		DDMTemplate ddmTemplate = (DDMTemplate)obj;
+		DDMTemplate ddmTemplate = (DDMTemplate)object;
 
 		long primaryKey = ddmTemplate.getPrimaryKey();
 

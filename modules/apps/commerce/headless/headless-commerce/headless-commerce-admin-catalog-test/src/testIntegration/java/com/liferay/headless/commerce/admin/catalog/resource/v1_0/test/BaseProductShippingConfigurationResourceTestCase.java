@@ -107,7 +107,9 @@ public abstract class BaseProductShippingConfigurationResourceTestCase {
 		ProductShippingConfigurationResource.Builder builder =
 			ProductShippingConfigurationResource.builder();
 
-		productShippingConfigurationResource = builder.locale(
+		productShippingConfigurationResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

@@ -33,7 +33,7 @@ public class IndexMetadataFactoryUtil {
 			throw new NullPointerException("Column names are missing");
 		}
 
-		StringBundler sb = new StringBundler(4 + columnNames.length * 2);
+		StringBundler sb = new StringBundler(4 + (columnNames.length * 2));
 
 		sb.append(tableName);
 		sb.append(StringPool.SPACE);

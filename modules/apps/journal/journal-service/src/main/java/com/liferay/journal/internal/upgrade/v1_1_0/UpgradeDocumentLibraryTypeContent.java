@@ -14,7 +14,7 @@
 
 package com.liferay.journal.internal.upgrade.v1_1_0;
 
-import com.liferay.journal.internal.upgrade.util.JournalArticleImageUpgradeUtil;
+import com.liferay.journal.internal.upgrade.util.JournalArticleImageUpgradeHelper;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -35,9 +35,9 @@ import java.util.List;
 public class UpgradeDocumentLibraryTypeContent extends UpgradeProcess {
 
 	public UpgradeDocumentLibraryTypeContent(
-		JournalArticleImageUpgradeUtil journalArticleImageUpgradeUtil) {
+		JournalArticleImageUpgradeHelper journalArticleImageUpgradeHelper) {
 
-		_journalArticleImageUpgradeUtil = journalArticleImageUpgradeUtil;
+		_journalArticleImageUpgradeHelper = journalArticleImageUpgradeHelper;
 	}
 
 	protected String convertContent(String content) throws Exception {
@@ -58,7 +58,7 @@ public class UpgradeDocumentLibraryTypeContent extends UpgradeProcess {
 
 			for (Element dynamicContentEl : dynamicContentEls) {
 				String data =
-					_journalArticleImageUpgradeUtil.getDocumentLibraryValue(
+					_journalArticleImageUpgradeHelper.getDocumentLibraryValue(
 						dynamicContentEl.getText());
 
 				dynamicContentEl.clearContent();
@@ -104,7 +104,7 @@ public class UpgradeDocumentLibraryTypeContent extends UpgradeProcess {
 		}
 	}
 
-	private final JournalArticleImageUpgradeUtil
-		_journalArticleImageUpgradeUtil;
+	private final JournalArticleImageUpgradeHelper
+		_journalArticleImageUpgradeHelper;
 
 }

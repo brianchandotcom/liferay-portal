@@ -114,7 +114,9 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		MessageBoardAttachmentResource.Builder builder =
 			MessageBoardAttachmentResource.builder();
 
-		messageBoardAttachmentResource = builder.locale(
+		messageBoardAttachmentResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}
@@ -191,6 +193,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 			randomMessageBoardAttachment();
 
 		messageBoardAttachment.setContentUrl(regex);
+		messageBoardAttachment.setContentValue(regex);
 		messageBoardAttachment.setEncodingFormat(regex);
 		messageBoardAttachment.setFileExtension(regex);
 		messageBoardAttachment.setTitle(regex);
@@ -203,6 +206,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		messageBoardAttachment = MessageBoardAttachmentSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, messageBoardAttachment.getContentUrl());
+		Assert.assertEquals(regex, messageBoardAttachment.getContentValue());
 		Assert.assertEquals(regex, messageBoardAttachment.getEncodingFormat());
 		Assert.assertEquals(regex, messageBoardAttachment.getFileExtension());
 		Assert.assertEquals(regex, messageBoardAttachment.getTitle());
@@ -681,6 +685,14 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("contentValue", additionalAssertFieldName)) {
+				if (messageBoardAttachment.getContentValue() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (messageBoardAttachment.getEncodingFormat() == null) {
 					valid = false;
@@ -820,6 +832,17 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 				if (!Objects.deepEquals(
 						messageBoardAttachment1.getContentUrl(),
 						messageBoardAttachment2.getContentUrl())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("contentValue", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardAttachment1.getContentValue(),
+						messageBoardAttachment2.getContentValue())) {
 
 					return false;
 				}
@@ -973,6 +996,14 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("contentValue")) {
+			sb.append("'");
+			sb.append(String.valueOf(messageBoardAttachment.getContentValue()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("encodingFormat")) {
 			sb.append("'");
 			sb.append(
@@ -1061,6 +1092,8 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		return new MessageBoardAttachment() {
 			{
 				contentUrl = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				contentValue = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				encodingFormat = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

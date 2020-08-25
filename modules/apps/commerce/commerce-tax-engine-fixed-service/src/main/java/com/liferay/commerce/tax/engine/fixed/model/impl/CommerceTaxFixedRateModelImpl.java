@@ -800,16 +800,17 @@ public class CommerceTaxFixedRateModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceTaxFixedRate)) {
+		if (!(object instanceof CommerceTaxFixedRate)) {
 			return false;
 		}
 
-		CommerceTaxFixedRate commerceTaxFixedRate = (CommerceTaxFixedRate)obj;
+		CommerceTaxFixedRate commerceTaxFixedRate =
+			(CommerceTaxFixedRate)object;
 
 		long primaryKey = commerceTaxFixedRate.getPrimaryKey();
 

@@ -471,16 +471,16 @@ public class TicketWrapper implements ModelWrapper<Ticket>, Ticket {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof TicketWrapper)) {
+		if (!(object instanceof TicketWrapper)) {
 			return false;
 		}
 
-		TicketWrapper ticketWrapper = (TicketWrapper)obj;
+		TicketWrapper ticketWrapper = (TicketWrapper)object;
 
 		if (Objects.equals(_ticket, ticketWrapper._ticket)) {
 			return true;

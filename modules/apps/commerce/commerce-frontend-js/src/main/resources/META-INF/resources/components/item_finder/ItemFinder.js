@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {DATASET_ACTION_PERFORMED} from '../../utilities/eventsDefinitions';
+import {fetchParams} from '../../utilities/index';
 import {
 	showErrorNotification,
 	showNotification
@@ -39,16 +40,13 @@ function ItemFinder(props) {
 		}
 
 		fetch(
-			`${
-				props.apiUrl
-			}?pageSize=${pageSize}&page=${currentPage}&search=${encodeURIComponent(
+			`${props.apiUrl}${
+				props.apiUrl.includes('?') ? '&' : '?'
+			}pageSize=${pageSize}&page=${currentPage}&search=${encodeURIComponent(
 				textFilter
 			)}`,
 			{
-				credentials: 'include',
-				headers: new Headers({
-					'x-csrf-token': Liferay.authToken
-				}),
+				...fetchParams,
 				method: 'GET'
 			}
 		)
@@ -68,11 +66,17 @@ function ItemFinder(props) {
 	]);
 
 	useEffect(() => {
-		props.getSelectedItems().then(updateSelectedItems);
+		props
+			.getSelectedItems()
+			.then((selectedItems = []) => updateSelectedItems(selectedItems));
 
 		function handleDatasetActions(e) {
 			if (props.linkedDatasetsId.includes(e.id)) {
-				props.getSelectedItems().then(updateSelectedItems);
+				props
+					.getSelectedItems()
+					.then((selectedItems = []) =>
+						updateSelectedItems(selectedItems)
+					);
 			}
 		}
 
@@ -118,6 +122,7 @@ function ItemFinder(props) {
 				currentPage={currentPage}
 				inputPlaceholder={props.inputPlaceholder}
 				inputSearchValue={textFilter}
+				itemCreation={props.itemCreation}
 				items={items}
 				itemsCount={itemsCount}
 				itemsKey={props.itemsKey}
@@ -143,6 +148,7 @@ ItemFinder.propTypes = {
 	createNewItemLabel: PropTypes.string,
 	getSelectedItems: PropTypes.func.isRequired,
 	inputPlaceholder: PropTypes.string,
+	itemCreation: PropTypes.bool,
 	itemSelectedMessage: PropTypes.string,
 	itemsKey: PropTypes.string.isRequired,
 	linkedDatasetsId: PropTypes.arrayOf(PropTypes.string),
@@ -151,12 +157,13 @@ ItemFinder.propTypes = {
 	onItemSelected: PropTypes.func.isRequired,
 	pageSize: PropTypes.number,
 	panelHeaderLabel: PropTypes.string,
-	schema: PropTypes.object.isRequired,
+	schema: PropTypes.array.isRequired,
 	titleLabel: PropTypes.string
 };
 
 ItemFinder.defaultProps = {
 	currentPage: 1,
+	itemCreation: true,
 	itemSelectedMessage: Liferay.Language.get('item-selected'),
 	multiSelectableEntries: false,
 	pageSize: 5,

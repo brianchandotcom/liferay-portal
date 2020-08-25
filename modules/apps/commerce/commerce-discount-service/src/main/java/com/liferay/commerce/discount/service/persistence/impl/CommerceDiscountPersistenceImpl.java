@@ -6044,6 +6044,288 @@ public class CommerceDiscountPersistenceImpl
 	private static final String _FINDER_COLUMN_LTE_S_STATUS_2 =
 		"commerceDiscount.status = ?";
 
+	private FinderPath _finderPathFetchByC_C_A;
+	private FinderPath _finderPathCountByC_C_A;
+
+	/**
+	 * Returns the commerce discount where companyId = &#63; and couponCode = &#63; and active = &#63; or throws a <code>NoSuchDiscountException</code> if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param couponCode the coupon code
+	 * @param active the active
+	 * @return the matching commerce discount
+	 * @throws NoSuchDiscountException if a matching commerce discount could not be found
+	 */
+	@Override
+	public CommerceDiscount findByC_C_A(
+			long companyId, String couponCode, boolean active)
+		throws NoSuchDiscountException {
+
+		CommerceDiscount commerceDiscount = fetchByC_C_A(
+			companyId, couponCode, active);
+
+		if (commerceDiscount == null) {
+			StringBundler sb = new StringBundler(8);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("companyId=");
+			sb.append(companyId);
+
+			sb.append(", couponCode=");
+			sb.append(couponCode);
+
+			sb.append(", active=");
+			sb.append(active);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchDiscountException(sb.toString());
+		}
+
+		return commerceDiscount;
+	}
+
+	/**
+	 * Returns the commerce discount where companyId = &#63; and couponCode = &#63; and active = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param couponCode the coupon code
+	 * @param active the active
+	 * @return the matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
+	 */
+	@Override
+	public CommerceDiscount fetchByC_C_A(
+		long companyId, String couponCode, boolean active) {
+
+		return fetchByC_C_A(companyId, couponCode, active, true);
+	}
+
+	/**
+	 * Returns the commerce discount where companyId = &#63; and couponCode = &#63; and active = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param couponCode the coupon code
+	 * @param active the active
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching commerce discount, or <code>null</code> if a matching commerce discount could not be found
+	 */
+	@Override
+	public CommerceDiscount fetchByC_C_A(
+		long companyId, String couponCode, boolean active,
+		boolean useFinderCache) {
+
+		couponCode = Objects.toString(couponCode, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {companyId, couponCode, active};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByC_C_A, finderArgs, this);
+		}
+
+		if (result instanceof CommerceDiscount) {
+			CommerceDiscount commerceDiscount = (CommerceDiscount)result;
+
+			if ((companyId != commerceDiscount.getCompanyId()) ||
+				!Objects.equals(couponCode, commerceDiscount.getCouponCode()) ||
+				(active != commerceDiscount.isActive())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(_SQL_SELECT_COMMERCEDISCOUNT_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_A_COMPANYID_2);
+
+			boolean bindCouponCode = false;
+
+			if (couponCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_C_A_COUPONCODE_3);
+			}
+			else {
+				bindCouponCode = true;
+
+				sb.append(_FINDER_COLUMN_C_C_A_COUPONCODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_C_A_ACTIVE_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindCouponCode) {
+					queryPos.add(couponCode);
+				}
+
+				queryPos.add(active);
+
+				List<CommerceDiscount> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_C_A, finderArgs, list);
+					}
+				}
+				else {
+					CommerceDiscount commerceDiscount = list.get(0);
+
+					result = commerceDiscount;
+
+					cacheResult(commerceDiscount);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(
+						_finderPathFetchByC_C_A, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CommerceDiscount)result;
+		}
+	}
+
+	/**
+	 * Removes the commerce discount where companyId = &#63; and couponCode = &#63; and active = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param couponCode the coupon code
+	 * @param active the active
+	 * @return the commerce discount that was removed
+	 */
+	@Override
+	public CommerceDiscount removeByC_C_A(
+			long companyId, String couponCode, boolean active)
+		throws NoSuchDiscountException {
+
+		CommerceDiscount commerceDiscount = findByC_C_A(
+			companyId, couponCode, active);
+
+		return remove(commerceDiscount);
+	}
+
+	/**
+	 * Returns the number of commerce discounts where companyId = &#63; and couponCode = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param couponCode the coupon code
+	 * @param active the active
+	 * @return the number of matching commerce discounts
+	 */
+	@Override
+	public int countByC_C_A(long companyId, String couponCode, boolean active) {
+		couponCode = Objects.toString(couponCode, "");
+
+		FinderPath finderPath = _finderPathCountByC_C_A;
+
+		Object[] finderArgs = new Object[] {companyId, couponCode, active};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_COMMERCEDISCOUNT_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_A_COMPANYID_2);
+
+			boolean bindCouponCode = false;
+
+			if (couponCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_C_A_COUPONCODE_3);
+			}
+			else {
+				bindCouponCode = true;
+
+				sb.append(_FINDER_COLUMN_C_C_A_COUPONCODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_C_A_ACTIVE_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindCouponCode) {
+					queryPos.add(couponCode);
+				}
+
+				queryPos.add(active);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_C_A_COMPANYID_2 =
+		"commerceDiscount.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_A_COUPONCODE_2 =
+		"commerceDiscount.couponCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_A_COUPONCODE_3 =
+		"(commerceDiscount.couponCode IS NULL OR commerceDiscount.couponCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_C_C_A_ACTIVE_2 =
+		"commerceDiscount.active = ?";
+
 	private FinderPath _finderPathFetchByC_ERC;
 	private FinderPath _finderPathCountByC_ERC;
 
@@ -6361,6 +6643,14 @@ public class CommerceDiscountPersistenceImpl
 			commerceDiscount);
 
 		finderCache.putResult(
+			_finderPathFetchByC_C_A,
+			new Object[] {
+				commerceDiscount.getCompanyId(),
+				commerceDiscount.getCouponCode(), commerceDiscount.isActive()
+			},
+			commerceDiscount);
+
+		finderCache.putResult(
 			_finderPathFetchByC_ERC,
 			new Object[] {
 				commerceDiscount.getCompanyId(),
@@ -6460,6 +6750,17 @@ public class CommerceDiscountPersistenceImpl
 
 		Object[] args = new Object[] {
 			commerceDiscountModelImpl.getCompanyId(),
+			commerceDiscountModelImpl.getCouponCode(),
+			commerceDiscountModelImpl.isActive()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByC_C_A, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByC_C_A, args, commerceDiscountModelImpl, false);
+
+		args = new Object[] {
+			commerceDiscountModelImpl.getCompanyId(),
 			commerceDiscountModelImpl.getExternalReferenceCode()
 		};
 
@@ -6472,6 +6773,30 @@ public class CommerceDiscountPersistenceImpl
 	protected void clearUniqueFindersCache(
 		CommerceDiscountModelImpl commerceDiscountModelImpl,
 		boolean clearCurrent) {
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+				commerceDiscountModelImpl.getCompanyId(),
+				commerceDiscountModelImpl.getCouponCode(),
+				commerceDiscountModelImpl.isActive()
+			};
+
+			finderCache.removeResult(_finderPathCountByC_C_A, args);
+			finderCache.removeResult(_finderPathFetchByC_C_A, args);
+		}
+
+		if ((commerceDiscountModelImpl.getColumnBitmask() &
+			 _finderPathFetchByC_C_A.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				commerceDiscountModelImpl.getOriginalCompanyId(),
+				commerceDiscountModelImpl.getOriginalCouponCode(),
+				commerceDiscountModelImpl.getOriginalActive()
+			};
+
+			finderCache.removeResult(_finderPathCountByC_C_A, args);
+			finderCache.removeResult(_finderPathFetchByC_C_A, args);
+		}
 
 		if (clearCurrent) {
 			Object[] args = new Object[] {
@@ -7379,6 +7704,28 @@ public class CommerceDiscountPersistenceImpl
 			CommerceDiscountModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtE_S",
 			new String[] {Date.class.getName(), Integer.class.getName()});
+
+		_finderPathFetchByC_C_A = new FinderPath(
+			CommerceDiscountModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceDiscountModelImpl.FINDER_CACHE_ENABLED,
+			CommerceDiscountImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByC_C_A",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Boolean.class.getName()
+			},
+			CommerceDiscountModelImpl.COMPANYID_COLUMN_BITMASK |
+			CommerceDiscountModelImpl.COUPONCODE_COLUMN_BITMASK |
+			CommerceDiscountModelImpl.ACTIVE_COLUMN_BITMASK);
+
+		_finderPathCountByC_C_A = new FinderPath(
+			CommerceDiscountModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceDiscountModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_A",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Boolean.class.getName()
+			});
 
 		_finderPathFetchByC_ERC = new FinderPath(
 			CommerceDiscountModelImpl.ENTITY_CACHE_ENABLED,

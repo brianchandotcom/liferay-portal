@@ -1257,16 +1257,16 @@ public class DLFileEntryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DLFileEntryWrapper)) {
+		if (!(object instanceof DLFileEntryWrapper)) {
 			return false;
 		}
 
-		DLFileEntryWrapper dlFileEntryWrapper = (DLFileEntryWrapper)obj;
+		DLFileEntryWrapper dlFileEntryWrapper = (DLFileEntryWrapper)object;
 
 		if (Objects.equals(_dlFileEntry, dlFileEntryWrapper._dlFileEntry)) {
 			return true;

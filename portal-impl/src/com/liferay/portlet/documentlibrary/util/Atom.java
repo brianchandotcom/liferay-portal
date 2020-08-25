@@ -177,7 +177,7 @@ public class Atom {
 			ArrayUtil.clone(_buffer, index + 8, index + 12));
 
 		for (int i = 0; i < offsetCount; i++) {
-			int offsetIndex = index + 12 + i * 8;
+			int offsetIndex = index + 12 + (i * 8);
 
 			long offset = bytesToLong(
 				ArrayUtil.clone(_buffer, offsetIndex, offsetIndex + 8));
@@ -204,7 +204,7 @@ public class Atom {
 			ArrayUtil.clone(_buffer, index + 8, index + 12));
 
 		for (int i = 0; i < offsetCount; i++) {
-			int offsetIndex = index + 12 + i * 4;
+			int offsetIndex = index + 12 + (i * 4);
 
 			int offset = (int)bytesToLong(
 				ArrayUtil.clone(_buffer, offsetIndex, offsetIndex + 4));

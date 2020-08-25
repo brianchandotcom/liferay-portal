@@ -594,17 +594,17 @@ public class LayoutFriendlyURLWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof LayoutFriendlyURLWrapper)) {
+		if (!(object instanceof LayoutFriendlyURLWrapper)) {
 			return false;
 		}
 
 		LayoutFriendlyURLWrapper layoutFriendlyURLWrapper =
-			(LayoutFriendlyURLWrapper)obj;
+			(LayoutFriendlyURLWrapper)object;
 
 		if (Objects.equals(
 				_layoutFriendlyURL,

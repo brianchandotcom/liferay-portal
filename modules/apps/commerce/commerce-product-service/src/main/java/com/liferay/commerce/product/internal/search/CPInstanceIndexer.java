@@ -110,6 +110,14 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 			}
 		}
 
+		if (attributes.containsKey(CPField.HAS_CHILD_CP_DEFINITIONS)) {
+			boolean hasChildCPDefinitions = GetterUtil.getBoolean(
+				attributes.get(CPField.HAS_CHILD_CP_DEFINITIONS));
+
+			contextBooleanFilter.addRequiredTerm(
+				CPField.HAS_CHILD_CP_DEFINITIONS, hasChildCPDefinitions);
+		}
+
 		if (attributes.containsKey(CPField.PUBLISHED)) {
 			boolean published = GetterUtil.getBoolean(
 				attributes.get(CPField.PUBLISHED));
@@ -220,6 +228,11 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		document.addKeyword(
 			CPField.EXTERNAL_REFERENCE_CODE,
 			cpInstance.getExternalReferenceCode());
+		document.addKeyword(
+			CPField.HAS_CHILD_CP_DEFINITIONS,
+			_cpDefinitionLocalService.hasChildCPDefinitions(
+				cpDefinition.getCPDefinitionId()));
+		document.addKeyword(CPField.UNSPSC, cpInstance.getUnspsc());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + cpInstance + " indexed successfully");

@@ -43,7 +43,7 @@ request.setAttribute("websites.classPK", company.getAccountId());
 	>
 		<div class="company-info">
 			<p class="float-container">
-				<img alt='<liferay-ui:message escapeAttribute="<%= true %>" key="logo" />' class="company-logo" src="<%= themeDisplay.getPathImage() %>/company_logo?img_id=<%= company.getLogoId() %>&t=<%= WebServerServletTokenUtil.getToken(company.getLogoId()) %>" /><br />
+				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="logo" />" class="company-logo" src="<%= themeDisplay.getPathImage() %>/company_logo?img_id=<%= company.getLogoId() %>&t=<%= WebServerServletTokenUtil.getToken(company.getLogoId()) %>" /><br />
 
 				<span class="company-name"><%= HtmlUtil.escape(company.getName()) %></span>
 			</p>

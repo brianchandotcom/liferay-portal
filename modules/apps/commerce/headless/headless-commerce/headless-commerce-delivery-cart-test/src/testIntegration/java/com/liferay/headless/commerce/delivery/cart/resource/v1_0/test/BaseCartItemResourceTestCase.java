@@ -112,7 +112,9 @@ public abstract class BaseCartItemResourceTestCase {
 
 		CartItemResource.Builder builder = CartItemResource.builder();
 
-		cartItemResource = builder.locale(
+		cartItemResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

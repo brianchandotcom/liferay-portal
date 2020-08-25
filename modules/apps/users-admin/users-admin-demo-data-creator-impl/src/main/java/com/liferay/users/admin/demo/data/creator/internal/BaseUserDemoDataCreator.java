@@ -75,29 +75,31 @@ public abstract class BaseUserDemoDataCreator implements UserDemoDataCreator {
 		Date birthDate = new Date();
 		byte[] portraitBytes = null;
 
-		try (InputStream is = new URL(
-				_RANDOM_USER_API
-			).openStream()) {
+		try {
+			URL url = new URL(_RANDOM_USER_API);
 
-			String json = StringUtil.read(is);
+			try (InputStream is = url.openStream()) {
+				String json = StringUtil.read(is);
 
-			JSONObject rootJSONObject = JSONFactoryUtil.createJSONObject(json);
+				JSONObject rootJSONObject = JSONFactoryUtil.createJSONObject(
+					json);
 
-			JSONArray jsonArray = rootJSONObject.getJSONArray("results");
+				JSONArray jsonArray = rootJSONObject.getJSONArray("results");
 
-			JSONObject userJSONObject = jsonArray.getJSONObject(0);
+				JSONObject userJSONObject = jsonArray.getJSONObject(0);
 
-			emailAddress = _getEmailAddress(emailAddress, userJSONObject);
-			male = StringUtil.equalsIgnoreCase(
-				userJSONObject.getString("gender"), "male");
-			birthDate = _getBirthDate(birthDate, userJSONObject);
+				emailAddress = _getEmailAddress(emailAddress, userJSONObject);
+				male = StringUtil.equalsIgnoreCase(
+					userJSONObject.getString("gender"), "male");
+				birthDate = _getBirthDate(birthDate, userJSONObject);
 
-			JSONObject pictureJSONObject = userJSONObject.getJSONObject(
-				"picture");
+				JSONObject pictureJSONObject = userJSONObject.getJSONObject(
+					"picture");
 
-			String portraitURL = pictureJSONObject.getString("large");
+				String portraitURL = pictureJSONObject.getString("large");
 
-			portraitBytes = _getBytes(new URL(portraitURL));
+				portraitBytes = _getBytes(new URL(portraitURL));
+			}
 		}
 		catch (IOException ioe) {
 			if (_log.isWarnEnabled()) {

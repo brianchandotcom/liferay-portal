@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -242,6 +243,15 @@ public class KaleoInstancePersistenceTest {
 		_persistence.countByCN_CPK("null", 0L);
 
 		_persistence.countByCN_CPK((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByKII_C_U() throws Exception {
+		_persistence.countByKII_C_U(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByKII_C_U(0L, 0L, 0L);
 	}
 
 	@Test
@@ -501,6 +511,31 @@ public class KaleoInstancePersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		KaleoInstance newKaleoInstance = addKaleoInstance();
+
+		_persistence.clearCache();
+
+		KaleoInstance existingKaleoInstance = _persistence.findByPrimaryKey(
+			newKaleoInstance.getPrimaryKey());
+
+		Assert.assertEquals(
+			Long.valueOf(existingKaleoInstance.getKaleoInstanceId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingKaleoInstance, "getOriginalKaleoInstanceId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingKaleoInstance.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingKaleoInstance, "getOriginalCompanyId",
+				new Class<?>[0]));
+		Assert.assertEquals(
+			Long.valueOf(existingKaleoInstance.getUserId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingKaleoInstance, "getOriginalUserId", new Class<?>[0]));
 	}
 
 	protected KaleoInstance addKaleoInstance() throws Exception {

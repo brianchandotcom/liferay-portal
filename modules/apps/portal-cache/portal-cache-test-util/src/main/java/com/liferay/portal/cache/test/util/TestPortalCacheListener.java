@@ -137,7 +137,7 @@ public class TestPortalCacheListener<K extends Serializable, V>
 	}
 
 	private String _allActions() {
-		StringBundler sb = new StringBundler(2 + 2 * _actions.size());
+		StringBundler sb = new StringBundler(2 + (2 * _actions.size()));
 
 		sb.append("All actions{");
 

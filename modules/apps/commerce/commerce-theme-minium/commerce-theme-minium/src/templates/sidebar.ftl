@@ -1,7 +1,7 @@
 <div class="minium-sidebar">
 	<div class="minium-sidebar__start">
 		<div class="minium-logo">
-			<a class="${logo_css_class}" href="${site_default_url}" title='<@liferay.language_format arguments="${site_name}" key="go-to-x" />'>
+			<a class="${logo_css_class}" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
 				<img alt="${logo_description}" class="logo-image-sm" src="${site_logo}" />
 			</a>
 		</div>

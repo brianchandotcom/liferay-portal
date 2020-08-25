@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>PANEL_EXPANDED</td>
-	<td>//div[@class='panel-heading']//a[normalize-space(text())='${key_panel}'][@aria-expanded='true' and not(contains(@class,'collapsed'))]</td>
+	<td>//div[@class='panel-heading']//a[normalize-space(text())='${key_panel}'][@aria-expanded='true' and not(contains(@class,'collapsed'))] | //div[@class='panel-title']//a[normalize-space(text())='${key_panel}'][@aria-expanded='true' and not(contains(@class,'collapsed'))]</td>
 	<td></td>
 </tr>
 <tr>

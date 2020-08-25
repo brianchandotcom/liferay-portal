@@ -205,7 +205,8 @@ public class CommercePaymentMethodClayTable
 						commercePaymentMethod.getName(
 							themeDisplay.getLocale())),
 					CommerceChannelClayTableUtil.getLabelField(
-						_isActive(commercePaymentMethodGroupRel))));
+						_isActive(commercePaymentMethodGroupRel),
+						themeDisplay.getLocale())));
 		}
 
 		return paymentMethods;

@@ -495,16 +495,16 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MBBanWrapper)) {
+		if (!(object instanceof MBBanWrapper)) {
 			return false;
 		}
 
-		MBBanWrapper mbBanWrapper = (MBBanWrapper)obj;
+		MBBanWrapper mbBanWrapper = (MBBanWrapper)object;
 
 		if (Objects.equals(_mbBan, mbBanWrapper._mbBan)) {
 			return true;

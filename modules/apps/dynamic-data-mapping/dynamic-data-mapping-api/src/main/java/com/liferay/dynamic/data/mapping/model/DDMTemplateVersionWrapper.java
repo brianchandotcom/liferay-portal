@@ -1086,17 +1086,17 @@ public class DDMTemplateVersionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMTemplateVersionWrapper)) {
+		if (!(object instanceof DDMTemplateVersionWrapper)) {
 			return false;
 		}
 
 		DDMTemplateVersionWrapper ddmTemplateVersionWrapper =
-			(DDMTemplateVersionWrapper)obj;
+			(DDMTemplateVersionWrapper)object;
 
 		if (Objects.equals(
 				_ddmTemplateVersion,

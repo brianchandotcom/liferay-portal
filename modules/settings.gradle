@@ -4,6 +4,16 @@ buildscript {
 
 apply plugin: "com.liferay.settings.plugin"
 
+File privateYarnLockFile = new File(rootDir, "private/yarn.lock")
+
+if (privateYarnLockFile.exists()) {
+	include "private"
+
+	ProjectDescriptor projectDescriptor = project(":private")
+
+	projectDescriptor.projectDir = privateYarnLockFile.parentFile
+}
+
 String testClassGroupIndex = System.getProperty("test.class.group.index")
 
 if (testClassGroupIndex) {

@@ -773,16 +773,16 @@ public class CProductModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CProduct)) {
+		if (!(object instanceof CProduct)) {
 			return false;
 		}
 
-		CProduct cProduct = (CProduct)obj;
+		CProduct cProduct = (CProduct)object;
 
 		long primaryKey = cProduct.getPrimaryKey();
 

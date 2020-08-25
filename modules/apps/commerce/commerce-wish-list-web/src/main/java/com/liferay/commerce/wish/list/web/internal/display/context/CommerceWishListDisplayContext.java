@@ -138,7 +138,7 @@ public class CommerceWishListDisplayContext {
 			cpDefinition.getCPDefinitionId(), commerceWishListItem.getJson(),
 			_commerceWishListRequestHelper.getLocale());
 
-		StringBundler sb = new StringBundler(keyValuePairs.size() * 2 - 1);
+		StringBundler sb = new StringBundler((keyValuePairs.size() * 2) - 1);
 
 		for (Iterator<KeyValuePair> iterator = keyValuePairs.iterator();
 			 iterator.hasNext();) {

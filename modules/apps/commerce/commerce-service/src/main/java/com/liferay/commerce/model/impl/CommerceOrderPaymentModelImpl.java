@@ -765,16 +765,17 @@ public class CommerceOrderPaymentModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceOrderPayment)) {
+		if (!(object instanceof CommerceOrderPayment)) {
 			return false;
 		}
 
-		CommerceOrderPayment commerceOrderPayment = (CommerceOrderPayment)obj;
+		CommerceOrderPayment commerceOrderPayment =
+			(CommerceOrderPayment)object;
 
 		long primaryKey = commerceOrderPayment.getPrimaryKey();
 

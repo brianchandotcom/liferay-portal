@@ -714,17 +714,17 @@ public class BackgroundTaskWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof BackgroundTaskWrapper)) {
+		if (!(object instanceof BackgroundTaskWrapper)) {
 			return false;
 		}
 
 		BackgroundTaskWrapper backgroundTaskWrapper =
-			(BackgroundTaskWrapper)obj;
+			(BackgroundTaskWrapper)object;
 
 		if (Objects.equals(
 				_backgroundTask, backgroundTaskWrapper._backgroundTask)) {

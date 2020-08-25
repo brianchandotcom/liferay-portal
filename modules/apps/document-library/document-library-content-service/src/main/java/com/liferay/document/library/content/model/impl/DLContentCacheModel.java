@@ -34,16 +34,16 @@ public class DLContentCacheModel
 	implements CacheModel<DLContent>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DLContentCacheModel)) {
+		if (!(object instanceof DLContentCacheModel)) {
 			return false;
 		}
 
-		DLContentCacheModel dlContentCacheModel = (DLContentCacheModel)obj;
+		DLContentCacheModel dlContentCacheModel = (DLContentCacheModel)object;
 
 		if (contentId == dlContentCacheModel.contentId) {
 			return true;

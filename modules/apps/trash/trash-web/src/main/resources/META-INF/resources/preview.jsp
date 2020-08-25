@@ -44,10 +44,8 @@ if (trashEntry != null) {
 }
 
 TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(className);
-
-TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
 %>
 
 <liferay-asset:asset-display
-	renderer="<%= trashRenderer %>"
+	renderer="<%= trashHandler.getTrashRenderer(classPK) %>"
 />

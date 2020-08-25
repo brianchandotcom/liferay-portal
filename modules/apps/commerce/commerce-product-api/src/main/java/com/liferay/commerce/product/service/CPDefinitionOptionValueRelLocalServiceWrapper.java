@@ -274,6 +274,15 @@ public class CPDefinitionOptionValueRelLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CPDefinitionOptionValueRel
+		fetchPreselectedCPDefinitionOptionValueRel(
+			long cpDefinitionOptionRelId) {
+
+		return _cpDefinitionOptionValueRelLocalService.
+			fetchPreselectedCPDefinitionOptionValueRel(cpDefinitionOptionRelId);
+	}
+
+	@Override
 	public java.util.List
 		<com.liferay.commerce.product.model.CPDefinitionOptionValueRel>
 			filterByCPInstanceOptionValueRels(
@@ -525,6 +534,14 @@ public class CPDefinitionOptionValueRelLocalServiceWrapper
 	}
 
 	@Override
+	public boolean hasPreselectedCPDefinitionOptionValueRel(
+		long cpDefinitionOptionRelId) {
+
+		return _cpDefinitionOptionValueRelLocalService.
+			hasPreselectedCPDefinitionOptionValueRel(cpDefinitionOptionRelId);
+	}
+
+	@Override
 	public void importCPDefinitionOptionRels(
 			long cpDefinitionOptionRelId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -591,6 +608,22 @@ public class CPDefinitionOptionValueRelLocalServiceWrapper
 			updateCPDefinitionOptionValueRel(cpDefinitionOptionValueRel);
 	}
 
+	/**
+	 * @param cpDefinitionOptionValueRelId
+	 * @param nameMap
+	 * @param priority
+	 * @param key
+	 * @param cpInstanceId
+	 * @param quantity
+	 * @param price
+	 * @param serviceContext
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link
+	 #updateCPDefinitionOptionValueRel(long, Map, double, String,
+	 long, int, boolean, BigDecimal, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.commerce.product.model.CPDefinitionOptionValueRel
 			updateCPDefinitionOptionValueRel(
@@ -612,6 +645,35 @@ public class CPDefinitionOptionValueRelLocalServiceWrapper
 			updateCPDefinitionOptionValueRel(
 				long cpDefinitionOptionValueRelId,
 				java.util.Map<java.util.Locale, String> nameMap,
+				double priority, String key, long cpInstanceId, int quantity,
+				boolean preselected, java.math.BigDecimal price,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionOptionValueRelLocalService.
+			updateCPDefinitionOptionValueRel(
+				cpDefinitionOptionValueRelId, nameMap, priority, key,
+				cpInstanceId, quantity, preselected, price, serviceContext);
+	}
+
+	/**
+	 * @param cpDefinitionOptionValueRelId
+	 * @param nameMap
+	 * @param priority
+	 * @param key
+	 * @param serviceContext
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link
+	 #updateCPDefinitionOptionValueRel(long, Map, double, String,
+	 long, int, boolean, BigDecimal, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.product.model.CPDefinitionOptionValueRel
+			updateCPDefinitionOptionValueRel(
+				long cpDefinitionOptionValueRelId,
+				java.util.Map<java.util.Locale, String> nameMap,
 				double priority, String key,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -620,6 +682,16 @@ public class CPDefinitionOptionValueRelLocalServiceWrapper
 			updateCPDefinitionOptionValueRel(
 				cpDefinitionOptionValueRelId, nameMap, priority, key,
 				serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.product.model.CPDefinitionOptionValueRel
+		updateCPDefinitionOptionValueRelPreselected(
+			long cpDefinitionOptionValueRelId, boolean preselected) {
+
+		return _cpDefinitionOptionValueRelLocalService.
+			updateCPDefinitionOptionValueRelPreselected(
+				cpDefinitionOptionValueRelId, preselected);
 	}
 
 	@Override

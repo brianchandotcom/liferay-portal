@@ -331,16 +331,16 @@ public class ClusterGroupWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ClusterGroupWrapper)) {
+		if (!(object instanceof ClusterGroupWrapper)) {
 			return false;
 		}
 
-		ClusterGroupWrapper clusterGroupWrapper = (ClusterGroupWrapper)obj;
+		ClusterGroupWrapper clusterGroupWrapper = (ClusterGroupWrapper)object;
 
 		if (Objects.equals(_clusterGroup, clusterGroupWrapper._clusterGroup)) {
 			return true;

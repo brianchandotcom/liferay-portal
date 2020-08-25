@@ -20,9 +20,9 @@ import com.liferay.commerce.payment.method.mercanet.internal.configuration.Merca
 import com.liferay.commerce.payment.method.mercanet.internal.connector.Environment;
 import com.liferay.commerce.payment.method.mercanet.internal.connector.PaypageClient;
 import com.liferay.commerce.payment.method.mercanet.internal.constants.MercanetCommercePaymentMethodConstants;
+import com.liferay.commerce.payment.util.CommercePaymentHttpHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
-import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -88,11 +88,9 @@ public class MercanetServlet extends HttpServlet {
 				PortalSessionThreadLocal.setHttpSession(httpSession);
 			}
 
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(
-					_portal.getUser(httpServletRequest));
+			// Handle initializing permission checker for guests
 
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			_commercePaymentHttpHelper.getCommerceOrder(httpServletRequest);
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
@@ -151,12 +149,9 @@ public class MercanetServlet extends HttpServlet {
 			}
 
 			if (Objects.equals("automatic", type)) {
-				long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
-				String uuid = ParamUtil.getString(httpServletRequest, "uuid");
-
 				CommerceOrder commerceOrder =
-					_commerceOrderLocalService.getCommerceOrderByUuidAndGroupId(
-						uuid, groupId);
+					_commercePaymentHttpHelper.getCommerceOrder(
+						httpServletRequest);
 
 				CommerceChannel commerceChannel =
 					_commerceChannelLocalService.
@@ -249,10 +244,10 @@ public class MercanetServlet extends HttpServlet {
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
-	private CommerceOrderLocalService _commerceOrderLocalService;
+	private CommercePaymentEngine _commercePaymentEngine;
 
 	@Reference
-	private CommercePaymentEngine _commercePaymentEngine;
+	private CommercePaymentHttpHelper _commercePaymentHttpHelper;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

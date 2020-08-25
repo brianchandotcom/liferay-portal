@@ -55,7 +55,7 @@ public class DestinationWrapper implements Destination {
 
 	@Override
 	public void destroy() {
-		this.destination.destroy();
+		destination.destroy();
 	}
 
 	@Override

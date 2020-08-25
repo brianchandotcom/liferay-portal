@@ -91,6 +91,111 @@ public class CommercePricingClassCPDefinitionRelServiceSoap {
 
 	public static
 		com.liferay.commerce.pricing.model.
+			CommercePricingClassCPDefinitionRelSoap
+					deleteCommercePricingClassCPDefinitionRel(
+						com.liferay.commerce.pricing.model.
+							CommercePricingClassCPDefinitionRelSoap
+								commercePricingClassCPDefinitionRel)
+				throws RemoteException {
+
+		try {
+			com.liferay.commerce.pricing.model.
+				CommercePricingClassCPDefinitionRel returnValue =
+					CommercePricingClassCPDefinitionRelServiceUtil.
+						deleteCommercePricingClassCPDefinitionRel(
+							com.liferay.commerce.pricing.model.impl.
+								CommercePricingClassCPDefinitionRelModelImpl.
+									toModel(
+										commercePricingClassCPDefinitionRel));
+
+			return com.liferay.commerce.pricing.model.
+				CommercePricingClassCPDefinitionRelSoap.toSoapModel(
+					returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.pricing.model.
+			CommercePricingClassCPDefinitionRelSoap
+					deleteCommercePricingClassCPDefinitionRel(
+						long commercePricingClassCPDefinitionRelId)
+				throws RemoteException {
+
+		try {
+			com.liferay.commerce.pricing.model.
+				CommercePricingClassCPDefinitionRel returnValue =
+					CommercePricingClassCPDefinitionRelServiceUtil.
+						deleteCommercePricingClassCPDefinitionRel(
+							commercePricingClassCPDefinitionRelId);
+
+			return com.liferay.commerce.pricing.model.
+				CommercePricingClassCPDefinitionRelSoap.toSoapModel(
+					returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.pricing.model.
+			CommercePricingClassCPDefinitionRelSoap
+					fetchCommercePricingClassCPDefinitionRel(
+						long commercePricingClassId, long cpDefinitionId)
+				throws RemoteException {
+
+		try {
+			com.liferay.commerce.pricing.model.
+				CommercePricingClassCPDefinitionRel returnValue =
+					CommercePricingClassCPDefinitionRelServiceUtil.
+						fetchCommercePricingClassCPDefinitionRel(
+							commercePricingClassId, cpDefinitionId);
+
+			return com.liferay.commerce.pricing.model.
+				CommercePricingClassCPDefinitionRelSoap.toSoapModel(
+					returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.pricing.model.
+			CommercePricingClassCPDefinitionRelSoap
+					getCommercePricingClassCPDefinitionRel(
+						long commercePricingClassCPDefinitionRelId)
+				throws RemoteException {
+
+		try {
+			com.liferay.commerce.pricing.model.
+				CommercePricingClassCPDefinitionRel returnValue =
+					CommercePricingClassCPDefinitionRelServiceUtil.
+						getCommercePricingClassCPDefinitionRel(
+							commercePricingClassCPDefinitionRelId);
+
+			return com.liferay.commerce.pricing.model.
+				CommercePricingClassCPDefinitionRelSoap.toSoapModel(
+					returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.pricing.model.
 			CommercePricingClassCPDefinitionRelSoap[]
 					getCommercePricingClassCPDefinitionRelByClassId(
 						long commercePricingClassId)
@@ -115,6 +220,75 @@ public class CommercePricingClassCPDefinitionRelServiceSoap {
 		}
 	}
 
+	public static
+		com.liferay.commerce.pricing.model.
+			CommercePricingClassCPDefinitionRelSoap[]
+					getCommercePricingClassCPDefinitionRels(
+						long commercePricingClassId, int start, int end,
+						com.liferay.portal.kernel.util.OrderByComparator
+							<com.liferay.commerce.pricing.model.
+								CommercePricingClassCPDefinitionRel>
+									orderByComparator)
+				throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.commerce.pricing.model.
+					CommercePricingClassCPDefinitionRel> returnValue =
+						CommercePricingClassCPDefinitionRelServiceUtil.
+							getCommercePricingClassCPDefinitionRels(
+								commercePricingClassId, start, end,
+								orderByComparator);
+
+			return com.liferay.commerce.pricing.model.
+				CommercePricingClassCPDefinitionRelSoap.toSoapModels(
+					returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getCommercePricingClassCPDefinitionRelsCount(
+			long commercePricingClassId)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CommercePricingClassCPDefinitionRelServiceUtil.
+					getCommercePricingClassCPDefinitionRelsCount(
+						commercePricingClassId);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getCommercePricingClassCPDefinitionRelsCount(
+			long commercePricingClassId, String name, String languageId)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				CommercePricingClassCPDefinitionRelServiceUtil.
+					getCommercePricingClassCPDefinitionRelsCount(
+						commercePricingClassId, name, languageId);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static long[] getCPDefinitionIds(long commercePricingClassId)
 		throws RemoteException {
 
@@ -124,6 +298,34 @@ public class CommercePricingClassCPDefinitionRelServiceSoap {
 					getCPDefinitionIds(commercePricingClassId);
 
 			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.pricing.model.
+			CommercePricingClassCPDefinitionRelSoap[]
+					searchByCommercePricingClassId(
+						long commercePricingClassId, String name,
+						String languageId, int start, int end)
+				throws RemoteException {
+
+		try {
+			java.util.List
+				<com.liferay.commerce.pricing.model.
+					CommercePricingClassCPDefinitionRel> returnValue =
+						CommercePricingClassCPDefinitionRelServiceUtil.
+							searchByCommercePricingClassId(
+								commercePricingClassId, name, languageId, start,
+								end);
+
+			return com.liferay.commerce.pricing.model.
+				CommercePricingClassCPDefinitionRelSoap.toSoapModels(
+					returnValue);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

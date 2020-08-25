@@ -119,7 +119,7 @@ Export-Package:\
 	javax.jws;version='1.1',\
 	javax.jws.soap;version='1.1',\
 	\
-	javax.mail.*;version='1.4',\
+	javax.mail.*;version='1.6.2',\
 	\
 	javax.persistence.*;version='2.1',\
 	\
@@ -258,7 +258,7 @@ Export-Package:\
 	\
 	org.aspectj.*,\
 	\
-	org.dom4j.*;version='2.1.1',\
+	org.dom4j.*;version='2.1.3',\
 	\
 	org.hibernate.*;version='3.6.10',\
 	\

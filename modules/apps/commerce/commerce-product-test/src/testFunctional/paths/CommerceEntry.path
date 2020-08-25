@@ -275,7 +275,7 @@
 </tr>
 <tr>
 	<td>FIX_ISSUE_BUTTON</td>
-	<td>//tr[contains (@data-qa-id,'row')]//td/button[contains (@id,'fixIssueButton${key_buttonRowNumber}')and contains(@class,'${key_buttonStatus}')]</td>
+	<td>//tr/td[contains(.,'${key_fixIssueButtonName}')]/..//td[@class='dataset-item-actions-wrapper']/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -400,7 +400,7 @@
 </tr>
 <tr>
 	<td>CHANNEL_PAYMENT_METHOD_NAME</td>
-	<td>//div/h4[contains(.,'Payment Methods')]/..//a[contains(.,'${key_paymentMethod}')]</td>
+	<td>//div/h4[contains(.,'Payment Methods')]/..//button[contains(.,'${key_paymentMethod}')]</td>
 	<td></td>
 </tr>
 <!--CATALOGS-->
@@ -449,6 +449,11 @@
 	<td></td>
 </tr>
 <!--PRODUCT-->
+<tr>
+	<td>CREATE_NEW_PRODUCT_CATALOG_FIELD</td>
+	<td>//label[text()='Catalog']/following::div//input[@placeholder='Type Here']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>PRODUCT_DETAIL_VIEW_OPTION</td>
 	<td>//div[contains(@class,'card d-flex')]//h4[contains(.,'Option')]/..//a</td>

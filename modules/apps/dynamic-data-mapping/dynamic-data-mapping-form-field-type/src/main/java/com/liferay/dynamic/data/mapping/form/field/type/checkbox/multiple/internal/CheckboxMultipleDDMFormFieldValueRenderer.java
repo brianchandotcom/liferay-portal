@@ -52,7 +52,7 @@ public class CheckboxMultipleDDMFormFieldValueRenderer
 			ddmFormFieldValue);
 
 		StringBundler sb = new StringBundler(
-			optionsValuesJSONArray.length() * 2 - 1);
+			(optionsValuesJSONArray.length() * 2) - 1);
 
 		for (int i = 0; i < optionsValuesJSONArray.length(); i++) {
 			LocalizedValue optionLabel = ddmFormFieldOptions.getOptionLabels(

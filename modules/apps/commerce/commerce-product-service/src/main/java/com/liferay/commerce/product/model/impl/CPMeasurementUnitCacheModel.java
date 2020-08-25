@@ -36,17 +36,17 @@ public class CPMeasurementUnitCacheModel
 	implements CacheModel<CPMeasurementUnit>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPMeasurementUnitCacheModel)) {
+		if (!(object instanceof CPMeasurementUnitCacheModel)) {
 			return false;
 		}
 
 		CPMeasurementUnitCacheModel cpMeasurementUnitCacheModel =
-			(CPMeasurementUnitCacheModel)obj;
+			(CPMeasurementUnitCacheModel)object;
 
 		if (CPMeasurementUnitId ==
 				cpMeasurementUnitCacheModel.CPMeasurementUnitId) {

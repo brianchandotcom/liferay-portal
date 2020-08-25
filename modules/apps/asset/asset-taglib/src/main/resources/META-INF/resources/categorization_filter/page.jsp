@@ -61,7 +61,7 @@ if (assetCategoryId != 0) {
 				<portlet:param name="categoryId" value="0" />
 			</portlet:renderURL>
 
-			<a href="<%= viewURLWithoutCategory %>" title='<liferay-ui:message key="remove" />'>
+			<a href="<%= viewURLWithoutCategory %>" title="<liferay-ui:message key="remove" />">
 				<aui:icon cssClass="textboxlistentry-remove" image="times" markupView="lexicon" />
 			</a>
 		</span>
@@ -79,7 +79,7 @@ if (assetCategoryId != 0) {
 				<liferay-portlet:param name="tag" value="" />
 			</liferay-portlet:renderURL>
 
-			<a href="<%= viewURLWithoutTag %>" title='<liferay-ui:message key="remove" />'>
+			<a href="<%= viewURLWithoutTag %>" title="<liferay-ui:message key="remove" />">
 				<aui:icon cssClass="textboxlistentry-remove" image="times" markupView="lexicon" />
 			</a>
 		</span>

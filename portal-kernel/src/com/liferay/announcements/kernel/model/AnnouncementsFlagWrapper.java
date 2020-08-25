@@ -372,17 +372,17 @@ public class AnnouncementsFlagWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AnnouncementsFlagWrapper)) {
+		if (!(object instanceof AnnouncementsFlagWrapper)) {
 			return false;
 		}
 
 		AnnouncementsFlagWrapper announcementsFlagWrapper =
-			(AnnouncementsFlagWrapper)obj;
+			(AnnouncementsFlagWrapper)object;
 
 		if (Objects.equals(
 				_announcementsFlag,

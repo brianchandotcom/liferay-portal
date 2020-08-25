@@ -362,7 +362,8 @@ public class AssetCategoryFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(categoryProperties.length * 3 + 2);
+		StringBundler sb = new StringBundler(
+			(categoryProperties.length * 3) + 2);
 
 		sb.append(" INNER JOIN AssetCategoryProperty ON ");
 		sb.append("(AssetCategoryProperty.categoryId = ");

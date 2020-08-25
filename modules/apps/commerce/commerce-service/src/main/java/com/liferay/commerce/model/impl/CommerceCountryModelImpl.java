@@ -1376,16 +1376,16 @@ public class CommerceCountryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceCountry)) {
+		if (!(object instanceof CommerceCountry)) {
 			return false;
 		}
 
-		CommerceCountry commerceCountry = (CommerceCountry)obj;
+		CommerceCountry commerceCountry = (CommerceCountry)object;
 
 		long primaryKey = commerceCountry.getPrimaryKey();
 

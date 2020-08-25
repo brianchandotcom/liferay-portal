@@ -89,6 +89,10 @@ public abstract class KBCommentLocalServiceBaseImpl
 	/**
 	 * Adds the kb comment to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect KBCommentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param kbComment the kb comment
 	 * @return the kb comment that was added
 	 */
@@ -115,6 +119,10 @@ public abstract class KBCommentLocalServiceBaseImpl
 	/**
 	 * Deletes the kb comment with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect KBCommentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param kbCommentId the primary key of the kb comment
 	 * @return the kb comment that was removed
 	 * @throws PortalException if a kb comment with the primary key could not be found
@@ -127,6 +135,10 @@ public abstract class KBCommentLocalServiceBaseImpl
 
 	/**
 	 * Deletes the kb comment from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect KBCommentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param kbComment the kb comment
 	 * @return the kb comment that was removed
@@ -492,6 +504,10 @@ public abstract class KBCommentLocalServiceBaseImpl
 
 	/**
 	 * Updates the kb comment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect KBCommentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param kbComment the kb comment
 	 * @return the kb comment that was updated

@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.form.field.type.date.internal;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidationException;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidator;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -47,9 +46,7 @@ public class DateDDMFormFieldValueValidator
 	public void validate(DDMFormField ddmFormField, Value value)
 		throws DDMFormFieldValueValidationException {
 
-		DDMForm ddmForm = ddmFormField.getDDMForm();
-
-		Locale defaultLocale = ddmForm.getDefaultLocale();
+		Locale defaultLocale = value.getDefaultLocale();
 
 		String valueString = value.getString(defaultLocale);
 

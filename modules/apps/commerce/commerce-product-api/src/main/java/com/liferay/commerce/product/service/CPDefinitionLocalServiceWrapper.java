@@ -155,6 +155,15 @@ public class CPDefinitionLocalServiceWrapper
 		return _cpDefinitionLocalService.copyCPDefinition(cpDefinitionId);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPDefinition copyCPDefinition(
+			long cpDefinitionId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionLocalService.copyCPDefinition(
+			cpDefinitionId, groupId);
+	}
+
 	/**
 	 * Creates a new cp definition with the primary key. Does not add the cp definition to the database.
 	 *

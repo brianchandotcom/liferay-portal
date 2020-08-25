@@ -5,4 +5,8 @@
 	<category name="com.liferay.adaptive.media.web.internal.messaging.AMMessageListener">
 		<priority value="WARN" />
 	</category>
+
+	<category name="com.liferay.adaptive.media.web.internal.servlet.AMServlet">
+		<priority value="WARN" />
+	</category>
 </log4j:configuration>

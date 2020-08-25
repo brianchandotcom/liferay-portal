@@ -566,18 +566,18 @@ public class CommerceInventoryWarehouseItemWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceInventoryWarehouseItemWrapper)) {
+		if (!(object instanceof CommerceInventoryWarehouseItemWrapper)) {
 			return false;
 		}
 
 		CommerceInventoryWarehouseItemWrapper
 			commerceInventoryWarehouseItemWrapper =
-				(CommerceInventoryWarehouseItemWrapper)obj;
+				(CommerceInventoryWarehouseItemWrapper)object;
 
 		if (Objects.equals(
 				_commerceInventoryWarehouseItem,

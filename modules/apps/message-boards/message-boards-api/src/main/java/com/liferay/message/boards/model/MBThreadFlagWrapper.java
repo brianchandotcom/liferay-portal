@@ -478,16 +478,16 @@ public class MBThreadFlagWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MBThreadFlagWrapper)) {
+		if (!(object instanceof MBThreadFlagWrapper)) {
 			return false;
 		}
 
-		MBThreadFlagWrapper mbThreadFlagWrapper = (MBThreadFlagWrapper)obj;
+		MBThreadFlagWrapper mbThreadFlagWrapper = (MBThreadFlagWrapper)object;
 
 		if (Objects.equals(_mbThreadFlag, mbThreadFlagWrapper._mbThreadFlag)) {
 			return true;

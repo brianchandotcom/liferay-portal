@@ -960,16 +960,17 @@ public class MBMailingListWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MBMailingListWrapper)) {
+		if (!(object instanceof MBMailingListWrapper)) {
 			return false;
 		}
 
-		MBMailingListWrapper mbMailingListWrapper = (MBMailingListWrapper)obj;
+		MBMailingListWrapper mbMailingListWrapper =
+			(MBMailingListWrapper)object;
 
 		if (Objects.equals(
 				_mbMailingList, mbMailingListWrapper._mbMailingList)) {

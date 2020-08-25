@@ -112,7 +112,9 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		OptionCategoryResource.Builder builder =
 			OptionCategoryResource.builder();
 
-		optionCategoryResource = builder.locale(
+		optionCategoryResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

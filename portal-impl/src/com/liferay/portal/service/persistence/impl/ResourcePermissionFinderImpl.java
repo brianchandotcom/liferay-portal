@@ -135,7 +135,7 @@ public class ResourcePermissionFinderImpl
 			String sql = CustomSQLUtil.get(COUNT_BY_C_N_S_P_R_A);
 
 			if (roleIds.length > 1) {
-				StringBundler sb = new StringBundler(roleIds.length * 2 - 1);
+				StringBundler sb = new StringBundler((roleIds.length * 2) - 1);
 
 				for (int i = 0; i < roleIds.length; i++) {
 					if (i > 0) {
@@ -260,7 +260,7 @@ public class ResourcePermissionFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(scopes.length * 2 + 1);
+		StringBundler sb = new StringBundler((scopes.length * 2) + 1);
 
 		sb.append(StringPool.OPEN_PARENTHESIS);
 

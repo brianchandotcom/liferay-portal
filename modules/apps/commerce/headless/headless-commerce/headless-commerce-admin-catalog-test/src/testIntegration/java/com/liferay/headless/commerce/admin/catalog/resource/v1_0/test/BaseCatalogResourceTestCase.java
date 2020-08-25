@@ -25,8 +25,10 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
+import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.CatalogResource;
 import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.CatalogSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -46,6 +48,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -54,11 +57,14 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,7 +76,9 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Level;
 
 import org.junit.After;
@@ -111,7 +119,9 @@ public abstract class BaseCatalogResourceTestCase {
 
 		CatalogResource.Builder builder = CatalogResource.builder();
 
-		catalogResource = builder.locale(
+		catalogResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}
@@ -424,7 +434,229 @@ public abstract class BaseCatalogResourceTestCase {
 
 	@Test
 	public void testGetCatalogsPage() throws Exception {
-		Assert.assertTrue(false);
+		Page<Catalog> page = catalogResource.getCatalogsPage(
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Catalog catalog1 = testGetCatalogsPage_addCatalog(randomCatalog());
+
+		Catalog catalog2 = testGetCatalogsPage_addCatalog(randomCatalog());
+
+		page = catalogResource.getCatalogsPage(
+			null, null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(catalog1, catalog2), (List<Catalog>)page.getItems());
+		assertValid(page);
+
+		catalogResource.deleteCatalog(null);
+
+		catalogResource.deleteCatalog(null);
+	}
+
+	@Test
+	public void testGetCatalogsPageWithFilterDateTimeEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Catalog catalog1 = randomCatalog();
+
+		catalog1 = testGetCatalogsPage_addCatalog(catalog1);
+
+		for (EntityField entityField : entityFields) {
+			Page<Catalog> page = catalogResource.getCatalogsPage(
+				null, getFilterString(entityField, "between", catalog1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(catalog1),
+				(List<Catalog>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetCatalogsPageWithFilterStringEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Catalog catalog1 = testGetCatalogsPage_addCatalog(randomCatalog());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Catalog catalog2 = testGetCatalogsPage_addCatalog(randomCatalog());
+
+		for (EntityField entityField : entityFields) {
+			Page<Catalog> page = catalogResource.getCatalogsPage(
+				null, getFilterString(entityField, "eq", catalog1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(catalog1),
+				(List<Catalog>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetCatalogsPageWithPagination() throws Exception {
+		Catalog catalog1 = testGetCatalogsPage_addCatalog(randomCatalog());
+
+		Catalog catalog2 = testGetCatalogsPage_addCatalog(randomCatalog());
+
+		Catalog catalog3 = testGetCatalogsPage_addCatalog(randomCatalog());
+
+		Page<Catalog> page1 = catalogResource.getCatalogsPage(
+			null, null, Pagination.of(1, 2), null);
+
+		List<Catalog> catalogs1 = (List<Catalog>)page1.getItems();
+
+		Assert.assertEquals(catalogs1.toString(), 2, catalogs1.size());
+
+		Page<Catalog> page2 = catalogResource.getCatalogsPage(
+			null, null, Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<Catalog> catalogs2 = (List<Catalog>)page2.getItems();
+
+		Assert.assertEquals(catalogs2.toString(), 1, catalogs2.size());
+
+		Page<Catalog> page3 = catalogResource.getCatalogsPage(
+			null, null, Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(catalog1, catalog2, catalog3),
+			(List<Catalog>)page3.getItems());
+	}
+
+	@Test
+	public void testGetCatalogsPageWithSortDateTime() throws Exception {
+		testGetCatalogsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, catalog1, catalog2) -> {
+				BeanUtils.setProperty(
+					catalog1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetCatalogsPageWithSortInteger() throws Exception {
+		testGetCatalogsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, catalog1, catalog2) -> {
+				BeanUtils.setProperty(catalog1, entityField.getName(), 0);
+				BeanUtils.setProperty(catalog2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetCatalogsPageWithSortString() throws Exception {
+		testGetCatalogsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, catalog1, catalog2) -> {
+				Class<?> clazz = catalog1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						catalog1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						catalog2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanUtils.setProperty(
+						catalog1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanUtils.setProperty(
+						catalog2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanUtils.setProperty(
+						catalog1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanUtils.setProperty(
+						catalog2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetCatalogsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, Catalog, Catalog, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Catalog catalog1 = randomCatalog();
+		Catalog catalog2 = randomCatalog();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, catalog1, catalog2);
+		}
+
+		catalog1 = testGetCatalogsPage_addCatalog(catalog1);
+
+		catalog2 = testGetCatalogsPage_addCatalog(catalog2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Catalog> ascPage = catalogResource.getCatalogsPage(
+				null, null, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(catalog1, catalog2),
+				(List<Catalog>)ascPage.getItems());
+
+			Page<Catalog> descPage = catalogResource.getCatalogsPage(
+				null, null, Pagination.of(1, 2),
+				entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(catalog2, catalog1),
+				(List<Catalog>)descPage.getItems());
+		}
+	}
+
+	protected Catalog testGetCatalogsPage_addCatalog(Catalog catalog)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -477,6 +709,142 @@ public abstract class BaseCatalogResourceTestCase {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
+
+	@Test
+	public void testGetProductByExternalReferenceCodeCatalog()
+		throws Exception {
+
+		Catalog postCatalog =
+			testGetProductByExternalReferenceCodeCatalog_addCatalog();
+
+		Catalog getCatalog =
+			catalogResource.getProductByExternalReferenceCodeCatalog(
+				postCatalog.getExternalReferenceCode(), Pagination.of(1, 2));
+
+		assertEquals(postCatalog, getCatalog);
+		assertValid(getCatalog);
+	}
+
+	protected Catalog testGetProductByExternalReferenceCodeCatalog_addCatalog()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProductByExternalReferenceCodeCatalog()
+		throws Exception {
+
+		Catalog catalog = testGraphQLCatalog_addCatalog();
+
+		Assert.assertTrue(
+			equals(
+				catalog,
+				CatalogSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productByExternalReferenceCodeCatalog",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												catalog.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/productByExternalReferenceCodeCatalog"))));
+	}
+
+	@Test
+	public void testGraphQLGetProductByExternalReferenceCodeCatalogNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productByExternalReferenceCodeCatalog",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
+	public void testGetProductIdCatalog() throws Exception {
+		Catalog postCatalog = testGetProductIdCatalog_addCatalog();
+
+		Catalog getCatalog = catalogResource.getProductIdCatalog(
+			postCatalog.getId(), Pagination.of(1, 2));
+
+		assertEquals(postCatalog, getCatalog);
+		assertValid(getCatalog);
+	}
+
+	protected Catalog testGetProductIdCatalog_addCatalog() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetProductIdCatalog() throws Exception {
+		Catalog catalog = testGraphQLCatalog_addCatalog();
+
+		Assert.assertTrue(
+			equals(
+				catalog,
+				CatalogSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"productIdCatalog",
+								new HashMap<String, Object>() {
+									{
+										put("id", catalog.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/productIdCatalog"))));
+	}
+
+	@Test
+	public void testGraphQLGetProductIdCatalogNotFound() throws Exception {
+		Long irrelevantId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"productIdCatalog",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected Catalog testGraphQLCatalog_addCatalog() throws Exception {
 		throw new UnsupportedOperationException(

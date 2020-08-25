@@ -23,7 +23,6 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.internal.helper.v1_0.OrderHelper;
 import com.liferay.headless.commerce.admin.order.internal.helper.v1_0.OrderItemHelper;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -66,10 +65,11 @@ public class CommerceMLOrderBatchEngineTaskItemDelegate
 
 		com.liferay.portal.vulcan.pagination.Page<Order> ordersPage =
 			_orderHelper.getOrdersPage(
-				contextCompany.getCompanyId(), filter, vulcanPagination,
-				StringPool.BLANK, sorts,
+				contextCompany.getCompanyId(), filter, vulcanPagination, search,
+				sorts,
 				document -> _toOrder(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))),
+				false);
 
 		return Page.of(
 			ordersPage.getItems(),

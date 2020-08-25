@@ -38,6 +38,7 @@ import java.util.Map;
 
 /**
  * @author Marco Leo
+ * @author Igor Beslic
  */
 public class CPDefinitionOptionValueRelServiceImpl
 	extends CPDefinitionOptionValueRelServiceBaseImpl {
@@ -248,6 +249,23 @@ public class CPDefinitionOptionValueRelServiceImpl
 				end, sort);
 	}
 
+	/**
+	 * @param      cpDefinitionOptionValueRelId
+	 * @param      nameMap
+	 * @param      priority
+	 * @param      key
+	 * @param      cpInstanceId
+	 * @param      quantity
+	 * @param      price
+	 * @param      serviceContext
+	 * @return
+	 *
+	 * @throws     PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link
+	 *             #updateCPDefinitionOptionValueRel(long, Map, double, String,
+	 *             long, int, boolean, BigDecimal, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
 			long cpDefinitionOptionValueRelId, Map<Locale, String> nameMap,
@@ -255,27 +273,17 @@ public class CPDefinitionOptionValueRelServiceImpl
 			BigDecimal price, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			cpDefinitionOptionValueRelLocalService.
-				getCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
-
-		CPDefinitionOptionRel cpDefinitionOptionRel =
-			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
-				cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
-
-		_checkCommerceCatalogPermissionByCPDefinitionId(
-			cpDefinitionOptionRel.getCPDefinitionId(), ActionKeys.UPDATE);
-
-		return cpDefinitionOptionValueRelLocalService.
-			updateCPDefinitionOptionValueRel(
-				cpDefinitionOptionValueRelId, nameMap, priority, key,
-				cpInstanceId, quantity, price, serviceContext);
+		return updateCPDefinitionOptionValueRel(
+			cpDefinitionOptionValueRelId, nameMap, priority, key, cpInstanceId,
+			quantity, false, price, serviceContext);
 	}
 
 	@Override
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
 			long cpDefinitionOptionValueRelId, Map<Locale, String> nameMap,
-			double priority, String key, ServiceContext serviceContext)
+			double priority, String key, long cpInstanceId, int quantity,
+			boolean preselected, BigDecimal price,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
@@ -292,7 +300,54 @@ public class CPDefinitionOptionValueRelServiceImpl
 		return cpDefinitionOptionValueRelLocalService.
 			updateCPDefinitionOptionValueRel(
 				cpDefinitionOptionValueRelId, nameMap, priority, key,
-				serviceContext);
+				cpInstanceId, quantity, preselected, price, serviceContext);
+	}
+
+	/**
+	 * @param      cpDefinitionOptionValueRelId
+	 * @param      nameMap
+	 * @param      priority
+	 * @param      key
+	 * @param      serviceContext
+	 * @return
+	 *
+	 * @throws     PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link
+	 *             #updateCPDefinitionOptionValueRel(long, Map, double, String,
+	 *             long, int, boolean, BigDecimal, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
+			long cpDefinitionOptionValueRelId, Map<Locale, String> nameMap,
+			double priority, String key, ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateCPDefinitionOptionValueRel(
+			cpDefinitionOptionValueRelId, nameMap, priority, key, 0, 0, false,
+			null, serviceContext);
+	}
+
+	@Override
+	public CPDefinitionOptionValueRel
+			updateCPDefinitionOptionValueRelPreselected(
+				long cpDefinitionOptionValueRelId, boolean preselected)
+		throws PortalException {
+
+		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+			cpDefinitionOptionValueRelLocalService.
+				getCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
+
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
+				cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
+
+		_checkCommerceCatalogPermissionByCPDefinitionId(
+			cpDefinitionOptionRel.getCPDefinitionId(), ActionKeys.UPDATE);
+
+		return cpDefinitionOptionValueRelLocalService.
+			updateCPDefinitionOptionValueRelPreselected(
+				cpDefinitionOptionValueRelId, preselected);
 	}
 
 	private void _checkCommerceCatalogPermissionByCPDefinitionId(

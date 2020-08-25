@@ -73,6 +73,14 @@ public interface TierPriceResource {
 			Long id, TierPrice tierPrice)
 		throws Exception;
 
+	public void postPriceEntryIdTierPriceBatch(
+			Long id, String callbackURL, Object object)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse postPriceEntryIdTierPriceBatchHttpResponse(
+			Long id, String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteTierPriceByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
@@ -168,8 +176,8 @@ public interface TierPriceResource {
 		private Map<String, String> _headers = new LinkedHashMap<>();
 		private String _host = "localhost";
 		private Locale _locale;
-		private String _login = "test@liferay.com";
-		private String _password = "test";
+		private String _login = "";
+		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
@@ -449,6 +457,68 @@ public interface TierPriceResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/headless-commerce-admin-pricing/v1.0/priceEntries/{id}/tierPrices",
+				id);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public void postPriceEntryIdTierPriceBatch(
+				Long id, String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postPriceEntryIdTierPriceBatchHttpResponse(
+					id, callbackURL, object);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+		}
+
+		public HttpInvoker.HttpResponse
+				postPriceEntryIdTierPriceBatchHttpResponse(
+					Long id, String callbackURL, Object object)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(object.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-commerce-admin-pricing/v1.0/priceEntries/{id}/tierPrices/batch",
 				id);
 
 			httpInvoker.userNameAndPassword(

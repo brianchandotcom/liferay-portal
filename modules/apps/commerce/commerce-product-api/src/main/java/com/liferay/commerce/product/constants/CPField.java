@@ -75,6 +75,9 @@ public class CPField {
 
 	public static final String FILE_ENTRY_ID = "fileEntryId";
 
+	public static final String HAS_CHILD_CP_DEFINITIONS =
+		"hasChildCPDefinitions";
+
 	public static final String HEIGHT = "height";
 
 	public static final String IS_IGNORE_SKU_COMBINATIONS =
@@ -122,5 +125,7 @@ public class CPField {
 		"specificationOptionsValuesNames";
 
 	public static final String SUBSCRIPTION_ENABLED = "subscriptionEnabled";
+
+	public static final String UNSPSC = "unspsc";
 
 }

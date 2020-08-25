@@ -514,16 +514,16 @@ public class PortletItemWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof PortletItemWrapper)) {
+		if (!(object instanceof PortletItemWrapper)) {
 			return false;
 		}
 
-		PortletItemWrapper portletItemWrapper = (PortletItemWrapper)obj;
+		PortletItemWrapper portletItemWrapper = (PortletItemWrapper)object;
 
 		if (Objects.equals(_portletItem, portletItemWrapper._portletItem)) {
 			return true;

@@ -304,6 +304,22 @@ public class CPDefinitionOptionValueRelServiceSoap {
 		}
 	}
 
+	/**
+	 * @param cpDefinitionOptionValueRelId
+	 * @param nameMap
+	 * @param priority
+	 * @param key
+	 * @param cpInstanceId
+	 * @param quantity
+	 * @param price
+	 * @param serviceContext
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link
+	 #updateCPDefinitionOptionValueRel(long, Map, double, String,
+	 long, int, boolean, BigDecimal, ServiceContext)}
+	 */
+	@Deprecated
 	public static
 		com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap
 				updateCPDefinitionOptionValueRel(
@@ -341,6 +357,53 @@ public class CPDefinitionOptionValueRelServiceSoap {
 				updateCPDefinitionOptionValueRel(
 					long cpDefinitionOptionValueRelId,
 					String[] nameMapLanguageIds, String[] nameMapValues,
+					double priority, String key, long cpInstanceId,
+					int quantity, boolean preselected,
+					java.math.BigDecimal price,
+					com.liferay.portal.kernel.service.ServiceContext
+						serviceContext)
+			throws RemoteException {
+
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+				nameMapLanguageIds, nameMapValues);
+
+			com.liferay.commerce.product.model.CPDefinitionOptionValueRel
+				returnValue =
+					CPDefinitionOptionValueRelServiceUtil.
+						updateCPDefinitionOptionValueRel(
+							cpDefinitionOptionValueRelId, nameMap, priority,
+							key, cpInstanceId, quantity, preselected, price,
+							serviceContext);
+
+			return com.liferay.commerce.product.model.
+				CPDefinitionOptionValueRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
+	 * @param cpDefinitionOptionValueRelId
+	 * @param nameMap
+	 * @param priority
+	 * @param key
+	 * @param serviceContext
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link
+	 #updateCPDefinitionOptionValueRel(long, Map, double, String,
+	 long, int, boolean, BigDecimal, ServiceContext)}
+	 */
+	@Deprecated
+	public static
+		com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap
+				updateCPDefinitionOptionValueRel(
+					long cpDefinitionOptionValueRelId,
+					String[] nameMapLanguageIds, String[] nameMapValues,
 					double priority, String key,
 					com.liferay.portal.kernel.service.ServiceContext
 						serviceContext)
@@ -356,6 +419,29 @@ public class CPDefinitionOptionValueRelServiceSoap {
 						updateCPDefinitionOptionValueRel(
 							cpDefinitionOptionValueRelId, nameMap, priority,
 							key, serviceContext);
+
+			return com.liferay.commerce.product.model.
+				CPDefinitionOptionValueRelSoap.toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static
+		com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap
+				updateCPDefinitionOptionValueRelPreselected(
+					long cpDefinitionOptionValueRelId, boolean preselected)
+			throws RemoteException {
+
+		try {
+			com.liferay.commerce.product.model.CPDefinitionOptionValueRel
+				returnValue =
+					CPDefinitionOptionValueRelServiceUtil.
+						updateCPDefinitionOptionValueRelPreselected(
+							cpDefinitionOptionValueRelId, preselected);
 
 			return com.liferay.commerce.product.model.
 				CPDefinitionOptionValueRelSoap.toSoapModel(returnValue);

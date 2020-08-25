@@ -599,16 +599,16 @@ public class RegionModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Region)) {
+		if (!(object instanceof Region)) {
 			return false;
 		}
 
-		Region region = (Region)obj;
+		Region region = (Region)object;
 
 		long primaryKey = region.getPrimaryKey();
 

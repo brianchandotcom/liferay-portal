@@ -181,7 +181,7 @@ public class LockLocalServiceTest {
 
 		// Set lock to be expired
 
-		expirationDate = new Date(System.currentTimeMillis() - 10 * Time.DAY);
+		expirationDate = new Date(System.currentTimeMillis() - (10 * Time.DAY));
 
 		lock.setExpirationDate(expirationDate);
 

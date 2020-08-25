@@ -1,8 +1,9 @@
 Bundle-Name: Liferay Headless Commerce Admin Pricing Implementation
 Bundle-SymbolicName: com.liferay.headless.commerce.admin.pricing.impl
-Bundle-Version: 1.0.38
+Bundle-Version: 1.0.45
 Import-Package:\
 	com.liferay.portal.vulcan.accept.language;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.dto.converter;version="[1.0.0,2.4.0)",\
 	com.liferay.portal.vulcan.pagination;version="[1.0.0,2.0.0)",\
 	com.liferay.portal.vulcan.resource; version="[1.1.0,2.0.0)",\
 	com.liferay.portal.vulcan.util;version="[1.1.0,3.0.0)",\

@@ -68,7 +68,7 @@ public class Autocomplete {
 			max = array.length;
 		}
 
-		StringBundler sb = new StringBundler(array.length * 8 + 3);
+		StringBundler sb = new StringBundler((array.length * 8) + 3);
 
 		sb.append("<?xml version=\"1.0\"?>");
 

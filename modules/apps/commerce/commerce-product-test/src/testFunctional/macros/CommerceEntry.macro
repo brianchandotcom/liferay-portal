@@ -80,8 +80,6 @@ definition {
 
 		if (isSet(siteName)) {
 
-			CommerceNavigator.gotoEntry(entryName = "${channelName}");
-
 			Click(
 				key_menuTab = "Type",
 				locator1 = "CommerceEntry#MENU_TAB");
@@ -293,7 +291,30 @@ definition {
 	}
 
 	macro addProductsEntry {
+		IFrame.selectModalFrame();
+
 		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "${productName}");
+
+		Type(
+			locator1 = "CommerceEntry#CREATE_NEW_PRODUCT_CATALOG_FIELD",
+			value1 = "${productCatalog}");
+
+		Click(
+			key_menuItem = "${productCatalog}",
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+
+		Click(locator1 = "Button#SUBMIT");
+
+		Refresh();
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Catalog",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${productCatalog}");
+
+		AssertTextEquals(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = "${productName}");
 
@@ -536,6 +557,48 @@ definition {
 			value1 = "Select File");
 
 		CommerceItemSelector.uploadSingleFile(uploadFileName = "${uploadFileName}");
+	}
+
+	macro viewAccountsEntry {
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "${accountName}");
+
+		AssertTextEquals(
+			locator1 = "TextInput#EMAIL",
+			value1 = "${accountEmail}");
+
+		AssertSelectedLabel(
+			locator1 = "Select#TYPE",
+			value1 = "${accountType}");
+
+		if (isSet(accountVATNumber)) {
+			AssertTextEquals(
+				key_fieldLabel = "VAT Number",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${accountVATNumber}");
+		}
+
+		if (isSet(accountDefaultBilling)) {
+			AssertSelectedLabel(
+				key_fieldLabel = "Default Billing",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${accountDefaultBilling}");
+		}
+
+		if (isSet(accountDefaultShipping)) {
+			AssertSelectedLabel(
+				key_fieldLabel = "Default Shipping",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${accountDefaultShipping}");
+		}
+
+		if ("${isAccountActive}" == "true") {
+			AssertChecked(locator1 = "Checkbox#ACTIVE");
+		}
+		else {
+			AssertNotChecked(locator1 = "Checkbox#ACTIVE");
+		}
 	}
 
 	macro viewCatalogsEntry {

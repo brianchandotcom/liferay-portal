@@ -231,6 +231,8 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		boolean neverExpire = ParamUtil.getBoolean(
 			actionRequest, "neverExpire");
 
+		String unspsc = ParamUtil.getString(actionRequest, "unspsc");
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPInstance.class.getName(), actionRequest);
 
@@ -245,7 +247,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				published, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
+				expirationDateMinute, neverExpire, unspsc, serviceContext);
 		}
 		else {
 			String ddmFormValues = ParamUtil.getString(
@@ -257,7 +259,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
+				expirationDateMinute, neverExpire, unspsc, serviceContext);
 		}
 
 		// Update pricing info

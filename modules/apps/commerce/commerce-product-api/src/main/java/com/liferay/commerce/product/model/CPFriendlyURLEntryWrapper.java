@@ -33,8 +33,11 @@ import java.util.Objects;
  *
  * @author Marco Leo
  * @see CPFriendlyURLEntry
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ com.liferay.friendly.url.model.impl.FriendlyURLEntryImpl}
  * @generated
  */
+@Deprecated
 public class CPFriendlyURLEntryWrapper
 	implements CPFriendlyURLEntry, ModelWrapper<CPFriendlyURLEntry> {
 
@@ -593,17 +596,17 @@ public class CPFriendlyURLEntryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPFriendlyURLEntryWrapper)) {
+		if (!(object instanceof CPFriendlyURLEntryWrapper)) {
 			return false;
 		}
 
 		CPFriendlyURLEntryWrapper cpFriendlyURLEntryWrapper =
-			(CPFriendlyURLEntryWrapper)obj;
+			(CPFriendlyURLEntryWrapper)object;
 
 		if (Objects.equals(
 				_cpFriendlyURLEntry,

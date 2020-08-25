@@ -60,6 +60,14 @@ public class CommerceChannelRelServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CommerceChannelRel
+		fetchCommerceChannelRel(
+			String className, long classPK, long commerceChannelId) {
+
+		return getService().fetchCommerceChannelRel(
+			className, classPK, commerceChannelId);
+	}
+
+	public static com.liferay.commerce.product.model.CommerceChannelRel
 			getCommerceChannelRel(long commerceChannelRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

@@ -71,6 +71,10 @@ public interface CommerceAvailabilityEstimateLocalService
 	/**
 	 * Adds the commerce availability estimate to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAvailabilityEstimateLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceAvailabilityEstimate the commerce availability estimate
 	 * @return the commerce availability estimate that was added
 	 */
@@ -96,6 +100,10 @@ public interface CommerceAvailabilityEstimateLocalService
 	/**
 	 * Deletes the commerce availability estimate from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAvailabilityEstimateLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceAvailabilityEstimate the commerce availability estimate
 	 * @return the commerce availability estimate that was removed
 	 * @throws PortalException
@@ -108,6 +116,10 @@ public interface CommerceAvailabilityEstimateLocalService
 
 	/**
 	 * Deletes the commerce availability estimate with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAvailabilityEstimateLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceAvailabilityEstimateId the primary key of the commerce availability estimate
 	 * @return the commerce availability estimate that was removed
@@ -294,6 +306,10 @@ public interface CommerceAvailabilityEstimateLocalService
 
 	/**
 	 * Updates the commerce availability estimate in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAvailabilityEstimateLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceAvailabilityEstimate the commerce availability estimate
 	 * @return the commerce availability estimate that was updated

@@ -34,17 +34,17 @@ public class RatingsStatsCacheModel
 	implements CacheModel<RatingsStats>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof RatingsStatsCacheModel)) {
+		if (!(object instanceof RatingsStatsCacheModel)) {
 			return false;
 		}
 
 		RatingsStatsCacheModel ratingsStatsCacheModel =
-			(RatingsStatsCacheModel)obj;
+			(RatingsStatsCacheModel)object;
 
 		if (statsId == ratingsStatsCacheModel.statsId) {
 			return true;

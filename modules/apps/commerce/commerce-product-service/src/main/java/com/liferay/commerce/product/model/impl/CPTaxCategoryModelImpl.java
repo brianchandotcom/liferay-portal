@@ -970,16 +970,16 @@ public class CPTaxCategoryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPTaxCategory)) {
+		if (!(object instanceof CPTaxCategory)) {
 			return false;
 		}
 
-		CPTaxCategory cpTaxCategory = (CPTaxCategory)obj;
+		CPTaxCategory cpTaxCategory = (CPTaxCategory)object;
 
 		long primaryKey = cpTaxCategory.getPrimaryKey();
 

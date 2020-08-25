@@ -85,6 +85,10 @@ public interface PriceEntryResource {
 	public PriceEntry postPriceListIdPriceEntry(Long id, PriceEntry priceEntry)
 		throws Exception;
 
+	public Response postPriceListIdPriceEntryBatch(
+			Long id, String callbackURL, Object object)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

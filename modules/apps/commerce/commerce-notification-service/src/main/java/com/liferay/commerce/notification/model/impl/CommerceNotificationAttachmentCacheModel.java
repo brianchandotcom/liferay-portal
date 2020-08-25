@@ -36,18 +36,18 @@ public class CommerceNotificationAttachmentCacheModel
 	implements CacheModel<CommerceNotificationAttachment>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceNotificationAttachmentCacheModel)) {
+		if (!(object instanceof CommerceNotificationAttachmentCacheModel)) {
 			return false;
 		}
 
 		CommerceNotificationAttachmentCacheModel
 			commerceNotificationAttachmentCacheModel =
-				(CommerceNotificationAttachmentCacheModel)obj;
+				(CommerceNotificationAttachmentCacheModel)object;
 
 		if (commerceNotificationAttachmentId ==
 				commerceNotificationAttachmentCacheModel.

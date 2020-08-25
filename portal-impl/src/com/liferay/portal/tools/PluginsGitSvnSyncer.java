@@ -76,7 +76,7 @@ public class PluginsGitSvnSyncer {
 		String[] stderr = _getExecOutput(process.getErrorStream());
 
 		if (stderr.length > 0) {
-			StringBundler sb = new StringBundler(stderr.length * 3 + 3);
+			StringBundler sb = new StringBundler((stderr.length * 3) + 3);
 
 			sb.append("Received errors in executing '");
 			sb.append(cmd);

@@ -878,16 +878,16 @@ public class SyncDeviceModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SyncDevice)) {
+		if (!(object instanceof SyncDevice)) {
 			return false;
 		}
 
-		SyncDevice syncDevice = (SyncDevice)obj;
+		SyncDevice syncDevice = (SyncDevice)object;
 
 		long primaryKey = syncDevice.getPrimaryKey();
 

@@ -108,7 +108,7 @@ public class MethodSignature {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(
-			_parameterTypeNames.length * 2 + 5);
+			(_parameterTypeNames.length * 2) + 5);
 
 		sb.append("{className=");
 		sb.append(_className);

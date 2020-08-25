@@ -1243,16 +1243,16 @@ public class WikiPageWrapper implements ModelWrapper<WikiPage>, WikiPage {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof WikiPageWrapper)) {
+		if (!(object instanceof WikiPageWrapper)) {
 			return false;
 		}
 
-		WikiPageWrapper wikiPageWrapper = (WikiPageWrapper)obj;
+		WikiPageWrapper wikiPageWrapper = (WikiPageWrapper)object;
 
 		if (Objects.equals(_wikiPage, wikiPageWrapper._wikiPage)) {
 			return true;

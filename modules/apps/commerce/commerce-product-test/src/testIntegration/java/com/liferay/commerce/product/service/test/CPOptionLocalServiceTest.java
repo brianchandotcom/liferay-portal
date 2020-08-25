@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.exception.CPOptionSKUContributorException;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
@@ -130,7 +131,7 @@ public class CPOptionLocalServiceTest {
 	@Test
 	public void testAddOptionSKUContributor() throws Exception {
 		String[] cpOptionSKUContributorFieldTypes =
-			CPTestUtil.getCPOptionSKUContributorFieldTypes();
+			CPConstants.PRODUCT_OPTION_SKU_CONTRIBUTOR_FIELD_TYPES;
 
 		frutillaRule.scenario(
 			"Add SKU contributor option"

@@ -38,7 +38,7 @@ public class CommerceDiscountScreenNavigationConstants {
 	public static final String ENTRY_KEY_COMMERCE_DISCOUNT_DETAIL = "detail";
 
 	public static final String ENTRY_KEY_COMMERCE_DISCOUNT_PRICING_CLASSES =
-		"pricing-classes";
+		"product-groups";
 
 	public static final String ENTRY_KEY_COMMERCE_DISCOUNT_PRODUCTS =
 		"products";

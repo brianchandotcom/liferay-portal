@@ -449,16 +449,16 @@ public class StatusWrapper implements ModelWrapper<Status>, Status {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof StatusWrapper)) {
+		if (!(object instanceof StatusWrapper)) {
 			return false;
 		}
 
-		StatusWrapper statusWrapper = (StatusWrapper)obj;
+		StatusWrapper statusWrapper = (StatusWrapper)object;
 
 		if (Objects.equals(_status, statusWrapper._status)) {
 			return true;

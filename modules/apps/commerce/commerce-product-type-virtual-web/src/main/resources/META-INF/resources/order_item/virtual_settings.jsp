@@ -72,7 +72,7 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 					<h4 class="<%= textCssClass %>" id="lfr-virtual-order-item-button-row-message"><liferay-ui:message key="or" /></h4>
 
 					<p class="text-default">
-						<span class='<%= (fileEntryId > 0) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />fileEntryRemove" role="button">
+						<span class="<%= (fileEntryId > 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />fileEntryRemove" role="button">
 							<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
 						</span>
 						<span id="<portlet:namespace />fileEntryNameInput">

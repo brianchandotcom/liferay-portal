@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Social Group Statistics Web
 Bundle-SymbolicName: com.liferay.social.group.statistics.web
-Bundle-Version: 3.0.14
+Bundle-Version: 3.0.15
 Web-ContextPath: /social-group-statistics-web

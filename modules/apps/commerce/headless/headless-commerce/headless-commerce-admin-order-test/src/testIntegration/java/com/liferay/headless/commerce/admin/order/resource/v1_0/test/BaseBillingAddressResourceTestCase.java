@@ -108,7 +108,9 @@ public abstract class BaseBillingAddressResourceTestCase {
 		BillingAddressResource.Builder builder =
 			BillingAddressResource.builder();
 
-		billingAddressResource = builder.locale(
+		billingAddressResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

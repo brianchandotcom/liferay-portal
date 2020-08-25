@@ -15,14 +15,10 @@
 package com.liferay.commerce.product.definitions.web.internal.frontend;
 
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableDataSetDisplayView;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
 import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
-import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
 import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -33,28 +29,23 @@ import org.osgi.service.component.annotations.Reference;
 	service = ClayDataSetDisplayView.class
 )
 public class CommerceProductDefinitionSpecificationClayTableDataSetDisplayView
-	extends ClayTableDataSetDisplayView {
+	extends BaseClayTableDataSetDisplayView {
 
 	@Override
-	public ClayTableSchema getClayTableSchema() {
-		ClayTableSchemaBuilder clayTableSchemaBuilder =
-			_clayTableSchemaBuilderFactory.clayTableSchemaBuilder();
+	protected void addActionLinkFields(
+		ClayTableSchemaBuilder clayTableSchemaBuilder) {
 
 		ClayTableSchemaField labelField = clayTableSchemaBuilder.addField(
 			"label", "label");
 
 		labelField.setContentRenderer("actionLink");
-
-		clayTableSchemaBuilder.addField("value", "value");
-
-		clayTableSchemaBuilder.addField("group", "group");
-
-		clayTableSchemaBuilder.addField("order", "order");
-
-		return clayTableSchemaBuilder.build();
 	}
 
-	@Reference
-	private ClayTableSchemaBuilderFactory _clayTableSchemaBuilderFactory;
+	@Override
+	protected void addFields(ClayTableSchemaBuilder clayTableSchemaBuilder) {
+		clayTableSchemaBuilder.addField("value", "value");
+		clayTableSchemaBuilder.addField("group", "group");
+		clayTableSchemaBuilder.addField("order", "order");
+	}
 
 }

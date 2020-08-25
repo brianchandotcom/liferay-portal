@@ -53,6 +53,14 @@ public class CommerceChannelRelServiceImpl
 	}
 
 	@Override
+	public CommerceChannelRel fetchCommerceChannelRel(
+		String className, long classPK, long commerceChannelId) {
+
+		return commerceChannelRelLocalService.fetchCommerceChannelRel(
+			className, classPK, commerceChannelId);
+	}
+
+	@Override
 	public CommerceChannelRel getCommerceChannelRel(long commerceChannelRelId)
 		throws PortalException {
 

@@ -89,6 +89,7 @@ public class CommerceDiscountModelImpl
 		{"level1", Types.DECIMAL}, {"level2", Types.DECIMAL},
 		{"level3", Types.DECIMAL}, {"level4", Types.DECIMAL},
 		{"limitationType", Types.VARCHAR}, {"limitationTimes", Types.INTEGER},
+		{"limitationTimesPerAccount", Types.INTEGER},
 		{"numberOfUse", Types.INTEGER}, {"rulesConjunction", Types.BOOLEAN},
 		{"active_", Types.BOOLEAN}, {"displayDate", Types.TIMESTAMP},
 		{"expirationDate", Types.TIMESTAMP},
@@ -122,6 +123,7 @@ public class CommerceDiscountModelImpl
 		TABLE_COLUMNS_MAP.put("level4", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("limitationType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("limitationTimes", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("limitationTimesPerAccount", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("numberOfUse", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("rulesConjunction", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
@@ -135,7 +137,7 @@ public class CommerceDiscountModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceDiscount (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceDiscountId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,target VARCHAR(75) null,useCouponCode BOOLEAN,couponCode VARCHAR(75) null,usePercentage BOOLEAN,maximumDiscountAmount DECIMAL(30, 16) null,levelType VARCHAR(75) null,level1 DECIMAL(30, 16) null,level2 DECIMAL(30, 16) null,level3 DECIMAL(30, 16) null,level4 DECIMAL(30, 16) null,limitationType VARCHAR(75) null,limitationTimes INTEGER,numberOfUse INTEGER,rulesConjunction BOOLEAN,active_ BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CommerceDiscount (uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceDiscountId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,target VARCHAR(75) null,useCouponCode BOOLEAN,couponCode VARCHAR(75) null,usePercentage BOOLEAN,maximumDiscountAmount DECIMAL(30, 16) null,levelType VARCHAR(75) null,level1 DECIMAL(30, 16) null,level2 DECIMAL(30, 16) null,level3 DECIMAL(30, 16) null,level4 DECIMAL(30, 16) null,limitationType VARCHAR(75) null,limitationTimes INTEGER,limitationTimesPerAccount INTEGER,numberOfUse INTEGER,rulesConjunction BOOLEAN,active_ BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceDiscount";
 
@@ -166,21 +168,23 @@ public class CommerceDiscountModelImpl
 			"value.object.column.bitmask.enabled.com.liferay.commerce.discount.model.CommerceDiscount"),
 		true);
 
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 
-	public static final long COUPONCODE_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 
-	public static final long DISPLAYDATE_COLUMN_BITMASK = 4L;
+	public static final long COUPONCODE_COLUMN_BITMASK = 4L;
 
-	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 8L;
+	public static final long DISPLAYDATE_COLUMN_BITMASK = 8L;
 
-	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 16L;
+	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 16L;
 
-	public static final long STATUS_COLUMN_BITMASK = 32L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 32L;
 
-	public static final long UUID_COLUMN_BITMASK = 64L;
+	public static final long STATUS_COLUMN_BITMASK = 64L;
 
-	public static final long CREATEDATE_COLUMN_BITMASK = 128L;
+	public static final long UUID_COLUMN_BITMASK = 128L;
+
+	public static final long CREATEDATE_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -216,6 +220,8 @@ public class CommerceDiscountModelImpl
 		model.setLevel4(soapModel.getLevel4());
 		model.setLimitationType(soapModel.getLimitationType());
 		model.setLimitationTimes(soapModel.getLimitationTimes());
+		model.setLimitationTimesPerAccount(
+			soapModel.getLimitationTimesPerAccount());
 		model.setNumberOfUse(soapModel.getNumberOfUse());
 		model.setRulesConjunction(soapModel.isRulesConjunction());
 		model.setActive(soapModel.isActive());
@@ -866,6 +872,30 @@ public class CommerceDiscountModelImpl
 
 			});
 		attributeGetterFunctions.put(
+			"limitationTimesPerAccount",
+			new Function<CommerceDiscount, Object>() {
+
+				@Override
+				public Object apply(CommerceDiscount commerceDiscount) {
+					return commerceDiscount.getLimitationTimesPerAccount();
+				}
+
+			});
+		attributeSetterBiConsumers.put(
+			"limitationTimesPerAccount",
+			new BiConsumer<CommerceDiscount, Object>() {
+
+				@Override
+				public void accept(
+					CommerceDiscount commerceDiscount,
+					Object limitationTimesPerAccountObject) {
+
+					commerceDiscount.setLimitationTimesPerAccount(
+						(Integer)limitationTimesPerAccountObject);
+				}
+
+			});
+		attributeGetterFunctions.put(
 			"numberOfUse",
 			new Function<CommerceDiscount, Object>() {
 
@@ -1456,6 +1486,17 @@ public class CommerceDiscountModelImpl
 
 	@JSON
 	@Override
+	public int getLimitationTimesPerAccount() {
+		return _limitationTimesPerAccount;
+	}
+
+	@Override
+	public void setLimitationTimesPerAccount(int limitationTimesPerAccount) {
+		_limitationTimesPerAccount = limitationTimesPerAccount;
+	}
+
+	@JSON
+	@Override
 	public int getNumberOfUse() {
 		return _numberOfUse;
 	}
@@ -1496,7 +1537,19 @@ public class CommerceDiscountModelImpl
 
 	@Override
 	public void setActive(boolean active) {
+		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
+
+		if (!_setOriginalActive) {
+			_setOriginalActive = true;
+
+			_originalActive = _active;
+		}
+
 		_active = active;
+	}
+
+	public boolean getOriginalActive() {
+		return _originalActive;
 	}
 
 	@JSON
@@ -1774,6 +1827,8 @@ public class CommerceDiscountModelImpl
 		commerceDiscountImpl.setLevel4(getLevel4());
 		commerceDiscountImpl.setLimitationType(getLimitationType());
 		commerceDiscountImpl.setLimitationTimes(getLimitationTimes());
+		commerceDiscountImpl.setLimitationTimesPerAccount(
+			getLimitationTimesPerAccount());
 		commerceDiscountImpl.setNumberOfUse(getNumberOfUse());
 		commerceDiscountImpl.setRulesConjunction(isRulesConjunction());
 		commerceDiscountImpl.setActive(isActive());
@@ -1807,16 +1862,16 @@ public class CommerceDiscountModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceDiscount)) {
+		if (!(object instanceof CommerceDiscount)) {
 			return false;
 		}
 
-		CommerceDiscount commerceDiscount = (CommerceDiscount)obj;
+		CommerceDiscount commerceDiscount = (CommerceDiscount)object;
 
 		long primaryKey = commerceDiscount.getPrimaryKey();
 
@@ -1862,6 +1917,11 @@ public class CommerceDiscountModelImpl
 
 		commerceDiscountModelImpl._originalCouponCode =
 			commerceDiscountModelImpl._couponCode;
+
+		commerceDiscountModelImpl._originalActive =
+			commerceDiscountModelImpl._active;
+
+		commerceDiscountModelImpl._setOriginalActive = false;
 
 		commerceDiscountModelImpl._originalDisplayDate =
 			commerceDiscountModelImpl._displayDate;
@@ -1990,6 +2050,9 @@ public class CommerceDiscountModelImpl
 		}
 
 		commerceDiscountCacheModel.limitationTimes = getLimitationTimes();
+
+		commerceDiscountCacheModel.limitationTimesPerAccount =
+			getLimitationTimesPerAccount();
 
 		commerceDiscountCacheModel.numberOfUse = getNumberOfUse();
 
@@ -2147,9 +2210,12 @@ public class CommerceDiscountModelImpl
 	private BigDecimal _level4;
 	private String _limitationType;
 	private int _limitationTimes;
+	private int _limitationTimesPerAccount;
 	private int _numberOfUse;
 	private boolean _rulesConjunction;
 	private boolean _active;
+	private boolean _originalActive;
+	private boolean _setOriginalActive;
 	private Date _displayDate;
 	private Date _originalDisplayDate;
 	private Date _expirationDate;

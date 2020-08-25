@@ -41,7 +41,7 @@ public class HashCodeHexStringCacheKeyGenerator extends BaseCacheKeyGenerator {
 		for (int i = keys.length - 1; i >= 0; i--) {
 			String s = keys[i];
 
-			hashCode = s.hashCode() * weight + hashCode;
+			hashCode = (s.hashCode() * weight) + hashCode;
 
 			for (int j = s.length(); j > 0; j--) {
 				weight *= 31;

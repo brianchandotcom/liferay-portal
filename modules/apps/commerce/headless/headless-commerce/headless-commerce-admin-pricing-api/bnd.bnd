@@ -1,9 +1,11 @@
 Bundle-Name: Liferay Headless Commerce Admin Pricing API
 Bundle-SymbolicName: com.liferay.headless.commerce.admin.pricing.api
-Bundle-Version: 6.3.3
+Bundle-Version: 8.2.2
 Export-Package:\
 	com.liferay.headless.commerce.admin.pricing.dto.v1_0,\
-	com.liferay.headless.commerce.admin.pricing.resource.v1_0
+	com.liferay.headless.commerce.admin.pricing.dto.v2_0,\
+	com.liferay.headless.commerce.admin.pricing.resource.v1_0,\
+	com.liferay.headless.commerce.admin.pricing.resource.v2_0
 Import-Package:\
 	com.liferay.portal.vulcan.accept.language;version="[1.0.0,2.0.0)",\
 	com.liferay.portal.vulcan.graphql.annotation;version="[1.0.0,2.0.0)",\

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPSpecificationOption cpSpecificationOption = (CPSpecificationOption)request.getAttribute(CPWebKeys.CP_OPTION);
+CPSpecificationOption cpSpecificationOption = (CPSpecificationOption)request.getAttribute(CPWebKeys.CP_SPECIFICATION_OPTION);
 %>
 
 <liferay-ui:error-marker

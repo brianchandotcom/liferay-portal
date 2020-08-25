@@ -37,17 +37,17 @@ public class WorkflowDefinitionLinkCacheModel
 	implements CacheModel<WorkflowDefinitionLink>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof WorkflowDefinitionLinkCacheModel)) {
+		if (!(object instanceof WorkflowDefinitionLinkCacheModel)) {
 			return false;
 		}
 
 		WorkflowDefinitionLinkCacheModel workflowDefinitionLinkCacheModel =
-			(WorkflowDefinitionLinkCacheModel)obj;
+			(WorkflowDefinitionLinkCacheModel)object;
 
 		if ((workflowDefinitionLinkId ==
 				workflowDefinitionLinkCacheModel.workflowDefinitionLinkId) &&

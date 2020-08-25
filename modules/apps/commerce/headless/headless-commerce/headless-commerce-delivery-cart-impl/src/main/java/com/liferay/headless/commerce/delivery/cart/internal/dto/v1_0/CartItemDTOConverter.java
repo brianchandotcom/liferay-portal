@@ -21,6 +21,8 @@ import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.price.CommerceOrderItemPrice;
+import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
@@ -37,8 +39,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 
 import java.util.Locale;
 
@@ -95,25 +95,6 @@ public class CartItemDTOConverter
 		};
 	}
 
-	private BigDecimal _getDiscountPercentage(
-		BigDecimal discountedAmount, BigDecimal amount,
-		RoundingMode roundingMode) {
-
-		double actualPrice = discountedAmount.doubleValue();
-		double originalPrice = amount.doubleValue();
-
-		double percentage = actualPrice / originalPrice;
-
-		BigDecimal discountPercentage = new BigDecimal(percentage);
-
-		discountPercentage = discountPercentage.multiply(_ONE_HUNDRED);
-
-		MathContext mathContext = new MathContext(
-			discountPercentage.precision(), roundingMode);
-
-		return _ONE_HUNDRED.subtract(discountPercentage, mathContext);
-	}
-
 	private Price _getPrice(CommerceOrderItem commerceOrderItem, Locale locale)
 		throws PortalException {
 
@@ -121,7 +102,11 @@ public class CartItemDTOConverter
 
 		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
-		CommerceMoney unitPriceMoney = commerceOrderItem.getUnitPriceMoney();
+		CommerceOrderItemPrice commerceOrderItemPrice =
+			_commerceOrderPriceCalculation.getCommerceOrderItemPricePerUnit(
+				commerceCurrency, commerceOrderItem);
+
+		CommerceMoney unitPriceMoney = commerceOrderItemPrice.getUnitPrice();
 
 		BigDecimal unitPrice = unitPriceMoney.getPrice();
 
@@ -133,65 +118,52 @@ public class CartItemDTOConverter
 			}
 		};
 
-		BigDecimal activePrice = unitPriceMoney.getPrice();
+		CommerceMoney promoPriceMoney = commerceOrderItemPrice.getPromoPrice();
 
-		CommerceMoney unitPromoPriceMoney =
-			commerceOrderItem.getPromoPriceMoney();
+		if (promoPriceMoney != null) {
+			BigDecimal unitPromoPrice = promoPriceMoney.getPrice();
 
-		BigDecimal unitPromoPrice = unitPromoPriceMoney.getPrice();
-
-		if (unitPromoPrice != null) {
-			price.setPromoPrice(unitPromoPrice.doubleValue());
-			price.setPromoPriceFormatted(unitPromoPriceMoney.format(locale));
-
-			if (unitPromoPrice.compareTo(BigDecimal.ZERO) > 0) {
-				activePrice = unitPromoPrice;
+			if (unitPromoPrice != null) {
+				price.setPromoPrice(unitPromoPrice.doubleValue());
+				price.setPromoPriceFormatted(promoPriceMoney.format(locale));
 			}
 		}
 
 		CommerceMoney discountAmountMoney =
-			commerceOrderItem.getDiscountAmountMoney();
+			commerceOrderItemPrice.getDiscountAmount();
 
-		BigDecimal discountAmount = discountAmountMoney.getPrice();
+		if (discountAmountMoney != null) {
+			BigDecimal discountAmount = discountAmountMoney.getPrice();
 
-		if (discountAmount != null) {
-			price.setDiscount(discountAmount.doubleValue());
-			price.setDiscountFormatted(discountAmountMoney.format(locale));
+			if (discountAmount != null) {
+				price.setDiscount(discountAmount.doubleValue());
+				price.setDiscountFormatted(discountAmountMoney.format(locale));
+				price.setDiscountPercentage(
+					_commercePriceFormatter.format(
+						commerceOrderItemPrice.getDiscountPercentage(),
+						locale));
 
-			BigDecimal discountPercentageLevel1 =
-				commerceOrderItem.getDiscountPercentageLevel1();
-			BigDecimal discountPercentageLevel2 =
-				commerceOrderItem.getDiscountPercentageLevel2();
-			BigDecimal discountPercentageLevel3 =
-				commerceOrderItem.getDiscountPercentageLevel3();
-			BigDecimal discountPercentageLevel4 =
-				commerceOrderItem.getDiscountPercentageLevel4();
+				BigDecimal discountPercentageLevel1 =
+					commerceOrderItemPrice.getDiscountPercentageLevel1();
+				BigDecimal discountPercentageLevel2 =
+					commerceOrderItemPrice.getDiscountPercentageLevel2();
+				BigDecimal discountPercentageLevel3 =
+					commerceOrderItemPrice.getDiscountPercentageLevel3();
+				BigDecimal discountPercentageLevel4 =
+					commerceOrderItemPrice.getDiscountPercentageLevel4();
 
-			price.setDiscountPercentageLevel1(
-				discountPercentageLevel1.doubleValue());
-			price.setDiscountPercentageLevel2(
-				discountPercentageLevel2.doubleValue());
-			price.setDiscountPercentageLevel3(
-				discountPercentageLevel3.doubleValue());
-			price.setDiscountPercentageLevel4(
-				discountPercentageLevel4.doubleValue());
-
-			BigDecimal discountPercentage = BigDecimal.ZERO;
-
-			if (activePrice.compareTo(BigDecimal.ZERO) > 0) {
-				BigDecimal discountedAmount = activePrice.subtract(
-					discountAmount);
-
-				discountPercentage = _getDiscountPercentage(
-					discountedAmount, activePrice,
-					RoundingMode.valueOf(commerceCurrency.getRoundingMode()));
+				price.setDiscountPercentageLevel1(
+					discountPercentageLevel1.doubleValue());
+				price.setDiscountPercentageLevel2(
+					discountPercentageLevel2.doubleValue());
+				price.setDiscountPercentageLevel3(
+					discountPercentageLevel3.doubleValue());
+				price.setDiscountPercentageLevel4(
+					discountPercentageLevel4.doubleValue());
 			}
-
-			price.setDiscountPercentage(
-				_commercePriceFormatter.format(discountPercentage, locale));
 		}
 
-		CommerceMoney finalPriceMoney = commerceOrderItem.getFinalPriceMoney();
+		CommerceMoney finalPriceMoney = commerceOrderItemPrice.getFinalPrice();
 
 		BigDecimal finalPrice = finalPriceMoney.getPrice();
 
@@ -248,10 +220,11 @@ public class CartItemDTOConverter
 		return settings;
 	}
 
-	private static final BigDecimal _ONE_HUNDRED = BigDecimal.valueOf(100);
-
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;
+
+	@Reference
+	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

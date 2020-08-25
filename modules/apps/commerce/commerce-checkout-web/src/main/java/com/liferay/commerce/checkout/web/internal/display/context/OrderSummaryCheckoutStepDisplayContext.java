@@ -187,24 +187,29 @@ public class OrderSummaryCheckoutStepDisplayContext {
 			CommerceContext commerceContext)
 		throws PortalException {
 
-		List<CommerceOptionValue> commerceOptionValues =
+		List<CommerceOptionValue> cpDefinitionCommerceOptionValues =
 			_commerceOptionValueHelper.getCPDefinitionCommerceOptionValues(
 				commerceOrderItem.getCPDefinitionId(),
 				commerceOrderItem.getJson());
 
-		if (((commerceOptionValues == null) ||
-			 commerceOptionValues.isEmpty()) &&
+		if (((cpDefinitionCommerceOptionValues == null) ||
+			 cpDefinitionCommerceOptionValues.isEmpty()) &&
 			!Objects.equals(commerceOrderItem.getJson(), "[]")) {
 
-			CommerceOptionValue commerceOptionValue =
-				_commerceOptionValueHelper.toCommerceOptionValue(
+			List<CommerceOptionValue> commerceOptionValues =
+				_commerceOptionValueHelper.toCommerceOptionValues(
 					commerceOrderItem.getJson());
 
-			if (Objects.equals(
-					commerceOptionValue.getPriceType(),
-					CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC)) {
+			for (CommerceOptionValue commerceOptionValue :
+					commerceOptionValues) {
 
-				return _getCommerceProductPriceFromOrderItem(commerceOrderItem);
+				if (Objects.equals(
+						commerceOptionValue.getPriceType(),
+						CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC)) {
+
+					return _getCommerceProductPriceFromOrderItem(
+						commerceOrderItem);
+				}
 			}
 		}
 
@@ -218,7 +223,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		commerceProductPriceRequest.setSecure(false);
 		commerceProductPriceRequest.setCommerceContext(commerceContext);
 		commerceProductPriceRequest.setCommerceOptionValues(
-			commerceOptionValues);
+			cpDefinitionCommerceOptionValues);
 		commerceProductPriceRequest.setCalculateTax(true);
 
 		return _commerceProductPriceCalculation.getCommerceProductPrice(

@@ -84,10 +84,10 @@ public class Range {
 	public int hashCode() {
 		int result = 1;
 
-		result = _PRIME * result + (int)(_end ^ (_end >>> 32));
-		result = _PRIME * result + (int)(_length ^ (_length >>> 32));
-		result = _PRIME * result + (int)(_start ^ (_start >>> 32));
-		result = _PRIME * result + (int)(_total ^ (_total >>> 32));
+		result = (_PRIME * result) + (int)(_end ^ (_end >>> 32));
+		result = (_PRIME * result) + (int)(_length ^ (_length >>> 32));
+		result = (_PRIME * result) + (int)(_start ^ (_start >>> 32));
+		result = (_PRIME * result) + (int)(_total ^ (_total >>> 32));
 
 		return result;
 	}

@@ -41,6 +41,10 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 	/**
 	 * Adds the commerce notification queue entry to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceNotificationQueueEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceNotificationQueueEntry the commerce notification queue entry
 	 * @return the commerce notification queue entry that was added
 	 */
@@ -129,6 +133,10 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 	/**
 	 * Deletes the commerce notification queue entry from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceNotificationQueueEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceNotificationQueueEntry the commerce notification queue entry
 	 * @return the commerce notification queue entry that was removed
 	 */
@@ -145,6 +153,10 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 
 	/**
 	 * Deletes the commerce notification queue entry with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceNotificationQueueEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceNotificationQueueEntryId the primary key of the commerce notification queue entry
 	 * @return the commerce notification queue entry that was removed
@@ -407,6 +419,10 @@ public class CommerceNotificationQueueEntryLocalServiceUtil {
 
 	/**
 	 * Updates the commerce notification queue entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceNotificationQueueEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceNotificationQueueEntry the commerce notification queue entry
 	 * @return the commerce notification queue entry that was updated

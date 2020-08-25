@@ -53,7 +53,7 @@ public class RubyScriptingContainer
 			RubyArray rubyArray = (RubyArray)iRubyObject.toJava(
 				RubyArray.class);
 
-			StringBuilder sb = new StringBuilder(2 * rubyArray.size() + 2);
+			StringBuilder sb = new StringBuilder((2 * rubyArray.size()) + 2);
 
 			sb.append(
 				String.valueOf(rubyException.message.toJava(String.class)));

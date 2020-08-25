@@ -132,6 +132,9 @@ public class EditCommerceOrderItemMVCActionCommand
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceOrderItems(actionRequest);
 			}
+			else if (cmd.equals("customFields")) {
+				updateCustomFields(actionRequest);
+			}
 		}
 		catch (Throwable t) {
 			if (t instanceof CommerceOrderValidatorException) {
@@ -212,6 +215,19 @@ public class EditCommerceOrderItemMVCActionCommand
 			commerceOrderItem.getShippingAddressId(),
 			commerceOrderItem.getPrintedNote(), requestedDeliveryDateMonth,
 			requestedDeliveryDateDay, requestedDeliveryDateYear);
+	}
+
+	protected void updateCustomFields(ActionRequest actionRequest)
+		throws PortalException {
+
+		long commerceOrderItemId = ParamUtil.getLong(
+			actionRequest, "commerceOrderItemId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceOrderItem.class.getName(), actionRequest);
+
+		_commerceOrderItemService.updateCustomFields(
+			commerceOrderItemId, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

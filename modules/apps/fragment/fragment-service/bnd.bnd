@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Fragment Service
 Bundle-SymbolicName: com.liferay.fragment.service
-Bundle-Version: 1.0.43
+Bundle-Version: 1.0.45
 Import-Package:\
 	com.liferay.fragment.util.comparator,\
 	\

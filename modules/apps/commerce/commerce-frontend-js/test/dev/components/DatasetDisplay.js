@@ -19,8 +19,6 @@ import sidePanelLauncher from '../../../src/main/resources/META-INF/resources/co
 
 import '../../../src/main/resources/META-INF/resources/styles/main.scss';
 
-const lang_id = themeDisplay.getLanguageId();
-
 const fluidDataSetDisplayProps = {
 	activeView: 2,
 	apiUrl: '/dataset-display-nested-items',
@@ -41,7 +39,7 @@ const fluidDataSetDisplayProps = {
 	creationMenuItems: [
 		{
 			href: 'modal/url',
-			label: 'Add via modal',
+			label: 'Add',
 			target: 'modal'
 		}
 	],
@@ -49,7 +47,7 @@ const fluidDataSetDisplayProps = {
 		{
 			id: 'number-test',
 			inputText: '$',
-			label: 'Number test',
+			label: 'Number',
 			max: 200,
 			min: 20,
 			operator: 'eq',
@@ -57,29 +55,8 @@ const fluidDataSetDisplayProps = {
 			value: 123
 		},
 		{
-			id: 'shipment-date',
-			label: 'Shipment date',
-			max: {
-				day: 2,
-				month: 9,
-				year: 2020
-			},
-			min: {
-				day: 14,
-				month: 6,
-				year: 2020
-			},
-			placeholder: 'dd/mm/yyyy',
-			type: 'date',
-			value: {
-				day: 18,
-				month: 7,
-				year: 2020
-			}
-		},
-		{
 			id: 'order-date',
-			label: 'Order range',
+			label: 'Order Range',
 			max: {
 				day: 2,
 				month: 9,
@@ -328,61 +305,95 @@ const selectableTableProps = {
 	]
 };
 
-const headlessDataSetDisplayProps = {
-	apiUrl: '/o/headless-commerce-admin-catalog/v1.0/products',
+const today = new Date();
+
+const ordersDataSetDisplayProps = {
+	apiUrl:
+		'/o/headless-commerce-admin-order/v1.0/orders?nestedFields=account,channel',
+	batchTasksStatusApiUrl: '/o/fake-batch-engine/v1.0/import-task',
 	bulkActions: [
 		{
-			href: '/side-panel/edit.html',
-			icon: 'plus',
-			label: 'Add',
-			target: 'sidePanel'
-		},
-		{
-			href: '/delete',
+			bodyKeys: ['id', 'productId'],
+			href: '/o/fake-bulk-action/v1.0/products/0/batch',
 			icon: 'trash',
 			label: 'Delete',
-			method: 'delete'
+			method: 'delete',
+			target: 'async'
 		}
 	],
 	creationMenuItems: [
 		{
-			href: '/standard/edit',
-			label: 'Add'
-		},
-		{
 			href: 'modal/url',
-			label: 'Add via modal',
+			label: 'Add',
 			target: 'modal'
 		}
 	],
 	filters: [
 		{
-			id: 'createDate',
-			label: 'Creation date',
-			operator: 'eq',
-			type: 'date'
-		},
-		{
-			apiUrl: '/o/headless-commerce-admin-catalog/v1.0/products',
+			apiUrl: '/o/headless-commerce-admin-account/v1.0/accounts',
 			id: 'accountId',
-			inputPlaceholder: 'Search for products...',
-			itemKey: 'productId',
-			itemLabel: ['name', lang_id],
-			label: 'Product ID',
+			inputPlaceholder: 'Search for account',
+			itemKey: 'id',
+			itemLabel: 'name',
+			label: 'Account',
 			selectionType: 'single',
 			type: 'autocomplete'
+		},
+		{
+			apiUrl: '/o/headless-commerce-admin-channel/v1.0/channels',
+			id: 'channelId',
+			inputPlaceholder: 'Search for Channel',
+			itemKey: 'id',
+			itemLabel: 'name',
+			label: 'Channel',
+			selectionType: 'single',
+			type: 'autocomplete'
+		},
+		{
+			id: 'createDate',
+			label: 'Order Range',
+			max: {
+				day: today.getDate(),
+				month: today.getMonth() + 1,
+				year: today.getFullYear()
+			},
+			min: {
+				day: today.getDate(),
+				month: today.getMonth() + 1,
+				year: today.getFullYear() - 1
+			},
+			placeholder: 'dd/mm/yyyy',
+			type: 'dateRange'
+		},
+		{
+			id: 'orderStatus',
+			items: [
+				{
+					label: 'Completed',
+					value: 1
+				},
+				{
+					label: 'Not-completed',
+					value: 999
+				}
+			],
+			label: 'Status',
+			operator: 'eq',
+			type: 'radio'
 		}
 	],
 	id: 'tableTest',
-	itemActions: [
+	itemsActions: [
 		{
-			href: '/edit/{productId}',
-			icon: 'pencil',
-			label: 'Edit'
+			href: '/view/{id}',
+			icon: 'view',
+			id: 'view',
+			label: 'View'
 		},
 		{
-			href: '/delete/{productId}',
+			href: '/o/headless-commerce-admin-order/v1.0/orders/{id}',
 			icon: 'trash',
+			id: 'delete',
 			label: 'Delete',
 			method: 'delete',
 			target: 'async'
@@ -414,9 +425,15 @@ const headlessDataSetDisplayProps = {
 		],
 		initialDelta: 10
 	},
-	selectedItemsKey: 'productId',
+	selectedItemsKey: 'id',
 	showPagination: true,
 	sidePanelId: 'sidePanelTestId',
+	sorting: [
+		{
+			direction: 'desc',
+			key: 'createDate'
+		}
+	],
 	spritemap: './assets/icons.svg',
 	views: [
 		{
@@ -426,40 +443,234 @@ const headlessDataSetDisplayProps = {
 			schema: {
 				fields: [
 					{
+						actionId: 'view',
 						contentRenderer: 'actionLink',
-						fieldName: ['name', lang_id],
+						fieldName: 'id',
+						label: 'order-id'
+					},
+					{
+						fieldName: ['account', 'name'],
+						label: 'account'
+					},
+					{
+						fieldName: ['channel', 'name'],
+						label: 'channel'
+					},
+					{
+						fieldName: 'totalFormatted',
+						label: 'amount'
+					},
+					{
+						contentRenderer: 'date',
+						fieldName: 'createDate',
+						label: 'Creation Date',
+						sortable: true
+					},
+					{
+						contentRenderer: 'date',
+						fieldName: 'modifiedDate',
+						label: 'Modification Date',
+						sortable: true
+					},
+					{
+						contentRenderer: 'status',
+						fieldName: 'orderStatusInfo',
+						label: 'Status'
+					},
+					{
+						contentRenderer: 'status',
+						fieldName: 'workflowStatusInfo',
+						label: 'Workflow Status'
+					}
+				]
+			}
+		}
+	]
+};
+
+const productsDataSetDisplayProps = {
+	apiUrl:
+		'/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=skus,catalog',
+	bulkActions: [
+		{
+			href: '/delete',
+			icon: 'trash',
+			label: 'Delete',
+			method: 'delete'
+		}
+	],
+	creationMenuItems: [
+		{
+			href: 'modal/url',
+			label: 'Add Product',
+			target: 'modal'
+		}
+	],
+	filters: [
+		{
+			id: 'blbl',
+			label: 'Custom Filter',
+			moduleUrl: '/blblasd/asd/basdkj'
+		},
+		{
+			id: 'createDate',
+			label: 'Creation date',
+			max: {
+				day: today.getDate(),
+				month: today.getMonth() + 1,
+				year: today.getFullYear()
+			},
+			min: {
+				day: today.getDate(),
+				month: today.getMonth() + 1,
+				year: today.getFullYear() - 10
+			},
+			placeholder: 'dd/mm/yyyy',
+			type: 'dateRange'
+		},
+		{
+			apiUrl:
+				'/o/headless-admin-taxonomy/v1.0/taxonomy-categories/0/taxonomy-categories',
+			id: 'categoryIds',
+			inputPlaceholder: 'Search for Category',
+			itemKey: 'id',
+			itemLabel: 'name',
+			label: 'Category',
+			type: 'autocomplete'
+		},
+		{
+			apiUrl: '/o/headless-commerce-admin-catalog/v1.0/catalogs',
+			id: 'catalogId',
+			inputPlaceholder: 'Search for Catalog',
+			itemKey: 'id',
+			itemLabel: 'name',
+			label: 'Catalog',
+			selectionType: 'single',
+			type: 'autocomplete'
+		},
+		{
+			id: 'productType',
+			items: [
+				{
+					label: 'Simple',
+					value: 'simple'
+				},
+				{
+					label: 'Multiple',
+					value: 'multiple'
+				}
+			],
+			label: 'Product Type',
+			operator: 'eq',
+			type: 'radio'
+		}
+	],
+	id: 'tableTest',
+	itemsActions: [
+		{
+			href: '/page/{id}',
+			icon: 'view',
+			id: 'view',
+			label: 'View',
+			permissionKey: 'get'
+		},
+		{
+			href:
+				'/o/headless-commerce-admin-catalog/v1.0/products/{productId}',
+			icon: 'trash',
+			id: 'delete',
+			label: 'Delete',
+			method: 'delete',
+			permissionKey: 'delete',
+			target: 'async'
+		}
+	],
+	pageSize: 5,
+	pagination: {
+		deltas: [
+			{
+				label: 5
+			},
+			{
+				label: 10
+			},
+			{
+				label: 20
+			},
+			{
+				label: 30
+			},
+			{
+				label: 50
+			},
+			{
+				href:
+					'http://localhost:8080/group/test-1/pending-orders?p_p_id=com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&_com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet_delta=75',
+				label: 75
+			}
+		],
+		initialDelta: 10
+	},
+	selectedItemsKey: 'id',
+	showPagination: true,
+	sidePanelId: 'sidePanelTestId',
+	sorting: [
+		{
+			direction: 'desc',
+			key: 'modifiedDate'
+		}
+	],
+	spritemap: './assets/icons.svg',
+	views: [
+		{
+			contentRenderer: 'table',
+			icon: 'table',
+			label: 'Table',
+			schema: {
+				fields: [
+					{
+						contentRenderer: 'image',
+						fieldName: 'thumbnail',
+						labelKey: ['name', 'LANG']
+					},
+					{
+						actionId: 'view',
+						contentRenderer: 'actionLink',
+						fieldName: ['name', 'LANG'],
 						label: 'Name',
 						sortable: true
 					},
 					{
 						fieldName: 'productType',
-						label: 'Product Type',
-						mapData: value => value.toUpperCase()
+						label: 'Product Type'
 					},
 					{
-						fieldName: 'externalReferenceCode',
-						label: 'SKU'
+						contentRenderer: 'list',
+						fieldName: 'skus',
+						label: 'Sku',
+						labelKey: 'sku',
+						multipleItemsLabel: 'Multiple-skus'
+					},
+					{
+						fieldName: ['catalog', 'name'],
+						label: 'Catalog'
+					},
+					{
+						contentRenderer: 'date',
+						fieldName: 'createDate',
+						label: 'Created Date',
+						sortable: true
 					},
 					{
 						contentRenderer: 'date',
 						fieldName: 'modifiedDate',
 						label: 'Modified Date',
-						type: 'relative'
+						sortable: true
 					},
 					{
-						contentRenderer: 'label',
-						fieldName: 'active',
-						label: 'Status',
-						mapData: value =>
-							value
-								? {
-										displayStyle: 'success',
-										label: 'Active'
-								  }
-								: {
-										displayStyle: 'danger',
-										label: 'Disabled'
-								  }
+						contentRenderer: 'status',
+						fieldName: 'workflowStatusInfo',
+						label: 'Status'
 					}
 				]
 			}
@@ -468,9 +679,15 @@ const headlessDataSetDisplayProps = {
 };
 
 datasetDisplayLauncher(
-	'headless-dataset-display',
-	'headless-dataset-display-root',
-	headlessDataSetDisplayProps
+	'orders-dataset-display',
+	'orders-dataset-display-root',
+	ordersDataSetDisplayProps
+);
+
+datasetDisplayLauncher(
+	'products-dataset-display',
+	'products-dataset-display-root',
+	productsDataSetDisplayProps
 );
 
 datasetDisplayLauncher(

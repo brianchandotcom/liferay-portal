@@ -14,16 +14,12 @@ definition {
 			widgetName = "${widgetName}");
 
 		if (contains("${typeSettings}","column-${column}=")) {
-			var typeSettings = StringUtil.regexReplaceFirst("${typeSettings}","(column-${column}=[^\\]*)","$1,${widget}");
+			var typeSettings = StringUtil.regexReplaceFirst("${typeSettings}","(column-${column}=[^%]*)","$1,${widget}");
 		}
 		else {
 			var typeSettings = '''${typeSettings}column-${column}''';
 			var typeSettings = '''${typeSettings}=${widget}''';
 		}
-
-		var typeSettings = StringUtil.regexReplaceAll("${typeSettings}","\\r\\n|\\r|\\n","%0A");
-
-		var typeSettings = StringUtil.replace("${typeSettings}", "=", "%3D");
 
 		return "${typeSettings}";
 	}

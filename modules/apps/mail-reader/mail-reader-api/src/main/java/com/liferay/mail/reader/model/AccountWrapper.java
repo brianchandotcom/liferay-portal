@@ -966,16 +966,16 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AccountWrapper)) {
+		if (!(object instanceof AccountWrapper)) {
 			return false;
 		}
 
-		AccountWrapper accountWrapper = (AccountWrapper)obj;
+		AccountWrapper accountWrapper = (AccountWrapper)object;
 
 		if (Objects.equals(_account, accountWrapper._account)) {
 			return true;

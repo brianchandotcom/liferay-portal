@@ -650,16 +650,16 @@ public class AttachmentModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Attachment)) {
+		if (!(object instanceof Attachment)) {
 			return false;
 		}
 
-		Attachment attachment = (Attachment)obj;
+		Attachment attachment = (Attachment)object;
 
 		long primaryKey = attachment.getPrimaryKey();
 

@@ -97,7 +97,7 @@ List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
 		for (ColorScheme curColorScheme : colorSchemes) {
 		%>
 
-			<div class='color-scheme-selector img-thumbnail <%= selColorSchemeId.equals(curColorScheme.getColorSchemeId()) ? "selected" : StringPool.BLANK %>' data-color-scheme-id="<%= curColorScheme.getColorSchemeId() %>">
+			<div class="color-scheme-selector img-thumbnail <%= selColorSchemeId.equals(curColorScheme.getColorSchemeId()) ? "selected" : StringPool.BLANK %>" data-color-scheme-id="<%= curColorScheme.getColorSchemeId() %>">
 				<div class="aspect-ratio aspect-ratio-4-to-3 aspect-ratio-middle">
 					<img alt="" src="<%= themeDisplay.getCDNBaseURL() %><%= HtmlUtil.escapeAttribute(selTheme.getStaticResourcePath()) %><%= HtmlUtil.escapeAttribute(curColorScheme.getColorSchemeThumbnailPath()) %>/thumbnail.png" title="<%= HtmlUtil.escapeAttribute(curColorScheme.getName()) %>" />
 				</div>

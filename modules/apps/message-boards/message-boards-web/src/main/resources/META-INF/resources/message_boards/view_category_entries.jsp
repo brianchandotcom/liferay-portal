@@ -20,12 +20,10 @@
 long categoryId = GetterUtil.getLong(request.getAttribute("view.jsp-categoryId"));
 
 MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, categoryId);
-
-SearchContainer categoryEntriesSearchContainer = (SearchContainer)request.getAttribute("view.jsp-categoryEntriesSearchContainer");
 %>
 
 <liferay-ui:search-container
-	searchContainer="<%= categoryEntriesSearchContainer %>"
+	searchContainer='<%= (SearchContainer)request.getAttribute("view.jsp-categoryEntriesSearchContainer") %>'
 >
 	<liferay-ui:search-container-row
 		className="com.liferay.message.boards.model.MBCategory"

@@ -57,16 +57,8 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 	<liferay-ui:error exception="<%= CPDefinitionMetaKeywordsException.class %>" message="the-meta-keywords-are-too-long" />
 	<liferay-ui:error exception="<%= CPDefinitionMetaTitleException.class %>" message="the-meta-title-is-too-long" />
 	<liferay-ui:error exception="<%= CPDefinitionNameDefaultLanguageException.class %>" message="please-enter-the-product-name-for-the-default-language" />
+	<liferay-ui:error exception="<%= FriendlyURLLengthException.class %>" message="the-friendly-url-is-too-long" />
 	<liferay-ui:error exception="<%= NoSuchCatalogException.class %>" message="please-select-a-valid-catalog" />
-
-	<liferay-ui:error exception="<%= CPFriendlyURLEntryException.class %>">
-
-		<%
-		CPFriendlyURLEntryException cpfuee = (CPFriendlyURLEntryException)errorException;
-		%>
-
-		<%@ include file="/error_friendly_url_exception.jspf" %>
-	</liferay-ui:error>
 
 	<div class="row">
 		<div class="col-8">
@@ -216,17 +208,28 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 					var productId = <%= cpDefinition.getCProductId() %>;
 
 					function selectItem(specification) {
+						debugger;
 						return fetch(
 							'/o/headless-commerce-admin-catalog/v1.0/products/' +
 								id +
 								'/productSpecifications/',
 							{
-								body: JSON.stringify({
-									productId: productId,
-									specificationId: specification.id,
-									specificationKey: specification.key,
-									value: {}
-								}),
+								body: JSON.stringify(
+									Object.assign(
+										{
+											productId: productId,
+											specificationId: specification.id,
+											specificationKey: specification.key,
+											value: {}
+										},
+										specification.optionCategory
+											? {
+													optionCategoryId:
+														specification.optionCategory.id
+											  }
+											: {}
+									)
+								),
 								credentials: 'include',
 								headers: headers,
 								method: 'POST'
@@ -251,7 +254,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 
 						return fetch('/o/headless-commerce-admin-catalog/v1.0/specifications', {
 							body: JSON.stringify({
-								key: slugify.default(encodeURIComponent(name)),
+								key: slugify.default(name),
 								title: nameDefinition
 							}),
 							credentials: 'include',
@@ -264,7 +267,7 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 								}
 
 								return response.json().then(function(data) {
-									return Promise.reject(data.message);
+									return Promise.reject(data.errorDescription);
 								});
 							})
 							.then(selectItem);
@@ -283,18 +286,25 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 							'<%= LanguageUtil.get(request, "find-or-create-a-specification") %>',
 						itemSelectedMessage:
 							'<%= LanguageUtil.get(request, "specification-selected") %>',
+						itemsKey: 'id',
 						linkedDatasetsId: [
 							'<%= CommerceProductDataSetConstants.COMMERCE_DATA_SET_KEY_PRODUCT_DEFINITION_SPECIFICATIONS %>'
 						],
 						multiSelectableEntries: true,
+						itemsKey: 'id',
 						onItemCreated: addNewItem,
 						onItemSelected: selectItem,
 						pageSize: 10,
 						panelHeaderLabel: '<%= LanguageUtil.get(request, "add-specifications") %>',
 						portletId: '<%= portletDisplay.getRootPortletId() %>',
-						schema: {
-							itemTitle: ['title', 'LANG']
-						},
+						schema: [
+							{
+								fieldName: ['title', 'LANG']
+							},
+							{
+								fieldName: 'key'
+							}
+						],
 						spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
 						titleLabel: '<%= LanguageUtil.get(request, "add-existing-specification") %>'
 					});

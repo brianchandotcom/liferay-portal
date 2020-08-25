@@ -63,6 +63,16 @@ public class OrderSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (order.getAccount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"account\": ");
+
+			sb.append(String.valueOf(order.getAccount()));
+		}
+
 		if (order.getAccountExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -85,6 +95,16 @@ public class OrderSerDes {
 			sb.append("\"accountId\": ");
 
 			sb.append(order.getAccountId());
+		}
+
+		if (order.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(order.getActions()));
 		}
 
 		if (order.getAdvanceStatus() != null) {
@@ -119,6 +139,30 @@ public class OrderSerDes {
 			sb.append("\"billingAddressId\": ");
 
 			sb.append(order.getBillingAddressId());
+		}
+
+		if (order.getChannel() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"channel\": ");
+
+			sb.append(String.valueOf(order.getChannel()));
+		}
+
+		if (order.getChannelExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"channelExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(order.getChannelExternalReferenceCode()));
+
+			sb.append("\"");
 		}
 
 		if (order.getChannelId() != null) {
@@ -280,6 +324,16 @@ public class OrderSerDes {
 			sb.append(order.getOrderStatus());
 		}
 
+		if (order.getOrderStatusInfo() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"orderStatusInfo\": ");
+
+			sb.append(String.valueOf(order.getOrderStatusInfo()));
+		}
+
 		if (order.getPaymentMethod() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -302,6 +356,16 @@ public class OrderSerDes {
 			sb.append("\"paymentStatus\": ");
 
 			sb.append(order.getPaymentStatus());
+		}
+
+		if (order.getPaymentStatusInfo() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paymentStatusInfo\": ");
+
+			sb.append(String.valueOf(order.getPaymentStatusInfo()));
 		}
 
 		if (order.getPrintedNote() != null) {
@@ -436,6 +500,16 @@ public class OrderSerDes {
 			sb.append(order.getShippingDiscountPercentageLevel1());
 		}
 
+		if (order.getShippingDiscountPercentageLevel1WithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippingDiscountPercentageLevel1WithTaxAmount\": ");
+
+			sb.append(order.getShippingDiscountPercentageLevel1WithTaxAmount());
+		}
+
 		if (order.getShippingDiscountPercentageLevel2() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -444,6 +518,16 @@ public class OrderSerDes {
 			sb.append("\"shippingDiscountPercentageLevel2\": ");
 
 			sb.append(order.getShippingDiscountPercentageLevel2());
+		}
+
+		if (order.getShippingDiscountPercentageLevel2WithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippingDiscountPercentageLevel2WithTaxAmount\": ");
+
+			sb.append(order.getShippingDiscountPercentageLevel2WithTaxAmount());
 		}
 
 		if (order.getShippingDiscountPercentageLevel3() != null) {
@@ -456,6 +540,16 @@ public class OrderSerDes {
 			sb.append(order.getShippingDiscountPercentageLevel3());
 		}
 
+		if (order.getShippingDiscountPercentageLevel3WithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippingDiscountPercentageLevel3WithTaxAmount\": ");
+
+			sb.append(order.getShippingDiscountPercentageLevel3WithTaxAmount());
+		}
+
 		if (order.getShippingDiscountPercentageLevel4() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -464,6 +558,41 @@ public class OrderSerDes {
 			sb.append("\"shippingDiscountPercentageLevel4\": ");
 
 			sb.append(order.getShippingDiscountPercentageLevel4());
+		}
+
+		if (order.getShippingDiscountPercentageLevel4WithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippingDiscountPercentageLevel4WithTaxAmount\": ");
+
+			sb.append(order.getShippingDiscountPercentageLevel4WithTaxAmount());
+		}
+
+		if (order.getShippingDiscountWithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippingDiscountWithTaxAmount\": ");
+
+			sb.append(order.getShippingDiscountWithTaxAmount());
+		}
+
+		if (order.getShippingDiscountWithTaxAmountFormatted() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippingDiscountWithTaxAmountFormatted\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(order.getShippingDiscountWithTaxAmountFormatted()));
+
+			sb.append("\"");
 		}
 
 		if (order.getShippingMethod() != null) {
@@ -492,6 +621,40 @@ public class OrderSerDes {
 			sb.append(_escape(order.getShippingOption()));
 
 			sb.append("\"");
+		}
+
+		if (order.getShippingWithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippingWithTaxAmount\": ");
+
+			sb.append(order.getShippingWithTaxAmount());
+		}
+
+		if (order.getShippingWithTaxAmountFormatted() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippingWithTaxAmountFormatted\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(order.getShippingWithTaxAmountFormatted()));
+
+			sb.append("\"");
+		}
+
+		if (order.getShippingWithTaxAmountValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shippingWithTaxAmountValue\": ");
+
+			sb.append(order.getShippingWithTaxAmountValue());
 		}
 
 		if (order.getSubtotal() != null) {
@@ -548,6 +711,16 @@ public class OrderSerDes {
 			sb.append(order.getSubtotalDiscountPercentageLevel1());
 		}
 
+		if (order.getSubtotalDiscountPercentageLevel1WithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subtotalDiscountPercentageLevel1WithTaxAmount\": ");
+
+			sb.append(order.getSubtotalDiscountPercentageLevel1WithTaxAmount());
+		}
+
 		if (order.getSubtotalDiscountPercentageLevel2() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -556,6 +729,16 @@ public class OrderSerDes {
 			sb.append("\"subtotalDiscountPercentageLevel2\": ");
 
 			sb.append(order.getSubtotalDiscountPercentageLevel2());
+		}
+
+		if (order.getSubtotalDiscountPercentageLevel2WithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subtotalDiscountPercentageLevel2WithTaxAmount\": ");
+
+			sb.append(order.getSubtotalDiscountPercentageLevel2WithTaxAmount());
 		}
 
 		if (order.getSubtotalDiscountPercentageLevel3() != null) {
@@ -568,6 +751,16 @@ public class OrderSerDes {
 			sb.append(order.getSubtotalDiscountPercentageLevel3());
 		}
 
+		if (order.getSubtotalDiscountPercentageLevel3WithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subtotalDiscountPercentageLevel3WithTaxAmount\": ");
+
+			sb.append(order.getSubtotalDiscountPercentageLevel3WithTaxAmount());
+		}
+
 		if (order.getSubtotalDiscountPercentageLevel4() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -576,6 +769,41 @@ public class OrderSerDes {
 			sb.append("\"subtotalDiscountPercentageLevel4\": ");
 
 			sb.append(order.getSubtotalDiscountPercentageLevel4());
+		}
+
+		if (order.getSubtotalDiscountPercentageLevel4WithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subtotalDiscountPercentageLevel4WithTaxAmount\": ");
+
+			sb.append(order.getSubtotalDiscountPercentageLevel4WithTaxAmount());
+		}
+
+		if (order.getSubtotalDiscountWithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subtotalDiscountWithTaxAmount\": ");
+
+			sb.append(order.getSubtotalDiscountWithTaxAmount());
+		}
+
+		if (order.getSubtotalDiscountWithTaxAmountFormatted() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subtotalDiscountWithTaxAmountFormatted\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(order.getSubtotalDiscountWithTaxAmountFormatted()));
+
+			sb.append("\"");
 		}
 
 		if (order.getSubtotalFormatted() != null) {
@@ -590,6 +818,40 @@ public class OrderSerDes {
 			sb.append(_escape(order.getSubtotalFormatted()));
 
 			sb.append("\"");
+		}
+
+		if (order.getSubtotalWithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subtotalWithTaxAmount\": ");
+
+			sb.append(order.getSubtotalWithTaxAmount());
+		}
+
+		if (order.getSubtotalWithTaxAmountFormatted() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subtotalWithTaxAmountFormatted\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(order.getSubtotalWithTaxAmountFormatted()));
+
+			sb.append("\"");
+		}
+
+		if (order.getSubtotalWithTaxAmountValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subtotalWithTaxAmountValue\": ");
+
+			sb.append(order.getSubtotalWithTaxAmountValue());
 		}
 
 		if (order.getTaxAmount() != null) {
@@ -670,6 +932,16 @@ public class OrderSerDes {
 			sb.append(order.getTotalDiscountPercentageLevel1());
 		}
 
+		if (order.getTotalDiscountPercentageLevel1WithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalDiscountPercentageLevel1WithTaxAmount\": ");
+
+			sb.append(order.getTotalDiscountPercentageLevel1WithTaxAmount());
+		}
+
 		if (order.getTotalDiscountPercentageLevel2() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -678,6 +950,16 @@ public class OrderSerDes {
 			sb.append("\"totalDiscountPercentageLevel2\": ");
 
 			sb.append(order.getTotalDiscountPercentageLevel2());
+		}
+
+		if (order.getTotalDiscountPercentageLevel2WithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalDiscountPercentageLevel2WithTaxAmount\": ");
+
+			sb.append(order.getTotalDiscountPercentageLevel2WithTaxAmount());
 		}
 
 		if (order.getTotalDiscountPercentageLevel3() != null) {
@@ -690,6 +972,16 @@ public class OrderSerDes {
 			sb.append(order.getTotalDiscountPercentageLevel3());
 		}
 
+		if (order.getTotalDiscountPercentageLevel3WithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalDiscountPercentageLevel3WithTaxAmount\": ");
+
+			sb.append(order.getTotalDiscountPercentageLevel3WithTaxAmount());
+		}
+
 		if (order.getTotalDiscountPercentageLevel4() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -698,6 +990,40 @@ public class OrderSerDes {
 			sb.append("\"totalDiscountPercentageLevel4\": ");
 
 			sb.append(order.getTotalDiscountPercentageLevel4());
+		}
+
+		if (order.getTotalDiscountPercentageLevel4WithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalDiscountPercentageLevel4WithTaxAmount\": ");
+
+			sb.append(order.getTotalDiscountPercentageLevel4WithTaxAmount());
+		}
+
+		if (order.getTotalDiscountWithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalDiscountWithTaxAmount\": ");
+
+			sb.append(order.getTotalDiscountWithTaxAmount());
+		}
+
+		if (order.getTotalDiscountWithTaxAmountFormatted() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalDiscountWithTaxAmountFormatted\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(order.getTotalDiscountWithTaxAmountFormatted()));
+
+			sb.append("\"");
 		}
 
 		if (order.getTotalFormatted() != null) {
@@ -714,6 +1040,40 @@ public class OrderSerDes {
 			sb.append("\"");
 		}
 
+		if (order.getTotalWithTaxAmount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalWithTaxAmount\": ");
+
+			sb.append(order.getTotalWithTaxAmount());
+		}
+
+		if (order.getTotalWithTaxAmountFormatted() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalWithTaxAmountFormatted\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(order.getTotalWithTaxAmountFormatted()));
+
+			sb.append("\"");
+		}
+
+		if (order.getTotalWithTaxAmountValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalWithTaxAmountValue\": ");
+
+			sb.append(order.getTotalWithTaxAmountValue());
+		}
+
 		if (order.getTransactionId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -726,6 +1086,16 @@ public class OrderSerDes {
 			sb.append(_escape(order.getTransactionId()));
 
 			sb.append("\"");
+		}
+
+		if (order.getWorkflowStatusInfo() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"workflowStatusInfo\": ");
+
+			sb.append(String.valueOf(order.getWorkflowStatusInfo()));
 		}
 
 		sb.append("}");
@@ -749,6 +1119,13 @@ public class OrderSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		if (order.getAccount() == null) {
+			map.put("account", null);
+		}
+		else {
+			map.put("account", String.valueOf(order.getAccount()));
+		}
+
 		if (order.getAccountExternalReferenceCode() == null) {
 			map.put("accountExternalReferenceCode", null);
 		}
@@ -763,6 +1140,13 @@ public class OrderSerDes {
 		}
 		else {
 			map.put("accountId", String.valueOf(order.getAccountId()));
+		}
+
+		if (order.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(order.getActions()));
 		}
 
 		if (order.getAdvanceStatus() == null) {
@@ -787,6 +1171,22 @@ public class OrderSerDes {
 			map.put(
 				"billingAddressId",
 				String.valueOf(order.getBillingAddressId()));
+		}
+
+		if (order.getChannel() == null) {
+			map.put("channel", null);
+		}
+		else {
+			map.put("channel", String.valueOf(order.getChannel()));
+		}
+
+		if (order.getChannelExternalReferenceCode() == null) {
+			map.put("channelExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"channelExternalReferenceCode",
+				String.valueOf(order.getChannelExternalReferenceCode()));
 		}
 
 		if (order.getChannelId() == null) {
@@ -883,6 +1283,14 @@ public class OrderSerDes {
 			map.put("orderStatus", String.valueOf(order.getOrderStatus()));
 		}
 
+		if (order.getOrderStatusInfo() == null) {
+			map.put("orderStatusInfo", null);
+		}
+		else {
+			map.put(
+				"orderStatusInfo", String.valueOf(order.getOrderStatusInfo()));
+		}
+
 		if (order.getPaymentMethod() == null) {
 			map.put("paymentMethod", null);
 		}
@@ -895,6 +1303,15 @@ public class OrderSerDes {
 		}
 		else {
 			map.put("paymentStatus", String.valueOf(order.getPaymentStatus()));
+		}
+
+		if (order.getPaymentStatusInfo() == null) {
+			map.put("paymentStatusInfo", null);
+		}
+		else {
+			map.put(
+				"paymentStatusInfo",
+				String.valueOf(order.getPaymentStatusInfo()));
 		}
 
 		if (order.getPrintedNote() == null) {
@@ -993,6 +1410,16 @@ public class OrderSerDes {
 				String.valueOf(order.getShippingDiscountPercentageLevel1()));
 		}
 
+		if (order.getShippingDiscountPercentageLevel1WithTaxAmount() == null) {
+			map.put("shippingDiscountPercentageLevel1WithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"shippingDiscountPercentageLevel1WithTaxAmount",
+				String.valueOf(
+					order.getShippingDiscountPercentageLevel1WithTaxAmount()));
+		}
+
 		if (order.getShippingDiscountPercentageLevel2() == null) {
 			map.put("shippingDiscountPercentageLevel2", null);
 		}
@@ -1000,6 +1427,16 @@ public class OrderSerDes {
 			map.put(
 				"shippingDiscountPercentageLevel2",
 				String.valueOf(order.getShippingDiscountPercentageLevel2()));
+		}
+
+		if (order.getShippingDiscountPercentageLevel2WithTaxAmount() == null) {
+			map.put("shippingDiscountPercentageLevel2WithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"shippingDiscountPercentageLevel2WithTaxAmount",
+				String.valueOf(
+					order.getShippingDiscountPercentageLevel2WithTaxAmount()));
 		}
 
 		if (order.getShippingDiscountPercentageLevel3() == null) {
@@ -1011,6 +1448,16 @@ public class OrderSerDes {
 				String.valueOf(order.getShippingDiscountPercentageLevel3()));
 		}
 
+		if (order.getShippingDiscountPercentageLevel3WithTaxAmount() == null) {
+			map.put("shippingDiscountPercentageLevel3WithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"shippingDiscountPercentageLevel3WithTaxAmount",
+				String.valueOf(
+					order.getShippingDiscountPercentageLevel3WithTaxAmount()));
+		}
+
 		if (order.getShippingDiscountPercentageLevel4() == null) {
 			map.put("shippingDiscountPercentageLevel4", null);
 		}
@@ -1018,6 +1465,35 @@ public class OrderSerDes {
 			map.put(
 				"shippingDiscountPercentageLevel4",
 				String.valueOf(order.getShippingDiscountPercentageLevel4()));
+		}
+
+		if (order.getShippingDiscountPercentageLevel4WithTaxAmount() == null) {
+			map.put("shippingDiscountPercentageLevel4WithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"shippingDiscountPercentageLevel4WithTaxAmount",
+				String.valueOf(
+					order.getShippingDiscountPercentageLevel4WithTaxAmount()));
+		}
+
+		if (order.getShippingDiscountWithTaxAmount() == null) {
+			map.put("shippingDiscountWithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"shippingDiscountWithTaxAmount",
+				String.valueOf(order.getShippingDiscountWithTaxAmount()));
+		}
+
+		if (order.getShippingDiscountWithTaxAmountFormatted() == null) {
+			map.put("shippingDiscountWithTaxAmountFormatted", null);
+		}
+		else {
+			map.put(
+				"shippingDiscountWithTaxAmountFormatted",
+				String.valueOf(
+					order.getShippingDiscountWithTaxAmountFormatted()));
 		}
 
 		if (order.getShippingMethod() == null) {
@@ -1034,6 +1510,33 @@ public class OrderSerDes {
 		else {
 			map.put(
 				"shippingOption", String.valueOf(order.getShippingOption()));
+		}
+
+		if (order.getShippingWithTaxAmount() == null) {
+			map.put("shippingWithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"shippingWithTaxAmount",
+				String.valueOf(order.getShippingWithTaxAmount()));
+		}
+
+		if (order.getShippingWithTaxAmountFormatted() == null) {
+			map.put("shippingWithTaxAmountFormatted", null);
+		}
+		else {
+			map.put(
+				"shippingWithTaxAmountFormatted",
+				String.valueOf(order.getShippingWithTaxAmountFormatted()));
+		}
+
+		if (order.getShippingWithTaxAmountValue() == null) {
+			map.put("shippingWithTaxAmountValue", null);
+		}
+		else {
+			map.put(
+				"shippingWithTaxAmountValue",
+				String.valueOf(order.getShippingWithTaxAmountValue()));
 		}
 
 		if (order.getSubtotal() == null) {
@@ -1078,6 +1581,16 @@ public class OrderSerDes {
 				String.valueOf(order.getSubtotalDiscountPercentageLevel1()));
 		}
 
+		if (order.getSubtotalDiscountPercentageLevel1WithTaxAmount() == null) {
+			map.put("subtotalDiscountPercentageLevel1WithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"subtotalDiscountPercentageLevel1WithTaxAmount",
+				String.valueOf(
+					order.getSubtotalDiscountPercentageLevel1WithTaxAmount()));
+		}
+
 		if (order.getSubtotalDiscountPercentageLevel2() == null) {
 			map.put("subtotalDiscountPercentageLevel2", null);
 		}
@@ -1085,6 +1598,16 @@ public class OrderSerDes {
 			map.put(
 				"subtotalDiscountPercentageLevel2",
 				String.valueOf(order.getSubtotalDiscountPercentageLevel2()));
+		}
+
+		if (order.getSubtotalDiscountPercentageLevel2WithTaxAmount() == null) {
+			map.put("subtotalDiscountPercentageLevel2WithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"subtotalDiscountPercentageLevel2WithTaxAmount",
+				String.valueOf(
+					order.getSubtotalDiscountPercentageLevel2WithTaxAmount()));
 		}
 
 		if (order.getSubtotalDiscountPercentageLevel3() == null) {
@@ -1096,6 +1619,16 @@ public class OrderSerDes {
 				String.valueOf(order.getSubtotalDiscountPercentageLevel3()));
 		}
 
+		if (order.getSubtotalDiscountPercentageLevel3WithTaxAmount() == null) {
+			map.put("subtotalDiscountPercentageLevel3WithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"subtotalDiscountPercentageLevel3WithTaxAmount",
+				String.valueOf(
+					order.getSubtotalDiscountPercentageLevel3WithTaxAmount()));
+		}
+
 		if (order.getSubtotalDiscountPercentageLevel4() == null) {
 			map.put("subtotalDiscountPercentageLevel4", null);
 		}
@@ -1105,6 +1638,35 @@ public class OrderSerDes {
 				String.valueOf(order.getSubtotalDiscountPercentageLevel4()));
 		}
 
+		if (order.getSubtotalDiscountPercentageLevel4WithTaxAmount() == null) {
+			map.put("subtotalDiscountPercentageLevel4WithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"subtotalDiscountPercentageLevel4WithTaxAmount",
+				String.valueOf(
+					order.getSubtotalDiscountPercentageLevel4WithTaxAmount()));
+		}
+
+		if (order.getSubtotalDiscountWithTaxAmount() == null) {
+			map.put("subtotalDiscountWithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"subtotalDiscountWithTaxAmount",
+				String.valueOf(order.getSubtotalDiscountWithTaxAmount()));
+		}
+
+		if (order.getSubtotalDiscountWithTaxAmountFormatted() == null) {
+			map.put("subtotalDiscountWithTaxAmountFormatted", null);
+		}
+		else {
+			map.put(
+				"subtotalDiscountWithTaxAmountFormatted",
+				String.valueOf(
+					order.getSubtotalDiscountWithTaxAmountFormatted()));
+		}
+
 		if (order.getSubtotalFormatted() == null) {
 			map.put("subtotalFormatted", null);
 		}
@@ -1112,6 +1674,33 @@ public class OrderSerDes {
 			map.put(
 				"subtotalFormatted",
 				String.valueOf(order.getSubtotalFormatted()));
+		}
+
+		if (order.getSubtotalWithTaxAmount() == null) {
+			map.put("subtotalWithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"subtotalWithTaxAmount",
+				String.valueOf(order.getSubtotalWithTaxAmount()));
+		}
+
+		if (order.getSubtotalWithTaxAmountFormatted() == null) {
+			map.put("subtotalWithTaxAmountFormatted", null);
+		}
+		else {
+			map.put(
+				"subtotalWithTaxAmountFormatted",
+				String.valueOf(order.getSubtotalWithTaxAmountFormatted()));
+		}
+
+		if (order.getSubtotalWithTaxAmountValue() == null) {
+			map.put("subtotalWithTaxAmountValue", null);
+		}
+		else {
+			map.put(
+				"subtotalWithTaxAmountValue",
+				String.valueOf(order.getSubtotalWithTaxAmountValue()));
 		}
 
 		if (order.getTaxAmount() == null) {
@@ -1171,6 +1760,16 @@ public class OrderSerDes {
 				String.valueOf(order.getTotalDiscountPercentageLevel1()));
 		}
 
+		if (order.getTotalDiscountPercentageLevel1WithTaxAmount() == null) {
+			map.put("totalDiscountPercentageLevel1WithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"totalDiscountPercentageLevel1WithTaxAmount",
+				String.valueOf(
+					order.getTotalDiscountPercentageLevel1WithTaxAmount()));
+		}
+
 		if (order.getTotalDiscountPercentageLevel2() == null) {
 			map.put("totalDiscountPercentageLevel2", null);
 		}
@@ -1178,6 +1777,16 @@ public class OrderSerDes {
 			map.put(
 				"totalDiscountPercentageLevel2",
 				String.valueOf(order.getTotalDiscountPercentageLevel2()));
+		}
+
+		if (order.getTotalDiscountPercentageLevel2WithTaxAmount() == null) {
+			map.put("totalDiscountPercentageLevel2WithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"totalDiscountPercentageLevel2WithTaxAmount",
+				String.valueOf(
+					order.getTotalDiscountPercentageLevel2WithTaxAmount()));
 		}
 
 		if (order.getTotalDiscountPercentageLevel3() == null) {
@@ -1189,6 +1798,16 @@ public class OrderSerDes {
 				String.valueOf(order.getTotalDiscountPercentageLevel3()));
 		}
 
+		if (order.getTotalDiscountPercentageLevel3WithTaxAmount() == null) {
+			map.put("totalDiscountPercentageLevel3WithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"totalDiscountPercentageLevel3WithTaxAmount",
+				String.valueOf(
+					order.getTotalDiscountPercentageLevel3WithTaxAmount()));
+		}
+
 		if (order.getTotalDiscountPercentageLevel4() == null) {
 			map.put("totalDiscountPercentageLevel4", null);
 		}
@@ -1196,6 +1815,34 @@ public class OrderSerDes {
 			map.put(
 				"totalDiscountPercentageLevel4",
 				String.valueOf(order.getTotalDiscountPercentageLevel4()));
+		}
+
+		if (order.getTotalDiscountPercentageLevel4WithTaxAmount() == null) {
+			map.put("totalDiscountPercentageLevel4WithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"totalDiscountPercentageLevel4WithTaxAmount",
+				String.valueOf(
+					order.getTotalDiscountPercentageLevel4WithTaxAmount()));
+		}
+
+		if (order.getTotalDiscountWithTaxAmount() == null) {
+			map.put("totalDiscountWithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"totalDiscountWithTaxAmount",
+				String.valueOf(order.getTotalDiscountWithTaxAmount()));
+		}
+
+		if (order.getTotalDiscountWithTaxAmountFormatted() == null) {
+			map.put("totalDiscountWithTaxAmountFormatted", null);
+		}
+		else {
+			map.put(
+				"totalDiscountWithTaxAmountFormatted",
+				String.valueOf(order.getTotalDiscountWithTaxAmountFormatted()));
 		}
 
 		if (order.getTotalFormatted() == null) {
@@ -1206,11 +1853,47 @@ public class OrderSerDes {
 				"totalFormatted", String.valueOf(order.getTotalFormatted()));
 		}
 
+		if (order.getTotalWithTaxAmount() == null) {
+			map.put("totalWithTaxAmount", null);
+		}
+		else {
+			map.put(
+				"totalWithTaxAmount",
+				String.valueOf(order.getTotalWithTaxAmount()));
+		}
+
+		if (order.getTotalWithTaxAmountFormatted() == null) {
+			map.put("totalWithTaxAmountFormatted", null);
+		}
+		else {
+			map.put(
+				"totalWithTaxAmountFormatted",
+				String.valueOf(order.getTotalWithTaxAmountFormatted()));
+		}
+
+		if (order.getTotalWithTaxAmountValue() == null) {
+			map.put("totalWithTaxAmountValue", null);
+		}
+		else {
+			map.put(
+				"totalWithTaxAmountValue",
+				String.valueOf(order.getTotalWithTaxAmountValue()));
+		}
+
 		if (order.getTransactionId() == null) {
 			map.put("transactionId", null);
 		}
 		else {
 			map.put("transactionId", String.valueOf(order.getTransactionId()));
+		}
+
+		if (order.getWorkflowStatusInfo() == null) {
+			map.put("workflowStatusInfo", null);
+		}
+		else {
+			map.put(
+				"workflowStatusInfo",
+				String.valueOf(order.getWorkflowStatusInfo()));
 		}
 
 		return map;
@@ -1233,8 +1916,14 @@ public class OrderSerDes {
 			Order order, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(
-					jsonParserFieldName, "accountExternalReferenceCode")) {
+			if (Objects.equals(jsonParserFieldName, "account")) {
+				if (jsonParserFieldValue != null) {
+					order.setAccount(
+						AccountSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "accountExternalReferenceCode")) {
 
 				if (jsonParserFieldValue != null) {
 					order.setAccountExternalReferenceCode(
@@ -1245,6 +1934,12 @@ public class OrderSerDes {
 				if (jsonParserFieldValue != null) {
 					order.setAccountId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					order.setActions(
+						(Map)OrderSerDes.toMap((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "advanceStatus")) {
@@ -1263,6 +1958,20 @@ public class OrderSerDes {
 				if (jsonParserFieldValue != null) {
 					order.setBillingAddressId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "channel")) {
+				if (jsonParserFieldValue != null) {
+					order.setChannel(
+						ChannelSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "channelExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setChannelExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "channelId")) {
@@ -1341,6 +2050,12 @@ public class OrderSerDes {
 						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "orderStatusInfo")) {
+				if (jsonParserFieldValue != null) {
+					order.setOrderStatusInfo(
+						StatusSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "paymentMethod")) {
 				if (jsonParserFieldValue != null) {
 					order.setPaymentMethod((String)jsonParserFieldValue);
@@ -1350,6 +2065,12 @@ public class OrderSerDes {
 				if (jsonParserFieldValue != null) {
 					order.setPaymentStatus(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "paymentStatusInfo")) {
+				if (jsonParserFieldValue != null) {
+					order.setPaymentStatusInfo(
+						StatusSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "printedNote")) {
@@ -1434,10 +2155,28 @@ public class OrderSerDes {
 			}
 			else if (Objects.equals(
 						jsonParserFieldName,
+						"shippingDiscountPercentageLevel1WithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setShippingDiscountPercentageLevel1WithTaxAmount(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
 						"shippingDiscountPercentageLevel2")) {
 
 				if (jsonParserFieldValue != null) {
 					order.setShippingDiscountPercentageLevel2(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"shippingDiscountPercentageLevel2WithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setShippingDiscountPercentageLevel2WithTaxAmount(
 						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}
@@ -1452,11 +2191,46 @@ public class OrderSerDes {
 			}
 			else if (Objects.equals(
 						jsonParserFieldName,
+						"shippingDiscountPercentageLevel3WithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setShippingDiscountPercentageLevel3WithTaxAmount(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
 						"shippingDiscountPercentageLevel4")) {
 
 				if (jsonParserFieldValue != null) {
 					order.setShippingDiscountPercentageLevel4(
 						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"shippingDiscountPercentageLevel4WithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setShippingDiscountPercentageLevel4WithTaxAmount(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "shippingDiscountWithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setShippingDiscountWithTaxAmount(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"shippingDiscountWithTaxAmountFormatted")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setShippingDiscountWithTaxAmountFormatted(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "shippingMethod")) {
@@ -1467,6 +2241,31 @@ public class OrderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "shippingOption")) {
 				if (jsonParserFieldValue != null) {
 					order.setShippingOption((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "shippingWithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setShippingWithTaxAmount(
+						(BigDecimal)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"shippingWithTaxAmountFormatted")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setShippingWithTaxAmountFormatted(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "shippingWithTaxAmountValue")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setShippingWithTaxAmountValue(
+						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "subtotal")) {
@@ -1508,10 +2307,28 @@ public class OrderSerDes {
 			}
 			else if (Objects.equals(
 						jsonParserFieldName,
+						"subtotalDiscountPercentageLevel1WithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setSubtotalDiscountPercentageLevel1WithTaxAmount(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
 						"subtotalDiscountPercentageLevel2")) {
 
 				if (jsonParserFieldValue != null) {
 					order.setSubtotalDiscountPercentageLevel2(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"subtotalDiscountPercentageLevel2WithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setSubtotalDiscountPercentageLevel2WithTaxAmount(
 						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}
@@ -1526,6 +2343,15 @@ public class OrderSerDes {
 			}
 			else if (Objects.equals(
 						jsonParserFieldName,
+						"subtotalDiscountPercentageLevel3WithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setSubtotalDiscountPercentageLevel3WithTaxAmount(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
 						"subtotalDiscountPercentageLevel4")) {
 
 				if (jsonParserFieldValue != null) {
@@ -1533,9 +2359,60 @@ public class OrderSerDes {
 						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"subtotalDiscountPercentageLevel4WithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setSubtotalDiscountPercentageLevel4WithTaxAmount(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "subtotalDiscountWithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setSubtotalDiscountWithTaxAmount(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"subtotalDiscountWithTaxAmountFormatted")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setSubtotalDiscountWithTaxAmountFormatted(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "subtotalFormatted")) {
 				if (jsonParserFieldValue != null) {
 					order.setSubtotalFormatted((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "subtotalWithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setSubtotalWithTaxAmount(
+						(BigDecimal)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"subtotalWithTaxAmountFormatted")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setSubtotalWithTaxAmountFormatted(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "subtotalWithTaxAmountValue")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setSubtotalWithTaxAmountValue(
+						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "taxAmount")) {
@@ -1587,10 +2464,28 @@ public class OrderSerDes {
 				}
 			}
 			else if (Objects.equals(
+						jsonParserFieldName,
+						"totalDiscountPercentageLevel1WithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setTotalDiscountPercentageLevel1WithTaxAmount(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "totalDiscountPercentageLevel2")) {
 
 				if (jsonParserFieldValue != null) {
 					order.setTotalDiscountPercentageLevel2(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"totalDiscountPercentageLevel2WithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setTotalDiscountPercentageLevel2WithTaxAmount(
 						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}
@@ -1603,6 +2498,15 @@ public class OrderSerDes {
 				}
 			}
 			else if (Objects.equals(
+						jsonParserFieldName,
+						"totalDiscountPercentageLevel3WithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setTotalDiscountPercentageLevel3WithTaxAmount(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "totalDiscountPercentageLevel4")) {
 
 				if (jsonParserFieldValue != null) {
@@ -1610,14 +2514,72 @@ public class OrderSerDes {
 						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"totalDiscountPercentageLevel4WithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setTotalDiscountPercentageLevel4WithTaxAmount(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "totalDiscountWithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setTotalDiscountWithTaxAmount(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"totalDiscountWithTaxAmountFormatted")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setTotalDiscountWithTaxAmountFormatted(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "totalFormatted")) {
 				if (jsonParserFieldValue != null) {
 					order.setTotalFormatted((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "totalWithTaxAmount")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setTotalWithTaxAmount(
+						(BigDecimal)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "totalWithTaxAmountFormatted")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setTotalWithTaxAmountFormatted(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "totalWithTaxAmountValue")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setTotalWithTaxAmountValue(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "transactionId")) {
 				if (jsonParserFieldValue != null) {
 					order.setTransactionId((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "workflowStatusInfo")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setWorkflowStatusInfo(
+						StatusSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else {

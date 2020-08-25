@@ -88,7 +88,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 					<h4 title="<%= HtmlUtil.escape(message.getSubject()) %>">
 						<c:choose>
 							<c:when test="<%= showPermanentLink %>">
-								<a href="#<portlet:namespace />message_<%= message.getMessageId() %>" title='<liferay-ui:message key="permanent-link-to-this-item" />'>
+								<a href="#<portlet:namespace />message_<%= message.getMessageId() %>" title="<liferay-ui:message key="permanent-link-to-this-item" />">
 									<%= HtmlUtil.escape(message.getSubject()) %>
 								</a>
 							</c:when>
@@ -122,7 +122,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 		<div class="divider"></div>
 
 		<div class="panel-body">
-			<div class="card-row card-row-padded message-content" id='<%= liferayPortletResponse.getNamespace() + "addQuickReply" + replyToMessageId %>'>
+			<div class="card-row card-row-padded message-content" id="<%= liferayPortletResponse.getNamespace() + "addQuickReply" + replyToMessageId %>">
 				<portlet:actionURL name="/message_boards/edit_message" var="editMessageURL" />
 
 				<aui:form action="<%= editMessageURL %>" method="post" name='<%= "addQuickReplyFm" + replyToMessageId %>' onSubmit='<%= "event.preventDefault(); " %>'>

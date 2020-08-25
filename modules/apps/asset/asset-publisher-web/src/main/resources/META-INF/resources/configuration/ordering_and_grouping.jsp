@@ -129,7 +129,7 @@
 				if (!assetVocabularies.isEmpty()) {
 			%>
 
-					<optgroup label='<liferay-ui:message key="vocabularies" />'>
+					<optgroup label="<liferay-ui:message key="vocabularies" />">
 
 						<%
 						for (AssetVocabulary assetVocabulary : assetVocabularies) {
@@ -154,7 +154,7 @@
 			if (!assetVocabularies.isEmpty()) {
 			%>
 
-				<optgroup label='<liferay-ui:message key="vocabularies" /> (<liferay-ui:message key="global" />)'>
+				<optgroup label="<liferay-ui:message key="vocabularies" /> (<liferay-ui:message key="global" />)">
 
 					<%
 					for (AssetVocabulary assetVocabulary : assetVocabularies) {

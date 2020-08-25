@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Warehouse Web
 Bundle-SymbolicName: com.liferay.commerce.warehouse.web
-Bundle-Version: 1.0.31
+Bundle-Version: 1.0.33
 Import-Package:\
 	com.liferay.taglib.util;version="[7.4.0,9.0.0)",\
 	\

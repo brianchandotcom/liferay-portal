@@ -563,16 +563,16 @@ public class TrashEntryWrapper implements ModelWrapper<TrashEntry>, TrashEntry {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof TrashEntryWrapper)) {
+		if (!(object instanceof TrashEntryWrapper)) {
 			return false;
 		}
 
-		TrashEntryWrapper trashEntryWrapper = (TrashEntryWrapper)obj;
+		TrashEntryWrapper trashEntryWrapper = (TrashEntryWrapper)object;
 
 		if (Objects.equals(_trashEntry, trashEntryWrapper._trashEntry)) {
 			return true;

@@ -36,17 +36,17 @@ public class ReadingTimeEntryCacheModel
 	implements CacheModel<ReadingTimeEntry>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ReadingTimeEntryCacheModel)) {
+		if (!(object instanceof ReadingTimeEntryCacheModel)) {
 			return false;
 		}
 
 		ReadingTimeEntryCacheModel readingTimeEntryCacheModel =
-			(ReadingTimeEntryCacheModel)obj;
+			(ReadingTimeEntryCacheModel)object;
 
 		if (readingTimeEntryId ==
 				readingTimeEntryCacheModel.readingTimeEntryId) {

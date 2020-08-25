@@ -478,17 +478,17 @@ public class UserNotificationDeliveryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof UserNotificationDeliveryWrapper)) {
+		if (!(object instanceof UserNotificationDeliveryWrapper)) {
 			return false;
 		}
 
 		UserNotificationDeliveryWrapper userNotificationDeliveryWrapper =
-			(UserNotificationDeliveryWrapper)obj;
+			(UserNotificationDeliveryWrapper)object;
 
 		if (Objects.equals(
 				_userNotificationDelivery,

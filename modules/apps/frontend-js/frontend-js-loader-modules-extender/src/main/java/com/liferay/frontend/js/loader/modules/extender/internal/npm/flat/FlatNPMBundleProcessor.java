@@ -109,7 +109,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 		Collections.reverse(processedParts);
 
-		StringBundler sb = new StringBundler(2 * processedParts.size() - 1);
+		StringBundler sb = new StringBundler((2 * processedParts.size()) - 1);
 
 		for (String processedPart : processedParts) {
 			if (sb.length() != 0) {

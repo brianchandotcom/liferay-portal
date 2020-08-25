@@ -19,7 +19,9 @@ import com.liferay.commerce.pricing.service.CommercePriceModifierService;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierPersistence;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelPersistence;
+import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelPersistence;
+import com.liferay.commerce.pricing.service.persistence.CommercePricingClassFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassPersistence;
 import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -291,6 +293,26 @@ public abstract class CommercePriceModifierServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce pricing class finder.
+	 *
+	 * @return the commerce pricing class finder
+	 */
+	public CommercePricingClassFinder getCommercePricingClassFinder() {
+		return commercePricingClassFinder;
+	}
+
+	/**
+	 * Sets the commerce pricing class finder.
+	 *
+	 * @param commercePricingClassFinder the commerce pricing class finder
+	 */
+	public void setCommercePricingClassFinder(
+		CommercePricingClassFinder commercePricingClassFinder) {
+
+		this.commercePricingClassFinder = commercePricingClassFinder;
+	}
+
+	/**
 	 * Returns the commerce pricing class cp definition rel local service.
 	 *
 	 * @return the commerce pricing class cp definition rel local service
@@ -364,6 +386,30 @@ public abstract class CommercePriceModifierServiceBaseImpl
 
 		this.commercePricingClassCPDefinitionRelPersistence =
 			commercePricingClassCPDefinitionRelPersistence;
+	}
+
+	/**
+	 * Returns the commerce pricing class cp definition rel finder.
+	 *
+	 * @return the commerce pricing class cp definition rel finder
+	 */
+	public CommercePricingClassCPDefinitionRelFinder
+		getCommercePricingClassCPDefinitionRelFinder() {
+
+		return commercePricingClassCPDefinitionRelFinder;
+	}
+
+	/**
+	 * Sets the commerce pricing class cp definition rel finder.
+	 *
+	 * @param commercePricingClassCPDefinitionRelFinder the commerce pricing class cp definition rel finder
+	 */
+	public void setCommercePricingClassCPDefinitionRelFinder(
+		CommercePricingClassCPDefinitionRelFinder
+			commercePricingClassCPDefinitionRelFinder) {
+
+		this.commercePricingClassCPDefinitionRelFinder =
+			commercePricingClassCPDefinitionRelFinder;
 	}
 
 	/**
@@ -726,6 +772,9 @@ public abstract class CommercePriceModifierServiceBaseImpl
 	@BeanReference(type = CommercePricingClassPersistence.class)
 	protected CommercePricingClassPersistence commercePricingClassPersistence;
 
+	@BeanReference(type = CommercePricingClassFinder.class)
+	protected CommercePricingClassFinder commercePricingClassFinder;
+
 	@BeanReference(
 		type = com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelLocalService.class
 	)
@@ -743,6 +792,10 @@ public abstract class CommercePriceModifierServiceBaseImpl
 	@BeanReference(type = CommercePricingClassCPDefinitionRelPersistence.class)
 	protected CommercePricingClassCPDefinitionRelPersistence
 		commercePricingClassCPDefinitionRelPersistence;
+
+	@BeanReference(type = CommercePricingClassCPDefinitionRelFinder.class)
+	protected CommercePricingClassCPDefinitionRelFinder
+		commercePricingClassCPDefinitionRelFinder;
 
 	@ServiceReference(
 		type = com.liferay.counter.kernel.service.CounterLocalService.class

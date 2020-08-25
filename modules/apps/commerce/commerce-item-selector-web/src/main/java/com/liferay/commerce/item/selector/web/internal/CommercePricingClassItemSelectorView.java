@@ -68,7 +68,7 @@ public class CommercePricingClassItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return LanguageUtil.get(locale, "pricing-classes");
+		return LanguageUtil.get(locale, "product-groups");
 	}
 
 	@Override

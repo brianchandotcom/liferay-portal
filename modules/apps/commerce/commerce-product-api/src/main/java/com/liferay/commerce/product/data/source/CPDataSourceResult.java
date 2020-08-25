@@ -52,7 +52,8 @@ public class CPDataSourceResult implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(2 * _cpCatalogEntries.size() + 4);
+		StringBundler sb = new StringBundler(
+			(2 * _cpCatalogEntries.size()) + 4);
 
 		sb.append("{data={");
 

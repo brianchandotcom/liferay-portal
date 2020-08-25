@@ -34,17 +34,17 @@ public class JournalContentSearchCacheModel
 	implements CacheModel<JournalContentSearch>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof JournalContentSearchCacheModel)) {
+		if (!(object instanceof JournalContentSearchCacheModel)) {
 			return false;
 		}
 
 		JournalContentSearchCacheModel journalContentSearchCacheModel =
-			(JournalContentSearchCacheModel)obj;
+			(JournalContentSearchCacheModel)object;
 
 		if (contentSearchId == journalContentSearchCacheModel.contentSearchId) {
 			return true;

@@ -41,6 +41,10 @@ public class RSVEntryLocalServiceUtil {
 	/**
 	 * Adds the rsv entry to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect RSVEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param rsvEntry the rsv entry
 	 * @return the rsv entry that was added
 	 */
@@ -76,6 +80,10 @@ public class RSVEntryLocalServiceUtil {
 	/**
 	 * Deletes the rsv entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect RSVEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param rsvEntryId the primary key of the rsv entry
 	 * @return the rsv entry that was removed
 	 * @throws PortalException if a rsv entry with the primary key could not be found
@@ -89,6 +97,10 @@ public class RSVEntryLocalServiceUtil {
 
 	/**
 	 * Deletes the rsv entry from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect RSVEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param rsvEntry the rsv entry
 	 * @return the rsv entry that was removed
@@ -266,6 +278,10 @@ public class RSVEntryLocalServiceUtil {
 
 	/**
 	 * Updates the rsv entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect RSVEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param rsvEntry the rsv entry
 	 * @return the rsv entry that was updated

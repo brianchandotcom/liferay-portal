@@ -40,6 +40,7 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 <aui:input helpMessage="key-help" name="key" />
 
 <c:if test="<%= cpDefinitionOptionValueRel != null %>">
+	<aui:input checked="<%= cpDefinitionOptionValueRel.isPreselected() %>" inlineField="<%= true %>" label="default" name="preselected" type="toggle-switch" />
 
 	<%
 	CommerceCurrency commerceCurrency = cpDefinitionOptionValueRelDisplayContext.getCommerceCurrency();
@@ -52,7 +53,7 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 	%>
 
 	<c:if test="<%= cpDefinitionOptionRel.isPriceTypeStatic() %>">
-		<aui:input name="price" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= commerceCurrency.round(price) %>">
+		<aui:input ignoreRequestValue="<%= true %>" label="delta-price" name="price" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= commerceCurrency.round(price) %>">
 			<aui:validator name="min">0</aui:validator>
 			<aui:validator name="number" />
 		</aui:input>
@@ -70,14 +71,11 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 				</div>
 
 				<div class="col-4">
-					<aui:input name="quantity" wrapperCssClass="mb-0">
-						<aui:validator name="min">1</aui:validator>
-						<aui:validator name="number" />
-					</aui:input>
+					<aui:input min="1" name="quantity" type="number" wrapperCssClass="mb-0" />
 				</div>
 
 				<div class="align-items-end col-auto d-flex">
-					<button class="btn btn-monospaced btn-secondary" id="remove-sku-button" onclick='<%= renderResponse.getNamespace() + "removeSku();" %>' type="button">
+					<button class="btn btn-monospaced btn-secondary form-submitter" id="remove-sku-button" onclick="<%= renderResponse.getNamespace() + "removeSku();" %>" type="button">
 						<clay:icon
 							symbol="trash"
 						/>
@@ -99,28 +97,32 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 		%>
 
 		<aui:script require="commerce-frontend-js/components/autocomplete/entry as autocomplete, commerce-frontend-js/utilities/eventsDefinitions as events">
+			var deleteButton = document.getElementById('remove-sku-button');
+			var quantityInput = document.getElementById(
+				'<%= renderResponse.getNamespace() %>quantity'
+			);
+
+			if (!quantityInput.value || quantityInput.value === '0') {
+				quantityInput.value = 1;
+			}
+
 			autocomplete.default('autocomplete', 'autocomplete-root', {
-				apiUrl: '/o/headless-commerce-admin-catalog/v1.0/skus',
+				apiUrl:
+					'/o/headless-commerce-admin-catalog/v1.0/skus?filter=hasChildCPDefinitions eq false',
 				initialLabel: '<%= cpInstanceLabel %>',
 				initialValue: '<%= cpInstanceId %>',
 				inputId: 'skuId',
 				inputName: '<%= renderResponse.getNamespace() %>cpInstanceId',
 				itemsKey: 'id',
-				itemsLabel: 'sku'
-			});
-
-			Liferay.on(events.AUTOCOMPLETE_VALUE_UPDATED, function(e) {
-				var quantityInput = document.getElementById(
-					'<%= renderResponse.getNamespace() %>quantity'
-				);
-				var deleteButton = document.getElementById('remove-sku-button');
-
-				if (e.value) {
-					quantityInput.disabled = false;
-					deleteButton.disabled = false;
-				} else {
-					quantityInput.disabled = true;
-					deleteButton.disabled = true;
+				itemsLabel: 'sku',
+				onValueUpdated: function(value) {
+					if (value) {
+						quantityInput.disabled = false;
+						deleteButton.disabled = false;
+					} else {
+						quantityInput.disabled = true;
+						deleteButton.disabled = true;
+					}
 				}
 			});
 
@@ -129,7 +131,11 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 					'<%= cpDefinitionOptionValueRelDisplayContext.getRemoveSkuUrl(currentURL) %>'
 				);
 
-				window.location.href = url.toString();
+				if (Liferay.SPA) {
+					Liferay.SPA.app.navigate(url.toString());
+				} else {
+					window.location.href = url.toString();
+				}
 			});
 		</aui:script>
 	</c:if>

@@ -761,16 +761,16 @@ public class ExpandoValueModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ExpandoValue)) {
+		if (!(object instanceof ExpandoValue)) {
 			return false;
 		}
 
-		ExpandoValue expandoValue = (ExpandoValue)obj;
+		ExpandoValue expandoValue = (ExpandoValue)object;
 
 		long primaryKey = expandoValue.getPrimaryKey();
 

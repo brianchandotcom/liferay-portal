@@ -72,6 +72,10 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	/**
 	 * Adds the announcements flag to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AnnouncementsFlagLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param announcementsFlag the announcements flag
 	 * @return the announcements flag that was added
 	 */
@@ -100,6 +104,10 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	/**
 	 * Deletes the announcements flag with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AnnouncementsFlagLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param flagId the primary key of the announcements flag
 	 * @return the announcements flag that was removed
 	 * @throws PortalException if a announcements flag with the primary key could not be found
@@ -114,6 +122,10 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 
 	/**
 	 * Deletes the announcements flag from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AnnouncementsFlagLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param announcementsFlag the announcements flag
 	 * @return the announcements flag that was removed
@@ -328,6 +340,10 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 
 	/**
 	 * Updates the announcements flag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AnnouncementsFlagLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param announcementsFlag the announcements flag
 	 * @return the announcements flag that was updated

@@ -18,6 +18,7 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.frontend.ClayCreationMenu;
 import com.liferay.commerce.frontend.ClayCreationMenuActionItem;
+import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -51,12 +52,12 @@ public class CommerceTaxFixedRatesDisplayContext
 		CommerceTaxFixedRateService commerceTaxFixedRateService,
 		CommerceTaxMethodService commerceTaxMethodService,
 		CPTaxCategoryService cpTaxCategoryService,
-		RenderRequest renderRequest) {
+		PercentageFormatter percentageFormatter, RenderRequest renderRequest) {
 
 		super(
 			commerceChannelLocalService, commerceChannelModelResourcePermission,
 			commerceCurrencyLocalService, commerceTaxMethodService,
-			cpTaxCategoryService, renderRequest);
+			cpTaxCategoryService, percentageFormatter, renderRequest);
 
 		_commerceTaxFixedRateService = commerceTaxFixedRateService;
 	}

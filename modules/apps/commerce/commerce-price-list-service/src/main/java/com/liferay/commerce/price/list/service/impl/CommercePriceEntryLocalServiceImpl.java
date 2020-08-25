@@ -512,7 +512,7 @@ public class CommercePriceEntryLocalServiceImpl
 	public List<CommercePriceEntry> getInstanceCommercePriceEntries(
 		String cpInstanceUuid, int start, int end) {
 
-		return commercePriceEntryPersistence.findByCPInstanceUuid(
+		return commercePriceListFinder.findByCPInstanceUuid(
 			cpInstanceUuid, start, end);
 	}
 
@@ -545,8 +545,7 @@ public class CommercePriceEntryLocalServiceImpl
 
 	@Override
 	public int getInstanceCommercePriceEntriesCount(String cpInstanceUuid) {
-		return commercePriceEntryPersistence.countByCPInstanceUuid(
-			cpInstanceUuid);
+		return commercePriceListFinder.countByCPInstanceUuid(cpInstanceUuid);
 	}
 
 	@Override
@@ -612,12 +611,12 @@ public class CommercePriceEntryLocalServiceImpl
 			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
 			boolean discountDiscovery, BigDecimal discountLevel1,
 			BigDecimal discountLevel2, BigDecimal discountLevel3,
-			BigDecimal discountLevel4, int displayDateMonth, int displayDateDay,
-			int displayDateYear, int displayDateHour, int displayDateMinute,
-			int expirationDateMonth, int expirationDateDay,
-			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			ServiceContext serviceContext)
+			BigDecimal discountLevel4, boolean bulkPricing,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -649,6 +648,7 @@ public class CommercePriceEntryLocalServiceImpl
 		commercePriceEntry.setDiscountLevel2(discountLevel2);
 		commercePriceEntry.setDiscountLevel3(discountLevel3);
 		commercePriceEntry.setDiscountLevel4(discountLevel4);
+		commercePriceEntry.setBulkPricing(bulkPricing);
 
 		commercePriceEntry.setDisplayDate(displayDate);
 
@@ -670,6 +670,28 @@ public class CommercePriceEntryLocalServiceImpl
 			user.getUserId(), commercePriceEntry, serviceContext);
 
 		return commercePriceEntry;
+	}
+
+	@Override
+	public CommercePriceEntry updateCommercePriceEntry(
+			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
+			boolean discountDiscovery, BigDecimal discountLevel1,
+			BigDecimal discountLevel2, BigDecimal discountLevel3,
+			BigDecimal discountLevel4, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateCommercePriceEntry(
+			commercePriceEntryId, price, promoPrice, discountDiscovery,
+			discountLevel1, discountLevel2, discountLevel3, discountLevel4,
+			true, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

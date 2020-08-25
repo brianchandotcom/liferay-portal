@@ -405,16 +405,16 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DLFileRankWrapper)) {
+		if (!(object instanceof DLFileRankWrapper)) {
 			return false;
 		}
 
-		DLFileRankWrapper dlFileRankWrapper = (DLFileRankWrapper)obj;
+		DLFileRankWrapper dlFileRankWrapper = (DLFileRankWrapper)object;
 
 		if (Objects.equals(_dlFileRank, dlFileRankWrapper._dlFileRank)) {
 			return true;

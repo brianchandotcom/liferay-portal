@@ -265,6 +265,20 @@ public class SkuSerDes {
 			sb.append("\"");
 		}
 
+		if (sku.getUnspsc() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unspsc\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sku.getUnspsc()));
+
+			sb.append("\"");
+		}
+
 		if (sku.getWeight() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -440,6 +454,13 @@ public class SkuSerDes {
 			map.put("sku", String.valueOf(sku.getSku()));
 		}
 
+		if (sku.getUnspsc() == null) {
+			map.put("unspsc", null);
+		}
+		else {
+			map.put("unspsc", String.valueOf(sku.getUnspsc()));
+		}
+
 		if (sku.getWeight() == null) {
 			map.put("weight", null);
 		}
@@ -568,6 +589,11 @@ public class SkuSerDes {
 			else if (Objects.equals(jsonParserFieldName, "sku")) {
 				if (jsonParserFieldValue != null) {
 					sku.setSku((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "unspsc")) {
+				if (jsonParserFieldValue != null) {
+					sku.setUnspsc((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "weight")) {

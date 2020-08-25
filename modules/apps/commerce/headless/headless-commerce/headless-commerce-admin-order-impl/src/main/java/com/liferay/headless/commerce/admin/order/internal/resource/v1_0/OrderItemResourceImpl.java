@@ -138,7 +138,7 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 			pagination, totalItems);
 	}
 
-	@NestedField(parentClass = Order.class, value = "items")
+	@NestedField(parentClass = Order.class, value = "orderItems")
 	@Override
 	public Page<OrderItem> getOrderIdOrderItemsPage(
 			Long id, Pagination pagination)
@@ -288,7 +288,35 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 						commerceOrderItem.getDiscountPercentageLevel3()),
 					(BigDecimal)GetterUtil.get(
 						orderItem.getDiscountPercentageLevel4(),
-						commerceOrderItem.getDiscountPercentageLevel4()));
+						commerceOrderItem.getDiscountPercentageLevel4()),
+					(BigDecimal)GetterUtil.get(
+						orderItem.getUnitPriceWithTaxAmount(),
+						commerceOrderItem.getUnitPriceWithTaxAmount()),
+					(BigDecimal)GetterUtil.get(
+						orderItem.getPromoPriceWithTaxAmount(),
+						commerceOrderItem.getPromoPriceWithTaxAmount()),
+					(BigDecimal)GetterUtil.get(
+						orderItem.getDiscountWithTaxAmount(),
+						commerceOrderItem.getDiscountWithTaxAmount()),
+					(BigDecimal)GetterUtil.get(
+						orderItem.getFinalPriceWithTaxAmount(),
+						commerceOrderItem.getFinalPriceWithTaxAmount()),
+					(BigDecimal)GetterUtil.get(
+						orderItem.getDiscountPercentageLevel1WithTaxAmount(),
+						commerceOrderItem.
+							getDiscountPercentageLevel1WithTaxAmount()),
+					(BigDecimal)GetterUtil.get(
+						orderItem.getDiscountPercentageLevel2WithTaxAmount(),
+						commerceOrderItem.
+							getDiscountPercentageLevel2WithTaxAmount()),
+					(BigDecimal)GetterUtil.get(
+						orderItem.getDiscountPercentageLevel3WithTaxAmount(),
+						commerceOrderItem.
+							getDiscountPercentageLevel3WithTaxAmount()),
+					(BigDecimal)GetterUtil.get(
+						orderItem.getDiscountPercentageLevel4WithTaxAmount(),
+						commerceOrderItem.
+							getDiscountPercentageLevel4WithTaxAmount()));
 		}
 
 		// Expando
@@ -351,7 +379,35 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 						commerceOrderItem.getDiscountPercentageLevel3()),
 					(BigDecimal)GetterUtil.get(
 						orderItem.getDiscountPercentageLevel4(),
-						commerceOrderItem.getDiscountPercentageLevel4()));
+						commerceOrderItem.getDiscountPercentageLevel4()),
+					(BigDecimal)GetterUtil.get(
+						orderItem.getUnitPriceWithTaxAmount(),
+						commerceOrderItem.getUnitPriceWithTaxAmount()),
+					(BigDecimal)GetterUtil.get(
+						orderItem.getPromoPriceWithTaxAmount(),
+						commerceOrderItem.getPromoPriceWithTaxAmount()),
+					(BigDecimal)GetterUtil.get(
+						orderItem.getDiscountWithTaxAmount(),
+						commerceOrderItem.getDiscountWithTaxAmount()),
+					(BigDecimal)GetterUtil.get(
+						orderItem.getFinalPriceWithTaxAmount(),
+						commerceOrderItem.getFinalPriceWithTaxAmount()),
+					(BigDecimal)GetterUtil.get(
+						orderItem.getDiscountPercentageLevel1WithTaxAmount(),
+						commerceOrderItem.
+							getDiscountPercentageLevel1WithTaxAmount()),
+					(BigDecimal)GetterUtil.get(
+						orderItem.getDiscountPercentageLevel2WithTaxAmount(),
+						commerceOrderItem.
+							getDiscountPercentageLevel2WithTaxAmount()),
+					(BigDecimal)GetterUtil.get(
+						orderItem.getDiscountPercentageLevel3WithTaxAmount(),
+						commerceOrderItem.
+							getDiscountPercentageLevel3WithTaxAmount()),
+					(BigDecimal)GetterUtil.get(
+						orderItem.getDiscountPercentageLevel4WithTaxAmount(),
+						commerceOrderItem.
+							getDiscountPercentageLevel4WithTaxAmount()));
 		}
 
 		// Expando

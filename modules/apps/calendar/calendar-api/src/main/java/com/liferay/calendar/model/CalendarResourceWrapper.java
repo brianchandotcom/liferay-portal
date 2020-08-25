@@ -973,17 +973,17 @@ public class CalendarResourceWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CalendarResourceWrapper)) {
+		if (!(object instanceof CalendarResourceWrapper)) {
 			return false;
 		}
 
 		CalendarResourceWrapper calendarResourceWrapper =
-			(CalendarResourceWrapper)obj;
+			(CalendarResourceWrapper)object;
 
 		if (Objects.equals(
 				_calendarResource, calendarResourceWrapper._calendarResource)) {

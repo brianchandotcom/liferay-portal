@@ -12,78 +12,11 @@
  * details.
  */
 
-export function convertObjectDateToIsoString(objDate) {
-	const date = new Date(objDate.year, objDate.month - 1, objDate.day);
-	return date.toISOString();
-}
-
-function createOdataFilterString(
-	key,
-	operator = 'eq',
-	type,
-	value,
-	selectionType
-) {
-	switch (type) {
-		case 'autocomplete':
-			if (selectionType !== 'multiple') {
-				const firstItemVal = value[0].value;
-				return `${key} eq ${
-					firstItemVal instanceof Number
-						? firstItemVal
-						: `'${firstItemVal}'`
-				}`;
-			}
-			break;
-		case 'date':
-			return `${key} ${operator} ${convertObjectDateToIsoString(value)}`;
-		case 'dateRange':
-			if (value.from && value.to) {
-				return `${key} gt ${convertObjectDateToIsoString(
-					value.from
-				)}) and (${key} lt ${convertObjectDateToIsoString(value.to)}`;
-			}
-			if (value.from) {
-				return `${key} gt ${convertObjectDateToIsoString(value.from)}`;
-			}
-			if (value.to) {
-				return `${key} lt ${convertObjectDateToIsoString(value.to)}`;
-			}
-			break;
-		default:
-			if (Array.isArray(value)) {
-				return value
-					.map(
-						el =>
-							`(${createOdataFilterString(
-								key,
-								operator,
-								type,
-								el
-							)})`
-					)
-					.join(' or ');
-			}
-			if (value instanceof String) {
-				return `${key} ${operator} '${value}'`;
-			}
-	}
-	return `${key} ${operator} ${value}`;
-}
-
 export default function createOdataFilter(filters) {
 	if (!filters.length) return null;
 
 	return filters
-		.map(filter => {
-			return createOdataFilterString(
-				filter.id,
-				filter.operator,
-				filter.type,
-				filter.value,
-				filter.selectionType
-			);
-		})
+		.map(filter => filter.odataFilterString)
 		.map(filterString => `(${filterString})`)
 		.join(' and ');
 }

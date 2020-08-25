@@ -644,16 +644,16 @@ public class TasksEntryWrapper implements ModelWrapper<TasksEntry>, TasksEntry {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof TasksEntryWrapper)) {
+		if (!(object instanceof TasksEntryWrapper)) {
 			return false;
 		}
 
-		TasksEntryWrapper tasksEntryWrapper = (TasksEntryWrapper)obj;
+		TasksEntryWrapper tasksEntryWrapper = (TasksEntryWrapper)object;
 
 		if (Objects.equals(_tasksEntry, tasksEntryWrapper._tasksEntry)) {
 			return true;

@@ -33,6 +33,7 @@
 		<column name="level4" type="BigDecimal" />
 		<column name="limitationType" type="String" />
 		<column name="limitationTimes" type="int" />
+		<column name="limitationTimesPerAccount" type="int" />
 		<column name="numberOfUse" type="int" />
 		<column name="rulesConjunction" type="boolean" />
 		<column name="active" type="boolean" />
@@ -66,6 +67,11 @@
 		<finder name="LtE_S" return-type="Collection">
 			<finder-column comparator="&lt;" name="expirationDate" />
 			<finder-column name="status" />
+		</finder>
+		<finder name="C_C_A" return-type="CommerceDiscount" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="couponCode" />
+			<finder-column name="active" />
 		</finder>
 
 		<!-- References -->
@@ -249,14 +255,35 @@
 		<order by="desc">
 			<order-column name="createDate" />
 		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceDiscountId" return-type="Collection">
+			<finder-column name="commerceDiscountId" />
+		</finder>
+		<finder name="A_D" return-type="Collection">
+			<finder-column name="commerceAccountId" />
+			<finder-column name="commerceDiscountId" />
+		</finder>
+		<finder name="O_D" return-type="Collection">
+			<finder-column name="commerceOrderId" />
+			<finder-column name="commerceDiscountId" />
+		</finder>
+		<finder name="A_O_D" return-type="Collection">
+			<finder-column name="commerceAccountId" />
+			<finder-column name="commerceOrderId" />
+			<finder-column name="commerceDiscountId" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>CommerceDiscountCouponCode</exception>
 		<exception>CommerceDiscountDisplayDate</exception>
 		<exception>CommerceDiscountExpirationDate</exception>
+		<exception>CommerceDiscountLimitationTimes</exception>
 		<exception>CommerceDiscountLimitationType</exception>
 		<exception>CommerceDiscountRuleType</exception>
 		<exception>CommerceDiscountTarget</exception>
 		<exception>CommerceDiscountTitle</exception>
+		<exception>DuplicateCommerceDiscount</exception>
 	</exceptions>
 </service-builder>

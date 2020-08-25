@@ -1140,18 +1140,18 @@ public class CommerceNotificationTemplateWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceNotificationTemplateWrapper)) {
+		if (!(object instanceof CommerceNotificationTemplateWrapper)) {
 			return false;
 		}
 
 		CommerceNotificationTemplateWrapper
 			commerceNotificationTemplateWrapper =
-				(CommerceNotificationTemplateWrapper)obj;
+				(CommerceNotificationTemplateWrapper)object;
 
 		if (Objects.equals(
 				_commerceNotificationTemplate,

@@ -35,17 +35,17 @@ public class ClusterGroupCacheModel
 	implements CacheModel<ClusterGroup>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ClusterGroupCacheModel)) {
+		if (!(object instanceof ClusterGroupCacheModel)) {
 			return false;
 		}
 
 		ClusterGroupCacheModel clusterGroupCacheModel =
-			(ClusterGroupCacheModel)obj;
+			(ClusterGroupCacheModel)object;
 
 		if ((clusterGroupId == clusterGroupCacheModel.clusterGroupId) &&
 			(mvccVersion == clusterGroupCacheModel.mvccVersion)) {

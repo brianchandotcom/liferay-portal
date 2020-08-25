@@ -88,59 +88,6 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentHelper.getCPOptionCa
 
 			</c:if>
 
-			<tr class="commerce-compare-table__separator">
-				<td colspan="<%= cpCatalogEntries.size() + 1 %>">
-					<span class="commerce-compare-table__title">
-						<liferay-ui:message key="dimensions" />
-					</span>
-				</td>
-			</tr>
-
-			<%
-			String dimensionCPMeasurementUnitName = cpCompareContentHelper.getDimensionCPMeasurementUnitName(company.getCompanyId(), locale);
-
-			if (Validator.isNotNull(dimensionCPMeasurementUnitName)) {
-				dimensionCPMeasurementUnitName = StringPool.OPEN_PARENTHESIS + dimensionCPMeasurementUnitName + StringPool.CLOSE_PARENTHESIS;
-			}
-			%>
-
-			<tr class="commerce-compare-table__common-row">
-				<td class="commerce-compare-table__title">
-					<%= LanguageUtil.get(request, "depth").concat(StringPool.SPACE).concat(HtmlUtil.escape(dimensionCPMeasurementUnitName)) %>
-				</td>
-
-				<%
-				for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
-				%>
-
-					<td class="commerce-compare-table__value">
-						<%= cpCatalogEntry.getDepth() %>
-					</td>
-
-				<%
-				}
-				%>
-
-			</tr>
-			<tr class="commerce-compare-table__common-row">
-				<td class="commerce-compare-table__title">
-					<%= LanguageUtil.get(request, "height").concat(StringPool.SPACE).concat(HtmlUtil.escape(dimensionCPMeasurementUnitName)) %>
-				</td>
-
-				<%
-				for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
-				%>
-
-					<td class="commerce-compare-table__value">
-						<%= cpCatalogEntry.getHeight() %>
-					</td>
-
-				<%
-				}
-				%>
-
-			</tr>
-
 			<c:if test="<%= !cpSpecificationOptions.isEmpty() %>">
 				<tr class="commerce-compare-table__separator">
 					<td colspan="<%= cpCatalogEntries.size() + 1 %>">

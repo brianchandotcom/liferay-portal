@@ -20,7 +20,10 @@ import com.liferay.commerce.pricing.model.CommercePricingClass;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -30,6 +33,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for CommercePricingClass. Methods of this
@@ -62,7 +67,13 @@ public interface CommercePricingClassService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommercePricingClassServiceUtil} to access the commerce pricing class remote service. Add custom service methods to <code>com.liferay.commerce.pricing.service.impl.CommercePricingClassServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommercePricingClass addCommercePricingClass(
-			long userId, long groupId, String title, String description,
+			long userId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommercePricingClass addCommercePricingClass(
+			long userId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String externalReferenceCode,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -86,6 +97,11 @@ public interface CommercePricingClassService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommercePricingClassCountByCPDefinitionId(
+			long cpDefinitionId, String title)
+		throws PrincipalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePricingClass> getCommercePricingClasses(
 			long companyId, int start, int end,
 			OrderByComparator<CommercePricingClass> orderByComparator)
@@ -95,6 +111,10 @@ public interface CommercePricingClassService extends BaseService {
 	public int getCommercePricingClassesCount(long companyId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommercePricingClassesCount(long cpDefinitionId, String title)
+		throws PrincipalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -102,15 +122,32 @@ public interface CommercePricingClassService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CommercePricingClass>
+			searchCommercePricingClasses(
+				long companyId, String keywords, int start, int end, Sort sort)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommercePricingClass>
+			searchCommercePricingClassesByCPDefinitionId(
+				long cpDefinitionId, String title, int start, int end)
+		throws PrincipalException;
+
 	public CommercePricingClass updateCommercePricingClass(
-			long commercePricingClassId, long userId, long groupId,
-			String title, String description, ServiceContext serviceContext)
+			long commercePricingClassId, long userId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommercePricingClass updateCommercePricingClassExternalReferenceCode(
+			long commercePricingClassId, String externalReferenceCode)
 		throws PortalException;
 
 	public CommercePricingClass upsertCommercePricingClass(
-			long commercePricingClassId, long userId, long groupId,
-			String title, String description, String externalReferenceCode,
-			ServiceContext serviceContext)
+			long commercePricingClassId, long userId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String externalReferenceCode, ServiceContext serviceContext)
 		throws PortalException;
 
 }

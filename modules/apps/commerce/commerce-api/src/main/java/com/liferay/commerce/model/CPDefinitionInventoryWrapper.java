@@ -773,17 +773,17 @@ public class CPDefinitionInventoryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionInventoryWrapper)) {
+		if (!(object instanceof CPDefinitionInventoryWrapper)) {
 			return false;
 		}
 
 		CPDefinitionInventoryWrapper cpDefinitionInventoryWrapper =
-			(CPDefinitionInventoryWrapper)obj;
+			(CPDefinitionInventoryWrapper)object;
 
 		if (Objects.equals(
 				_cpDefinitionInventory,

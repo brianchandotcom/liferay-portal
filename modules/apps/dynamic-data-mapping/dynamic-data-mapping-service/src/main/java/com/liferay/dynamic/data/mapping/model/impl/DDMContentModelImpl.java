@@ -932,16 +932,16 @@ public class DDMContentModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMContent)) {
+		if (!(object instanceof DDMContent)) {
 			return false;
 		}
 
-		DDMContent ddmContent = (DDMContent)obj;
+		DDMContent ddmContent = (DDMContent)object;
 
 		long primaryKey = ddmContent.getPrimaryKey();
 

@@ -385,17 +385,17 @@ public class DLFileEntryMetadataWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DLFileEntryMetadataWrapper)) {
+		if (!(object instanceof DLFileEntryMetadataWrapper)) {
 			return false;
 		}
 
 		DLFileEntryMetadataWrapper dlFileEntryMetadataWrapper =
-			(DLFileEntryMetadataWrapper)obj;
+			(DLFileEntryMetadataWrapper)object;
 
 		if (Objects.equals(
 				_dlFileEntryMetadata,

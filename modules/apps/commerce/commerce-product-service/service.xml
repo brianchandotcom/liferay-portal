@@ -481,6 +481,7 @@
 		<column name="priority" type="double" />
 		<column name="key" type="String" />
 		<column name="quantity" type="int" />
+		<column name="preselected" type="boolean" />
 		<column name="price" type="BigDecimal" />
 
 		<!-- Order -->
@@ -509,6 +510,10 @@
 		<finder name="C_K" return-type="CPDefinitionOptionValueRel" unique="true">
 			<finder-column name="CPDefinitionOptionRelId" />
 			<finder-column name="key" />
+		</finder>
+		<finder name="CDORI_P" return-type="Collection">
+			<finder-column name="CPDefinitionOptionRelId" />
+			<finder-column name="preselected" />
 		</finder>
 
 		<!-- References -->
@@ -625,7 +630,7 @@
 
 		<reference entity="Layout" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="CPFriendlyURLEntry" remote-service="false" uuid="true">
+	<entity deprecated="true" local-service="true" name="CPFriendlyURLEntry" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
@@ -750,6 +755,7 @@
 		<column name="deliverySubscriptionType" type="String" />
 		<column db-name="deliverySubTypeSettings" name="deliverySubscriptionTypeSettings" type="String" />
 		<column name="deliveryMaxSubscriptionCycles" type="long" />
+		<column name="unspsc" type="String" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />

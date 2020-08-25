@@ -1361,16 +1361,16 @@ public class CalendarModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Calendar)) {
+		if (!(object instanceof Calendar)) {
 			return false;
 		}
 
-		Calendar calendar = (Calendar)obj;
+		Calendar calendar = (Calendar)object;
 
 		long primaryKey = calendar.getPrimaryKey();
 

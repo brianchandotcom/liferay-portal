@@ -862,16 +862,16 @@ public class FriendlyURLEntryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof FriendlyURLEntry)) {
+		if (!(object instanceof FriendlyURLEntry)) {
 			return false;
 		}
 
-		FriendlyURLEntry friendlyURLEntry = (FriendlyURLEntry)obj;
+		FriendlyURLEntry friendlyURLEntry = (FriendlyURLEntry)object;
 
 		long primaryKey = friendlyURLEntry.getPrimaryKey();
 

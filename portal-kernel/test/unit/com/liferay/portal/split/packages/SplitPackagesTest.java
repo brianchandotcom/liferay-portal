@@ -55,6 +55,8 @@ public class SplitPackagesTest {
 
 		final Set<Path> ignorePaths = new HashSet<>(
 			Arrays.asList(
+				portalPath.resolve(
+					"modules/apps/portal-vulcan/portal-vulcan-compat-api"),
 				portalPath.resolve("portal-impl"),
 				portalPath.resolve("portal-test"),
 				portalPath.resolve("portal-test-integration")));

@@ -78,8 +78,9 @@ public class PaypageClient {
 
 		_verifySeal(parameters.get("Data"), parameters.get("Seal"));
 
-		return new ObjectMapper().convertValue(
-			parameters, PaypageResponse.class);
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		return objectMapper.convertValue(parameters, PaypageResponse.class);
 	}
 
 	public InitializationResponse initialize(PaymentRequest paymentRequest)
@@ -94,8 +95,10 @@ public class PaypageClient {
 				SealCalculator.calculate(
 					SealCalculator.getSealString(paymentRequest), _secretKey));
 
+			ObjectMapper objectMapper = new ObjectMapper();
+
 			StringEntity requestEntity = new StringEntity(
-				new ObjectMapper().writeValueAsString(paymentRequest),
+				objectMapper.writeValueAsString(paymentRequest),
 				ContentType.APPLICATION_JSON);
 
 			HttpPost postMethod = new HttpPost(_getEnvironmentUrl());
@@ -105,7 +108,7 @@ public class PaypageClient {
 			CloseableHttpResponse rawResponse = httpClient.execute(postMethod);
 
 			InitializationResponse initializationResponse =
-				new ObjectMapper().readValue(
+				objectMapper.readValue(
 					EntityUtils.toString(rawResponse.getEntity()),
 					InitializationResponse.class);
 

@@ -63,4 +63,7 @@ public interface CommercePriceModifierRel
 
 			};
 
+	public CommercePriceModifier getCommercePriceModifier()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 }

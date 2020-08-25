@@ -37,6 +37,7 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -229,15 +230,8 @@ public class CommerceDiscountLocalServiceTest {
 				CommerceDiscountConstants.TARGET_PRODUCT,
 				cpDefinition.getCPDefinitionId());
 
-		List<CommerceDiscount> commerceDiscounts =
-			_commerceDiscountLocalService.getUnqualifiedCommerceDiscounts(
-				_company.getCompanyId(), cpDefinition.getCPDefinitionId());
-
-		CommerceDiscount commerceDiscount = commerceDiscounts.get(0);
-
-		Assert.assertEquals(
-			commerceUnqualifiedDiscount.getCommerceDiscountId(),
-			commerceDiscount.getCommerceDiscountId());
+		_productAssertEquals(
+			commerceUnqualifiedDiscount, cpDefinition.getCPDefinitionId());
 
 		CommerceDiscount commerceChannelDiscount =
 			CommerceDiscountTestUtil.addChannelDiscount(
@@ -245,16 +239,8 @@ public class CommerceDiscountLocalServiceTest {
 				CommerceDiscountConstants.LEVEL_L1,
 				cpDefinition.getCPDefinitionId());
 
-		commerceDiscounts =
-			_commerceDiscountLocalService.getChannelCommerceDiscounts(
-				_commerceChannel.getCommerceChannelId(),
-				cpDefinition.getCPDefinitionId());
-
-		commerceDiscount = commerceDiscounts.get(0);
-
-		Assert.assertEquals(
-			commerceChannelDiscount.getCommerceDiscountId(),
-			commerceDiscount.getCommerceDiscountId());
+		_productAssertEquals(
+			commerceChannelDiscount, cpDefinition.getCPDefinitionId());
 
 		long[] commerceAccountGroups =
 			_commerceAccountHelper.getCommerceAccountGroupIds(
@@ -266,15 +252,19 @@ public class CommerceDiscountLocalServiceTest {
 				CommerceDiscountConstants.LEVEL_L3,
 				cpDefinition.getCPDefinitionId());
 
-		commerceDiscounts =
-			_commerceDiscountLocalService.getAccountGroupCommerceDiscount(
-				commerceAccountGroups, cpDefinition.getCPDefinitionId());
+		_productAssertEquals(
+			commerceAccountGroupsDiscount, cpDefinition.getCPDefinitionId());
 
-		commerceDiscount = commerceDiscounts.get(0);
+		CommerceDiscount commerceAccountGroupsAndChannelDiscount =
+			CommerceDiscountTestUtil.addAccountGroupAndChannelDiscount(
+				_user.getGroupId(), commerceAccountGroups,
+				_commerceChannel.getCommerceChannelId(),
+				CommerceDiscountConstants.LEVEL_L3,
+				cpDefinition.getCPDefinitionId());
 
-		Assert.assertEquals(
-			commerceAccountGroupsDiscount.getCommerceDiscountId(),
-			commerceDiscount.getCommerceDiscountId());
+		_productAssertEquals(
+			commerceAccountGroupsAndChannelDiscount,
+			cpDefinition.getCPDefinitionId());
 
 		CommerceDiscount commerceAccountDiscount =
 			CommerceDiscountTestUtil.addAccountDiscount(
@@ -282,16 +272,19 @@ public class CommerceDiscountLocalServiceTest {
 				CommerceDiscountConstants.LEVEL_L4,
 				cpDefinition.getCPDefinitionId());
 
-		commerceDiscounts =
-			_commerceDiscountLocalService.getAccountCommerceDiscounts(
-				_commerceAccount.getCommerceAccountId(),
+		_productAssertEquals(
+			commerceAccountDiscount, cpDefinition.getCPDefinitionId());
+
+		CommerceDiscount commerceAccountAndChannelDiscount =
+			CommerceDiscountTestUtil.addAccountAndChannelDiscount(
+				_user.getGroupId(), _commerceAccount.getCommerceAccountId(),
+				_commerceChannel.getCommerceChannelId(),
+				CommerceDiscountConstants.LEVEL_L4,
 				cpDefinition.getCPDefinitionId());
 
-		commerceDiscount = commerceDiscounts.get(0);
-
-		Assert.assertEquals(
-			commerceAccountDiscount.getCommerceDiscountId(),
-			commerceDiscount.getCommerceDiscountId());
+		_productAssertEquals(
+			commerceAccountAndChannelDiscount,
+			cpDefinition.getCPDefinitionId());
 	}
 
 	@Test
@@ -308,7 +301,7 @@ public class CommerceDiscountLocalServiceTest {
 		);
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), _commerceAccount.getCommerceAccountId(),
+			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency);
 
 		_commerceOrders.add(commerceOrder);
@@ -317,81 +310,289 @@ public class CommerceDiscountLocalServiceTest {
 			_commerceAccountHelper.getCommerceAccountGroupIds(
 				_commerceAccount.getCommerceAccountId());
 
-		CommerceDiscountTestUtil.addChannelOrderDiscount(
-			_user.getGroupId(), _commerceChannel.getCommerceChannelId(),
-			CommerceDiscountConstants.TARGET_TOTAL);
+		CommerceDiscount commerceDiscountTotal1 =
+			CommerceDiscountTestUtil.addChannelOrderDiscount(
+				_user.getGroupId(), _commerceChannel.getCommerceChannelId(),
+				CommerceDiscountConstants.TARGET_TOTAL);
 
-		CommerceDiscountTestUtil.addAccountGroupOrderDiscount(
-			_user.getGroupId(), commerceAccountGroups,
-			CommerceDiscountConstants.TARGET_TOTAL);
+		_orderAssertEquals(
+			commerceDiscountTotal1, CommerceDiscountConstants.TARGET_TOTAL);
+
+		CommerceDiscount commerceDiscountTotal2 =
+			CommerceDiscountTestUtil.addAccountGroupOrderDiscount(
+				_user.getGroupId(), commerceAccountGroups,
+				CommerceDiscountConstants.TARGET_TOTAL);
+
+		_orderAssertEquals(
+			commerceDiscountTotal2, CommerceDiscountConstants.TARGET_TOTAL);
 
 		CommerceDiscount commerceDiscountTotal3 =
+			CommerceDiscountTestUtil.addAccountGroupAndChannelOrderDiscount(
+				_user.getGroupId(), commerceAccountGroups,
+				_commerceChannel.getCommerceChannelId(),
+				CommerceDiscountConstants.TARGET_TOTAL);
+
+		_orderAssertEquals(
+			commerceDiscountTotal3, CommerceDiscountConstants.TARGET_TOTAL);
+
+		CommerceDiscount commerceDiscountTotal4 =
 			CommerceDiscountTestUtil.addAccountOrderDiscount(
 				_user.getGroupId(), _commerceAccount.getCommerceAccountId(),
 				CommerceDiscountConstants.TARGET_TOTAL);
 
-		List<CommerceDiscount> commerceDiscounts =
-			_commerceDiscountLocalService.getAccountCommerceDiscounts(
-				_commerceAccount.getCommerceAccountId(),
+		_orderAssertEquals(
+			commerceDiscountTotal4, CommerceDiscountConstants.TARGET_TOTAL);
+
+		CommerceDiscount commerceDiscountTotal5 =
+			CommerceDiscountTestUtil.addAccountAndChannelOrderDiscount(
+				_user.getGroupId(), _commerceAccount.getCommerceAccountId(),
+				_commerceChannel.getCommerceChannelId(),
 				CommerceDiscountConstants.TARGET_TOTAL);
 
-		CommerceDiscount commerceDiscount = commerceDiscounts.get(0);
+		_orderAssertEquals(
+			commerceDiscountTotal5, CommerceDiscountConstants.TARGET_TOTAL);
 
-		Assert.assertEquals(
-			commerceDiscountTotal3.getCommerceDiscountId(),
-			commerceDiscount.getCommerceDiscountId());
+		CommerceDiscount commerceDiscountShipping1 =
+			CommerceDiscountTestUtil.addChannelOrderDiscount(
+				_user.getGroupId(), _commerceChannel.getCommerceChannelId(),
+				CommerceDiscountConstants.TARGET_SHIPPING);
 
-		CommerceDiscountTestUtil.addChannelOrderDiscount(
-			_user.getGroupId(), _commerceChannel.getCommerceChannelId(),
+		_orderAssertEquals(
+			commerceDiscountShipping1,
 			CommerceDiscountConstants.TARGET_SHIPPING);
 
-		CommerceDiscountTestUtil.addAccountGroupOrderDiscount(
-			_user.getGroupId(), commerceAccountGroups,
+		CommerceDiscount commerceDiscountShipping2 =
+			CommerceDiscountTestUtil.addAccountGroupOrderDiscount(
+				_user.getGroupId(), commerceAccountGroups,
+				CommerceDiscountConstants.TARGET_SHIPPING);
+
+		_orderAssertEquals(
+			commerceDiscountShipping2,
 			CommerceDiscountConstants.TARGET_SHIPPING);
 
 		CommerceDiscount commerceDiscountShipping3 =
+			CommerceDiscountTestUtil.addAccountGroupAndChannelOrderDiscount(
+				_user.getGroupId(), commerceAccountGroups,
+				_commerceChannel.getCommerceChannelId(),
+				CommerceDiscountConstants.TARGET_SHIPPING);
+
+		_orderAssertEquals(
+			commerceDiscountShipping3,
+			CommerceDiscountConstants.TARGET_SHIPPING);
+
+		CommerceDiscount commerceDiscountShipping4 =
 			CommerceDiscountTestUtil.addAccountOrderDiscount(
 				_user.getGroupId(), _commerceAccount.getCommerceAccountId(),
 				CommerceDiscountConstants.TARGET_SHIPPING);
 
-		commerceDiscounts =
-			_commerceDiscountLocalService.getAccountCommerceDiscounts(
-				_commerceAccount.getCommerceAccountId(),
+		_orderAssertEquals(
+			commerceDiscountShipping4,
+			CommerceDiscountConstants.TARGET_SHIPPING);
+
+		CommerceDiscount commerceDiscountShipping5 =
+			CommerceDiscountTestUtil.addAccountAndChannelOrderDiscount(
+				_user.getGroupId(), _commerceAccount.getCommerceAccountId(),
+				_commerceChannel.getCommerceChannelId(),
 				CommerceDiscountConstants.TARGET_SHIPPING);
 
-		commerceDiscount = commerceDiscounts.get(0);
+		_orderAssertEquals(
+			commerceDiscountShipping5,
+			CommerceDiscountConstants.TARGET_SHIPPING);
 
-		Assert.assertEquals(
-			commerceDiscountShipping3.getCommerceDiscountId(),
-			commerceDiscount.getCommerceDiscountId());
+		CommerceDiscount commerceDiscountSubtotal1 =
+			CommerceDiscountTestUtil.addChannelOrderDiscount(
+				_user.getGroupId(), _commerceChannel.getCommerceChannelId(),
+				CommerceDiscountConstants.TARGET_SUBTOTAL);
 
-		CommerceDiscountTestUtil.addChannelOrderDiscount(
-			_user.getGroupId(), _commerceChannel.getCommerceChannelId(),
+		_orderAssertEquals(
+			commerceDiscountSubtotal1,
 			CommerceDiscountConstants.TARGET_SUBTOTAL);
 
-		CommerceDiscountTestUtil.addAccountGroupOrderDiscount(
-			_user.getGroupId(), commerceAccountGroups,
+		CommerceDiscount commerceDiscountSubtotal2 =
+			CommerceDiscountTestUtil.addAccountGroupOrderDiscount(
+				_user.getGroupId(), commerceAccountGroups,
+				CommerceDiscountConstants.TARGET_SUBTOTAL);
+
+		_orderAssertEquals(
+			commerceDiscountSubtotal2,
 			CommerceDiscountConstants.TARGET_SUBTOTAL);
 
 		CommerceDiscount commerceDiscountSubtotal3 =
+			CommerceDiscountTestUtil.addAccountGroupAndChannelOrderDiscount(
+				_user.getGroupId(), commerceAccountGroups,
+				_commerceChannel.getCommerceChannelId(),
+				CommerceDiscountConstants.TARGET_SUBTOTAL);
+
+		_orderAssertEquals(
+			commerceDiscountSubtotal3,
+			CommerceDiscountConstants.TARGET_SUBTOTAL);
+
+		CommerceDiscount commerceDiscountSubtotal4 =
 			CommerceDiscountTestUtil.addAccountOrderDiscount(
 				_user.getGroupId(), _commerceAccount.getCommerceAccountId(),
 				CommerceDiscountConstants.TARGET_SUBTOTAL);
 
-		commerceDiscounts =
-			_commerceDiscountLocalService.getAccountCommerceDiscounts(
-				_commerceAccount.getCommerceAccountId(),
+		_orderAssertEquals(
+			commerceDiscountSubtotal4,
+			CommerceDiscountConstants.TARGET_SUBTOTAL);
+
+		CommerceDiscount commerceDiscountSubtotal5 =
+			CommerceDiscountTestUtil.addAccountAndChannelOrderDiscount(
+				_user.getGroupId(), _commerceAccount.getCommerceAccountId(),
+				_commerceChannel.getCommerceChannelId(),
 				CommerceDiscountConstants.TARGET_SUBTOTAL);
 
-		commerceDiscount = commerceDiscounts.get(0);
-
-		Assert.assertEquals(
-			commerceDiscountSubtotal3.getCommerceDiscountId(),
-			commerceDiscount.getCommerceDiscountId());
+		_orderAssertEquals(
+			commerceDiscountSubtotal5,
+			CommerceDiscountConstants.TARGET_SUBTOTAL);
 	}
 
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
+
+	private List<CommerceDiscount> _getOrderCommerceDiscountByHierarchy(
+			long companyId, long commerceAccountId, long commerceChannelId,
+			String commerceDiscountTargetType)
+		throws PortalException {
+
+		List<CommerceDiscount> commerceDiscounts =
+			_commerceDiscountLocalService.getAccountAndChannelCommerceDiscounts(
+				commerceAccountId, commerceChannelId,
+				commerceDiscountTargetType);
+
+		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
+			return commerceDiscounts;
+		}
+
+		commerceDiscounts =
+			_commerceDiscountLocalService.getAccountCommerceDiscounts(
+				commerceAccountId, commerceDiscountTargetType);
+
+		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
+			return commerceDiscounts;
+		}
+
+		long[] commerceAccountGroupIds =
+			_commerceAccountHelper.getCommerceAccountGroupIds(
+				commerceAccountId);
+
+		commerceDiscounts =
+			_commerceDiscountLocalService.
+				getAccountGroupAndChannelCommerceDiscount(
+					commerceAccountGroupIds, commerceChannelId,
+					commerceDiscountTargetType);
+
+		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
+			return commerceDiscounts;
+		}
+
+		commerceDiscounts =
+			_commerceDiscountLocalService.getAccountGroupCommerceDiscount(
+				commerceAccountGroupIds, commerceDiscountTargetType);
+
+		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
+			return commerceDiscounts;
+		}
+
+		commerceDiscounts =
+			_commerceDiscountLocalService.getChannelCommerceDiscounts(
+				commerceChannelId, commerceDiscountTargetType);
+
+		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
+			return commerceDiscounts;
+		}
+
+		return _commerceDiscountLocalService.getUnqualifiedCommerceDiscounts(
+			companyId, commerceDiscountTargetType);
+	}
+
+	private List<CommerceDiscount> _getProductCommerceDiscountByHierarchy(
+			long companyId, long commerceAccountId, long commerceChannelId,
+			long cpDefinitionId)
+		throws PortalException {
+
+		List<CommerceDiscount> commerceDiscounts =
+			_commerceDiscountLocalService.getAccountAndChannelCommerceDiscounts(
+				commerceAccountId, commerceChannelId, cpDefinitionId);
+
+		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
+			return commerceDiscounts;
+		}
+
+		commerceDiscounts =
+			_commerceDiscountLocalService.getAccountCommerceDiscounts(
+				commerceAccountId, cpDefinitionId);
+
+		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
+			return commerceDiscounts;
+		}
+
+		long[] commerceAccountGroupIds =
+			_commerceAccountHelper.getCommerceAccountGroupIds(
+				commerceAccountId);
+
+		commerceDiscounts =
+			_commerceDiscountLocalService.
+				getAccountGroupAndChannelCommerceDiscount(
+					commerceAccountGroupIds, commerceChannelId, cpDefinitionId);
+
+		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
+			return commerceDiscounts;
+		}
+
+		commerceDiscounts =
+			_commerceDiscountLocalService.getAccountGroupCommerceDiscount(
+				commerceAccountGroupIds, cpDefinitionId);
+
+		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
+			return commerceDiscounts;
+		}
+
+		commerceDiscounts =
+			_commerceDiscountLocalService.getChannelCommerceDiscounts(
+				commerceChannelId, cpDefinitionId);
+
+		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
+			return commerceDiscounts;
+		}
+
+		return _commerceDiscountLocalService.getUnqualifiedCommerceDiscounts(
+			companyId, cpDefinitionId);
+	}
+
+	private void _orderAssertEquals(
+			CommerceDiscount expectedDiscount, String type)
+		throws PortalException {
+
+		List<CommerceDiscount> commerceDiscounts =
+			_getOrderCommerceDiscountByHierarchy(
+				_company.getCompanyId(),
+				_commerceAccount.getCommerceAccountId(),
+				_commerceChannel.getCommerceChannelId(), type);
+
+		CommerceDiscount commerceDiscount = commerceDiscounts.get(0);
+
+		Assert.assertEquals(
+			expectedDiscount.getCommerceDiscountId(),
+			commerceDiscount.getCommerceDiscountId());
+	}
+
+	private void _productAssertEquals(
+			CommerceDiscount expectedDiscount, long cpDefinitionId)
+		throws PortalException {
+
+		List<CommerceDiscount> commerceDiscounts =
+			_getProductCommerceDiscountByHierarchy(
+				_company.getCompanyId(),
+				_commerceAccount.getCommerceAccountId(),
+				_commerceChannel.getCommerceChannelId(), cpDefinitionId);
+
+		CommerceDiscount commerceDiscount = commerceDiscounts.get(0);
+
+		Assert.assertEquals(
+			expectedDiscount.getCommerceDiscountId(),
+			commerceDiscount.getCommerceDiscountId());
+	}
 
 	@DeleteAfterTestRun
 	private CommerceAccount _commerceAccount;

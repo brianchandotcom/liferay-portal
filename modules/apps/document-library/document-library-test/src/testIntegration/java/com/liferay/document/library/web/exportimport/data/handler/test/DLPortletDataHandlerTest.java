@@ -24,6 +24,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
@@ -33,16 +34,19 @@ import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLTrashServiceUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.exportimport.kernel.lar.DataLevel;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
@@ -62,8 +66,11 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portlet.PortletPreferencesImpl;
+import com.liferay.portlet.documentlibrary.service.test.BaseDLAppTestCase;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.registry.Registry;
@@ -97,7 +104,9 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerTestRule.INSTANCE);
 
 	@Before
 	@Override
@@ -232,6 +241,117 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		portletDataHandler.prepareManifestSummary(portletDataContext);
 
 		Assert.assertTrue(atomicInteger.get() >= 1);
+	}
+
+	@Test
+	public void testGetManifestSummaryWithFolderAndFile() throws Exception {
+		StagingLocalServiceUtil.enableLocalStaging(
+			TestPropsValues.getUserId(), this.stagingGroup, false, false,
+			new ServiceContext());
+
+		Group stagingGroup = this.stagingGroup.getStagingGroup();
+
+		Folder folder = DLAppServiceUtil.addFolder(
+			stagingGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			new ServiceContext());
+
+		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+			folder.getGroupId(), folder.getFolderId(),
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			BaseDLAppTestCase.CONTENT.getBytes(), new ServiceContext());
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		DLFileEntryLocalServiceUtil.updateStatus(
+			TestPropsValues.getUserId(), fileVersion.getFileVersionId(),
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(), new HashMap<>());
+
+		initContext();
+
+		Map<String, String[]> parameterMap =
+			portletDataContext.getParameterMap();
+
+		parameterMap.put(
+			ExportImportDateUtil.RANGE,
+			new String[] {ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE});
+
+		portletDataContext.setParameterMap(parameterMap);
+
+		portletDataContext.setEndDate(getEndDate());
+		portletDataContext.setScopeGroupId(stagingGroup.getGroupId());
+
+		portletDataHandler.prepareManifestSummary(portletDataContext);
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		Assert.assertEquals(
+			1, manifestSummary.getModelAdditionCount(DLFolder.class.getName()));
+		Assert.assertEquals(
+			1,
+			manifestSummary.getModelAdditionCount(DLFileEntry.class.getName()));
+	}
+
+	@Test
+	public void testGetManifestSummaryWithFolderAndFileInTrash()
+		throws Exception {
+
+		StagingLocalServiceUtil.enableLocalStaging(
+			TestPropsValues.getUserId(), this.stagingGroup, false, false,
+			new ServiceContext());
+
+		Group stagingGroup = this.stagingGroup.getStagingGroup();
+
+		Folder folder = DLAppServiceUtil.addFolder(
+			stagingGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			new ServiceContext());
+
+		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+			folder.getGroupId(), folder.getFolderId(),
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			BaseDLAppTestCase.CONTENT.getBytes(), new ServiceContext());
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		DLFileEntryLocalServiceUtil.updateStatus(
+			TestPropsValues.getUserId(), fileVersion.getFileVersionId(),
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(), new HashMap<>());
+
+		_dlAppHelperLocalService.moveFolderToTrash(
+			TestPropsValues.getUserId(), folder);
+
+		initContext();
+
+		Map<String, String[]> parameterMap =
+			portletDataContext.getParameterMap();
+
+		parameterMap.put(
+			ExportImportDateUtil.RANGE,
+			new String[] {ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE});
+
+		portletDataContext.setParameterMap(parameterMap);
+
+		portletDataContext.setEndDate(getEndDate());
+		portletDataContext.setScopeGroupId(stagingGroup.getGroupId());
+
+		portletDataHandler.prepareManifestSummary(portletDataContext);
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		Assert.assertEquals(
+			0, manifestSummary.getModelAdditionCount(DLFolder.class.getName()));
+		Assert.assertEquals(
+			0,
+			manifestSummary.getModelAdditionCount(DLFileEntry.class.getName()));
 	}
 
 	@Test
@@ -514,6 +634,9 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 				DLExportableRepositoryPublisher.class,
 				dlExportableRepositoryPublisher, new HashMap<>()));
 	}
+
+	@Inject
+	private DLAppHelperLocalService _dlAppHelperLocalService;
 
 	private final Collection
 		<ServiceRegistration<DLExportableRepositoryPublisher>>

@@ -20,6 +20,8 @@ import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGro
 import com.liferay.commerce.price.list.service.CommercePriceListAccountRelLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
+import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -75,6 +77,8 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.GROUP_ID, Field.MODIFIED_DATE, Field.NAME,
 			Field.SCOPE_GROUP_ID, Field.UID);
+		setFilterSearch(true);
+		setPermissionAware(true);
 	}
 
 	@Override
@@ -216,6 +220,10 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 		document.addText(Field.USER_NAME, commercePriceList.getUserName());
 		document.addNumberSortable(
 			Field.PRIORITY, commercePriceList.getPriority());
+		document.addNumber("catalogId", _getCatalogId(commercePriceList));
+		document.addKeyword(
+			"catalogBasePriceList", commercePriceList.isCatalogBasePriceList());
+		document.addText("type", commercePriceList.getType());
 
 		List<CommercePriceListAccountRel> commercePriceListAccountRels =
 			_commercePriceListAccountRelLocalService.
@@ -321,11 +329,28 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 		indexableActionableDynamicQuery.performActions();
 	}
 
+	private long _getCatalogId(CommercePriceList commercePriceList)
+		throws PortalException {
+
+		CommerceCatalog commerceCatalog =
+			_commerceCatalogLocalService.fetchCommerceCatalogByGroupId(
+				commercePriceList.getGroupId());
+
+		if (commerceCatalog == null) {
+			return 0L;
+		}
+
+		return commerceCatalog.getCommerceCatalogId();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommercePriceListIndexer.class);
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@Reference
 	private CommercePriceListAccountRelLocalService

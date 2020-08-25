@@ -23,6 +23,7 @@ import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
 import com.liferay.commerce.discount.model.CommerceDiscount;
+import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.discount.test.util.CommerceDiscountTestUtil;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.model.CommerceOrder;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
@@ -98,6 +100,9 @@ public class CommerceOrderDiscountTest {
 		_commerceAccountLocalService.deleteCommerceAccount(_commerceAccount);
 		GroupTestUtil.deleteGroup(_group);
 		_userLocalService.deleteUser(_user);
+
+		_commerceDiscountLocalService.deleteCommerceDiscounts(
+			_user.getCompanyId());
 	}
 
 	@Test
@@ -148,7 +153,7 @@ public class CommerceOrderDiscountTest {
 			_user.getUserId(), commerceInventoryWarehouse,
 			cpInstanceDiscount.getSku(), quantity);
 
-		String couponCode = "SCONTO";
+		String couponCode = StringUtil.randomString();
 
 		CommerceDiscountTestUtil.addCouponDiscount(
 			_group.getGroupId(), 1, couponCode,
@@ -356,7 +361,7 @@ public class CommerceOrderDiscountTest {
 				CommerceDiscountConstants.TARGET_PRODUCT,
 				cpDefinition.getCPDefinitionId());
 
-		String couponCode = "SCONTO";
+		String couponCode = StringUtil.randomString();
 
 		CommerceDiscount commerceDiscount2 =
 			CommerceDiscountTestUtil.addCouponDiscount(
@@ -428,6 +433,9 @@ public class CommerceOrderDiscountTest {
 
 	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;
+
+	@Inject
+	private CommerceDiscountLocalService _commerceDiscountLocalService;
 
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;

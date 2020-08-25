@@ -41,6 +41,10 @@ public class FragmentEntryLocalServiceUtil {
 	/**
 	 * Adds the fragment entry to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect FragmentEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param fragmentEntry the fragment entry
 	 * @return the fragment entry that was added
 	 */
@@ -157,6 +161,10 @@ public class FragmentEntryLocalServiceUtil {
 	/**
 	 * Deletes the fragment entry from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect FragmentEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param fragmentEntry the fragment entry
 	 * @return the fragment entry that was removed
 	 * @throws PortalException
@@ -170,6 +178,10 @@ public class FragmentEntryLocalServiceUtil {
 
 	/**
 	 * Deletes the fragment entry with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect FragmentEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param fragmentEntryId the primary key of the fragment entry
 	 * @return the fragment entry that was removed
@@ -487,6 +499,10 @@ public class FragmentEntryLocalServiceUtil {
 
 	/**
 	 * Updates the fragment entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect FragmentEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param fragmentEntry the fragment entry
 	 * @return the fragment entry that was updated

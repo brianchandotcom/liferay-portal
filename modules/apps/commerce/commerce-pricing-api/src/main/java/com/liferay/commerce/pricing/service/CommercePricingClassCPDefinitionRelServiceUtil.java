@@ -49,6 +49,48 @@ public class CommercePricingClassCPDefinitionRelServiceUtil {
 			commercePricingClassId, cpDefinitionId, serviceContext);
 	}
 
+	public static
+		com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel
+				deleteCommercePricingClassCPDefinitionRel(
+					com.liferay.commerce.pricing.model.
+						CommercePricingClassCPDefinitionRel
+							commercePricingClassCPDefinitionRel)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteCommercePricingClassCPDefinitionRel(
+			commercePricingClassCPDefinitionRel);
+	}
+
+	public static
+		com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel
+				deleteCommercePricingClassCPDefinitionRel(
+					long commercePricingClassCPDefinitionRelId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteCommercePricingClassCPDefinitionRel(
+			commercePricingClassCPDefinitionRelId);
+	}
+
+	public static
+		com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel
+				fetchCommercePricingClassCPDefinitionRel(
+					long commercePricingClassId, long cpDefinitionId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().fetchCommercePricingClassCPDefinitionRel(
+			commercePricingClassId, cpDefinitionId);
+	}
+
+	public static
+		com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel
+				getCommercePricingClassCPDefinitionRel(
+					long commercePricingClassCPDefinitionRelId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommercePricingClassCPDefinitionRel(
+			commercePricingClassCPDefinitionRelId);
+	}
+
 	public static java.util.List
 		<com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel>
 				getCommercePricingClassCPDefinitionRelByClassId(
@@ -57,6 +99,35 @@ public class CommercePricingClassCPDefinitionRelServiceUtil {
 
 		return getService().getCommercePricingClassCPDefinitionRelByClassId(
 			commercePricingClassId);
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel>
+				getCommercePricingClassCPDefinitionRels(
+					long commercePricingClassId, int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.commerce.pricing.model.
+							CommercePricingClassCPDefinitionRel>
+								orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommercePricingClassCPDefinitionRels(
+			commercePricingClassId, start, end, orderByComparator);
+	}
+
+	public static int getCommercePricingClassCPDefinitionRelsCount(
+			long commercePricingClassId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommercePricingClassCPDefinitionRelsCount(
+			commercePricingClassId);
+	}
+
+	public static int getCommercePricingClassCPDefinitionRelsCount(
+		long commercePricingClassId, String name, String languageId) {
+
+		return getService().getCommercePricingClassCPDefinitionRelsCount(
+			commercePricingClassId, name, languageId);
 	}
 
 	public static long[] getCPDefinitionIds(long commercePricingClassId)
@@ -72,6 +143,17 @@ public class CommercePricingClassCPDefinitionRelServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel>
+				searchByCommercePricingClassId(
+					long commercePricingClassId, String name, String languageId,
+					int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().searchByCommercePricingClassId(
+			commercePricingClassId, name, languageId, start, end);
 	}
 
 	public static CommercePricingClassCPDefinitionRelService getService() {

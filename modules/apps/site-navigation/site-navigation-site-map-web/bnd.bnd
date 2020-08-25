@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Site Navigation Site Map Web
 Bundle-SymbolicName: com.liferay.site.navigation.site.map.web
-Bundle-Version: 3.0.13
+Bundle-Version: 3.0.16
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.site.navigation.lang)";\

@@ -30,7 +30,7 @@ public class PortletParameterUtil {
 			return "p_p_id=".concat(portletId);
 		}
 
-		StringBundler sb = new StringBundler(2 + parameters.length * 4);
+		StringBundler sb = new StringBundler(2 + (parameters.length * 4));
 
 		sb.append("p_p_id=");
 		sb.append(portletId);

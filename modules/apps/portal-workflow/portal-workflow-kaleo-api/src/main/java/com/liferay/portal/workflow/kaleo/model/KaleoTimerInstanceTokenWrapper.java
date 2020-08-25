@@ -821,17 +821,17 @@ public class KaleoTimerInstanceTokenWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoTimerInstanceTokenWrapper)) {
+		if (!(object instanceof KaleoTimerInstanceTokenWrapper)) {
 			return false;
 		}
 
 		KaleoTimerInstanceTokenWrapper kaleoTimerInstanceTokenWrapper =
-			(KaleoTimerInstanceTokenWrapper)obj;
+			(KaleoTimerInstanceTokenWrapper)object;
 
 		if (Objects.equals(
 				_kaleoTimerInstanceToken,

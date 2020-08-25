@@ -36,7 +36,7 @@
 <div class="col-md-9">
 	<aui:fieldset>
 		<p class="text-default">
-			<span class='<%= (sampleFileEntryId > 0) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />sampleFileEntryRemove" role="button">
+			<span class="<%= (sampleFileEntryId > 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />sampleFileEntryRemove" role="button">
 				<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
 			</span>
 			<span id="<portlet:namespace />sampleFileEntryNameInput">

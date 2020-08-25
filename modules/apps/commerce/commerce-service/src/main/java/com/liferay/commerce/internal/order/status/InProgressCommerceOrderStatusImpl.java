@@ -70,7 +70,7 @@ public class InProgressCommerceOrderStatusImpl implements CommerceOrderStatus {
 			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 			commerceOrder = WorkflowHandlerRegistryUtil.startWorkflowInstance(
-				commerceOrder.getCompanyId(), commerceOrder.getGroupId(),
+				commerceOrder.getCompanyId(), commerceOrder.getScopeGroupId(),
 				commerceOrder.getUserId(), CommerceOrder.class.getName(),
 				commerceOrderId, commerceOrder, serviceContext,
 				new HashMap<>());

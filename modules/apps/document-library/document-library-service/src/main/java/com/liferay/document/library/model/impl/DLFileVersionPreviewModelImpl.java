@@ -547,16 +547,17 @@ public class DLFileVersionPreviewModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DLFileVersionPreview)) {
+		if (!(object instanceof DLFileVersionPreview)) {
 			return false;
 		}
 
-		DLFileVersionPreview dlFileVersionPreview = (DLFileVersionPreview)obj;
+		DLFileVersionPreview dlFileVersionPreview =
+			(DLFileVersionPreview)object;
 
 		long primaryKey = dlFileVersionPreview.getPrimaryKey();
 

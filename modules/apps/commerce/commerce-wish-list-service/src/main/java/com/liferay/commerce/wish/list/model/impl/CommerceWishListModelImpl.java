@@ -854,16 +854,16 @@ public class CommerceWishListModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceWishList)) {
+		if (!(object instanceof CommerceWishList)) {
 			return false;
 		}
 
-		CommerceWishList commerceWishList = (CommerceWishList)obj;
+		CommerceWishList commerceWishList = (CommerceWishList)object;
 
 		long primaryKey = commerceWishList.getPrimaryKey();
 

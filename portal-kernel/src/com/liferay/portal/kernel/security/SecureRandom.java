@@ -31,7 +31,7 @@ public class SecureRandom extends Random {
 			result = (result << 8) + (SecureRandomUtil.nextByte() & 0xFF);
 		}
 
-		return result >>> (bytes * 8 - bits);
+		return result >>> ((bytes * 8) - bits);
 	}
 
 }

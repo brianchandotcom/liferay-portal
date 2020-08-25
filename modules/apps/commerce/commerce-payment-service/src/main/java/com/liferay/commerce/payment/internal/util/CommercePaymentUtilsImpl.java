@@ -25,14 +25,18 @@ import com.liferay.commerce.payment.request.CommercePaymentRequestProviderRegist
 import com.liferay.commerce.payment.result.CommercePaymentResult;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.payment.util.CommercePaymentUtils;
-import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.security.Key;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -89,7 +93,7 @@ public class CommercePaymentUtilsImpl implements CommercePaymentUtils {
 			CommerceOrder commerceOrder, Locale locale, String transactionId,
 			String checkoutStepUrl, HttpServletRequest httpServletRequest,
 			CommercePaymentMethod commercePaymentMethod)
-		throws PortalException {
+		throws Exception {
 
 		String cancelUrl = null;
 		String returnUrl = null;
@@ -135,9 +139,10 @@ public class CommercePaymentUtilsImpl implements CommercePaymentUtils {
 	}
 
 	private StringBundler _getBaseUrl(
-		HttpServletRequest httpServletRequest, CommerceOrder commerceOrder,
-		String redirect, CommercePaymentMethod commercePaymentMethod,
-		int extraCapacity) {
+			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder,
+			String redirect, CommercePaymentMethod commercePaymentMethod,
+			int extraCapacity)
+		throws Exception {
 
 		StringBundler sb = new StringBundler(
 			extraCapacity + (Validator.isNotNull(redirect) ? 13 : 11));
@@ -152,6 +157,19 @@ public class CommercePaymentUtilsImpl implements CommercePaymentUtils {
 		sb.append("&uuid=");
 		sb.append(URLCodec.encodeURL(commerceOrder.getUuid()));
 
+		if (commerceOrder.isGuestOrder()) {
+			Company company = _portal.getCompany(httpServletRequest);
+
+			Key key = company.getKeyObj();
+
+			String token = Encryptor.encrypt(
+				key, String.valueOf(commerceOrder.getCommerceOrderId()));
+
+			sb.append("&guestToken=");
+			sb.append(token);
+			sb.append(StringPool.AMPERSAND);
+		}
+
 		if (Validator.isNotNull(redirect)) {
 			sb.append("&redirect=");
 			sb.append(URLCodec.encodeURL(redirect));
@@ -161,8 +179,9 @@ public class CommercePaymentUtilsImpl implements CommercePaymentUtils {
 	}
 
 	private String _getCancelUrl(
-		HttpServletRequest httpServletRequest, CommerceOrder commerceOrder,
-		String redirect, CommercePaymentMethod commercePaymentMethod) {
+			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder,
+			String redirect, CommercePaymentMethod commercePaymentMethod)
+		throws Exception {
 
 		StringBundler sb = _getBaseUrl(
 			httpServletRequest, commerceOrder, redirect, commercePaymentMethod,
@@ -174,8 +193,9 @@ public class CommercePaymentUtilsImpl implements CommercePaymentUtils {
 	}
 
 	private String _getReturnUrl(
-		HttpServletRequest httpServletRequest, CommerceOrder commerceOrder,
-		String redirect, CommercePaymentMethod commercePaymentMethod) {
+			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder,
+			String redirect, CommercePaymentMethod commercePaymentMethod)
+		throws Exception {
 
 		StringBundler sb = _getBaseUrl(
 			httpServletRequest, commerceOrder, redirect, commercePaymentMethod,
@@ -183,9 +203,6 @@ public class CommercePaymentUtilsImpl implements CommercePaymentUtils {
 
 		return sb.toString();
 	}
-
-	@Reference
-	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;

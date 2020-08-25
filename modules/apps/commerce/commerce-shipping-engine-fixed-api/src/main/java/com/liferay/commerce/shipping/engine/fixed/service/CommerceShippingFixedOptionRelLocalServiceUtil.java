@@ -41,6 +41,10 @@ public class CommerceShippingFixedOptionRelLocalServiceUtil {
 	/**
 	 * Adds the commerce shipping fixed option rel to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceShippingFixedOptionRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceShippingFixedOptionRel the commerce shipping fixed option rel
 	 * @return the commerce shipping fixed option rel that was added
 	 */
@@ -109,6 +113,10 @@ public class CommerceShippingFixedOptionRelLocalServiceUtil {
 	/**
 	 * Deletes the commerce shipping fixed option rel from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceShippingFixedOptionRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceShippingFixedOptionRel the commerce shipping fixed option rel
 	 * @return the commerce shipping fixed option rel that was removed
 	 */
@@ -123,6 +131,10 @@ public class CommerceShippingFixedOptionRelLocalServiceUtil {
 
 	/**
 	 * Deletes the commerce shipping fixed option rel with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceShippingFixedOptionRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceShippingFixedOptionRelId the primary key of the commerce shipping fixed option rel
 	 * @return the commerce shipping fixed option rel that was removed
@@ -394,6 +406,10 @@ public class CommerceShippingFixedOptionRelLocalServiceUtil {
 
 	/**
 	 * Updates the commerce shipping fixed option rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceShippingFixedOptionRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceShippingFixedOptionRel the commerce shipping fixed option rel
 	 * @return the commerce shipping fixed option rel that was updated

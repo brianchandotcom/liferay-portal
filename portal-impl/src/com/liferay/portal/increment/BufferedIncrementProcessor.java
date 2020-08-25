@@ -54,7 +54,7 @@ public class BufferedIncrementProcessor {
 
 		Class<?>[] parameterTypes = method.getParameterTypes();
 
-		StringBundler sb = new StringBundler(parameterTypes.length * 2 + 5);
+		StringBundler sb = new StringBundler((parameterTypes.length * 2) + 5);
 
 		sb.append("BufferedIncrement-");
 

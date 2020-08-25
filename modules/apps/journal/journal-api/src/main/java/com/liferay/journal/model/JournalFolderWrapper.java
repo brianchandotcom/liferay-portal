@@ -946,16 +946,17 @@ public class JournalFolderWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof JournalFolderWrapper)) {
+		if (!(object instanceof JournalFolderWrapper)) {
 			return false;
 		}
 
-		JournalFolderWrapper journalFolderWrapper = (JournalFolderWrapper)obj;
+		JournalFolderWrapper journalFolderWrapper =
+			(JournalFolderWrapper)object;
 
 		if (Objects.equals(
 				_journalFolder, journalFolderWrapper._journalFolder)) {

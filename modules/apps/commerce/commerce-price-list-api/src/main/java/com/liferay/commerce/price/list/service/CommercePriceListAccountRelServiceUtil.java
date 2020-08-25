@@ -67,12 +67,43 @@ public class CommercePriceListAccountRelServiceUtil {
 			commercePriceListId, commerceAccountId);
 	}
 
+	public static
+		com.liferay.commerce.price.list.model.CommercePriceListAccountRel
+				getCommercePriceListAccountRel(
+					long commercePriceListAccountRelId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommercePriceListAccountRel(
+			commercePriceListAccountRelId);
+	}
+
 	public static java.util.List
 		<com.liferay.commerce.price.list.model.CommercePriceListAccountRel>
 				getCommercePriceListAccountRels(long commercePriceListId)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getCommercePriceListAccountRels(
+			commercePriceListId);
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.price.list.model.CommercePriceListAccountRel>
+				getCommercePriceListAccountRels(
+					long commercePriceListId, int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.commerce.price.list.model.
+							CommercePriceListAccountRel> orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommercePriceListAccountRels(
+			commercePriceListId, start, end, orderByComparator);
+	}
+
+	public static int getCommercePriceListAccountRelsCount(
+			long commercePriceListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommercePriceListAccountRelsCount(
 			commercePriceListId);
 	}
 

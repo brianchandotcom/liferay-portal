@@ -45,7 +45,7 @@ SearchContainer<DDMTemplate> templateSearch = ddmDisplayContext.getTemplateSearc
 	namespace="<%= renderResponse.getNamespace() %>"
 	searchActionURL="<%= ddmDisplayContext.getSelectTemplateSearchActionURL() %>"
 	searchFormName="searchForm"
-	selectable="false"
+	selectable="<%= false %>"
 	sortingOrder="<%= ddmDisplayContext.getOrderByType() %>"
 	sortingURL="<%= ddmDisplayContext.getSortingURL() %>"
 />

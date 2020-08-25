@@ -1,0 +1,21 @@
+definition {
+
+	macro assertGuestCheckoutAuthenticationPage {
+		AssertElementPresent(locator1 = "TextInput#EMAIL_ADDRESS");
+
+		AssertElementPresent(locator1 = "TextInput#PASSWORD");
+
+		AssertElementPresent(
+			key_text = "Sign In",
+			locator1 = "Button#ANY");
+
+		AssertElementPresent(locator1 = "Link#CREATE_ACCOUNT");
+
+		AssertElementPresent(locator1 = "Link#FORGOT_PASSWORD");
+
+		AssertElementPresent(
+			key_text = "Continue as a Guest",
+			locator1 = "Button#ANY");
+	}
+
+}

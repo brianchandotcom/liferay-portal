@@ -90,7 +90,7 @@ public class StringTemplateResource implements TemplateResource {
 
 	@Override
 	public int hashCode() {
-		return _templateId.hashCode() * 11 + _templateContent.hashCode();
+		return (_templateId.hashCode() * 11) + _templateContent.hashCode();
 	}
 
 	@Override

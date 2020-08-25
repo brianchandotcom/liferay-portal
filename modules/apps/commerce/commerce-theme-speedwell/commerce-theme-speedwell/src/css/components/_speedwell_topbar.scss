@@ -4,6 +4,7 @@
 	display: grid;
 	grid-template-columns: 1fr 200px 1fr;
 	left: 0;
+	padding-right: $topbar-height;
 	position: fixed;
 	right: 0;
 	top: $liferay-topbar-height;
@@ -26,8 +27,7 @@
 		display: none;
 	}
 
-	&__button,
-	.speedwell-cart .commerce-topbar-button {
+	&__button {
 		align-items: center;
 		background-color: #fff;
 		border: 0;
@@ -114,9 +114,6 @@
 		}
 	}
 
-	&__cart-wrapper {
-	}
-
 	&--translucent {
 		@media screen and (min-width: 768px) {
 			background-color: transparent;
@@ -133,19 +130,13 @@
 				@include speedwellButtonEffect($color-bg, $stroke);
 			}
 
-			.speedwell-cart .commerce-topbar-button {
-				background-color: $color-bg;
-				color: $stroke;
-			}
-
 			.speedwell-logo svg path:nth-child(1) {
 				fill: white;
 				stroke: transparent;
 			}
 
 			.is-open {
-				.speedwell-topbar__button,
-				.speedwell-cart .commerce-topbar-button {
+				.speedwell-topbar__button {
 					background-color: $stroke;
 					color: $color-bg;
 				}
@@ -177,22 +168,5 @@
 				display: none;
 			}
 		}
-	}
-}
-
-.speedwell-topbar--translucent.cart-open {
-	background-color: $color-bg !important;
-	background-image: none !important;
-	color: $stroke !important;
-	transition: background-image 0.2s $easeOutQuart,
-		background-color 0.2s $easeOutQuart;
-
-	.speedwell-topbar__button {
-		color: $stroke !important;
-		transition: color 0.2s $easeOutQuart;
-	}
-
-	.speedwell-logo svg path:nth-child(1) {
-		fill: $stroke;
 	}
 }

@@ -68,12 +68,43 @@ public class CommercePriceListDiscountRelServiceUtil {
 			commercePriceListId, commerceDiscountId);
 	}
 
+	public static
+		com.liferay.commerce.price.list.model.CommercePriceListDiscountRel
+				getCommercePriceListDiscountRel(
+					long commercePriceListDiscountRelId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommercePriceListDiscountRel(
+			commercePriceListDiscountRelId);
+	}
+
 	public static java.util.List
 		<com.liferay.commerce.price.list.model.CommercePriceListDiscountRel>
 				getCommercePriceListDiscountRels(long commercePriceListId)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getCommercePriceListDiscountRels(
+			commercePriceListId);
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.price.list.model.CommercePriceListDiscountRel>
+				getCommercePriceListDiscountRels(
+					long commercePriceListId, int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.commerce.price.list.model.
+							CommercePriceListDiscountRel> orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommercePriceListDiscountRels(
+			commercePriceListId, start, end, orderByComparator);
+	}
+
+	public static int getCommercePriceListDiscountRelsCount(
+			long commercePriceListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCommercePriceListDiscountRelsCount(
 			commercePriceListId);
 	}
 

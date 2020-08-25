@@ -19,7 +19,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import ActionsDropdownRenderer from '../../data_renderer/ActionsDropdownRenderer';
+import ActionsDropdownRenderer from '../../../data_renderers/ActionsDropdownRenderer';
 
 function Email(props) {
 	const {openSidePanel} = useContext(props.datasetDisplayContext);

@@ -279,6 +279,11 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 	}
 
 	@Override
+	public String getCookieName(long groupId) {
+		return CommerceOrder.class.getName() + StringPool.POUND + groupId;
+	}
+
+	@Override
 	public CommerceOrder getCurrentCommerceOrder(
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
@@ -361,8 +366,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		HttpSession httpSession = httpServletRequest.getSession();
 
 		httpSession.setAttribute(
-			_getCookieName(commerceOrder.getGroupId()),
-			commerceOrder.getUuid());
+			getCookieName(commerceOrder.getGroupId()), commerceOrder.getUuid());
 	}
 
 	@Reference(
@@ -398,10 +402,35 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 		String domain = CookieKeys.getDomain(themeDisplay.getRequest());
 
-		String commerceOrderUuidWebKey = _getCookieName(
+		String commerceOrderUuidWebKey = getCookieName(
 			commerceOrder.getGroupId());
 
-		if (commerceOrder.isGuestOrder()) {
+		// Remove thread local order when used
+
+		CommerceOrder threadLocalCommerceOrder =
+			_commerceOrderUuidThreadLocal.get();
+
+		if ((threadLocalCommerceOrder != null) &&
+			threadLocalCommerceOrder.isGuestOrder()) {
+
+			CookieKeys.deleteCookies(
+				themeDisplay.getRequest(), themeDisplay.getResponse(), domain,
+				commerceOrderUuidWebKey);
+
+			_commerceOrderUuidThreadLocal.remove();
+		}
+
+		long commerceChannelGroupId =
+			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
+				themeDisplay.getScopeGroupId());
+
+		CommerceOrder userCommerceOrder =
+			_commerceOrderService.fetchCommerceOrder(
+				commerceAccount.getCommerceAccountId(), commerceChannelGroupId,
+				themeDisplay.getUserId(),
+				CommerceOrderConstants.ORDER_STATUS_OPEN);
+
+		if (userCommerceOrder == null) {
 			CookieKeys.deleteCookies(
 				themeDisplay.getRequest(), themeDisplay.getResponse(), domain,
 				commerceOrderUuidWebKey);
@@ -411,40 +440,19 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 				commerceAccount.getCommerceAccountId());
 		}
 
-		String commerceOrderUuid = CookieKeys.getCookie(
-			themeDisplay.getRequest(), commerceOrderUuidWebKey, false);
-
-		if (Validator.isNull(commerceOrderUuid)) {
-			return commerceOrder;
-		}
-
-		long commerceChannelGroupId =
-			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
-				themeDisplay.getScopeGroupId());
-
-		CommerceOrder cookieCommerceOrder =
-			_commerceOrderService.fetchCommerceOrder(
-				commerceOrderUuid, commerceChannelGroupId);
-
-		if ((cookieCommerceOrder == null) ||
-			!cookieCommerceOrder.isGuestOrder()) {
-
-			return commerceOrder;
-		}
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			themeDisplay.getRequest());
 
 		_commerceOrderService.mergeGuestCommerceOrder(
-			cookieCommerceOrder.getCommerceOrderId(),
 			commerceOrder.getCommerceOrderId(),
+			userCommerceOrder.getCommerceOrderId(),
 			_getCommerceContext(themeDisplay.getRequest()), serviceContext);
 
 		CookieKeys.deleteCookies(
 			themeDisplay.getRequest(), themeDisplay.getResponse(), domain,
 			commerceOrderUuidWebKey);
 
-		return commerceOrder;
+		return userCommerceOrder;
 	}
 
 	private CommerceContext _getCommerceContext(
@@ -452,10 +460,6 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 		return (CommerceContext)httpServletRequest.getAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT);
-	}
-
-	private String _getCookieName(long groupId) {
-		return CommerceOrder.class.getName() + StringPool.POUND + groupId;
 	}
 
 	private CommerceOrder _getCurrentCommerceOrder(
@@ -477,7 +481,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		}
 
 		if (commerceAccountId != CommerceAccountConstants.ACCOUNT_ID_GUEST) {
-			String cookieName = _getCookieName(commerceChannel.getGroupId());
+			String cookieName = getCookieName(commerceChannel.getGroupId());
 
 			String commerceOrderUuid = CookieKeys.getCookie(
 				themeDisplay.getRequest(), cookieName, true);
@@ -502,7 +506,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			}
 		}
 
-		String cookieName = _getCookieName(commerceChannel.getGroupId());
+		String cookieName = getCookieName(commerceChannel.getGroupId());
 
 		String commerceOrderUuid = CookieKeys.getCookie(
 			themeDisplay.getRequest(), cookieName, true);
@@ -576,7 +580,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			_commerceChannelLocalService.getCommerceChannelGroupIdBySiteGroupId(
 				themeDisplay.getScopeGroupId());
 
-		String commerceOrderUuidWebKey = _getCookieName(commerceChannelGroupId);
+		String commerceOrderUuidWebKey = getCookieName(commerceChannelGroupId);
 
 		Cookie cookie = new Cookie(
 			commerceOrderUuidWebKey, commerceOrder.getUuid());

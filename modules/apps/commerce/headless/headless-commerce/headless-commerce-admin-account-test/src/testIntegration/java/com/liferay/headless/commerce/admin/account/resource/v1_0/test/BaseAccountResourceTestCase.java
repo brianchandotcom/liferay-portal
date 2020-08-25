@@ -25,8 +25,10 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.headless.commerce.admin.account.client.dto.v1_0.Account;
 import com.liferay.headless.commerce.admin.account.client.http.HttpInvoker;
 import com.liferay.headless.commerce.admin.account.client.pagination.Page;
+import com.liferay.headless.commerce.admin.account.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.account.client.resource.v1_0.AccountResource;
 import com.liferay.headless.commerce.admin.account.client.serdes.v1_0.AccountSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -46,6 +48,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -54,11 +57,14 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,7 +76,9 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Level;
 
 import org.junit.After;
@@ -111,7 +119,9 @@ public abstract class BaseAccountResourceTestCase {
 
 		AccountResource.Builder builder = AccountResource.builder();
 
-		accountResource = builder.locale(
+		accountResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}
@@ -228,7 +238,229 @@ public abstract class BaseAccountResourceTestCase {
 
 	@Test
 	public void testGetAccountsPage() throws Exception {
-		Assert.assertTrue(false);
+		Page<Account> page = accountResource.getAccountsPage(
+			RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Account account1 = testGetAccountsPage_addAccount(randomAccount());
+
+		Account account2 = testGetAccountsPage_addAccount(randomAccount());
+
+		page = accountResource.getAccountsPage(
+			null, null, Pagination.of(1, 2), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(account1, account2), (List<Account>)page.getItems());
+		assertValid(page);
+
+		accountResource.deleteAccount(null);
+
+		accountResource.deleteAccount(null);
+	}
+
+	@Test
+	public void testGetAccountsPageWithFilterDateTimeEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Account account1 = randomAccount();
+
+		account1 = testGetAccountsPage_addAccount(account1);
+
+		for (EntityField entityField : entityFields) {
+			Page<Account> page = accountResource.getAccountsPage(
+				null, getFilterString(entityField, "between", account1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(account1),
+				(List<Account>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetAccountsPageWithFilterStringEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Account account1 = testGetAccountsPage_addAccount(randomAccount());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Account account2 = testGetAccountsPage_addAccount(randomAccount());
+
+		for (EntityField entityField : entityFields) {
+			Page<Account> page = accountResource.getAccountsPage(
+				null, getFilterString(entityField, "eq", account1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(account1),
+				(List<Account>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetAccountsPageWithPagination() throws Exception {
+		Account account1 = testGetAccountsPage_addAccount(randomAccount());
+
+		Account account2 = testGetAccountsPage_addAccount(randomAccount());
+
+		Account account3 = testGetAccountsPage_addAccount(randomAccount());
+
+		Page<Account> page1 = accountResource.getAccountsPage(
+			null, null, Pagination.of(1, 2), null);
+
+		List<Account> accounts1 = (List<Account>)page1.getItems();
+
+		Assert.assertEquals(accounts1.toString(), 2, accounts1.size());
+
+		Page<Account> page2 = accountResource.getAccountsPage(
+			null, null, Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<Account> accounts2 = (List<Account>)page2.getItems();
+
+		Assert.assertEquals(accounts2.toString(), 1, accounts2.size());
+
+		Page<Account> page3 = accountResource.getAccountsPage(
+			null, null, Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(account1, account2, account3),
+			(List<Account>)page3.getItems());
+	}
+
+	@Test
+	public void testGetAccountsPageWithSortDateTime() throws Exception {
+		testGetAccountsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, account1, account2) -> {
+				BeanUtils.setProperty(
+					account1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetAccountsPageWithSortInteger() throws Exception {
+		testGetAccountsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, account1, account2) -> {
+				BeanUtils.setProperty(account1, entityField.getName(), 0);
+				BeanUtils.setProperty(account2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetAccountsPageWithSortString() throws Exception {
+		testGetAccountsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, account1, account2) -> {
+				Class<?> clazz = account1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanUtils.setProperty(
+						account1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanUtils.setProperty(
+						account2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanUtils.setProperty(
+						account1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanUtils.setProperty(
+						account2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanUtils.setProperty(
+						account1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanUtils.setProperty(
+						account2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetAccountsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, Account, Account, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Account account1 = randomAccount();
+		Account account2 = randomAccount();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, account1, account2);
+		}
+
+		account1 = testGetAccountsPage_addAccount(account1);
+
+		account2 = testGetAccountsPage_addAccount(account2);
+
+		for (EntityField entityField : entityFields) {
+			Page<Account> ascPage = accountResource.getAccountsPage(
+				null, null, Pagination.of(1, 2),
+				entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(account1, account2),
+				(List<Account>)ascPage.getItems());
+
+			Page<Account> descPage = accountResource.getAccountsPage(
+				null, null, Pagination.of(1, 2),
+				entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(account2, account1),
+				(List<Account>)descPage.getItems());
+		}
+	}
+
+	protected Account testGetAccountsPage_addAccount(Account account)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -515,6 +747,9 @@ public abstract class BaseAccountResourceTestCase {
 	public void testPostAccountLogo() throws Exception {
 		Assert.assertTrue(false);
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected Account testGraphQLAccount_addAccount() throws Exception {
 		throw new UnsupportedOperationException(

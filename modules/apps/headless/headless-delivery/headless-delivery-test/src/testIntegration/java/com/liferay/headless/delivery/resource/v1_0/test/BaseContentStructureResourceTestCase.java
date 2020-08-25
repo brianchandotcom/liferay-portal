@@ -116,7 +116,9 @@ public abstract class BaseContentStructureResourceTestCase {
 		ContentStructureResource.Builder builder =
 			ContentStructureResource.builder();
 
-		contentStructureResource = builder.locale(
+		contentStructureResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

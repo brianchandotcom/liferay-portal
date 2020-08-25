@@ -390,16 +390,16 @@ public class UserIdMapperWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof UserIdMapperWrapper)) {
+		if (!(object instanceof UserIdMapperWrapper)) {
 			return false;
 		}
 
-		UserIdMapperWrapper userIdMapperWrapper = (UserIdMapperWrapper)obj;
+		UserIdMapperWrapper userIdMapperWrapper = (UserIdMapperWrapper)object;
 
 		if (Objects.equals(_userIdMapper, userIdMapperWrapper._userIdMapper)) {
 			return true;

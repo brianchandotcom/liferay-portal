@@ -6314,19 +6314,7 @@ public class JournalArticleLocalServiceImpl
 			visible = false;
 		}
 
-		boolean addDraftAssetEntry = false;
-
-		if (!article.isApproved() &&
-			(article.getVersion() != JournalArticleConstants.VERSION_DEFAULT)) {
-
-			int approvedArticlesCount = journalArticlePersistence.countByG_A_ST(
-				article.getGroupId(), article.getArticleId(),
-				JournalArticleConstants.ASSET_ENTRY_CREATION_STATUSES);
-
-			if (approvedArticlesCount > 0) {
-				addDraftAssetEntry = true;
-			}
-		}
+		boolean addDraftAssetEntry = _addDraftAssetEntry(article);
 
 		AssetEntry assetEntry = null;
 
@@ -6480,15 +6468,17 @@ public class JournalArticleLocalServiceImpl
 
 		article.setModifiedDate(modifiedDate);
 
-		if (status == WorkflowConstants.STATUS_APPROVED) {
-			Date expirationDate = article.getExpirationDate();
+		Date expirationDate = article.getExpirationDate();
 
-			if ((expirationDate != null) && expirationDate.before(now)) {
-				article.setExpirationDate(null);
-			}
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			(expirationDate != null) && expirationDate.before(now)) {
+
+			article.setExpirationDate(null);
 		}
 
-		if (status == WorkflowConstants.STATUS_EXPIRED) {
+		if ((status == WorkflowConstants.STATUS_EXPIRED) &&
+			(expirationDate == null)) {
+
 			article.setExpirationDate(now);
 		}
 
@@ -8878,6 +8868,35 @@ public class JournalArticleLocalServiceImpl
 
 		return journalArticleLocalizationPersistence.update(
 			journalArticleLocalization);
+	}
+
+	private boolean _addDraftAssetEntry(JournalArticle journalArticle) {
+		if (journalArticle.isApproved()) {
+			return false;
+		}
+
+		if (journalArticle.getVersion() ==
+				JournalArticleConstants.VERSION_DEFAULT) {
+
+			return false;
+		}
+
+		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), journalArticle.getPrimaryKey());
+
+		if (assetEntry == null) {
+			return false;
+		}
+
+		int approvedArticlesCount = journalArticlePersistence.countByG_A_ST(
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			JournalArticleConstants.ASSET_ENTRY_CREATION_STATUSES);
+
+		if (approvedArticlesCount == 0) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private Map<Locale, String> _checkFriendlyURLMap(

@@ -97,6 +97,10 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		return _showEmptyFieldLabel;
 	}
 
+	public boolean getShowLanguageSelector() {
+		return _showLanguageSelector;
+	}
+
 	public boolean getSynchronousFormSubmission() {
 		return _synchronousFormSubmission;
 	}
@@ -165,6 +169,10 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		_showEmptyFieldLabel = showEmptyFieldLabel;
 	}
 
+	public void setShowLanguageSelector(boolean showLanguageSelector) {
+		_showLanguageSelector = showLanguageSelector;
+	}
+
 	public void setSynchronousFormSubmission(boolean synchronousFormSubmission) {
 		_synchronousFormSubmission = synchronousFormSubmission;
 	}
@@ -196,6 +204,7 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		_repeatable = true;
 		_requestedLocale = null;
 		_showEmptyFieldLabel = true;
+		_showLanguageSelector = true;
 		_synchronousFormSubmission = true;
 	}
 
@@ -227,6 +236,7 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "repeatable", _repeatable);
 		setNamespacedAttribute(request, "requestedLocale", _requestedLocale);
 		setNamespacedAttribute(request, "showEmptyFieldLabel", _showEmptyFieldLabel);
+		setNamespacedAttribute(request, "showLanguageSelector", _showLanguageSelector);
 		setNamespacedAttribute(request, "synchronousFormSubmission", _synchronousFormSubmission);
 	}
 
@@ -251,6 +261,7 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 	private boolean _repeatable = true;
 	private java.util.Locale _requestedLocale = null;
 	private boolean _showEmptyFieldLabel = true;
+	private boolean _showLanguageSelector = true;
 	private boolean _synchronousFormSubmission = true;
 
 }

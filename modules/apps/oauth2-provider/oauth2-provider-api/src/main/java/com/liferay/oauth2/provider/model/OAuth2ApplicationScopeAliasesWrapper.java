@@ -453,18 +453,18 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof OAuth2ApplicationScopeAliasesWrapper)) {
+		if (!(object instanceof OAuth2ApplicationScopeAliasesWrapper)) {
 			return false;
 		}
 
 		OAuth2ApplicationScopeAliasesWrapper
 			oAuth2ApplicationScopeAliasesWrapper =
-				(OAuth2ApplicationScopeAliasesWrapper)obj;
+				(OAuth2ApplicationScopeAliasesWrapper)object;
 
 		if (Objects.equals(
 				_oAuth2ApplicationScopeAliases,

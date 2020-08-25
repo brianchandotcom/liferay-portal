@@ -167,17 +167,15 @@ AUI.add(
 
 				repetitions.splice(index, 0, copiedField);
 
+				instance.set('repetitions', repetitions);
+
 				var container = instance.get('container');
 
 				container.insert(copiedField.get('container'), 'after');
 
 				copiedField.render();
 
-				repetitions.filter(
-					function(repetition, currentIndex) {
-						return currentIndex > index;
-					}
-				).forEach(A.bind('_syncRepeatableField', instance));
+				repetitions.forEach(A.bind('_syncRepeatableField', instance));
 
 				return copiedField;
 			},
@@ -251,6 +249,7 @@ AUI.add(
 
 					field.set('repeatedIndex', repeatedSiblings.indexOf(field));
 					field.set('repetitions', repeatedSiblings);
+					field.set('name', field.getQualifiedName());
 				}
 			},
 

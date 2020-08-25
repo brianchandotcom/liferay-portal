@@ -113,7 +113,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 
 		<liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
 
-		<div class='<%= OrganizationLocalServiceUtil.isCountryEnabled(type) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />countryDiv">
+		<div class="<%= OrganizationLocalServiceUtil.isCountryEnabled(type) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />countryDiv">
 			<aui:select label="country" name="countryId" />
 
 			<aui:select label="region" name="regionId" />

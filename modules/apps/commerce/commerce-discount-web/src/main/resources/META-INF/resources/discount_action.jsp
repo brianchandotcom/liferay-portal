@@ -55,4 +55,21 @@ CommerceDiscount commerceDiscount = (CommerceDiscount)row.getObject();
 			url="<%= deleteURL %>"
 		/>
 	</c:if>
+
+	<c:if test="<%= commerceDiscountDisplayContext.hasPermission(commerceDiscount.getCommerceDiscountId(), ActionKeys.PERMISSIONS) %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= CommerceDiscount.class.getName() %>"
+			modelResourceDescription="<%= commerceDiscount.getTitle() %>"
+			resourcePrimKey="<%= String.valueOf(commerceDiscount.getCommerceDiscountId()) %>"
+			var="permissionsDiscountURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
+
+		<liferay-ui:icon
+			message="permissions"
+			method="get"
+			url="<%= permissionsDiscountURL %>"
+			useDialog="<%= true %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

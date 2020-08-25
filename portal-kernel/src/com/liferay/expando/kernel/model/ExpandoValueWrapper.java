@@ -781,16 +781,16 @@ public class ExpandoValueWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ExpandoValueWrapper)) {
+		if (!(object instanceof ExpandoValueWrapper)) {
 			return false;
 		}
 
-		ExpandoValueWrapper expandoValueWrapper = (ExpandoValueWrapper)obj;
+		ExpandoValueWrapper expandoValueWrapper = (ExpandoValueWrapper)object;
 
 		if (Objects.equals(_expandoValue, expandoValueWrapper._expandoValue)) {
 			return true;

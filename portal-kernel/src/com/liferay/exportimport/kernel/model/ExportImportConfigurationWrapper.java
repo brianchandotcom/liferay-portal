@@ -819,17 +819,17 @@ public class ExportImportConfigurationWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ExportImportConfigurationWrapper)) {
+		if (!(object instanceof ExportImportConfigurationWrapper)) {
 			return false;
 		}
 
 		ExportImportConfigurationWrapper exportImportConfigurationWrapper =
-			(ExportImportConfigurationWrapper)obj;
+			(ExportImportConfigurationWrapper)object;
 
 		if (Objects.equals(
 				_exportImportConfiguration,

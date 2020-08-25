@@ -1117,16 +1117,16 @@ public class MDRRuleGroupModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MDRRuleGroup)) {
+		if (!(object instanceof MDRRuleGroup)) {
 			return false;
 		}
 
-		MDRRuleGroup mdrRuleGroup = (MDRRuleGroup)obj;
+		MDRRuleGroup mdrRuleGroup = (MDRRuleGroup)object;
 
 		long primaryKey = mdrRuleGroup.getPrimaryKey();
 

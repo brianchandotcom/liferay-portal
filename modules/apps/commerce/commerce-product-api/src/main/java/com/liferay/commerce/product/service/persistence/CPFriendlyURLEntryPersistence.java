@@ -34,8 +34,11 @@ import java.util.Set;
  *
  * @author Marco Leo
  * @see CPFriendlyURLEntryUtil
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ com.liferay.friendly.url.model.impl.FriendlyURLEntryImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface CPFriendlyURLEntryPersistence
 	extends BasePersistence<CPFriendlyURLEntry> {

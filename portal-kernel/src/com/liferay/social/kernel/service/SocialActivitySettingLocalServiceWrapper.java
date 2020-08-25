@@ -36,6 +36,10 @@ public class SocialActivitySettingLocalServiceWrapper
 	/**
 	 * Adds the social activity setting to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SocialActivitySettingLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param socialActivitySetting the social activity setting
 	 * @return the social activity setting that was added
 	 */
@@ -91,6 +95,10 @@ public class SocialActivitySettingLocalServiceWrapper
 	/**
 	 * Deletes the social activity setting with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SocialActivitySettingLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param activitySettingId the primary key of the social activity setting
 	 * @return the social activity setting that was removed
 	 * @throws PortalException if a social activity setting with the primary key could not be found
@@ -106,6 +114,10 @@ public class SocialActivitySettingLocalServiceWrapper
 
 	/**
 	 * Deletes the social activity setting from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SocialActivitySettingLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param socialActivitySetting the social activity setting
 	 * @return the social activity setting that was removed
@@ -383,6 +395,10 @@ public class SocialActivitySettingLocalServiceWrapper
 
 	/**
 	 * Updates the social activity setting in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SocialActivitySettingLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param socialActivitySetting the social activity setting
 	 * @return the social activity setting that was updated

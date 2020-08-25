@@ -47,6 +47,6 @@
 		<span class="taglib-text-icon"><%= localizeMessage ? LanguageUtil.get(resourceBundle, message) : message %></span>
 	</c:when>
 	<c:otherwise>
-		<span class='taglib-text <%= label ? StringPool.BLANK : "sr-only" %>'><%= localizeMessage ? LanguageUtil.get(resourceBundle, message) : message %></span>
+		<span class="taglib-text <%= label ? StringPool.BLANK : "sr-only" %>"><%= localizeMessage ? LanguageUtil.get(resourceBundle, message) : message %></span>
 	</c:otherwise>
 </c:choose>

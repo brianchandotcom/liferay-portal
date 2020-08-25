@@ -24,6 +24,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.SkuDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.helper.v1_0.SkuHelper;
+import com.liferay.headless.commerce.admin.catalog.internal.odata.entity.v1_0.SkuEntityModel;
 import com.liferay.headless.commerce.admin.catalog.internal.util.DateConfigUtil;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.SkuUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuResource;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
@@ -47,6 +49,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -91,6 +94,11 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 		Response.ResponseBuilder responseBuilder = Response.noContent();
 
 		return responseBuilder.build();
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
 	}
 
 	@Override
@@ -276,7 +284,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			GetterUtil.get(
 				sku.getNeverExpire(),
 				(cpInstance.getExpirationDate() == null) ? true : false),
-			serviceContext);
+			sku.getUnspsc(), serviceContext);
 
 		return _toSku(cpInstance.getCPInstanceId());
 	}
@@ -290,6 +298,8 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 
 		return _toSku(cpInstance.getCPInstanceId());
 	}
+
+	private static final EntityModel _entityModel = new SkuEntityModel();
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

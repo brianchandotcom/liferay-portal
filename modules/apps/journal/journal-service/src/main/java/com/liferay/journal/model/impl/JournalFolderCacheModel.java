@@ -36,17 +36,17 @@ public class JournalFolderCacheModel
 	implements CacheModel<JournalFolder>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof JournalFolderCacheModel)) {
+		if (!(object instanceof JournalFolderCacheModel)) {
 			return false;
 		}
 
 		JournalFolderCacheModel journalFolderCacheModel =
-			(JournalFolderCacheModel)obj;
+			(JournalFolderCacheModel)object;
 
 		if (folderId == journalFolderCacheModel.folderId) {
 			return true;

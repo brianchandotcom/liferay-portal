@@ -1526,16 +1526,16 @@ public class CommerceAddressModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceAddress)) {
+		if (!(object instanceof CommerceAddress)) {
 			return false;
 		}
 
-		CommerceAddress commerceAddress = (CommerceAddress)obj;
+		CommerceAddress commerceAddress = (CommerceAddress)object;
 
 		long primaryKey = commerceAddress.getPrimaryKey();
 

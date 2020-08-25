@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -55,6 +56,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @SuppressStaticInitializationFor(
 	{
 		"com.liferay.portal.kernel.service.GroupLocalServiceUtil",
+		"com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil",
 		"com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil"
 	}
 )
@@ -63,6 +65,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 	@Before
 	public void setUp() throws PortalException {
 		setUpGroupLocalServiceUtil();
+		setUpUserNotificationEventLocalServiceUtil(0);
 		setUpWorkflowHandlerRegistryUtil();
 	}
 
@@ -182,19 +185,32 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 	}
 
 	@Test
-	public void testNotContentReviewerWithAssetViewPermissionHasPermission()
+	public void testNotContentReviewerWithAssetViewPermissionHasPermissionOnCompletedTask()
 		throws PortalException {
-
-		// Checks permission on completed workflow task
-
-		PermissionChecker permissionChecker = mockPermissionChecker(
-			RandomTestUtil.randomLong(), new long[0], false, false, false);
 
 		mockAssetRendererHasViewPermission(true);
 
 		Assert.assertTrue(
 			_workflowTaskPermissionChecker.hasPermission(
 				RandomTestUtil.randomLong(), mockCompletedWorkflowTask(),
+				mockPermissionChecker(
+					RandomTestUtil.randomLong(), new long[0], false, false,
+					false)));
+	}
+
+	@Test
+	public void testNotContentReviewerWithAssetViewPermissionHasPermissionOnPendingTaskWithNotification()
+		throws PortalException {
+
+		PermissionChecker permissionChecker = mockPermissionChecker(
+			RandomTestUtil.randomLong(), new long[0], false, false, false);
+
+		mockAssetRendererHasViewPermission(true);
+		setUpUserNotificationEventLocalServiceUtil(1);
+
+		Assert.assertTrue(
+			_workflowTaskPermissionChecker.hasPermission(
+				RandomTestUtil.randomLong(), mockWorkflowTask(),
 				permissionChecker));
 	}
 
@@ -416,6 +432,20 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 			GroupLocalServiceUtil.getGroup(Matchers.anyLong())
 		).thenReturn(
 			group
+		);
+	}
+
+	protected void setUpUserNotificationEventLocalServiceUtil(int count)
+		throws PortalException {
+
+		mockStatic(UserNotificationEventLocalServiceUtil.class);
+
+		when(
+			UserNotificationEventLocalServiceUtil.
+				getUserNotificationEventsCount(
+					Matchers.anyLong(), Matchers.anyString(), Matchers.anyMap())
+		).thenReturn(
+			count
 		);
 	}
 

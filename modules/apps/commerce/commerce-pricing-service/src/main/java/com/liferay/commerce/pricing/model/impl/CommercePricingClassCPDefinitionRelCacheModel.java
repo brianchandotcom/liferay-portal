@@ -36,18 +36,20 @@ public class CommercePricingClassCPDefinitionRelCacheModel
 	implements CacheModel<CommercePricingClassCPDefinitionRel>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommercePricingClassCPDefinitionRelCacheModel)) {
+		if (!(object instanceof
+				CommercePricingClassCPDefinitionRelCacheModel)) {
+
 			return false;
 		}
 
 		CommercePricingClassCPDefinitionRelCacheModel
 			commercePricingClassCPDefinitionRelCacheModel =
-				(CommercePricingClassCPDefinitionRelCacheModel)obj;
+				(CommercePricingClassCPDefinitionRelCacheModel)object;
 
 		if (CommercePricingClassCPDefinitionRelId ==
 				commercePricingClassCPDefinitionRelCacheModel.

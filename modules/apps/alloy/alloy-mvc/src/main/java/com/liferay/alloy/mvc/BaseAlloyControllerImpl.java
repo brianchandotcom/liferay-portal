@@ -630,7 +630,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected String getMethodKey(
 		String methodName, Class<?>... parameterTypes) {
 
-		StringBundler sb = new StringBundler(parameterTypes.length * 2 + 2);
+		StringBundler sb = new StringBundler((parameterTypes.length * 2) + 2);
 
 		sb.append(methodName);
 		sb.append(StringPool.POUND);

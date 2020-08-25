@@ -87,7 +87,7 @@ if (portletTitleBasedNavigation) {
 		</div>
 
 		<div <%= portletTitleBasedNavigation ? "class=\"main-content-card panel\"" : StringPool.BLANK %>>
-			<div class='kb-entity-body <%= portletTitleBasedNavigation ? "panel-body" : StringPool.BLANK %>'>
+			<div class="kb-entity-body <%= portletTitleBasedNavigation ? "panel-body" : StringPool.BLANK %>">
 				<c:if test="<%= portletTitleBasedNavigation %>">
 					<h1>
 						<%= HtmlUtil.escape(kbArticle.getTitle()) %>

@@ -508,6 +508,66 @@ public interface CommercePriceModifierRelPersistence
 	public int countByCN_CPK(long classNameId, long classPK);
 
 	/**
+	 * Returns the commerce price modifier rel where commercePriceModifierId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchPriceModifierRelException</code> if it could not be found.
+	 *
+	 * @param commercePriceModifierId the commerce price modifier ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching commerce price modifier rel
+	 * @throws NoSuchPriceModifierRelException if a matching commerce price modifier rel could not be found
+	 */
+	public CommercePriceModifierRel findByCPM_CN_CPK(
+			long commercePriceModifierId, long classNameId, long classPK)
+		throws NoSuchPriceModifierRelException;
+
+	/**
+	 * Returns the commerce price modifier rel where commercePriceModifierId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param commercePriceModifierId the commerce price modifier ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching commerce price modifier rel, or <code>null</code> if a matching commerce price modifier rel could not be found
+	 */
+	public CommercePriceModifierRel fetchByCPM_CN_CPK(
+		long commercePriceModifierId, long classNameId, long classPK);
+
+	/**
+	 * Returns the commerce price modifier rel where commercePriceModifierId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param commercePriceModifierId the commerce price modifier ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching commerce price modifier rel, or <code>null</code> if a matching commerce price modifier rel could not be found
+	 */
+	public CommercePriceModifierRel fetchByCPM_CN_CPK(
+		long commercePriceModifierId, long classNameId, long classPK,
+		boolean useFinderCache);
+
+	/**
+	 * Removes the commerce price modifier rel where commercePriceModifierId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param commercePriceModifierId the commerce price modifier ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the commerce price modifier rel that was removed
+	 */
+	public CommercePriceModifierRel removeByCPM_CN_CPK(
+			long commercePriceModifierId, long classNameId, long classPK)
+		throws NoSuchPriceModifierRelException;
+
+	/**
+	 * Returns the number of commerce price modifier rels where commercePriceModifierId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param commercePriceModifierId the commerce price modifier ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the number of matching commerce price modifier rels
+	 */
+	public int countByCPM_CN_CPK(
+		long commercePriceModifierId, long classNameId, long classPK);
+
+	/**
 	 * Caches the commerce price modifier rel in the entity cache if it is enabled.
 	 *
 	 * @param commercePriceModifierRel the commerce price modifier rel

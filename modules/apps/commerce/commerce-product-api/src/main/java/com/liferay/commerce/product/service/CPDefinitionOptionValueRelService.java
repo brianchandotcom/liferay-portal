@@ -129,6 +129,22 @@ public interface CPDefinitionOptionValueRelService extends BaseService {
 				String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
+	/**
+	 * @param cpDefinitionOptionValueRelId
+	 * @param nameMap
+	 * @param priority
+	 * @param key
+	 * @param cpInstanceId
+	 * @param quantity
+	 * @param price
+	 * @param serviceContext
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link
+	 #updateCPDefinitionOptionValueRel(long, Map, double, String,
+	 long, int, boolean, BigDecimal, ServiceContext)}
+	 */
+	@Deprecated
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
 			long cpDefinitionOptionValueRelId, Map<Locale, String> nameMap,
 			double priority, String key, long cpInstanceId, int quantity,
@@ -137,7 +153,32 @@ public interface CPDefinitionOptionValueRelService extends BaseService {
 
 	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
 			long cpDefinitionOptionValueRelId, Map<Locale, String> nameMap,
+			double priority, String key, long cpInstanceId, int quantity,
+			boolean preselected, BigDecimal price,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * @param cpDefinitionOptionValueRelId
+	 * @param nameMap
+	 * @param priority
+	 * @param key
+	 * @param serviceContext
+	 * @return
+	 * @throws PortalException
+	 * @deprecated As of Athanasius (7.3.x), use {@link
+	 #updateCPDefinitionOptionValueRel(long, Map, double, String,
+	 long, int, boolean, BigDecimal, ServiceContext)}
+	 */
+	@Deprecated
+	public CPDefinitionOptionValueRel updateCPDefinitionOptionValueRel(
+			long cpDefinitionOptionValueRelId, Map<Locale, String> nameMap,
 			double priority, String key, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CPDefinitionOptionValueRel
+			updateCPDefinitionOptionValueRelPreselected(
+				long cpDefinitionOptionValueRelId, boolean preselected)
 		throws PortalException;
 
 }

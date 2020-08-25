@@ -97,6 +97,12 @@
 				<defaultValue>true</defaultValue>
 			</attribute>
 			<attribute>
+				<name>showLanguageSelector</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
 				<name>synchronousFormSubmission</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>

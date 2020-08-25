@@ -660,16 +660,16 @@ public class PluginSettingModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof PluginSetting)) {
+		if (!(object instanceof PluginSetting)) {
 			return false;
 		}
 
-		PluginSetting pluginSetting = (PluginSetting)obj;
+		PluginSetting pluginSetting = (PluginSetting)object;
 
 		long primaryKey = pluginSetting.getPrimaryKey();
 

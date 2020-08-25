@@ -449,16 +449,16 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AssetLinkWrapper)) {
+		if (!(object instanceof AssetLinkWrapper)) {
 			return false;
 		}
 
-		AssetLinkWrapper assetLinkWrapper = (AssetLinkWrapper)obj;
+		AssetLinkWrapper assetLinkWrapper = (AssetLinkWrapper)object;
 
 		if (Objects.equals(_assetLink, assetLinkWrapper._assetLink)) {
 			return true;

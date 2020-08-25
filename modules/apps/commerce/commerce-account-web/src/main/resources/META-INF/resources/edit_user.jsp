@@ -131,7 +131,7 @@ boolean canEditUser = (selectedUser.getUserId() == user.getUserId()) || commerce
 									/>
 								</c:when>
 								<c:otherwise>
-									<img alt='<liferay-ui:message escapeAttribute="<%= true %>" key="portrait" />' src="<%= selectedUser.getPortraitURL(themeDisplay) %>" />
+									<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="portrait" />" src="<%= selectedUser.getPortraitURL(themeDisplay) %>" />
 								</c:otherwise>
 							</c:choose>
 						</aui:fieldset>

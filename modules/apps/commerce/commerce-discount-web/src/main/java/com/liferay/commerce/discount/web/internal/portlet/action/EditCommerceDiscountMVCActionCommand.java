@@ -19,11 +19,9 @@ import com.liferay.commerce.discount.constants.CommerceDiscountPortletKeys;
 import com.liferay.commerce.discount.exception.CommerceDiscountCouponCodeException;
 import com.liferay.commerce.discount.exception.NoSuchDiscountException;
 import com.liferay.commerce.discount.model.CommerceDiscount;
-import com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupRel;
 import com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGroupRelService;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.product.exception.NoSuchCatalogException;
-import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -170,7 +168,7 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "commerceChannelIds");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceChannelRel.class.getName(), actionRequest);
+			CommerceDiscount.class.getName(), actionRequest);
 
 		_commerceChannelRelService.deleteCommerceChannelRels(
 			CommerceDiscount.class.getName(), commerceDiscountId);
@@ -304,8 +302,7 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 
 		if (addCommerceAccountGroupIds.length > 0) {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				CommerceDiscountCommerceAccountGroupRel.class.getName(),
-				actionRequest);
+				CommerceDiscount.class.getName(), actionRequest);
 
 			for (long addCommerceAccountGroupId : addCommerceAccountGroupIds) {
 				_commerceDiscountCommerceAccountGroupRelService.

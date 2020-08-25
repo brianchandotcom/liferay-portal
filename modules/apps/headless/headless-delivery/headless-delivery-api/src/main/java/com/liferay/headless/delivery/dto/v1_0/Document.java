@@ -178,6 +178,38 @@ public class Document {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String contentUrl;
 
+	@Schema(
+		description = "optional field with the content of the document in Base64, can be embedded with nestedFields"
+	)
+	public String getContentValue() {
+		return contentValue;
+	}
+
+	public void setContentValue(String contentValue) {
+		this.contentValue = contentValue;
+	}
+
+	@JsonIgnore
+	public void setContentValue(
+		UnsafeSupplier<String, Exception> contentValueUnsafeSupplier) {
+
+		try {
+			contentValue = contentValueUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "optional field with the content of the document in Base64, can be embedded with nestedFields"
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String contentValue;
+
 	@Schema(description = "The document's creator.")
 	@Valid
 	public Creator getCreator() {
@@ -351,8 +383,37 @@ public class Document {
 	@GraphQLField(
 		description = "The ID of the `DocumentFolder` where this document is stored."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long documentFolderId;
+
+	@Schema
+	@Valid
+	public DocumentType getDocumentType() {
+		return documentType;
+	}
+
+	public void setDocumentType(DocumentType documentType) {
+		this.documentType = documentType;
+	}
+
+	@JsonIgnore
+	public void setDocumentType(
+		UnsafeSupplier<DocumentType, Exception> documentTypeUnsafeSupplier) {
+
+		try {
+			documentType = documentTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected DocumentType documentType;
 
 	@Schema(
 		description = "The document's content type (e.g., `application/pdf`, etc.)."
@@ -772,6 +833,20 @@ public class Document {
 			sb.append("\"");
 		}
 
+		if (contentValue != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentValue\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(contentValue));
+
+			sb.append("\"");
+		}
+
 		if (creator != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -852,6 +927,16 @@ public class Document {
 			sb.append("\"documentFolderId\": ");
 
 			sb.append(documentFolderId);
+		}
+
+		if (documentType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"documentType\": ");
+
+			sb.append(String.valueOf(documentType));
 		}
 
 		if (encodingFormat != null) {
@@ -1075,6 +1160,16 @@ public class Document {
 		return string.replaceAll("\"", "\\\\\"");
 	}
 
+	private static boolean _isArray(Object value) {
+		if (value == null) {
+			return false;
+		}
+
+		Class<?> clazz = value.getClass();
+
+		return clazz.isArray();
+	}
+
 	private static String _toJSON(Map<String, ?> map) {
 		StringBuilder sb = new StringBuilder("{");
 
@@ -1093,9 +1188,7 @@ public class Document {
 
 			Object value = entry.getValue();
 
-			Class<?> clazz = value.getClass();
-
-			if (clazz.isArray()) {
+			if (_isArray(value)) {
 				sb.append("[");
 
 				Object[] valueArray = (Object[])value;

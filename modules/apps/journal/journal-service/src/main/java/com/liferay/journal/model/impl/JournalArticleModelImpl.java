@@ -2215,16 +2215,16 @@ public class JournalArticleModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof JournalArticle)) {
+		if (!(object instanceof JournalArticle)) {
 			return false;
 		}
 
-		JournalArticle journalArticle = (JournalArticle)obj;
+		JournalArticle journalArticle = (JournalArticle)object;
 
 		long primaryKey = journalArticle.getPrimaryKey();
 

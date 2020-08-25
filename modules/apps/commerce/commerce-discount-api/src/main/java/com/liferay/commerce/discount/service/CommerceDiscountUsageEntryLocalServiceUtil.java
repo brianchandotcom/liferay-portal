@@ -41,6 +41,10 @@ public class CommerceDiscountUsageEntryLocalServiceUtil {
 	/**
 	 * Adds the commerce discount usage entry to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceDiscountUsageEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceDiscountUsageEntry the commerce discount usage entry
 	 * @return the commerce discount usage entry that was added
 	 */
@@ -81,6 +85,10 @@ public class CommerceDiscountUsageEntryLocalServiceUtil {
 	/**
 	 * Deletes the commerce discount usage entry from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceDiscountUsageEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceDiscountUsageEntry the commerce discount usage entry
 	 * @return the commerce discount usage entry that was removed
 	 */
@@ -96,6 +104,10 @@ public class CommerceDiscountUsageEntryLocalServiceUtil {
 	/**
 	 * Deletes the commerce discount usage entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceDiscountUsageEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceDiscountUsageEntryId the primary key of the commerce discount usage entry
 	 * @return the commerce discount usage entry that was removed
 	 * @throws PortalException if a commerce discount usage entry with the primary key could not be found
@@ -106,6 +118,19 @@ public class CommerceDiscountUsageEntryLocalServiceUtil {
 
 		return getService().deleteCommerceDiscountUsageEntry(
 			commerceDiscountUsageEntryId);
+	}
+
+	public static void deleteCommerceUsageEntry(
+		long commerceAccountId, long commerceOrderId, long commerceDiscountId) {
+
+		getService().deleteCommerceUsageEntry(
+			commerceAccountId, commerceOrderId, commerceDiscountId);
+	}
+
+	public static void deleteCommerceUsageEntryByDiscountId(
+		long commerceDiscountId) {
+
+		getService().deleteCommerceUsageEntryByDiscountId(commerceDiscountId);
 	}
 
 	/**
@@ -244,6 +269,34 @@ public class CommerceDiscountUsageEntryLocalServiceUtil {
 		return getService().getCommerceDiscountUsageEntriesCount();
 	}
 
+	public static int getCommerceDiscountUsageEntriesCount(
+		long commerceDiscountId) {
+
+		return getService().getCommerceDiscountUsageEntriesCount(
+			commerceDiscountId);
+	}
+
+	public static int getCommerceDiscountUsageEntriesCount(
+		long commerceAccountId, long commerceOrderId, long commerceDiscountId) {
+
+		return getService().getCommerceDiscountUsageEntriesCount(
+			commerceAccountId, commerceOrderId, commerceDiscountId);
+	}
+
+	public static int getCommerceDiscountUsageEntriesCountByAccountId(
+		long commerceAccountId, long commerceDiscountId) {
+
+		return getService().getCommerceDiscountUsageEntriesCountByAccountId(
+			commerceAccountId, commerceDiscountId);
+	}
+
+	public static int getCommerceDiscountUsageEntriesCountByOrderId(
+		long commerceOrderId, long commerceDiscountId) {
+
+		return getService().getCommerceDiscountUsageEntriesCountByOrderId(
+			commerceOrderId, commerceDiscountId);
+	}
+
 	/**
 	 * Returns the commerce discount usage entry with the primary key.
 	 *
@@ -288,6 +341,10 @@ public class CommerceDiscountUsageEntryLocalServiceUtil {
 	/**
 	 * Updates the commerce discount usage entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceDiscountUsageEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceDiscountUsageEntry the commerce discount usage entry
 	 * @return the commerce discount usage entry that was updated
 	 */
@@ -298,6 +355,14 @@ public class CommerceDiscountUsageEntryLocalServiceUtil {
 
 		return getService().updateCommerceDiscountUsageEntry(
 			commerceDiscountUsageEntry);
+	}
+
+	public static boolean validateDiscountLimitationUsage(
+			long commerceAccountId, long commerceDiscountId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().validateDiscountLimitationUsage(
+			commerceAccountId, commerceDiscountId);
 	}
 
 	public static CommerceDiscountUsageEntryLocalService getService() {

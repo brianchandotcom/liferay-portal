@@ -187,7 +187,7 @@ public class JournalArticleStagedModelDataHandler
 			List<JournalFolder> ancestorFolders = folder.getAncestors();
 
 			StringBundler sb = new StringBundler(
-				4 * ancestorFolders.size() + 5);
+				(4 * ancestorFolders.size()) + 5);
 
 			Collections.reverse(ancestorFolders);
 

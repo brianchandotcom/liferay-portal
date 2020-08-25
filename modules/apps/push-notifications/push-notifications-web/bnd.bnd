@@ -1,3 +1,19 @@
 Bundle-Name: Liferay Push Notifications Web
 Bundle-SymbolicName: com.liferay.push.notifications.web
-Bundle-Version: 2.0.10
+Bundle-Version: 2.0.12
+Import-Package:\
+	com.liferay.application.list.*;version="[1.0.0,2.0.0)",\
+	com.liferay.exportimport.kernel.lar.*;version="[1.0.0,2.0.0)",\
+	com.liferay.petra.string.*;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.kernel.exception.*;version="[7.0.0,8.0.0)",\
+	com.liferay.portal.kernel.json.*;version="[7.0.0,8.0.0)",\
+	com.liferay.portal.kernel.language.*;version="[7.0.0,8.0.0)",\
+	com.liferay.portal.kernel.portlet;version="[8.0.0,9.0.0)",\
+	com.liferay.portal.kernel.search.*;version="[7.0.0,8.0.0)",\
+	com.liferay.portal.kernel.service.*;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.kernel.theme.*;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.kernel.upgrade.*;version="[7.0.0,8.0.0)",\
+	com.liferay.portal.kernel.upload.*;version="[6.0.0,7.0.0)",\
+	com.liferay.portal.kernel.util.*;version="[8.0.0,9.0.0)",\
+	\
+	*

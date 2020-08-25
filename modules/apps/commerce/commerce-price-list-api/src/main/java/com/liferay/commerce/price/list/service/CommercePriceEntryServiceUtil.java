@@ -134,6 +134,10 @@ public class CommercePriceEntryServiceUtil {
 			commercePriceListId, start, end, orderByComparator);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static java.util.List
 		<com.liferay.commerce.price.list.model.CommercePriceEntry>
 				getCommercePriceEntriesByCompanyId(
@@ -150,6 +154,10 @@ public class CommercePriceEntryServiceUtil {
 		return getService().getCommercePriceEntriesCount(commercePriceListId);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static int getCommercePriceEntriesCountByCompanyId(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -173,6 +181,10 @@ public class CommercePriceEntryServiceUtil {
 			cpInstanceId, start, end);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static java.util.List
 		<com.liferay.commerce.price.list.model.CommercePriceEntry>
 				getInstanceCommercePriceEntries(
@@ -222,6 +234,30 @@ public class CommercePriceEntryServiceUtil {
 
 		return getService().updateCommercePriceEntry(
 			commercePriceEntryId, price, promoPrice, serviceContext);
+	}
+
+	public static com.liferay.commerce.price.list.model.CommercePriceEntry
+			updateCommercePriceEntry(
+				long commercePriceEntryId, java.math.BigDecimal price,
+				boolean discountDiscovery, java.math.BigDecimal discountLevel1,
+				java.math.BigDecimal discountLevel2,
+				java.math.BigDecimal discountLevel3,
+				java.math.BigDecimal discountLevel4, boolean bulkPricing,
+				int displayDateMonth, int displayDateDay, int displayDateYear,
+				int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommercePriceEntry(
+			commercePriceEntryId, price, discountDiscovery, discountLevel1,
+			discountLevel2, discountLevel3, discountLevel4, bulkPricing,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry

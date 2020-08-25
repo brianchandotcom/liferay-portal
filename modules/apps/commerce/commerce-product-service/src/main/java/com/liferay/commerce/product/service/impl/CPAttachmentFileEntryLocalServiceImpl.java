@@ -122,8 +122,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		Locale locale = LocaleUtil.getSiteDefault();
-
 		Date expirationDate = null;
 		Date now = new Date();
 
@@ -147,12 +145,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 				"Expiration date " + expirationDate + " is in the past");
 		}
 
-		FileEntry fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
-
-		if (Validator.isNull(titleMap.get(locale))) {
-			titleMap.put(locale, fileEntry.getFileName());
-		}
-
 		long cpAttachmentFileEntryId = counterLocalService.increment();
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
@@ -174,6 +166,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		cpAttachmentFileEntry.setUserName(user.getFullName());
 		cpAttachmentFileEntry.setClassNameId(classNameId);
 		cpAttachmentFileEntry.setClassPK(classPK);
+
+		FileEntry fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
 
 		fileEntryId = _getFileEntryId(
 			fileEntry, user.getUserId(), groupId,
@@ -199,7 +193,10 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			cpAttachmentFileEntry.setStatus(WorkflowConstants.STATUS_EXPIRED);
 		}
 
-		cpAttachmentFileEntry.setTitleMap(titleMap);
+		cpAttachmentFileEntry.setTitleMap(
+			_getValidLocalizedMap(
+				LocaleUtil.getSiteDefault(), fileEntry.getFileName(),
+				titleMap));
 		cpAttachmentFileEntry.setJson(json);
 		cpAttachmentFileEntry.setPriority(priority);
 		cpAttachmentFileEntry.setType(type);
@@ -537,8 +534,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		Locale locale = LocaleUtil.getSiteDefault();
-
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			cpAttachmentFileEntryPersistence.findByPrimaryKey(
 				cpAttachmentFileEntryId);
@@ -587,12 +582,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		FileEntry fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
 
-		HashMap<Locale, String> validTitleMap = new HashMap<>(titleMap);
-
-		if (Validator.isNull(validTitleMap.get(locale))) {
-			validTitleMap.put(locale, fileEntry.getFileName());
-		}
-
 		fileEntryId = _getFileEntryId(
 			fileEntry, user.getUserId(), cpAttachmentFileEntry.getGroupId(),
 			cpAttachmentFileEntry.getClassName(),
@@ -610,7 +599,10 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			cpAttachmentFileEntry.setStatus(WorkflowConstants.STATUS_EXPIRED);
 		}
 
-		cpAttachmentFileEntry.setTitleMap(validTitleMap);
+		cpAttachmentFileEntry.setTitleMap(
+			_getValidLocalizedMap(
+				LocaleUtil.getSiteDefault(), fileEntry.getFileName(),
+				titleMap));
 		cpAttachmentFileEntry.setJson(json);
 		cpAttachmentFileEntry.setPriority(priority);
 		cpAttachmentFileEntry.setType(type);
@@ -875,6 +867,21 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		TempFileEntryUtil.deleteTempFileEntry(fileEntry.getFileEntryId());
 
 		return newFileEntry.getFileEntryId();
+	}
+
+	private Map<Locale, String> _getValidLocalizedMap(
+		Locale defaultLocale, String defaultTitle,
+		Map<Locale, String> titleMap) {
+
+		if (Validator.isNotNull(titleMap.get(defaultLocale))) {
+			return titleMap;
+		}
+
+		Map<Locale, String> validTitleMap = new HashMap<>(titleMap);
+
+		validTitleMap.put(defaultLocale, defaultTitle);
+
+		return validTitleMap;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

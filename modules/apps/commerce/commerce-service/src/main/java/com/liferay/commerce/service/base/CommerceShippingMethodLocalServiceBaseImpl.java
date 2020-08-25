@@ -95,6 +95,10 @@ public abstract class CommerceShippingMethodLocalServiceBaseImpl
 	/**
 	 * Adds the commerce shipping method to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceShippingMethodLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceShippingMethod the commerce shipping method
 	 * @return the commerce shipping method that was added
 	 */
@@ -126,6 +130,10 @@ public abstract class CommerceShippingMethodLocalServiceBaseImpl
 	/**
 	 * Deletes the commerce shipping method with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceShippingMethodLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceShippingMethodId the primary key of the commerce shipping method
 	 * @return the commerce shipping method that was removed
 	 * @throws PortalException if a commerce shipping method with the primary key could not be found
@@ -142,6 +150,10 @@ public abstract class CommerceShippingMethodLocalServiceBaseImpl
 
 	/**
 	 * Deletes the commerce shipping method from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceShippingMethodLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceShippingMethod the commerce shipping method
 	 * @return the commerce shipping method that was removed
@@ -372,6 +384,10 @@ public abstract class CommerceShippingMethodLocalServiceBaseImpl
 
 	/**
 	 * Updates the commerce shipping method in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceShippingMethodLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceShippingMethod the commerce shipping method
 	 * @return the commerce shipping method that was updated

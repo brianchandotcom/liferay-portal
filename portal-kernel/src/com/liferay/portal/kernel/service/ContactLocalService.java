@@ -62,6 +62,10 @@ public interface ContactLocalService
 	/**
 	 * Adds the contact to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ContactLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param contact the contact
 	 * @return the contact that was added
 	 */
@@ -89,6 +93,10 @@ public interface ContactLocalService
 	/**
 	 * Deletes the contact from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ContactLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param contact the contact
 	 * @return the contact that was removed
 	 */
@@ -97,6 +105,10 @@ public interface ContactLocalService
 
 	/**
 	 * Deletes the contact with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ContactLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param contactId the primary key of the contact
 	 * @return the contact that was removed
@@ -250,6 +262,10 @@ public interface ContactLocalService
 
 	/**
 	 * Updates the contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ContactLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param contact the contact
 	 * @return the contact that was updated

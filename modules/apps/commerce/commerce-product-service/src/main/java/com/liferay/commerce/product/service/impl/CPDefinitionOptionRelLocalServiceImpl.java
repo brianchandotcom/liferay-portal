@@ -61,6 +61,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -178,12 +180,13 @@ public class CPDefinitionOptionRelLocalServiceImpl
 				cpDefinitionOptionRelId, serviceContext);
 		}
 
-		checkCPDefinition(cpDefinitionId, serviceContext);
-
 		// Commerce product instances
 
 		cpInstanceLocalService.inactivateIncompatibleCPInstances(
 			user.getUserId(), cpDefinitionId);
+
+		_updateCPDefinitionIgnoreSKUCombinations(
+			cpDefinitionId, serviceContext);
 
 		// Commerce product definition
 
@@ -254,7 +257,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			cpDefinitionOptionRel.getCPDefinitionId(),
 			cpDefinitionOptionRel.getCPDefinitionOptionRelId());
 
-		checkCPDefinition(
+		_updateCPDefinitionIgnoreSKUCombinations(
 			cpDefinitionOptionRel.getCPDefinitionId(), new ServiceContext());
 
 		// Commerce product definition
@@ -669,14 +672,16 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		cpDefinitionOptionRel = cpDefinitionOptionRelPersistence.update(
 			cpDefinitionOptionRel);
 
-		checkCPDefinition(
-			cpDefinitionOptionRel.getCPDefinitionId(), serviceContext);
+		_updateCPDefinitionOptionValueRels(cpDefinitionOptionRelId, priceType);
 
 		// Commerce product instances
 
 		cpInstanceLocalService.inactivateIncompatibleCPInstances(
 			serviceContext.getUserId(),
 			cpDefinitionOptionRel.getCPDefinitionId());
+
+		_updateCPDefinitionIgnoreSKUCombinations(
+			cpDefinitionOptionRel.getCPDefinitionId(), serviceContext);
 
 		// Commerce product definition
 
@@ -724,23 +729,6 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		}
 
 		return searchContext;
-	}
-
-	protected void checkCPDefinition(
-			long cpDefintionId, ServiceContext serviceContext)
-		throws PortalException {
-
-		if (_hasCPDefinitionSKUContributorCPDefinitionOptionRel(
-				cpDefintionId)) {
-
-			cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
-				cpDefintionId, false, serviceContext);
-
-			return;
-		}
-
-		cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
-			cpDefintionId, true, serviceContext);
 	}
 
 	protected List<CPDefinitionOptionRel> getCPDefinitionOptionRels(Hits hits)
@@ -830,6 +818,55 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		return false;
 	}
 
+	private void _updateCPDefinitionIgnoreSKUCombinations(
+			long cpDefintionId, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (_hasCPDefinitionSKUContributorCPDefinitionOptionRel(
+				cpDefintionId)) {
+
+			cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
+				cpDefintionId, false, serviceContext);
+
+			return;
+		}
+
+		cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
+			cpDefintionId, true, serviceContext);
+	}
+
+	private void _updateCPDefinitionOptionValueRels(
+		long cpDefinitionOptionRelId, String priceType) {
+
+		if (!Objects.equals(
+				priceType, CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC)) {
+
+			return;
+		}
+
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			cpDefinitionOptionValueRelLocalService.
+				getCPDefinitionOptionValueRels(cpDefinitionOptionRelId);
+
+		if ((cpDefinitionOptionValueRels == null) ||
+			cpDefinitionOptionValueRels.isEmpty()) {
+
+			return;
+		}
+
+		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+				cpDefinitionOptionValueRels) {
+
+			if (cpDefinitionOptionValueRel.getPrice() == null) {
+				cpDefinitionOptionValueRel.setPrice(BigDecimal.ZERO);
+
+				cpDefinitionOptionValueRelLocalService.
+					updateCPDefinitionOptionValueRel(
+						cpDefinitionOptionValueRel);
+			}
+		}
+	}
+
 	private void _validateCPDefinitionOptionKey(long cpDefinitionId, String key)
 		throws PortalException {
 
@@ -857,7 +894,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 
 		if (skuContributor) {
 			ddmFormFieldTypesAllowed =
-				cpOptionConfiguration.skuContributorDDMFormFieldTypesAllowed();
+				CPConstants.PRODUCT_OPTION_SKU_CONTRIBUTOR_FIELD_TYPES;
 		}
 
 		if (ArrayUtil.contains(

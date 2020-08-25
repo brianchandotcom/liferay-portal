@@ -1389,16 +1389,16 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AssetEntryWrapper)) {
+		if (!(object instanceof AssetEntryWrapper)) {
 			return false;
 		}
 
-		AssetEntryWrapper assetEntryWrapper = (AssetEntryWrapper)obj;
+		AssetEntryWrapper assetEntryWrapper = (AssetEntryWrapper)object;
 
 		if (Objects.equals(_assetEntry, assetEntryWrapper._assetEntry)) {
 			return true;

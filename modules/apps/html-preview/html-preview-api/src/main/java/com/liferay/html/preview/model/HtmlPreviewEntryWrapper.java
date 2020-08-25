@@ -501,17 +501,17 @@ public class HtmlPreviewEntryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof HtmlPreviewEntryWrapper)) {
+		if (!(object instanceof HtmlPreviewEntryWrapper)) {
 			return false;
 		}
 
 		HtmlPreviewEntryWrapper htmlPreviewEntryWrapper =
-			(HtmlPreviewEntryWrapper)obj;
+			(HtmlPreviewEntryWrapper)object;
 
 		if (Objects.equals(
 				_htmlPreviewEntry, htmlPreviewEntryWrapper._htmlPreviewEntry)) {

@@ -99,7 +99,9 @@ public class GroupIdQueryPreFilterContributor
 				scopeGroupIdsTermsFilter, BooleanClauseOccur.MUST);
 		}
 
-		booleanFilter.add(scopeBooleanFilter, BooleanClauseOccur.MUST);
+		if (scopeBooleanFilter.hasClauses()) {
+			booleanFilter.add(scopeBooleanFilter, BooleanClauseOccur.MUST);
+		}
 	}
 
 	@Reference(unbind = "-")

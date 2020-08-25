@@ -54,6 +54,14 @@ public class WorkflowInstanceManagerUtil {
 			companyId, workflowInstanceId);
 	}
 
+	public static WorkflowInstance getWorkflowInstance(
+			long companyId, long userId, long workflowInstanceId)
+		throws WorkflowException {
+
+		return getWorkflowInstanceManager().getWorkflowInstance(
+			companyId, userId, workflowInstanceId);
+	}
+
 	public static int getWorkflowInstanceCount(
 			long companyId, Long userId, String assetClassName,
 			Long assetClassPK, Boolean completed)

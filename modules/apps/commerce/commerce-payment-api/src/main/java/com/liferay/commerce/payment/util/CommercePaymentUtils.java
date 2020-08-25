@@ -42,7 +42,7 @@ public interface CommercePaymentUtils {
 			CommerceOrder commerceOrder, Locale locale, String transactionId,
 			String checkoutStepUrl, HttpServletRequest httpServletRequest,
 			CommercePaymentMethod commercePaymentMethod)
-		throws PortalException;
+		throws Exception;
 
 	public CommercePaymentRequestProvider getCommercePaymentRequestProvider(
 		CommercePaymentMethod commercePaymentMethod);

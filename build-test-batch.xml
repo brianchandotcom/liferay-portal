@@ -385,8 +385,12 @@ mariadb.executable=${mariadb.executable}]]></echo>
 
 					<if>
 						<and>
-							<equals arg1="${operating.system.type}" arg2="centos" />
-							<equals arg1="${operating.system.centos.version}" arg2="8" />
+							<not>
+								<and>
+									<equals arg1="${operating.system.type}" arg2="centos" />
+									<equals arg1="${operating.system.centos.version}" arg2="7" />
+								</and>
+							</not>
 							<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
 						</and>
 						<then>
@@ -427,8 +431,12 @@ mariadb.executable=${mariadb.executable}]]></echo>
 
 					<if>
 						<and>
-							<equals arg1="${operating.system.type}" arg2="centos" />
-							<equals arg1="${operating.system.centos.version}" arg2="8" />
+							<not>
+								<and>
+									<equals arg1="${operating.system.type}" arg2="centos" />
+									<equals arg1="${operating.system.centos.version}" arg2="7" />
+								</and>
+							</not>
 							<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
 						</and>
 						<then>
@@ -644,6 +652,9 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					<equals arg1="${app.server.type}" arg2="tomcat" />
 					<equals arg1="${test.batch.code.coverage}" arg2="true" />
 					<not>
+						<contains string="${test.batch.name}" substring="functional" />
+					</not>
+					<not>
 						<os family="windows" />
 					</not>
 				</and>
@@ -857,12 +868,18 @@ mariadb.executable=${mariadb.executable}]]></echo>
 			<propertycopy from="search.engine[@{suite.name}]" name="suite.search.engine" silent="true" />
 
 			<if>
-				<equals arg1="${suite.search.engine}" arg2="solr" />
+				<equals arg1="${suite.search.engine}" arg2="remote-elasticsearch6" />
 				<then>
-					<property name="com.liferay.portal.search.solr7.test.unit.started" value="true" />
-
-					<ant antfile="build-test-solr.xml" target="prepare-solr-suite" />
+					<ant antfile="build-test-elasticsearch6.xml" target="start-elasticsearch" />
 				</then>
+				<elseif>
+					<equals arg1="${suite.search.engine}" arg2="solr" />
+					<then>
+						<property name="com.liferay.portal.search.solr7.test.unit.started" value="true" />
+
+						<ant antfile="build-test-solr.xml" target="set-up-solr" />
+					</then>
+				</elseif>
 			</if>
 		</sequential>
 	</macrodef>
@@ -1660,22 +1677,6 @@ app.server.type=@{app.server.type}]]></echo>
 									dest="${liferay.home}/deploy"
 									src="@{test.plugin.zip.url}"
 								/>
-							</then>
-						</if>
-
-						<if>
-							<isset property="env.CI_TEST_SUITE" />
-							<then>
-								<get-testcase-property property.name="osgi.app.includes" />
-
-								<if>
-									<not>
-										<contains string="${osgi.app.includes}" substring="portal-search-solr7" />
-									</not>
-									<then>
-										<prepare-suite-search-engine suite.name="${env.CI_TEST_SUITE}" />
-									</then>
-								</if>
 							</then>
 						</if>
 
@@ -3190,6 +3191,13 @@ log.sanitizer.enabled=false</echo>
 	<macrodef name="stop-suite-search-engine">
 		<sequential>
 			<if>
+				<equals arg1="${suite.search.engine}" arg2="remote-elasticsearch6" />
+				<then>
+					<ant antfile="build-test-elasticsearch6.xml" target="stop-elasticsearch" />
+				</then>
+			</if>
+
+			<if>
 				<equals arg1="${suite.search.engine}" arg2="solr" />
 				<then>
 					<ant antfile="build-test-solr.xml" target="stop-solr-core" />
@@ -3940,6 +3948,14 @@ log.sanitizer.enabled=false</echo>
 		/>
 	</target>
 
+	<target name="functional-orcllinux6-tomcat90-mysql57-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
+	</target>
+
+	<target name="functional-orcllinux7-tomcat90-mysql57-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
+	</target>
+
 	<target name="functional-smoke-bundle-tomcat-mysql56-jdk8">
 		<antcall target="functional-bundle-tomcat-mysql56-jdk8" />
 	</target>
@@ -4142,6 +4158,18 @@ log.sanitizer.enabled=false</echo>
 
 	<target name="functional-tomcat90-sybase160-jdk11_open">
 		<run-functional-test app.server.type="tomcat" database.type="sybase" />
+	</target>
+
+	<target name="functional-ubuntu14-tomcat90-mysql57-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
+	</target>
+
+	<target name="functional-ubuntu16-tomcat90-mysql57-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
+	</target>
+
+	<target name="functional-ubuntu18-tomcat90-mysql57-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
 	<target name="functional-upgrade-jboss71-mysql57-jdk8">
@@ -4472,6 +4500,14 @@ log.sanitizer.enabled=false</echo>
 
 	<target name="legacy-functional-bundle-tomcat-postgresql10">
 		<run-legacy-database-dump database.type="postgresql" />
+	</target>
+
+	<target name="legacy-functional-bundle-tomcat-sqlserver2017">
+		<run-legacy-database-dump database.type="sqlserver" database.version="2017" />
+	</target>
+
+	<target name="legacy-functional-bundle-tomcat-sqlserver2019">
+		<run-legacy-database-dump database.type="sqlserver" database.version="2019" />
 	</target>
 
 	<target name="legacy-functional-bundle-tomcat-sybase160">
@@ -5140,6 +5176,7 @@ ${output.content}</echo>
 			<test-action>
 				<sequential>
 					<ant dir="${release.tool.dir}" inheritAll="false" target="dist" useNativeBasedir="true">
+						<property name="override.decrement.module.bnd.versions" value="true" />
 						<property name="project.release.dir.native" value="${release.tool.dir}" />
 					</ant>
 				</sequential>
@@ -5469,6 +5506,107 @@ ${output.content}</echo>
 		<run-release-osgi-state-lpkg-test />
 	</target>
 
+	<target name="rest-builder-jdk8">
+		<run-batch-test>
+			<test-action>
+				<if>
+					<available file="modules/util/portal-tools-rest-builder" />
+					<then>
+						<gradle-execute dir="modules/util/portal-tools-rest-builder" task="deploy">
+							<arg value="clean" />
+						</gradle-execute>
+					</then>
+				</if>
+
+				<exec executable="git">
+					<arg value="add" />
+					<arg value="--all" />
+				</exec>
+
+				<record action="start" name="${project.dir}/build.rest.output.txt" />
+
+				<if>
+					<isset property="modules.test.class.group" />
+					<then>
+						<loadresource property="modules.build.rest.tasks">
+							<filterchain>
+								<tokenfilter>
+									<replaceregex flags="g" pattern="(\S+ )" replace="\0," />
+								</tokenfilter>
+							</filterchain>
+							<propertyresource name="modules.test.class.group" />
+						</loadresource>
+
+						<for list="${modules.build.rest.tasks}" param="modules.build.rest.task" trim="true">
+							<sequential>
+								<echo>Executing Gradle tasks: @{modules.build.rest.task}</echo>
+
+								<gradle-execute dir="modules" forcedcacheenabled="false" task="@{modules.build.rest.task}">
+									<arg value="-DbuildREST.skipReadOnly=${build.rest.skip.read.only}" />
+									<arg value="-Pcom.liferay.portal.tools.rest.builder.ignore.local=false" />
+								</gradle-execute>
+							</sequential>
+						</for>
+					</then>
+					<else>
+						<echo>Executing Gradle tasks: @{modules.build.rest.task}</echo>
+
+						<gradle-execute dir="modules" forcedcacheenabled="false" task="buildREST">
+							<arg value="-DbuildREST.skipReadOnly=${build.rest.skip.read.only}" />
+							<arg value="-Pcom.liferay.portal.tools.rest.builder.ignore.local=false" />
+						</gradle-execute>
+					</else>
+				</if>
+
+				<record action="stop" name="${project.dir}/build.rest.output.txt" />
+
+				<loadfile
+					property="build.rest.output.txt.content"
+					srcfile="${project.dir}/build.rest.output.txt"
+				/>
+
+				<delete file="${project.dir}/build.rest.output.txt" />
+
+				<if>
+					<contains string="${build.rest.output.txt.content}" substring="Writing " />
+					<then>
+						<exec executable="git" output="${project.dir}/build.rest.diff.txt">
+							<arg value="diff" />
+							<arg value="--" />
+							<arg value="." />
+							<arg value=":!*/packageinfo" />
+						</exec>
+
+						<loadfile
+							property="build.rest.diff.txt.content"
+							srcfile="${project.dir}/build.rest.diff.txt"
+						/>
+
+						<delete file="${project.dir}/build.rest.diff.txt" />
+
+						<if>
+							<isset property="build.rest.diff.txt.content" />
+							<then>
+								<echo message="${build.rest.diff.txt.content}" />
+
+								<fail>
+.
+
+Detected build REST changes. See above build REST log for more
+information. Make sure to commit in all build REST results.
+								</fail>
+							</then>
+						</if>
+					</then>
+				</if>
+			</test-action>
+
+			<test-set-up>
+				<setup-test-environment />
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="ruby-sass-compiler-jdk8">
 		<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
 
@@ -5711,8 +5849,9 @@ information. Make sure to commit in all build services results.
 					<property name="format.current.branch" value="${format.current.branch}" />
 					<property name="show.documentation" value="false" />
 					<property name="source.auto.fix" value="false" />
+					<property name="source.fail.on.auto.fix" value="true" />
+					<property name="source.fail.on.has.warning" value="true" />
 					<property name="source.print.errors" value="false" />
-					<property name="source.throw.exception" value="true" />
 					<property name="source.use.properties" value="false" />
 				</ant>
 			</test-action>
@@ -5740,9 +5879,10 @@ information. Make sure to commit in all build services results.
 				<ant dir="portal-impl" target="format-source-all">
 					<property name="show.documentation" value="false" />
 					<property name="source.auto.fix" value="false" />
+					<property name="source.fail.on.auto.fix" value="true" />
+					<property name="source.fail.on.has.warning" value="true" />
 					<property if:true="${liferay.releng.public}" name="source.formatter.excludes" value="modules/private/**" />
 					<property name="source.print.errors" value="false" />
-					<property name="source.throw.exception" value="true" />
 					<property name="source.use.properties" value="false" />
 				</ant>
 			</test-action>

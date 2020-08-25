@@ -579,7 +579,7 @@ public class HeaderResponseImpl
 		}
 
 		public StringBundler toStringBundler() {
-			StringBundler sb = new StringBundler(_attributes.size() * 5 + 7);
+			StringBundler sb = new StringBundler((_attributes.size() * 5) + 7);
 
 			sb.append("\n<");
 			sb.append(_name);

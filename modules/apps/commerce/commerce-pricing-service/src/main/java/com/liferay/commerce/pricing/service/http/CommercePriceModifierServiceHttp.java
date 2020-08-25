@@ -284,7 +284,11 @@ public class CommercePriceModifierServiceHttp {
 	public static java.util.List
 		<com.liferay.commerce.pricing.model.CommercePriceModifier>
 				getCommercePriceModifiers(
-					HttpPrincipal httpPrincipal, long companyId, String target)
+					HttpPrincipal httpPrincipal, long commercePriceListId,
+					int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.commerce.pricing.model.
+							CommercePriceModifier> orderByComparator)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -292,6 +296,51 @@ public class CommercePriceModifierServiceHttp {
 				CommercePriceModifierServiceUtil.class,
 				"getCommercePriceModifiers",
 				_getCommercePriceModifiersParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commercePriceListId, start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.pricing.model.CommercePriceModifier>)
+					returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.pricing.model.CommercePriceModifier>
+				getCommercePriceModifiers(
+					HttpPrincipal httpPrincipal, long companyId, String target)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommercePriceModifierServiceUtil.class,
+				"getCommercePriceModifiers",
+				_getCommercePriceModifiersParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, target);
@@ -334,9 +383,50 @@ public class CommercePriceModifierServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceModifierServiceUtil.class,
 				"getCommercePriceModifiersCount",
-				_getCommercePriceModifiersCountParameterTypes6);
+				_getCommercePriceModifiersCountParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getCommercePriceModifiersCount(
+			HttpPrincipal httpPrincipal, long commercePriceListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommercePriceModifierServiceUtil.class,
+				"getCommercePriceModifiersCount",
+				_getCommercePriceModifiersCountParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commercePriceListId);
 
 			Object returnObj = null;
 
@@ -378,7 +468,7 @@ public class CommercePriceModifierServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceModifierServiceUtil.class,
 				"searchCommercePriceModifiers",
-				_searchCommercePriceModifiersParameterTypes7);
+				_searchCommercePriceModifiersParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, keywords, status, start, end, sort);
@@ -431,7 +521,7 @@ public class CommercePriceModifierServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceModifierServiceUtil.class,
 				"updateCommercePriceModifier",
-				_updateCommercePriceModifierParameterTypes8);
+				_updateCommercePriceModifierParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePriceModifierId, groupId, title, target,
@@ -489,7 +579,7 @@ public class CommercePriceModifierServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePriceModifierServiceUtil.class,
 				"upsertCommercePriceModifier",
-				_upsertCommercePriceModifierParameterTypes9);
+				_upsertCommercePriceModifierParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, commercePriceModifierId, groupId, title,
@@ -552,16 +642,25 @@ public class CommercePriceModifierServiceHttp {
 	private static final Class<?>[] _getCommercePriceModifierParameterTypes4 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getCommercePriceModifiersParameterTypes5 =
+		new Class[] {
+			long.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _getCommercePriceModifiersParameterTypes6 =
 		new Class[] {long.class, String.class};
 	private static final Class<?>[]
-		_getCommercePriceModifiersCountParameterTypes6 = new Class[] {};
+		_getCommercePriceModifiersCountParameterTypes7 = new Class[] {};
 	private static final Class<?>[]
-		_searchCommercePriceModifiersParameterTypes7 = new Class[] {
+		_getCommercePriceModifiersCountParameterTypes8 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[]
+		_searchCommercePriceModifiersParameterTypes9 = new Class[] {
 			long.class, String.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[]
-		_updateCommercePriceModifierParameterTypes8 = new Class[] {
+		_updateCommercePriceModifierParameterTypes10 = new Class[] {
 			long.class, long.class, String.class, String.class, long.class,
 			String.class, java.math.BigDecimal.class, double.class,
 			boolean.class, int.class, int.class, int.class, int.class,
@@ -570,7 +669,7 @@ public class CommercePriceModifierServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
-		_upsertCommercePriceModifierParameterTypes9 = new Class[] {
+		_upsertCommercePriceModifierParameterTypes11 = new Class[] {
 			long.class, long.class, long.class, String.class, String.class,
 			long.class, String.class, java.math.BigDecimal.class, double.class,
 			boolean.class, int.class, int.class, int.class, int.class,

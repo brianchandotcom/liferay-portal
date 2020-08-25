@@ -12,34 +12,19 @@
  * details.
  */
 
-import React from 'react';
+export function isValuesArrayChanged(prevValue = [], newValue = []) {
+	if (prevValue.length !== newValue.length) return true;
 
-import AutocompleteFilter from '../management_bar/components/filters/AutocompleteFilter';
-import CheckboxesFilter from '../management_bar/components/filters/CheckboxesFilter';
-import DateFilter from '../management_bar/components/filters/DateFilter';
-import DateRangeFilter from '../management_bar/components/filters/DateRangeFilter';
-import NumberFilter from '../management_bar/components/filters/NumberFilter';
-import RadioFilter from '../management_bar/components/filters/RadioFilter';
-import SelectFilter from '../management_bar/components/filters/SelectFilter';
-import TextFilter from '../management_bar/components/filters/TextFilter';
+	const prevValues = prevValue.map(el => el.value || el).sort();
+	const newValues = newValue.map(el => el.value || el).sort();
 
-export const filterIdToComponentMap = {
-	autocomplete: AutocompleteFilter,
-	checkbox: CheckboxesFilter,
-	date: DateFilter,
-	dateRange: DateRangeFilter,
-	number: NumberFilter,
-	radio: RadioFilter,
-	select: SelectFilter,
-	text: TextFilter
-};
+	let changed = false;
 
-export const renderFilter = (item, panelType) => {
-	const Filter = filterIdToComponentMap[item.type];
+	prevValues.forEach((element, i) => {
+		if (element !== newValues[i]) {
+			changed = true;
+		}
+	});
 
-	if (!Filter) {
-		throw new Error(`Filter type '${item.type}' not found.`);
-	}
-
-	return <Filter {...item} panelType={panelType} />;
-};
+	return changed;
+}

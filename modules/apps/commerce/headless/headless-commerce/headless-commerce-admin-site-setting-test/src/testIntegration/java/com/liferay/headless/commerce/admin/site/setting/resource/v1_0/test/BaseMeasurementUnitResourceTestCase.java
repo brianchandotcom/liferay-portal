@@ -113,7 +113,9 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		MeasurementUnitResource.Builder builder =
 			MeasurementUnitResource.builder();
 
-		measurementUnitResource = builder.locale(
+		measurementUnitResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

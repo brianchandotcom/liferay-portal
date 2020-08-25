@@ -1019,16 +1019,16 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ContactWrapper)) {
+		if (!(object instanceof ContactWrapper)) {
 			return false;
 		}
 
-		ContactWrapper contactWrapper = (ContactWrapper)obj;
+		ContactWrapper contactWrapper = (ContactWrapper)object;
 
 		if (Objects.equals(_contact, contactWrapper._contact)) {
 			return true;

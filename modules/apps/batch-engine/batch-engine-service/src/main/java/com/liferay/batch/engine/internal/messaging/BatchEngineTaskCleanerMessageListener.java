@@ -62,7 +62,7 @@ public class BatchEngineTaskCleanerMessageListener extends BaseMessageListener {
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className,
-			new Date(System.currentTimeMillis() + scanInterval * Time.DAY),
+			new Date(System.currentTimeMillis() + (scanInterval * Time.DAY)),
 			null, scanInterval, TimeUnit.DAY);
 
 		_schedulerEngineHelper.register(

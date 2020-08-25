@@ -1510,16 +1510,16 @@ public class DDMStructureVersionModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMStructureVersion)) {
+		if (!(object instanceof DDMStructureVersion)) {
 			return false;
 		}
 
-		DDMStructureVersion ddmStructureVersion = (DDMStructureVersion)obj;
+		DDMStructureVersion ddmStructureVersion = (DDMStructureVersion)object;
 
 		long primaryKey = ddmStructureVersion.getPrimaryKey();
 

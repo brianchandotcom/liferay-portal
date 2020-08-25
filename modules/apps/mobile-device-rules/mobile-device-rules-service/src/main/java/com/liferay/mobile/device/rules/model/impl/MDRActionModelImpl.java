@@ -1324,16 +1324,16 @@ public class MDRActionModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MDRAction)) {
+		if (!(object instanceof MDRAction)) {
 			return false;
 		}
 
-		MDRAction mdrAction = (MDRAction)obj;
+		MDRAction mdrAction = (MDRAction)object;
 
 		long primaryKey = mdrAction.getPrimaryKey();
 

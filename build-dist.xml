@@ -3589,6 +3589,20 @@ plugins.includes=</echo>
 				</if>
 
 				<if>
+					<available file="${zip.executable.dir}/../elasticsearch7" />
+					<then>
+						<copy
+							preservelastmodified="true"
+							todir="dist/${tstamp.value}/liferay-portal-${lp.version}/elasticsearch7"
+						>
+							<fileset
+								dir="${zip.executable.dir}/../elasticsearch7"
+							/>
+						</copy>
+					</then>
+				</if>
+
+				<if>
 					<available file="${zip.executable.dir}/../osgi" />
 					<then>
 						<copy

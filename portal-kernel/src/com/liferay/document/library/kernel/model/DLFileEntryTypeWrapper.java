@@ -822,17 +822,17 @@ public class DLFileEntryTypeWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DLFileEntryTypeWrapper)) {
+		if (!(object instanceof DLFileEntryTypeWrapper)) {
 			return false;
 		}
 
 		DLFileEntryTypeWrapper dlFileEntryTypeWrapper =
-			(DLFileEntryTypeWrapper)obj;
+			(DLFileEntryTypeWrapper)object;
 
 		if (Objects.equals(
 				_dlFileEntryType, dlFileEntryTypeWrapper._dlFileEntryType)) {

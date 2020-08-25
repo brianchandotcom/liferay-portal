@@ -105,7 +105,7 @@ public class URLTemplateResource implements TemplateResource {
 
 	@Override
 	public int hashCode() {
-		return _templateId.hashCode() * 11 +
+		return (_templateId.hashCode() * 11) +
 			_templateURLExternalForm.hashCode();
 	}
 

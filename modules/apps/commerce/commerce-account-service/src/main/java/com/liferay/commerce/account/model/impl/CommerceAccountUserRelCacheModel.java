@@ -37,17 +37,17 @@ public class CommerceAccountUserRelCacheModel
 	implements CacheModel<CommerceAccountUserRel>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceAccountUserRelCacheModel)) {
+		if (!(object instanceof CommerceAccountUserRelCacheModel)) {
 			return false;
 		}
 
 		CommerceAccountUserRelCacheModel commerceAccountUserRelCacheModel =
-			(CommerceAccountUserRelCacheModel)obj;
+			(CommerceAccountUserRelCacheModel)object;
 
 		if (commerceAccountUserRelPK.equals(
 				commerceAccountUserRelCacheModel.commerceAccountUserRelPK)) {

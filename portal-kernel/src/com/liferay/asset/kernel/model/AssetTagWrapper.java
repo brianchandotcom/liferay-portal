@@ -502,16 +502,16 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AssetTagWrapper)) {
+		if (!(object instanceof AssetTagWrapper)) {
 			return false;
 		}
 
-		AssetTagWrapper assetTagWrapper = (AssetTagWrapper)obj;
+		AssetTagWrapper assetTagWrapper = (AssetTagWrapper)object;
 
 		if (Objects.equals(_assetTag, assetTagWrapper._assetTag)) {
 			return true;

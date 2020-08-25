@@ -122,16 +122,17 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+		<finder name="CPM_CN_CPK" return-type="CommercePriceModifierRel" unique="true">
+			<finder-column name="commercePriceModifierId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
 	</entity>
 	<entity external-reference-code="true" local-service="true" name="CommercePricingClass" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
 		<column name="commercePricingClassId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
 
 		<!-- Audit fields -->
 
@@ -143,8 +144,8 @@
 
 		<!-- Other fields -->
 
-		<column name="title" type="String" />
-		<column name="description" type="String" />
+		<column localized="true" name="title" type="String" />
+		<column localized="true" name="description" type="String" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
@@ -155,12 +156,10 @@
 
 		<!-- Finder methods -->
 
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity local-service="true" name="CommercePricingClassCPDefinitionRel" remote-service="true" table="CPricingClassCPDefinitionRel">
 
@@ -195,6 +194,10 @@
 		<finder name="CPDefinitionId" return-type="Collection">
 			<finder-column name="CPDefinitionId" />
 		</finder>
+		<finder name="C_C" return-type="CommercePricingClassCPDefinitionRel" unique="true">
+			<finder-column name="commercePricingClassId" />
+			<finder-column name="CPDefinitionId" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>CommercePriceModifierAmount</exception>
@@ -207,5 +210,7 @@
 		<exception>CommercePricingClassExpirationDate</exception>
 		<exception>CommercePricingClassTitle</exception>
 		<exception>CommerceUndefinedBasePriceList</exception>
+		<exception>DuplicateCommercePriceModifier</exception>
+		<exception>DuplicateCommercePricingClassCPDefinitionRel</exception>
 	</exceptions>
 </service-builder>

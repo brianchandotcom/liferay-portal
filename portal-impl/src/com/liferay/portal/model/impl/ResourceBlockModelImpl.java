@@ -666,16 +666,16 @@ public class ResourceBlockModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ResourceBlock)) {
+		if (!(object instanceof ResourceBlock)) {
 			return false;
 		}
 
-		ResourceBlock resourceBlock = (ResourceBlock)obj;
+		ResourceBlock resourceBlock = (ResourceBlock)object;
 
 		long primaryKey = resourceBlock.getPrimaryKey();
 

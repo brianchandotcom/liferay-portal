@@ -1133,17 +1133,17 @@ public class BatchEngineExportTaskModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof BatchEngineExportTask)) {
+		if (!(object instanceof BatchEngineExportTask)) {
 			return false;
 		}
 
 		BatchEngineExportTask batchEngineExportTask =
-			(BatchEngineExportTask)obj;
+			(BatchEngineExportTask)object;
 
 		long primaryKey = batchEngineExportTask.getPrimaryKey();
 

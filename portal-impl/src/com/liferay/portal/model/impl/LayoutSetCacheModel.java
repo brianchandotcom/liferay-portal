@@ -37,16 +37,16 @@ public class LayoutSetCacheModel
 	implements CacheModel<LayoutSet>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof LayoutSetCacheModel)) {
+		if (!(object instanceof LayoutSetCacheModel)) {
 			return false;
 		}
 
-		LayoutSetCacheModel layoutSetCacheModel = (LayoutSetCacheModel)obj;
+		LayoutSetCacheModel layoutSetCacheModel = (LayoutSetCacheModel)object;
 
 		if ((layoutSetId == layoutSetCacheModel.layoutSetId) &&
 			(mvccVersion == layoutSetCacheModel.mvccVersion)) {

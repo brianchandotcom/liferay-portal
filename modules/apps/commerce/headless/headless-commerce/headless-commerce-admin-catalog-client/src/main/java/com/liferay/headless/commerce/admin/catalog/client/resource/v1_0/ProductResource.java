@@ -89,6 +89,16 @@ public interface ProductResource {
 				String externalReferenceCode, Product product)
 		throws Exception;
 
+	public Product postProductByExternalReferenceCodeClone(
+			String externalReferenceCode, String catalogExternalReferenceCode)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postProductByExternalReferenceCodeCloneHttpResponse(
+				String externalReferenceCode,
+				String catalogExternalReferenceCode)
+		throws Exception;
+
 	public void deleteProduct(Long id) throws Exception;
 
 	public HttpInvoker.HttpResponse deleteProductHttpResponse(Long id)
@@ -110,6 +120,12 @@ public interface ProductResource {
 
 	public HttpInvoker.HttpResponse patchProductHttpResponse(
 			Long id, Product product)
+		throws Exception;
+
+	public Product postProductClone(Long id, Long catalogId) throws Exception;
+
+	public HttpInvoker.HttpResponse postProductCloneHttpResponse(
+			Long id, Long catalogId)
 		throws Exception;
 
 	public static class Builder {
@@ -157,8 +173,8 @@ public interface ProductResource {
 		private Map<String, String> _headers = new LinkedHashMap<>();
 		private String _host = "localhost";
 		private Locale _locale;
-		private String _login = "test@liferay.com";
-		private String _password = "test";
+		private String _login = "";
+		private String _password = "";
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
@@ -548,6 +564,83 @@ public interface ProductResource {
 			return httpInvoker.invoke();
 		}
 
+		public Product postProductByExternalReferenceCodeClone(
+				String externalReferenceCode,
+				String catalogExternalReferenceCode)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postProductByExternalReferenceCodeCloneHttpResponse(
+					externalReferenceCode, catalogExternalReferenceCode);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return ProductSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postProductByExternalReferenceCodeCloneHttpResponse(
+					String externalReferenceCode,
+					String catalogExternalReferenceCode)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(
+				catalogExternalReferenceCode.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (catalogExternalReferenceCode != null) {
+				httpInvoker.parameter(
+					"catalogExternalReferenceCode",
+					String.valueOf(catalogExternalReferenceCode));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/clone",
+				externalReferenceCode);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
 		public void deleteProduct(Long id) throws Exception {
 			HttpInvoker.HttpResponse httpResponse = deleteProductHttpResponse(
 				id);
@@ -758,6 +851,75 @@ public interface ProductResource {
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
 						"/o/headless-commerce-admin-catalog/v1.0/products/{id}",
+				id);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Product postProductClone(Long id, Long catalogId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postProductCloneHttpResponse(id, catalogId);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return ProductSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse postProductCloneHttpResponse(
+				Long id, Long catalogId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(catalogId.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (catalogId != null) {
+				httpInvoker.parameter("catalogId", String.valueOf(catalogId));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-commerce-admin-catalog/v1.0/products/{id}/clone",
 				id);
 
 			httpInvoker.userNameAndPassword(

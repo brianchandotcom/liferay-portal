@@ -28,6 +28,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -85,6 +86,10 @@ public interface AttachmentResource {
 		throws Exception;
 
 	public Attachment postProductIdAttachment(Long id, Attachment attachment)
+		throws Exception;
+
+	public Response postProductIdAttachmentBatch(
+			Long id, String callbackURL, Object object)
 		throws Exception;
 
 	public Attachment postProductIdAttachmentByBase64(

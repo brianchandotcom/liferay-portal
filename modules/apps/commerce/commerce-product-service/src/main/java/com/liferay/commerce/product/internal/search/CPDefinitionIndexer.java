@@ -34,16 +34,16 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -70,6 +70,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -333,10 +335,21 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		long classNameId = _classNameLocalService.getClassNameId(
 			CProduct.class);
 
-		Map<String, String> languageIdToUrlTitleMap =
-			_cpFriendlyURLEntryLocalService.getLanguageIdToUrlTitleMap(
-				GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
-				cpDefinition.getCProductId());
+		Map<String, String> languageIdToUrlTitleMap = new HashMap<>();
+
+		try {
+			FriendlyURLEntry friendlyURLEntry =
+				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+					classNameId, cpDefinition.getCProductId());
+
+			languageIdToUrlTitleMap =
+				friendlyURLEntry.getLanguageIdToUrlTitleMap();
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
 
 		for (String languageId : languageIds) {
 			String description = cpDefinition.getDescription(languageId);
@@ -555,9 +568,12 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			specificationOptionNames.add(cpSpecificationOption.getKey());
 			specificationOptionIds.add(
 				cpSpecificationOption.getCPSpecificationOptionId());
-			specificationOptionValuesNames.add(
+
+			String specificationOptionValue =
 				cpDefinitionSpecificationOptionValue.getValue(
-					cpDefinitionDefaultLanguageId));
+					cpDefinitionDefaultLanguageId);
+
+			specificationOptionValuesNames.add(specificationOptionValue);
 
 			Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
 				cpDefinitionSpecificationOptionValue.getGroupId());
@@ -570,27 +586,85 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 				if (Validator.isBlank(localizedSpecificationOptionValue)) {
 					localizedSpecificationOptionValue =
-						cpDefinitionSpecificationOptionValue.getValue(
-							cpDefinitionDefaultLanguageId);
+						specificationOptionValue;
 				}
 
-				document.addText(
-					StringBundler.concat(
-						languageId, "_SPECIFICATION_",
-						cpSpecificationOption.getKey(), "_VALUE_NAME"),
-					localizedSpecificationOptionValue);
+				String localeSpecificationValueName = StringBundler.concat(
+					languageId, "_SPECIFICATION_",
+					cpSpecificationOption.getKey(), "_VALUE_NAME");
+
+				Field field = document.getField(localeSpecificationValueName);
+
+				if (field != null) {
+					String[] currentValues = field.getValues();
+
+					List<String> valuesArrayList = new ArrayList<>(
+						Arrays.asList(currentValues));
+
+					valuesArrayList.add(localizedSpecificationOptionValue);
+
+					String[] valuesArray = valuesArrayList.toArray(
+						new String[0]);
+
+					document.addText(localeSpecificationValueName, valuesArray);
+				}
+				else {
+					document.addText(
+						localeSpecificationValueName,
+						localizedSpecificationOptionValue);
+				}
 			}
 
-			document.addText(
+			String specificationValueName =
 				"SPECIFICATION_" + cpSpecificationOption.getKey() +
-					"_VALUE_NAME",
-				cpDefinitionSpecificationOptionValue.getValue(
-					cpDefinitionDefaultLanguageId));
+					"_VALUE_NAME";
 
-			document.addNumber(
-				"SPECIFICATION_" + cpSpecificationOption.getKey() + "_VALUE_ID",
+			Field field = document.getField(specificationValueName);
+
+			if (field != null) {
+				String[] currentValues = field.getValues();
+
+				List<String> valuesArrayList = new ArrayList<>(
+					Arrays.asList(currentValues));
+
+				valuesArrayList.add(specificationOptionValue);
+
+				String[] valuesArray = valuesArrayList.toArray(new String[0]);
+
+				document.addText(specificationValueName, valuesArray);
+			}
+			else {
+				document.addText(
+					specificationValueName, specificationOptionValue);
+			}
+
+			String specificationValueId =
+				"SPECIFICATION_" + cpSpecificationOption.getKey() + "_VALUE_ID";
+
+			long cpDefinitionSpecificationOptionValueId =
 				cpDefinitionSpecificationOptionValue.
-					getCPDefinitionSpecificationOptionValueId());
+					getCPDefinitionSpecificationOptionValueId();
+
+			field = document.getField(specificationValueId);
+
+			if (field != null) {
+				String[] currentValues = field.getValues();
+
+				List<String> valuesArrayList = new ArrayList<>(
+					Arrays.asList(currentValues));
+
+				valuesArrayList.add(
+					String.valueOf(cpDefinitionSpecificationOptionValueId));
+
+				String[] valuesArray = valuesArrayList.toArray(new String[0]);
+
+				document.addNumber(specificationValueId, valuesArray);
+			}
+			else {
+				document.addNumber(
+					specificationValueId,
+					cpDefinitionSpecificationOptionValueId);
+			}
 		}
 
 		document.addText(
@@ -645,13 +719,15 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		}
 
 		if ((cpDefinition.getStatus() != WorkflowConstants.STATUS_APPROVED) ||
-			(cpDefinition.getCPDefinitionId() ==
-				cProduct.getPublishedCPDefinitionId())) {
+			((cpDefinition.getCPDefinitionId() !=
+				cProduct.getPublishedCPDefinitionId()) &&
+			 _cpDefinitionLocalService.isVersionable(
+				 cpDefinition.getCPDefinitionId()))) {
 
-			document.addKeyword(Field.HIDDEN, false);
+			document.addKeyword(Field.HIDDEN, true);
 		}
 		else {
-			document.addKeyword(Field.HIDDEN, true);
+			document.addKeyword(Field.HIDDEN, false);
 		}
 
 		CommerceCatalog commerceCatalog = cpDefinition.getCommerceCatalog();
@@ -782,10 +858,10 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
-	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
-	private CPInstanceLocalService _cpInstanceLocalService;
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

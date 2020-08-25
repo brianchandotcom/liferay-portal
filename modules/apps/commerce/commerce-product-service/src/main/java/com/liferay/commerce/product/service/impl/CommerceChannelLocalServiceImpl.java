@@ -162,6 +162,18 @@ public class CommerceChannelLocalServiceImpl
 	}
 
 	@Override
+	public CommerceChannel fetchByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			return null;
+		}
+
+		return commerceChannelPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	@Override
 	public CommerceChannel fetchCommerceChannelBySiteGroupId(long siteGroupId) {
 		return commerceChannelPersistence.fetchBySiteGroupId(siteGroupId);
 	}

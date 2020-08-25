@@ -998,16 +998,17 @@ public class MDRRuleGroupInstanceModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MDRRuleGroupInstance)) {
+		if (!(object instanceof MDRRuleGroupInstance)) {
 			return false;
 		}
 
-		MDRRuleGroupInstance mdrRuleGroupInstance = (MDRRuleGroupInstance)obj;
+		MDRRuleGroupInstance mdrRuleGroupInstance =
+			(MDRRuleGroupInstance)object;
 
 		long primaryKey = mdrRuleGroupInstance.getPrimaryKey();
 

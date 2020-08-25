@@ -1,4 +1,8 @@
 Bundle-Name: Liferay Commerce Product Asset Categories Navigation Web
 Bundle-SymbolicName: com.liferay.commerce.product.asset.categories.navigation.web
-Bundle-Version: 1.0.27
+Bundle-Version: 1.0.31
+Import-Package:\
+	com.liferay.friendly.url.model;version="[1.0.0,3.0.0)",\
+	\
+	*
 Web-ContextPath: /commerce-product-asset-categories-navigation-web

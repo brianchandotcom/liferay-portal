@@ -912,16 +912,16 @@ public class RoleWrapper implements ModelWrapper<Role>, Role {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof RoleWrapper)) {
+		if (!(object instanceof RoleWrapper)) {
 			return false;
 		}
 
-		RoleWrapper roleWrapper = (RoleWrapper)obj;
+		RoleWrapper roleWrapper = (RoleWrapper)object;
 
 		if (Objects.equals(_role, roleWrapper._role)) {
 			return true;

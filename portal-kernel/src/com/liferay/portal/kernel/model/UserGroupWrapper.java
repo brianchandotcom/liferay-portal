@@ -607,16 +607,16 @@ public class UserGroupWrapper implements ModelWrapper<UserGroup>, UserGroup {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof UserGroupWrapper)) {
+		if (!(object instanceof UserGroupWrapper)) {
 			return false;
 		}
 
-		UserGroupWrapper userGroupWrapper = (UserGroupWrapper)obj;
+		UserGroupWrapper userGroupWrapper = (UserGroupWrapper)object;
 
 		if (Objects.equals(_userGroup, userGroupWrapper._userGroup)) {
 			return true;

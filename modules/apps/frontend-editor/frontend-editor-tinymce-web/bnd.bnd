@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend Editor TinyMCE Web
 Bundle-SymbolicName: com.liferay.frontend.editor.tinymce.web
-Bundle-Version: 2.0.22
+Bundle-Version: 2.0.23
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.frontend.editor.lang)";\

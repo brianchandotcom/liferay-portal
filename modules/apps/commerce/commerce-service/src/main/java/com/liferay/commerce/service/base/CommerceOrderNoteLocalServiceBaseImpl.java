@@ -94,6 +94,10 @@ public abstract class CommerceOrderNoteLocalServiceBaseImpl
 	/**
 	 * Adds the commerce order note to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderNoteLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceOrderNote the commerce order note
 	 * @return the commerce order note that was added
 	 */
@@ -122,6 +126,10 @@ public abstract class CommerceOrderNoteLocalServiceBaseImpl
 	/**
 	 * Deletes the commerce order note with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderNoteLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceOrderNoteId the primary key of the commerce order note
 	 * @return the commerce order note that was removed
 	 * @throws PortalException if a commerce order note with the primary key could not be found
@@ -136,6 +144,10 @@ public abstract class CommerceOrderNoteLocalServiceBaseImpl
 
 	/**
 	 * Deletes the commerce order note from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderNoteLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceOrderNote the commerce order note
 	 * @return the commerce order note that was removed
@@ -368,6 +380,10 @@ public abstract class CommerceOrderNoteLocalServiceBaseImpl
 
 	/**
 	 * Updates the commerce order note in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderNoteLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceOrderNote the commerce order note
 	 * @return the commerce order note that was updated

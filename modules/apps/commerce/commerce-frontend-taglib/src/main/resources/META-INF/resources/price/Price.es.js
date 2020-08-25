@@ -17,13 +17,36 @@ import Soy, {Config} from 'metal-soy';
 
 import template from './Price.soy';
 
-class Price extends Component {}
+class Price extends Component {
+	created() {
+		window.Liferay.on(
+			'priceUpdated',
+			this._updatePrice,
+			this
+		);
+	}
+
+	detached() {
+		window.Liferay.detach(
+			'priceUpdated',
+			this._updatePrice,
+			this
+		);
+	}
+	_updatePrice(e) {
+		if(e.id === this.id) {
+			this.displayDiscountLevels = e.displayDiscountLevels;
+			this.prices = e.prices;
+		}
+	}
+}
 
 Price.STATE = {
 	additionalDiscountClasses: Config.string(),
 	additionalPriceClasses: Config.string(),
 	additionalPromoPriceClasses: Config.string(),
 	displayDiscountLevels: Config.bool().value(false),
+	id: Config.string(),
 	prices: Config.shapeOf({
 		discountPercentage: Config.string(),
 		discountPercentages: Config.array().value(null),

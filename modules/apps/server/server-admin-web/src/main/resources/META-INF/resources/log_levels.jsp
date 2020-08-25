@@ -152,7 +152,7 @@ serverURL.setParameter("tabs2", tabs2);
 						Level level = logger.getLevel();
 						%>
 
-						<select name='<%= renderResponse.getNamespace() + "logLevel" + HtmlUtil.escapeAttribute(name) %>'>
+						<select name="<%= renderResponse.getNamespace() + "logLevel" + HtmlUtil.escapeAttribute(name) %>">
 
 							<%
 							for (int j = 0; j < Levels.ALL_LEVELS.length; j++) {

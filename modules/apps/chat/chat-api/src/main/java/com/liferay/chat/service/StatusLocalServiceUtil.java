@@ -41,6 +41,10 @@ public class StatusLocalServiceUtil {
 	/**
 	 * Adds the status to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect StatusLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param status the status
 	 * @return the status that was added
 	 */
@@ -74,6 +78,10 @@ public class StatusLocalServiceUtil {
 	/**
 	 * Deletes the status with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect StatusLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param statusId the primary key of the status
 	 * @return the status that was removed
 	 * @throws PortalException if a status with the primary key could not be found
@@ -86,6 +94,10 @@ public class StatusLocalServiceUtil {
 
 	/**
 	 * Deletes the status from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect StatusLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param status the status
 	 * @return the status that was removed
@@ -306,6 +318,10 @@ public class StatusLocalServiceUtil {
 
 	/**
 	 * Updates the status in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect StatusLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param status the status
 	 * @return the status that was updated

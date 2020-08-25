@@ -27,7 +27,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 PortletURL navigationPortletURL = renderResponse.createRenderURL();
 
-navigationPortletURL.setParameter("mvcRenderCommandName", "/analytics_settings/edit_synced_organizations");
+navigationPortletURL.setParameter("mvcRenderCommandName", "/analytics_settings/edit_synced_contacts_organizations");
 navigationPortletURL.setParameter("redirect", redirect);
 
 if (delta > 0) {
@@ -58,7 +58,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "sync-by-organizations"), currentURL);
 %>
 
-<portlet:actionURL name="/analytics/edit_synced_contacts" var="editSyncedContactsURL" />
+<portlet:actionURL name="/analytics_settings/edit_synced_contacts" var="editSyncedContactsURL" />
 
 <div class="container-fluid-1280">
 	<div class="col-12">

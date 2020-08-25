@@ -295,7 +295,7 @@ public class DDMFormDisplayContext {
 			return _hasAddFormInstanceRecordPermission;
 		}
 
-		_hasAddFormInstanceRecordPermission = true;
+		_hasAddFormInstanceRecordPermission = false;
 
 		DDMFormInstance ddmFormInstance = getFormInstance();
 
@@ -316,7 +316,7 @@ public class DDMFormDisplayContext {
 			return _hasViewPermission;
 		}
 
-		_hasViewPermission = true;
+		_hasViewPermission = false;
 
 		DDMFormInstance ddmFormInstance =
 			_ddmFormInstanceLocalService.fetchFormInstance(getFormInstanceId());

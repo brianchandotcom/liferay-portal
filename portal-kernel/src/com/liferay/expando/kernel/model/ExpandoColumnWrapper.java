@@ -399,16 +399,17 @@ public class ExpandoColumnWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ExpandoColumnWrapper)) {
+		if (!(object instanceof ExpandoColumnWrapper)) {
 			return false;
 		}
 
-		ExpandoColumnWrapper expandoColumnWrapper = (ExpandoColumnWrapper)obj;
+		ExpandoColumnWrapper expandoColumnWrapper =
+			(ExpandoColumnWrapper)object;
 
 		if (Objects.equals(
 				_expandoColumn, expandoColumnWrapper._expandoColumn)) {

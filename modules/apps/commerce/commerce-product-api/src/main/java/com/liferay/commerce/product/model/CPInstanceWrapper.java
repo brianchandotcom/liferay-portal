@@ -103,6 +103,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 		attributes.put(
 			"deliveryMaxSubscriptionCycles",
 			getDeliveryMaxSubscriptionCycles());
+		attributes.put("unspsc", getUnspsc());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -346,6 +347,12 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 
 		if (deliveryMaxSubscriptionCycles != null) {
 			setDeliveryMaxSubscriptionCycles(deliveryMaxSubscriptionCycles);
+		}
+
+		String unspsc = (String)attributes.get("unspsc");
+
+		if (unspsc != null) {
+			setUnspsc(unspsc);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -806,6 +813,16 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 		getSubscriptionTypeSettingsProperties() {
 
 		return _cpInstance.getSubscriptionTypeSettingsProperties();
+	}
+
+	/**
+	 * Returns the unspsc of this cp instance.
+	 *
+	 * @return the unspsc of this cp instance
+	 */
+	@Override
+	public String getUnspsc() {
+		return _cpInstance.getUnspsc();
 	}
 
 	/**
@@ -1462,6 +1479,16 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	}
 
 	/**
+	 * Sets the unspsc of this cp instance.
+	 *
+	 * @param unspsc the unspsc of this cp instance
+	 */
+	@Override
+	public void setUnspsc(String unspsc) {
+		_cpInstance.setUnspsc(unspsc);
+	}
+
+	/**
 	 * Sets the user ID of this cp instance.
 	 *
 	 * @param userId the user ID of this cp instance
@@ -1549,16 +1576,16 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPInstanceWrapper)) {
+		if (!(object instanceof CPInstanceWrapper)) {
 			return false;
 		}
 
-		CPInstanceWrapper cpInstanceWrapper = (CPInstanceWrapper)obj;
+		CPInstanceWrapper cpInstanceWrapper = (CPInstanceWrapper)object;
 
 		if (Objects.equals(_cpInstance, cpInstanceWrapper._cpInstance)) {
 			return true;

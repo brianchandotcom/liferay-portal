@@ -121,7 +121,9 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		MessageBoardMessageResource.Builder builder =
 			MessageBoardMessageResource.builder();
 
-		messageBoardMessageResource = builder.locale(
+		messageBoardMessageResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

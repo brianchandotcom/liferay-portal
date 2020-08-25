@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.search.admin.web.internal.constants.SearchAdminPortletKeys;
+import com.liferay.portal.search.admin.web.internal.util.DictionaryReindexer;
 
 import java.io.Serializable;
 
@@ -184,12 +185,10 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 	protected void reindexDictionaries(ActionRequest actionRequest)
 		throws Exception {
 
-		long[] companyIds = _portalInstancesLocalService.getCompanyIds();
+		DictionaryReindexer dictionaryReindexer = new DictionaryReindexer(
+			_indexWriterHelper, _portalInstancesLocalService);
 
-		for (long companyId : companyIds) {
-			_indexWriterHelper.indexQuerySuggestionDictionaries(companyId);
-			_indexWriterHelper.indexSpellCheckerDictionaries(companyId);
-		}
+		dictionaryReindexer.reindexDictionaries();
 	}
 
 	@Reference

@@ -111,7 +111,9 @@ public abstract class BaseFormResourceTestCase {
 
 		FormResource.Builder builder = FormResource.builder();
 
-		formResource = builder.locale(
+		formResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

@@ -486,17 +486,17 @@ public class DDMStructureLayoutWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMStructureLayoutWrapper)) {
+		if (!(object instanceof DDMStructureLayoutWrapper)) {
 			return false;
 		}
 
 		DDMStructureLayoutWrapper ddmStructureLayoutWrapper =
-			(DDMStructureLayoutWrapper)obj;
+			(DDMStructureLayoutWrapper)object;
 
 		if (Objects.equals(
 				_ddmStructureLayout,

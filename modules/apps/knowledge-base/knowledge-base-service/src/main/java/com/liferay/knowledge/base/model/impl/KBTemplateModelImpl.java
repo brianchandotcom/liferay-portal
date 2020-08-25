@@ -836,16 +836,16 @@ public class KBTemplateModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KBTemplate)) {
+		if (!(object instanceof KBTemplate)) {
 			return false;
 		}
 
-		KBTemplate kbTemplate = (KBTemplate)obj;
+		KBTemplate kbTemplate = (KBTemplate)object;
 
 		long primaryKey = kbTemplate.getPrimaryKey();
 

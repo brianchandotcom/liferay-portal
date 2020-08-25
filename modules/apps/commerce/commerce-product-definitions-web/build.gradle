@@ -24,9 +24,11 @@ dependencies {
 	compileOnly project(":apps:commerce:commerce-frontend-taglib")
 	compileOnly project(":apps:commerce:commerce-inventory-api")
 	compileOnly project(":apps:commerce:commerce-media-api")
+	compileOnly project(":apps:commerce:commerce-pricing-api")
 	compileOnly project(":apps:commerce:commerce-product-api")
 	compileOnly project(":apps:commerce:commerce-product-ddm-api")
 	compileOnly project(":apps:commerce:commerce-product-item-selector-api")
 	compileOnly project(":apps:commerce:commerce-product-service")
 	compileOnly project(":apps:commerce:commerce-taglib")
+	compileOnly project(":apps:friendly-url:friendly-url-api")
 }

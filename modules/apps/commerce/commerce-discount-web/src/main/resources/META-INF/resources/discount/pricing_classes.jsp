@@ -41,7 +41,7 @@ SearchContainer<CommerceDiscountRel> commercePricingClassCommerceDiscountRelSear
 		<aui:form action="<%= addCommerceDiscountRelURL %>" cssClass="hide" name="addCommerceDiscountRelFm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="addClassPKs" type="hidden" value="" />
+			<aui:input name="classPKs" type="hidden" value="" />
 			<aui:input name="className" type="hidden" value="<%= CommercePricingClass.class.getName() %>" />
 			<aui:input name="commerceDiscountId" type="hidden" value="<%= commerceDiscountId %>" />
 		</aui:form>
@@ -51,7 +51,7 @@ SearchContainer<CommerceDiscountRel> commercePricingClassCommerceDiscountRelSear
 		>
 			<liferay-frontend:add-menu-item
 				id="addCommerceDiscountRelMenuItem"
-				title='<%= LanguageUtil.get(request, "add-discount-pricing-class") %>'
+				title='<%= LanguageUtil.get(request, "add-discount-product-group") %>'
 				url="javascript:;"
 			/>
 		</liferay-frontend:add-menu>
@@ -100,7 +100,7 @@ SearchContainer<CommerceDiscountRel> commercePricingClassCommerceDiscountRelSear
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
 					name="name"
-					value="<%= HtmlUtil.escape((commercePricingClass == null) ? StringPool.BLANK : commercePricingClass.getTitle()) %>"
+					value="<%= HtmlUtil.escape((commercePricingClass == null) ? StringPool.BLANK : commercePricingClass.getTitle(themeDisplay.getLanguageId())) %>"
 				/>
 
 				<liferay-ui:search-container-column-jsp
@@ -126,12 +126,10 @@ SearchContainer<CommerceDiscountRel> commercePricingClassCommerceDiscountRelSear
 			eventName: 'pricingClassSelectItem',
 			on: {
 				selectedItemChange: function(event) {
-					var <portlet:namespace />addCPDefinitionIds = [];
-
 					var selectedItems = event.newVal;
 
 					if (selectedItems) {
-						$('#<portlet:namespace />addClassPKs').val(selectedItems);
+						$('#<portlet:namespace />classPKs').val(selectedItems);
 
 						var addCommerceDiscountRelFm = $(
 							'#<portlet:namespace />addCommerceDiscountRelFm'
@@ -142,7 +140,7 @@ SearchContainer<CommerceDiscountRel> commercePricingClassCommerceDiscountRelSear
 				}
 			},
 			title:
-				'<liferay-ui:message arguments="<%= commerceDiscount.getTitle() %>" key="add-new-pricing-class-to-x" />',
+				'<liferay-ui:message arguments="<%= commerceDiscount.getTitle() %>" key="add-new-product-group-to-x" />',
 			url:
 				'<%= commerceDiscountRelDisplayContext.getPricingClassItemSelectorUrl() %>'
 		});
@@ -155,7 +153,7 @@ SearchContainer<CommerceDiscountRel> commercePricingClassCommerceDiscountRelSear
 	function <portlet:namespace />deleteCommerceDiscountRels() {
 		if (
 			confirm(
-				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-discount-pricing-classes" />'
+				'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-discount-product-groups" />'
 			)
 		) {
 			var form = AUI.$(document.<portlet:namespace />fm);

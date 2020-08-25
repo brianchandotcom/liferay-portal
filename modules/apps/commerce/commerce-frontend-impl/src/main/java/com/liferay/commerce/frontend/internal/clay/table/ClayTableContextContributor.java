@@ -95,7 +95,15 @@ public class ClayTableContextContributor
 				"contentRendererModuleUrl",
 				clayTableSchemaField.getContentRendererModuleUrl());
 			jsonObject.put("expand", clayTableSchemaField.isExpand());
-			jsonObject.put("fieldName", name);
+
+			if (name.contains(StringPool.PERIOD)) {
+				jsonObject.put(
+					"fieldName", StringUtil.split(name, StringPool.PERIOD));
+			}
+			else {
+				jsonObject.put("fieldName", name);
+			}
+
 			jsonObject.put("label", label);
 			jsonObject.put("sortable", clayTableSchemaField.isSortable());
 

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Shipping Engine Fixed Service
 Bundle-SymbolicName: com.liferay.commerce.shipping.engine.fixed.service
-Bundle-Version: 1.0.32
+Bundle-Version: 1.0.35
 Import-Package:\
 	com.liferay.counter.kernel.service;version="[1.0.0,3.0.0)",\
 	com.liferay.expando.kernel.model;version="[1.1.0,3.0.0)",\

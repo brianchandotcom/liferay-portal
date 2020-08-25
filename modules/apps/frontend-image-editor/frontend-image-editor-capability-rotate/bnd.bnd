@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend Image Editor Capability Rotate
 Bundle-SymbolicName: com.liferay.frontend.image.editor.capability.rotate
-Bundle-Version: 2.0.7
+Bundle-Version: 2.0.8
 Provide-Capability:\
 	soy;\
 		type="image-editor-capability";\

@@ -24,8 +24,8 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentField;
+import com.liferay.headless.delivery.client.dto.v1_0.ContentFieldValue;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
-import com.liferay.headless.delivery.client.dto.v1_0.Value;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
@@ -105,7 +105,9 @@ public class StructuredContentResourceTest
 			StructuredContentResource.builder();
 
 		StructuredContentResource frenchStructuredContentResource =
-			builder.locale(
+			builder.authentication(
+				"test@liferay.com", "test"
+			).locale(
 				LocaleUtil.FRANCE
 			).build();
 
@@ -138,10 +140,11 @@ public class StructuredContentResourceTest
 
 		ContentField[] contentFields = structuredContent.getContentFields();
 
-		Value value = contentFields[0].getValue();
+		ContentFieldValue contentFieldValue =
+			contentFields[0].getContentFieldValue();
 
 		Assert.assertEquals(
-			"<div>" + value.getData() + "</div>",
+			"<div>" + contentFieldValue.getData() + "</div>",
 			structuredContentResource.
 				getStructuredContentRenderedContentTemplate(
 					structuredContent.getId(), _ddmTemplate.getTemplateId()));
@@ -177,12 +180,12 @@ public class StructuredContentResourceTest
 			new ContentField[] {
 				new ContentField() {
 					{
-						name = "MyText";
-						value = new Value() {
+						contentFieldValue = new ContentFieldValue() {
 							{
 								data = RandomTestUtil.randomString(10);
 							}
 						};
+						name = "MyText";
 					}
 				}
 			});

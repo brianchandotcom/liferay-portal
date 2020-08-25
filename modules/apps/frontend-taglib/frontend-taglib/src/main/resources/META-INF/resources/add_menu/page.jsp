@@ -54,12 +54,12 @@ String viewMoreURL = (String)request.getAttribute("liferay-frontend:add-menu:vie
 		</a>
 	</c:when>
 	<c:otherwise>
-		<div class='add-menu btn-action-secondary <%= inline ? StringPool.BLANK : "btn-bottom-right" %> dropdown'>
+		<div class="add-menu btn-action-secondary <%= inline ? StringPool.BLANK : "btn-bottom-right" %> dropdown">
 			<button aria-expanded="false" class="btn btn-primary" data-qa-id="addButton" data-toggle="dropdown" type="button">
 				<aui:icon image="plus" markupView="lexicon" />
 			</button>
 
-			<ul class='dropdown-menu <%= inline ? "dropdown-menu-right" : "dropdown-menu-left-side-bottom" %>'>
+			<ul class="dropdown-menu <%= inline ? "dropdown-menu-right" : "dropdown-menu-left-side-bottom" %>">
 
 				<%
 				boolean customizeAddMenuAdviceMessage = GetterUtil.getBoolean(SessionClicks.get(request, "com.liferay.addmenu_customizeAddMenuAdviceMessage", null));

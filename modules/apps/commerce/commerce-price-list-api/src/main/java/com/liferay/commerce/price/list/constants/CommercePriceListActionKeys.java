@@ -19,7 +19,7 @@ package com.liferay.commerce.price.list.constants;
  */
 public class CommercePriceListActionKeys {
 
-	public static final String MANAGE_COMMERCE_PRICE_LISTS =
-		"MANAGE_COMMERCE_PRICE_LISTS";
+	public static final String ADD_COMMERCE_PRICE_LIST =
+		"ADD_COMMERCE_PRICE_LIST";
 
 }

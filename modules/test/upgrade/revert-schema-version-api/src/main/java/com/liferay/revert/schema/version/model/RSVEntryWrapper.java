@@ -264,16 +264,16 @@ public class RSVEntryWrapper implements ModelWrapper<RSVEntry>, RSVEntry {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof RSVEntryWrapper)) {
+		if (!(object instanceof RSVEntryWrapper)) {
 			return false;
 		}
 
-		RSVEntryWrapper rsvEntryWrapper = (RSVEntryWrapper)obj;
+		RSVEntryWrapper rsvEntryWrapper = (RSVEntryWrapper)object;
 
 		if (Objects.equals(_rsvEntry, rsvEntryWrapper._rsvEntry)) {
 			return true;

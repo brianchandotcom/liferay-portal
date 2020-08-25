@@ -30,11 +30,9 @@ if (commerceTaxFixedRate != null) {
 <aui:input name="commerceTaxFixedRateId" type="hidden" value="<%= commerceTaxFixedRateId %>" />
 <aui:input name="commerceTaxMethodId" type="hidden" value="<%= commerceTaxMethodId %>" />
 
-<aui:model-context bean="<%= commerceTaxFixedRate %>" model="<%= CommerceTaxFixedRate.class %>" />
-
 <div class="row">
 	<div class="col-md-6">
-		<aui:select disabled="<%= commerceTaxFixedRate != null %>" label="tax-category" name="CPTaxCategoryId">
+		<aui:select disabled="<%= commerceTaxFixedRate != null %>" label="tax-category" name="CPTaxCategoryId" value="<%= (commerceTaxFixedRate == null) ? null : commerceTaxFixedRate.getCPTaxCategoryId() %>">
 
 			<%
 			List<CPTaxCategory> cpTaxCategories = commerceTaxFixedRatesDisplayContext.getAvailableCPTaxCategories();
@@ -52,7 +50,7 @@ if (commerceTaxFixedRate != null) {
 	</div>
 
 	<div class="col-md-6">
-		<aui:input label='<%= commerceTaxMethod.isPercentage() ? "rate" : "amount" %>' name="rate" suffix="<%= commerceTaxFixedRatesDisplayContext.getCommerceCurrencyCode() %>">
+		<aui:input label='<%= commerceTaxMethod.isPercentage() ? "rate" : "amount" %>' name="rate" suffix="<%= commerceTaxMethod.isPercentage() ? StringPool.PERCENT : commerceTaxFixedRatesDisplayContext.getCommerceCurrencyCode() %>" value="<%= commerceTaxFixedRatesDisplayContext.getLocalizedRate(commerceTaxMethod.isPercentage(), (commerceTaxFixedRate == null) ? 0 : commerceTaxFixedRate.getRate(), locale) %>">
 			<aui:validator name="min">0</aui:validator>
 		</aui:input>
 	</div>

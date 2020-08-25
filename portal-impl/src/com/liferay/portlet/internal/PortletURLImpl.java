@@ -1639,7 +1639,7 @@ public class PortletURLImpl
 		for (Map.Entry<String, String[]> entry : renderParameters.entrySet()) {
 			String name = entry.getKey();
 
-			if (name.contains(namespace)) {
+			if (name.startsWith(namespace)) {
 				name = name.substring(namespace.length());
 			}
 

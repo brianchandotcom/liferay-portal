@@ -91,7 +91,7 @@ public class DeterminateKeyGenerator {
 	}
 
 	private static int _nextRandom(int seed) {
-		return (seed % 127773) * 16807 - (seed / 127773) * 2836;
+		return ((seed % 127773) * 16807) - ((seed / 127773) * 2836);
 	}
 
 	private static final char[] _CHARACTERS =

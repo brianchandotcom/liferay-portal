@@ -31,7 +31,7 @@ if (article.getGroupId() != themeDisplay.getScopeGroupId()) {
 String articleImageURL = HtmlUtil.escapeAttribute(assetRenderer.getThumbnailPath(liferayPortletRequest));
 %>
 
-<div class='card card-type-asset <%= Validator.isNotNull(articleImageURL) ? "image-card" : "file-card" %>'>
+<div class="card card-type-asset <%= Validator.isNotNull(articleImageURL) ? "image-card" : "file-card" %>">
 	<div class="aspect-ratio card-item-first">
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(articleImageURL) %>">

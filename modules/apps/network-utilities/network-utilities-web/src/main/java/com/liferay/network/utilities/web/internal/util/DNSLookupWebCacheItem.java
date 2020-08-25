@@ -63,7 +63,7 @@ public class DNSLookupWebCacheItem implements WebCacheItem {
 				}
 				else {
 					StringBundler sb = new StringBundler(
-						inetAddresses.length * 2 - 1);
+						(inetAddresses.length * 2) - 1);
 
 					for (int i = 0; i < inetAddresses.length; i++) {
 						sb.append(inetAddresses[i].getHostName());

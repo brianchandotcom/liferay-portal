@@ -1054,16 +1054,16 @@ public class SAPEntryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SAPEntry)) {
+		if (!(object instanceof SAPEntry)) {
 			return false;
 		}
 
-		SAPEntry sapEntry = (SAPEntry)obj;
+		SAPEntry sapEntry = (SAPEntry)object;
 
 		long primaryKey = sapEntry.getPrimaryKey();
 

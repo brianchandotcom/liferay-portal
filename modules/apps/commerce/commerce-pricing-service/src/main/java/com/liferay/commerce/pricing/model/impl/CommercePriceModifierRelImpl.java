@@ -14,24 +14,25 @@
 
 package com.liferay.commerce.pricing.model.impl;
 
+import com.liferay.commerce.pricing.model.CommercePriceModifier;
+import com.liferay.commerce.pricing.service.CommercePriceModifierLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
- * The extended model implementation for the CommercePriceModifierRel service. Represents a row in the &quot;CommercePriceModifierRel&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.commerce.pricing.model.CommercePriceModifierRel</code> interface.
- * </p>
- *
  * @author Riccardo Alberti
  */
 public class CommercePriceModifierRelImpl
 	extends CommercePriceModifierRelBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a commerce price modifier rel model instance should use the {@link com.liferay.commerce.pricing.model.CommercePriceModifierRel} interface instead.
-	 */
 	public CommercePriceModifierRelImpl() {
+	}
+
+	@Override
+	public CommercePriceModifier getCommercePriceModifier()
+		throws PortalException {
+
+		return CommercePriceModifierLocalServiceUtil.getCommercePriceModifier(
+			getCommercePriceModifierId());
 	}
 
 }

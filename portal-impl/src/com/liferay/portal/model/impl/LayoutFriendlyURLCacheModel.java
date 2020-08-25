@@ -37,17 +37,17 @@ public class LayoutFriendlyURLCacheModel
 	implements CacheModel<LayoutFriendlyURL>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof LayoutFriendlyURLCacheModel)) {
+		if (!(object instanceof LayoutFriendlyURLCacheModel)) {
 			return false;
 		}
 
 		LayoutFriendlyURLCacheModel layoutFriendlyURLCacheModel =
-			(LayoutFriendlyURLCacheModel)obj;
+			(LayoutFriendlyURLCacheModel)object;
 
 		if ((layoutFriendlyURLId ==
 				layoutFriendlyURLCacheModel.layoutFriendlyURLId) &&

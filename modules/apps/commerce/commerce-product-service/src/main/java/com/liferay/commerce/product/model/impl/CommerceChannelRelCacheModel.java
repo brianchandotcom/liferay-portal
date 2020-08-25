@@ -36,17 +36,17 @@ public class CommerceChannelRelCacheModel
 	implements CacheModel<CommerceChannelRel>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceChannelRelCacheModel)) {
+		if (!(object instanceof CommerceChannelRelCacheModel)) {
 			return false;
 		}
 
 		CommerceChannelRelCacheModel commerceChannelRelCacheModel =
-			(CommerceChannelRelCacheModel)obj;
+			(CommerceChannelRelCacheModel)object;
 
 		if (commerceChannelRelId ==
 				commerceChannelRelCacheModel.commerceChannelRelId) {

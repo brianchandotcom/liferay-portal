@@ -36,17 +36,17 @@ public class KaleoTaskInstanceTokenCacheModel
 	implements CacheModel<KaleoTaskInstanceToken>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoTaskInstanceTokenCacheModel)) {
+		if (!(object instanceof KaleoTaskInstanceTokenCacheModel)) {
 			return false;
 		}
 
 		KaleoTaskInstanceTokenCacheModel kaleoTaskInstanceTokenCacheModel =
-			(KaleoTaskInstanceTokenCacheModel)obj;
+			(KaleoTaskInstanceTokenCacheModel)object;
 
 		if (kaleoTaskInstanceTokenId ==
 				kaleoTaskInstanceTokenCacheModel.kaleoTaskInstanceTokenId) {

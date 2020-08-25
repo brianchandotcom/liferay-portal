@@ -975,16 +975,16 @@ public class AuditEventModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AuditEvent)) {
+		if (!(object instanceof AuditEvent)) {
 			return false;
 		}
 
-		AuditEvent auditEvent = (AuditEvent)obj;
+		AuditEvent auditEvent = (AuditEvent)object;
 
 		long primaryKey = auditEvent.getPrimaryKey();
 

@@ -253,6 +253,10 @@ public class CommercePriceEntryServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceEntrySoap[]
 			getCommercePriceEntriesByCompanyId(
 				long companyId, int start, int end)
@@ -293,6 +297,10 @@ public class CommercePriceEntryServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static int getCommercePriceEntriesCountByCompanyId(long companyId)
 		throws RemoteException {
 
@@ -353,6 +361,10 @@ public class CommercePriceEntryServiceSoap {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static com.liferay.commerce.price.list.model.CommercePriceEntrySoap[]
 			getInstanceCommercePriceEntries(
 				long cpInstanceId, int start, int end,
@@ -408,6 +420,44 @@ public class CommercePriceEntryServiceSoap {
 				returnValue =
 					CommercePriceEntryServiceUtil.updateCommercePriceEntry(
 						commercePriceEntryId, price, promoPrice,
+						serviceContext);
+
+			return com.liferay.commerce.price.list.model.CommercePriceEntrySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.price.list.model.CommercePriceEntrySoap
+			updateCommercePriceEntry(
+				long commercePriceEntryId, java.math.BigDecimal price,
+				boolean discountDiscovery, java.math.BigDecimal discountLevel1,
+				java.math.BigDecimal discountLevel2,
+				java.math.BigDecimal discountLevel3,
+				java.math.BigDecimal discountLevel4, boolean bulkPricing,
+				int displayDateMonth, int displayDateDay, int displayDateYear,
+				int displayDateHour, int displayDateMinute,
+				int expirationDateMonth, int expirationDateDay,
+				int expirationDateYear, int expirationDateHour,
+				int expirationDateMinute, boolean neverExpire,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.price.list.model.CommercePriceEntry
+				returnValue =
+					CommercePriceEntryServiceUtil.updateCommercePriceEntry(
+						commercePriceEntryId, price, discountDiscovery,
+						discountLevel1, discountLevel2, discountLevel3,
+						discountLevel4, bulkPricing, displayDateMonth,
+						displayDateDay, displayDateYear, displayDateHour,
+						displayDateMinute, expirationDateMonth,
+						expirationDateDay, expirationDateYear,
+						expirationDateHour, expirationDateMinute, neverExpire,
 						serviceContext);
 
 			return com.liferay.commerce.price.list.model.CommercePriceEntrySoap.

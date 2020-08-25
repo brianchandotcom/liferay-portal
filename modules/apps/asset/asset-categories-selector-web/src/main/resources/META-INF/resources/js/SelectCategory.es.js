@@ -84,11 +84,11 @@ class SelectCategory extends PortletBase {
 		}
 
 		if (newVal) {
-			let data = {};
+			this.data = !this.data ? {} : this.data;
 
 			newVal.forEach(
 				(node) => {
-					data[node.id] = {
+					this.data[node.id] = {
 						categoryId: node.vocabulary ? 0 : node.id,
 						value: node.name,
 						vocabularyId: node.vocabulary ? node.id : 0
@@ -99,7 +99,7 @@ class SelectCategory extends PortletBase {
 			selectedNodes.forEach(
 				(node) => {
 					if (newVal.indexOf(node) === -1) {
-						data[node.id] = {
+						this.data[node.id] = {
 							categoryId: node.vocabulary ? 0 : node.id,
 							unchecked: true,
 							value: node.name,
@@ -122,7 +122,7 @@ class SelectCategory extends PortletBase {
 			Liferay.Util.getOpener().Liferay.fire(
 				this.itemSelectorSaveEvent,
 				{
-					data: data
+					data: this.data
 				}
 			);
 		}

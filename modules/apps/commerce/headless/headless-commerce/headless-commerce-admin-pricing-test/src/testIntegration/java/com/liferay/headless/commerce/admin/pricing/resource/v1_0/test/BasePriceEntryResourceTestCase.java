@@ -112,7 +112,9 @@ public abstract class BasePriceEntryResourceTestCase {
 
 		PriceEntryResource.Builder builder = PriceEntryResource.builder();
 
-		priceEntryResource = builder.locale(
+		priceEntryResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

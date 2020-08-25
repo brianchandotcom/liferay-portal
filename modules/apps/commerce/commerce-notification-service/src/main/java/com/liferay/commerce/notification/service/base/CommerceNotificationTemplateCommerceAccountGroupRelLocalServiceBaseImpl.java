@@ -79,6 +79,10 @@ public abstract class
 	/**
 	 * Adds the commerce notification template commerce account group rel to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceNotificationTemplateCommerceAccountGroupRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceNotificationTemplateCommerceAccountGroupRel the commerce notification template commerce account group rel
 	 * @return the commerce notification template commerce account group rel that was added
 	 */
@@ -114,6 +118,10 @@ public abstract class
 	/**
 	 * Deletes the commerce notification template commerce account group rel with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceNotificationTemplateCommerceAccountGroupRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceNotificationTemplateCommerceAccountGroupRelId the primary key of the commerce notification template commerce account group rel
 	 * @return the commerce notification template commerce account group rel that was removed
 	 * @throws PortalException if a commerce notification template commerce account group rel with the primary key could not be found
@@ -131,6 +139,10 @@ public abstract class
 
 	/**
 	 * Deletes the commerce notification template commerce account group rel from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceNotificationTemplateCommerceAccountGroupRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceNotificationTemplateCommerceAccountGroupRel the commerce notification template commerce account group rel
 	 * @return the commerce notification template commerce account group rel that was removed
@@ -376,6 +388,10 @@ public abstract class
 
 	/**
 	 * Updates the commerce notification template commerce account group rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceNotificationTemplateCommerceAccountGroupRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceNotificationTemplateCommerceAccountGroupRel the commerce notification template commerce account group rel
 	 * @return the commerce notification template commerce account group rel that was updated

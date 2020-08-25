@@ -917,17 +917,17 @@ public class LayoutPageTemplateCollectionModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof LayoutPageTemplateCollection)) {
+		if (!(object instanceof LayoutPageTemplateCollection)) {
 			return false;
 		}
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			(LayoutPageTemplateCollection)obj;
+			(LayoutPageTemplateCollection)object;
 
 		long primaryKey = layoutPageTemplateCollection.getPrimaryKey();
 

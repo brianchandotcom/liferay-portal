@@ -50,6 +50,10 @@ public class CommerceAccountLocalServiceWrapper
 	/**
 	 * Adds the commerce account to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAccountLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceAccount the commerce account
 	 * @return the commerce account that was added
 	 */
@@ -104,6 +108,10 @@ public class CommerceAccountLocalServiceWrapper
 	/**
 	 * Deletes the commerce account from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAccountLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceAccount the commerce account
 	 * @return the commerce account that was removed
 	 * @throws PortalException
@@ -121,6 +129,10 @@ public class CommerceAccountLocalServiceWrapper
 
 	/**
 	 * Deletes the commerce account with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAccountLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceAccountId the primary key of the commerce account
 	 * @return the commerce account that was removed
@@ -478,6 +490,10 @@ public class CommerceAccountLocalServiceWrapper
 
 	/**
 	 * Updates the commerce account in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceAccountLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceAccount the commerce account
 	 * @return the commerce account that was updated

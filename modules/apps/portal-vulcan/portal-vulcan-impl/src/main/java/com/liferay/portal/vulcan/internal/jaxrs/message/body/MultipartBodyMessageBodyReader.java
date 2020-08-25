@@ -44,6 +44,7 @@ import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.Providers;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
@@ -56,6 +57,10 @@ import org.apache.commons.fileupload.util.Streams;
 @Provider
 public class MultipartBodyMessageBodyReader
 	implements MessageBodyReader<MultipartBody> {
+
+	public MultipartBodyMessageBodyReader(long fileMaxSize) {
+		_fileMaxSize = fileMaxSize;
+	}
 
 	@Override
 	public boolean isReadable(
@@ -103,6 +108,9 @@ public class MultipartBodyMessageBodyReader
 			ServletFileUpload servletFileUpload = new ServletFileUpload(
 				new DiskFileItemFactory());
 
+			servletFileUpload.setFileSizeMax(_fileMaxSize);
+			servletFileUpload.setSizeMax(_fileMaxSize);
+
 			List<FileItem> fileItems = servletFileUpload.parseRequest(
 				_httpServletRequest);
 
@@ -125,11 +133,21 @@ public class MultipartBodyMessageBodyReader
 			return MultipartBody.of(
 				binaryFiles, contextResolver::getContext, values);
 		}
+		catch (FileUploadBase.SizeLimitExceededException
+					sizeLimitExceededException) {
+
+			throw new BadRequestException(
+				"Please enter a file with a valid file size no larger than " +
+					_fileMaxSize,
+				sizeLimitExceededException);
+		}
 		catch (Exception exception) {
 			throw new BadRequestException(
 				"Request body is not a valid multipart form", exception);
 		}
 	}
+
+	private final long _fileMaxSize;
 
 	@Context
 	private HttpServletRequest _httpServletRequest;

@@ -36,17 +36,17 @@ public class KaleoConditionCacheModel
 	implements CacheModel<KaleoCondition>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoConditionCacheModel)) {
+		if (!(object instanceof KaleoConditionCacheModel)) {
 			return false;
 		}
 
 		KaleoConditionCacheModel kaleoConditionCacheModel =
-			(KaleoConditionCacheModel)obj;
+			(KaleoConditionCacheModel)object;
 
 		if (kaleoConditionId == kaleoConditionCacheModel.kaleoConditionId) {
 			return true;

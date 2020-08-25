@@ -81,7 +81,8 @@ public class LayoutTypeSettingsUtil {
 						continue;
 					}
 
-					StringBundler sb = new StringBundler(2 * parts.size() - 2);
+					StringBundler sb = new StringBundler(
+						(2 * parts.size()) - 2);
 
 					for (String part : parts) {
 						if (!part.startsWith(portletId)) {

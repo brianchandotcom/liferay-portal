@@ -36,16 +36,16 @@ public class MBMessageCacheModel
 	implements CacheModel<MBMessage>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MBMessageCacheModel)) {
+		if (!(object instanceof MBMessageCacheModel)) {
 			return false;
 		}
 
-		MBMessageCacheModel mbMessageCacheModel = (MBMessageCacheModel)obj;
+		MBMessageCacheModel mbMessageCacheModel = (MBMessageCacheModel)object;
 
 		if (messageId == mbMessageCacheModel.messageId) {
 			return true;

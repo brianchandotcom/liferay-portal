@@ -14,9 +14,12 @@
 
 package com.liferay.headless.delivery.client.pagination;
 
+import com.liferay.headless.delivery.client.aggregation.Facet;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
@@ -42,6 +45,10 @@ public class Page<T> {
 
 	public Map<String, Map> getActions() {
 		return _actions;
+	}
+
+	public List<Facet> getFacets() {
+		return _facets;
 	}
 
 	public Collection<T> getItems() {
@@ -86,6 +93,10 @@ public class Page<T> {
 
 	public void setActions(Map<String, Map> actions) {
 		_actions = actions;
+	}
+
+	public void setFacets(List<Facet> facets) {
+		_facets = facets;
 	}
 
 	public void setItems(Collection<T> items) {
@@ -139,6 +150,36 @@ public class Page<T> {
 							(String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "facets")) {
+				if (jsonParserFieldValue != null) {
+					page.setFacets(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							this::parseToMap
+						).map(
+							facets -> new Facet(
+								(String)facets.get("facetCriteria"),
+								Stream.of(
+									(Object[])facets.get("facetValues")
+								).map(
+									object -> (String)object
+								).map(
+									this::parseToMap
+								).map(
+									facetValues -> new Facet.FacetValue(
+										Integer.valueOf(
+											(String)facetValues.get(
+												"numberOfOccurrences")),
+										(String)facetValues.get("term"))
+								).collect(
+									Collectors.toList()
+								))
+						).collect(
+							Collectors.toList()
+						));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "items")) {
 				if (jsonParserFieldValue != null) {
 					page.setItems(
@@ -181,6 +222,7 @@ public class Page<T> {
 	}
 
 	private Map<String, Map> _actions;
+	private List<Facet> _facets = new ArrayList<>();
 	private Collection<T> _items;
 	private long _page;
 	private long _pageSize;

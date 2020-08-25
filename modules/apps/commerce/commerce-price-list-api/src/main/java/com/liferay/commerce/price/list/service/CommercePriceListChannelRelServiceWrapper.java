@@ -67,6 +67,15 @@ public class CommercePriceListChannelRelServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.price.list.model.CommercePriceListChannelRel
+			getCommercePriceListChannelRel(long commercePriceListChannelRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePriceListChannelRelService.
+			getCommercePriceListChannelRel(commercePriceListChannelRelId);
+	}
+
+	@Override
 	public java.util.List
 		<com.liferay.commerce.price.list.model.CommercePriceListChannelRel>
 				getCommercePriceListChannelRels(long commercePriceListId)
@@ -74,6 +83,29 @@ public class CommercePriceListChannelRelServiceWrapper
 
 		return _commercePriceListChannelRelService.
 			getCommercePriceListChannelRels(commercePriceListId);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.price.list.model.CommercePriceListChannelRel>
+				getCommercePriceListChannelRels(
+					long commercePriceListId, int start, int end,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.commerce.price.list.model.
+							CommercePriceListChannelRel> orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePriceListChannelRelService.
+			getCommercePriceListChannelRels(
+				commercePriceListId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommercePriceListChannelRelsCount(long commercePriceListId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePriceListChannelRelService.
+			getCommercePriceListChannelRelsCount(commercePriceListId);
 	}
 
 	/**

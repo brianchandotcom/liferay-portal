@@ -76,6 +76,10 @@ public abstract class CommerceTaxFixedRateLocalServiceBaseImpl
 	/**
 	 * Adds the commerce tax fixed rate to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceTaxFixedRateLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceTaxFixedRate the commerce tax fixed rate
 	 * @return the commerce tax fixed rate that was added
 	 */
@@ -106,6 +110,10 @@ public abstract class CommerceTaxFixedRateLocalServiceBaseImpl
 	/**
 	 * Deletes the commerce tax fixed rate with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceTaxFixedRateLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceTaxFixedRateId the primary key of the commerce tax fixed rate
 	 * @return the commerce tax fixed rate that was removed
 	 * @throws PortalException if a commerce tax fixed rate with the primary key could not be found
@@ -121,6 +129,10 @@ public abstract class CommerceTaxFixedRateLocalServiceBaseImpl
 
 	/**
 	 * Deletes the commerce tax fixed rate from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceTaxFixedRateLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceTaxFixedRate the commerce tax fixed rate
 	 * @return the commerce tax fixed rate that was removed
@@ -348,6 +360,10 @@ public abstract class CommerceTaxFixedRateLocalServiceBaseImpl
 
 	/**
 	 * Updates the commerce tax fixed rate in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceTaxFixedRateLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceTaxFixedRate the commerce tax fixed rate
 	 * @return the commerce tax fixed rate that was updated

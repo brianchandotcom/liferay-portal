@@ -350,17 +350,17 @@ public class WikiPageResourceWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof WikiPageResourceWrapper)) {
+		if (!(object instanceof WikiPageResourceWrapper)) {
 			return false;
 		}
 
 		WikiPageResourceWrapper wikiPageResourceWrapper =
-			(WikiPageResourceWrapper)obj;
+			(WikiPageResourceWrapper)object;
 
 		if (Objects.equals(
 				_wikiPageResource, wikiPageResourceWrapper._wikiPageResource)) {

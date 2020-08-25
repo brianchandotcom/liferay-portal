@@ -60,6 +60,9 @@ public interface CPDefinitionOptionRel
 
 			};
 
+	public CPDefinitionOptionValueRel
+		fetchPreselectedCPDefinitionOptionValueRel();
+
 	public CPDefinition getCPDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

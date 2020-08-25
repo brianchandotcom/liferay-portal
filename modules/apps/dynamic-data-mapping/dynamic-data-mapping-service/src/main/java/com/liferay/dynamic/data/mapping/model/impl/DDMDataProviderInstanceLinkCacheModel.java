@@ -34,18 +34,18 @@ public class DDMDataProviderInstanceLinkCacheModel
 	implements CacheModel<DDMDataProviderInstanceLink>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMDataProviderInstanceLinkCacheModel)) {
+		if (!(object instanceof DDMDataProviderInstanceLinkCacheModel)) {
 			return false;
 		}
 
 		DDMDataProviderInstanceLinkCacheModel
 			ddmDataProviderInstanceLinkCacheModel =
-				(DDMDataProviderInstanceLinkCacheModel)obj;
+				(DDMDataProviderInstanceLinkCacheModel)object;
 
 		if (dataProviderInstanceLinkId ==
 				ddmDataProviderInstanceLinkCacheModel.

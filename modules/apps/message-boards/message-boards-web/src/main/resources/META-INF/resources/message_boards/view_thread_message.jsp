@@ -67,7 +67,7 @@ if (message.isAnonymous()) {
 				<h4 title="<%= HtmlUtil.escape(message.getSubject()) %>">
 					<c:choose>
 						<c:when test="<%= showPermanentLink %>">
-							<a href="#<portlet:namespace />message_<%= message.getMessageId() %>" title='<liferay-ui:message key="permanent-link-to-this-item" />'>
+							<a href="#<portlet:namespace />message_<%= message.getMessageId() %>" title="<liferay-ui:message key="permanent-link-to-this-item" />">
 								<%= HtmlUtil.escape(message.getSubject()) %>
 							</a>
 						</c:when>

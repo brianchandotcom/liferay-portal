@@ -27,7 +27,7 @@
 			method="post"
 			name="fm"
 		>
-			<aui:input name="portletId" type="hidden" value="<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %>" />
+			<aui:input name="portletId" type="hidden" value="<%= HtmlUtil.escapeJS(portletConfigurationCSSPortletDisplayContext.getPortletResource()) %>" />
 
 			<liferay-frontend:edit-form-body>
 				<liferay-frontend:form-navigator

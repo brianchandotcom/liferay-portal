@@ -458,16 +458,16 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CountryWrapper)) {
+		if (!(object instanceof CountryWrapper)) {
 			return false;
 		}
 
-		CountryWrapper countryWrapper = (CountryWrapper)obj;
+		CountryWrapper countryWrapper = (CountryWrapper)object;
 
 		if (Objects.equals(_country, countryWrapper._country)) {
 			return true;

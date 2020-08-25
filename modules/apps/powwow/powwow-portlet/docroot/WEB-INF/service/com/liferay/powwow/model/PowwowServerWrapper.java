@@ -541,16 +541,16 @@ public class PowwowServerWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof PowwowServerWrapper)) {
+		if (!(object instanceof PowwowServerWrapper)) {
 			return false;
 		}
 
-		PowwowServerWrapper powwowServerWrapper = (PowwowServerWrapper)obj;
+		PowwowServerWrapper powwowServerWrapper = (PowwowServerWrapper)object;
 
 		if (Objects.equals(_powwowServer, powwowServerWrapper._powwowServer)) {
 			return true;

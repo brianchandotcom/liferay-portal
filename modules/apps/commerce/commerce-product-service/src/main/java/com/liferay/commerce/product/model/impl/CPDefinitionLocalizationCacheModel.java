@@ -35,17 +35,17 @@ public class CPDefinitionLocalizationCacheModel
 	implements CacheModel<CPDefinitionLocalization>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionLocalizationCacheModel)) {
+		if (!(object instanceof CPDefinitionLocalizationCacheModel)) {
 			return false;
 		}
 
 		CPDefinitionLocalizationCacheModel cpDefinitionLocalizationCacheModel =
-			(CPDefinitionLocalizationCacheModel)obj;
+			(CPDefinitionLocalizationCacheModel)object;
 
 		if ((cpDefinitionLocalizationId ==
 				cpDefinitionLocalizationCacheModel.

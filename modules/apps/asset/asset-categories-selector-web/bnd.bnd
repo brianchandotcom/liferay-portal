@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Asset Categories Selector Web
 Bundle-SymbolicName: com.liferay.asset.categories.selector.web
-Bundle-Version: 1.0.14
+Bundle-Version: 1.0.16
 Provide-Capability:\
 	soy;\
 		type="asset-categories-selector-web";\

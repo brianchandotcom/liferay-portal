@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.text.NumberFormat;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -130,13 +132,18 @@ public class EditCommerceTaxFixedRateAddressRelMVCActionCommand
 		long commerceRegionId = ParamUtil.getLong(
 			actionRequest, "commerceRegionId");
 		String zip = ParamUtil.getString(actionRequest, "zip");
-		double rate = ParamUtil.getDouble(actionRequest, "rate");
+		String localizedRate = ParamUtil.getString(actionRequest, "rate");
+
+		NumberFormat numberFormat = NumberFormat.getNumberInstance(
+			_portal.getLocale(actionRequest));
+
+		Number rate = numberFormat.parse(localizedRate);
 
 		if (commerceTaxFixedRateAddressRelId > 0) {
 			_commerceTaxFixedRateAddressRelService.
 				updateCommerceTaxFixedRateAddressRel(
 					commerceTaxFixedRateAddressRelId, commerceCountryId,
-					commerceRegionId, zip, rate);
+					commerceRegionId, zip, rate.doubleValue());
 		}
 		else {
 			CommerceTaxMethod commerceTaxMethod =
@@ -148,7 +155,8 @@ public class EditCommerceTaxFixedRateAddressRelMVCActionCommand
 					_portal.getUserId(actionRequest),
 					commerceTaxMethod.getGroupId(),
 					commerceTaxMethod.getCommerceTaxMethodId(), cpTaxCategoryId,
-					commerceCountryId, commerceRegionId, zip, rate);
+					commerceCountryId, commerceRegionId, zip,
+					rate.doubleValue());
 		}
 	}
 

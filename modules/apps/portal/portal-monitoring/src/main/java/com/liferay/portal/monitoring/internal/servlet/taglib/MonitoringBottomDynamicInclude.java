@@ -79,7 +79,7 @@ public class MonitoringBottomDynamicInclude extends BaseDynamicInclude {
 			return;
 		}
 
-		StringBundler sb = new StringBundler(dataSamples.size() * 2 + 2);
+		StringBundler sb = new StringBundler((dataSamples.size() * 2) + 2);
 
 		sb.append("<!--\n");
 

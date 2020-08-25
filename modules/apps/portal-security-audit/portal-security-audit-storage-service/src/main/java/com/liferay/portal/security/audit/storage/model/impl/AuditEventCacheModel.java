@@ -36,16 +36,17 @@ public class AuditEventCacheModel
 	implements CacheModel<AuditEvent>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AuditEventCacheModel)) {
+		if (!(object instanceof AuditEventCacheModel)) {
 			return false;
 		}
 
-		AuditEventCacheModel auditEventCacheModel = (AuditEventCacheModel)obj;
+		AuditEventCacheModel auditEventCacheModel =
+			(AuditEventCacheModel)object;
 
 		if (auditEventId == auditEventCacheModel.auditEventId) {
 			return true;

@@ -1860,16 +1860,16 @@ public class BlogsEntryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof BlogsEntry)) {
+		if (!(object instanceof BlogsEntry)) {
 			return false;
 		}
 
-		BlogsEntry blogsEntry = (BlogsEntry)obj;
+		BlogsEntry blogsEntry = (BlogsEntry)object;
 
 		long primaryKey = blogsEntry.getPrimaryKey();
 

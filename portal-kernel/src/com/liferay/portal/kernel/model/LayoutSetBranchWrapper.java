@@ -818,17 +818,17 @@ public class LayoutSetBranchWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof LayoutSetBranchWrapper)) {
+		if (!(object instanceof LayoutSetBranchWrapper)) {
 			return false;
 		}
 
 		LayoutSetBranchWrapper layoutSetBranchWrapper =
-			(LayoutSetBranchWrapper)obj;
+			(LayoutSetBranchWrapper)object;
 
 		if (Objects.equals(
 				_layoutSetBranch, layoutSetBranchWrapper._layoutSetBranch)) {

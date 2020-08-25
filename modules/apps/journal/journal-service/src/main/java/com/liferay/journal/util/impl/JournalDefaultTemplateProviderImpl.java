@@ -63,7 +63,7 @@ public class JournalDefaultTemplateProviderImpl
 			fields.getTemplateVariableDefinitions();
 
 		StringBundler sb = new StringBundler(
-			templateVariableDefinitions.size() * 5 + 2);
+			(templateVariableDefinitions.size() * 5) + 2);
 
 		sb.append("<dl>");
 

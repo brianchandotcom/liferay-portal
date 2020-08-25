@@ -36,6 +36,10 @@ public class RatingsStatsLocalServiceWrapper
 	/**
 	 * Adds the ratings stats to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect RatingsStatsLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param ratingsStats the ratings stats
 	 * @return the ratings stats that was added
 	 */
@@ -80,6 +84,10 @@ public class RatingsStatsLocalServiceWrapper
 	/**
 	 * Deletes the ratings stats with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect RatingsStatsLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param statsId the primary key of the ratings stats
 	 * @return the ratings stats that was removed
 	 * @throws PortalException if a ratings stats with the primary key could not be found
@@ -94,6 +102,10 @@ public class RatingsStatsLocalServiceWrapper
 
 	/**
 	 * Deletes the ratings stats from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect RatingsStatsLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param ratingsStats the ratings stats
 	 * @return the ratings stats that was removed
@@ -327,6 +339,10 @@ public class RatingsStatsLocalServiceWrapper
 
 	/**
 	 * Updates the ratings stats in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect RatingsStatsLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param ratingsStats the ratings stats
 	 * @return the ratings stats that was updated

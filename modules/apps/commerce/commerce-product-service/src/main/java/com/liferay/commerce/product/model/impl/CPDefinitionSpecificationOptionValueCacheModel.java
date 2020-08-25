@@ -37,18 +37,20 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 			   Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionSpecificationOptionValueCacheModel)) {
+		if (!(object instanceof
+				CPDefinitionSpecificationOptionValueCacheModel)) {
+
 			return false;
 		}
 
 		CPDefinitionSpecificationOptionValueCacheModel
 			cpDefinitionSpecificationOptionValueCacheModel =
-				(CPDefinitionSpecificationOptionValueCacheModel)obj;
+				(CPDefinitionSpecificationOptionValueCacheModel)object;
 
 		if (CPDefinitionSpecificationOptionValueId ==
 				cpDefinitionSpecificationOptionValueCacheModel.

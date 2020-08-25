@@ -35,17 +35,17 @@ public class PortalPreferencesCacheModel
 	implements CacheModel<PortalPreferences>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof PortalPreferencesCacheModel)) {
+		if (!(object instanceof PortalPreferencesCacheModel)) {
 			return false;
 		}
 
 		PortalPreferencesCacheModel portalPreferencesCacheModel =
-			(PortalPreferencesCacheModel)obj;
+			(PortalPreferencesCacheModel)object;
 
 		if ((portalPreferencesId ==
 				portalPreferencesCacheModel.portalPreferencesId) &&

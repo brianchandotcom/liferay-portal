@@ -230,6 +230,7 @@
 			<validator name="required" />
 		</field>
 		<field name="quantity" type="int" />
+		<field name="preselected" type="boolean" />
 		<field name="price" type="BigDecimal" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue">
@@ -344,6 +345,7 @@
 		<field name="deliverySubscriptionType" type="String" />
 		<field name="deliverySubscriptionTypeSettings" type="String" />
 		<field name="deliveryMaxSubscriptionCycles" type="long" />
+		<field name="unspsc" type="String" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />

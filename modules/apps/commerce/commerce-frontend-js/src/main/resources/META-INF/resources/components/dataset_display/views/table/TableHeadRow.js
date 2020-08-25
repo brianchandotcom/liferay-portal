@@ -16,21 +16,24 @@ import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext} from 'react';
 
-import Checkbox from '../../data_renderer/CheckboxRenderer';
+import Checkbox from '../../../data_renderers/CheckboxRenderer';
+import DatasetDisplayContext from '../../DatasetDisplayContext';
 
 function TableHeadCell(props) {
-	const sortingMatch = props.sorting.find(
-		el => el.fieldName === props.fieldName
-	);
+	const sortingKey =
+		props.sortingKey ||
+		(Array.isArray(props.fieldName) ? props.fieldName[0] : props.fieldName);
+
+	const sortingMatch = props.sorting.find(el => el.key === sortingKey);
 
 	function handleSortingCellClick(e) {
 		e.preventDefault();
 
 		if (sortingMatch) {
 			const updatedSortedElements = props.sorting.map(el =>
-				el.fieldName === props.fieldName
+				el.key === sortingKey
 					? {
 							...el,
 							direction: el.direction === 'asc' ? 'desc' : 'asc'
@@ -42,7 +45,7 @@ function TableHeadCell(props) {
 			props.updateSorting([
 				{
 					direction: 'asc',
-					fieldName: props.fieldName
+					key: sortingKey
 				}
 			]);
 		}
@@ -63,6 +66,7 @@ function TableHeadCell(props) {
 			{props.sortable ? (
 				<a
 					className="inline-item text-truncate-inline text-nowrap"
+					data-senna-off
 					href="#"
 					onClick={handleSortingCellClick}
 				>
@@ -76,7 +80,7 @@ function TableHeadCell(props) {
 									'active'
 							)}
 							draggable
-							symbol={'order-arrow-up'}
+							symbol="order-arrow-up"
 						/>
 						<ClayIcon
 							className={classNames(
@@ -86,7 +90,7 @@ function TableHeadCell(props) {
 									'active'
 							)}
 							draggable
-							symbol={'order-arrow-down'}
+							symbol="order-arrow-down"
 						/>
 					</span>
 				</a>
@@ -98,6 +102,8 @@ function TableHeadCell(props) {
 }
 
 function TableHeadRow(props) {
+	const {actionLoading} = useContext(DatasetDisplayContext);
+
 	const getColumns = fields => {
 		const expandableColumns = fields.reduce(
 			(expandable, field) => expandable || Boolean(field.expand),
@@ -108,7 +114,7 @@ function TableHeadRow(props) {
 				<TableHeadCell
 					{...field}
 					expandableColumns={expandableColumns}
-					key={field.fieldName || i}
+					key={field.sortingKey || field.fieldName || i}
 					sorting={props.sorting}
 					updateSorting={props.updateSorting}
 				/>
@@ -135,6 +141,7 @@ function TableHeadRow(props) {
 						props.selectionType === 'multiple' ? (
 							<Checkbox
 								checked={!!props.selectedItemsValue.length}
+								disabled={actionLoading}
 								indeterminate={
 									!!props.selectedItemsValue.length &&
 									props.items.length !==
@@ -162,10 +169,11 @@ TableHeadRow.propTypes = {
 				expand: PropTypes.bool,
 				fieldName: PropTypes.oneOfType([
 					PropTypes.string,
-					PropTypes.array
+					PropTypes.arrayOf(PropTypes.string)
 				]),
 				label: PropTypes.string,
-				sortable: PropTypes.bool
+				sortable: PropTypes.bool,
+				sortingKey: PropTypes.string
 			}).isRequired
 		)
 	}),

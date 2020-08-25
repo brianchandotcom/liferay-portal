@@ -616,8 +616,14 @@ public class SearchResultSummaryDisplayBuilder {
 				summaryBuilder.setLocale(summary.getLocale());
 				summaryBuilder.setMaxContentLength(
 					summary.getMaxContentLength());
-				summaryBuilder.setTitle(
-					appendStagingLabel(summary.getTitle(), assetRenderer));
+
+				if (assetRenderer != null) {
+					summaryBuilder.setTitle(
+						appendStagingLabel(summary.getTitle(), assetRenderer));
+				}
+				else {
+					summaryBuilder.setTitle(summary.getTitle());
+				}
 
 				return summaryBuilder.build();
 			}

@@ -62,6 +62,8 @@ generatePom {
 
 generatePomCompileOnly {
 	doFirst {
+		assert project.properties["portalArtifactsJarVersion"] : "Provide a value for the project property 'portalArtifactsJarVersion'"
+
 		File projectTemplatesDir = new File(buildDir, "releng/projectTemplates")
 
 		delete projectTemplatesDir
@@ -161,6 +163,16 @@ generatePomCompileOnly {
 
 			dependencyManagement.addDependency(dependency)
 		}
+
+		String portalArtifactsJarArtifactId = "release." + (_isDigitalExperiencePlatform() ? "dxp" : "portal") + ".api"
+
+		Dependency portalArtifactsJarDependency = new Dependency()
+
+		portalArtifactsJarDependency.setArtifactId(portalArtifactsJarArtifactId)
+		portalArtifactsJarDependency.setGroupId("com.liferay.portal")
+		portalArtifactsJarDependency.setVersion(project.properties["portalArtifactsJarVersion"])
+
+		dependencyManagement.addDependency(portalArtifactsJarDependency)
 
 		model.setDependencyManagement(dependencyManagement)
 

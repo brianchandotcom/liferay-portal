@@ -187,7 +187,7 @@ public class QuartzSchedulerEngineTest {
 		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs();
 
 		Assert.assertEquals(
-			schedulerResponses.toString(), 2 * _DEFAULT_JOB_NUMBER + 1,
+			schedulerResponses.toString(), (2 * _DEFAULT_JOB_NUMBER) + 1,
 			schedulerResponses.size());
 
 		_quartzSchedulerEngine.delete(

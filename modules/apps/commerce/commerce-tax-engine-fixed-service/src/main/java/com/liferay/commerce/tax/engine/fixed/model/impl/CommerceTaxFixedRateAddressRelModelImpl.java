@@ -1010,17 +1010,17 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceTaxFixedRateAddressRel)) {
+		if (!(object instanceof CommerceTaxFixedRateAddressRel)) {
 			return false;
 		}
 
 		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel =
-			(CommerceTaxFixedRateAddressRel)obj;
+			(CommerceTaxFixedRateAddressRel)object;
 
 		long primaryKey = commerceTaxFixedRateAddressRel.getPrimaryKey();
 

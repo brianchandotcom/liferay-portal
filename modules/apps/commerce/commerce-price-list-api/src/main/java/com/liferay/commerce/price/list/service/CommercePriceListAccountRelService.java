@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -75,8 +76,23 @@ public interface CommercePriceListAccountRelService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommercePriceListAccountRel getCommercePriceListAccountRel(
+			long commercePriceListAccountRelId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceListAccountRel> getCommercePriceListAccountRels(
 			long commercePriceListId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommercePriceListAccountRel> getCommercePriceListAccountRels(
+			long commercePriceListId, int start, int end,
+			OrderByComparator<CommercePriceListAccountRel> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommercePriceListAccountRelsCount(long commercePriceListId)
 		throws PortalException;
 
 	/**

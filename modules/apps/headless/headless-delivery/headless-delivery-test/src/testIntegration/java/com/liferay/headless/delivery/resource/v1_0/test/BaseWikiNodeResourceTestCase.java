@@ -120,7 +120,9 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 		WikiNodeResource.Builder builder = WikiNodeResource.builder();
 
-		wikiNodeResource = builder.locale(
+		wikiNodeResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

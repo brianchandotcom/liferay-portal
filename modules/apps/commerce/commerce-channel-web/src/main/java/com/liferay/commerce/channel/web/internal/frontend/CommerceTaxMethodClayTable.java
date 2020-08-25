@@ -195,7 +195,7 @@ public class CommerceTaxMethodClayTable
 				new TaxMethod(
 					commerceTaxDescription, entry.getKey(), commerceTaxName,
 					CommerceChannelClayTableUtil.getLabelField(
-						_isActive(commerceTaxMethod)),
+						_isActive(commerceTaxMethod), themeDisplay.getLocale()),
 					commerceTaxEngine.getName(themeDisplay.getLocale())));
 		}
 

@@ -16,25 +16,41 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
 import {getValueFromItem} from '../../utilities/index';
+import {getDataRendererById} from '../data_renderers/index';
 import Expose from './Expose';
 
 function Item(props) {
 	return (
-		<ClayList.Item className={classNames('py-3', props.className)} flex>
-			<ClayList.ItemField expand>
-				<ClayList.ItemTitle>{props.title}</ClayList.ItemTitle>
-			</ClayList.ItemField>
-			<ClayList.ItemField expand>
-				<div className="autofit-col">
-					<p className="list-group-subtext">{props.subTitle}</p>
-				</div>
-			</ClayList.ItemField>
-			<ClayList.ItemField>
+		<ClayTable.Row>
+			{props.fields.map((field, i) => {
+				const value = getValueFromItem(props.itemData, field.fieldName);
+				const DataRenderer = getDataRendererById(field.contentRenderer);
+				return (
+					<ClayTable.Cell
+						expanded
+						headingTitle={i === 0}
+						key={
+							Array.isArray(field.fieldName)
+								? field.fieldName[0]
+								: field.fieldName
+						}
+					>
+						<DataRenderer
+							actions={[]}
+							itemData={props.itemData}
+							options={field}
+							value={value}
+						/>
+					</ClayTable.Cell>
+				);
+			})}
+			<ClayTable.Cell>
 				<ClayButton
 					disabled={props.selected}
 					displayType="secondary"
@@ -43,8 +59,8 @@ function Item(props) {
 				>
 					{Liferay.Language.get('select')}
 				</ClayButton>
-			</ClayList.ItemField>
-		</ClayList.Item>
+			</ClayTable.Cell>
+		</ClayTable.Row>
 	);
 }
 
@@ -118,102 +134,115 @@ class AddOrCreateBase extends Component {
 						(this.props.items && this.props.items.length)) && (
 						<div className="card-body">
 							<ClayList>
-								{this.props.inputSearchValue && (
-									<>
-										<ClayList.Header>
-											{this.props.createNewItemLabel}
-										</ClayList.Header>
-										<ClayList.Item
-											className={classNames(
-												'py-3',
-												this.props.items &&
-													this.props.items.length &&
-													'border-bottom mb-3'
+								{this.props.itemCreation &&
+									this.props.inputSearchValue && (
+										<>
+											<ClayList.Header className="px-0">
+												{this.props.createNewItemLabel}
+											</ClayList.Header>
+											<ClayList.Item
+												className={classNames(
+													'py-3',
+													this.props.items &&
+														this.props.items
+															.length &&
+														'border-bottom mb-3'
+												)}
+												flex
+											>
+												<ClayList.ItemField expand>
+													<ClayList.ItemTitle>
+														&quot;
+														{
+															this.props
+																.inputSearchValue
+														}
+														&quot;
+													</ClayList.ItemTitle>
+												</ClayList.ItemField>
+												<ClayList.ItemField>
+													<ClayButton
+														onClick={
+															this.props
+																.onItemCreated
+														}
+														small
+													>
+														{Liferay.Language.get(
+															'create-new'
+														)}
+													</ClayButton>
+												</ClayList.ItemField>
+											</ClayList.Item>
+										</>
+									)}
+								{this.props.items &&
+									this.props.items.length === 0 &&
+									!this.props.itemCreation && (
+										<ClayList.Header className="px-0 d-flex">
+											{Liferay.Language.get(
+												'no-items-were-found'
 											)}
-											flex
-										>
-											<ClayList.ItemField expand>
-												<ClayList.ItemTitle>
-													&quot;
-													{
-														this.props
-															.inputSearchValue
-													}
-													&quot;
-												</ClayList.ItemTitle>
-											</ClayList.ItemField>
-
-											<ClayList.ItemField>
-												<ClayButton
-													onClick={
-														this.props.onItemCreated
-													}
-													small
-												>
-													{Liferay.Language.get(
-														'create-new'
-													)}
-												</ClayButton>
-											</ClayList.ItemField>
-										</ClayList.Item>
-									</>
-								)}
-
-								{this.props.items && this.props.items.length ? (
-									<>
-										<ClayList.Header>
+										</ClayList.Header>
+									)}
+							</ClayList>
+							{this.props.items && this.props.items.length ? (
+								<>
+									{this.props.itemCreation && (
+										<ClayList.Header className="px-0">
 											{this.props.titleLabel}
 										</ClayList.Header>
-										{this.props.items.map((item, i) => (
-											<Item
-												className={classNames(
-													i !==
-														this.props.items
-															.length -
-															1 && 'border-bottom'
-												)}
-												key={
-													item[this.props.itemsKey] ||
-													i
-												}
-												onSelect={() =>
-													this.props.onItemSelected(
+									)}
+									<ClayTable
+										borderless
+										hover={false}
+										responsive
+									>
+										<ClayTable.Body>
+											{this.props.items.map((item, i) => (
+												<Item
+													fields={this.props.schema}
+													itemData={item}
+													key={
+														item[
+															this.props.itemsKey
+														] || i
+													}
+													onSelect={() =>
+														this.props.onItemSelected(
+															item[
+																this.props
+																	.itemsKey
+															]
+														)
+													}
+													selected={this.props.selectedItems.includes(
 														item[
 															this.props.itemsKey
 														]
-													)
-												}
-												selected={this.props.selectedItems.includes(
-													item[this.props.itemsKey]
-												)}
-												subTitle={item.key}
-												title={getValueFromItem(
-													item,
-													this.props.schema.itemTitle
-												)}
-											/>
-										))}
-										<ClayPaginationBarWithBasicItems
-											activeDelta={this.props.pageSize}
-											activePage={this.props.currentPage}
-											className="mt-3"
-											deltas={this.props.deltas}
-											ellipsisBuffer={3}
-											onDeltaChange={deltaVal => {
-												this.props.updateCurrentPage(1);
-												this.props.updatePageSize(
-													deltaVal
-												);
-											}}
-											onPageChange={
-												this.props.updateCurrentPage
-											}
-											spritemap={this.props.spritemap}
-											totalItems={this.props.itemsCount}
-										/>
-									</>
-								) : null}
-							</ClayList>
+													)}
+												/>
+											))}
+										</ClayTable.Body>
+									</ClayTable>
+									<ClayPaginationBarWithBasicItems
+										activeDelta={this.props.pageSize}
+										activePage={this.props.currentPage}
+										className="mt-3"
+										deltas={this.props.deltas}
+										ellipsisBuffer={3}
+										onDeltaChange={deltaVal => {
+											this.props.updateCurrentPage(1);
+											this.props.updatePageSize(deltaVal);
+										}}
+										onPageChange={
+											this.props.updateCurrentPage
+										}
+										spritemap={this.props.spritemap}
+										totalItems={this.props.itemsCount}
+									/>
+								</>
+							) : null}
 						</div>
 					)}
 			</div>
@@ -242,12 +271,15 @@ AddOrCreateBase.propTypes = {
 	onSubmit: PropTypes.func,
 	pageSize: PropTypes.number,
 	panelHeaderLabel: PropTypes.string,
-	schema: PropTypes.shape({
-		itemTitle: PropTypes.oneOfType([
-			PropTypes.arrayOf(PropTypes.string),
-			PropTypes.string
-		])
-	}),
+	schema: PropTypes.arrayOf(
+		PropTypes.shape({
+			contentRenderer: PropTypes.string,
+			fieldName: PropTypes.oneOfType([
+				PropTypes.string,
+				PropTypes.arrayOf(PropTypes.string)
+			]).isRequired
+		})
+	),
 	selectedItems: PropTypes.arrayOf(
 		PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 	),

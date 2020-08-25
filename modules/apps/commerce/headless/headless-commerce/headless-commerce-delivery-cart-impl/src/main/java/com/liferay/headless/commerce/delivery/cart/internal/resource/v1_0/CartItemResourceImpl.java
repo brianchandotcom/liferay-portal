@@ -59,7 +59,18 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 
 	@Override
 	public Response deleteCartItem(@NotNull Long cartItemId) throws Exception {
-		_commerceOrderItemService.deleteCommerceOrderItem(cartItemId);
+		CommerceOrderItem commerceOrderItem =
+			_commerceOrderItemService.getCommerceOrderItem(cartItemId);
+
+		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
+		CommerceContext commerceContext = _commerceContextFactory.create(
+			contextCompany.getCompanyId(), commerceOrder.getGroupId(),
+			contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
+			commerceOrder.getCommerceAccountId());
+
+		_commerceOrderItemService.deleteCommerceOrderItem(
+			cartItemId, commerceContext);
 
 		Response.ResponseBuilder responseBuilder = Response.noContent();
 

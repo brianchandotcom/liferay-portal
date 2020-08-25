@@ -122,7 +122,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 		StructuredContentResource.Builder builder =
 			StructuredContentResource.builder();
 
-		structuredContentResource = builder.locale(
+		structuredContentResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

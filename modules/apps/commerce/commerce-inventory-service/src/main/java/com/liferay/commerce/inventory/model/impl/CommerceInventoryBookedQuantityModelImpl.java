@@ -920,17 +920,17 @@ public class CommerceInventoryBookedQuantityModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceInventoryBookedQuantity)) {
+		if (!(object instanceof CommerceInventoryBookedQuantity)) {
 			return false;
 		}
 
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
-			(CommerceInventoryBookedQuantity)obj;
+			(CommerceInventoryBookedQuantity)object;
 
 		long primaryKey = commerceInventoryBookedQuantity.getPrimaryKey();
 

@@ -2,7 +2,7 @@
 
 <#include init />
 
-<html class="${root_css_class}" dir='<@liferay.language key="lang.dir" />' lang="${w3c_language_id}">
+<html class="${root_css_class}" dir="<@liferay.language key="lang.dir" />" lang="${w3c_language_id}">
 
 <head>
 	<title>${the_title} - ${company_name}</title>
@@ -26,7 +26,7 @@
 			<div class="navbar navbar-classic navbar-top py-3">
 				<div class="container user-personal-bar">
 					<div class="align-items-center autofit-row">
-						<a class="${logo_css_class} align-items-center d-md-inline-flex d-sm-none d-none logo-md" href="${site_default_url}" title='<@liferay.language_format arguments="" key="go-to-x" />'>
+						<a class="${logo_css_class} align-items-center d-md-inline-flex d-sm-none d-none logo-md" href="${site_default_url}" title="<@liferay.language_format arguments="" key="go-to-x" />">
 							<img alt="${logo_description}" class="mr-2" height="56" src="${site_logo}" />
 
 							<#if show_site_name>

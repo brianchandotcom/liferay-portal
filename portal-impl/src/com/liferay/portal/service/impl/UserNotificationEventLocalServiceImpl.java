@@ -14,6 +14,11 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -32,6 +37,7 @@ import com.liferay.portal.service.base.UserNotificationEventLocalServiceBaseImpl
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 /**
@@ -460,10 +466,40 @@ public class UserNotificationEventLocalServiceImpl
 
 	@Override
 	public int getUserNotificationEventsCount(
-		long userId, String type, int deliveryType, boolean archived) {
+		long userId, String type, int deliveryType, boolean delivered) {
 
 		return userNotificationEventPersistence.countByU_T_DT_D(
-			userId, type, deliveryType, archived);
+			userId, type, deliveryType, delivered);
+	}
+
+	@Override
+	public int getUserNotificationEventsCount(
+		long userId, String type, Map<String, String> payloadParameters) {
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UserNotificationEvent.class, getClassLoader());
+
+		Property userIdProperty = PropertyFactoryUtil.forName("userId");
+
+		dynamicQuery.add(userIdProperty.eq(userId));
+
+		Property typeProperty = PropertyFactoryUtil.forName("type");
+
+		dynamicQuery.add(typeProperty.eq(type));
+
+		Property payloadProperty = PropertyFactoryUtil.forName("payload");
+
+		for (Map.Entry<String, String> payloadParameter :
+				payloadParameters.entrySet()) {
+
+			dynamicQuery.add(
+				payloadProperty.like(
+					StringBundler.concat(
+						"%\"", payloadParameter.getKey(), "\":\"",
+						payloadParameter.getValue(), "\"%")));
+		}
+
+		return (int)dynamicQueryCount(dynamicQuery);
 	}
 
 	@Override

@@ -853,17 +853,17 @@ public class CommerceShippingMethodWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceShippingMethodWrapper)) {
+		if (!(object instanceof CommerceShippingMethodWrapper)) {
 			return false;
 		}
 
 		CommerceShippingMethodWrapper commerceShippingMethodWrapper =
-			(CommerceShippingMethodWrapper)obj;
+			(CommerceShippingMethodWrapper)object;
 
 		if (Objects.equals(
 				_commerceShippingMethod,

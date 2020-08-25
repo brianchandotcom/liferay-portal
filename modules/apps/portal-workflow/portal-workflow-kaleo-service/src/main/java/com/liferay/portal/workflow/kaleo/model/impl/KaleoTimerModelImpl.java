@@ -995,16 +995,16 @@ public class KaleoTimerModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoTimer)) {
+		if (!(object instanceof KaleoTimer)) {
 			return false;
 		}
 
-		KaleoTimer kaleoTimer = (KaleoTimer)obj;
+		KaleoTimer kaleoTimer = (KaleoTimer)object;
 
 		long primaryKey = kaleoTimer.getPrimaryKey();
 

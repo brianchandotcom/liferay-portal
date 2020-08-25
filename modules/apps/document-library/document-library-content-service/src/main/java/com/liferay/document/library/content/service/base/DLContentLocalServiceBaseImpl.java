@@ -81,6 +81,10 @@ public abstract class DLContentLocalServiceBaseImpl
 	/**
 	 * Adds the document library content to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DLContentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param dlContent the document library content
 	 * @return the document library content that was added
 	 */
@@ -107,6 +111,10 @@ public abstract class DLContentLocalServiceBaseImpl
 	/**
 	 * Deletes the document library content with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DLContentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param contentId the primary key of the document library content
 	 * @return the document library content that was removed
 	 * @throws PortalException if a document library content with the primary key could not be found
@@ -119,6 +127,10 @@ public abstract class DLContentLocalServiceBaseImpl
 
 	/**
 	 * Deletes the document library content from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DLContentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param dlContent the document library content
 	 * @return the document library content that was removed
@@ -326,6 +338,10 @@ public abstract class DLContentLocalServiceBaseImpl
 
 	/**
 	 * Updates the document library content in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect DLContentLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param dlContent the document library content
 	 * @return the document library content that was updated

@@ -37,17 +37,17 @@ public class LayoutPrototypeCacheModel
 	implements CacheModel<LayoutPrototype>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof LayoutPrototypeCacheModel)) {
+		if (!(object instanceof LayoutPrototypeCacheModel)) {
 			return false;
 		}
 
 		LayoutPrototypeCacheModel layoutPrototypeCacheModel =
-			(LayoutPrototypeCacheModel)obj;
+			(LayoutPrototypeCacheModel)object;
 
 		if ((layoutPrototypeId ==
 				layoutPrototypeCacheModel.layoutPrototypeId) &&

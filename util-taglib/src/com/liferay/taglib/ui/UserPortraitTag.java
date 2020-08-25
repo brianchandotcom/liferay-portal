@@ -91,6 +91,30 @@ public class UserPortraitTag extends IncludeTag {
 		return sb.toString();
 	}
 
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
+	public String getCssClass() {
+		return null;
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
+	public User getUser() {
+		return _user;
+	}
+
+	/**
+	 * @deprecated As of Judson (7.1.x), with no direct replacement
+	 */
+	@Deprecated
+	public long getUserId() {
+		return 0;
+	}
+
 	@Override
 	public int processEndTag() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
@@ -163,10 +187,6 @@ public class UserPortraitTag extends IncludeTag {
 		}
 
 		return portraitURL;
-	}
-
-	protected User getUser() {
-		return _user;
 	}
 
 	protected String getUserInitials(User user) {

@@ -38,7 +38,7 @@
 </c:choose>
 
 <div class="card card-horizontal taglib-horizontal-card <%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
-	<div class='card-row card-row-padded <%= showCheckbox ? "selectable" : StringPool.BLANK %>'>
+	<div class="card-row card-row-padded <%= showCheckbox ? "selectable" : StringPool.BLANK %>">
 		<c:if test="<%= Validator.isNotNull(colHTML) %>">
 			<div class="card-col-field">
 				<%= colHTML %>

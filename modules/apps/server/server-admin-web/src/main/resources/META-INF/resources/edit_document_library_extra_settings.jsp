@@ -85,7 +85,7 @@ if (!dlFileEntries.isEmpty()) {
 					<br />
 
 					<aui:select helpMessage="custom-field-type-help" label="type" name="<%= selectName %>">
-						<optgroup label='<liferay-ui:message key="presets" />'>
+						<optgroup label="<liferay-ui:message key="presets" />">
 							<aui:option label="selection-of-integer-values" value="PresetSelectionIntegerArray()" />
 							<aui:option label="selection-of-decimal-values" value="PresetSelectionDoubleArray()" />
 							<aui:option label="selection-of-text-values" value="PresetSelectionStringArray()" />
@@ -95,7 +95,7 @@ if (!dlFileEntries.isEmpty()) {
 							<aui:option label="text-field-indexed" selected="<%= true %>" value="PresetTextFieldIndexed()" />
 						</optgroup>
 
-						<optgroup label='<liferay-ui:message key="primitives" />'>
+						<optgroup label="<liferay-ui:message key="primitives" />">
 
 							<%
 							for (int curType : ExpandoColumnConstants.TYPES) {

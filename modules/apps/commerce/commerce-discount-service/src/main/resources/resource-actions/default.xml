@@ -21,6 +21,7 @@
 		<model-name>com.liferay.commerce.discount.model.CommerceDiscount</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_discount_web_internal_portlet_CommerceDiscountPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_pricing_web_internal_portlet_CommercePricingClassesPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -31,13 +32,12 @@
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults />
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
+			<guest-defaults />
 			<guest-unsupported>
 				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

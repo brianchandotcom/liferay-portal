@@ -112,6 +112,10 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	/**
 	 * Adds the commerce order to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceOrder the commerce order
 	 * @return the commerce order that was added
 	 */
@@ -138,6 +142,10 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	/**
 	 * Deletes the commerce order with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceOrderId the primary key of the commerce order
 	 * @return the commerce order that was removed
 	 * @throws PortalException if a commerce order with the primary key could not be found
@@ -152,6 +160,10 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 
 	/**
 	 * Deletes the commerce order from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceOrder the commerce order
 	 * @return the commerce order that was removed
@@ -545,6 +557,10 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 
 	/**
 	 * Updates the commerce order in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceOrderLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceOrder the commerce order
 	 * @return the commerce order that was updated

@@ -15,6 +15,10 @@
 package com.liferay.commerce.tax.engine.fixed.web.internal.frontend;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.currency.model.CommerceMoneyFactory;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.frontend.CommerceDataSetDataProvider;
 import com.liferay.commerce.frontend.Filter;
 import com.liferay.commerce.frontend.Pagination;
@@ -26,6 +30,7 @@ import com.liferay.commerce.frontend.clay.table.ClayTableSchema;
 import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilder;
 import com.liferay.commerce.frontend.clay.table.ClayTableSchemaBuilderFactory;
 import com.liferay.commerce.frontend.clay.table.ClayTableSchemaField;
+import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
@@ -33,6 +38,7 @@ import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateService;
 import com.liferay.commerce.tax.engine.fixed.web.internal.model.TaxRate;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
+import com.liferay.commerce.tax.service.CommerceTaxMethodLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -48,8 +54,11 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -183,6 +192,15 @@ public class CommerceTaxRateClayTable
 		CommerceChannel commerceChannel =
 			_commerceChannelService.getCommerceChannel(commerceChannelId);
 
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyLocalService.getCommerceCurrency(
+				commerceChannel.getCompanyId(),
+				commerceChannel.getCommerceCurrencyCode());
+
+		CommerceTaxMethod commerceTaxMethod =
+			_commerceTaxMethodLocalService.getCommerceTaxMethod(
+				commerceTaxMethodId);
+
 		List<CommerceTaxFixedRate> commerceTaxFixedRates =
 			_commerceTaxFixedRateService.getCommerceTaxFixedRates(
 				commerceChannel.getGroupId(), commerceTaxMethodId,
@@ -200,11 +218,33 @@ public class CommerceTaxRateClayTable
 			taxRates.add(
 				new TaxRate(
 					cpTaxCategory.getName(themeDisplay.getLanguageId()),
-					commerceTaxFixedRate.getRate(),
+					_getLocalizedRate(
+						commerceCurrency, commerceTaxMethod.isPercentage(),
+						commerceTaxFixedRate.getRate(),
+						_portal.getLocale(httpServletRequest)),
 					commerceTaxFixedRate.getCommerceTaxFixedRateId()));
 		}
 
 		return taxRates;
+	}
+
+	private String _getLocalizedRate(
+			CommerceCurrency commerceCurrency, boolean isPercentage,
+			double rate, Locale locale)
+		throws PortalException {
+
+		BigDecimal bigDecimalPercentage = new BigDecimal(rate);
+
+		if (isPercentage) {
+			return _percentageFormatter.getLocalizedPercentage(
+				locale, commerceCurrency.getMaxFractionDigits(),
+				commerceCurrency.getMinFractionDigits(), bigDecimalPercentage);
+		}
+
+		CommerceMoney commerceMoney = _commerceMoneyFactory.create(
+			commerceCurrency, bigDecimalPercentage);
+
+		return commerceMoney.format(locale);
 	}
 
 	private String _getTaxRateDeleteURL(
@@ -266,7 +306,19 @@ public class CommerceTaxRateClayTable
 	private CommerceChannelService _commerceChannelService;
 
 	@Reference
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	@Reference
+	private CommerceMoneyFactory _commerceMoneyFactory;
+
+	@Reference
 	private CommerceTaxFixedRateService _commerceTaxFixedRateService;
+
+	@Reference
+	private CommerceTaxMethodLocalService _commerceTaxMethodLocalService;
+
+	@Reference
+	private PercentageFormatter _percentageFormatter;
 
 	@Reference
 	private Portal _portal;

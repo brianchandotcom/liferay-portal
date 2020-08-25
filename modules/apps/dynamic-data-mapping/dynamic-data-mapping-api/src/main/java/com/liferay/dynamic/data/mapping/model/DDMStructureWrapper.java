@@ -1245,16 +1245,16 @@ public class DDMStructureWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMStructureWrapper)) {
+		if (!(object instanceof DDMStructureWrapper)) {
 			return false;
 		}
 
-		DDMStructureWrapper ddmStructureWrapper = (DDMStructureWrapper)obj;
+		DDMStructureWrapper ddmStructureWrapper = (DDMStructureWrapper)object;
 
 		if (Objects.equals(_ddmStructure, ddmStructureWrapper._ddmStructure)) {
 			return true;

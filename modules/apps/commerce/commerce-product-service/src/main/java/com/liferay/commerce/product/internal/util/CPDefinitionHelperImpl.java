@@ -24,22 +24,21 @@ import com.liferay.commerce.product.internal.catalog.DatabaseCPCatalogEntryImpl;
 import com.liferay.commerce.product.internal.catalog.IndexCPCatalogEntryImpl;
 import com.liferay.commerce.product.internal.search.CPDefinitionSearcher;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -52,7 +51,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -189,45 +187,14 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 	private String _getFriendlyURL(long cProductId, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		long classNameId = _portal.getClassNameId(CProduct.class);
+		FriendlyURLEntry friendlyURLEntry = null;
 
-		CPFriendlyURLEntry cpFriendlyURLEntry =
-			_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
-				GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId, cProductId,
-				themeDisplay.getLanguageId(), true);
-
-		if (cpFriendlyURLEntry == null) {
-			cpFriendlyURLEntry =
-				_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
-					GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
-					cProductId,
-					LocaleUtil.toLanguageId(
-						themeDisplay.getSiteDefaultLocale()),
-					true);
+		try {
+			friendlyURLEntry =
+				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+					_portal.getClassNameId(CProduct.class), cProductId);
 		}
-
-		if (cpFriendlyURLEntry == null) {
-			cpFriendlyURLEntry =
-				_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
-					GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
-					cProductId,
-					LocaleUtil.toLanguageId(
-						themeDisplay.getSiteDefaultLocale()),
-					true);
-		}
-
-		if (cpFriendlyURLEntry == null) {
-			List<CPFriendlyURLEntry> cpFriendlyURLEntries =
-				_cpFriendlyURLEntryLocalService.getCPFriendlyURLEntries(
-					GroupConstants.DEFAULT_LIVE_GROUP_ID, classNameId,
-					cProductId);
-
-			if (!cpFriendlyURLEntries.isEmpty()) {
-				cpFriendlyURLEntry = cpFriendlyURLEntries.get(0);
-			}
-		}
-
-		if (cpFriendlyURLEntry == null) {
+		catch (Exception e) {
 			if (_log.isInfoEnabled()) {
 				_log.info("No friendly URL found for " + cProductId);
 			}
@@ -286,7 +253,7 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 		String productFriendlyURL =
 			currentSiteURL + CPConstants.SEPARATOR_PRODUCT_URL +
-				cpFriendlyURLEntry.getUrlTitle();
+				friendlyURLEntry.getUrlTitle(themeDisplay.getLanguageId());
 
 		return _portal.addPreservedParameters(themeDisplay, productFriendlyURL);
 	}
@@ -348,13 +315,13 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
-	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
-
-	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private CProductLocalService _cProductLocalService;
+
+	@Reference
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -553,18 +553,20 @@ public class CommercePriceListCommerceAccountGroupRelWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommercePriceListCommerceAccountGroupRelWrapper)) {
+		if (!(object instanceof
+				CommercePriceListCommerceAccountGroupRelWrapper)) {
+
 			return false;
 		}
 
 		CommercePriceListCommerceAccountGroupRelWrapper
 			commercePriceListCommerceAccountGroupRelWrapper =
-				(CommercePriceListCommerceAccountGroupRelWrapper)obj;
+				(CommercePriceListCommerceAccountGroupRelWrapper)object;
 
 		if (Objects.equals(
 				_commercePriceListCommerceAccountGroupRel,

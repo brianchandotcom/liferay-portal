@@ -61,6 +61,21 @@ public class JournalArticleExportImportContentProcessorTest {
 			_group.getGroupId(), content);
 	}
 
+	@Test
+	public void testValidateContentReferencesLargeHTMLComment()
+		throws Exception {
+
+		ExportImportContentProcessor exportImportContentProcessor =
+			ExportImportContentProcessorRegistryUtil.
+				getExportImportContentProcessor(JournalArticle.class.getName());
+
+		String content = read(
+			"test-journal-content-web-content-field-large-HTML-comment.xml");
+
+		exportImportContentProcessor.validateContentReferences(
+			_group.getGroupId(), content);
+	}
+
 	protected String read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 

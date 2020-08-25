@@ -1235,16 +1235,16 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof BlogsEntryWrapper)) {
+		if (!(object instanceof BlogsEntryWrapper)) {
 			return false;
 		}
 
-		BlogsEntryWrapper blogsEntryWrapper = (BlogsEntryWrapper)obj;
+		BlogsEntryWrapper blogsEntryWrapper = (BlogsEntryWrapper)object;
 
 		if (Objects.equals(_blogsEntry, blogsEntryWrapper._blogsEntry)) {
 			return true;

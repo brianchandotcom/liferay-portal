@@ -541,9 +541,13 @@ public class ConfigurationPersistenceManager
 
 			while (resultSet.next()) {
 				String pid = resultSet.getString(1);
-				String dictionaryString = resultSet.getString(2);
 
-				_dictionaries.putIfAbsent(pid, toDictionary(dictionaryString));
+				Dictionary<String, String> dictionary = _verifyDictionary(
+					pid, resultSet.getString(2));
+
+				if (dictionary != null) {
+					_dictionaries.putIfAbsent(pid, dictionary);
+				}
 			}
 		}
 		catch (IOException | SQLException e) {
@@ -746,8 +750,86 @@ public class ConfigurationPersistenceManager
 			});
 	}
 
+	private Dictionary<String, String> _verifyDictionary(
+			String pid, String dictionaryString)
+		throws IOException {
+
+		if (dictionaryString == null) {
+			return new HashMapDictionary<>();
+		}
+
+		Dictionary<String, String> dictionary = ConfigurationHandler.read(
+			new UnsyncByteArrayInputStream(
+				dictionaryString.getBytes(StringPool.UTF8)));
+
+		String felixFileInstallFileName = dictionary.get(
+			_FELIX_FILE_INSTALL_FILENAME);
+
+		if (felixFileInstallFileName == null) {
+			return dictionary;
+		}
+
+		boolean needSave = false;
+
+		if (dictionary.get(_SERVIE_BUNDLE_LOCATION) == null) {
+			dictionary.put(_SERVIE_BUNDLE_LOCATION, "?");
+
+			needSave = true;
+		}
+
+		File configFile = null;
+
+		if (felixFileInstallFileName.startsWith("file:")) {
+			try {
+				configFile = new File(URI.create(felixFileInstallFileName));
+			}
+			catch (Exception exception) {
+				configFile = new File(felixFileInstallFileName);
+			}
+
+			dictionary.put(_FELIX_FILE_INSTALL_FILENAME, configFile.getName());
+
+			storeInDatabase(pid, dictionary);
+
+			dictionary.put(
+				_FELIX_FILE_INSTALL_FILENAME, felixFileInstallFileName);
+
+			needSave = false;
+		}
+		else {
+			configFile = new File(
+				PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
+				felixFileInstallFileName);
+
+			configFile = configFile.getCanonicalFile();
+
+			configFile = configFile.getAbsoluteFile();
+
+			URI uri = configFile.toURI();
+
+			dictionary.put(_FELIX_FILE_INSTALL_FILENAME, uri.toString());
+		}
+
+		if (needSave) {
+			storeInDatabase(pid, dictionary);
+		}
+
+		String ignore = dictionary.get("configuration.cleaner.ignore");
+
+		if (!Boolean.valueOf(ignore) && !configFile.exists()) {
+			deleteFromDatabase(pid);
+
+			return null;
+		}
+
+		return dictionary;
+	}
+
 	private static final String _FELIX_FILE_INSTALL_FILENAME =
 		"felix.fileinstall.filename";
+
+	private static final String _SERVIE_BUNDLE_LOCATION =
+		"service.bundleLocation";
 
 	private static final Dictionary<?, ?> _emptyDictionary =
 		new HashMapDictionary<>();

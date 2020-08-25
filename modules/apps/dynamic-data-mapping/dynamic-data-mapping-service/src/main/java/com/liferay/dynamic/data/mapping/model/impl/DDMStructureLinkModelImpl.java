@@ -544,16 +544,16 @@ public class DDMStructureLinkModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMStructureLink)) {
+		if (!(object instanceof DDMStructureLink)) {
 			return false;
 		}
 
-		DDMStructureLink ddmStructureLink = (DDMStructureLink)obj;
+		DDMStructureLink ddmStructureLink = (DDMStructureLink)object;
 
 		long primaryKey = ddmStructureLink.getPrimaryKey();
 

@@ -987,16 +987,16 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MBCategoryWrapper)) {
+		if (!(object instanceof MBCategoryWrapper)) {
 			return false;
 		}
 
-		MBCategoryWrapper mbCategoryWrapper = (MBCategoryWrapper)obj;
+		MBCategoryWrapper mbCategoryWrapper = (MBCategoryWrapper)object;
 
 		if (Objects.equals(_mbCategory, mbCategoryWrapper._mbCategory)) {
 			return true;

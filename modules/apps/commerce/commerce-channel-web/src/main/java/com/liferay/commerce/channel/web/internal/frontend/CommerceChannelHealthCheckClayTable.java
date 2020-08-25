@@ -37,9 +37,11 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -102,11 +104,16 @@ public class CommerceChannelHealthCheckClayTable
 			portletURL.setParameter(
 				"commerceChannelId", String.valueOf(commerceChannelId));
 
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", _portal.getLocale(httpServletRequest),
+				getClass());
+
 			clayTableActions.add(
 				new ClayDataSetAction(
 					StringPool.BLANK, portletURL.toString(), StringPool.BLANK,
-					LanguageUtil.get(httpServletRequest, "fix-issue"), null,
-					false, false));
+					LanguageUtil.get(
+						httpServletRequest, resourceBundle, "fix-issue"),
+					null, false, false));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -119,11 +126,30 @@ public class CommerceChannelHealthCheckClayTable
 	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
 		throws PortalException {
 
+		long commerceChannelId = ParamUtil.getLong(
+			httpServletRequest, "commerceChannelId");
+
+		CommerceChannel commerceChannel =
+			_commerceChannelService.getCommerceChannel(commerceChannelId);
+
 		List<CommerceChannelHealthStatus> commerceChannelHealthStatuses =
 			_commerceChannelHealthStatusRegistry.
 				getCommerceChannelHealthStatuses();
 
-		return commerceChannelHealthStatuses.size();
+		int healthStatusToFixCount = 0;
+
+		for (CommerceChannelHealthStatus commerceChannelHealthStatus :
+				commerceChannelHealthStatuses) {
+
+			if (!commerceChannelHealthStatus.isFixed(
+					commerceChannel.getCompanyId(),
+					commerceChannel.getCommerceChannelId())) {
+
+				healthStatusToFixCount++;
+			}
+		}
+
+		return healthStatusToFixCount;
 	}
 
 	@Override

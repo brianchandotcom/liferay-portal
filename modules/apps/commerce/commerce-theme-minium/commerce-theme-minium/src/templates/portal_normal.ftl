@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <#include init />
-<html class="${root_css_class}" dir='<@liferay.language key="lang.dir" />' lang="${w3c_language_id}">
+<html class="${root_css_class}" dir="<@liferay.language key="lang.dir" />" lang="${w3c_language_id}">
 <head>
 	<title>${the_title} - ${company_name}</title>
 
@@ -29,7 +29,7 @@
 	<#assign css_class = css_class + " minium-login" />
 </#if>
 
-<body class="${css_class}">
+<body class="${css_class}" id="content">
 	<div id="wrapper">
 		<div class="liferay-top">
 			<@liferay_ui["quick-access"] contentId="#main-content" />

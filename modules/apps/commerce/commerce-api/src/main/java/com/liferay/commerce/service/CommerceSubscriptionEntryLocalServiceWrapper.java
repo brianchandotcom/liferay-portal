@@ -38,6 +38,10 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 	/**
 	 * Adds the commerce subscription entry to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceSubscriptionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceSubscriptionEntry the commerce subscription entry
 	 * @return the commerce subscription entry that was added
 	 */
@@ -118,6 +122,10 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 	/**
 	 * Deletes the commerce subscription entry from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceSubscriptionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceSubscriptionEntry the commerce subscription entry
 	 * @return the commerce subscription entry that was removed
 	 */
@@ -133,6 +141,10 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 
 	/**
 	 * Deletes the commerce subscription entry with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceSubscriptionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceSubscriptionEntryId the primary key of the commerce subscription entry
 	 * @return the commerce subscription entry that was removed
@@ -300,6 +312,14 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 
 		return _commerceSubscriptionEntryLocalService.
 			getActiveCommerceSubscriptionEntries();
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceSubscriptionEntry>
+		getActiveCommerceSubscriptionEntries(long commerceAccountId) {
+
+		return _commerceSubscriptionEntryLocalService.
+			getActiveCommerceSubscriptionEntries(commerceAccountId);
 	}
 
 	@Override
@@ -570,6 +590,10 @@ public class CommerceSubscriptionEntryLocalServiceWrapper
 
 	/**
 	 * Updates the commerce subscription entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceSubscriptionEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceSubscriptionEntry the commerce subscription entry
 	 * @return the commerce subscription entry that was updated

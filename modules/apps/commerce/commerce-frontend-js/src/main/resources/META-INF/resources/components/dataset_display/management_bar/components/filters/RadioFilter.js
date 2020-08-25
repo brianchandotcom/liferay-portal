@@ -13,41 +13,104 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayRadio, ClayRadioGroup} from '@clayui/form';
+import ClayDropDown from '@clayui/drop-down';
+import {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import getAppContext from '../Context';
+function formatValue(itemValue, items, exclude) {
+	return (
+		(exclude ? `(${Liferay.Language.get('exclude')}) ` : '') +
+		items.find(item => item.value === itemValue).label
+	);
+}
 
+function getOdataString(value, key, exclude) {
+	return `${key} ${exclude ? 'ne' : 'eq'} ${
+		typeof value === 'string' ? `'${value}'` : value
+	}`;
+}
 function RadioFilter(props) {
-	const {actions} = getAppContext();
-	const [value, setValue] = useState(props.value);
+	const [itemValue, setItemValue] = useState(
+		props.value && props.value.itemValue
+	);
+	const [exclude, setExclude] = useState(props.value && props.value.exclude);
+
+	const actionType = props.value ? 'edit' : 'add';
+
+	let submitDisabled = true;
+
+	if (
+		(!props.value && itemValue) ||
+		(props.value && props.value.itemValue !== itemValue) ||
+		(props.value && itemValue && props.value.exclude !== exclude)
+	) {
+		submitDisabled = false;
+	}
 
 	return (
 		<>
-			<ClayRadioGroup
-				onSelectedValueChange={setValue}
-				selectedValue={value || ''}
-			>
-				{props.items.map(item => (
-					<ClayRadio
-						key={item.value}
-						label={item.label}
-						value={item.value}
-					/>
-				))}
-			</ClayRadioGroup>
-			<div className="mt-3">
+			<ClayDropDown.Caption className="pb-0">
+				<div className="row">
+					<div className="col">
+						<label htmlFor={`autocomplete-exclude-${props.id}`}>
+							{Liferay.Language.get('exclude')}
+						</label>
+					</div>
+					<div className="col-auto">
+						<ClayToggle
+							id={`autocomplete-exclude-${props.id}`}
+							onToggle={() => setExclude(!exclude)}
+							toggled={exclude}
+						/>
+					</div>
+				</div>
+			</ClayDropDown.Caption>
+			<ClayDropDown.Divider />
+			<ClayDropDown.Caption>
+				<div className="inline-scroller mx-n2 px-2 mb-n2">
+					<ClayRadioGroup
+						onSelectedValueChange={setItemValue}
+						selectedValue={itemValue || ''}
+					>
+						{props.items.map(item => (
+							<ClayRadio
+								key={item.value}
+								label={item.label}
+								value={item.value}
+							/>
+						))}
+					</ClayRadioGroup>
+				</div>
+			</ClayDropDown.Caption>
+			<ClayDropDown.Divider />
+			<ClayDropDown.Caption>
 				<ClayButton
-					className="btn-sm"
-					disabled={value === props.value}
-					onClick={() => actions.updateFilterValue(props.id, value)}
+					disabled={submitDisabled}
+					onClick={() =>
+						actionType !== 'delete'
+							? props.actions.updateFilterState(
+									props.id,
+									{
+										exclude,
+										itemValue
+									},
+									formatValue(
+										itemValue,
+										props.items,
+										exclude
+									),
+									getOdataString(itemValue, props.id, exclude)
+							  )
+							: props.actions.updateFilterState(props.id)
+					}
+					small
 				>
-					{props.panelType === 'edit'
-						? Liferay.Language.get('edit-filter')
-						: Liferay.Language.get('add-filter')}
+					{actionType === 'add' && Liferay.Language.get('add-filter')}
+					{actionType === 'edit' &&
+						Liferay.Language.get('edit-filter')}
 				</ClayButton>
-			</div>
+			</ClayDropDown.Caption>
 		</>
 	);
 }
@@ -62,20 +125,11 @@ RadioFilter.propTypes = {
 		})
 	),
 	label: PropTypes.string.isRequired,
-	operator: PropTypes.oneOf([
-		'eq',
-		'ne',
-		'gt',
-		'ge',
-		'lt',
-		'le',
-		'and',
-		'or',
-		'not',
-		'startswith'
-	]).isRequired,
 	type: PropTypes.oneOf(['radio']).isRequired,
-	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+	value: PropTypes.shape({
+		exclude: PropTypes.bool,
+		itemValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+	})
 };
 
 export default RadioFilter;

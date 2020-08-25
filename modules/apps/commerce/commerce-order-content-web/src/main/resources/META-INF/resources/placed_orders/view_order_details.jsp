@@ -196,6 +196,8 @@ if (commerceOrder != null) {
 	</aui:form>
 
 	<aui:button cssClass="btn btn-lg btn-secondary" onClick='<%= renderResponse.getNamespace() + "reorderCommerceOrder();" %>' value="reorder" />
+
+	<liferay-util:dynamic-include key="com.liferay.commerce.order.content.web#/place_order_detail_cta#" />
 </div>
 
 <div class="row">

@@ -85,7 +85,8 @@ public class SkuUtil {
 			expirationDateConfig.getMonth(), expirationDateConfig.getDay(),
 			expirationDateConfig.getYear(), expirationDateConfig.getHour(),
 			expirationDateConfig.getMinute(),
-			GetterUtil.get(sku.getNeverExpire(), false), serviceContext);
+			GetterUtil.get(sku.getNeverExpire(), false), sku.getUnspsc(),
+			serviceContext);
 	}
 
 	private static String _getOptions(Sku sku) {

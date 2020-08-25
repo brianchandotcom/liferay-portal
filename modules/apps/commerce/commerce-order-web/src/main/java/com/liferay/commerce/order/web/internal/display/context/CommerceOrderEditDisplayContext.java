@@ -33,14 +33,13 @@ import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.order.web.internal.display.context.util.CommerceOrderRequestHelper;
 import com.liferay.commerce.order.web.internal.servlet.taglib.ui.CommerceOrderScreenNavigationConstants;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
-import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
+import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShipmentService;
-import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -87,10 +86,9 @@ public class CommerceOrderEditDisplayContext {
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderNoteService commerceOrderNoteService,
 			CommerceOrderStatusRegistry commerceOrderStatusRegistry,
-			CommercePaymentMethodGroupRelService
-				commercePaymentMethodGroupRelService,
+			CommercePaymentMethodGroupRelLocalService
+				commercePaymentMethodGroupRelLocalService,
 			CommerceShipmentService commerceShipmentService,
-			CommerceShippingHelper commerceShippingHelper,
 			RenderRequest renderRequest)
 		throws PortalException {
 
@@ -102,10 +100,9 @@ public class CommerceOrderEditDisplayContext {
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderNoteService = commerceOrderNoteService;
 		_commerceOrderStatusRegistry = commerceOrderStatusRegistry;
-		_commercePaymentMethodGroupRelService =
-			commercePaymentMethodGroupRelService;
+		_commercePaymentMethodGroupRelLocalService =
+			commercePaymentMethodGroupRelLocalService;
 		_commerceShipmentService = commerceShipmentService;
-		_commerceShippingHelper = commerceShippingHelper;
 
 		long commerceOrderId = ParamUtil.getLong(
 			renderRequest, "commerceOrderId");
@@ -362,7 +359,7 @@ public class CommerceOrderEditDisplayContext {
 	public CommercePaymentMethodGroupRel getCommercePaymentMethodGroupRel()
 		throws PortalException {
 
-		return _commercePaymentMethodGroupRelService.
+		return _commercePaymentMethodGroupRelLocalService.
 			getCommercePaymentMethodGroupRel(
 				_commerceOrder.getGroupId(),
 				_commerceOrder.getCommercePaymentMethodKey());
@@ -445,24 +442,15 @@ public class CommerceOrderEditDisplayContext {
 		if ((_commerceOrder == null) || (currentCommerceOrderStatus == null) ||
 			!currentCommerceOrderStatus.isComplete(_commerceOrder) ||
 			(currentCommerceOrderStatus.getKey() ==
-				CommerceOrderConstants.ORDER_STATUS_CANCELLED)) {
+				CommerceOrderConstants.ORDER_STATUS_CANCELLED) ||
+			(currentCommerceOrderStatus.getKey() ==
+				CommerceOrderConstants.ORDER_STATUS_IN_PROGRESS)) {
 
 			return headerActionModels;
 		}
 
 		List<CommerceOrderStatus> commerceOrderStatuses =
 			_commerceOrderEngine.getNextCommerceOrderStatuses(_commerceOrder);
-
-		if ((currentCommerceOrderStatus.getKey() ==
-				CommerceOrderConstants.ORDER_STATUS_IN_PROGRESS) &&
-			(_commerceOrder.getPaymentStatus() !=
-				CommerceOrderConstants.PAYMENT_STATUS_PENDING) &&
-			_commerceOrder.isApproved() && commerceOrderStatuses.isEmpty() &&
-			currentCommerceOrderStatus.isTransitionCriteriaMet(
-				_commerceOrder)) {
-
-			commerceOrderStatuses.add(currentCommerceOrderStatus);
-		}
 
 		PortletURL portletURL = getTransitionOrderPortletURL();
 
@@ -492,12 +480,8 @@ public class CommerceOrderEditDisplayContext {
 					label = "submit";
 				}
 			}
-			else if ((commerceOrderStatus.getKey() ==
-						CommerceOrderConstants.ORDER_STATUS_PROCESSING) ||
-					 ((commerceOrderStatus.getKey() ==
-						 CommerceOrderConstants.ORDER_STATUS_PENDING) &&
-					  (_commerceOrder.getPaymentStatus() ==
-						  CommerceOrderConstants.PAYMENT_STATUS_PENDING))) {
+			else if (commerceOrderStatus.getKey() ==
+						CommerceOrderConstants.ORDER_STATUS_PROCESSING) {
 
 				label = "accept-order";
 			}
@@ -677,10 +661,9 @@ public class CommerceOrderEditDisplayContext {
 	private final CommerceOrderRequestHelper _commerceOrderRequestHelper;
 	private final CommerceOrderService _commerceOrderService;
 	private final CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
-	private final CommercePaymentMethodGroupRelService
-		_commercePaymentMethodGroupRelService;
+	private final CommercePaymentMethodGroupRelLocalService
+		_commercePaymentMethodGroupRelLocalService;
 	private CommerceShipment _commerceShipment;
 	private final CommerceShipmentService _commerceShipmentService;
-	private final CommerceShippingHelper _commerceShippingHelper;
 
 }

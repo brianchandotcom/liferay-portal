@@ -36,17 +36,17 @@ public class DLFileShortcutCacheModel
 	implements CacheModel<DLFileShortcut>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DLFileShortcutCacheModel)) {
+		if (!(object instanceof DLFileShortcutCacheModel)) {
 			return false;
 		}
 
 		DLFileShortcutCacheModel dlFileShortcutCacheModel =
-			(DLFileShortcutCacheModel)obj;
+			(DLFileShortcutCacheModel)object;
 
 		if (fileShortcutId == dlFileShortcutCacheModel.fileShortcutId) {
 			return true;

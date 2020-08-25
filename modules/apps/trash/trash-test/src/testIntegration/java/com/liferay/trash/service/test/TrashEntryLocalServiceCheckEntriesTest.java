@@ -261,7 +261,7 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 
 			trashEntry.setCreateDate(
 				new Date(
-					createDate.getTime() - maxAge * Time.MINUTE - Time.DAY));
+					createDate.getTime() - (maxAge * Time.MINUTE) - Time.DAY));
 
 			TrashEntryLocalServiceUtil.updateTrashEntry(trashEntry);
 		}

@@ -36,18 +36,18 @@ public class OAuth2ApplicationScopeAliasesCacheModel
 	implements CacheModel<OAuth2ApplicationScopeAliases>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof OAuth2ApplicationScopeAliasesCacheModel)) {
+		if (!(object instanceof OAuth2ApplicationScopeAliasesCacheModel)) {
 			return false;
 		}
 
 		OAuth2ApplicationScopeAliasesCacheModel
 			oAuth2ApplicationScopeAliasesCacheModel =
-				(OAuth2ApplicationScopeAliasesCacheModel)obj;
+				(OAuth2ApplicationScopeAliasesCacheModel)object;
 
 		if (oAuth2ApplicationScopeAliasesId ==
 				oAuth2ApplicationScopeAliasesCacheModel.

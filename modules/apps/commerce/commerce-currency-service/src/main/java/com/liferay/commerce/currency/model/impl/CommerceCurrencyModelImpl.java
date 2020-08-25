@@ -1487,16 +1487,16 @@ public class CommerceCurrencyModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceCurrency)) {
+		if (!(object instanceof CommerceCurrency)) {
 			return false;
 		}
 
-		CommerceCurrency commerceCurrency = (CommerceCurrency)obj;
+		CommerceCurrency commerceCurrency = (CommerceCurrency)object;
 
 		long primaryKey = commerceCurrency.getPrimaryKey();
 

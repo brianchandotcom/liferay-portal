@@ -74,20 +74,23 @@ public class DummyStagedModelRepository
 
 	@Override
 	public Dummy addStagedModel(
-			PortletDataContext portletDataContext, Dummy dummy)
+			PortletDataContext portletDataContext, Dummy dummy1)
 		throws PortalException {
 
-		dummy.setId(new Dummy().getId());
+		Dummy dummy2 = new Dummy();
+
+		dummy1.setId(dummy2.getId());
 
 		if ((portletDataContext != null) &&
 			(portletDataContext.getUserIdStrategy() != null)) {
 
-			dummy.setUserId(portletDataContext.getUserId(dummy.getUserUuid()));
+			dummy1.setUserId(
+				portletDataContext.getUserId(dummy1.getUserUuid()));
 		}
 
-		_dummies.add(dummy);
+		_dummies.add(dummy1);
 
-		return dummy;
+		return dummy1;
 	}
 
 	@Override
@@ -407,7 +410,7 @@ public class DummyStagedModelRepository
 		}
 
 		public Predicate<? super Dummy> getPredicate(String expression) {
-			if (expression.contains("groupId=")) {
+			if (expression.startsWith("groupId=")) {
 				return d ->
 					d.getGroupId() == Long.valueOf(
 						expression.substring("groupId=".length()));
@@ -417,7 +420,7 @@ public class DummyStagedModelRepository
 				return d -> d.getId() > -1;
 			}
 
-			if (expression.contains("companyId=")) {
+			if (expression.startsWith("companyId=")) {
 				return d ->
 					d.getCompanyId() == Long.valueOf(
 						expression.substring("companyId=".length()));

@@ -168,7 +168,18 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 			Role role = getRole(name, type, serviceContext);
 
-			updateActions(role, actionsJSONObject, scope, serviceContext);
+			if (actionsJSONObject != null) {
+				updateActions(role, actionsJSONObject, scope, serviceContext);
+			}
+			else {
+				JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
+
+				for (int j = 0; j < actionsJSONArray.length(); j++) {
+					updateActions(
+						role, actionsJSONArray.getJSONObject(j), scope,
+						serviceContext);
+				}
+			}
 		}
 	}
 

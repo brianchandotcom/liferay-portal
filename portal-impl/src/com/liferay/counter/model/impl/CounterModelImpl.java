@@ -334,16 +334,16 @@ public class CounterModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Counter)) {
+		if (!(object instanceof Counter)) {
 			return false;
 		}
 
-		Counter counter = (Counter)obj;
+		Counter counter = (Counter)object;
 
 		String primaryKey = counter.getPrimaryKey();
 

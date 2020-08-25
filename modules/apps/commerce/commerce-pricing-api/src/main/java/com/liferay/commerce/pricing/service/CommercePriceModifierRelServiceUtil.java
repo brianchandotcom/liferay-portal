@@ -54,6 +54,15 @@ public class CommercePriceModifierRelServiceUtil {
 		getService().deleteCommercePriceModifierRel(commercePriceModifierRelId);
 	}
 
+	public static com.liferay.commerce.pricing.model.CommercePriceModifierRel
+			fetchCommercePriceModifierRel(
+				long commercePriceModifierId, String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().fetchCommercePriceModifierRel(
+			commercePriceModifierId, className, classPK);
+	}
+
 	public static long[] getClassPKs(
 			long commercePriceModifierRelId, String className)
 		throws com.liferay.portal.kernel.exception.PortalException {

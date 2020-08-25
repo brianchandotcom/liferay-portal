@@ -600,16 +600,16 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KBCommentWrapper)) {
+		if (!(object instanceof KBCommentWrapper)) {
 			return false;
 		}
 
-		KBCommentWrapper kbCommentWrapper = (KBCommentWrapper)obj;
+		KBCommentWrapper kbCommentWrapper = (KBCommentWrapper)object;
 
 		if (Objects.equals(_kbComment, kbCommentWrapper._kbComment)) {
 			return true;

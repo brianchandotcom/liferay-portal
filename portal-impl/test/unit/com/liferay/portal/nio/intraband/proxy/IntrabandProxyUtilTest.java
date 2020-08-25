@@ -1755,7 +1755,7 @@ public class IntrabandProxyUtilTest {
 			_buildProxyMethodSignatures(clazz), proxyMethodSignatures);
 
 		StringBundler sb = new StringBundler(
-			proxyMethodSignatures.length * 4 + 1);
+			(proxyMethodSignatures.length * 4) + 1);
 
 		sb.append(StringPool.OPEN_CURLY_BRACE);
 

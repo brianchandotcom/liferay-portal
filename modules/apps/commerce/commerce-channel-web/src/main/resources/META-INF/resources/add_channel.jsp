@@ -33,6 +33,8 @@ boolean isViewOnly = false;
 if (commerceChannel != null) {
 	isViewOnly = !commerceChannelDisplayContext.hasPermission(commerceChannelId, ActionKeys.UPDATE);
 }
+
+PortletURL editCommerceChannelRenderURL = commerceChannelDisplayContext.getEditCommerceChannelRenderURL();
 %>
 
 <commerce-ui:modal-content
@@ -41,19 +43,13 @@ if (commerceChannel != null) {
 >
 	<portlet:actionURL name="editCommerceChannel" var="editCommerceChannelActionURL" />
 
-	<aui:form action="<%= editCommerceChannelActionURL %>" method="post" name="channelFm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceChannel == null) ? Constants.ADD : Constants.UPDATE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURLObj %>" />
-		<aui:input name="addTypeSettings" type="hidden" />
-		<aui:input name="commerceChannelId" type="hidden" value="<%= commerceChannelId %>" />
-		<aui:input name="deleteTypeSettings" type="hidden" />
-
+	<aui:form cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "apiSubmit(this.form);" %>' useNamespace="<%= false %>">
 		<div class="lfr-form-content">
 			<aui:model-context bean="<%= commerceChannel %>" model="<%= CommerceChannel.class %>" />
 
 			<aui:input autoFocus="<%= true %>" disabled="<%= isViewOnly %>" name="name" value="<%= name %>" />
 
-			<aui:select label="currency" name="commerceCurrencyCode" required="<%= true %>" title="currency">
+			<aui:select label="currency" name="currencyCode" required="<%= true %>" title="currency">
 
 				<%
 				for (CommerceCurrency commerceCurrency : commerceCurrencies) {
@@ -83,4 +79,57 @@ if (commerceChannel != null) {
 			</aui:select>
 		</div>
 	</aui:form>
+
+	<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/utilities/forms/index as FormUtils">
+		Liferay.provide(
+			window,
+			'<portlet:namespace/>apiSubmit',
+			function(form) {
+				var API_URL = '/o/headless-commerce-admin-channel/v1.0/channels';
+
+				window.parent.Liferay.fire(events.IS_LOADING_MODAL, {
+					isLoading: true
+				});
+
+				FormUtils.apiSubmit(form, API_URL)
+					.then(function(payload) {
+						var redirectURL = new Liferay.PortletURL.createURL(
+							'<%= editCommerceChannelRenderURL.toString() %>'
+						);
+
+						redirectURL.setParameter('commerceChannelId', payload.id);
+						redirectURL.setParameter('p_auth', Liferay.authToken);
+
+						window.parent.Liferay.fire(events.CLOSE_MODAL, {
+							redirectURL: redirectURL.toString(),
+							successNotification: {
+								showSuccessNotification: true,
+								message:
+									'<liferay-ui:message key="your-request-completed-successfully" />'
+							}
+						});
+					})
+					.catch(function() {
+						window.parent.Liferay.fire(events.IS_LOADING_MODAL, {
+							isLoading: false
+						});
+
+						new Liferay.Notification({
+							closeable: true,
+							delay: {
+								hide: 5000,
+								show: 0
+							},
+							duration: 500,
+							message:
+								'<liferay-ui:message key="an-unexpected-error-occurred" />',
+							render: true,
+							title: '<liferay-ui:message key="danger" />',
+							type: 'danger'
+						});
+					});
+			},
+			['liferay-portlet-url']
+		);
+	</aui:script>
 </commerce-ui:modal-content>

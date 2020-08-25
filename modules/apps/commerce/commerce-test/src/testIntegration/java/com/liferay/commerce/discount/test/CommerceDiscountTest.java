@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
@@ -160,8 +161,13 @@ public class CommerceDiscountTest {
 
 		CommerceMoney discountAmount = discountValue.getDiscountAmount();
 
+		BigDecimal discountAmountPrice = discountAmount.getPrice();
+
+		BigDecimal commerceDiscountLevel1 = commerceDiscount.getLevel1();
+
 		Assert.assertEquals(
-			commerceDiscount.getLevel1(), discountAmount.getPrice());
+			commerceDiscountLevel1.stripTrailingZeros(),
+			discountAmountPrice.stripTrailingZeros());
 
 		BigDecimal price = cpInstance.getPrice();
 
@@ -602,7 +608,7 @@ public class CommerceDiscountTest {
 
 		_cpInstanceLocalService.updateCPInstance(cpInstance);
 
-		String couponCode = "SCONTO";
+		String couponCode = StringUtil.randomString();
 
 		CommerceDiscount commerceDiscount =
 			CommerceDiscountTestUtil.addCouponDiscount(
@@ -643,7 +649,11 @@ public class CommerceDiscountTest {
 			discountPrice = discountAmount.getPrice();
 		}
 
-		Assert.assertEquals(commerceDiscount.getLevel1(), discountPrice);
+		BigDecimal commerceDiscountLevel1 = commerceDiscount.getLevel1();
+
+		Assert.assertEquals(
+			commerceDiscountLevel1.stripTrailingZeros(),
+			discountPrice.stripTrailingZeros());
 
 		BigDecimal price = cpInstance.getPrice();
 

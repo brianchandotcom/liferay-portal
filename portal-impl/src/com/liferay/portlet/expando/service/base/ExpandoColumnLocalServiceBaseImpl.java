@@ -78,6 +78,10 @@ public abstract class ExpandoColumnLocalServiceBaseImpl
 	/**
 	 * Adds the expando column to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ExpandoColumnLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param expandoColumn the expando column
 	 * @return the expando column that was added
 	 */
@@ -104,6 +108,10 @@ public abstract class ExpandoColumnLocalServiceBaseImpl
 	/**
 	 * Deletes the expando column with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ExpandoColumnLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param columnId the primary key of the expando column
 	 * @return the expando column that was removed
 	 * @throws PortalException if a expando column with the primary key could not be found
@@ -118,6 +126,10 @@ public abstract class ExpandoColumnLocalServiceBaseImpl
 
 	/**
 	 * Deletes the expando column from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ExpandoColumnLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param expandoColumn the expando column
 	 * @return the expando column that was removed
@@ -328,6 +340,10 @@ public abstract class ExpandoColumnLocalServiceBaseImpl
 
 	/**
 	 * Updates the expando column in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ExpandoColumnLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param expandoColumn the expando column
 	 * @return the expando column that was updated

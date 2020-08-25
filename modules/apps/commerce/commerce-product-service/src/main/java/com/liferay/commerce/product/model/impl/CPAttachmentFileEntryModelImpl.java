@@ -1765,17 +1765,17 @@ public class CPAttachmentFileEntryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPAttachmentFileEntry)) {
+		if (!(object instanceof CPAttachmentFileEntry)) {
 			return false;
 		}
 
 		CPAttachmentFileEntry cpAttachmentFileEntry =
-			(CPAttachmentFileEntry)obj;
+			(CPAttachmentFileEntry)object;
 
 		long primaryKey = cpAttachmentFileEntry.getPrimaryKey();
 

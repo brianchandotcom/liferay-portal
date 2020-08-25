@@ -592,16 +592,17 @@ public class SocialRequestWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SocialRequestWrapper)) {
+		if (!(object instanceof SocialRequestWrapper)) {
 			return false;
 		}
 
-		SocialRequestWrapper socialRequestWrapper = (SocialRequestWrapper)obj;
+		SocialRequestWrapper socialRequestWrapper =
+			(SocialRequestWrapper)object;
 
 		if (Objects.equals(
 				_socialRequest, socialRequestWrapper._socialRequest)) {

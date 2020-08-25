@@ -114,7 +114,9 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 		WikiPageAttachmentResource.Builder builder =
 			WikiPageAttachmentResource.builder();
 
-		wikiPageAttachmentResource = builder.locale(
+		wikiPageAttachmentResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}
@@ -186,6 +188,7 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 		WikiPageAttachment wikiPageAttachment = randomWikiPageAttachment();
 
 		wikiPageAttachment.setContentUrl(regex);
+		wikiPageAttachment.setContentValue(regex);
 		wikiPageAttachment.setEncodingFormat(regex);
 		wikiPageAttachment.setFileExtension(regex);
 		wikiPageAttachment.setTitle(regex);
@@ -197,6 +200,7 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 		wikiPageAttachment = WikiPageAttachmentSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, wikiPageAttachment.getContentUrl());
+		Assert.assertEquals(regex, wikiPageAttachment.getContentValue());
 		Assert.assertEquals(regex, wikiPageAttachment.getEncodingFormat());
 		Assert.assertEquals(regex, wikiPageAttachment.getFileExtension());
 		Assert.assertEquals(regex, wikiPageAttachment.getTitle());
@@ -533,6 +537,14 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("contentValue", additionalAssertFieldName)) {
+				if (wikiPageAttachment.getContentValue() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (wikiPageAttachment.getEncodingFormat() == null) {
 					valid = false;
@@ -672,6 +684,17 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 				if (!Objects.deepEquals(
 						wikiPageAttachment1.getContentUrl(),
 						wikiPageAttachment2.getContentUrl())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("contentValue", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						wikiPageAttachment1.getContentValue(),
+						wikiPageAttachment2.getContentValue())) {
 
 					return false;
 				}
@@ -825,6 +848,14 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("contentValue")) {
+			sb.append("'");
+			sb.append(String.valueOf(wikiPageAttachment.getContentValue()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("encodingFormat")) {
 			sb.append("'");
 			sb.append(String.valueOf(wikiPageAttachment.getEncodingFormat()));
@@ -909,6 +940,8 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 		return new WikiPageAttachment() {
 			{
 				contentUrl = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				contentValue = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				encodingFormat = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

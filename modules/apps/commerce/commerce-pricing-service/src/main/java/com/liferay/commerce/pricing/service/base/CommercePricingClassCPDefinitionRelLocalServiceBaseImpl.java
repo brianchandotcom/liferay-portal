@@ -19,7 +19,9 @@ import com.liferay.commerce.pricing.service.CommercePricingClassCPDefinitionRelL
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierPersistence;
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelPersistence;
+import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelPersistence;
+import com.liferay.commerce.pricing.service.persistence.CommercePricingClassFinder;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -79,6 +81,10 @@ public abstract class CommercePricingClassCPDefinitionRelLocalServiceBaseImpl
 	/**
 	 * Adds the commerce pricing class cp definition rel to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePricingClassCPDefinitionRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePricingClassCPDefinitionRel the commerce pricing class cp definition rel
 	 * @return the commerce pricing class cp definition rel that was added
 	 */
@@ -114,6 +120,10 @@ public abstract class CommercePricingClassCPDefinitionRelLocalServiceBaseImpl
 	/**
 	 * Deletes the commerce pricing class cp definition rel with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePricingClassCPDefinitionRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param CommercePricingClassCPDefinitionRelId the primary key of the commerce pricing class cp definition rel
 	 * @return the commerce pricing class cp definition rel that was removed
 	 * @throws PortalException if a commerce pricing class cp definition rel with the primary key could not be found
@@ -131,6 +141,10 @@ public abstract class CommercePricingClassCPDefinitionRelLocalServiceBaseImpl
 
 	/**
 	 * Deletes the commerce pricing class cp definition rel from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePricingClassCPDefinitionRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commercePricingClassCPDefinitionRel the commerce pricing class cp definition rel
 	 * @return the commerce pricing class cp definition rel that was removed
@@ -373,6 +387,10 @@ public abstract class CommercePricingClassCPDefinitionRelLocalServiceBaseImpl
 	/**
 	 * Updates the commerce pricing class cp definition rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePricingClassCPDefinitionRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePricingClassCPDefinitionRel the commerce pricing class cp definition rel
 	 * @return the commerce pricing class cp definition rel that was updated
 	 */
@@ -553,6 +571,26 @@ public abstract class CommercePricingClassCPDefinitionRelLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce pricing class finder.
+	 *
+	 * @return the commerce pricing class finder
+	 */
+	public CommercePricingClassFinder getCommercePricingClassFinder() {
+		return commercePricingClassFinder;
+	}
+
+	/**
+	 * Sets the commerce pricing class finder.
+	 *
+	 * @param commercePricingClassFinder the commerce pricing class finder
+	 */
+	public void setCommercePricingClassFinder(
+		CommercePricingClassFinder commercePricingClassFinder) {
+
+		this.commercePricingClassFinder = commercePricingClassFinder;
+	}
+
+	/**
 	 * Returns the commerce pricing class cp definition rel local service.
 	 *
 	 * @return the commerce pricing class cp definition rel local service
@@ -598,6 +636,30 @@ public abstract class CommercePricingClassCPDefinitionRelLocalServiceBaseImpl
 
 		this.commercePricingClassCPDefinitionRelPersistence =
 			commercePricingClassCPDefinitionRelPersistence;
+	}
+
+	/**
+	 * Returns the commerce pricing class cp definition rel finder.
+	 *
+	 * @return the commerce pricing class cp definition rel finder
+	 */
+	public CommercePricingClassCPDefinitionRelFinder
+		getCommercePricingClassCPDefinitionRelFinder() {
+
+		return commercePricingClassCPDefinitionRelFinder;
+	}
+
+	/**
+	 * Sets the commerce pricing class cp definition rel finder.
+	 *
+	 * @param commercePricingClassCPDefinitionRelFinder the commerce pricing class cp definition rel finder
+	 */
+	public void setCommercePricingClassCPDefinitionRelFinder(
+		CommercePricingClassCPDefinitionRelFinder
+			commercePricingClassCPDefinitionRelFinder) {
+
+		this.commercePricingClassCPDefinitionRelFinder =
+			commercePricingClassCPDefinitionRelFinder;
 	}
 
 	/**
@@ -818,6 +880,9 @@ public abstract class CommercePricingClassCPDefinitionRelLocalServiceBaseImpl
 	@BeanReference(type = CommercePricingClassPersistence.class)
 	protected CommercePricingClassPersistence commercePricingClassPersistence;
 
+	@BeanReference(type = CommercePricingClassFinder.class)
+	protected CommercePricingClassFinder commercePricingClassFinder;
+
 	@BeanReference(type = CommercePricingClassCPDefinitionRelLocalService.class)
 	protected CommercePricingClassCPDefinitionRelLocalService
 		commercePricingClassCPDefinitionRelLocalService;
@@ -825,6 +890,10 @@ public abstract class CommercePricingClassCPDefinitionRelLocalServiceBaseImpl
 	@BeanReference(type = CommercePricingClassCPDefinitionRelPersistence.class)
 	protected CommercePricingClassCPDefinitionRelPersistence
 		commercePricingClassCPDefinitionRelPersistence;
+
+	@BeanReference(type = CommercePricingClassCPDefinitionRelFinder.class)
+	protected CommercePricingClassCPDefinitionRelFinder
+		commercePricingClassCPDefinitionRelFinder;
 
 	@ServiceReference(
 		type = com.liferay.counter.kernel.service.CounterLocalService.class

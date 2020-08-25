@@ -36,17 +36,17 @@ public class CPDefinitionCacheModel
 	implements CacheModel<CPDefinition>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionCacheModel)) {
+		if (!(object instanceof CPDefinitionCacheModel)) {
 			return false;
 		}
 
 		CPDefinitionCacheModel cpDefinitionCacheModel =
-			(CPDefinitionCacheModel)obj;
+			(CPDefinitionCacheModel)object;
 
 		if (CPDefinitionId == cpDefinitionCacheModel.CPDefinitionId) {
 			return true;

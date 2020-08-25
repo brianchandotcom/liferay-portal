@@ -36,17 +36,17 @@ public class AssetDisplayPageEntryCacheModel
 	implements CacheModel<AssetDisplayPageEntry>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AssetDisplayPageEntryCacheModel)) {
+		if (!(object instanceof AssetDisplayPageEntryCacheModel)) {
 			return false;
 		}
 
 		AssetDisplayPageEntryCacheModel assetDisplayPageEntryCacheModel =
-			(AssetDisplayPageEntryCacheModel)obj;
+			(AssetDisplayPageEntryCacheModel)object;
 
 		if (assetDisplayPageEntryId ==
 				assetDisplayPageEntryCacheModel.assetDisplayPageEntryId) {

@@ -57,7 +57,20 @@ public class StagingProcessesWebToolbarDisplayContext {
 			portlet.getRootPortletId());
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getActionDropdownItems(boolean)}
+	 */
+	@Deprecated
 	public List<DropdownItem> getActionDropdownItems() {
+		return getActionDropdownItems(true);
+	}
+
+	public List<DropdownItem> getActionDropdownItems(boolean hasPermission) {
+		if (!hasPermission) {
+			return null;
+		}
+
 		return new DropdownItemList() {
 			{
 				add(
@@ -72,7 +85,20 @@ public class StagingProcessesWebToolbarDisplayContext {
 		};
 	}
 
+	/**
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link
+	 *             #getCreationMenu(boolean)}
+	 */
+	@Deprecated
+	public CreationMenu getCreationMenu() {
+		return getCreationMenu(true);
+	}
+
 	public CreationMenu getCreationMenu(boolean hasPermission) {
+		if (!hasPermission) {
+			return null;
+		}
+
 		return new CreationMenu() {
 			{
 				int configurationType = 0;
@@ -93,38 +119,15 @@ public class StagingProcessesWebToolbarDisplayContext {
 							TYPE_PUBLISH_LAYOUT_LOCAL;
 				}
 
-				if (hasPermission) {
-					List<ExportImportConfiguration> exportImportConfigurations =
-						ExportImportConfigurationLocalServiceUtil.
-							getExportImportConfigurations(
-								stagingGroupId, configurationType);
+				List<ExportImportConfiguration> exportImportConfigurations =
+					ExportImportConfigurationLocalServiceUtil.
+						getExportImportConfigurations(
+							stagingGroupId, configurationType);
 
-					for (ExportImportConfiguration exportImportConfiguration :
-							exportImportConfigurations) {
+				for (ExportImportConfiguration exportImportConfiguration :
+						exportImportConfigurations) {
 
-						addRestDropdownItem(
-							dropdownItem -> {
-								String cmd = Constants.PUBLISH_TO_LIVE;
-
-								if (stagingGroup.isStagedRemotely()) {
-									cmd = Constants.PUBLISH_TO_REMOTE;
-								}
-
-								dropdownItem.setHref(
-									_portletResponse.createRenderURL(),
-									"mvcRenderCommandName", "publishLayouts",
-									Constants.CMD, cmd,
-									"exportImportConfigurationId",
-									String.valueOf(
-										exportImportConfiguration.
-											getExportImportConfigurationId()),
-									"groupId", String.valueOf(stagingGroupId));
-								dropdownItem.setLabel(
-									exportImportConfiguration.getName());
-							});
-					}
-
-					addPrimaryDropdownItem(
+					addRestDropdownItem(
 						dropdownItem -> {
 							String cmd = Constants.PUBLISH_TO_LIVE;
 
@@ -135,14 +138,34 @@ public class StagingProcessesWebToolbarDisplayContext {
 							dropdownItem.setHref(
 								_portletResponse.createRenderURL(),
 								"mvcRenderCommandName", "publishLayouts",
-								Constants.CMD, cmd, "groupId",
-								String.valueOf(stagingGroupId), "privateLayout",
-								Boolean.FALSE.toString());
+								Constants.CMD, cmd,
+								"exportImportConfigurationId",
+								String.valueOf(
+									exportImportConfiguration.
+										getExportImportConfigurationId()),
+								"groupId", String.valueOf(stagingGroupId));
 							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_request, "custom-publication"));
+								exportImportConfiguration.getName());
 						});
 				}
+
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						String cmd = Constants.PUBLISH_TO_LIVE;
+
+						if (stagingGroup.isStagedRemotely()) {
+							cmd = Constants.PUBLISH_TO_REMOTE;
+						}
+
+						dropdownItem.setHref(
+							_portletResponse.createRenderURL(),
+							"mvcRenderCommandName", "publishLayouts",
+							Constants.CMD, cmd, "groupId",
+							String.valueOf(stagingGroupId), "privateLayout",
+							Boolean.FALSE.toString());
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "custom-publication"));
+					});
 			}
 		};
 	}

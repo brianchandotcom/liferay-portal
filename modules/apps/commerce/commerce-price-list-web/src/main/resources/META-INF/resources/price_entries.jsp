@@ -26,7 +26,7 @@ SearchContainer<CommercePriceEntry> commercePriceEntriesSearchContainer = commer
 PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 %>
 
-<c:if test="<%= commercePriceEntryDisplayContext.hasManageCommercePriceListPermission() %>">
+<c:if test="<%= commercePriceEntryDisplayContext.hasPermission(commercePriceListId, ActionKeys.VIEW) %>">
 	<liferay-frontend:management-bar
 		includeCheckBox="<%= true %>"
 		searchContainerId="commercePriceEntries"
@@ -54,15 +54,17 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 				<aui:input name="cpInstanceIds" type="hidden" value="" />
 			</aui:form>
 
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					id="addCommercePriceEntry"
-					title='<%= LanguageUtil.get(request, "add-entry") %>'
-					url="javascript:;"
-				/>
-			</liferay-frontend:add-menu>
+			<c:if test="<%= commercePriceEntryDisplayContext.hasPermission(commercePriceListId, ActionKeys.UPDATE) %>">
+				<liferay-frontend:add-menu
+					inline="<%= true %>"
+				>
+					<liferay-frontend:add-menu-item
+						id="addCommercePriceEntry"
+						title='<%= LanguageUtil.get(request, "add-entry") %>'
+						url="javascript:;"
+					/>
+				</liferay-frontend:add-menu>
+			</c:if>
 		</liferay-frontend:management-bar-buttons>
 
 		<liferay-frontend:management-bar-filters>
@@ -87,11 +89,13 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 				/>
 			</c:if>
 
-			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommercePriceEntries();" %>'
-				icon="times"
-				label="delete"
-			/>
+			<c:if test="<%= commercePriceEntryDisplayContext.hasPermission(commercePriceListId, ActionKeys.UPDATE) %>">
+				<liferay-frontend:management-bar-button
+					href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommercePriceEntries();" %>'
+					icon="times"
+					label="delete"
+				/>
+			</c:if>
 		</liferay-frontend:management-bar-action-buttons>
 	</liferay-frontend:management-bar>
 

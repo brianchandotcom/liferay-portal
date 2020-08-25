@@ -191,6 +191,10 @@ public interface CommerceChannelRelLocalService
 		long commerceChannelRelId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceChannelRel fetchCommerceChannelRel(
+		String className, long classPK, long commerceChannelId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**

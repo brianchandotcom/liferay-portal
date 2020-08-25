@@ -15,7 +15,6 @@
 package com.liferay.commerce.discount.internal;
 
 import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
@@ -28,8 +27,8 @@ import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountRule;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleType;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleTypeRegistry;
-import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleLocalService;
+import com.liferay.commerce.discount.service.CommerceDiscountUsageEntryLocalService;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.price.list.model.CommercePriceListDiscountRel;
 import com.liferay.commerce.price.list.service.CommercePriceListDiscountRelLocalService;
@@ -71,7 +70,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 	service = CommerceDiscountCalculation.class
 )
 public class CommerceDiscountCalculationV2Impl
-	implements CommerceDiscountCalculation {
+	extends BaseCommerceDiscountCalculation {
 
 	@Override
 	public CommerceDiscountValue getOrderShippingCommerceDiscountValue(
@@ -152,7 +151,7 @@ public class CommerceDiscountCalculationV2Impl
 			).toArray();
 
 			List<CommerceDiscount> commerceDiscounts =
-				_commerceDiscountLocalService.getPriceListCommerceDiscounts(
+				commerceDiscountLocalService.getPriceListCommerceDiscounts(
 					commerceDiscountIds, cpInstance.getCPDefinitionId());
 
 			if (commerceDiscounts.isEmpty()) {
@@ -164,8 +163,9 @@ public class CommerceDiscountCalculationV2Impl
 		}
 
 		List<CommerceDiscount> commerceDiscounts =
-			_getProductCommerceDiscountByHierarchy(
-				cpInstance.getCompanyId(), commerceContext,
+			getProductCommerceDiscountByHierarchy(
+				cpInstance.getCompanyId(), commerceContext.getCommerceAccount(),
+				commerceContext.getCommerceChannelId(),
 				cpInstance.getCPDefinitionId());
 
 		if (commerceDiscounts.isEmpty()) {
@@ -244,7 +244,7 @@ public class CommerceDiscountCalculationV2Impl
 		}
 
 		CommerceDiscount commerceDiscount =
-			_commerceDiscountLocalService.getCommerceDiscount(
+			commerceDiscountLocalService.getCommerceDiscount(
 				commerceDiscountId);
 
 		BigDecimal discountAmount = BigDecimal.ZERO;
@@ -318,8 +318,9 @@ public class CommerceDiscountCalculationV2Impl
 		for (CommerceDiscount commerceDiscount : commerceDiscounts) {
 			String discountCouponCode = commerceDiscount.getCouponCode();
 
-			if (!Validator.isBlank(discountCouponCode) &&
-				!Objects.equals(couponCode, discountCouponCode)) {
+			if (!_isValidCouponCode(
+					commerceDiscount.getCommerceDiscountId(), couponCode,
+					discountCouponCode, commerceContext)) {
 
 				continue;
 			}
@@ -387,8 +388,10 @@ public class CommerceDiscountCalculationV2Impl
 		}
 
 		List<CommerceDiscount> commerceDiscounts =
-			_getOrderCommerceDiscountByHierarchy(
-				commerceOrder.getCompanyId(), commerceContext, discountType);
+			getOrderCommerceDiscountByHierarchy(
+				commerceOrder.getCompanyId(),
+				commerceContext.getCommerceAccount(),
+				commerceContext.getCommerceChannelId(), discountType);
 
 		if (commerceDiscounts.isEmpty()) {
 			return null;
@@ -486,114 +489,29 @@ public class CommerceDiscountCalculationV2Impl
 		return _ONE_HUNDRED.subtract(discountPercentage, mathContext);
 	}
 
-	private List<CommerceDiscount> _getOrderCommerceDiscountByHierarchy(
-			long companyId, CommerceContext commerceContext,
-			String commerceDiscountTargetType)
+	private boolean _isValidCouponCode(
+			long commerceDiscountId, String couponCode,
+			String discountCouponCode, CommerceContext commerceContext)
 		throws PortalException {
 
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
 		long commerceAccountId = 0;
+
+		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
 
 		if (commerceAccount != null) {
 			commerceAccountId = commerceAccount.getCommerceAccountId();
 		}
 
-		return _getOrderCommerceDiscountByHierarchy(
-			companyId, commerceAccountId,
-			commerceContext.getCommerceChannelId(), commerceDiscountTargetType);
-	}
+		if ((Validator.isBlank(discountCouponCode) ||
+			 Objects.equals(couponCode, discountCouponCode)) &&
+			_commerceDiscountUsageEntryLocalService.
+				validateDiscountLimitationUsage(
+					commerceAccountId, commerceDiscountId)) {
 
-	private List<CommerceDiscount> _getOrderCommerceDiscountByHierarchy(
-			long companyId, long commerceAccountId, long commerceChannelId,
-			String commerceDiscountTargetType)
-		throws PortalException {
-
-		List<CommerceDiscount> commerceDiscounts =
-			_commerceDiscountLocalService.getAccountCommerceDiscounts(
-				commerceAccountId, commerceDiscountTargetType);
-
-		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
-			return commerceDiscounts;
+			return true;
 		}
 
-		long[] commerceAccountGroupIds =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
-				commerceAccountId);
-
-		commerceDiscounts =
-			_commerceDiscountLocalService.getAccountGroupCommerceDiscount(
-				commerceAccountGroupIds, commerceDiscountTargetType);
-
-		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
-			return commerceDiscounts;
-		}
-
-		commerceDiscounts =
-			_commerceDiscountLocalService.getChannelCommerceDiscounts(
-				commerceChannelId, commerceDiscountTargetType);
-
-		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
-			return commerceDiscounts;
-		}
-
-		return _commerceDiscountLocalService.getUnqualifiedCommerceDiscounts(
-			companyId, commerceDiscountTargetType);
-	}
-
-	private List<CommerceDiscount> _getProductCommerceDiscountByHierarchy(
-			long companyId, CommerceContext commerceContext,
-			long cpDefinitionId)
-		throws PortalException {
-
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
-		long commerceAccountId = 0;
-
-		if (commerceAccount != null) {
-			commerceAccountId = commerceAccount.getCommerceAccountId();
-		}
-
-		return _getProductCommerceDiscountByHierarchy(
-			companyId, commerceAccountId,
-			commerceContext.getCommerceChannelId(), cpDefinitionId);
-	}
-
-	private List<CommerceDiscount> _getProductCommerceDiscountByHierarchy(
-			long companyId, long commerceAccountId, long commerceChannelId,
-			long cpDefinitionId)
-		throws PortalException {
-
-		List<CommerceDiscount> commerceDiscounts =
-			_commerceDiscountLocalService.getAccountCommerceDiscounts(
-				commerceAccountId, cpDefinitionId);
-
-		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
-			return commerceDiscounts;
-		}
-
-		long[] commerceAccountGroupIds =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
-				commerceAccountId);
-
-		commerceDiscounts =
-			_commerceDiscountLocalService.getAccountGroupCommerceDiscount(
-				commerceAccountGroupIds, cpDefinitionId);
-
-		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
-			return commerceDiscounts;
-		}
-
-		commerceDiscounts =
-			_commerceDiscountLocalService.getChannelCommerceDiscounts(
-				commerceChannelId, cpDefinitionId);
-
-		if ((commerceDiscounts != null) && !commerceDiscounts.isEmpty()) {
-			return commerceDiscounts;
-		}
-
-		return _commerceDiscountLocalService.getUnqualifiedCommerceDiscounts(
-			companyId, cpDefinitionId);
+		return false;
 	}
 
 	private boolean _isValidDiscount(
@@ -638,20 +556,18 @@ public class CommerceDiscountCalculationV2Impl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceDiscountCalculationV2Impl.class);
 
-	@Reference
-	private CommerceAccountHelper _commerceAccountHelper;
-
 	private final Map<String, CommerceDiscountApplicationStrategy>
 		_commerceDiscountApplicationStrategyMap = new ConcurrentHashMap<>();
-
-	@Reference
-	private CommerceDiscountLocalService _commerceDiscountLocalService;
 
 	@Reference
 	private CommerceDiscountRuleLocalService _commerceDiscountRuleLocalService;
 
 	@Reference
 	private CommerceDiscountRuleTypeRegistry _commerceDiscountRuleTypeRegistry;
+
+	@Reference
+	private CommerceDiscountUsageEntryLocalService
+		_commerceDiscountUsageEntryLocalService;
 
 	@Reference
 	private CommerceMoneyFactory _commerceMoneyFactory;

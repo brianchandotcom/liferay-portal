@@ -1071,16 +1071,16 @@ public class KaleoTaskAssignmentModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoTaskAssignment)) {
+		if (!(object instanceof KaleoTaskAssignment)) {
 			return false;
 		}
 
-		KaleoTaskAssignment kaleoTaskAssignment = (KaleoTaskAssignment)obj;
+		KaleoTaskAssignment kaleoTaskAssignment = (KaleoTaskAssignment)object;
 
 		long primaryKey = kaleoTaskAssignment.getPrimaryKey();
 

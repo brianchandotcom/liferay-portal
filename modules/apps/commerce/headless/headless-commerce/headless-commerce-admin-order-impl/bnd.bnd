@@ -1,8 +1,20 @@
 Bundle-Name: Liferay Headless Commerce Admin Order Implementation
 Bundle-SymbolicName: com.liferay.headless.commerce.admin.order.impl
-Bundle-Version: 1.0.35
+Bundle-Version: 1.0.45
 Import-Package:\
+	com.liferay.expando.kernel.model;version="[1.1.0,3.0.0)",\
+	com.liferay.exportimport.kernel.lar;version="[1.13.0,3.0.0)",\
+	com.liferay.portal.kernel.exception;version="[7.5.0,9.0.0)",\
+	com.liferay.portal.kernel.model;version="[2.0.0,4.0.0)",\
+	com.liferay.portal.kernel.model.impl;version="[1.1.0,3.0.0)",\
+	com.liferay.portal.kernel.search;version="[7.7.0,9.0.0)",\
+	com.liferay.portal.kernel.security.auth;version="[1.2.0,3.0.0)",\
+	com.liferay.portal.kernel.security.permission;version="[1.8.0,3.0.0)",\
+	com.liferay.portal.kernel.service;version="[1.43.0,3.0.0)",\
+	com.liferay.portal.kernel.util;version="[8.20.0,10.0.0)",\
+	com.liferay.portal.kernel.workflow;version="[7.4.0,9.0.0)",\
 	com.liferay.portal.vulcan.accept.language;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.dto.converter;version="[1.0.0,2.4.0)",\
 	com.liferay.portal.vulcan.fields;version="[1.0.0,2.0.0)",\
 	com.liferay.portal.vulcan.pagination;version="[1.0.0,2.0.0)",\
 	com.liferay.portal.vulcan.resource; version="[1.1.0,2.0.0)",\

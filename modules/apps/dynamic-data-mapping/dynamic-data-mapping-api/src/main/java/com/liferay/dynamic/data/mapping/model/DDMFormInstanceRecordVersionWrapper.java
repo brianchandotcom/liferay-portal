@@ -754,18 +754,18 @@ public class DDMFormInstanceRecordVersionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMFormInstanceRecordVersionWrapper)) {
+		if (!(object instanceof DDMFormInstanceRecordVersionWrapper)) {
 			return false;
 		}
 
 		DDMFormInstanceRecordVersionWrapper
 			ddmFormInstanceRecordVersionWrapper =
-				(DDMFormInstanceRecordVersionWrapper)obj;
+				(DDMFormInstanceRecordVersionWrapper)object;
 
 		if (Objects.equals(
 				_ddmFormInstanceRecordVersion,

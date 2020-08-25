@@ -64,6 +64,10 @@ public interface AccountLocalService
 	/**
 	 * Adds the account to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AccountLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param account the account
 	 * @return the account that was added
 	 */
@@ -92,6 +96,10 @@ public interface AccountLocalService
 	/**
 	 * Deletes the account from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AccountLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param account the account
 	 * @return the account that was removed
 	 * @throws PortalException
@@ -101,6 +109,10 @@ public interface AccountLocalService
 
 	/**
 	 * Deletes the account with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AccountLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param accountId the primary key of the account
 	 * @return the account that was removed
@@ -249,6 +261,10 @@ public interface AccountLocalService
 
 	/**
 	 * Updates the account in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect AccountLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param account the account
 	 * @return the account that was updated

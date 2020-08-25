@@ -34,8 +34,6 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 		contextObjects.put("commerceVirtualOrderItemContentDisplayContext", commerceVirtualOrderItemContentDisplayContext);
 
 		SearchContainer<CommerceVirtualOrderItem> commerceVirtualOrderContentDisplayContextSearchContainer = commerceVirtualOrderItemContentDisplayContext.getSearchContainer();
-
-		List<CommerceVirtualOrderItem> results = commerceVirtualOrderContentDisplayContextSearchContainer.getResults();
 		%>
 
 		<liferay-ddm:template-renderer
@@ -43,7 +41,7 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 			contextObjects="<%= contextObjects %>"
 			displayStyle="<%= commerceVirtualOrderItemContentDisplayContext.getDisplayStyle() %>"
 			displayStyleGroupId="<%= commerceVirtualOrderItemContentDisplayContext.getDisplayStyleGroupId() %>"
-			entries="<%= results %>"
+			entries="<%= commerceVirtualOrderContentDisplayContextSearchContainer.getResults() %>"
 		>
 			<div class="container-fluid-1280" id="<portlet:namespace />virtualOrderItemsContainer">
 				<div class="commerce-virtual-order-items-container" id="<portlet:namespace />entriesContainer">
@@ -107,11 +105,9 @@ CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDis
 
 									useDialog = true;
 								}
-
-								boolean hasDownloadCommerceVirtualOrderItemPermission = CommerceVirtualOrderItemPermission.contains(permissionChecker, commerceVirtualOrderItem, CommerceVirtualOrderActionKeys.DOWNLOAD_COMMERCE_VIRTUAL_ORDER_ITEM);
 								%>
 
-								<c:if test="<%= hasDownloadCommerceVirtualOrderItemPermission %>">
+								<c:if test="<%= CommerceVirtualOrderItemPermission.contains(permissionChecker, commerceVirtualOrderItem, CommerceVirtualOrderActionKeys.DOWNLOAD_COMMERCE_VIRTUAL_ORDER_ITEM) %>">
 									<aui:form action="<%= String.valueOf(commerceVirtualOrderItemContentDisplayContext.getDownloadResourceURL(commerceVirtualOrderItem.getCommerceVirtualOrderItemId())) %>" method="post" name='<%= commerceVirtualOrderItem.getCommerceVirtualOrderItemId() + "Fm" %>' />
 
 									<liferay-ui:icon

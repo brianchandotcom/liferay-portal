@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element index-type="text" instance-id="RFnJ1nCn" name="text_area" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<!--
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean mollis, risus
+vel venenatis lacinia, velit risus luctus dolor, eu ornare purus felis vitae
+erat. Morbi tincidunt sit amet nibh eget varius. Nunc molestie quis augue ac
+blandit. Suspendisse eros quam, gravida nec tristique non, pharetra sit amet
+arcu. Ut egestas urna justo, nec ullamcorper nunc porttitor et. Aenean
+ultrices sagittis tincidunt. Mauris quis libero blandit, posuere justo vel,
+auctor nisi. Sed sem risus, molestie sed mauris vel, tincidunt luctus urna.
+Ut hendrerit felis tortor. Nullam porttitor lacinia nisl, sit amet maximus
+neque molestie nec. Aenean vulputate massa quis eros tincidunt aliquet.
+Curabitur auctor, eros vel sagittis dictum, mauris lacus scelerisque nibh,
+ut fringilla nisl risus id leo. Cras eget risus pharetra neque condimentum
+vulputate sed quis est. Curabitur maximus, nulla non interdum mattis, augue
+sapien vehicula dolor, quis blandit lorem ligula in ex. Vestibulum vestibulum
+mi eget bibendum suscipit. Nulla rutrum porttitor placerat.
+
+Morbi venenatis nibh nec placerat mattis. Fusce sollicitudin lectus vel leo
+pellentesque, et vulputate eros iaculis. Fusce vel finibus neque, a scelerisque
+mauris. Nulla ut mollis risus, eget finibus lectus. Donec vulputate turpis a
+luctus maximus. Pellentesque habitant morbi tristique senectus et netus et
+malesuada fames ac turpis egestas. Mauris est nisl, imperdiet non tincidunt
+porttitor, semper a nulla. Aenean auctor ullamcorper risus, eu dapibus ligula
+iaculis et. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+posuere cubilia curae; Etiam orci massa, malesuada at luctus in, dapibus at
+erat. Pellentesque dictum pulvinar semper.
+
+Donec nunc neque, rhoncus finibus lectus in, convallis tempus mi. Praesent leo
+turpis, ullamcorper eget nulla sed, eleifend tincidunt mauris. In at luctus
+justo, ac varius ante. In dui massa, mollis eu ultricies sit amet, lobortis sed
+mi. Ut hendrerit cursus neque imperdiet eleifend. Aenean volutpat felis
+porttitor gravida tempus. Curabitur vel eros et ligula dictum gravida.
+Pellentesque posuere erat vitae consectetur hendrerit. Suspendisse cursus orci
+ut orci laoreet, eu feugiat arcu euismod. Quisque in est eget velit ornare
+condimentum vel id sapien. In iaculis dolor nulla, sed finibus mi consectetur
+ut.
+
+Mauris pellentesque libero sit amet arcu vulputate ultrices. Pellentesque
+ultricies pellentesque augue quis varius. Praesent in mi in odio pretium
+placerat. Donec quis odio imperdiet, euismod neque eu, ultrices urna. Quisque
+scelerisque et neque eu ultrices. Ut pellentesque commodo nunc.
+-->]]></dynamic-content>
+	</dynamic-element>
+</root>

@@ -1,0 +1,340 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.headless.delivery.internal.dto.v1_0.util;
+
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.headless.delivery.dto.v1_0.ContentField;
+import com.liferay.headless.delivery.dto.v1_0.ContentFieldValue;
+import com.liferay.headless.delivery.dto.v1_0.Geo;
+import com.liferay.headless.delivery.dto.v1_0.StructuredContentLink;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleService;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
+
+import java.text.ParseException;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.TimeZone;
+
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.core.UriInfo;
+
+/**
+ * @author Javier Gamarra
+ */
+public class ContentFieldUtil {
+
+	public static ContentField toContentField(
+			DDMFormFieldValue ddmFormFieldValue, DLAppService dlAppService,
+			DTOConverterContext dtoConverterContext,
+			JournalArticleService journalArticleService,
+			LayoutLocalService layoutLocalService)
+		throws Exception {
+
+		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+
+		if (ddmFormField == null) {
+			return null;
+		}
+
+		LocalizedValue localizedValue = ddmFormField.getLabel();
+
+		return new ContentField() {
+			{
+				contentFieldValue = _toContentFieldValue(
+					ddmFormField, dlAppService, journalArticleService,
+					layoutLocalService, dtoConverterContext.getLocale(),
+					dtoConverterContext.getUriInfoOptional(),
+					ddmFormFieldValue.getValue());
+				dataType = ContentStructureUtil.toDataType(ddmFormField);
+				inputControl = ContentStructureUtil.toInputControl(
+					ddmFormField);
+				label = localizedValue.getString(
+					dtoConverterContext.getLocale());
+				label_i18n = LocalizedMapUtil.getLocalizedMap(
+					dtoConverterContext.isAcceptAllLanguages(),
+					localizedValue.getValues());
+				name = ddmFormField.getName();
+				nestedContentFields = TransformUtil.transformToArray(
+					ddmFormFieldValue.getNestedDDMFormFieldValues(),
+					value -> toContentField(
+						value, dlAppService, dtoConverterContext,
+						journalArticleService, layoutLocalService),
+					ContentField.class);
+				repeatable = ddmFormField.isRepeatable();
+
+				setContentFieldValue_i18n(
+					() -> {
+						if (!dtoConverterContext.isAcceptAllLanguages()) {
+							return null;
+						}
+
+						Map<String, ContentFieldValue> map = new HashMap<>();
+
+						Map<Locale, String> valueValues = Optional.ofNullable(
+							ddmFormFieldValue.getValue()
+						).map(
+							Value::getValues
+						).orElse(
+							Collections.emptyMap()
+						);
+
+						for (Map.Entry<Locale, String> entry :
+								valueValues.entrySet()) {
+
+							Locale locale = entry.getKey();
+
+							map.put(
+								LocaleUtil.toBCP47LanguageId(locale),
+								_getContentFieldValue(
+									ddmFormField, dlAppService,
+									journalArticleService, layoutLocalService,
+									entry.getKey(),
+									dtoConverterContext.getUriInfoOptional(),
+									entry.getValue()));
+						}
+
+						return map;
+					});
+			}
+		};
+	}
+
+	private static ContentFieldValue _getContentFieldValue(
+		DDMFormField ddmFormField, DLAppService dlAppService,
+		JournalArticleService journalArticleService,
+		LayoutLocalService layoutLocalService, Locale locale,
+		Optional<UriInfo> uriInfoOptional, String valueString) {
+
+		try {
+			if (Objects.equals(DDMFormFieldType.DATE, ddmFormField.getType())) {
+				return new ContentFieldValue() {
+					{
+						data = _toDateString(locale, valueString);
+					}
+				};
+			}
+			else if (Objects.equals(
+						DDMFormFieldType.DOCUMENT_LIBRARY,
+						ddmFormField.getType())) {
+
+				FileEntry fileEntry = _getFileEntry(dlAppService, valueString);
+
+				if (fileEntry == null) {
+					return new ContentFieldValue();
+				}
+
+				return new ContentFieldValue() {
+					{
+						document = ContentDocumentUtil.toContentDocument(
+							"contentFields.contentFieldValue.document",
+							fileEntry, uriInfoOptional);
+					}
+				};
+			}
+
+			if (Objects.equals(
+					DDMFormFieldType.GEOLOCATION, ddmFormField.getType())) {
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					valueString);
+
+				return new ContentFieldValue() {
+					{
+						geo = new Geo() {
+							{
+								latitude = jsonObject.getDouble("latitude");
+								longitude = jsonObject.getDouble("longitude");
+							}
+						};
+					}
+				};
+			}
+
+			if (Objects.equals(
+					DDMFormFieldType.IMAGE, ddmFormField.getType())) {
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					valueString);
+
+				long fileEntryId = jsonObject.getLong("fileEntryId");
+
+				if (fileEntryId == 0) {
+					return new ContentFieldValue();
+				}
+
+				return new ContentFieldValue() {
+					{
+						image = ContentDocumentUtil.toContentDocument(
+							"contentFields.contentFieldValue.image",
+							dlAppService.getFileEntry(fileEntryId),
+							uriInfoOptional);
+
+						image.setDescription(jsonObject.getString("alt"));
+					}
+				};
+			}
+
+			if (Objects.equals(
+					DDMFormFieldType.JOURNAL_ARTICLE, ddmFormField.getType())) {
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					valueString);
+
+				long classPK = jsonObject.getLong("classPK");
+
+				if (classPK == 0) {
+					return new ContentFieldValue();
+				}
+
+				JournalArticle journalArticle =
+					journalArticleService.getLatestArticle(classPK);
+
+				return new ContentFieldValue() {
+					{
+						structuredContentLink = new StructuredContentLink() {
+							{
+								contentType = "StructuredContent";
+								id = journalArticle.getResourcePrimKey();
+								title = journalArticle.getTitle();
+							}
+						};
+					}
+				};
+			}
+
+			if (Objects.equals(
+					DDMFormFieldType.LINK_TO_PAGE, ddmFormField.getType())) {
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					valueString);
+
+				long layoutId = jsonObject.getLong("layoutId");
+
+				if (layoutId == 0) {
+					return new ContentFieldValue();
+				}
+
+				long groupId = jsonObject.getLong("groupId");
+				boolean privateLayout = jsonObject.getBoolean("privateLayout");
+
+				Layout layoutByUuidAndGroupId = layoutLocalService.getLayout(
+					groupId, privateLayout, layoutId);
+
+				return new ContentFieldValue() {
+					{
+						link = layoutByUuidAndGroupId.getFriendlyURL();
+					}
+				};
+			}
+
+			return new ContentFieldValue() {
+				{
+					data = valueString;
+				}
+			};
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception, exception);
+			}
+
+			return new ContentFieldValue();
+		}
+	}
+
+	private static FileEntry _getFileEntry(
+			DLAppService dlAppService, String valueString)
+		throws Exception {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(valueString);
+
+		long classPK = jsonObject.getLong("classPK");
+
+		if (classPK != 0) {
+			return dlAppService.getFileEntry(classPK);
+		}
+
+		long groupId = jsonObject.getLong("groupId");
+
+		if (groupId == 0) {
+			return null;
+		}
+
+		return dlAppService.getFileEntryByUuidAndGroupId(
+			jsonObject.getString("uuid"), groupId);
+	}
+
+	private static ContentFieldValue _toContentFieldValue(
+		DDMFormField ddmFormField, DLAppService dlAppService,
+		JournalArticleService journalArticleService,
+		LayoutLocalService layoutLocalService, Locale locale,
+		Optional<UriInfo> uriInfoOptional, Value value) {
+
+		if (value == null) {
+			return new ContentFieldValue();
+		}
+
+		String valueString = String.valueOf(value.getString(locale));
+
+		return _getContentFieldValue(
+			ddmFormField, dlAppService, journalArticleService,
+			layoutLocalService, locale, uriInfoOptional, valueString);
+	}
+
+	private static String _toDateString(Locale locale, String valueString) {
+		if (Validator.isNull(valueString)) {
+			return "";
+		}
+
+		try {
+			return DateUtil.getDate(
+				DateUtil.parseDate("yyyy-MM-dd", valueString, locale),
+				"yyyy-MM-dd'T'HH:mm:ss'Z'", locale,
+				TimeZone.getTimeZone("UTC"));
+		}
+		catch (ParseException parseException) {
+			throw new BadRequestException(
+				"Unable to parse date that does not conform to ISO-8601",
+				parseException);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContentFieldUtil.class);
+
+}

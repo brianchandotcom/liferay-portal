@@ -1174,16 +1174,16 @@ public class KBArticleWrapper implements KBArticle, ModelWrapper<KBArticle> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KBArticleWrapper)) {
+		if (!(object instanceof KBArticleWrapper)) {
 			return false;
 		}
 
-		KBArticleWrapper kbArticleWrapper = (KBArticleWrapper)obj;
+		KBArticleWrapper kbArticleWrapper = (KBArticleWrapper)object;
 
 		if (Objects.equals(_kbArticle, kbArticleWrapper._kbArticle)) {
 			return true;

@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 @Generated("")
 @OpenAPIDefinition(
-	info = @Info(description = "Headless Delivery Commerce Cart API. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.commerce.delivery.cart.client', and version '1.0.9'.", license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "Headless Delivery Commerce Cart API", version = "v1.0")
+	info = @Info(description = "Headless Delivery Commerce Cart API. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.commerce.delivery.cart.client', and version '1.0.15'.", license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "Headless Delivery Commerce Cart API", version = "v1.0")
 )
 @Path("/v1.0")
 public class OpenAPIResourceImpl {
@@ -57,6 +57,17 @@ public class OpenAPIResourceImpl {
 	@Produces({MediaType.APPLICATION_JSON, "application/yaml"})
 	public Response getOpenAPI(@PathParam("type") String type)
 		throws Exception {
+
+		try {
+			Class<? extends OpenAPIResource> clazz =
+				_openAPIResource.getClass();
+
+			clazz.getMethod(
+				"getOpenAPI", Set.class, String.class, UriInfo.class);
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			return _openAPIResource.getOpenAPI(_resourceClasses, type);
+		}
 
 		return _openAPIResource.getOpenAPI(_resourceClasses, type, _uriInfo);
 	}

@@ -316,16 +316,16 @@ public class VirtualHostWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof VirtualHostWrapper)) {
+		if (!(object instanceof VirtualHostWrapper)) {
 			return false;
 		}
 
-		VirtualHostWrapper virtualHostWrapper = (VirtualHostWrapper)obj;
+		VirtualHostWrapper virtualHostWrapper = (VirtualHostWrapper)object;
 
 		if (Objects.equals(_virtualHost, virtualHostWrapper._virtualHost)) {
 			return true;

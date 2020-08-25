@@ -67,6 +67,10 @@ public interface KaleoTransitionLocalService
 	/**
 	 * Adds the kaleo transition to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect KaleoTransitionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param kaleoTransition the kaleo transition
 	 * @return the kaleo transition that was added
 	 */
@@ -96,6 +100,10 @@ public interface KaleoTransitionLocalService
 	/**
 	 * Deletes the kaleo transition from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect KaleoTransitionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param kaleoTransition the kaleo transition
 	 * @return the kaleo transition that was removed
 	 */
@@ -105,6 +113,10 @@ public interface KaleoTransitionLocalService
 
 	/**
 	 * Deletes the kaleo transition with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect KaleoTransitionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param kaleoTransitionId the primary key of the kaleo transition
 	 * @return the kaleo transition that was removed
@@ -264,6 +276,10 @@ public interface KaleoTransitionLocalService
 
 	/**
 	 * Updates the kaleo transition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect KaleoTransitionLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param kaleoTransition the kaleo transition
 	 * @return the kaleo transition that was updated

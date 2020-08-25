@@ -867,17 +867,17 @@ public class CPDAvailabilityEstimateModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDAvailabilityEstimate)) {
+		if (!(object instanceof CPDAvailabilityEstimate)) {
 			return false;
 		}
 
 		CPDAvailabilityEstimate cpdAvailabilityEstimate =
-			(CPDAvailabilityEstimate)obj;
+			(CPDAvailabilityEstimate)object;
 
 		long primaryKey = cpdAvailabilityEstimate.getPrimaryKey();
 

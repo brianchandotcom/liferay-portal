@@ -99,6 +99,14 @@ public class PriceListAccountGroupResourceImpl
 			Long id, Pagination pagination)
 		throws Exception {
 
+		CommercePriceList commercePriceList =
+			_commercePriceListService.fetchCommercePriceList(id);
+
+		if (commercePriceList == null) {
+			throw new NoSuchPriceListException(
+				"Unable to find Price List with id: " + id);
+		}
+
 		List<CommercePriceListCommerceAccountGroupRel>
 			commercePriceListCommerceAccountGroupRels =
 				_commercePriceListCommerceAccountGroupRelService.

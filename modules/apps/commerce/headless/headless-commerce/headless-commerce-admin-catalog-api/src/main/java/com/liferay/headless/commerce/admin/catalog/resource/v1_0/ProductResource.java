@@ -70,6 +70,10 @@ public interface ProductResource {
 			String externalReferenceCode, Product product)
 		throws Exception;
 
+	public Product postProductByExternalReferenceCodeClone(
+			String externalReferenceCode, String catalogExternalReferenceCode)
+		throws Exception;
+
 	public Response deleteProduct(Long id) throws Exception;
 
 	public Response deleteProductBatch(
@@ -79,6 +83,8 @@ public interface ProductResource {
 	public Product getProduct(Long id) throws Exception;
 
 	public Response patchProduct(Long id, Product product) throws Exception;
+
+	public Product postProductClone(Long id, Long catalogId) throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

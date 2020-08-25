@@ -16,16 +16,12 @@ import launcher from '../../../src/main/resources/META-INF/resources/components/
 import slugify from '../../../src/main/resources/META-INF/resources/utilities/slugify';
 
 import '../../../src/main/resources/META-INF/resources/styles/main.scss';
-
-const themeDisplay = {
-	getLanguageId: () => 'en_US'
-};
+import {showErrorNotification} from '../../../src/main/resources/META-INF/resources/utilities/notifications';
 
 const headers = new Headers({
 	Accept: 'application/json',
 	Authorization: 'Basic ' + btoa('test@liferay.com' + ':' + 'test'),
-	'Content-Type': 'application/json',
-	'x-csrf-token': Liferay.authToken
+	'Content-Type': 'application/json'
 });
 
 const id = 40077;
@@ -42,7 +38,7 @@ function selectItem(specification) {
 				specificationId: specification.id,
 				specificationKey: specification.key,
 				value: {
-					[themeDisplay.getLanguageId()]: name
+					[Liferay.ThemeDisplay.getLanguageId()]: name
 				}
 			}),
 			credentials: 'include',
@@ -57,7 +53,7 @@ function addNewItem(name) {
 		body: JSON.stringify({
 			key: slugify(name),
 			title: {
-				[themeDisplay.getLanguageId()]: name
+				[Liferay.ThemeDisplay.getLanguageId()]: name
 			}
 		}),
 		credentials: 'include',
@@ -82,6 +78,9 @@ function getSelectedItems() {
 	)
 		.then(response => response.json())
 		.then(jsonResponse => {
+			if (!jsonResponse.items && jsonResponse.title) {
+				return showErrorNotification(jsonResponse.title);
+			}
 			return jsonResponse.items.map(
 				specification => specification.specificationId
 			);
@@ -92,15 +91,24 @@ launcher('itemFinder', 'item-finder-root-id', {
 	apiUrl: '/o/headless-commerce-admin-catalog/v1.0/specifications',
 	createNewItemLabel: 'Create new specification',
 	getSelectedItems,
+	itemCreation: false,
 	itemsKey: 'id',
 	linkedDatasetsId: ['test'],
 	onItemCreated: addNewItem,
 	onItemSelected: selectItem,
 	pageSize: 5,
 	panelHeaderLabel: 'Add new specification',
-	schema: {
-		itemTitle: ['title', 'en_US']
-	},
+	schema: [
+		{
+			fieldName: ['title', 'LANG']
+		},
+		{
+			fieldName: 'id'
+		},
+		{
+			fieldName: 'key'
+		}
+	],
 	spritemap: './assets/icons.svg',
 	titleLabel: 'Select an existing specification'
 });

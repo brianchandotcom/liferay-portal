@@ -14,12 +14,16 @@
 
 package com.liferay.commerce.inventory.internal.permission;
 
+import static com.liferay.portal.kernel.security.permission.PermissionThreadLocal.getPermissionChecker;
+
+import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.permission.CommerceInventoryWarehousePermission;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.permission.PortalPermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -137,6 +141,13 @@ public class CommerceInventoryWarehousePermissionImpl
 			return true;
 		}
 
+		if (_portalPermission.contains(
+				getPermissionChecker(),
+				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
+
+			return true;
+		}
+
 		return permissionChecker.hasPermission(
 			null, CommerceInventoryWarehouse.class.getName(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
@@ -146,5 +157,8 @@ public class CommerceInventoryWarehousePermissionImpl
 	@Reference
 	private CommerceInventoryWarehouseLocalService
 		_commerceInventoryWarehouseLocalService;
+
+	@Reference
+	private PortalPermission _portalPermission;
 
 }

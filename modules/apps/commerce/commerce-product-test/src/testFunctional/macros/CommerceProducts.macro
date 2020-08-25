@@ -10,7 +10,12 @@ definition {
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM",
 			value1 = "${key_menuItem}");
 
+		if (!(isSet(productCatalog))) {
+			var productCatalog = "Master";
+		}
+
 		CommerceEntry.addProductsEntry(
+			productCatalog = "${productCatalog}",
 			productFullDescription = "${productFullDescription}",
 			productName = "${productName}",
 			productShortDescription = "${productShortDescription}");
@@ -38,6 +43,16 @@ definition {
 		Click(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
 
 		Click(locator1 = "Button#RECYCLE_BIN");
+	}
+
+	macro searchProduct {
+		Type(
+			locator1 = "CommerceNavigation#SEARCH_FIELD",
+			value1 = "${search}");
+
+		KeyPress(
+			locator1 = "CommerceNavigation#SEARCH_FIELD",
+			value1 = "\RETURN");
 	}
 
 }

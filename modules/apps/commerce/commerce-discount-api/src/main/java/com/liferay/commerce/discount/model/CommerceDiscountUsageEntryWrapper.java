@@ -464,17 +464,17 @@ public class CommerceDiscountUsageEntryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceDiscountUsageEntryWrapper)) {
+		if (!(object instanceof CommerceDiscountUsageEntryWrapper)) {
 			return false;
 		}
 
 		CommerceDiscountUsageEntryWrapper commerceDiscountUsageEntryWrapper =
-			(CommerceDiscountUsageEntryWrapper)obj;
+			(CommerceDiscountUsageEntryWrapper)object;
 
 		if (Objects.equals(
 				_commerceDiscountUsageEntry,

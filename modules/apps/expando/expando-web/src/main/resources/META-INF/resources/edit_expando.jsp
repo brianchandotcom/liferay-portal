@@ -102,7 +102,7 @@ renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageU
 				</c:when>
 				<c:otherwise>
 					<aui:select helpMessage="custom-field-type-help" name="type">
-						<optgroup label='<liferay-ui:message key="presets" />'>
+						<optgroup label="<liferay-ui:message key="presets" />">
 							<aui:option label="selection-of-integer-values" value="PresetSelectionIntegerArray()" />
 							<aui:option label="selection-of-decimal-values" value="PresetSelectionDoubleArray()" />
 							<aui:option label="selection-of-text-values" value="PresetSelectionStringArray()" />
@@ -112,7 +112,7 @@ renderResponse.setTitle(modelResourceName + ": " + ((column == null) ? LanguageU
 							<aui:option label="text-field-indexed" selected="<%= true %>" value="PresetTextFieldIndexed()" />
 						</optgroup>
 
-						<optgroup label='<liferay-ui:message key="primitives" />'>
+						<optgroup label="<liferay-ui:message key="primitives" />">
 
 							<%
 							for (int curType : ExpandoColumnConstants.TYPES) {

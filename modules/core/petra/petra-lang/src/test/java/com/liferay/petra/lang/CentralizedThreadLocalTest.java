@@ -196,9 +196,10 @@ public class CentralizedThreadLocalTest {
 			shortLivedHashCode + hashIncrement,
 			shortLivedCentralizedThreadLocal.hashCode());
 		Assert.assertEquals(
-			longLivedHashCode + hashIncrement * 2, longLivedNextHasCode.get());
+			longLivedHashCode + (hashIncrement * 2),
+			longLivedNextHasCode.get());
 		Assert.assertEquals(
-			shortLivedHashCode + hashIncrement * 2,
+			shortLivedHashCode + (hashIncrement * 2),
 			shortLivedNextHasCode.get());
 	}
 

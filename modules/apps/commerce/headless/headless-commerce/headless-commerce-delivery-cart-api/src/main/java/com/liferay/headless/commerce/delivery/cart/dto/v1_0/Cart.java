@@ -478,6 +478,35 @@ public class Cart {
 	protected CartComment[] notes;
 
 	@Schema
+	@Valid
+	public Status getOrderStatusInfo() {
+		return orderStatusInfo;
+	}
+
+	public void setOrderStatusInfo(Status orderStatusInfo) {
+		this.orderStatusInfo = orderStatusInfo;
+	}
+
+	@JsonIgnore
+	public void setOrderStatusInfo(
+		UnsafeSupplier<Status, Exception> orderStatusInfoUnsafeSupplier) {
+
+		try {
+			orderStatusInfo = orderStatusInfoUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Status orderStatusInfo;
+
+	@Schema
 	public String getOrderUUID() {
 		return orderUUID;
 	}
@@ -588,6 +617,35 @@ public class Cart {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer paymentStatus;
+
+	@Schema
+	@Valid
+	public Status getPaymentStatusInfo() {
+		return paymentStatusInfo;
+	}
+
+	public void setPaymentStatusInfo(Status paymentStatusInfo) {
+		this.paymentStatusInfo = paymentStatusInfo;
+	}
+
+	@JsonIgnore
+	public void setPaymentStatusInfo(
+		UnsafeSupplier<Status, Exception> paymentStatusInfoUnsafeSupplier) {
+
+		try {
+			paymentStatusInfo = paymentStatusInfoUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Status paymentStatusInfo;
 
 	@Schema
 	public String getPaymentStatusLabel() {
@@ -871,6 +929,35 @@ public class Cart {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean useAsBilling;
 
+	@Schema
+	@Valid
+	public Status getWorkflowStatusInfo() {
+		return workflowStatusInfo;
+	}
+
+	public void setWorkflowStatusInfo(Status workflowStatusInfo) {
+		this.workflowStatusInfo = workflowStatusInfo;
+	}
+
+	@JsonIgnore
+	public void setWorkflowStatusInfo(
+		UnsafeSupplier<Status, Exception> workflowStatusInfoUnsafeSupplier) {
+
+		try {
+			workflowStatusInfo = workflowStatusInfoUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Status workflowStatusInfo;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -1099,6 +1186,16 @@ public class Cart {
 			sb.append("]");
 		}
 
+		if (orderStatusInfo != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"orderStatusInfo\": ");
+
+			sb.append(String.valueOf(orderStatusInfo));
+		}
+
 		if (orderUUID != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1149,6 +1246,16 @@ public class Cart {
 			sb.append("\"paymentStatus\": ");
 
 			sb.append(paymentStatus);
+		}
+
+		if (paymentStatusInfo != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paymentStatusInfo\": ");
+
+			sb.append(String.valueOf(paymentStatusInfo));
 		}
 
 		if (paymentStatusLabel != null) {
@@ -1275,6 +1382,16 @@ public class Cart {
 			sb.append(useAsBilling);
 		}
 
+		if (workflowStatusInfo != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"workflowStatusInfo\": ");
+
+			sb.append(String.valueOf(workflowStatusInfo));
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -1290,6 +1407,16 @@ public class Cart {
 		String string = String.valueOf(object);
 
 		return string.replaceAll("\"", "\\\\\"");
+	}
+
+	private static boolean _isArray(Object value) {
+		if (value == null) {
+			return false;
+		}
+
+		Class<?> clazz = value.getClass();
+
+		return clazz.isArray();
 	}
 
 	private static String _toJSON(Map<String, ?> map) {
@@ -1310,9 +1437,7 @@ public class Cart {
 
 			Object value = entry.getValue();
 
-			Class<?> clazz = value.getClass();
-
-			if (clazz.isArray()) {
+			if (_isArray(value)) {
 				sb.append("[");
 
 				Object[] valueArray = (Object[])value;

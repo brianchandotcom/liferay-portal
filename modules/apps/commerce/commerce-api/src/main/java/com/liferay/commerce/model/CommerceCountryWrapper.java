@@ -896,17 +896,17 @@ public class CommerceCountryWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceCountryWrapper)) {
+		if (!(object instanceof CommerceCountryWrapper)) {
 			return false;
 		}
 
 		CommerceCountryWrapper commerceCountryWrapper =
-			(CommerceCountryWrapper)obj;
+			(CommerceCountryWrapper)object;
 
 		if (Objects.equals(
 				_commerceCountry, commerceCountryWrapper._commerceCountry)) {

@@ -36,16 +36,16 @@ public class CProductCacheModel
 	implements CacheModel<CProduct>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CProductCacheModel)) {
+		if (!(object instanceof CProductCacheModel)) {
 			return false;
 		}
 
-		CProductCacheModel cProductCacheModel = (CProductCacheModel)obj;
+		CProductCacheModel cProductCacheModel = (CProductCacheModel)object;
 
 		if (CProductId == cProductCacheModel.CProductId) {
 			return true;

@@ -36,17 +36,17 @@ public class MDRRuleGroupCacheModel
 	implements CacheModel<MDRRuleGroup>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MDRRuleGroupCacheModel)) {
+		if (!(object instanceof MDRRuleGroupCacheModel)) {
 			return false;
 		}
 
 		MDRRuleGroupCacheModel mdrRuleGroupCacheModel =
-			(MDRRuleGroupCacheModel)obj;
+			(MDRRuleGroupCacheModel)object;
 
 		if (ruleGroupId == mdrRuleGroupCacheModel.ruleGroupId) {
 			return true;

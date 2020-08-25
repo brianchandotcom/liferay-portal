@@ -816,17 +816,17 @@ public class CommerceInventoryWarehouseWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceInventoryWarehouseWrapper)) {
+		if (!(object instanceof CommerceInventoryWarehouseWrapper)) {
 			return false;
 		}
 
 		CommerceInventoryWarehouseWrapper commerceInventoryWarehouseWrapper =
-			(CommerceInventoryWarehouseWrapper)obj;
+			(CommerceInventoryWarehouseWrapper)object;
 
 		if (Objects.equals(
 				_commerceInventoryWarehouse,

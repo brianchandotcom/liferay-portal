@@ -673,16 +673,17 @@ public class KaleoInstanceWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoInstanceWrapper)) {
+		if (!(object instanceof KaleoInstanceWrapper)) {
 			return false;
 		}
 
-		KaleoInstanceWrapper kaleoInstanceWrapper = (KaleoInstanceWrapper)obj;
+		KaleoInstanceWrapper kaleoInstanceWrapper =
+			(KaleoInstanceWrapper)object;
 
 		if (Objects.equals(
 				_kaleoInstance, kaleoInstanceWrapper._kaleoInstance)) {

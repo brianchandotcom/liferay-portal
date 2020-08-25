@@ -99,7 +99,7 @@ public class DiffResult {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(2 * _changedLines.size() + 3);
+		StringBundler sb = new StringBundler((2 * _changedLines.size()) + 3);
 
 		sb.append("Line: ");
 		sb.append(_lineNumber);

@@ -80,6 +80,10 @@ public abstract class CommerceDiscountRuleLocalServiceBaseImpl
 	/**
 	 * Adds the commerce discount rule to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceDiscountRuleLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceDiscountRule the commerce discount rule
 	 * @return the commerce discount rule that was added
 	 */
@@ -110,6 +114,10 @@ public abstract class CommerceDiscountRuleLocalServiceBaseImpl
 	/**
 	 * Deletes the commerce discount rule with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceDiscountRuleLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceDiscountRuleId the primary key of the commerce discount rule
 	 * @return the commerce discount rule that was removed
 	 * @throws PortalException if a commerce discount rule with the primary key could not be found
@@ -125,6 +133,10 @@ public abstract class CommerceDiscountRuleLocalServiceBaseImpl
 
 	/**
 	 * Deletes the commerce discount rule from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceDiscountRuleLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceDiscountRule the commerce discount rule
 	 * @return the commerce discount rule that was removed
@@ -354,6 +366,10 @@ public abstract class CommerceDiscountRuleLocalServiceBaseImpl
 
 	/**
 	 * Updates the commerce discount rule in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceDiscountRuleLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceDiscountRule the commerce discount rule
 	 * @return the commerce discount rule that was updated

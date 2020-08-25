@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Subscription Web
 Bundle-SymbolicName: com.liferay.commerce.subscription.web
-Bundle-Version: 1.0.38
+Bundle-Version: 1.0.43
 Import-Package:\
 	com.liferay.frontend.taglib.clay.servlet.taglib.util;version="[1.0.0,3.0.0)",\
 	\

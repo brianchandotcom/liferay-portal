@@ -470,16 +470,16 @@ public class UserTrackerWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof UserTrackerWrapper)) {
+		if (!(object instanceof UserTrackerWrapper)) {
 			return false;
 		}
 
-		UserTrackerWrapper userTrackerWrapper = (UserTrackerWrapper)obj;
+		UserTrackerWrapper userTrackerWrapper = (UserTrackerWrapper)object;
 
 		if (Objects.equals(_userTracker, userTrackerWrapper._userTracker)) {
 			return true;

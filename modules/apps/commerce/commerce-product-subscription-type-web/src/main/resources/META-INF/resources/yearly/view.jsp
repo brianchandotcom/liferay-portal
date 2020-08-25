@@ -39,7 +39,7 @@ int selectedYearlyMode = yearlyCPSubscriptionTypeDisplayContext.getSelectedYearl
 
 		</aui:select>
 
-		<div class='<%= (selectedYearlyMode == CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_YEAR) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />exactDayOfYearInputContainer">
+		<div class="<%= (selectedYearlyMode == CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_YEAR) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />exactDayOfYearInputContainer">
 			<aui:select label="month" name="subscriptionTypeSettings--month--">
 
 				<%
@@ -101,7 +101,7 @@ int selectedYearlyMode = yearlyCPSubscriptionTypeDisplayContext.getSelectedYearl
 
 		</aui:select>
 
-		<div class='<%= (selectedYearlyMode == CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_YEAR) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />deliveryExactDayOfYearInputContainer">
+		<div class="<%= (selectedYearlyMode == CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_YEAR) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />deliveryExactDayOfYearInputContainer">
 			<aui:select label="month" name="deliverySubscriptionTypeSettings--deliveryMonth--">
 
 				<%

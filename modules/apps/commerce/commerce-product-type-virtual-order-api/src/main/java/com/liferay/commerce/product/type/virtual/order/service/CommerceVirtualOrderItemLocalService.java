@@ -68,6 +68,10 @@ public interface CommerceVirtualOrderItemLocalService
 	/**
 	 * Adds the commerce virtual order item to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceVirtualOrderItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceVirtualOrderItem the commerce virtual order item
 	 * @return the commerce virtual order item that was added
 	 */
@@ -100,6 +104,10 @@ public interface CommerceVirtualOrderItemLocalService
 	/**
 	 * Deletes the commerce virtual order item from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceVirtualOrderItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceVirtualOrderItem the commerce virtual order item
 	 * @return the commerce virtual order item that was removed
 	 */
@@ -109,6 +117,10 @@ public interface CommerceVirtualOrderItemLocalService
 
 	/**
 	 * Deletes the commerce virtual order item with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceVirtualOrderItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceVirtualOrderItemId the primary key of the commerce virtual order item
 	 * @return the commerce virtual order item that was removed
@@ -338,6 +350,10 @@ public interface CommerceVirtualOrderItemLocalService
 
 	/**
 	 * Updates the commerce virtual order item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceVirtualOrderItemLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceVirtualOrderItem the commerce virtual order item
 	 * @return the commerce virtual order item that was updated

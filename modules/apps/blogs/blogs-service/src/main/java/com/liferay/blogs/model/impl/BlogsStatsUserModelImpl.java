@@ -729,16 +729,16 @@ public class BlogsStatsUserModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof BlogsStatsUser)) {
+		if (!(object instanceof BlogsStatsUser)) {
 			return false;
 		}
 
-		BlogsStatsUser blogsStatsUser = (BlogsStatsUser)obj;
+		BlogsStatsUser blogsStatsUser = (BlogsStatsUser)object;
 
 		long primaryKey = blogsStatsUser.getPrimaryKey();
 

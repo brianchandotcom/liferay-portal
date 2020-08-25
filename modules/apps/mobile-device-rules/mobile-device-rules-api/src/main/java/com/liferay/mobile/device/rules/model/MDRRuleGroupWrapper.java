@@ -777,16 +777,16 @@ public class MDRRuleGroupWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MDRRuleGroupWrapper)) {
+		if (!(object instanceof MDRRuleGroupWrapper)) {
 			return false;
 		}
 
-		MDRRuleGroupWrapper mdrRuleGroupWrapper = (MDRRuleGroupWrapper)obj;
+		MDRRuleGroupWrapper mdrRuleGroupWrapper = (MDRRuleGroupWrapper)object;
 
 		if (Objects.equals(_mdrRuleGroup, mdrRuleGroupWrapper._mdrRuleGroup)) {
 			return true;

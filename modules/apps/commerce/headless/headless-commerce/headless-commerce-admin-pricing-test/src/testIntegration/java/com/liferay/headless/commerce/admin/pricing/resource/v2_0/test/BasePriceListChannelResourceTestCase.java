@@ -1,0 +1,1180 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.headless.commerce.admin.pricing.resource.v2_0.test;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+
+import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PriceListChannel;
+import com.liferay.headless.commerce.admin.pricing.client.http.HttpInvoker;
+import com.liferay.headless.commerce.admin.pricing.client.pagination.Page;
+import com.liferay.headless.commerce.admin.pricing.client.pagination.Pagination;
+import com.liferay.headless.commerce.admin.pricing.client.resource.v2_0.PriceListChannelResource;
+import com.liferay.headless.commerce.admin.pricing.client.serdes.v2_0.PriceListChannelSerDes;
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+
+import java.text.DateFormat;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.annotation.Generated;
+
+import javax.ws.rs.core.MultivaluedHashMap;
+
+import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.log4j.Level;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+/**
+ * @author Zoltán Takács
+ * @generated
+ */
+@Generated("")
+public abstract class BasePriceListChannelResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		irrelevantGroup = GroupTestUtil.addGroup();
+		testGroup = GroupTestUtil.addGroup();
+
+		testCompany = CompanyLocalServiceUtil.getCompany(
+			testGroup.getCompanyId());
+
+		_priceListChannelResource.setContextCompany(testCompany);
+
+		PriceListChannelResource.Builder builder =
+			PriceListChannelResource.builder();
+
+		priceListChannelResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		GroupTestUtil.deleteGroup(irrelevantGroup);
+		GroupTestUtil.deleteGroup(testGroup);
+	}
+
+	@Test
+	public void testClientSerDesToDTO() throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper() {
+			{
+				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				configure(
+					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
+				enable(SerializationFeature.INDENT_OUTPUT);
+				setDateFormat(new ISO8601DateFormat());
+				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				setVisibility(
+					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+				setVisibility(
+					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
+			}
+		};
+
+		PriceListChannel priceListChannel1 = randomPriceListChannel();
+
+		String json = objectMapper.writeValueAsString(priceListChannel1);
+
+		PriceListChannel priceListChannel2 = PriceListChannelSerDes.toDTO(json);
+
+		Assert.assertTrue(equals(priceListChannel1, priceListChannel2));
+	}
+
+	@Test
+	public void testClientSerDesToJSON() throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper() {
+			{
+				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
+				configure(
+					SerializationFeature.WRITE_ENUMS_USING_TO_STRING, true);
+				setDateFormat(new ISO8601DateFormat());
+				setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+				setSerializationInclusion(JsonInclude.Include.NON_NULL);
+				setVisibility(
+					PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+				setVisibility(
+					PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE);
+			}
+		};
+
+		PriceListChannel priceListChannel = randomPriceListChannel();
+
+		String json1 = objectMapper.writeValueAsString(priceListChannel);
+		String json2 = PriceListChannelSerDes.toJSON(priceListChannel);
+
+		Assert.assertEquals(
+			objectMapper.readTree(json1), objectMapper.readTree(json2));
+	}
+
+	@Test
+	public void testEscapeRegexInStringFields() throws Exception {
+		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
+
+		PriceListChannel priceListChannel = randomPriceListChannel();
+
+		priceListChannel.setChannelExternalReferenceCode(regex);
+		priceListChannel.setChannelName(regex);
+		priceListChannel.setPriceListExternalReferenceCode(regex);
+
+		String json = PriceListChannelSerDes.toJSON(priceListChannel);
+
+		Assert.assertFalse(json.contains(regex));
+
+		priceListChannel = PriceListChannelSerDes.toDTO(json);
+
+		Assert.assertEquals(
+			regex, priceListChannel.getChannelExternalReferenceCode());
+		Assert.assertEquals(regex, priceListChannel.getChannelName());
+		Assert.assertEquals(
+			regex, priceListChannel.getPriceListExternalReferenceCode());
+	}
+
+	@Test
+	public void testDeletePriceListChannel() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PriceListChannel priceListChannel =
+			testDeletePriceListChannel_addPriceListChannel();
+
+		assertHttpResponseStatusCode(
+			204,
+			priceListChannelResource.deletePriceListChannelHttpResponse(
+				priceListChannel.getId()));
+	}
+
+	protected PriceListChannel testDeletePriceListChannel_addPriceListChannel()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeletePriceListChannel() throws Exception {
+		PriceListChannel priceListChannel =
+			testGraphQLPriceListChannel_addPriceListChannel();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deletePriceListChannel",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"priceListChannelId",
+									priceListChannel.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deletePriceListChannel"));
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					"graphql.execution.SimpleDataFetcherExceptionHandler",
+					Level.WARN)) {
+
+			JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"priceListChannel",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"priceListChannelId",
+									priceListChannel.getId());
+							}
+						},
+						new GraphQLField("id"))),
+				"JSONArray/errors");
+
+			Assert.assertTrue(errorsJSONArray.length() > 0);
+		}
+	}
+
+	@Test
+	public void testGetPriceListByExternalReferenceCodePriceListChannelsPage()
+		throws Exception {
+
+		Page<PriceListChannel> page =
+			priceListChannelResource.
+				getPriceListByExternalReferenceCodePriceListChannelsPage(
+					testGetPriceListByExternalReferenceCodePriceListChannelsPage_getExternalReferenceCode(),
+					Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		String externalReferenceCode =
+			testGetPriceListByExternalReferenceCodePriceListChannelsPage_getExternalReferenceCode();
+		String irrelevantExternalReferenceCode =
+			testGetPriceListByExternalReferenceCodePriceListChannelsPage_getIrrelevantExternalReferenceCode();
+
+		if ((irrelevantExternalReferenceCode != null)) {
+			PriceListChannel irrelevantPriceListChannel =
+				testGetPriceListByExternalReferenceCodePriceListChannelsPage_addPriceListChannel(
+					irrelevantExternalReferenceCode,
+					randomIrrelevantPriceListChannel());
+
+			page =
+				priceListChannelResource.
+					getPriceListByExternalReferenceCodePriceListChannelsPage(
+						irrelevantExternalReferenceCode, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantPriceListChannel),
+				(List<PriceListChannel>)page.getItems());
+			assertValid(page);
+		}
+
+		PriceListChannel priceListChannel1 =
+			testGetPriceListByExternalReferenceCodePriceListChannelsPage_addPriceListChannel(
+				externalReferenceCode, randomPriceListChannel());
+
+		PriceListChannel priceListChannel2 =
+			testGetPriceListByExternalReferenceCodePriceListChannelsPage_addPriceListChannel(
+				externalReferenceCode, randomPriceListChannel());
+
+		page =
+			priceListChannelResource.
+				getPriceListByExternalReferenceCodePriceListChannelsPage(
+					externalReferenceCode, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(priceListChannel1, priceListChannel2),
+			(List<PriceListChannel>)page.getItems());
+		assertValid(page);
+
+		priceListChannelResource.deletePriceListChannel(null);
+
+		priceListChannelResource.deletePriceListChannel(null);
+	}
+
+	@Test
+	public void testGetPriceListByExternalReferenceCodePriceListChannelsPageWithPagination()
+		throws Exception {
+
+		String externalReferenceCode =
+			testGetPriceListByExternalReferenceCodePriceListChannelsPage_getExternalReferenceCode();
+
+		PriceListChannel priceListChannel1 =
+			testGetPriceListByExternalReferenceCodePriceListChannelsPage_addPriceListChannel(
+				externalReferenceCode, randomPriceListChannel());
+
+		PriceListChannel priceListChannel2 =
+			testGetPriceListByExternalReferenceCodePriceListChannelsPage_addPriceListChannel(
+				externalReferenceCode, randomPriceListChannel());
+
+		PriceListChannel priceListChannel3 =
+			testGetPriceListByExternalReferenceCodePriceListChannelsPage_addPriceListChannel(
+				externalReferenceCode, randomPriceListChannel());
+
+		Page<PriceListChannel> page1 =
+			priceListChannelResource.
+				getPriceListByExternalReferenceCodePriceListChannelsPage(
+					externalReferenceCode, Pagination.of(1, 2));
+
+		List<PriceListChannel> priceListChannels1 =
+			(List<PriceListChannel>)page1.getItems();
+
+		Assert.assertEquals(
+			priceListChannels1.toString(), 2, priceListChannels1.size());
+
+		Page<PriceListChannel> page2 =
+			priceListChannelResource.
+				getPriceListByExternalReferenceCodePriceListChannelsPage(
+					externalReferenceCode, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<PriceListChannel> priceListChannels2 =
+			(List<PriceListChannel>)page2.getItems();
+
+		Assert.assertEquals(
+			priceListChannels2.toString(), 1, priceListChannels2.size());
+
+		Page<PriceListChannel> page3 =
+			priceListChannelResource.
+				getPriceListByExternalReferenceCodePriceListChannelsPage(
+					externalReferenceCode, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				priceListChannel1, priceListChannel2, priceListChannel3),
+			(List<PriceListChannel>)page3.getItems());
+	}
+
+	protected PriceListChannel
+			testGetPriceListByExternalReferenceCodePriceListChannelsPage_addPriceListChannel(
+				String externalReferenceCode, PriceListChannel priceListChannel)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetPriceListByExternalReferenceCodePriceListChannelsPage_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetPriceListByExternalReferenceCodePriceListChannelsPage_getIrrelevantExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostPriceListByExternalReferenceCodePriceListChannel()
+		throws Exception {
+
+		PriceListChannel randomPriceListChannel = randomPriceListChannel();
+
+		PriceListChannel postPriceListChannel =
+			testPostPriceListByExternalReferenceCodePriceListChannel_addPriceListChannel(
+				randomPriceListChannel);
+
+		assertEquals(randomPriceListChannel, postPriceListChannel);
+		assertValid(postPriceListChannel);
+	}
+
+	protected PriceListChannel
+			testPostPriceListByExternalReferenceCodePriceListChannel_addPriceListChannel(
+				PriceListChannel priceListChannel)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetPriceListIdPriceListChannelsPage() throws Exception {
+		Page<PriceListChannel> page =
+			priceListChannelResource.getPriceListIdPriceListChannelsPage(
+				testGetPriceListIdPriceListChannelsPage_getId(),
+				Pagination.of(1, 2));
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		Long id = testGetPriceListIdPriceListChannelsPage_getId();
+		Long irrelevantId =
+			testGetPriceListIdPriceListChannelsPage_getIrrelevantId();
+
+		if ((irrelevantId != null)) {
+			PriceListChannel irrelevantPriceListChannel =
+				testGetPriceListIdPriceListChannelsPage_addPriceListChannel(
+					irrelevantId, randomIrrelevantPriceListChannel());
+
+			page = priceListChannelResource.getPriceListIdPriceListChannelsPage(
+				irrelevantId, Pagination.of(1, 2));
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantPriceListChannel),
+				(List<PriceListChannel>)page.getItems());
+			assertValid(page);
+		}
+
+		PriceListChannel priceListChannel1 =
+			testGetPriceListIdPriceListChannelsPage_addPriceListChannel(
+				id, randomPriceListChannel());
+
+		PriceListChannel priceListChannel2 =
+			testGetPriceListIdPriceListChannelsPage_addPriceListChannel(
+				id, randomPriceListChannel());
+
+		page = priceListChannelResource.getPriceListIdPriceListChannelsPage(
+			id, Pagination.of(1, 2));
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(priceListChannel1, priceListChannel2),
+			(List<PriceListChannel>)page.getItems());
+		assertValid(page);
+
+		priceListChannelResource.deletePriceListChannel(null);
+
+		priceListChannelResource.deletePriceListChannel(null);
+	}
+
+	@Test
+	public void testGetPriceListIdPriceListChannelsPageWithPagination()
+		throws Exception {
+
+		Long id = testGetPriceListIdPriceListChannelsPage_getId();
+
+		PriceListChannel priceListChannel1 =
+			testGetPriceListIdPriceListChannelsPage_addPriceListChannel(
+				id, randomPriceListChannel());
+
+		PriceListChannel priceListChannel2 =
+			testGetPriceListIdPriceListChannelsPage_addPriceListChannel(
+				id, randomPriceListChannel());
+
+		PriceListChannel priceListChannel3 =
+			testGetPriceListIdPriceListChannelsPage_addPriceListChannel(
+				id, randomPriceListChannel());
+
+		Page<PriceListChannel> page1 =
+			priceListChannelResource.getPriceListIdPriceListChannelsPage(
+				id, Pagination.of(1, 2));
+
+		List<PriceListChannel> priceListChannels1 =
+			(List<PriceListChannel>)page1.getItems();
+
+		Assert.assertEquals(
+			priceListChannels1.toString(), 2, priceListChannels1.size());
+
+		Page<PriceListChannel> page2 =
+			priceListChannelResource.getPriceListIdPriceListChannelsPage(
+				id, Pagination.of(2, 2));
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<PriceListChannel> priceListChannels2 =
+			(List<PriceListChannel>)page2.getItems();
+
+		Assert.assertEquals(
+			priceListChannels2.toString(), 1, priceListChannels2.size());
+
+		Page<PriceListChannel> page3 =
+			priceListChannelResource.getPriceListIdPriceListChannelsPage(
+				id, Pagination.of(1, 3));
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				priceListChannel1, priceListChannel2, priceListChannel3),
+			(List<PriceListChannel>)page3.getItems());
+	}
+
+	protected PriceListChannel
+			testGetPriceListIdPriceListChannelsPage_addPriceListChannel(
+				Long id, PriceListChannel priceListChannel)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetPriceListIdPriceListChannelsPage_getId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetPriceListIdPriceListChannelsPage_getIrrelevantId()
+		throws Exception {
+
+		return null;
+	}
+
+	@Test
+	public void testPostPriceListIdPriceListChannel() throws Exception {
+		PriceListChannel randomPriceListChannel = randomPriceListChannel();
+
+		PriceListChannel postPriceListChannel =
+			testPostPriceListIdPriceListChannel_addPriceListChannel(
+				randomPriceListChannel);
+
+		assertEquals(randomPriceListChannel, postPriceListChannel);
+		assertValid(postPriceListChannel);
+	}
+
+	protected PriceListChannel
+			testPostPriceListIdPriceListChannel_addPriceListChannel(
+				PriceListChannel priceListChannel)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected PriceListChannel testGraphQLPriceListChannel_addPriceListChannel()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected void assertHttpResponseStatusCode(
+		int expectedHttpResponseStatusCode,
+		HttpInvoker.HttpResponse actualHttpResponse) {
+
+		Assert.assertEquals(
+			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
+	}
+
+	protected void assertEquals(
+		PriceListChannel priceListChannel1,
+		PriceListChannel priceListChannel2) {
+
+		Assert.assertTrue(
+			priceListChannel1 + " does not equal " + priceListChannel2,
+			equals(priceListChannel1, priceListChannel2));
+	}
+
+	protected void assertEquals(
+		List<PriceListChannel> priceListChannels1,
+		List<PriceListChannel> priceListChannels2) {
+
+		Assert.assertEquals(
+			priceListChannels1.size(), priceListChannels2.size());
+
+		for (int i = 0; i < priceListChannels1.size(); i++) {
+			PriceListChannel priceListChannel1 = priceListChannels1.get(i);
+			PriceListChannel priceListChannel2 = priceListChannels2.get(i);
+
+			assertEquals(priceListChannel1, priceListChannel2);
+		}
+	}
+
+	protected void assertEqualsIgnoringOrder(
+		List<PriceListChannel> priceListChannels1,
+		List<PriceListChannel> priceListChannels2) {
+
+		Assert.assertEquals(
+			priceListChannels1.size(), priceListChannels2.size());
+
+		for (PriceListChannel priceListChannel1 : priceListChannels1) {
+			boolean contains = false;
+
+			for (PriceListChannel priceListChannel2 : priceListChannels2) {
+				if (equals(priceListChannel1, priceListChannel2)) {
+					contains = true;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(
+				priceListChannels2 + " does not contain " + priceListChannel1,
+				contains);
+		}
+	}
+
+	protected void assertValid(PriceListChannel priceListChannel) {
+		boolean valid = true;
+
+		if (priceListChannel.getId() == null) {
+			valid = false;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"channelExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (priceListChannel.getChannelExternalReferenceCode() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("channelId", additionalAssertFieldName)) {
+				if (priceListChannel.getChannelId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("channelName", additionalAssertFieldName)) {
+				if (priceListChannel.getChannelName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("order", additionalAssertFieldName)) {
+				if (priceListChannel.getOrder() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"priceListExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (priceListChannel.getPriceListExternalReferenceCode() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("priceListId", additionalAssertFieldName)) {
+				if (priceListChannel.getPriceListId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
+	}
+
+	protected void assertValid(Page<PriceListChannel> page) {
+		boolean valid = false;
+
+		java.util.Collection<PriceListChannel> priceListChannels =
+			page.getItems();
+
+		int size = priceListChannels.size();
+
+		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
+			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
+			(size > 0)) {
+
+			valid = true;
+		}
+
+		Assert.assertTrue(valid);
+	}
+
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[0];
+	}
+
+	protected List<GraphQLField> getGraphQLFields() throws Exception {
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field :
+				ReflectionUtil.getDeclaredFields(
+					com.liferay.headless.commerce.admin.pricing.dto.v2_0.
+						PriceListChannel.class)) {
+
+			if (!ArrayUtil.contains(
+					getAdditionalAssertFieldNames(), field.getName())) {
+
+				continue;
+			}
+
+			graphQLFields.addAll(getGraphQLFields(field));
+		}
+
+		return graphQLFields;
+	}
+
+	protected List<GraphQLField> getGraphQLFields(Field... fields)
+		throws Exception {
+
+		List<GraphQLField> graphQLFields = new ArrayList<>();
+
+		for (Field field : fields) {
+			com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+				vulcanGraphQLField = field.getAnnotation(
+					com.liferay.portal.vulcan.graphql.annotation.GraphQLField.
+						class);
+
+			if (vulcanGraphQLField != null) {
+				Class<?> clazz = field.getType();
+
+				if (clazz.isArray()) {
+					clazz = clazz.getComponentType();
+				}
+
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
+					ReflectionUtil.getDeclaredFields(clazz));
+
+				graphQLFields.add(
+					new GraphQLField(field.getName(), childrenGraphQLFields));
+			}
+		}
+
+		return graphQLFields;
+	}
+
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[0];
+	}
+
+	protected boolean equals(
+		PriceListChannel priceListChannel1,
+		PriceListChannel priceListChannel2) {
+
+		if (priceListChannel1 == priceListChannel2) {
+			return true;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"channelExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						priceListChannel1.getChannelExternalReferenceCode(),
+						priceListChannel2.getChannelExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("channelId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						priceListChannel1.getChannelId(),
+						priceListChannel2.getChannelId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("channelName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						priceListChannel1.getChannelName(),
+						priceListChannel2.getChannelName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						priceListChannel1.getId(), priceListChannel2.getId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("order", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						priceListChannel1.getOrder(),
+						priceListChannel2.getOrder())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"priceListExternalReferenceCode",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						priceListChannel1.getPriceListExternalReferenceCode(),
+						priceListChannel2.
+							getPriceListExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("priceListId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						priceListChannel1.getPriceListId(),
+						priceListChannel2.getPriceListId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		return true;
+	}
+
+	protected boolean equals(
+		Map<String, Object> map1, Map<String, Object> map2) {
+
+		if (Objects.equals(map1.keySet(), map2.keySet())) {
+			for (Map.Entry<String, Object> entry : map1.entrySet()) {
+				if (entry.getValue() instanceof Map) {
+					if (!equals(
+							(Map)entry.getValue(),
+							(Map)map2.get(entry.getKey()))) {
+
+						return false;
+					}
+				}
+				else if (!Objects.deepEquals(
+							entry.getValue(), map2.get(entry.getKey()))) {
+
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	protected java.util.Collection<EntityField> getEntityFields()
+		throws Exception {
+
+		if (!(_priceListChannelResource instanceof EntityModelResource)) {
+			throw new UnsupportedOperationException(
+				"Resource is not an instance of EntityModelResource");
+		}
+
+		EntityModelResource entityModelResource =
+			(EntityModelResource)_priceListChannelResource;
+
+		EntityModel entityModel = entityModelResource.getEntityModel(
+			new MultivaluedHashMap());
+
+		Map<String, EntityField> entityFieldsMap =
+			entityModel.getEntityFieldsMap();
+
+		return entityFieldsMap.values();
+	}
+
+	protected List<EntityField> getEntityFields(EntityField.Type type)
+		throws Exception {
+
+		java.util.Collection<EntityField> entityFields = getEntityFields();
+
+		Stream<EntityField> stream = entityFields.stream();
+
+		return stream.filter(
+			entityField ->
+				Objects.equals(entityField.getType(), type) &&
+				!ArrayUtil.contains(
+					getIgnoredEntityFieldNames(), entityField.getName())
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	protected String getFilterString(
+		EntityField entityField, String operator,
+		PriceListChannel priceListChannel) {
+
+		StringBundler sb = new StringBundler();
+
+		String entityFieldName = entityField.getName();
+
+		sb.append(entityFieldName);
+
+		sb.append(" ");
+		sb.append(operator);
+		sb.append(" ");
+
+		if (entityFieldName.equals("channelExternalReferenceCode")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(
+					priceListChannel.getChannelExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("channelId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("channelName")) {
+			sb.append("'");
+			sb.append(String.valueOf(priceListChannel.getChannelName()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("id")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("order")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("priceListExternalReferenceCode")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(
+					priceListChannel.getPriceListExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("priceListId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid entity field " + entityFieldName);
+	}
+
+	protected String invoke(String query) throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		httpInvoker.body(
+			JSONUtil.put(
+				"query", query
+			).toString(),
+			"application/json");
+		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.userNameAndPassword("test@liferay.com:test");
+
+		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
+
+		return httpResponse.getContent();
+	}
+
+	protected JSONObject invokeGraphQLMutation(GraphQLField graphQLField)
+		throws Exception {
+
+		GraphQLField mutationGraphQLField = new GraphQLField(
+			"mutation", graphQLField);
+
+		return JSONFactoryUtil.createJSONObject(
+			invoke(mutationGraphQLField.toString()));
+	}
+
+	protected JSONObject invokeGraphQLQuery(GraphQLField graphQLField)
+		throws Exception {
+
+		GraphQLField queryGraphQLField = new GraphQLField(
+			"query", graphQLField);
+
+		return JSONFactoryUtil.createJSONObject(
+			invoke(queryGraphQLField.toString()));
+	}
+
+	protected PriceListChannel randomPriceListChannel() throws Exception {
+		return new PriceListChannel() {
+			{
+				channelExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				channelId = RandomTestUtil.randomLong();
+				channelName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				id = RandomTestUtil.randomLong();
+				order = RandomTestUtil.randomInt();
+				priceListExternalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				priceListId = RandomTestUtil.randomLong();
+			}
+		};
+	}
+
+	protected PriceListChannel randomIrrelevantPriceListChannel()
+		throws Exception {
+
+		PriceListChannel randomIrrelevantPriceListChannel =
+			randomPriceListChannel();
+
+		return randomIrrelevantPriceListChannel;
+	}
+
+	protected PriceListChannel randomPatchPriceListChannel() throws Exception {
+		return randomPriceListChannel();
+	}
+
+	protected PriceListChannelResource priceListChannelResource;
+	protected Group irrelevantGroup;
+	protected Company testCompany;
+	protected Group testGroup;
+
+	protected class GraphQLField {
+
+		public GraphQLField(String key, GraphQLField... graphQLFields) {
+			this(key, new HashMap<>(), graphQLFields);
+		}
+
+		public GraphQLField(String key, List<GraphQLField> graphQLFields) {
+			this(key, new HashMap<>(), graphQLFields);
+		}
+
+		public GraphQLField(
+			String key, Map<String, Object> parameterMap,
+			GraphQLField... graphQLFields) {
+
+			_key = key;
+			_parameterMap = parameterMap;
+			_graphQLFields = Arrays.asList(graphQLFields);
+		}
+
+		public GraphQLField(
+			String key, Map<String, Object> parameterMap,
+			List<GraphQLField> graphQLFields) {
+
+			_key = key;
+			_parameterMap = parameterMap;
+			_graphQLFields = graphQLFields;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder sb = new StringBuilder(_key);
+
+			if (!_parameterMap.isEmpty()) {
+				sb.append("(");
+
+				for (Map.Entry<String, Object> entry :
+						_parameterMap.entrySet()) {
+
+					sb.append(entry.getKey());
+					sb.append(":");
+					sb.append(entry.getValue());
+					sb.append(",");
+				}
+
+				sb.setLength(sb.length() - 1);
+
+				sb.append(")");
+			}
+
+			if (!_graphQLFields.isEmpty()) {
+				sb.append("{");
+
+				for (GraphQLField graphQLField : _graphQLFields) {
+					sb.append(graphQLField.toString());
+					sb.append(",");
+				}
+
+				sb.setLength(sb.length() - 1);
+
+				sb.append("}");
+			}
+
+			return sb.toString();
+		}
+
+		private final List<GraphQLField> _graphQLFields;
+		private final String _key;
+		private final Map<String, Object> _parameterMap;
+
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BasePriceListChannelResourceTestCase.class);
+
+	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
+
+		@Override
+		public void copyProperty(Object bean, String name, Object value)
+			throws IllegalAccessException, InvocationTargetException {
+
+			if (value != null) {
+				super.copyProperty(bean, name, value);
+			}
+		}
+
+	};
+	private static DateFormat _dateFormat;
+
+	@Inject
+	private com.liferay.headless.commerce.admin.pricing.resource.v2_0.
+		PriceListChannelResource _priceListChannelResource;
+
+}

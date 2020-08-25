@@ -12,35 +12,14 @@
  * details.
  */
 
+import AJAX from '../AJAX/index';
 import {isFormElement, toJSON} from './formsHelper';
-
-function doSubmit(apiUrl, method = 'POST', json = {}) {
-	const headers = new Headers({
-		Accept: 'application/json',
-		'Content-Type': 'application/json',
-		'x-csrf-token': Liferay.authToken
-	});
-
-	const options = {
-		body: JSON.stringify(json),
-		credentials: 'include',
-		headers,
-		method
-	};
-
-	return fetch(apiUrl, options)
-		.then(response => response.json())
-		.catch(error => {
-			throw new Error(error);
-		});
-}
 
 export function apiSubmit(formElement, API_URL = null) {
 	if (isFormElement(formElement)) {
-		const jsonData = toJSON(new FormData(formElement)),
-			method = formElement.method;
+		const jsonData = toJSON(new FormData(formElement));
 
-		return doSubmit(API_URL, method, jsonData);
+		return AJAX.POST(API_URL, jsonData);
 	}
 
 	return Promise.reject(new Error('Not a form.'));

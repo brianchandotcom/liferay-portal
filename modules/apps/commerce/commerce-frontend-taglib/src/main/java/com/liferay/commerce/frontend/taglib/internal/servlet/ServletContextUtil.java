@@ -18,6 +18,7 @@ import com.liferay.commerce.frontend.CommerceDataProviderRegistry;
 import com.liferay.commerce.frontend.FilterFactoryRegistry;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDataJSONBuilder;
 import com.liferay.commerce.frontend.clay.data.set.ClayDataSetDisplayViewSerializer;
+import com.liferay.commerce.frontend.clay.data.set.ClayDataSetFilterSerializer;
 import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.content.util.CPContentHelper;
@@ -43,6 +44,12 @@ public class ServletContextUtil {
 		getClayDataSetDisplayViewSerializer() {
 
 		return _servletContextUtil._getClayDataSetDisplayViewSerializer();
+	}
+
+	public static final ClayDataSetFilterSerializer
+		getClayDataSetFilterSerializer() {
+
+		return _servletContextUtil._getClayDataSetFilterSerializer();
 	}
 
 	public static final ClayDataSetDataJSONBuilder
@@ -116,6 +123,13 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
+	protected void setClayDataSetFilterSerializer(
+		ClayDataSetFilterSerializer clayDataSetFilterSerializer) {
+
+		_clayDataSetFilterSerializer = clayDataSetFilterSerializer;
+	}
+
+	@Reference(unbind = "-")
 	protected void setCommerceDataProviderRegistry(
 		CommerceDataProviderRegistry commerceDataProviderRegistry) {
 
@@ -179,6 +193,10 @@ public class ServletContextUtil {
 		return _clayDataSetDisplayViewSerializer;
 	}
 
+	private ClayDataSetFilterSerializer _getClayDataSetFilterSerializer() {
+		return _clayDataSetFilterSerializer;
+	}
+
 	private ClayDataSetDataJSONBuilder _getClayTableDataJSONBuilder() {
 		return _clayDataSetDataJSONBuilder;
 	}
@@ -223,6 +241,7 @@ public class ServletContextUtil {
 
 	private ClayDataSetDataJSONBuilder _clayDataSetDataJSONBuilder;
 	private ClayDataSetDisplayViewSerializer _clayDataSetDisplayViewSerializer;
+	private ClayDataSetFilterSerializer _clayDataSetFilterSerializer;
 	private CommerceDataProviderRegistry _commerceDataProviderRegistry;
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private ConfigurationProvider _configurationProvider;

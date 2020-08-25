@@ -34,17 +34,17 @@ public class DDMStorageLinkCacheModel
 	implements CacheModel<DDMStorageLink>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMStorageLinkCacheModel)) {
+		if (!(object instanceof DDMStorageLinkCacheModel)) {
 			return false;
 		}
 
 		DDMStorageLinkCacheModel ddmStorageLinkCacheModel =
-			(DDMStorageLinkCacheModel)obj;
+			(DDMStorageLinkCacheModel)object;
 
 		if (storageLinkId == ddmStorageLinkCacheModel.storageLinkId) {
 			return true;

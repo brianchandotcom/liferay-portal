@@ -588,17 +588,17 @@ public class JournalArticleLocalizationModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof JournalArticleLocalization)) {
+		if (!(object instanceof JournalArticleLocalization)) {
 			return false;
 		}
 
 		JournalArticleLocalization journalArticleLocalization =
-			(JournalArticleLocalization)obj;
+			(JournalArticleLocalization)object;
 
 		long primaryKey = journalArticleLocalization.getPrimaryKey();
 

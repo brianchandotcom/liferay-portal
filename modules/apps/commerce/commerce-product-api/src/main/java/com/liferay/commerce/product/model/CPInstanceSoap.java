@@ -77,6 +77,7 @@ public class CPInstanceSoap implements Serializable {
 			model.getDeliverySubscriptionTypeSettings());
 		soapModel.setDeliveryMaxSubscriptionCycles(
 			model.getDeliveryMaxSubscriptionCycles());
+		soapModel.setUnspsc(model.getUnspsc());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -456,6 +457,14 @@ public class CPInstanceSoap implements Serializable {
 		_deliveryMaxSubscriptionCycles = deliveryMaxSubscriptionCycles;
 	}
 
+	public String getUnspsc() {
+		return _unspsc;
+	}
+
+	public void setUnspsc(String unspsc) {
+		_unspsc = unspsc;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -525,6 +534,7 @@ public class CPInstanceSoap implements Serializable {
 	private String _deliverySubscriptionType;
 	private String _deliverySubscriptionTypeSettings;
 	private long _deliveryMaxSubscriptionCycles;
+	private String _unspsc;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

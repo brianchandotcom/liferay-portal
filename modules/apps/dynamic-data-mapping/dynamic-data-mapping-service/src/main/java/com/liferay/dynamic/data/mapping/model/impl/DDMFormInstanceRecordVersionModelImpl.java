@@ -1198,17 +1198,17 @@ public class DDMFormInstanceRecordVersionModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMFormInstanceRecordVersion)) {
+		if (!(object instanceof DDMFormInstanceRecordVersion)) {
 			return false;
 		}
 
 		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
-			(DDMFormInstanceRecordVersion)obj;
+			(DDMFormInstanceRecordVersion)object;
 
 		long primaryKey = ddmFormInstanceRecordVersion.getPrimaryKey();
 

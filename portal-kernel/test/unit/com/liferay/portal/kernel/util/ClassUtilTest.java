@@ -60,7 +60,7 @@ public class ClassUtilTest {
 		throws Exception {
 
 		StringBundler sb = new StringBundler(
-			arrayParameterClassNames.length * 3 + 2);
+			(arrayParameterClassNames.length * 3) + 2);
 
 		sb.append(StringPool.AT);
 		sb.append(annotation);

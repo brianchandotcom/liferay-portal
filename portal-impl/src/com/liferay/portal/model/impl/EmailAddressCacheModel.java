@@ -37,17 +37,17 @@ public class EmailAddressCacheModel
 	implements CacheModel<EmailAddress>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof EmailAddressCacheModel)) {
+		if (!(object instanceof EmailAddressCacheModel)) {
 			return false;
 		}
 
 		EmailAddressCacheModel emailAddressCacheModel =
-			(EmailAddressCacheModel)obj;
+			(EmailAddressCacheModel)object;
 
 		if ((emailAddressId == emailAddressCacheModel.emailAddressId) &&
 			(mvccVersion == emailAddressCacheModel.mvccVersion)) {

@@ -1064,16 +1064,16 @@ public class KaleoNotificationModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoNotification)) {
+		if (!(object instanceof KaleoNotification)) {
 			return false;
 		}
 
-		KaleoNotification kaleoNotification = (KaleoNotification)obj;
+		KaleoNotification kaleoNotification = (KaleoNotification)object;
 
 		long primaryKey = kaleoNotification.getPrimaryKey();
 

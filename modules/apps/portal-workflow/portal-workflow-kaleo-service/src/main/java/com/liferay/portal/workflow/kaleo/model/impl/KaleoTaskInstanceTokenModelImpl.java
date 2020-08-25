@@ -1201,17 +1201,17 @@ public class KaleoTaskInstanceTokenModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoTaskInstanceToken)) {
+		if (!(object instanceof KaleoTaskInstanceToken)) {
 			return false;
 		}
 
 		KaleoTaskInstanceToken kaleoTaskInstanceToken =
-			(KaleoTaskInstanceToken)obj;
+			(KaleoTaskInstanceToken)object;
 
 		long primaryKey = kaleoTaskInstanceToken.getPrimaryKey();
 

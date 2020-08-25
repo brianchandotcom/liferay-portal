@@ -16,11 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
-%>
-
-<aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
+<aui:model-context bean="<%= (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER) %>" model="<%= User.class %>" />
 
 <aui:fieldset>
 	<aui:input label="comments" name="comments" />

@@ -65,6 +65,10 @@ public class CommercePaymentMethodGroupRelLocalServiceUtil {
 	/**
 	 * Adds the commerce payment method group rel to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePaymentMethodGroupRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePaymentMethodGroupRel the commerce payment method group rel
 	 * @return the commerce payment method group rel that was added
 	 */
@@ -119,6 +123,10 @@ public class CommercePaymentMethodGroupRelLocalServiceUtil {
 	/**
 	 * Deletes the commerce payment method group rel from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePaymentMethodGroupRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commercePaymentMethodGroupRel the commerce payment method group rel
 	 * @return the commerce payment method group rel that was removed
 	 * @throws PortalException
@@ -137,6 +145,10 @@ public class CommercePaymentMethodGroupRelLocalServiceUtil {
 
 	/**
 	 * Deletes the commerce payment method group rel with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePaymentMethodGroupRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commercePaymentMethodGroupRelId the primary key of the commerce payment method group rel
 	 * @return the commerce payment method group rel that was removed
@@ -453,6 +465,10 @@ public class CommercePaymentMethodGroupRelLocalServiceUtil {
 
 	/**
 	 * Updates the commerce payment method group rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommercePaymentMethodGroupRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commercePaymentMethodGroupRel the commerce payment method group rel
 	 * @return the commerce payment method group rel that was updated

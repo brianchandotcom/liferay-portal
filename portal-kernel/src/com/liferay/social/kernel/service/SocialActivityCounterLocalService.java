@@ -127,6 +127,10 @@ public interface SocialActivityCounterLocalService
 	/**
 	 * Adds the social activity counter to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SocialActivityCounterLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param socialActivityCounter the social activity counter
 	 * @return the social activity counter that was added
 	 */
@@ -188,6 +192,10 @@ public interface SocialActivityCounterLocalService
 	/**
 	 * Deletes the social activity counter with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SocialActivityCounterLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param activityCounterId the primary key of the social activity counter
 	 * @return the social activity counter that was removed
 	 * @throws PortalException if a social activity counter with the primary key could not be found
@@ -199,6 +207,10 @@ public interface SocialActivityCounterLocalService
 
 	/**
 	 * Deletes the social activity counter from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SocialActivityCounterLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param socialActivityCounter the social activity counter
 	 * @return the social activity counter that was removed
@@ -581,6 +593,10 @@ public interface SocialActivityCounterLocalService
 
 	/**
 	 * Updates the social activity counter in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SocialActivityCounterLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param socialActivityCounter the social activity counter
 	 * @return the social activity counter that was updated

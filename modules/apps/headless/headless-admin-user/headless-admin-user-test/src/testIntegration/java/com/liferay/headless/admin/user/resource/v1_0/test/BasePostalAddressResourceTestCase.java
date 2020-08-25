@@ -107,7 +107,9 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		PostalAddressResource.Builder builder = PostalAddressResource.builder();
 
-		postalAddressResource = builder.locale(
+		postalAddressResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

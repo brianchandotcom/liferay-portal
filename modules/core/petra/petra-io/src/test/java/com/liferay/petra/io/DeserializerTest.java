@@ -581,7 +581,7 @@ public class DeserializerTest {
 
 		String nonAsciiString = "非ASCII Code中文测试";
 
-		buffer = new byte[nonAsciiString.length() * 2 + 6];
+		buffer = new byte[(nonAsciiString.length() * 2) + 6];
 
 		buffer[0] = SerializationConstants.TC_STRING;
 		buffer[1] = 0;
@@ -589,7 +589,8 @@ public class DeserializerTest {
 		BigEndianCodec.putInt(buffer, 2, nonAsciiString.length());
 
 		for (int i = 0; i < nonAsciiString.length(); i++) {
-			BigEndianCodec.putChar(buffer, 6 + i * 2, nonAsciiString.charAt(i));
+			BigEndianCodec.putChar(
+				buffer, 6 + (i * 2), nonAsciiString.charAt(i));
 		}
 
 		byteBuffer = ByteBuffer.wrap(buffer);
@@ -665,14 +666,15 @@ public class DeserializerTest {
 
 		String nonAsciiString = "非ASCII Code中文测试";
 
-		buffer = new byte[nonAsciiString.length() * 2 + 5];
+		buffer = new byte[(nonAsciiString.length() * 2) + 5];
 
 		buffer[0] = 0;
 
 		BigEndianCodec.putInt(buffer, 1, nonAsciiString.length());
 
 		for (int i = 0; i < nonAsciiString.length(); i++) {
-			BigEndianCodec.putChar(buffer, 5 + i * 2, nonAsciiString.charAt(i));
+			BigEndianCodec.putChar(
+				buffer, 5 + (i * 2), nonAsciiString.charAt(i));
 		}
 
 		byteBuffer = ByteBuffer.wrap(buffer);

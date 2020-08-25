@@ -62,6 +62,10 @@ public interface TierPriceResource {
 	public TierPrice postPriceEntryIdTierPrice(Long id, TierPrice tierPrice)
 		throws Exception;
 
+	public Response postPriceEntryIdTierPriceBatch(
+			Long id, String callbackURL, Object object)
+		throws Exception;
+
 	public Response deleteTierPriceByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;

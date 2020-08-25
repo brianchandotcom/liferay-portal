@@ -571,6 +571,34 @@ public class Sku {
 	@NotEmpty
 	protected String sku;
 
+	@Schema
+	public String getUnspsc() {
+		return unspsc;
+	}
+
+	public void setUnspsc(String unspsc) {
+		this.unspsc = unspsc;
+	}
+
+	@JsonIgnore
+	public void setUnspsc(
+		UnsafeSupplier<String, Exception> unspscUnsafeSupplier) {
+
+		try {
+			unspsc = unspscUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String unspsc;
+
 	@DecimalMin("0")
 	@Schema
 	public Double getWeight() {
@@ -863,6 +891,20 @@ public class Sku {
 			sb.append("\"");
 		}
 
+		if (unspsc != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unspsc\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(unspsc));
+
+			sb.append("\"");
+		}
+
 		if (weight != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -900,6 +942,16 @@ public class Sku {
 		return string.replaceAll("\"", "\\\\\"");
 	}
 
+	private static boolean _isArray(Object value) {
+		if (value == null) {
+			return false;
+		}
+
+		Class<?> clazz = value.getClass();
+
+		return clazz.isArray();
+	}
+
 	private static String _toJSON(Map<String, ?> map) {
 		StringBuilder sb = new StringBuilder("{");
 
@@ -918,9 +970,7 @@ public class Sku {
 
 			Object value = entry.getValue();
 
-			Class<?> clazz = value.getClass();
-
-			if (clazz.isArray()) {
+			if (_isArray(value)) {
 				sb.append("[");
 
 				Object[] valueArray = (Object[])value;

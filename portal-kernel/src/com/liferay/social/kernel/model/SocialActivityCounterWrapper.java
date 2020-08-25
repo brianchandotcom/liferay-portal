@@ -572,17 +572,17 @@ public class SocialActivityCounterWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SocialActivityCounterWrapper)) {
+		if (!(object instanceof SocialActivityCounterWrapper)) {
 			return false;
 		}
 
 		SocialActivityCounterWrapper socialActivityCounterWrapper =
-			(SocialActivityCounterWrapper)obj;
+			(SocialActivityCounterWrapper)object;
 
 		if (Objects.equals(
 				_socialActivityCounter,

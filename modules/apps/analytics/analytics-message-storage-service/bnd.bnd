@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Analytics Message Storage Service
 Bundle-SymbolicName: com.liferay.analytics.message.storage.service
-Bundle-Version: 2.0.5
+Bundle-Version: 2.0.7
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
 -dsannotations-options: inherit

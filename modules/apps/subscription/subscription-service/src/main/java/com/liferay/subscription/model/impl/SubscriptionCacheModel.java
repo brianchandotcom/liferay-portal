@@ -37,17 +37,17 @@ public class SubscriptionCacheModel
 	implements CacheModel<Subscription>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SubscriptionCacheModel)) {
+		if (!(object instanceof SubscriptionCacheModel)) {
 			return false;
 		}
 
 		SubscriptionCacheModel subscriptionCacheModel =
-			(SubscriptionCacheModel)obj;
+			(SubscriptionCacheModel)object;
 
 		if ((subscriptionId == subscriptionCacheModel.subscriptionId) &&
 			(mvccVersion == subscriptionCacheModel.mvccVersion)) {

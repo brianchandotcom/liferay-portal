@@ -18,15 +18,19 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * The base model interface for the CommercePricingClass service. Represents a row in the &quot;CommercePricingClass&quot; database table, with each column mapped to a property of this class.
@@ -41,7 +45,8 @@ import java.util.Date;
  */
 @ProviderType
 public interface CommercePricingClassModel
-	extends BaseModel<CommercePricingClass>, ShardedModel, StagedGroupedModel {
+	extends BaseModel<CommercePricingClass>, LocalizedModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -108,22 +113,6 @@ public interface CommercePricingClassModel
 	 * @param commercePricingClassId the commerce pricing class ID of this commerce pricing class
 	 */
 	public void setCommercePricingClassId(long commercePricingClassId);
-
-	/**
-	 * Returns the group ID of this commerce pricing class.
-	 *
-	 * @return the group ID of this commerce pricing class
-	 */
-	@Override
-	public long getGroupId();
-
-	/**
-	 * Sets the group ID of this commerce pricing class.
-	 *
-	 * @param groupId the group ID of this commerce pricing class
-	 */
-	@Override
-	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the company ID of this commerce pricing class.
@@ -227,8 +216,58 @@ public interface CommercePricingClassModel
 	 *
 	 * @return the title of this commerce pricing class
 	 */
-	@AutoEscape
 	public String getTitle();
+
+	/**
+	 * Returns the localized title of this commerce pricing class in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized title of this commerce pricing class
+	 */
+	@AutoEscape
+	public String getTitle(Locale locale);
+
+	/**
+	 * Returns the localized title of this commerce pricing class in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized title of this commerce pricing class. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getTitle(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized title of this commerce pricing class in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized title of this commerce pricing class
+	 */
+	@AutoEscape
+	public String getTitle(String languageId);
+
+	/**
+	 * Returns the localized title of this commerce pricing class in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized title of this commerce pricing class
+	 */
+	@AutoEscape
+	public String getTitle(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getTitleCurrentLanguageId();
+
+	@AutoEscape
+	public String getTitleCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized titles of this commerce pricing class.
+	 *
+	 * @return the locales and localized titles of this commerce pricing class
+	 */
+	public Map<Locale, String> getTitleMap();
 
 	/**
 	 * Sets the title of this commerce pricing class.
@@ -238,12 +277,96 @@ public interface CommercePricingClassModel
 	public void setTitle(String title);
 
 	/**
+	 * Sets the localized title of this commerce pricing class in the language.
+	 *
+	 * @param title the localized title of this commerce pricing class
+	 * @param locale the locale of the language
+	 */
+	public void setTitle(String title, Locale locale);
+
+	/**
+	 * Sets the localized title of this commerce pricing class in the language, and sets the default locale.
+	 *
+	 * @param title the localized title of this commerce pricing class
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setTitle(String title, Locale locale, Locale defaultLocale);
+
+	public void setTitleCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized titles of this commerce pricing class from the map of locales and localized titles.
+	 *
+	 * @param titleMap the locales and localized titles of this commerce pricing class
+	 */
+	public void setTitleMap(Map<Locale, String> titleMap);
+
+	/**
+	 * Sets the localized titles of this commerce pricing class from the map of locales and localized titles, and sets the default locale.
+	 *
+	 * @param titleMap the locales and localized titles of this commerce pricing class
+	 * @param defaultLocale the default locale
+	 */
+	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale);
+
+	/**
 	 * Returns the description of this commerce pricing class.
 	 *
 	 * @return the description of this commerce pricing class
 	 */
-	@AutoEscape
 	public String getDescription();
+
+	/**
+	 * Returns the localized description of this commerce pricing class in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized description of this commerce pricing class
+	 */
+	@AutoEscape
+	public String getDescription(Locale locale);
+
+	/**
+	 * Returns the localized description of this commerce pricing class in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized description of this commerce pricing class. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getDescription(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized description of this commerce pricing class in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized description of this commerce pricing class
+	 */
+	@AutoEscape
+	public String getDescription(String languageId);
+
+	/**
+	 * Returns the localized description of this commerce pricing class in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized description of this commerce pricing class
+	 */
+	@AutoEscape
+	public String getDescription(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getDescriptionCurrentLanguageId();
+
+	@AutoEscape
+	public String getDescriptionCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized descriptions of this commerce pricing class.
+	 *
+	 * @return the locales and localized descriptions of this commerce pricing class
+	 */
+	public Map<Locale, String> getDescriptionMap();
 
 	/**
 	 * Sets the description of this commerce pricing class.
@@ -253,11 +376,46 @@ public interface CommercePricingClassModel
 	public void setDescription(String description);
 
 	/**
+	 * Sets the localized description of this commerce pricing class in the language.
+	 *
+	 * @param description the localized description of this commerce pricing class
+	 * @param locale the locale of the language
+	 */
+	public void setDescription(String description, Locale locale);
+
+	/**
+	 * Sets the localized description of this commerce pricing class in the language, and sets the default locale.
+	 *
+	 * @param description the localized description of this commerce pricing class
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setDescription(
+		String description, Locale locale, Locale defaultLocale);
+
+	public void setDescriptionCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized descriptions of this commerce pricing class from the map of locales and localized descriptions.
+	 *
+	 * @param descriptionMap the locales and localized descriptions of this commerce pricing class
+	 */
+	public void setDescriptionMap(Map<Locale, String> descriptionMap);
+
+	/**
+	 * Sets the localized descriptions of this commerce pricing class from the map of locales and localized descriptions, and sets the default locale.
+	 *
+	 * @param descriptionMap the locales and localized descriptions of this commerce pricing class
+	 * @param defaultLocale the default locale
+	 */
+	public void setDescriptionMap(
+		Map<Locale, String> descriptionMap, Locale defaultLocale);
+
+	/**
 	 * Returns the last publish date of this commerce pricing class.
 	 *
 	 * @return the last publish date of this commerce pricing class
 	 */
-	@Override
 	public Date getLastPublishDate();
 
 	/**
@@ -265,7 +423,6 @@ public interface CommercePricingClassModel
 	 *
 	 * @param lastPublishDate the last publish date of this commerce pricing class
 	 */
-	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override
@@ -300,6 +457,19 @@ public interface CommercePricingClassModel
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
+
+	@Override
+	public String[] getAvailableLanguageIds();
+
+	@Override
+	public String getDefaultLanguageId();
+
+	@Override
+	public void prepareLocalizedFieldsForImport() throws LocaleException;
+
+	@Override
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException;
 
 	@Override
 	public Object clone();

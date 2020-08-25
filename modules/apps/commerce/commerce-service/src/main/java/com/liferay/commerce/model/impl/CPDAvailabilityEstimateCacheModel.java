@@ -36,17 +36,17 @@ public class CPDAvailabilityEstimateCacheModel
 	implements CacheModel<CPDAvailabilityEstimate>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDAvailabilityEstimateCacheModel)) {
+		if (!(object instanceof CPDAvailabilityEstimateCacheModel)) {
 			return false;
 		}
 
 		CPDAvailabilityEstimateCacheModel cpdAvailabilityEstimateCacheModel =
-			(CPDAvailabilityEstimateCacheModel)obj;
+			(CPDAvailabilityEstimateCacheModel)object;
 
 		if (CPDAvailabilityEstimateId ==
 				cpdAvailabilityEstimateCacheModel.CPDAvailabilityEstimateId) {

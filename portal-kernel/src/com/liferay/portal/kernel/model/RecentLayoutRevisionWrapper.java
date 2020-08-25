@@ -423,17 +423,17 @@ public class RecentLayoutRevisionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof RecentLayoutRevisionWrapper)) {
+		if (!(object instanceof RecentLayoutRevisionWrapper)) {
 			return false;
 		}
 
 		RecentLayoutRevisionWrapper recentLayoutRevisionWrapper =
-			(RecentLayoutRevisionWrapper)obj;
+			(RecentLayoutRevisionWrapper)object;
 
 		if (Objects.equals(
 				_recentLayoutRevision,

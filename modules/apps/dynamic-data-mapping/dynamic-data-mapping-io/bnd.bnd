@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Dynamic Data Mapping IO
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.io
-Bundle-Version: 3.0.32
+Bundle-Version: 3.0.33
 Import-Package:\
 	!org.apache.poi.hssf.usermodel.*,\
 	!org.apache.poi.ss.usermodel.*,\

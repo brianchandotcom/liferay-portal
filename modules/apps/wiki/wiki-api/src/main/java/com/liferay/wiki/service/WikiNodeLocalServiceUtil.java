@@ -90,6 +90,10 @@ public class WikiNodeLocalServiceUtil {
 	/**
 	 * Adds the wiki node to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect WikiNodeLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param wikiNode the wiki node
 	 * @return the wiki node that was added
 	 */
@@ -141,6 +145,10 @@ public class WikiNodeLocalServiceUtil {
 	/**
 	 * Deletes the wiki node with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect WikiNodeLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param nodeId the primary key of the wiki node
 	 * @return the wiki node that was removed
 	 * @throws PortalException if a wiki node with the primary key could not be found
@@ -153,6 +161,10 @@ public class WikiNodeLocalServiceUtil {
 
 	/**
 	 * Deletes the wiki node from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect WikiNodeLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param wikiNode the wiki node
 	 * @return the wiki node that was removed
@@ -535,6 +547,10 @@ public class WikiNodeLocalServiceUtil {
 
 	/**
 	 * Updates the wiki node in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect WikiNodeLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param wikiNode the wiki node
 	 * @return the wiki node that was updated

@@ -106,7 +106,7 @@ public class InternetAddressUtil {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(addresses.length * 2 - 1);
+		StringBundler sb = new StringBundler((addresses.length * 2) - 1);
 
 		for (int i = 0; i < (addresses.length - 1); i++) {
 			sb.append(toString(addresses[i]));

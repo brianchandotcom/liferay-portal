@@ -311,7 +311,7 @@ public class AlloyControllerInvokerManager {
 			methodVisitor.visitLdcInsn(jsonWebServiceMethod.lifecycle());
 
 			methodVisitor.visitIntInsn(
-				Opcodes.BIPUSH, parameterTypes.length * 2 + 2);
+				Opcodes.BIPUSH, (parameterTypes.length * 2) + 2);
 			methodVisitor.visitTypeInsn(
 				Opcodes.ANEWARRAY, getClassBinaryName(Object.class.getName()));
 
@@ -334,7 +334,7 @@ public class AlloyControllerInvokerManager {
 				methodVisitor.visitInsn(Opcodes.AASTORE);
 
 				methodVisitor.visitInsn(Opcodes.DUP);
-				methodVisitor.visitIntInsn(Opcodes.BIPUSH, (i + 1) * 2 + 1);
+				methodVisitor.visitIntInsn(Opcodes.BIPUSH, ((i + 1) * 2) + 1);
 				methodVisitor.visitVarInsn(Opcodes.ALOAD, i + 1);
 				methodVisitor.visitInsn(Opcodes.AASTORE);
 			}

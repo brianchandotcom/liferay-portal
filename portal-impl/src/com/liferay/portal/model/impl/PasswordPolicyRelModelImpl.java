@@ -583,16 +583,16 @@ public class PasswordPolicyRelModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof PasswordPolicyRel)) {
+		if (!(object instanceof PasswordPolicyRel)) {
 			return false;
 		}
 
-		PasswordPolicyRel passwordPolicyRel = (PasswordPolicyRel)obj;
+		PasswordPolicyRel passwordPolicyRel = (PasswordPolicyRel)object;
 
 		long primaryKey = passwordPolicyRel.getPrimaryKey();
 

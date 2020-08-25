@@ -14,16 +14,23 @@
 
 export const actionsDefinition = {
 	RESET_FILTERS_VALUE: 'resetFiltersValue',
-	UPDATE_FILTER_VALUE: 'updateFilterValue'
+	UPDATE_FILTER_STATE: 'updateFilterState'
 };
 
-const updateFilterValue = dispatch => (id, value = null) =>
+const updateFilterState = dispatch => (
+	id,
+	value = null,
+	formattedValue = null,
+	odataFilterString = null
+) =>
 	dispatch({
 		payload: {
+			formattedValue,
 			id,
+			odataFilterString,
 			value
 		},
-		type: actionsDefinition.UPDATE_FILTER_VALUE
+		type: actionsDefinition.UPDATE_FILTER_STATE
 	});
 
 const resetFiltersValue = dispatch => () =>
@@ -33,7 +40,7 @@ const resetFiltersValue = dispatch => () =>
 
 export const actions = {
 	resetFiltersValue,
-	updateFilterValue
+	updateFilterState
 };
 
 export default actions;

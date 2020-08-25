@@ -1240,16 +1240,16 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MBMessageWrapper)) {
+		if (!(object instanceof MBMessageWrapper)) {
 			return false;
 		}
 
-		MBMessageWrapper mbMessageWrapper = (MBMessageWrapper)obj;
+		MBMessageWrapper mbMessageWrapper = (MBMessageWrapper)object;
 
 		if (Objects.equals(_mbMessage, mbMessageWrapper._mbMessage)) {
 			return true;

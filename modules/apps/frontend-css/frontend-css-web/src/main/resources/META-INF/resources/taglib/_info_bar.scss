@@ -1,14 +1,9 @@
 .info-bar-container {
 	background-color: #FFF;
 	border-bottom: 1px solid #EDF0F2;
-	min-height: 47px;
 
 	.info-bar {
 		padding: 0;
-	}
-
-	@include sm() {
-		min-height: 59px;
 	}
 
 	.info-bar-default {
@@ -26,11 +21,9 @@
 	}
 
 	.info-bar-center {
-		left: 50%;
+		margin-bottom: 16px;
 		margin-top: 16px;
-		position: absolute;
 		text-align: center;
-		transform: translate(-50%);
 		width: 100%;
 
 		@include sm() {

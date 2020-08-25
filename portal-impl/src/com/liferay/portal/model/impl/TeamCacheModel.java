@@ -37,16 +37,16 @@ public class TeamCacheModel
 	implements CacheModel<Team>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof TeamCacheModel)) {
+		if (!(object instanceof TeamCacheModel)) {
 			return false;
 		}
 
-		TeamCacheModel teamCacheModel = (TeamCacheModel)obj;
+		TeamCacheModel teamCacheModel = (TeamCacheModel)object;
 
 		if ((teamId == teamCacheModel.teamId) &&
 			(mvccVersion == teamCacheModel.mvccVersion)) {

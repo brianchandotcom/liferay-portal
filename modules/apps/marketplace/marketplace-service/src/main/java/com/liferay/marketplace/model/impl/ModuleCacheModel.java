@@ -33,16 +33,16 @@ import java.io.ObjectOutput;
 public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ModuleCacheModel)) {
+		if (!(object instanceof ModuleCacheModel)) {
 			return false;
 		}
 
-		ModuleCacheModel moduleCacheModel = (ModuleCacheModel)obj;
+		ModuleCacheModel moduleCacheModel = (ModuleCacheModel)object;
 
 		if (moduleId == moduleCacheModel.moduleId) {
 			return true;

@@ -64,14 +64,9 @@
 								</div>
 							</c:when>
 							<c:otherwise>
-
-								<%
-								PortletURL portletURL = PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.RENDER_PHASE);
-								%>
-
 								<liferay-ui:search-container
 									emptyResultsMessage="no-sites-were-found"
-									iteratorURL="<%= portletURL %>"
+									iteratorURL="<%= PortletURLFactoryUtil.create(request, portletDisplay.getId(), PortletRequest.RENDER_PHASE) %>"
 								>
 
 									<%

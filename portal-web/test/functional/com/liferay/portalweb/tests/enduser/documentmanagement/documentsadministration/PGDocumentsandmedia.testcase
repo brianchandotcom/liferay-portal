@@ -1267,6 +1267,7 @@ definition {
 	@priority = "5"
 	test SubscribeToCommentAndViewEmailNotification {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property test.assert.javascript.errors = "false";
 		property test.smtp.server.enabled = "true";
 
 		JSONUser.addUser(
@@ -1330,6 +1331,7 @@ definition {
 	@priority = "5"
 	test SubscribeToFolderAndViewEmailNotifications {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property test.assert.javascript.errors = "false";
 		property test.smtp.server.enabled = "true";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

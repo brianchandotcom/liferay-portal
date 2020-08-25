@@ -37,16 +37,16 @@ public class ImageCacheModel
 	implements CacheModel<Image>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ImageCacheModel)) {
+		if (!(object instanceof ImageCacheModel)) {
 			return false;
 		}
 
-		ImageCacheModel imageCacheModel = (ImageCacheModel)obj;
+		ImageCacheModel imageCacheModel = (ImageCacheModel)object;
 
 		if ((imageId == imageCacheModel.imageId) &&
 			(mvccVersion == imageCacheModel.mvccVersion)) {

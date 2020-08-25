@@ -1,10 +1,13 @@
 Bundle-Name: Liferay Headless Commerce Delivery Cart API
 Bundle-SymbolicName: com.liferay.headless.commerce.delivery.cart.api
-Bundle-Version: 2.1.2
+Bundle-Version: 2.2.4
 Export-Package:\
 	com.liferay.headless.commerce.delivery.cart.dto.v1_0,\
 	com.liferay.headless.commerce.delivery.cart.resource.v1_0
 Import-Package:\
+	com.liferay.portal.vulcan.accept.language;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.graphql.annotation;version="[1.0.0,2.0.0)",\
+	com.liferay.portal.vulcan.pagination;version="[1.0.0,2.0.0)",\
 	com.liferay.portal.vulcan.util;version="[2.3.0,3.0.0)",\
 	\
 	*

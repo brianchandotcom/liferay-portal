@@ -329,11 +329,6 @@ definition {
 				locator1 = "build-test.xml",
 				value1 = "start-app-server -Dkeep.cached.app.server.data=true");
 		}
-		else if ("${deleteindexdata}" == "true") {
-			AntCommand(
-				locator1 = "build-test.xml",
-				value1 = "start-app-server -Ddelete.index.data=true");
-		}
 		else {
 			AntCommand(
 				locator1 = "build-test.xml",

@@ -66,7 +66,7 @@ public class ReadingTimeCalculatorImplTest {
 		Duration readingTimeDuration = _calculateReadingTime(
 			sb.toString(), "text/html", LocaleUtil.getDefault());
 
-		Assert.assertEquals(60 + 3 * 3, readingTimeDuration.getSeconds());
+		Assert.assertEquals(60 + (3 * 3), readingTimeDuration.getSeconds());
 	}
 
 	@Test

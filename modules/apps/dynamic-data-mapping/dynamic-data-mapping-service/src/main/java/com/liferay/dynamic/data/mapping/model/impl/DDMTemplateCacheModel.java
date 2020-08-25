@@ -36,17 +36,17 @@ public class DDMTemplateCacheModel
 	implements CacheModel<DDMTemplate>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMTemplateCacheModel)) {
+		if (!(object instanceof DDMTemplateCacheModel)) {
 			return false;
 		}
 
 		DDMTemplateCacheModel ddmTemplateCacheModel =
-			(DDMTemplateCacheModel)obj;
+			(DDMTemplateCacheModel)object;
 
 		if (templateId == ddmTemplateCacheModel.templateId) {
 			return true;

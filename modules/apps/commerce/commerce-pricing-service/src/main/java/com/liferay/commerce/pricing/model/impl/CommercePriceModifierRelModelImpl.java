@@ -827,17 +827,17 @@ public class CommercePriceModifierRelModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommercePriceModifierRel)) {
+		if (!(object instanceof CommercePriceModifierRel)) {
 			return false;
 		}
 
 		CommercePriceModifierRel commercePriceModifierRel =
-			(CommercePriceModifierRel)obj;
+			(CommercePriceModifierRel)object;
 
 		long primaryKey = commercePriceModifierRel.getPrimaryKey();
 

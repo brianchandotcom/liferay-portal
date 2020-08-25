@@ -57,7 +57,7 @@ public class PrimitiveIntList {
 		if (minSize > oldSize) {
 			int[] previousElements = _elements;
 
-			int newCapacity = (oldSize * 3) / 2 + 1;
+			int newCapacity = ((oldSize * 3) / 2) + 1;
 
 			if (newCapacity < minSize) {
 				newCapacity = minSize;

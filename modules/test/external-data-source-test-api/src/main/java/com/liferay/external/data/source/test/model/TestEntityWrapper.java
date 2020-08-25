@@ -239,16 +239,16 @@ public class TestEntityWrapper implements ModelWrapper<TestEntity>, TestEntity {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof TestEntityWrapper)) {
+		if (!(object instanceof TestEntityWrapper)) {
 			return false;
 		}
 
-		TestEntityWrapper testEntityWrapper = (TestEntityWrapper)obj;
+		TestEntityWrapper testEntityWrapper = (TestEntityWrapper)object;
 
 		if (Objects.equals(_testEntity, testEntityWrapper._testEntity)) {
 			return true;

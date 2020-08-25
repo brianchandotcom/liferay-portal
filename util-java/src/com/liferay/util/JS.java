@@ -116,7 +116,7 @@ public class JS {
 	}
 
 	public static String toScript(String[] array) {
-		StringBundler sb = new StringBundler(array.length * 4 + 2);
+		StringBundler sb = new StringBundler((array.length * 4) + 2);
 
 		sb.append(StringPool.OPEN_BRACKET);
 

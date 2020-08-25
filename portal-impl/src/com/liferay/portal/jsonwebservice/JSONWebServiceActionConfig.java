@@ -105,7 +105,7 @@ public class JSONWebServiceActionConfig
 
 		Class<?>[] parameterTypes = _actionMethod.getParameterTypes();
 
-		StringBundler sb = new StringBundler(parameterTypes.length * 2 + 3);
+		StringBundler sb = new StringBundler((parameterTypes.length * 2) + 3);
 
 		sb.append(_path);
 		sb.append(StringPool.MINUS);

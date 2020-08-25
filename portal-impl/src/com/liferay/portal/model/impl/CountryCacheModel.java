@@ -35,16 +35,16 @@ public class CountryCacheModel
 	implements CacheModel<Country>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CountryCacheModel)) {
+		if (!(object instanceof CountryCacheModel)) {
 			return false;
 		}
 
-		CountryCacheModel countryCacheModel = (CountryCacheModel)obj;
+		CountryCacheModel countryCacheModel = (CountryCacheModel)object;
 
 		if ((countryId == countryCacheModel.countryId) &&
 			(mvccVersion == countryCacheModel.mvccVersion)) {

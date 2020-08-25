@@ -36,17 +36,17 @@ public class CommerceVirtualOrderItemCacheModel
 	implements CacheModel<CommerceVirtualOrderItem>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceVirtualOrderItemCacheModel)) {
+		if (!(object instanceof CommerceVirtualOrderItemCacheModel)) {
 			return false;
 		}
 
 		CommerceVirtualOrderItemCacheModel commerceVirtualOrderItemCacheModel =
-			(CommerceVirtualOrderItemCacheModel)obj;
+			(CommerceVirtualOrderItemCacheModel)object;
 
 		if (commerceVirtualOrderItemId ==
 				commerceVirtualOrderItemCacheModel.commerceVirtualOrderItemId) {

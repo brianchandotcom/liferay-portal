@@ -77,7 +77,7 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 											fragmentCollectionURL.setParameter("fragmentCollectionId", String.valueOf(fragmentCollection.getFragmentCollectionId()));
 											%>
 
-											<a class='nav-link truncate-text <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>' href="<%= fragmentCollectionURL.toString() %>">
+											<a class="nav-link truncate-text <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
 												<%= HtmlUtil.escape(fragmentCollection.getName()) %>
 											</a>
 										</li>

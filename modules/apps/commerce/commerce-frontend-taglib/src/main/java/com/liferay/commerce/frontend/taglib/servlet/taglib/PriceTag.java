@@ -138,6 +138,10 @@ public class PriceTag extends ComponentRendererTag {
 		putValue("CPInstanceId", cpInstanceId);
 	}
 
+	public void setId(String id) {
+		putValue("id", id);
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);

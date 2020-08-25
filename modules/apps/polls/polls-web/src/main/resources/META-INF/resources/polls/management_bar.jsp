@@ -26,7 +26,7 @@
 	searchActionURL="<%= pollsDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= pollsDisplayContext.getSearchContainerId() %>"
 	searchFormName="fm1"
-	selectable="false"
+	selectable="<%= false %>"
 	sortingOrder="<%= pollsDisplayContext.getOrderByType() %>"
 	sortingURL="<%= pollsDisplayContext.getSortingURL() %>"
 />

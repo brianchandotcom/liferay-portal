@@ -1235,16 +1235,16 @@ public class OrganizationModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Organization)) {
+		if (!(object instanceof Organization)) {
 			return false;
 		}
 
-		Organization organization = (Organization)obj;
+		Organization organization = (Organization)object;
 
 		long primaryKey = organization.getPrimaryKey();
 

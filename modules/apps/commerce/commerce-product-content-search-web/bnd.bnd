@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Product Content Search Web
 Bundle-SymbolicName: com.liferay.commerce.product.content.search.web
-Bundle-Version: 1.0.41
+Bundle-Version: 1.0.47
 Import-Package:\
 	com.liferay.portal.search.web.portlet.shared.search;version="[2.1.0,4.0.0)",\
 	\

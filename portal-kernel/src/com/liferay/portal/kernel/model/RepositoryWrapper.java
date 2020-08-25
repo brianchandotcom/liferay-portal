@@ -664,16 +664,16 @@ public class RepositoryWrapper implements ModelWrapper<Repository>, Repository {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof RepositoryWrapper)) {
+		if (!(object instanceof RepositoryWrapper)) {
 			return false;
 		}
 
-		RepositoryWrapper repositoryWrapper = (RepositoryWrapper)obj;
+		RepositoryWrapper repositoryWrapper = (RepositoryWrapper)object;
 
 		if (Objects.equals(_repository, repositoryWrapper._repository)) {
 			return true;

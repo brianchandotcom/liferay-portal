@@ -1109,6 +1109,9 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 			/>
 		</delete>
 
+		<delete dir="${project.dir}/modules/.releng/dxp/apps/lcs" failonerror="false" />
+		<delete dir="${project.dir}/modules/dxp/apps/lcs" failonerror="false" />
+
 		<update-gradle-properties />
 
 		<if>
@@ -1396,7 +1399,9 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 		>
 			<fileset
 				dir="${project.dir}/.gradle/caches/modules-2/files-2.1"
-			/>
+			>
+				<size units="Mi" value="100" when="less" />
+			</fileset>
 		</copy>
 
 		<gradle-execute dir="${project.dir}/modules" task="updateYarnBinariesCache">

@@ -181,7 +181,7 @@ int index = 0;
 					}
 					%>
 
-					<div class='<%= !fieldParamSelection.equals(String.valueOf(index + 1)) ? "hide" : StringPool.BLANK %> modified-custom-range' id="<%= randomNamespace %>customRange">
+					<div class="<%= !fieldParamSelection.equals(String.valueOf(index + 1)) ? "hide" : StringPool.BLANK %> modified-custom-range" id="<%= randomNamespace %>customRange">
 						<div class="col-md-6" id="<%= randomNamespace %>customRangeFrom">
 							<aui:field-wrapper label="from">
 								<liferay-ui:input-date

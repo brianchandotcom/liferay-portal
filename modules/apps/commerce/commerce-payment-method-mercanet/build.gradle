@@ -1,7 +1,7 @@
 dependencies {
-	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.9.10"
-	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.9.10.1"
-	compileInclude group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jsr310", version: "2.9.10"
+	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.10.3"
+	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.10.3"
+	compileInclude group: "com.fasterxml.jackson.datatype", name: "jackson-datatype-jsr310", version: "2.10.3"
 	compileInclude group: "com.worldline.sips", name: "payment-sdk-common", version: "1.2.0"
 	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.8.1"
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.3"

@@ -36,16 +36,16 @@ public class CPOptionCacheModel
 	implements CacheModel<CPOption>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPOptionCacheModel)) {
+		if (!(object instanceof CPOptionCacheModel)) {
 			return false;
 		}
 
-		CPOptionCacheModel cpOptionCacheModel = (CPOptionCacheModel)obj;
+		CPOptionCacheModel cpOptionCacheModel = (CPOptionCacheModel)object;
 
 		if (CPOptionId == cpOptionCacheModel.CPOptionId) {
 			return true;

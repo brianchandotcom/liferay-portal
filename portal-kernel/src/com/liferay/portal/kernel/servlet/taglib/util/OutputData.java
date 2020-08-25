@@ -224,7 +224,7 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 
 		@Override
 		public int hashCode() {
-			return _outputKey.hashCode() * 11 + _webKey.hashCode();
+			return (_outputKey.hashCode() * 11) + _webKey.hashCode();
 		}
 
 		private static final long serialVersionUID = 1L;

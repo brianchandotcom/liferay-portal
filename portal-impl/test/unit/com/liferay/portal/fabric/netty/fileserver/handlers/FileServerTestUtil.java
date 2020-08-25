@@ -172,7 +172,7 @@ public class FileServerTestUtil {
 
 	public static ByteBuf wrapSecondHalf(byte[] data) {
 		return Unpooled.wrappedBuffer(
-			data, data.length / 2, data.length - data.length / 2);
+			data, data.length / 2, data.length - (data.length / 2));
 	}
 
 	protected static final Set<Path> paths = new HashSet<>();

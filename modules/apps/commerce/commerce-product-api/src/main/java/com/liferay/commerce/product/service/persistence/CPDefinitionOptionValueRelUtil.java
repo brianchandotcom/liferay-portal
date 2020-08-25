@@ -1525,6 +1525,206 @@ public class CPDefinitionOptionValueRelUtil {
 	}
 
 	/**
+	 * Returns all the cp definition option value rels where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
+	 *
+	 * @param CPDefinitionOptionRelId the cp definition option rel ID
+	 * @param preselected the preselected
+	 * @return the matching cp definition option value rels
+	 */
+	public static List<CPDefinitionOptionValueRel> findByCDORI_P(
+		long CPDefinitionOptionRelId, boolean preselected) {
+
+		return getPersistence().findByCDORI_P(
+			CPDefinitionOptionRelId, preselected);
+	}
+
+	/**
+	 * Returns a range of all the cp definition option value rels where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CPDefinitionOptionRelId the cp definition option rel ID
+	 * @param preselected the preselected
+	 * @param start the lower bound of the range of cp definition option value rels
+	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
+	 * @return the range of matching cp definition option value rels
+	 */
+	public static List<CPDefinitionOptionValueRel> findByCDORI_P(
+		long CPDefinitionOptionRelId, boolean preselected, int start, int end) {
+
+		return getPersistence().findByCDORI_P(
+			CPDefinitionOptionRelId, preselected, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp definition option value rels where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CPDefinitionOptionRelId the cp definition option rel ID
+	 * @param preselected the preselected
+	 * @param start the lower bound of the range of cp definition option value rels
+	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp definition option value rels
+	 */
+	public static List<CPDefinitionOptionValueRel> findByCDORI_P(
+		long CPDefinitionOptionRelId, boolean preselected, int start, int end,
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
+
+		return getPersistence().findByCDORI_P(
+			CPDefinitionOptionRelId, preselected, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp definition option value rels where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionOptionValueRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CPDefinitionOptionRelId the cp definition option rel ID
+	 * @param preselected the preselected
+	 * @param start the lower bound of the range of cp definition option value rels
+	 * @param end the upper bound of the range of cp definition option value rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching cp definition option value rels
+	 */
+	public static List<CPDefinitionOptionValueRel> findByCDORI_P(
+		long CPDefinitionOptionRelId, boolean preselected, int start, int end,
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByCDORI_P(
+			CPDefinitionOptionRelId, preselected, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first cp definition option value rel in the ordered set where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
+	 *
+	 * @param CPDefinitionOptionRelId the cp definition option rel ID
+	 * @param preselected the preselected
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp definition option value rel
+	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
+	 */
+	public static CPDefinitionOptionValueRel findByCDORI_P_First(
+			long CPDefinitionOptionRelId, boolean preselected,
+			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPDefinitionOptionValueRelException {
+
+		return getPersistence().findByCDORI_P_First(
+			CPDefinitionOptionRelId, preselected, orderByComparator);
+	}
+
+	/**
+	 * Returns the first cp definition option value rel in the ordered set where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
+	 *
+	 * @param CPDefinitionOptionRelId the cp definition option rel ID
+	 * @param preselected the preselected
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
+	 */
+	public static CPDefinitionOptionValueRel fetchByCDORI_P_First(
+		long CPDefinitionOptionRelId, boolean preselected,
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
+
+		return getPersistence().fetchByCDORI_P_First(
+			CPDefinitionOptionRelId, preselected, orderByComparator);
+	}
+
+	/**
+	 * Returns the last cp definition option value rel in the ordered set where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
+	 *
+	 * @param CPDefinitionOptionRelId the cp definition option rel ID
+	 * @param preselected the preselected
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp definition option value rel
+	 * @throws NoSuchCPDefinitionOptionValueRelException if a matching cp definition option value rel could not be found
+	 */
+	public static CPDefinitionOptionValueRel findByCDORI_P_Last(
+			long CPDefinitionOptionRelId, boolean preselected,
+			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPDefinitionOptionValueRelException {
+
+		return getPersistence().findByCDORI_P_Last(
+			CPDefinitionOptionRelId, preselected, orderByComparator);
+	}
+
+	/**
+	 * Returns the last cp definition option value rel in the ordered set where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
+	 *
+	 * @param CPDefinitionOptionRelId the cp definition option rel ID
+	 * @param preselected the preselected
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp definition option value rel, or <code>null</code> if a matching cp definition option value rel could not be found
+	 */
+	public static CPDefinitionOptionValueRel fetchByCDORI_P_Last(
+		long CPDefinitionOptionRelId, boolean preselected,
+		OrderByComparator<CPDefinitionOptionValueRel> orderByComparator) {
+
+		return getPersistence().fetchByCDORI_P_Last(
+			CPDefinitionOptionRelId, preselected, orderByComparator);
+	}
+
+	/**
+	 * Returns the cp definition option value rels before and after the current cp definition option value rel in the ordered set where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
+	 *
+	 * @param CPDefinitionOptionValueRelId the primary key of the current cp definition option value rel
+	 * @param CPDefinitionOptionRelId the cp definition option rel ID
+	 * @param preselected the preselected
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp definition option value rel
+	 * @throws NoSuchCPDefinitionOptionValueRelException if a cp definition option value rel with the primary key could not be found
+	 */
+	public static CPDefinitionOptionValueRel[] findByCDORI_P_PrevAndNext(
+			long CPDefinitionOptionValueRelId, long CPDefinitionOptionRelId,
+			boolean preselected,
+			OrderByComparator<CPDefinitionOptionValueRel> orderByComparator)
+		throws com.liferay.commerce.product.exception.
+			NoSuchCPDefinitionOptionValueRelException {
+
+		return getPersistence().findByCDORI_P_PrevAndNext(
+			CPDefinitionOptionValueRelId, CPDefinitionOptionRelId, preselected,
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the cp definition option value rels where CPDefinitionOptionRelId = &#63; and preselected = &#63; from the database.
+	 *
+	 * @param CPDefinitionOptionRelId the cp definition option rel ID
+	 * @param preselected the preselected
+	 */
+	public static void removeByCDORI_P(
+		long CPDefinitionOptionRelId, boolean preselected) {
+
+		getPersistence().removeByCDORI_P(CPDefinitionOptionRelId, preselected);
+	}
+
+	/**
+	 * Returns the number of cp definition option value rels where CPDefinitionOptionRelId = &#63; and preselected = &#63;.
+	 *
+	 * @param CPDefinitionOptionRelId the cp definition option rel ID
+	 * @param preselected the preselected
+	 * @return the number of matching cp definition option value rels
+	 */
+	public static int countByCDORI_P(
+		long CPDefinitionOptionRelId, boolean preselected) {
+
+		return getPersistence().countByCDORI_P(
+			CPDefinitionOptionRelId, preselected);
+	}
+
+	/**
 	 * Caches the cp definition option value rel in the entity cache if it is enabled.
 	 *
 	 * @param cpDefinitionOptionValueRel the cp definition option value rel

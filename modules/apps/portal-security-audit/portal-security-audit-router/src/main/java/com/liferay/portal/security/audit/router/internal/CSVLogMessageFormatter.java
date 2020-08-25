@@ -42,7 +42,7 @@ public class CSVLogMessageFormatter implements LogMessageFormatter {
 
 	@Override
 	public String format(AuditMessage auditMessage) {
-		StringBundler sb = new StringBundler(_columns.length * 4 - 1);
+		StringBundler sb = new StringBundler((_columns.length * 4) - 1);
 
 		JSONObject jsonObject = auditMessage.toJSONObject();
 

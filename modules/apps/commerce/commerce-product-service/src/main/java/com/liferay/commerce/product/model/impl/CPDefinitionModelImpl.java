@@ -2899,16 +2899,16 @@ public class CPDefinitionModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinition)) {
+		if (!(object instanceof CPDefinition)) {
 			return false;
 		}
 
-		CPDefinition cpDefinition = (CPDefinition)obj;
+		CPDefinition cpDefinition = (CPDefinition)object;
 
 		long primaryKey = cpDefinition.getPrimaryKey();
 

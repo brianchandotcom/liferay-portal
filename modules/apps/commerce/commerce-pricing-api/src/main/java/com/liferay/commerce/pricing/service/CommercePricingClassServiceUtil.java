@@ -39,12 +39,26 @@ public class CommercePricingClassServiceUtil {
 	 */
 	public static com.liferay.commerce.pricing.model.CommercePricingClass
 			addCommercePricingClass(
-				long userId, long groupId, String title, String description,
+				long userId, java.util.Map<java.util.Locale, String> titleMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addCommercePricingClass(
-			userId, groupId, title, description, serviceContext);
+			userId, titleMap, descriptionMap, serviceContext);
+	}
+
+	public static com.liferay.commerce.pricing.model.CommercePricingClass
+			addCommercePricingClass(
+				long userId, java.util.Map<java.util.Locale, String> titleMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				String externalReferenceCode,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCommercePricingClass(
+			userId, titleMap, descriptionMap, externalReferenceCode,
+			serviceContext);
 	}
 
 	public static com.liferay.commerce.pricing.model.CommercePricingClass
@@ -77,6 +91,14 @@ public class CommercePricingClassServiceUtil {
 		return getService().getCommercePricingClass(commercePricingClassId);
 	}
 
+	public static int getCommercePricingClassCountByCPDefinitionId(
+			long cpDefinitionId, String title)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
+
+		return getService().getCommercePricingClassCountByCPDefinitionId(
+			cpDefinitionId, title);
+	}
+
 	public static java.util.List
 		<com.liferay.commerce.pricing.model.CommercePricingClass>
 				getCommercePricingClasses(
@@ -96,6 +118,14 @@ public class CommercePricingClassServiceUtil {
 		return getService().getCommercePricingClassesCount(companyId);
 	}
 
+	public static int getCommercePricingClassesCount(
+			long cpDefinitionId, String title)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
+
+		return getService().getCommercePricingClassesCount(
+			cpDefinitionId, title);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -105,27 +135,60 @@ public class CommercePricingClassServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.commerce.pricing.model.CommercePricingClass>
+				searchCommercePricingClasses(
+					long companyId, String keywords, int start, int end,
+					com.liferay.portal.kernel.search.Sort sort)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().searchCommercePricingClasses(
+			companyId, keywords, start, end, sort);
+	}
+
+	public static java.util.List
+		<com.liferay.commerce.pricing.model.CommercePricingClass>
+				searchCommercePricingClassesByCPDefinitionId(
+					long cpDefinitionId, String title, int start, int end)
+			throws com.liferay.portal.kernel.security.auth.PrincipalException {
+
+		return getService().searchCommercePricingClassesByCPDefinitionId(
+			cpDefinitionId, title, start, end);
+	}
+
 	public static com.liferay.commerce.pricing.model.CommercePricingClass
 			updateCommercePricingClass(
-				long commercePricingClassId, long userId, long groupId,
-				String title, String description,
+				long commercePricingClassId, long userId,
+				java.util.Map<java.util.Locale, String> titleMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateCommercePricingClass(
-			commercePricingClassId, userId, groupId, title, description,
+			commercePricingClassId, userId, titleMap, descriptionMap,
 			serviceContext);
 	}
 
 	public static com.liferay.commerce.pricing.model.CommercePricingClass
+			updateCommercePricingClassExternalReferenceCode(
+				long commercePricingClassId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateCommercePricingClassExternalReferenceCode(
+			commercePricingClassId, externalReferenceCode);
+	}
+
+	public static com.liferay.commerce.pricing.model.CommercePricingClass
 			upsertCommercePricingClass(
-				long commercePricingClassId, long userId, long groupId,
-				String title, String description, String externalReferenceCode,
+				long commercePricingClassId, long userId,
+				java.util.Map<java.util.Locale, String> titleMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				String externalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().upsertCommercePricingClass(
-			commercePricingClassId, userId, groupId, title, description,
+			commercePricingClassId, userId, titleMap, descriptionMap,
 			externalReferenceCode, serviceContext);
 	}
 

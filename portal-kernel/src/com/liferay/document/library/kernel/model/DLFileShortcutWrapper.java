@@ -913,17 +913,17 @@ public class DLFileShortcutWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DLFileShortcutWrapper)) {
+		if (!(object instanceof DLFileShortcutWrapper)) {
 			return false;
 		}
 
 		DLFileShortcutWrapper dlFileShortcutWrapper =
-			(DLFileShortcutWrapper)obj;
+			(DLFileShortcutWrapper)object;
 
 		if (Objects.equals(
 				_dlFileShortcut, dlFileShortcutWrapper._dlFileShortcut)) {

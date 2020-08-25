@@ -35,16 +35,16 @@ import java.util.Date;
 public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MDRRuleCacheModel)) {
+		if (!(object instanceof MDRRuleCacheModel)) {
 			return false;
 		}
 
-		MDRRuleCacheModel mdrRuleCacheModel = (MDRRuleCacheModel)obj;
+		MDRRuleCacheModel mdrRuleCacheModel = (MDRRuleCacheModel)object;
 
 		if (ruleId == mdrRuleCacheModel.ruleId) {
 			return true;

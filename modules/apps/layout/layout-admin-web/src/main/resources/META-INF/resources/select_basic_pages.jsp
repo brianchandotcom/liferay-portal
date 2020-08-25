@@ -114,7 +114,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 													<portlet:param name="type" value="<%= type %>" />
 												</portlet:renderURL>
 
-												<a class="add-layout-action-option text-truncate" data-add-layout-url="<%= addLayoutURL %>" href="javascript:;" title='<%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + type) %>'><%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + type) %></a>
+												<a class="add-layout-action-option text-truncate" data-add-layout-url="<%= addLayoutURL %>" href="javascript:;" title="<%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + type) %>"><%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + type) %></a>
 											</span>
 										</h3>
 									</section>

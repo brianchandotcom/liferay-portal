@@ -36,17 +36,17 @@ public class CPDefinitionGroupedEntryCacheModel
 	implements CacheModel<CPDefinitionGroupedEntry>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionGroupedEntryCacheModel)) {
+		if (!(object instanceof CPDefinitionGroupedEntryCacheModel)) {
 			return false;
 		}
 
 		CPDefinitionGroupedEntryCacheModel cpDefinitionGroupedEntryCacheModel =
-			(CPDefinitionGroupedEntryCacheModel)obj;
+			(CPDefinitionGroupedEntryCacheModel)object;
 
 		if (CPDefinitionGroupedEntryId ==
 				cpDefinitionGroupedEntryCacheModel.CPDefinitionGroupedEntryId) {

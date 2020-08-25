@@ -74,6 +74,10 @@ public interface CommerceCountryLocalService
 	/**
 	 * Adds the commerce country to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceCountryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceCountry the commerce country
 	 * @return the commerce country that was added
 	 */
@@ -103,6 +107,10 @@ public interface CommerceCountryLocalService
 	/**
 	 * Deletes the commerce country from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceCountryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param commerceCountry the commerce country
 	 * @return the commerce country that was removed
 	 * @throws PortalException
@@ -115,6 +123,10 @@ public interface CommerceCountryLocalService
 
 	/**
 	 * Deletes the commerce country with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceCountryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceCountryId the primary key of the commerce country
 	 * @return the commerce country that was removed
@@ -359,6 +371,10 @@ public interface CommerceCountryLocalService
 
 	/**
 	 * Updates the commerce country in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CommerceCountryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param commerceCountry the commerce country
 	 * @return the commerce country that was updated

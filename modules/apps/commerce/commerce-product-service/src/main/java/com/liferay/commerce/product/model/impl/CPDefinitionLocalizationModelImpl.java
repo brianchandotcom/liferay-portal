@@ -798,17 +798,17 @@ public class CPDefinitionLocalizationModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionLocalization)) {
+		if (!(object instanceof CPDefinitionLocalization)) {
 			return false;
 		}
 
 		CPDefinitionLocalization cpDefinitionLocalization =
-			(CPDefinitionLocalization)obj;
+			(CPDefinitionLocalization)object;
 
 		long primaryKey = cpDefinitionLocalization.getPrimaryKey();
 

@@ -15,18 +15,31 @@
 import React from 'react';
 
 const DatasetDisplayContext = React.createContext({
+	actionLoading: false,
+	executeAsyncBulkAction: () => {},
+	executeAsyncItemAction: () => {},
 	formId: null,
 	formRef: null,
+	highlightItems: () => {},
+	highlightedItemsValue: [],
+	itemsActions: () => {},
 	loadData: () => {},
 	modalId: null,
 	namespace: null,
+	nestedItemsKey: null,
+	nestedItemsReferenceKey: null,
 	openModal: () => {},
 	openSidePanel: () => {},
 	selectItems: () => {},
 	selectable: false,
+	selectedItemsKey: null,
 	selectedItemsValue: [],
+	selectionType: null,
 	sidePanelId: null,
 	sorting: [],
+	style: null,
+	updateDatasetItems: () => {},
+	updateSearchParam: () => {},
 	updateSorting: () => {}
 });
 

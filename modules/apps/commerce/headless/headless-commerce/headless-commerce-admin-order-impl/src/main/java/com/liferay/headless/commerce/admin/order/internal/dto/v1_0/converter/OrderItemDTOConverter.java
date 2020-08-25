@@ -66,15 +66,31 @@ public class OrderItemDTOConverter
 				discountAmount = commerceOrderItem.getDiscountAmount();
 				discountPercentageLevel1 =
 					commerceOrderItem.getDiscountPercentageLevel1();
+				discountPercentageLevel1WithTaxAmount =
+					commerceOrderItem.
+						getDiscountPercentageLevel1WithTaxAmount();
 				discountPercentageLevel2 =
 					commerceOrderItem.getDiscountPercentageLevel2();
+				discountPercentageLevel2WithTaxAmount =
+					commerceOrderItem.
+						getDiscountPercentageLevel2WithTaxAmount();
 				discountPercentageLevel3 =
 					commerceOrderItem.getDiscountPercentageLevel3();
+				discountPercentageLevel3WithTaxAmount =
+					commerceOrderItem.
+						getDiscountPercentageLevel3WithTaxAmount();
 				discountPercentageLevel4 =
 					commerceOrderItem.getDiscountPercentageLevel4();
+				discountPercentageLevel4WithTaxAmount =
+					commerceOrderItem.
+						getDiscountPercentageLevel4WithTaxAmount();
+				discountWithTaxAmount =
+					commerceOrderItem.getDiscountWithTaxAmount();
 				externalReferenceCode =
 					commerceOrderItem.getExternalReferenceCode();
 				finalPrice = commerceOrderItem.getFinalPrice();
+				finalPriceWithTaxAmount =
+					commerceOrderItem.getFinalPriceWithTaxAmount();
 				id = commerceOrderItem.getCommerceOrderItemId();
 				name = LanguageUtils.getLanguageIdMap(
 					commerceOrderItem.getNameMap());
@@ -83,6 +99,8 @@ public class OrderItemDTOConverter
 				orderId = commerceOrder.getCommerceOrderId();
 				printedNote = commerceOrderItem.getPrintedNote();
 				promoPrice = commerceOrderItem.getPromoPrice();
+				promoPriceWithTaxAmount =
+					commerceOrderItem.getPromoPriceWithTaxAmount();
 				quantity = commerceOrderItem.getQuantity();
 				requestedDeliveryDate =
 					commerceOrderItem.getRequestedDeliveryDate();
@@ -97,6 +115,8 @@ public class OrderItemDTOConverter
 				skuId = _getSkuId(cpInstance);
 				subscription = commerceOrderItem.isSubscription();
 				unitPrice = commerceOrderItem.getUnitPrice();
+				unitPriceWithTaxAmount =
+					commerceOrderItem.getUnitPriceWithTaxAmount();
 			}
 		};
 	}

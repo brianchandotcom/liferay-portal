@@ -160,6 +160,14 @@ public class CommercePriceListAccountRelWrapper
 			commercePriceListAccountRel);
 	}
 
+	@Override
+	public com.liferay.commerce.account.model.CommerceAccount
+			getCommerceAccount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePriceListAccountRel.getCommerceAccount();
+	}
+
 	/**
 	 * Returns the commerce account ID of this commerce price list account rel.
 	 *
@@ -168,6 +176,13 @@ public class CommercePriceListAccountRelWrapper
 	@Override
 	public long getCommerceAccountId() {
 		return _commercePriceListAccountRel.getCommerceAccountId();
+	}
+
+	@Override
+	public CommercePriceList getCommercePriceList()
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePriceListAccountRel.getCommercePriceList();
 	}
 
 	/**
@@ -521,17 +536,17 @@ public class CommercePriceListAccountRelWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommercePriceListAccountRelWrapper)) {
+		if (!(object instanceof CommercePriceListAccountRelWrapper)) {
 			return false;
 		}
 
 		CommercePriceListAccountRelWrapper commercePriceListAccountRelWrapper =
-			(CommercePriceListAccountRelWrapper)obj;
+			(CommercePriceListAccountRelWrapper)object;
 
 		if (Objects.equals(
 				_commercePriceListAccountRel,

@@ -112,7 +112,9 @@ public abstract class BaseCartCommentResourceTestCase {
 
 		CartCommentResource.Builder builder = CartCommentResource.builder();
 
-		cartCommentResource = builder.locale(
+		cartCommentResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

@@ -125,6 +125,14 @@ public class CPDefinitionServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CPDefinition copyCPDefinition(
+			long cpDefinitionId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionService.copyCPDefinition(cpDefinitionId, groupId);
+	}
+
+	@Override
 	public void deleteAssetCategoryCPDefinition(
 			long cpDefinitionId, long categoryId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend Image Editor Web
 Bundle-SymbolicName: com.liferay.frontend.image.editor.web
-Bundle-Version: 2.0.22
+Bundle-Version: 2.0.23
 Provide-Capability:\
 	soy;\
 		type="image-editor-web";\

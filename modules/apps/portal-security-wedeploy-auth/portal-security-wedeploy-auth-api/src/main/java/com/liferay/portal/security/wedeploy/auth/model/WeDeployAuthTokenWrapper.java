@@ -453,17 +453,17 @@ public class WeDeployAuthTokenWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof WeDeployAuthTokenWrapper)) {
+		if (!(object instanceof WeDeployAuthTokenWrapper)) {
 			return false;
 		}
 
 		WeDeployAuthTokenWrapper weDeployAuthTokenWrapper =
-			(WeDeployAuthTokenWrapper)obj;
+			(WeDeployAuthTokenWrapper)object;
 
 		if (Objects.equals(
 				_weDeployAuthToken,

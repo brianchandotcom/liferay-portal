@@ -43,7 +43,7 @@ public class XmlRpcParser {
 	public static String buildMethod(String methodName, Object[] arguments)
 		throws XmlRpcException {
 
-		StringBundler sb = new StringBundler(arguments.length * 3 + 8);
+		StringBundler sb = new StringBundler((arguments.length * 3) + 8);
 
 		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 

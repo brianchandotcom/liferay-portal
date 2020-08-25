@@ -581,17 +581,17 @@ public class WorkflowDefinitionLinkWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof WorkflowDefinitionLinkWrapper)) {
+		if (!(object instanceof WorkflowDefinitionLinkWrapper)) {
 			return false;
 		}
 
 		WorkflowDefinitionLinkWrapper workflowDefinitionLinkWrapper =
-			(WorkflowDefinitionLinkWrapper)obj;
+			(WorkflowDefinitionLinkWrapper)object;
 
 		if (Objects.equals(
 				_workflowDefinitionLink,

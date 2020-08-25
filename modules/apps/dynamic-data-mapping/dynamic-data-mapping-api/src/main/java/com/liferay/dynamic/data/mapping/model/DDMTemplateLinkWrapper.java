@@ -344,17 +344,17 @@ public class DDMTemplateLinkWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof DDMTemplateLinkWrapper)) {
+		if (!(object instanceof DDMTemplateLinkWrapper)) {
 			return false;
 		}
 
 		DDMTemplateLinkWrapper ddmTemplateLinkWrapper =
-			(DDMTemplateLinkWrapper)obj;
+			(DDMTemplateLinkWrapper)object;
 
 		if (Objects.equals(
 				_ddmTemplateLink, ddmTemplateLinkWrapper._ddmTemplateLink)) {

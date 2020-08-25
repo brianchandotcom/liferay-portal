@@ -14,18 +14,20 @@
 
 package com.liferay.commerce.price.list.web.internal.portlet.action;
 
-import com.liferay.commerce.account.service.CommerceAccountGroupService;
+import com.liferay.commerce.account.service.CommerceAccountGroupLocalService;
 import com.liferay.commerce.account.service.CommerceAccountService;
-import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.price.list.constants.CommercePriceListPortletKeys;
+import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListAccountRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListCommerceAccountGroupRelService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.price.list.web.internal.display.context.CommercePriceListDisplayContext;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
-import com.liferay.commerce.product.service.CommerceCatalogService;
+import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -57,9 +59,11 @@ public class EditCommercePriceListMVCRenderCommand implements MVCRenderCommand {
 		CommercePriceListDisplayContext commercePriceListDisplayContext =
 			new CommercePriceListDisplayContext(
 				_commercePriceListActionHelper, _commerceAccountService,
-				_commerceAccountGroupService, _commerceCatalogService,
-				_commerceCurrencyService, _commercePriceListAccountRelService,
+				_commerceAccountGroupLocalService, _commerceCatalogLocalService,
+				_commerceCurrencyLocalService,
+				_commercePriceListAccountRelService,
 				_commercePriceListCommerceAccountGroupRelService,
+				_commercePriceListModelResourcePermission,
 				_commercePriceListService,
 				_portal.getHttpServletRequest(renderRequest), _itemSelector);
 
@@ -70,16 +74,16 @@ public class EditCommercePriceListMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private CommerceAccountGroupService _commerceAccountGroupService;
+	private CommerceAccountGroupLocalService _commerceAccountGroupLocalService;
 
 	@Reference
 	private CommerceAccountService _commerceAccountService;
 
 	@Reference
-	private CommerceCatalogService _commerceCatalogService;
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@Reference
-	private CommerceCurrencyService _commerceCurrencyService;
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
 	private CommercePriceListAccountRelService
@@ -91,6 +95,12 @@ public class EditCommercePriceListMVCRenderCommand implements MVCRenderCommand {
 	@Reference
 	private CommercePriceListCommerceAccountGroupRelService
 		_commercePriceListCommerceAccountGroupRelService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.price.list.model.CommercePriceList)"
+	)
+	private ModelResourcePermission<CommercePriceList>
+		_commercePriceListModelResourcePermission;
 
 	@Reference
 	private CommercePriceListService _commercePriceListService;

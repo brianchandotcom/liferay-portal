@@ -91,19 +91,14 @@ const eventsDefinitions = {
 				document.querySelector('[data-text-cp-instance-subscription-info]').innerHTML = response.subscriptionInfo || '';
 				document.querySelector('[data-text-cp-instance-delivery-subscription-info]').innerHTML = response.deliverySubscriptionInfo || '';
 
-				var priceElement = document.querySelector('[data-text-cp-instance-price]');
-
-				if (response.promoPrice != null) {
-					priceElement.innerHTML =
-						'<span class="price-value price-value-promo">' + response.promoPrice + '</span>' +
-						'<span class="price-value price-value-inactive">' + response.price + '</span>';
-				}
-				else if (response.price != null) {
-					priceElement.innerHTML = '<span class="price-value">' + response.price + '</span>';
-				}
-				else {
-					priceElement.innerHTML = '';
-				}
+				Liferay.fire(
+					"priceUpdated",
+					{
+						displayDiscountLevels: response.displayDiscountLevels,
+						id: '<%= "productDetail_" + cpCatalogEntry.getCPDefinitionId() %>',
+						prices: response.prices
+					}
+				);
 
 				var formData = new FormData();
 				formData.append('<portlet:namespace />ddmFormValues', formValues);

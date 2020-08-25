@@ -727,6 +727,7 @@
 		<exception>FormInstanceSettingsRedirectURL</exception>
 		<exception>FormInstanceStructureId</exception>
 		<exception>InvalidParentStructure</exception>
+		<exception>InvalidStructureFieldName</exception>
 		<exception>InvalidStructureVersion</exception>
 		<exception>InvalidTemplateVersion</exception>
 		<exception>RequiredFormInstance</exception>

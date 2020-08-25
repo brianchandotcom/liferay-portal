@@ -649,16 +649,16 @@ public class AnnouncementsFlagModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AnnouncementsFlag)) {
+		if (!(object instanceof AnnouncementsFlag)) {
 			return false;
 		}
 
-		AnnouncementsFlag announcementsFlag = (AnnouncementsFlag)obj;
+		AnnouncementsFlag announcementsFlag = (AnnouncementsFlag)object;
 
 		long primaryKey = announcementsFlag.getPrimaryKey();
 

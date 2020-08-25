@@ -72,6 +72,10 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 	/**
 	 * Adds the cluster group to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ClusterGroupLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param clusterGroup the cluster group
 	 * @return the cluster group that was added
 	 */
@@ -98,6 +102,10 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 	/**
 	 * Deletes the cluster group with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ClusterGroupLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param clusterGroupId the primary key of the cluster group
 	 * @return the cluster group that was removed
 	 * @throws PortalException if a cluster group with the primary key could not be found
@@ -112,6 +120,10 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 
 	/**
 	 * Deletes the cluster group from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ClusterGroupLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param clusterGroup the cluster group
 	 * @return the cluster group that was removed
@@ -323,6 +335,10 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 
 	/**
 	 * Updates the cluster group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ClusterGroupLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param clusterGroup the cluster group
 	 * @return the cluster group that was updated

@@ -31,8 +31,13 @@ BigDecimal price = BigDecimal.ZERO;
 BigDecimal promoPrice = BigDecimal.ZERO;
 
 if (commerceTierPriceEntry != null) {
-	price = commerceTierPriceEntry.getPrice();
-	promoPrice = commerceTierPriceEntry.getPromoPrice();
+	if (commerceTierPriceEntry.getPrice() != null) {
+		price = commerceTierPriceEntry.getPrice();
+	}
+
+	if (commerceTierPriceEntry.getPromoPrice() != null) {
+		promoPrice = commerceTierPriceEntry.getPromoPrice();
+	}
 }
 
 CPInstance cpInstance = commercePriceEntry.getCPInstance();

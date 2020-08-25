@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Product Service
 Bundle-SymbolicName: com.liferay.commerce.product.service
-Bundle-Version: 3.0.36
+Bundle-Version: 3.0.44
 Import-Package:\
 	com.liferay.asset.kernel.model;version="[1.0.0,3.0.0)",\
 	com.liferay.asset.kernel.service.persistence;version="[1.0.0,3.0.0)",\
@@ -14,6 +14,7 @@ Import-Package:\
 	com.liferay.expando.kernel.model;version="[1.1.0,3.0.0)",\
 	com.liferay.expando.kernel.service.persistence;version="[1.0.0,3.0.0)",\
 	com.liferay.exportimport.kernel.lar;version="[1.13.0,3.0.0)",\
+	com.liferay.friendly.url.model;version="[1.0.0,3.0.0)",\
 	com.liferay.portal.kernel.dao.orm;version="[7.3.0,9.0.0)",\
 	com.liferay.portal.kernel.exception;version="[7.5.0,9.0.0)",\
 	com.liferay.portal.kernel.json;version="[7.7.0,9.0.0)",\
@@ -35,5 +36,5 @@ Import-Package:\
 	com.liferay.portal.kernel.workflow;version="[7.4.0,9.0.0)",\
 	\
 	*
-Liferay-Require-SchemaVersion: 2.3.0
+Liferay-Require-SchemaVersion: 2.6.0
 Liferay-Service: true

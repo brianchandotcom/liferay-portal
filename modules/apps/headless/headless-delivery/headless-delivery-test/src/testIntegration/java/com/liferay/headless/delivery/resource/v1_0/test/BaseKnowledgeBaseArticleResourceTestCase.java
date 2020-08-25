@@ -122,7 +122,9 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		KnowledgeBaseArticleResource.Builder builder =
 			KnowledgeBaseArticleResource.builder();
 
-		knowledgeBaseArticleResource = builder.locale(
+		knowledgeBaseArticleResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

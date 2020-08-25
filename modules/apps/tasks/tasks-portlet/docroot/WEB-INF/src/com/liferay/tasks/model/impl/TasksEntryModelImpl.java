@@ -1014,16 +1014,16 @@ public class TasksEntryModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof TasksEntry)) {
+		if (!(object instanceof TasksEntry)) {
 			return false;
 		}
 
-		TasksEntry tasksEntry = (TasksEntry)obj;
+		TasksEntry tasksEntry = (TasksEntry)object;
 
 		long primaryKey = tasksEntry.getPrimaryKey();
 

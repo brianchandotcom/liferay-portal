@@ -109,7 +109,9 @@ public abstract class BaseSkuResourceTestCase {
 
 		SkuResource.Builder builder = SkuResource.builder();
 
-		skuResource = builder.locale(
+		skuResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

@@ -696,16 +696,16 @@ public class KaleoActionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof KaleoActionWrapper)) {
+		if (!(object instanceof KaleoActionWrapper)) {
 			return false;
 		}
 
-		KaleoActionWrapper kaleoActionWrapper = (KaleoActionWrapper)obj;
+		KaleoActionWrapper kaleoActionWrapper = (KaleoActionWrapper)object;
 
 		if (Objects.equals(_kaleoAction, kaleoActionWrapper._kaleoAction)) {
 			return true;

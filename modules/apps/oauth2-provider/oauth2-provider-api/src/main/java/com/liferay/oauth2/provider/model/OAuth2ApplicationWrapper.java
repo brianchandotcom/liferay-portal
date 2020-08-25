@@ -737,17 +737,17 @@ public class OAuth2ApplicationWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof OAuth2ApplicationWrapper)) {
+		if (!(object instanceof OAuth2ApplicationWrapper)) {
 			return false;
 		}
 
 		OAuth2ApplicationWrapper oAuth2ApplicationWrapper =
-			(OAuth2ApplicationWrapper)obj;
+			(OAuth2ApplicationWrapper)object;
 
 		if (Objects.equals(
 				_oAuth2Application,

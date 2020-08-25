@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Theme Minium Implementation
 Bundle-SymbolicName: com.liferay.commerce.theme.minium.impl
-Bundle-Version: 2.0.35
+Bundle-Version: 2.0.38
 Import-Package:\
 	com.liferay.application.list;version="[1.1.0,3.0.0)",\
 	com.liferay.expando.kernel.model;version="[1.1.0,3.0.0)",\

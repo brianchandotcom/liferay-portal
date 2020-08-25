@@ -612,16 +612,16 @@ public class PhoneWrapper implements ModelWrapper<Phone>, Phone {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof PhoneWrapper)) {
+		if (!(object instanceof PhoneWrapper)) {
 			return false;
 		}
 
-		PhoneWrapper phoneWrapper = (PhoneWrapper)obj;
+		PhoneWrapper phoneWrapper = (PhoneWrapper)object;
 
 		if (Objects.equals(_phone, phoneWrapper._phone)) {
 			return true;

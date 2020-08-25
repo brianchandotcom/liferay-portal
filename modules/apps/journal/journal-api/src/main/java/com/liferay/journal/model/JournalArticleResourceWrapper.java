@@ -326,17 +326,17 @@ public class JournalArticleResourceWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof JournalArticleResourceWrapper)) {
+		if (!(object instanceof JournalArticleResourceWrapper)) {
 			return false;
 		}
 
 		JournalArticleResourceWrapper journalArticleResourceWrapper =
-			(JournalArticleResourceWrapper)obj;
+			(JournalArticleResourceWrapper)object;
 
 		if (Objects.equals(
 				_journalArticleResource,

@@ -35,17 +35,17 @@ public class RecentLayoutRevisionCacheModel
 	implements CacheModel<RecentLayoutRevision>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof RecentLayoutRevisionCacheModel)) {
+		if (!(object instanceof RecentLayoutRevisionCacheModel)) {
 			return false;
 		}
 
 		RecentLayoutRevisionCacheModel recentLayoutRevisionCacheModel =
-			(RecentLayoutRevisionCacheModel)obj;
+			(RecentLayoutRevisionCacheModel)object;
 
 		if ((recentLayoutRevisionId ==
 				recentLayoutRevisionCacheModel.recentLayoutRevisionId) &&

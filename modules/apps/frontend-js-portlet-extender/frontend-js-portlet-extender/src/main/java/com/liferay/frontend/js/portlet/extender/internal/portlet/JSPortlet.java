@@ -32,6 +32,7 @@ import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -49,11 +50,13 @@ import org.osgi.service.cm.ManagedService;
 public class JSPortlet extends MVCPortlet implements ManagedService {
 
 	public JSPortlet(
-		JSONFactory jsonFactory, String packageName, String packageVersion) {
+		JSONFactory jsonFactory, String packageName, String packageVersion,
+		Set<String> portletPreferencesFieldNames) {
 
 		_jsonFactory = jsonFactory;
 		_packageName = packageName;
 		_packageVersion = packageVersion;
+		_portletPreferencesFieldNames = portletPreferencesFieldNames;
 	}
 
 	@Override
@@ -155,6 +158,10 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 		while (portletPreferencesNames.hasMoreElements()) {
 			String key = portletPreferencesNames.nextElement();
 
+			if (!_portletPreferencesFieldNames.contains(key)) {
+				continue;
+			}
+
 			String[] values = portletPreferences.getValues(
 				key, StringPool.EMPTY_ARRAY);
 
@@ -189,5 +196,6 @@ public class JSPortlet extends MVCPortlet implements ManagedService {
 	private final JSONFactory _jsonFactory;
 	private final String _packageName;
 	private final String _packageVersion;
+	private final Set<String> _portletPreferencesFieldNames;
 
 }

@@ -133,6 +133,10 @@ public class ResourceBlockLocalServiceUtil {
 	/**
 	 * Adds the resource block to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ResourceBlockLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param resourceBlock the resource block
 	 * @return the resource block that was added
 	 */
@@ -169,6 +173,10 @@ public class ResourceBlockLocalServiceUtil {
 	/**
 	 * Deletes the resource block with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ResourceBlockLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param resourceBlockId the primary key of the resource block
 	 * @return the resource block that was removed
 	 * @throws PortalException if a resource block with the primary key could not be found
@@ -182,6 +190,10 @@ public class ResourceBlockLocalServiceUtil {
 
 	/**
 	 * Deletes the resource block from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ResourceBlockLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param resourceBlock the resource block
 	 * @return the resource block that was removed
@@ -690,6 +702,10 @@ public class ResourceBlockLocalServiceUtil {
 
 	/**
 	 * Updates the resource block in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect ResourceBlockLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param resourceBlock the resource block
 	 * @return the resource block that was updated

@@ -821,17 +821,17 @@ public class CommerceTaxMethodWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CommerceTaxMethodWrapper)) {
+		if (!(object instanceof CommerceTaxMethodWrapper)) {
 			return false;
 		}
 
 		CommerceTaxMethodWrapper commerceTaxMethodWrapper =
-			(CommerceTaxMethodWrapper)obj;
+			(CommerceTaxMethodWrapper)object;
 
 		if (Objects.equals(
 				_commerceTaxMethod,

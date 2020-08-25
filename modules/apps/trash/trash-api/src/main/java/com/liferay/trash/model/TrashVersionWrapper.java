@@ -415,16 +415,16 @@ public class TrashVersionWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof TrashVersionWrapper)) {
+		if (!(object instanceof TrashVersionWrapper)) {
 			return false;
 		}
 
-		TrashVersionWrapper trashVersionWrapper = (TrashVersionWrapper)obj;
+		TrashVersionWrapper trashVersionWrapper = (TrashVersionWrapper)object;
 
 		if (Objects.equals(_trashVersion, trashVersionWrapper._trashVersion)) {
 			return true;

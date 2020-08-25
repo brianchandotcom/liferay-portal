@@ -32,7 +32,7 @@ if ((commerceDiscount != null) && !commerceDiscount.getUsePercentage()) {
 		<aui:input bean="<%= commerceDiscount %>" checked="<%= useCouponCode %>" model="<%= CommerceDiscount.class %>" name="useCouponCode" type="toggle-switch" value="<%= useCouponCode %>" />
 	</div>
 
-	<div class='<%= useCouponCode ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />couponCodeInput">
+	<div class="<%= useCouponCode ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />couponCodeInput">
 		<aui:input bean="<%= commerceDiscount %>" model="<%= CommerceDiscount.class %>" name="couponCode" />
 	</div>
 </div>

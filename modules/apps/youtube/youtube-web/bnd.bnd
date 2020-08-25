@@ -1,4 +1,4 @@
 Bundle-Name: Liferay YouTube Web
 Bundle-SymbolicName: com.liferay.youtube.web
-Bundle-Version: 2.0.9
+Bundle-Version: 2.0.10
 Web-ContextPath: /youtube-web

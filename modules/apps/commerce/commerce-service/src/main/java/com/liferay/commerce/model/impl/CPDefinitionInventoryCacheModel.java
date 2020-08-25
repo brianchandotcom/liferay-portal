@@ -36,17 +36,17 @@ public class CPDefinitionInventoryCacheModel
 	implements CacheModel<CPDefinitionInventory>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CPDefinitionInventoryCacheModel)) {
+		if (!(object instanceof CPDefinitionInventoryCacheModel)) {
 			return false;
 		}
 
 		CPDefinitionInventoryCacheModel cpDefinitionInventoryCacheModel =
-			(CPDefinitionInventoryCacheModel)obj;
+			(CPDefinitionInventoryCacheModel)object;
 
 		if (CPDefinitionInventoryId ==
 				cpDefinitionInventoryCacheModel.CPDefinitionInventoryId) {

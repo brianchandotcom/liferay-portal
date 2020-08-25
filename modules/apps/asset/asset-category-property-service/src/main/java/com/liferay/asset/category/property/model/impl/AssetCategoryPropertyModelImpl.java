@@ -793,17 +793,17 @@ public class AssetCategoryPropertyModelImpl
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof AssetCategoryProperty)) {
+		if (!(object instanceof AssetCategoryProperty)) {
 			return false;
 		}
 
 		AssetCategoryProperty assetCategoryProperty =
-			(AssetCategoryProperty)obj;
+			(AssetCategoryProperty)object;
 
 		long primaryKey = assetCategoryProperty.getPrimaryKey();
 

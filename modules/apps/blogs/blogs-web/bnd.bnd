@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Blogs Web
 Bundle-SymbolicName: com.liferay.blogs.web
-Bundle-Version: 3.0.66
+Bundle-Version: 3.0.67
 Liferay-JS-Config: /META-INF/resources/blogs/js/config.js
 Web-ContextPath: /blogs-web
 -dsannotations-options: inherit

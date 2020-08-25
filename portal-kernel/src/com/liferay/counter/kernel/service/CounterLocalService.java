@@ -62,6 +62,10 @@ public interface CounterLocalService
 	/**
 	 * Adds the counter to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CounterLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param counter the counter
 	 * @return the counter that was added
 	 */
@@ -80,6 +84,10 @@ public interface CounterLocalService
 	/**
 	 * Deletes the counter from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CounterLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param counter the counter
 	 * @return the counter that was removed
 	 */
@@ -88,6 +96,10 @@ public interface CounterLocalService
 
 	/**
 	 * Deletes the counter with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CounterLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param name the primary key of the counter
 	 * @return the counter that was removed
@@ -254,6 +266,10 @@ public interface CounterLocalService
 
 	/**
 	 * Updates the counter in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect CounterLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param counter the counter
 	 * @return the counter that was updated

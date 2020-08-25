@@ -36,17 +36,17 @@ public class BookmarksFolderCacheModel
 	implements CacheModel<BookmarksFolder>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof BookmarksFolderCacheModel)) {
+		if (!(object instanceof BookmarksFolderCacheModel)) {
 			return false;
 		}
 
 		BookmarksFolderCacheModel bookmarksFolderCacheModel =
-			(BookmarksFolderCacheModel)obj;
+			(BookmarksFolderCacheModel)object;
 
 		if (folderId == bookmarksFolderCacheModel.folderId) {
 			return true;

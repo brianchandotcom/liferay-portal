@@ -384,7 +384,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 		if (skuContributor) {
 			ddmFormFieldTypesAllowed =
-				cpOptionConfiguration.skuContributorDDMFormFieldTypesAllowed();
+				CPConstants.PRODUCT_OPTION_SKU_CONTRIBUTOR_FIELD_TYPES;
 		}
 
 		if (ArrayUtil.contains(

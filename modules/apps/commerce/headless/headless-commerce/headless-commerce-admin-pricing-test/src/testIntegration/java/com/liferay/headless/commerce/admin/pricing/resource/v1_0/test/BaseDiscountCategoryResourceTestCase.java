@@ -113,7 +113,9 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 		DiscountCategoryResource.Builder builder =
 			DiscountCategoryResource.builder();
 
-		discountCategoryResource = builder.locale(
+		discountCategoryResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

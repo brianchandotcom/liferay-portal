@@ -107,7 +107,9 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		WarehouseResource.Builder builder = WarehouseResource.builder();
 
-		warehouseResource = builder.locale(
+		warehouseResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

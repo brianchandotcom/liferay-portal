@@ -14,24 +14,23 @@
 
 package com.liferay.commerce.price.list.model.impl;
 
+import com.liferay.commerce.price.list.model.CommercePriceList;
+import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
- * The extended model implementation for the CommercePriceListDiscountRel service. Represents a row in the &quot;CommercePriceListDiscountRel&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.commerce.price.list.model.CommercePriceListDiscountRel</code> interface.
- * </p>
- *
  * @author Alessio Antonio Rendina
  */
 public class CommercePriceListDiscountRelImpl
 	extends CommercePriceListDiscountRelBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a commerce price list discount rel model instance should use the {@link com.liferay.commerce.price.list.model.CommercePriceListDiscountRel} interface instead.
-	 */
 	public CommercePriceListDiscountRelImpl() {
+	}
+
+	@Override
+	public CommercePriceList getCommercePriceList() throws PortalException {
+		return CommercePriceListLocalServiceUtil.getCommercePriceList(
+			getCommercePriceListId());
 	}
 
 }

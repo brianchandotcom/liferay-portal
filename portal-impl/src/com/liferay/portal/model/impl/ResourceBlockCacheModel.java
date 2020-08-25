@@ -37,17 +37,17 @@ public class ResourceBlockCacheModel
 	implements CacheModel<ResourceBlock>, Externalizable, MVCCModel {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ResourceBlockCacheModel)) {
+		if (!(object instanceof ResourceBlockCacheModel)) {
 			return false;
 		}
 
 		ResourceBlockCacheModel resourceBlockCacheModel =
-			(ResourceBlockCacheModel)obj;
+			(ResourceBlockCacheModel)object;
 
 		if ((resourceBlockId == resourceBlockCacheModel.resourceBlockId) &&
 			(mvccVersion == resourceBlockCacheModel.mvccVersion)) {

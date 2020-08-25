@@ -483,17 +483,17 @@ public class SocialActivityLimitWrapper
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SocialActivityLimitWrapper)) {
+		if (!(object instanceof SocialActivityLimitWrapper)) {
 			return false;
 		}
 
 		SocialActivityLimitWrapper socialActivityLimitWrapper =
-			(SocialActivityLimitWrapper)obj;
+			(SocialActivityLimitWrapper)object;
 
 		if (Objects.equals(
 				_socialActivityLimit,

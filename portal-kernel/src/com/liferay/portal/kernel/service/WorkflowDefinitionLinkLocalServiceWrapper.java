@@ -49,6 +49,10 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	/**
 	 * Adds the workflow definition link to the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect WorkflowDefinitionLinkLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param workflowDefinitionLink the workflow definition link
 	 * @return the workflow definition link that was added
 	 */
@@ -91,6 +95,10 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	/**
 	 * Deletes the workflow definition link with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect WorkflowDefinitionLinkLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
 	 * @param workflowDefinitionLinkId the primary key of the workflow definition link
 	 * @return the workflow definition link that was removed
 	 * @throws PortalException if a workflow definition link with the primary key could not be found
@@ -115,6 +123,10 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 
 	/**
 	 * Deletes the workflow definition link from the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect WorkflowDefinitionLinkLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param workflowDefinitionLink the workflow definition link
 	 * @return the workflow definition link that was removed
@@ -485,6 +497,10 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 
 	/**
 	 * Updates the workflow definition link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect WorkflowDefinitionLinkLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
 	 *
 	 * @param workflowDefinitionLink the workflow definition link
 	 * @return the workflow definition link that was updated

@@ -108,7 +108,9 @@ public abstract class BaseProductSubscriptionConfigurationResourceTestCase {
 		ProductSubscriptionConfigurationResource.Builder builder =
 			ProductSubscriptionConfigurationResource.builder();
 
-		productSubscriptionConfigurationResource = builder.locale(
+		productSubscriptionConfigurationResource = builder.authentication(
+			"test@liferay.com", "test"
+		).locale(
 			LocaleUtil.getDefault()
 		).build();
 	}

@@ -16,13 +16,11 @@ package com.liferay.translation.internal.instance.lifecycle;
 
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-
-import java.util.Locale;
+import com.liferay.portal.util.PropsValues;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,19 +40,14 @@ public class AddResourceActionsPortalInstanceLifecycleListener
 			"/com/liferay/translation/internal/instance/lifecycle" +
 				"/dependencies/languages.xml.tpl");
 
-		for (Locale availableLocale : _language.getAvailableLocales()) {
+		for (String languageId : PropsValues.LOCALES) {
 			_resourceActions.read(
 				null,
 				SAXReaderUtil.read(
-					StringUtil.replace(
-						xml, "[$LANGUAGE$]",
-						_language.getLanguageId(availableLocale))),
+					StringUtil.replace(xml, "[$LANGUAGE$]", languageId)),
 				null);
 		}
 	}
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private ResourceActions _resourceActions;

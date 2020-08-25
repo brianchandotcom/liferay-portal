@@ -128,6 +128,79 @@
 
 		<reference entity="BigDecimalEntry" package-path="com.liferay.portal.tools.service.builder.test" />
 	</entity>
+	<entity local-service="true" name="ManyColumnsEntry">
+
+		<!-- PK fields -->
+
+		<column name="manyColumnsEntryId" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="column1" type="int" />
+		<column name="column2" type="int" />
+		<column name="column3" type="int" />
+		<column name="column4" type="int" />
+		<column name="column5" type="int" />
+		<column name="column6" type="int" />
+		<column name="column7" type="int" />
+		<column name="column8" type="int" />
+		<column name="column9" type="int" />
+		<column name="column10" type="int" />
+		<column name="column11" type="int" />
+		<column name="column12" type="int" />
+		<column name="column13" type="int" />
+		<column name="column14" type="int" />
+		<column name="column15" type="int" />
+		<column name="column16" type="int" />
+		<column name="column17" type="int" />
+		<column name="column18" type="int" />
+		<column name="column19" type="int" />
+		<column name="column20" type="int" />
+		<column name="column21" type="int" />
+		<column name="column22" type="int" />
+		<column name="column23" type="int" />
+		<column name="column24" type="int" />
+		<column name="column25" type="int" />
+		<column name="column26" type="int" />
+		<column name="column27" type="int" />
+		<column name="column28" type="int" />
+		<column name="column29" type="int" />
+		<column name="column30" type="int" />
+		<column name="column31" type="int" />
+		<column name="column32" type="int" />
+		<column name="column33" type="int" />
+		<column name="column34" type="int" />
+		<column name="column35" type="int" />
+		<column name="column36" type="int" />
+		<column name="column37" type="int" />
+		<column name="column38" type="int" />
+		<column name="column39" type="int" />
+		<column name="column40" type="int" />
+		<column name="column41" type="int" />
+		<column name="column42" type="int" />
+		<column name="column43" type="int" />
+		<column name="column44" type="int" />
+		<column name="column45" type="int" />
+		<column name="column46" type="int" />
+		<column name="column47" type="int" />
+		<column name="column48" type="int" />
+		<column name="column49" type="int" />
+		<column name="column50" type="int" />
+		<column name="column51" type="int" />
+		<column name="column52" type="int" />
+		<column name="column53" type="int" />
+		<column name="column54" type="int" />
+		<column name="column55" type="int" />
+		<column name="column56" type="int" />
+		<column name="column57" type="int" />
+		<column name="column58" type="int" />
+		<column name="column59" type="int" />
+		<column name="column60" type="int" />
+		<column name="column61" type="int" />
+		<column name="column62" type="int" />
+		<column name="column63" type="int" />
+		<column name="column64" type="int" />
+	</entity>
 	<entity local-service="true" name="NestedSetsTreeEntry" remote-service="false">
 
 		<!-- PK fields -->

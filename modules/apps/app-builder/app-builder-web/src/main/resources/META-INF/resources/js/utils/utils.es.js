@@ -27,3 +27,7 @@ export const isEqualObjects = (firstObj = {}, secondObj = {}) => {
 
 	return JSON.stringify(firstObj) === JSON.stringify(secondObj);
 };
+
+export const getValidName = (defaultName, name) => {
+	return !name || name === 'null' ? defaultName : name;
+};

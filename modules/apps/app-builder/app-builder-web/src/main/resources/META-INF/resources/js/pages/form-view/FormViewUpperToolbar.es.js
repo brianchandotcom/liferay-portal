@@ -23,6 +23,7 @@ import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {AppContext} from '../../AppContext.es';
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
 import {errorToast, successToast} from '../../utils/toast.es';
+import {getValidName} from '../../utils/utils.es';
 import FormViewContext from './FormViewContext.es';
 
 export default ({newCustomObject, showTranslationManager}) => {
@@ -104,6 +105,11 @@ export default ({newCustomObject, showTranslationManager}) => {
 			dataLayout.name[defaultLanguageId] =
 				dataLayout.name[editingLanguageId];
 		}
+
+		dataLayout.name[defaultLanguageId] = getValidName(
+			Liferay.Language.get('untitled-form-view'),
+			dataLayout.name[defaultLanguageId]
+		);
 
 		setLoading(true);
 

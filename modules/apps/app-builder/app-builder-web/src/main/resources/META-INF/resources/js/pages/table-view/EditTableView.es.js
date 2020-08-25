@@ -23,6 +23,7 @@ import DragLayer from '../../components/drag-and-drop/DragLayer.es';
 import {Loading} from '../../components/loading/Loading.es';
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
 import {errorToast, successToast} from '../../utils/toast.es';
+import {getValidName} from '../../utils/utils.es';
 import DropZone from './DropZone.es';
 import EditTableViewContext, {
 	ADD_DATA_LIST_VIEW_FIELD,
@@ -85,6 +86,11 @@ const EditTableView = withRouter(({history}) => {
 			dataListView.name[defaultLanguageId] =
 				dataListView.name[editingLanguageId];
 		}
+
+		dataListView.name[defaultLanguageId] = getValidName(
+			Liferay.Language.get('untitled-table-view'),
+			dataListView.name[defaultLanguageId]
+		);
 
 		setLoading(true);
 

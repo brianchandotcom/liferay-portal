@@ -22,6 +22,7 @@ import useQuery from '../../hooks/useQuery.es';
 import isClickOutside from '../../utils/clickOutside.es';
 import {addItem, parseResponse} from '../../utils/client.es';
 import {errorToast, successToast} from '../../utils/toast.es';
+import {getValidName} from '../../utils/utils.es';
 import ListObjects from '../object/ListObjects.es';
 import CustomObjectPopover from './CustomObjectPopover.es';
 
@@ -94,7 +95,10 @@ export default ({history}) => {
 			dataDefinitionFields: [],
 			defaultLanguageId,
 			name: {
-				[defaultLanguageId]: name,
+				[defaultLanguageId]: getValidName(
+					Liferay.Language.get('untitled-custom-object'),
+					name
+				),
 			},
 		})
 			.then(({id}) => {

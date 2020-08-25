@@ -42,6 +42,10 @@ definition {
 		Click(
 			key_card = "${entryTitle}",
 			locator1 = "Card#CARD_TITLE");
+
+		AssertElementPresent(
+			key_contentName = "${entryTitle}",
+			locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
 	}
 
 	macro mapEditableFieldToCollectionItems {

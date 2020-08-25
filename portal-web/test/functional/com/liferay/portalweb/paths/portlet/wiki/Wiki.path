@@ -213,7 +213,7 @@
 </tr>
 <tr>
 	<td>COMPARE_VERSIONS_IFRAME</td>
-	<td>//iframe[contains(@id,'compareVersions')]</td>
+	<td>//div[contains(@class,'modal-body')]/iframe[contains(@id,'selectVersionFm')]</td>
 	<td></td>
 </tr>
 <tr>

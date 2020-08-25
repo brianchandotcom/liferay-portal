@@ -1672,19 +1672,20 @@ public class DataDefinitionResourceImpl
 		DataDefinitionContentType dataDefinitionContentType, DDMForm ddmForm) {
 
 		try {
-			_ddmFormValidator.validate(ddmForm);
-
 			Map<String, Object> name = dataDefinition.getName();
 
 			Locale defaultLocale = ddmForm.getDefaultLocale();
 
 			if ((name == null) ||
-				!name.containsKey(LocaleUtil.toLanguageId(defaultLocale))) {
+				Validator.isNull(
+					name.get(LocaleUtil.toLanguageId(defaultLocale)))) {
 
 				throw new DataDefinitionValidationException.MustSetValidName(
 					"Name is null for locale " +
 						defaultLocale.getDisplayName());
 			}
+
+			_ddmFormValidator.validate(ddmForm);
 		}
 		catch (DDMFormValidationException ddmFormValidationException) {
 			if ((ddmFormValidationException instanceof

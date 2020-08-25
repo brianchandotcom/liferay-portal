@@ -100,11 +100,9 @@ public class ShippingMethodCheckoutStepDisplayContext {
 		sb.append(commerceShippingOption.getLabel());
 		sb.append(" (+");
 
-		CommerceContext commerceContext = _getCommerceContext();
-
 		sb.append(
 			_commercePriceFormatter.format(
-				commerceContext.getCommerceCurrency(),
+				_commerceOrder.getCommerceCurrency(),
 				commerceShippingOption.getAmount(), themeDisplay.getLocale()));
 
 		sb.append(CharPool.CLOSE_PARENTHESIS);

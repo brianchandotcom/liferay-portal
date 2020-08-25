@@ -26,13 +26,13 @@ import org.junit.Test;
 /**
  * @author Arthur Chan
  */
-public class URLToCORSSupportMapperTest {
+public class SimpleURLToCORSSupportMapperTest {
 
 	@Test
 	public void testGet() {
 		KeyValuePair[] keyValuePairs = _createKeyValuePairs();
 
-		URLToCORSSupportMapper urlToCORSSupportMapper =
+		BaseURLToCORSSupportMapper urlToCORSSupportMapper =
 			createURLToCORSSupportMapper(_createCORSSupports(keyValuePairs));
 
 		for (KeyValuePair keyValuePair : keyValuePairs) {
@@ -62,10 +62,10 @@ public class URLToCORSSupportMapperTest {
 		}
 	}
 
-	protected URLToCORSSupportMapper createURLToCORSSupportMapper(
+	protected BaseURLToCORSSupportMapper createURLToCORSSupportMapper(
 		Map<String, CORSSupport> corsSupports) {
 
-		return new URLToCORSSupportMapper(corsSupports);
+		return new SimpleURLToCORSSupportMapper(corsSupports);
 	}
 
 	private Map<String, CORSSupport> _createCORSSupports(

@@ -34,8 +34,9 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration;
+import com.liferay.portal.remote.cors.internal.BaseURLToCORSSupportMapper;
 import com.liferay.portal.remote.cors.internal.CORSSupport;
-import com.liferay.portal.remote.cors.internal.URLToCORSSupportMapper;
+import com.liferay.portal.remote.cors.internal.SimpleURLToCORSSupportMapper;
 import com.liferay.portal.remote.cors.internal.configuration.persistence.listener.PortalCORSConfigurationModelListener;
 
 import java.util.Collections;
@@ -195,8 +196,8 @@ public class PortalCORSServletFilter
 			return;
 		}
 
-		URLToCORSSupportMapper urlPatternMatcher = _getURLToCORSSupportMapper(
-			companyId);
+		BaseURLToCORSSupportMapper urlPatternMatcher =
+			_getURLToCORSSupportMapper(companyId);
 
 		CORSSupport corsSupport = urlPatternMatcher.get(
 			_getURI(httpServletRequest));
@@ -250,7 +251,7 @@ public class PortalCORSServletFilter
 		}
 	}
 
-	private URLToCORSSupportMapper _buildDefaultURLToCORSSupportMapper() {
+	private SimpleURLToCORSSupportMapper _buildDefaultURLToCORSSupportMapper() {
 		Map<String, CORSSupport> corsSupports = new HashMap<>();
 
 		_buildCORSSupports(
@@ -258,7 +259,7 @@ public class PortalCORSServletFilter
 			ConfigurableUtil.createConfigurable(
 				PortalCORSConfiguration.class, new HashMapDictionary<>()));
 
-		return new URLToCORSSupportMapper(corsSupports);
+		return new SimpleURLToCORSSupportMapper(corsSupports);
 	}
 
 	private String _getURI(HttpServletRequest httpServletRequest) {
@@ -274,9 +275,11 @@ public class PortalCORSServletFilter
 		return _http.normalizePath(uri);
 	}
 
-	private URLToCORSSupportMapper _getURLToCORSSupportMapper(long companyId) {
-		URLToCORSSupportMapper urlPatternMatcher = _urlToCORSSupportMappers.get(
-			companyId);
+	private BaseURLToCORSSupportMapper _getURLToCORSSupportMapper(
+		long companyId) {
+
+		BaseURLToCORSSupportMapper urlPatternMatcher =
+			_urlToCORSSupportMappers.get(companyId);
 
 		if (urlPatternMatcher != null) {
 			return urlPatternMatcher;
@@ -329,7 +332,8 @@ public class PortalCORSServletFilter
 		_mergeCORSConfiguration(corsSupports, CompanyConstants.SYSTEM);
 
 		_urlToCORSSupportMappers.put(
-			CompanyConstants.SYSTEM, new URLToCORSSupportMapper(corsSupports));
+			CompanyConstants.SYSTEM,
+			new SimpleURLToCORSSupportMapper(corsSupports));
 
 		for (long companyId : _urlToCORSSupportMappers.keySet()) {
 			if (companyId != CompanyConstants.SYSTEM) {
@@ -352,7 +356,7 @@ public class PortalCORSServletFilter
 		_mergeCORSConfiguration(corsSupports, CompanyConstants.SYSTEM);
 
 		_urlToCORSSupportMappers.put(
-			companyId, new URLToCORSSupportMapper(corsSupports));
+			companyId, new SimpleURLToCORSSupportMapper(corsSupports));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -362,7 +366,7 @@ public class PortalCORSServletFilter
 		_configurationPidsProperties = Collections.synchronizedMap(
 			new LinkedHashMap<>());
 	private String _contextPath;
-	private URLToCORSSupportMapper _defaultURLToCORSSupportMapper;
+	private SimpleURLToCORSSupportMapper _defaultURLToCORSSupportMapper;
 
 	@Reference
 	private Http _http;
@@ -372,7 +376,8 @@ public class PortalCORSServletFilter
 
 	private ServiceRegistration<ConfigurationModelListener>
 		_serviceRegistration;
-	private final Map<Long, URLToCORSSupportMapper> _urlToCORSSupportMappers =
-		Collections.synchronizedMap(new LinkedHashMap<>());
+	private final Map<Long, BaseURLToCORSSupportMapper>
+		_urlToCORSSupportMappers = Collections.synchronizedMap(
+			new LinkedHashMap<>());
 
 }

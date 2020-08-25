@@ -25,14 +25,14 @@ import org.junit.Test;
 /**
  * @author Arthur Chan
  */
-public class URLToCORSSupportMapperPerformanceTest {
+public class SimpleURLToCORSSupportMapperPerformanceTest {
 
 	@Test
 	public void testGet() {
 		long start = System.currentTimeMillis();
 
 		KeyValuePair[] keyValuePairs = _createKeyValuePairs();
-		URLToCORSSupportMapper urlToCORSSupportMapper =
+		BaseURLToCORSSupportMapper urlToCORSSupportMapper =
 			createURLToCORSSupportMapper(_createCORSSupports());
 
 		for (int i = 0; i < 100000; i++) {
@@ -50,10 +50,10 @@ public class URLToCORSSupportMapperPerformanceTest {
 		Assert.assertTrue(delta < 2000);
 	}
 
-	protected URLToCORSSupportMapper createURLToCORSSupportMapper(
+	protected BaseURLToCORSSupportMapper createURLToCORSSupportMapper(
 		Map<String, CORSSupport> corsSupports) {
 
-		return new URLToCORSSupportMapper(corsSupports);
+		return new SimpleURLToCORSSupportMapper(corsSupports);
 	}
 
 	private Map<String, CORSSupport> _createCORSSupports() {

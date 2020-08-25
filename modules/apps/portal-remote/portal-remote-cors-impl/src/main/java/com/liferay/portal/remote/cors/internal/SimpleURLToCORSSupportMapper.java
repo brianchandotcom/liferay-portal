@@ -24,14 +24,15 @@ import java.util.Map;
  * @author Carlos Sierra Andrés
  * @author Brian Wing Shun Chan
  */
-public class URLToCORSSupportMapper {
+public class SimpleURLToCORSSupportMapper extends BaseURLToCORSSupportMapper {
 
-	public URLToCORSSupportMapper(Map<String, CORSSupport> corsSupports) {
+	public SimpleURLToCORSSupportMapper(Map<String, CORSSupport> corsSupports) {
 		for (Map.Entry<String, CORSSupport> entry : corsSupports.entrySet()) {
 			put(entry.getValue(), entry.getKey());
 		}
 	}
 
+	@Override
 	public CORSSupport get(String urlPath) {
 		if (Validator.isNull(urlPath)) {
 			return null;
@@ -72,6 +73,7 @@ public class URLToCORSSupportMapper {
 			"*" + urlPath.substring(index));
 	}
 
+	@Override
 	protected void put(CORSSupport corsSupport, String urlPattern)
 		throws IllegalArgumentException {
 

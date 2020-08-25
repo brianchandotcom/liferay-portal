@@ -22,11 +22,9 @@ import java.util.Map;
  * @author Arthur Chan
  * @author Carlos Sierra Andrés
  */
-public class FastURLToCORSSupportMapper extends URLToCORSSupportMapper {
+public class FastURLToCORSSupportMapper extends BaseURLToCORSSupportMapper {
 
 	public FastURLToCORSSupportMapper(Map<String, CORSSupport> corsSupports) {
-		super(corsSupports);
-
 		int maxURLPatternLength = 0;
 
 		for (Map.Entry<String, CORSSupport> entry : corsSupports.entrySet()) {
@@ -48,6 +46,10 @@ public class FastURLToCORSSupportMapper extends URLToCORSSupportMapper {
 			new long[2][_maxURLPatternLength][_ASCII_CHARACTER_RANGE];
 		_wildCardTrieMatrix =
 			new long[2][_maxURLPatternLength][_ASCII_CHARACTER_RANGE];
+
+		for (Map.Entry<String, CORSSupport> entry : corsSupports.entrySet()) {
+			put(entry.getValue(), entry.getKey());
+		}
 	}
 
 	@Override

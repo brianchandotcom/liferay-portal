@@ -588,6 +588,7 @@ definition {
 	test AddFormWithDuplicateTextFields {
 		property test.name.skip.portal.instance = "Forms#AddFormWithDuplicateTextFields";
 		property portal.acceptance = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -606,13 +607,21 @@ definition {
 
 		FormFields.duplicateField();
 
-		FormFields.viewFieldName(fieldName = "CopyOfTextField");
+		Form.gotoAdvancedTab();
+
+		var textFieldName = FormFields.getFieldName();
+
+		Form.gotoBasicTab();
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Copy of Text Field",
+			fieldName = "${textFieldName}");
 
 		Form.editFieldLabelMetal(fieldValue = "My New Text Field");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "My New Text Field",
-			fieldName = "MyNewTextField");
+			fieldName = "${textFieldName}");
 
 		Form.closeSidebar();
 

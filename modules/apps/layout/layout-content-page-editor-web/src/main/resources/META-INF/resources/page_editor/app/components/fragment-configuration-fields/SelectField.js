@@ -39,6 +39,10 @@ export const SelectField = ({disabled, field, onValueSelect, value}) => {
 	const getFrontendTokenOption = (option) => {
 		const token = frontendTokens[option.frontendTokenName];
 
+		if (!token) {
+			return option;
+		}
+
 		return {
 			label: token.label,
 			value: option.frontendTokenName,

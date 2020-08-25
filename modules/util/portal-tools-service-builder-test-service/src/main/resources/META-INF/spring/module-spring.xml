@@ -22,6 +22,9 @@
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LVEntryLocalizationPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryLocalizationPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LVEntryLocalizationVersionPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryLocalizationVersionPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LVEntryVersionPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryVersionPersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.ManyColumnsEntityLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.ManyColumnsEntityLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.ManyColumnsEntityServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.ManyColumnsEntityService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.ManyColumnsEntityPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.ManyColumnsEntityPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.NestedSetsTreeEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.NestedSetsTreeEntryLocalService" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.NestedSetsTreeEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.NestedSetsTreeEntryPersistence" />
 	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.UADPartialEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.UADPartialEntryLocalService" />

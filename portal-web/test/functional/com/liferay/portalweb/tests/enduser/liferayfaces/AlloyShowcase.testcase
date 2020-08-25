@@ -70,6 +70,38 @@ definition {
 			screenName4 = "William");
 
 		AlloyShowcase.selectRowsPerPage();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/selection");
+
+		AlloyShowcase.viewSelectionPaginator(
+			screenName1 = "John",
+			screenName2 = "Philip",
+			screenName3 = "George",
+			screenName4 = "William");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/server-events");
+
+		AlloyShowcase.viewEventPaginator(
+			screenName1 = "John",
+			screenName2 = "Philip",
+			screenName3 = "George",
+			screenName4 = "William");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/sort-multiple-columns");
+
+		AlloyShowcase.viewMultipleColumnSortPaginator(
+			screenName1 = "John",
+			screenName2 = "Philip",
+			screenName3 = "George",
+			screenName4 = "William");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/sort-single-column");
+
+		AlloyShowcase.viewSingleColumnSortPaginator(
+			screenName1 = "John",
+			screenName2 = "Philip",
+			screenName3 = "George",
+			screenName4 = "William");
 	}
 
 	@priority = "5"

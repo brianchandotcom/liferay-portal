@@ -35,7 +35,7 @@ export const isFieldValueOperand = (operands) => {
 };
 
 export const isOptionReferencedByOperand = (options, operandValue) => {
-	return options.some(({value}) => operandValue === value);
+	return options.some(({label}) => operandValue === label);
 };
 
 export const renameFieldInsideExpression = (
@@ -136,16 +136,18 @@ export const updateRulesReferences = (rules, oldProperties, newProperties) => {
 					isEqualLengthOptions(oldOptions, newOptions) &&
 					isOptionReferencedByOperand(oldOptions, operand.value)
 				) {
-					const changedOption = newOptions.find(({value}) => {
-						return !oldOptions.some(
-							(option) => option.value == value
-						);
-					});
+					const changedOption = newOptions.find(
+						({value}) =>
+							value ===
+							oldOptions.find(
+								({label}) => label === operand.value
+							).value
+					);
 
 					if (changedOption) {
 						return {
 							...operand,
-							value: changedOption.value,
+							value: changedOption.label,
 						};
 					}
 				}

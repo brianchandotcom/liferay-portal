@@ -43,11 +43,11 @@
 
 		<reference entity="LVEntry" package-path="com.liferay.portal.tools.service.builder.test" />
 	</entity>
-	<entity local-service="true" name="EagerBlobEntity" remote-service="true" uuid="true">
+	<entity local-service="true" name="EagerBlobEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="eagerBlobEntityId" primary="true" type="long" />
+		<column name="eagerBlobEntryId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -57,11 +57,11 @@
 
 		<column lazy="false" name="blob" type="Blob" />
 	</entity>
-	<entity local-service="true" name="LazyBlobEntity" remote-service="true" uuid="true">
+	<entity local-service="true" name="LazyBlobEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="lazyBlobEntityId" primary="true" type="long" />
+		<column name="lazyBlobEntryId" primary="true" type="long" />
 
 		<!-- Group instance -->
 

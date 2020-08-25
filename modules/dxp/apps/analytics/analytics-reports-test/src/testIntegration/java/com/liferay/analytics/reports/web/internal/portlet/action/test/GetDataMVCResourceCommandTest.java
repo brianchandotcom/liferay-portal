@@ -16,6 +16,7 @@ package com.liferay.analytics.reports.web.internal.portlet.action.test;
 
 import com.liferay.analytics.reports.test.MockObject;
 import com.liferay.analytics.reports.test.util.MockObjectUtil;
+import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockHttpUtil;
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockThemeDisplayUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.item.InfoItemReference;
@@ -53,14 +54,11 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PrefsPropsImpl;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 import java.util.Dictionary;
-import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
@@ -97,41 +95,44 @@ public class GetDataMVCResourceCommandTest {
 		String dataSourceId = prefsPropsWrapper.getString(
 			RandomTestUtil.nextLong(), "liferayAnalyticsDataSourceId");
 
-		_mockHttp(
-			HashMapBuilder.<String, UnsafeSupplier<String, Exception>>put(
-				"/api/1.0/data-sources/" + dataSourceId, () -> StringPool.BLANK
-			).put(
-				"/api/seo/1.0/traffic-sources",
-				() -> JSONUtil.put(
-					JSONUtil.put(
-						"countryKeywords",
+		ReflectionTestUtil.setFieldValue(
+			_mvcResourceCommand, "_http",
+			MockHttpUtil.geHttp(
+				HashMapBuilder.<String, UnsafeSupplier<String, Exception>>put(
+					"/api/1.0/data-sources/" + dataSourceId,
+					() -> StringPool.BLANK
+				).put(
+					"/api/seo/1.0/traffic-sources",
+					() -> JSONUtil.put(
 						JSONUtil.put(
+							"countryKeywords",
 							JSONUtil.put(
-								"countryCode", "us"
-							).put(
-								"countryName", "United States"
-							).put(
-								"keywords",
 								JSONUtil.put(
+									"countryCode", "us"
+								).put(
+									"countryName", "United States"
+								).put(
+									"keywords",
 									JSONUtil.put(
-										"keyword", "liferay"
-									).put(
-										"position", 1
-									).put(
-										"searchVolume", 3600
-									).put(
-										"traffic", 2880L
-									))
-							))
-					).put(
-						"name", "organic"
-					).put(
-						"trafficAmount", 3192L
-					).put(
-						"trafficShare", 93.93D
-					)
-				).toString()
-			).build());
+										JSONUtil.put(
+											"keyword", "liferay"
+										).put(
+											"position", 1
+										).put(
+											"searchVolume", 3600
+										).put(
+											"traffic", 2880L
+										))
+								))
+						).put(
+							"name", "organic"
+						).put(
+							"trafficAmount", 3192L
+						).put(
+							"trafficShare", 93.93D
+						)
+					).toString()
+				).build()));
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
@@ -259,14 +260,6 @@ public class GetDataMVCResourceCommandTest {
 			});
 	}
 
-	private static int _getLastPosition(String location) {
-		if (location.contains("?")) {
-			return location.indexOf("?");
-		}
-
-		return location.length();
-	}
-
 	private MockLiferayResourceRequest _getMockLiferayResourceRequest() {
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
@@ -305,57 +298,6 @@ public class GetDataMVCResourceCommandTest {
 			PrefsPropsUtil.class, "_prefsProps", prefsPropsWrapper);
 
 		return prefsPropsWrapper;
-	}
-
-	private void _mockHttp(
-		Map<String, UnsafeSupplier<String, Exception>> mockRequest) {
-
-		Http http = new HttpImpl() {
-
-			@Override
-			public String URLtoString(Options options) throws IOException {
-				try {
-					String location = options.getLocation();
-
-					String endpoint = location.substring(
-						location.lastIndexOf("/api"),
-						_getLastPosition(location));
-
-					if (mockRequest.containsKey(endpoint)) {
-						Response httpResponse = new Response();
-
-						httpResponse.setResponseCode(200);
-
-						options.setResponse(httpResponse);
-
-						UnsafeSupplier<String, Exception> unsafeSupplier =
-							mockRequest.get(endpoint);
-
-						return unsafeSupplier.get();
-					}
-
-					Response httpResponse = new Response();
-
-					httpResponse.setResponseCode(400);
-
-					options.setResponse(httpResponse);
-
-					return "error";
-				}
-				catch (Throwable throwable) {
-					Response httpResponse = new Response();
-
-					httpResponse.setResponseCode(400);
-
-					options.setResponse(httpResponse);
-
-					throw new RuntimeException(throwable);
-				}
-			}
-
-		};
-
-		ReflectionTestUtil.setFieldValue(_mvcResourceCommand, "_http", http);
 	}
 
 	@Inject

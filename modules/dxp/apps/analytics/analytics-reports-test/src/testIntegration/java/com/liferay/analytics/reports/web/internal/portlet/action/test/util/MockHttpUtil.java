@@ -16,10 +16,11 @@ package com.liferay.analytics.reports.web.internal.portlet.action.test.util;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.util.HttpImpl;
+
+import java.io.IOException;
 
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Cristina González
@@ -27,19 +28,13 @@ import java.util.Objects;
 public class MockHttpUtil {
 
 	public static Http geHttp(
-			Map<String, UnsafeSupplier<String, Exception>> mockRequest)
-		throws Exception {
+		Map<String, UnsafeSupplier<String, Exception>> mockRequest) {
 
-		return (Http)ProxyUtil.newProxyInstance(
-			Http.class.getClassLoader(), new Class<?>[] {Http.class},
-			(proxy, method, args) -> {
-				if (!Objects.equals(method.getName(), "URLtoString")) {
-					throw new UnsupportedOperationException();
-				}
+		return new HttpImpl() {
 
+			@Override
+			public String URLtoString(Options options) throws IOException {
 				try {
-					Http.Options options = (Http.Options)args[0];
-
 					String location = options.getLocation();
 
 					String endpoint = location.substring(
@@ -47,7 +42,7 @@ public class MockHttpUtil {
 						_getLastPosition(location));
 
 					if (mockRequest.containsKey(endpoint)) {
-						Http.Response httpResponse = new Http.Response();
+						Response httpResponse = new Response();
 
 						httpResponse.setResponseCode(200);
 
@@ -59,7 +54,7 @@ public class MockHttpUtil {
 						return unsafeSupplier.get();
 					}
 
-					Http.Response httpResponse = new Http.Response();
+					Response httpResponse = new Response();
 
 					httpResponse.setResponseCode(400);
 
@@ -68,17 +63,17 @@ public class MockHttpUtil {
 					return "error";
 				}
 				catch (Throwable throwable) {
-					Http.Options options = (Http.Options)args[0];
-
-					Http.Response httpResponse = new Http.Response();
+					Response httpResponse = new Response();
 
 					httpResponse.setResponseCode(400);
 
 					options.setResponse(httpResponse);
 
-					throw throwable;
+					throw new RuntimeException(throwable);
 				}
-			});
+			}
+
+		};
 	}
 
 	private static int _getLastPosition(String location) {

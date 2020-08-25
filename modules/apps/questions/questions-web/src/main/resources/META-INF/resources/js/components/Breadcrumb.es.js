@@ -60,7 +60,7 @@ export default withRouter(({allowCreateTopicInRootTopic, history, section}) => {
 
 	const buildBreadcrumbNodesData = useCallback(
 		(rootSection, section, acc = []) => {
-			if (rootSection !== section.title) {
+			if (+rootSection !== +section.id) {
 				acc.push({
 					subCategories: getSubSections(section),
 					title: section.title || 'Home',

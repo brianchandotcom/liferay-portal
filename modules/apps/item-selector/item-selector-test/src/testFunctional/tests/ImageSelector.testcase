@@ -78,7 +78,9 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		IFrame.closeFrame();
+		Click(
+			key_modalTitle = "Select File",
+			locator1 = "Button#CLOSE_MODAL");
 
 		for (var coverImageName : list "Document_1,Document_2,Document_3") {
 			AssertElementNotPresent(
@@ -134,7 +136,9 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
-		IFrame.closeFrame();
+		Click(
+			key_modalTitle = "Select File",
+			locator1 = "Button#CLOSE_MODAL");
 
 		for (var coverImageName : list "Document_1,Document_2,Document_3") {
 			AssertElementNotPresent(

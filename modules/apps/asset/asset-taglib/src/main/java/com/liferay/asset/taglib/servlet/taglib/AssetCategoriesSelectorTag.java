@@ -318,6 +318,12 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		for (int i = 0; i < vocabularies.size(); i++) {
 			AssetVocabulary vocabulary = vocabularies.get(i);
 
+			if (!ArrayUtil.contains(
+					getVisibilityTypes(), vocabulary.getVisibilityType())) {
+
+				continue;
+			}
+
 			String selectedCategoryIds = categoryIdsTitles.get(i)[0];
 
 			Map<String, Object> vocabularyMap =

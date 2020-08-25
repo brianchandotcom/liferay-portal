@@ -112,7 +112,7 @@ export default function FieldSets({keywords}) {
 	};
 
 	const filteredFieldSets = fieldSets
-		.filter(({defaultLanguageId}) =>
+		.filter(({defaultLanguageId, name}) =>
 			new RegExp(keywords, 'ig').test(
 				getLocalizedValue(defaultLanguageId, name)
 			)

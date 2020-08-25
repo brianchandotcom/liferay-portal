@@ -1102,6 +1102,188 @@ definition {
 			value1 = "Item Type:Document");
 	}
 
+	@description = "This is a test for LPS-118979. The mappable fields are grouped by fieldset in content page."
+	@priority = "5"
+	test ViewMappableFieldsAreGroupedByFieldset {
+		task ("Add a web content article based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a blogs entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a custom Document type") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMNavigator.gotoDocumentType();
+
+			DMDocumentType.add(
+				dmDocumentTypeDescription = "DM Document Type Description",
+				dmDocumentTypeFieldNames = "Text",
+				dmDocumentTypeName = "DM Document Type Name");
+		}
+
+		task ("Add a document based on new document type") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMDocument.addCP(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				dmDocumentTypeName = "DM Document Type Name",
+				textField = "DM Document Text");
+		}
+
+		task ("Add a Heading fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the web content article to editable field of Heading") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				contributed = "true",
+				fragmentName = "Heading",
+				id = "text");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Web Content Title",
+				navItem = "Web Content");
+		}
+
+		task ("Assert the mappable fields are grouped by fieldset") {
+			for (var field : list "Title,Description,Publish Date,Author Name,Last Editor Name") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Basic Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Content (Basic Web Content)",
+				key_value = "Content",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Templates",
+				key_value = "Basic Web Content",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Display Page",
+				key_value = "Display Page URL",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			for (var field : list "All Categories,Topic,Tags") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Categorization",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "Display Date,Expiration Date") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Schedule",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+		}
+
+		task ("Map the blogs entry to editable field of Heading") {
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Blogs Entry Title",
+				navItem = "Blogs");
+		}
+
+		task ("Assert the mappable fields are grouped by fieldset") {
+			for (var field : list "Title,Author Name") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Basic Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "Subtitle,Cover Image Caption,Content") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Content",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "Display Page URL,Description,Display Date") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Configuration",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "All Categories,Tags") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Categorization",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+		}
+
+		task ("Map the document to editable field of Heading") {
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "DM Document Title",
+				navItem = "Documents and Media");
+		}
+
+		task ("Assert the mappable fields are grouped by fieldset") {
+			for (var field : list "Title,Description,Version,Publish Date,Author Name") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Basic Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "File Name,Download URL,MIME Type,Size") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "File Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "DM Document Type Name",
+				key_value = "Text",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			for (var field : list "All Categories,Tags") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Categorization",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-96794. In a Permission mode, the edit actions associated that will show a modal with the permission information. In an edit mode, the edit actions associated that will show a modal with the usages of the web content."
 	@priority = "4"
 	test ViewPermissionsAndUsageViaSidebarWithMappedWebContent {

@@ -335,7 +335,7 @@ public class DataLayoutUtil {
 			_toDDMFormLayoutRows(dataLayoutPage.getDataLayoutRows()));
 		ddmFormLayoutPage.setDescription(
 			LocalizedValueUtil.toLocalizedValue(
-				dataLayoutPage.getDescription()));
+				dataLayoutPage.getDescription(), locale));
 		ddmFormLayoutPage.setTitle(
 			LocalizedValueUtil.toLocalizedValue(
 				dataLayoutPage.getTitle(), locale));

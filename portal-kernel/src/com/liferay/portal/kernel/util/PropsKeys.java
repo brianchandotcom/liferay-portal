@@ -1458,6 +1458,9 @@ public interface PropsKeys {
 	public static final String JSON_SERVICE_INVALID_METHOD_NAMES =
 		"json.service.invalid.method.names";
 
+	public static final String JSON_SERVICE_SERIALIZE_THROWABLES =
+		"json.service.serialize.throwables";
+
 	public static final String JSON_WEB_SERVICE_ENABLED =
 		"json.web.service.enabled";
 

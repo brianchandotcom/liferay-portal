@@ -31,9 +31,10 @@ import com.liferay.portal.tools.service.builder.test.service.base.LazyBlobEntryS
  */
 public class LazyBlobEntryServiceImpl extends LazyBlobEntryServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryServiceUtil</code> to access the lazy blob entry remote service.
 	 */
+
 }

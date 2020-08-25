@@ -32,9 +32,10 @@ import com.liferay.portal.tools.service.builder.test.service.base.LazyBlobEntryL
 public class LazyBlobEntryLocalServiceImpl
 	extends LazyBlobEntryLocalServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.portal.tools.service.builder.test.service.LazyBlobEntryLocalServiceUtil</code>.
 	 */
+
 }

@@ -31,9 +31,10 @@ import com.liferay.portal.tools.service.builder.test.service.base.EagerBlobEntry
  */
 public class EagerBlobEntryServiceImpl extends EagerBlobEntryServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.portal.tools.service.builder.test.service.EagerBlobEntryServiceUtil</code> to access the eager blob entry remote service.
 	 */
+
 }

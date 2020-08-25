@@ -263,6 +263,70 @@ definition {
 			password = "Hello World!",
 			text = "Password",
 			textValue = "Hello World!");
+
+		// InputSecretImmediate
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/inputsecret/immediate");
+
+		JSFShowcase.submitImmediate(
+			immediate = "true",
+			messageImmediate1 = "APPLY_REQUEST_VALUES",
+			textInput = "Hello World!",
+			textValue = "Hello World!");
+
+		JSFShowcase.submitImmediate(
+			immediate = "false",
+			messageImmediate2 = "PROCESS_VALIDATIONS",
+			textInput = "Hello World!",
+			textValue = "Hello World!");
+
+		// InputSecretRedisplay
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/inputsecret/redisplay");
+
+		JSFShowcase.submitImmediate(
+			immediate = "true",
+			textInput = "Hello World!",
+			textResult = "Hello World!");
+
+		AssertElementPresent(locator1 = "JSFShowcase#SECRET_MESSAGE");
+
+		JSFShowcase.submitImmediate(
+			immediate = "false",
+			textInput = "Hello World!",
+			textResult = "Hello World!");
+
+		AssertElementPresent(locator1 = "JSFShowcase#SECRET_MESSAGE_2");
+
+		// InputSecretValidation
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/inputtext/validation");
+
+		Type(
+			locator1 = "JSFShowcase#CONVERSION_INPUT_1",
+			value1 = "HelloWorldcom");
+
+		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
+
+		AssertElementPresent(locator1 = "JSFShowcase#CONVERSION_INCORRECT_MESSAGE");
+
+		JSFShowcase.submitImmediate(
+			immediate = "true",
+			textInput = "Hello@World.com",
+			textResult = "Hello@World.com");
+
+		Type(
+			locator1 = "JSFShowcase#CONVERSION_INPUT_2",
+			value1 = "HelloWorldcom");
+
+		Click(locator1 = "JSFShowcase#GENERAL_BUTTON_2");
+
+		AssertElementPresent(locator1 = "JSFShowcase#CONVERSION_INCORRECT_MESSAGE");
+
+		JSFShowcase.submitImmediate(
+			immediate = "false",
+			textInput = "Hello@World.com",
+			textResult = "Hello@World.com");
 	}
 
 	@priority = "5"

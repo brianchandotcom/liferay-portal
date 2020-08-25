@@ -47,8 +47,12 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 			</c:if>
 
 			<div class="card-body widget-topbar">
-				<div class="autofit-row card-title">
-					<div class="autofit-col autofit-col-expand">
+				<clay:content-row
+					cssClass=" card-title"
+				>
+					<clay:content-col
+						expand="<%= true %>"
+					>
 						<portlet:renderURL var="blogsEntryURL">
 							<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 							<portlet:param name="redirect" value="<%= redirect %>" />
@@ -64,10 +68,12 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 						<h3 class="title"><a class="title-link" href="<%= blogsEntryURL %>">
 							<%= HtmlUtil.escape(BlogsEntryUtil.getDisplayTitle(resourceBundle, blogsEntry)) %></a>
 						</h3>
-					</div>
-				</div>
+					</clay:content-col>
+				</clay:content-row>
 
-				<div class="autofit-row widget-metadata">
+				<clay:content-row
+					cssClass="widget-metadata"
+				>
 
 					<%
 					User blogsEntryUser = UserLocalServiceUtil.fetchUser(blogsEntry.getUserId());
@@ -108,7 +114,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 							</clay:content-col>
 						</clay:content-row>
 					</clay:content-col>
-				</div>
+				</clay:content-row>
 			</div>
 
 			<div class="card-footer">

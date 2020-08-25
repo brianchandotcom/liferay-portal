@@ -41,11 +41,31 @@ public class AssetCategoryIdsQueryPreFilterContributor
 			return;
 		}
 
-		TermsFilter termsFilter = new TermsFilter(Field.ASSET_CATEGORY_IDS);
+		TermsFilter categoryIdsTermsFilter = new TermsFilter(
+			Field.ASSET_CATEGORY_IDS);
 
-		termsFilter.addValues(ArrayUtil.toStringArray(assetCategoryIds));
+		categoryIdsTermsFilter.addValues(
+			ArrayUtil.toStringArray(assetCategoryIds));
 
-		fullQueryBooleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
+		if (!searchContext.isIncludeInternalAssetCategories()) {
+			fullQueryBooleanFilter.add(
+				categoryIdsTermsFilter, BooleanClauseOccur.MUST);
+
+			return;
+		}
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		TermsFilter internalCategoryIdsTermsFilter = new TermsFilter(
+			Field.ASSET_INTERNAL_CATEGORY_IDS);
+
+		internalCategoryIdsTermsFilter.addValues(
+			ArrayUtil.toStringArray(assetCategoryIds));
+
+		booleanFilter.add(categoryIdsTermsFilter);
+		booleanFilter.add(internalCategoryIdsTermsFilter);
+
+		fullQueryBooleanFilter.add(booleanFilter, BooleanClauseOccur.MUST);
 	}
 
 }

@@ -110,7 +110,7 @@ public class TranslationEntryLocalServiceImpl
 
 		translationEntry.setContent(content);
 		translationEntry.setContentType(contentType);
-		translationEntry.setStatus(WorkflowConstants.STATUS_APPROVED);
+		translationEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 

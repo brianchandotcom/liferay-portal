@@ -15,18 +15,40 @@
 package com.liferay.layout.taglib.servlet.taglib;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
+import com.liferay.layout.taglib.internal.display.context.RenderLayoutStructureDisplayContext;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eudaldo Alonso
  */
 public class RenderLayoutStructureTag extends IncludeTag {
+
+	@Override
+	public int doStartTag() throws JspException {
+		request.setAttribute(
+			RenderLayoutStructureDisplayContext.class.getName(),
+			new RenderLayoutStructureDisplayContext(
+				getFieldValues(),
+				ServletContextUtil.getFrontendTokenDefinitionRegistry(),
+				request, (HttpServletResponse)pageContext.getResponse(),
+				ServletContextUtil.getInfoItemServiceTracker(),
+				ServletContextUtil.getInfoListRendererTracker(),
+				ServletContextUtil.getLayoutDisplayPageProviderTracker(),
+				ServletContextUtil.getLayoutListRetrieverTracker(),
+				getLayoutStructure(),
+				ServletContextUtil.getListObjectReferenceFactoryTracker(),
+				getMainItemId(), getMode(), isShowPreview()));
+
+		return super.doStartTag();
+	}
 
 	public Map<String, Object> getFieldValues() {
 		return _fieldValues;

@@ -544,7 +544,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "visible",
+				"defaultValue": "",
 				"dependencies": [
 				],
 				"label": "overflow",
@@ -552,6 +552,10 @@
 				"responsive": false,
 				"type": "select",
 				"validValues": [
+					{
+						"label": "default",
+						"value": ""
+					},
 					{
 						"label": "visible",
 						"value": "visible"
@@ -577,7 +581,7 @@
 		"styles": [
 			{
 				"dataType": "string",
-				"defaultValue": "fontFamilyBase",
+				"defaultValue": "",
 				"dependencies": [
 				],
 				"label": "font-family",
@@ -585,6 +589,10 @@
 				"responsive": false,
 				"type": "select",
 				"validValues": [
+					{
+						"label": "default",
+						"value": ""
+					},
 					{
 						"frontendTokenName": "fontFamilySansSerif",
 						"label": "sans-serif",
@@ -604,7 +612,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "fontWeightNormal",
+				"defaultValue": "",
 				"dependencies": [
 				],
 				"label": "font-weight",
@@ -612,6 +620,10 @@
 				"responsive": false,
 				"type": "select",
 				"validValues": [
+					{
+						"label": "default",
+						"value": ""
+					},
 					{
 						"frontendTokenName": "fontWeightNormal",
 						"label": "normal",
@@ -641,7 +653,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "fontSizeBase",
+				"defaultValue": "",
 				"dependencies": [
 				],
 				"label": "font-size",
@@ -649,6 +661,10 @@
 				"responsive": false,
 				"type": "select",
 				"validValues": [
+					{
+						"label": "default",
+						"value": ""
+					},
 					{
 						"frontendTokenName": "fontSizeSm",
 						"label": "small",
@@ -677,7 +693,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "none",
+				"defaultValue": "",
 				"dependencies": [
 				],
 				"label": "text-align",
@@ -686,8 +702,8 @@
 				"type": "select",
 				"validValues": [
 					{
-						"label": "none",
-						"value": "none"
+						"label": "default",
+						"value": ""
 					},
 					{
 						"label": "left",
@@ -754,7 +770,7 @@
 			},
 			{
 				"dataType": "string",
-				"defaultValue": "0",
+				"defaultValue": "",
 				"dependencies": [
 				],
 				"label": "border-radius",
@@ -763,8 +779,8 @@
 				"type": "select",
 				"validValues": [
 					{
-						"label": "none",
-						"value": "0"
+						"label": "default",
+						"value": ""
 					},
 					{
 						"frontendTokenName": "borderRadiusSm",
@@ -819,7 +835,7 @@
 			},
 			{
 				"dataType": "object",
-				"defaultValue": "none",
+				"defaultValue": "",
 				"dependencies": [
 				],
 				"label": "shadow",
@@ -828,8 +844,8 @@
 				"type": "select",
 				"validValues": [
 					{
-						"label": "none",
-						"value": "none"
+						"label": "default",
+						"value": ""
 					},
 					{
 						"frontendTokenName": "boxShadowSm",

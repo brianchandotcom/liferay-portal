@@ -49,12 +49,6 @@ const renderColumn = ({
 describe('Column', () => {
 	afterEach(cleanup);
 
-	it('has empty class if it has no content', () => {
-		const {container} = renderColumn();
-
-		expect(container.querySelector('.empty')).toBeInTheDocument();
-	});
-
 	it('removes column borders if current experience is locked', () => {
 		const {container} = renderColumn({lockedExperience: true});
 

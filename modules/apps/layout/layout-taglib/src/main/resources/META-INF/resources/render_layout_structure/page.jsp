@@ -15,3 +15,11 @@
 --%>
 
 <%@ include file="/render_layout_structure/init.jsp" %>
+
+<%
+RenderLayoutStructureDisplayContext renderLayoutStructureDisplayContext = (RenderLayoutStructureDisplayContext)request.getAttribute(RenderLayoutStructureDisplayContext.class.getName());
+
+request.setAttribute("render_layout_structure.jsp-childrenItemIds", renderLayoutStructureDisplayContext.getMainChildrenItemIds());
+%>
+
+<liferay-util:include page="/render_layout_structure/render_layout_structure.jsp" servletContext="<%= application %>" />

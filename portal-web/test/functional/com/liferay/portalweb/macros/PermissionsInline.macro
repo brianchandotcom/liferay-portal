@@ -1,5 +1,26 @@
 definition {
 
+	macro addOrRemoveAccessPermissionFromAllRoles {
+		for (var roleTitle : list "${roleList}") {
+			var roleTitle = "${roleTitle}";
+			var key_roleTitle = StringUtil.replace("${roleTitle}", " ", "-");
+			var key_roleTitle = StringUtil.lowerCase("${key_roleTitle}");
+
+			if ("${addOrRemoveViewPermission}" == "Add") {
+				Check(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ACCESS_CHECKBOX");
+			}
+			else if ("${addOrRemoveViewPermission}" == "Remove") {
+				Uncheck(locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ACCESS_CHECKBOX");
+			}
+		}
+
+		Button.clickSave();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "Your request completed successfully.");
+	}
+
 	macro addOrRemoveViewPermissionFromAllRoles {
 		for (var roleTitle : list "${roleList}") {
 			var roleTitle = "${roleTitle}";

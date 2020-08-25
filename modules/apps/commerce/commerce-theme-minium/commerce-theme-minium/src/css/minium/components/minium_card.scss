@@ -252,7 +252,7 @@ $card-spacer: 20px;
 		.lexicon-icon-heart-full {
 			color: $color-theme;
 			opacity: 0;
-			transform: translate(-50%, -50%) scale(0);
+			transform: scale(0);
 			transform-origin: 50%;
 			transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 			z-index: 2;
@@ -264,12 +264,12 @@ $card-spacer: 20px;
 			}
 
 			&:hover [class*='-icon'] {
-				transform: translate(-50%, -50%) scale(1.2);
+				transform: scale(1.2);
 			}
 
 			.lexicon-icon-heart-full {
 				opacity: 1;
-				transform: translate(-50%, -50%) scale(1);
+				transform: scale(1);
 			}
 		}
 	}

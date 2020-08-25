@@ -44,8 +44,8 @@ dependencies {
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.10"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.12"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore-nio", version: "4.4.12"
-	compileInclude group: "org.apache.logging.log4j", name: "log4j-api", version: "2.11.1"
-	compileInclude group: "org.apache.logging.log4j", name: "log4j-core", version: "2.11.1"
+	compileInclude group: "org.apache.logging.log4j", name: "log4j-api", version: "2.13.3"
+	compileInclude group: "org.apache.logging.log4j", name: "log4j-core", version: "2.13.3"
 	compileInclude group: "org.apache.lucene", name: "lucene-core", version: luceneVersion
 	compileInclude group: "org.apache.lucene", name: "lucene-highlighter", version: luceneVersion
 	compileInclude group: "org.apache.lucene", name: "lucene-join", version: luceneVersion

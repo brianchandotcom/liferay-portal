@@ -500,7 +500,7 @@ public class SharingEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -524,7 +524,8 @@ public class SharingEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -564,7 +565,7 @@ public class SharingEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@JSON
@@ -660,7 +661,8 @@ public class SharingEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalToUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("toUserId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("toUserId"));
 	}
 
 	@Override
@@ -704,7 +706,8 @@ public class SharingEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassNameId() {
-		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("classNameId"));
 	}
 
 	@JSON
@@ -728,7 +731,7 @@ public class SharingEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassPK() {
-		return GetterUtil.getLong(getColumnOriginalValue("classPK"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
 	@JSON

@@ -368,7 +368,8 @@ public class ExpandoTableModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -412,7 +413,8 @@ public class ExpandoTableModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassNameId() {
-		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("classNameId"));
 	}
 
 	@JSON

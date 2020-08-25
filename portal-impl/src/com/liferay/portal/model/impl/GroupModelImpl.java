@@ -663,7 +663,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -687,7 +687,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -762,7 +763,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	 */
 	@Deprecated
 	public long getOriginalClassNameId() {
-		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("classNameId"));
 	}
 
 	@JSON
@@ -786,7 +788,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	 */
 	@Deprecated
 	public long getOriginalClassPK() {
-		return GetterUtil.getLong(getColumnOriginalValue("classPK"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
 	@JSON
@@ -810,7 +812,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	 */
 	@Deprecated
 	public long getOriginalParentGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("parentGroupId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("parentGroupId"));
 	}
 
 	@JSON
@@ -834,7 +837,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	 */
 	@Deprecated
 	public long getOriginalLiveGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("liveGroupId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("liveGroupId"));
 	}
 
 	@JSON
@@ -1144,7 +1148,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	 */
 	@Deprecated
 	public int getOriginalType() {
-		return GetterUtil.getInteger(getColumnOriginalValue("type_"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("type_"));
 	}
 
 	@JSON
@@ -1259,7 +1264,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	 */
 	@Deprecated
 	public boolean getOriginalSite() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("site"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("site"));
 	}
 
 	@JSON
@@ -1304,7 +1310,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	 */
 	@Deprecated
 	public boolean getOriginalInheritContent() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("inheritContent"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("inheritContent"));
 	}
 
 	@JSON
@@ -1334,7 +1341,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	 */
 	@Deprecated
 	public boolean getOriginalActive() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("active_"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("active_"));
 	}
 
 	public long getColumnBitmask() {

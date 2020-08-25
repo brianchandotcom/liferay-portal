@@ -351,7 +351,8 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -438,7 +439,7 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 	@Deprecated
 	public long getOriginalOAuth2ApplicationId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("oAuth2ApplicationId"));
+			this.<Long>getColumnOriginalValue("oAuth2ApplicationId"));
 	}
 
 	public long getColumnBitmask() {

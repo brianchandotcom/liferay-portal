@@ -582,7 +582,7 @@ public class LayoutSEOEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -606,7 +606,8 @@ public class LayoutSEOEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -723,7 +724,8 @@ public class LayoutSEOEntryModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalPrivateLayout() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("privateLayout"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("privateLayout"));
 	}
 
 	@JSON
@@ -747,7 +749,8 @@ public class LayoutSEOEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalLayoutId() {
-		return GetterUtil.getLong(getColumnOriginalValue("layoutId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("layoutId"));
 	}
 
 	@JSON

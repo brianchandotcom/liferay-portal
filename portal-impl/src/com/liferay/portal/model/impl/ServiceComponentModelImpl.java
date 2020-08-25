@@ -373,7 +373,8 @@ public class ServiceComponentModelImpl
 	 */
 	@Deprecated
 	public long getOriginalBuildNumber() {
-		return GetterUtil.getLong(getColumnOriginalValue("buildNumber"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("buildNumber"));
 	}
 
 	@Override

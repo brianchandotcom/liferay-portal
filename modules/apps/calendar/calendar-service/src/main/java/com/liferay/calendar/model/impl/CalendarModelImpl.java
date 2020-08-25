@@ -519,7 +519,7 @@ public class CalendarModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -543,7 +543,8 @@ public class CalendarModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -654,7 +655,8 @@ public class CalendarModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCalendarResourceId() {
-		return GetterUtil.getLong(getColumnOriginalValue("calendarResourceId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("calendarResourceId"));
 	}
 
 	@JSON
@@ -938,7 +940,8 @@ public class CalendarModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalDefaultCalendar() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("defaultCalendar"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("defaultCalendar"));
 	}
 
 	@JSON

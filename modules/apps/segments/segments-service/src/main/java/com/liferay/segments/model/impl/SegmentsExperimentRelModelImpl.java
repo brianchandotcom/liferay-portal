@@ -604,7 +604,7 @@ public class SegmentsExperimentRelModelImpl
 	@Deprecated
 	public long getOriginalSegmentsExperimentId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("segmentsExperimentId"));
+			this.<Long>getColumnOriginalValue("segmentsExperimentId"));
 	}
 
 	@JSON
@@ -629,7 +629,7 @@ public class SegmentsExperimentRelModelImpl
 	@Deprecated
 	public long getOriginalSegmentsExperienceId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("segmentsExperienceId"));
+			this.<Long>getColumnOriginalValue("segmentsExperienceId"));
 	}
 
 	@JSON

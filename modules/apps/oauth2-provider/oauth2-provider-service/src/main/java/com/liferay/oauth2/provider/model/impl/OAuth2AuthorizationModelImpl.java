@@ -536,7 +536,8 @@ public class OAuth2AuthorizationModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -575,7 +576,7 @@ public class OAuth2AuthorizationModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@Override
@@ -632,7 +633,7 @@ public class OAuth2AuthorizationModelImpl
 	@Deprecated
 	public long getOriginalOAuth2ApplicationId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("oAuth2ApplicationId"));
+			this.<Long>getColumnOriginalValue("oAuth2ApplicationId"));
 	}
 
 	@Override
@@ -691,7 +692,7 @@ public class OAuth2AuthorizationModelImpl
 	@Deprecated
 	public long getOriginalAccessTokenContentHash() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("accessTokenContentHash"));
+			this.<Long>getColumnOriginalValue("accessTokenContentHash"));
 	}
 
 	@Override
@@ -800,7 +801,7 @@ public class OAuth2AuthorizationModelImpl
 	@Deprecated
 	public long getOriginalRefreshTokenContentHash() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("refreshTokenContentHash"));
+			this.<Long>getColumnOriginalValue("refreshTokenContentHash"));
 	}
 
 	@Override

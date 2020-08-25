@@ -428,7 +428,8 @@ public class AccountEntryOrganizationRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalAccountEntryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("accountEntryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("accountEntryId"));
 	}
 
 	@JSON
@@ -452,7 +453,8 @@ public class AccountEntryOrganizationRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalOrganizationId() {
-		return GetterUtil.getLong(getColumnOriginalValue("organizationId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("organizationId"));
 	}
 
 	public long getColumnBitmask() {

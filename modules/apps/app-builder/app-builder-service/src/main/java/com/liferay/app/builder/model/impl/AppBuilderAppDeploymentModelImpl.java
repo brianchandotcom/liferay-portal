@@ -346,7 +346,8 @@ public class AppBuilderAppDeploymentModelImpl
 	 */
 	@Deprecated
 	public long getOriginalAppBuilderAppId() {
-		return GetterUtil.getLong(getColumnOriginalValue("appBuilderAppId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("appBuilderAppId"));
 	}
 
 	@Override

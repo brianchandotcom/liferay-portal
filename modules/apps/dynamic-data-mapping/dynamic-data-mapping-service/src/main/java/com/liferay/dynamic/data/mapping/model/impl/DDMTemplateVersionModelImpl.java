@@ -699,7 +699,8 @@ public class DDMTemplateVersionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalTemplateId() {
-		return GetterUtil.getLong(getColumnOriginalValue("templateId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("templateId"));
 	}
 
 	@JSON
@@ -1011,7 +1012,8 @@ public class DDMTemplateVersionModelImpl
 	 */
 	@Deprecated
 	public int getOriginalStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("status"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	@JSON

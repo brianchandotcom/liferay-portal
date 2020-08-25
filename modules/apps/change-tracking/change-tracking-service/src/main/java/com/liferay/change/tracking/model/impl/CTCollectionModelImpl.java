@@ -430,7 +430,8 @@ public class CTCollectionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -561,7 +562,8 @@ public class CTCollectionModelImpl
 	 */
 	@Deprecated
 	public int getOriginalStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("status"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	@JSON

@@ -459,7 +459,8 @@ public class UserGroupGroupRoleModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userGroupId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("userGroupId"));
 	}
 
 	@JSON
@@ -483,7 +484,7 @@ public class UserGroupGroupRoleModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -507,7 +508,7 @@ public class UserGroupGroupRoleModelImpl
 	 */
 	@Deprecated
 	public long getOriginalRoleId() {
-		return GetterUtil.getLong(getColumnOriginalValue("roleId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("roleId"));
 	}
 
 	public long getColumnBitmask() {

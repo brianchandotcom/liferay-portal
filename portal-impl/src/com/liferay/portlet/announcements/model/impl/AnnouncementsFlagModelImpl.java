@@ -433,7 +433,8 @@ public class AnnouncementsFlagModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -473,7 +474,7 @@ public class AnnouncementsFlagModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@JSON
@@ -512,7 +513,7 @@ public class AnnouncementsFlagModelImpl
 	 */
 	@Deprecated
 	public long getOriginalEntryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("entryId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("entryId"));
 	}
 
 	@JSON
@@ -536,7 +537,8 @@ public class AnnouncementsFlagModelImpl
 	 */
 	@Deprecated
 	public int getOriginalValue() {
-		return GetterUtil.getInteger(getColumnOriginalValue("value"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("value"));
 	}
 
 	public long getColumnBitmask() {

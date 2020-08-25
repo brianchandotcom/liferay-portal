@@ -389,7 +389,8 @@ public class RegionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCountryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("countryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("countryId"));
 	}
 
 	@JSON
@@ -468,7 +469,8 @@ public class RegionModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalActive() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("active_"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("active_"));
 	}
 
 	public long getColumnBitmask() {

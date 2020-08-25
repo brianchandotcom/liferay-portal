@@ -473,7 +473,7 @@ public class SocialActivityCounterModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -530,7 +530,8 @@ public class SocialActivityCounterModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassNameId() {
-		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("classNameId"));
 	}
 
 	@Override
@@ -553,7 +554,7 @@ public class SocialActivityCounterModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassPK() {
-		return GetterUtil.getLong(getColumnOriginalValue("classPK"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
 	@Override
@@ -604,7 +605,8 @@ public class SocialActivityCounterModelImpl
 	 */
 	@Deprecated
 	public int getOriginalOwnerType() {
-		return GetterUtil.getInteger(getColumnOriginalValue("ownerType"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("ownerType"));
 	}
 
 	@Override
@@ -669,7 +671,8 @@ public class SocialActivityCounterModelImpl
 	 */
 	@Deprecated
 	public int getOriginalStartPeriod() {
-		return GetterUtil.getInteger(getColumnOriginalValue("startPeriod"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("startPeriod"));
 	}
 
 	@Override
@@ -692,7 +695,8 @@ public class SocialActivityCounterModelImpl
 	 */
 	@Deprecated
 	public int getOriginalEndPeriod() {
-		return GetterUtil.getInteger(getColumnOriginalValue("endPeriod"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("endPeriod"));
 	}
 
 	@Override

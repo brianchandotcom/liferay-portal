@@ -542,7 +542,7 @@ public class MBMailingListModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -565,7 +565,8 @@ public class MBMailingListModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -671,7 +672,8 @@ public class MBMailingListModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCategoryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("categoryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("categoryId"));
 	}
 
 	@Override
@@ -988,7 +990,8 @@ public class MBMailingListModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalActive() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("active_"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("active_"));
 	}
 
 	@Override

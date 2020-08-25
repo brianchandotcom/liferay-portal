@@ -544,7 +544,8 @@ public class DLOpenerFileEntryReferenceModelImpl
 	 */
 	@Deprecated
 	public long getOriginalFileEntryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("fileEntryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("fileEntryId"));
 	}
 
 	@Override

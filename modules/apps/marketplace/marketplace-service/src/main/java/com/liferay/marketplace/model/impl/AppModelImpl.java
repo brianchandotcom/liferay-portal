@@ -450,7 +450,8 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -561,7 +562,8 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	 */
 	@Deprecated
 	public long getOriginalRemoteAppId() {
-		return GetterUtil.getLong(getColumnOriginalValue("remoteAppId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("remoteAppId"));
 	}
 
 	@JSON

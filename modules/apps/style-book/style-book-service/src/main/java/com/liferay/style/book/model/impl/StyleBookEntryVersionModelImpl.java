@@ -452,7 +452,8 @@ public class StyleBookEntryVersionModelImpl
 	 */
 	@Deprecated
 	public int getOriginalVersion() {
-		return GetterUtil.getInteger(getColumnOriginalValue("version"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("version"));
 	}
 
 	@Override
@@ -475,7 +476,8 @@ public class StyleBookEntryVersionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalStyleBookEntryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("styleBookEntryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("styleBookEntryId"));
 	}
 
 	@Override
@@ -498,7 +500,7 @@ public class StyleBookEntryVersionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -604,7 +606,7 @@ public class StyleBookEntryVersionModelImpl
 	@Deprecated
 	public boolean getOriginalDefaultStyleBookEntry() {
 		return GetterUtil.getBoolean(
-			getColumnOriginalValue("defaultStyleBookEntry"));
+			this.<Boolean>getColumnOriginalValue("defaultStyleBookEntry"));
 	}
 
 	@Override

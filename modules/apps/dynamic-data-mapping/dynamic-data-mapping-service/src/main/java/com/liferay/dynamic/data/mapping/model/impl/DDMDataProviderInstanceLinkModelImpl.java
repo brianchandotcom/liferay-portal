@@ -387,7 +387,7 @@ public class DDMDataProviderInstanceLinkModelImpl
 	@Deprecated
 	public long getOriginalDataProviderInstanceId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("dataProviderInstanceId"));
+			this.<Long>getColumnOriginalValue("dataProviderInstanceId"));
 	}
 
 	@Override
@@ -410,7 +410,8 @@ public class DDMDataProviderInstanceLinkModelImpl
 	 */
 	@Deprecated
 	public long getOriginalStructureId() {
-		return GetterUtil.getLong(getColumnOriginalValue("structureId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("structureId"));
 	}
 
 	public long getColumnBitmask() {

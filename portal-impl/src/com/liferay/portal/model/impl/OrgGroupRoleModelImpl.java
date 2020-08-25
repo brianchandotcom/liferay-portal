@@ -339,7 +339,7 @@ public class OrgGroupRoleModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -362,7 +362,7 @@ public class OrgGroupRoleModelImpl
 	 */
 	@Deprecated
 	public long getOriginalRoleId() {
-		return GetterUtil.getLong(getColumnOriginalValue("roleId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("roleId"));
 	}
 
 	@Override

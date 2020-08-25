@@ -610,7 +610,8 @@ public class OrganizationModelImpl
 	 */
 	@Deprecated
 	public long getOriginalOrganizationId() {
-		return GetterUtil.getLong(getColumnOriginalValue("organizationId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("organizationId"));
 	}
 
 	@JSON
@@ -634,7 +635,8 @@ public class OrganizationModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -746,7 +748,7 @@ public class OrganizationModelImpl
 	@Deprecated
 	public long getOriginalParentOrganizationId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("parentOrganizationId"));
+			this.<Long>getColumnOriginalValue("parentOrganizationId"));
 	}
 
 	@JSON

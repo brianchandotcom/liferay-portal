@@ -477,7 +477,7 @@ public class SamlIdpSpSessionModelImpl
 	@Deprecated
 	public long getOriginalSamlIdpSsoSessionId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("samlIdpSsoSessionId"));
+			this.<Long>getColumnOriginalValue("samlIdpSsoSessionId"));
 	}
 
 	@Override

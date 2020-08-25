@@ -384,7 +384,8 @@ public class VirtualHostModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -407,7 +408,8 @@ public class VirtualHostModelImpl
 	 */
 	@Deprecated
 	public long getOriginalLayoutSetId() {
-		return GetterUtil.getLong(getColumnOriginalValue("layoutSetId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("layoutSetId"));
 	}
 
 	@Override
@@ -464,7 +466,7 @@ public class VirtualHostModelImpl
 	@Deprecated
 	public boolean getOriginalDefaultVirtualHost() {
 		return GetterUtil.getBoolean(
-			getColumnOriginalValue("defaultVirtualHost"));
+			this.<Boolean>getColumnOriginalValue("defaultVirtualHost"));
 	}
 
 	@Override

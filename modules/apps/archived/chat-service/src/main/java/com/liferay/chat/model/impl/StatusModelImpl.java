@@ -343,7 +343,7 @@ public class StatusModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@Override
@@ -366,7 +366,8 @@ public class StatusModelImpl
 	 */
 	@Deprecated
 	public long getOriginalModifiedDate() {
-		return GetterUtil.getLong(getColumnOriginalValue("modifiedDate"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("modifiedDate"));
 	}
 
 	@Override
@@ -394,7 +395,8 @@ public class StatusModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalOnline() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("online_"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("online_"));
 	}
 
 	@Override

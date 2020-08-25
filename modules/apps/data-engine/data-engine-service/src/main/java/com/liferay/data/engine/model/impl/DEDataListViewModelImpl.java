@@ -421,7 +421,7 @@ public class DEDataListViewModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -444,7 +444,8 @@ public class DEDataListViewModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -569,7 +570,8 @@ public class DEDataListViewModelImpl
 	 */
 	@Deprecated
 	public long getOriginalDdmStructureId() {
-		return GetterUtil.getLong(getColumnOriginalValue("ddmStructureId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("ddmStructureId"));
 	}
 
 	@Override

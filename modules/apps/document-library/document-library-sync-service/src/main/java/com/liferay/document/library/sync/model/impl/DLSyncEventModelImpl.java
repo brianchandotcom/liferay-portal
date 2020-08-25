@@ -325,7 +325,8 @@ public class DLSyncEventModelImpl
 	 */
 	@Deprecated
 	public long getOriginalModifiedTime() {
-		return GetterUtil.getLong(getColumnOriginalValue("modifiedTime"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("modifiedTime"));
 	}
 
 	@Override
@@ -386,7 +387,7 @@ public class DLSyncEventModelImpl
 	 */
 	@Deprecated
 	public long getOriginalTypePK() {
-		return GetterUtil.getLong(getColumnOriginalValue("typePK"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("typePK"));
 	}
 
 	public long getColumnBitmask() {

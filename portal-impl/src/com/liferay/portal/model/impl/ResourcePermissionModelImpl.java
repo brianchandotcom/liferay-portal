@@ -507,7 +507,8 @@ public class ResourcePermissionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -560,7 +561,8 @@ public class ResourcePermissionModelImpl
 	 */
 	@Deprecated
 	public int getOriginalScope() {
-		return GetterUtil.getInteger(getColumnOriginalValue("scope"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("scope"));
 	}
 
 	@JSON
@@ -613,7 +615,8 @@ public class ResourcePermissionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalPrimKeyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("primKeyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("primKeyId"));
 	}
 
 	@JSON
@@ -637,7 +640,7 @@ public class ResourcePermissionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalRoleId() {
-		return GetterUtil.getLong(getColumnOriginalValue("roleId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("roleId"));
 	}
 
 	@JSON
@@ -697,7 +700,8 @@ public class ResourcePermissionModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalViewActionId() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("viewActionId"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("viewActionId"));
 	}
 
 	public long getColumnBitmask() {

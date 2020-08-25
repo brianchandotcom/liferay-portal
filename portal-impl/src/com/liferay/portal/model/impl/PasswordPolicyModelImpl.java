@@ -672,7 +672,8 @@ public class PasswordPolicyModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -789,7 +790,8 @@ public class PasswordPolicyModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalDefaultPolicy() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("defaultPolicy"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("defaultPolicy"));
 	}
 
 	@JSON

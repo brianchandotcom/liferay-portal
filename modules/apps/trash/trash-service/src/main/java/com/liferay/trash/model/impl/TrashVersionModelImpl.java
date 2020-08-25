@@ -390,7 +390,7 @@ public class TrashVersionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalEntryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("entryId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("entryId"));
 	}
 
 	@Override
@@ -433,7 +433,8 @@ public class TrashVersionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassNameId() {
-		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("classNameId"));
 	}
 
 	@Override
@@ -456,7 +457,7 @@ public class TrashVersionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassPK() {
-		return GetterUtil.getLong(getColumnOriginalValue("classPK"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
 	@Override

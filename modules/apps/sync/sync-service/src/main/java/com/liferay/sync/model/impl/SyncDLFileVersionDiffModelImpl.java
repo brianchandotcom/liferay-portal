@@ -383,7 +383,8 @@ public class SyncDLFileVersionDiffModelImpl
 	 */
 	@Deprecated
 	public long getOriginalFileEntryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("fileEntryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("fileEntryId"));
 	}
 
 	@Override
@@ -407,7 +408,7 @@ public class SyncDLFileVersionDiffModelImpl
 	@Deprecated
 	public long getOriginalSourceFileVersionId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("sourceFileVersionId"));
+			this.<Long>getColumnOriginalValue("sourceFileVersionId"));
 	}
 
 	@Override
@@ -431,7 +432,7 @@ public class SyncDLFileVersionDiffModelImpl
 	@Deprecated
 	public long getOriginalTargetFileVersionId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("targetFileVersionId"));
+			this.<Long>getColumnOriginalValue("targetFileVersionId"));
 	}
 
 	@Override

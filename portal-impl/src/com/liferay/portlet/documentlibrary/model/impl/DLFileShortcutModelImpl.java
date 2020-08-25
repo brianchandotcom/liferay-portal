@@ -591,7 +591,7 @@ public class DLFileShortcutModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -615,7 +615,8 @@ public class DLFileShortcutModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -741,7 +742,8 @@ public class DLFileShortcutModelImpl
 	 */
 	@Deprecated
 	public long getOriginalFolderId() {
-		return GetterUtil.getLong(getColumnOriginalValue("folderId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("folderId"));
 	}
 
 	@JSON
@@ -765,7 +767,8 @@ public class DLFileShortcutModelImpl
 	 */
 	@Deprecated
 	public long getOriginalToFileEntryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("toFileEntryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("toFileEntryId"));
 	}
 
 	@JSON
@@ -815,7 +818,8 @@ public class DLFileShortcutModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalActive() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("active_"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("active_"));
 	}
 
 	@JSON
@@ -854,7 +858,8 @@ public class DLFileShortcutModelImpl
 	 */
 	@Deprecated
 	public int getOriginalStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("status"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	@JSON

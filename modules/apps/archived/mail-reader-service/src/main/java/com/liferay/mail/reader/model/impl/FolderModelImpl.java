@@ -421,7 +421,8 @@ public class FolderModelImpl
 	 */
 	@Deprecated
 	public long getOriginalAccountId() {
-		return GetterUtil.getLong(getColumnOriginalValue("accountId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("accountId"));
 	}
 
 	@Override

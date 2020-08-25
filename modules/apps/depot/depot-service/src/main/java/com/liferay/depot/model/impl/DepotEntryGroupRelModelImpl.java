@@ -452,7 +452,7 @@ public class DepotEntryGroupRelModelImpl
 	@Deprecated
 	public boolean getOriginalDdmStructuresAvailable() {
 		return GetterUtil.getBoolean(
-			getColumnOriginalValue("ddmStructuresAvailable"));
+			this.<Boolean>getColumnOriginalValue("ddmStructuresAvailable"));
 	}
 
 	@JSON
@@ -476,7 +476,8 @@ public class DepotEntryGroupRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalDepotEntryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("depotEntryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("depotEntryId"));
 	}
 
 	@JSON
@@ -506,7 +507,8 @@ public class DepotEntryGroupRelModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalSearchable() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("searchable"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("searchable"));
 	}
 
 	@JSON
@@ -530,7 +532,8 @@ public class DepotEntryGroupRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalToGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("toGroupId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("toGroupId"));
 	}
 
 	public long getColumnBitmask() {

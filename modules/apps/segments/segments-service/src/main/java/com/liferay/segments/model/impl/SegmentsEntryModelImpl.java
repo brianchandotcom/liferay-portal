@@ -561,7 +561,7 @@ public class SegmentsEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -585,7 +585,8 @@ public class SegmentsEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -950,7 +951,8 @@ public class SegmentsEntryModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalActive() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("active_"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("active_"));
 	}
 
 	@JSON

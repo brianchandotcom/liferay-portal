@@ -435,7 +435,7 @@ public class MBThreadFlagModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -458,7 +458,8 @@ public class MBThreadFlagModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -497,7 +498,7 @@ public class MBThreadFlagModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@Override
@@ -573,7 +574,8 @@ public class MBThreadFlagModelImpl
 	 */
 	@Deprecated
 	public long getOriginalThreadId() {
-		return GetterUtil.getLong(getColumnOriginalValue("threadId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("threadId"));
 	}
 
 	@Override

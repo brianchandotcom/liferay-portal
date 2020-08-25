@@ -367,7 +367,8 @@ public class ModuleModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -390,7 +391,7 @@ public class ModuleModelImpl
 	 */
 	@Deprecated
 	public long getOriginalAppId() {
-		return GetterUtil.getLong(getColumnOriginalValue("appId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("appId"));
 	}
 
 	@Override

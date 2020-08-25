@@ -357,7 +357,8 @@ public class UserTrackerPathModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserTrackerId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userTrackerId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("userTrackerId"));
 	}
 
 	@Override

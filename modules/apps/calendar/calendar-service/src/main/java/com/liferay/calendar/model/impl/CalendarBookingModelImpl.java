@@ -684,7 +684,7 @@ public class CalendarBookingModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -708,7 +708,8 @@ public class CalendarBookingModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -819,7 +820,8 @@ public class CalendarBookingModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCalendarId() {
-		return GetterUtil.getLong(getColumnOriginalValue("calendarId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("calendarId"));
 	}
 
 	@JSON
@@ -843,7 +845,8 @@ public class CalendarBookingModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCalendarResourceId() {
-		return GetterUtil.getLong(getColumnOriginalValue("calendarResourceId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("calendarResourceId"));
 	}
 
 	@JSON
@@ -868,7 +871,7 @@ public class CalendarBookingModelImpl
 	@Deprecated
 	public long getOriginalParentCalendarBookingId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("parentCalendarBookingId"));
+			this.<Long>getColumnOriginalValue("parentCalendarBookingId"));
 	}
 
 	@JSON
@@ -893,7 +896,7 @@ public class CalendarBookingModelImpl
 	@Deprecated
 	public long getOriginalRecurringCalendarBookingId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("recurringCalendarBookingId"));
+			this.<Long>getColumnOriginalValue("recurringCalendarBookingId"));
 	}
 
 	@JSON
@@ -1343,7 +1346,8 @@ public class CalendarBookingModelImpl
 	 */
 	@Deprecated
 	public int getOriginalStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("status"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	@JSON

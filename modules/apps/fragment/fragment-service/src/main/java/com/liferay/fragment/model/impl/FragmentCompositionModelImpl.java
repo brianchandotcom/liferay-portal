@@ -611,7 +611,7 @@ public class FragmentCompositionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -635,7 +635,8 @@ public class FragmentCompositionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -747,7 +748,7 @@ public class FragmentCompositionModelImpl
 	@Deprecated
 	public long getOriginalFragmentCollectionId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("fragmentCollectionId"));
+			this.<Long>getColumnOriginalValue("fragmentCollectionId"));
 	}
 
 	@JSON
@@ -899,7 +900,8 @@ public class FragmentCompositionModelImpl
 	 */
 	@Deprecated
 	public int getOriginalStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("status"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	@JSON

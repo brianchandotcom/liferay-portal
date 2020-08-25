@@ -640,7 +640,8 @@ public class SyncDLObjectModelImpl
 	 */
 	@Deprecated
 	public long getOriginalModifiedTime() {
-		return GetterUtil.getLong(getColumnOriginalValue("modifiedTime"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("modifiedTime"));
 	}
 
 	@JSON
@@ -664,7 +665,8 @@ public class SyncDLObjectModelImpl
 	 */
 	@Deprecated
 	public long getOriginalRepositoryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("repositoryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("repositoryId"));
 	}
 
 	@JSON
@@ -688,7 +690,8 @@ public class SyncDLObjectModelImpl
 	 */
 	@Deprecated
 	public long getOriginalParentFolderId() {
-		return GetterUtil.getLong(getColumnOriginalValue("parentFolderId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("parentFolderId"));
 	}
 
 	@JSON(include = false)
@@ -1099,7 +1102,7 @@ public class SyncDLObjectModelImpl
 	 */
 	@Deprecated
 	public long getOriginalTypePK() {
-		return GetterUtil.getLong(getColumnOriginalValue("typePK"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("typePK"));
 	}
 
 	@JSON

@@ -570,7 +570,7 @@ public class LVEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalHeadId() {
-		return GetterUtil.getLong(getColumnOriginalValue("headId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("headId"));
 	}
 
 	public boolean getHead() {
@@ -596,7 +596,8 @@ public class LVEntryModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalHead() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("head"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("head"));
 	}
 
 	@Override
@@ -652,7 +653,8 @@ public class LVEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -675,7 +677,7 @@ public class LVEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override

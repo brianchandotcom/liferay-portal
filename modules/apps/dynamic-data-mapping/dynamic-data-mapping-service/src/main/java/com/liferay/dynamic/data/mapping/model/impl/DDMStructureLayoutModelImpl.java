@@ -569,7 +569,7 @@ public class DDMStructureLayoutModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -593,7 +593,8 @@ public class DDMStructureLayoutModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -724,7 +725,8 @@ public class DDMStructureLayoutModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassNameId() {
-		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("classNameId"));
 	}
 
 	@JSON
@@ -777,7 +779,8 @@ public class DDMStructureLayoutModelImpl
 	 */
 	@Deprecated
 	public long getOriginalStructureVersionId() {
-		return GetterUtil.getLong(getColumnOriginalValue("structureVersionId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("structureVersionId"));
 	}
 
 	@JSON

@@ -464,7 +464,7 @@ public class MembershipRequestModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -519,7 +519,7 @@ public class MembershipRequestModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@JSON
@@ -644,7 +644,8 @@ public class MembershipRequestModelImpl
 	 */
 	@Deprecated
 	public long getOriginalStatusId() {
-		return GetterUtil.getLong(getColumnOriginalValue("statusId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("statusId"));
 	}
 
 	public long getColumnBitmask() {

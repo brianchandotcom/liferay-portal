@@ -380,7 +380,7 @@ public class MBStatsUserModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -433,7 +433,7 @@ public class MBStatsUserModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@Override
@@ -456,7 +456,8 @@ public class MBStatsUserModelImpl
 	 */
 	@Deprecated
 	public int getOriginalMessageCount() {
-		return GetterUtil.getInteger(getColumnOriginalValue("messageCount"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("messageCount"));
 	}
 
 	@Override

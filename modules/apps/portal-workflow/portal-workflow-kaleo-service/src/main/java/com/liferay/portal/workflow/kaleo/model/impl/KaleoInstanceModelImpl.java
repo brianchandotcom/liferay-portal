@@ -458,7 +458,8 @@ public class KaleoInstanceModelImpl
 	 */
 	@Deprecated
 	public long getOriginalKaleoInstanceId() {
-		return GetterUtil.getLong(getColumnOriginalValue("kaleoInstanceId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("kaleoInstanceId"));
 	}
 
 	@Override
@@ -495,7 +496,8 @@ public class KaleoInstanceModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -534,7 +536,7 @@ public class KaleoInstanceModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@Override
@@ -610,7 +612,8 @@ public class KaleoInstanceModelImpl
 	 */
 	@Deprecated
 	public long getOriginalKaleoDefinitionId() {
-		return GetterUtil.getLong(getColumnOriginalValue("kaleoDefinitionId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("kaleoDefinitionId"));
 	}
 
 	@Override
@@ -634,7 +637,7 @@ public class KaleoInstanceModelImpl
 	@Deprecated
 	public long getOriginalKaleoDefinitionVersionId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("kaleoDefinitionVersionId"));
+			this.<Long>getColumnOriginalValue("kaleoDefinitionVersionId"));
 	}
 
 	@Override
@@ -686,7 +689,7 @@ public class KaleoInstanceModelImpl
 	@Deprecated
 	public int getOriginalKaleoDefinitionVersion() {
 		return GetterUtil.getInteger(
-			getColumnOriginalValue("kaleoDefinitionVersion"));
+			this.<Integer>getColumnOriginalValue("kaleoDefinitionVersion"));
 	}
 
 	@Override
@@ -751,7 +754,7 @@ public class KaleoInstanceModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassPK() {
-		return GetterUtil.getLong(getColumnOriginalValue("classPK"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
 	@Override
@@ -779,7 +782,8 @@ public class KaleoInstanceModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalCompleted() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("completed"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("completed"));
 	}
 
 	@Override

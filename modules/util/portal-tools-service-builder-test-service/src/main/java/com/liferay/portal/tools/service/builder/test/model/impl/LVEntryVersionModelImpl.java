@@ -414,7 +414,8 @@ public class LVEntryVersionModelImpl
 	 */
 	@Deprecated
 	public int getOriginalVersion() {
-		return GetterUtil.getInteger(getColumnOriginalValue("version"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("version"));
 	}
 
 	@Override
@@ -484,7 +485,8 @@ public class LVEntryVersionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalLvEntryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("lvEntryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("lvEntryId"));
 	}
 
 	@Override
@@ -507,7 +509,8 @@ public class LVEntryVersionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -530,7 +533,7 @@ public class LVEntryVersionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override

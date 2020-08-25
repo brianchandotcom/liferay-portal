@@ -336,7 +336,8 @@ public class CTMessageModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCtCollectionId() {
-		return GetterUtil.getLong(getColumnOriginalValue("ctCollectionId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 	}
 
 	@Override

@@ -453,7 +453,8 @@ public class AssetAutoTaggerEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalAssetEntryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("assetEntryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("assetEntryId"));
 	}
 
 	@Override
@@ -476,7 +477,8 @@ public class AssetAutoTaggerEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalAssetTagId() {
-		return GetterUtil.getLong(getColumnOriginalValue("assetTagId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("assetTagId"));
 	}
 
 	public long getColumnBitmask() {

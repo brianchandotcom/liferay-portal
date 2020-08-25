@@ -472,7 +472,8 @@ public class PortletPreferencesModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -496,7 +497,7 @@ public class PortletPreferencesModelImpl
 	 */
 	@Deprecated
 	public long getOriginalOwnerId() {
-		return GetterUtil.getLong(getColumnOriginalValue("ownerId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("ownerId"));
 	}
 
 	@JSON
@@ -520,7 +521,8 @@ public class PortletPreferencesModelImpl
 	 */
 	@Deprecated
 	public int getOriginalOwnerType() {
-		return GetterUtil.getInteger(getColumnOriginalValue("ownerType"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("ownerType"));
 	}
 
 	@JSON
@@ -544,7 +546,7 @@ public class PortletPreferencesModelImpl
 	 */
 	@Deprecated
 	public long getOriginalPlid() {
-		return GetterUtil.getLong(getColumnOriginalValue("plid"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("plid"));
 	}
 
 	@JSON

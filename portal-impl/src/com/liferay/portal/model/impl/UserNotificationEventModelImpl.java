@@ -479,7 +479,8 @@ public class UserNotificationEventModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -518,7 +519,7 @@ public class UserNotificationEventModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@Override
@@ -583,7 +584,8 @@ public class UserNotificationEventModelImpl
 	 */
 	@Deprecated
 	public int getOriginalDeliveryType() {
-		return GetterUtil.getInteger(getColumnOriginalValue("deliveryType"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("deliveryType"));
 	}
 
 	@Override
@@ -625,7 +627,8 @@ public class UserNotificationEventModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalDelivered() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("delivered"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("delivered"));
 	}
 
 	@Override
@@ -672,7 +675,8 @@ public class UserNotificationEventModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalActionRequired() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("actionRequired"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("actionRequired"));
 	}
 
 	@Override
@@ -700,7 +704,8 @@ public class UserNotificationEventModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalArchived() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("archived"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("archived"));
 	}
 
 	public long getColumnBitmask() {

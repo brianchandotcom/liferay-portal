@@ -440,7 +440,8 @@ public class DLFileEntryMetadataModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -477,7 +478,8 @@ public class DLFileEntryMetadataModelImpl
 	 */
 	@Deprecated
 	public long getOriginalDDMStructureId() {
-		return GetterUtil.getLong(getColumnOriginalValue("DDMStructureId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("DDMStructureId"));
 	}
 
 	@Override
@@ -500,7 +502,8 @@ public class DLFileEntryMetadataModelImpl
 	 */
 	@Deprecated
 	public long getOriginalFileEntryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("fileEntryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("fileEntryId"));
 	}
 
 	@Override
@@ -523,7 +526,8 @@ public class DLFileEntryMetadataModelImpl
 	 */
 	@Deprecated
 	public long getOriginalFileVersionId() {
-		return GetterUtil.getLong(getColumnOriginalValue("fileVersionId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("fileVersionId"));
 	}
 
 	public long getColumnBitmask() {

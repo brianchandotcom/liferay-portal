@@ -423,7 +423,8 @@ public class SocialRelationModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -460,7 +461,7 @@ public class SocialRelationModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserId1() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId1"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId1"));
 	}
 
 	@Override
@@ -483,7 +484,7 @@ public class SocialRelationModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserId2() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId2"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId2"));
 	}
 
 	@Override
@@ -506,7 +507,8 @@ public class SocialRelationModelImpl
 	 */
 	@Deprecated
 	public int getOriginalType() {
-		return GetterUtil.getInteger(getColumnOriginalValue("type_"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("type_"));
 	}
 
 	public long getColumnBitmask() {

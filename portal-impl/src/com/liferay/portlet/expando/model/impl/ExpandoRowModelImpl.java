@@ -383,7 +383,7 @@ public class ExpandoRowModelImpl
 	 */
 	@Deprecated
 	public long getOriginalTableId() {
-		return GetterUtil.getLong(getColumnOriginalValue("tableId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("tableId"));
 	}
 
 	@Override
@@ -406,7 +406,7 @@ public class ExpandoRowModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassPK() {
-		return GetterUtil.getLong(getColumnOriginalValue("classPK"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
 	public long getColumnBitmask() {

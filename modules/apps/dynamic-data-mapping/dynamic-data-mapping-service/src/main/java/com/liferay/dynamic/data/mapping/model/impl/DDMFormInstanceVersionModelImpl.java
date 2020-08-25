@@ -644,7 +644,8 @@ public class DDMFormInstanceVersionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalFormInstanceId() {
-		return GetterUtil.getLong(getColumnOriginalValue("formInstanceId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("formInstanceId"));
 	}
 
 	@JSON
@@ -951,7 +952,8 @@ public class DDMFormInstanceVersionModelImpl
 	 */
 	@Deprecated
 	public int getOriginalStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("status"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	@JSON

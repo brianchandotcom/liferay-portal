@@ -492,7 +492,7 @@ public class StyleBookEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalHeadId() {
-		return GetterUtil.getLong(getColumnOriginalValue("headId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("headId"));
 	}
 
 	@JSON(include = false)
@@ -519,7 +519,8 @@ public class StyleBookEntryModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalHead() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("head"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("head"));
 	}
 
 	@JSON
@@ -558,7 +559,7 @@ public class StyleBookEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -670,7 +671,7 @@ public class StyleBookEntryModelImpl
 	@Deprecated
 	public boolean getOriginalDefaultStyleBookEntry() {
 		return GetterUtil.getBoolean(
-			getColumnOriginalValue("defaultStyleBookEntry"));
+			this.<Boolean>getColumnOriginalValue("defaultStyleBookEntry"));
 	}
 
 	@JSON

@@ -439,7 +439,7 @@ public class UserNotificationDeliveryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@Override
@@ -510,7 +510,8 @@ public class UserNotificationDeliveryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassNameId() {
-		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("classNameId"));
 	}
 
 	@Override
@@ -534,7 +535,7 @@ public class UserNotificationDeliveryModelImpl
 	@Deprecated
 	public int getOriginalNotificationType() {
 		return GetterUtil.getInteger(
-			getColumnOriginalValue("notificationType"));
+			this.<Integer>getColumnOriginalValue("notificationType"));
 	}
 
 	@Override
@@ -557,7 +558,8 @@ public class UserNotificationDeliveryModelImpl
 	 */
 	@Deprecated
 	public int getOriginalDeliveryType() {
-		return GetterUtil.getInteger(getColumnOriginalValue("deliveryType"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("deliveryType"));
 	}
 
 	@Override

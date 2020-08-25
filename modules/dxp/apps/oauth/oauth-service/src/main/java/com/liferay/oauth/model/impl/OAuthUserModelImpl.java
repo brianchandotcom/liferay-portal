@@ -449,7 +449,7 @@ public class OAuthUserModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@JSON
@@ -529,7 +529,8 @@ public class OAuthUserModelImpl
 	 */
 	@Deprecated
 	public long getOriginalOAuthApplicationId() {
-		return GetterUtil.getLong(getColumnOriginalValue("oAuthApplicationId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("oAuthApplicationId"));
 	}
 
 	@JSON

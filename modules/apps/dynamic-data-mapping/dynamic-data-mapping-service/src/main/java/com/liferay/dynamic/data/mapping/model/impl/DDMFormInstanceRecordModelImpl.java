@@ -581,7 +581,7 @@ public class DDMFormInstanceRecordModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -605,7 +605,8 @@ public class DDMFormInstanceRecordModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -645,7 +646,7 @@ public class DDMFormInstanceRecordModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@JSON
@@ -776,7 +777,8 @@ public class DDMFormInstanceRecordModelImpl
 	 */
 	@Deprecated
 	public long getOriginalFormInstanceId() {
-		return GetterUtil.getLong(getColumnOriginalValue("formInstanceId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("formInstanceId"));
 	}
 
 	@JSON

@@ -460,7 +460,8 @@ public class AssetLinkModelImpl
 	 */
 	@Deprecated
 	public long getOriginalEntryId1() {
-		return GetterUtil.getLong(getColumnOriginalValue("entryId1"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("entryId1"));
 	}
 
 	@Override
@@ -483,7 +484,8 @@ public class AssetLinkModelImpl
 	 */
 	@Deprecated
 	public long getOriginalEntryId2() {
-		return GetterUtil.getLong(getColumnOriginalValue("entryId2"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("entryId2"));
 	}
 
 	@Override
@@ -506,7 +508,8 @@ public class AssetLinkModelImpl
 	 */
 	@Deprecated
 	public int getOriginalType() {
-		return GetterUtil.getInteger(getColumnOriginalValue("type_"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("type_"));
 	}
 
 	@Override

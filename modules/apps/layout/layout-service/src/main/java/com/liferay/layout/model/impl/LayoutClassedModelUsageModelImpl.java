@@ -507,7 +507,7 @@ public class LayoutClassedModelUsageModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -530,7 +530,8 @@ public class LayoutClassedModelUsageModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -607,7 +608,8 @@ public class LayoutClassedModelUsageModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassNameId() {
-		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("classNameId"));
 	}
 
 	@Override
@@ -630,7 +632,7 @@ public class LayoutClassedModelUsageModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassPK() {
-		return GetterUtil.getLong(getColumnOriginalValue("classPK"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
 	@Override
@@ -681,7 +683,8 @@ public class LayoutClassedModelUsageModelImpl
 	 */
 	@Deprecated
 	public long getOriginalContainerType() {
-		return GetterUtil.getLong(getColumnOriginalValue("containerType"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("containerType"));
 	}
 
 	@Override
@@ -704,7 +707,7 @@ public class LayoutClassedModelUsageModelImpl
 	 */
 	@Deprecated
 	public long getOriginalPlid() {
-		return GetterUtil.getLong(getColumnOriginalValue("plid"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("plid"));
 	}
 
 	@Override
@@ -727,7 +730,8 @@ public class LayoutClassedModelUsageModelImpl
 	 */
 	@Deprecated
 	public int getOriginalType() {
-		return GetterUtil.getInteger(getColumnOriginalValue("type_"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("type_"));
 	}
 
 	@Override

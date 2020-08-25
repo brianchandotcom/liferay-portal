@@ -527,7 +527,8 @@ public class LayoutBranchModelImpl
 	 */
 	@Deprecated
 	public long getOriginalLayoutSetBranchId() {
-		return GetterUtil.getLong(getColumnOriginalValue("layoutSetBranchId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("layoutSetBranchId"));
 	}
 
 	@JSON
@@ -551,7 +552,7 @@ public class LayoutBranchModelImpl
 	 */
 	@Deprecated
 	public long getOriginalPlid() {
-		return GetterUtil.getLong(getColumnOriginalValue("plid"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("plid"));
 	}
 
 	@JSON
@@ -630,7 +631,8 @@ public class LayoutBranchModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalMaster() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("master"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("master"));
 	}
 
 	public long getColumnBitmask() {

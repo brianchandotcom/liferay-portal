@@ -490,7 +490,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	 */
 	@Deprecated
 	public int getOriginalSize() {
-		return GetterUtil.getInteger(getColumnOriginalValue("size_"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("size_"));
 	}
 
 	public long getColumnBitmask() {

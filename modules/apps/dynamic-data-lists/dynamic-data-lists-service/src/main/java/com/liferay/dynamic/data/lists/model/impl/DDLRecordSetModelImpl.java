@@ -546,7 +546,7 @@ public class DDLRecordSetModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -570,7 +570,8 @@ public class DDLRecordSetModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -732,7 +733,8 @@ public class DDLRecordSetModelImpl
 	 */
 	@Deprecated
 	public long getOriginalDDMStructureId() {
-		return GetterUtil.getLong(getColumnOriginalValue("DDMStructureId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("DDMStructureId"));
 	}
 
 	@JSON

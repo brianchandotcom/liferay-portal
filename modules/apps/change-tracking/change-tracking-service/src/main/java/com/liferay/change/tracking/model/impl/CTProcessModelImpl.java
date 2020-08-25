@@ -399,7 +399,8 @@ public class CTProcessModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -469,7 +470,8 @@ public class CTProcessModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCtCollectionId() {
-		return GetterUtil.getLong(getColumnOriginalValue("ctCollectionId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 	}
 
 	@JSON

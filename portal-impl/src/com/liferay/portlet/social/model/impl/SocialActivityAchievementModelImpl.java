@@ -415,7 +415,7 @@ public class SocialActivityAchievementModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -468,7 +468,7 @@ public class SocialActivityAchievementModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@Override
@@ -538,7 +538,8 @@ public class SocialActivityAchievementModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalFirstInGroup() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("firstInGroup"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("firstInGroup"));
 	}
 
 	public long getColumnBitmask() {

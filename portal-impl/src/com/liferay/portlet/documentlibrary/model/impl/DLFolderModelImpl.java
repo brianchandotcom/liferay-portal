@@ -622,7 +622,8 @@ public class DLFolderModelImpl
 	 */
 	@Deprecated
 	public long getOriginalFolderId() {
-		return GetterUtil.getLong(getColumnOriginalValue("folderId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("folderId"));
 	}
 
 	@JSON
@@ -646,7 +647,7 @@ public class DLFolderModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -670,7 +671,8 @@ public class DLFolderModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -781,7 +783,8 @@ public class DLFolderModelImpl
 	 */
 	@Deprecated
 	public long getOriginalRepositoryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("repositoryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("repositoryId"));
 	}
 
 	@JSON
@@ -811,7 +814,8 @@ public class DLFolderModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalMountPoint() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("mountPoint"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("mountPoint"));
 	}
 
 	@JSON
@@ -835,7 +839,8 @@ public class DLFolderModelImpl
 	 */
 	@Deprecated
 	public long getOriginalParentFolderId() {
-		return GetterUtil.getLong(getColumnOriginalValue("parentFolderId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("parentFolderId"));
 	}
 
 	@JSON
@@ -973,7 +978,8 @@ public class DLFolderModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalHidden() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("hidden_"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("hidden_"));
 	}
 
 	@JSON
@@ -1027,7 +1033,8 @@ public class DLFolderModelImpl
 	 */
 	@Deprecated
 	public int getOriginalStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("status"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	@JSON

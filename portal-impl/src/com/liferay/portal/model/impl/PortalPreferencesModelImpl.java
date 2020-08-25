@@ -347,7 +347,7 @@ public class PortalPreferencesModelImpl
 	 */
 	@Deprecated
 	public long getOriginalOwnerId() {
-		return GetterUtil.getLong(getColumnOriginalValue("ownerId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("ownerId"));
 	}
 
 	@Override
@@ -370,7 +370,8 @@ public class PortalPreferencesModelImpl
 	 */
 	@Deprecated
 	public int getOriginalOwnerType() {
-		return GetterUtil.getInteger(getColumnOriginalValue("ownerType"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("ownerType"));
 	}
 
 	@Override

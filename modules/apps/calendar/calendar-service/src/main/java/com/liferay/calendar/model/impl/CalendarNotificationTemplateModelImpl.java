@@ -573,7 +573,7 @@ public class CalendarNotificationTemplateModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -597,7 +597,8 @@ public class CalendarNotificationTemplateModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -708,7 +709,8 @@ public class CalendarNotificationTemplateModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCalendarId() {
-		return GetterUtil.getLong(getColumnOriginalValue("calendarId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("calendarId"));
 	}
 
 	@JSON

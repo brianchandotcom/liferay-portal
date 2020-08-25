@@ -653,7 +653,7 @@ public class FragmentEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalHeadId() {
-		return GetterUtil.getLong(getColumnOriginalValue("headId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("headId"));
 	}
 
 	@JSON(include = false)
@@ -680,7 +680,8 @@ public class FragmentEntryModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalHead() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("head"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("head"));
 	}
 
 	@JSON
@@ -719,7 +720,7 @@ public class FragmentEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -743,7 +744,8 @@ public class FragmentEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -855,7 +857,7 @@ public class FragmentEntryModelImpl
 	@Deprecated
 	public long getOriginalFragmentCollectionId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("fragmentCollectionId"));
+			this.<Long>getColumnOriginalValue("fragmentCollectionId"));
 	}
 
 	@JSON
@@ -1074,7 +1076,8 @@ public class FragmentEntryModelImpl
 	 */
 	@Deprecated
 	public int getOriginalType() {
-		return GetterUtil.getInteger(getColumnOriginalValue("type_"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("type_"));
 	}
 
 	@JSON
@@ -1113,7 +1116,8 @@ public class FragmentEntryModelImpl
 	 */
 	@Deprecated
 	public int getOriginalStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("status"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	@JSON

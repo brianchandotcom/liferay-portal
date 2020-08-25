@@ -514,7 +514,7 @@ public class LayoutSetBranchModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -646,7 +646,8 @@ public class LayoutSetBranchModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalPrivateLayout() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("privateLayout"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("privateLayout"));
 	}
 
 	@JSON
@@ -725,7 +726,8 @@ public class LayoutSetBranchModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalMaster() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("master"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("master"));
 	}
 
 	@JSON

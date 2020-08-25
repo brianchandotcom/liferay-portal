@@ -392,7 +392,7 @@ public class WikiPageResourceModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -415,7 +415,8 @@ public class WikiPageResourceModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -438,7 +439,7 @@ public class WikiPageResourceModelImpl
 	 */
 	@Deprecated
 	public long getOriginalNodeId() {
-		return GetterUtil.getLong(getColumnOriginalValue("nodeId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("nodeId"));
 	}
 
 	@Override

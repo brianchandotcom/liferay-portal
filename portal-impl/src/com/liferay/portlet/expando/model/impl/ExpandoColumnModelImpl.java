@@ -439,7 +439,7 @@ public class ExpandoColumnModelImpl
 	 */
 	@Deprecated
 	public long getOriginalTableId() {
-		return GetterUtil.getLong(getColumnOriginalValue("tableId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("tableId"));
 	}
 
 	@JSON

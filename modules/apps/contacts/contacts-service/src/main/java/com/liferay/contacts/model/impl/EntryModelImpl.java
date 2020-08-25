@@ -371,7 +371,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	 */
 	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@Override

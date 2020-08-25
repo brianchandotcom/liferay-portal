@@ -491,7 +491,7 @@ public class KBFolderModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -515,7 +515,8 @@ public class KBFolderModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -626,7 +627,8 @@ public class KBFolderModelImpl
 	 */
 	@Deprecated
 	public long getOriginalParentKBFolderId() {
-		return GetterUtil.getLong(getColumnOriginalValue("parentKBFolderId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("parentKBFolderId"));
 	}
 
 	@JSON

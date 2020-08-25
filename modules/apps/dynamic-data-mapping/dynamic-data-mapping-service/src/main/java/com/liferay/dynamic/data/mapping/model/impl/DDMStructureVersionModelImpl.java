@@ -654,7 +654,8 @@ public class DDMStructureVersionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalStructureId() {
-		return GetterUtil.getLong(getColumnOriginalValue("structureId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("structureId"));
 	}
 
 	@JSON
@@ -996,7 +997,8 @@ public class DDMStructureVersionModelImpl
 	 */
 	@Deprecated
 	public int getOriginalStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("status"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	@JSON

@@ -421,7 +421,8 @@ public class AccountEntryUserRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalAccountEntryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("accountEntryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("accountEntryId"));
 	}
 
 	@JSON
@@ -461,7 +462,8 @@ public class AccountEntryUserRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalAccountUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("accountUserId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("accountUserId"));
 	}
 
 	public long getColumnBitmask() {

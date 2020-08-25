@@ -385,7 +385,8 @@ public class DLContentModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -408,7 +409,8 @@ public class DLContentModelImpl
 	 */
 	@Deprecated
 	public long getOriginalRepositoryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("repositoryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("repositoryId"));
 	}
 
 	@Override

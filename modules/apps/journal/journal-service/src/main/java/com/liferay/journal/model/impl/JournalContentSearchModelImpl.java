@@ -412,7 +412,7 @@ public class JournalContentSearchModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -435,7 +435,8 @@ public class JournalContentSearchModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -463,7 +464,8 @@ public class JournalContentSearchModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalPrivateLayout() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("privateLayout"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("privateLayout"));
 	}
 
 	@Override
@@ -486,7 +488,8 @@ public class JournalContentSearchModelImpl
 	 */
 	@Deprecated
 	public long getOriginalLayoutId() {
-		return GetterUtil.getLong(getColumnOriginalValue("layoutId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("layoutId"));
 	}
 
 	@Override

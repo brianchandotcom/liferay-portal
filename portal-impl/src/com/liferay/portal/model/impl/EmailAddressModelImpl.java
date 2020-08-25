@@ -505,7 +505,8 @@ public class EmailAddressModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -545,7 +546,7 @@ public class EmailAddressModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@JSON
@@ -645,7 +646,8 @@ public class EmailAddressModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassNameId() {
-		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("classNameId"));
 	}
 
 	@JSON
@@ -669,7 +671,7 @@ public class EmailAddressModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassPK() {
-		return GetterUtil.getLong(getColumnOriginalValue("classPK"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
 	@JSON
@@ -734,7 +736,8 @@ public class EmailAddressModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalPrimary() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("primary_"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("primary_"));
 	}
 
 	@Override

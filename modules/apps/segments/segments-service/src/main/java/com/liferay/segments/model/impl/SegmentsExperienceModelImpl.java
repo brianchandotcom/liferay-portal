@@ -598,7 +598,7 @@ public class SegmentsExperienceModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -622,7 +622,8 @@ public class SegmentsExperienceModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -733,7 +734,8 @@ public class SegmentsExperienceModelImpl
 	 */
 	@Deprecated
 	public long getOriginalSegmentsEntryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("segmentsEntryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("segmentsEntryId"));
 	}
 
 	@JSON
@@ -806,7 +808,8 @@ public class SegmentsExperienceModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassNameId() {
-		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("classNameId"));
 	}
 
 	@JSON
@@ -830,7 +833,7 @@ public class SegmentsExperienceModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassPK() {
-		return GetterUtil.getLong(getColumnOriginalValue("classPK"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
 	@JSON
@@ -961,7 +964,8 @@ public class SegmentsExperienceModelImpl
 	 */
 	@Deprecated
 	public int getOriginalPriority() {
-		return GetterUtil.getInteger(getColumnOriginalValue("priority"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("priority"));
 	}
 
 	@JSON
@@ -991,7 +995,8 @@ public class SegmentsExperienceModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalActive() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("active_"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("active_"));
 	}
 
 	@JSON

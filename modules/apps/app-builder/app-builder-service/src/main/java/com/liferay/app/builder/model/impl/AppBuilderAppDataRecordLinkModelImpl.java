@@ -374,7 +374,8 @@ public class AppBuilderAppDataRecordLinkModelImpl
 	 */
 	@Deprecated
 	public long getOriginalAppBuilderAppId() {
-		return GetterUtil.getLong(getColumnOriginalValue("appBuilderAppId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("appBuilderAppId"));
 	}
 
 	@Override
@@ -411,7 +412,8 @@ public class AppBuilderAppDataRecordLinkModelImpl
 	 */
 	@Deprecated
 	public long getOriginalDdlRecordId() {
-		return GetterUtil.getLong(getColumnOriginalValue("ddlRecordId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("ddlRecordId"));
 	}
 
 	public long getColumnBitmask() {

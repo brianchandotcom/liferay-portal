@@ -420,7 +420,8 @@ public class DDMStorageLinkModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -477,7 +478,7 @@ public class DDMStorageLinkModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassPK() {
-		return GetterUtil.getLong(getColumnOriginalValue("classPK"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
 	@Override
@@ -500,7 +501,8 @@ public class DDMStorageLinkModelImpl
 	 */
 	@Deprecated
 	public long getOriginalStructureId() {
-		return GetterUtil.getLong(getColumnOriginalValue("structureId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("structureId"));
 	}
 
 	@Override
@@ -523,7 +525,8 @@ public class DDMStorageLinkModelImpl
 	 */
 	@Deprecated
 	public long getOriginalStructureVersionId() {
-		return GetterUtil.getLong(getColumnOriginalValue("structureVersionId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("structureVersionId"));
 	}
 
 	public long getColumnBitmask() {

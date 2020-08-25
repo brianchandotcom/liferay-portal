@@ -374,7 +374,8 @@ public class DepotAppCustomizationModelImpl
 	 */
 	@Deprecated
 	public long getOriginalDepotEntryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("depotEntryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("depotEntryId"));
 	}
 
 	@Override
@@ -402,7 +403,8 @@ public class DepotAppCustomizationModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalEnabled() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("enabled"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("enabled"));
 	}
 
 	@Override

@@ -394,7 +394,8 @@ public class AssetEntryAssetCategoryRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalAssetEntryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("assetEntryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("assetEntryId"));
 	}
 
 	@Override
@@ -417,7 +418,8 @@ public class AssetEntryAssetCategoryRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalAssetCategoryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("assetCategoryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("assetCategoryId"));
 	}
 
 	@Override

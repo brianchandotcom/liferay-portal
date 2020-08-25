@@ -404,7 +404,8 @@ public class AppBuilderWorkflowTaskLinkModelImpl
 	 */
 	@Deprecated
 	public long getOriginalAppBuilderAppId() {
-		return GetterUtil.getLong(getColumnOriginalValue("appBuilderAppId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("appBuilderAppId"));
 	}
 
 	@Override
@@ -428,7 +429,7 @@ public class AppBuilderWorkflowTaskLinkModelImpl
 	@Deprecated
 	public long getOriginalAppBuilderAppVersionId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("appBuilderAppVersionId"));
+			this.<Long>getColumnOriginalValue("appBuilderAppVersionId"));
 	}
 
 	@Override
@@ -452,7 +453,7 @@ public class AppBuilderWorkflowTaskLinkModelImpl
 	@Deprecated
 	public long getOriginalDdmStructureLayoutId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("ddmStructureLayoutId"));
+			this.<Long>getColumnOriginalValue("ddmStructureLayoutId"));
 	}
 
 	@Override

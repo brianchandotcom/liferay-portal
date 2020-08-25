@@ -594,7 +594,7 @@ public class DDMStructureModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -618,7 +618,8 @@ public class DDMStructureModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -780,7 +781,8 @@ public class DDMStructureModelImpl
 	 */
 	@Deprecated
 	public long getOriginalParentStructureId() {
-		return GetterUtil.getLong(getColumnOriginalValue("parentStructureId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("parentStructureId"));
 	}
 
 	@JSON
@@ -804,7 +806,8 @@ public class DDMStructureModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassNameId() {
-		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("classNameId"));
 	}
 
 	@JSON

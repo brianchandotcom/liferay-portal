@@ -501,7 +501,7 @@ public class BackgroundTaskModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -525,7 +525,8 @@ public class BackgroundTaskModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -735,7 +736,8 @@ public class BackgroundTaskModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalCompleted() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("completed"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("completed"));
 	}
 
 	@JSON
@@ -774,7 +776,8 @@ public class BackgroundTaskModelImpl
 	 */
 	@Deprecated
 	public int getOriginalStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("status"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	@JSON

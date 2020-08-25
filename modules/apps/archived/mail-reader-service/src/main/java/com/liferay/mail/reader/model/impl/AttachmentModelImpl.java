@@ -402,7 +402,8 @@ public class AttachmentModelImpl
 	 */
 	@Deprecated
 	public long getOriginalMessageId() {
-		return GetterUtil.getLong(getColumnOriginalValue("messageId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("messageId"));
 	}
 
 	@Override

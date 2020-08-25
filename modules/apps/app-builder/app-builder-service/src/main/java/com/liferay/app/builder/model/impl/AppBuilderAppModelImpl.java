@@ -443,7 +443,7 @@ public class AppBuilderAppModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -466,7 +466,8 @@ public class AppBuilderAppModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -577,7 +578,8 @@ public class AppBuilderAppModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalActive() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("active_"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("active_"));
 	}
 
 	@Override
@@ -614,7 +616,8 @@ public class AppBuilderAppModelImpl
 	 */
 	@Deprecated
 	public long getOriginalDdmStructureId() {
-		return GetterUtil.getLong(getColumnOriginalValue("ddmStructureId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("ddmStructureId"));
 	}
 
 	@Override

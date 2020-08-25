@@ -577,7 +577,7 @@ public class MBThreadModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -601,7 +601,8 @@ public class MBThreadModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -712,7 +713,8 @@ public class MBThreadModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCategoryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("categoryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("categoryId"));
 	}
 
 	@JSON
@@ -736,7 +738,8 @@ public class MBThreadModelImpl
 	 */
 	@Deprecated
 	public long getOriginalRootMessageId() {
-		return GetterUtil.getLong(getColumnOriginalValue("rootMessageId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("rootMessageId"));
 	}
 
 	@JSON
@@ -867,7 +870,8 @@ public class MBThreadModelImpl
 	 */
 	@Deprecated
 	public double getOriginalPriority() {
-		return GetterUtil.getDouble(getColumnOriginalValue("priority"));
+		return GetterUtil.getDouble(
+			this.<Double>getColumnOriginalValue("priority"));
 	}
 
 	@JSON
@@ -927,7 +931,8 @@ public class MBThreadModelImpl
 	 */
 	@Deprecated
 	public int getOriginalStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("status"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	@JSON

@@ -843,7 +843,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	 */
 	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@JSON
@@ -867,7 +867,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -951,7 +952,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	 */
 	@Deprecated
 	public boolean getOriginalDefaultUser() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("defaultUser"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("defaultUser"));
 	}
 
 	@JSON
@@ -975,7 +977,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	 */
 	@Deprecated
 	public long getOriginalContactId() {
-		return GetterUtil.getLong(getColumnOriginalValue("contactId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("contactId"));
 	}
 
 	@JSON(include = false)
@@ -1207,7 +1210,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	 */
 	@Deprecated
 	public long getOriginalFacebookId() {
-		return GetterUtil.getLong(getColumnOriginalValue("facebookId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("facebookId"));
 	}
 
 	@JSON
@@ -1304,7 +1308,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	 */
 	@Deprecated
 	public long getOriginalPortraitId() {
-		return GetterUtil.getLong(getColumnOriginalValue("portraitId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("portraitId"));
 	}
 
 	@JSON
@@ -1666,7 +1671,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	 */
 	@Deprecated
 	public int getOriginalStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("status"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	@Override

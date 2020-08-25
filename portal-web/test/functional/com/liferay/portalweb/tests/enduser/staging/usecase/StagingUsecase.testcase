@@ -897,6 +897,7 @@ definition {
 
 		var webContentFeedUrl = selenium.getAttribute("//a[contains(@href,'rss') and contains(.,'Preview')]@href");
 		var stagingFeedId = StringUtil.extractLast("${webContentFeedUrl}", "/");
+		var entryExternalURL = StringUtil.replace("${webContentFeedUrl}", "http://", "");
 
 		echo("## * Staging FeedId: ${stagingFeedId}");
 
@@ -904,11 +905,12 @@ definition {
 
 		WebContentNavigator.gotoAddCP();
 
-		WebContent.addCP(
-			webContentContent = "${webContentFeedUrl}",
-			webContentTitle = "Web Content Title");
+		PortletEntry.inputTitle(title = "Web Content Title");
 
-		AlloyEditor.addEntryExternalURL(entryExternalURL = "${webContentFeedUrl}");
+		CKEditor.addEntryExternalURL(
+			displayText = "${webContentFeedUrl}",
+			entryExternalURL = "${entryExternalURL}",
+			fieldLabel = "content");
 
 		Button.clickPublish();
 

@@ -94,12 +94,12 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 												fragmentCollectionURL.setParameter("fragmentCollectionKey", String.valueOf(fragmentCollectionContributor.getFragmentCollectionKey()));
 												%>
 
-												<a class="nav-link text-truncate <%= Objects.equals(fragmentCollectionContributor.getFragmentCollectionKey(), fragmentDisplayContext.getFragmentCollectionKey()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
-													<%= HtmlUtil.escape(fragmentCollectionContributor.getName(locale)) %>
+												<a class="d-flex nav-link <%= Objects.equals(fragmentCollectionContributor.getFragmentCollectionKey(), fragmentDisplayContext.getFragmentCollectionKey()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
+													<span class="text-truncate"><%= HtmlUtil.escape(fragmentCollectionContributor.getName(locale)) %></span>
 
 													<liferay-ui:icon
 														icon="lock"
-														iconCssClass="text-muted"
+														iconCssClass="ml-1 text-muted"
 														markupView="lexicon"
 													/>
 												</a>
@@ -120,13 +120,13 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 												fragmentCollectionURL.setParameter("fragmentCollectionId", String.valueOf(fragmentCollection.getFragmentCollectionId()));
 												%>
 
-												<a class="nav-link text-truncate <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
-													<%= HtmlUtil.escape(fragmentCollection.getName()) %>
+												<a class="d-flex nav-link <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
+													<span class="text-truncate"><%= HtmlUtil.escape(fragmentCollection.getName()) %></span>
 
 													<c:if test="<%= fragmentDisplayContext.isLocked(fragmentCollection) %>">
 														<liferay-ui:icon
 															icon="lock"
-															iconCssClass="text-muted"
+															iconCssClass="ml-1 text-muted"
 															markupView="lexicon"
 														/>
 													</c:if>
@@ -161,12 +161,12 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 												fragmentCollectionURL.setParameter("fragmentCollectionId", String.valueOf(fragmentCollection.getFragmentCollectionId()));
 												%>
 
-												<a class="nav-link text-truncate <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
-													<%= HtmlUtil.escape(fragmentCollection.getName()) %>
+												<a class="d-flex nav-link <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
+													<span class="text-truncate"><%= HtmlUtil.escape(fragmentCollection.getName()) %></span>
 
 													<liferay-ui:icon
 														icon="lock"
-														iconCssClass="text-muted"
+														iconCssClass="ml-1 text-muted"
 														markupView="lexicon"
 													/>
 												</a>
@@ -196,13 +196,13 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 												fragmentCollectionURL.setParameter("fragmentCollectionId", String.valueOf(fragmentCollection.getFragmentCollectionId()));
 												%>
 
-												<a class="nav-link text-truncate <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
-													<%= HtmlUtil.escape(fragmentCollection.getName()) %>
+												<a class="d-flex nav-link <%= (fragmentCollection.getFragmentCollectionId() == fragmentDisplayContext.getFragmentCollectionId()) ? "active" : StringPool.BLANK %>" href="<%= fragmentCollectionURL.toString() %>">
+													<span class="text-truncate"><%= HtmlUtil.escape(fragmentCollection.getName()) %></span>
 
 													<c:if test="<%= fragmentDisplayContext.isLocked(fragmentCollection) %>">
 														<liferay-ui:icon
 															icon="lock"
-															iconCssClass="text-muted"
+															iconCssClass="ml-1 text-muted"
 															markupView="lexicon"
 														/>
 													</c:if>

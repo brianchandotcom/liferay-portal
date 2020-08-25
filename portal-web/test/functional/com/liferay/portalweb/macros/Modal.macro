@@ -6,10 +6,4 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro selectFrameSpecific {
-		SelectFrame(
-			key_title = "${modalTitle}",
-			locator1 = "IFrame#MODAL_ANY");
-	}
-
 }

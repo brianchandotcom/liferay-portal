@@ -109,28 +109,31 @@ export default withRouter(({history, section}) => {
 					<AllBreadcrumb />
 				)}
 			</ol>
-			{section && section.actions && section.actions['add-subcategory'] && (
-				<>
-					<NewTopicModal
-						currentSectionId={section && section.id}
-						onClose={() => setVisible(false)}
-						onCreateNavigateTo={(topicName) =>
-							historyPushParser(
-								`/questions/${stringToSlug(topicName)}`
-							)
-						}
-						visible={visible}
-					/>
-					<ClayButton
-						className="breadcrumb-button c-ml-3 c-p-2"
-						displayType="unstyled"
-						onClick={() => setVisible(true)}
-					>
-						<ClayIcon className="c-mr-2" symbol="plus" />
-						{Liferay.Language.get('new-topic')}
-					</ClayButton>
-				</>
-			)}
+			{section &&
+				section.actions &&
+				(section.actions['add-subcategory'] ||
+					section.actions['create']) && (
+					<>
+						<NewTopicModal
+							currentSectionId={section && section.id}
+							onClose={() => setVisible(false)}
+							onCreateNavigateTo={(topicName) =>
+								historyPushParser(
+									`/questions/${stringToSlug(topicName)}`
+								)
+							}
+							visible={visible}
+						/>
+						<ClayButton
+							className="breadcrumb-button c-ml-3 c-p-2"
+							displayType="unstyled"
+							onClick={() => setVisible(true)}
+						>
+							<ClayIcon className="c-mr-2" symbol="plus" />
+							{Liferay.Language.get('new-topic')}
+						</ClayButton>
+					</>
+				)}
 		</section>
 	);
 

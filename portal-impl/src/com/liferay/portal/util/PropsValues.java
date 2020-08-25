@@ -1238,6 +1238,10 @@ public class PropsValues {
 	public static final String[] JSON_SERVICE_AUTH_TOKEN_HOSTS_ALLOWED =
 		PropsUtil.getArray(PropsKeys.JSON_SERVICE_AUTH_TOKEN_HOSTS_ALLOWED);
 
+	public static final boolean JSON_SERVICE_DEVELOPER_MODE =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.JSON_SERVICE_DEVELOPER_MODE));
+
 	public static final String[] JSON_SERVICE_INVALID_CLASS_NAMES =
 		PropsUtil.getArray(PropsKeys.JSON_SERVICE_INVALID_CLASS_NAMES);
 

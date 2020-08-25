@@ -1452,6 +1452,9 @@ public interface PropsKeys {
 	public static final String JSON_SERVICE_AUTH_TOKEN_HOSTS_ALLOWED =
 		"json.service.auth.token.hosts.allowed";
 
+	public static final String JSON_SERVICE_DEVELOPER_MODE =
+		"json.service.developer.mode";
+
 	public static final String JSON_SERVICE_INVALID_CLASS_NAMES =
 		"json.service.invalid.class.names";
 

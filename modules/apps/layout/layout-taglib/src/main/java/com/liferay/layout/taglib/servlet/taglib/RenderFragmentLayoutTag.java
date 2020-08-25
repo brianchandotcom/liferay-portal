@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -136,18 +135,6 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:mode", _mode);
 		httpServletRequest.setAttribute(
-			"liferay-layout:render-fragment-layout:previewClassNameId",
-			_getPreviewClassNameId());
-		httpServletRequest.setAttribute(
-			"liferay-layout:render-fragment-layout:previewClassPK",
-			_getPreviewClassPK());
-		httpServletRequest.setAttribute(
-			"liferay-layout:render-fragment-layout:previewType",
-			_getPreviewType());
-		httpServletRequest.setAttribute(
-			"liferay-layout:render-fragment-layout:previewVersion",
-			_getPreviewVersion());
-		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:" +
 				"renderFragmentLayoutDisplayContext",
 			new RenderFragmentLayoutDisplayContext(
@@ -160,8 +147,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 				ServletContextUtil.getLayoutListRetrieverTracker(),
 				ServletContextUtil.getListObjectReferenceFactoryTracker()));
 		httpServletRequest.setAttribute(
-			"liferay-layout:render-fragment-layout:segmentsExperienceIds",
-			_getSegmentsExperienceIds());
+			"liferay-layout:render-fragment-layout:showPreview", _showPreview);
 	}
 
 	private Layout _getLayout(HttpServletRequest httpServletRequest) {
@@ -248,38 +234,6 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 
 		return masterLayoutPageTemplateStructure.getData(
 			SegmentsExperienceConstants.ID_DEFAULT);
-	}
-
-	private long _getPreviewClassNameId() {
-		if (!_showPreview) {
-			return 0;
-		}
-
-		return ParamUtil.getLong(request, "previewClassNameId");
-	}
-
-	private long _getPreviewClassPK() {
-		if (!_showPreview) {
-			return 0;
-		}
-
-		return ParamUtil.getLong(request, "previewClassPK");
-	}
-
-	private int _getPreviewType() {
-		if (!_showPreview) {
-			return 0;
-		}
-
-		return ParamUtil.getInteger(request, "previewType");
-	}
-
-	private String _getPreviewVersion() {
-		if (!_showPreview) {
-			return null;
-		}
-
-		return ParamUtil.getString(request, "previewVersion");
 	}
 
 	private long[] _getSegmentsExperienceIds() {

@@ -68,11 +68,15 @@ import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
@@ -116,16 +120,9 @@ public class RenderFragmentLayoutDisplayContext {
 			"liferay-layout:render-fragment-layout:layoutStructure");
 		_mode = (String)_httpServletRequest.getAttribute(
 			"liferay-layout:render-fragment-layout:mode");
-		_previewClassNameId = (long)_httpServletRequest.getAttribute(
-			"liferay-layout:render-fragment-layout:previewClassNameId");
-		_previewClassPK = (long)_httpServletRequest.getAttribute(
-			"liferay-layout:render-fragment-layout:previewClassPK");
-		_previewType = (int)_httpServletRequest.getAttribute(
-			"liferay-layout:render-fragment-layout:previewType");
-		_previewVersion = (String)_httpServletRequest.getAttribute(
-			"liferay-layout:render-fragment-layout:previewVersion");
-		_segmentsExperienceIds = (long[])_httpServletRequest.getAttribute(
-			"liferay-layout:render-fragment-layout:segmentsExperienceIds");
+		_showPreview = GetterUtil.getBoolean(
+			_httpServletRequest.getAttribute(
+				"liferay-layout:render-fragment-layout:showPreview"));
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -161,7 +158,7 @@ public class RenderFragmentLayoutDisplayContext {
 			new DefaultLayoutListRetrieverContext();
 
 		defaultLayoutListRetrieverContext.setSegmentsExperienceIdsOptional(
-			_segmentsExperienceIds);
+			_getSegmentsExperienceIds());
 		defaultLayoutListRetrieverContext.setPagination(
 			Pagination.of(
 				collectionStyledLayoutStructureItem.getNumberOfItems(), 0));
@@ -494,12 +491,12 @@ public class RenderFragmentLayoutDisplayContext {
 		defaultFragmentRendererContext.setLocale(_themeDisplay.getLocale());
 		defaultFragmentRendererContext.setMode(_mode);
 		defaultFragmentRendererContext.setPreviewClassNameId(
-			_previewClassNameId);
-		defaultFragmentRendererContext.setPreviewClassPK(_previewClassPK);
-		defaultFragmentRendererContext.setPreviewType(_previewType);
-		defaultFragmentRendererContext.setPreviewVersion(_previewVersion);
+			_getPreviewClassNameId());
+		defaultFragmentRendererContext.setPreviewClassPK(_getPreviewClassPK());
+		defaultFragmentRendererContext.setPreviewType(_getPreviewType());
+		defaultFragmentRendererContext.setPreviewVersion(_getPreviewVersion());
 		defaultFragmentRendererContext.setSegmentsExperienceIds(
-			_segmentsExperienceIds);
+			_getSegmentsExperienceIds());
 
 		if (LayoutStructureItemUtil.hasAncestor(
 				itemId, LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM,
@@ -1024,6 +1021,78 @@ public class RenderFragmentLayoutDisplayContext {
 		return _portlets;
 	}
 
+	private long _getPreviewClassNameId() {
+		if (_previewClassNameId != null) {
+			return _previewClassNameId;
+		}
+
+		if (!_showPreview) {
+			return 0;
+		}
+
+		_previewClassNameId = ParamUtil.getLong(
+			_httpServletRequest, "previewClassNameId");
+
+		return _previewClassNameId;
+	}
+
+	private long _getPreviewClassPK() {
+		if (_previewClassPK != null) {
+			return _previewClassPK;
+		}
+
+		if (!_showPreview) {
+			return 0;
+		}
+
+		_previewClassPK = ParamUtil.getLong(
+			_httpServletRequest, "previewClassPK");
+
+		return _previewClassPK;
+	}
+
+	private int _getPreviewType() {
+		if (_previewType != null) {
+			return _previewType;
+		}
+
+		if (!_showPreview) {
+			return 0;
+		}
+
+		_previewType = ParamUtil.getInteger(_httpServletRequest, "previewType");
+
+		return _previewType;
+	}
+
+	private String _getPreviewVersion() {
+		if (_previewVersion != null) {
+			return _previewVersion;
+		}
+
+		if (!_showPreview) {
+			return null;
+		}
+
+		_previewVersion = ParamUtil.getString(
+			_httpServletRequest, "previewVersion");
+
+		return _previewVersion;
+	}
+
+	private long[] _getSegmentsExperienceIds() {
+		if (_segmentsExperienceIds != null) {
+			return _segmentsExperienceIds;
+		}
+
+		_segmentsExperienceIds = GetterUtil.getLongValues(
+			_httpServletRequest.getAttribute(
+				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
+			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
+
+		return _segmentsExperienceIds;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		RenderFragmentLayoutDisplayContext.class);
 
@@ -1042,11 +1111,12 @@ public class RenderFragmentLayoutDisplayContext {
 		_listObjectReferenceFactoryTracker;
 	private final String _mode;
 	private List<Portlet> _portlets;
-	private final long _previewClassNameId;
-	private final long _previewClassPK;
-	private final int _previewType;
-	private final String _previewVersion;
-	private final long[] _segmentsExperienceIds;
+	private Long _previewClassNameId;
+	private Long _previewClassPK;
+	private Integer _previewType;
+	private String _previewVersion;
+	private long[] _segmentsExperienceIds;
+	private final boolean _showPreview;
 	private final ThemeDisplay _themeDisplay;
 
 }

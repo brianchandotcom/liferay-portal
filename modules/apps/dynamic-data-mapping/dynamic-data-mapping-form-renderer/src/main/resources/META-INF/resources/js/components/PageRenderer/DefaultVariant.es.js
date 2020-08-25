@@ -105,7 +105,7 @@ export const Column = ({
 					className={classnames(
 						'ddm-resize-handle ddm-resize-handle-left',
 						{
-							hide: !firstField.selected,
+							hide: !(firstField.hovered || firstField.selected),
 						}
 					)}
 					{...addr}
@@ -126,7 +126,7 @@ export const Column = ({
 					className={classnames(
 						'ddm-resize-handle ddm-resize-handle-right',
 						{
-							hide: !firstField.selected,
+							hide: !(firstField.hovered || firstField.selected),
 						}
 					)}
 					{...addr}

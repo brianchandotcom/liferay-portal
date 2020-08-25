@@ -39,7 +39,6 @@ import handleFieldDeleted from './handlers/fieldDeletedHandler.es';
 import handleFieldDuplicated from './handlers/fieldDuplicatedHandler.es';
 import handleFieldEdited from './handlers/fieldEditedHandler.es';
 import handleFieldEditedProperties from './handlers/fieldEditedPropertiesHandler.es';
-import handleFieldHovered from './handlers/fieldHoveredHandler.es';
 import handleFieldMoved from './handlers/fieldMovedHandler.es';
 import handleFieldSetAdded from './handlers/fieldSetAddedHandler.es';
 import handleFocusedFieldEvaluationEnded from './handlers/focusedFieldEvaluationEndedHandler.es';
@@ -190,13 +189,12 @@ class LayoutProvider extends Component {
 						defaultLanguageId,
 						editingLanguageId
 					),
+					hovered: fieldHovered.fieldName === field.fieldName,
 					name: generateName(field.name, {
 						instanceId: field.instanceId || generateInstanceId(),
 						repeatedIndex: getRepeatedIndex(field.name),
 					}),
-					selected:
-						focusedField.fieldName === field.fieldName ||
-						fieldHovered.fieldName === field.fieldName,
+					selected: focusedField.fieldName === field.fieldName,
 					settingsContext: newSettingsContext,
 				};
 			},
@@ -375,16 +373,7 @@ class LayoutProvider extends Component {
 	}
 
 	_handleFieldHovered(fieldHovered) {
-		const {fieldName} = fieldHovered;
-
-		if (fieldName) {
-			this.setState(
-				handleFieldHovered(this.props, this.state, fieldName)
-			);
-		}
-		else {
-			this.setState({fieldHovered});
-		}
+		this.setState({fieldHovered});
 	}
 
 	_handleFieldBlurred(event) {

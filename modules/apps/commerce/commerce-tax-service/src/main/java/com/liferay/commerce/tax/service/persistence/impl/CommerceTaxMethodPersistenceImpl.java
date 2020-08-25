@@ -21,6 +21,7 @@ import com.liferay.commerce.tax.model.impl.CommerceTaxMethodImpl;
 import com.liferay.commerce.tax.model.impl.CommerceTaxMethodModelImpl;
 import com.liferay.commerce.tax.service.persistence.CommerceTaxMethodPersistence;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -30,10 +31,12 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -45,10 +48,17 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * The persistence implementation for the commerce tax method service.
@@ -1400,8 +1410,6 @@ public class CommerceTaxMethodPersistenceImpl
 				commerceTaxMethod.getGroupId(), commerceTaxMethod.getEngineKey()
 			},
 			commerceTaxMethod);
-
-		commerceTaxMethod.resetOriginalValues();
 	}
 
 	/**
@@ -1417,9 +1425,6 @@ public class CommerceTaxMethodPersistenceImpl
 					commerceTaxMethod.getPrimaryKey()) == null) {
 
 				cacheResult(commerceTaxMethod);
-			}
-			else {
-				commerceTaxMethod.resetOriginalValues();
 			}
 		}
 	}
@@ -1450,26 +1455,14 @@ public class CommerceTaxMethodPersistenceImpl
 	@Override
 	public void clearCache(CommerceTaxMethod commerceTaxMethod) {
 		entityCache.removeResult(
-			CommerceTaxMethodImpl.class, commerceTaxMethod.getPrimaryKey());
-
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache(
-			(CommerceTaxMethodModelImpl)commerceTaxMethod, true);
+			CommerceTaxMethodImpl.class, commerceTaxMethod);
 	}
 
 	@Override
 	public void clearCache(List<CommerceTaxMethod> commerceTaxMethods) {
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (CommerceTaxMethod commerceTaxMethod : commerceTaxMethods) {
 			entityCache.removeResult(
-				CommerceTaxMethodImpl.class, commerceTaxMethod.getPrimaryKey());
-
-			clearUniqueFindersCache(
-				(CommerceTaxMethodModelImpl)commerceTaxMethod, true);
+				CommerceTaxMethodImpl.class, commerceTaxMethod);
 		}
 	}
 
@@ -1496,33 +1489,6 @@ public class CommerceTaxMethodPersistenceImpl
 			_finderPathCountByG_E, args, Long.valueOf(1), false);
 		finderCache.putResult(
 			_finderPathFetchByG_E, args, commerceTaxMethodModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		CommerceTaxMethodModelImpl commerceTaxMethodModelImpl,
-		boolean clearCurrent) {
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-				commerceTaxMethodModelImpl.getGroupId(),
-				commerceTaxMethodModelImpl.getEngineKey()
-			};
-
-			finderCache.removeResult(_finderPathCountByG_E, args);
-			finderCache.removeResult(_finderPathFetchByG_E, args);
-		}
-
-		if ((commerceTaxMethodModelImpl.getColumnBitmask() &
-			 _finderPathFetchByG_E.getColumnBitmask()) != 0) {
-
-			Object[] args = new Object[] {
-				commerceTaxMethodModelImpl.getOriginalGroupId(),
-				commerceTaxMethodModelImpl.getOriginalEngineKey()
-			};
-
-			finderCache.removeResult(_finderPathCountByG_E, args);
-			finderCache.removeResult(_finderPathFetchByG_E, args);
-		}
 	}
 
 	/**
@@ -1686,10 +1652,8 @@ public class CommerceTaxMethodPersistenceImpl
 		try {
 			session = openSession();
 
-			if (commerceTaxMethod.isNew()) {
+			if (isNew) {
 				session.save(commerceTaxMethod);
-
-				commerceTaxMethod.setNew(false);
 			}
 			else {
 				commerceTaxMethod = (CommerceTaxMethod)session.merge(
@@ -1703,80 +1667,15 @@ public class CommerceTaxMethodPersistenceImpl
 			closeSession(session);
 		}
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		entityCache.putResult(
+			CommerceTaxMethodImpl.class, commerceTaxMethodModelImpl, false,
+			true);
+
+		cacheUniqueFindersCache(commerceTaxMethodModelImpl);
 
 		if (isNew) {
-			Object[] args = new Object[] {
-				commerceTaxMethodModelImpl.getGroupId()
-			};
-
-			finderCache.removeResult(_finderPathCountByGroupId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByGroupId, args);
-
-			args = new Object[] {
-				commerceTaxMethodModelImpl.getGroupId(),
-				commerceTaxMethodModelImpl.isActive()
-			};
-
-			finderCache.removeResult(_finderPathCountByG_A, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByG_A, args);
-
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+			commerceTaxMethod.setNew(false);
 		}
-		else {
-			if ((commerceTaxMethodModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByGroupId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					commerceTaxMethodModelImpl.getOriginalGroupId()
-				};
-
-				finderCache.removeResult(_finderPathCountByGroupId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByGroupId, args);
-
-				args = new Object[] {commerceTaxMethodModelImpl.getGroupId()};
-
-				finderCache.removeResult(_finderPathCountByGroupId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByGroupId, args);
-			}
-
-			if ((commerceTaxMethodModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByG_A.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					commerceTaxMethodModelImpl.getOriginalGroupId(),
-					commerceTaxMethodModelImpl.getOriginalActive()
-				};
-
-				finderCache.removeResult(_finderPathCountByG_A, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByG_A, args);
-
-				args = new Object[] {
-					commerceTaxMethodModelImpl.getGroupId(),
-					commerceTaxMethodModelImpl.isActive()
-				};
-
-				finderCache.removeResult(_finderPathCountByG_A, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByG_A, args);
-			}
-		}
-
-		entityCache.putResult(
-			CommerceTaxMethodImpl.class, commerceTaxMethod.getPrimaryKey(),
-			commerceTaxMethod, false);
-
-		clearUniqueFindersCache(commerceTaxMethodModelImpl, false);
-		cacheUniqueFindersCache(commerceTaxMethodModelImpl);
 
 		commerceTaxMethod.resetOriginalValues();
 
@@ -2043,76 +1942,90 @@ public class CommerceTaxMethodPersistenceImpl
 	 * Initializes the commerce tax method persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceTaxMethodImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
+		Bundle bundle = FrameworkUtil.getBundle(
+			CommerceTaxMethodPersistenceImpl.class);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceTaxMethodImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+		_bundleContext = bundle.getBundleContext();
 
-		_finderPathCountAll = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_argumentsResolverServiceRegistration = _bundleContext.registerService(
+			ArgumentsResolver.class,
+			new CommerceTaxMethodModelArgumentsResolver(),
+			MapUtil.singletonDictionary(
+				"model.class.name", CommerceTaxMethod.class.getName()));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			CommerceTaxMethodImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByGroupId",
+		_finderPathWithPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathWithoutPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathCountAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
+
+		_finderPathWithPaginationFindByGroupId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"groupId"}, true);
 
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			CommerceTaxMethodImpl.class,
+		_finderPathWithoutPaginationFindByGroupId = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()},
-			CommerceTaxMethodModelImpl.GROUPID_COLUMN_BITMASK |
-			CommerceTaxMethodModelImpl.CREATEDATE_COLUMN_BITMASK);
+			new String[] {Long.class.getName()}, new String[] {"groupId"},
+			true);
 
-		_finderPathCountByGroupId = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByGroupId", new String[] {Long.class.getName()});
+		_finderPathCountByGroupId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+			new String[] {Long.class.getName()}, new String[] {"groupId"},
+			false);
 
-		_finderPathFetchByG_E = new FinderPath(
-			CommerceTaxMethodImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
+		_finderPathFetchByG_E = _createFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceTaxMethodModelImpl.GROUPID_COLUMN_BITMASK |
-			CommerceTaxMethodModelImpl.ENGINEKEY_COLUMN_BITMASK);
+			new String[] {"groupId", "engineKey"}, true);
 
-		_finderPathCountByG_E = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_E",
-			new String[] {Long.class.getName(), String.class.getName()});
+		_finderPathCountByG_E = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_E",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"groupId", "engineKey"}, false);
 
-		_finderPathWithPaginationFindByG_A = new FinderPath(
-			CommerceTaxMethodImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByG_A",
+		_finderPathWithPaginationFindByG_A = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"groupId", "active_"}, true);
 
-		_finderPathWithoutPaginationFindByG_A = new FinderPath(
-			CommerceTaxMethodImpl.class,
+		_finderPathWithoutPaginationFindByG_A = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			CommerceTaxMethodModelImpl.GROUPID_COLUMN_BITMASK |
-			CommerceTaxMethodModelImpl.ACTIVE_COLUMN_BITMASK |
-			CommerceTaxMethodModelImpl.CREATEDATE_COLUMN_BITMASK);
+			new String[] {"groupId", "active_"}, true);
 
-		_finderPathCountByG_A = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()});
+		_finderPathCountByG_A = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"groupId", "active_"}, false);
 	}
 
 	public void destroy() {
 		entityCache.removeCache(CommerceTaxMethodImpl.class.getName());
-		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		_argumentsResolverServiceRegistration.unregister();
+
+		for (ServiceRegistration<FinderPath> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
+
+	private BundleContext _bundleContext;
 
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
@@ -2145,5 +2058,106 @@ public class CommerceTaxMethodPersistenceImpl
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"active"});
+
+	private FinderPath _createFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, baseModelResult);
+
+		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
+			_serviceRegistrations.add(
+				_bundleContext.registerService(
+					FinderPath.class, finderPath,
+					MapUtil.singletonDictionary("cache.name", cacheName)));
+		}
+
+		return finderPath;
+	}
+
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
+	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
+		new HashSet<>();
+
+	private static class CommerceTaxMethodModelArgumentsResolver
+		implements ArgumentsResolver {
+
+		@Override
+		public Object[] getArguments(
+			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
+			boolean original) {
+
+			String[] columnNames = finderPath.getColumnNames();
+
+			if ((columnNames == null) || (columnNames.length == 0)) {
+				if (baseModel.isNew()) {
+					return FINDER_ARGS_EMPTY;
+				}
+
+				return null;
+			}
+
+			CommerceTaxMethodModelImpl commerceTaxMethodModelImpl =
+				(CommerceTaxMethodModelImpl)baseModel;
+
+			long columnBitmask = commerceTaxMethodModelImpl.getColumnBitmask();
+
+			if (!checkColumn || (columnBitmask == 0)) {
+				return _getValue(
+					commerceTaxMethodModelImpl, columnNames, original);
+			}
+
+			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
+				finderPath);
+
+			if (finderPathColumnBitmask == null) {
+				finderPathColumnBitmask = 0L;
+
+				for (String columnName : columnNames) {
+					finderPathColumnBitmask |=
+						commerceTaxMethodModelImpl.getColumnBitmask(columnName);
+				}
+
+				_finderPathColumnBitmasksCache.put(
+					finderPath, finderPathColumnBitmask);
+			}
+
+			if ((columnBitmask & finderPathColumnBitmask) != 0) {
+				return _getValue(
+					commerceTaxMethodModelImpl, columnNames, original);
+			}
+
+			return null;
+		}
+
+		private Object[] _getValue(
+			CommerceTaxMethodModelImpl commerceTaxMethodModelImpl,
+			String[] columnNames, boolean original) {
+
+			Object[] arguments = new Object[columnNames.length];
+
+			for (int i = 0; i < arguments.length; i++) {
+				String columnName = columnNames[i];
+
+				if (original) {
+					arguments[i] =
+						commerceTaxMethodModelImpl.getColumnOriginalValue(
+							columnName);
+				}
+				else {
+					arguments[i] = commerceTaxMethodModelImpl.getColumnValue(
+						columnName);
+				}
+			}
+
+			return arguments;
+		}
+
+		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
+			new ConcurrentHashMap<>();
+
+	}
 
 }

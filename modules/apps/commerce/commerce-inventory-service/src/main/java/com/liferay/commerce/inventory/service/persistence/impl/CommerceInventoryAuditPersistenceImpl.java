@@ -21,6 +21,7 @@ import com.liferay.commerce.inventory.model.impl.CommerceInventoryAuditImpl;
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryAuditModelImpl;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryAuditPersistence;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -30,10 +31,12 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -47,10 +50,17 @@ import java.sql.Timestamp;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * The persistence implementation for the commerce inventory audit service.
@@ -1225,8 +1235,6 @@ public class CommerceInventoryAuditPersistenceImpl
 		entityCache.putResult(
 			CommerceInventoryAuditImpl.class,
 			commerceInventoryAudit.getPrimaryKey(), commerceInventoryAudit);
-
-		commerceInventoryAudit.resetOriginalValues();
 	}
 
 	/**
@@ -1246,9 +1254,6 @@ public class CommerceInventoryAuditPersistenceImpl
 					commerceInventoryAudit.getPrimaryKey()) == null) {
 
 				cacheResult(commerceInventoryAudit);
-			}
-			else {
-				commerceInventoryAudit.resetOriginalValues();
 			}
 		}
 	}
@@ -1279,26 +1284,18 @@ public class CommerceInventoryAuditPersistenceImpl
 	@Override
 	public void clearCache(CommerceInventoryAudit commerceInventoryAudit) {
 		entityCache.removeResult(
-			CommerceInventoryAuditImpl.class,
-			commerceInventoryAudit.getPrimaryKey());
-
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			CommerceInventoryAuditImpl.class, commerceInventoryAudit);
 	}
 
 	@Override
 	public void clearCache(
 		List<CommerceInventoryAudit> commerceInventoryAudits) {
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (CommerceInventoryAudit commerceInventoryAudit :
 				commerceInventoryAudits) {
 
 			entityCache.removeResult(
-				CommerceInventoryAuditImpl.class,
-				commerceInventoryAudit.getPrimaryKey());
+				CommerceInventoryAuditImpl.class, commerceInventoryAudit);
 		}
 	}
 
@@ -1480,10 +1477,8 @@ public class CommerceInventoryAuditPersistenceImpl
 		try {
 			session = openSession();
 
-			if (commerceInventoryAudit.isNew()) {
+			if (isNew) {
 				session.save(commerceInventoryAudit);
-
-				commerceInventoryAudit.setNew(false);
 			}
 			else {
 				commerceInventoryAudit = (CommerceInventoryAudit)session.merge(
@@ -1497,51 +1492,13 @@ public class CommerceInventoryAuditPersistenceImpl
 			closeSession(session);
 		}
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		entityCache.putResult(
+			CommerceInventoryAuditImpl.class, commerceInventoryAuditModelImpl,
+			false, true);
 
 		if (isNew) {
-			Object[] args = new Object[] {
-				commerceInventoryAuditModelImpl.getCompanyId(),
-				commerceInventoryAuditModelImpl.getSku()
-			};
-
-			finderCache.removeResult(_finderPathCountByC_S, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByC_S, args);
-
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+			commerceInventoryAudit.setNew(false);
 		}
-		else {
-			if ((commerceInventoryAuditModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByC_S.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					commerceInventoryAuditModelImpl.getOriginalCompanyId(),
-					commerceInventoryAuditModelImpl.getOriginalSku()
-				};
-
-				finderCache.removeResult(_finderPathCountByC_S, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByC_S, args);
-
-				args = new Object[] {
-					commerceInventoryAuditModelImpl.getCompanyId(),
-					commerceInventoryAuditModelImpl.getSku()
-				};
-
-				finderCache.removeResult(_finderPathCountByC_S, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByC_S, args);
-			}
-		}
-
-		entityCache.putResult(
-			CommerceInventoryAuditImpl.class,
-			commerceInventoryAudit.getPrimaryKey(), commerceInventoryAudit,
-			false);
 
 		commerceInventoryAudit.resetOriginalValues();
 
@@ -1813,59 +1770,75 @@ public class CommerceInventoryAuditPersistenceImpl
 	 * Initializes the commerce inventory audit persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceInventoryAuditImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		Bundle bundle = FrameworkUtil.getBundle(
+			CommerceInventoryAuditPersistenceImpl.class);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceInventoryAuditImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+		_bundleContext = bundle.getBundleContext();
 
-		_finderPathCountAll = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_argumentsResolverServiceRegistration = _bundleContext.registerService(
+			ArgumentsResolver.class,
+			new CommerceInventoryAuditModelArgumentsResolver(),
+			MapUtil.singletonDictionary(
+				"model.class.name", CommerceInventoryAudit.class.getName()));
 
-		_finderPathWithPaginationFindByLtCreateDate = new FinderPath(
-			CommerceInventoryAuditImpl.class,
+		_finderPathWithPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathWithoutPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathCountAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
+
+		_finderPathWithPaginationFindByLtCreateDate = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtCreateDate",
 			new String[] {
 				Date.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"createDate"}, true);
 
-		_finderPathWithPaginationCountByLtCreateDate = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"countByLtCreateDate", new String[] {Date.class.getName()});
+		_finderPathWithPaginationCountByLtCreateDate = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtCreateDate",
+			new String[] {Date.class.getName()}, new String[] {"createDate"},
+			false);
 
-		_finderPathWithPaginationFindByC_S = new FinderPath(
-			CommerceInventoryAuditImpl.class,
+		_finderPathWithPaginationFindByC_S = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"companyId", "sku"}, true);
 
-		_finderPathWithoutPaginationFindByC_S = new FinderPath(
-			CommerceInventoryAuditImpl.class,
+		_finderPathWithoutPaginationFindByC_S = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceInventoryAuditModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceInventoryAuditModelImpl.SKU_COLUMN_BITMASK |
-			CommerceInventoryAuditModelImpl.CREATEDATE_COLUMN_BITMASK);
+			new String[] {"companyId", "sku"}, true);
 
-		_finderPathCountByC_S = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
-			new String[] {Long.class.getName(), String.class.getName()});
+		_finderPathCountByC_S = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "sku"}, false);
 	}
 
 	public void destroy() {
 		entityCache.removeCache(CommerceInventoryAuditImpl.class.getName());
-		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		_argumentsResolverServiceRegistration.unregister();
+
+		for (ServiceRegistration<FinderPath> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
+
+	private BundleContext _bundleContext;
 
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
@@ -1873,7 +1846,7 @@ public class CommerceInventoryAuditPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
-	private Long _getTime(Date date) {
+	private static Long _getTime(Date date) {
 		if (date == null) {
 			return null;
 		}
@@ -1907,5 +1880,109 @@ public class CommerceInventoryAuditPersistenceImpl
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"commerceInventoryAuditId"});
+
+	private FinderPath _createFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, baseModelResult);
+
+		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
+			_serviceRegistrations.add(
+				_bundleContext.registerService(
+					FinderPath.class, finderPath,
+					MapUtil.singletonDictionary("cache.name", cacheName)));
+		}
+
+		return finderPath;
+	}
+
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
+	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
+		new HashSet<>();
+
+	private static class CommerceInventoryAuditModelArgumentsResolver
+		implements ArgumentsResolver {
+
+		@Override
+		public Object[] getArguments(
+			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
+			boolean original) {
+
+			String[] columnNames = finderPath.getColumnNames();
+
+			if ((columnNames == null) || (columnNames.length == 0)) {
+				if (baseModel.isNew()) {
+					return FINDER_ARGS_EMPTY;
+				}
+
+				return null;
+			}
+
+			CommerceInventoryAuditModelImpl commerceInventoryAuditModelImpl =
+				(CommerceInventoryAuditModelImpl)baseModel;
+
+			long columnBitmask =
+				commerceInventoryAuditModelImpl.getColumnBitmask();
+
+			if (!checkColumn || (columnBitmask == 0)) {
+				return _getValue(
+					commerceInventoryAuditModelImpl, columnNames, original);
+			}
+
+			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
+				finderPath);
+
+			if (finderPathColumnBitmask == null) {
+				finderPathColumnBitmask = 0L;
+
+				for (String columnName : columnNames) {
+					finderPathColumnBitmask |=
+						commerceInventoryAuditModelImpl.getColumnBitmask(
+							columnName);
+				}
+
+				_finderPathColumnBitmasksCache.put(
+					finderPath, finderPathColumnBitmask);
+			}
+
+			if ((columnBitmask & finderPathColumnBitmask) != 0) {
+				return _getValue(
+					commerceInventoryAuditModelImpl, columnNames, original);
+			}
+
+			return null;
+		}
+
+		private Object[] _getValue(
+			CommerceInventoryAuditModelImpl commerceInventoryAuditModelImpl,
+			String[] columnNames, boolean original) {
+
+			Object[] arguments = new Object[columnNames.length];
+
+			for (int i = 0; i < arguments.length; i++) {
+				String columnName = columnNames[i];
+
+				if (original) {
+					arguments[i] =
+						commerceInventoryAuditModelImpl.getColumnOriginalValue(
+							columnName);
+				}
+				else {
+					arguments[i] =
+						commerceInventoryAuditModelImpl.getColumnValue(
+							columnName);
+				}
+			}
+
+			return arguments;
+		}
+
+		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
+			new ConcurrentHashMap<>();
+
+	}
 
 }

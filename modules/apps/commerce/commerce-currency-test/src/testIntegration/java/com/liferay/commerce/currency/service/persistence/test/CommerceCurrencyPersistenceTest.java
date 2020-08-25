@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -540,18 +541,62 @@ public class CommerceCurrencyPersistenceTest {
 
 		_persistence.clearCache();
 
-		CommerceCurrency existingCommerceCurrency =
-			_persistence.findByPrimaryKey(newCommerceCurrency.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newCommerceCurrency.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CommerceCurrency newCommerceCurrency = addCommerceCurrency();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CommerceCurrency.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"commerceCurrencyId",
+				newCommerceCurrency.getCommerceCurrencyId()));
+
+		List<CommerceCurrency> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(CommerceCurrency commerceCurrency) {
 		Assert.assertEquals(
-			Long.valueOf(existingCommerceCurrency.getCompanyId()),
+			Long.valueOf(commerceCurrency.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceCurrency, "getOriginalCompanyId",
-				new Class<?>[0]));
+				commerceCurrency, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
-			existingCommerceCurrency.getCode(),
+			commerceCurrency.getCode(),
 			ReflectionTestUtil.invoke(
-				existingCommerceCurrency, "getOriginalCode", new Class<?>[0]));
+				commerceCurrency, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "code_"));
 	}
 
 	protected CommerceCurrency addCommerceCurrency() throws Exception {

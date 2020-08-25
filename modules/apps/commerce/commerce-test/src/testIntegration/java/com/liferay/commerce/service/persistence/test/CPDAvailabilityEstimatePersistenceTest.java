@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -505,15 +506,61 @@ public class CPDAvailabilityEstimatePersistenceTest {
 
 		_persistence.clearCache();
 
-		CPDAvailabilityEstimate existingCPDAvailabilityEstimate =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newCPDAvailabilityEstimate.getPrimaryKey());
+				newCPDAvailabilityEstimate.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CPDAvailabilityEstimate newCPDAvailabilityEstimate =
+			addCPDAvailabilityEstimate();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CPDAvailabilityEstimate.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"CPDAvailabilityEstimateId",
+				newCPDAvailabilityEstimate.getCPDAvailabilityEstimateId()));
+
+		List<CPDAvailabilityEstimate> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		CPDAvailabilityEstimate cpdAvailabilityEstimate) {
 
 		Assert.assertEquals(
-			Long.valueOf(existingCPDAvailabilityEstimate.getCProductId()),
+			Long.valueOf(cpdAvailabilityEstimate.getCProductId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCPDAvailabilityEstimate, "getOriginalCProductId",
-				new Class<?>[0]));
+				cpdAvailabilityEstimate, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "CProductId"));
 	}
 
 	protected CPDAvailabilityEstimate addCPDAvailabilityEstimate()

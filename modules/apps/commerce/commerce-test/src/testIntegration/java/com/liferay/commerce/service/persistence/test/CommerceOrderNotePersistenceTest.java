@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -467,19 +468,63 @@ public class CommerceOrderNotePersistenceTest {
 
 		_persistence.clearCache();
 
-		CommerceOrderNote existingCommerceOrderNote =
-			_persistence.findByPrimaryKey(newCommerceOrderNote.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(
+				newCommerceOrderNote.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CommerceOrderNote newCommerceOrderNote = addCommerceOrderNote();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CommerceOrderNote.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"commerceOrderNoteId",
+				newCommerceOrderNote.getCommerceOrderNoteId()));
+
+		List<CommerceOrderNote> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(CommerceOrderNote commerceOrderNote) {
 		Assert.assertEquals(
-			Long.valueOf(existingCommerceOrderNote.getCompanyId()),
+			Long.valueOf(commerceOrderNote.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceOrderNote, "getOriginalCompanyId",
-				new Class<?>[0]));
+				commerceOrderNote, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
-			existingCommerceOrderNote.getExternalReferenceCode(),
+			commerceOrderNote.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
-				existingCommerceOrderNote, "getOriginalExternalReferenceCode",
-				new Class<?>[0]));
+				commerceOrderNote, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected CommerceOrderNote addCommerceOrderNote() throws Exception {

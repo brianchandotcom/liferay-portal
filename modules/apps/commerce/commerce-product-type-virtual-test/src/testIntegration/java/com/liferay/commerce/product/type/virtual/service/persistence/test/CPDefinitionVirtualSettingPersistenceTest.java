@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -601,31 +602,78 @@ public class CPDefinitionVirtualSettingPersistenceTest {
 
 		_persistence.clearCache();
 
-		CPDefinitionVirtualSetting existingCPDefinitionVirtualSetting =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newCPDefinitionVirtualSetting.getPrimaryKey());
+				newCPDefinitionVirtualSetting.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CPDefinitionVirtualSetting newCPDefinitionVirtualSetting =
+			addCPDefinitionVirtualSetting();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CPDefinitionVirtualSetting.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"CPDefinitionVirtualSettingId",
+				newCPDefinitionVirtualSetting.
+					getCPDefinitionVirtualSettingId()));
+
+		List<CPDefinitionVirtualSetting> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
 
 		Assert.assertEquals(
-			existingCPDefinitionVirtualSetting.getUuid(),
+			cpDefinitionVirtualSetting.getUuid(),
 			ReflectionTestUtil.invoke(
-				existingCPDefinitionVirtualSetting, "getOriginalUuid",
-				new Class<?>[0]));
+				cpDefinitionVirtualSetting, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
-			Long.valueOf(existingCPDefinitionVirtualSetting.getGroupId()),
+			Long.valueOf(cpDefinitionVirtualSetting.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCPDefinitionVirtualSetting, "getOriginalGroupId",
-				new Class<?>[0]));
+				cpDefinitionVirtualSetting, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
-			Long.valueOf(existingCPDefinitionVirtualSetting.getClassNameId()),
+			Long.valueOf(cpDefinitionVirtualSetting.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCPDefinitionVirtualSetting, "getOriginalClassNameId",
-				new Class<?>[0]));
+				cpDefinitionVirtualSetting, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
 		Assert.assertEquals(
-			Long.valueOf(existingCPDefinitionVirtualSetting.getClassPK()),
+			Long.valueOf(cpDefinitionVirtualSetting.getClassPK()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCPDefinitionVirtualSetting, "getOriginalClassPK",
-				new Class<?>[0]));
+				cpDefinitionVirtualSetting, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 	}
 
 	protected CPDefinitionVirtualSetting addCPDefinitionVirtualSetting()

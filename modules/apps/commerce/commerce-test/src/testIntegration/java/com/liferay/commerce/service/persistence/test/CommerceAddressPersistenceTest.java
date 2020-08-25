@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -586,19 +587,62 @@ public class CommerceAddressPersistenceTest {
 
 		_persistence.clearCache();
 
-		CommerceAddress existingCommerceAddress = _persistence.findByPrimaryKey(
-			newCommerceAddress.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newCommerceAddress.getPrimaryKey()));
+	}
 
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CommerceAddress newCommerceAddress = addCommerceAddress();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CommerceAddress.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"commerceAddressId",
+				newCommerceAddress.getCommerceAddressId()));
+
+		List<CommerceAddress> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(CommerceAddress commerceAddress) {
 		Assert.assertEquals(
-			Long.valueOf(existingCommerceAddress.getCompanyId()),
+			Long.valueOf(commerceAddress.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceAddress, "getOriginalCompanyId",
-				new Class<?>[0]));
+				commerceAddress, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
-			existingCommerceAddress.getExternalReferenceCode(),
+			commerceAddress.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
-				existingCommerceAddress, "getOriginalExternalReferenceCode",
-				new Class<?>[0]));
+				commerceAddress, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected CommerceAddress addCommerceAddress() throws Exception {

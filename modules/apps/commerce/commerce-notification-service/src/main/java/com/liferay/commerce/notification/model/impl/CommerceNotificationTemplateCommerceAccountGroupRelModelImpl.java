@@ -133,10 +133,23 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMMERCEACCOUNTGROUPID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMMERCENOTIFICATIONTEMPLATEID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 4L;
 
 	/**
@@ -479,6 +492,10 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	public void setCommerceNotificationTemplateCommerceAccountGroupRelId(
 		long commerceNotificationTemplateCommerceAccountGroupRelId) {
 
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_commerceNotificationTemplateCommerceAccountGroupRelId =
 			commerceNotificationTemplateCommerceAccountGroupRelId;
 	}
@@ -491,6 +508,10 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_groupId = groupId;
 	}
 
@@ -502,6 +523,10 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_companyId = companyId;
 	}
 
@@ -513,6 +538,10 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_userId = userId;
 	}
 
@@ -545,6 +574,10 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_userName = userName;
 	}
 
@@ -556,6 +589,10 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_createDate = createDate;
 	}
 
@@ -573,6 +610,10 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -586,20 +627,21 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	public void setCommerceNotificationTemplateId(
 		long commerceNotificationTemplateId) {
 
-		_columnBitmask |= COMMERCENOTIFICATIONTEMPLATEID_COLUMN_BITMASK;
-
-		if (!_setOriginalCommerceNotificationTemplateId) {
-			_setOriginalCommerceNotificationTemplateId = true;
-
-			_originalCommerceNotificationTemplateId =
-				_commerceNotificationTemplateId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_commerceNotificationTemplateId = commerceNotificationTemplateId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCommerceNotificationTemplateId() {
-		return _originalCommerceNotificationTemplateId;
+		return GetterUtil.getLong(
+			getColumnOriginalValue("commerceNotificationTemplateId"));
 	}
 
 	@JSON
@@ -610,22 +652,42 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 
 	@Override
 	public void setCommerceAccountGroupId(long commerceAccountGroupId) {
-		_columnBitmask |= COMMERCEACCOUNTGROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalCommerceAccountGroupId) {
-			_setOriginalCommerceAccountGroupId = true;
-
-			_originalCommerceAccountGroupId = _commerceAccountGroupId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_commerceAccountGroupId = commerceAccountGroupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCommerceAccountGroupId() {
-		return _originalCommerceAccountGroupId;
+		return GetterUtil.getLong(
+			getColumnOriginalValue("commerceAccountGroupId"));
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -769,15 +831,9 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 
 	@Override
 	public void resetOriginalValues() {
+		_columnOriginalValues = Collections.emptyMap();
+
 		_setModifiedDate = false;
-		_originalCommerceNotificationTemplateId =
-			_commerceNotificationTemplateId;
-
-		_setOriginalCommerceNotificationTemplateId = false;
-
-		_originalCommerceAccountGroupId = _commerceAccountGroupId;
-
-		_setOriginalCommerceAccountGroupId = false;
 
 		_columnBitmask = 0;
 	}
@@ -947,11 +1003,97 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _commerceNotificationTemplateId;
-	private long _originalCommerceNotificationTemplateId;
-	private boolean _setOriginalCommerceNotificationTemplateId;
 	private long _commerceAccountGroupId;
-	private long _originalCommerceAccountGroupId;
-	private boolean _setOriginalCommerceAccountGroupId;
+
+	public <T> T getColumnValue(String columnName) {
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
+
+		Function<CommerceNotificationTemplateCommerceAccountGroupRel, Object>
+			function = _attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply(
+			(CommerceNotificationTemplateCommerceAccountGroupRel)this);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put(
+			"CNTemplateCAccountGroupRelId",
+			_commerceNotificationTemplateCommerceAccountGroupRelId);
+		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put(
+			"commerceNotificationTemplateId", _commerceNotificationTemplateId);
+		_columnOriginalValues.put(
+			"commerceAccountGroupId", _commerceAccountGroupId);
+	}
+
+	private static final Map<String, String> _attributeNames;
+
+	static {
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put(
+			"CNTemplateCAccountGroupRelId",
+			"commerceNotificationTemplateCommerceAccountGroupRelId");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new HashMap<>();
+
+		columnBitmasks.put("CNTemplateCAccountGroupRelId", 1L);
+
+		columnBitmasks.put("groupId", 2L);
+
+		columnBitmasks.put("companyId", 4L);
+
+		columnBitmasks.put("userId", 8L);
+
+		columnBitmasks.put("userName", 16L);
+
+		columnBitmasks.put("createDate", 32L);
+
+		columnBitmasks.put("modifiedDate", 64L);
+
+		columnBitmasks.put("commerceNotificationTemplateId", 128L);
+
+		columnBitmasks.put("commerceAccountGroupId", 256L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
 	private long _columnBitmask;
 	private CommerceNotificationTemplateCommerceAccountGroupRel _escapedModel;
 

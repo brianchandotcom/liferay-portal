@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -617,47 +618,90 @@ public class CommercePriceEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		CommercePriceEntry existingCommercePriceEntry =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newCommercePriceEntry.getPrimaryKey());
+				newCommercePriceEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CommercePriceEntry newCommercePriceEntry = addCommercePriceEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CommercePriceEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"commercePriceEntryId",
+				newCommercePriceEntry.getCommercePriceEntryId()));
+
+		List<CommercePriceEntry> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(CommercePriceEntry commercePriceEntry) {
+		Assert.assertEquals(
+			Long.valueOf(commercePriceEntry.getCommercePriceListId()),
+			ReflectionTestUtil.<Long>invoke(
+				commercePriceEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "commercePriceListId"));
+		Assert.assertEquals(
+			commercePriceEntry.getCPInstanceUuid(),
+			ReflectionTestUtil.invoke(
+				commercePriceEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "CPInstanceUuid"));
 
 		Assert.assertEquals(
-			Long.valueOf(existingCommercePriceEntry.getCommercePriceListId()),
+			Long.valueOf(commercePriceEntry.getCommercePriceListId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommercePriceEntry, "getOriginalCommercePriceListId",
-				new Class<?>[0]));
+				commercePriceEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "commercePriceListId"));
 		Assert.assertEquals(
-			existingCommercePriceEntry.getCPInstanceUuid(),
+			commercePriceEntry.getCPInstanceUuid(),
 			ReflectionTestUtil.invoke(
-				existingCommercePriceEntry, "getOriginalCPInstanceUuid",
-				new Class<?>[0]));
-
+				commercePriceEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "CPInstanceUuid"));
 		Assert.assertEquals(
-			Long.valueOf(existingCommercePriceEntry.getCommercePriceListId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingCommercePriceEntry, "getOriginalCommercePriceListId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			existingCommercePriceEntry.getCPInstanceUuid(),
-			ReflectionTestUtil.invoke(
-				existingCommercePriceEntry, "getOriginalCPInstanceUuid",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			Integer.valueOf(existingCommercePriceEntry.getStatus()),
+			Integer.valueOf(commercePriceEntry.getStatus()),
 			ReflectionTestUtil.<Integer>invoke(
-				existingCommercePriceEntry, "getOriginalStatus",
-				new Class<?>[0]));
+				commercePriceEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "status"));
 
 		Assert.assertEquals(
-			Long.valueOf(existingCommercePriceEntry.getCompanyId()),
+			Long.valueOf(commercePriceEntry.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommercePriceEntry, "getOriginalCompanyId",
-				new Class<?>[0]));
+				commercePriceEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
-			existingCommercePriceEntry.getExternalReferenceCode(),
+			commercePriceEntry.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
-				existingCommercePriceEntry, "getOriginalExternalReferenceCode",
-				new Class<?>[0]));
+				commercePriceEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected CommercePriceEntry addCommercePriceEntry() throws Exception {

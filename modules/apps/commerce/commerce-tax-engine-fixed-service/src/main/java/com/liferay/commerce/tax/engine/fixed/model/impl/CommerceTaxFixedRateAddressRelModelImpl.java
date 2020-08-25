@@ -139,12 +139,29 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CPTAXCATEGORYID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMMERCECOUNTRYID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMMERCETAXMETHODID_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 8L;
 
 	/**
@@ -447,6 +464,10 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 	public void setCommerceTaxFixedRateAddressRelId(
 		long commerceTaxFixedRateAddressRelId) {
 
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_commerceTaxFixedRateAddressRelId = commerceTaxFixedRateAddressRelId;
 	}
 
@@ -458,6 +479,10 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_groupId = groupId;
 	}
 
@@ -469,6 +494,10 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_companyId = companyId;
 	}
 
@@ -480,6 +509,10 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_userId = userId;
 	}
 
@@ -512,6 +545,10 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_userName = userName;
 	}
 
@@ -523,6 +560,10 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_createDate = createDate;
 	}
 
@@ -540,6 +581,10 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -551,19 +596,21 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 
 	@Override
 	public void setCommerceTaxMethodId(long commerceTaxMethodId) {
-		_columnBitmask |= COMMERCETAXMETHODID_COLUMN_BITMASK;
-
-		if (!_setOriginalCommerceTaxMethodId) {
-			_setOriginalCommerceTaxMethodId = true;
-
-			_originalCommerceTaxMethodId = _commerceTaxMethodId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_commerceTaxMethodId = commerceTaxMethodId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCommerceTaxMethodId() {
-		return _originalCommerceTaxMethodId;
+		return GetterUtil.getLong(
+			getColumnOriginalValue("commerceTaxMethodId"));
 	}
 
 	@JSON
@@ -574,19 +621,20 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 
 	@Override
 	public void setCPTaxCategoryId(long CPTaxCategoryId) {
-		_columnBitmask |= CPTAXCATEGORYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCPTaxCategoryId) {
-			_setOriginalCPTaxCategoryId = true;
-
-			_originalCPTaxCategoryId = _CPTaxCategoryId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_CPTaxCategoryId = CPTaxCategoryId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCPTaxCategoryId() {
-		return _originalCPTaxCategoryId;
+		return GetterUtil.getLong(getColumnOriginalValue("CPTaxCategoryId"));
 	}
 
 	@JSON
@@ -597,19 +645,20 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 
 	@Override
 	public void setCommerceCountryId(long commerceCountryId) {
-		_columnBitmask |= COMMERCECOUNTRYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCommerceCountryId) {
-			_setOriginalCommerceCountryId = true;
-
-			_originalCommerceCountryId = _commerceCountryId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_commerceCountryId = commerceCountryId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCommerceCountryId() {
-		return _originalCommerceCountryId;
+		return GetterUtil.getLong(getColumnOriginalValue("commerceCountryId"));
 	}
 
 	@JSON
@@ -620,6 +669,10 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 
 	@Override
 	public void setCommerceRegionId(long commerceRegionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_commerceRegionId = commerceRegionId;
 	}
 
@@ -636,6 +689,10 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 
 	@Override
 	public void setZip(String zip) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_zip = zip;
 	}
 
@@ -647,10 +704,32 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 
 	@Override
 	public void setRate(double rate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_rate = rate;
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -778,18 +857,9 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 
 	@Override
 	public void resetOriginalValues() {
+		_columnOriginalValues = Collections.emptyMap();
+
 		_setModifiedDate = false;
-		_originalCommerceTaxMethodId = _commerceTaxMethodId;
-
-		_setOriginalCommerceTaxMethodId = false;
-
-		_originalCPTaxCategoryId = _CPTaxCategoryId;
-
-		_setOriginalCPTaxCategoryId = false;
-
-		_originalCommerceCountryId = _commerceCountryId;
-
-		_setOriginalCommerceCountryId = false;
 
 		_columnBitmask = 0;
 	}
@@ -950,17 +1020,108 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _commerceTaxMethodId;
-	private long _originalCommerceTaxMethodId;
-	private boolean _setOriginalCommerceTaxMethodId;
 	private long _CPTaxCategoryId;
-	private long _originalCPTaxCategoryId;
-	private boolean _setOriginalCPTaxCategoryId;
 	private long _commerceCountryId;
-	private long _originalCommerceCountryId;
-	private boolean _setOriginalCommerceCountryId;
 	private long _commerceRegionId;
 	private String _zip;
 	private double _rate;
+
+	public <T> T getColumnValue(String columnName) {
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
+
+		Function<CommerceTaxFixedRateAddressRel, Object> function =
+			_attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((CommerceTaxFixedRateAddressRel)this);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put(
+			"CTaxFixedRateAddressRelId", _commerceTaxFixedRateAddressRelId);
+		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("commerceTaxMethodId", _commerceTaxMethodId);
+		_columnOriginalValues.put("CPTaxCategoryId", _CPTaxCategoryId);
+		_columnOriginalValues.put("commerceCountryId", _commerceCountryId);
+		_columnOriginalValues.put("commerceRegionId", _commerceRegionId);
+		_columnOriginalValues.put("zip", _zip);
+		_columnOriginalValues.put("rate", _rate);
+	}
+
+	private static final Map<String, String> _attributeNames;
+
+	static {
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put(
+			"CTaxFixedRateAddressRelId", "commerceTaxFixedRateAddressRelId");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new HashMap<>();
+
+		columnBitmasks.put("CTaxFixedRateAddressRelId", 1L);
+
+		columnBitmasks.put("groupId", 2L);
+
+		columnBitmasks.put("companyId", 4L);
+
+		columnBitmasks.put("userId", 8L);
+
+		columnBitmasks.put("userName", 16L);
+
+		columnBitmasks.put("createDate", 32L);
+
+		columnBitmasks.put("modifiedDate", 64L);
+
+		columnBitmasks.put("commerceTaxMethodId", 128L);
+
+		columnBitmasks.put("CPTaxCategoryId", 256L);
+
+		columnBitmasks.put("commerceCountryId", 512L);
+
+		columnBitmasks.put("commerceRegionId", 1024L);
+
+		columnBitmasks.put("zip", 2048L);
+
+		columnBitmasks.put("rate", 4096L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
 	private long _columnBitmask;
 	private CommerceTaxFixedRateAddressRel _escapedModel;
 

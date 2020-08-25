@@ -153,20 +153,53 @@ public class CommerceCountryModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long BILLINGALLOWED_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long NUMERICISOCODE_COLUMN_BITMASK = 8L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long SHIPPINGALLOWED_COLUMN_BITMASK = 16L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long TWOLETTERSISOCODE_COLUMN_BITMASK = 32L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long UUID_COLUMN_BITMASK = 64L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long PRIORITY_COLUMN_BITMASK = 128L;
 
 	/**
@@ -474,17 +507,20 @@ public class CommerceCountryModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_uuid = uuid;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		return getColumnOriginalValue("uuid_");
 	}
 
 	@JSON
@@ -495,6 +531,10 @@ public class CommerceCountryModelImpl
 
 	@Override
 	public void setCommerceCountryId(long commerceCountryId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_commerceCountryId = commerceCountryId;
 	}
 
@@ -506,19 +546,20 @@ public class CommerceCountryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -529,6 +570,10 @@ public class CommerceCountryModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_userId = userId;
 	}
 
@@ -561,6 +606,10 @@ public class CommerceCountryModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_userName = userName;
 	}
 
@@ -572,6 +621,10 @@ public class CommerceCountryModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_createDate = createDate;
 	}
 
@@ -588,6 +641,10 @@ public class CommerceCountryModelImpl
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
 
 		_modifiedDate = modifiedDate;
 	}
@@ -648,6 +705,10 @@ public class CommerceCountryModelImpl
 
 	@Override
 	public void setName(String name) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_name = name;
 	}
 
@@ -709,19 +770,20 @@ public class CommerceCountryModelImpl
 
 	@Override
 	public void setBillingAllowed(boolean billingAllowed) {
-		_columnBitmask |= BILLINGALLOWED_COLUMN_BITMASK;
-
-		if (!_setOriginalBillingAllowed) {
-			_setOriginalBillingAllowed = true;
-
-			_originalBillingAllowed = _billingAllowed;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_billingAllowed = billingAllowed;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public boolean getOriginalBillingAllowed() {
-		return _originalBillingAllowed;
+		return GetterUtil.getBoolean(getColumnOriginalValue("billingAllowed"));
 	}
 
 	@JSON
@@ -738,19 +800,20 @@ public class CommerceCountryModelImpl
 
 	@Override
 	public void setShippingAllowed(boolean shippingAllowed) {
-		_columnBitmask |= SHIPPINGALLOWED_COLUMN_BITMASK;
-
-		if (!_setOriginalShippingAllowed) {
-			_setOriginalShippingAllowed = true;
-
-			_originalShippingAllowed = _shippingAllowed;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_shippingAllowed = shippingAllowed;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public boolean getOriginalShippingAllowed() {
-		return _originalShippingAllowed;
+		return GetterUtil.getBoolean(getColumnOriginalValue("shippingAllowed"));
 	}
 
 	@JSON
@@ -766,17 +829,20 @@ public class CommerceCountryModelImpl
 
 	@Override
 	public void setTwoLettersISOCode(String twoLettersISOCode) {
-		_columnBitmask |= TWOLETTERSISOCODE_COLUMN_BITMASK;
-
-		if (_originalTwoLettersISOCode == null) {
-			_originalTwoLettersISOCode = _twoLettersISOCode;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_twoLettersISOCode = twoLettersISOCode;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalTwoLettersISOCode() {
-		return GetterUtil.getString(_originalTwoLettersISOCode);
+		return getColumnOriginalValue("twoLettersISOCode");
 	}
 
 	@JSON
@@ -792,6 +858,10 @@ public class CommerceCountryModelImpl
 
 	@Override
 	public void setThreeLettersISOCode(String threeLettersISOCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_threeLettersISOCode = threeLettersISOCode;
 	}
 
@@ -803,19 +873,20 @@ public class CommerceCountryModelImpl
 
 	@Override
 	public void setNumericISOCode(int numericISOCode) {
-		_columnBitmask |= NUMERICISOCODE_COLUMN_BITMASK;
-
-		if (!_setOriginalNumericISOCode) {
-			_setOriginalNumericISOCode = true;
-
-			_originalNumericISOCode = _numericISOCode;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_numericISOCode = numericISOCode;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public int getOriginalNumericISOCode() {
-		return _originalNumericISOCode;
+		return GetterUtil.getInteger(getColumnOriginalValue("numericISOCode"));
 	}
 
 	@JSON
@@ -832,6 +903,10 @@ public class CommerceCountryModelImpl
 
 	@Override
 	public void setSubjectToVAT(boolean subjectToVAT) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_subjectToVAT = subjectToVAT;
 	}
 
@@ -843,6 +918,10 @@ public class CommerceCountryModelImpl
 
 	@Override
 	public void setPriority(double priority) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_priority = priority;
 	}
 
@@ -860,19 +939,20 @@ public class CommerceCountryModelImpl
 
 	@Override
 	public void setActive(boolean active) {
-		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
-
-		if (!_setOriginalActive) {
-			_setOriginalActive = true;
-
-			_originalActive = _active;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_active = active;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public boolean getOriginalActive() {
-		return _originalActive;
+		return GetterUtil.getBoolean(getColumnOriginalValue("active_"));
 	}
 
 	@JSON
@@ -883,6 +963,10 @@ public class CommerceCountryModelImpl
 
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_lastPublishDate = lastPublishDate;
 	}
 
@@ -900,6 +984,10 @@ public class CommerceCountryModelImpl
 
 	@Override
 	public void setChannelFilterEnabled(boolean channelFilterEnabled) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_channelFilterEnabled = channelFilterEnabled;
 	}
 
@@ -910,6 +998,24 @@ public class CommerceCountryModelImpl
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -1103,31 +1209,9 @@ public class CommerceCountryModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_originalUuid = _uuid;
-
-		_originalCompanyId = _companyId;
-
-		_setOriginalCompanyId = false;
+		_columnOriginalValues = Collections.emptyMap();
 
 		_setModifiedDate = false;
-
-		_originalBillingAllowed = _billingAllowed;
-
-		_setOriginalBillingAllowed = false;
-
-		_originalShippingAllowed = _shippingAllowed;
-
-		_setOriginalShippingAllowed = false;
-
-		_originalTwoLettersISOCode = _twoLettersISOCode;
-
-		_originalNumericISOCode = _numericISOCode;
-
-		_setOriginalNumericISOCode = false;
-
-		_originalActive = _active;
-
-		_setOriginalActive = false;
 
 		_columnBitmask = 0;
 	}
@@ -1304,11 +1388,8 @@ public class CommerceCountryModelImpl
 	}
 
 	private String _uuid;
-	private String _originalUuid;
 	private long _commerceCountryId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1317,24 +1398,127 @@ public class CommerceCountryModelImpl
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private boolean _billingAllowed;
-	private boolean _originalBillingAllowed;
-	private boolean _setOriginalBillingAllowed;
 	private boolean _shippingAllowed;
-	private boolean _originalShippingAllowed;
-	private boolean _setOriginalShippingAllowed;
 	private String _twoLettersISOCode;
-	private String _originalTwoLettersISOCode;
 	private String _threeLettersISOCode;
 	private int _numericISOCode;
-	private int _originalNumericISOCode;
-	private boolean _setOriginalNumericISOCode;
 	private boolean _subjectToVAT;
 	private double _priority;
 	private boolean _active;
-	private boolean _originalActive;
-	private boolean _setOriginalActive;
 	private Date _lastPublishDate;
 	private boolean _channelFilterEnabled;
+
+	public <T> T getColumnValue(String columnName) {
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
+
+		Function<CommerceCountry, Object> function =
+			_attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((CommerceCountry)this);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put("commerceCountryId", _commerceCountryId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("billingAllowed", _billingAllowed);
+		_columnOriginalValues.put("shippingAllowed", _shippingAllowed);
+		_columnOriginalValues.put("twoLettersISOCode", _twoLettersISOCode);
+		_columnOriginalValues.put("threeLettersISOCode", _threeLettersISOCode);
+		_columnOriginalValues.put("numericISOCode", _numericISOCode);
+		_columnOriginalValues.put("subjectToVAT", _subjectToVAT);
+		_columnOriginalValues.put("priority", _priority);
+		_columnOriginalValues.put("active_", _active);
+		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
+		_columnOriginalValues.put(
+			"channelFilterEnabled", _channelFilterEnabled);
+	}
+
+	private static final Map<String, String> _attributeNames;
+
+	static {
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("uuid_", "uuid");
+		attributeNames.put("active_", "active");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new HashMap<>();
+
+		columnBitmasks.put("uuid_", 1L);
+
+		columnBitmasks.put("commerceCountryId", 2L);
+
+		columnBitmasks.put("companyId", 4L);
+
+		columnBitmasks.put("userId", 8L);
+
+		columnBitmasks.put("userName", 16L);
+
+		columnBitmasks.put("createDate", 32L);
+
+		columnBitmasks.put("modifiedDate", 64L);
+
+		columnBitmasks.put("name", 128L);
+
+		columnBitmasks.put("billingAllowed", 256L);
+
+		columnBitmasks.put("shippingAllowed", 512L);
+
+		columnBitmasks.put("twoLettersISOCode", 1024L);
+
+		columnBitmasks.put("threeLettersISOCode", 2048L);
+
+		columnBitmasks.put("numericISOCode", 4096L);
+
+		columnBitmasks.put("subjectToVAT", 8192L);
+
+		columnBitmasks.put("priority", 16384L);
+
+		columnBitmasks.put("active_", 32768L);
+
+		columnBitmasks.put("lastPublishDate", 65536L);
+
+		columnBitmasks.put("channelFilterEnabled", 131072L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
 	private long _columnBitmask;
 	private CommerceCountry _escapedModel;
 

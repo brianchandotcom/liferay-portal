@@ -21,6 +21,7 @@ import com.liferay.commerce.discount.model.impl.CommerceDiscountRuleImpl;
 import com.liferay.commerce.discount.model.impl.CommerceDiscountRuleModelImpl;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRulePersistence;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -30,10 +31,12 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -45,9 +48,16 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * The persistence implementation for the commerce discount rule service.
@@ -621,8 +631,6 @@ public class CommerceDiscountRulePersistenceImpl
 		entityCache.putResult(
 			CommerceDiscountRuleImpl.class,
 			commerceDiscountRule.getPrimaryKey(), commerceDiscountRule);
-
-		commerceDiscountRule.resetOriginalValues();
 	}
 
 	/**
@@ -640,9 +648,6 @@ public class CommerceDiscountRulePersistenceImpl
 					commerceDiscountRule.getPrimaryKey()) == null) {
 
 				cacheResult(commerceDiscountRule);
-			}
-			else {
-				commerceDiscountRule.resetOriginalValues();
 			}
 		}
 	}
@@ -673,24 +678,16 @@ public class CommerceDiscountRulePersistenceImpl
 	@Override
 	public void clearCache(CommerceDiscountRule commerceDiscountRule) {
 		entityCache.removeResult(
-			CommerceDiscountRuleImpl.class,
-			commerceDiscountRule.getPrimaryKey());
-
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			CommerceDiscountRuleImpl.class, commerceDiscountRule);
 	}
 
 	@Override
 	public void clearCache(List<CommerceDiscountRule> commerceDiscountRules) {
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (CommerceDiscountRule commerceDiscountRule :
 				commerceDiscountRules) {
 
 			entityCache.removeResult(
-				CommerceDiscountRuleImpl.class,
-				commerceDiscountRule.getPrimaryKey());
+				CommerceDiscountRuleImpl.class, commerceDiscountRule);
 		}
 	}
 
@@ -870,10 +867,8 @@ public class CommerceDiscountRulePersistenceImpl
 		try {
 			session = openSession();
 
-			if (commerceDiscountRule.isNew()) {
+			if (isNew) {
 				session.save(commerceDiscountRule);
-
-				commerceDiscountRule.setNew(false);
 			}
 			else {
 				commerceDiscountRule = (CommerceDiscountRule)session.merge(
@@ -887,51 +882,13 @@ public class CommerceDiscountRulePersistenceImpl
 			closeSession(session);
 		}
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		entityCache.putResult(
+			CommerceDiscountRuleImpl.class, commerceDiscountRuleModelImpl,
+			false, true);
 
 		if (isNew) {
-			Object[] args = new Object[] {
-				commerceDiscountRuleModelImpl.getCommerceDiscountId()
-			};
-
-			finderCache.removeResult(
-				_finderPathCountByCommerceDiscountId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByCommerceDiscountId, args);
-
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+			commerceDiscountRule.setNew(false);
 		}
-		else {
-			if ((commerceDiscountRuleModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByCommerceDiscountId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					commerceDiscountRuleModelImpl.
-						getOriginalCommerceDiscountId()
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByCommerceDiscountId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCommerceDiscountId, args);
-
-				args = new Object[] {
-					commerceDiscountRuleModelImpl.getCommerceDiscountId()
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByCommerceDiscountId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCommerceDiscountId, args);
-			}
-		}
-
-		entityCache.putResult(
-			CommerceDiscountRuleImpl.class,
-			commerceDiscountRule.getPrimaryKey(), commerceDiscountRule, false);
 
 		commerceDiscountRule.resetOriginalValues();
 
@@ -1200,45 +1157,62 @@ public class CommerceDiscountRulePersistenceImpl
 	 * Initializes the commerce discount rule persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceDiscountRuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		Bundle bundle = FrameworkUtil.getBundle(
+			CommerceDiscountRulePersistenceImpl.class);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceDiscountRuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+		_bundleContext = bundle.getBundleContext();
 
-		_finderPathCountAll = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_argumentsResolverServiceRegistration = _bundleContext.registerService(
+			ArgumentsResolver.class,
+			new CommerceDiscountRuleModelArgumentsResolver(),
+			MapUtil.singletonDictionary(
+				"model.class.name", CommerceDiscountRule.class.getName()));
 
-		_finderPathWithPaginationFindByCommerceDiscountId = new FinderPath(
-			CommerceDiscountRuleImpl.class,
+		_finderPathWithPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathWithoutPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathCountAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
+
+		_finderPathWithPaginationFindByCommerceDiscountId = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceDiscountId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"commerceDiscountId"}, true);
 
-		_finderPathWithoutPaginationFindByCommerceDiscountId = new FinderPath(
-			CommerceDiscountRuleImpl.class,
+		_finderPathWithoutPaginationFindByCommerceDiscountId =
+			_createFinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByCommerceDiscountId", new String[] {Long.class.getName()},
+				new String[] {"commerceDiscountId"}, true);
+
+		_finderPathCountByCommerceDiscountId = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCommerceDiscountId", new String[] {Long.class.getName()},
-			CommerceDiscountRuleModelImpl.COMMERCEDISCOUNTID_COLUMN_BITMASK |
-			CommerceDiscountRuleModelImpl.CREATEDATE_COLUMN_BITMASK);
-
-		_finderPathCountByCommerceDiscountId = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceDiscountId", new String[] {Long.class.getName()});
+			"countByCommerceDiscountId", new String[] {Long.class.getName()},
+			new String[] {"commerceDiscountId"}, false);
 	}
 
 	public void destroy() {
 		entityCache.removeCache(CommerceDiscountRuleImpl.class.getName());
-		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		_argumentsResolverServiceRegistration.unregister();
+
+		for (ServiceRegistration<FinderPath> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
+
+	private BundleContext _bundleContext;
 
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
@@ -1272,5 +1246,108 @@ public class CommerceDiscountRulePersistenceImpl
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"type"});
+
+	private FinderPath _createFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, baseModelResult);
+
+		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
+			_serviceRegistrations.add(
+				_bundleContext.registerService(
+					FinderPath.class, finderPath,
+					MapUtil.singletonDictionary("cache.name", cacheName)));
+		}
+
+		return finderPath;
+	}
+
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
+	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
+		new HashSet<>();
+
+	private static class CommerceDiscountRuleModelArgumentsResolver
+		implements ArgumentsResolver {
+
+		@Override
+		public Object[] getArguments(
+			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
+			boolean original) {
+
+			String[] columnNames = finderPath.getColumnNames();
+
+			if ((columnNames == null) || (columnNames.length == 0)) {
+				if (baseModel.isNew()) {
+					return FINDER_ARGS_EMPTY;
+				}
+
+				return null;
+			}
+
+			CommerceDiscountRuleModelImpl commerceDiscountRuleModelImpl =
+				(CommerceDiscountRuleModelImpl)baseModel;
+
+			long columnBitmask =
+				commerceDiscountRuleModelImpl.getColumnBitmask();
+
+			if (!checkColumn || (columnBitmask == 0)) {
+				return _getValue(
+					commerceDiscountRuleModelImpl, columnNames, original);
+			}
+
+			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
+				finderPath);
+
+			if (finderPathColumnBitmask == null) {
+				finderPathColumnBitmask = 0L;
+
+				for (String columnName : columnNames) {
+					finderPathColumnBitmask |=
+						commerceDiscountRuleModelImpl.getColumnBitmask(
+							columnName);
+				}
+
+				_finderPathColumnBitmasksCache.put(
+					finderPath, finderPathColumnBitmask);
+			}
+
+			if ((columnBitmask & finderPathColumnBitmask) != 0) {
+				return _getValue(
+					commerceDiscountRuleModelImpl, columnNames, original);
+			}
+
+			return null;
+		}
+
+		private Object[] _getValue(
+			CommerceDiscountRuleModelImpl commerceDiscountRuleModelImpl,
+			String[] columnNames, boolean original) {
+
+			Object[] arguments = new Object[columnNames.length];
+
+			for (int i = 0; i < arguments.length; i++) {
+				String columnName = columnNames[i];
+
+				if (original) {
+					arguments[i] =
+						commerceDiscountRuleModelImpl.getColumnOriginalValue(
+							columnName);
+				}
+				else {
+					arguments[i] = commerceDiscountRuleModelImpl.getColumnValue(
+						columnName);
+				}
+			}
+
+			return arguments;
+		}
+
+		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
+			new ConcurrentHashMap<>();
+
+	}
 
 }

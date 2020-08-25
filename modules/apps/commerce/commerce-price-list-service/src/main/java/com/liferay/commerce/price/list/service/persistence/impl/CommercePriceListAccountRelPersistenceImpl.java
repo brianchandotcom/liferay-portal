@@ -21,6 +21,7 @@ import com.liferay.commerce.price.list.model.impl.CommercePriceListAccountRelImp
 import com.liferay.commerce.price.list.model.impl.CommercePriceListAccountRelModelImpl;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListAccountRelPersistence;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -30,10 +31,12 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -47,10 +50,17 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * The persistence implementation for the commerce price list account rel service.
@@ -2011,8 +2021,6 @@ public class CommercePriceListAccountRelPersistenceImpl
 				commercePriceListAccountRel.getCommercePriceListId()
 			},
 			commercePriceListAccountRel);
-
-		commercePriceListAccountRel.resetOriginalValues();
 	}
 
 	/**
@@ -2032,9 +2040,6 @@ public class CommercePriceListAccountRelPersistenceImpl
 					commercePriceListAccountRel.getPrimaryKey()) == null) {
 
 				cacheResult(commercePriceListAccountRel);
-			}
-			else {
-				commercePriceListAccountRel.resetOriginalValues();
 			}
 		}
 	}
@@ -2067,35 +2072,19 @@ public class CommercePriceListAccountRelPersistenceImpl
 		CommercePriceListAccountRel commercePriceListAccountRel) {
 
 		entityCache.removeResult(
-			CommercePriceListAccountRelImpl.class,
-			commercePriceListAccountRel.getPrimaryKey());
-
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache(
-			(CommercePriceListAccountRelModelImpl)commercePriceListAccountRel,
-			true);
+			CommercePriceListAccountRelImpl.class, commercePriceListAccountRel);
 	}
 
 	@Override
 	public void clearCache(
 		List<CommercePriceListAccountRel> commercePriceListAccountRels) {
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (CommercePriceListAccountRel commercePriceListAccountRel :
 				commercePriceListAccountRels) {
 
 			entityCache.removeResult(
 				CommercePriceListAccountRelImpl.class,
-				commercePriceListAccountRel.getPrimaryKey());
-
-			clearUniqueFindersCache(
-				(CommercePriceListAccountRelModelImpl)
-					commercePriceListAccountRel,
-				true);
+				commercePriceListAccountRel);
 		}
 	}
 
@@ -2125,36 +2114,6 @@ public class CommercePriceListAccountRelPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByC_C, args, commercePriceListAccountRelModelImpl,
 			false);
-	}
-
-	protected void clearUniqueFindersCache(
-		CommercePriceListAccountRelModelImpl
-			commercePriceListAccountRelModelImpl,
-		boolean clearCurrent) {
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-				commercePriceListAccountRelModelImpl.getCommerceAccountId(),
-				commercePriceListAccountRelModelImpl.getCommercePriceListId()
-			};
-
-			finderCache.removeResult(_finderPathCountByC_C, args);
-			finderCache.removeResult(_finderPathFetchByC_C, args);
-		}
-
-		if ((commercePriceListAccountRelModelImpl.getColumnBitmask() &
-			 _finderPathFetchByC_C.getColumnBitmask()) != 0) {
-
-			Object[] args = new Object[] {
-				commercePriceListAccountRelModelImpl.
-					getOriginalCommerceAccountId(),
-				commercePriceListAccountRelModelImpl.
-					getOriginalCommercePriceListId()
-			};
-
-			finderCache.removeResult(_finderPathCountByC_C, args);
-			finderCache.removeResult(_finderPathFetchByC_C, args);
-		}
 	}
 
 	/**
@@ -2343,10 +2302,8 @@ public class CommercePriceListAccountRelPersistenceImpl
 		try {
 			session = openSession();
 
-			if (commercePriceListAccountRel.isNew()) {
+			if (isNew) {
 				session.save(commercePriceListAccountRel);
-
-				commercePriceListAccountRel.setNew(false);
 			}
 			else {
 				commercePriceListAccountRel =
@@ -2361,119 +2318,15 @@ public class CommercePriceListAccountRelPersistenceImpl
 			closeSession(session);
 		}
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-
-		if (isNew) {
-			Object[] args = new Object[] {
-				commercePriceListAccountRelModelImpl.getUuid()
-			};
-
-			finderCache.removeResult(_finderPathCountByUuid, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByUuid, args);
-
-			args = new Object[] {
-				commercePriceListAccountRelModelImpl.getUuid(),
-				commercePriceListAccountRelModelImpl.getCompanyId()
-			};
-
-			finderCache.removeResult(_finderPathCountByUuid_C, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByUuid_C, args);
-
-			args = new Object[] {
-				commercePriceListAccountRelModelImpl.getCommercePriceListId()
-			};
-
-			finderCache.removeResult(
-				_finderPathCountByCommercePriceListId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByCommercePriceListId, args);
-
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
-		}
-		else {
-			if ((commercePriceListAccountRelModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByUuid.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					commercePriceListAccountRelModelImpl.getOriginalUuid()
-				};
-
-				finderCache.removeResult(_finderPathCountByUuid, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByUuid, args);
-
-				args = new Object[] {
-					commercePriceListAccountRelModelImpl.getUuid()
-				};
-
-				finderCache.removeResult(_finderPathCountByUuid, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByUuid, args);
-			}
-
-			if ((commercePriceListAccountRelModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					commercePriceListAccountRelModelImpl.getOriginalUuid(),
-					commercePriceListAccountRelModelImpl.getOriginalCompanyId()
-				};
-
-				finderCache.removeResult(_finderPathCountByUuid_C, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByUuid_C, args);
-
-				args = new Object[] {
-					commercePriceListAccountRelModelImpl.getUuid(),
-					commercePriceListAccountRelModelImpl.getCompanyId()
-				};
-
-				finderCache.removeResult(_finderPathCountByUuid_C, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByUuid_C, args);
-			}
-
-			if ((commercePriceListAccountRelModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByCommercePriceListId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					commercePriceListAccountRelModelImpl.
-						getOriginalCommercePriceListId()
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByCommercePriceListId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCommercePriceListId,
-					args);
-
-				args = new Object[] {
-					commercePriceListAccountRelModelImpl.
-						getCommercePriceListId()
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByCommercePriceListId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCommercePriceListId,
-					args);
-			}
-		}
-
 		entityCache.putResult(
 			CommercePriceListAccountRelImpl.class,
-			commercePriceListAccountRel.getPrimaryKey(),
-			commercePriceListAccountRel, false);
+			commercePriceListAccountRelModelImpl, false, true);
 
-		clearUniqueFindersCache(commercePriceListAccountRelModelImpl, false);
 		cacheUniqueFindersCache(commercePriceListAccountRelModelImpl);
+
+		if (isNew) {
+			commercePriceListAccountRel.setNew(false);
+		}
 
 		commercePriceListAccountRel.resetOriginalValues();
 
@@ -2748,101 +2601,112 @@ public class CommercePriceListAccountRelPersistenceImpl
 	 * Initializes the commerce price list account rel persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			CommercePriceListAccountRelImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		Bundle bundle = FrameworkUtil.getBundle(
+			CommercePriceListAccountRelPersistenceImpl.class);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommercePriceListAccountRelImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+		_bundleContext = bundle.getBundleContext();
 
-		_finderPathCountAll = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_argumentsResolverServiceRegistration = _bundleContext.registerService(
+			ArgumentsResolver.class,
+			new CommercePriceListAccountRelModelArgumentsResolver(),
+			MapUtil.singletonDictionary(
+				"model.class.name",
+				CommercePriceListAccountRel.class.getName()));
 
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			CommercePriceListAccountRelImpl.class,
+		_finderPathWithPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathWithoutPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathCountAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
+
+		_finderPathWithPaginationFindByUuid = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"uuid_"}, true);
 
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			CommercePriceListAccountRelImpl.class,
+		_finderPathWithoutPaginationFindByUuid = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()},
-			CommercePriceListAccountRelModelImpl.UUID_COLUMN_BITMASK |
-			CommercePriceListAccountRelModelImpl.ORDER_COLUMN_BITMASK);
+			new String[] {String.class.getName()}, new String[] {"uuid_"},
+			true);
 
-		_finderPathCountByUuid = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUuid", new String[] {String.class.getName()});
+		_finderPathCountByUuid = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] {String.class.getName()}, new String[] {"uuid_"},
+			false);
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			CommercePriceListAccountRelImpl.class,
+		_finderPathWithPaginationFindByUuid_C = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			CommercePriceListAccountRelImpl.class,
+		_finderPathWithoutPaginationFindByUuid_C = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CommercePriceListAccountRelModelImpl.UUID_COLUMN_BITMASK |
-			CommercePriceListAccountRelModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommercePriceListAccountRelModelImpl.ORDER_COLUMN_BITMASK);
+			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathCountByUuid_C = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()});
+		_finderPathCountByUuid_C = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "companyId"}, false);
 
-		_finderPathWithPaginationFindByCommercePriceListId = new FinderPath(
-			CommercePriceListAccountRelImpl.class,
+		_finderPathWithPaginationFindByCommercePriceListId = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommercePriceListId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"commercePriceListId"}, true);
 
-		_finderPathWithoutPaginationFindByCommercePriceListId = new FinderPath(
-			CommercePriceListAccountRelImpl.class,
+		_finderPathWithoutPaginationFindByCommercePriceListId =
+			_createFinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByCommercePriceListId",
+				new String[] {Long.class.getName()},
+				new String[] {"commercePriceListId"}, true);
+
+		_finderPathCountByCommercePriceListId = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCommercePriceListId", new String[] {Long.class.getName()},
-			CommercePriceListAccountRelModelImpl.
-				COMMERCEPRICELISTID_COLUMN_BITMASK |
-			CommercePriceListAccountRelModelImpl.ORDER_COLUMN_BITMASK);
+			"countByCommercePriceListId", new String[] {Long.class.getName()},
+			new String[] {"commercePriceListId"}, false);
 
-		_finderPathCountByCommercePriceListId = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommercePriceListId", new String[] {Long.class.getName()});
-
-		_finderPathFetchByC_C = new FinderPath(
-			CommercePriceListAccountRelImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_C",
+		_finderPathFetchByC_C = _createFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			CommercePriceListAccountRelModelImpl.
-				COMMERCEACCOUNTID_COLUMN_BITMASK |
-			CommercePriceListAccountRelModelImpl.
-				COMMERCEPRICELISTID_COLUMN_BITMASK);
+			new String[] {"commerceAccountId", "commercePriceListId"}, true);
 
-		_finderPathCountByC_C = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()});
+		_finderPathCountByC_C = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"commerceAccountId", "commercePriceListId"}, false);
 	}
 
 	public void destroy() {
 		entityCache.removeCache(
 			CommercePriceListAccountRelImpl.class.getName());
-		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		_argumentsResolverServiceRegistration.unregister();
+
+		for (ServiceRegistration<FinderPath> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
+
+	private BundleContext _bundleContext;
 
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
@@ -2876,5 +2740,113 @@ public class CommercePriceListAccountRelPersistenceImpl
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "order"});
+
+	private FinderPath _createFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, baseModelResult);
+
+		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
+			_serviceRegistrations.add(
+				_bundleContext.registerService(
+					FinderPath.class, finderPath,
+					MapUtil.singletonDictionary("cache.name", cacheName)));
+		}
+
+		return finderPath;
+	}
+
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
+	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
+		new HashSet<>();
+
+	private static class CommercePriceListAccountRelModelArgumentsResolver
+		implements ArgumentsResolver {
+
+		@Override
+		public Object[] getArguments(
+			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
+			boolean original) {
+
+			String[] columnNames = finderPath.getColumnNames();
+
+			if ((columnNames == null) || (columnNames.length == 0)) {
+				if (baseModel.isNew()) {
+					return FINDER_ARGS_EMPTY;
+				}
+
+				return null;
+			}
+
+			CommercePriceListAccountRelModelImpl
+				commercePriceListAccountRelModelImpl =
+					(CommercePriceListAccountRelModelImpl)baseModel;
+
+			long columnBitmask =
+				commercePriceListAccountRelModelImpl.getColumnBitmask();
+
+			if (!checkColumn || (columnBitmask == 0)) {
+				return _getValue(
+					commercePriceListAccountRelModelImpl, columnNames,
+					original);
+			}
+
+			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
+				finderPath);
+
+			if (finderPathColumnBitmask == null) {
+				finderPathColumnBitmask = 0L;
+
+				for (String columnName : columnNames) {
+					finderPathColumnBitmask |=
+						commercePriceListAccountRelModelImpl.getColumnBitmask(
+							columnName);
+				}
+
+				_finderPathColumnBitmasksCache.put(
+					finderPath, finderPathColumnBitmask);
+			}
+
+			if ((columnBitmask & finderPathColumnBitmask) != 0) {
+				return _getValue(
+					commercePriceListAccountRelModelImpl, columnNames,
+					original);
+			}
+
+			return null;
+		}
+
+		private Object[] _getValue(
+			CommercePriceListAccountRelModelImpl
+				commercePriceListAccountRelModelImpl,
+			String[] columnNames, boolean original) {
+
+			Object[] arguments = new Object[columnNames.length];
+
+			for (int i = 0; i < arguments.length; i++) {
+				String columnName = columnNames[i];
+
+				if (original) {
+					arguments[i] =
+						commercePriceListAccountRelModelImpl.
+							getColumnOriginalValue(columnName);
+				}
+				else {
+					arguments[i] =
+						commercePriceListAccountRelModelImpl.getColumnValue(
+							columnName);
+				}
+			}
+
+			return arguments;
+		}
+
+		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
+			new ConcurrentHashMap<>();
+
+	}
 
 }

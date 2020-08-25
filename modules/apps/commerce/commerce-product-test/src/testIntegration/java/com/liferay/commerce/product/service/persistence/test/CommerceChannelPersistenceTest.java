@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -476,25 +477,68 @@ public class CommerceChannelPersistenceTest {
 
 		_persistence.clearCache();
 
-		CommerceChannel existingCommerceChannel = _persistence.findByPrimaryKey(
-			newCommerceChannel.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newCommerceChannel.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CommerceChannel newCommerceChannel = addCommerceChannel();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CommerceChannel.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"commerceChannelId",
+				newCommerceChannel.getCommerceChannelId()));
+
+		List<CommerceChannel> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(CommerceChannel commerceChannel) {
+		Assert.assertEquals(
+			Long.valueOf(commerceChannel.getSiteGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				commerceChannel, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "siteGroupId"));
 
 		Assert.assertEquals(
-			Long.valueOf(existingCommerceChannel.getSiteGroupId()),
+			Long.valueOf(commerceChannel.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceChannel, "getOriginalSiteGroupId",
-				new Class<?>[0]));
-
+				commerceChannel, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
-			Long.valueOf(existingCommerceChannel.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingCommerceChannel, "getOriginalCompanyId",
-				new Class<?>[0]));
-		Assert.assertEquals(
-			existingCommerceChannel.getExternalReferenceCode(),
+			commerceChannel.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
-				existingCommerceChannel, "getOriginalExternalReferenceCode",
-				new Class<?>[0]));
+				commerceChannel, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected CommerceChannel addCommerceChannel() throws Exception {

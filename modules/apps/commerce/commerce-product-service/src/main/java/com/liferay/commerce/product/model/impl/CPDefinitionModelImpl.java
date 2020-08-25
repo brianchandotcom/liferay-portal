@@ -198,24 +198,65 @@ public class CPDefinitionModelImpl
 	@Deprecated
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CPTAXCATEGORYID_COLUMN_BITMASK = 1L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CPRODUCTID_COLUMN_BITMASK = 2L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long DISPLAYDATE_COLUMN_BITMASK = 8L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long GROUPID_COLUMN_BITMASK = 16L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long STATUS_COLUMN_BITMASK = 32L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long SUBSCRIPTIONENABLED_COLUMN_BITMASK = 64L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long UUID_COLUMN_BITMASK = 128L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long VERSION_COLUMN_BITMASK = 256L;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *		#getColumnBitmask(String)
+	 */
+	@Deprecated
 	public static final long CREATEDATE_COLUMN_BITMASK = 512L;
 
 	/**
@@ -1113,17 +1154,20 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		_columnBitmask |= UUID_COLUMN_BITMASK;
-
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_uuid = uuid;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
+		return getColumnOriginalValue("uuid_");
 	}
 
 	@JSON
@@ -1139,6 +1183,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setDefaultLanguageId(String defaultLanguageId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_defaultLanguageId = defaultLanguageId;
 	}
 
@@ -1150,6 +1198,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setCPDefinitionId(long CPDefinitionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_CPDefinitionId = CPDefinitionId;
 	}
 
@@ -1161,19 +1213,20 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_groupId = groupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalGroupId() {
-		return _originalGroupId;
+		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -1184,19 +1237,20 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCompanyId() {
-		return _originalCompanyId;
+		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -1207,6 +1261,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setUserId(long userId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_userId = userId;
 	}
 
@@ -1239,6 +1297,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setUserName(String userName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_userName = userName;
 	}
 
@@ -1250,6 +1312,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_createDate = createDate;
 	}
 
@@ -1267,6 +1333,10 @@ public class CPDefinitionModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1278,19 +1348,20 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setCProductId(long CProductId) {
-		_columnBitmask |= CPRODUCTID_COLUMN_BITMASK;
-
-		if (!_setOriginalCProductId) {
-			_setOriginalCProductId = true;
-
-			_originalCProductId = _CProductId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_CProductId = CProductId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCProductId() {
-		return _originalCProductId;
+		return GetterUtil.getLong(getColumnOriginalValue("CProductId"));
 	}
 
 	@JSON
@@ -1301,19 +1372,20 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setCPTaxCategoryId(long CPTaxCategoryId) {
-		_columnBitmask |= CPTAXCATEGORYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCPTaxCategoryId) {
-			_setOriginalCPTaxCategoryId = true;
-
-			_originalCPTaxCategoryId = _CPTaxCategoryId;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_CPTaxCategoryId = CPTaxCategoryId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public long getOriginalCPTaxCategoryId() {
-		return _originalCPTaxCategoryId;
+		return GetterUtil.getLong(getColumnOriginalValue("CPTaxCategoryId"));
 	}
 
 	@JSON
@@ -1329,6 +1401,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setProductTypeName(String productTypeName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_productTypeName = productTypeName;
 	}
 
@@ -1346,6 +1422,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setAvailableIndividually(boolean availableIndividually) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_availableIndividually = availableIndividually;
 	}
 
@@ -1363,6 +1443,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setIgnoreSKUCombinations(boolean ignoreSKUCombinations) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_ignoreSKUCombinations = ignoreSKUCombinations;
 	}
 
@@ -1380,6 +1464,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setShippable(boolean shippable) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_shippable = shippable;
 	}
 
@@ -1397,6 +1485,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setFreeShipping(boolean freeShipping) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_freeShipping = freeShipping;
 	}
 
@@ -1414,6 +1506,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setShipSeparately(boolean shipSeparately) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_shipSeparately = shipSeparately;
 	}
 
@@ -1425,6 +1521,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setShippingExtraPrice(double shippingExtraPrice) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_shippingExtraPrice = shippingExtraPrice;
 	}
 
@@ -1436,6 +1536,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setWidth(double width) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_width = width;
 	}
 
@@ -1447,6 +1551,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setHeight(double height) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_height = height;
 	}
 
@@ -1458,6 +1566,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setDepth(double depth) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_depth = depth;
 	}
 
@@ -1469,6 +1581,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setWeight(double weight) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_weight = weight;
 	}
 
@@ -1486,6 +1602,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setTaxExempt(boolean taxExempt) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_taxExempt = taxExempt;
 	}
 
@@ -1503,6 +1623,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setTelcoOrElectronics(boolean telcoOrElectronics) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_telcoOrElectronics = telcoOrElectronics;
 	}
 
@@ -1519,6 +1643,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setDDMStructureKey(String DDMStructureKey) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_DDMStructureKey = DDMStructureKey;
 	}
 
@@ -1536,6 +1664,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setPublished(boolean published) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_published = published;
 	}
 
@@ -1547,17 +1679,20 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setDisplayDate(Date displayDate) {
-		_columnBitmask |= DISPLAYDATE_COLUMN_BITMASK;
-
-		if (_originalDisplayDate == null) {
-			_originalDisplayDate = _displayDate;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_displayDate = displayDate;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public Date getOriginalDisplayDate() {
-		return _originalDisplayDate;
+		return getColumnOriginalValue("displayDate");
 	}
 
 	@JSON
@@ -1568,6 +1703,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setExpirationDate(Date expirationDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_expirationDate = expirationDate;
 	}
 
@@ -1579,6 +1718,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_lastPublishDate = lastPublishDate;
 	}
 
@@ -1596,19 +1739,21 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setSubscriptionEnabled(boolean subscriptionEnabled) {
-		_columnBitmask |= SUBSCRIPTIONENABLED_COLUMN_BITMASK;
-
-		if (!_setOriginalSubscriptionEnabled) {
-			_setOriginalSubscriptionEnabled = true;
-
-			_originalSubscriptionEnabled = _subscriptionEnabled;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_subscriptionEnabled = subscriptionEnabled;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public boolean getOriginalSubscriptionEnabled() {
-		return _originalSubscriptionEnabled;
+		return GetterUtil.getBoolean(
+			getColumnOriginalValue("subscriptionEnabled"));
 	}
 
 	@JSON
@@ -1619,6 +1764,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setSubscriptionLength(int subscriptionLength) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_subscriptionLength = subscriptionLength;
 	}
 
@@ -1635,6 +1784,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setSubscriptionType(String subscriptionType) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_subscriptionType = subscriptionType;
 	}
 
@@ -1651,6 +1804,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setSubscriptionTypeSettings(String subscriptionTypeSettings) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_subscriptionTypeSettings = subscriptionTypeSettings;
 	}
 
@@ -1662,6 +1819,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setMaxSubscriptionCycles(long maxSubscriptionCycles) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_maxSubscriptionCycles = maxSubscriptionCycles;
 	}
 
@@ -1681,6 +1842,10 @@ public class CPDefinitionModelImpl
 	public void setDeliverySubscriptionEnabled(
 		boolean deliverySubscriptionEnabled) {
 
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_deliverySubscriptionEnabled = deliverySubscriptionEnabled;
 	}
 
@@ -1692,6 +1857,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setDeliverySubscriptionLength(int deliverySubscriptionLength) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_deliverySubscriptionLength = deliverySubscriptionLength;
 	}
 
@@ -1708,6 +1877,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setDeliverySubscriptionType(String deliverySubscriptionType) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_deliverySubscriptionType = deliverySubscriptionType;
 	}
 
@@ -1726,6 +1899,10 @@ public class CPDefinitionModelImpl
 	public void setDeliverySubscriptionTypeSettings(
 		String deliverySubscriptionTypeSettings) {
 
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_deliverySubscriptionTypeSettings = deliverySubscriptionTypeSettings;
 	}
 
@@ -1738,6 +1915,10 @@ public class CPDefinitionModelImpl
 	@Override
 	public void setDeliveryMaxSubscriptionCycles(
 		long deliveryMaxSubscriptionCycles) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
 
 		_deliveryMaxSubscriptionCycles = deliveryMaxSubscriptionCycles;
 	}
@@ -1758,6 +1939,10 @@ public class CPDefinitionModelImpl
 	public void setAccountGroupFilterEnabled(
 		boolean accountGroupFilterEnabled) {
 
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_accountGroupFilterEnabled = accountGroupFilterEnabled;
 	}
 
@@ -1775,6 +1960,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setChannelFilterEnabled(boolean channelFilterEnabled) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_channelFilterEnabled = channelFilterEnabled;
 	}
 
@@ -1786,19 +1975,20 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setVersion(int version) {
-		_columnBitmask |= VERSION_COLUMN_BITMASK;
-
-		if (!_setOriginalVersion) {
-			_setOriginalVersion = true;
-
-			_originalVersion = _version;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_version = version;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public int getOriginalVersion() {
-		return _originalVersion;
+		return GetterUtil.getInteger(getColumnOriginalValue("version"));
 	}
 
 	@JSON
@@ -1809,19 +1999,20 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
-
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
-
-			_originalStatus = _status;
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_status = status;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
 	public int getOriginalStatus() {
-		return _originalStatus;
+		return GetterUtil.getInteger(getColumnOriginalValue("status"));
 	}
 
 	@JSON
@@ -1832,6 +2023,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_statusByUserId = statusByUserId;
 	}
 
@@ -1864,6 +2059,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_statusByUserName = statusByUserName;
 	}
 
@@ -1875,6 +2074,10 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void setStatusDate(Date statusDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
 		_statusDate = statusDate;
 	}
 
@@ -1965,6 +2168,24 @@ public class CPDefinitionModelImpl
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -2131,38 +2352,9 @@ public class CPDefinitionModelImpl
 
 	@Override
 	public void resetOriginalValues() {
-		_originalUuid = _uuid;
-
-		_originalGroupId = _groupId;
-
-		_setOriginalGroupId = false;
-
-		_originalCompanyId = _companyId;
-
-		_setOriginalCompanyId = false;
+		_columnOriginalValues = Collections.emptyMap();
 
 		_setModifiedDate = false;
-		_originalCProductId = _CProductId;
-
-		_setOriginalCProductId = false;
-
-		_originalCPTaxCategoryId = _CPTaxCategoryId;
-
-		_setOriginalCPTaxCategoryId = false;
-
-		_originalDisplayDate = _displayDate;
-
-		_originalSubscriptionEnabled = _subscriptionEnabled;
-
-		_setOriginalSubscriptionEnabled = false;
-
-		_originalVersion = _version;
-
-		_setOriginalVersion = false;
-
-		_originalStatus = _status;
-
-		_setOriginalStatus = false;
 
 		_columnBitmask = 0;
 	}
@@ -2459,26 +2651,17 @@ public class CPDefinitionModelImpl
 	}
 
 	private String _uuid;
-	private String _originalUuid;
 	private String _defaultLanguageId;
 	private long _CPDefinitionId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _CProductId;
-	private long _originalCProductId;
-	private boolean _setOriginalCProductId;
 	private long _CPTaxCategoryId;
-	private long _originalCPTaxCategoryId;
-	private boolean _setOriginalCPTaxCategoryId;
 	private String _productTypeName;
 	private boolean _availableIndividually;
 	private boolean _ignoreSKUCombinations;
@@ -2495,12 +2678,9 @@ public class CPDefinitionModelImpl
 	private String _DDMStructureKey;
 	private boolean _published;
 	private Date _displayDate;
-	private Date _originalDisplayDate;
 	private Date _expirationDate;
 	private Date _lastPublishDate;
 	private boolean _subscriptionEnabled;
-	private boolean _originalSubscriptionEnabled;
-	private boolean _setOriginalSubscriptionEnabled;
 	private int _subscriptionLength;
 	private String _subscriptionType;
 	private String _subscriptionTypeSettings;
@@ -2513,14 +2693,217 @@ public class CPDefinitionModelImpl
 	private boolean _accountGroupFilterEnabled;
 	private boolean _channelFilterEnabled;
 	private int _version;
-	private int _originalVersion;
-	private boolean _setOriginalVersion;
 	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+
+	public <T> T getColumnValue(String columnName) {
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
+
+		Function<CPDefinition, Object> function = _attributeGetterFunctions.get(
+			columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((CPDefinition)this);
+	}
+
+	public <T> T getColumnOriginalValue(String columnName) {
+		if (_columnOriginalValues == null) {
+			return null;
+		}
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		return (T)_columnOriginalValues.get(columnName);
+	}
+
+	private void _setColumnOriginalValues() {
+		_columnOriginalValues = new HashMap<String, Object>();
+
+		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put("defaultLanguageId", _defaultLanguageId);
+		_columnOriginalValues.put("CPDefinitionId", _CPDefinitionId);
+		_columnOriginalValues.put("groupId", _groupId);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("userId", _userId);
+		_columnOriginalValues.put("userName", _userName);
+		_columnOriginalValues.put("createDate", _createDate);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("CProductId", _CProductId);
+		_columnOriginalValues.put("CPTaxCategoryId", _CPTaxCategoryId);
+		_columnOriginalValues.put("productTypeName", _productTypeName);
+		_columnOriginalValues.put(
+			"availableIndividually", _availableIndividually);
+		_columnOriginalValues.put(
+			"ignoreSKUCombinations", _ignoreSKUCombinations);
+		_columnOriginalValues.put("shippable", _shippable);
+		_columnOriginalValues.put("freeShipping", _freeShipping);
+		_columnOriginalValues.put("shipSeparately", _shipSeparately);
+		_columnOriginalValues.put("shippingExtraPrice", _shippingExtraPrice);
+		_columnOriginalValues.put("width", _width);
+		_columnOriginalValues.put("height", _height);
+		_columnOriginalValues.put("depth", _depth);
+		_columnOriginalValues.put("weight", _weight);
+		_columnOriginalValues.put("taxExempt", _taxExempt);
+		_columnOriginalValues.put("telcoOrElectronics", _telcoOrElectronics);
+		_columnOriginalValues.put("DDMStructureKey", _DDMStructureKey);
+		_columnOriginalValues.put("published", _published);
+		_columnOriginalValues.put("displayDate", _displayDate);
+		_columnOriginalValues.put("expirationDate", _expirationDate);
+		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
+		_columnOriginalValues.put("subscriptionEnabled", _subscriptionEnabled);
+		_columnOriginalValues.put("subscriptionLength", _subscriptionLength);
+		_columnOriginalValues.put("subscriptionType", _subscriptionType);
+		_columnOriginalValues.put(
+			"subscriptionTypeSettings", _subscriptionTypeSettings);
+		_columnOriginalValues.put(
+			"maxSubscriptionCycles", _maxSubscriptionCycles);
+		_columnOriginalValues.put(
+			"deliverySubscriptionEnabled", _deliverySubscriptionEnabled);
+		_columnOriginalValues.put(
+			"deliverySubscriptionLength", _deliverySubscriptionLength);
+		_columnOriginalValues.put(
+			"deliverySubscriptionType", _deliverySubscriptionType);
+		_columnOriginalValues.put(
+			"deliverySubTypeSettings", _deliverySubscriptionTypeSettings);
+		_columnOriginalValues.put(
+			"deliveryMaxSubscriptionCycles", _deliveryMaxSubscriptionCycles);
+		_columnOriginalValues.put(
+			"accountGroupFilterEnabled", _accountGroupFilterEnabled);
+		_columnOriginalValues.put(
+			"channelFilterEnabled", _channelFilterEnabled);
+		_columnOriginalValues.put("version", _version);
+		_columnOriginalValues.put("status", _status);
+		_columnOriginalValues.put("statusByUserId", _statusByUserId);
+		_columnOriginalValues.put("statusByUserName", _statusByUserName);
+		_columnOriginalValues.put("statusDate", _statusDate);
+	}
+
+	private static final Map<String, String> _attributeNames;
+
+	static {
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("uuid_", "uuid");
+		attributeNames.put(
+			"deliverySubTypeSettings", "deliverySubscriptionTypeSettings");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
+	private static final Map<String, Long> _columnBitmasks;
+
+	static {
+		Map<String, Long> columnBitmasks = new HashMap<>();
+
+		columnBitmasks.put("uuid_", 1L);
+
+		columnBitmasks.put("defaultLanguageId", 2L);
+
+		columnBitmasks.put("CPDefinitionId", 4L);
+
+		columnBitmasks.put("groupId", 8L);
+
+		columnBitmasks.put("companyId", 16L);
+
+		columnBitmasks.put("userId", 32L);
+
+		columnBitmasks.put("userName", 64L);
+
+		columnBitmasks.put("createDate", 128L);
+
+		columnBitmasks.put("modifiedDate", 256L);
+
+		columnBitmasks.put("CProductId", 512L);
+
+		columnBitmasks.put("CPTaxCategoryId", 1024L);
+
+		columnBitmasks.put("productTypeName", 2048L);
+
+		columnBitmasks.put("availableIndividually", 4096L);
+
+		columnBitmasks.put("ignoreSKUCombinations", 8192L);
+
+		columnBitmasks.put("shippable", 16384L);
+
+		columnBitmasks.put("freeShipping", 32768L);
+
+		columnBitmasks.put("shipSeparately", 65536L);
+
+		columnBitmasks.put("shippingExtraPrice", 131072L);
+
+		columnBitmasks.put("width", 262144L);
+
+		columnBitmasks.put("height", 524288L);
+
+		columnBitmasks.put("depth", 1048576L);
+
+		columnBitmasks.put("weight", 2097152L);
+
+		columnBitmasks.put("taxExempt", 4194304L);
+
+		columnBitmasks.put("telcoOrElectronics", 8388608L);
+
+		columnBitmasks.put("DDMStructureKey", 16777216L);
+
+		columnBitmasks.put("published", 33554432L);
+
+		columnBitmasks.put("displayDate", 67108864L);
+
+		columnBitmasks.put("expirationDate", 134217728L);
+
+		columnBitmasks.put("lastPublishDate", 268435456L);
+
+		columnBitmasks.put("subscriptionEnabled", 536870912L);
+
+		columnBitmasks.put("subscriptionLength", 1073741824L);
+
+		columnBitmasks.put("subscriptionType", 2147483648L);
+
+		columnBitmasks.put("subscriptionTypeSettings", 4294967296L);
+
+		columnBitmasks.put("maxSubscriptionCycles", 8589934592L);
+
+		columnBitmasks.put("deliverySubscriptionEnabled", 17179869184L);
+
+		columnBitmasks.put("deliverySubscriptionLength", 34359738368L);
+
+		columnBitmasks.put("deliverySubscriptionType", 68719476736L);
+
+		columnBitmasks.put("deliverySubTypeSettings", 137438953472L);
+
+		columnBitmasks.put("deliveryMaxSubscriptionCycles", 274877906944L);
+
+		columnBitmasks.put("accountGroupFilterEnabled", 549755813888L);
+
+		columnBitmasks.put("channelFilterEnabled", 1099511627776L);
+
+		columnBitmasks.put("version", 2199023255552L);
+
+		columnBitmasks.put("status", 4398046511104L);
+
+		columnBitmasks.put("statusByUserId", 8796093022208L);
+
+		columnBitmasks.put("statusByUserName", 17592186044416L);
+
+		columnBitmasks.put("statusDate", 35184372088832L);
+
+		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
+	}
+
 	private long _columnBitmask;
 	private CPDefinition _escapedModel;
 

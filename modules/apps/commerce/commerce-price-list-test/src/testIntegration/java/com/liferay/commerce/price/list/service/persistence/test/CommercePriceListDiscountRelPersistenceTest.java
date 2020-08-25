@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -530,22 +531,67 @@ public class CommercePriceListDiscountRelPersistenceTest {
 
 		_persistence.clearCache();
 
-		CommercePriceListDiscountRel existingCommercePriceListDiscountRel =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newCommercePriceListDiscountRel.getPrimaryKey());
+				newCommercePriceListDiscountRel.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CommercePriceListDiscountRel newCommercePriceListDiscountRel =
+			addCommercePriceListDiscountRel();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CommercePriceListDiscountRel.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"commercePriceListDiscountRelId",
+				newCommercePriceListDiscountRel.
+					getCommercePriceListDiscountRelId()));
+
+		List<CommercePriceListDiscountRel> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		CommercePriceListDiscountRel commercePriceListDiscountRel) {
 
 		Assert.assertEquals(
-			Long.valueOf(
-				existingCommercePriceListDiscountRel.getCommerceDiscountId()),
+			Long.valueOf(commercePriceListDiscountRel.getCommerceDiscountId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommercePriceListDiscountRel,
-				"getOriginalCommerceDiscountId", new Class<?>[0]));
+				commercePriceListDiscountRel, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "commerceDiscountId"));
 		Assert.assertEquals(
-			Long.valueOf(
-				existingCommercePriceListDiscountRel.getCommercePriceListId()),
+			Long.valueOf(commercePriceListDiscountRel.getCommercePriceListId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommercePriceListDiscountRel,
-				"getOriginalCommercePriceListId", new Class<?>[0]));
+				commercePriceListDiscountRel, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "commercePriceListId"));
 	}
 
 	protected CommercePriceListDiscountRel addCommercePriceListDiscountRel()

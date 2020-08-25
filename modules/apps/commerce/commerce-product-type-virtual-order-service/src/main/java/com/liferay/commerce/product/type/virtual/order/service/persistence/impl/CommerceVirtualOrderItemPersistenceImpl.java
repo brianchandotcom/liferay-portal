@@ -21,6 +21,7 @@ import com.liferay.commerce.product.type.virtual.order.model.impl.CommerceVirtua
 import com.liferay.commerce.product.type.virtual.order.model.impl.CommerceVirtualOrderItemModelImpl;
 import com.liferay.commerce.product.type.virtual.order.service.persistence.CommerceVirtualOrderItemPersistence;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -30,10 +31,12 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -47,10 +50,17 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * The persistence implementation for the commerce virtual order item service.
@@ -1717,8 +1727,6 @@ public class CommerceVirtualOrderItemPersistenceImpl
 			_finderPathFetchByCommerceOrderItemId,
 			new Object[] {commerceVirtualOrderItem.getCommerceOrderItemId()},
 			commerceVirtualOrderItem);
-
-		commerceVirtualOrderItem.resetOriginalValues();
 	}
 
 	/**
@@ -1738,9 +1746,6 @@ public class CommerceVirtualOrderItemPersistenceImpl
 					commerceVirtualOrderItem.getPrimaryKey()) == null) {
 
 				cacheResult(commerceVirtualOrderItem);
-			}
-			else {
-				commerceVirtualOrderItem.resetOriginalValues();
 			}
 		}
 	}
@@ -1771,33 +1776,18 @@ public class CommerceVirtualOrderItemPersistenceImpl
 	@Override
 	public void clearCache(CommerceVirtualOrderItem commerceVirtualOrderItem) {
 		entityCache.removeResult(
-			CommerceVirtualOrderItemImpl.class,
-			commerceVirtualOrderItem.getPrimaryKey());
-
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache(
-			(CommerceVirtualOrderItemModelImpl)commerceVirtualOrderItem, true);
+			CommerceVirtualOrderItemImpl.class, commerceVirtualOrderItem);
 	}
 
 	@Override
 	public void clearCache(
 		List<CommerceVirtualOrderItem> commerceVirtualOrderItems) {
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (CommerceVirtualOrderItem commerceVirtualOrderItem :
 				commerceVirtualOrderItems) {
 
 			entityCache.removeResult(
-				CommerceVirtualOrderItemImpl.class,
-				commerceVirtualOrderItem.getPrimaryKey());
-
-			clearUniqueFindersCache(
-				(CommerceVirtualOrderItemModelImpl)commerceVirtualOrderItem,
-				true);
+				CommerceVirtualOrderItemImpl.class, commerceVirtualOrderItem);
 		}
 	}
 
@@ -1837,58 +1827,6 @@ public class CommerceVirtualOrderItemPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByCommerceOrderItemId, args,
 			commerceVirtualOrderItemModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		CommerceVirtualOrderItemModelImpl commerceVirtualOrderItemModelImpl,
-		boolean clearCurrent) {
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-				commerceVirtualOrderItemModelImpl.getUuid(),
-				commerceVirtualOrderItemModelImpl.getGroupId()
-			};
-
-			finderCache.removeResult(_finderPathCountByUUID_G, args);
-			finderCache.removeResult(_finderPathFetchByUUID_G, args);
-		}
-
-		if ((commerceVirtualOrderItemModelImpl.getColumnBitmask() &
-			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
-
-			Object[] args = new Object[] {
-				commerceVirtualOrderItemModelImpl.getOriginalUuid(),
-				commerceVirtualOrderItemModelImpl.getOriginalGroupId()
-			};
-
-			finderCache.removeResult(_finderPathCountByUUID_G, args);
-			finderCache.removeResult(_finderPathFetchByUUID_G, args);
-		}
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-				commerceVirtualOrderItemModelImpl.getCommerceOrderItemId()
-			};
-
-			finderCache.removeResult(
-				_finderPathCountByCommerceOrderItemId, args);
-			finderCache.removeResult(
-				_finderPathFetchByCommerceOrderItemId, args);
-		}
-
-		if ((commerceVirtualOrderItemModelImpl.getColumnBitmask() &
-			 _finderPathFetchByCommerceOrderItemId.getColumnBitmask()) != 0) {
-
-			Object[] args = new Object[] {
-				commerceVirtualOrderItemModelImpl.
-					getOriginalCommerceOrderItemId()
-			};
-
-			finderCache.removeResult(
-				_finderPathCountByCommerceOrderItemId, args);
-			finderCache.removeResult(
-				_finderPathFetchByCommerceOrderItemId, args);
-		}
 	}
 
 	/**
@@ -2069,10 +2007,8 @@ public class CommerceVirtualOrderItemPersistenceImpl
 		try {
 			session = openSession();
 
-			if (commerceVirtualOrderItem.isNew()) {
+			if (isNew) {
 				session.save(commerceVirtualOrderItem);
-
-				commerceVirtualOrderItem.setNew(false);
 			}
 			else {
 				commerceVirtualOrderItem =
@@ -2087,83 +2023,15 @@ public class CommerceVirtualOrderItemPersistenceImpl
 			closeSession(session);
 		}
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-
-		if (isNew) {
-			Object[] args = new Object[] {
-				commerceVirtualOrderItemModelImpl.getUuid()
-			};
-
-			finderCache.removeResult(_finderPathCountByUuid, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByUuid, args);
-
-			args = new Object[] {
-				commerceVirtualOrderItemModelImpl.getUuid(),
-				commerceVirtualOrderItemModelImpl.getCompanyId()
-			};
-
-			finderCache.removeResult(_finderPathCountByUuid_C, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByUuid_C, args);
-
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
-		}
-		else {
-			if ((commerceVirtualOrderItemModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByUuid.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					commerceVirtualOrderItemModelImpl.getOriginalUuid()
-				};
-
-				finderCache.removeResult(_finderPathCountByUuid, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByUuid, args);
-
-				args = new Object[] {
-					commerceVirtualOrderItemModelImpl.getUuid()
-				};
-
-				finderCache.removeResult(_finderPathCountByUuid, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByUuid, args);
-			}
-
-			if ((commerceVirtualOrderItemModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					commerceVirtualOrderItemModelImpl.getOriginalUuid(),
-					commerceVirtualOrderItemModelImpl.getOriginalCompanyId()
-				};
-
-				finderCache.removeResult(_finderPathCountByUuid_C, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByUuid_C, args);
-
-				args = new Object[] {
-					commerceVirtualOrderItemModelImpl.getUuid(),
-					commerceVirtualOrderItemModelImpl.getCompanyId()
-				};
-
-				finderCache.removeResult(_finderPathCountByUuid_C, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByUuid_C, args);
-			}
-		}
-
 		entityCache.putResult(
 			CommerceVirtualOrderItemImpl.class,
-			commerceVirtualOrderItem.getPrimaryKey(), commerceVirtualOrderItem,
-			false);
+			commerceVirtualOrderItemModelImpl, false, true);
 
-		clearUniqueFindersCache(commerceVirtualOrderItemModelImpl, false);
 		cacheUniqueFindersCache(commerceVirtualOrderItemModelImpl);
+
+		if (isNew) {
+			commerceVirtualOrderItem.setNew(false);
+		}
 
 		commerceVirtualOrderItem.resetOriginalValues();
 
@@ -2436,89 +2304,100 @@ public class CommerceVirtualOrderItemPersistenceImpl
 	 * Initializes the commerce virtual order item persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceVirtualOrderItemImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		Bundle bundle = FrameworkUtil.getBundle(
+			CommerceVirtualOrderItemPersistenceImpl.class);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceVirtualOrderItemImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+		_bundleContext = bundle.getBundleContext();
 
-		_finderPathCountAll = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_argumentsResolverServiceRegistration = _bundleContext.registerService(
+			ArgumentsResolver.class,
+			new CommerceVirtualOrderItemModelArgumentsResolver(),
+			MapUtil.singletonDictionary(
+				"model.class.name", CommerceVirtualOrderItem.class.getName()));
 
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			CommerceVirtualOrderItemImpl.class,
+		_finderPathWithPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathWithoutPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathCountAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
+
+		_finderPathWithPaginationFindByUuid = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"uuid_"}, true);
 
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			CommerceVirtualOrderItemImpl.class,
+		_finderPathWithoutPaginationFindByUuid = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()},
-			CommerceVirtualOrderItemModelImpl.UUID_COLUMN_BITMASK |
-			CommerceVirtualOrderItemModelImpl.CREATEDATE_COLUMN_BITMASK);
+			new String[] {String.class.getName()}, new String[] {"uuid_"},
+			true);
 
-		_finderPathCountByUuid = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUuid", new String[] {String.class.getName()});
+		_finderPathCountByUuid = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] {String.class.getName()}, new String[] {"uuid_"},
+			false);
 
-		_finderPathFetchByUUID_G = new FinderPath(
-			CommerceVirtualOrderItemImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByUUID_G",
+		_finderPathFetchByUUID_G = _createFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CommerceVirtualOrderItemModelImpl.UUID_COLUMN_BITMASK |
-			CommerceVirtualOrderItemModelImpl.GROUPID_COLUMN_BITMASK);
+			new String[] {"uuid_", "groupId"}, true);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()});
+		_finderPathCountByUUID_G = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "groupId"}, false);
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			CommerceVirtualOrderItemImpl.class,
+		_finderPathWithPaginationFindByUuid_C = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			CommerceVirtualOrderItemImpl.class,
+		_finderPathWithoutPaginationFindByUuid_C = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CommerceVirtualOrderItemModelImpl.UUID_COLUMN_BITMASK |
-			CommerceVirtualOrderItemModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceVirtualOrderItemModelImpl.CREATEDATE_COLUMN_BITMASK);
+			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathCountByUuid_C = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()});
+		_finderPathCountByUuid_C = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "companyId"}, false);
 
-		_finderPathFetchByCommerceOrderItemId = new FinderPath(
-			CommerceVirtualOrderItemImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByCommerceOrderItemId", new String[] {Long.class.getName()},
-			CommerceVirtualOrderItemModelImpl.
-				COMMERCEORDERITEMID_COLUMN_BITMASK);
+		_finderPathFetchByCommerceOrderItemId = _createFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByCommerceOrderItemId",
+			new String[] {Long.class.getName()},
+			new String[] {"commerceOrderItemId"}, true);
 
-		_finderPathCountByCommerceOrderItemId = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceOrderItemId", new String[] {Long.class.getName()});
+		_finderPathCountByCommerceOrderItemId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCommerceOrderItemId", new String[] {Long.class.getName()},
+			new String[] {"commerceOrderItemId"}, false);
 	}
 
 	public void destroy() {
 		entityCache.removeCache(CommerceVirtualOrderItemImpl.class.getName());
-		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		_argumentsResolverServiceRegistration.unregister();
+
+		for (ServiceRegistration<FinderPath> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
+
+	private BundleContext _bundleContext;
 
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
@@ -2552,5 +2431,110 @@ public class CommerceVirtualOrderItemPersistenceImpl
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "active"});
+
+	private FinderPath _createFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, baseModelResult);
+
+		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
+			_serviceRegistrations.add(
+				_bundleContext.registerService(
+					FinderPath.class, finderPath,
+					MapUtil.singletonDictionary("cache.name", cacheName)));
+		}
+
+		return finderPath;
+	}
+
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
+	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
+		new HashSet<>();
+
+	private static class CommerceVirtualOrderItemModelArgumentsResolver
+		implements ArgumentsResolver {
+
+		@Override
+		public Object[] getArguments(
+			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
+			boolean original) {
+
+			String[] columnNames = finderPath.getColumnNames();
+
+			if ((columnNames == null) || (columnNames.length == 0)) {
+				if (baseModel.isNew()) {
+					return FINDER_ARGS_EMPTY;
+				}
+
+				return null;
+			}
+
+			CommerceVirtualOrderItemModelImpl
+				commerceVirtualOrderItemModelImpl =
+					(CommerceVirtualOrderItemModelImpl)baseModel;
+
+			long columnBitmask =
+				commerceVirtualOrderItemModelImpl.getColumnBitmask();
+
+			if (!checkColumn || (columnBitmask == 0)) {
+				return _getValue(
+					commerceVirtualOrderItemModelImpl, columnNames, original);
+			}
+
+			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
+				finderPath);
+
+			if (finderPathColumnBitmask == null) {
+				finderPathColumnBitmask = 0L;
+
+				for (String columnName : columnNames) {
+					finderPathColumnBitmask |=
+						commerceVirtualOrderItemModelImpl.getColumnBitmask(
+							columnName);
+				}
+
+				_finderPathColumnBitmasksCache.put(
+					finderPath, finderPathColumnBitmask);
+			}
+
+			if ((columnBitmask & finderPathColumnBitmask) != 0) {
+				return _getValue(
+					commerceVirtualOrderItemModelImpl, columnNames, original);
+			}
+
+			return null;
+		}
+
+		private Object[] _getValue(
+			CommerceVirtualOrderItemModelImpl commerceVirtualOrderItemModelImpl,
+			String[] columnNames, boolean original) {
+
+			Object[] arguments = new Object[columnNames.length];
+
+			for (int i = 0; i < arguments.length; i++) {
+				String columnName = columnNames[i];
+
+				if (original) {
+					arguments[i] =
+						commerceVirtualOrderItemModelImpl.
+							getColumnOriginalValue(columnName);
+				}
+				else {
+					arguments[i] =
+						commerceVirtualOrderItemModelImpl.getColumnValue(
+							columnName);
+				}
+			}
+
+			return arguments;
+		}
+
+		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
+			new ConcurrentHashMap<>();
+
+	}
 
 }

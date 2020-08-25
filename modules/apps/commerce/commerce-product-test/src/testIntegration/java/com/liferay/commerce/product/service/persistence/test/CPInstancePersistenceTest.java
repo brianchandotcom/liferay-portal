@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -705,48 +706,94 @@ public class CPInstancePersistenceTest {
 
 		_persistence.clearCache();
 
-		CPInstance existingCPInstance = _persistence.findByPrimaryKey(
-			newCPInstance.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newCPInstance.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CPInstance newCPInstance = addCPInstance();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CPInstance.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"CPInstanceId", newCPInstance.getCPInstanceId()));
+
+		List<CPInstance> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(CPInstance cpInstance) {
+		Assert.assertEquals(
+			cpInstance.getUuid(),
+			ReflectionTestUtil.invoke(
+				cpInstance, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
+		Assert.assertEquals(
+			Long.valueOf(cpInstance.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				cpInstance, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
-			existingCPInstance.getUuid(),
-			ReflectionTestUtil.invoke(
-				existingCPInstance, "getOriginalUuid", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingCPInstance.getGroupId()),
+			Long.valueOf(cpInstance.getCPDefinitionId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCPInstance, "getOriginalGroupId", new Class<?>[0]));
+				cpInstance, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "CPDefinitionId"));
+		Assert.assertEquals(
+			cpInstance.getCPInstanceUuid(),
+			ReflectionTestUtil.invoke(
+				cpInstance, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "CPInstanceUuid"));
 
 		Assert.assertEquals(
-			Long.valueOf(existingCPInstance.getCPDefinitionId()),
+			Long.valueOf(cpInstance.getCPDefinitionId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCPInstance, "getOriginalCPDefinitionId",
-				new Class<?>[0]));
+				cpInstance, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "CPDefinitionId"));
 		Assert.assertEquals(
-			existingCPInstance.getCPInstanceUuid(),
+			cpInstance.getSku(),
 			ReflectionTestUtil.invoke(
-				existingCPInstance, "getOriginalCPInstanceUuid",
-				new Class<?>[0]));
+				cpInstance, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "sku"));
 
 		Assert.assertEquals(
-			Long.valueOf(existingCPInstance.getCPDefinitionId()),
+			Long.valueOf(cpInstance.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCPInstance, "getOriginalCPDefinitionId",
-				new Class<?>[0]));
+				cpInstance, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
-			existingCPInstance.getSku(),
+			cpInstance.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
-				existingCPInstance, "getOriginalSku", new Class<?>[0]));
-
-		Assert.assertEquals(
-			Long.valueOf(existingCPInstance.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingCPInstance, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertEquals(
-			existingCPInstance.getExternalReferenceCode(),
-			ReflectionTestUtil.invoke(
-				existingCPInstance, "getOriginalExternalReferenceCode",
-				new Class<?>[0]));
+				cpInstance, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected CPInstance addCPInstance() throws Exception {

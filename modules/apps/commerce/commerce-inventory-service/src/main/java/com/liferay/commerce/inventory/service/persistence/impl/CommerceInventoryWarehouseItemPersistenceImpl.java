@@ -21,6 +21,7 @@ import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemI
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseItemModelImpl;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehouseItemPersistence;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -30,10 +31,12 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -47,10 +50,17 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * The persistence implementation for the commerce inventory warehouse item service.
@@ -2325,8 +2335,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 				commerceInventoryWarehouseItem.getExternalReferenceCode()
 			},
 			commerceInventoryWarehouseItem);
-
-		commerceInventoryWarehouseItem.resetOriginalValues();
 	}
 
 	/**
@@ -2346,9 +2354,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 					commerceInventoryWarehouseItem.getPrimaryKey()) == null) {
 
 				cacheResult(commerceInventoryWarehouseItem);
-			}
-			else {
-				commerceInventoryWarehouseItem.resetOriginalValues();
 			}
 		}
 	}
@@ -2382,35 +2387,19 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 
 		entityCache.removeResult(
 			CommerceInventoryWarehouseItemImpl.class,
-			commerceInventoryWarehouseItem.getPrimaryKey());
-
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache(
-			(CommerceInventoryWarehouseItemModelImpl)
-				commerceInventoryWarehouseItem,
-			true);
+			commerceInventoryWarehouseItem);
 	}
 
 	@Override
 	public void clearCache(
 		List<CommerceInventoryWarehouseItem> commerceInventoryWarehouseItems) {
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (CommerceInventoryWarehouseItem commerceInventoryWarehouseItem :
 				commerceInventoryWarehouseItems) {
 
 			entityCache.removeResult(
 				CommerceInventoryWarehouseItemImpl.class,
-				commerceInventoryWarehouseItem.getPrimaryKey());
-
-			clearUniqueFindersCache(
-				(CommerceInventoryWarehouseItemModelImpl)
-					commerceInventoryWarehouseItem,
-				true);
+				commerceInventoryWarehouseItem);
 		}
 	}
 
@@ -2452,60 +2441,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByC_ERC, args,
 			commerceInventoryWarehouseItemModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		CommerceInventoryWarehouseItemModelImpl
-			commerceInventoryWarehouseItemModelImpl,
-		boolean clearCurrent) {
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-				commerceInventoryWarehouseItemModelImpl.
-					getCommerceInventoryWarehouseId(),
-				commerceInventoryWarehouseItemModelImpl.getSku()
-			};
-
-			finderCache.removeResult(_finderPathCountByC_S, args);
-			finderCache.removeResult(_finderPathFetchByC_S, args);
-		}
-
-		if ((commerceInventoryWarehouseItemModelImpl.getColumnBitmask() &
-			 _finderPathFetchByC_S.getColumnBitmask()) != 0) {
-
-			Object[] args = new Object[] {
-				commerceInventoryWarehouseItemModelImpl.
-					getOriginalCommerceInventoryWarehouseId(),
-				commerceInventoryWarehouseItemModelImpl.getOriginalSku()
-			};
-
-			finderCache.removeResult(_finderPathCountByC_S, args);
-			finderCache.removeResult(_finderPathFetchByC_S, args);
-		}
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-				commerceInventoryWarehouseItemModelImpl.getCompanyId(),
-				commerceInventoryWarehouseItemModelImpl.
-					getExternalReferenceCode()
-			};
-
-			finderCache.removeResult(_finderPathCountByC_ERC, args);
-			finderCache.removeResult(_finderPathFetchByC_ERC, args);
-		}
-
-		if ((commerceInventoryWarehouseItemModelImpl.getColumnBitmask() &
-			 _finderPathFetchByC_ERC.getColumnBitmask()) != 0) {
-
-			Object[] args = new Object[] {
-				commerceInventoryWarehouseItemModelImpl.getOriginalCompanyId(),
-				commerceInventoryWarehouseItemModelImpl.
-					getOriginalExternalReferenceCode()
-			};
-
-			finderCache.removeResult(_finderPathCountByC_ERC, args);
-			finderCache.removeResult(_finderPathFetchByC_ERC, args);
-		}
 	}
 
 	/**
@@ -2684,10 +2619,8 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 		try {
 			session = openSession();
 
-			if (commerceInventoryWarehouseItem.isNew()) {
+			if (isNew) {
 				session.save(commerceInventoryWarehouseItem);
-
-				commerceInventoryWarehouseItem.setNew(false);
 			}
 			else {
 				commerceInventoryWarehouseItem =
@@ -2702,123 +2635,15 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 			closeSession(session);
 		}
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-
-		if (isNew) {
-			Object[] args = new Object[] {
-				commerceInventoryWarehouseItemModelImpl.getCompanyId()
-			};
-
-			finderCache.removeResult(_finderPathCountByCompanyId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByCompanyId, args);
-
-			args = new Object[] {
-				commerceInventoryWarehouseItemModelImpl.
-					getCommerceInventoryWarehouseId()
-			};
-
-			finderCache.removeResult(
-				_finderPathCountByCommerceInventoryWarehouseId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId,
-				args);
-
-			args = new Object[] {
-				commerceInventoryWarehouseItemModelImpl.getCompanyId(),
-				commerceInventoryWarehouseItemModelImpl.getSku()
-			};
-
-			finderCache.removeResult(_finderPathCountByCompanyId_Sku, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByCompanyId_Sku, args);
-
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
-		}
-		else {
-			if ((commerceInventoryWarehouseItemModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByCompanyId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					commerceInventoryWarehouseItemModelImpl.
-						getOriginalCompanyId()
-				};
-
-				finderCache.removeResult(_finderPathCountByCompanyId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCompanyId, args);
-
-				args = new Object[] {
-					commerceInventoryWarehouseItemModelImpl.getCompanyId()
-				};
-
-				finderCache.removeResult(_finderPathCountByCompanyId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCompanyId, args);
-			}
-
-			if ((commerceInventoryWarehouseItemModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByCommerceInventoryWarehouseId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					commerceInventoryWarehouseItemModelImpl.
-						getOriginalCommerceInventoryWarehouseId()
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByCommerceInventoryWarehouseId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId,
-					args);
-
-				args = new Object[] {
-					commerceInventoryWarehouseItemModelImpl.
-						getCommerceInventoryWarehouseId()
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByCommerceInventoryWarehouseId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId,
-					args);
-			}
-
-			if ((commerceInventoryWarehouseItemModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByCompanyId_Sku.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					commerceInventoryWarehouseItemModelImpl.
-						getOriginalCompanyId(),
-					commerceInventoryWarehouseItemModelImpl.getOriginalSku()
-				};
-
-				finderCache.removeResult(_finderPathCountByCompanyId_Sku, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCompanyId_Sku, args);
-
-				args = new Object[] {
-					commerceInventoryWarehouseItemModelImpl.getCompanyId(),
-					commerceInventoryWarehouseItemModelImpl.getSku()
-				};
-
-				finderCache.removeResult(_finderPathCountByCompanyId_Sku, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCompanyId_Sku, args);
-			}
-		}
-
 		entityCache.putResult(
 			CommerceInventoryWarehouseItemImpl.class,
-			commerceInventoryWarehouseItem.getPrimaryKey(),
-			commerceInventoryWarehouseItem, false);
+			commerceInventoryWarehouseItemModelImpl, false, true);
 
-		clearUniqueFindersCache(commerceInventoryWarehouseItemModelImpl, false);
 		cacheUniqueFindersCache(commerceInventoryWarehouseItemModelImpl);
+
+		if (isNew) {
+			commerceInventoryWarehouseItem.setNew(false);
+		}
 
 		commerceInventoryWarehouseItem.resetOriginalValues();
 
@@ -3095,115 +2920,125 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	 * Initializes the commerce inventory warehouse item persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceInventoryWarehouseItemImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		Bundle bundle = FrameworkUtil.getBundle(
+			CommerceInventoryWarehouseItemPersistenceImpl.class);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceInventoryWarehouseItemImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+		_bundleContext = bundle.getBundleContext();
 
-		_finderPathCountAll = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_argumentsResolverServiceRegistration = _bundleContext.registerService(
+			ArgumentsResolver.class,
+			new CommerceInventoryWarehouseItemModelArgumentsResolver(),
+			MapUtil.singletonDictionary(
+				"model.class.name",
+				CommerceInventoryWarehouseItem.class.getName()));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			CommerceInventoryWarehouseItemImpl.class,
+		_finderPathWithPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathWithoutPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathCountAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
+
+		_finderPathWithPaginationFindByCompanyId = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"companyId"}, true);
 
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			CommerceInventoryWarehouseItemImpl.class,
+		_finderPathWithoutPaginationFindByCompanyId = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()},
-			CommerceInventoryWarehouseItemModelImpl.COMPANYID_COLUMN_BITMASK);
+			new String[] {Long.class.getName()}, new String[] {"companyId"},
+			true);
 
-		_finderPathCountByCompanyId = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCompanyId", new String[] {Long.class.getName()});
+		_finderPathCountByCompanyId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+			new String[] {Long.class.getName()}, new String[] {"companyId"},
+			false);
 
 		_finderPathWithPaginationFindByCommerceInventoryWarehouseId =
-			new FinderPath(
-				CommerceInventoryWarehouseItemImpl.class,
+			_createFinderPath(
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 				"findByCommerceInventoryWarehouseId",
 				new String[] {
 					Long.class.getName(), Integer.class.getName(),
 					Integer.class.getName(), OrderByComparator.class.getName()
-				});
+				},
+				new String[] {"commerceInventoryWarehouseId"}, true);
 
 		_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId =
-			new FinderPath(
-				CommerceInventoryWarehouseItemImpl.class,
+			_createFinderPath(
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceInventoryWarehouseId",
 				new String[] {Long.class.getName()},
-				CommerceInventoryWarehouseItemModelImpl.
-					COMMERCEINVENTORYWAREHOUSEID_COLUMN_BITMASK);
+				new String[] {"commerceInventoryWarehouseId"}, true);
 
-		_finderPathCountByCommerceInventoryWarehouseId = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+		_finderPathCountByCommerceInventoryWarehouseId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceInventoryWarehouseId",
-			new String[] {Long.class.getName()});
+			new String[] {Long.class.getName()},
+			new String[] {"commerceInventoryWarehouseId"}, false);
 
-		_finderPathWithPaginationFindByCompanyId_Sku = new FinderPath(
-			CommerceInventoryWarehouseItemImpl.class,
+		_finderPathWithPaginationFindByCompanyId_Sku = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId_Sku",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"companyId", "sku"}, true);
 
-		_finderPathWithoutPaginationFindByCompanyId_Sku = new FinderPath(
-			CommerceInventoryWarehouseItemImpl.class,
+		_finderPathWithoutPaginationFindByCompanyId_Sku = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId_Sku",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceInventoryWarehouseItemModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceInventoryWarehouseItemModelImpl.SKU_COLUMN_BITMASK);
+			new String[] {"companyId", "sku"}, true);
 
-		_finderPathCountByCompanyId_Sku = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCompanyId_Sku",
-			new String[] {Long.class.getName(), String.class.getName()});
-
-		_finderPathFetchByC_S = new FinderPath(
-			CommerceInventoryWarehouseItemImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_S",
+		_finderPathCountByCompanyId_Sku = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId_Sku",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceInventoryWarehouseItemModelImpl.
-				COMMERCEINVENTORYWAREHOUSEID_COLUMN_BITMASK |
-			CommerceInventoryWarehouseItemModelImpl.SKU_COLUMN_BITMASK);
+			new String[] {"companyId", "sku"}, false);
 
-		_finderPathCountByC_S = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
-			new String[] {Long.class.getName(), String.class.getName()});
-
-		_finderPathFetchByC_ERC = new FinderPath(
-			CommerceInventoryWarehouseItemImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_ERC",
+		_finderPathFetchByC_S = _createFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_S",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceInventoryWarehouseItemModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceInventoryWarehouseItemModelImpl.
-				EXTERNALREFERENCECODE_COLUMN_BITMASK);
+			new String[] {"commerceInventoryWarehouseId", "sku"}, true);
 
-		_finderPathCountByC_ERC = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByC_ERC",
-			new String[] {Long.class.getName(), String.class.getName()});
+		_finderPathCountByC_S = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"commerceInventoryWarehouseId", "sku"}, false);
+
+		_finderPathFetchByC_ERC = _createFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_ERC",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "externalReferenceCode"}, true);
+
+		_finderPathCountByC_ERC = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_ERC",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "externalReferenceCode"}, false);
 	}
 
 	public void destroy() {
 		entityCache.removeCache(
 			CommerceInventoryWarehouseItemImpl.class.getName());
-		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		_argumentsResolverServiceRegistration.unregister();
+
+		for (ServiceRegistration<FinderPath> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
+
+	private BundleContext _bundleContext;
 
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
@@ -3239,5 +3074,113 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"commerceInventoryWarehouseItemId"});
+
+	private FinderPath _createFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, baseModelResult);
+
+		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
+			_serviceRegistrations.add(
+				_bundleContext.registerService(
+					FinderPath.class, finderPath,
+					MapUtil.singletonDictionary("cache.name", cacheName)));
+		}
+
+		return finderPath;
+	}
+
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
+	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
+		new HashSet<>();
+
+	private static class CommerceInventoryWarehouseItemModelArgumentsResolver
+		implements ArgumentsResolver {
+
+		@Override
+		public Object[] getArguments(
+			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
+			boolean original) {
+
+			String[] columnNames = finderPath.getColumnNames();
+
+			if ((columnNames == null) || (columnNames.length == 0)) {
+				if (baseModel.isNew()) {
+					return FINDER_ARGS_EMPTY;
+				}
+
+				return null;
+			}
+
+			CommerceInventoryWarehouseItemModelImpl
+				commerceInventoryWarehouseItemModelImpl =
+					(CommerceInventoryWarehouseItemModelImpl)baseModel;
+
+			long columnBitmask =
+				commerceInventoryWarehouseItemModelImpl.getColumnBitmask();
+
+			if (!checkColumn || (columnBitmask == 0)) {
+				return _getValue(
+					commerceInventoryWarehouseItemModelImpl, columnNames,
+					original);
+			}
+
+			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
+				finderPath);
+
+			if (finderPathColumnBitmask == null) {
+				finderPathColumnBitmask = 0L;
+
+				for (String columnName : columnNames) {
+					finderPathColumnBitmask |=
+						commerceInventoryWarehouseItemModelImpl.
+							getColumnBitmask(columnName);
+				}
+
+				_finderPathColumnBitmasksCache.put(
+					finderPath, finderPathColumnBitmask);
+			}
+
+			if ((columnBitmask & finderPathColumnBitmask) != 0) {
+				return _getValue(
+					commerceInventoryWarehouseItemModelImpl, columnNames,
+					original);
+			}
+
+			return null;
+		}
+
+		private Object[] _getValue(
+			CommerceInventoryWarehouseItemModelImpl
+				commerceInventoryWarehouseItemModelImpl,
+			String[] columnNames, boolean original) {
+
+			Object[] arguments = new Object[columnNames.length];
+
+			for (int i = 0; i < arguments.length; i++) {
+				String columnName = columnNames[i];
+
+				if (original) {
+					arguments[i] =
+						commerceInventoryWarehouseItemModelImpl.
+							getColumnOriginalValue(columnName);
+				}
+				else {
+					arguments[i] =
+						commerceInventoryWarehouseItemModelImpl.getColumnValue(
+							columnName);
+				}
+			}
+
+			return arguments;
+		}
+
+		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
+			new ConcurrentHashMap<>();
+
+	}
 
 }

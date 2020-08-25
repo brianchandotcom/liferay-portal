@@ -21,6 +21,7 @@ import com.liferay.commerce.inventory.model.impl.CommerceInventoryReplenishmentI
 import com.liferay.commerce.inventory.model.impl.CommerceInventoryReplenishmentItemModelImpl;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryReplenishmentItemPersistence;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -30,10 +31,12 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -47,10 +50,17 @@ import java.sql.Timestamp;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * The persistence implementation for the commerce inventory replenishment item service.
@@ -3048,8 +3058,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			CommerceInventoryReplenishmentItemImpl.class,
 			commerceInventoryReplenishmentItem.getPrimaryKey(),
 			commerceInventoryReplenishmentItem);
-
-		commerceInventoryReplenishmentItem.resetOriginalValues();
 	}
 
 	/**
@@ -3072,9 +3080,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 						null) {
 
 				cacheResult(commerceInventoryReplenishmentItem);
-			}
-			else {
-				commerceInventoryReplenishmentItem.resetOriginalValues();
 			}
 		}
 	}
@@ -3108,10 +3113,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 
 		entityCache.removeResult(
 			CommerceInventoryReplenishmentItemImpl.class,
-			commerceInventoryReplenishmentItem.getPrimaryKey());
-
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			commerceInventoryReplenishmentItem);
 	}
 
 	@Override
@@ -3119,16 +3121,13 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		List<CommerceInventoryReplenishmentItem>
 			commerceInventoryReplenishmentItems) {
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (CommerceInventoryReplenishmentItem
 				commerceInventoryReplenishmentItem :
 					commerceInventoryReplenishmentItems) {
 
 			entityCache.removeResult(
 				CommerceInventoryReplenishmentItemImpl.class,
-				commerceInventoryReplenishmentItem.getPrimaryKey());
+				commerceInventoryReplenishmentItem);
 		}
 	}
 
@@ -3326,10 +3325,8 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		try {
 			session = openSession();
 
-			if (commerceInventoryReplenishmentItem.isNew()) {
+			if (isNew) {
 				session.save(commerceInventoryReplenishmentItem);
-
-				commerceInventoryReplenishmentItem.setNew(false);
 			}
 			else {
 				commerceInventoryReplenishmentItem =
@@ -3344,194 +3341,13 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			closeSession(session);
 		}
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-
-		if (isNew) {
-			Object[] args = new Object[] {
-				commerceInventoryReplenishmentItemModelImpl.
-					getCommerceInventoryWarehouseId()
-			};
-
-			finderCache.removeResult(
-				_finderPathCountByCommerceInventoryWarehouseId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId,
-				args);
-
-			args = new Object[] {
-				commerceInventoryReplenishmentItemModelImpl.getSku()
-			};
-
-			finderCache.removeResult(_finderPathCountBySku, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindBySku, args);
-
-			args = new Object[] {
-				commerceInventoryReplenishmentItemModelImpl.
-					getAvailabilityDate()
-			};
-
-			finderCache.removeResult(_finderPathCountByAvailabilityDate, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByAvailabilityDate, args);
-
-			args = new Object[] {
-				commerceInventoryReplenishmentItemModelImpl.getCompanyId(),
-				commerceInventoryReplenishmentItemModelImpl.getSku()
-			};
-
-			finderCache.removeResult(_finderPathCountByC_S, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByC_S, args);
-
-			args = new Object[] {
-				commerceInventoryReplenishmentItemModelImpl.getSku(),
-				commerceInventoryReplenishmentItemModelImpl.
-					getAvailabilityDate()
-			};
-
-			finderCache.removeResult(_finderPathCountByS_AD, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByS_AD, args);
-
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
-		}
-		else {
-			if ((commerceInventoryReplenishmentItemModelImpl.
-					getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByCommerceInventoryWarehouseId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					commerceInventoryReplenishmentItemModelImpl.
-						getOriginalCommerceInventoryWarehouseId()
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByCommerceInventoryWarehouseId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId,
-					args);
-
-				args = new Object[] {
-					commerceInventoryReplenishmentItemModelImpl.
-						getCommerceInventoryWarehouseId()
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByCommerceInventoryWarehouseId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId,
-					args);
-			}
-
-			if ((commerceInventoryReplenishmentItemModelImpl.
-					getColumnBitmask() &
-				 _finderPathWithoutPaginationFindBySku.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					commerceInventoryReplenishmentItemModelImpl.getOriginalSku()
-				};
-
-				finderCache.removeResult(_finderPathCountBySku, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindBySku, args);
-
-				args = new Object[] {
-					commerceInventoryReplenishmentItemModelImpl.getSku()
-				};
-
-				finderCache.removeResult(_finderPathCountBySku, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindBySku, args);
-			}
-
-			if ((commerceInventoryReplenishmentItemModelImpl.
-					getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByAvailabilityDate.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					commerceInventoryReplenishmentItemModelImpl.
-						getOriginalAvailabilityDate()
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByAvailabilityDate, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByAvailabilityDate, args);
-
-				args = new Object[] {
-					commerceInventoryReplenishmentItemModelImpl.
-						getAvailabilityDate()
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByAvailabilityDate, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByAvailabilityDate, args);
-			}
-
-			if ((commerceInventoryReplenishmentItemModelImpl.
-					getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByC_S.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					commerceInventoryReplenishmentItemModelImpl.
-						getOriginalCompanyId(),
-					commerceInventoryReplenishmentItemModelImpl.getOriginalSku()
-				};
-
-				finderCache.removeResult(_finderPathCountByC_S, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByC_S, args);
-
-				args = new Object[] {
-					commerceInventoryReplenishmentItemModelImpl.getCompanyId(),
-					commerceInventoryReplenishmentItemModelImpl.getSku()
-				};
-
-				finderCache.removeResult(_finderPathCountByC_S, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByC_S, args);
-			}
-
-			if ((commerceInventoryReplenishmentItemModelImpl.
-					getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByS_AD.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					commerceInventoryReplenishmentItemModelImpl.
-						getOriginalSku(),
-					commerceInventoryReplenishmentItemModelImpl.
-						getOriginalAvailabilityDate()
-				};
-
-				finderCache.removeResult(_finderPathCountByS_AD, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByS_AD, args);
-
-				args = new Object[] {
-					commerceInventoryReplenishmentItemModelImpl.getSku(),
-					commerceInventoryReplenishmentItemModelImpl.
-						getAvailabilityDate()
-				};
-
-				finderCache.removeResult(_finderPathCountByS_AD, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByS_AD, args);
-			}
-		}
-
 		entityCache.putResult(
 			CommerceInventoryReplenishmentItemImpl.class,
-			commerceInventoryReplenishmentItem.getPrimaryKey(),
-			commerceInventoryReplenishmentItem, false);
+			commerceInventoryReplenishmentItemModelImpl, false, true);
+
+		if (isNew) {
+			commerceInventoryReplenishmentItem.setNew(false);
+		}
 
 		commerceInventoryReplenishmentItem.resetOriginalValues();
 
@@ -3813,131 +3629,140 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	 * Initializes the commerce inventory replenishment item persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceInventoryReplenishmentItemImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		Bundle bundle = FrameworkUtil.getBundle(
+			CommerceInventoryReplenishmentItemPersistenceImpl.class);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceInventoryReplenishmentItemImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+		_bundleContext = bundle.getBundleContext();
 
-		_finderPathCountAll = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_argumentsResolverServiceRegistration = _bundleContext.registerService(
+			ArgumentsResolver.class,
+			new CommerceInventoryReplenishmentItemModelArgumentsResolver(),
+			MapUtil.singletonDictionary(
+				"model.class.name",
+				CommerceInventoryReplenishmentItem.class.getName()));
+
+		_finderPathWithPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathWithoutPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathCountAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByCommerceInventoryWarehouseId =
-			new FinderPath(
-				CommerceInventoryReplenishmentItemImpl.class,
+			_createFinderPath(
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 				"findByCommerceInventoryWarehouseId",
 				new String[] {
 					Long.class.getName(), Integer.class.getName(),
 					Integer.class.getName(), OrderByComparator.class.getName()
-				});
+				},
+				new String[] {"commerceInventoryWarehouseId"}, true);
 
 		_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId =
-			new FinderPath(
-				CommerceInventoryReplenishmentItemImpl.class,
+			_createFinderPath(
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceInventoryWarehouseId",
 				new String[] {Long.class.getName()},
-				CommerceInventoryReplenishmentItemModelImpl.
-					COMMERCEINVENTORYWAREHOUSEID_COLUMN_BITMASK);
+				new String[] {"commerceInventoryWarehouseId"}, true);
 
-		_finderPathCountByCommerceInventoryWarehouseId = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+		_finderPathCountByCommerceInventoryWarehouseId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceInventoryWarehouseId",
-			new String[] {Long.class.getName()});
+			new String[] {Long.class.getName()},
+			new String[] {"commerceInventoryWarehouseId"}, false);
 
-		_finderPathWithPaginationFindBySku = new FinderPath(
-			CommerceInventoryReplenishmentItemImpl.class,
+		_finderPathWithPaginationFindBySku = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySku",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"sku"}, true);
 
-		_finderPathWithoutPaginationFindBySku = new FinderPath(
-			CommerceInventoryReplenishmentItemImpl.class,
+		_finderPathWithoutPaginationFindBySku = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySku",
-			new String[] {String.class.getName()},
-			CommerceInventoryReplenishmentItemModelImpl.SKU_COLUMN_BITMASK);
+			new String[] {String.class.getName()}, new String[] {"sku"}, true);
 
-		_finderPathCountBySku = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySku",
-			new String[] {String.class.getName()});
+		_finderPathCountBySku = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySku",
+			new String[] {String.class.getName()}, new String[] {"sku"}, false);
 
-		_finderPathWithPaginationFindByAvailabilityDate = new FinderPath(
-			CommerceInventoryReplenishmentItemImpl.class,
+		_finderPathWithPaginationFindByAvailabilityDate = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAvailabilityDate",
 			new String[] {
 				Date.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"availabilityDate"}, true);
 
-		_finderPathWithoutPaginationFindByAvailabilityDate = new FinderPath(
-			CommerceInventoryReplenishmentItemImpl.class,
+		_finderPathWithoutPaginationFindByAvailabilityDate = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAvailabilityDate",
 			new String[] {Date.class.getName()},
-			CommerceInventoryReplenishmentItemModelImpl.
-				AVAILABILITYDATE_COLUMN_BITMASK);
+			new String[] {"availabilityDate"}, true);
 
-		_finderPathCountByAvailabilityDate = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByAvailabilityDate", new String[] {Date.class.getName()});
+		_finderPathCountByAvailabilityDate = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByAvailabilityDate", new String[] {Date.class.getName()},
+			new String[] {"availabilityDate"}, false);
 
-		_finderPathWithPaginationFindByC_S = new FinderPath(
-			CommerceInventoryReplenishmentItemImpl.class,
+		_finderPathWithPaginationFindByC_S = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"companyId", "sku"}, true);
 
-		_finderPathWithoutPaginationFindByC_S = new FinderPath(
-			CommerceInventoryReplenishmentItemImpl.class,
+		_finderPathWithoutPaginationFindByC_S = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
 			new String[] {Long.class.getName(), String.class.getName()},
-			CommerceInventoryReplenishmentItemModelImpl.
-				COMPANYID_COLUMN_BITMASK |
-			CommerceInventoryReplenishmentItemModelImpl.SKU_COLUMN_BITMASK);
+			new String[] {"companyId", "sku"}, true);
 
-		_finderPathCountByC_S = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
-			new String[] {Long.class.getName(), String.class.getName()});
+		_finderPathCountByC_S = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "sku"}, false);
 
-		_finderPathWithPaginationFindByS_AD = new FinderPath(
-			CommerceInventoryReplenishmentItemImpl.class,
+		_finderPathWithPaginationFindByS_AD = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_AD",
 			new String[] {
 				String.class.getName(), Date.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"sku", "availabilityDate"}, true);
 
-		_finderPathWithoutPaginationFindByS_AD = new FinderPath(
-			CommerceInventoryReplenishmentItemImpl.class,
+		_finderPathWithoutPaginationFindByS_AD = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_AD",
 			new String[] {String.class.getName(), Date.class.getName()},
-			CommerceInventoryReplenishmentItemModelImpl.SKU_COLUMN_BITMASK |
-			CommerceInventoryReplenishmentItemModelImpl.
-				AVAILABILITYDATE_COLUMN_BITMASK);
+			new String[] {"sku", "availabilityDate"}, true);
 
-		_finderPathCountByS_AD = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByS_AD",
-			new String[] {String.class.getName(), Date.class.getName()});
+		_finderPathCountByS_AD = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_AD",
+			new String[] {String.class.getName(), Date.class.getName()},
+			new String[] {"sku", "availabilityDate"}, false);
 	}
 
 	public void destroy() {
 		entityCache.removeCache(
 			CommerceInventoryReplenishmentItemImpl.class.getName());
-		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		_argumentsResolverServiceRegistration.unregister();
+
+		for (ServiceRegistration<FinderPath> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
+
+	private BundleContext _bundleContext;
 
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
@@ -3945,7 +3770,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
-	private Long _getTime(Date date) {
+	private static Long _getTime(Date date) {
 		if (date == null) {
 			return null;
 		}
@@ -3981,5 +3806,114 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"commerceInventoryReplenishmentItemId"});
+
+	private FinderPath _createFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, baseModelResult);
+
+		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
+			_serviceRegistrations.add(
+				_bundleContext.registerService(
+					FinderPath.class, finderPath,
+					MapUtil.singletonDictionary("cache.name", cacheName)));
+		}
+
+		return finderPath;
+	}
+
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
+	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
+		new HashSet<>();
+
+	private static class
+		CommerceInventoryReplenishmentItemModelArgumentsResolver
+			implements ArgumentsResolver {
+
+		@Override
+		public Object[] getArguments(
+			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
+			boolean original) {
+
+			String[] columnNames = finderPath.getColumnNames();
+
+			if ((columnNames == null) || (columnNames.length == 0)) {
+				if (baseModel.isNew()) {
+					return FINDER_ARGS_EMPTY;
+				}
+
+				return null;
+			}
+
+			CommerceInventoryReplenishmentItemModelImpl
+				commerceInventoryReplenishmentItemModelImpl =
+					(CommerceInventoryReplenishmentItemModelImpl)baseModel;
+
+			long columnBitmask =
+				commerceInventoryReplenishmentItemModelImpl.getColumnBitmask();
+
+			if (!checkColumn || (columnBitmask == 0)) {
+				return _getValue(
+					commerceInventoryReplenishmentItemModelImpl, columnNames,
+					original);
+			}
+
+			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
+				finderPath);
+
+			if (finderPathColumnBitmask == null) {
+				finderPathColumnBitmask = 0L;
+
+				for (String columnName : columnNames) {
+					finderPathColumnBitmask |=
+						commerceInventoryReplenishmentItemModelImpl.
+							getColumnBitmask(columnName);
+				}
+
+				_finderPathColumnBitmasksCache.put(
+					finderPath, finderPathColumnBitmask);
+			}
+
+			if ((columnBitmask & finderPathColumnBitmask) != 0) {
+				return _getValue(
+					commerceInventoryReplenishmentItemModelImpl, columnNames,
+					original);
+			}
+
+			return null;
+		}
+
+		private Object[] _getValue(
+			CommerceInventoryReplenishmentItemModelImpl
+				commerceInventoryReplenishmentItemModelImpl,
+			String[] columnNames, boolean original) {
+
+			Object[] arguments = new Object[columnNames.length];
+
+			for (int i = 0; i < arguments.length; i++) {
+				String columnName = columnNames[i];
+
+				if (original) {
+					arguments[i] =
+						commerceInventoryReplenishmentItemModelImpl.
+							getColumnOriginalValue(columnName);
+				}
+				else {
+					arguments[i] =
+						commerceInventoryReplenishmentItemModelImpl.
+							getColumnValue(columnName);
+				}
+			}
+
+			return arguments;
+		}
+
+		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
+			new ConcurrentHashMap<>();
+
+	}
 
 }

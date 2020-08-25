@@ -21,6 +21,7 @@ import com.liferay.commerce.notification.model.impl.CommerceNotificationTemplate
 import com.liferay.commerce.notification.model.impl.CommerceNotificationTemplateModelImpl;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationTemplatePersistence;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -31,11 +32,13 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -49,10 +52,17 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * The persistence implementation for the commerce notification template service.
@@ -4472,8 +4482,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 				commerceNotificationTemplate.getGroupId()
 			},
 			commerceNotificationTemplate);
-
-		commerceNotificationTemplate.resetOriginalValues();
 	}
 
 	/**
@@ -4493,9 +4501,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 					commerceNotificationTemplate.getPrimaryKey()) == null) {
 
 				cacheResult(commerceNotificationTemplate);
-			}
-			else {
-				commerceNotificationTemplate.resetOriginalValues();
 			}
 		}
 	}
@@ -4529,34 +4534,19 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 		entityCache.removeResult(
 			CommerceNotificationTemplateImpl.class,
-			commerceNotificationTemplate.getPrimaryKey());
-
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache(
-			(CommerceNotificationTemplateModelImpl)commerceNotificationTemplate,
-			true);
+			commerceNotificationTemplate);
 	}
 
 	@Override
 	public void clearCache(
 		List<CommerceNotificationTemplate> commerceNotificationTemplates) {
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (CommerceNotificationTemplate commerceNotificationTemplate :
 				commerceNotificationTemplates) {
 
 			entityCache.removeResult(
 				CommerceNotificationTemplateImpl.class,
-				commerceNotificationTemplate.getPrimaryKey());
-
-			clearUniqueFindersCache(
-				(CommerceNotificationTemplateModelImpl)
-					commerceNotificationTemplate,
-				true);
+				commerceNotificationTemplate);
 		}
 	}
 
@@ -4586,34 +4576,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 		finderCache.putResult(
 			_finderPathFetchByUUID_G, args,
 			commerceNotificationTemplateModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		CommerceNotificationTemplateModelImpl
-			commerceNotificationTemplateModelImpl,
-		boolean clearCurrent) {
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-				commerceNotificationTemplateModelImpl.getUuid(),
-				commerceNotificationTemplateModelImpl.getGroupId()
-			};
-
-			finderCache.removeResult(_finderPathCountByUUID_G, args);
-			finderCache.removeResult(_finderPathFetchByUUID_G, args);
-		}
-
-		if ((commerceNotificationTemplateModelImpl.getColumnBitmask() &
-			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
-
-			Object[] args = new Object[] {
-				commerceNotificationTemplateModelImpl.getOriginalUuid(),
-				commerceNotificationTemplateModelImpl.getOriginalGroupId()
-			};
-
-			finderCache.removeResult(_finderPathCountByUUID_G, args);
-			finderCache.removeResult(_finderPathFetchByUUID_G, args);
-		}
 	}
 
 	/**
@@ -4802,10 +4764,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 		try {
 			session = openSession();
 
-			if (commerceNotificationTemplate.isNew()) {
+			if (isNew) {
 				session.save(commerceNotificationTemplate);
-
-				commerceNotificationTemplate.setNew(false);
 			}
 			else {
 				commerceNotificationTemplate =
@@ -4820,179 +4780,15 @@ public class CommerceNotificationTemplatePersistenceImpl
 			closeSession(session);
 		}
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-
-		if (isNew) {
-			Object[] args = new Object[] {
-				commerceNotificationTemplateModelImpl.getUuid()
-			};
-
-			finderCache.removeResult(_finderPathCountByUuid, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByUuid, args);
-
-			args = new Object[] {
-				commerceNotificationTemplateModelImpl.getUuid(),
-				commerceNotificationTemplateModelImpl.getCompanyId()
-			};
-
-			finderCache.removeResult(_finderPathCountByUuid_C, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByUuid_C, args);
-
-			args = new Object[] {
-				commerceNotificationTemplateModelImpl.getGroupId()
-			};
-
-			finderCache.removeResult(_finderPathCountByGroupId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByGroupId, args);
-
-			args = new Object[] {
-				commerceNotificationTemplateModelImpl.getGroupId(),
-				commerceNotificationTemplateModelImpl.isEnabled()
-			};
-
-			finderCache.removeResult(_finderPathCountByG_E, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByG_E, args);
-
-			args = new Object[] {
-				commerceNotificationTemplateModelImpl.getGroupId(),
-				commerceNotificationTemplateModelImpl.getType(),
-				commerceNotificationTemplateModelImpl.isEnabled()
-			};
-
-			finderCache.removeResult(_finderPathCountByG_T_E, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByG_T_E, args);
-
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
-		}
-		else {
-			if ((commerceNotificationTemplateModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByUuid.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					commerceNotificationTemplateModelImpl.getOriginalUuid()
-				};
-
-				finderCache.removeResult(_finderPathCountByUuid, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByUuid, args);
-
-				args = new Object[] {
-					commerceNotificationTemplateModelImpl.getUuid()
-				};
-
-				finderCache.removeResult(_finderPathCountByUuid, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByUuid, args);
-			}
-
-			if ((commerceNotificationTemplateModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					commerceNotificationTemplateModelImpl.getOriginalUuid(),
-					commerceNotificationTemplateModelImpl.getOriginalCompanyId()
-				};
-
-				finderCache.removeResult(_finderPathCountByUuid_C, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByUuid_C, args);
-
-				args = new Object[] {
-					commerceNotificationTemplateModelImpl.getUuid(),
-					commerceNotificationTemplateModelImpl.getCompanyId()
-				};
-
-				finderCache.removeResult(_finderPathCountByUuid_C, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByUuid_C, args);
-			}
-
-			if ((commerceNotificationTemplateModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByGroupId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					commerceNotificationTemplateModelImpl.getOriginalGroupId()
-				};
-
-				finderCache.removeResult(_finderPathCountByGroupId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByGroupId, args);
-
-				args = new Object[] {
-					commerceNotificationTemplateModelImpl.getGroupId()
-				};
-
-				finderCache.removeResult(_finderPathCountByGroupId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByGroupId, args);
-			}
-
-			if ((commerceNotificationTemplateModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByG_E.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					commerceNotificationTemplateModelImpl.getOriginalGroupId(),
-					commerceNotificationTemplateModelImpl.getOriginalEnabled()
-				};
-
-				finderCache.removeResult(_finderPathCountByG_E, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByG_E, args);
-
-				args = new Object[] {
-					commerceNotificationTemplateModelImpl.getGroupId(),
-					commerceNotificationTemplateModelImpl.isEnabled()
-				};
-
-				finderCache.removeResult(_finderPathCountByG_E, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByG_E, args);
-			}
-
-			if ((commerceNotificationTemplateModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByG_T_E.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					commerceNotificationTemplateModelImpl.getOriginalGroupId(),
-					commerceNotificationTemplateModelImpl.getOriginalType(),
-					commerceNotificationTemplateModelImpl.getOriginalEnabled()
-				};
-
-				finderCache.removeResult(_finderPathCountByG_T_E, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByG_T_E, args);
-
-				args = new Object[] {
-					commerceNotificationTemplateModelImpl.getGroupId(),
-					commerceNotificationTemplateModelImpl.getType(),
-					commerceNotificationTemplateModelImpl.isEnabled()
-				};
-
-				finderCache.removeResult(_finderPathCountByG_T_E, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByG_T_E, args);
-			}
-		}
-
 		entityCache.putResult(
 			CommerceNotificationTemplateImpl.class,
-			commerceNotificationTemplate.getPrimaryKey(),
-			commerceNotificationTemplate, false);
+			commerceNotificationTemplateModelImpl, false, true);
 
-		clearUniqueFindersCache(commerceNotificationTemplateModelImpl, false);
 		cacheUniqueFindersCache(commerceNotificationTemplateModelImpl);
+
+		if (isNew) {
+			commerceNotificationTemplate.setNew(false);
+		}
 
 		commerceNotificationTemplate.resetOriginalValues();
 
@@ -5268,154 +5064,154 @@ public class CommerceNotificationTemplatePersistenceImpl
 	 * Initializes the commerce notification template persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceNotificationTemplateImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		Bundle bundle = FrameworkUtil.getBundle(
+			CommerceNotificationTemplatePersistenceImpl.class);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceNotificationTemplateImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+		_bundleContext = bundle.getBundleContext();
 
-		_finderPathCountAll = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_argumentsResolverServiceRegistration = _bundleContext.registerService(
+			ArgumentsResolver.class,
+			new CommerceNotificationTemplateModelArgumentsResolver(),
+			MapUtil.singletonDictionary(
+				"model.class.name",
+				CommerceNotificationTemplate.class.getName()));
 
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			CommerceNotificationTemplateImpl.class,
+		_finderPathWithPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathWithoutPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathCountAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
+
+		_finderPathWithPaginationFindByUuid = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"uuid_"}, true);
 
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			CommerceNotificationTemplateImpl.class,
+		_finderPathWithoutPaginationFindByUuid = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()},
-			CommerceNotificationTemplateModelImpl.UUID_COLUMN_BITMASK |
-			CommerceNotificationTemplateModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
-			CommerceNotificationTemplateModelImpl.NAME_COLUMN_BITMASK);
+			new String[] {String.class.getName()}, new String[] {"uuid_"},
+			true);
 
-		_finderPathCountByUuid = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUuid", new String[] {String.class.getName()});
+		_finderPathCountByUuid = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] {String.class.getName()}, new String[] {"uuid_"},
+			false);
 
-		_finderPathFetchByUUID_G = new FinderPath(
-			CommerceNotificationTemplateImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByUUID_G",
+		_finderPathFetchByUUID_G = _createFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CommerceNotificationTemplateModelImpl.UUID_COLUMN_BITMASK |
-			CommerceNotificationTemplateModelImpl.GROUPID_COLUMN_BITMASK);
+			new String[] {"uuid_", "groupId"}, true);
 
-		_finderPathCountByUUID_G = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()});
+		_finderPathCountByUUID_G = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "groupId"}, false);
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			CommerceNotificationTemplateImpl.class,
+		_finderPathWithPaginationFindByUuid_C = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			CommerceNotificationTemplateImpl.class,
+		_finderPathWithoutPaginationFindByUuid_C = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			CommerceNotificationTemplateModelImpl.UUID_COLUMN_BITMASK |
-			CommerceNotificationTemplateModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceNotificationTemplateModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
-			CommerceNotificationTemplateModelImpl.NAME_COLUMN_BITMASK);
+			new String[] {"uuid_", "companyId"}, true);
 
-		_finderPathCountByUuid_C = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()});
+		_finderPathCountByUuid_C = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "companyId"}, false);
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			CommerceNotificationTemplateImpl.class,
+		_finderPathWithPaginationFindByGroupId = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"groupId"}, true);
 
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			CommerceNotificationTemplateImpl.class,
+		_finderPathWithoutPaginationFindByGroupId = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()},
-			CommerceNotificationTemplateModelImpl.GROUPID_COLUMN_BITMASK |
-			CommerceNotificationTemplateModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
-			CommerceNotificationTemplateModelImpl.NAME_COLUMN_BITMASK);
+			new String[] {Long.class.getName()}, new String[] {"groupId"},
+			true);
 
-		_finderPathCountByGroupId = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByGroupId", new String[] {Long.class.getName()});
+		_finderPathCountByGroupId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+			new String[] {Long.class.getName()}, new String[] {"groupId"},
+			false);
 
-		_finderPathWithPaginationFindByG_E = new FinderPath(
-			CommerceNotificationTemplateImpl.class,
+		_finderPathWithPaginationFindByG_E = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_E",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"groupId", "enabled"}, true);
 
-		_finderPathWithoutPaginationFindByG_E = new FinderPath(
-			CommerceNotificationTemplateImpl.class,
+		_finderPathWithoutPaginationFindByG_E = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_E",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			CommerceNotificationTemplateModelImpl.GROUPID_COLUMN_BITMASK |
-			CommerceNotificationTemplateModelImpl.ENABLED_COLUMN_BITMASK |
-			CommerceNotificationTemplateModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
-			CommerceNotificationTemplateModelImpl.NAME_COLUMN_BITMASK);
+			new String[] {"groupId", "enabled"}, true);
 
-		_finderPathCountByG_E = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_E",
-			new String[] {Long.class.getName(), Boolean.class.getName()});
+		_finderPathCountByG_E = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_E",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"groupId", "enabled"}, false);
 
-		_finderPathWithPaginationFindByG_T_E = new FinderPath(
-			CommerceNotificationTemplateImpl.class,
+		_finderPathWithPaginationFindByG_T_E = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_E",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"groupId", "type_", "enabled"}, true);
 
-		_finderPathWithoutPaginationFindByG_T_E = new FinderPath(
-			CommerceNotificationTemplateImpl.class,
+		_finderPathWithoutPaginationFindByG_T_E = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T_E",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName()
 			},
-			CommerceNotificationTemplateModelImpl.GROUPID_COLUMN_BITMASK |
-			CommerceNotificationTemplateModelImpl.TYPE_COLUMN_BITMASK |
-			CommerceNotificationTemplateModelImpl.ENABLED_COLUMN_BITMASK |
-			CommerceNotificationTemplateModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
-			CommerceNotificationTemplateModelImpl.NAME_COLUMN_BITMASK);
+			new String[] {"groupId", "type_", "enabled"}, true);
 
-		_finderPathCountByG_T_E = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByG_T_E",
+		_finderPathCountByG_T_E = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T_E",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName()
-			});
+			},
+			new String[] {"groupId", "type_", "enabled"}, false);
 	}
 
 	public void destroy() {
 		entityCache.removeCache(
 			CommerceNotificationTemplateImpl.class.getName());
-		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		_argumentsResolverServiceRegistration.unregister();
+
+		for (ServiceRegistration<FinderPath> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
+
+	private BundleContext _bundleContext;
 
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
@@ -5477,5 +5273,113 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"uuid", "from", "to", "type"});
+
+	private FinderPath _createFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, baseModelResult);
+
+		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
+			_serviceRegistrations.add(
+				_bundleContext.registerService(
+					FinderPath.class, finderPath,
+					MapUtil.singletonDictionary("cache.name", cacheName)));
+		}
+
+		return finderPath;
+	}
+
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
+	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
+		new HashSet<>();
+
+	private static class CommerceNotificationTemplateModelArgumentsResolver
+		implements ArgumentsResolver {
+
+		@Override
+		public Object[] getArguments(
+			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
+			boolean original) {
+
+			String[] columnNames = finderPath.getColumnNames();
+
+			if ((columnNames == null) || (columnNames.length == 0)) {
+				if (baseModel.isNew()) {
+					return FINDER_ARGS_EMPTY;
+				}
+
+				return null;
+			}
+
+			CommerceNotificationTemplateModelImpl
+				commerceNotificationTemplateModelImpl =
+					(CommerceNotificationTemplateModelImpl)baseModel;
+
+			long columnBitmask =
+				commerceNotificationTemplateModelImpl.getColumnBitmask();
+
+			if (!checkColumn || (columnBitmask == 0)) {
+				return _getValue(
+					commerceNotificationTemplateModelImpl, columnNames,
+					original);
+			}
+
+			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
+				finderPath);
+
+			if (finderPathColumnBitmask == null) {
+				finderPathColumnBitmask = 0L;
+
+				for (String columnName : columnNames) {
+					finderPathColumnBitmask |=
+						commerceNotificationTemplateModelImpl.getColumnBitmask(
+							columnName);
+				}
+
+				_finderPathColumnBitmasksCache.put(
+					finderPath, finderPathColumnBitmask);
+			}
+
+			if ((columnBitmask & finderPathColumnBitmask) != 0) {
+				return _getValue(
+					commerceNotificationTemplateModelImpl, columnNames,
+					original);
+			}
+
+			return null;
+		}
+
+		private Object[] _getValue(
+			CommerceNotificationTemplateModelImpl
+				commerceNotificationTemplateModelImpl,
+			String[] columnNames, boolean original) {
+
+			Object[] arguments = new Object[columnNames.length];
+
+			for (int i = 0; i < arguments.length; i++) {
+				String columnName = columnNames[i];
+
+				if (original) {
+					arguments[i] =
+						commerceNotificationTemplateModelImpl.
+							getColumnOriginalValue(columnName);
+				}
+				else {
+					arguments[i] =
+						commerceNotificationTemplateModelImpl.getColumnValue(
+							columnName);
+				}
+			}
+
+			return arguments;
+		}
+
+		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
+			new ConcurrentHashMap<>();
+
+	}
 
 }

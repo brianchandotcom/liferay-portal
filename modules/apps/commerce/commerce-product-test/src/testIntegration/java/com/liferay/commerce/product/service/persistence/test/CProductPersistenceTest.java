@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -463,27 +464,71 @@ public class CProductPersistenceTest {
 
 		_persistence.clearCache();
 
-		CProduct existingCProduct = _persistence.findByPrimaryKey(
-			newCProduct.getPrimaryKey());
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newCProduct.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CProduct newCProduct = addCProduct();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CProduct.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"CProductId", newCProduct.getCProductId()));
+
+		List<CProduct> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(CProduct cProduct) {
+		Assert.assertEquals(
+			cProduct.getUuid(),
+			ReflectionTestUtil.invoke(
+				cProduct, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
+		Assert.assertEquals(
+			Long.valueOf(cProduct.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				cProduct, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
-			existingCProduct.getUuid(),
-			ReflectionTestUtil.invoke(
-				existingCProduct, "getOriginalUuid", new Class<?>[0]));
-		Assert.assertEquals(
-			Long.valueOf(existingCProduct.getGroupId()),
+			Long.valueOf(cProduct.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCProduct, "getOriginalGroupId", new Class<?>[0]));
-
+				cProduct, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
-			Long.valueOf(existingCProduct.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				existingCProduct, "getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertEquals(
-			existingCProduct.getExternalReferenceCode(),
+			cProduct.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
-				existingCProduct, "getOriginalExternalReferenceCode",
-				new Class<?>[0]));
+				cProduct, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected CProduct addCProduct() throws Exception {

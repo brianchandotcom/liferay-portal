@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -697,44 +698,88 @@ public class CommerceSubscriptionEntryPersistenceTest {
 
 		_persistence.clearCache();
 
-		CommerceSubscriptionEntry existingCommerceSubscriptionEntry =
+		_assertOriginalValues(
 			_persistence.findByPrimaryKey(
-				newCommerceSubscriptionEntry.getPrimaryKey());
+				newCommerceSubscriptionEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		CommerceSubscriptionEntry newCommerceSubscriptionEntry =
+			addCommerceSubscriptionEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			CommerceSubscriptionEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"commerceSubscriptionEntryId",
+				newCommerceSubscriptionEntry.getCommerceSubscriptionEntryId()));
+
+		List<CommerceSubscriptionEntry> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		CommerceSubscriptionEntry commerceSubscriptionEntry) {
 
 		Assert.assertEquals(
-			existingCommerceSubscriptionEntry.getUuid(),
+			commerceSubscriptionEntry.getUuid(),
 			ReflectionTestUtil.invoke(
-				existingCommerceSubscriptionEntry, "getOriginalUuid",
-				new Class<?>[0]));
+				commerceSubscriptionEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
 		Assert.assertEquals(
-			Long.valueOf(existingCommerceSubscriptionEntry.getGroupId()),
+			Long.valueOf(commerceSubscriptionEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceSubscriptionEntry, "getOriginalGroupId",
-				new Class<?>[0]));
+				commerceSubscriptionEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
-			Long.valueOf(
-				existingCommerceSubscriptionEntry.getCommerceOrderItemId()),
+			Long.valueOf(commerceSubscriptionEntry.getCommerceOrderItemId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceSubscriptionEntry,
-				"getOriginalCommerceOrderItemId", new Class<?>[0]));
+				commerceSubscriptionEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "commerceOrderItemId"));
 
 		Assert.assertEquals(
-			existingCommerceSubscriptionEntry.getCPInstanceUuid(),
+			commerceSubscriptionEntry.getCPInstanceUuid(),
 			ReflectionTestUtil.invoke(
-				existingCommerceSubscriptionEntry, "getOriginalCPInstanceUuid",
-				new Class<?>[0]));
+				commerceSubscriptionEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "CPInstanceUuid"));
 		Assert.assertEquals(
-			Long.valueOf(existingCommerceSubscriptionEntry.getCProductId()),
+			Long.valueOf(commerceSubscriptionEntry.getCProductId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceSubscriptionEntry, "getOriginalCProductId",
-				new Class<?>[0]));
+				commerceSubscriptionEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "CProductId"));
 		Assert.assertEquals(
-			Long.valueOf(
-				existingCommerceSubscriptionEntry.getCommerceOrderItemId()),
+			Long.valueOf(commerceSubscriptionEntry.getCommerceOrderItemId()),
 			ReflectionTestUtil.<Long>invoke(
-				existingCommerceSubscriptionEntry,
-				"getOriginalCommerceOrderItemId", new Class<?>[0]));
+				commerceSubscriptionEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "commerceOrderItemId"));
 	}
 
 	protected CommerceSubscriptionEntry addCommerceSubscriptionEntry()

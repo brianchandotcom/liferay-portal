@@ -1123,7 +1123,7 @@ definition {
 		RelatedAssets.selectAsset(
 			assetTitle = "Blogs Entry Title",
 			assetType = "Blogs Entry",
-			scopeSite = "Test Site Name");
+			scopeSite = "Everywhere");
 
 		SelectFrame(value1 = "relative=top");
 

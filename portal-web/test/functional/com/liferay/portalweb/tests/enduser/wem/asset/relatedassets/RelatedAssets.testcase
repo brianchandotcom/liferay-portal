@@ -163,7 +163,7 @@ definition {
 		WebContent.addExistingRelatedAssetCP(
 			assetTitle = "Web Content Title 1",
 			assetType = "Basic Web Content",
-			scopeSite = "Global",
+			scopeSite = "Everywhere",
 			siteName = "Global",
 			webContentTitle = "Web Content Title 2");
 

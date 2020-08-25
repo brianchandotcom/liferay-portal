@@ -185,49 +185,6 @@ public class AnalyticsReportsDisplayContextTest {
 	}
 
 	@Test
-	public void testGetPropsViewURLs() throws Exception {
-		AnalyticsReportsDataProvider analyticsReportsDataProvider =
-			_getAnalyticsReportsDataProvider(
-				Collections.emptyList(), RandomTestUtil.randomInt(),
-				RandomTestUtil.randomDouble(), Collections.emptyList(),
-				RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
-				true);
-
-		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem =
-			_getAnalyticsReportsItem(LocaleUtil.US);
-
-		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
-			new AnalyticsReportsDisplayContext(
-				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, _getLayoutDisplayPageObjectProvider(), new PortalImpl(),
-				new MockLiferayPortletRenderRequest(),
-				new MockLiferayPortletRenderResponse(), _getResourceBundle(),
-				_getThemeDisplay(_getLayout()), null);
-
-		Map<String, Object> data = analyticsReportsDisplayContext.getData();
-
-		Map<String, Object> props = (Map<String, Object>)data.get("props");
-
-		JSONArray jsonArray = (JSONArray)props.get("viewURLs");
-
-		Assert.assertEquals(String.valueOf(jsonArray), 1, jsonArray.length());
-
-		JSONObject jsonObject = jsonArray.getJSONObject(0);
-
-		Assert.assertEquals(Boolean.TRUE, jsonObject.getBoolean("default"));
-		Assert.assertEquals(
-			LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
-			jsonObject.getString("languageId"));
-
-		Http http = new HttpImpl();
-
-		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
-			http.getParameter(
-				jsonObject.getString("viewURL"), "param_languageId"));
-	}
-
-	@Test
 	public void testGetPropsViewURLsWithMultipleLocales() throws Exception {
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
 			_getAnalyticsReportsDataProvider(
@@ -352,26 +309,12 @@ public class AnalyticsReportsDisplayContextTest {
 
 	@Test
 	public void testGetPropsWithValidAnalyticsConnection() throws Exception {
-		long organicTrafficAmount = RandomTestUtil.randomInt();
-		double organicTrafficShare = RandomTestUtil.randomDouble();
-
-		long paidTrafficAmount = RandomTestUtil.randomInt();
-		double paidTrafficShare = RandomTestUtil.randomDouble();
-
-		SearchKeyword organicSearchKeyword = new SearchKeyword(
-			RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
-			RandomTestUtil.randomInt(), RandomTestUtil.randomInt());
-
-		SearchKeyword paidSearchKeyword = new SearchKeyword(
-			RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
-			RandomTestUtil.randomInt(), RandomTestUtil.randomInt());
-
 		AnalyticsReportsDataProvider analyticsReportsDataProvider =
 			_getAnalyticsReportsDataProvider(
-				Collections.singletonList(organicSearchKeyword),
-				organicTrafficAmount, organicTrafficShare,
-				Collections.singletonList(paidSearchKeyword), paidTrafficAmount,
-				paidTrafficShare, true);
+				Collections.emptyList(), RandomTestUtil.randomInt(),
+				RandomTestUtil.randomDouble(), Collections.emptyList(),
+				RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
+				true);
 
 		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem =
 			_getAnalyticsReportsItem();
@@ -405,83 +348,6 @@ public class AnalyticsReportsDisplayContextTest {
 		Assert.assertEquals(
 			analyticsReportsInfoItem.getTitle(null, LocaleUtil.US),
 			props.get("title"));
-
-		JSONArray trafficSourcesJSONArray = (JSONArray)props.get(
-			"trafficSources");
-
-		Assert.assertEquals(
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"countryKeywords",
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"countryCode", "us"
-						).put(
-							"countryName", "United States"
-						).put(
-							"keywords",
-							JSONUtil.putAll(
-								JSONUtil.put(
-									"keyword", paidSearchKeyword.getKeyword()
-								).put(
-									"position", paidSearchKeyword.getPosition()
-								).put(
-									"searchVolume",
-									paidSearchKeyword.getSearchVolume()
-								).put(
-									"traffic",
-									Math.toIntExact(
-										paidSearchKeyword.getTraffic())
-								))
-						))
-				).put(
-					"helpMessage", _titles.get(_MESSAGE_KEY_HELP_PAID)
-				).put(
-					"name", _TITLE_KEY_PAID
-				).put(
-					"share", paidTrafficShare
-				).put(
-					"title", _titles.get(_TITLE_KEY_PAID)
-				).put(
-					"value", Math.toIntExact(paidTrafficAmount)
-				),
-				JSONUtil.put(
-					"countryKeywords",
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"countryCode", "us"
-						).put(
-							"countryName", "United States"
-						).put(
-							"keywords",
-							JSONUtil.putAll(
-								JSONUtil.put(
-									"keyword", organicSearchKeyword.getKeyword()
-								).put(
-									"position",
-									organicSearchKeyword.getPosition()
-								).put(
-									"searchVolume",
-									organicSearchKeyword.getSearchVolume()
-								).put(
-									"traffic",
-									Math.toIntExact(
-										organicSearchKeyword.getTraffic())
-								))
-						))
-				).put(
-					"helpMessage", _titles.get(_MESSAGE_KEY_HELP_ORGANIC)
-				).put(
-					"name", _TITLE_KEY_ORGANIC
-				).put(
-					"share", organicTrafficShare
-				).put(
-					"title", _titles.get(_TITLE_KEY_ORGANIC)
-				).put(
-					"value", Math.toIntExact(organicTrafficAmount)
-				)
-			).toJSONString(),
-			trafficSourcesJSONArray.toJSONString());
 	}
 
 	private AnalyticsReportsDataProvider _getAnalyticsReportsDataProvider(

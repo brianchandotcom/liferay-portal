@@ -402,12 +402,10 @@ definition {
 
 		IFrame.closeFrame();
 
-		var serviceContext = '''{"assetTagNames": ["tag name"]}''';
-
 		JSONWebcontent.addWebContent(
+			assetTagNames = "tag name",
 			content = "Web Content Content",
 			groupName = "Guest",
-			serviceContext = "${serviceContext}",
 			title = "Web Content Title");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
@@ -535,12 +533,10 @@ definition {
 			groupName = "Guest",
 			vocabularyName = "Vocabulary Name");
 
-		var serviceContext = '''{"assetCategoryIds": ["${categoryId}"]}''';
-
 		JSONWebcontent.addWebContent(
+			assetCategoryIds = "${categoryId}",
 			content = "Web Content Content",
 			groupName = "Guest",
-			serviceContext = "${serviceContext}",
 			title = "Web Content Title");
 
 		Navigator.gotoPage(pageName = "Asset Publisher Page");

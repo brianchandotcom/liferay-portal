@@ -617,21 +617,17 @@ definition {
 			layoutName = "Tags Navigation Page",
 			widgetName = "Asset Publisher");
 
-		var serviceContext = '''{"assetTagNames": ["first tag","second tag"]}''';
-
 		JSONWebcontent.addWebContent(
+			assetTagNames = "first tag,second tag",
 			content = "Web Content Content",
 			groupName = "Test Site Name",
-			serviceContext = "${serviceContext}",
 			title = "Web Content Title");
 
-		var serviceContext = '''{"assetTagNames": ["first tag"]}''';
-
 		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "first tag",
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Test Site Name",
 			mimeType = "text/plain",
-			serviceContext = "${serviceContext}",
 			sourceFileName = "Document_1.txt");
 
 		Navigator.gotoSitePage(

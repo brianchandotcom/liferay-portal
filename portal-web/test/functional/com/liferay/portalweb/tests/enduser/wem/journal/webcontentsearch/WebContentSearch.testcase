@@ -362,12 +362,10 @@ definition {
 			layoutName = "Web Content Display Page",
 			widgetName = "Web Content Display");
 
-		var serviceContext = '''{"assetTagNames": ["tag name"]}''';
-
 		JSONWebcontent.addWebContent(
+			assetTagNames = "tag name",
 			content = "WC WebContent Content",
 			groupName = "Guest",
-			serviceContext = "${serviceContext}",
 			title = "WC WebContent Title");
 
 		Navigator.gotoPage(pageName = "Web Content Display Page");

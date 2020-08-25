@@ -740,12 +740,11 @@ definition {
 				groupName = "Test Site Name",
 				vocabularyName = "Vocabulary Name");
 
-			var serviceContext = '''{"assetTagNames": ["test tag"], "assetCategoryIds": ["${categoryId}"]}''';
-
 			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				assetTagNames = "test tag",
 				content = "Webcontent Content",
 				groupName = "Test Site Name",
-				serviceContext = "${serviceContext}",
 				title = "Webcontent Title");
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

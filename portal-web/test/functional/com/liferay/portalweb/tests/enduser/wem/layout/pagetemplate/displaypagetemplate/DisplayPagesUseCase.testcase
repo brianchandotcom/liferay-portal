@@ -714,12 +714,10 @@ definition {
 		}
 
 		task ("Add a web content article with tags that uses the display page") {
-			var serviceContext = '''{"assetTagNames": ["tag1","tag2","tag3"]}''';
-
 			JSONWebcontent.addWebContent(
+				assetTagNames = "tag1,tag2,tag3",
 				content = "Webcontent Content",
 				groupName = "Test Site Name",
-				serviceContext = "${serviceContext}",
 				title = "Webcontent Title");
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");

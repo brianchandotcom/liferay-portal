@@ -250,21 +250,17 @@ definition {
 				tagName = "${tagName}");
 		}
 
-		var serviceContext = '''{"assetTagNames": ["first tag","second tag"]}''';
-
 		JSONWebcontent.addWebContent(
+			assetTagNames = "first tag,second tag",
 			content = "Web Content Content",
 			groupName = "Guest",
-			serviceContext = "${serviceContext}",
 			title = "Web Content Title");
 
-		var serviceContext = '''{"assetTagNames": ["first tag"]}''';
-
 		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "first tag",
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Guest",
 			mimeType = "text/plain",
-			serviceContext = "${serviceContext}",
 			sourceFileName = "Document_1.txt");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
@@ -308,21 +304,17 @@ definition {
 			layoutName = "Tags Navigation Page",
 			widgetName = "Asset Publisher");
 
-		var serviceContext = '''{"assetTagNames": ["first tag","second tag"]}''';
-
 		JSONWebcontent.addWebContent(
+			assetTagNames = "first tag,second tag",
 			content = "Web Content Content",
 			groupName = "Guest",
-			serviceContext = "${serviceContext}",
 			title = "Web Content Title");
 
-		var serviceContext = '''{"assetTagNames": ["first tag"]}''';
-
 		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "first tag",
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Guest",
 			mimeType = "text/plain",
-			serviceContext = "${serviceContext}",
 			sourceFileName = "Document_1.txt");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
@@ -600,21 +592,17 @@ definition {
 				tagName = "${tagName}");
 		}
 
-		var serviceContext = '''{"assetTagNames": ["first tag","second tag"]}''';
-
 		JSONWebcontent.addWebContent(
+			assetTagNames = "first tag,second tag",
 			content = "Web Content Content",
 			groupName = "Guest",
-			serviceContext = "${serviceContext}",
 			title = "Web Content Title");
 
-		var serviceContext = '''{"assetTagNames": ["first tag"]}''';
-
 		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "first tag",
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Guest",
 			mimeType = "text/plain",
-			serviceContext = "${serviceContext}",
 			sourceFileName = "Document_1.txt");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");
@@ -627,12 +615,10 @@ definition {
 			tagName = "second tag (1)",
 			tagPopularityLevel = "3");
 
-		var serviceContext = '''{"assetTagNames": ["first tag","second tag"]}''';
-
 		JSONWebcontent.addWebContent(
+			assetTagNames = "first tag,second tag",
 			content = "Web Content2 Content",
 			groupName = "Guest",
-			serviceContext = "${serviceContext}",
 			title = "Web Content2 Title");
 
 		Navigator.gotoPage(pageName = "Tags Navigation Page");

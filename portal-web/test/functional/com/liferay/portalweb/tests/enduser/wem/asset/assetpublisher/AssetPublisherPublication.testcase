@@ -138,12 +138,10 @@ definition {
 			site = "false",
 			vocabularyName = "Vocabulary Name");
 
-		var serviceContext = '''{"assetCategoryIds": ["${categoryId}"]}''';
-
 		JSONWebcontent.addWebContent(
+			assetCategoryIds = "${categoryId}",
 			content = "Web Content With One Category",
 			groupName = "Site Name (Staging)",
-			serviceContext = "${serviceContext}",
 			site = "false",
 			title = "Web Content Title 1");
 
@@ -165,12 +163,10 @@ definition {
 			site = "false",
 			vocabularyName = "Vocabulary Name");
 
-		var serviceContext = '''{"assetCategoryIds": ["${firstCategoryId}","${secondCategoryId}"]}''';
-
 		JSONWebcontent.addWebContent(
+			assetCategoryIds = "${firstCategoryId},${secondCategoryId}",
 			content = "Web Content With Two Categories",
 			groupName = "Site Name (Staging)",
-			serviceContext = "${serviceContext}",
 			site = "false",
 			title = "Web Content Title 2");
 

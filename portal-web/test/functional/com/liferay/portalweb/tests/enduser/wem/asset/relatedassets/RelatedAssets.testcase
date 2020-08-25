@@ -61,12 +61,10 @@ definition {
 			site = "false",
 			vocabularyName = "Vocabulary Name");
 
-		var serviceContext = '''{"assetCategoryIds": ["${categoryId}"]}''';
-
 		JSONWebcontent.addWebContent(
+			assetCategoryIds = "${categoryId}",
 			content = "Web Content Content 2",
 			groupName = "Site Name (Staging)",
-			serviceContext = "${serviceContext}",
 			site = "false",
 			title = "Web Content Title 2");
 

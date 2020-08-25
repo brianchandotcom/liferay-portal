@@ -4578,11 +4578,10 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-64305."
-	@ignore = "true"
 	@priority = "4"
 	test ViewDefaultFieldNamesWithPunctuationCharacters {
 		property test.name.skip.portal.instance = "Forms#ViewDefaultFieldNamesWithPunctuationCharacters";
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		Navigator.openURL();
 

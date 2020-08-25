@@ -37,6 +37,7 @@ patch {
 
 	fileNames "org/apache/felix/scr/impl/ComponentRegistry.java"
 	fileNames "org/apache/felix/scr/impl/config/ScrMetaTypeProvider.java"
+	fileNames "org/apache/felix/scr/impl/inject/methods/ActivateMethod.java"
 
 	originalLibModuleName = "org.apache.felix.scr"
 }

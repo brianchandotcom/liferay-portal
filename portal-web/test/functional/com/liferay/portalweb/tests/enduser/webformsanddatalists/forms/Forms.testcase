@@ -3855,13 +3855,14 @@ definition {
 			locator1 = "FormFields#FIELD_HELPER_EDIT",
 			value1 = "help");
 
-		Form.gotoPropertiesTab();
+		Form.gotoAdvancedTab();
 
 		FormFields.enableSwitcher(fieldName = "Repeatable");
 
 		Form.publishForm();
 
 		Form.assertFormWasPublished();
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");

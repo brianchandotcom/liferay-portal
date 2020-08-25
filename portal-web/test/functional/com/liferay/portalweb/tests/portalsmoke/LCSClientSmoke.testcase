@@ -5,6 +5,7 @@ definition {
 	property test.assert.warning.exceptions = "true";
 	property deploy.lcs.token.file = "true";
 	property environment.acceptance = "true";
+	property portal.acceptance = "true";
 	property portal.fixpack.release = "true";
 	property portal.release = "true";
 	property portal.smoke = "false";

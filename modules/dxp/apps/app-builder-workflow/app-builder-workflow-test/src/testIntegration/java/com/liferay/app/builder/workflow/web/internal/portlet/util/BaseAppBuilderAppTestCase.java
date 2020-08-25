@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.app.builder.workflow.web.internal.portlet.action.test;
+package com.liferay.app.builder.workflow.web.internal.portlet.util;
 
 import com.liferay.app.builder.constants.AppBuilderAppConstants;
 import com.liferay.app.builder.constants.AppBuilderPortletKeys;
@@ -78,7 +78,7 @@ import org.junit.Rule;
 /**
  * @author Rafael Praxedes
  */
-public abstract class BaseAppBuilderAppMVCResourceCommandTestCase {
+public abstract class BaseAppBuilderAppTestCase {
 
 	@ClassRule
 	@Rule

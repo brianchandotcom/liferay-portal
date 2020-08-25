@@ -21,6 +21,7 @@ import React from 'react';
 import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {config} from '../../config/index';
+import {ColorPaletteField} from './ColorPaletteField';
 
 const COLOR_PICKER_TYPE = 'ColorPicker';
 
@@ -41,6 +42,18 @@ export const ColorPickerField = ({field, onValueSelect, value}) => {
 	}, {});
 
 	const colors = colorTokens.map((token) => token.value.replace('#', ''));
+
+	if (!colors.length) {
+		return (
+			<ColorPaletteField
+				field={field}
+				onValueSelect={(name, value) =>
+					onValueSelect(name, value?.rgbValue ?? '')
+				}
+				value={value}
+			/>
+		);
+	}
 
 	return (
 		<ClayForm.Group small>
@@ -64,7 +77,7 @@ export const ColorPickerField = ({field, onValueSelect, value}) => {
 						value={
 							frontendTokens[value]
 								? frontendTokens[value].label
-								: ''
+								: Liferay.Language.get('default')
 						}
 					/>
 				</ClayInput.GroupItem>

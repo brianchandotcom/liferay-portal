@@ -131,7 +131,7 @@ const Container = React.forwardRef(
 					`pt-${paddingTop}`,
 					{
 						container: widthType === 'fixed',
-						empty: item.children.length === 0,
+						empty: !item.children.length && !height,
 						[`ml-${marginLeft}`]:
 							widthType !== 'fixed' && !withinTopper,
 						[`mr-${marginRight}`]:

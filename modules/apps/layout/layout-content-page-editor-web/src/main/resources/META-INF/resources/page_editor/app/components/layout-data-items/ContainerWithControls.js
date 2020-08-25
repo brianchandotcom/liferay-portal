@@ -50,6 +50,7 @@ const ContainerWithControls = React.forwardRef(
 		const {widthType} = itemConfig;
 
 		const {
+			height,
 			marginLeft,
 			marginRight,
 			maxWidth,
@@ -80,7 +81,7 @@ const ContainerWithControls = React.forwardRef(
 			>
 				<Container
 					className={classNames({
-						empty: !item.children.length,
+						empty: !item.children.length && !height,
 						'page-editor__container':
 							canUpdatePageStructure ||
 							canUpdateItemConfiguration,

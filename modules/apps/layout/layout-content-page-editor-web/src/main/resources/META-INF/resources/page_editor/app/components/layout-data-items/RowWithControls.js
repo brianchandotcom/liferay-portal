@@ -49,9 +49,9 @@ const RowWithControls = React.forwardRef(
 		);
 
 		const [setRef, itemElement] = useSetRef(ref);
-		const {verticalAlignment} = rowResponsiveConfig;
+		const {modulesPerRow, verticalAlignment} = rowResponsiveConfig;
 
-		const {maxWidth, minWidth, width} = item.config.styles;
+		const {height, maxWidth, minWidth, width} = item.config.styles;
 
 		const style = {};
 
@@ -70,6 +70,13 @@ const RowWithControls = React.forwardRef(
 					className={classNames({
 						'align-bottom': verticalAlignment === 'bottom',
 						'align-middle': verticalAlignment === 'middle',
+						empty:
+							item.config.numberOfColumns === modulesPerRow &&
+							!item.children.some(
+								(childId) =>
+									layoutData.items[childId].children.length
+							) &&
+							!height,
 						'page-editor__row': canUpdatePageStructure,
 						'page-editor__row-overlay-grid': resizing,
 					})}

@@ -110,7 +110,8 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 						!item.children.some(
 							(childId) =>
 								layoutData.items[childId].children.length
-						),
+						) &&
+						!height,
 					'flex-column': customRow && modulesPerRow === 1,
 					'flex-column-reverse':
 						item.config.numberOfColumns === 2 &&

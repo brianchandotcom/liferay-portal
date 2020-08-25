@@ -31,8 +31,6 @@ definition {
 	@description = "This is a test for LPS-84223."
 	@priority = "3"
 	test DLLinkValidationInWebContent {
-		property portal.upstream = "quarantine";
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
@@ -2018,7 +2016,6 @@ ${webContentData}
 	@description = "This is a test for LPS-91233."
 	@priority = "3"
 	test PublishWebContentWithBrokenLink {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ExportImport#PublishWebContentWithBrokenLink";
 
 		ApplicationsMenu.gotoPortlet(

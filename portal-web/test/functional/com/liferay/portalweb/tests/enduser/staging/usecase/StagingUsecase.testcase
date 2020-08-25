@@ -831,7 +831,6 @@ definition {
 	@description = "This is a use case for LPS-82757."
 	@priority = "3"
 	test PublishWebContentWithFeeds {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "StagingUsecase#PublishWebContentWithFeeds";
 
 		ApplicationsMenu.gotoPortlet(

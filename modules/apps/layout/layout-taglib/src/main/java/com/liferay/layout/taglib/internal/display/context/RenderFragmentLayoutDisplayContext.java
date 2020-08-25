@@ -871,6 +871,10 @@ public class RenderFragmentLayoutDisplayContext {
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				layoutSet.getThemeId());
 
+		if (frontendTokenDefinition == null) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
 		JSONObject frontendTokenDefinitionJSONObject =
 			JSONFactoryUtil.createJSONObject(
 				frontendTokenDefinition.getJSON(_themeDisplay.getLocale()));

@@ -32,9 +32,10 @@ import com.liferay.portal.tools.service.builder.test.service.base.ManyColumnsEnt
 public class ManyColumnsEntityServiceImpl
 	extends ManyColumnsEntityServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use <code>com.liferay.portal.tools.service.builder.test.service.ManyColumnsEntityServiceUtil</code> to access the many columns entity remote service.
 	 */
+
 }

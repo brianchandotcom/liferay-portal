@@ -547,6 +547,128 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-118276. Map single vocabulary with single category from asset entry to editable field."
+	@priority = "5"
+	test MapSingleCategoryFromAssetEntryToEditableField {
+		task ("Add a new vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a web content article based on Basic Web Content with the new category") {
+			var categoryId = JSONCategory.getCategoryId(
+				categoryName = "Category Name",
+				groupName = "Test Site Name",
+				vocabularyName = "Vocabulary Name");
+
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a blogs entry with the new category") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${categoryId}",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a document based on Basic Document with the new category") {
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${categoryId}",
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpg");
+		}
+
+		task ("Add a Heading fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the new category from web content article to editable field of Heading") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				contributed = "true",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Web Content Title",
+				navItem = "Web Content");
+
+			Pause(locator1 = "3000");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Vocabulary Name");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Category Name",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("Map the new category from blogs entry to editable field of Heading") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				contributed = "true",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Blogs Entry Title",
+				navItem = "Blogs");
+
+			Pause(locator1 = "3000");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Vocabulary Name");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Category Name",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("Map the new category from document to editable field of Heading") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				contributed = "true",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Document Title",
+				navItem = "Documents and Media");
+
+			Pause(locator1 = "3000");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Vocabulary Name");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Category Name",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+	}
+
 	@description = "This is a use case for LPS-116975. Map multiple tags from asset entry to editable field."
 	@priority = "5"
 	test MapTagsToEditableField {

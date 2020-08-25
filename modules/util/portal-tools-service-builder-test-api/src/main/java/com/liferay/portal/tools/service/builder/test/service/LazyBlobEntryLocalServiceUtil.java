@@ -57,6 +57,16 @@ public class LazyBlobEntryLocalServiceUtil {
 		return getService().addLazyBlobEntry(lazyBlobEntry);
 	}
 
+	public static
+		com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry
+			addLazyBlobEntry(
+				long groupId, byte[] bytes,
+				com.liferay.portal.kernel.service.ServiceContext
+					serviceContext) {
+
+		return getService().addLazyBlobEntry(groupId, bytes, serviceContext);
+	}
+
 	/**
 	 * Creates a new lazy blob entry with the primary key. Does not add the lazy blob entry to the database.
 	 *

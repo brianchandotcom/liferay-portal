@@ -35,7 +35,7 @@ public class SimpleURLToCORSSupportMapperPerformanceTest {
 
 		long start = System.currentTimeMillis();
 
-		for (int i = 0; i < 100000; i++) {
+		for (int i = 0; i < 1000000; i++) {
 			for (KeyValuePair keyValuePair : keyValuePairs) {
 				urlToCORSSupportMapper.get(keyValuePair.getKey());
 			}
@@ -45,9 +45,9 @@ public class SimpleURLToCORSSupportMapperPerformanceTest {
 
 		long delta = end - start;
 
-		System.out.println("Iterated 100 thousand times in " + delta + " ms");
+		System.out.println("Iterated 1 million times in " + delta + " ms");
 
-		Assert.assertTrue(delta < 2000);
+		Assert.assertTrue(delta < 20000);
 	}
 
 	protected BaseURLToCORSSupportMapper createURLToCORSSupportMapper(

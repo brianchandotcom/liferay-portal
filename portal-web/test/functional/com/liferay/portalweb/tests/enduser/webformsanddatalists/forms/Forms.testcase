@@ -3827,6 +3827,8 @@ definition {
 	@priority = "5"
 	test SubmitFormWithRequiredImageField {
 		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredImageField";
+		property portal.acceptance = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Forms");

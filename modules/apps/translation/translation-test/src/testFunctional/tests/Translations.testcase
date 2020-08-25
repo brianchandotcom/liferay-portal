@@ -130,6 +130,8 @@ definition {
 	@description = "This ensures that a translated zip file with an available language can be exported."
 	@priority = "5"
 	test ExportWebContent {
+		property portal.acceptance = "true";
+
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
 			groupName = "Guest",
@@ -191,6 +193,8 @@ definition {
 	@description = "This ensures that a translated file(.xlf) with an available language can be imported."
 	@priority = "5"
 	test ImportWebContent {
+		property portal.acceptance = "true";
+
 		JSONWebcontent.addWebContent(
 			content = "WebContent",
 			description = "Description",
@@ -232,6 +236,8 @@ definition {
 	@description = "This ensures that a translated file(.xliff) with an available language can be imported."
 	@priority = "5"
 	test ImportWebContentWithXliffFile {
+		property portal.acceptance = "true";
+
 		JSONWebcontent.addWebContent(
 			content = "WebContent",
 			description = "Description",
@@ -530,6 +536,7 @@ definition {
 	test TranslateWebContent {
 		property osgi.module.configuration.file.names = "com.liferay.translation.internal.configuration.FFTranslationWorkflowConfiguration.config";
 		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",

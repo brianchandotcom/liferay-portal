@@ -23,7 +23,7 @@ String mainItemId = (String)request.getAttribute("liferay-layout:render-fragment
 String mode = (String)request.getAttribute("liferay-layout:render-fragment-layout:mode");
 boolean showPreview = GetterUtil.getBoolean(request.getAttribute("liferay-layout:render-fragment-layout:showPreview"));
 
-RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = (RenderFragmentLayoutDisplayContext)request.getAttribute("liferay-layout:render-fragment-layout:renderFragmentLayoutDisplayContext");
+RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = new RenderFragmentLayoutDisplayContext(request, response);
 %>
 
 <liferay-util:html-top>

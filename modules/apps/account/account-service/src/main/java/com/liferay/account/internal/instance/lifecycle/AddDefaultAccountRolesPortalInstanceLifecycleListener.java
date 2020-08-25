@@ -56,9 +56,14 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
+		long companyId = company.getCompanyId();
+
 		User defaultUser = company.getDefaultUser();
 
-		if (!_exists(AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER)) {
+		if (!_exists(
+				companyId,
+				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER)) {
+
 			AccountRole accountRole = _addAccountRole(
 				defaultUser.getUserId(),
 				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER);
@@ -68,6 +73,7 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 		}
 
 		if (!_exists(
+				companyId,
 				AccountRoleConstants.
 					REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR)) {
 
@@ -82,7 +88,10 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 				_accountAdministratorResourceActionsMap);
 		}
 
-		if (!_exists(AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER)) {
+		if (!_exists(
+				companyId,
+				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER)) {
+
 			Role role = _roleLocalService.addRole(
 				defaultUser.getUserId(), null, 0,
 				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER, null,
@@ -143,9 +152,8 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 		}
 	}
 
-	private boolean _exists(String roleName) {
-		Role role = _roleLocalService.fetchRole(
-			CompanyThreadLocal.getCompanyId(), roleName);
+	private boolean _exists(long companyId, String roleName) {
+		Role role = _roleLocalService.fetchRole(companyId, roleName);
 
 		if (role != null) {
 			_checkRoleDescription(role);

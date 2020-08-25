@@ -26,6 +26,7 @@ import {fromNow} from '../../utils/time.es';
 
 const columns = [
 	{
+		editable: true,
 		key: 'name',
 		sortable: true,
 		value: Liferay.Language.get('name'),
@@ -143,6 +144,7 @@ export default ({history, listViewProps = {}, objectType}) => {
 								{getLocalizedValue(defaultLanguageId, name)}
 							</Link>
 						),
+						originalItem: item,
 					};
 				}}
 			</ListView>

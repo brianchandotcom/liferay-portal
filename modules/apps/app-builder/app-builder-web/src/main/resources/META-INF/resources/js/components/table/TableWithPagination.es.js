@@ -25,6 +25,7 @@ import Table from './Table.es';
 const TableWithPagination = ({
 	actions,
 	columns,
+	editMode,
 	items,
 	noActionsMessage,
 	totalCount,
@@ -39,6 +40,7 @@ const TableWithPagination = ({
 			<Table
 				actions={actions}
 				columns={columns}
+				editMode={editMode}
 				items={items}
 				noActionsMessage={noActionsMessage}
 			/>

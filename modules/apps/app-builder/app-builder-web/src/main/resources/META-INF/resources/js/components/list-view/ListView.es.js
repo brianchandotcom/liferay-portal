@@ -32,6 +32,7 @@ export default withRouter(
 		addButton,
 		children,
 		columns,
+		editMode,
 		emptyState,
 		endpoint,
 		filters = [],
@@ -99,7 +100,7 @@ export default withRouter(
 				return {
 					...action,
 					action: (item) => {
-						action.action(item).then((isRefetch) => {
+						action.action(item, refetch).then((isRefetch) => {
 							if (!isRefetch) {
 								return;
 							}
@@ -134,6 +135,7 @@ export default withRouter(
 				<TableWithPagination
 					actions={refetchOnActions}
 					columns={columns}
+					editMode={editMode}
 					emptyState={emptyState}
 					isEmpty={isEmpty}
 					isFiltered={isFiltered}

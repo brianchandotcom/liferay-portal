@@ -53,7 +53,9 @@ definition {
 	}
 
 	macro duplicateField {
-		Click(locator1 = "Form#SIDEBAR_ELLIPSIS");
+		while (IsElementNotPresent(locator1 = "Form#SIDEBAR_MENUITEM_DUPLICATE_FIELD")) {
+			Click(locator1 = "Form#SIDEBAR_ELLIPSIS");
+		}
 
 		AssertClick(
 			locator1 = "Form#SIDEBAR_MENUITEM_DUPLICATE_FIELD",

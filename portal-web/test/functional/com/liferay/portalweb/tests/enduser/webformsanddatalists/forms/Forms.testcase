@@ -4599,7 +4599,9 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = ",-+!@#$%^*()=.?/;:{}[]\|");
 
-		FormFields.editFieldName(fieldValue = "_,-+!@#$%^*()=.?/;:{}[]\|");
+		Form.gotoAdvancedTab();
+
+		var textFieldName1 = FormFields.getFieldName();
 
 		Form.closeSidebar();
 
@@ -4607,7 +4609,9 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Jump, She exclaimed!");
 
-		FormFields.editFieldName(fieldValue = "Jump, She exclaimed!");
+		Form.gotoAdvancedTab();
+
+		var textFieldName2 = FormFields.getFieldName();
 
 		Form.closeSidebar();
 
@@ -4619,18 +4623,18 @@ definition {
 
 		FormFields.viewTextField(
 			fieldLabel = ",-+!@#$%^*()=.?/;:{}[]\|",
-			fieldName = "_");
+			fieldName = "${textFieldName1}");
 
 		FormFields.viewTextField(
 			fieldLabel = "Jump, She exclaimed!",
-			fieldName = "JumpSheexclaimed");
+			fieldName = "${textFieldName2}");
 
 		FormFields.editText(
-			fieldName = "_",
+			fieldName = "${textFieldName1}",
 			fieldValue = "1,2,3.");
 
 		FormFields.editText(
-			fieldName = "JumpSheexclaimed",
+			fieldName = "${textFieldName2}",
 			fieldValue = ",-+!@#$%^*()=.?/;:{}[]\|");
 
 		FormPortlet.submitSuccessfully();

@@ -16,7 +16,9 @@ package com.liferay.document.library.web.internal.info.item.provider;
 
 import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
@@ -64,7 +66,10 @@ public class FileEntryInfoItemFormProvider
 	@Override
 	public InfoForm getInfoForm() {
 		try {
-			return _getInfoForm(0);
+			return _getInfoForm(
+				0,
+				_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
+					DLFileEntryConstants.getClassName()));
 		}
 		catch (NoSuchFormVariationException noSuchFormVariationException) {
 			throw new RuntimeException(noSuchFormVariationException);
@@ -87,10 +92,21 @@ public class FileEntryInfoItemFormProvider
 		}
 
 		try {
-			return _getInfoForm(ddmStructureId);
+			return _getInfoForm(
+				ddmStructureId,
+				_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
+					_assetEntryLocalService.getEntry(
+						DLFileEntryConstants.getClassName(),
+						fileEntry.getFileEntryId())));
 		}
 		catch (NoSuchFormVariationException noSuchFormVariationException) {
 			throw new RuntimeException(noSuchFormVariationException);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(
+				"Unable to get asset entry for file entry " +
+					fileEntry.getFileEntryId(),
+				portalException);
 		}
 	}
 
@@ -107,7 +123,11 @@ public class FileEntryInfoItemFormProvider
 			ddmStructureId = ddmStructure.getStructureId();
 		}
 
-		return _getInfoForm(ddmStructureId);
+		return _getInfoForm(
+			ddmStructureId,
+			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
+				DLFileEntryConstants.getClassName(),
+				GetterUtil.getLong(formVariationKey), groupId));
 	}
 
 	private DDMStructure _fetchDDMStructure(long fileEntryTypeId) {
@@ -182,7 +202,8 @@ public class FileEntryInfoItemFormProvider
 		).build();
 	}
 
-	private InfoForm _getInfoForm(long ddmStructureId)
+	private InfoForm _getInfoForm(
+			long ddmStructureId, InfoFieldSet assetEntryInfoFieldSet)
 		throws NoSuchFormVariationException {
 
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
@@ -222,8 +243,7 @@ public class FileEntryInfoItemFormProvider
 				_expandoInfoItemFieldSetProvider.getInfoFieldSet(
 					FileEntry.class.getName())
 			).infoFieldSetEntry(
-				_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
-					FileEntry.class.getName())
+				assetEntryInfoFieldSet
 			).infoFieldSetEntry(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
 					AssetCategory.class.getName())
@@ -266,6 +286,9 @@ public class FileEntryInfoItemFormProvider
 	@Reference
 	private AssetEntryInfoItemFieldSetProvider
 		_assetEntryInfoItemFieldSetProvider;
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private DDMStructureInfoItemFieldSetProvider

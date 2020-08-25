@@ -25,7 +25,6 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
@@ -41,7 +40,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
-import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PortalImpl;
 
 import java.time.LocalDate;
@@ -251,49 +249,6 @@ public class AnalyticsReportsDisplayContextTest {
 				)
 			).toJSONString(),
 			trafficSourcesJSONArray.toJSONString());
-	}
-
-	@Test
-	public void testGetPropsWithValidAnalyticsConnection() throws Exception {
-		AnalyticsReportsDataProvider analyticsReportsDataProvider =
-			_getAnalyticsReportsDataProvider(
-				Collections.emptyList(), RandomTestUtil.randomInt(),
-				RandomTestUtil.randomDouble(), Collections.emptyList(),
-				RandomTestUtil.randomInt(), RandomTestUtil.randomDouble(),
-				true);
-
-		AnalyticsReportsInfoItem<Object> analyticsReportsInfoItem =
-			_getAnalyticsReportsItem();
-
-		Layout layout = _getLayout();
-
-		String authorPortraitURL = RandomTestUtil.randomString();
-
-		AnalyticsReportsDisplayContext analyticsReportsDisplayContext =
-			new AnalyticsReportsDisplayContext(
-				analyticsReportsDataProvider, analyticsReportsInfoItem, null,
-				null, _getLayoutDisplayPageObjectProvider(), new PortalImpl(),
-				new MockLiferayPortletRenderRequest(),
-				new MockLiferayPortletRenderResponse(), _getResourceBundle(),
-				_getThemeDisplay(layout), _getUser(authorPortraitURL));
-
-		Map<String, Object> data = analyticsReportsDisplayContext.getData();
-
-		Map<String, Object> props = (Map<String, Object>)data.get("props");
-
-		Assert.assertEquals(
-			analyticsReportsInfoItem.getAuthorName(null),
-			props.get("authorName"));
-		Assert.assertEquals(authorPortraitURL, props.get("authorPortraitURL"));
-		Assert.assertEquals(
-			analyticsReportsInfoItem.getAuthorUserId(null),
-			props.get("authorUserId"));
-		Assert.assertEquals(
-			analyticsReportsInfoItem.getPublishDate(null),
-			props.get("publishDate"));
-		Assert.assertEquals(
-			analyticsReportsInfoItem.getTitle(null, LocaleUtil.US),
-			props.get("title"));
 	}
 
 	private AnalyticsReportsDataProvider _getAnalyticsReportsDataProvider(

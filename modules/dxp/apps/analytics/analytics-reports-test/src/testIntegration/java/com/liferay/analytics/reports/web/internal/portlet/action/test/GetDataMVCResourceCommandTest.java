@@ -16,6 +16,8 @@ package com.liferay.analytics.reports.web.internal.portlet.action.test;
 
 import com.liferay.analytics.reports.test.MockObject;
 import com.liferay.analytics.reports.test.analytics.reports.info.item.MockAnalyticsReportsInfoItem;
+import com.liferay.analytics.reports.test.info.item.provider.MockInfoItemFieldValuesProvider;
+import com.liferay.analytics.reports.test.layout.display.page.MockLayoutDisplayPageProvider;
 import com.liferay.analytics.reports.test.util.MockContextUtil;
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockHttpUtil;
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockThemeDisplayUtil;
@@ -59,7 +61,14 @@ import com.liferay.portal.util.PrefsPropsImpl;
 
 import java.io.ByteArrayOutputStream;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.Objects;
 
@@ -86,6 +95,99 @@ public class GetDataMVCResourceCommandTest {
 		_group = GroupTestUtil.addGroup();
 
 		_layout = LayoutTestUtil.addLayout(_group);
+	}
+
+	@Test
+	public void testGetContext() throws Exception {
+		String authorName = RandomTestUtil.randomString();
+		String authorProfileImage =
+			RandomTestUtil.randomString() + "?img_id=10";
+		Date publishDate = new Date();
+		String title = RandomTestUtil.randomString();
+
+		MockContextUtil.testWithMockContext(
+			new MockContextUtil.MockContext.Builder(
+				_classNameLocalService
+			).analyticsReportsInfoItem(
+				MockAnalyticsReportsInfoItem.builder(
+				).publishDate(
+					publishDate
+				).build()
+			).infoItemFieldValuesProvider(
+				MockInfoItemFieldValuesProvider.builder(
+				).authorName(
+					authorName
+				).authorProfileImage(
+					authorProfileImage
+				).build()
+			).layoutDisplayPageProvider(
+				MockLayoutDisplayPageProvider.builder(
+					_classNameLocalService
+				).title(
+					title
+				).build()
+			).build(),
+			() -> {
+				MockLiferayResourceResponse mockLiferayResourceResponse =
+					new MockLiferayResourceResponse();
+
+				_mvcResourceCommand.serveResource(
+					_getMockLiferayResourceRequest(),
+					mockLiferayResourceResponse);
+
+				ByteArrayOutputStream byteArrayOutputStream =
+					(ByteArrayOutputStream)
+						mockLiferayResourceResponse.getPortletOutputStream();
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					new String(byteArrayOutputStream.toByteArray()));
+
+				JSONObject contextJSONObject = jsonObject.getJSONObject(
+					"context");
+
+				JSONObject authorJSONObject = contextJSONObject.getJSONObject(
+					"author");
+
+				Assert.assertEquals(authorName, authorJSONObject.get("alt"));
+				Assert.assertEquals(
+					authorProfileImage, authorJSONObject.get("url"));
+
+				Instant instant = publishDate.toInstant();
+
+				ZonedDateTime zonedDateTime = instant.atZone(
+					ZoneId.systemDefault());
+
+				LocalDate localDate = LocalDate.from(
+					DateTimeFormatter.ISO_DATE.parse(
+						contextJSONObject.getString("publishDate")));
+
+				Assert.assertEquals(zonedDateTime.toLocalDate(), localDate);
+
+				Assert.assertEquals(
+					title, contextJSONObject.getString("title"));
+
+				JSONArray jsonArray = contextJSONObject.getJSONArray(
+					"viewURLs");
+
+				Assert.assertEquals(
+					String.valueOf(jsonArray), jsonArray.length(), 1);
+
+				JSONObject viewURLJSONObject = jsonArray.getJSONObject(0);
+
+				Assert.assertEquals(
+					Boolean.TRUE, viewURLJSONObject.getBoolean("default"));
+
+				Assert.assertEquals(
+					LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
+					viewURLJSONObject.getString("languageId"));
+
+				String viewURL = viewURLJSONObject.getString("viewURL");
+
+				Assert.assertTrue(
+					viewURL.contains(
+						"param_languageId=" +
+							LocaleUtil.toLanguageId(LocaleUtil.getDefault())));
+			});
 	}
 
 	@Test

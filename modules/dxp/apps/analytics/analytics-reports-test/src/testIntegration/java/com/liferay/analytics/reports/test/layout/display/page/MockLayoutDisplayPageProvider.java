@@ -29,10 +29,8 @@ import java.util.Locale;
 public class MockLayoutDisplayPageProvider
 	implements LayoutDisplayPageProvider<MockObject> {
 
-	public MockLayoutDisplayPageProvider(
-		ClassNameLocalService classNameLocalService) {
-
-		_classNameLocalService = classNameLocalService;
+	public static Builder builder(ClassNameLocalService classNameLocalService) {
+		return new Builder(classNameLocalService);
 	}
 
 	@Override
@@ -45,7 +43,8 @@ public class MockLayoutDisplayPageProvider
 		getLayoutDisplayPageObjectProvider(
 			InfoItemReference infoItemReference) {
 
-		return new MockLayoutDisplayPageObjectProvider(_classNameLocalService);
+		return new MockLayoutDisplayPageObjectProvider(
+			_classNameLocalService, _title);
 	}
 
 	@Override
@@ -60,16 +59,50 @@ public class MockLayoutDisplayPageProvider
 		return "/mock_separator";
 	}
 
-	public static class MockLayoutDisplayPageObjectProvider
+	public static class Builder {
+
+		public Builder(ClassNameLocalService classNameLocalService) {
+			_classNameLocalService = classNameLocalService;
+		}
+
+		public MockLayoutDisplayPageProvider build() {
+			return new MockLayoutDisplayPageProvider(
+				_classNameLocalService, _title);
+		}
+
+		public Builder title(String title) {
+			_title = title;
+
+			return this;
+		}
+
+		private final ClassNameLocalService _classNameLocalService;
+		private String _title;
+
+	}
+
+	private MockLayoutDisplayPageProvider(
+		ClassNameLocalService classNameLocalService, String title) {
+
+		_classNameLocalService = classNameLocalService;
+		_title = title;
+	}
+
+	private final ClassNameLocalService _classNameLocalService;
+	private final String _title;
+
+	private static class MockLayoutDisplayPageObjectProvider
 		implements LayoutDisplayPageObjectProvider<MockObject> {
 
 		public MockLayoutDisplayPageObjectProvider(
-			ClassNameLocalService classNameLocalService) {
+			ClassNameLocalService classNameLocalService, String title) {
 
 			ClassName className = classNameLocalService.getClassName(
 				MockObject.class.getName());
 
 			_classNameId = className.getClassNameId();
+
+			_title = title;
 		}
 
 		@Override
@@ -109,7 +142,7 @@ public class MockLayoutDisplayPageProvider
 
 		@Override
 		public String getTitle(Locale locale) {
-			return null;
+			return _title;
 		}
 
 		@Override
@@ -118,9 +151,8 @@ public class MockLayoutDisplayPageProvider
 		}
 
 		private final long _classNameId;
+		private final String _title;
 
 	}
-
-	private final ClassNameLocalService _classNameLocalService;
 
 }

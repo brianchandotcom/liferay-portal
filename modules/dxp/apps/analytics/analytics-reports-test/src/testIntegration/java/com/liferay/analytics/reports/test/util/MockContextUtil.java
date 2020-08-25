@@ -74,7 +74,7 @@ public class MockContextUtil {
 				bundleContext.registerService(
 					(Class<LayoutDisplayPageProvider<MockObject>>)
 						(Class<?>)LayoutDisplayPageProvider.class,
-					new MockLayoutDisplayPageProvider(classNameLocalService),
+					mockContext.getLayoutDisplayPageProvider(),
 					new HashMapDictionary<>());
 
 			unsafeRunnable.run();
@@ -120,6 +120,12 @@ public class MockContextUtil {
 			return _infoItemFieldValuesProvider;
 		}
 
+		public LayoutDisplayPageProvider<MockObject>
+			getLayoutDisplayPageProvider() {
+
+			return _layoutDisplayPageProvider;
+		}
+
 		public static class Builder {
 
 			public Builder(ClassNameLocalService classNameLocalService) {
@@ -137,7 +143,7 @@ public class MockContextUtil {
 			public MockContext build() {
 				return new MockContext(
 					_analyticsReportsInfoItem, _classNameLocalService,
-					_infoItemFieldValuesProvider);
+					_infoItemFieldValuesProvider, _layoutDisplayPageProvider);
 			}
 
 			public Builder infoItemFieldValuesProvider(
@@ -149,19 +155,30 @@ public class MockContextUtil {
 				return this;
 			}
 
+			public Builder layoutDisplayPageProvider(
+				LayoutDisplayPageProvider<MockObject>
+					layoutDisplayPageProvider) {
+
+				_layoutDisplayPageProvider = layoutDisplayPageProvider;
+
+				return this;
+			}
+
 			private AnalyticsReportsInfoItem<MockObject>
 				_analyticsReportsInfoItem;
 			private final ClassNameLocalService _classNameLocalService;
 			private InfoItemFieldValuesProvider<MockObject>
 				_infoItemFieldValuesProvider;
+			private LayoutDisplayPageProvider<MockObject>
+				_layoutDisplayPageProvider;
 
 		}
 
 		private MockContext(
 			AnalyticsReportsInfoItem<MockObject> analyticsReportsInfoItem,
 			ClassNameLocalService classNameLocalService,
-			InfoItemFieldValuesProvider<MockObject>
-				infoItemFieldValuesProvider) {
+			InfoItemFieldValuesProvider<MockObject> infoItemFieldValuesProvider,
+			LayoutDisplayPageProvider<MockObject> layoutDisplayPageProvider) {
 
 			if (analyticsReportsInfoItem == null) {
 				_analyticsReportsInfoItem =
@@ -182,6 +199,16 @@ public class MockContextUtil {
 			else {
 				_infoItemFieldValuesProvider = infoItemFieldValuesProvider;
 			}
+
+			if (layoutDisplayPageProvider == null) {
+				_layoutDisplayPageProvider =
+					MockLayoutDisplayPageProvider.builder(
+						_classNameLocalService
+					).build();
+			}
+			else {
+				_layoutDisplayPageProvider = layoutDisplayPageProvider;
+			}
 		}
 
 		private final AnalyticsReportsInfoItem<MockObject>
@@ -189,6 +216,8 @@ public class MockContextUtil {
 		private final ClassNameLocalService _classNameLocalService;
 		private final InfoItemFieldValuesProvider<MockObject>
 			_infoItemFieldValuesProvider;
+		private final LayoutDisplayPageProvider<MockObject>
+			_layoutDisplayPageProvider;
 
 	}
 

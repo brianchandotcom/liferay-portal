@@ -79,6 +79,20 @@ public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
 		JSONAssert.assertEquals(expectedJSON, actualJSON, false);
 	}
 
+	@Test
+	public void testDDMFormSerializationWithSchemaVersion() throws Exception {
+		String expectedJSON = read(
+			"ddm-form-json-serializer-with-definition-schema-version.json");
+
+		DDMForm ddmForm = createDDMForm();
+
+		ddmForm.setDefinitionSchemaVersion("2.0");
+
+		String actualJSON = serialize(ddmForm);
+
+		JSONAssert.assertEquals(expectedJSON, actualJSON, false);
+	}
+
 	protected List<DDMFormRule> createDDMFormRules() {
 		List<DDMFormRule> ddmFormRules = new ArrayList<>();
 

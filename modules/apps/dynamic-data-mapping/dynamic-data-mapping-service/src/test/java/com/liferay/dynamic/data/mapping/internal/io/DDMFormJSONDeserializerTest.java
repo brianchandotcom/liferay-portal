@@ -44,6 +44,7 @@ import java.util.ResourceBundle;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
@@ -63,6 +64,16 @@ public class DDMFormJSONDeserializerTest
 
 		setUpDDMFormJSONDeserializer();
 		setUpPortalUtil();
+	}
+
+	@Test
+	public void testDDMFormDeserializationWithSchemaVersion() throws Exception {
+		DDMForm ddmForm = deserialize(
+			read(
+				"ddm-form-json-deserializer-with-definition-schema-" +
+					"version.json"));
+
+		Assert.assertEquals("2.0", ddmForm.getDefinitionSchemaVersion());
 	}
 
 	@Override

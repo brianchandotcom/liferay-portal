@@ -128,10 +128,21 @@ const DocumentRenderer = ({displayType, value = {}}) => {
 	);
 };
 
-const OptionsRenderer = ({displayType, options, values = []}) => {
-	const labels = values.map((value) =>
-		DataDefinitionUtils.getOptionLabel(options, value)
-	);
+const OptionsRenderer = ({
+	defaultLanguageId,
+	displayType,
+	options,
+	values = [],
+}) => {
+	const labels = values
+		.map((value) =>
+			DataDefinitionUtils.getOptionLabel(
+				options,
+				value,
+				defaultLanguageId
+			)
+		)
+		.filter((label) => label);
 
 	if (displayType === 'list' || labels.length === 0) {
 		return <StringRenderer value={labels.join(', ')} />;
@@ -192,7 +203,11 @@ export const SectionRenderer = ({
 	);
 };
 
-const getFieldValueRenderer = (dataDefinitionField, displayType) => {
+const getFieldValueRenderer = (
+	dataDefinitionField,
+	displayType,
+	defaultLanguageId
+) => {
 	const {customProperties, fieldType} = dataDefinitionField;
 
 	if (fieldType === 'checkbox_multiple') {
@@ -200,6 +215,7 @@ const getFieldValueRenderer = (dataDefinitionField, displayType) => {
 
 		return ({value}) => (
 			<OptionsRenderer
+				defaultLanguageId={defaultLanguageId}
 				displayType={displayType}
 				options={options}
 				values={value}
@@ -218,7 +234,11 @@ const getFieldValueRenderer = (dataDefinitionField, displayType) => {
 
 		return ({value}) => (
 			<StringRenderer
-				value={DataDefinitionUtils.getOptionLabel(options, value)}
+				value={DataDefinitionUtils.getOptionLabel(
+					options,
+					value,
+					defaultLanguageId
+				)}
 			/>
 		);
 	}
@@ -229,6 +249,7 @@ const getFieldValueRenderer = (dataDefinitionField, displayType) => {
 		if (multiple) {
 			return ({value}) => (
 				<OptionsRenderer
+					defaultLanguageId={defaultLanguageId}
 					displayType={displayType}
 					options={options}
 					values={value}
@@ -238,7 +259,11 @@ const getFieldValueRenderer = (dataDefinitionField, displayType) => {
 
 		return ({value = []}) => (
 			<StringRenderer
-				value={DataDefinitionUtils.getOptionLabel(options, value[0])}
+				value={DataDefinitionUtils.getOptionLabel(
+					options,
+					value[0],
+					defaultLanguageId
+				)}
 			/>
 		);
 	}
@@ -252,22 +277,22 @@ export const FieldValuePreview = ({
 	displayType = 'form',
 	fieldName,
 }) => {
+	const {defaultLanguageId} = dataDefinition;
 	const dataDefinitionField = DataDefinitionUtils.getDataDefinitionField(
 		dataDefinition,
 		fieldName
 	);
 
-	const Renderer = getFieldValueRenderer(dataDefinitionField, displayType);
-
+	const Renderer = getFieldValueRenderer(
+		dataDefinitionField,
+		displayType,
+		defaultLanguageId
+	);
 	const value = dataRecordValues[fieldName];
 
 	if (dataDefinitionField.localizable) {
 		return (
-			<Renderer
-				value={
-					value ? value[dataDefinition.defaultLanguageId] : undefined
-				}
-			/>
+			<Renderer value={value ? value[defaultLanguageId] : undefined} />
 		);
 	}
 

@@ -46,16 +46,18 @@ definition {
 
 		var dmDocumentURL = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
 		var editDocumentURL = StringUtil.extractFirst("${dmDocumentURL}", "jpg");
+		var entryExternalURL = StringUtil.replace("${editDocumentURL}", "http://", "");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoAddCP();
 
-		WebContent.addCP(
-			webContentContent = "${editDocumentURL}",
-			webContentTitle = "WC WebContent Title");
+		PortletEntry.inputTitle(title = "Web Content Title");
 
-		AlloyEditor.addEntryExternalURL(entryExternalURL = "${editDocumentURL}");
+		CKEditor.addEntryExternalURL(
+			displayText = "${editDocumentURL}",
+			entryExternalURL = "${entryExternalURL}",
+			fieldLabel = "content");
 
 		Button.clickPublish();
 
@@ -2031,6 +2033,10 @@ ${webContentData}
 
 		SystemSettings.configureSystemSetting(
 			enableSetting = "false",
+			settingFieldName = "Validate File Entries");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "false",
 			settingFieldName = "Validate Layout References");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -2045,6 +2051,7 @@ ${webContentData}
 		DMDocument.expandInfo();
 
 		var dmDocumentURL = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
+		var entryExternalURL = StringUtil.replace("${dmDocumentURL}", "http://", "");
 
 		JSONDocument.deleteFile(
 			dmDocumentTitle = "DM Document Title",
@@ -2054,11 +2061,12 @@ ${webContentData}
 
 		WebContentNavigator.gotoAddCP();
 
-		WebContent.addCP(
-			webContentContent = "${dmDocumentURL}",
-			webContentTitle = "WC WebContent Title");
+		PortletEntry.inputTitle(title = "WC WebContent Title");
 
-		AlloyEditor.addEntryExternalURL(entryExternalURL = "${dmDocumentURL}");
+		CKEditor.addEntryExternalURL(
+			displayText = "${dmDocumentURL}",
+			entryExternalURL = "${entryExternalURL}",
+			fieldLabel = "content");
 
 		PortletEntry.publish();
 	}

@@ -59,9 +59,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Pei-Jung Lan
  */
-public class ViewUsersManagementToolbarDisplayContext {
+public class ViewFlatUsersDisplayContext {
 
-	public ViewUsersManagementToolbarDisplayContext(
+	public ViewFlatUsersDisplayContext(
 		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
 		RenderResponse renderResponse, String displayStyle, String domain,
 		String navigation, int status) {
@@ -436,7 +436,7 @@ public class ViewUsersManagementToolbarDisplayContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ViewUsersManagementToolbarDisplayContext.class);
+		ViewFlatUsersDisplayContext.class);
 
 	private final PortletURL _currentURL;
 	private final String _displayStyle;

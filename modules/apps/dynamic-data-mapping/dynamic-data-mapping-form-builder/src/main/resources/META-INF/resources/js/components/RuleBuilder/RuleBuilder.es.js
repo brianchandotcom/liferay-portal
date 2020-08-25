@@ -175,7 +175,7 @@ class RuleBuilder extends Component {
 							return {
 								...data,
 								label: data.name,
-								value: data.id,
+								value: data.name,
 							};
 						}),
 					});

@@ -131,7 +131,7 @@ const RuleEditorModalContent = ({onClose, rule}) => {
 					id: `${id}`,
 					label: name,
 					name,
-					value: `${id}`,
+					value: name,
 				}));
 
 				setState((prevState) => ({

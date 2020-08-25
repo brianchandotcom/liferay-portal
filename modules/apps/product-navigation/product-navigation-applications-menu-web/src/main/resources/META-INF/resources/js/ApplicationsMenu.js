@@ -22,9 +22,20 @@ import '../css/ApplicationsMenu.scss';
 import ClayLabel from '@clayui/label';
 import ClaySticker from '@clayui/sticker';
 import ClayTabs from '@clayui/tabs';
+import {useEventListener} from 'frontend-js-react-web';
 import {fetch, navigate, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
+
+const OPEN_MENU_TITLE_TPL =
+	`<div>${Liferay.Language.get('open-menu')}</div>` +
+	'<kbd class="c-kbd c-kbd-dark">' +
+	'<kbd class="c-kbd">⌘</kbd>' +
+	'<span class="c-kbd-separator">+</span>' +
+	'<kbd class="c-kbd">⇧</kbd>' +
+	'<span class="c-kbd-separator">+</span>' +
+	'<kbd class="c-kbd">M</kbd>' +
+	'</kbd>';
 
 const Site = ({current, label, logoURL, url}) => {
 	return (
@@ -346,6 +357,27 @@ const ApplicationsMenu = ({
 		onClose: () => setVisible(false),
 	});
 
+	useEventListener(
+		'keydown',
+		(event) => {
+			const isCMDPressed = Liferay.Browser.isMac()
+				? event.metaKey
+				: event.ctrlKey;
+
+			if (
+				isCMDPressed &&
+				event.shiftKey &&
+				event.key.toLowerCase() === 'm'
+			) {
+				event.preventDefault();
+
+				handleTriggerButtonClick();
+			}
+		},
+		true,
+		window
+	);
+
 	const fetchCategoriesPromiseRef = useRef();
 
 	const fetchCategories = () => {
@@ -368,7 +400,7 @@ const ApplicationsMenu = ({
 
 	const handleTriggerButtonClick = () => {
 		fetchCategories();
-		setVisible(true);
+		setVisible(!visible);
 	};
 
 	return (
@@ -392,6 +424,7 @@ const ApplicationsMenu = ({
 			)}
 
 			<ClayButtonWithIcon
+				aria-label={Liferay.Language.get('open-menu')}
 				className="dropdown-toggle lfr-portal-tooltip"
 				data-qa-id="applicationsMenu"
 				displayType="unstyled"
@@ -400,7 +433,7 @@ const ApplicationsMenu = ({
 				onMouseOver={fetchCategories}
 				small
 				symbol="grid"
-				title={Liferay.Language.get('applications-menu')}
+				title={OPEN_MENU_TITLE_TPL}
 			/>
 		</>
 	);

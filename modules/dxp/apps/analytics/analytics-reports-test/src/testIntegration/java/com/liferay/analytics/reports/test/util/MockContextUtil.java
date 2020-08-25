@@ -68,7 +68,7 @@ public class MockContextUtil {
 				bundleContext.registerService(
 					(Class<InfoItemFieldValuesProvider<MockObject>>)
 						(Class<?>)InfoItemFieldValuesProvider.class,
-					new MockInfoItemFieldValuesProvider(),
+					mockContext.getInfoItemFieldValuesProvider(),
 					new HashMapDictionary<>());
 			layoutDisplayPageProviderServiceRegistration =
 				bundleContext.registerService(
@@ -114,6 +114,12 @@ public class MockContextUtil {
 			return _classNameLocalService;
 		}
 
+		public InfoItemFieldValuesProvider<MockObject>
+			getInfoItemFieldValuesProvider() {
+
+			return _infoItemFieldValuesProvider;
+		}
+
 		public static class Builder {
 
 			public Builder(ClassNameLocalService classNameLocalService) {
@@ -130,18 +136,32 @@ public class MockContextUtil {
 
 			public MockContext build() {
 				return new MockContext(
-					_analyticsReportsInfoItem, _classNameLocalService);
+					_analyticsReportsInfoItem, _classNameLocalService,
+					_infoItemFieldValuesProvider);
+			}
+
+			public Builder infoItemFieldValuesProvider(
+				InfoItemFieldValuesProvider<MockObject>
+					infoItemFieldValuesProvider) {
+
+				_infoItemFieldValuesProvider = infoItemFieldValuesProvider;
+
+				return this;
 			}
 
 			private AnalyticsReportsInfoItem<MockObject>
 				_analyticsReportsInfoItem;
 			private final ClassNameLocalService _classNameLocalService;
+			private InfoItemFieldValuesProvider<MockObject>
+				_infoItemFieldValuesProvider;
 
 		}
 
 		private MockContext(
 			AnalyticsReportsInfoItem<MockObject> analyticsReportsInfoItem,
-			ClassNameLocalService classNameLocalService) {
+			ClassNameLocalService classNameLocalService,
+			InfoItemFieldValuesProvider<MockObject>
+				infoItemFieldValuesProvider) {
 
 			if (analyticsReportsInfoItem == null) {
 				_analyticsReportsInfoItem =
@@ -153,11 +173,22 @@ public class MockContextUtil {
 			}
 
 			_classNameLocalService = classNameLocalService;
+
+			if (infoItemFieldValuesProvider == null) {
+				_infoItemFieldValuesProvider =
+					MockInfoItemFieldValuesProvider.builder(
+					).build();
+			}
+			else {
+				_infoItemFieldValuesProvider = infoItemFieldValuesProvider;
+			}
 		}
 
 		private final AnalyticsReportsInfoItem<MockObject>
 			_analyticsReportsInfoItem;
 		private final ClassNameLocalService _classNameLocalService;
+		private final InfoItemFieldValuesProvider<MockObject>
+			_infoItemFieldValuesProvider;
 
 	}
 

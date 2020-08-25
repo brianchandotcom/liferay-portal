@@ -28,6 +28,10 @@ import com.liferay.portal.kernel.json.JSONUtil;
 public class MockInfoItemFieldValuesProvider
 	implements InfoItemFieldValuesProvider<MockObject> {
 
+	public static Builder builder() {
+		return new Builder();
+	}
+
 	@Override
 	public InfoItemFieldValues getInfoItemFieldValues(MockObject mockObject) {
 		return InfoItemFieldValues.builder(
@@ -40,11 +44,45 @@ public class MockInfoItemFieldValuesProvider
 					"authorProfileImage"
 				).build(),
 				JSONUtil.put(
-					"alt", "Author Name"
+					"alt", _authorName
 				).put(
-					"authorId", 12345L
+					"url", _authorProfileImage
 				))
 		).build();
 	}
+
+	public static class Builder {
+
+		public Builder authorName(String authorName) {
+			_authorName = authorName;
+
+			return this;
+		}
+
+		public Builder authorProfileImage(String authorProfileImage) {
+			_authorProfileImage = authorProfileImage;
+
+			return this;
+		}
+
+		public MockInfoItemFieldValuesProvider build() {
+			return new MockInfoItemFieldValuesProvider(
+				_authorName, _authorProfileImage);
+		}
+
+		private String _authorName;
+		private String _authorProfileImage;
+
+	}
+
+	private MockInfoItemFieldValuesProvider(
+		String authorName, String authorProfileImage) {
+
+		_authorName = authorName;
+		_authorProfileImage = authorProfileImage;
+	}
+
+	private final String _authorName;
+	private final String _authorProfileImage;
 
 }

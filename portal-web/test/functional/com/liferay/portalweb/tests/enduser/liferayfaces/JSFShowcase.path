@@ -49,6 +49,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONVERSION_INPUT_1</td>
+	<td>//div[contains(@class,'showcase-field')]/input[@type='text'] | //div[@class='showcase-example-usage']/input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONVERSION_INPUT_2</td>
+	<td>xpath=(//div[contains(@class,'showcase-field')]/input[@type='text'] | //div[@class='showcase-example-usage']/input[@type='text'])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COPY_CLEAR_BUTTON</td>
 	<td>//button[contains(text(),'${key_text}')]</td>
 	<td></td>

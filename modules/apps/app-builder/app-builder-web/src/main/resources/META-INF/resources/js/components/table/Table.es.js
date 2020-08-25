@@ -17,14 +17,29 @@ import ClayTable from '@clayui/table';
 import React from 'react';
 
 import DropDown from './DropDown.es';
+import EditableCells from './EditableCells.es';
 
 const {Body, Cell, Head, Row} = ClayTable;
+
+const CellWrapper = ({children, colSpan = 1, fieldAlign, index}) => (
+	<Cell
+		align={index === 0 ? 'left' : fieldAlign}
+		className={index > 0 && 'table-cell-expand-smaller'}
+		colSpan={colSpan}
+		expanded={index === 0}
+		headingTitle={index === 0}
+		key={index}
+	>
+		{children}
+	</Cell>
+);
 
 const Table = ({
 	actions,
 	align = 'left',
 	checkable,
 	columns,
+	editMode,
 	forwardRef,
 	items,
 	noActionsMessage,
@@ -52,42 +67,54 @@ const Table = ({
 					</Row>
 				</Head>
 				<Body>
-					{items.map((item, index) => (
-						<Row key={index}>
-							{checkable && (
-								<Cell>
-									<ClayCheckbox
-										checked={false}
-										disabled={false}
-										indeterminate={false}
-										onChange={() => {}}
-									/>
-								</Cell>
-							)}
-							{columns.map((column, index) => (
-								<Cell
-									align={index === 0 ? 'left' : align}
-									className={
-										index > 0 && 'table-cell-expand-smaller'
-									}
-									expanded={index === 0}
-									headingTitle={index === 0}
-									key={index}
-								>
-									{item[column.key]}
-								</Cell>
-							))}
-							{actions && (
-								<Cell>
-									<DropDown
-										actions={actions}
+					{items.map((item, index) => {
+						const id = item.id;
+						const isEditMode = editMode && editMode.id === id;
+
+						return (
+							<Row key={index}>
+								{checkable && (
+									<Cell>
+										<ClayCheckbox
+											checked={false}
+											disabled={false}
+											indeterminate={false}
+											onChange={() => {}}
+										/>
+									</Cell>
+								)}
+								{isEditMode ? (
+									<EditableCells
+										Cell={CellWrapper}
+										columns={columns}
+										editMode={editMode}
 										item={item}
-										noActionsMessage={noActionsMessage}
 									/>
-								</Cell>
-							)}
-						</Row>
-					))}
+								) : (
+									columns.map((column, index) => {
+										return (
+											<CellWrapper
+												fieldAlign={align}
+												index={index}
+												key={index}
+											>
+												{item[column.key]}
+											</CellWrapper>
+										);
+									})
+								)}
+								{actions && !isEditMode && (
+									<Cell>
+										<DropDown
+											actions={actions}
+											item={item}
+											noActionsMessage={noActionsMessage}
+										/>
+									</Cell>
+								)}
+							</Row>
+						);
+					})}
 				</Body>
 			</ClayTable>
 		</div>

@@ -198,34 +198,6 @@ definition {
 		AssertElementNotPresent(locator1 = "JSFShowcase#REQUIRED_ERROR_MESSAGE");
 	}
 
-	/*macro selectError {
-		if (isSet(listboxNameList)) {
-			for (var listboxNameList : list "${listboxNameList}") {
-				Click(
-					key_opt = "${listboxNameList}",
-					locator1 = "JSFShowcase#GENERAL_SELECT");
-			}
-		}
-
-		if (isSet(checkboxNameList)) {
-			for (var checkboxNameList : list "${checkboxNameList}") {
-				Check(
-					key_opt = "${checkboxNameList}",
-					locator1 = "JSFShowcase#GENERAL_CHECKBOX");
-			}
-		}
-
-		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
-
-		for (var textValue : list "${textValue}") {
-			AssertElementPresent(
-				key_attribute = "${textValue}",
-				locator1 = "JSFShowcase#MODEL_VALUE");
-		}
-
-		AssertElementPresent(locator1 = "JSFShowcase#CONVERSION_INCORRECT_MESSAGE");
-	}*/
-
 	macro selectInstantAjax {
 		if (isSet(listboxNameList)) {
 			for (var listboxNameList : list "${listboxNameList}") {
@@ -352,6 +324,12 @@ definition {
 				}
 			}
 
+			if (isSet(textArea)) {
+				Type(
+					locator1 = "JSFShowcase#CONVERSION_AREA_1",
+					value1 = "${textArea}");
+			}
+
 			Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
 
 			if (isSet(textValue)) {
@@ -362,9 +340,17 @@ definition {
 				}
 			}
 
-			AssertElementPresent(
-				key_message = "${messageImmediate1}",
-				locator1 = "JSFShowcase#RESULT_MESSAGE");
+			if (isSet(textResult)) {
+				AssertElementPresent(
+					key_attribute = "${textValue}",
+					locator1 = "JSFShowcase#MODEL_RESULT");
+			}
+
+			if (isSet(textValue)) {
+				AssertElementPresent(
+					key_message = "${messageImmediate1}",
+					locator1 = "JSFShowcase#RESULT_MESSAGE");
+			}
 		}
 
 		if ("${immediate}" == "false") {
@@ -406,6 +392,12 @@ definition {
 				}
 			}
 
+			if (isSet(textArea)) {
+				Type(
+					locator1 = "JSFShowcase#CONVERSION_AREA_2",
+					value1 = "${textArea}");
+			}
+
 			Click(locator1 = "JSFShowcase#GENERAL_BUTTON_2");
 
 			if (isSet(textValue)) {
@@ -416,9 +408,17 @@ definition {
 				}
 			}
 
-			AssertElementPresent(
-				key_message = "${messageImmediate2}",
-				locator1 = "JSFShowcase#RESULT_MESSAGE");
+			if (isSet(textResult)) {
+				AssertElementPresent(
+					key_attribute = "${textValue}",
+					locator1 = "JSFShowcase#MODEL_RESULT_2");
+			}
+
+			if (isSet(textValue)) {
+				AssertElementPresent(
+					key_message = "${messageImmediate2}",
+					locator1 = "JSFShowcase#RESULT_MESSAGE");
+			}
 		}
 	}
 

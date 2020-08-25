@@ -71,6 +71,13 @@ public class DDMFormJSONDeserializer implements DDMFormDeserializer {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				ddmFormDeserializerDeserializeRequest.getContent());
 
+			if (Validator.isNotNull(
+					jsonObject.getString("definitionSchemaVersion"))) {
+
+				ddmForm.setDefinitionSchemaVersion(
+					jsonObject.getString("definitionSchemaVersion"));
+			}
+
 			setDDMFormAvailableLocales(
 				jsonObject.getJSONArray("availableLanguageIds"), ddmForm);
 			setDDMFormDefaultLocale(

@@ -16,9 +16,6 @@ package com.liferay.portal.remote.cors.internal;
 
 import com.liferay.portal.kernel.util.Validator;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,59 +70,6 @@ public class URLToCORSSupportMapper {
 
 		return _extensionURLPatternCORSSupports.get(
 			"*" + urlPath.substring(index));
-	}
-
-	protected boolean isExtensionURLPattern(String urlPattern) {
-
-		// Servlet 4 spec 12.1.3
-		// Servlet 4 spec 12.2
-
-		if ((urlPattern.length() < 3) || (urlPattern.charAt(0) != '*') ||
-			(urlPattern.charAt(1) != '.')) {
-
-			return false;
-		}
-
-		for (int i = 2; i < urlPattern.length(); ++i) {
-			if (urlPattern.charAt(i) == '/') {
-				return false;
-			}
-
-			if (urlPattern.charAt(i) == '.') {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	protected boolean isWildcardURLPattern(String urlPattern) {
-
-		// Servlet 4 spec 12.2
-
-		if ((urlPattern.length() < 2) || (urlPattern.charAt(0) != '/') ||
-			(urlPattern.charAt(urlPattern.length() - 1) != '*') ||
-			(urlPattern.charAt(urlPattern.length() - 2) != '/')) {
-
-			return false;
-		}
-
-		// RFC 3986 3.3
-
-		try {
-			String urlPath = urlPattern.substring(0, urlPattern.length() - 1);
-
-			URI uri = new URI("https://test" + urlPath);
-
-			if (!urlPath.contentEquals(uri.getPath())) {
-				return false;
-			}
-		}
-		catch (URISyntaxException uriSyntaxException) {
-			return false;
-		}
-
-		return true;
 	}
 
 	protected void put(CORSSupport corsSupport, String urlPattern)

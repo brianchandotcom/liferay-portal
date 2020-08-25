@@ -395,6 +395,82 @@ definition {
 			password = "Hello World!",
 			text = "Text Field",
 			textValue = "Hello World!");
+
+		// InputTextConversion
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/inputtext/conversion");
+
+		Type(
+			locator1 = "JSFShowcase#CONVERSION_INPUT_1",
+			value1 = "apr 3 33");
+
+		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
+
+		AssertElementPresent(locator1 = "JSFShowcase#CONVERSION_INCORRECT_MESSAGE");
+
+		JSFShowcase.submitImmediate(
+			immediate = "true",
+			textInput = "apr 3, 33",
+			textResult = "Apr 3, 0033");
+
+		Type(
+			locator1 = "JSFShowcase#CONVERSION_INPUT_2",
+			value1 = "4/333");
+
+		Click(locator1 = "JSFShowcase#GENERAL_BUTTON_2");
+
+		AssertElementPresent(locator1 = "JSFShowcase#CONVERSION_INCORRECT_MESSAGE");
+
+		JSFShowcase.submitImmediate(
+			immediate = "false",
+			textInput = "4/3/33",
+			textResult = "04/03/0033");
+
+		// InputTextImmediate
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/inputtext/immediate");
+
+		JSFShowcase.submitImmediate(
+			immediate = "true",
+			messageImmediate1 = "APPLY_REQUEST_VALUES",
+			textInput = "Hello World!",
+			textValue = "Hello World!");
+
+		JSFShowcase.submitImmediate(
+			immediate = "false",
+			messageImmediate2 = "PROCESS_VALIDATIONS",
+			textInput = "Hello World!",
+			textValue = "Hello World!");
+
+		// InputTextValidation
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/inputtext/validation");
+
+		Type(
+			locator1 = "JSFShowcase#CONVERSION_INPUT_1",
+			value1 = "HelloWorldcom");
+
+		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
+
+		AssertElementPresent(locator1 = "JSFShowcase#CONVERSION_INCORRECT_MESSAGE");
+
+		JSFShowcase.submitImmediate(
+			immediate = "true",
+			textInput = "Hello@World.com",
+			textResult = "Hello@World.com");
+
+		Type(
+			locator1 = "JSFShowcase#CONVERSION_INPUT_2",
+			value1 = "HelloWorldcom");
+
+		Click(locator1 = "JSFShowcase#GENERAL_BUTTON_2");
+
+		AssertElementPresent(locator1 = "JSFShowcase#CONVERSION_INCORRECT_MESSAGE");
+
+		JSFShowcase.submitImmediate(
+			immediate = "false",
+			textInput = "Hello@World.com",
+			textResult = "Hello@World.com");
 	}
 
 	@priority = "5"

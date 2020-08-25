@@ -1374,7 +1374,6 @@ public class PortalImpl implements Portal {
 		throws PortalException {
 
 		String groupFriendlyURL = StringPool.BLANK;
-		boolean hasFriendlyURLSeparator = false;
 		boolean includeParametersURL = false;
 		String parametersURL = StringPool.BLANK;
 
@@ -1389,7 +1388,6 @@ public class PortalImpl implements Portal {
 				pos = completeURL.indexOf(urlSeparator);
 
 				if (pos != -1) {
-					hasFriendlyURLSeparator = true;
 					includeParametersURL = true;
 
 					break;
@@ -1427,9 +1425,12 @@ public class PortalImpl implements Portal {
 				getSiteDefaultLocale(layout.getGroupId()));
 		}
 
-		if (!hasFriendlyURLSeparator &&
-			(forceLayoutFriendlyURL || !layout.isFirstParent() ||
-			 Validator.isNotNull(parametersURL))) {
+		if (forceLayoutFriendlyURL ||
+			((!layout.isFirstParent() || Validator.isNotNull(parametersURL)) &&
+			 (groupFriendlyURL.contains(
+				 themeDisplay.getLayoutFriendlyURL(layout)) ||
+			  groupFriendlyURL.endsWith(
+				  StringPool.SLASH + layout.getLayoutId())))) {
 
 			canonicalLayoutFriendlyURL = defaultLayoutFriendlyURL;
 		}

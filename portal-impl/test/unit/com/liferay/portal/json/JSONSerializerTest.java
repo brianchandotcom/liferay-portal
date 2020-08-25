@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.model.UserTrackerPath;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.impl.UserTrackerPathImpl;
 import com.liferay.portal.util.LocalizationImpl;
 
 import org.junit.Assert;
@@ -61,6 +63,27 @@ public class JSONSerializerTest {
 		String json = jsonSerializer.serialize(testClass);
 
 		Assert.assertTrue(json, json.contains("\"name\":\"test name\""));
+	}
+
+	@Test
+	public void testSerializeEntityWithGetOriginal() {
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+
+		UserTrackerPath userTrackerPath = new UserTrackerPathImpl();
+
+		String json = jsonSerializer.serialize(userTrackerPath);
+
+		Assert.assertTrue(
+			json, json.contains("\"originalUserTrackerId\":\"0\""));
+
+		userTrackerPath.setUserTrackerId(1L);
+
+		userTrackerPath.resetOriginalValues();
+
+		json = jsonSerializer.serialize(userTrackerPath);
+
+		Assert.assertTrue(
+			json, json.contains("\"originalUserTrackerId\":\"1\""));
 	}
 
 	@Test

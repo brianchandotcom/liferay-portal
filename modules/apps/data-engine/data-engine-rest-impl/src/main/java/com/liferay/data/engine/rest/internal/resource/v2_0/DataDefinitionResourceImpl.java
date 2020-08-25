@@ -467,6 +467,8 @@ public class DataDefinitionResourceImpl
 		DDMForm ddmForm = DataDefinitionUtil.toDDMForm(
 			dataDefinition, _ddmFormFieldTypeServicesTracker);
 
+		ddmForm.setDefinitionSchemaVersion("2.0");
+
 		_validate(
 			dataDefinition,
 			_dataDefinitionContentTypeTracker.getDataDefinitionContentType(
@@ -573,10 +575,17 @@ public class DataDefinitionResourceImpl
 					dataLayout));
 		}
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
-			dataDefinitionId);
 		DDMForm ddmForm = DataDefinitionUtil.toDDMForm(
 			dataDefinition, _ddmFormFieldTypeServicesTracker);
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
+			dataDefinitionId);
+
+		JSONObject definitionJSONObject = _jsonFactory.createJSONObject(
+			ddmStructure.getDefinition());
+
+		ddmForm.setDefinitionSchemaVersion(
+			definitionJSONObject.getString("definitionSchemaVersion"));
 
 		_validate(
 			dataDefinition,
@@ -1208,17 +1217,24 @@ public class DataDefinitionResourceImpl
 				_ddmStructureLayoutLocalService.getStructureLayout(
 					ddmStructureLayoutId);
 
+			DDMFormLayout ddmFormLayout = ddmStructureLayout.getDDMFormLayout();
+
+			String definitionSchemaVersion =
+				ddmFormLayout.getDefinitionSchemaVersion();
+
 			DataLayout dataLayout = DataLayoutUtil.toDataLayout(
 				ddmStructureLayout.getDDMFormLayout(),
 				_spiDDMFormRuleConverter);
 
 			_removeFieldsFromDataLayout(dataLayout, fieldNames);
 
-			DDMFormLayout ddmFormLayout = DataLayoutUtil.toDDMFormLayout(
+			ddmFormLayout = DataLayoutUtil.toDDMFormLayout(
 				dataLayout,
 				DataDefinitionUtil.toDDMForm(
 					dataDefinition, _ddmFormFieldTypeServicesTracker),
 				_ddmFormRuleDeserializer);
+
+			ddmFormLayout.setDefinitionSchemaVersion(definitionSchemaVersion);
 
 			DDMFormLayoutSerializerSerializeRequest.Builder builder =
 				DDMFormLayoutSerializerSerializeRequest.Builder.newBuilder(

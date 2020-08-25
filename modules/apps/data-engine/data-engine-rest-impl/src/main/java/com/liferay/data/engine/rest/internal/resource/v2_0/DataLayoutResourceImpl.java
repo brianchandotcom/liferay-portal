@@ -37,6 +37,7 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFact
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
@@ -52,6 +53,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -341,6 +343,8 @@ public class DataLayoutResourceImpl
 			Map<String, Object> description, Map<String, Object> name)
 		throws Exception {
 
+		content = _updateContent(content, "2.0");
+
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			dataDefinitionId);
 
@@ -547,6 +551,19 @@ public class DataLayoutResourceImpl
 		return new StructureLayoutModifiedDateComparator(ascending);
 	}
 
+	private String _updateContent(
+			String content, String definitionSchemaVersion)
+		throws Exception {
+
+		JSONObject contentJSONObject = JSONFactoryUtil.createJSONObject(
+			content);
+
+		contentJSONObject.put(
+			"definitionSchemaVersion", definitionSchemaVersion);
+
+		return contentJSONObject.toString();
+	}
+
 	private DataLayout _updateDataLayout(
 			long dataLayoutId, String content, Map<String, Object> description,
 			Map<String, Object> name)
@@ -554,6 +571,11 @@ public class DataLayoutResourceImpl
 
 		DDMStructureLayout ddmStructureLayout =
 			_ddmStructureLayoutLocalService.getStructureLayout(dataLayoutId);
+
+		DDMFormLayout ddmFormLayout = ddmStructureLayout.getDDMFormLayout();
+
+		content = _updateContent(
+			content, ddmFormLayout.getDefinitionSchemaVersion());
 
 		DDMStructure ddmStructure = ddmStructureLayout.getDDMStructure();
 

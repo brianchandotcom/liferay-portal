@@ -84,6 +84,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Brian Wing Shun Chan
@@ -185,15 +187,17 @@ public class FriendlyURLServlet extends HttpServlet {
 					0, friendlyURL.length() - 1);
 			}
 
-			RedirectEntry redirectEntry =
-				redirectEntryLocalService.fetchRedirectEntry(
-					group.getGroupId(), _normalizeFriendlyURL(friendlyURL),
-					true);
+			if (redirectEntryLocalService != null) {
+				RedirectEntry redirectEntry =
+					redirectEntryLocalService.fetchRedirectEntry(
+						group.getGroupId(), _normalizeFriendlyURL(friendlyURL),
+						true);
 
-			if (redirectEntry != null) {
-				return new Redirect(
-					redirectEntry.getDestinationURL(), true,
-					redirectEntry.isPermanent());
+				if (redirectEntry != null) {
+					return new Redirect(
+						redirectEntry.getDestinationURL(), true,
+						redirectEntry.isPermanent());
+				}
 			}
 		}
 		else {
@@ -304,8 +308,11 @@ public class FriendlyURLServlet extends HttpServlet {
 				}
 			}
 
-			redirectNotFoundEntryLocalService.addOrUpdateRedirectNotFoundEntry(
-				group, _normalizeFriendlyURL(friendlyURL));
+			if (redirectNotFoundEntryLocalService != null) {
+				redirectNotFoundEntryLocalService.
+					addOrUpdateRedirectNotFoundEntry(
+						group, _normalizeFriendlyURL(friendlyURL));
+			}
 
 			if (Validator.isNotNull(
 					PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND)) {
@@ -666,10 +673,16 @@ public class FriendlyURLServlet extends HttpServlet {
 	@Reference
 	protected Portal portal;
 
-	@Reference
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	protected RedirectEntryLocalService redirectEntryLocalService;
 
-	@Reference
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	protected RedirectNotFoundEntryLocalService
 		redirectNotFoundEntryLocalService;
 

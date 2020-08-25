@@ -138,14 +138,8 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			"liferay-layout:render-fragment-layout:" +
 				"renderFragmentLayoutDisplayContext",
 			new RenderFragmentLayoutDisplayContext(
-				ServletContextUtil.getFrontendTokenDefinitionRegistry(),
 				httpServletRequest,
-				(HttpServletResponse)pageContext.getResponse(),
-				ServletContextUtil.getInfoItemServiceTracker(),
-				ServletContextUtil.getInfoListRendererTracker(),
-				ServletContextUtil.getLayoutDisplayPageProviderTracker(),
-				ServletContextUtil.getLayoutListRetrieverTracker(),
-				ServletContextUtil.getListObjectReferenceFactoryTracker()));
+				(HttpServletResponse)pageContext.getResponse()));
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:showPreview", _showPreview);
 	}

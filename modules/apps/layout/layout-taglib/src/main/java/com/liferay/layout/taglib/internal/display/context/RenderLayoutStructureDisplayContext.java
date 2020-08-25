@@ -49,7 +49,6 @@ import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.layout.util.structure.StyledLayoutStructureItem;
-import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -60,28 +59,20 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletPreferences;
-import com.liferay.portal.kernel.portlet.PortletJSONUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
-import com.liferay.taglib.servlet.PipingServletResponse;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -96,6 +87,7 @@ import javax.servlet.http.HttpServletResponse;
 public class RenderLayoutStructureDisplayContext {
 
 	public RenderLayoutStructureDisplayContext(
+		Map<String, Object> fieldValues,
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse,
@@ -103,8 +95,11 @@ public class RenderLayoutStructureDisplayContext {
 		InfoListRendererTracker infoListRendererTracker,
 		LayoutDisplayPageProviderTracker layoutDisplayPageProviderTracker,
 		LayoutListRetrieverTracker layoutListRetrieverTracker,
-		ListObjectReferenceFactoryTracker listObjectReferenceFactoryTracker) {
+		LayoutStructure layoutStructure,
+		ListObjectReferenceFactoryTracker listObjectReferenceFactoryTracker,
+		String mode, boolean showPreview) {
 
+		_fieldValues = fieldValues;
 		_frontendTokenDefinitionRegistry = frontendTokenDefinitionRegistry;
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
@@ -112,17 +107,11 @@ public class RenderLayoutStructureDisplayContext {
 		_infoListRendererTracker = infoListRendererTracker;
 		_layoutDisplayPageProviderTracker = layoutDisplayPageProviderTracker;
 		_layoutListRetrieverTracker = layoutListRetrieverTracker;
+		_layoutStructure = layoutStructure;
 		_listObjectReferenceFactoryTracker = listObjectReferenceFactoryTracker;
+		_mode = mode;
+		_showPreview = showPreview;
 
-		_fieldValues = (Map<String, Object>)_httpServletRequest.getAttribute(
-			"liferay-layout:render-fragment-layout:fieldValues");
-		_layoutStructure = (LayoutStructure)_httpServletRequest.getAttribute(
-			"liferay-layout:render-fragment-layout:layoutStructure");
-		_mode = (String)_httpServletRequest.getAttribute(
-			"liferay-layout:render-fragment-layout:mode");
-		_showPreview = GetterUtil.getBoolean(
-			_httpServletRequest.getAttribute(
-				"liferay-layout:render-fragment-layout:showPreview"));
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -539,60 +528,6 @@ public class RenderLayoutStructureDisplayContext {
 		return _layoutStructure;
 	}
 
-	public String getPortletFooterPaths() {
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		PipingServletResponse pipingServletResponse = new PipingServletResponse(
-			_httpServletResponse, unsyncStringWriter);
-
-		for (Portlet portlet : _getPortlets()) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			try {
-				PortletJSONUtil.populatePortletJSONObject(
-					_httpServletRequest, StringPool.BLANK, portlet, jsonObject);
-
-				PortletJSONUtil.writeHeaderPaths(
-					pipingServletResponse, jsonObject);
-			}
-			catch (Exception exception) {
-				_log.error(
-					"Unable to write portlet footer paths " +
-						portlet.getPortletId(),
-					exception);
-			}
-		}
-
-		return unsyncStringWriter.toString();
-	}
-
-	public String getPortletHeaderPaths() {
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		PipingServletResponse pipingServletResponse = new PipingServletResponse(
-			_httpServletResponse, unsyncStringWriter);
-
-		for (Portlet portlet : _getPortlets()) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			try {
-				PortletJSONUtil.populatePortletJSONObject(
-					_httpServletRequest, StringPool.BLANK, portlet, jsonObject);
-
-				PortletJSONUtil.writeFooterPaths(
-					pipingServletResponse, jsonObject);
-			}
-			catch (Exception exception) {
-				_log.error(
-					"Unable to write portlet header paths " +
-						portlet.getPortletId(),
-					exception);
-			}
-		}
-
-		return unsyncStringWriter.toString();
-	}
-
 	public String getStyle(StyledLayoutStructureItem styledLayoutStructureItem)
 		throws Exception {
 
@@ -1002,29 +937,6 @@ public class RenderLayoutStructureDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	private List<Portlet> _getPortlets() {
-		if (_portlets != null) {
-			return _portlets;
-		}
-
-		_portlets = new ArrayList<>();
-
-		List<PortletPreferences> portletPreferencesList =
-			PortletPreferencesLocalServiceUtil.getPortletPreferences(
-				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _themeDisplay.getPlid());
-
-		for (PortletPreferences portletPreferences : portletPreferencesList) {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				_themeDisplay.getCompanyId(),
-				portletPreferences.getPortletId());
-
-			_portlets.add(portlet);
-		}
-
-		return _portlets;
-	}
-
 	private long _getPreviewClassNameId() {
 		if (_previewClassNameId != null) {
 			return _previewClassNameId;
@@ -1098,7 +1010,7 @@ public class RenderLayoutStructureDisplayContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		RenderFragmentLayoutDisplayContext.class);
+		RenderLayoutStructureDisplayContext.class);
 
 	private final Map<String, Object> _fieldValues;
 	private final FrontendTokenDefinitionRegistry
@@ -1114,7 +1026,6 @@ public class RenderLayoutStructureDisplayContext {
 	private final ListObjectReferenceFactoryTracker
 		_listObjectReferenceFactoryTracker;
 	private final String _mode;
-	private List<Portlet> _portlets;
 	private Long _previewClassNameId;
 	private Long _previewClassPK;
 	private Integer _previewType;

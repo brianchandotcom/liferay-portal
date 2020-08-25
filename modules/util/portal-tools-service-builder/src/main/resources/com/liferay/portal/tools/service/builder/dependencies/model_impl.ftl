@@ -1019,7 +1019,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			public ${entityColumn.type} getOriginal${entityColumn.methodName}() {
 				<#if serviceBuilder.isVersionGTE_7_3_0()>
 					<#if entityColumn.isPrimitiveType()>
-						return GetterUtil.get${serviceBuilder.getPrimitiveObj(entityColumn.type)}(getColumnOriginalValue("${entityColumn.DBName}"));
+						return GetterUtil.get${serviceBuilder.getPrimitiveObj(entityColumn.type)}((Object)getColumnOriginalValue("${entityColumn.DBName}"));
 					<#else>
 						return getColumnOriginalValue("${entityColumn.DBName}");
 					</#if>

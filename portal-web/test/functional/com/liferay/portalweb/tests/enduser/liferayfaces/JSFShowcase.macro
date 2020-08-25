@@ -330,6 +330,12 @@ definition {
 					value1 = "${textArea}");
 			}
 
+			if (isSet(textInput)) {
+				Type(
+					locator1 = "JSFShowcase#CONVERSION_INPUT_1",
+					value1 = "${textInput}");
+			}
+
 			Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
 
 			if (isSet(textValue)) {
@@ -396,6 +402,12 @@ definition {
 				Type(
 					locator1 = "JSFShowcase#CONVERSION_AREA_2",
 					value1 = "${textArea}");
+			}
+
+			if (isSet(textInput)) {
+				Type(
+					locator1 = "JSFShowcase#CONVERSION_INPUT_2",
+					value1 = "${textInput}");
 			}
 
 			Click(locator1 = "JSFShowcase#GENERAL_BUTTON_2");

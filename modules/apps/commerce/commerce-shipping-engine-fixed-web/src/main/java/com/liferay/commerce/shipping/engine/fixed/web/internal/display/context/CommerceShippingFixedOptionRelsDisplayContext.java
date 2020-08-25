@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -68,12 +67,12 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 		CommerceShippingFixedOptionRelService
 			commerceShippingFixedOptionRelService,
 		CPMeasurementUnitLocalService cpMeasurementUnitLocalService,
-		PortletResourcePermission portletResourcePermission, Portal portal,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		Portal portal, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
 		super(
 			commerceCurrencyLocalService, commerceShippingMethodService,
-			portletResourcePermission, renderRequest, renderResponse);
+			renderRequest, renderResponse);
 
 		_commerceCountryService = commerceCountryService;
 		_commerceRegionService = commerceRegionService;

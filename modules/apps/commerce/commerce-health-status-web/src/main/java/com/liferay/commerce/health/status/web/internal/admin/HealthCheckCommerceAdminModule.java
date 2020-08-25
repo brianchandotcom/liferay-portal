@@ -16,7 +16,6 @@ package com.liferay.commerce.health.status.web.internal.admin;
 
 import com.liferay.commerce.admin.CommerceAdminModule;
 import com.liferay.commerce.constants.CommerceActionKeys;
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceHealthStatusConstants;
 import com.liferay.commerce.health.status.CommerceHealthHttpStatusRegistry;
 import com.liferay.commerce.health.status.web.internal.display.context.CommerceHealthStatusDisplayContext;
@@ -24,7 +23,7 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -75,8 +74,8 @@ public class HealthCheckCommerceAdminModule implements CommerceAdminModule {
 
 	@Override
 	public boolean isVisible(long groupId) throws PortalException {
-		return _portletResourcePermission.contains(
-			PermissionThreadLocal.getPermissionChecker(), groupId,
+		return PortalPermissionUtil.contains(
+			PermissionThreadLocal.getPermissionChecker(),
 			CommerceActionKeys.MANAGE_COMMERCE_HEALTH_STATUS);
 	}
 
@@ -96,8 +95,8 @@ public class HealthCheckCommerceAdminModule implements CommerceAdminModule {
 
 		CommerceHealthStatusDisplayContext commerceHealthStatusDisplayContext =
 			new CommerceHealthStatusDisplayContext(
-				_commerceHealthHttpStatusRegistry, _portletResourcePermission,
-				renderRequest, renderResponse,
+				_commerceHealthHttpStatusRegistry, renderRequest,
+				renderResponse,
 				CommerceHealthStatusConstants.
 					COMMERCE_HEALTH_STATUS_TYPE_VIRTUAL_INSTANCE);
 
@@ -118,11 +117,6 @@ public class HealthCheckCommerceAdminModule implements CommerceAdminModule {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME + ")"
-	)
-	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.health.status.web)"

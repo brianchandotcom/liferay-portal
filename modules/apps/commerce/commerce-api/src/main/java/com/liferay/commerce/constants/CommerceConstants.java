@@ -30,8 +30,6 @@ public class CommerceConstants {
 	public static final String PRICE_SERVICE_NAME =
 		"com.liferay.commerce.price";
 
-	public static final String RESOURCE_NAME = "com.liferay.commerce";
-
 	public static final String SHIPPING_SERVICE_NAME =
 		"com.liferay.commerce.shipping";
 

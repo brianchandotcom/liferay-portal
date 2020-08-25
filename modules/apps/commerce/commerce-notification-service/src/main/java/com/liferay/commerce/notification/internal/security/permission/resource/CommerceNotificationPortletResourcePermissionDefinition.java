@@ -15,23 +15,13 @@
 package com.liferay.commerce.notification.internal.security.permission.resource;
 
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.notification.constants.CommerceNotificationConstants;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.StagedPortletPermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.definition.PortletResourcePermissionDefinition;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 
-import java.util.Dictionary;
-
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -45,7 +35,7 @@ public class CommerceNotificationPortletResourcePermissionDefinition
 
 	@Override
 	public PortletResourcePermissionLogic[]
-	getPortletResourcePermissionLogics() {
+		getPortletResourcePermissionLogics() {
 
 		return new PortletResourcePermissionLogic[] {
 			new StagedPortletPermissionLogic(

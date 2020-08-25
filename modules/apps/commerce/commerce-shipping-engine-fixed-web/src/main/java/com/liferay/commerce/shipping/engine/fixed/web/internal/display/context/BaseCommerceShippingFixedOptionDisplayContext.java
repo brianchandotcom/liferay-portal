@@ -20,7 +20,6 @@ import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,12 +39,10 @@ public class BaseCommerceShippingFixedOptionDisplayContext {
 	public BaseCommerceShippingFixedOptionDisplayContext(
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		CommerceShippingMethodService commerceShippingMethodService,
-		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		this.commerceCurrencyLocalService = commerceCurrencyLocalService;
 		this.commerceShippingMethodService = commerceShippingMethodService;
-		this.portletResourcePermission = portletResourcePermission;
 		this.renderRequest = renderRequest;
 		this.renderResponse = renderResponse;
 	}
@@ -154,7 +151,6 @@ public class BaseCommerceShippingFixedOptionDisplayContext {
 
 	protected final CommerceCurrencyLocalService commerceCurrencyLocalService;
 	protected final CommerceShippingMethodService commerceShippingMethodService;
-	protected final PortletResourcePermission portletResourcePermission;
 	protected final RenderRequest renderRequest;
 	protected final RenderResponse renderResponse;
 

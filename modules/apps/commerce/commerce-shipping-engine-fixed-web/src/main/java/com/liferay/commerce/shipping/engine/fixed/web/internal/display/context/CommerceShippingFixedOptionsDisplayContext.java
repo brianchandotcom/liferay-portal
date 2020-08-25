@@ -28,7 +28,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -49,12 +48,12 @@ public class CommerceShippingFixedOptionsDisplayContext
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		CommerceShippingMethodService commerceShippingMethodService,
 		CommerceShippingFixedOptionService commerceShippingFixedOptionService,
-		Portal portal, PortletResourcePermission portletResourcePermission,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		Portal portal, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
 		super(
 			commerceCurrencyLocalService, commerceShippingMethodService,
-			portletResourcePermission, renderRequest, renderResponse);
+			renderRequest, renderResponse);
 
 		_commerceShippingFixedOptionService =
 			commerceShippingFixedOptionService;

@@ -8,6 +8,7 @@
 			<supports>
 				<action-key>MANAGE_COMMERCE_AVAILABILITY_ESTIMATES</action-key>
 				<action-key>MANAGE_COMMERCE_COUNTRIES</action-key>
+				<action-key>MANAGE_COMMERCE_HEALTH_STATUS</action-key>
 				<action-key>MANAGE_COMMERCE_ORDER_PRICES</action-key>
 				<action-key>MANAGE_COMMERCE_SHIPMENTS</action-key>
 				<action-key>MANAGE_COMMERCE_SUBSCRIPTIONS</action-key>
@@ -17,30 +18,13 @@
 			<guest-unsupported>
 				<action-key>MANAGE_COMMERCE_AVAILABILITY_ESTIMATES</action-key>
 				<action-key>MANAGE_COMMERCE_COUNTRIES</action-key>
+				<action-key>MANAGE_COMMERCE_HEALTH_STATUS</action-key>
 				<action-key>MANAGE_COMMERCE_ORDER_PRICES</action-key>
 				<action-key>MANAGE_COMMERCE_SHIPMENTS</action-key>
 				<action-key>MANAGE_COMMERCE_SUBSCRIPTIONS</action-key>
 			</guest-unsupported>
 		</permissions>
 	</portlet-resource>
-	<model-resource>
-		<model-name>com.liferay.commerce</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_commerce_admin_web_internal_portlet_CommerceAdminPortlet</portlet-name>
-		</portlet-ref>
-		<root>true</root>
-		<weight>1</weight>
-		<permissions>
-			<supports>
-				<action-key>MANAGE_COMMERCE_HEALTH_STATUS</action-key>
-			</supports>
-			<site-member-defaults />
-			<guest-defaults />
-			<guest-unsupported>
-				<action-key>MANAGE_COMMERCE_HEALTH_STATUS</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
 	<model-resource>
 		<model-name>com.liferay.commerce.order</model-name>
 		<portlet-ref>

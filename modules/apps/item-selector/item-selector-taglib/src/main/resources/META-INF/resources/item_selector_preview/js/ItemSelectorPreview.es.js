@@ -106,7 +106,7 @@ const ItemSelectorPreview = ({
 			'edit'
 		)} ${itemTitle} (${Liferay.Language.get('copy')})`;
 
-		let editEntityBaseZIndex = Liferay.zIndex.WINDOW;
+		const editEntityBaseZIndex = Liferay.zIndex.WINDOW;
 
 		Liferay.Util.editEntity(
 			{

@@ -67,13 +67,8 @@ function Modal(props) {
 				setTitle(data.title);
 			}
 
-			/**
-			 * Based on ClayModal specs, the default size of a modal is 'null'.
-			 * Our initial modal size is 'lg'. If the input size is undefined,
-			 * the initial size won't be altered.
-			 */
-			if (data.size !== INITIAL_MODAL_SIZE && data.size !== undefined) {
-				setSize(data.size);
+			if (!data.size) {
+				setSize(INITIAL_MODAL_SIZE);
 			}
 		}
 

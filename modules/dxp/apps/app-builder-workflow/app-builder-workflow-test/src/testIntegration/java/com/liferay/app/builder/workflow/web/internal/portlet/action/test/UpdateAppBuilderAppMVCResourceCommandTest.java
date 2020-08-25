@@ -16,6 +16,7 @@ package com.liferay.app.builder.workflow.web.internal.portlet.action.test;
 
 import com.liferay.app.builder.rest.dto.v1_0.App;
 import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflow;
+import com.liferay.app.builder.workflow.web.internal.portlet.util.BaseAppBuilderAppTestCase;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 
@@ -29,7 +30,7 @@ import org.junit.runner.RunWith;
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class UpdateAppBuilderAppMVCResourceCommandTest
-	extends BaseAppBuilderAppMVCResourceCommandTestCase {
+	extends BaseAppBuilderAppTestCase {
 
 	@Test
 	public void testUpdateAppWorkflow() throws Exception {

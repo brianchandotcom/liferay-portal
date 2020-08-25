@@ -62,6 +62,203 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-118979. The mappable fields are grouped by fieldset in display page template."
+	@priority = "4"
+	test ViewMappableFieldsAreGroupedByFieldset {
+		task ("Add a custom Document type") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMNavigator.gotoDocumentType();
+
+			DMDocumentType.add(
+				dmDocumentTypeDescription = "DM Document Type Description",
+				dmDocumentTypeFieldNames = "Text",
+				dmDocumentTypeName = "DM Document Type Name");
+		}
+
+		task ("Add a Heading fragment to the Display Page Name") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Assert the mappable fields are grouped by fieldset") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				contributed = "true",
+				fragmentName = "Heading",
+				id = "text");
+
+			AssertElementPresent(
+				key_fieldLabel = "Source",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Basic Web Content (Default)");
+
+			for (var field : list "Title,Description,Publish Date,Author Name,Last Editor Name") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Basic Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Content (Basic Web Content)",
+				key_value = "Content",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Templates",
+				key_value = "Basic Web Content",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Display Page",
+				key_value = "Display Page URL",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			for (var field : list "All Categories,Topic,Tags") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Categorization",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "Display Date,Expiration Date") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Schedule",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+		}
+
+		task ("Add a display page template based on Blogs Entry") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Blogs Entry",
+				displayPageTemplateEntryName = "Display Page Name 2",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a Heading fragment to the Display Page Name 2") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 2");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Assert the mappable fields are grouped by fieldset") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				contributed = "true",
+				fragmentName = "Heading",
+				id = "text");
+
+			AssertElementPresent(
+				key_fieldLabel = "Source",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Blogs Entry (Default)");
+
+			for (var field : list "Title,Author Name") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Basic Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "Subtitle,Cover Image Caption,Content") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Content",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "Display Page URL,Description,Display Date") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Configuration",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "All Categories,Tags") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Categorization",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+		}
+
+		task ("Add a display page template based on Document and new document type") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Document",
+				displayPageName = "Display Page Name 3",
+				subType = "DM Document Type Name");
+		}
+
+		task ("Add a Heading fragment to the Display Page Name 3") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Assert the mappable fields are grouped by fieldset") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				contributed = "true",
+				fragmentName = "Heading",
+				id = "text");
+
+			AssertElementPresent(
+				key_fieldLabel = "Source",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Basic Document (Default)");
+
+			for (var field : list "Title,Description,Version,Publish Date,Author Name") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Basic Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			for (var field : list "File Name,Download URL,MIME Type,Size") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "File Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "DM Document Type Name",
+				key_value = "Text",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+
+			for (var field : list "All Categories,Tags") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Categorization",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-118060. The contributed content types and their subtypes are available when creating a display page template."
 	@priority = "5"
 	test ViewTypesDuringCreation {

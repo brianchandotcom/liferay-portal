@@ -24,10 +24,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeSet;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,13 +39,18 @@ import org.json.JSONObject;
 public class SpiraRestAPIUtil {
 
 	public static void summarizeRequests() {
-		TreeSet<RequestDataEntry> orderedRequestDataEntries = new TreeSet<>();
+		Set<RequestDataEntry> orderedRequestDataEntriesSet = new HashSet<>();
 
 		for (Map.Entry<String, List<RequestDataEntry>> entry :
 				_groupedRequestDataEntriesMap.entrySet()) {
 
-			orderedRequestDataEntries.addAll(entry.getValue());
+			orderedRequestDataEntriesSet.addAll(entry.getValue());
 		}
+
+		List<RequestDataEntry> orderedRequestDataEntries = new ArrayList<>(
+			orderedRequestDataEntriesSet);
+
+		Collections.sort(orderedRequestDataEntries);
 
 		long totalRequestCount = orderedRequestDataEntries.size();
 
@@ -57,9 +63,10 @@ public class SpiraRestAPIUtil {
 
 		long q3Index = q1Index + q2Index;
 
-		RequestDataEntry q1RequestDataEntry = orderedRequestDataEntries.first();
-		RequestDataEntry q2RequestDataEntry = orderedRequestDataEntries.first();
-		RequestDataEntry q3RequestDataEntry = orderedRequestDataEntries.last();
+		RequestDataEntry q1RequestDataEntry = orderedRequestDataEntries.get(0);
+		RequestDataEntry q2RequestDataEntry = orderedRequestDataEntries.get(0);
+		RequestDataEntry q3RequestDataEntry = orderedRequestDataEntries.get(
+			orderedRequestDataEntries.size() - 1);
 
 		int i = 0;
 
@@ -108,7 +115,7 @@ public class SpiraRestAPIUtil {
 		System.out.println("# Fastest Request");
 		System.out.println("#");
 		System.out.println();
-		System.out.println(orderedRequestDataEntries.first());
+		System.out.println(orderedRequestDataEntries.get(0));
 
 		System.out.println();
 		System.out.println("#");
@@ -136,7 +143,9 @@ public class SpiraRestAPIUtil {
 		System.out.println("# Slowest Request");
 		System.out.println("#");
 		System.out.println();
-		System.out.println(orderedRequestDataEntries.last());
+		System.out.println(
+			orderedRequestDataEntries.get(
+				orderedRequestDataEntries.size() - 1));
 
 		for (Map.Entry<String, List<RequestDataEntry>> entry :
 				_groupedRequestDataEntriesMap.entrySet()) {

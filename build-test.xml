@@ -392,7 +392,9 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 					propertyValue = project.getProperty(sb.toString());
 
-					project.setProperty(propertyName, propertyValue);
+					if (propertyValue != null) {
+						project.setProperty(propertyName, propertyValue);
+					}
 				]]>
 			</beanshell>
 		</sequential>

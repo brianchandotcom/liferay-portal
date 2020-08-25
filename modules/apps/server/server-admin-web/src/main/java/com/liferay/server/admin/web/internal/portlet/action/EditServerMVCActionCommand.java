@@ -503,6 +503,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		String language = ParamUtil.getString(actionRequest, "language");
+		String output = ParamUtil.getString(actionRequest, "output");
 		String script = ParamUtil.getString(actionRequest, "script");
 
 		PortletConfig portletConfig = getPortletConfig(actionRequest);
@@ -522,6 +523,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			SessionMessages.add(actionRequest, "language", language);
+			SessionMessages.add(actionRequest, "output", output);
 			SessionMessages.add(actionRequest, "script", script);
 
 			_scripting.exec(null, portletObjects, language, script);

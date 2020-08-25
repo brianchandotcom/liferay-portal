@@ -49,6 +49,11 @@ definition {
 			title = "Category Name 1",
 			vocabularyName = "Vocabulary Name 1");
 
+		var categoryId1 = JSONCategory.getCategoryId(
+			categoryName = "Category Name 1",
+			groupName = "Test Site Name",
+			vocabularyName = "Vocabulary Name 1");
+
 		JSONCategory.addCategory(
 			groupName = "Test Site Name",
 			title = "Category Name 2",
@@ -58,6 +63,11 @@ definition {
 			groupName = "Test Site Name",
 			parentCategoryName = "Category Name 2",
 			title = "Subcategory Name 2",
+			vocabularyName = "Vocabulary Name 2");
+
+		var categoryId2 = JSONCategory.getCategoryId(
+			categoryName = "Subcategory Name 2",
+			groupName = "Test Site Name",
 			vocabularyName = "Vocabulary Name 2");
 
 		JSONCategory.addCategory(
@@ -75,27 +85,26 @@ definition {
 			title = "Category Name 3-3",
 			vocabularyName = "Vocabulary Name 3");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		WebContent.selectCategory(
-			categoryName = "Category Name 1",
-			vocabularyName = "Vocabulary Name 1");
-
-		WebContent.selectCategory(
-			categoryName = "Subcategory Name 2",
-			vocabularyName = "Vocabulary Name 2");
-
-		AssetCategorization.addMultipleCategories(
-			categoryNameList = "Category Name 3-1,Category Name 3-2,Category Name 3-3",
+		var categoryId3 = JSONCategory.getCategoryId(
+			categoryName = "Category Name 3-1",
+			groupName = "Test Site Name",
 			vocabularyName = "Vocabulary Name 3");
 
-		PortletEntry.publish();
+		var categoryId4 = JSONCategory.getCategoryId(
+			categoryName = "Category Name 3-2",
+			groupName = "Test Site Name",
+			vocabularyName = "Vocabulary Name 3");
+
+		var categoryId5 = JSONCategory.getCategoryId(
+			categoryName = "Category Name 3-3",
+			groupName = "Test Site Name",
+			vocabularyName = "Vocabulary Name 3");
+
+		JSONWebcontent.addWebContent(
+			assetCategoryIds = "${categoryId1},${categoryId2},${categoryId3},${categoryId4},${categoryId5}",
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -564,14 +573,11 @@ definition {
 			groupName = "Test Site Name",
 			tagName = "tagname3");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addWithTagCP(
-			tagNameList = "tagname1,tagname2,tagname3",
-			webContentContent = "Web Content Content",
-			webContentTitle = "Web Content Title");
+		JSONWebcontent.addWebContent(
+			assetTagNames = "tagname1,tagname2,tagname3",
+			content = "Web Content Content",
+			groupName = "Test Site Name",
+			title = "Web Content Title");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -609,12 +615,11 @@ definition {
 			groupName = "Test Site Name",
 			tagName = "tagname1");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
-
-		Blogs.addEntryWithTag(
-			entryContent = "Entry Content",
-			entryTitle = "Entry Title",
-			tagName = "tagname1");
+		JSONBlog.addEntry(
+			assetTagNames = "tagname1",
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Test Site Name");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -630,7 +635,7 @@ definition {
 			id = "text");
 
 		PageEditorMapping.mapEditableFieldToAsset(
-			entryTitle = "Entry Title",
+			entryTitle = "Blogs Entry Title",
 			navItem = "Blogs");
 
 		Select(

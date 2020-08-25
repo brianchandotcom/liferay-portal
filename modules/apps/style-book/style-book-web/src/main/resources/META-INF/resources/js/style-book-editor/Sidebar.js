@@ -24,7 +24,9 @@ export default function Sidebar() {
 	return (
 		<div className="style-book-editor__sidebar">
 			<Toolbar />
-			<SidebarContent />
+			{config.frontendTokenDefinition.frontendTokenCategories && (
+				<SidebarContent />
+			)}
 		</div>
 	);
 }

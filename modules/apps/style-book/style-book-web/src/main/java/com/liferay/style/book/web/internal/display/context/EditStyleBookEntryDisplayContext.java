@@ -124,8 +124,12 @@ public class EditStyleBookEntryDisplayContext {
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				layoutSet.getThemeId());
 
-		return JSONFactoryUtil.createJSONObject(
-			frontendTokenDefinition.getJSON(_themeDisplay.getLocale()));
+		if (frontendTokenDefinition != null) {
+			return JSONFactoryUtil.createJSONObject(
+				frontendTokenDefinition.getJSON(_themeDisplay.getLocale()));
+		}
+
+		return JSONFactoryUtil.createJSONObject();
 	}
 
 	private JSONObject _getInitialPreviewLayoutJSONObject() throws Exception {

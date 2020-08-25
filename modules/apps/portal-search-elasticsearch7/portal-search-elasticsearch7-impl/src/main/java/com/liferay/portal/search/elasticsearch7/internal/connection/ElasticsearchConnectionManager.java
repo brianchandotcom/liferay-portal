@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.ccr.CrossClusterReplicationConfigurationHelper;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationObserver;
-import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationObserverComparator;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.OperationModeResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.constants.ConnectionConstants;
@@ -98,7 +97,7 @@ public class ElasticsearchConnectionManager
 	public int compareTo(
 		ElasticsearchConfigurationObserver elasticsearchConfigurationObserver) {
 
-		return elasticsearchConfigurationObserverComparator.compare(
+		return elasticsearchConfigurationWrapper.compare(
 			this, elasticsearchConfigurationObserver);
 	}
 
@@ -329,10 +328,6 @@ public class ElasticsearchConnectionManager
 	)
 	protected CrossClusterReplicationConfigurationHelper
 		crossClusterReplicationConfigurationHelper;
-
-	@Reference
-	protected ElasticsearchConfigurationObserverComparator
-		elasticsearchConfigurationObserverComparator;
 
 	@Reference
 	protected volatile ElasticsearchConfigurationWrapper

@@ -17,7 +17,6 @@ package com.liferay.portal.search.elasticsearch7.internal.index;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationObserver;
-import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationObserverComparator;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
@@ -37,7 +36,7 @@ public class CompanyIdIndexNameBuilder
 	public int compareTo(
 		ElasticsearchConfigurationObserver elasticsearchConfigurationObserver) {
 
-		return elasticsearchConfigurationObserverComparator.compare(
+		return elasticsearchConfigurationWrapper.compare(
 			this, elasticsearchConfigurationObserver);
 	}
 
@@ -77,10 +76,6 @@ public class CompanyIdIndexNameBuilder
 				StringUtil.trim(indexNamePrefix));
 		}
 	}
-
-	@Reference
-	protected ElasticsearchConfigurationObserverComparator
-		elasticsearchConfigurationObserverComparator;
 
 	@Reference
 	protected volatile ElasticsearchConfigurationWrapper

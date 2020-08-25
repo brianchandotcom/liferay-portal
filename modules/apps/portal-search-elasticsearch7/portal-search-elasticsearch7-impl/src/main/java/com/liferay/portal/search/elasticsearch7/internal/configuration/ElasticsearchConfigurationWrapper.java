@@ -24,6 +24,7 @@ import com.liferay.portal.search.elasticsearch7.configuration.OperationMode;
 import com.liferay.portal.search.elasticsearch7.configuration.RESTClientLoggerLevel;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -42,7 +43,8 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
 	immediate = true, service = ElasticsearchConfigurationWrapper.class
 )
-public class ElasticsearchConfigurationWrapper {
+public class ElasticsearchConfigurationWrapper
+	implements Comparator<ElasticsearchConfigurationObserver> {
 
 	public String additionalConfigurations() {
 		return _elasticsearchConfiguration.additionalConfigurations();
@@ -66,6 +68,26 @@ public class ElasticsearchConfigurationWrapper {
 
 	public String clusterName() {
 		return _elasticsearchConfiguration.clusterName();
+	}
+
+	@Override
+	public int compare(
+		ElasticsearchConfigurationObserver elasticsearchConfigurationObserver1,
+		ElasticsearchConfigurationObserver
+			elasticsearchConfigurationObserver2) {
+
+		if (elasticsearchConfigurationObserver1.getPriority() >
+				elasticsearchConfigurationObserver2.getPriority()) {
+
+			return 1;
+		}
+		else if (elasticsearchConfigurationObserver1.getPriority() ==
+					elasticsearchConfigurationObserver2.getPriority()) {
+
+			return 0;
+		}
+
+		return -1;
 	}
 
 	/**

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationObserver;
-import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationObserverComparator;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch7.internal.index.contributor.IndexContributorReceiver;
@@ -79,7 +78,7 @@ public class CompanyIndexFactory
 	public int compareTo(
 		ElasticsearchConfigurationObserver elasticsearchConfigurationObserver) {
 
-		return elasticsearchConfigurationObserverComparator.compare(
+		return _elasticsearchConfigurationWrapper.compare(
 			this, elasticsearchConfigurationObserver);
 	}
 
@@ -472,10 +471,6 @@ public class CompanyIndexFactory
 
 		liferayDocumentTypeFactory.createOptionalDefaultTypeMappings(indexName);
 	}
-
-	@Reference
-	protected ElasticsearchConfigurationObserverComparator
-		elasticsearchConfigurationObserverComparator;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyIndexFactory.class);

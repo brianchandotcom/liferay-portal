@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationObserver;
-import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationObserverComparator;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.OperationModeResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionBuilder;
@@ -57,7 +56,7 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 	public int compareTo(
 		ElasticsearchConfigurationObserver elasticsearchConfigurationObserver) {
 
-		return elasticsearchConfigurationObserverComparator.compare(
+		return elasticsearchConfigurationWrapper.compare(
 			this, elasticsearchConfigurationObserver);
 	}
 
@@ -189,10 +188,6 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 
 	@Reference
 	protected ClusterExecutor clusterExecutor;
-
-	@Reference
-	protected ElasticsearchConfigurationObserverComparator
-		elasticsearchConfigurationObserverComparator;
 
 	@Reference
 	protected volatile ElasticsearchConfigurationWrapper

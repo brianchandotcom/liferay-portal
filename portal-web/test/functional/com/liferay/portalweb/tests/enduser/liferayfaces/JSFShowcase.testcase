@@ -1,6 +1,7 @@
 @component-name = "core-infrastructure"
 definition {
 
+	property liferay.faces = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Liferay Faces";
@@ -9,6 +10,26 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "JSF Showcase");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "JSF Showcase",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase");
+
+		Portlet.addPG(portletName = "JSF Showcase");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase");
 	}
 
 	tearDown {

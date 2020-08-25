@@ -1,6 +1,8 @@
 @component-name = "core-infrastructure"
 definition {
 
+	property custom.properties = "company.default.time.zone=Greenwich";
+	property liferay.faces = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Liferay Faces";
@@ -9,6 +11,10 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Bridge Demos");
+
+		SitePages.openPagesAdmin(siteURLKey = "Bridge Demos");
 	}
 
 	tearDown {
@@ -24,7 +30,25 @@ definition {
 
 	@priority = "5"
 	test AlloyApplicantPortletSmoke {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/alloy-applicant");
+		JSONLayout.addPublicLayout(
+			groupName = "Bridge Demos",
+			layoutName = "alloy-applicant");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "alloy-applicant",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/alloy-applicant");
+
+		Portlet.addPG(portletName = "alloy-applicant");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/alloy-applicant");
 
 		BridgeDemos.viewApplication();
 
@@ -51,23 +75,23 @@ definition {
 			fieldName = "Birthday",
 			fieldNameText = "dateOfBirth",
 			fieldValue = "12/34/5678",
-			urlAppend = "group/bridge-demos/alloy-applicant");
+			urlAppend = "web/bridge-demos/alloy-applicant");
 
 		BridgeDemos.validateField(
 			errorMessage = "Invalid e-mail address",
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "test",
-			urlAppend = "group/bridge-demos/alloy-applicant");
+			urlAppend = "web/bridge-demos/alloy-applicant");
 
 		BridgeDemos.validateField(
 			errorMessage = "Invalid e-mail address",
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "@liferay.com",
-			urlAppend = "group/bridge-demos/alloy-applicant");
+			urlAppend = "web/bridge-demos/alloy-applicant");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/alloy-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/alloy-applicant");
 
 		BridgeDemos.autoPopulateCityState(
 			city = "Orlando",
@@ -80,7 +104,7 @@ definition {
 
 		BridgeDemos.viewComment(comments = "testing 1, 2, 3");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/alloy-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/alloy-applicant");
 
 		BridgeDemos.uploadFile(fileName = "Document_2.jpeg");
 
@@ -98,7 +122,25 @@ definition {
 
 	@priority = "5"
 	test BootsFacesApplicantPortletSmoke {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/bootsfaces-applicant");
+		JSONLayout.addPublicLayout(
+			groupName = "Bridge Demos",
+			layoutName = "bootsfaces-applicant");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "bootsfaces-applicant",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/bootsfaces-applicant");
+
+		Portlet.addPG(portletName = "bootsfaces-applicant");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/bootsfaces-applicant");
 
 		BridgeDemos.viewApplication();
 
@@ -127,7 +169,7 @@ definition {
 			fieldName = "Birthday",
 			fieldNameText = "dateOfBirth",
 			fieldValue = "12/34/5678",
-			urlAppend = "group/bridge-demos/bootsfaces-applicant");
+			urlAppend = "web/bridge-demos/bootsfaces-applicant");
 
 		BridgeDemos.validateField(
 			applicantName = "Boots Faces",
@@ -135,7 +177,7 @@ definition {
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "test",
-			urlAppend = "group/bridge-demos/bootsfaces-applicant");
+			urlAppend = "web/bridge-demos/bootsfaces-applicant");
 
 		BridgeDemos.validateField(
 			applicantName = "Boots Faces",
@@ -143,9 +185,9 @@ definition {
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "@liferay.com",
-			urlAppend = "group/bridge-demos/bootsfaces-applicant");
+			urlAppend = "web/bridge-demos/bootsfaces-applicant");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/bootsfaces-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/bootsfaces-applicant");
 
 		BridgeDemos.autoPopulateCityState(
 			city = "Orlando",
@@ -158,7 +200,7 @@ definition {
 
 		BridgeDemos.viewComment(comments = "testing 1, 2, 3");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/bootsfaces-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/bootsfaces-applicant");
 
 		BridgeDemos.uploadFile(fileName = "Document_2.jpeg");
 
@@ -176,7 +218,25 @@ definition {
 
 	@priority = "5"
 	test ButterFacesApplicantPortletSmoke {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/butterfaces-applicant");
+		JSONLayout.addPublicLayout(
+			groupName = "Bridge Demos",
+			layoutName = "butterfaces-applicant");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "butterfaces-applicant",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/butterfaces-applicant");
+
+		Portlet.addPG(portletName = "butterfaces-applicant");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/butterfaces-applicant");
 
 		BridgeDemos.viewApplication();
 
@@ -205,7 +265,7 @@ definition {
 			fieldName = "Birthday",
 			fieldNameText = "dateOfBirth",
 			fieldValue = "12/34/5678",
-			urlAppend = "group/bridge-demos/butterfaces-applicant");
+			urlAppend = "web/bridge-demos/butterfaces-applicant");
 
 		BridgeDemos.validateField(
 			applicantName = "Butter Faces",
@@ -213,7 +273,7 @@ definition {
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "test",
-			urlAppend = "group/bridge-demos/butterfaces-applicant");
+			urlAppend = "web/bridge-demos/butterfaces-applicant");
 
 		BridgeDemos.validateField(
 			applicantName = "Butter Faces",
@@ -221,9 +281,9 @@ definition {
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "@liferay.com",
-			urlAppend = "group/bridge-demos/butterfaces-applicant");
+			urlAppend = "web/bridge-demos/butterfaces-applicant");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/butterfaces-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/butterfaces-applicant");
 
 		BridgeDemos.autoPopulateCityState(
 			city = "Orlando",
@@ -236,7 +296,7 @@ definition {
 
 		BridgeDemos.viewComment(comments = "testing 1, 2, 3");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/butterfaces-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/butterfaces-applicant");
 
 		BridgeDemos.uploadFile(fileName = "Document_2.jpeg");
 
@@ -254,7 +314,29 @@ definition {
 
 	@priority = "5"
 	test JSF_IPCEventsPortletsSmoke {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-events");
+		JSONLayout.addPublicLayout(
+			groupName = "Bridge Demos",
+			layoutName = "jsf-events");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "jsf-events",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-events");
+
+		Portlet.addPG(portletName = "jsf-ipc-events-customers");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-events");
+
+		Portlet.addPG(portletName = "jsf-ipc-events-bookings");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-events");
 
 		var currentDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy");
 
@@ -289,7 +371,29 @@ definition {
 
 	@priority = "5"
 	test JSF_IPCPublicRenderParamsPortletsSmoke {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-prp");
+		JSONLayout.addPublicLayout(
+			groupName = "Bridge Demos",
+			layoutName = "jsf-prp");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "jsf-prp",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-prp");
+
+		Portlet.addPG(portletName = "jsf-ipc-pub-render-params-customers");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-prp");
+
+		Portlet.addPG(portletName = "jsf-ipc-pub-render-params-bookings");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-prp");
 
 		var currentDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy");
 
@@ -324,7 +428,25 @@ definition {
 
 	@priority = "5"
 	test JSFApplicantPortletSmoke {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-applicant");
+		JSONLayout.addPublicLayout(
+			groupName = "Bridge Demos",
+			layoutName = "jsf-applicant");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "jsf-applicant",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-applicant");
+
+		Portlet.addPG(portletName = "jsf-applicant");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-applicant");
 
 		BridgeDemos.viewApplication();
 
@@ -351,23 +473,23 @@ definition {
 			fieldName = "Birthday",
 			fieldNameText = "dateOfBirth",
 			fieldValue = "12/34/5678",
-			urlAppend = "group/bridge-demos/jsf-applicant");
+			urlAppend = "web/bridge-demos/jsf-applicant");
 
 		BridgeDemos.validateField(
 			errorMessage = "Invalid e-mail address",
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "test",
-			urlAppend = "group/bridge-demos/jsf-applicant");
+			urlAppend = "web/bridge-demos/jsf-applicant");
 
 		BridgeDemos.validateField(
 			errorMessage = "Invalid e-mail address",
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "@liferay.com",
-			urlAppend = "group/bridge-demos/jsf-applicant");
+			urlAppend = "web/bridge-demos/jsf-applicant");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-applicant");
 
 		BridgeDemos.autoPopulateCityState(
 			city = "Orlando",
@@ -380,7 +502,7 @@ definition {
 
 		BridgeDemos.viewComment(comments = "testing 1, 2, 3");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-applicant");
 
 		BridgeDemos.uploadFile(fileName = "Document_2.jpeg");
 
@@ -398,7 +520,25 @@ definition {
 
 	@priority = "5"
 	test JSFCDIApplicantPortletSmoke {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-cdi-applicant");
+		JSONLayout.addPublicLayout(
+			groupName = "Bridge Demos",
+			layoutName = "jsf-cdi-applicant");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "jsf-cdi-applicant",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-cdi-applicant");
+
+		Portlet.addPG(portletName = "jsf-cdi-applicant");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-cdi-applicant");
 
 		BridgeDemos.viewApplication();
 
@@ -425,23 +565,23 @@ definition {
 			fieldName = "Birthday",
 			fieldNameText = "dateOfBirth",
 			fieldValue = "12/34/5678",
-			urlAppend = "group/bridge-demos/jsf-cdi-applicant");
+			urlAppend = "web/bridge-demos/jsf-cdi-applicant");
 
 		BridgeDemos.validateField(
 			errorMessage = "Invalid e-mail address",
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "test",
-			urlAppend = "group/bridge-demos/jsf-cdi-applicant");
+			urlAppend = "web/bridge-demos/jsf-cdi-applicant");
 
 		BridgeDemos.validateField(
 			errorMessage = "Invalid e-mail address",
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "@liferay.com",
-			urlAppend = "group/bridge-demos/jsf-cdi-applicant");
+			urlAppend = "web/bridge-demos/jsf-cdi-applicant");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-cdi-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-cdi-applicant");
 
 		BridgeDemos.autoPopulateCityState(
 			city = "Orlando",
@@ -454,7 +594,7 @@ definition {
 
 		BridgeDemos.viewComment(comments = "testing 1, 2, 3");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-cdi-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-cdi-applicant");
 
 		BridgeDemos.uploadFile(fileName = "Document_2.jpeg");
 
@@ -472,17 +612,52 @@ definition {
 
 	@priority = "5"
 	test JSFExportPDFPortletSmoke {
+		JSONLayout.addPublicLayout(
+			groupName = "Bridge Demos",
+			layoutName = "jsf-pdf");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "jsf-pdf",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-pdf");
+
+		Portlet.addPG(portletName = "jsf-export-pdf");
 
 		// Only export files, no verification of file content
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-pdf");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-pdf");
 
 		BridgeDemos.exportFile(lastName = "Green,Kessler,Shearer");
 	}
 
 	@priority = "5"
 	test JSFHTML5ApplicantPortletSmoke {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-html5-applicant");
+		JSONLayout.addPublicLayout(
+			groupName = "Bridge Demos",
+			layoutName = "jsf-html5-applicant");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "jsf-html5-applicant",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-html5-applicant");
+
+		Portlet.addPG(portletName = "jsf-html5-applicant");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-html5-applicant");
 
 		BridgeDemos.viewApplication();
 
@@ -509,23 +684,23 @@ definition {
 			fieldName = "Birthday",
 			fieldNameText = "dateOfBirth",
 			fieldValue = "12/34/5678",
-			urlAppend = "group/bridge-demos/jsf-html5-applicant");
+			urlAppend = "web/bridge-demos/jsf-html5-applicant");
 
 		BridgeDemos.validateField(
 			errorMessage = "Invalid e-mail address",
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "test",
-			urlAppend = "group/bridge-demos/jsf-html5-applicant");
+			urlAppend = "web/bridge-demos/jsf-html5-applicant");
 
 		BridgeDemos.validateField(
 			errorMessage = "Invalid e-mail address",
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "@liferay.com",
-			urlAppend = "group/bridge-demos/jsf-html5-applicant");
+			urlAppend = "web/bridge-demos/jsf-html5-applicant");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-html5-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-html5-applicant");
 
 		BridgeDemos.autoPopulateCityState(
 			city = "Orlando",
@@ -538,7 +713,7 @@ definition {
 
 		BridgeDemos.viewComment(comments = "testing 1, 2, 3");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-html5-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-html5-applicant");
 
 		BridgeDemos.uploadFile(fileName = "Document_2.jpeg");
 
@@ -556,7 +731,25 @@ definition {
 
 	@priority = "5"
 	test JSFJSPApplicantPortletSmoke {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-jsp-applicant");
+		JSONLayout.addPublicLayout(
+			groupName = "Bridge Demos",
+			layoutName = "jsf-jsp-applicant");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "jsf-jsp-applicant",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-jsp-applicant");
+
+		Portlet.addPG(portletName = "jsf-jsp-applicant");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-jsp-applicant");
 
 		BridgeDemos.viewApplication(applicantName = "JSF JSP");
 
@@ -573,7 +766,7 @@ definition {
 			fieldName = "Birthday",
 			fieldNameText = "dateOfBirth",
 			fieldValue = "12/34/5678",
-			urlAppend = "group/bridge-demos/jsf-jsp-applicant");
+			urlAppend = "web/bridge-demos/jsf-jsp-applicant");
 
 		BridgeDemos.validateField(
 			applicantName = "JSF JSP",
@@ -581,7 +774,7 @@ definition {
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "test",
-			urlAppend = "group/bridge-demos/jsf-jsp-applicant");
+			urlAppend = "web/bridge-demos/jsf-jsp-applicant");
 
 		BridgeDemos.validateField(
 			applicantName = "JSF JSP",
@@ -589,9 +782,9 @@ definition {
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "@liferay.com",
-			urlAppend = "group/bridge-demos/jsf-jsp-applicant");
+			urlAppend = "web/bridge-demos/jsf-jsp-applicant");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-jsp-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-jsp-applicant");
 
 		BridgeDemos.uploadFile(
 			applicantName = "JSF JSP",
@@ -612,7 +805,25 @@ definition {
 
 	@priority = "5"
 	test JSFSpringApplicantPortletSmoke {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-spring-applicant");
+		JSONLayout.addPublicLayout(
+			groupName = "Bridge Demos",
+			layoutName = "jsf-spring-applicant");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "jsf-spring-applicant",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos");
+
+		Portlet.addPG(portletName = "jsf-spring-applicant");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-spring-applicant");
 
 		BridgeDemos.viewApplication();
 
@@ -639,23 +850,23 @@ definition {
 			fieldName = "Birthday",
 			fieldNameText = "dateOfBirth",
 			fieldValue = "12/34/5678",
-			urlAppend = "group/bridge-demos/jsf-spring-applicant");
+			urlAppend = "web/bridge-demos/jsf-spring-applicant");
 
 		BridgeDemos.validateField(
 			errorMessage = "Invalid e-mail address",
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "test",
-			urlAppend = "group/bridge-demos/jsf-spring-applicant");
+			urlAppend = "web/bridge-demos/jsf-spring-applicant");
 
 		BridgeDemos.validateField(
 			errorMessage = "Invalid e-mail address",
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "@liferay.com",
-			urlAppend = "group/bridge-demos/jsf-spring-applicant");
+			urlAppend = "web/bridge-demos/jsf-spring-applicant");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-spring-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-spring-applicant");
 
 		BridgeDemos.autoPopulateCityState(
 			city = "Orlando",
@@ -668,7 +879,7 @@ definition {
 
 		BridgeDemos.viewComment(comments = "testing 1, 2, 3");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/jsf-spring-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/jsf-spring-applicant");
 
 		BridgeDemos.uploadFile(fileName = "Document_2.jpeg");
 
@@ -686,7 +897,25 @@ definition {
 
 	@priority = "5"
 	test PrimeFacesCDIApplicantPortletSmoke {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/primefaces-applicant");
+		JSONLayout.addPublicLayout(
+			groupName = "Bridge Demos",
+			layoutName = "primefaces-applicant");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "primefaces-applicant",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/primefaces-applicant");
+
+		Portlet.addPG(portletName = "primefaces-applicant");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/primefaces-applicant");
 
 		BridgeDemos.viewApplication();
 
@@ -713,23 +942,23 @@ definition {
 			fieldName = "Birthday",
 			fieldNameText = "dateOfBirth",
 			fieldValue = "12/34/5678",
-			urlAppend = "group/bridge-demos/primefaces-applicant");
+			urlAppend = "web/bridge-demos/primefaces-applicant");
 
 		BridgeDemos.validateField(
 			errorMessage = "Invalid e-mail address",
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "test",
-			urlAppend = "group/bridge-demos/primefaces-applicant");
+			urlAppend = "web/bridge-demos/primefaces-applicant");
 
 		BridgeDemos.validateField(
 			errorMessage = "Invalid e-mail address",
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "@liferay.com",
-			urlAppend = "group/bridge-demos/primefaces-applicant");
+			urlAppend = "web/bridge-demos/primefaces-applicant");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/primefaces-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/primefaces-applicant");
 
 		BridgeDemos.autoPopulateCityState(
 			city = "Orlando",
@@ -742,7 +971,7 @@ definition {
 
 		BridgeDemos.viewComment(comments = "testing 1, 2, 3");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/primefaces-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/primefaces-applicant");
 
 		BridgeDemos.uploadFile(
 			applicantName = "Prime Faces",
@@ -762,7 +991,25 @@ definition {
 
 	@priority = "5"
 	test RichFacesCDIApplicantPortletSmoke {
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/richfaces-applicant");
+		JSONLayout.addPublicLayout(
+			groupName = "Bridge Demos",
+			layoutName = "richfaces-applicant");
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.configurePage(
+			columnName = "1 Column",
+			pageName = "richfaces-applicant",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/richfaces-applicant");
+
+		Portlet.addPG(portletName = "richfaces-applicant");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/richfaces-applicant");
 
 		BridgeDemos.viewApplication();
 
@@ -789,23 +1036,23 @@ definition {
 			fieldName = "Birthday",
 			fieldNameText = "dateOfBirth",
 			fieldValue = "12/34/5678",
-			urlAppend = "group/bridge-demos/richfaces-applicant");
+			urlAppend = "web/bridge-demos/richfaces-applicant");
 
 		BridgeDemos.validateField(
 			errorMessage = "Invalid e-mail address",
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "test",
-			urlAppend = "group/bridge-demos/richfaces-applicant");
+			urlAppend = "web/bridge-demos/richfaces-applicant");
 
 		BridgeDemos.validateField(
 			errorMessage = "Invalid e-mail address",
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
 			fieldValue = "@liferay.com",
-			urlAppend = "group/bridge-demos/richfaces-applicant");
+			urlAppend = "web/bridge-demos/richfaces-applicant");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/richfaces-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/richfaces-applicant");
 
 		BridgeDemos.autoPopulateCityState(
 			city = "Orlando",
@@ -818,7 +1065,7 @@ definition {
 
 		BridgeDemos.viewComment(comments = "testing 1, 2, 3");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/bridge-demos/richfaces-applicant");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/richfaces-applicant");
 
 		BridgeDemos.uploadFile(
 			applicantName = "Rich JSP",

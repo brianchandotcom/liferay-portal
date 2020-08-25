@@ -17,6 +17,7 @@ definition {
 				assetCategoryIds = "${assetCategoryIds}",
 				assetTagNames = "${assetTagNames}",
 				groupName = "${groupName}",
+				serviceContext = "${serviceContext}",
 				site = "${site}",
 				workflowAction = "${workflowAction}");
 		}
@@ -25,6 +26,7 @@ definition {
 				assetCategoryIds = "${assetCategoryIds}",
 				assetTagNames = "${assetTagNames}",
 				groupName = "Guest",
+				serviceContext = "${serviceContext}",
 				workflowAction = "${workflowAction}");
 		}
 

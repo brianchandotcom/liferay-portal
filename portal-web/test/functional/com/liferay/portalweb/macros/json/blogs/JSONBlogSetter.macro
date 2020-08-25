@@ -7,13 +7,15 @@ definition {
 	}
 
 	macro setServiceContext {
-		var serviceContext = JSONServiceContextUtil.setServiceContext(
-			addGuestPermissions = "true",
-			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}",
-			groupName = "${groupName}",
-			site = "${site}",
-			workflowAction = "${workflowAction}");
+		if (!(isSet(serviceContext))) {
+			var serviceContext = JSONServiceContextUtil.setServiceContext(
+				addGuestPermissions = "true",
+				assetCategoryIds = "${assetCategoryIds}",
+				assetTagNames = "${assetTagNames}",
+				groupName = "${groupName}",
+				site = "${site}",
+				workflowAction = "${workflowAction}");
+		}
 
 		return "${serviceContext}";
 	}

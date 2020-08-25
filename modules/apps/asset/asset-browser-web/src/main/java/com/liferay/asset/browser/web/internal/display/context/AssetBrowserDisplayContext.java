@@ -479,25 +479,20 @@ public class AssetBrowserDisplayContext {
 	}
 
 	private long[] _getFilterGroupIds() throws PortalException {
-		long[] filterGroupIds = getSelectedGroupIds();
-
-		if (getGroupId() > 0) {
-			filterGroupIds = new long[] {getGroupId()};
+		if (getGroupId() == 0) {
+			return getSelectedGroupIds();
 		}
 
-		if (_isSearchEverywhere()) {
-			for (long filterGroupId : filterGroupIds) {
-				filterGroupIds = ArrayUtil.append(
-					filterGroupIds,
-					ListUtil.toLongArray(
-						DepotEntryServiceUtil.getGroupConnectedDepotEntries(
-							filterGroupId, QueryUtil.ALL_POS,
-							QueryUtil.ALL_POS),
-						DepotEntry::getGroupId));
-			}
+		if (!_isSearchEverywhere()) {
+			return new long[]{getGroupId()};
 		}
 
-		return filterGroupIds;
+		return ArrayUtil.append(
+			PortalUtil.getCurrentAndAncestorSiteGroupIds(getGroupId()),
+			ListUtil.toLongArray(
+				DepotEntryServiceUtil.getGroupConnectedDepotEntries(
+					getGroupId(), true, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				DepotEntry::getGroupId));
 	}
 
 	private BreadcrumbEntry _getHomeBreadcrumb() throws PortalException {

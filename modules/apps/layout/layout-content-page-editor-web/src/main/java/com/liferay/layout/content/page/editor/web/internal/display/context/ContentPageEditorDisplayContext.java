@@ -1457,8 +1457,6 @@ public class ContentPageEditorDisplayContext {
 	private Map<String, Map<String, Object>> _getFrontendTokens()
 		throws Exception {
 
-		Map<String, Map<String, Object>> frontendTokens = new LinkedHashMap<>();
-
 		JSONObject frontendTokenValuesJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
@@ -1475,6 +1473,12 @@ public class ContentPageEditorDisplayContext {
 		FrontendTokenDefinition frontendTokenDefinition =
 			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
 				layoutSet.getThemeId());
+
+		if (frontendTokenDefinition == null) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, Map<String, Object>> frontendTokens = new LinkedHashMap<>();
 
 		JSONObject frontendTokenDefinitionJSONObject =
 			JSONFactoryUtil.createJSONObject(

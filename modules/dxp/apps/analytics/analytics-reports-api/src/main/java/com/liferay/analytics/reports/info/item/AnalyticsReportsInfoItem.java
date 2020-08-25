@@ -26,6 +26,10 @@ import java.util.Locale;
  */
 public interface AnalyticsReportsInfoItem<T> {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by InfoItemFieldValuesProvider.getInfoItemFieldValues
+	 */
+	@Deprecated
 	public String getAuthorName(T model);
 
 	public default long getAuthorUserId(T model) {
@@ -42,6 +46,10 @@ public interface AnalyticsReportsInfoItem<T> {
 
 	public Date getPublishDate(T model);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by LayoutDisplayPageObjectProvider.getTitle
+	 */
+	@Deprecated
 	public String getTitle(T model, Locale locale);
 
 }

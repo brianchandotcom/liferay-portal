@@ -22,7 +22,9 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
@@ -36,24 +38,32 @@ import org.json.JSONObject;
 public class SpiraRestAPIUtil {
 
 	public static void summarizeRequests() {
-		long totalRequests = _requestDataEntries.size();
+		TreeSet<RequestDataEntry> orderedRequestDataEntries = new TreeSet<>();
+
+		for (Map.Entry<String, List<RequestDataEntry>> entry :
+				_groupedRequestDataEntriesMap.entrySet()) {
+
+			orderedRequestDataEntries.addAll(entry.getValue());
+		}
+
+		long totalRequestCount = orderedRequestDataEntries.size();
 
 		long totalDuration = 0;
 		long totalRequestByteCount = 0;
 		long totalResponseByteCount = 0;
 
-		long q1Index = totalRequests / 4;
-		long q2Index = totalRequests / 2;
+		long q1Index = totalRequestCount / 4;
+		long q2Index = totalRequestCount / 2;
 
 		long q3Index = q1Index + q2Index;
 
-		RequestDataEntry q1RequestDataEntry = _requestDataEntries.first();
-		RequestDataEntry q2RequestDataEntry = _requestDataEntries.first();
-		RequestDataEntry q3RequestDataEntry = _requestDataEntries.last();
+		RequestDataEntry q1RequestDataEntry = orderedRequestDataEntries.first();
+		RequestDataEntry q2RequestDataEntry = orderedRequestDataEntries.first();
+		RequestDataEntry q3RequestDataEntry = orderedRequestDataEntries.last();
 
 		int i = 0;
 
-		for (RequestDataEntry requestDataEntry : _requestDataEntries) {
+		for (RequestDataEntry requestDataEntry : orderedRequestDataEntries) {
 			if (i == q1Index) {
 				q1RequestDataEntry = requestDataEntry;
 			}
@@ -73,61 +83,116 @@ public class SpiraRestAPIUtil {
 			i++;
 		}
 
-		RequestDataEntry totalRequestDataEntry = new RequestDataEntry(
-			null, totalDuration, totalRequestByteCount, totalResponseByteCount);
-
+		System.out.println();
 		System.out.println("#");
-		System.out.printf("# Total Requests (%,d)\n", totalRequests);
+		System.out.printf("# Total Requests (%,d)\n", totalRequestCount);
 		System.out.println("#");
 		System.out.println();
-		System.out.println(totalRequestDataEntry);
+		System.out.println(
+			new RequestDataEntry(
+				totalDuration, totalRequestByteCount, totalResponseByteCount));
+
 		System.out.println();
-
-		RequestDataEntry averageRequestDataEntry = new RequestDataEntry(
-			null, totalDuration / totalRequests,
-			totalRequestByteCount / totalRequests,
-			totalResponseByteCount / totalRequests);
-
 		System.out.println("#");
 		System.out.println("# Average Request");
 		System.out.println("#");
 		System.out.println();
-		System.out.println(averageRequestDataEntry);
-		System.out.println();
+		System.out.println(
+			new RequestDataEntry(
+				totalDuration / totalRequestCount,
+				totalRequestByteCount / totalRequestCount,
+				totalResponseByteCount / totalRequestCount));
 
+		System.out.println();
 		System.out.println("#");
 		System.out.println("# Fastest Request");
 		System.out.println("#");
 		System.out.println();
-		System.out.println(_requestDataEntries.first());
-		System.out.println();
+		System.out.println(orderedRequestDataEntries.first());
 
+		System.out.println();
 		System.out.println("#");
 		System.out.println("# Q1 Request");
 		System.out.println("#");
 		System.out.println();
 		System.out.println(q1RequestDataEntry);
-		System.out.println();
 
+		System.out.println();
 		System.out.println("#");
 		System.out.println("# Q2 Request (median)");
 		System.out.println("#");
 		System.out.println();
 		System.out.println(q2RequestDataEntry);
-		System.out.println();
 
+		System.out.println();
 		System.out.println("#");
 		System.out.println("# Q3 Request");
 		System.out.println("#");
 		System.out.println();
 		System.out.println(q3RequestDataEntry);
-		System.out.println();
 
+		System.out.println();
 		System.out.println("#");
 		System.out.println("# Slowest Request");
 		System.out.println("#");
 		System.out.println();
-		System.out.println(_requestDataEntries.last());
+		System.out.println(orderedRequestDataEntries.last());
+
+		for (Map.Entry<String, List<RequestDataEntry>> entry :
+				_groupedRequestDataEntriesMap.entrySet()) {
+
+			List<RequestDataEntry> groupRequestDataEntries = entry.getValue();
+
+			long groupDuration = 0;
+			long groupRequestByteCount = 0;
+			long groupResponseByteCount = 0;
+
+			for (RequestDataEntry groupRequestDataEntry :
+					groupRequestDataEntries) {
+
+				groupDuration += groupRequestDataEntry.getDuration();
+
+				groupRequestByteCount +=
+					groupRequestDataEntry.getRequestByteCount();
+
+				groupResponseByteCount +=
+					groupRequestDataEntry.getResponseByteCount();
+			}
+
+			long groupRequestCount = groupRequestDataEntries.size();
+
+			System.out.println();
+			System.out.println("#");
+
+			System.out.printf(
+				"# Requests - %s (%,d)\n", entry.getKey(), groupRequestCount);
+
+			System.out.println("#");
+			System.out.println();
+
+			System.out.println(
+				new RequestDataEntry(
+					groupDuration, groupRequestByteCount,
+					groupResponseByteCount));
+
+			if (groupRequestCount > 1) {
+				System.out.println();
+				System.out.println("#");
+
+				System.out.printf(
+					"# Requests (avg) - %s (%d)\n", entry.getKey(),
+					groupRequestCount);
+
+				System.out.println("#");
+				System.out.println();
+				System.out.println(
+					new RequestDataEntry(
+						groupDuration / groupRequestCount,
+						groupRequestByteCount / groupRequestCount,
+						groupResponseByteCount / groupRequestCount));
+			}
+		}
+
 		System.out.println();
 	}
 
@@ -181,10 +246,22 @@ public class SpiraRestAPIUtil {
 
 				long duration = System.currentTimeMillis() - start;
 
-				_requestDataEntries.add(
-					new RequestDataEntry(
-						spiraRestAPIURL + "/" + urlPath, duration, requestData,
-						responseData));
+				RequestDataEntry requestDataEntry = new RequestDataEntry(
+					"/" + urlPath, duration, requestData, responseData);
+
+				List<RequestDataEntry> requestDataEntries =
+					_groupedRequestDataEntriesMap.get(
+						requestDataEntry.getRequestURLPath());
+
+				if (requestDataEntries == null) {
+					requestDataEntries = Collections.synchronizedList(
+						new ArrayList<RequestDataEntry>());
+				}
+
+				requestDataEntries.add(requestDataEntry);
+
+				_groupedRequestDataEntriesMap.put(
+					requestDataEntry.getRequestURLPath(), requestDataEntries);
 			}
 		}
 	}
@@ -230,9 +307,9 @@ public class SpiraRestAPIUtil {
 		public String toString() {
 			StringBuilder sb = new StringBuilder();
 
-			if (_requestURL != null) {
-				sb.append("Request URL: ");
-				sb.append(_requestURL);
+			if (_requestURLPath != null) {
+				sb.append("Request URL Path: ");
+				sb.append(_requestURLPath);
 				sb.append("\n");
 			}
 
@@ -253,10 +330,16 @@ public class SpiraRestAPIUtil {
 		}
 
 		protected RequestDataEntry(
-			String requestURL, long duration, long requestByteCount,
+			long duration, long requestByteCount, long responseByteCount) {
+
+			this(null, duration, requestByteCount, responseByteCount);
+		}
+
+		protected RequestDataEntry(
+			String requestURLPath, long duration, long requestByteCount,
 			long responseByteCount) {
 
-			_requestURL = requestURL;
+			_requestURLPath = requestURLPath;
 			_duration = duration;
 			_requestByteCount = requestByteCount;
 			_responseByteCount = responseByteCount;
@@ -279,6 +362,10 @@ public class SpiraRestAPIUtil {
 			return _requestByteCount;
 		}
 
+		protected String getRequestURLPath() {
+			return _requestURLPath;
+		}
+
 		protected Long getResponseByteCount() {
 			return _responseByteCount;
 		}
@@ -295,7 +382,7 @@ public class SpiraRestAPIUtil {
 
 		private final Long _duration;
 		private final Long _requestByteCount;
-		private final String _requestURL;
+		private final String _requestURLPath;
 		private final Long _responseByteCount;
 
 	}
@@ -357,7 +444,8 @@ public class SpiraRestAPIUtil {
 
 	private static final int _SECONDS_RETRY_PERIOD_DEFAULT = 5;
 
-	private static final TreeSet<RequestDataEntry> _requestDataEntries =
-		new TreeSet<>();
+	private static final Map<String, List<RequestDataEntry>>
+		_groupedRequestDataEntriesMap = Collections.synchronizedMap(
+			new LinkedHashMap<String, List<RequestDataEntry>>());
 
 }

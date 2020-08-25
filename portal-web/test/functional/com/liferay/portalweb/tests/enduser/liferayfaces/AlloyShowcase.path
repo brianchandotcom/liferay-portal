@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECTION_FIRST_NAME_CELL</td>
+	<td>//tbody//td[2]//span[contains(@class,'alloy-output-text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GENERAL_BUTTON_1</td>
 	<td>//button[contains(.,'Button')]//img[contains(@src,'liferay-faces-logo-small.png')]/..</td>
 	<td></td>
@@ -100,6 +105,41 @@
 </tr><tr>
 	<td>SELECTION_MODAL_TEXT</td>
 	<td>//div[@class='yui3-widget-bd modal-body']//div//div//span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTION_CHECKBOX</td>
+	<td>//input[@id='_1_WAR_comliferayfacesdemoalloyshowcaseportlet_:exampleForm:customers:0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTION_CHECKBOX_ALL</td>
+	<td>//input[@id='_1_WAR_comliferayfacesdemoalloyshowcaseportlet_:exampleForm:customers_selectAll']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENT_TABLE</td>
+	<td>//td[contains(text(),'${key_eventText}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_LAST_NAME</td>
+	<td>//a[contains(text(),'Last Name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_LAST_NAME_ARROW</td>
+	<td>//a[contains(text(),'Last Name')]//span[@class='table-sort-indicator']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_DATE_OF_BIRTH</td>
+	<td>//a[contains(text(),'Date of Birth')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_DATE_OF_BIRTH_ARROW</td>
+	<td>//a[contains(text(),'Date of Birth')]//span[@class='table-sort-indicator']</td>
 	<td></td>
 </tr>
 </tbody>

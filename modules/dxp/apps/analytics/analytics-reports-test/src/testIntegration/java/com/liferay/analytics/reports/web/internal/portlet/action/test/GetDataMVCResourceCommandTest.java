@@ -15,7 +15,7 @@
 package com.liferay.analytics.reports.web.internal.portlet.action.test;
 
 import com.liferay.analytics.reports.test.MockObject;
-import com.liferay.analytics.reports.test.util.MockObjectUtil;
+import com.liferay.analytics.reports.test.util.MockContextUtil;
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockHttpUtil;
 import com.liferay.analytics.reports.web.internal.portlet.action.test.util.MockThemeDisplayUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -139,8 +139,10 @@ public class GetDataMVCResourceCommandTest {
 		properties.put("trafficSourcesEnabled", true);
 
 		try {
-			MockObjectUtil.testWithMockObject(
-				_classNameLocalService,
+			MockContextUtil.testWithMockContext(
+				MockContextUtil.MockContext.builder(
+					_classNameLocalService
+				).build(),
 				() -> {
 					MockLiferayResourceResponse mockLiferayResourceResponse =
 						new MockLiferayResourceResponse();
@@ -216,8 +218,10 @@ public class GetDataMVCResourceCommandTest {
 
 	@Test
 	public void testGetViewURLs() throws Exception {
-		MockObjectUtil.testWithMockObject(
-			_classNameLocalService,
+		MockContextUtil.testWithMockContext(
+			MockContextUtil.MockContext.builder(
+				_classNameLocalService
+			).build(),
 			() -> {
 				MockLiferayResourceResponse mockLiferayResourceResponse =
 					new MockLiferayResourceResponse();

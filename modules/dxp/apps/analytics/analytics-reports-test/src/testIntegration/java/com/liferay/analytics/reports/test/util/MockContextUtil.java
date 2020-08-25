@@ -34,17 +34,19 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Cristina González
  */
-public class MockObjectUtil {
+public class MockContextUtil {
 
-	public static void testWithMockObject(
-			ClassNameLocalService classNameLocalService,
-			UnsafeRunnable<Exception> unsafeRunnable)
+	public static void testWithMockContext(
+			MockContext mockContext, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
+
+		ClassNameLocalService classNameLocalService =
+			mockContext.getClassNameLocalService();
 
 		ClassName className = classNameLocalService.addClassName(
 			MockObject.class.getName());
 
-		Bundle bundle = FrameworkUtil.getBundle(MockObjectUtil.class);
+		Bundle bundle = FrameworkUtil.getBundle(MockContextUtil.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -92,6 +94,40 @@ public class MockObjectUtil {
 
 			classNameLocalService.deleteClassName(className);
 		}
+	}
+
+	public static class MockContext {
+
+		public static Builder builder(
+			ClassNameLocalService classNameLocalService) {
+
+			return new Builder(classNameLocalService);
+		}
+
+		public ClassNameLocalService getClassNameLocalService() {
+			return _classNameLocalService;
+		}
+
+		public static class Builder {
+
+			public Builder(ClassNameLocalService classNameLocalService) {
+				_classNameLocalService = classNameLocalService;
+			}
+
+			public MockContext build() {
+				return new MockContext(_classNameLocalService);
+			}
+
+			private final ClassNameLocalService _classNameLocalService;
+
+		}
+
+		private MockContext(ClassNameLocalService classNameLocalService) {
+			_classNameLocalService = classNameLocalService;
+		}
+
+		private final ClassNameLocalService _classNameLocalService;
+
 	}
 
 }

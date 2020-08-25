@@ -513,6 +513,10 @@ public class ViewChangesDisplayContext {
 		if (model instanceof Group) {
 			Group group = (Group)model;
 
+			if (group.isCompany()) {
+				return false;
+			}
+
 			return group.isSite();
 		}
 

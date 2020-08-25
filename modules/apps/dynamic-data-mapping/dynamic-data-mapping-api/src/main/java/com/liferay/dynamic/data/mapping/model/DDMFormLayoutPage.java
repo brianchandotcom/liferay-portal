@@ -14,10 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.model;
 
+import com.liferay.petra.lang.HashUtil;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Marcellus Tavares
@@ -42,6 +45,29 @@ public class DDMFormLayoutPage implements Serializable {
 		_ddmFormLayoutRows.add(ddmFormLayoutRow);
 	}
 
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof DDMFormLayoutPage)) {
+			return false;
+		}
+
+		DDMFormLayoutPage ddmFormLayoutPage = (DDMFormLayoutPage)object;
+
+		if (Objects.equals(
+				_ddmFormLayoutRows, ddmFormLayoutPage._ddmFormLayoutRows) &&
+			Objects.equals(_description, ddmFormLayoutPage._description) &&
+			Objects.equals(_title, ddmFormLayoutPage._title)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public DDMFormLayoutRow getDDMFormLayoutRow(int index) {
 		return _ddmFormLayoutRows.get(index);
 	}
@@ -56,6 +82,15 @@ public class DDMFormLayoutPage implements Serializable {
 
 	public LocalizedValue getTitle() {
 		return _title;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = HashUtil.hash(0, _ddmFormLayoutRows);
+
+		hash = HashUtil.hash(hash, _description);
+
+		return HashUtil.hash(hash, _title);
 	}
 
 	public void setDDMFormLayoutRows(List<DDMFormLayoutRow> ddmFormLayoutRows) {

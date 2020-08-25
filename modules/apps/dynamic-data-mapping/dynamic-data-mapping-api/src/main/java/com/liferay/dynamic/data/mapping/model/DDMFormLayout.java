@@ -14,12 +14,15 @@
 
 package com.liferay.dynamic.data.mapping.model;
 
+import com.liferay.petra.lang.HashUtil;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -60,6 +63,35 @@ public class DDMFormLayout implements Serializable {
 
 	public void addDDMFormRule(DDMFormRule ddmFormRule) {
 		_ddmFormRules.add(ddmFormRule);
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof DDMFormLayout)) {
+			return false;
+		}
+
+		DDMFormLayout ddmFormLayout = (DDMFormLayout)object;
+
+		if (Objects.equals(
+				_availableLocales, ddmFormLayout._availableLocales) &&
+			Objects.equals(
+				_ddmFormLayoutPages, ddmFormLayout._ddmFormLayoutPages) &&
+			Objects.equals(_ddmFormRules, ddmFormLayout._ddmFormRules) &&
+			Objects.equals(_defaultLocale, ddmFormLayout._defaultLocale) &&
+			Objects.equals(_paginationMode, ddmFormLayout._paginationMode) &&
+			Objects.equals(
+				_definitionSchemaVersion,
+				ddmFormLayout._definitionSchemaVersion)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public Set<Locale> getAvailableLocales() {

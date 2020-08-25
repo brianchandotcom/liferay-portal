@@ -14,12 +14,14 @@
 
 package com.liferay.dynamic.data.mapping.model;
 
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Marcellus Tavares
@@ -43,6 +45,28 @@ public class DDMFormLayoutColumn implements Serializable {
 		_ddmFormFieldNames = ListUtil.fromArray(ddmFormFieldNames);
 	}
 
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof DDMFormLayoutColumn)) {
+			return false;
+		}
+
+		DDMFormLayoutColumn ddmFormLayoutColumn = (DDMFormLayoutColumn)object;
+
+		if (Objects.equals(_size, ddmFormLayoutColumn._size) &&
+			Objects.equals(
+				_ddmFormFieldNames, ddmFormLayoutColumn._ddmFormFieldNames)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public String getDDMFormFieldName(int index) {
 		return _ddmFormFieldNames.get(index);
 	}
@@ -53,6 +77,13 @@ public class DDMFormLayoutColumn implements Serializable {
 
 	public int getSize() {
 		return _size;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = HashUtil.hash(0, _ddmFormFieldNames);
+
+		return HashUtil.hash(hash, _size);
 	}
 
 	public void setDDMFormFieldNames(List<String> ddmFormFieldNames) {

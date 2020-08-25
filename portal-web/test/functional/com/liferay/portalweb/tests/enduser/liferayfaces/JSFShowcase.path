@@ -29,13 +29,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONVERSION_AREA_1</td>
+	<td>//textarea[contains(@name,'textarea')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONVERSION_AREA_2</td>
+	<td>xpath=(//textarea[contains(@name,'textarea')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONVERSION_CORRECT_MESSAGE</td>
 	<td>//li[contains(text(),'Correct!')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONVERSION_INCORRECT_MESSAGE</td>
-	<td>//li[contains(text(),'Incorrect!')]</td>
+	<td>//li[contains(text(),'Incorrect!')] | //span[contains(text(),'Failed')] | //span[contains(text(),'Invalid E-Mail Address')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -164,6 +174,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODEL_RESULT</td>
+	<td>//div[contains(@class,'results-content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODEL_RESULT_2</td>
+	<td>xpath=(//div[contains(@class,'results-content')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MODEL_VALUE</td>
 	<td>//span[contains(@id,':modelValue') and contains(.,'${key_attribute}')]</td>
 	<td></td>
@@ -211,6 +231,16 @@
 <tr>
 	<td>RESULT_MESSAGE</td>
 	<td>xpath=(//span | //td | //li)[contains(text(),'${key_message}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RIGHT_TO_LEFT</td>
+	<td>//textarea[@dir='RTL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_AREA_SIZE</td>
+	<td>//textarea[@cols='50'][@rows='6']</td>
 	<td></td>
 </tr>
 <tr>

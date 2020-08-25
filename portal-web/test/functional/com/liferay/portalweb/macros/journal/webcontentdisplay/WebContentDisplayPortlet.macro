@@ -305,7 +305,7 @@ definition {
 			locator1 = "IFrame#MODAL_ANY");
 
 		Click(
-			key_breadcrumbName = "Sites",
+			key_breadcrumbName = "Sites and Libraries",
 			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
 
 		Click(

@@ -21,6 +21,8 @@ $c: '.ddm-field-types-panel';
 
 .ddm-drag-item {
 	&.dragging {
+		cursor: move;
+		cursor: grabbing;
 		z-index: 99999;
 	}
 }

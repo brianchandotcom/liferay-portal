@@ -151,6 +151,7 @@
 								setModalContent(html);
 							}
 						},
+						size: 'md',
 						title: '<liferay-ui:message key="sign-in" />',
 					});
 				});

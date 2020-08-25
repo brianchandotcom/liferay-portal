@@ -595,17 +595,17 @@
 					},
 					{
 						"frontendTokenName": "fontFamilySansSerif",
-						"label": "sans-serif",
+						"label": "font-family-sans-serif",
 						"value": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
 					},
 					{
 						"frontendTokenName": "fontFamilyMonospace",
-						"label": "monospace",
+						"label": "font-family-monospace",
 						"value": "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
 					},
 					{
 						"frontendTokenName": "fontFamilyBase",
-						"label": "base",
+						"label": "font-family-base",
 						"value": "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'"
 					}
 				]
@@ -626,27 +626,27 @@
 					},
 					{
 						"frontendTokenName": "fontWeightNormal",
-						"label": "normal",
+						"label": "font-weight-normal",
 						"value": "400"
 					},
 					{
 						"frontendTokenName": "fontWeightBold",
-						"label": "bold",
+						"label": "font-weight-bold",
 						"value": "700"
 					},
 					{
 						"frontendTokenName": "fontWeightBolder",
-						"label": "bolder",
+						"label": "font-weight-bolder",
 						"value": "900"
 					},
 					{
 						"frontendTokenName": "fontWeightLight",
-						"label": "light",
+						"label": "font-weight-light",
 						"value": "300"
 					},
 					{
 						"frontendTokenName": "fontWeightLighter",
-						"label": "lighter",
+						"label": "font-weight-lighter",
 						"value": "lighter"
 					}
 				]
@@ -667,17 +667,17 @@
 					},
 					{
 						"frontendTokenName": "fontSizeSm",
-						"label": "small",
+						"label": "font-size-small",
 						"value": "0.875rem"
 					},
 					{
 						"frontendTokenName": "fontSizeBase",
-						"label": "base",
+						"label": "font-size-base",
 						"value": "0.875rem"
 					},
 					{
 						"frontendTokenName": "fontSizeLg",
-						"label": "large",
+						"label": "font-size-large",
 						"value": "1.125rem"
 					}
 				]
@@ -849,17 +849,17 @@
 					},
 					{
 						"frontendTokenName": "boxShadowSm",
-						"label": "small",
+						"label": "box-shadow-small",
 						"value": "0 .125rem .25rem rgba(0, 0, 0, .075)"
 					},
 					{
 						"frontendTokenName": "boxShadow",
-						"label": "regular",
+						"label": "box-shadow-regular",
 						"value": "0 .5rem 1rem rgba(0, 0, 0, .15)"
 					},
 					{
 						"frontendTokenName": "boxShadowLg",
-						"label": "large",
+						"label": "box-shadow-large",
 						"value": "0 1rem 3rem rgba(0, 0, 0, .175)"
 					}
 				]

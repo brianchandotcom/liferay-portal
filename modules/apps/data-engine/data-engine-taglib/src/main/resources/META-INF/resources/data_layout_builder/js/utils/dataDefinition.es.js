@@ -97,15 +97,28 @@ export const getFieldLabel = (dataDefinition, fieldName) => {
 	return fieldName;
 };
 
-export const getOptionLabel = (options = {}, value) => {
-	return (options[themeDisplay.getLanguageId()] || []).reduce(
-		(result, option) => {
-			if (option.value === value) {
-				return option.label;
-			}
+export const getOptionLabel = (
+	options = {},
+	value,
+	defaultLanguage = themeDisplay.getDefaultLanguageId(),
+	withNonMatchValue = false
+) => {
+	const languageId = themeDisplay.getLanguageId();
+	const getLabel = (language) => {
+		if (options[language]) {
+			const {label} =
+				options[language].find((option) => option.value === value) ||
+				{};
 
-			return result;
-		},
-		value
-	);
+			return label;
+		}
+	};
+
+	const label = getLabel[languageId] || getLabel(defaultLanguage);
+
+	if (label) {
+		return label;
+	}
+
+	return withNonMatchValue ? value : null;
 };

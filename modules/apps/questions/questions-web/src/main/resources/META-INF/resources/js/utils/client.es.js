@@ -591,14 +591,14 @@ export const getSectionByRootSection = (siteKey) => {
 				siteKey,
 			},
 		})
-		.then(({data}) => ({
-			actions: data.actions,
+		.then(({data: {messageBoardSections}}) => ({
+			actions: messageBoardSections.actions,
 			id: 0,
-			messageBoardSections: data.messageBoardSections,
+			messageBoardSections,
 			numberOfMessageBoardSections:
-				data.messageBoardSections &&
-				data.messageBoardSections.items &&
-				data.messageBoardSections.items.length,
+				messageBoardSections &&
+				messageBoardSections.items &&
+				messageBoardSections.items.length,
 		}));
 };
 

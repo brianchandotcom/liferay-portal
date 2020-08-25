@@ -212,6 +212,40 @@
 	</tag>
 	<tag>
 		<description></description>
+		<name>render-layout-structure</name>
+		<tag-class>com.liferay.layout.taglib.servlet.taglib.RenderLayoutStructureTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>fieldValues</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>layoutStructure</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>mainItemId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>mode</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showPreview</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+	</tag>
+	<tag>
+		<description></description>
 		<name>select-layout</name>
 		<tag-class>com.liferay.layout.taglib.servlet.taglib.react.SelectLayoutTag</tag-class>
 		<body-content>empty</body-content>

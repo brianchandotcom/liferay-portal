@@ -18,6 +18,8 @@
 
 <%
 DepotAdminViewDepotDashboardDisplayContext depotAdminViewDepotDashboardDisplayContext = (DepotAdminViewDepotDashboardDisplayContext)request.getAttribute(DepotAdminViewDepotDashboardDisplayContext.class.getName());
+
+boolean panelsShown = false;
 %>
 
 <clay:container-fluid
@@ -30,6 +32,8 @@ DepotAdminViewDepotDashboardDisplayContext depotAdminViewDepotDashboardDisplayCo
 	<%
 	for (PanelCategory panelCategory : depotAdminViewDepotDashboardDisplayContext.getPanelCategories()) {
 		Collection<PanelApp> panelApps = depotAdminViewDepotDashboardDisplayContext.getPanelApps(panelCategory);
+
+		panelsShown = panelsShown || (panelApps.size() > 0);
 	%>
 
 		<c:if test="<%= panelApps.size() > 0 %>">
@@ -69,4 +73,10 @@ DepotAdminViewDepotDashboardDisplayContext depotAdminViewDepotDashboardDisplayCo
 	}
 	%>
 
+	<c:if test="<%= !panelsShown %>">
+		<clay:alert
+			displayType="info"
+			message="you-dont-have-access-to-any-application-in-this-asset-library"
+		/>
+	</c:if>
 </clay:container-fluid>

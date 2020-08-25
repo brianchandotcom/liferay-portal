@@ -39,8 +39,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import com.liferay.translation.model.TranslationEntry;
+import com.liferay.translation.service.TranslationEntryLocalServiceUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -252,8 +254,19 @@ public class JournalTranslateDisplayContext {
 	}
 
 	public boolean isPublishButtonDisabled() throws PortalException {
-		if (_journalEditArticleDisplayContext.isPending() ||
-			_isAvailableTargetLanguageIdsEmpty()) {
+		if (_isAvailableTargetLanguageIdsEmpty()) {
+			return true;
+		}
+
+		TranslationEntry translationEntry =
+			TranslationEntryLocalServiceUtil.fetchTranslationEntry(
+				JournalArticle.class.getName(), _article.getResourcePrimKey(),
+				_targetLanguageId);
+
+		if ((translationEntry != null) &&
+			(translationEntry.getStatus() !=
+				WorkflowConstants.STATUS_APPROVED) &&
+			(translationEntry.getStatus() != WorkflowConstants.STATUS_DRAFT)) {
 
 			return true;
 		}

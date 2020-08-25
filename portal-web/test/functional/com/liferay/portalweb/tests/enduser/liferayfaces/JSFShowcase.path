@@ -50,12 +50,12 @@
 </tr>
 <tr>
 	<td>CONVERSION_INPUT_1</td>
-	<td>//div[contains(@class,'showcase-field')]/input[@type='text'] | //div[@class='showcase-example-usage']/input[@type='text']</td>
+	<td>//div[contains(@class,'showcase-field')]/input[@type='text'] | //div[@class='showcase-field form-group']/input[@type='text'] | //div[contains(@class,'showcase-field')]/input[@type='password']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONVERSION_INPUT_2</td>
-	<td>xpath=(//div[contains(@class,'showcase-field')]/input[@type='text'] | //div[@class='showcase-example-usage']/input[@type='text'])[2]</td>
+	<td>xpath=(//div[contains(@class,'showcase-field')]/input[@type='text'] | //div[@class='showcase-field form-group']/input[@type='text'] | //div[contains(@class,'showcase-field')]/input[@type='password'])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -246,6 +246,16 @@
 <tr>
 	<td>RIGHT_TO_LEFT</td>
 	<td>//textarea[@dir='RTL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SECRET_MESSAGE</td>
+	<td>//td[contains(text(),'was intentionally not re-rendered')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SECRET_MESSAGE_2</td>
+	<td>//td[contains(text(),'entire form')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -479,20 +479,27 @@ public class AssetBrowserDisplayContext {
 	}
 
 	private long[] _getFilterGroupIds() throws PortalException {
+		if (_filterGroupIds != null) {
+			return _filterGroupIds;
+		}
+
 		if (getGroupId() == 0) {
-			return getSelectedGroupIds();
+			_filterGroupIds = getSelectedGroupIds();
+		}
+		else if (!_isSearchEverywhere()) {
+			_filterGroupIds = new long[] {getGroupId()};
+		}
+		else {
+			_filterGroupIds = ArrayUtil.append(
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(getGroupId()),
+				ListUtil.toLongArray(
+					DepotEntryServiceUtil.getGroupConnectedDepotEntries(
+						getGroupId(), true, QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS),
+					DepotEntry::getGroupId));
 		}
 
-		if (!_isSearchEverywhere()) {
-			return new long[]{getGroupId()};
-		}
-
-		return ArrayUtil.append(
-			PortalUtil.getCurrentAndAncestorSiteGroupIds(getGroupId()),
-			ListUtil.toLongArray(
-				DepotEntryServiceUtil.getGroupConnectedDepotEntries(
-					getGroupId(), true, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-				DepotEntry::getGroupId));
+		return _filterGroupIds;
 	}
 
 	private BreadcrumbEntry _getHomeBreadcrumb() throws PortalException {
@@ -604,6 +611,7 @@ public class AssetBrowserDisplayContext {
 	private long[] _classNameIds;
 	private String _displayStyle;
 	private String _eventName;
+	private long[] _filterGroupIds;
 	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;

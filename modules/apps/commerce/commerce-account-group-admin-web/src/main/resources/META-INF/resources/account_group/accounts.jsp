@@ -148,9 +148,11 @@ PortletURL portletURL = commerceAccountGroupAdminDisplayContext.getPortletURL();
 	</aui:script>
 
 	<aui:script use="liferay-item-selector-dialog">
-		window.document.querySelector('#<portlet:namespace />addCommerceAccountGroupCommerceAccountRel').addEventListener(
-			'click',
-			function (event) {
+		window.document
+			.querySelector(
+				'#<portlet:namespace />addCommerceAccountGroupCommerceAccountRel'
+			)
+			.addEventListener('click', function (event) {
 				event.preventDefault();
 
 				var itemSelectorDialog = new A.LiferayItemSelectorDialog({
@@ -172,7 +174,11 @@ PortletURL portletURL = commerceAccountGroupAdminDisplayContext.getPortletURL();
 									);
 								});
 
-								window.document.querySelector('#<portlet:namespace />commerceAccountIds').value = <portlet:namespace />addCommerceAccountIds.join(',');
+								window.document.querySelector(
+									'#<portlet:namespace />commerceAccountIds'
+								).value = <portlet:namespace />addCommerceAccountIds.join(
+									','
+								);
 
 								var addCommerceAccountGroupCommerceAccountRelFm = AUI.$(
 									'#<portlet:namespace />addCommerceAccountGroupCommerceAccountRelFm'
@@ -189,7 +195,6 @@ PortletURL portletURL = commerceAccountGroupAdminDisplayContext.getPortletURL();
 				});
 
 				itemSelectorDialog.open();
-			}
-		);
+			});
 	</aui:script>
 </c:if>

@@ -216,32 +216,36 @@ PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
 	</aui:script>
 
 	<aui:script use="liferay-item-selector-dialog">
-		window.document.querySelector('#<portlet:namespace />addCommercePriceEntry').addEventListener('click', function (event) {
-			event.preventDefault();
+		window.document
+			.querySelector('#<portlet:namespace />addCommercePriceEntry')
+			.addEventListener('click', function (event) {
+				event.preventDefault();
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-				eventName: 'productInstancesSelectItem',
-				on: {
-					selectedItemChange: function (event) {
-						var selectedItems = event.newVal;
+				var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+					eventName: 'productInstancesSelectItem',
+					on: {
+						selectedItemChange: function (event) {
+							var selectedItems = event.newVal;
 
-						if (selectedItems) {
-							window.document.querySelector('#<portlet:namespace />cpInstanceIds').value = selectedItems;
+							if (selectedItems) {
+								window.document.querySelector(
+									'#<portlet:namespace />cpInstanceIds'
+								).value = selectedItems;
 
-							var addCommercePriceEntryFm = AUI.$(
-								'#<portlet:namespace />addCommercePriceEntryFm'
-							);
+								var addCommercePriceEntryFm = AUI.$(
+									'#<portlet:namespace />addCommercePriceEntryFm'
+								);
 
-							submitForm(addCommercePriceEntryFm);
-						}
+								submitForm(addCommercePriceEntryFm);
+							}
+						},
 					},
-				},
-				title:
-					'<liferay-ui:message arguments="<%= HtmlUtil.escape(commercePriceList.getName()) %>" key="add-new-entry-to-x" />',
-				url: '<%= commercePriceEntryDisplayContext.getItemSelectorUrl() %>',
-			});
+					title:
+						'<liferay-ui:message arguments="<%= HtmlUtil.escape(commercePriceList.getName()) %>" key="add-new-entry-to-x" />',
+					url: '<%= commercePriceEntryDisplayContext.getItemSelectorUrl() %>',
+				});
 
-			itemSelectorDialog.open();
-		});
+				itemSelectorDialog.open();
+			});
 	</aui:script>
 </c:if>

@@ -117,36 +117,38 @@ SearchContainer<CommerceDiscountRel> commercePricingClassCommerceDiscountRelSear
 </div>
 
 <aui:script use="liferay-item-selector-dialog">
-	window.document.querySelector('#<portlet:namespace />addCommerceDiscountRelMenuItem').addEventListener('click', function (
-		event
-	) {
-		event.preventDefault();
+	window.document
+		.querySelector('#<portlet:namespace />addCommerceDiscountRelMenuItem')
+		.addEventListener('click', function (event) {
+			event.preventDefault();
 
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-			eventName: 'pricingClassSelectItem',
-			on: {
-				selectedItemChange: function (event) {
-					var selectedItems = event.newVal;
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+				eventName: 'pricingClassSelectItem',
+				on: {
+					selectedItemChange: function (event) {
+						var selectedItems = event.newVal;
 
-					if (selectedItems) {
-						window.document.querySelector('#<portlet:namespace />classPKs').value = selectedItems;
+						if (selectedItems) {
+							window.document.querySelector(
+								'#<portlet:namespace />classPKs'
+							).value = selectedItems;
 
-						var addCommerceDiscountRelFm = AUI.$(
-							'#<portlet:namespace />addCommerceDiscountRelFm'
-						);
+							var addCommerceDiscountRelFm = AUI.$(
+								'#<portlet:namespace />addCommerceDiscountRelFm'
+							);
 
-						submitForm(addCommerceDiscountRelFm);
-					}
+							submitForm(addCommerceDiscountRelFm);
+						}
+					},
 				},
-			},
-			title:
-				'<liferay-ui:message arguments="<%= commerceDiscount.getTitle() %>" key="add-new-product-group-to-x" />',
-			url:
-				'<%= commerceDiscountRelDisplayContext.getPricingClassItemSelectorUrl() %>',
-		});
+				title:
+					'<liferay-ui:message arguments="<%= commerceDiscount.getTitle() %>" key="add-new-product-group-to-x" />',
+				url:
+					'<%= commerceDiscountRelDisplayContext.getPricingClassItemSelectorUrl() %>',
+			});
 
-		itemSelectorDialog.open();
-	});
+			itemSelectorDialog.open();
+		});
 </aui:script>
 
 <aui:script>

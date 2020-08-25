@@ -64,11 +64,17 @@ TalendProcessTypeHelper talendProcessTypeHelper = (TalendProcessTypeHelper)reque
 </div>
 
 <aui:script>
-	window.document.querySelector('#<portlet:namespace />fileEntryRemove').addEventListener('click', function (event) {
-		event.preventDefault();
+	window.document
+		.querySelector('#<portlet:namespace />fileEntryRemove')
+		.addEventListener('click', function (event) {
+			event.preventDefault();
 
-		window.document.querySelector('#<portlet:namespace />fileEntry').classList.remove('hide');
+			window.document
+				.querySelector('#<portlet:namespace />fileEntry')
+				.classList.remove('hide');
 
-		window.document.querySelector('#<portlet:namespace />fileEntryName').classList.add('hide');
-	});
+			window.document
+				.querySelector('#<portlet:namespace />fileEntryName')
+				.classList.add('hide');
+		});
 </aui:script>

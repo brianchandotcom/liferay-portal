@@ -277,9 +277,14 @@ String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId
 	window.document.addEventListener('DOMContentLoaded', function () {
 		var thumbElements = window.document.querySelectorAll('.thumb');
 
-		Array.from(thumbElements).forEach(function(thumbElement) {
+		Array.from(thumbElements).forEach(function (thumbElement) {
 			thumbElement.addEventListener('click', function (event) {
-				window.document.querySelector('#<portlet:namespace />full-image').setAttribute('src', event.currentTarget.getAttribute('data-url'));
+				window.document
+					.querySelector('#<portlet:namespace />full-image')
+					.setAttribute(
+						'src',
+						event.currentTarget.getAttribute('data-url')
+					);
 			});
 		});
 	});

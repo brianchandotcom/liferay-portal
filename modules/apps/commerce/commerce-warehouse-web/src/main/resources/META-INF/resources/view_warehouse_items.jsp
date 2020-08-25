@@ -134,16 +134,22 @@ if (Validator.isNotNull(backURL)) {
 			'<portlet:namespace />commerceInventoryWarehouseItemQuantity';
 		var enterKeyCode = 13;
 
-		var quantityInputElements = window.document.querySelectorAll('input[id^=' + quantityPrefix + ']');
+		var quantityInputElements = window.document.querySelectorAll(
+			'input[id^=' + quantityPrefix + ']'
+		);
 
-		Array.from(quantityInputElements).forEach(function(quantityInputElement) {
+		Array.from(quantityInputElements).forEach(function (quantityInputElement) {
 			quantityInputElement.addEventListener('keypress', function (event) {
 				if (event.keyCode == enterKeyCode) {
 					event.preventDefault();
 
-					var curIndex = event.currentTarget.getAttribute('id').split(quantityPrefix)[1];
+					var curIndex = event.currentTarget
+						.getAttribute('id')
+						.split(quantityPrefix)[1];
 
-					window.document.querySelector('#<portlet:namespace/>saveButton' + curIndex).click();
+					window.document
+						.querySelector('#<portlet:namespace/>saveButton' + curIndex)
+						.click();
 				}
 			});
 		});

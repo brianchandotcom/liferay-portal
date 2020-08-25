@@ -207,36 +207,38 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 </aui:script>
 
 <aui:script use="liferay-item-selector-dialog">
-	window.document.querySelector('#<portlet:namespace />addDefinitionGroupedEntry').addEventListener('click', function (
-		event
-	) {
-		event.preventDefault();
+	window.document
+		.querySelector('#<portlet:namespace />addDefinitionGroupedEntry')
+		.addEventListener('click', function (event) {
+			event.preventDefault();
 
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-			eventName: 'productDefinitionsSelectItem',
-			on: {
-				selectedItemChange: function (event) {
-					var <portlet:namespace />addCPDefinitionIds = [];
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+				eventName: 'productDefinitionsSelectItem',
+				on: {
+					selectedItemChange: function (event) {
+						var <portlet:namespace />addCPDefinitionIds = [];
 
-					var selectedItems = event.newVal;
+						var selectedItems = event.newVal;
 
-					if (selectedItems) {
-						window.document.querySelector('#<portlet:namespace />entryCPDefinitionIds').value = selectedItems;
+						if (selectedItems) {
+							window.document.querySelector(
+								'#<portlet:namespace />entryCPDefinitionIds'
+							).value = selectedItems;
 
-						var addCPDefinitionGroupedEntryFm = AUI.$(
-							'#<portlet:namespace />addCPDefinitionGroupedEntryFm'
-						);
+							var addCPDefinitionGroupedEntryFm = AUI.$(
+								'#<portlet:namespace />addCPDefinitionGroupedEntryFm'
+							);
 
-						submitForm(addCPDefinitionGroupedEntryFm);
-					}
+							submitForm(addCPDefinitionGroupedEntryFm);
+						}
+					},
 				},
-			},
-			title:
-				'<liferay-ui:message arguments="<%= cpDefinition.getName(themeDisplay.getLanguageId()) %>" key="add-new-grouped-entry-to-x" />',
-			url:
-				'<%= cpDefinitionGroupedEntriesDisplayContext.getItemSelectorUrl() %>',
-		});
+				title:
+					'<liferay-ui:message arguments="<%= cpDefinition.getName(themeDisplay.getLanguageId()) %>" key="add-new-grouped-entry-to-x" />',
+				url:
+					'<%= cpDefinitionGroupedEntriesDisplayContext.getItemSelectorUrl() %>',
+			});
 
-		itemSelectorDialog.open();
-	});
+			itemSelectorDialog.open();
+		});
 </aui:script>

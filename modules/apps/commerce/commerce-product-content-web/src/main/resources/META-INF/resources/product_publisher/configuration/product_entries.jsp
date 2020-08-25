@@ -137,35 +137,35 @@ List<CPCatalogEntry> catalogEntries = cpPublisherConfigurationDisplayContext.get
 </aui:script>
 
 <aui:script use="liferay-item-selector-dialog">
-	window.document.querySelector('#<portlet:namespace />addCommerceProductDefinition').addEventListener('click', function (
-		event
-	) {
-		event.preventDefault();
+	window.document
+		.querySelector('#<portlet:namespace />addCommerceProductDefinition')
+		.addEventListener('click', function (event) {
+			event.preventDefault();
 
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-			eventName: 'productDefinitionsSelectItem',
-			on: {
-				selectedItemChange: function (event) {
-					var <portlet:namespace />addCPDefinitionIds = [];
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+				eventName: 'productDefinitionsSelectItem',
+				on: {
+					selectedItemChange: function (event) {
+						var <portlet:namespace />addCPDefinitionIds = [];
 
-					var selectedItems = event.newVal;
+						var selectedItems = event.newVal;
 
-					if (selectedItems) {
-						document.<portlet:namespace />fm.<portlet:namespace />cpDefinitionIds.value = selectedItems;
-						document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value =
-							'add-selection';
-						document.<portlet:namespace />fm.<portlet:namespace />redirect.value =
-							'<%= HtmlUtil.escapeJS(currentURL) %>';
+						if (selectedItems) {
+							document.<portlet:namespace />fm.<portlet:namespace />cpDefinitionIds.value = selectedItems;
+							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value =
+								'add-selection';
+							document.<portlet:namespace />fm.<portlet:namespace />redirect.value =
+								'<%= HtmlUtil.escapeJS(currentURL) %>';
 
-						submitForm(document.<portlet:namespace />fm);
-					}
+							submitForm(document.<portlet:namespace />fm);
+						}
+					},
 				},
-			},
-			title: 'add-new-product-to-x',
-			url:
-				'<%= cpPublisherConfigurationDisplayContext.getItemSelectorUrl() %>',
-		});
+				title: 'add-new-product-to-x',
+				url:
+					'<%= cpPublisherConfigurationDisplayContext.getItemSelectorUrl() %>',
+			});
 
-		itemSelectorDialog.open();
-	});
+			itemSelectorDialog.open();
+		});
 </aui:script>

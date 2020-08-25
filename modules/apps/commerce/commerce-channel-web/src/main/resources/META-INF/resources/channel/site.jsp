@@ -111,8 +111,9 @@ if (commerceChannel != null) {
 </aui:form>
 
 <aui:script use="aui-base,liferay-item-selector-dialog">
-	var selectSiteButton =
-		window.document.querySelector('#<portlet:namespace />selectSite');
+	var selectSiteButton = window.document.querySelector(
+		'#<portlet:namespace />selectSite'
+	);
 
 	if (selectSiteButton) {
 		selectSiteButton.addEventListener('click', function (event) {

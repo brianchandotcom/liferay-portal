@@ -129,52 +129,75 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 </aui:form>
 
 <aui:script use="liferay-item-selector-dialog">
-	var fileEntryRemove = window.document.querySelector('#<portlet:namespace />fileEntryRemove');
-	var fileEntryNameInput = window.document.querySelector('#<portlet:namespace />fileEntryNameInput');
+	var fileEntryRemove = window.document.querySelector(
+		'#<portlet:namespace />fileEntryRemove'
+	);
+	var fileEntryNameInput = window.document.querySelector(
+		'#<portlet:namespace />fileEntryNameInput'
+	);
 
-	window.document.querySelector('#<portlet:namespace />selectFile').addEventListener('click', function (event) {
-		event.preventDefault();
+	window.document
+		.querySelector('#<portlet:namespace />selectFile')
+		.addEventListener('click', function (event) {
+			event.preventDefault();
 
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-			eventName: 'uploadCommerceVirtualOrderItem',
-			on: {
-				selectedItemChange: function (event) {
-					var selectedItem = event.newVal;
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+				eventName: 'uploadCommerceVirtualOrderItem',
+				on: {
+					selectedItemChange: function (event) {
+						var selectedItem = event.newVal;
 
-					if (selectedItem) {
-						var value = JSON.parse(selectedItem.value);
+						if (selectedItem) {
+							var value = JSON.parse(selectedItem.value);
 
-						window.document.querySelector('#<portlet:namespace />fileEntryId').value = value.fileEntryId;
+							window.document.querySelector(
+								'#<portlet:namespace />fileEntryId'
+							).value = value.fileEntryId;
 
-						window.document.querySelector('#<portlet:namespace />url').setAttribute('disabled', 'true');
+							window.document
+								.querySelector('#<portlet:namespace />url')
+								.setAttribute('disabled', 'true');
 
-						window.document.querySelector('#lfr-virtual-order-item-button-row-message').classList.add('hide');
+							window.document
+								.querySelector(
+									'#lfr-virtual-order-item-button-row-message'
+								)
+								.classList.add('hide');
 
-						fileEntryRemove.classList.remove('hide');
+							fileEntryRemove.classList.remove('hide');
 
-						fileEntryNameInput.innerHTML = '<a>' + value.title + '</a>';
-					}
+							fileEntryNameInput.innerHTML =
+								'<a>' + value.title + '</a>';
+						}
+					},
 				},
-			},
-			title: '<liferay-ui:message key="select-file" />',
-			url:
-				'<%= commerceVirtualOrderItemEditDisplayContext.getFileEntryItemSelectorURL() %>',
+				title: '<liferay-ui:message key="select-file" />',
+				url:
+					'<%= commerceVirtualOrderItemEditDisplayContext.getFileEntryItemSelectorURL() %>',
+			});
+
+			itemSelectorDialog.open();
 		});
 
-		itemSelectorDialog.open();
-	});
+	window.document
+		.querySelector('#<portlet:namespace />fileEntryRemove')
+		.addEventListener('click', function (event) {
+			event.preventDefault();
 
-	window.document.querySelector('#<portlet:namespace />fileEntryRemove').addEventListener('click', function (event) {
-		event.preventDefault();
+			window.document.querySelector(
+				'#<portlet:namespace />fileEntryId'
+			).value = 0;
 
-		window.document.querySelector('#<portlet:namespace />fileEntryId').value = 0;
+			window.document
+				.querySelector('#<portlet:namespace />url')
+				.setAttribute('disabled', 'false');
 
-		window.document.querySelector('#<portlet:namespace />url').setAttribute('disabled', 'false');
+			window.document
+				.querySelector('#lfr-virtual-order-item-button-row-message')
+				.classList.remove('hide');
 
-		window.document.querySelector('#lfr-virtual-order-item-button-row-message').classList.remove('hide');
+			fileEntryNameInput.innerHTML = '<liferay-ui:message key="none" />';
 
-		fileEntryNameInput.innerHTML = '<liferay-ui:message key="none" />';
-
-		fileEntryRemove.classList.add('hide');
-	});
+			fileEntryRemove.classList.add('hide');
+		});
 </aui:script>

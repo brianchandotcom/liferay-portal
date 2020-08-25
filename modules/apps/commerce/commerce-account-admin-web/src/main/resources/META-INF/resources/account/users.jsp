@@ -160,45 +160,47 @@ PortletURL portletURL = commerceAccountUserRelAdminDisplayContext.getPortletURL(
 	</aui:script>
 
 	<aui:script use="liferay-item-selector-dialog">
-		window.document.querySelector('#<portlet:namespace />addCommerceAccountUserRel').addEventListener('click', function (
-			event
-		) {
-			event.preventDefault();
+		window.document
+			.querySelector('#<portlet:namespace />addCommerceAccountUserRel')
+			.addEventListener('click', function (event) {
+				event.preventDefault();
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-				eventName: 'usersSelectItem',
-				on: {
-					selectedItemChange: function (event) {
-						var <portlet:namespace />addUserIds = [];
+				var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+					eventName: 'usersSelectItem',
+					on: {
+						selectedItemChange: function (event) {
+							var <portlet:namespace />addUserIds = [];
 
-						var selectedItems = event.newVal;
+							var selectedItems = event.newVal;
 
-						if (selectedItems) {
-							A.Array.each(selectedItems, function (
-								item,
-								index,
-								selectedItems
-							) {
-								<portlet:namespace />addUserIds.push(item.id);
-							});
+							if (selectedItems) {
+								A.Array.each(selectedItems, function (
+									item,
+									index,
+									selectedItems
+								) {
+									<portlet:namespace />addUserIds.push(item.id);
+								});
 
-							window.document.querySelector('#<portlet:namespace />userIds').value = <portlet:namespace />addUserIds.join(',');
+								window.document.querySelector(
+									'#<portlet:namespace />userIds'
+								).value = <portlet:namespace />addUserIds.join(',');
 
-							var addCommerceAccountUserRelFm = AUI.$(
-								'#<portlet:namespace />addCommerceAccountUserRelFm'
-							);
+								var addCommerceAccountUserRelFm = AUI.$(
+									'#<portlet:namespace />addCommerceAccountUserRelFm'
+								);
 
-							submitForm(addCommerceAccountUserRelFm);
-						}
+								submitForm(addCommerceAccountUserRelFm);
+							}
+						},
 					},
-				},
-				title:
-					'<liferay-ui:message arguments="<%= HtmlUtil.escape(commerceAccount.getName()) %>" key="add-new-entry-to-x" />',
-				url:
-					'<%= commerceAccountUserRelAdminDisplayContext.getItemSelectorUrl() %>',
-			});
+					title:
+						'<liferay-ui:message arguments="<%= HtmlUtil.escape(commerceAccount.getName()) %>" key="add-new-entry-to-x" />',
+					url:
+						'<%= commerceAccountUserRelAdminDisplayContext.getItemSelectorUrl() %>',
+				});
 
-			itemSelectorDialog.open();
-		});
+				itemSelectorDialog.open();
+			});
 	</aui:script>
 </c:if>

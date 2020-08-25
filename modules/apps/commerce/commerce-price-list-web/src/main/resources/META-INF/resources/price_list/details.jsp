@@ -224,9 +224,9 @@ if (parentCommercePriceList != null) {
 <aui:button cssClass="mb-4" name="selectCommercePriceListAccountRel" value="select" />
 
 <aui:script use="liferay-item-selector-dialog">
-	window.document.querySelector('#<portlet:namespace />selectCommercePriceListAccountRel').addEventListener(
-		'click',
-		function (event) {
+	window.document
+		.querySelector('#<portlet:namespace />selectCommercePriceListAccountRel')
+		.addEventListener('click', function (event) {
 			event.preventDefault();
 
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
@@ -257,12 +257,13 @@ if (parentCommercePriceList != null) {
 			});
 
 			itemSelectorDialog.open();
-		}
-	);
+		});
 
-	window.document.querySelector('#<portlet:namespace />selectCommercePriceListCommerceAccountGroupRel').addEventListener(
-		'click',
-		function (event) {
+	window.document
+		.querySelector(
+			'#<portlet:namespace />selectCommercePriceListCommerceAccountGroupRel'
+		)
+		.addEventListener('click', function (event) {
 			event.preventDefault();
 
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
@@ -293,39 +294,38 @@ if (parentCommercePriceList != null) {
 			});
 
 			itemSelectorDialog.open();
-		}
-	);
-
-	window.document.querySelector('#<portlet:namespace />setParentCommercePriceList').addEventListener('click', function (
-		event
-	) {
-		event.preventDefault();
-
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-			eventName: 'priceListsSelectItem',
-			on: {
-				selectedItemChange: function (event) {
-					var selectedItems = event.newVal;
-
-					if (selectedItems) {
-						var parentCommercePriceListId = selectedItems.replace(
-							/(\d+).*/,
-							'$1'
-						);
-
-						<portlet:namespace />setParentCommercePriceList(
-							parentCommercePriceListId
-						);
-					}
-				},
-			},
-			title: '<liferay-ui:message key="set-parent-price-list" />',
-			url:
-				'<%= commercePriceListDisplayContext.getPriceListItemSelectorUrl() %>',
 		});
 
-		itemSelectorDialog.open();
-	});
+	window.document
+		.querySelector('#<portlet:namespace />setParentCommercePriceList')
+		.addEventListener('click', function (event) {
+			event.preventDefault();
+
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+				eventName: 'priceListsSelectItem',
+				on: {
+					selectedItemChange: function (event) {
+						var selectedItems = event.newVal;
+
+						if (selectedItems) {
+							var parentCommercePriceListId = selectedItems.replace(
+								/(\d+).*/,
+								'$1'
+							);
+
+							<portlet:namespace />setParentCommercePriceList(
+								parentCommercePriceListId
+							);
+						}
+					},
+				},
+				title: '<liferay-ui:message key="set-parent-price-list" />',
+				url:
+					'<%= commercePriceListDisplayContext.getPriceListItemSelectorUrl() %>',
+			});
+
+			itemSelectorDialog.open();
+		});
 </aui:script>
 
 <aui:script>

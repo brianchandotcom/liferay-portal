@@ -150,9 +150,9 @@ PortletURL portletURL = commerceAccountOrganizationRelAdminDisplayContext.getPor
 	</aui:script>
 
 	<aui:script use="liferay-item-selector-dialog">
-		window.document.querySelector('#<portlet:namespace />addCommerceAccountOrganizationRel').addEventListener(
-			'click',
-			function (event) {
+		window.document
+			.querySelector('#<portlet:namespace />addCommerceAccountOrganizationRel')
+			.addEventListener('click', function (event) {
 				event.preventDefault();
 
 				var itemSelectorDialog = new A.LiferayItemSelectorDialog({
@@ -174,7 +174,11 @@ PortletURL portletURL = commerceAccountOrganizationRelAdminDisplayContext.getPor
 									);
 								});
 
-								window.document.querySelector('#<portlet:namespace />organizationIds').value = <portlet:namespace />addOrganizationIds.join(',');
+								window.document.querySelector(
+									'#<portlet:namespace />organizationIds'
+								).value = <portlet:namespace />addOrganizationIds.join(
+									','
+								);
 
 								var addCommerceAccountOrganizationRelFm = AUI.$(
 									'#<portlet:namespace />addCommerceAccountOrganizationRelFm'
@@ -191,7 +195,6 @@ PortletURL portletURL = commerceAccountOrganizationRelAdminDisplayContext.getPor
 				});
 
 				itemSelectorDialog.open();
-			}
-		);
+			});
 	</aui:script>
 </c:if>

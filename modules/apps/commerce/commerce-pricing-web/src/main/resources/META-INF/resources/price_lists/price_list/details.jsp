@@ -117,10 +117,14 @@ if ((commercePriceList != null) && (commercePriceList.getExpirationDate() != nul
 						itemsLabel: 'name',
 						onValueUpdated: function (value, priceListData) {
 							if (value) {
-								window.document.querySelector('#<portlet:namespace />parentCommercePriceListId').value = priceListData.id;
+								window.document.querySelector(
+									'#<portlet:namespace />parentCommercePriceListId'
+								).value = priceListData.id;
 							}
 							else {
-								window.document.querySelector('#<portlet:namespace />parentCommercePriceListId').value = 0;
+								window.document.querySelector(
+									'#<portlet:namespace />parentCommercePriceListId'
+								).value = 0;
 							}
 						},
 					});

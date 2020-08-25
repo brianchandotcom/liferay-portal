@@ -49,34 +49,34 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 
 request.setAttribute(UsersAdminWebKeys.STATUS, status);
 
-ViewUsersManagementToolbarDisplayContext viewUsersManagementToolbarDisplayContext = new ViewUsersManagementToolbarDisplayContext(request, renderRequest, renderResponse, displayStyle, domain, navigation, status);
+ViewFlatUsersDisplayContext viewFlatUsersDisplayContext = new ViewFlatUsersDisplayContext(request, renderRequest, renderResponse, displayStyle, domain, navigation, status);
 
-SearchContainer<User> searchContainer = viewUsersManagementToolbarDisplayContext.getSearchContainer();
+SearchContainer<User> searchContainer = viewFlatUsersDisplayContext.getSearchContainer();
 
-PortletURL portletURL = viewUsersManagementToolbarDisplayContext.getPortletURL();
+PortletURL portletURL = viewFlatUsersDisplayContext.getPortletURL();
 
 portletURL.setParameter("status", String.valueOf(status));
 
-boolean showDeleteButton = viewUsersManagementToolbarDisplayContext.isShowDeleteButton();
-boolean showRestoreButton = viewUsersManagementToolbarDisplayContext.isShowRestoreButton();
+boolean showDeleteButton = viewFlatUsersDisplayContext.isShowDeleteButton();
+boolean showRestoreButton = viewFlatUsersDisplayContext.isShowRestoreButton();
 %>
 
 <clay:management-toolbar
-	actionDropdownItems="<%= viewUsersManagementToolbarDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= viewUsersManagementToolbarDisplayContext.getClearResultsURL() %>"
-	creationMenu="<%= viewUsersManagementToolbarDisplayContext.getCreationMenu() %>"
-	filterDropdownItems="<%= viewUsersManagementToolbarDisplayContext.getFilterDropdownItems() %>"
-	filterLabelItems="<%= viewUsersManagementToolbarDisplayContext.getFilterLabelItems() %>"
+	actionDropdownItems="<%= viewFlatUsersDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= viewFlatUsersDisplayContext.getClearResultsURL() %>"
+	creationMenu="<%= viewFlatUsersDisplayContext.getCreationMenu() %>"
+	filterDropdownItems="<%= viewFlatUsersDisplayContext.getFilterDropdownItems() %>"
+	filterLabelItems="<%= viewFlatUsersDisplayContext.getFilterLabelItems() %>"
 	itemsTotal="<%= searchContainer.getTotal() %>"
-	searchActionURL="<%= viewUsersManagementToolbarDisplayContext.getSearchActionURL() %>"
+	searchActionURL="<%= viewFlatUsersDisplayContext.getSearchActionURL() %>"
 	searchContainerId="users"
 	searchFormName="searchFm"
 	selectable="<%= true %>"
-	showCreationMenu="<%= viewUsersManagementToolbarDisplayContext.showCreationMenu() %>"
+	showCreationMenu="<%= viewFlatUsersDisplayContext.showCreationMenu() %>"
 	showSearch="<%= true %>"
 	sortingOrder="<%= searchContainer.getOrderByType() %>"
-	sortingURL="<%= viewUsersManagementToolbarDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= viewUsersManagementToolbarDisplayContext.getViewTypeItems() %>"
+	sortingURL="<%= viewFlatUsersDisplayContext.getSortingURL() %>"
+	viewTypeItems="<%= viewFlatUsersDisplayContext.getViewTypeItems() %>"
 />
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "search();" %>'>

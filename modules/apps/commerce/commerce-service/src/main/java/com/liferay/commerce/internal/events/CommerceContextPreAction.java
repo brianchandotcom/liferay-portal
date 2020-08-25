@@ -25,6 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marco Leo
@@ -47,7 +49,10 @@ public class CommerceContextPreAction extends Action {
 			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
 	}
 
-	@Reference
-	private CommerceContextFactory _commerceContextFactory;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile CommerceContextFactory _commerceContextFactory;
 
 }

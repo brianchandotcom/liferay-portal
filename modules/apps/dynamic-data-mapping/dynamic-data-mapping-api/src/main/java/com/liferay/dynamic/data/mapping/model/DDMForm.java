@@ -42,6 +42,7 @@ public class DDMForm implements Serializable {
 	public DDMForm(DDMForm ddmForm) {
 		_availableLocales = new LinkedHashSet<>(ddmForm._availableLocales);
 		_defaultLocale = ddmForm._defaultLocale;
+		_definitionSchemaVersion = ddmForm._definitionSchemaVersion;
 
 		_ddmFormFields = new ArrayList<>(ddmForm._ddmFormFields.size());
 
@@ -91,7 +92,9 @@ public class DDMForm implements Serializable {
 			Objects.equals(_ddmFormRules, ddmForm._ddmFormRules) &&
 			Objects.equals(
 				_ddmFormSuccessPageSettings,
-				ddmForm._ddmFormSuccessPageSettings)) {
+				ddmForm._ddmFormSuccessPageSettings) &&
+			Objects.equals(
+				_definitionSchemaVersion, ddmForm._definitionSchemaVersion)) {
 
 			return true;
 		}
@@ -136,6 +139,10 @@ public class DDMForm implements Serializable {
 		return _defaultLocale;
 	}
 
+	public String getDefinitionSchemaVersion() {
+		return _definitionSchemaVersion;
+	}
+
 	public Map<String, DDMFormField> getNontransientDDMFormFieldsMap(
 		boolean includeNestedDDMFormFields) {
 
@@ -165,7 +172,9 @@ public class DDMForm implements Serializable {
 
 		hash = HashUtil.hash(hash, _ddmFormRules);
 
-		return HashUtil.hash(hash, _ddmFormSuccessPageSettings);
+		hash = HashUtil.hash(hash, _ddmFormSuccessPageSettings);
+
+		return HashUtil.hash(hash, _definitionSchemaVersion);
 	}
 
 	public void setAvailableLocales(Set<Locale> availableLocales) {
@@ -195,10 +204,15 @@ public class DDMForm implements Serializable {
 		_defaultLocale = defaultLocale;
 	}
 
+	public void setDefinitionSchemaVersion(String definitionSchemaVersion) {
+		_definitionSchemaVersion = definitionSchemaVersion;
+	}
+
 	private Set<Locale> _availableLocales;
 	private List<DDMFormField> _ddmFormFields;
 	private List<DDMFormRule> _ddmFormRules;
 	private DDMFormSuccessPageSettings _ddmFormSuccessPageSettings;
 	private Locale _defaultLocale;
+	private String _definitionSchemaVersion;
 
 }

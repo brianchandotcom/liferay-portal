@@ -41,6 +41,7 @@ public class DDMFormLayout implements Serializable {
 	public DDMFormLayout(DDMFormLayout ddmFormLayout) {
 		_defaultLocale = ddmFormLayout._defaultLocale;
 		_paginationMode = ddmFormLayout._paginationMode;
+		_definitionSchemaVersion = ddmFormLayout._definitionSchemaVersion;
 
 		for (DDMFormLayoutPage ddmFormLayoutPage :
 				ddmFormLayout._ddmFormLayoutPages) {
@@ -81,8 +82,27 @@ public class DDMFormLayout implements Serializable {
 		return _defaultLocale;
 	}
 
+	public String getDefinitionSchemaVersion() {
+		return _definitionSchemaVersion;
+	}
+
 	public String getPaginationMode() {
 		return _paginationMode;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = HashUtil.hash(0, _availableLocales);
+
+		hash = HashUtil.hash(hash, _ddmFormLayoutPages);
+
+		hash = HashUtil.hash(hash, _ddmFormRules);
+
+		hash = HashUtil.hash(hash, _defaultLocale);
+
+		hash = HashUtil.hash(hash, _paginationMode);
+
+		return HashUtil.hash(hash, _definitionSchemaVersion);
 	}
 
 	public void setAvailableLocales(Set<Locale> availableLocales) {
@@ -103,6 +123,10 @@ public class DDMFormLayout implements Serializable {
 		_defaultLocale = defaultLocale;
 	}
 
+	public void setDefinitionSchemaVersion(String definitionSchemaVersion) {
+		_definitionSchemaVersion = definitionSchemaVersion;
+	}
+
 	public void setPaginationMode(String paginationMode) {
 		_paginationMode = paginationMode;
 	}
@@ -111,6 +135,7 @@ public class DDMFormLayout implements Serializable {
 	private List<DDMFormLayoutPage> _ddmFormLayoutPages = new ArrayList<>();
 	private List<DDMFormRule> _ddmFormRules = new ArrayList<>();
 	private Locale _defaultLocale;
+	private String _definitionSchemaVersion;
 	private String _paginationMode;
 
 }

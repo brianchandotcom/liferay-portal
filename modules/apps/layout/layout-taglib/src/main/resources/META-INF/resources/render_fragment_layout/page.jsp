@@ -17,8 +17,11 @@
 <%@ include file="/render_fragment_layout/init.jsp" %>
 
 <%
+Map<String, Object> fieldValues = (Map<String, Object>)request.getAttribute("liferay-layout:render-fragment-layout:fieldValues");
 LayoutStructure layoutStructure = (LayoutStructure)request.getAttribute("liferay-layout:render-fragment-layout:layoutStructure");
 String mainItemId = (String)request.getAttribute("liferay-layout:render-fragment-layout:mainItemId");
+String mode = (String)request.getAttribute("liferay-layout:render-fragment-layout:mode");
+boolean showPreview = GetterUtil.getBoolean(request.getAttribute("liferay-layout:render-fragment-layout:showPreview"));
 
 RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = (RenderFragmentLayoutDisplayContext)request.getAttribute("liferay-layout:render-fragment-layout:renderFragmentLayoutDisplayContext");
 %>
@@ -30,13 +33,15 @@ RenderFragmentLayoutDisplayContext renderFragmentLayoutDisplayContext = (RenderF
 <%
 try {
 	request.setAttribute(WebKeys.SHOW_PORTLET_TOPPER, Boolean.TRUE);
-
-	LayoutStructureItem layoutStructureItem = layoutStructure.getLayoutStructureItem(mainItemId);
-
-	request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
 %>
 
-	<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
+	<liferay-layout:render-layout-structure
+		fieldValues="<%= fieldValues %>"
+		layoutStructure="<%= layoutStructure %>"
+		mainItemId="<%= mainItemId %>"
+		mode="<%= mode %>"
+		showPreview="<%= showPreview %>"
+	/>
 
 <%
 }

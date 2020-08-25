@@ -16,7 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ taglib uri="http://liferay.com/tld/layout" prefix="liferay-layout" %>
+
 <%@ page import="com.liferay.layout.taglib.internal.display.context.RenderFragmentLayoutDisplayContext" %><%@
 page import="com.liferay.layout.util.structure.LayoutStructure" %><%@
-page import="com.liferay.layout.util.structure.LayoutStructureItem" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
+
+<%@ page import="java.util.Map" %>

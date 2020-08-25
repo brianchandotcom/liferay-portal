@@ -1,0 +1,64 @@
+{
+	"defaultLanguageId": "en_US",
+	"definitionSchemaVersion": "2.0",
+	"pages": [
+		{
+			"rows": [
+				{
+					"columns": [
+						{
+							"fieldNames": [
+								"text1"
+							],
+							"size": 6
+						},
+						{
+							"fieldNames": [
+								"text2"
+							],
+							"size": 6
+						}
+					]
+				},
+				{
+					"columns": [
+						{
+							"fieldNames": [
+								"text3"
+							],
+							"size": 4
+						},
+						{
+							"fieldNames": [
+								"text4"
+							],
+							"size": 4
+						},
+						{
+							"fieldNames": [
+								"text5"
+							],
+							"size": 4
+						}
+					]
+				},
+				{
+					"columns": [
+						{
+							"fieldNames": [
+								"text6",
+								"text7",
+								"text8"
+							],
+							"size": 12
+						}
+					]
+				}
+			],
+			"title": {
+				"en_US": "Page 1",
+				"pt_BR": "Pagina 1"
+			}
+		}
+	]
+}

@@ -54,6 +54,12 @@ const Numeric = ({
 	const inputRef = useRef(null);
 
 	useEffect(() => {
+		if (initialValue) {
+			setValue(initialValue);
+		}
+	}, [initialValue, setValue]);
+
+	useEffect(() => {
 		let maskInstance = null;
 
 		if (inputRef.current) {

@@ -248,7 +248,7 @@ definition {
 	macro editPageTitle {
 		var key_titleNumber = "${formTitleNumber}";
 
-		ScrollBy(value1 = "0, 230");
+		ScrollWebElementIntoView(locator1 = "Form#PAGE_TITLE_FIELD");
 
 		WaitForElementPresent(
 			locator1 = "Form#PAGE_TITLE_FIELD",

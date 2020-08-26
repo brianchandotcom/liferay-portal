@@ -77,6 +77,8 @@ definition {
 		DepotNavigator.gotoPortlet(
 			depotName = "${depotName}",
 			portlet = "${portlet}");
+
+		AssertElementNotPresent(locator1 = "ProductMenu#TOGGLE");
 	}
 
 	macro gotoDepotPortletViaBreadcrumb {

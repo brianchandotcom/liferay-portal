@@ -76,14 +76,14 @@ else {
 		</portlet:renderURL>
 
 		<%
-		String onClick = liferayPortletResponse.getNamespace() + "openCompareVersionsPopup('" + compareVersionsURL.toString() + "');";
+		String taglibOnClick = liferayPortletResponse.getNamespace() + "openCompareVersionsPopup('" + compareVersionsURL.toString() + "');";
 		%>
 
 		<liferay-ui:icon
 			cssClass="compare-to-link"
 			label="<%= true %>"
 			message="compare-to"
-			onClick="<%= onClick %>"
+			onClick="<%= taglibOnClick %>"
 			url="javascript:;"
 		/>
 	</liferay-ui:icon-menu>

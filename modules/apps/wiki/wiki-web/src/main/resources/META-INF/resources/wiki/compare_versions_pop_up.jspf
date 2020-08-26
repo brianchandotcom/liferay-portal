@@ -16,7 +16,9 @@
 
 <script>
 	if (!window.<portlet:namespace />openCompareVersionsPopup) {
-		window.<portlet:namespace />openCompareVersionsPopup = function(compareVersionUrl) {
+		window.<portlet:namespace />openCompareVersionsPopup = function (
+			compareVersionUrl
+		) {
 			var currentTarget = event.delegateTarget;
 
 			Liferay.Util.openSelectionModal({
@@ -32,13 +34,11 @@
 					var uri = '<%= compareVersionURL %>';
 
 					uri = Liferay.Util.addParams(
-						'<portlet:namespace />sourceVersion=' +
-							event.sourceversion,
+						'<portlet:namespace />sourceVersion=' + event.sourceversion,
 						uri
 					);
 					uri = Liferay.Util.addParams(
-						'<portlet:namespace />targetVersion=' +
-							event.targetversion,
+						'<portlet:namespace />targetVersion=' + event.targetversion,
 						uri
 					);
 
@@ -48,6 +48,6 @@
 				title: '<liferay-ui:message key="compare-versions" />',
 				url: compareVersionUrl,
 			});
-		}
+		};
 	}
 </script>

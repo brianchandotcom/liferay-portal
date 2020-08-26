@@ -82,7 +82,7 @@ const Sidebar = ({children, onClose = noop, open = true}) => {
 	}, [isOpen]);
 
 	return (
-		<div className="sidebar sidebar-light sidebar-sm">
+		<div className="content-dashboard sidebar sidebar-light sidebar-sm">
 			<SidebarContext.Provider value={{onClose}}>
 				{children}
 			</SidebarContext.Provider>

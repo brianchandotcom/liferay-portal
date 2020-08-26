@@ -61,7 +61,7 @@
 		height: calc(100% - #{$controlMenuHeight});
 	}
 
-	.sidebar {
+	.content-dashboard.sidebar {
 		top: $controlMenuHeight;
 	}
 }
@@ -70,7 +70,7 @@
 	height: 100%;
 }
 
-.sidebar {
+.content-dashboard.sidebar {
 	bottom: 0;
 	height: auto;
 	left: 100%;
@@ -88,7 +88,7 @@
 }
 
 .sidebar-open {
-	.sidebar {
+	.content-dashboard.sidebar {
 		transform: translateX(-100%);
 		will-change: transform;
 	}
@@ -102,7 +102,7 @@
 	transition: padding-right 0.5s ease;
 }
 
-.sidebar {
+.content-dashboard.sidebar {
 	transition: transform 0.5s ease;
 }
 

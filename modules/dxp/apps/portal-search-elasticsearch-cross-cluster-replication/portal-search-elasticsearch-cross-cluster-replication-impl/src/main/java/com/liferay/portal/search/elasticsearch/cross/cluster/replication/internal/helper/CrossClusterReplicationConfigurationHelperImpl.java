@@ -15,7 +15,6 @@
 package com.liferay.portal.search.elasticsearch.cross.cluster.replication.internal.helper;
 
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.ccr.CrossClusterReplicationConfigurationHelper;
 import com.liferay.portal.search.elasticsearch.cross.cluster.replication.internal.configuration.CrossClusterReplicationConfigurationWrapper;
 
@@ -82,13 +81,6 @@ public class CrossClusterReplicationConfigurationHelperImpl
 
 	@Override
 	public boolean isCrossClusterReplicationEnabled() {
-		if (ArrayUtil.isEmpty(
-				crossClusterReplicationConfigurationWrapper.
-					getCCRLocalClusterConnectionConfigurations())) {
-
-			return false;
-		}
-
 		return crossClusterReplicationConfigurationWrapper.isCCREnabled();
 	}
 

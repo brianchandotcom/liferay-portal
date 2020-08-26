@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.search.ccr.CrossClusterReplicationHelper;
 import com.liferay.portal.search.elasticsearch.cross.cluster.replication.internal.configuration.CrossClusterReplicationConfiguration;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -30,6 +32,7 @@ import com.liferay.portal.search.engine.adapter.index.GetIndexIndexResponse;
 
 import java.util.Dictionary;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -55,6 +58,13 @@ public class CrossClusterReplicationConfigurationModelListener
 			"remoteClusterAlias");
 
 		if ((Boolean)properties.get("ccrEnabled")) {
+			String[] ccrLocalClusterConnectionConfigurations =
+				GetterUtil.getStringValues(
+					properties.get("ccrLocalClusterConnectionConfigurations"));
+
+			_validateCCRLocalClusterConnectionConfigurations(
+				ccrLocalClusterConnectionConfigurations, properties);
+
 			addRemoteAndFollowIndexes(remoteClusterAlias, properties);
 		}
 	}
@@ -62,6 +72,20 @@ public class CrossClusterReplicationConfigurationModelListener
 	@Override
 	public void onBeforeSave(String pid, Dictionary<String, Object> properties)
 		throws ConfigurationModelListenerException {
+
+		String[] excludedIndexes = GetterUtil.getStringValues(
+			properties.get("excludedIndexes"));
+		boolean ccrEnabled = (Boolean)properties.get("ccrEnabled");
+		String[] ccrLocalClusterConnectionConfigurations =
+			GetterUtil.getStringValues(
+				properties.get("ccrLocalClusterConnectionConfigurations"));
+		String remoteClusterAlias = (String)properties.get(
+			"remoteClusterAlias");
+
+		if (ccrEnabled) {
+			_validateCCRLocalClusterConnectionConfigurations(
+				ccrLocalClusterConnectionConfigurations, properties);
+		}
 
 		Configuration[] configurations = null;
 
@@ -87,14 +111,6 @@ public class CrossClusterReplicationConfigurationModelListener
 		Dictionary<String, Object> previousProperties =
 			configuration.getProperties();
 
-		String[] excludedIndexes = GetterUtil.getStringValues(
-			properties.get("excludedIndexes"));
-		boolean ccrEnabled = (Boolean)properties.get("ccrEnabled");
-		String[] ccrLocalClusterConnectionConfigurations =
-			GetterUtil.getStringValues(
-				properties.get("ccrLocalClusterConnectionConfigurations"));
-		String remoteClusterAlias = (String)properties.get(
-			"remoteClusterAlias");
 		String[] previousExcludedIndexes = GetterUtil.getStringValues(
 			previousProperties.get("excludedIndexes"));
 		boolean previousCcrEnabled = (Boolean)previousProperties.get(
@@ -245,6 +261,43 @@ public class CrossClusterReplicationConfigurationModelListener
 
 	@Reference
 	protected SearchEngineAdapter searchEngineAdapter;
+
+	private String _getMessage(String key, Object... arguments) {
+		try {
+			ResourceBundle resourceBundle = _getResourceBundle();
+
+			return ResourceBundleUtil.getString(resourceBundle, key, arguments);
+		}
+		catch (Exception exception) {
+			return null;
+		}
+	}
+
+	private ResourceBundle _getResourceBundle() {
+		return ResourceBundleUtil.getBundle(
+			"content.Language", LocaleThreadLocal.getThemeDisplayLocale(),
+			getClass());
+	}
+
+	private void _validateCCRLocalClusterConnectionConfigurations(
+			String[] ccrLocalClusterConnectionConfigurations,
+			Dictionary<String, Object> properties)
+		throws ConfigurationModelListenerException {
+
+		for (String ccrLocalClusterConnectionConfiguration :
+				ccrLocalClusterConnectionConfigurations) {
+
+			List<String> localClusterConnectionConfigurationParts =
+				StringUtil.split(ccrLocalClusterConnectionConfiguration);
+
+			if (localClusterConnectionConfigurationParts.size() != 2) {
+				throw new ConfigurationModelListenerException(
+					_getMessage("please-set-a-hostname-and-connection-id"),
+					CrossClusterReplicationConfiguration.class, getClass(),
+					properties);
+			}
+		}
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CrossClusterReplicationConfigurationModelListener.class);

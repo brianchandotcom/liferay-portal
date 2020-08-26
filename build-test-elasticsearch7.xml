@@ -980,6 +980,16 @@ xpack.monitoring.collection.enabled: true</echo>
 					dir="${elasticsearch.dir}"
 				/>
 			</copy>
+
+			<chmod
+				maxparallel="10"
+				perm="a+rwx"
+				type="both"
+			>
+				<fileset
+					dir="${elasticsearch.dir}-${elasticsearch.node.number}"
+				/>
+			</chmod>
 		</antelope:repeat>
 
 		<delete dir="${elasticsearch.dir}" />
@@ -1337,16 +1347,6 @@ xpack.monitoring.collection.enabled: true</echo>
 					operation="+"
 					result="elasticsearch.node.number"
 				/>
-
-				<chmod
-					maxparallel="10"
-					perm="a+rwx"
-					type="both"
-				>
-					<fileset
-						dir="${elasticsearch.dir}-${elasticsearch.node.number}"
-					/>
-				</chmod>
 
 				<if>
 					<os family="mac" />

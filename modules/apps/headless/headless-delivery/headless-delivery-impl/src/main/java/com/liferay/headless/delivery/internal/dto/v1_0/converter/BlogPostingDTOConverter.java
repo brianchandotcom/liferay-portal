@@ -108,8 +108,7 @@ public class BlogPostingDTOConverter
 						BlogsEntry.class.getName(), blogsEntry.getEntryId()),
 					assetCategory ->
 						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
-							dtoConverterContext.isAcceptAllLanguages(),
-							assetCategory, dtoConverterContext.getLocale()),
+							assetCategory, dtoConverterContext),
 					TaxonomyCategoryBrief.class);
 			}
 		};

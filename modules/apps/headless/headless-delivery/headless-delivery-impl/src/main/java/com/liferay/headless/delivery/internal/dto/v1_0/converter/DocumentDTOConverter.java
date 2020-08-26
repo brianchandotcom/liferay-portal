@@ -158,8 +158,7 @@ public class DocumentDTOConverter
 						fileEntry.getFileEntryId()),
 					assetCategory ->
 						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
-							dtoConverterContext.isAcceptAllLanguages(),
-							assetCategory, dtoConverterContext.getLocale()),
+							assetCategory, dtoConverterContext),
 					TaxonomyCategoryBrief.class);
 				title = fileEntry.getTitle();
 			}

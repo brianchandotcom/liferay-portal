@@ -145,8 +145,7 @@ public class MessageBoardThreadDTOConverter
 						MBMessage.class.getName(), mbThread.getRootMessageId()),
 					assetCategory ->
 						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
-							dtoConverterContext.isAcceptAllLanguages(),
-							assetCategory, dtoConverterContext.getLocale()),
+							assetCategory, dtoConverterContext),
 					TaxonomyCategoryBrief.class);
 				threadType = _toThreadType(
 					languageId, mbThread.getGroupId(), mbThread.getPriority());

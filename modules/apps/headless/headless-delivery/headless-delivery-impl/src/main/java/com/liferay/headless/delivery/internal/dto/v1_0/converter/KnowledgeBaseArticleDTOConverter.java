@@ -125,8 +125,7 @@ public class KnowledgeBaseArticleDTOConverter
 						KBArticle.class.getName(), kbArticle.getClassPK()),
 					assetCategory ->
 						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
-							dtoConverterContext.isAcceptAllLanguages(),
-							assetCategory, dtoConverterContext.getLocale()),
+							assetCategory, dtoConverterContext),
 					TaxonomyCategoryBrief.class);
 				title = kbArticle.getTitle();
 

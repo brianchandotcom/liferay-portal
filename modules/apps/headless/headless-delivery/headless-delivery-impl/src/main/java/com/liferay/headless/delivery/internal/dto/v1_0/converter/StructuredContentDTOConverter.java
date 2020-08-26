@@ -173,8 +173,7 @@ public class StructuredContentDTOConverter
 						journalArticle.getResourcePrimKey()),
 					assetCategory ->
 						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
-							dtoConverterContext.isAcceptAllLanguages(),
-							assetCategory, dtoConverterContext.getLocale()),
+							assetCategory, dtoConverterContext),
 					TaxonomyCategoryBrief.class);
 				title = journalArticle.getTitle(
 					dtoConverterContext.getLocale());

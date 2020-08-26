@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -66,6 +67,7 @@ import com.liferay.wiki.service.WikiPageService;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -402,9 +404,14 @@ public class WikiPageResourceImpl
 						wikiPage.getPageId()),
 					assetCategory ->
 						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
-							contextAcceptLanguage.isAcceptAllLanguages(),
 							assetCategory,
-							contextAcceptLanguage.getPreferredLocale()),
+							new DefaultDTOConverterContext(
+								contextAcceptLanguage.isAcceptAllLanguages(),
+								Collections.emptyMap(), _dtoConverterRegistry,
+								contextHttpServletRequest,
+								assetCategory.getCategoryId(),
+								contextAcceptLanguage.getPreferredLocale(),
+								contextUriInfo, contextUser)),
 					TaxonomyCategoryBrief.class);
 
 				setParentWikiPageId(

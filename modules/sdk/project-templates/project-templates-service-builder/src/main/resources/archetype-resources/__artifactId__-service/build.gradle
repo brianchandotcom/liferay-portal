@@ -21,3 +21,9 @@ buildService {
 }
 
 group = "${package}"
+
+// Generated classes using Jodd library are unable to be read when compiled against JDK 11
+tasks.withType(JavaCompile) {
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
+}

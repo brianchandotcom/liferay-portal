@@ -77,7 +77,9 @@ jest.mock('frontend-js-web', () => ({
 const mockAddItem = jest.fn().mockResolvedValue(ENTRY.DATA_RECORD_APPS(1));
 const mockGetItem = jest
 	.fn()
+	.mockResolvedValueOnce(ENTRY.DATA_DEFINITION)
 	.mockResolvedValueOnce(ENTRY.APP_WORKFLOW)
+	.mockResolvedValueOnce(ENTRY.DATA_DEFINITION)
 	.mockResolvedValueOnce(ENTRY.APP_WORKFLOW)
 	.mockResolvedValue({
 		items: [
@@ -107,7 +109,7 @@ describe('EditEntry', () => {
 		dataRecordValues: {
 			Text: {en_US: 'text'},
 			Text1: {en_US: ['text1']},
-			Text2: '',
+			Text2: {en_US: ''},
 		},
 	});
 
@@ -142,6 +144,7 @@ describe('EditEntry', () => {
 				current: {
 					get: () => null,
 					getFormNode: () => document.getElementById(mockFormId),
+					updateEditingLanguageId: () => null,
 					validate: jest.fn().mockResolvedValue(true),
 				},
 			},
@@ -151,7 +154,11 @@ describe('EditEntry', () => {
 	it('renders on create mode', async () => {
 		const {container, queryAllByRole} = render(
 			<AppContextProviderWrapper appContext={context}>
-				<EditEntry dataRecordId="0" />
+				<EditEntry
+					dataDefinitionId="1"
+					dataRecordId="0"
+					userLanguageId="en_US"
+				/>
 			</AppContextProviderWrapper>,
 			{wrapper: PermissionsContextProviderWrapper}
 		);
@@ -192,7 +199,12 @@ describe('EditEntry', () => {
 	it('renders on edit mode', async () => {
 		const {container, queryAllByRole} = render(
 			<AppContextProviderWrapper appContext={context}>
-				<EditEntry dataRecordId="1" redirect="/home" />
+				<EditEntry
+					dataDefinitionId="1"
+					dataRecordId="1"
+					redirect="/home"
+					userLanguageId="en_US"
+				/>
 			</AppContextProviderWrapper>,
 			{wrapper: PermissionsContextProviderWrapper}
 		);

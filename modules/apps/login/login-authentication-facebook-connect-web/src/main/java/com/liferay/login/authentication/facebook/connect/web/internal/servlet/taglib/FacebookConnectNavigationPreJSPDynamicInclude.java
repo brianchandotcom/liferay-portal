@@ -38,11 +38,9 @@ import org.osgi.service.component.annotations.Reference;
  * to the portlet if Facebook Connect authentication has been enabled for the
  * portal instance being accessed.
  *
- * @author     Michael C. Han
- * @deprecated As of Athanasius (7.3.x), with no direct replacement
+ * @author Michael C. Han
  */
 @Component(immediate = true, service = DynamicInclude.class)
-@Deprecated
 public class FacebookConnectNavigationPreJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 

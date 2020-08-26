@@ -33,8 +33,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author     Stian Sigvartsen
- * @deprecated As of Athanasius (7.3.x), with no direct replacement
+ * @author Stian Sigvartsen
  */
 @Component(
 	immediate = true,
@@ -45,7 +44,6 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCRenderCommand.class
 )
-@Deprecated
 public class AssociateFacebookUserMVCRenderCommand implements MVCRenderCommand {
 
 	@Override

@@ -52,6 +52,41 @@ public class TaxonomyCategoryBrief {
 	}
 
 	@Schema(
+		description = "Optional field with the embedded taxonomy category, can be embedded with nestedFields"
+	)
+	@Valid
+	public Object getEmbeddedTaxonomyCategory() {
+		return embeddedTaxonomyCategory;
+	}
+
+	public void setEmbeddedTaxonomyCategory(Object embeddedTaxonomyCategory) {
+		this.embeddedTaxonomyCategory = embeddedTaxonomyCategory;
+	}
+
+	@JsonIgnore
+	public void setEmbeddedTaxonomyCategory(
+		UnsafeSupplier<Object, Exception>
+			embeddedTaxonomyCategoryUnsafeSupplier) {
+
+		try {
+			embeddedTaxonomyCategory =
+				embeddedTaxonomyCategoryUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "Optional field with the embedded taxonomy category, can be embedded with nestedFields"
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Object embeddedTaxonomyCategory;
+
+	@Schema(
 		description = "The category's ID. This can be used to retrieve more information in the `TaxonomyCategory` API."
 	)
 	public Long getTaxonomyCategoryId() {
@@ -171,6 +206,16 @@ public class TaxonomyCategoryBrief {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (embeddedTaxonomyCategory != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"embeddedTaxonomyCategory\": ");
+
+			sb.append(String.valueOf(embeddedTaxonomyCategory));
+		}
 
 		if (taxonomyCategoryId != null) {
 			if (sb.length() > 1) {

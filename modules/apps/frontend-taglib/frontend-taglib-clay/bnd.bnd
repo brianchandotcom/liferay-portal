@@ -21,7 +21,8 @@ Export-Package:\
 	com.liferay.frontend.taglib.clay.servlet.taglib.model.table,\
 	com.liferay.frontend.taglib.clay.servlet.taglib.soy,\
 	com.liferay.frontend.taglib.clay.servlet.taglib.soy.base,\
-	com.liferay.frontend.taglib.clay.servlet.taglib.util
+	com.liferay.frontend.taglib.clay.servlet.taglib.util,\
+	com.liferay.frontend.taglib.clay.servlet.taglib.view.state
 Liferay-JS-Submodules-Bridge:\
 	clay-alert,\
 	clay-badge,\

@@ -136,5 +136,5 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 			title: '<liferay-ui:message key="compare-versions" />',
 			url: selectVersionUrl,
 		});
-	};
+	}
 </script>

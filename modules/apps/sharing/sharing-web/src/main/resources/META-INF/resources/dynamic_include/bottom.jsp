@@ -31,6 +31,7 @@ sharingURL.setWindowState(LiferayWindowState.POP_UP);
 		Liferay.Util.openModal({
 			id: 'sharingDialog',
 			iframeBodyCssClass: 'sharing-dialog',
+			size: 'md',
 			title: Liferay.Util.escapeHTML(title),
 			url: uri,
 		});

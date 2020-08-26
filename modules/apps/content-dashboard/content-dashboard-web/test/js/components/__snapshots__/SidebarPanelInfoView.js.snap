@@ -3,7 +3,7 @@
 exports[`SidebarPanelInfoView renders 1`] = `
 <DocumentFragment>
   <div
-    class="sidebar sidebar-light sidebar-sm"
+    class="content-dashboard sidebar sidebar-light sidebar-sm"
   >
     <div
       class="sidebar-header"

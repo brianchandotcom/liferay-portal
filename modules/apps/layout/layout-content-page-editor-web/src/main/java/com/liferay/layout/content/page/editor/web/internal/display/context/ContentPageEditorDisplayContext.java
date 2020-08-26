@@ -154,6 +154,7 @@ import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -1460,14 +1461,7 @@ public class ContentPageEditorDisplayContext {
 		Map<String, Map<String, Object>> frontendTokens = new LinkedHashMap<>();
 
 		JSONObject frontendTokenValuesJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		StyleBookEntry styleBookEntry = _getDefaultStyleBookEntry();
-
-		if (styleBookEntry != null) {
-			frontendTokenValuesJSONObject = JSONFactoryUtil.createJSONObject(
-				styleBookEntry.getFrontendTokensValues());
-		}
+			_getFrontendTokenValuesJSONObject();
 
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
 			themeDisplay.getSiteGroupId(), false);
@@ -1484,73 +1478,48 @@ public class ContentPageEditorDisplayContext {
 			frontendTokenDefinitionJSONObject.getJSONArray(
 				"frontendTokenCategories");
 
-		for (int i = 0; i < frontendTokenCategoriesJSONArray.length(); i++) {
-			JSONObject frontendTokenCategoryJSONObject =
-				frontendTokenCategoriesJSONArray.getJSONObject(i);
+		Iterator<JSONObject> frontendTokenCategoriesIterator =
+			frontendTokenCategoriesJSONArray.iterator();
 
-			JSONArray frontendTokenSetsJSONArray =
-				frontendTokenCategoryJSONObject.getJSONArray(
-					"frontendTokenSets");
+		frontendTokenCategoriesIterator.forEachRemaining(
+			frontendTokenCategoryJSONObject -> {
+				JSONArray frontendTokenSetsJSONArray =
+					frontendTokenCategoryJSONObject.getJSONArray(
+						"frontendTokenSets");
 
-			for (int j = 0; j < frontendTokenSetsJSONArray.length(); j++) {
-				JSONObject frontendTokenSetJSONObject =
-					frontendTokenSetsJSONArray.getJSONObject(j);
+				Iterator<JSONObject> frontendTokenSetsIterator =
+					frontendTokenSetsJSONArray.iterator();
 
-				JSONArray frontendTokensJSONArray =
-					frontendTokenSetJSONObject.getJSONArray("frontendTokens");
+				frontendTokenSetsIterator.forEachRemaining(
+					frontendTokenSetJSONObject -> {
+						JSONArray frontendTokensJSONArray =
+							frontendTokenSetJSONObject.getJSONArray(
+								"frontendTokens");
 
-				for (int k = 0; k < frontendTokensJSONArray.length(); k++) {
-					JSONObject frontendTokenJSONObject =
-						frontendTokensJSONArray.getJSONObject(k);
+						Iterator<JSONObject> frontendTokensIterator =
+							frontendTokensJSONArray.iterator();
 
-					String name = frontendTokenJSONObject.getString("name");
-
-					JSONObject valueJSONObject =
-						frontendTokenValuesJSONObject.getJSONObject(name);
-
-					String value = StringPool.BLANK;
-
-					if (valueJSONObject != null) {
-						value = valueJSONObject.getString("value");
-					}
-					else {
-						value = frontendTokenJSONObject.getString(
-							"defaultValue");
-					}
-
-					JSONArray mappingsJSONArray =
-						frontendTokenJSONObject.getJSONArray("mappings");
-					String cssVariable = StringPool.BLANK;
-
-					for (int l = 0; l < mappingsJSONArray.length(); l++) {
-						JSONObject mapping = mappingsJSONArray.getJSONObject(l);
-
-						if (Objects.equals(
-								mapping.getString("type"), "cssVariable")) {
-
-							cssVariable = mapping.getString("value");
-						}
-					}
-
-					frontendTokens.put(
-						name,
-						HashMapBuilder.<String, Object>put(
-							"cssVariable", cssVariable
-						).put(
-							"editorType",
-							frontendTokenJSONObject.get("editorType")
-						).put(
-							"label", frontendTokenJSONObject.get("label")
-						).put(
-							"name", name
-						).put(
-							"value", value
-						).build());
-				}
-			}
-		}
+						frontendTokensIterator.forEachRemaining(
+							frontendTokenJSONObject ->
+								_processFrontendTokenJSONObject(
+									frontendTokenJSONObject,
+									frontendTokenValuesJSONObject,
+									frontendTokens));
+					});
+			});
 
 		return frontendTokens;
+	}
+
+	private JSONObject _getFrontendTokenValuesJSONObject() throws Exception {
+		StyleBookEntry styleBookEntry = _getDefaultStyleBookEntry();
+
+		if (styleBookEntry != null) {
+			return JSONFactoryUtil.createJSONObject(
+				styleBookEntry.getFrontendTokensValues());
+		}
+
+		return JSONFactoryUtil.createJSONObject();
 	}
 
 	private ItemSelectorCriterion _getImageItemSelectorCriterion() {
@@ -2247,6 +2216,52 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return false;
+	}
+
+	private void _processFrontendTokenJSONObject(
+		JSONObject frontendTokenJSONObject,
+		JSONObject frontendTokenValuesJSONObject,
+		Map<String, Map<String, Object>> frontendTokens) {
+
+		String name = frontendTokenJSONObject.getString("name");
+
+		JSONObject valueJSONObject =
+			frontendTokenValuesJSONObject.getJSONObject(name);
+
+		String value = StringPool.BLANK;
+
+		if (valueJSONObject != null) {
+			value = valueJSONObject.getString("value");
+		}
+		else {
+			value = frontendTokenJSONObject.getString("defaultValue");
+		}
+
+		JSONArray mappingsJSONArray = frontendTokenJSONObject.getJSONArray(
+			"mappings");
+		String cssVariable = StringPool.BLANK;
+
+		for (int l = 0; l < mappingsJSONArray.length(); l++) {
+			JSONObject mapping = mappingsJSONArray.getJSONObject(l);
+
+			if (Objects.equals(mapping.getString("type"), "cssVariable")) {
+				cssVariable = mapping.getString("value");
+			}
+		}
+
+		frontendTokens.put(
+			name,
+			HashMapBuilder.<String, Object>put(
+				"cssVariable", cssVariable
+			).put(
+				"editorType", frontendTokenJSONObject.get("editorType")
+			).put(
+				"label", frontendTokenJSONObject.get("label")
+			).put(
+				"name", name
+			).put(
+				"value", value
+			).build());
 	}
 
 	private static final String[] _UNSUPPORTED_PORTLETS_NAMES = {

@@ -77,7 +77,7 @@ definition {
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
-			portlet = "Manage Publications");
+			portlet = "Publications");
 
 		ChangeList.deletePublication(publicationName = "Publication Name");
 

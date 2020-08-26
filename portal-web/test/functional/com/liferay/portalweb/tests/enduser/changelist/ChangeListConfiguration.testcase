@@ -55,7 +55,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ChangeList#MANGE_PUBLICATIONS_PAGE_TITLE",
-			value1 = "Manage Publications");
+			value1 = "Publications");
 
 		AssertElementPresent(
 			locator1 = "ChangeList#PRODUCTION_CARD_TITLE",

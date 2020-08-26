@@ -612,7 +612,7 @@ definition {
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
-			portlet = "Manage Publications");
+			portlet = "Publications");
 
 		Navigator.gotoNavTab(navTab = "History");
 
@@ -646,7 +646,7 @@ definition {
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
-			portlet = "Manage Publications");
+			portlet = "Publications");
 
 		Navigator.gotoNavTab(navTab = "Ongoing");
 
@@ -752,7 +752,7 @@ definition {
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
-			portlet = "Manage Publications");
+			portlet = "Publications");
 
 		Navigator.gotoNavTab(navTab = "History");
 

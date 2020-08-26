@@ -4,7 +4,7 @@ definition {
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
-			portlet = "Manage Publications");
+			portlet = "Publications");
 
 		Click(locator1 = "Button#PLUS");
 
@@ -20,7 +20,7 @@ definition {
 			ApplicationsMenu.gotoPortlet(
 				category = "Publications",
 				panel = "Applications",
-				portlet = "Manage Publications");
+				portlet = "Publications");
 
 			Click(locator1 = "Button#PLUS");
 		}
@@ -58,7 +58,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "ChangeList#MANGE_PUBLICATIONS_PAGE_TITLE",
-			value1 = "Manage Publications");
+			value1 = "Publications");
 
 		Alert.viewSuccessMessage();
 	}
@@ -108,7 +108,7 @@ definition {
 			ApplicationsMenu.gotoPortlet(
 				category = "Publications",
 				panel = "Applications",
-				portlet = "Manage Publications");
+				portlet = "Publications");
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

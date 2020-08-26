@@ -88,11 +88,12 @@ public class CommercePricingClassCPDefinitionRelDataSetActionProvider
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getPricingClassCPDefinitionRelDeleteURL(
-						pricingClassCPDefinitionRel.getCPDefinitionId()));
+						commercePricingClassCPDefinitionRel.
+							getCommercePricingClassCPDefinitionRelId()));
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setTarget("async");
-				dropdownItem.put("method", "delete");
+				dropdownItem.putData("method", "delete");
 			}
 		).build();
 	}

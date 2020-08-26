@@ -54,6 +54,16 @@ public class DispatchLogLocalServiceUtil {
 		return getService().addDispatchLog(dispatchLog);
 	}
 
+	public static com.liferay.dispatch.model.DispatchLog addDispatchLog(
+			long userId, long dispatchTriggerId, String error, String output,
+			int status, java.util.Date startDate, java.util.Date endDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addDispatchLog(
+			userId, dispatchTriggerId, error, output, status, startDate,
+			endDate);
+	}
+
 	/**
 	 * Creates a new dispatch log with the primary key. Does not add the dispatch log to the database.
 	 *
@@ -108,6 +118,10 @@ public class DispatchLogLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteDispatchLog(dispatchLogId);
+	}
+
+	public static void deleteDispatchLogs(long dispatchTriggerId) {
+		getService().deleteDispatchLogs(dispatchTriggerId);
 	}
 
 	/**
@@ -255,6 +269,12 @@ public class DispatchLogLocalServiceUtil {
 		return getService().getDispatchLogs(start, end);
 	}
 
+	public static java.util.List<com.liferay.dispatch.model.DispatchLog>
+		getDispatchLogs(long dispatchTriggerId, int start, int end) {
+
+		return getService().getDispatchLogs(dispatchTriggerId, start, end);
+	}
+
 	/**
 	 * Returns the number of dispatch logs.
 	 *
@@ -262,6 +282,10 @@ public class DispatchLogLocalServiceUtil {
 	 */
 	public static int getDispatchLogsCount() {
 		return getService().getDispatchLogsCount();
+	}
+
+	public static int getDispatchLogsCount(long dispatchTriggerId) {
+		return getService().getDispatchLogsCount(dispatchTriggerId);
 	}
 
 	public static
@@ -304,6 +328,15 @@ public class DispatchLogLocalServiceUtil {
 		com.liferay.dispatch.model.DispatchLog dispatchLog) {
 
 		return getService().updateDispatchLog(dispatchLog);
+	}
+
+	public static com.liferay.dispatch.model.DispatchLog updateDispatchLog(
+			long dispatchLogId, String error, String output, int status,
+			java.util.Date endDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateDispatchLog(
+			dispatchLogId, error, output, status, endDate);
 	}
 
 	public static DispatchLogLocalService getService() {

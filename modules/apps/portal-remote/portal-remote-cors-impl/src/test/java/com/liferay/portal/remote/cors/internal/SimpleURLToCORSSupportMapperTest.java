@@ -15,6 +15,7 @@
 package com.liferay.portal.remote.cors.internal;
 
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -74,6 +75,10 @@ public class SimpleURLToCORSSupportMapperTest {
 		Map<String, CORSSupport> corsSupports = new HashMap<>();
 
 		for (KeyValuePair keyValuePair : keyValuePairs) {
+			if (Validator.isBlank(keyValuePair.getValue())) {
+				continue;
+			}
+
 			CORSSupport corsSupport = new CORSSupport();
 
 			corsSupport.setHeader("pattern", keyValuePair.getValue());

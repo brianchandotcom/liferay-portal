@@ -28,8 +28,10 @@ import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowTask;
 import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowTransition;
 import com.liferay.app.builder.workflow.rest.resource.v1_0.AppWorkflowResource;
 import com.liferay.data.engine.model.DEDataListView;
+import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.service.DEDataListViewLocalService;
 import com.liferay.dynamic.data.lists.constants.DDLRecordSetConstants;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
@@ -42,15 +44,19 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -105,22 +111,29 @@ public abstract class BaseAppBuilderAppTestCase {
 	}
 
 	protected App addApp() throws Exception {
-		MockLiferayResourceResponse mockLiferayResourceResponse =
-			new MockLiferayResourceResponse();
-
-		_addAppBuilderAppMVCResourceCommand.serveResource(
-			_getMockLiferayResourceRequest(
-				mockLiferayResourceResponse,
+		return _toDTO(
+			App.class,
+			_serveResource(
+				_addAppBuilderAppMVCResourceCommand,
 				HashMapBuilder.<String, Object>put(
 					"app", _createApp()
 				).put(
 					"appWorkflow", createAppWorkflow()
 				).put(
 					"dataDefinitionId", _ddmStructure.getStructureId()
-				).build()),
-			mockLiferayResourceResponse);
+				).build()));
+	}
 
-		return _toApp(mockLiferayResourceResponse);
+	protected DataRecord addDataRecord(App app) throws Exception {
+		return _toDTO(
+			DataRecord.class,
+			_serveResource(
+				_addDataRecordMVCResourceCommand,
+				HashMapBuilder.<String, Object>put(
+					"appBuilderAppId", app.getId()
+				).put(
+					"dataRecord", _createDataRecord(app)
+				).build()));
 	}
 
 	protected AppWorkflow createAppWorkflow() throws Exception {
@@ -217,23 +230,52 @@ public abstract class BaseAppBuilderAppTestCase {
 	}
 
 	protected App updateApp(App app, AppWorkflow appWorkflow) throws Exception {
-		MockLiferayResourceResponse mockLiferayResourceResponse =
-			new MockLiferayResourceResponse();
-
-		_updateAppBuilderAppMVCResourceCommand.serveResource(
-			_getMockLiferayResourceRequest(
-				mockLiferayResourceResponse,
+		return _toDTO(
+			App.class,
+			_serveResource(
+				_updateAppBuilderAppMVCResourceCommand,
 				HashMapBuilder.<String, Object>put(
 					"app", app
 				).put(
 					"appBuilderAppId", app.getId()
 				).put(
 					"appWorkflow", appWorkflow
-				).build()),
-			mockLiferayResourceResponse);
-
-		return _toApp(mockLiferayResourceResponse);
+				).build()));
 	}
+
+	protected DataRecord updateDataRecord(App app, long dataRecordId)
+		throws Exception {
+
+		AppWorkflow appWorkflow = getAppWorkflow(app);
+
+		AppWorkflowTask[] appWorkflowTasks = appWorkflow.getAppWorkflowTasks();
+
+		AppWorkflowTask appWorkflowTask = appWorkflowTasks[0];
+
+		AppWorkflowTransition[] appWorkflowTransitions =
+			appWorkflowTask.getAppWorkflowTransitions();
+
+		AppWorkflowTransition appWorkflowTransition = appWorkflowTransitions[0];
+
+		return _toDTO(
+			DataRecord.class,
+			_serveResource(
+				_updateDataRecordMVCResourceCommand,
+				HashMapBuilder.<String, Object>put(
+					"dataRecord", _createDataRecord(app)
+				).put(
+					"dataRecordId", dataRecordId
+				).put(
+					"taskName", appWorkflowTask.getName()
+				).put(
+					"transitionName", appWorkflowTransition.getName()
+				).put(
+					"workflowInstanceId", _getWorkflowInstanceId(dataRecordId)
+				).build()));
+	}
+
+	@Inject
+	protected AppBuilderAppLocalService appBuilderAppLocalService;
 
 	private DDLRecordSet _addDDLRecordSet(DDMStructure ddmStructure)
 		throws Exception {
@@ -296,6 +338,24 @@ public abstract class BaseAppBuilderAppTestCase {
 		};
 	}
 
+	private DataRecord _createDataRecord(App app) {
+		return new DataRecord() {
+			{
+				dataRecordCollectionId = app.getDataRecordCollectionId();
+				dataRecordValues = HashMapBuilder.<String, Object>put(
+					"MyText",
+					HashMapBuilder.put(
+						"en_US",
+						new String[] {
+							RandomTestUtil.randomString(),
+							RandomTestUtil.randomString()
+						}
+					).build()
+				).build();
+			}
+		};
+	}
+
 	private MockLiferayResourceRequest _getMockLiferayResourceRequest(
 			MockLiferayResourceResponse mockLiferayResourceResponse,
 			Map<String, Object> parameterMap)
@@ -332,25 +392,57 @@ public abstract class BaseAppBuilderAppTestCase {
 		return mockLiferayResourceRequest;
 	}
 
-	private String _read(String fileName) throws Exception {
-		return StringUtil.read(getClass(), "dependencies/" + fileName);
+	private long _getWorkflowInstanceId(long dataRecordId) throws Exception {
+		WorkflowInstanceLink workflowInstanceLink =
+			_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
+				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+				ResourceActionsUtil.getCompositeModelName(
+					AppBuilderApp.class.getName(), DDLRecord.class.getName()),
+				dataRecordId);
+
+		return workflowInstanceLink.getWorkflowInstanceId();
 	}
 
-	private App _toApp(MockLiferayResourceResponse mockLiferayResourceResponse)
+	private String _read(String fileName) throws Exception {
+		return StringUtil.read(
+			BaseAppBuilderAppTestCase.class, "dependencies/" + fileName);
+	}
+
+	private MockLiferayResourceResponse _serveResource(
+			MVCResourceCommand mvcResourceCommand,
+			Map<String, Object> parameterMap)
+		throws Exception {
+
+		MockLiferayResourceResponse mockLiferayResourceResponse =
+			new MockLiferayResourceResponse();
+
+		mvcResourceCommand.serveResource(
+			_getMockLiferayResourceRequest(
+				mockLiferayResourceResponse, parameterMap),
+			mockLiferayResourceResponse);
+
+		return mockLiferayResourceResponse;
+	}
+
+	private <T> T _toDTO(
+			Class<T> dtoClass,
+			MockLiferayResourceResponse mockLiferayResourceResponse)
 		throws Exception {
 
 		ByteArrayOutputStream byteArrayOutputStream =
 			(ByteArrayOutputStream)
 				mockLiferayResourceResponse.getPortletOutputStream();
 
-		return App.toDTO(byteArrayOutputStream.toString());
+		return ReflectionTestUtil.invoke(
+			dtoClass, "toDTO", new Class<?>[] {String.class},
+			byteArrayOutputStream.toString());
 	}
 
 	@Inject(filter = "mvc.command.name=/app_builder/add_workflow_app")
 	private MVCResourceCommand _addAppBuilderAppMVCResourceCommand;
 
-	@Inject
-	private AppBuilderAppLocalService _appBuilderAppLocalService;
+	@Inject(filter = "mvc.command.name=/app_builder/add_data_record")
+	private MVCResourceCommand _addDataRecordMVCResourceCommand;
 
 	private Company _company;
 
@@ -382,5 +474,11 @@ public abstract class BaseAppBuilderAppTestCase {
 
 	@Inject(filter = "mvc.command.name=/app_builder/update_workflow_app")
 	private MVCResourceCommand _updateAppBuilderAppMVCResourceCommand;
+
+	@Inject(filter = "mvc.command.name=/app_builder/update_data_record")
+	private MVCResourceCommand _updateDataRecordMVCResourceCommand;
+
+	@Inject
+	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

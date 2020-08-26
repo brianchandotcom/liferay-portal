@@ -221,7 +221,7 @@ public class DDMFormDisplayContext {
 			ddmFormRenderingContext.setDDMFormValues(mergedDDMFormValues);
 		}
 
-		if (!hasAddFormInstanceRecordPermission()) {
+		if (!hasAddFormInstanceRecordPermission() || !hasValidStorageType()) {
 			ddmFormRenderingContext.setReadOnly(true);
 		}
 

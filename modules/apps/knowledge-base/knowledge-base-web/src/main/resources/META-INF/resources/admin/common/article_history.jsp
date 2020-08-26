@@ -78,22 +78,22 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 								/>
 							</c:if>
 
-							<portlet:renderURL var="compareVersionsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:renderURL var="selectVersionURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 								<portlet:param name="mvcPath" value="/admin/common/select_version.jsp" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 								<portlet:param name="sourceVersion" value="<%= String.valueOf(curKBArticle.getVersion()) %>" />
 							</portlet:renderURL>
 
+							<%
+							String taglibOnClick = liferayPortletResponse.getNamespace() + "openCompareVersionsPopup('" + selectVersionURL.toString() + "');";
+							%>
+
 							<liferay-ui:icon
 								cssClass="compare-to-link"
-								data='<%=
-									HashMapBuilder.<String, Object>put(
-										"uri", compareVersionsURL
-									).build()
-								%>'
 								label="<%= true %>"
 								message="compare-to"
+								onClick="<%= taglibOnClick %>"
 								url="javascript:;"
 							/>
 						</liferay-ui:icon-menu>
@@ -115,10 +115,8 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 	<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 </portlet:renderURL>
 
-<aui:script require="metal-dom/src/dom as dom">
-	dom.delegate(document.body, 'click', '.compare-to-link > a', function (event) {
-		var currentTarget = event.delegateTarget;
-
+<script>
+	function <portlet:namespace />openCompareVersionsPopup(selectVersionUrl) {
 		Liferay.Util.openSelectionModal({
 			onSelect: function (event) {
 				var uri = '<%= HtmlUtil.escapeJS(compareVersionURL) %>';
@@ -136,7 +134,7 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 			},
 			selectEventName: '<portlet:namespace />selectVersionFm',
 			title: '<liferay-ui:message key="compare-versions" />',
-			url: currentTarget.dataset.uri,
+			url: selectVersionUrl,
 		});
-	});
-</aui:script>
+	};
+</script>

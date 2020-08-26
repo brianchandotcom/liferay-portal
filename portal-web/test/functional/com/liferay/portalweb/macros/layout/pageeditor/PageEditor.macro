@@ -658,7 +658,7 @@ definition {
 		if (isSet(textColor)) {
 			PageEditor.selectColorSwatchItem(
 				colorSwatchItem = "${textColor}",
-				fieldLabel = "Text Body");
+				fieldLabel = "Text Color");
 
 			Pause(locator1 = "3000");
 		}

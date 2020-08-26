@@ -16,6 +16,10 @@
 		min-height: $line-height-base * 1em;
 	}
 
+	&-description {
+		word-break: break-all;
+	}
+
 	&-title {
 		font-size: 1rem;
 	}

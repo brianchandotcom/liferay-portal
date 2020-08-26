@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -156,13 +157,19 @@ public class ChangeStyleBookEntryMVCActionCommand
 						frontendTokenJSONObject.getJSONArray("mappings");
 					String cssVariable = StringPool.BLANK;
 
-					for (int l = 0; l < mappingsJSONArray.length(); l++) {
-						JSONObject mapping = mappingsJSONArray.getJSONObject(l);
+					Iterator<?> iterator = mappingsJSONArray.iterator();
+
+					while (iterator.hasNext()) {
+						JSONObject mappingJSONObject =
+							(JSONObject)iterator.next();
 
 						if (Objects.equals(
-								mapping.getString("type"), "cssVariable")) {
+								mappingJSONObject.getString("type"),
+								"cssVariable")) {
 
-							cssVariable = mapping.getString("value");
+							cssVariable = mappingJSONObject.getString("value");
+
+							break;
 						}
 					}
 

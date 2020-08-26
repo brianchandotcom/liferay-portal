@@ -17,7 +17,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
-import React, {useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {LAYOUT_TYPES} from '../../../app/config/constants/layoutTypes';
 import {config} from '../../../app/config/index';
@@ -38,7 +38,44 @@ export default function PageDesignOptionsSidebar() {
 		(state) => state.masterLayout?.masterLayoutPlid
 	);
 
-	const tabs = useMemo(() => getTabs(masterLayoutPlid), [masterLayoutPlid]);
+	const [styleBookEntryId, setStyleBookEntryId] = useState(
+		config.styleBookEntryId
+	);
+	const [selectedStyleBook, setSelectedStyleBook] = useState(null);
+
+	const onSelectStyleBook = useCallback((styleBook) => {
+		LayoutService.changeStyleBookEntry({
+			onNetworkStatus: () => {},
+			styleBookEntryId: styleBook.styleBookEntryId,
+		}).then((styleBookWithTokens) => {
+			if (Liferay.Browser.isIe()) {
+				Liferay.Util.navigate(window.location.href);
+			}
+			else {
+				setStyleBookEntryId(styleBook.styleBookEntryId);
+				setSelectedStyleBook(styleBookWithTokens);
+			}
+		});
+	}, []);
+
+	useEffect(() => {
+		const wrapper = document.getElementById('wrapper');
+
+		if (selectedStyleBook && wrapper) {
+			selectedStyleBook.tokenValues.forEach((token) => {
+				wrapper.style.setProperty(
+					`--${token.cssVariable}`,
+					token.value
+				);
+			});
+		}
+	}, [selectedStyleBook]);
+
+	const tabs = useMemo(
+		() => getTabs(masterLayoutPlid, styleBookEntryId, onSelectStyleBook),
+		[masterLayoutPlid, onSelectStyleBook, styleBookEntryId]
+	);
+
 	const [activeTabId, setActiveTabId] = useState(0);
 	const tabIdNamespace = useId();
 
@@ -162,7 +199,7 @@ const OptionList = ({options = [], icon}) => {
 	);
 };
 
-function getTabs(masterLayoutPlid) {
+function getTabs(masterLayoutPlid, styleBookEntryId, onSelectStyleBook) {
 	const styleBooks = [
 		{
 			name:
@@ -183,16 +220,8 @@ function getTabs(masterLayoutPlid) {
 			label: Liferay.Language.get('style-book'),
 			options: styleBooks.map((styleBook) => ({
 				...styleBook,
-				isActive:
-					config.styleBookEntryId === styleBook.styleBookEntryId,
-				onClick: () => {
-					LayoutService.changeStyleBookEntry({
-						onNetworkStatus: () => {},
-						styleBookEntryId: styleBook.styleBookEntryId,
-					}).then(() => {
-						Liferay.Util.navigate(window.location.href);
-					});
-				},
+				isActive: styleBookEntryId === styleBook.styleBookEntryId,
+				onClick: () => onSelectStyleBook(styleBook),
 			})),
 			type: OPTIONS_TYPES.styleBook,
 		},

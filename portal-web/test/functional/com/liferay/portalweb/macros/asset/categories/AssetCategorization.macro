@@ -116,7 +116,7 @@ definition {
 	macro selectTag {
 		Click(locator1 = "AssetCategorization#TAGS_SELECT_BUTTON");
 
-		Modal.selectFrameSpecific(modalTitle = "Tags");
+		IFrame.selectTagFrame();
 
 		for (var tagName : list "${tagNameList}") {
 			Check(
@@ -126,7 +126,9 @@ definition {
 
 		SelectFrameTop();
 
-		Modal.selectFrameSpecific(modalTitle = "Asset Publisher");
+		SelectFrame(
+			key_title = "Asset Publisher",
+			locator1 = "IFrame#MODAL_ANY");
 
 		AssertClick(
 			locator1 = "Button#DONE",

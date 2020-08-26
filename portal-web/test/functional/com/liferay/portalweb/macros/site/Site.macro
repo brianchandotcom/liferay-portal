@@ -260,7 +260,7 @@ definition {
 			locator1 = "SiteSettingsDefaultUserAssociations#TEAMS_SELECT",
 			value1 = "Select");
 
-		Modal.selectFrameSpecific(modalTitle = "Select Team");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 

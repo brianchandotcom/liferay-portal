@@ -129,7 +129,7 @@ definition {
 
 		Click(locator1 = "AssetCategorization#TAGS_SELECT_BUTTON");
 
-		Modal.selectFrameSpecific(modalTitle = "Tags");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		for (var tagName : list "${tagNameList}") {
 			Check(

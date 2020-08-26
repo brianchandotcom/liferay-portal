@@ -42,7 +42,10 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 	</c:if>
 
 	<%
+	boolean hasValidDDMFormFields = ddmFormAdminDisplayContext.hasValidDDMFormFields(formInstance);
 	boolean hasValidStorageType = ddmFormAdminDisplayContext.hasValidStorageType(formInstance);
+
+	boolean isValidForm = hasValidDDMFormFields && hasValidStorageType;
 	%>
 
 	<c:if test="<%= formInstancePermissionCheckerHelper.isShowDuplicateIcon() %>">
@@ -52,7 +55,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 		</liferay-portlet:actionURL>
 
 		<liferay-ui:icon
-			cssClass='<%= !hasValidStorageType ? "disabled" : "" %>'
+			cssClass='<%= !isValidForm ? "disabled" : "" %>'
 			message="duplicate"
 			url="<%= copyFormInstanceURL %>"
 		/>
@@ -66,7 +69,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			cssClass='<%= !hasValidStorageType ? "disabled" : "" %>'
+			cssClass='<%= !isValidForm ? "disabled" : "" %>'
 			message="edit"
 			url="<%= editURL %>"
 		/>
@@ -88,7 +91,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 		%>
 
 		<liferay-ui:icon
-			cssClass='<%= !hasValidStorageType ? "disabled" : "" %>'
+			cssClass='<%= !isValidForm ? "disabled" : "" %>'
 			message="export"
 			url="<%= sb.toString() %>"
 		/>
@@ -113,7 +116,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 
 	<c:if test="<%= formInstancePermissionCheckerHelper.isShowShareIcon(formInstance) && ddmFormAdminDisplayContext.isFormPublished(formInstance) %>">
 		<liferay-ui:icon
-			cssClass='<%= !hasValidStorageType ? "disabled" : "" %>'
+			cssClass='<%= !isValidForm ? "disabled" : "" %>'
 			message="share"
 			onClick='<%= "Liferay.fire('" + liferayPortletResponse.getNamespace() + "openShareFormModal', { localizedName:" + ddmFormAdminDisplayContext.getFormLocalizedName(formInstance) + " , shareFormInstanceURL:'" + ddmFormAdminDisplayContext.getShareFormInstanceURL(formInstance) + "' , url:'" + ddmFormAdminDisplayContext.getPublishedFormURL(formInstance) + "' , node: this});" %>'
 			url="javascript:;"
@@ -128,7 +131,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			cssClass='<%= !hasValidStorageType ? "disabled" : "" %>'
+			cssClass='<%= !isValidForm ? "disabled" : "" %>'
 			message="view-entries"
 			url="<%= viewEntriesURL %>"
 		/>

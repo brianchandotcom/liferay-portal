@@ -60,56 +60,74 @@
 </div>
 
 <aui:script use="liferay-item-selector-dialog">
-	var fileEntryRemove = $('#<portlet:namespace />fileEntryRemove');
-	var fileEntryNameInput = $('#<portlet:namespace />fileEntryNameInput');
+	var fileEntryRemove = window.document.querySelector(
+		'#<portlet:namespace />fileEntryRemove'
+	);
+	var fileEntryNameInput = window.document.querySelector(
+		'#<portlet:namespace />fileEntryNameInput'
+	);
 
-	$('#<portlet:namespace />selectFile').on('click', function (event) {
-		event.preventDefault();
+	window.document
+		.querySelector('#<portlet:namespace />selectFile')
+		.addEventListener('click', function (event) {
+			event.preventDefault();
 
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-			eventName: 'uploadCPDefinitionVirtualSetting',
-			on: {
-				selectedItemChange: function (event) {
-					var selectedItem = event.newVal;
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+				eventName: 'uploadCPDefinitionVirtualSetting',
+				on: {
+					selectedItemChange: function (event) {
+						var selectedItem = event.newVal;
 
-					if (selectedItem) {
-						var value = JSON.parse(selectedItem.value);
+						if (selectedItem) {
+							var value = JSON.parse(selectedItem.value);
 
-						$('#<portlet:namespace />fileEntryId').val(
-							value.fileEntryId
-						);
+							window.document.querySelector(
+								'#<portlet:namespace />fileEntryId'
+							).value = value.fileEntryId;
 
-						$('#<portlet:namespace />url').attr('disabled', true);
+							window.document
+								.querySelector('#<portlet:namespace />url')
+								.setAttribute('disabled', true);
 
-						$('#lfr-definition-virtual-button-row-message').addClass(
-							'hide'
-						);
+							window.document
+								.querySelector(
+									'#lfr-definition-virtual-button-row-message'
+								)
+								.classList.add('hide');
 
-						fileEntryRemove.removeClass('hide');
+							fileEntryRemove.removeClass('hide');
 
-						fileEntryNameInput.html('<a>' + value.title + '</a>');
-					}
+							fileEntryNameInput.html('<a>' + value.title + '</a>');
+						}
+					},
 				},
-			},
-			title: '<liferay-ui:message key="select-file" />',
-			url:
-				'<%= cpDefinitionVirtualSettingDisplayContext.getFileEntryItemSelectorURL() %>',
+				title: '<liferay-ui:message key="select-file" />',
+				url:
+					'<%= cpDefinitionVirtualSettingDisplayContext.getFileEntryItemSelectorURL() %>',
+			});
+
+			itemSelectorDialog.open();
 		});
 
-		itemSelectorDialog.open();
-	});
+	window.document
+		.querySelector('#<portlet:namespace />fileEntryRemove')
+		.addEventListener('click', function (event) {
+			event.preventDefault();
 
-	$('#<portlet:namespace />fileEntryRemove').on('click', function (event) {
-		event.preventDefault();
+			window.document.querySelector(
+				'#<portlet:namespace />fileEntryId'
+			).value = 0;
 
-		$('#<portlet:namespace />fileEntryId').val(0);
+			window.document
+				.querySelector('#<portlet:namespace />url')
+				.setAttribute('disabled', false);
 
-		$('#<portlet:namespace />url').attr('disabled', false);
+			window.document
+				.querySelector('#lfr-definition-virtual-button-row-message')
+				.classList.remove('hide');
 
-		$('#lfr-definition-virtual-button-row-message').removeClass('hide');
+			fileEntryNameInput.html('<liferay-ui:message key="none" />');
 
-		fileEntryNameInput.html('<liferay-ui:message key="none" />');
-
-		fileEntryRemove.addClass('hide');
-	});
+			fileEntryRemove.addClass('hide');
+		});
 </aui:script>

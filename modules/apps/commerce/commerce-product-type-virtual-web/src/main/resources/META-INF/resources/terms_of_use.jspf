@@ -78,46 +78,54 @@
 		'<portlet:namespace />termsOfUseSettings'
 	);
 
-	var journalArticleRemove = $('#<portlet:namespace />journalArticleRemove');
-	var journalArticleNameInput = $(
+	var journalArticleRemove = window.document.querySelector(
+		'#<portlet:namespace />journalArticleRemove'
+	);
+	var journalArticleNameInput = window.document.querySelector(
 		'#<portlet:namespace />journalArticleNameInput'
 	);
 
-	$('#<portlet:namespace />selectArticle').on('click', function (event) {
-		event.preventDefault();
+	window.document
+		.querySelector('#<portlet:namespace />selectArticle')
+		.addEventListener('click', function (event) {
+			event.preventDefault();
 
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					destroyOnHide: true,
-					modal: true,
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						destroyOnHide: true,
+						modal: true,
+					},
+					eventName: 'selectJournalArticle',
+					id: '',
+					title: '<liferay-ui:message key="select-web-content" />',
+					uri:
+						'<%= cpDefinitionVirtualSettingDisplayContext.getTermsOfUseJournalArticleBrowserURL() %>',
 				},
-				eventName: 'selectJournalArticle',
-				id: '',
-				title: '<liferay-ui:message key="select-web-content" />',
-				uri:
-					'<%= cpDefinitionVirtualSettingDisplayContext.getTermsOfUseJournalArticleBrowserURL() %>',
-			},
-			function (event) {
-				$(
-					'#<portlet:namespace />termsOfUseJournalArticleResourcePrimKey'
-				).val(event.assetclasspk);
+				function (event) {
+					window.document.querySelector(
+						'#<portlet:namespace />termsOfUseJournalArticleResourcePrimKey'
+					).value = event.assetclasspk;
 
-				journalArticleRemove.removeClass('hide');
+					journalArticleRemove.classList.remove('hide');
 
-				journalArticleNameInput.html(event.assettitle);
-			}
-		);
-	});
+					journalArticleNameInput.innerHTML = event.assettitle;
+				}
+			);
+		});
 
-	$('#<portlet:namespace />journalArticleRemove').on('click', function (event) {
-		event.preventDefault();
+	window.document
+		.querySelector('#<portlet:namespace />journalArticleRemove')
+		.addEventListener('click', function (event) {
+			event.preventDefault();
 
-		$('#<portlet:namespace />termsOfUseJournalArticleResourcePrimKey').val(0);
+			window.document.querySelector(
+				'#<portlet:namespace />termsOfUseJournalArticleResourcePrimKey'
+			).value = 0;
 
-		journalArticleNameInput.html('<liferay-ui:message key="none" />');
+			journalArticleNameInput.innerHTML = '<liferay-ui:message key="none" />';
 
-		journalArticleRemove.addClass('hide');
-	});
+			journalArticleRemove.classList.add('hide');
+		});
 </aui:script>

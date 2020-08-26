@@ -58,38 +58,38 @@ List<CommerceDiscountCommerceAccountGroupRel> commerceDiscountCommerceAccountGro
 <aui:button name="selectCommerceAccountGroup" value="select" />
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace />selectCommerceAccountGroup').on('click', function (
-		event
-	) {
-		event.preventDefault();
+	window.document
+		.querySelector('#<portlet:namespace />selectCommerceAccountGroup')
+		.addEventListener('click', function (event) {
+			event.preventDefault();
 
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-			eventName: 'accountGroupSelectItem',
-			on: {
-				selectedItemChange: function (event) {
-					var <portlet:namespace />addCommerceAccountGroupIds = [];
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+				eventName: 'accountGroupSelectItem',
+				on: {
+					selectedItemChange: function (event) {
+						var <portlet:namespace />addCommerceAccountGroupIds = [];
 
-					var selectedItems = event.newVal;
+						var selectedItems = event.newVal;
 
-					if (selectedItems) {
-						var A = AUI();
+						if (selectedItems) {
+							var A = AUI();
 
-						A.Array.each(selectedItems, function (
-							item,
-							index,
-							selectedItems
-						) {
-							<portlet:namespace />addCommerceAccountGroup(item);
-						});
-					}
+							A.Array.each(selectedItems, function (
+								item,
+								index,
+								selectedItems
+							) {
+								<portlet:namespace />addCommerceAccountGroup(item);
+							});
+						}
+					},
 				},
-			},
-			title: '<liferay-ui:message key="select-account-group" />',
-			url: '<%= commerceDiscountDisplayContext.getItemSelectorUrl() %>',
-		});
+				title: '<liferay-ui:message key="select-account-group" />',
+				url: '<%= commerceDiscountDisplayContext.getItemSelectorUrl() %>',
+			});
 
-		itemSelectorDialog.open();
-	});
+			itemSelectorDialog.open();
+		});
 </aui:script>
 
 <aui:script>

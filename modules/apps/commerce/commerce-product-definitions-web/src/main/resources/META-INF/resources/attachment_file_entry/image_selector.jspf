@@ -58,51 +58,69 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 </c:choose>
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace />selectFile').on('click', function (event) {
-		event.preventDefault();
+	window.document
+		.querySelector('#<portlet:namespace />selectFile')
+		.addEventListener('click', function (event) {
+			event.preventDefault();
 
-		var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-			eventName: 'addCPAttachmentFileEntry',
-			on: {
-				selectedItemChange: function (event) {
-					var selectedItem = event.newVal;
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
+				eventName: 'addCPAttachmentFileEntry',
+				on: {
+					selectedItemChange: function (event) {
+						var selectedItem = event.newVal;
 
-					if (selectedItem) {
-						var value = JSON.parse(selectedItem.value);
+						if (selectedItem) {
+							var value = JSON.parse(selectedItem.value);
 
-						$('#<portlet:namespace />fileEntryId').val(
-							value.fileEntryId
-						);
+							window.document.querySelector(
+								'#<portlet:namespace />fileEntryId'
+							).value = value.fileEntryId;
 
-						$('#<portlet:namespace />fileEntryTitle').html(value.title);
+							window.document.querySelector(
+								'#<portlet:namespace />fileEntryTitle'
+							).innerHTML = value.title;
 
-						$('#<portlet:namespace />fileEntryContainer').removeClass(
-							'hidden'
-						);
+							window.document
+								.querySelector(
+									'#<portlet:namespace />fileEntryContainer'
+								)
+								.classList.remove('hidden');
 
-						$('#<portlet:namespace />deleteFile').removeClass('hidden');
-					}
+							window.document
+								.querySelector('#<portlet:namespace />deleteFile')
+								.classList.remove('hidden');
+						}
+					},
 				},
-			},
-			title: '<liferay-ui:message key="select-file" />',
-			url:
-				'<%= cpAttachmentFileEntriesDisplayContext.getAttachmentItemSelectorUrl() %>',
-		});
+				title: '<liferay-ui:message key="select-file" />',
+				url:
+					'<%= cpAttachmentFileEntriesDisplayContext.getAttachmentItemSelectorUrl() %>',
+			});
 
-		itemSelectorDialog.open();
-	});
+			itemSelectorDialog.open();
+		});
 </aui:script>
 
 <aui:script>
-	$('#<portlet:namespace />deleteFile').on('click', function (event) {
-		event.preventDefault();
+	window.document
+		.querySelector('#<portlet:namespace />deleteFile')
+		.addEventListener('click', function (event) {
+			event.preventDefault();
 
-		$('#<portlet:namespace />fileEntryId').val(0);
+			window.document.querySelector(
+				'#<portlet:namespace />fileEntryId'
+			).value = 0;
 
-		$('#<portlet:namespace />fileEntryTitle').html('');
+			window.document.querySelector(
+				'#<portlet:namespace />fileEntryTitle'
+			).innerHTML = '';
 
-		$('#<portlet:namespace />fileEntryContainer').addClass('hidden');
+			window.document
+				.querySelector('#<portlet:namespace />fileEntryContainer')
+				.classList.add('hidden');
 
-		$('#<portlet:namespace />deleteFile').addClass('hidden');
-	});
+			window.document
+				.querySelector('#<portlet:namespace />deleteFile')
+				.classList.add('hidden');
+		});
 </aui:script>

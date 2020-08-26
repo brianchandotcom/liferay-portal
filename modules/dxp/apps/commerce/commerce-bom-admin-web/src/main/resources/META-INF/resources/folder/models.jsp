@@ -168,15 +168,13 @@ CommerceBOMFolder commerceBOMFolder = commerceBOMAdminDisplayContext.getCommerce
 									);
 								});
 
-								$(
+								window.document.querySelector(
 									'#<portlet:namespace />commerceApplicationModelIds'
-								).val(
-									<portlet:namespace />addCommerceApplicationModelIds.join(
-										','
-									)
+								).value = <portlet:namespace />addCommerceApplicationModelIds.join(
+									','
 								);
 
-								var fm = $('#<portlet:namespace />fm');
+								var fm = AUI.$('#<portlet:namespace />fm');
 
 								submitForm(fm);
 							}

@@ -24,6 +24,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -120,6 +121,10 @@ public class FileInstallDeployTest {
 					String content = sb.toString();
 
 					Files.write(path, content.getBytes());
+
+					File file = path.toFile();
+
+					file.setLastModified(file.lastModified() + 1000);
 				});
 
 			configuration = _configurationAdmin.getConfiguration(

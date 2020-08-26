@@ -166,7 +166,7 @@
 </tr>
 <tr>
 	<td>THREAD_LIST_ANSWER</td>
-	<td>//div[@data-qa-id='rowItemContent'][contains(.,'${key_threadSubject}')]//div[4][contains(.,'${key_answerCount}')] | /div[@data-qa-id='rowItemContent'][contains(.,'${key_threadSubject}')]//div[5][contains(.,'${key_answerCount}')]</td>
+	<td>//div[@data-qa-id='rowItemContent'][contains(.,'${key_threadSubject}')]//div[2][contains(.,'${key_answerCount}')] | /div[@data-qa-id='rowItemContent'][contains(.,'${key_threadSubject}')]//div[5][contains(.,'${key_answerCount}')]</td>
 	<td></td>
 </tr>
 <tr>

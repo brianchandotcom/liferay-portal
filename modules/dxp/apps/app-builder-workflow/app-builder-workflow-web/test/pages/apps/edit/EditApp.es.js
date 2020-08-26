@@ -17,26 +17,28 @@ import React from 'react';
 import EditApp from '../../../../src/main/resources/META-INF/resources/js/pages/apps/edit/EditApp.es';
 import AppContextProviderWrapper from '../../../AppContextProviderWrapper.es';
 
-const app = {
-	active: false,
-	appDeployments: [
-		{
-			settings: {},
-			type: 'standalone',
+const app = (active) => {
+	return {
+		active,
+		appDeployments: [
+			{
+				settings: {},
+				type: 'standalone',
+			},
+		],
+		dataDefinitionId: 37497,
+		dataDefinitionName: 'Object 01',
+		dataLayoutId: 37625,
+		dataListViewId: 37628,
+		dateCreated: '2020-06-08T12:13:14Z',
+		dateModified: '2020-06-08T12:13:14Z',
+		id: 37634,
+		name: {
+			en_US: 'Test',
 		},
-	],
-	dataDefinitionId: 37497,
-	dataDefinitionName: 'Object 01',
-	dataLayoutId: 37625,
-	dataListViewId: 37628,
-	dateCreated: '2020-06-08T12:13:14Z',
-	dateModified: '2020-06-08T12:13:14Z',
-	id: 37634,
-	name: {
-		en_US: 'Test',
-	},
-	siteId: 20124,
-	userId: 20126,
+		siteId: 20124,
+		userId: 20126,
+	};
 };
 
 const customObjectItems = {
@@ -225,12 +227,21 @@ const mockGetItem = jest
 	.fn()
 	.mockResolvedValueOnce(roleItems)
 	.mockResolvedValueOnce(customObjectItems)
+	.mockResolvedValueOnce(app(true))
+	.mockResolvedValueOnce(workflow)
+	.mockResolvedValueOnce(customObjectItems.items[0])
+	.mockResolvedValueOnce(formViewItems)
+	.mockResolvedValueOnce(tableViewItems)
+	.mockResolvedValueOnce(formViewItems)
+	.mockResolvedValueOnce(tableViewItems)
+	.mockResolvedValueOnce(roleItems)
+	.mockResolvedValueOnce(customObjectItems)
 	.mockResolvedValueOnce(customObjectItems)
 	.mockResolvedValueOnce(formViewItems)
 	.mockResolvedValueOnce(tableViewItems)
 	.mockResolvedValueOnce(roleItems)
 	.mockResolvedValueOnce(customObjectItems)
-	.mockResolvedValueOnce(app)
+	.mockResolvedValueOnce(app(false))
 	.mockResolvedValueOnce(workflow)
 	.mockResolvedValueOnce(customObjectItems.items[0])
 	.mockResolvedValueOnce(formViewItems)
@@ -239,6 +250,7 @@ const mockGetItem = jest
 	.mockResolvedValueOnce(formViewItems)
 	.mockResolvedValueOnce(tableViewItems)
 	.mockResolvedValueOnce(formViewItems);
+
 const mockToast = jest.fn();
 
 jest.mock('frontend-js-web', () => ({
@@ -263,25 +275,51 @@ describe('EditApp', () => {
 		jest.restoreAllMocks();
 	});
 
-	describe('Creating an app', () => {
-		let container,
-			getAllByText,
-			getAllByTitle,
-			getByDisplayValue,
-			getByLabelText,
-			getByPlaceholderText,
-			getByText,
-			getByTitle,
-			queryByText;
+	describe('Changing app language and clicking on undeploy button', () => {
+		const routeProps = {
+			match: {params: {appId: '37634'}},
+		};
 
-		beforeAll(() => {
+		it('selects language and clicks on undeploy button', async () => {
+			const {getAllByText, getByText} = render(
+				<AppContextProviderWrapper history={history}>
+					<EditApp {...routeProps} />
+				</AppContextProviderWrapper>
+			);
+
+			await waitForElementToBeRemoved(() =>
+				document.querySelector('span.loading-animation')
+			);
+
+			await fireEvent.click(getAllByText('en-US')[1]);
+
+			await fireEvent.click(getByText('undeploy'));
+
+			cleanup();
+		});
+	});
+
+	describe('Creating an app', () => {
+		let getByTextFunc;
+
+		it('renders control menu, upperToolbar, sidebar and steps components correctly when creating a new app', async () => {
 			const params = {};
 
 			const routeProps = {
 				match: {params},
 			};
 
-			const renderResult = render(
+			const {
+				container,
+				getAllByText,
+				getAllByTitle,
+				getByDisplayValue,
+				getByLabelText,
+				getByPlaceholderText,
+				getByText,
+				getByTitle,
+				queryByText,
+			} = render(
 				<AppContextProviderWrapper
 					appContext={{baseResourceUrl: '', namespace: ''}}
 					history={history}
@@ -290,18 +328,8 @@ describe('EditApp', () => {
 				</AppContextProviderWrapper>
 			);
 
-			container = renderResult.container;
-			getAllByText = renderResult.getAllByText;
-			getAllByTitle = renderResult.getAllByTitle;
-			getByDisplayValue = renderResult.getByDisplayValue;
-			getByLabelText = renderResult.getByLabelText;
-			getByPlaceholderText = renderResult.getByPlaceholderText;
-			getByText = renderResult.getByText;
-			getByTitle = renderResult.getByTitle;
-			queryByText = renderResult.queryByText;
-		});
+			getByTextFunc = getByText;
 
-		it('renders control menu, upperToolbar, sidebar and steps components correctly when creating a new app', async () => {
 			const deployButton = getByText('deploy');
 			const nameInput = getByPlaceholderText('untitled-app');
 			let stepNameInput = container.querySelector(
@@ -316,14 +344,12 @@ describe('EditApp', () => {
 			expect(steps[0]).toHaveTextContent('initial-step');
 			expect(steps[1]).toHaveTextContent('final-step');
 			expect(stepNameInput.value).toBe('initial-step');
-
 			expect(nameInput.value).toBe('');
 			expect(getByText('save')).toBeDisabled();
 
 			await fireEvent.click(getByText('data-and-views'));
 
 			const sidebarHeader = document.querySelector('div.tab-title');
-
 			expect(queryByText('step-configuration')).toBeNull();
 			expect(sidebarHeader.children.length).toBe(2);
 			expect(sidebarHeader.children[1]).toHaveTextContent(
@@ -333,6 +359,7 @@ describe('EditApp', () => {
 			await waitForElementToBeRemoved(() =>
 				document.querySelector('span.loading-animation')
 			);
+
 			await fireEvent.click(getByText('Object 01'));
 
 			expect(getByLabelText('main-data-object')).toHaveTextContent(
@@ -350,6 +377,7 @@ describe('EditApp', () => {
 			);
 
 			await fireEvent.click(getByText('Form 01'));
+
 			await fireEvent.click(getByText('Table 01'));
 
 			expect(getByLabelText('form-view')).toHaveTextContent('Form 01');
@@ -362,11 +390,9 @@ describe('EditApp', () => {
 			await fireEvent.click(getByTitle('create-new-step'));
 
 			expect(deployButton).toBeDisabled();
-
 			stepNameInput = container.querySelector(
 				'.form-group-outlined input'
 			);
-
 			expect(stepNameInput.value).toBe('step-x');
 
 			await fireEvent.mouseDown(getByText('Account Manager'));
@@ -380,7 +406,6 @@ describe('EditApp', () => {
 			await fireEvent.click(getByText('add-new-form-view'));
 
 			const stepFormViews = container.querySelectorAll('.step-form-view');
-
 			expect(stepFormViews[0]).toHaveTextContent('Form 01');
 
 			await fireEvent.click(getAllByText('Form 02')[1]);
@@ -411,7 +436,7 @@ describe('EditApp', () => {
 		it('calls error toast after saving', async () => {
 			expect(mockToast).toHaveBeenCalledWith(errorMessage);
 
-			await fireEvent.click(getByText('save'));
+			await fireEvent.click(getByTextFunc('save'));
 		});
 
 		it('calls success toast after saving', () => {

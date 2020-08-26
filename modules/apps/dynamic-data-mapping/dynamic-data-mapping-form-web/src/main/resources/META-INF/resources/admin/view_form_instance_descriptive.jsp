@@ -30,9 +30,31 @@ String href = (String)request.getAttribute(WebKeys.SEARCH_ENTRY_HREF);
 
 <div class="clamp-container">
 	<h2 class="h5 text-truncate">
-		<aui:a cssClass="form-instance-name" href="<%= href %>">
-			<%= HtmlUtil.escape(ddmFormInstance.getName(locale)) %>
-		</aui:a>
+
+		<%
+		boolean hasValidStorageType = ddmFormAdminDisplayContext.hasValidStorageType(ddmFormInstance);
+		%>
+
+		<c:choose>
+			<c:when test="<%= hasValidStorageType %>">
+				<aui:a cssClass="form-instance-name" href="<%= href %>">
+					<%= HtmlUtil.escape(ddmFormInstance.getName(locale)) %>
+				</aui:a>
+			</c:when>
+			<c:otherwise>
+				<span style="color: #da1414; margin-right: 5px;">
+					<liferay-ui:icon
+						icon="exclamation-full"
+						markupView="lexicon"
+						message='<%= LanguageUtil.format(request, "this-form-was-created-using-a-storage-type-x-that-is-not-available-for-this-liferay-dxp-installation.-install-x-to-make-it-available-for-editing", ddmFormInstance.getStorageType()) %>'
+						toolTip="<%= true %>"
+					/>
+				</span>
+				<span style="font-weight: normal;">
+					<%= HtmlUtil.escape(ddmFormInstance.getName(locale)) %>
+				</span>
+			</c:otherwise>
+		</c:choose>
 	</h2>
 
 	<span class="text-default">

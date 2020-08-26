@@ -77,12 +77,40 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 								/>
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:search-container-column-text
-									cssClass="table-cell-expand table-title"
-									href="<%= rowURL %>"
-									name="name"
-									value="<%= HtmlUtil.escape(formInstance.getName(locale)) %>"
-								/>
+
+								<%
+								boolean hasValidStorageType = ddmFormAdminDisplayContext.hasValidStorageType(formInstance);
+								%>
+
+								<c:choose>
+									<c:when test="<%= hasValidStorageType %>">
+										<liferay-ui:search-container-column-text
+											cssClass="table-cell-expand table-title"
+											href="<%= rowURL %>"
+											name="name"
+										>
+											<%= HtmlUtil.escape(formInstance.getName(locale)) %>
+										</liferay-ui:search-container-column-text>
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:search-container-column-text
+											cssClass="table-cell-expand table-title"
+											name="name"
+										>
+											<span style="color: #da1414; margin-right: 5px;">
+												<liferay-ui:icon
+													icon="exclamation-full"
+													markupView="lexicon"
+													message='<%= LanguageUtil.format(request, "this-form-was-created-using-a-storage-type-x-that-is-not-available-for-this-liferay-dxp-installation.-install-x-to-make-it-available-for-editing", formInstance.getStorageType()) %>'
+													toolTip="<%= true %>"
+												/>
+											</span>
+											<span style="font-weight: normal;">
+												<%= HtmlUtil.escape(formInstance.getName(locale)) %>
+											</span>
+										</liferay-ui:search-container-column-text>
+									</c:otherwise>
+								</c:choose>
 
 								<liferay-ui:search-container-column-text
 									cssClass="table-cell-expand"

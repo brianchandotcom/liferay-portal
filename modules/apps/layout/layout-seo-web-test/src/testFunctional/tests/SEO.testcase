@@ -95,7 +95,7 @@ definition {
 			mappedField = "HTML Title");
 
 		OpenGraph.mapEditableTextToField(
-			field = "Content Type",
+			field = "MIME Type",
 			mappedField = "Description");
 
 		Button.clickSave();
@@ -106,7 +106,7 @@ definition {
 
 		OpenGraph.viewMappedField(
 			mappedField = "Description",
-			mappedFieldValue = "Document: Content Type");
+			mappedFieldValue = "Document: MIME Type");
 	}
 
 	@description = "This test ensures that user can map the web content with SEO meta tags for display pages."

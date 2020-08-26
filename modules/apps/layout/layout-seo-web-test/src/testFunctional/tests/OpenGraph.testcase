@@ -353,7 +353,7 @@ definition {
 			mappedField = "Title");
 
 		OpenGraph.mapEditableTextToField(
-			field = "Content Type",
+			field = "MIME Type",
 			mappedField = "Description");
 
 		OpenGraph.mapEditableTextToField(
@@ -372,7 +372,7 @@ definition {
 
 		OpenGraph.viewMappedField(
 			mappedField = "Description",
-			mappedFieldValue = "Document: Content Type");
+			mappedFieldValue = "Document: MIME Type");
 
 		OpenGraph.viewMappedField(
 			mappedField = "Image",

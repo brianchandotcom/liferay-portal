@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -104,7 +105,8 @@ public class GetFriendlyURLEntryLocalizationsMVCResourceCommand
 			friendlyURLEntryLocalizationsJSONObject.put(
 				languageId,
 				JSONUtil.put(
-					"current", JSONUtil.put("urlTitle", mainUrlTitle)
+					"current",
+					JSONUtil.put("urlTitle", _http.decodeURL(mainUrlTitle))
 				).put(
 					"history",
 					_getJSONJArray(
@@ -145,7 +147,7 @@ public class GetFriendlyURLEntryLocalizationsMVCResourceCommand
 			Long.valueOf(
 				friendlyEntryLocalization.getFriendlyURLEntryLocalizationId())
 		).put(
-			"urlTitle", friendlyEntryLocalization.getUrlTitle()
+			"urlTitle", _http.decodeURL(friendlyEntryLocalization.getUrlTitle())
 		);
 	}
 
@@ -155,6 +157,9 @@ public class GetFriendlyURLEntryLocalizationsMVCResourceCommand
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private LayoutFriendlyURLEntryHelper _layoutFriendlyURLEntryHelper;

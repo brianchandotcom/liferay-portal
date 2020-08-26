@@ -64,6 +64,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Igor Beslic
+ * @author Alessio Antonio Rendina
  */
 @RunWith(Arquillian.class)
 public class CPInstanceHelperTest {
@@ -365,6 +366,120 @@ public class CPInstanceHelperTest {
 
 		_cpInstanceHelper.getDefaultCPInstance(
 			cpDefinition.getCPDefinitionId());
+	}
+
+	@Test
+	public void testPublicStoreOptionsOrder() throws Exception {
+		frutillaRule.scenario(
+			"Check the order of product options on the front store"
+		).given(
+			"a product with multiple options with different priorities"
+		).when(
+			"the method renderOptions is called from CPContentHelper"
+		).then(
+			"the options Map are sorted ascending by priority."
+		);
+
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
+			_commerceCatalog.getGroupId());
+
+		CPDefinitionOptionRel cpDefinitionOptionRel1 =
+			CPTestUtil.addCPDefinitionOptionRel(
+				cpDefinition.getGroupId(), cpDefinition.getCPDefinitionId(),
+				true, 2);
+
+		cpDefinitionOptionRel1.setPriority(2);
+
+		_cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
+			cpDefinitionOptionRel1);
+
+		CPDefinitionOptionRel cpDefinitionOptionRel2 =
+			CPTestUtil.addCPDefinitionOptionRel(
+				cpDefinition.getGroupId(), cpDefinition.getCPDefinitionId(),
+				true, 2);
+
+		cpDefinitionOptionRel2.setPriority(1);
+
+		_cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
+			cpDefinitionOptionRel2);
+
+		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+			cpDefinitionOptionRelsMap =
+				_cpInstanceHelper.getCPDefinitionOptionRelsMap(
+					cpDefinition.getCPDefinitionId(), true, true);
+
+		Assert.assertNotNull(cpDefinitionOptionRelsMap);
+		Assert.assertEquals(
+			cpDefinitionOptionRelsMap.toString(), 2,
+			cpDefinitionOptionRelsMap.size());
+
+		List<CPDefinitionOptionRel> keys = new ArrayList(
+			cpDefinitionOptionRelsMap.keySet());
+
+		CPDefinitionOptionRel orderedCPDefinitionOptionRel1 = keys.get(0);
+		CPDefinitionOptionRel orderedCPDefinitionOptionRel2 = keys.get(1);
+
+		Assert.assertEquals(
+			cpDefinitionOptionRel2, orderedCPDefinitionOptionRel1);
+		Assert.assertEquals(
+			cpDefinitionOptionRel1, orderedCPDefinitionOptionRel2);
+	}
+
+	@Test
+	public void testPublicStoreOptionsWithSamePriorityOrder() throws Exception {
+		frutillaRule.scenario(
+			"Check the order of product options on the front store"
+		).given(
+			"a product with multiple options with same priorities"
+		).when(
+			"the method renderOptions is called from CPContentHelper"
+		).then(
+			"the options Map are sorted ascending by name."
+		);
+
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
+			_commerceCatalog.getGroupId());
+
+		CPDefinitionOptionRel cpDefinitionOptionRel1 =
+			CPTestUtil.addCPDefinitionOptionRel(
+				cpDefinition.getGroupId(), cpDefinition.getCPDefinitionId(),
+				true, 2);
+
+		cpDefinitionOptionRel1.setName("Size");
+
+		_cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
+			cpDefinitionOptionRel1);
+
+		CPDefinitionOptionRel cpDefinitionOptionRel2 =
+			CPTestUtil.addCPDefinitionOptionRel(
+				cpDefinition.getGroupId(), cpDefinition.getCPDefinitionId(),
+				true, 2);
+
+		cpDefinitionOptionRel2.setName("Color");
+
+		_cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
+			cpDefinitionOptionRel2);
+
+		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+			cpDefinitionOptionRelsMap =
+				_cpInstanceHelper.getCPDefinitionOptionRelsMap(
+					cpDefinition.getCPDefinitionId(), true, true);
+
+		Assert.assertNotNull(cpDefinitionOptionRelsMap);
+		Assert.assertEquals(
+			cpDefinitionOptionRelsMap.toString(), 2,
+			cpDefinitionOptionRelsMap.size());
+
+		List<CPDefinitionOptionRel> keys = new ArrayList(
+			cpDefinitionOptionRelsMap.keySet());
+
+		CPDefinitionOptionRel orderedCPDefinitionOptionRel1 = keys.get(0);
+		CPDefinitionOptionRel orderedCPDefinitionOptionRel2 = keys.get(1);
+
+		Assert.assertEquals(
+			cpDefinitionOptionRel2, orderedCPDefinitionOptionRel1);
+		Assert.assertEquals(
+			cpDefinitionOptionRel1, orderedCPDefinitionOptionRel2);
 	}
 
 	@Rule

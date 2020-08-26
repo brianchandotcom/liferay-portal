@@ -108,7 +108,9 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 		writer.write("</table></div>");
 	}
 
-	protected void buildDisplay(DisplayBuilder<T> displayBuilder) {
+	protected void buildDisplay(DisplayBuilder<T> displayBuilder)
+		throws PortalException {
+
 		T model = displayBuilder.getModel();
 
 		Map<String, Function<T, Object>> attributeGetterFunctions =

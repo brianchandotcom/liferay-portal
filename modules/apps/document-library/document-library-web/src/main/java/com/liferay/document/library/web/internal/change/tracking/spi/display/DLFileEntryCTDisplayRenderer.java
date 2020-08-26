@@ -16,11 +16,9 @@ package com.liferay.document.library.web.internal.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
-import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -36,8 +34,6 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -104,29 +100,13 @@ public class DLFileEntryCTDisplayRenderer
 	}
 
 	@Override
-	public void render(DisplayContext<DLFileEntry> displayContext)
-		throws Exception {
+	protected void buildDisplay(DisplayBuilder<DLFileEntry> displayBuilder)
+		throws PortalException {
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/document_library/ct_display/render_file_version.jsp");
+		DLFileEntry dlFileEntry = displayBuilder.getModel();
 
-		HttpServletRequest httpServletRequest =
-			displayContext.getHttpServletRequest();
-
-		httpServletRequest.setAttribute(
-			DLWebKeys.CHANGE_TRACKING_DISPLAY_CONTEXT, displayContext);
-
-		DLFileEntry dlFileEntry = displayContext.getModel();
-
-		httpServletRequest.setAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, dlFileEntry);
-		httpServletRequest.setAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FILE_VERSION,
-			dlFileEntry.getFileVersion());
-
-		requestDispatcher.include(
-			httpServletRequest, displayContext.getHttpServletResponse());
+		DLFileVersionCTDisplayRenderer.buildDisplay(
+			displayBuilder, dlFileEntry.getFileVersion());
 	}
 
 	@Reference
@@ -134,10 +114,5 @@ public class DLFileEntryCTDisplayRenderer
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.web)"
-	)
-	private ServletContext _servletContext;
 
 }

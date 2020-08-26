@@ -20,22 +20,18 @@ import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.document.library.web.internal.constants.DLWebKeys;
+import com.liferay.frontend.taglib.clay.servlet.taglib.LinkTag;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 
 import java.io.InputStream;
 
 import java.util.Locale;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Samuel Trong Tran
@@ -47,6 +43,28 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DLFileVersionCTDisplayRenderer
 	extends BaseCTDisplayRenderer<DLFileVersion> {
+
+	public static void buildDisplay(
+		DisplayBuilder<?> displayBuilder, DLFileVersion dlFileVersion) {
+
+		displayBuilder.display(
+			"title", dlFileVersion.getTitle()
+		).display(
+			"description", dlFileVersion.getDescription()
+		).display(
+			"file-name", dlFileVersion.getFileName()
+		).display(
+			"extension", dlFileVersion.getExtension()
+		).display(
+			"mime-type", dlFileVersion.getMimeType()
+		).display(
+			"version", dlFileVersion.getVersion()
+		).display(
+			"size", dlFileVersion.getSize()
+		).display(
+			"download", _getDownloadLink(displayBuilder, dlFileVersion), false
+		);
+	}
 
 	@Override
 	public InputStream getDownloadInputStream(
@@ -87,36 +105,35 @@ public class DLFileVersionCTDisplayRenderer
 	}
 
 	@Override
-	public void render(DisplayContext<DLFileVersion> displayContext)
-		throws Exception {
-
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/document_library/ct_display/render_file_version.jsp");
-
-		HttpServletRequest httpServletRequest =
-			displayContext.getHttpServletRequest();
-
-		DLFileVersion dlFileVersion = displayContext.getModel();
-
-		httpServletRequest.setAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, dlFileVersion.getFileEntry());
-		httpServletRequest.setAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, dlFileVersion);
-
-		httpServletRequest.setAttribute(
-			DLWebKeys.CHANGE_TRACKING_DISPLAY_CONTEXT, displayContext);
-
-		requestDispatcher.include(
-			httpServletRequest, displayContext.getHttpServletResponse());
+	protected void buildDisplay(DisplayBuilder<DLFileVersion> displayBuilder) {
+		buildDisplay(displayBuilder, displayBuilder.getModel());
 	}
 
-	@Reference
-	private Language _language;
+	private static String _getDownloadLink(
+		DisplayBuilder<?> displayBuilder, DLFileVersion dlFileVersion) {
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.web)"
-	)
-	private ServletContext _servletContext;
+		DisplayContext<?> displayContext = displayBuilder.getDisplayContext();
+
+		LinkTag linkTag = new LinkTag();
+
+		linkTag.setDisplayType("primary");
+		linkTag.setHref(
+			displayContext.getDownloadURL(
+				dlFileVersion.getVersion(), dlFileVersion.getSize(),
+				dlFileVersion.getFileName()));
+		linkTag.setIcon("download");
+		linkTag.setLabel("download");
+		linkTag.setSmall(true);
+		linkTag.setType("button");
+
+		try {
+			return linkTag.doTagAsString(
+				displayContext.getHttpServletRequest(),
+				displayContext.getHttpServletResponse());
+		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
+	}
 
 }

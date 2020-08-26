@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.headless.delivery.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.dto.v1_0.ContentFieldValue;
 import com.liferay.headless.delivery.dto.v1_0.Geo;
+import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentLink;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
@@ -37,7 +38,10 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -60,11 +64,10 @@ import javax.ws.rs.core.UriInfo;
 public class ContentFieldUtil {
 
 	public static ContentField toContentField(
-			DDMFormFieldValue ddmFormFieldValue, DLAppService dlAppService,
-			DLURLHelper dlURLHelper, DTOConverterContext dtoConverterContext,
-			JournalArticleService journalArticleService,
-			LayoutLocalService layoutLocalService)
-		throws Exception {
+		DDMFormFieldValue ddmFormFieldValue, DLAppService dlAppService,
+		DLURLHelper dlURLHelper, DTOConverterContext dtoConverterContext,
+		JournalArticleService journalArticleService,
+		LayoutLocalService layoutLocalService) {
 
 		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
@@ -78,9 +81,8 @@ public class ContentFieldUtil {
 			{
 				contentFieldValue = _toContentFieldValue(
 					ddmFormField, dlAppService, dlURLHelper,
-					journalArticleService, layoutLocalService,
-					dtoConverterContext.getLocale(),
-					dtoConverterContext.getUriInfoOptional(),
+					dtoConverterContext, journalArticleService,
+					layoutLocalService, dtoConverterContext.getLocale(),
 					ddmFormFieldValue.getValue());
 				dataType = ContentStructureUtil.toDataType(ddmFormField);
 				inputControl = ContentStructureUtil.toInputControl(
@@ -124,9 +126,8 @@ public class ContentFieldUtil {
 								LocaleUtil.toBCP47LanguageId(locale),
 								_getContentFieldValue(
 									ddmFormField, dlAppService, dlURLHelper,
-									journalArticleService, layoutLocalService,
-									entry.getKey(),
-									dtoConverterContext.getUriInfoOptional(),
+									dtoConverterContext, journalArticleService,
+									layoutLocalService, locale,
 									entry.getValue()));
 						}
 
@@ -138,11 +139,15 @@ public class ContentFieldUtil {
 
 	private static ContentFieldValue _getContentFieldValue(
 		DDMFormField ddmFormField, DLAppService dlAppService,
-		DLURLHelper dlURLHelper, JournalArticleService journalArticleService,
+		DLURLHelper dlURLHelper, DTOConverterContext dtoConverterContext,
+		JournalArticleService journalArticleService,
 		LayoutLocalService layoutLocalService, Locale locale,
-		Optional<UriInfo> uriInfoOptional, String valueString) {
+		String valueString) {
 
 		try {
+			Optional<UriInfo> uriInfoOptional =
+				dtoConverterContext.getUriInfoOptional();
+
 			if (Objects.equals(DDMFormFieldType.DATE, ddmFormField.getType())) {
 				return new ContentFieldValue() {
 					{
@@ -233,6 +238,9 @@ public class ContentFieldUtil {
 						structuredContentLink = new StructuredContentLink() {
 							{
 								contentType = "StructuredContent";
+								embeddedStructuredContent =
+									_toStructuredContent(
+										classPK, dtoConverterContext);
 								id = journalArticle.getResourcePrimKey();
 								title = journalArticle.getTitle();
 							}
@@ -305,9 +313,9 @@ public class ContentFieldUtil {
 
 	private static ContentFieldValue _toContentFieldValue(
 		DDMFormField ddmFormField, DLAppService dlAppService,
-		DLURLHelper dlURLHelper, JournalArticleService journalArticleService,
-		LayoutLocalService layoutLocalService, Locale locale,
-		Optional<UriInfo> uriInfoOptional, Value value) {
+		DLURLHelper dlURLHelper, DTOConverterContext dtoConverterContext,
+		JournalArticleService journalArticleService,
+		LayoutLocalService layoutLocalService, Locale locale, Value value) {
 
 		if (value == null) {
 			return new ContentFieldValue();
@@ -316,8 +324,8 @@ public class ContentFieldUtil {
 		String valueString = String.valueOf(value.getString(locale));
 
 		return _getContentFieldValue(
-			ddmFormField, dlAppService, dlURLHelper, journalArticleService,
-			layoutLocalService, locale, uriInfoOptional, valueString);
+			ddmFormField, dlAppService, dlURLHelper, dtoConverterContext,
+			journalArticleService, layoutLocalService, locale, valueString);
 	}
 
 	private static String _toDateString(Locale locale, String valueString) {
@@ -336,6 +344,48 @@ public class ContentFieldUtil {
 				"Unable to parse date that does not conform to ISO-8601",
 				parseException);
 		}
+	}
+
+	private static StructuredContent _toStructuredContent(
+			long classPK, DTOConverterContext dtoConverterContext)
+		throws Exception {
+
+		Optional<UriInfo> uriInfoOptional =
+			dtoConverterContext.getUriInfoOptional();
+
+		if (uriInfoOptional.map(
+				UriInfo::getQueryParameters
+			).map(
+				queryParameters -> queryParameters.getFirst("nestedFields")
+			).map(
+				nestedFields -> nestedFields.contains(
+					"embeddedStructuredContent")
+			).orElse(
+				false
+			)) {
+
+			DTOConverterRegistry dtoConverterRegistry =
+				dtoConverterContext.getDTOConverterRegistry();
+
+			DTOConverter<?, ?> dtoConverter =
+				dtoConverterRegistry.getDTOConverter(
+					JournalArticle.class.getName());
+
+			if (dtoConverter == null) {
+				return null;
+			}
+
+			return (StructuredContent)dtoConverter.toDTO(
+				new DefaultDTOConverterContext(
+					dtoConverterContext.isAcceptAllLanguages(),
+					Collections.emptyMap(), dtoConverterRegistry,
+					dtoConverterContext.getHttpServletRequest(), classPK,
+					dtoConverterContext.getLocale(),
+					uriInfoOptional.orElse(null),
+					dtoConverterContext.getUser()));
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

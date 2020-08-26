@@ -138,7 +138,7 @@ definition {
 
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 		Navigator.openPrivateSitePageURL(
-			pageName = "Private Widget",
+			pageName = "Private Widget Page",
 			siteName = "${siteName}");
 
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
@@ -328,7 +328,7 @@ definition {
 
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");
 		Navigator.openPrivateSitePageURL(
-			pageName = "Private Widget",
+			pageName = "Private Widget Page",
 			siteName = "${siteName}");
 
 		AssertTextNotPresent(value1 = "The requested resource could not be found.");

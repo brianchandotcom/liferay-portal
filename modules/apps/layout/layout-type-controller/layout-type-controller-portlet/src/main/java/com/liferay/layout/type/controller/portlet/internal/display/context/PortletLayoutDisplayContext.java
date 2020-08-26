@@ -38,9 +38,11 @@ import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
@@ -60,7 +62,6 @@ import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -68,6 +69,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
@@ -454,13 +456,21 @@ public class PortletLayoutDisplayContext {
 			return _layoutStructure;
 		}
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(
-			_themeDisplay.getPlid());
+		Layout layout = _themeDisplay.getLayout();
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			LayoutPageTemplateEntryLocalServiceUtil.
 				fetchLayoutPageTemplateEntryByPlid(
 					layout.getMasterLayoutPlid());
+
+		if (masterLayoutPageTemplateEntry == null) {
+			masterLayoutPageTemplateEntry =
+				LayoutPageTemplateEntryServiceUtil.
+					fetchDefaultLayoutPageTemplateEntry(
+						_themeDisplay.getScopeGroupId(),
+						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+						WorkflowConstants.STATUS_APPROVED);
+		}
 
 		if (masterLayoutPageTemplateEntry == null) {
 			_layoutStructure = _getDefaultMasterLayoutStructure();

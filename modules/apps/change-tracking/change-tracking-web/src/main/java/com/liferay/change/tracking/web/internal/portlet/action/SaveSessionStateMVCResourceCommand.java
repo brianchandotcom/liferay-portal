@@ -16,6 +16,7 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -47,17 +48,15 @@ public class SaveSessionStateMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
-		String line = null;
+		try (BufferedReader bufferedReader = resourceRequest.getReader()) {
+			String line = null;
 
-		BufferedReader bufferedReader = resourceRequest.getReader();
-
-		while ((line = bufferedReader.readLine()) != null) {
-			sb.append(line);
+			while ((line = bufferedReader.readLine()) != null) {
+				sb.append(line);
+			}
 		}
-
-		bufferedReader.close();
 
 		JSONObject sessionStateJSONObject = JSONFactoryUtil.createJSONObject(
 			sb.toString());

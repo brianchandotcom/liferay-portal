@@ -308,14 +308,6 @@ definition {
 				}
 			}
 
-			if (isSet(checkboxNameList)) {
-				for (var checkboxNameList : list "${checkboxNameList}") {
-					Check(
-						key_opt = "${checkboxNameList}",
-						locator1 = "JSFShowcase#GENERAL_CHECKBOX");
-				}
-			}
-
 			if (isSet(uncheckboxNameList)) {
 				for (var uncheckboxNameList : list "${uncheckboxNameList}") {
 					Uncheck(
@@ -338,24 +330,18 @@ definition {
 
 			Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
 
-			if (isSet(textValue)) {
-				for (var textValue : list "${textValue}") {
-					AssertElementPresent(
-						key_attribute = "${textValue}",
-						locator1 = "JSFShowcase#MODEL_VALUE");
-				}
-			}
-
-			if (isSet(textResult)) {
-				AssertElementPresent(
-					key_attribute = "${textValue}",
-					locator1 = "JSFShowcase#MODEL_RESULT");
-			}
-
-			if (isSet(textValue)) {
+			if (isSet(messageImmediate1)) {
 				AssertElementPresent(
 					key_message = "${messageImmediate1}",
 					locator1 = "JSFShowcase#RESULT_MESSAGE");
+			}
+
+			if (isSet(textResult)) {
+				for (var textResult : list "${textResult}") {
+					AssertTextEquals.assertPartialText(
+						locator1 = "JSFShowcase#MODEL_RESULT",
+						value1 = "${textResult}");
+				}
 			}
 		}
 
@@ -382,14 +368,6 @@ definition {
 				}
 			}
 
-			if (isSet(checkboxNameList)) {
-				for (var checkboxNameList : list "${checkboxNameList}") {
-					Check(
-						key_opt = "${checkboxNameList}",
-						locator1 = "JSFShowcase#GENERAL_CHECKBOX_2");
-				}
-			}
-
 			if (isSet(uncheckboxNameList)) {
 				for (var uncheckboxNameList : list "${uncheckboxNameList}") {
 					Uncheck(
@@ -412,24 +390,18 @@ definition {
 
 			Click(locator1 = "JSFShowcase#GENERAL_BUTTON_2");
 
-			if (isSet(textValue)) {
-				for (var textValue : list "${textValue}") {
-					AssertElementPresent(
-						key_attribute = "${textValue}",
-						locator1 = "JSFShowcase#MODEL_VALUE_2");
-				}
-			}
-
-			if (isSet(textResult)) {
-				AssertElementPresent(
-					key_attribute = "${textValue}",
-					locator1 = "JSFShowcase#MODEL_RESULT_2");
-			}
-
-			if (isSet(textValue)) {
+			if (isSet(messageImmediate2)) {
 				AssertElementPresent(
 					key_message = "${messageImmediate2}",
 					locator1 = "JSFShowcase#RESULT_MESSAGE");
+			}
+
+			if (isSet(textResult)) {
+				for (var textResult : list "${textResult}") {
+					AssertTextEquals.assertPartialText(
+						locator1 = "JSFShowcase#MODEL_RESULT_2",
+						value1 = "${textResult}");
+				}
 			}
 		}
 	}

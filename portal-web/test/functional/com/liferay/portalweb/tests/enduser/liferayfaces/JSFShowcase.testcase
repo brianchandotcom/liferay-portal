@@ -272,13 +272,13 @@ definition {
 			immediate = "true",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
 			textInput = "Hello World!",
-			textValue = "Hello World!");
+			textResult = "Hello World!");
 
 		JSFShowcase.submitImmediate(
 			immediate = "false",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
 			textInput = "Hello World!",
-			textValue = "Hello World!");
+			textResult = "Hello World!");
 
 		// InputSecretRedisplay
 
@@ -381,13 +381,13 @@ definition {
 			immediate = "true",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
 			textArea = "Hello World!",
-			textValue = "Hello World!");
+			textResult = "Hello World!");
 
 		JSFShowcase.submitImmediate(
 			immediate = "false",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
 			textArea = "Hello World!",
-			textValue = "Hello World!");
+			textResult = "Hello World!");
 
 		// InputTextareaRightToLeft
 
@@ -498,13 +498,13 @@ definition {
 			immediate = "true",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
 			textInput = "Hello World!",
-			textValue = "Hello World!");
+			textResult = "Hello World!");
 
 		JSFShowcase.submitImmediate(
 			immediate = "false",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
 			textInput = "Hello World!",
-			textValue = "Hello World!");
+			textResult = "Hello World!");
 
 		// InputTextValidation
 
@@ -758,24 +758,24 @@ definition {
 		JSFShowcase.submitImmediate(
 			immediate = "true",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
-			textValue = "false");
+			textResult = "false");
 
 		JSFShowcase.submitImmediate(
 			immediate = "false",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
-			textValue = "false");
+			textResult = "false");
 
 		JSFShowcase.submitImmediate(
 			checkboxName = "Agree",
 			immediate = "true",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
-			textValue = "true");
+			textResult = "true");
 
 		JSFShowcase.submitImmediate(
 			checkboxName = "Agree",
 			immediate = "false",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
-			textValue = "true");
+			textResult = "true");
 
 		// SelectBooleanCheckboxInstant-ajax
 
@@ -883,24 +883,24 @@ definition {
 			checkboxNameList = "Compatible,Powerful Integration,Lightweight",
 			immediate = "true",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
-			textValue = "1,3,4");
+			textResult = "1,3,4");
 
 		JSFShowcase.submitImmediate(
 			checkboxNameList = "Compatible,Powerful Integration,Lightweight",
 			immediate = "false",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
-			textValue = "1,3,4");
+			textResult = "1,3,4");
 
 		JSFShowcase.submitImmediate(
 			immediate = "true",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
-			textValue = "3,4",
+			textResult = "3,4",
 			uncheckboxNameList = "Compatible");
 
 		JSFShowcase.submitImmediate(
 			immediate = "false",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
-			textValue = "3,4",
+			textResult = "3,4",
 			uncheckboxNameList = "Compatible");
 
 		AssertElementNotPresent(
@@ -1016,25 +1016,25 @@ definition {
 			immediate = "true",
 			listboxNameList = "Compatible,Powerful Integration,Lightweight",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
-			textValue = "1,3,4");
+			textResult = "1,3,4");
 
 		JSFShowcase.submitImmediate(
 			immediate = "false",
 			listboxNameList = "Compatible,Powerful Integration,Lightweight",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
-			textValue = "1,3,4");
+			textResult = "1,3,4");
 
 		JSFShowcase.submitImmediate(
 			immediate = "true",
 			listboxNameList = "Compatible",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
-			textValue = "3,4");
+			textResult = "3,4");
 
 		JSFShowcase.submitImmediate(
 			immediate = "false",
 			listboxNameList = "Compatible",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
-			textValue = "3,4");
+			textResult = "3,4");
 
 		AssertElementNotPresent(
 			key_attribute = "1",
@@ -1149,25 +1149,25 @@ definition {
 			immediate = "true",
 			listboxNameList = "Compatible,Powerful Integration,Lightweight",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
-			textValue = "1,3,4");
+			textResult = "1,3,4");
 
 		JSFShowcase.submitImmediate(
 			immediate = "false",
 			listboxNameList = "Compatible,Powerful Integration,Lightweight",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
-			textValue = "1,3,4");
+			textResult = "1,3,4");
 
 		JSFShowcase.submitImmediate(
 			immediate = "true",
 			listboxNameList = "Compatible",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
-			textValue = "3,4");
+			textResult = "3,4");
 
 		JSFShowcase.submitImmediate(
 			immediate = "false",
 			listboxNameList = "Compatible",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
-			textValue = "3,4");
+			textResult = "3,4");
 
 		AssertElementNotPresent(
 			key_attribute = "1",
@@ -1275,25 +1275,25 @@ definition {
 			immediate = "true",
 			listboxNameList = "Compatible",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
-			textValue = "1");
+			textResult = "1");
 
 		JSFShowcase.submitImmediate(
 			immediate = "false",
 			listboxNameList = "Compatible",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
-			textValue = "1");
+			textResult = "1");
 
 		JSFShowcase.submitImmediate(
 			immediate = "true",
 			listboxNameList = "Powerful Integration",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
-			textValue = "3");
+			textResult = "3");
 
 		JSFShowcase.submitImmediate(
 			immediate = "false",
 			listboxNameList = "Powerful Integration",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
-			textValue = "3");
+			textResult = "3");
 
 		AssertElementNotPresent(
 			key_attribute = "1",
@@ -1401,25 +1401,25 @@ definition {
 			immediate = "true",
 			listboxNameList = "Compatible",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
-			textValue = "1");
+			textResult = "1");
 
 		JSFShowcase.submitImmediate(
 			immediate = "false",
 			listboxNameList = "Compatible",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
-			textValue = "1");
+			textResult = "1");
 
 		JSFShowcase.submitImmediate(
 			immediate = "true",
 			listboxNameList = "Powerful Integration",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
-			textValue = "3");
+			textResult = "3");
 
 		JSFShowcase.submitImmediate(
 			immediate = "false",
 			listboxNameList = "Powerful Integration",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
-			textValue = "3");
+			textResult = "3");
 
 		AssertElementNotPresent(
 			key_attribute = "1",
@@ -1509,25 +1509,25 @@ definition {
 			checkboxNameList = "Compatible",
 			immediate = "true",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
-			textValue = "1");
+			textResult = "1");
 
 		JSFShowcase.submitImmediate(
 			checkboxNameList = "Compatible",
 			immediate = "false",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
-			textValue = "1");
+			textResult = "1");
 
 		JSFShowcase.submitImmediate(
 			checkboxNameList = "Powerful Integration",
 			immediate = "true",
 			messageImmediate1 = "APPLY_REQUEST_VALUES",
-			textValue = "3");
+			textResult = "3");
 
 		JSFShowcase.submitImmediate(
 			checkboxNameList = "Powerful Integration",
 			immediate = "false",
 			messageImmediate2 = "PROCESS_VALIDATIONS",
-			textValue = "3");
+			textResult = "3");
 
 		AssertElementNotPresent(
 			key_attribute = "1",

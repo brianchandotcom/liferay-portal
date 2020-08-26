@@ -38,11 +38,8 @@ import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -141,13 +138,7 @@ public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
 		}
 
-		Stream<Document> stream = Arrays.stream(hits.getDocs());
-
-		return stream.map(
-			doc -> GetterUtil.getLong(doc.getField(Field.ENTRY_CLASS_PK))
-		).collect(
-			Collectors.toSet()
-		);
+		return classPKsSet;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

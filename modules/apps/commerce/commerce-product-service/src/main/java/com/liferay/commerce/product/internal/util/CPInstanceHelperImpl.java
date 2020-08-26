@@ -21,6 +21,7 @@ import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.internal.catalog.CPSkuImpl;
+import com.liferay.commerce.product.internal.util.comparator.CPDefinitionOptionRelComparator;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -60,6 +61,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -169,7 +171,8 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			long cpDefinitionId, boolean skuContributor, boolean publicStore) {
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-			cpDefinitionOptionRelsMap = new HashMap<>();
+			cpDefinitionOptionRelsMap = new TreeMap<>(
+				new CPDefinitionOptionRelComparator());
 
 		List<CPDefinitionOptionRel> cpDefinitionOptionRels;
 

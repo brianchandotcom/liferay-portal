@@ -499,11 +499,11 @@ public class CPContentHelperImpl implements CPContentHelper {
 	private Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 		_filterByInventoryAvailability(
 			Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-				cpDefinitionOptionRelstMap) {
+				cpDefinitionOptionRelsMap) {
 
 		for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 				cpDefinitionOptionRelEntry :
-					cpDefinitionOptionRelstMap.entrySet()) {
+					cpDefinitionOptionRelsMap.entrySet()) {
 
 			CPDefinitionOptionRel cpDefinitionOptionRel =
 				cpDefinitionOptionRelEntry.getKey();
@@ -535,7 +535,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 											getCPDefinitionOptionRelId()))));
 		}
 
-		return cpDefinitionOptionRelstMap;
+		return cpDefinitionOptionRelsMap;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

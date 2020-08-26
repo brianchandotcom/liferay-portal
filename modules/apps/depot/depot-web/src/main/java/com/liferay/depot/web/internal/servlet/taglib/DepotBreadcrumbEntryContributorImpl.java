@@ -110,7 +110,20 @@ public class DepotBreadcrumbEntryContributorImpl
 					portletDisplay.getPortletName())) {
 
 				breadcrumbEntries.add(
-					_getHomeBreadcrumbEntry(scopeGroup, httpServletRequest));
+					_getPortletBreadcrumbEntry(
+						httpServletRequest, scopeGroup,
+						portletDisplay.getPortletDisplayName()));
+			}
+			else if (!originalBreadcrumbEntries.isEmpty()) {
+				String homeTitle = _language.get(httpServletRequest, "home");
+
+				BreadcrumbEntry breadcrumbEntry = originalBreadcrumbEntries.get(
+					0);
+
+				if (homeTitle.equals(breadcrumbEntry.getTitle())) {
+					breadcrumbEntry.setTitle(
+						portletDisplay.getPortletDisplayName());
+				}
 			}
 		}
 		catch (PortalException portalException) {
@@ -166,12 +179,12 @@ public class DepotBreadcrumbEntryContributorImpl
 		return _depotEntryService.getDepotEntry(depotEntryId);
 	}
 
-	private BreadcrumbEntry _getHomeBreadcrumbEntry(
-		Group scopeGroup, HttpServletRequest httpServletRequest) {
+	private BreadcrumbEntry _getPortletBreadcrumbEntry(
+		HttpServletRequest httpServletRequest, Group scopeGroup, String title) {
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-		breadcrumbEntry.setTitle(_language.get(httpServletRequest, "home"));
+		breadcrumbEntry.setTitle(_language.get(httpServletRequest, title));
 		breadcrumbEntry.setURL(
 			_groupURLProvider.getGroupURL(
 				scopeGroup,

@@ -179,7 +179,14 @@ public class MonitoringProxyServlet extends ProxyServlet {
 	protected void modified(Map<String, Object> properties) throws Exception {
 		replaceConfiguration(properties);
 
-		init();
+		try {
+			init();
+		}
+		catch (NullPointerException nullPointerException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to initialize monitoring proxy servlet");
+			}
+		}
 	}
 
 	protected void replaceConfiguration(Map<String, Object> properties) {

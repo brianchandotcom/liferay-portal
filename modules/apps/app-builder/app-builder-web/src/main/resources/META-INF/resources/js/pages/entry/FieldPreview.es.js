@@ -142,7 +142,7 @@ const OptionsRenderer = ({
 				defaultLanguageId
 			)
 		)
-		.filter((label) => label);
+		.filter(Boolean);
 
 	if (displayType === 'list' || labels.length === 0) {
 		return <StringRenderer value={labels.join(', ')} />;
@@ -282,7 +282,6 @@ export const FieldValuePreview = ({
 		dataDefinition,
 		fieldName
 	);
-
 	const Renderer = getFieldValueRenderer(
 		dataDefinitionField,
 		displayType,

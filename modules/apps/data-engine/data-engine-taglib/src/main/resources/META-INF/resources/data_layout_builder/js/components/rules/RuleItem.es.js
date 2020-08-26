@@ -124,13 +124,13 @@ export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 						);
 
 						if (parent) {
-							const label = getOptionLabel(
+							const optionLabel = getOptionLabel(
 								parent.customProperties?.options,
 								lastValue,
-								defaultLanguageId,
+								defaultLanguageId
 							);
 
-							return label || value;
+							return optionLabel || lastValue;
 						}
 
 						return lastValue;

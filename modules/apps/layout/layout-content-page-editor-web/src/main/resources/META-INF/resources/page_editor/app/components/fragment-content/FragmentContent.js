@@ -33,8 +33,6 @@ import {useGlobalContext} from '../GlobalContext';
 import Layout from '../Layout';
 import UnsafeHTML from '../UnsafeHTML';
 import {useIsProcessorEnabled} from './EditableProcessorContext';
-import FragmentContentInteractionsFilter from './FragmentContentInteractionsFilter';
-import FragmentContentProcessor from './FragmentContentProcessor';
 import getAllEditables from './getAllEditables';
 import resolveEditableValue from './resolveEditableValue';
 
@@ -243,41 +241,29 @@ const FragmentContent = ({
 	}
 
 	return (
-		<>
-			<FragmentContentInteractionsFilter
-				fragmentEntryLinkId={fragmentEntryLinkId}
-				itemId={itemId}
-			>
-				<UnsafeHTML
-					className={classNames(
-						`mb-${marginBottom}`,
-						`ml-${marginLeft}`,
-						`mr-${marginRight}`,
-						`mt-${marginTop}`,
-						`pb-${paddingBottom}`,
-						`pl-${paddingLeft}`,
-						`pr-${paddingRight}`,
-						`pt-${paddingTop}`,
-						{
-							'page-editor__fragment-content': withinTopper,
-							'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,
-							[textAlign]: textAlign,
-						}
-					)}
-					contentRef={elementRef}
-					getPortals={getPortals}
-					globalContext={globalContext}
-					markup={content}
-					onRender={onRender}
-					style={style}
-				/>
-			</FragmentContentInteractionsFilter>
-
-			<FragmentContentProcessor
-				fragmentEntryLinkId={fragmentEntryLinkId}
-				itemId={itemId}
-			/>
-		</>
+		<UnsafeHTML
+			className={classNames(
+				`mb-${marginBottom}`,
+				`ml-${marginLeft}`,
+				`mr-${marginRight}`,
+				`mt-${marginTop}`,
+				`pb-${paddingBottom}`,
+				`pl-${paddingLeft}`,
+				`pr-${paddingRight}`,
+				`pt-${paddingTop}`,
+				{
+					'page-editor__fragment-content': withinTopper,
+					'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,
+					[textAlign]: textAlign,
+				}
+			)}
+			contentRef={elementRef}
+			getPortals={getPortals}
+			globalContext={globalContext}
+			markup={content}
+			onRender={withinTopper ? onRender : () => {}}
+			style={style}
+		/>
 	);
 };
 

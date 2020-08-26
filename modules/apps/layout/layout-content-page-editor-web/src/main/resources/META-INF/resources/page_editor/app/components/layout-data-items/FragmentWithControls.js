@@ -21,18 +21,30 @@ import {
 } from '../../../prop-types/index';
 import Topper from '../Topper';
 import FragmentContent from '../fragment-content/FragmentContent';
+import FragmentContentInteractionsFilter from '../fragment-content/FragmentContentInteractionsFilter';
+import FragmentContentProcessor from '../fragment-content/FragmentContentProcessor';
 
 const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	const [setRef, itemElement] = useSetRef(ref);
 
 	return (
 		<Topper item={item} itemElement={itemElement} layoutData={layoutData}>
-			<FragmentContent
-				elementRef={setRef}
+			<FragmentContentInteractionsFilter
 				fragmentEntryLinkId={item.config.fragmentEntryLinkId}
-				item={item}
-				withinTopper
-			/>
+				itemId={item.itemId}
+			>
+				<FragmentContent
+					elementRef={setRef}
+					fragmentEntryLinkId={item.config.fragmentEntryLinkId}
+					item={item}
+					withinTopper
+				/>
+
+				<FragmentContentProcessor
+					fragmentEntryLinkId={item.config.fragmentEntryLinkId}
+					itemId={item.itemId}
+				/>
+			</FragmentContentInteractionsFilter>
 		</Topper>
 	);
 });

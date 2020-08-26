@@ -263,8 +263,8 @@ describe('PageStructureSidebar', () => {
 			rootItemChildren: ['04-fragment'],
 		});
 
-		expect(queryByLabelText('select-x-text')).toBeInTheDocument();
-		expect(queryByLabelText('remove-x-text')).toBe(null);
+		expect(queryByLabelText('select-x-05-editable')).toBeInTheDocument();
+		expect(queryByLabelText('remove-x-05-editable')).toBe(null);
 	});
 
 	it('sets element as active item', () => {

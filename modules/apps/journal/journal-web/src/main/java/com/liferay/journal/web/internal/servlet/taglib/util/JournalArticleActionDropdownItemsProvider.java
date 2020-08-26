@@ -118,7 +118,7 @@ public class JournalArticleActionDropdownItemsProvider {
 			_getViewContentArticleActionUnsafeConsumer();
 
 		boolean importExportTranslationEnabled =
-			_isImportExportTranslationEnabled(hasUpdatePermission);
+			hasUpdatePermission && !_isSingleLanguageSite();
 
 		return DropdownItemListBuilder.add(
 			() -> hasUpdatePermission, _getEditArticleActionUnsafeConsumer()
@@ -143,8 +143,9 @@ public class JournalArticleActionDropdownItemsProvider {
 			() -> hasViewPermission && (previewContentArticleAction != null),
 			previewContentArticleAction
 		).add(
-			() -> _isImportExportTranslationEnabled(
-				hasUpdatePermission || hasViewPermission),
+			() ->
+				(hasUpdatePermission || hasViewPermission) &&
+				!_isSingleLanguageSite(),
 			_getTranslateActionUnsafeConsumer()
 		).add(
 			() -> importExportTranslationEnabled,
@@ -780,21 +781,6 @@ public class JournalArticleActionDropdownItemsProvider {
 		};
 	}
 
-	private boolean _isImportExportTranslationEnabled(
-		boolean hasViewPermission) {
-
-		if (hasViewPermission) {
-			Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
-				_themeDisplay.getSiteGroupId());
-
-			if (availableLocales.size() > 1) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private boolean _isShowPublishAction() {
 		PermissionChecker permissionChecker =
 			_themeDisplay.getPermissionChecker();
@@ -878,6 +864,17 @@ public class JournalArticleActionDropdownItemsProvider {
 		}
 
 		if (Validator.isNotNull(_article.getLayoutUuid())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isSingleLanguageSite() {
+		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
+			_themeDisplay.getSiteGroupId());
+
+		if (availableLocales.size() == 1) {
 			return true;
 		}
 

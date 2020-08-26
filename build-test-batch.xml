@@ -391,16 +391,10 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						</else>
 					</if>
 
+					<get-operating-system-property property.name="operating.system.docker.image" />
+
 					<if>
-						<and>
-							<not>
-								<and>
-									<equals arg1="${operating.system.type}" arg2="centos" />
-									<equals arg1="${operating.system.centos.version}" arg2="7" />
-								</and>
-							</not>
-							<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
-						</and>
+						<isset property="operating.system.docker.image" />
 						<then>
 							<stop-docker-os />
 
@@ -437,16 +431,10 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						</then>
 					</if>
 
+					<get-operating-system-property property.name="operating.system.docker.image" />
+
 					<if>
-						<and>
-							<not>
-								<and>
-									<equals arg1="${operating.system.type}" arg2="centos" />
-									<equals arg1="${operating.system.centos.version}" arg2="7" />
-								</and>
-							</not>
-							<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
-						</and>
+						<isset property="operating.system.docker.image" />
 						<then>
 							<stop-docker-os />
 						</then>

@@ -1103,6 +1103,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 	<macrodef name="get-test-url">
 		<sequential>
+			<get-operating-system-property property.name="operating.system.docker.image" />
 			<get-testcase-property property.name="analytics.cloud.enabled" />
 			<get-testcase-property property.name="testcase.url" />
 
@@ -1126,15 +1127,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					</then>
 				</elseif>
 				<elseif>
-					<and>
-						<not>
-							<and>
-								<equals arg1="${operating.system.type}" arg2="centos" />
-								<equals arg1="${operating.system.centos.version}" arg2="7" />
-							</and>
-						</not>
-						<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
-					</and>
+					<isset property="operating.system.docker.image" />
 					<then>
 						<get-operating-system-property property.name="operating.system.host" />
 
@@ -4285,6 +4278,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 					<get-testcase-property property.name="ext.plugins.includes" />
 
+					<get-operating-system-property property.name="operating.system.docker.image" />
+
 					<parallel>
 						<if>
 							<not>
@@ -4316,15 +4311,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 									</exec>
 								</then>
 								<elseif>
-									<and>
-										<not>
-											<and>
-												<equals arg1="${operating.system.type}" arg2="centos" />
-												<equals arg1="${operating.system.centos.version}" arg2="7" />
-											</and>
-										</not>
-										<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
-									</and>
+									<isset property="operating.system.docker.image" />
 									<then>
 										<sequential>
 											<get-operating-system-property property.name="operating.system.host" />
@@ -5389,6 +5376,7 @@ war.path=${app.server.portal.dir}/</echo>
 
 			<local name="app.server.waiting.url" />
 
+			<get-operating-system-property property.name="operating.system.docker.image" />
 			<get-testcase-property property.name="portal.context" />
 
 			<if>
@@ -5397,15 +5385,7 @@ war.path=${app.server.portal.dir}/</echo>
 					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/${portal.context}/web/guest" />
 				</then>
 				<elseif>
-					<and>
-						<not>
-							<and>
-								<equals arg1="${operating.system.type}" arg2="centos" />
-								<equals arg1="${operating.system.centos.version}" arg2="7" />
-							</and>
-						</not>
-						<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
-					</and>
+					<isset property="operating.system.docker.image" />
 					<then>
 						<get-operating-system-property property.name="operating.system.host" />
 
@@ -9161,16 +9141,10 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<antcall target="prepare-selenium-sharepoint-properties" />
 		<antcall target="prepare-selenium-testcase-properties" />
 
+		<get-operating-system-property property.name="operating.system.docker.image" />
+
 		<if>
-			<and>
-				<not>
-					<and>
-						<equals arg1="${operating.system.type}" arg2="centos" />
-						<equals arg1="${operating.system.centos.version}" arg2="7" />
-					</and>
-				</not>
-				<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
-			</and>
+			<isset property="operating.system.docker.image" />
 			<then>
 				<get-operating-system-property property.name="operating.system.host.alias" />
 
@@ -11034,13 +11008,10 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 					<param name="keep.hypersonicdb" value="true" />
 				</antcall>
 
+				<get-database-property property.name="database.docker.image" />
+
 				<if>
-					<and>
-						<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
-						<not>
-							<equals arg1="${database.type}" arg2="hypersonic" />
-						</not>
-					</and>
+					<isset property="database.docker.image" />
 					<then>
 						<get-database-property property.name="database.host" />
 						<get-database-property property.name="database.password" />
@@ -11370,8 +11341,10 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 			src="${portal.legacy.dir}/${portal.version}/data-archive/${data.archive.type}-${database.type}.zip"
 		/>
 
+		<get-database-property property.name="database.docker.image" />
+
 		<if>
-			<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
+			<isset property="database.docker.image" />
 			<then>
 				<get-database-property property.name="database.host" />
 				<get-database-property property.name="database.password" />

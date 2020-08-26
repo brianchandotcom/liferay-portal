@@ -16,15 +16,8 @@ package com.liferay.layout.type.controller.portlet.internal.layout.type.controll
 
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.renderer.FragmentRendererController;
-import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.list.renderer.InfoListRendererTracker;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
-import com.liferay.layout.list.retriever.LayoutListRetrieverTracker;
-import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.layout.type.controller.portlet.internal.constants.PortletLayoutTypeControllerWebKeys;
-import com.liferay.layout.type.controller.portlet.internal.display.context.PortletLayoutDisplayContext;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -95,14 +88,6 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		httpServletRequest.setAttribute(
 			FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER,
 			_fragmentRendererController);
-		httpServletRequest.setAttribute(
-			PortletLayoutDisplayContext.class.getName(),
-			new PortletLayoutDisplayContext(
-				_frontendTokenDefinitionRegistry, httpServletRequest,
-				httpServletResponse, _infoItemServiceTracker,
-				_infoListRendererTracker, _layoutDisplayPageProviderTracker,
-				_layoutListRetrieverTracker,
-				_listObjectReferenceFactoryTracker));
 
 		RequestDispatcher requestDispatcher =
 			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
@@ -226,25 +211,6 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Reference
 	private FragmentRendererController _fragmentRendererController;
-
-	@Reference
-	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;
-
-	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
-
-	@Reference
-	private InfoListRendererTracker _infoListRendererTracker;
-
-	@Reference
-	private LayoutDisplayPageProviderTracker _layoutDisplayPageProviderTracker;
-
-	@Reference
-	private LayoutListRetrieverTracker _layoutListRetrieverTracker;
-
-	@Reference
-	private ListObjectReferenceFactoryTracker
-		_listObjectReferenceFactoryTracker;
 
 	@Reference
 	private Portal _portal;

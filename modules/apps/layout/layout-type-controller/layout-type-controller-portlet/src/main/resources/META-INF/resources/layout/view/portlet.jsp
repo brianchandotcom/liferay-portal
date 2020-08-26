@@ -57,16 +57,12 @@ HttpServletRequest originalServletRequest = (HttpServletRequest)request.getAttri
 		</style>
 
 		<%
-		PortletLayoutDisplayContext portletLayoutDisplayContext = (PortletLayoutDisplayContext)request.getAttribute(PortletLayoutDisplayContext.class.getName());
-
-		LayoutStructure layoutStructure = portletLayoutDisplayContext.getLayoutStructure();
-
-		LayoutStructureItem layoutStructureItem = layoutStructure.getMainLayoutStructureItem();
-
-		request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+		PortletLayoutDisplayContext portletLayoutDisplayContext = new PortletLayoutDisplayContext();
 		%>
 
-		<liferay-util:include page="/layout/view/render_layout_structure.jsp" servletContext="<%= application %>" />
+		<liferay-layout:render-layout-structure
+			layoutStructure="<%= portletLayoutDisplayContext.getLayoutStructure(themeDisplay.getScopeGroupId(), themeDisplay.getLayout()) %>"
+		/>
 	</c:otherwise>
 </c:choose>
 

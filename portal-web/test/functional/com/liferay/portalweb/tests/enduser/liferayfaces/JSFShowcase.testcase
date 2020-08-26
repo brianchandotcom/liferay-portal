@@ -2,6 +2,7 @@
 definition {
 
 	property liferay.faces = "true";
+	property custom.properties = "company.default.time.zone=Greenwich";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Liferay Faces";
@@ -205,6 +206,7 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/inputhidden/conversion");
 
 		JSFShowcase.submitHiddenValue(
+			key_text = "Copy a date to the value of the hidden input",
 			message1 = "Apr 5, 0033",
 			message2 = "04/05/0033");
 
@@ -216,13 +218,17 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/inputhidden/general");
 
-		JSFShowcase.submitHiddenValue(message1 = "1234");
+		JSFShowcase.submitHiddenValue(
+			key_text = "Copy ",
+			message1 = "1234");
 
 		JSFShowcase.clearHiddenValue(message1 = "1234");
 
 		JSFShowcase.validateRequiredCheckbox();
 
-		JSFShowcase.submitHiddenValue(message1 = "1234");
+		JSFShowcase.submitHiddenValue(
+			key_text = "Copy ",
+			message1 = "1234");
 
 		AssertElementNotPresent(locator1 = "JSFShowcase#REQUIRED_ERROR_MESSAGE");
 
@@ -232,6 +238,7 @@ definition {
 
 		JSFShowcase.submitHiddenValue(
 			immediate = "true",
+			key_text = "Copy ",
 			message1 = "1234",
 			messageImmediate1 = "APPLY_REQUEST_VALUES");
 
@@ -239,6 +246,7 @@ definition {
 
 		JSFShowcase.submitHiddenValue(
 			immediate = "true",
+			key_text = "Copy ",
 			message2 = "1234",
 			messageImmediate2 = "PROCESS_VALIDATIONS");
 
@@ -252,7 +260,9 @@ definition {
 			invalid = "true",
 			message1 = "Invalid E-Mail Address");
 
-		JSFShowcase.submitHiddenValue(message1 = "test@liferay.com");
+		JSFShowcase.submitHiddenValue(
+			key_text = "Copy a valid email address to the hidden input",
+			message1 = "test@liferay.com");
 
 		JSFShowcase.clearHiddenValue(
 			invalid = "true",
@@ -263,7 +273,9 @@ definition {
 			invalid = "true",
 			message2 = "Invalid E-Mail Address");
 
-		JSFShowcase.submitHiddenValue(message2 = "test@liferay.com");
+		JSFShowcase.submitHiddenValue(
+			key_text = "Copy a valid email address to the hidden input",
+			message2 = "test@liferay.com");
 
 		JSFShowcase.clearHiddenValue(
 			invalid = "true",
@@ -689,9 +701,11 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/jsf-showcase/-/jsf-tag/h/outputtext/conversion");
 
+		var displayDate = DateUtil.getFormattedCurrentDate("EEEE, MMM dd, yyyy");
+
 		AssertTextEquals(
 			locator1 = "JSFShowcase#EXAMPLE_TEXT",
-			value1 = "Wednesday, Aug 19, 2020");
+			value1 = "${displayDate}");
 
 		// OutputTextConversionTester
 
@@ -1463,7 +1477,7 @@ definition {
 			textValue = "1");
 
 		AssertElementNotPresent(
-			key_attribute = "1",
+			key_attribute = "3",
 			locator1 = "JSFShowcase#MODEL_VALUE");
 	}
 

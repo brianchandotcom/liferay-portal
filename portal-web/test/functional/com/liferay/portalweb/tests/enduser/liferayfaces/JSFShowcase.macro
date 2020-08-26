@@ -241,7 +241,7 @@ definition {
 			}
 			else {
 				Click(
-					key_text = "Copy a valid",
+					key_text = "${key_text}",
 					locator1 = "JSFShowcase#COPY_CLEAR_BUTTON");
 			}
 
@@ -266,7 +266,7 @@ definition {
 			}
 			else {
 				Click(
-					key_text = "Copy a valid",
+					key_text = "${key_text}",
 					locator1 = "JSFShowcase#COPY_CLEAR_BUTTON_2");
 			}
 
@@ -606,13 +606,10 @@ definition {
 	}
 
 	macro viewStylesheet {
-		AssertElementPresent(
-			key_text = "Button",
-			locator1 = "Button#ANY");
+		AssertElementPresent(locator1 = "//button[normalize-space(text())='Button']");
 
 		AssertCssValue(
-			key_text = "Button",
-			locator1 = "Button#ANY",
+			locator1 = "//button[normalize-space(text())='Button']",
 			locator2 = "opacity",
 			value1 = "0.65");
 

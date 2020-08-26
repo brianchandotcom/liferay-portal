@@ -26,10 +26,16 @@ definition {
 			locator1 = "TextInput#ANY",
 			value1 = "${city}");
 
-		AssertTextEquals(
-			key_text = "State/Province",
-			locator1 = "BridgeDemos#STATE_PROVINCE_SELECTED",
-			value1 = "${state}");
+		if ("${applicantName}" == "Prime Faces") {
+			AssertElementPresent(locator1 = "//div[label[contains(.,'State/Province')]]//select/option[@selected='selected' and contains(.,'${state}')]");
+		}
+
+		else {
+			AssertTextEquals(
+				key_text = "State/Province",
+				locator1 = "BridgeDemos#STATE_PROVINCE_SELECTED",
+				value1 = "${state}");
+		}
 	}
 
 	macro editDateFormat {
@@ -100,6 +106,7 @@ definition {
 
 		if (!("${applicantName}" == "JSF JSP")) {
 			BridgeDemos.autoPopulateCityState(
+				applicantName = "${applicantName}",
 				city = "${city}",
 				postalCode = "${postalCode}",
 				state = "${state}");
@@ -187,6 +194,15 @@ definition {
 				key_fieldName = "${fieldName}",
 				locator1 = "BridgeDemos#FIELD_ERROR_JSF_JSP",
 				value1 = "${errorMessage}");
+		}
+
+		else if ("${applicantName}" == "Prime Faces") {
+			Click(locator1 = "BridgeDemos#SUBMIT_BUTTON");
+
+			BridgeDemos.viewFieldErrorMessage(
+				applicantName = "${applicantName}",
+				errorMessage = "${errorMessage}",
+				fieldName = "${fieldNameText}");
 		}
 
 		else {

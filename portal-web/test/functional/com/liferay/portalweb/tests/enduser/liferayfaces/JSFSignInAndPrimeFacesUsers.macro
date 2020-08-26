@@ -36,7 +36,7 @@ definition {
 
 	macro filterUsers {
 		Click(
-			key_name = "${name}",
+			key_name = "${sortName}",
 			locator1 = "JSFSignInAndPrimeFacesUsers#SORT_BUTTON");
 
 		if ("${sort}" == "ascending") {
@@ -148,7 +148,8 @@ definition {
 			filterName = "${filterName}",
 			name = "screenName",
 			screenName1 = "${screenName1}",
-			sort = "ascending");
+			sort = "ascending",
+			sortName = "${sortName}");
 
 		JSFSignInAndPrimeFacesUsers.goToEditUsers(screenName = "${screenName1}");
 
@@ -184,9 +185,13 @@ definition {
 	}
 
 	macro viewPaginator {
+		var screenName1 = selenium.getAttribute("//tbody//span[contains(@id,'users:0:screenNameCell')]@textContent");
+
 		Click(
 			key_buttonLabel = "Next Page",
 			locator1 = "JSFSignInAndPrimeFacesUsers#PAGINATOR_BUTTON");
+
+		var screenName2 = selenium.getAttribute("//tbody//span[contains(@id,'users:3:screenNameCell')]@textContent");
 
 		AssertElementPresent(
 			key_pageNum = "2",
@@ -200,6 +205,8 @@ definition {
 		Click(
 			key_buttonLabel = "3",
 			locator1 = "JSFSignInAndPrimeFacesUsers#PAGINATOR_BUTTON");
+
+		var screenName3 = selenium.getAttribute("//tbody//span[contains(@id,'users:6:screenNameCell')]@textContent");
 
 		AssertElementPresent(
 			key_pageNum = "3",

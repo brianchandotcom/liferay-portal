@@ -938,6 +938,7 @@ definition {
 		}
 
 		BridgeDemos.validateField(
+			applicantName = "Prime Faces",
 			errorMessage = "Invalid date format",
 			fieldName = "Birthday",
 			fieldNameText = "dateOfBirth",
@@ -945,6 +946,7 @@ definition {
 			urlAppend = "web/bridge-demos/primefaces-applicant");
 
 		BridgeDemos.validateField(
+			applicantName = "Prime Faces",
 			errorMessage = "Invalid e-mail address",
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
@@ -952,6 +954,7 @@ definition {
 			urlAppend = "web/bridge-demos/primefaces-applicant");
 
 		BridgeDemos.validateField(
+			applicantName = "Prime Faces",
 			errorMessage = "Invalid e-mail address",
 			fieldName = "Email Address",
 			fieldNameText = "emailAddress",
@@ -961,6 +964,7 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/primefaces-applicant");
 
 		BridgeDemos.autoPopulateCityState(
+			applicantName = "Prime Faces",
 			city = "Orlando",
 			postalCode = "32801",
 			state = "FL");
@@ -978,6 +982,7 @@ definition {
 			fileName = "Document_2.jpeg");
 
 		BridgeDemos.submit(
+			applicantName = "Prime Faces",
 			city = "Orlando",
 			comments = "Indeed the people are one and they all have one language, and this is what they begin to do ...",
 			confirmation = "Thank you David",

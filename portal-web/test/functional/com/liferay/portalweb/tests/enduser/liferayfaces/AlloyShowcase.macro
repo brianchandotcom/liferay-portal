@@ -281,6 +281,7 @@ definition {
 		AssertElementNotPresent(
 			key_item = "6",
 			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_DESCRIPTION");
+	}
 
 	macro viewEventPaginator {
 		AlloyShowcase.viewPaginator(

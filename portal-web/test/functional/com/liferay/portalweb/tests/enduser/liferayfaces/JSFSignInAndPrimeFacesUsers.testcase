@@ -80,10 +80,7 @@ definition {
 
 		JSFSignInAndPrimeFacesUsers.setRowsPerPage();
 
-		JSFSignInAndPrimeFacesUsers.viewPaginator(
-			screenName1 = "benjamin.adams",
-			screenName2 = "carter.braxton",
-			screenName3 = "philip.livingston");
+		JSFSignInAndPrimeFacesUsers.viewPaginator();
 
 		JSFSignInAndPrimeFacesUsers.sortUsers(
 			screenName1 = "benjamin.adams",
@@ -101,16 +98,18 @@ definition {
 		JSFSignInAndPrimeFacesUsers.filterUsers(
 			filterName = "John",
 			name = "firstName",
-			screenName1 = "john.franklin",
+			screenName1 = "john.adams",
 			screenName2 = "john.braxton",
-			screenName3 = "john.adams",
-			sort = "ascending");
+			screenName3 = "john.franklin",
+			sort = "ascending",
+			sortName = "lastName");
 
 		JSFSignInAndPrimeFacesUsers.filterUsers(
 			name = "firstName",
 			screenName1 = "john.franklin",
 			screenName2 = "john.braxton",
-			screenName3 = "john.adams");
+			screenName3 = "john.adams",
+			sortName = "lastName");
 
 		// UsersFilter
 
@@ -121,12 +120,14 @@ definition {
 			name = "lastName",
 			screenName1 = "benjamin.adams",
 			screenName2 = "john.adams",
-			sort = "ascending");
+			sort = "ascending",
+			sortName = "firstName");
 
 		JSFSignInAndPrimeFacesUsers.filterUsers(
 			name = "lastName",
-			screenName1 = "benjamin.adams",
-			screenName2 = "john.adams");
+			screenName1 = "john.adams",
+			screenName2 = "benjamin.adams",
+			sortName = "firstName");
 
 		// DetailViewErrorMessages
 
@@ -136,7 +137,8 @@ definition {
 			filterName = "john.adams",
 			name = "screenName",
 			screenName1 = "john.adams",
-			sort = "ascending");
+			sort = "ascending",
+			sortName = "screenName");
 
 		JSFSignInAndPrimeFacesUsers.goToEditUsers(screenName = "john.adams");
 
@@ -152,7 +154,8 @@ definition {
 			filterName = "john.adams",
 			name = "screenName",
 			screenName1 = "john.adams",
-			sort = "ascending");
+			sort = "ascending",
+			sortName = "screenName");
 
 		JSFSignInAndPrimeFacesUsers.goToEditUsers(screenName = "john.adams");
 
@@ -160,7 +163,8 @@ definition {
 			fileName = "Document_1.jpeg",
 			filterName = "john.adams",
 			name = "screenName",
-			screenName1 = "john.adams");
+			screenName1 = "john.adams",
+			sortName = "screenName");
 
 		// DetailViewChangeUserAttributes
 
@@ -170,7 +174,8 @@ definition {
 			filterName = "john.adams",
 			name = "screenName",
 			screenName1 = "john.adams",
-			sort = "ascending");
+			sort = "ascending",
+			sortName = "screenName");
 
 		JSFSignInAndPrimeFacesUsers.goToEditUsers(screenName = "john.adams");
 

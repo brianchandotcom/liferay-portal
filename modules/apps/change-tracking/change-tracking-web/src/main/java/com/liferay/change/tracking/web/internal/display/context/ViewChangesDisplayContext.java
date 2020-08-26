@@ -352,7 +352,7 @@ public class ViewChangesDisplayContext {
 					_renderRequest.getPortletSession();
 
 				return portletSession.getAttribute(
-					CTWebKeys.CHANGES_SESSION_STATE);
+					CTWebKeys.VIEW_CHANGES_SESSION_STATE);
 			}
 		).put(
 			"siteNames",

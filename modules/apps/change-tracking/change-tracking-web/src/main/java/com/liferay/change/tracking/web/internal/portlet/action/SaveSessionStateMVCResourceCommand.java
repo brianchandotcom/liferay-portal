@@ -64,7 +64,7 @@ public class SaveSessionStateMVCResourceCommand extends BaseMVCResourceCommand {
 		PortletSession portletSession = resourceRequest.getPortletSession();
 
 		portletSession.setAttribute(
-			CTWebKeys.CHANGES_SESSION_STATE, sessionStateJSONObject);
+			CTWebKeys.VIEW_CHANGES_SESSION_STATE, sessionStateJSONObject);
 	}
 
 }

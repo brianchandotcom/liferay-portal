@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusInterceptor;
+import com.liferay.portal.kernel.util.TransientValue;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
@@ -57,6 +59,12 @@ public class CTMessageBusInterceptor implements MessageBusInterceptor {
 		}
 
 		message.setDestinationName(destinationName);
+
+		Map<String, Object> messageValues = message.getValues();
+
+		Collection<Object> values = messageValues.values();
+
+		values.removeIf(value -> value instanceof TransientValue);
 
 		_ctMessageLocalService.addCTMessage(ctCollectionId, message);
 

@@ -41,15 +41,6 @@ const EDITABLE_TYPE_ICONS = {
 	[EDITABLE_TYPES.text]: 'text-editor',
 };
 
-const EDITABLE_TYPE_LABELS = {
-	[EDITABLE_TYPES.backgroundImage]: Liferay.Language.get('image'),
-	[EDITABLE_TYPES.html]: Liferay.Language.get('html'),
-	[EDITABLE_TYPES.image]: Liferay.Language.get('image'),
-	[EDITABLE_TYPES.link]: Liferay.Language.get('link'),
-	[EDITABLE_TYPES['rich-text']]: Liferay.Language.get('rich-text'),
-	[EDITABLE_TYPES.text]: Liferay.Language.get('text'),
-};
-
 const LAYOUT_DATA_ITEM_TYPE_ICONS = {
 	[LAYOUT_DATA_ITEM_TYPES.collection]: 'list',
 	[LAYOUT_DATA_ITEM_TYPES.collectionItem]: 'document',
@@ -199,7 +190,7 @@ function visit(
 				icon: EDITABLE_TYPE_ICONS[type],
 				id: childId,
 				itemType: ITEM_TYPES.editable,
-				name: EDITABLE_TYPE_LABELS[type],
+				name: editableId,
 				onHoverNode,
 				parentId: item.parentId,
 				removable: false,

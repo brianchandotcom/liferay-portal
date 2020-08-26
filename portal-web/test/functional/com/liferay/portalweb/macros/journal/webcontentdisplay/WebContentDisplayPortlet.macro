@@ -209,13 +209,7 @@ definition {
 			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
 			value1 = "Select");
 
-		WaitForElementPresent(
-			key_title = "Select Web Content",
-			locator1 = "IFrame#MODAL_ANY");
-
-		SelectFrame.selectFrameNoLoading(
-			key_title = "Select Web Content",
-			locator1 = "IFrame#MODAL_ANY");
+		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
 
 		var searchTerm = "${webContentTitle}";
 
@@ -264,13 +258,7 @@ definition {
 			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
 			value1 = "Select");
 
-		WaitForElementPresent(
-			key_title = "Select Web Content",
-			locator1 = "IFrame#MODAL_ANY");
-
-		SelectFrame.selectFrameNoLoading(
-			key_title = "Select Web Content",
-			locator1 = "IFrame#MODAL_ANY");
+		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Search.searchCP(searchTerm = "${webContentTitle}");
 
@@ -296,13 +284,7 @@ definition {
 			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
 			value1 = "Select");
 
-		WaitForElementPresent(
-			key_title = "Select Web Content",
-			locator1 = "IFrame#MODAL_ANY");
-
-		SelectFrame.selectFrameNoLoading(
-			key_title = "Select Web Content",
-			locator1 = "IFrame#MODAL_ANY");
+		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Click(
 			key_breadcrumbName = "Sites and Libraries",
@@ -349,13 +331,7 @@ definition {
 			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
 			value1 = "Select");
 
-		WaitForElementPresent(
-			key_title = "Select Web Content",
-			locator1 = "IFrame#MODAL_ANY");
-
-		SelectFrame.selectFrameNoLoading(
-			key_title = "Select Web Content",
-			locator1 = "IFrame#MODAL_ANY");
+		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(depotName)) {
 			var key_rowEntry = "${webContentTitle}";

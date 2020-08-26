@@ -221,7 +221,9 @@ public class DDMFormDisplayContext {
 			ddmFormRenderingContext.setDDMFormValues(mergedDDMFormValues);
 		}
 
-		if (!hasAddFormInstanceRecordPermission() || !hasValidStorageType()) {
+		if (!hasAddFormInstanceRecordPermission() ||
+			!hasValidStorageType(ddmFormInstance)) {
+
 			ddmFormRenderingContext.setReadOnly(true);
 		}
 
@@ -378,10 +380,8 @@ public class DDMFormDisplayContext {
 		return _hasAddFormInstanceRecordPermission;
 	}
 
-	public boolean hasValidStorageType() {
+	public boolean hasValidStorageType(DDMFormInstance ddmFormInstance) {
 		try {
-			DDMFormInstance ddmFormInstance = getFormInstance();
-
 			DDMStorageAdapter ddmStorageAdapter =
 				_ddmStorageAdapterTracker.getDDMStorageAdapter(
 					ddmFormInstance.getStorageType());

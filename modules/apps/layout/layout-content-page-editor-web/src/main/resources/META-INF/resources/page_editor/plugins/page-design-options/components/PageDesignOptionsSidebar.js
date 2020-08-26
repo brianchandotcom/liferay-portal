@@ -48,13 +48,8 @@ export default function PageDesignOptionsSidebar() {
 			onNetworkStatus: () => {},
 			styleBookEntryId: styleBook.styleBookEntryId,
 		}).then((styleBookWithTokens) => {
-			if (Liferay.Browser.isIe()) {
-				Liferay.Util.navigate(window.location.href);
-			}
-			else {
-				setStyleBookEntryId(styleBook.styleBookEntryId);
-				setSelectedStyleBook(styleBookWithTokens);
-			}
+			setStyleBookEntryId(styleBook.styleBookEntryId);
+			setSelectedStyleBook(styleBookWithTokens);
 		});
 	}, []);
 

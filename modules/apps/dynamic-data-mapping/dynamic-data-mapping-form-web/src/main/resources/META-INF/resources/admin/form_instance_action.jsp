@@ -21,6 +21,8 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 DDMFormInstance formInstance = (DDMFormInstance)row.getObject();
 
+boolean hasValidStorageType = ddmFormAdminDisplayContext.hasValidStorageType(formInstance);
+
 FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFormAdminDisplayContext.getPermissionCheckerHelper();
 %>
 
@@ -48,6 +50,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 		</liferay-portlet:actionURL>
 
 		<liferay-ui:icon
+			cssClass='<%= !hasValidStorageType ? "disabled" : "" %>'
 			message="duplicate"
 			url="<%= copyFormInstanceURL %>"
 		/>
@@ -61,6 +64,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 		</portlet:renderURL>
 
 		<liferay-ui:icon
+			cssClass='<%= !hasValidStorageType ? "disabled" : "" %>'
 			message="edit"
 			url="<%= editURL %>"
 		/>
@@ -82,6 +86,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 		%>
 
 		<liferay-ui:icon
+			cssClass='<%= !hasValidStorageType ? "disabled" : "" %>'
 			message="export"
 			url="<%= sb.toString() %>"
 		/>
@@ -106,6 +111,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 
 	<c:if test="<%= formInstancePermissionCheckerHelper.isShowShareIcon(formInstance) && ddmFormAdminDisplayContext.isFormPublished(formInstance) %>">
 		<liferay-ui:icon
+			cssClass='<%= !hasValidStorageType ? "disabled" : "" %>'
 			message="share"
 			onClick='<%= "Liferay.fire('" + liferayPortletResponse.getNamespace() + "openShareFormModal', { localizedName:" + ddmFormAdminDisplayContext.getFormLocalizedName(formInstance) + " , shareFormInstanceURL:'" + ddmFormAdminDisplayContext.getShareFormInstanceURL(formInstance) + "' , url:'" + ddmFormAdminDisplayContext.getPublishedFormURL(formInstance) + "' , node: this});" %>'
 			url="javascript:;"
@@ -120,6 +126,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 		</portlet:renderURL>
 
 		<liferay-ui:icon
+			cssClass='<%= !hasValidStorageType ? "disabled" : "" %>'
 			message="view-entries"
 			url="<%= viewEntriesURL %>"
 		/>

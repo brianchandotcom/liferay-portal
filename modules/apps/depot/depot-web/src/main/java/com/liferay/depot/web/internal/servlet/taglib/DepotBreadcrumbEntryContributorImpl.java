@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.util.GroupURLProvider;
 
@@ -109,10 +110,15 @@ public class DepotBreadcrumbEntryContributorImpl
 					DepotPortletKeys.DEPOT_ADMIN,
 					portletDisplay.getPortletName())) {
 
+				String title = portletDisplay.getPortletDisplayName();
+
+				if (Validator.isBlank(title)) {
+					title = _language.get(httpServletRequest, "home");
+				}
+
 				breadcrumbEntries.add(
 					_getPortletBreadcrumbEntry(
-						httpServletRequest, scopeGroup,
-						portletDisplay.getPortletDisplayName()));
+						httpServletRequest, scopeGroup, title));
 			}
 			else if (!originalBreadcrumbEntries.isEmpty()) {
 				String homeTitle = _language.get(httpServletRequest, "home");

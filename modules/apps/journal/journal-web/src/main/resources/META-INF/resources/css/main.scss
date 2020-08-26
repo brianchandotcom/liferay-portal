@@ -7,6 +7,8 @@ $toolbarZIndex: 971;
 $controlMenuHeight: 56px;
 $sidebarHeaderHeight: 104px;
 
+$portletLayoutMargin: 35px;
+
 $productMenuTransitionDuration: 0.5s;
 $productMenuWidth: 320px;
 
@@ -179,9 +181,22 @@ $productMenuWidth: 320px;
 				margin-top: $toolbarDesktopHeight;
 			}
 
-			@media (max-width: 769px) {
-				> .container-fluid {
-					margin: 0;
+			> .container-fluid {
+				max-height: calc(
+					100vh - #{$controlMenuHeight + $portletLayoutMargin +
+						$toolbarHeight}
+				);
+				overflow: auto;
+
+				@include media-breakpoint-up(lg) {
+					max-height: calc(
+						100vh - #{$controlMenuHeight + $portletLayoutMargin +
+							$toolbarDesktopHeight}
+					);
+				}
+
+				@include media-breakpoint-up(md) {
+					margin: 0 auto;
 					padding: 0;
 
 					> .sheet {
@@ -192,8 +207,8 @@ $productMenuWidth: 320px;
 				}
 			}
 
-			@media (max-width: 992px) {
-				.sidebar-body {
+			.sidebar-body {
+				@include media-breakpoint-down(lg) {
 					height: calc(
 						100vh - #{$toolbarHeight + $controlMenuHeight +$sidebarHeaderHeight}
 					);

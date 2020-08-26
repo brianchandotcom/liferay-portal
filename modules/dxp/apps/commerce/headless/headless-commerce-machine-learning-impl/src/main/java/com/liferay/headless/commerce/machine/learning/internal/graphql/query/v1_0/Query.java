@@ -25,15 +25,12 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.aggregation.Aggregation;
-import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
@@ -126,7 +123,7 @@ public class Query {
 
 		public AccountCategoryForecastPage(Page accountCategoryForecastPage) {
 			actions = accountCategoryForecastPage.getActions();
-			facets = accountCategoryForecastPage.getFacets();
+
 			items = accountCategoryForecastPage.getItems();
 			lastPage = accountCategoryForecastPage.getLastPage();
 			page = accountCategoryForecastPage.getPage();
@@ -136,9 +133,6 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<AccountCategoryForecast> items;
@@ -162,7 +156,7 @@ public class Query {
 
 		public AccountForecastPage(Page accountForecastPage) {
 			actions = accountForecastPage.getActions();
-			facets = accountForecastPage.getFacets();
+
 			items = accountForecastPage.getItems();
 			lastPage = accountForecastPage.getLastPage();
 			page = accountForecastPage.getPage();
@@ -172,9 +166,6 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<AccountForecast> items;
@@ -252,8 +243,6 @@ public class Query {
 		_accountForecastResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
-	private BiFunction<Object, List<String>, Aggregation>
-		_aggregationBiFunction;
 	private com.liferay.portal.kernel.model.Company _company;
 	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private GroupLocalService _groupLocalService;

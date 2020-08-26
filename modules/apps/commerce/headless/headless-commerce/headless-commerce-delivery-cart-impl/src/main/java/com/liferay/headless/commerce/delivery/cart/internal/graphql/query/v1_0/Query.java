@@ -29,15 +29,12 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.aggregation.Aggregation;
-import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
@@ -321,7 +318,7 @@ public class Query {
 
 		public AddressPage(Page addressPage) {
 			actions = addressPage.getActions();
-			facets = addressPage.getFacets();
+
 			items = addressPage.getItems();
 			lastPage = addressPage.getLastPage();
 			page = addressPage.getPage();
@@ -331,9 +328,6 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Address> items;
@@ -357,7 +351,7 @@ public class Query {
 
 		public CartPage(Page cartPage) {
 			actions = cartPage.getActions();
-			facets = cartPage.getFacets();
+
 			items = cartPage.getItems();
 			lastPage = cartPage.getLastPage();
 			page = cartPage.getPage();
@@ -367,9 +361,6 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<Cart> items;
@@ -393,7 +384,7 @@ public class Query {
 
 		public CartCommentPage(Page cartCommentPage) {
 			actions = cartCommentPage.getActions();
-			facets = cartCommentPage.getFacets();
+
 			items = cartCommentPage.getItems();
 			lastPage = cartCommentPage.getLastPage();
 			page = cartCommentPage.getPage();
@@ -403,9 +394,6 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<CartComment> items;
@@ -429,7 +417,7 @@ public class Query {
 
 		public CartItemPage(Page cartItemPage) {
 			actions = cartItemPage.getActions();
-			facets = cartItemPage.getFacets();
+
 			items = cartItemPage.getItems();
 			lastPage = cartItemPage.getLastPage();
 			page = cartItemPage.getPage();
@@ -439,9 +427,6 @@ public class Query {
 
 		@GraphQLField
 		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
 
 		@GraphQLField
 		protected java.util.Collection<CartItem> items;
@@ -566,8 +551,6 @@ public class Query {
 		_cartItemResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
-	private BiFunction<Object, List<String>, Aggregation>
-		_aggregationBiFunction;
 	private com.liferay.portal.kernel.model.Company _company;
 	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private GroupLocalService _groupLocalService;

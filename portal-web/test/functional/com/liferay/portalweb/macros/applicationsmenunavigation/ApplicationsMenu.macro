@@ -4,18 +4,15 @@ definition {
 	macro gotoLocalizedSite {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
-		AssertClick(
+		Click(
 			key_site = "${site}",
-			locator1 = "ApplicationsMenu#SITE_LINK",
-			value1 = "${site}");
+			locator1 = "ApplicationsMenu#SITE_LINK");
 	}
 
 	macro gotoPanel {
 		var key_panel = "${panel}";
 
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "ApplicationsMenu#PANEL",
-			value1 = "${panel}");
+		Click(locator1 = "ApplicationsMenu#PANEL");
 
 		AssertElementPresent(locator1 = "ApplicationsMenu#ACTIVE_PANEL");
 
@@ -37,10 +34,9 @@ definition {
 	macro gotoSite {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
-		AssertClick(
+		Click(
 			key_site = "${site}",
-			locator1 = "ApplicationsMenu#SITE_LINK",
-			value1 = "${site}");
+			locator1 = "ApplicationsMenu#SITE_LINK");
 	}
 
 	@summary = "Navigate to Applications Menu > Sites > Sites Modal > ${site}"

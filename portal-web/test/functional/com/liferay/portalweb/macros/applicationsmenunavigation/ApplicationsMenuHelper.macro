@@ -9,11 +9,10 @@ definition {
 	}
 
 	macro gotoPortlet {
-		AssertClick(
+		Click(
 			key_category = "${category}",
 			key_portlet = "${portlet}",
-			locator1 = "ApplicationsMenu#PORTLET",
-			value1 = "${portlet}");
+			locator1 = "ApplicationsMenu#PORTLET");
 	}
 
 	macro openApplicationsMenu {

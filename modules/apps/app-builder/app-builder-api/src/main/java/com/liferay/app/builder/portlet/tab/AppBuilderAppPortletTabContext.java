@@ -30,9 +30,9 @@ import java.util.Map;
 public class AppBuilderAppPortletTabContext {
 
 	public AppBuilderAppPortletTabContext addDataLayoutProperties(
-		long dataLayout, Map<String, Object> properties) {
+		long dataLayoutId, Map<String, Object> properties) {
 
-		_propertiesMap.put(dataLayout, properties);
+		_propertiesMap.put(dataLayoutId, properties);
 
 		return this;
 	}

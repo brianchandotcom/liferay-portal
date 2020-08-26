@@ -35,6 +35,12 @@ page import="com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem
 page import="com.liferay.layout.util.structure.LayoutStructure" %><%@
 page import="com.liferay.layout.util.structure.LayoutStructureItem" %><%@
 page import="com.liferay.layout.util.structure.RootLayoutStructureItem" %><%@
-page import="com.liferay.layout.util.structure.RowStyledLayoutStructureItem" %>
+page import="com.liferay.layout.util.structure.RowStyledLayoutStructureItem" %><%@
+page import="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil" %><%@
+page import="com.liferay.portal.kernel.model.LayoutTemplate" %><%@
+page import="com.liferay.portal.kernel.model.LayoutTemplateConstants" %><%@
+page import="com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.template.StringTemplateResource" %>
 
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.List" %><%@
+page import="java.util.Objects" %>

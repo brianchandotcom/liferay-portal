@@ -59,6 +59,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -478,16 +480,23 @@ public class RenderLayoutStructureDisplayContext {
 		defaultFragmentRendererContext.setDisplayObject(
 			_httpServletRequest.getAttribute(
 				InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT));
-		defaultFragmentRendererContext.setFieldValues(_fieldValues);
 		defaultFragmentRendererContext.setLocale(_themeDisplay.getLocale());
-		defaultFragmentRendererContext.setMode(_mode);
-		defaultFragmentRendererContext.setPreviewClassNameId(
-			_getPreviewClassNameId());
-		defaultFragmentRendererContext.setPreviewClassPK(_getPreviewClassPK());
-		defaultFragmentRendererContext.setPreviewType(_getPreviewType());
-		defaultFragmentRendererContext.setPreviewVersion(_getPreviewVersion());
-		defaultFragmentRendererContext.setSegmentsExperienceIds(
-			_getSegmentsExperienceIds());
+
+		Layout layout = _themeDisplay.getLayout();
+
+		if (!Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
+			defaultFragmentRendererContext.setFieldValues(_fieldValues);
+			defaultFragmentRendererContext.setMode(_mode);
+			defaultFragmentRendererContext.setPreviewClassNameId(
+				_getPreviewClassNameId());
+			defaultFragmentRendererContext.setPreviewClassPK(
+				_getPreviewClassPK());
+			defaultFragmentRendererContext.setPreviewType(_getPreviewType());
+			defaultFragmentRendererContext.setPreviewVersion(
+				_getPreviewVersion());
+			defaultFragmentRendererContext.setSegmentsExperienceIds(
+				_getSegmentsExperienceIds());
+		}
 
 		if (LayoutStructureItemUtil.hasAncestor(
 				itemId, LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM,

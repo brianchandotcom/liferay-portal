@@ -121,28 +121,71 @@ for (String childrenItemId : childrenItemIds) {
 				</c:if>
 			</div>
 		</c:when>
+		<c:when test="<%= layoutStructureItem instanceof DropZoneLayoutStructureItem %>">
+			<c:choose>
+				<c:when test="<%= Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) %>">
+
+					<%
+					String themeId = theme.getThemeId();
+
+					String layoutTemplateId = layoutTypePortlet.getLayoutTemplateId();
+
+					if (Validator.isNull(layoutTemplateId)) {
+						layoutTemplateId = PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID;
+					}
+
+					LayoutTemplate layoutTemplate = LayoutTemplateLocalServiceUtil.getLayoutTemplate(layoutTemplateId, false, theme.getThemeId());
+
+					if (layoutTemplate != null) {
+						themeId = layoutTemplate.getThemeId();
+					}
+
+					String templateId = themeId + LayoutTemplateConstants.CUSTOM_SEPARATOR + layoutTypePortlet.getLayoutTemplateId();
+					String templateContent = LayoutTemplateLocalServiceUtil.getContent(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId());
+					String langType = LayoutTemplateLocalServiceUtil.getLangType(layoutTypePortlet.getLayoutTemplateId(), false, theme.getThemeId());
+
+					if (Validator.isNotNull(templateContent)) {
+						HttpServletRequest originalServletRequest = (HttpServletRequest)request.getAttribute("ORIGINAL_HTTP_SERVLET_REQUEST");
+
+						RuntimePageUtil.processTemplate(originalServletRequest, response, new StringTemplateResource(templateId, templateContent), langType);
+					}
+					%>
+
+				</c:when>
+				<c:otherwise>
+
+					<%
+					request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+					%>
+
+					<liferay-util:include page="/render_layout_structure/render_layout_structure.jsp" servletContext="<%= application %>" />
+				</c:otherwise>
+			</c:choose>
+		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof FragmentStyledLayoutStructureItem %>">
+			<div class="<%= Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) ? "master-layout-fragment" : "" %>">
 
-			<%
-			FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem = (FragmentStyledLayoutStructureItem)layoutStructureItem;
+				<%
+				FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem = (FragmentStyledLayoutStructureItem)layoutStructureItem;
 
-			if (fragmentStyledLayoutStructureItem.getFragmentEntryLinkId() <= 0) {
-				continue;
-			}
+				if (fragmentStyledLayoutStructureItem.getFragmentEntryLinkId() <= 0) {
+					continue;
+				}
 
-			FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+				FragmentEntryLink fragmentEntryLink = FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
 
-			if (fragmentEntryLink == null) {
-				continue;
-			}
+				if (fragmentEntryLink == null) {
+					continue;
+				}
 
-			FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
+				FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
 
-			DefaultFragmentRendererContext defaultFragmentRendererContext = renderLayoutStructureDisplayContext.getDefaultFragmentRendererContext(fragmentEntryLink, fragmentStyledLayoutStructureItem.getItemId());
-			%>
+				DefaultFragmentRendererContext defaultFragmentRendererContext = renderLayoutStructureDisplayContext.getDefaultFragmentRendererContext(fragmentEntryLink, fragmentStyledLayoutStructureItem.getItemId());
+				%>
 
-			<div class="<%= renderLayoutStructureDisplayContext.getCssClass(fragmentStyledLayoutStructureItem) %>" style="<%= renderLayoutStructureDisplayContext.getStyle(fragmentStyledLayoutStructureItem) %>">
-				<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
+				<div class="<%= renderLayoutStructureDisplayContext.getCssClass(fragmentStyledLayoutStructureItem) %>" style="<%= renderLayoutStructureDisplayContext.getStyle(fragmentStyledLayoutStructureItem) %>">
+					<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>
+				</div>
 			</div>
 		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof RowStyledLayoutStructureItem %>">
@@ -155,16 +198,21 @@ for (String childrenItemId : childrenItemIds) {
 			boolean includeContainer = false;
 
 			if (parentLayoutStructureItem instanceof RootLayoutStructureItem) {
-				LayoutStructureItem rootParentLayoutStructureItem = layoutStructure.getLayoutStructureItem(parentLayoutStructureItem.getParentItemId());
-
-				if (rootParentLayoutStructureItem == null) {
+				if (Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
 					includeContainer = true;
 				}
-				else if (rootParentLayoutStructureItem instanceof DropZoneLayoutStructureItem) {
-					LayoutStructureItem dropZoneParentLayoutStructureItem = layoutStructure.getLayoutStructureItem(rootParentLayoutStructureItem.getParentItemId());
+				else {
+					LayoutStructureItem rootParentLayoutStructureItem = layoutStructure.getLayoutStructureItem(parentLayoutStructureItem.getParentItemId());
 
-					if (dropZoneParentLayoutStructureItem instanceof RootLayoutStructureItem) {
+					if (rootParentLayoutStructureItem == null) {
 						includeContainer = true;
+					}
+					else if (rootParentLayoutStructureItem instanceof DropZoneLayoutStructureItem) {
+						LayoutStructureItem dropZoneParentLayoutStructureItem = layoutStructure.getLayoutStructureItem(rootParentLayoutStructureItem.getParentItemId());
+
+						if (dropZoneParentLayoutStructureItem instanceof RootLayoutStructureItem) {
+							includeContainer = true;
+						}
 					}
 				}
 			}

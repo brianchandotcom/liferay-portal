@@ -531,12 +531,7 @@ public class JournalContentDisplayContext {
 		assetEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new AssetEntryItemSelectorReturnType());
 
-		long groupId = getGroupId();
-
-		assetEntryItemSelectorCriterion.setGroupId(groupId);
-		assetEntryItemSelectorCriterion.setSelectedGroupIds(
-			PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId));
-
+		assetEntryItemSelectorCriterion.setGroupId(getGroupId());
 		assetEntryItemSelectorCriterion.setShowNonindexable(true);
 		assetEntryItemSelectorCriterion.setShowScheduled(true);
 		assetEntryItemSelectorCriterion.setSingleSelect(true);

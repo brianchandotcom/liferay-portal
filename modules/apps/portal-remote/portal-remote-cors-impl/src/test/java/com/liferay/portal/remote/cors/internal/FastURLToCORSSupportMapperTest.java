@@ -16,7 +16,6 @@ package com.liferay.portal.remote.cors.internal;
 
 import java.util.Map;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -25,7 +24,6 @@ import org.junit.Test;
 public class FastURLToCORSSupportMapperTest
 	extends SimpleURLToCORSSupportMapperTest {
 
-	@Ignore
 	@Test
 	public void testGet() {
 		super.testGet();

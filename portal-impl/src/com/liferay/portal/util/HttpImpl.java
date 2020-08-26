@@ -284,7 +284,9 @@ public class HttpImpl implements Http {
 			return URLCodec.decodeURL(url, StringPool.UTF8);
 		}
 		catch (IllegalArgumentException illegalArgumentException) {
-			_log.error(illegalArgumentException.getMessage());
+			if (_log.isWarnEnabled()) {
+				_log.warn(illegalArgumentException.getMessage());
+			}
 		}
 
 		return StringPool.BLANK;

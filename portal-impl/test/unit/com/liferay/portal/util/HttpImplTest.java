@@ -610,7 +610,7 @@ public class HttpImplTest {
 	private void _testDecodeURL(String url, String expectedMessage) {
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
-					HttpImpl.class.getName(), Level.SEVERE)) {
+					HttpImpl.class.getName(), Level.WARNING)) {
 
 			String decodeURL = _httpImpl.decodeURL(url);
 

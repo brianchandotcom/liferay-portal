@@ -719,6 +719,16 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 					</then>
 				</elseif>
 			</if>
+
+			<chmod
+				maxparallel="10"
+				perm="a+rwx"
+				type="both"
+			>
+				<fileset
+					dir="${elastic.kibana.dir}"
+				/>
+			</chmod>
 		</sequential>
 	</macrodef>
 
@@ -1375,23 +1385,6 @@ xpack.monitoring.collection.enabled: true</echo>
 		<lstopwatch action="start" name="start.kibana" />
 
 		<unzip-kibana />
-
-		<chmod
-			maxparallel="10"
-			perm="a+x"
-			type="both"
-		>
-			<fileset
-				dir="${elastic.kibana.dir}/bin"
-			>
-				<include name="**" />
-			</fileset>
-			<fileset
-				dir="${elastic.kibana.dir}/node"
-			>
-				<include name="**" />
-			</fileset>
-		</chmod>
 
 		<get-testcase-property property.name="elastic.xpack.enabled" />
 

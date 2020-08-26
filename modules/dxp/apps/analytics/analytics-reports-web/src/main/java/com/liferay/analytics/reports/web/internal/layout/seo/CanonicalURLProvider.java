@@ -64,13 +64,10 @@ public class CanonicalURLProvider {
 	public String getCanonicalURL() throws PortalException {
 		Locale locale = LocaleUtil.fromLanguageId(
 			ParamUtil.getString(
-				_portal.getOriginalServletRequest(_httpServletRequest),
-				"languageId", _themeDisplay.getLanguageId()));
+				_httpServletRequest, "languageId",
+				_themeDisplay.getLanguageId()));
 
-		return _getCanonicalURL(
-			_portal.getCanonicalURL(
-				_getCanonicalURL(locale), _themeDisplay,
-				_themeDisplay.getLayout(), false, false));
+		return _getCanonicalURL(_getCanonicalURL(locale));
 	}
 
 	private Map<Locale, String> _getAlternateURLS() {
@@ -102,19 +99,22 @@ public class CanonicalURLProvider {
 	}
 
 	private String _getCanonicalURL(Locale locale) throws PortalException {
-		String completeURL = _portal.getCurrentCompleteURL(_httpServletRequest);
-
 		if (_layoutDisplayPageObjectProvider != null) {
-			completeURL = _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				_portal.getClassName(
-					_layoutDisplayPageObjectProvider.getClassNameId()),
-				_layoutDisplayPageObjectProvider.getClassPK(), locale,
-				_themeDisplay);
+			String canonicalURL =
+				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+					_portal.getClassName(
+						_layoutDisplayPageObjectProvider.getClassNameId()),
+					_layoutDisplayPageObjectProvider.getClassPK(), locale,
+					_themeDisplay);
+
+			if (canonicalURL != null) {
+				return canonicalURL;
+			}
 		}
 
 		return _portal.getCanonicalURL(
-			completeURL, _themeDisplay, _themeDisplay.getLayout(), false,
-			false);
+			_portal.getCurrentCompleteURL(_httpServletRequest), _themeDisplay,
+			_themeDisplay.getLayout(), false, false);
 	}
 
 	private String _getCanonicalURL(String canonicalURL)

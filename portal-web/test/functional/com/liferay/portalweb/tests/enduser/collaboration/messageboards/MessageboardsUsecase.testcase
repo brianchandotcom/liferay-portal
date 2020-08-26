@@ -946,7 +946,7 @@ definition {
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
 			value1 = "MB Category6 Name");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			key_threadSubject = "MB Thread Message 1 Subject",
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "MB Thread Message 1 Subject");

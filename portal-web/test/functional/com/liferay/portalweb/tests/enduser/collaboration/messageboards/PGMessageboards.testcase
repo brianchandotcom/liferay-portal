@@ -706,7 +706,7 @@ definition {
 		var key_threadStatus = "Draft";
 		var key_threadSubject = "Message Boards Thread Draft";
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "Message Boards Thread Draft");
 
@@ -718,7 +718,7 @@ definition {
 			locator1 = "MessageBoards#NAVIGATION_MY_POSTS",
 			value1 = "My Posts");
 
-		AssertTextEquals(
+		AssertTextEquals.assertPartialText(
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "Message Boards Thread Draft");
 

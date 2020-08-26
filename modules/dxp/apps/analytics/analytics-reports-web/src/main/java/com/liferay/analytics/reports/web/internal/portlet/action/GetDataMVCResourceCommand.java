@@ -25,8 +25,10 @@ import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.analytics.reports.web.internal.model.TrafficSource;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.type.WebImage;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderTracker;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
@@ -179,32 +181,31 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
 		Locale locale, Object object) {
 
-		try {
-			InfoFieldValue<Object> infoItemFieldValue =
-				infoItemFieldValuesProvider.getInfoItemFieldValue(
-					object, "authorProfileImage");
+		InfoItemFieldValues infoItemFieldValues =
+			infoItemFieldValuesProvider.getInfoItemFieldValues(object);
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				String.valueOf(infoItemFieldValue.getValue(locale)));
+		InfoFieldValue<Object> authorProfileImageInfoFieldValue =
+			infoItemFieldValues.getInfoFieldValue("authorProfileImage");
 
-			long portraitId = GetterUtil.getLong(
-				_http.getParameter(
-					HtmlUtil.escape(jsonObject.getString("url")), "img_id"));
+		WebImage webImage = (WebImage)authorProfileImageInfoFieldValue.getValue(
+			locale);
 
-			if (portraitId <= 0) {
-				jsonObject.put("url", (String)null);
-			}
+		long portraitId = GetterUtil.getLong(
+			_http.getParameter(HtmlUtil.escape(webImage.getUrl()), "img_id"));
 
-			jsonObject.put(
-				"authorId", analyticsReportsInfoItem.getAuthorUserId(object));
+		String authorProfileImage = null;
 
-			return jsonObject;
+		if (portraitId > 0) {
+			authorProfileImage = webImage.getUrl();
 		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
 
-			return JSONFactoryUtil.createJSONObject();
-		}
+		return JSONUtil.put(
+			"alt", webImage.getAlt()
+		).put(
+			"authorId", analyticsReportsInfoItem.getAuthorUserId(object)
+		).put(
+			"url", authorProfileImage
+		);
 	}
 
 	private JSONObject _getJSONObject(

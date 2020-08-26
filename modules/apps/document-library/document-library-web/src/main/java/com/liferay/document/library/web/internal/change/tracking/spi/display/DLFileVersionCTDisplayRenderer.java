@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.web.internal.change.tracking.spi.display;
 
+import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -22,14 +23,12 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 
 import java.io.InputStream;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -47,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = CTDisplayRenderer.class
 )
 public class DLFileVersionCTDisplayRenderer
-	implements CTDisplayRenderer<DLFileVersion> {
+	extends BaseCTDisplayRenderer<DLFileVersion> {
 
 	@Override
 	public InputStream getDownloadInputStream(
@@ -83,14 +82,8 @@ public class DLFileVersionCTDisplayRenderer
 	}
 
 	@Override
-	public String getTypeName(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, DLFileVersionCTDisplayRenderer.class);
-
-		return _language.get(
-			resourceBundle,
-			"model.resource.com.liferay.document.library.kernel.model." +
-				"DLFileVersion");
+	public boolean isHideable(DLFileVersion dlFileVersion) {
+		return true;
 	}
 
 	@Override

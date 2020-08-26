@@ -140,6 +140,8 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 
 		public T getModel();
 
+		public ThemeDisplay getThemeDisplay();
+
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -254,6 +256,11 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 		@Override
 		public T getModel() {
 			return _displayContext.getModel();
+		}
+
+		@Override
+		public ThemeDisplay getThemeDisplay() {
+			return _themeDisplay;
 		}
 
 		private DisplayBuilderImpl(

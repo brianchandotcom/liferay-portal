@@ -14,26 +14,28 @@
 
 package com.liferay.document.library.web.internal.change.tracking.spi.display;
 
+import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
-import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.portal.kernel.language.Language;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Samuel Trong Tran
  */
 @Component(immediate = true, service = CTDisplayRenderer.class)
-public class DLFolderCTDisplayRenderer implements CTDisplayRenderer<DLFolder> {
+public class DLFolderCTDisplayRenderer extends BaseCTDisplayRenderer<DLFolder> {
 
 	@Override
 	public String getEditURL(
@@ -85,46 +87,76 @@ public class DLFolderCTDisplayRenderer implements CTDisplayRenderer<DLFolder> {
 	}
 
 	@Override
-	public String getTypeName(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			locale, DLFolderCTDisplayRenderer.class);
+	protected void buildDisplay(DisplayBuilder<DLFolder> displayBuilder) {
+		DLFolder dlFolder = displayBuilder.getModel();
 
-		return _language.get(
-			resourceBundle,
-			"model.resource.com.liferay.document.library.kernel.model." +
-				"DLFolder");
+		displayBuilder.display(
+			"name", dlFolder.getName()
+		).display(
+			"description", dlFolder.getDescription()
+		).display(
+			"created-by",
+			() -> {
+				String userName = dlFolder.getUserName();
+
+				if (Validator.isNotNull(userName)) {
+					return userName;
+				}
+
+				return null;
+			}
+		).display(
+			"create-date", dlFolder.getCreateDate()
+		).display(
+			"last-modified", dlFolder.getModifiedDate()
+		).display(
+			"folders",
+			() -> {
+				try {
+					return _dlAppService.getFoldersCount(
+						dlFolder.getRepositoryId(), dlFolder.getFolderId());
+				}
+				catch (PortalException portalException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(portalException, portalException);
+					}
+
+					return 0;
+				}
+			}
+		).display(
+			"documents",
+			() -> {
+				ThemeDisplay themeDisplay = displayBuilder.getThemeDisplay();
+
+				int status = WorkflowConstants.STATUS_APPROVED;
+
+				PermissionChecker permissionChecker =
+					themeDisplay.getPermissionChecker();
+
+				if (permissionChecker.isContentReviewer(
+						themeDisplay.getCompanyId(),
+						themeDisplay.getScopeGroupId())) {
+
+					status = WorkflowConstants.STATUS_ANY;
+				}
+
+				return _dlAppService.getFileEntriesAndFileShortcutsCount(
+					dlFolder.getRepositoryId(), dlFolder.getFolderId(), status);
+			}
+		);
 	}
 
-	@Override
-	public void render(DisplayContext<DLFolder> displayContext)
-		throws Exception {
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLFolderCTDisplayRenderer.class);
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/document_library/ct_display/render_folder.jsp");
-
-		HttpServletRequest httpServletRequest =
-			displayContext.getHttpServletRequest();
-
-		httpServletRequest.setAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FOLDER, displayContext.getModel());
-
-		requestDispatcher.include(
-			httpServletRequest, displayContext.getHttpServletResponse());
-	}
+	@Reference
+	private DLAppService _dlAppService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private Language _language;
-
-	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.document.library.web)"
-	)
-	private ServletContext _servletContext;
 
 }

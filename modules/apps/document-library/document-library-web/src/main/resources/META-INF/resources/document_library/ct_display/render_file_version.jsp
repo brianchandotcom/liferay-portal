@@ -19,35 +19,55 @@
 <%
 DisplayContext<?> displayContext = (DisplayContext<?>)request.getAttribute(DLWebKeys.CHANGE_TRACKING_DISPLAY_CONTEXT);
 
-DLFileEntry dlFileEntry = (DLFileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
-
 DLFileVersion dlFileVersion = (DLFileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
 %>
 
-<p>
-	<b><liferay-ui:message key="id" /></b>: <%= dlFileEntry.getFileEntryId() %>
-</p>
+<div class="table-responsive">
+	<table class="table">
+		<tr>
+			<td><liferay-ui:message key="title" /></td>
+			<td><%= HtmlUtil.escape(dlFileVersion.getTitle()) %></td>
+		</tr>
+		<tr>
+			<td><liferay-ui:message key="description" /></td>
+			<td><%= HtmlUtil.escape(dlFileVersion.getDescription()) %></td>
+		</tr>
+		<tr>
+			<td><liferay-ui:message key="file-name" /></td>
+			<td><%= HtmlUtil.escape(dlFileVersion.getFileName()) %></td>
+		</tr>
+		<tr>
+			<td><liferay-ui:message key="extension" /></td>
+			<td><%= HtmlUtil.escape(dlFileVersion.getExtension()) %></td>
+		</tr>
+		<tr>
+			<td><liferay-ui:message key="mime-type" /></td>
+			<td><%= HtmlUtil.escape(dlFileVersion.getMimeType()) %></td>
+		</tr>
+		<tr>
+			<td><liferay-ui:message key="version" /></td>
+			<td><%= HtmlUtil.escape(dlFileVersion.getVersion()) %></td>
+		</tr>
+		<tr>
+			<td><liferay-ui:message key="size" /></td>
+			<td><%= dlFileVersion.getSize() %></td>
+		</tr>
+		<tr>
+			<td>
+				<clay:link
+					displayType="primary"
+					href="<%= displayContext.getDownloadURL(dlFileVersion.getVersion(), dlFileVersion.getSize(), dlFileVersion.getFileName()) %>"
+					icon="download"
+					label="download"
+					small="<%= true %>"
+					title='<%= LanguageUtil.format(resourceBundle, "file-size-x", LanguageUtil.formatStorageSize(dlFileVersion.getSize(), locale), false) %>'
+					type="button"
+				/>
+			</td>
+		</tr>
+	</table>
+</div>
 
-<p>
-	<b><liferay-ui:message key="version" /></b>: <%= dlFileVersion.getVersion() %>
-</p>
+<div class="container-fluid">
 
-<p>
-	<b><liferay-ui:message key="title" /></b>: <%= HtmlUtil.escape(dlFileVersion.getTitle()) %>
-</p>
-
-<p>
-	<b><liferay-ui:message key="description" /></b>: <%= HtmlUtil.escape(dlFileVersion.getDescription()) %>
-</p>
-
-<p>
-	<clay:link
-		displayType="primary"
-		href="<%= displayContext.getDownloadURL(dlFileVersion.getVersion(), dlFileVersion.getSize(), dlFileVersion.getFileName()) %>"
-		icon="download"
-		label="download"
-		small="<%= true %>"
-		title='<%= LanguageUtil.format(resourceBundle, "file-size-x", LanguageUtil.formatStorageSize(dlFileVersion.getSize(), locale), false) %>'
-		type="button"
-	/>
-</p>
+</div>

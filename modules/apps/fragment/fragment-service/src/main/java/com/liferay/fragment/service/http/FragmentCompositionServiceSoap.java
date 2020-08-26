@@ -317,6 +317,29 @@ public class FragmentCompositionServiceSoap {
 	}
 
 	public static com.liferay.fragment.model.FragmentCompositionSoap
+			updateFragmentComposition(
+				long fragmentCompositionId, long fragmentCollectionId,
+				String name, String description, String data,
+				long previewFileEntryId, int status)
+		throws RemoteException {
+
+		try {
+			com.liferay.fragment.model.FragmentComposition returnValue =
+				FragmentCompositionServiceUtil.updateFragmentComposition(
+					fragmentCompositionId, fragmentCollectionId, name,
+					description, data, previewFileEntryId, status);
+
+			return com.liferay.fragment.model.FragmentCompositionSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.fragment.model.FragmentCompositionSoap
 			updateFragmentComposition(long fragmentCompositionId, String name)
 		throws RemoteException {
 
@@ -346,29 +369,6 @@ public class FragmentCompositionServiceSoap {
 				FragmentCompositionServiceUtil.updateFragmentComposition(
 					fragmentCompositionId, name, description, data,
 					previewFileEntryId, status);
-
-			return com.liferay.fragment.model.FragmentCompositionSoap.
-				toSoapModel(returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	public static com.liferay.fragment.model.FragmentCompositionSoap
-			updateFragmentComposition(
-				long fragmentCompositionId, long fragmentCollectionId,
-				String name, String description, String data,
-				long previewFileEntryId, int status)
-		throws RemoteException {
-
-		try {
-			com.liferay.fragment.model.FragmentComposition returnValue =
-				FragmentCompositionServiceUtil.updateFragmentComposition(
-					fragmentCompositionId, fragmentCollectionId, name,
-					description, data, previewFileEntryId, status);
 
 			return com.liferay.fragment.model.FragmentCompositionSoap.
 				toSoapModel(returnValue);

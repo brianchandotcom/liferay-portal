@@ -17,8 +17,6 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 
@@ -58,13 +56,10 @@ public class SaveSessionStateMVCResourceCommand extends BaseMVCResourceCommand {
 			}
 		}
 
-		JSONObject sessionStateJSONObject = JSONFactoryUtil.createJSONObject(
-			sb.toString());
-
 		PortletSession portletSession = resourceRequest.getPortletSession();
 
 		portletSession.setAttribute(
-			CTWebKeys.VIEW_CHANGES_SESSION_STATE, sessionStateJSONObject);
+			CTWebKeys.VIEW_CHANGES_SESSION_STATE, sb.toString());
 	}
 
 }

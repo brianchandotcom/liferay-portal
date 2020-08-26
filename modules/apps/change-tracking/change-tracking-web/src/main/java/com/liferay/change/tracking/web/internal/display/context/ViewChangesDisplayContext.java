@@ -351,8 +351,14 @@ public class ViewChangesDisplayContext {
 				PortletSession portletSession =
 					_renderRequest.getPortletSession();
 
-				return portletSession.getAttribute(
+				String sessionState = (String)portletSession.getAttribute(
 					CTWebKeys.VIEW_CHANGES_SESSION_STATE);
+
+				if (sessionState == null) {
+					return null;
+				}
+
+				return JSONFactoryUtil.createJSONObject(sessionState);
 			}
 		).put(
 			"siteNames",

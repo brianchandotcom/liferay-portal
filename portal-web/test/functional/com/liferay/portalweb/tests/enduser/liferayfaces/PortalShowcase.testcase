@@ -45,9 +45,54 @@ definition {
 	@priority = "5"
 	test InputRichTextSmoke {
 
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/portal-showcase/-/portal-tag/portal/inputrichtext/general");
+
+		AssertElementPresent(locator1 = "PortalShowcase#CHECKED_RENDERED_CHECKBOX");
+
+		// InputRichTextHidden
+
+		PortalShowcase.checkText(
+			boldClose = "</strong>",
+			boldOpen = "<strong>",
+			italicClose = "</em>",
+			italicOpen = "<em>",
+			usecase = "Hidden");
+
+		// InputRichTextGeneral
+
+		PortalShowcase.checkText(
+			boldClose = "</strong>",
+			boldOpen = "<strong>",
+			italicClose = "</em>",
+			italicOpen = "<em>",
+			usecase = "General");
+
 		// InputRichTextBBCode
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/portal-showcase/-/portal-tag/portal/inputrichtext/bbcode");
+		PortalShowcase.checkText(
+			boldClose = "[/b]",
+			boldOpen = "[b]",
+			italicClose = "[/i]",
+			italicOpen = "[i]",
+			usecase = "BBCode");
+
+		// InputRichTextCreole
+
+		PortalShowcase.checkText(
+			boldClose = "**",
+			boldOpen = "**",
+			italicClose = "//",
+			italicOpen = "//",
+			usecase = "Creole");
+
+		// InputRichTextInstantAjax
+
+		PortalShowcase.checkText(
+			boldClose = "</strong>",
+			boldOpen = "<strong>",
+			italicClose = "</em>",
+			italicOpen = "<em>",
+			usecase = "Instant Ajax");
 	}
 
 }

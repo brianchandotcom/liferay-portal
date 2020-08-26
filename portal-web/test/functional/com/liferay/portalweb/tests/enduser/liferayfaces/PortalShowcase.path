@@ -8,7 +8,46 @@
 <tr><td rowspan="1" colspan="3">PortalShowcase</td></tr>
 </thead>
 <tbody>
-
+<tr>
+	<td>RENDERED_CHECKBOX</td>
+	<td>//input[@id='_1_WAR_comliferayfacesdemoportalshowcaseportlet_:exampleForm:renderedCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKED_RENDERED_CHECKBOX</td>
+	<td>//input[@checked='checked'][@id='_1_WAR_comliferayfacesdemoportalshowcaseportlet_:exampleForm:renderedCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUIRED_CHECKBOX</td>
+	<td>//input[@id='_1_WAR_comliferayfacesdemoportalshowcaseportlet_:exampleForm:requiredCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUIRED_ERROR_MESSAGE</td>
+	<td>//span[text()="Comments: Validation Error: Value is required."]</td>
+	<td></td>
+</tr>
+<tr>
+    <td>WRITEABLE_FIELD</td>
+    <td>//div[contains(@id,':comments')]//iframe</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SUBMIT_BUTTON</td>
+    <td>//input[@value='Submit']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>MODAL_VALUE</td>
+    <td>//span[@id='_1_WAR_comliferayfacesdemoportalshowcaseportlet_:modelValue']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>MODAL_VALUE_TITLE</td>
+    <td>//label[contains(text(),'Model Value')]</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -1,10 +1,127 @@
 definition {
 
-	macro example {
+	macro _writeAdjustedBoldItalicText {
+		Click(locator1 = "PortalShowcase#WRITEABLE_FIELD");
 
-		// Please delete this macro when adding a macro to PortalShowcase.macro!!!!!
+		RobotType.robotTypeShortcut(locator1 = "Ctrl + a");
 
-		Button.clickSave();
+		RobotType(locator1 = "Hel");
+
+		RobotType.robotTypeShortcut(locator1 = "Ctrl + b");
+
+		RobotType(locator1 = "lo t");
+
+		RobotType.robotTypeShortcut(locator1 = "Ctrl + i");
+
+		RobotType(locator1 = "o the wh");
+
+		RobotType.robotTypeShortcut(locator1 = "Ctrl + b");
+
+		RobotType(locator1 = "ole Wor");
+
+		RobotType.robotTypeShortcut(locator1 = "Ctrl + i");
+
+		RobotType(locator1 = "ld!");
+
+		PortalShowcase.submit();
+	}
+
+	macro _writeAdjustedBoldText {
+		Click(locator1 = "PortalShowcase#WRITEABLE_FIELD");
+
+		RobotType.robotTypeShortcut(locator1 = "Ctrl + a");
+
+		RobotType(locator1 = "Hel");
+
+		RobotType.robotTypeShortcut(locator1 = "Ctrl + b");
+
+		RobotType(locator1 = "lo to the wh");
+
+		RobotType.robotTypeShortcut(locator1 = "Ctrl + b");
+
+		RobotType(locator1 = "ole World!");
+
+		PortalShowcase.submit();
+	}
+
+	macro _writeText {
+		Click(locator1 = "PortalShowcase#WRITEABLE_FIELD");
+
+		RobotType(locator1 = "${text}");
+
+		PortalShowcase.submit();
+	}
+
+	macro checkText {
+		var boldOpen = "${boldOpen}";
+		var boldClose = "${boldClose}";
+		var italicOpen = "${italicOpen}";
+		var italicClose = "${italicClose}";
+		var usecase = "${usecase}";
+
+		Click(locator1 = "//a[contains(text(),'${usecase}')]");
+
+		if (IsElementPresent(locator1 = "PortalShowcase#CHECKED_RENDERED_CHECKBOX") || IsElementNotPresent(locator1 = "PortalShowcase#RENDERED_CHECKBOX")) {
+			AssertElementPresent(locator1 = "PortalShowcase#WRITEABLE_FIELD");
+		}
+
+		if (IsElementPresent(locator1 = "PortalShowcase#RENDERED_CHECKBOX")) {
+			if (IsElementNotPresent(locator1 = "PortalShowcase#CHECKED_RENDERED_CHECKBOX")) {
+				Click(locator1 = "PortalShowcase#RENDERED_CHECKBOX");
+			}
+			Click(locator1 = "PortalShowcase#RENDERED_CHECKBOX");
+
+			AssertElementNotPresent(locator1 = "PortalShowcase#WRITEABLE_FIELD");
+
+			Click(locator1 = "PortalShowcase#RENDERED_CHECKBOX");
+
+			AssertElementPresent(locator1 = "PortalShowcase#WRITEABLE_FIELD");
+
+		}
+
+		if (IsElementPresent(locator1 = "PortalShowcase#REQUIRED_CHECKBOX")) {
+			Click(locator1 = "PortalShowcase#SUBMIT_BUTTON");
+
+			AssertElementNotPresent(locator1 = "PortalShowcase#REQUIRED_ERROR_MESSAGE");
+
+			Click(locator1 = "PortalShowcase#REQUIRED_CHECKBOX");
+
+			Click(locator1 = "PortalShowcase#SUBMIT_BUTTON");
+
+			AssertElementPresent(locator1 = "PortalShowcase#REQUIRED_ERROR_MESSAGE");
+
+		}
+
+		PortalShowcase._writeText(text = "Hello to the whole World!");
+
+		AssertElementNotPresent(locator1 = "PortalShowcase#REQUIRED_ERROR_MESSAGE");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "PortalShowcase#MODAL_VALUE",
+			value1 = "Hello to the whole World!");
+
+		PortalShowcase._writeAdjustedBoldText();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "PortalShowcase#MODAL_VALUE",
+			value1 = "Hel${boldOpen}lo to the wh${boldClose}ole World!");
+
+		PortalShowcase._writeAdjustedBoldItalicText();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "PortalShowcase#MODAL_VALUE",
+			value1 = "Hel${boldOpen}lo t${italicOpen}o the wh${italicClose}${boldClose}${italicOpen}ole Wor${italicClose}ld!");
+
+		AssertElementNotPresent(locator1 = "PortalShowcase#REQUIRED_ERROR_MESSAGE");
+	}
+
+	macro submit {
+		if (IsElementPresent(locator1 = "PortalShowcase#SUBMIT_BUTTON")) {
+			Click(locator1 = "PortalShowcase#SUBMIT_BUTTON");
+		}
+		else {
+			Click(locator1 = "PortalShowcase#MODAL_VALUE_TITLE");
+		}
 	}
 
 }

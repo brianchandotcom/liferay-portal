@@ -91,13 +91,9 @@ public class FastURLToCORSSupportMapper extends BaseURLToCORSSupportMapper {
 		int column = 0;
 		int row = 0;
 
-		for (; row < urlPath.length(); ++row) {
-			if (row > (_maxURLPatternLength - 1)) {
-				bitmask = 0;
+		int maxRow = Math.min(urlPath.length(), _maxURLPatternLength - 1);
 
-				break;
-			}
-
+		for (; row < maxRow; ++row) {
 			char character = urlPath.charAt(row);
 
 			column = character - _ASCII_PRINTABLE_OFFSET;
@@ -107,6 +103,10 @@ public class FastURLToCORSSupportMapper extends BaseURLToCORSSupportMapper {
 			if (bitmask == 0) {
 				break;
 			}
+		}
+
+		if (row > (_maxURLPatternLength - 1)) {
+			bitmask = 0;
 		}
 
 		if (bitmask != 0) {
@@ -123,11 +123,9 @@ public class FastURLToCORSSupportMapper extends BaseURLToCORSSupportMapper {
 	private CORSSupport _getExtensionCORSSupport(String urlPath) {
 		long currentBitmask = _BITMASK;
 
-		for (int row = 0; row < urlPath.length(); ++row) {
-			if (row > (_maxURLPatternLength - 1)) {
-				break;
-			}
+		int maxRow = Math.min(urlPath.length(), _maxURLPatternLength - 1);
 
+		for (int row = 0; row < maxRow; ++row) {
 			char character = urlPath.charAt(urlPath.length() - 1 - row);
 
 			if (character == '/') {
@@ -231,13 +229,9 @@ public class FastURLToCORSSupportMapper extends BaseURLToCORSSupportMapper {
 		long currentBitmask = _BITMASK;
 		int row = 0;
 
-		for (; row < urlPath.length(); ++row) {
-			if (row > (_maxURLPatternLength - 1)) {
-				currentBitmask = 0;
+		int maxRow = Math.min(urlPath.length(), _maxURLPatternLength - 1);
 
-				break;
-			}
-
+		for (; row < maxRow; ++row) {
 			char character = urlPath.charAt(row);
 
 			column = character - _ASCII_PRINTABLE_OFFSET;
@@ -259,6 +253,10 @@ public class FastURLToCORSSupportMapper extends BaseURLToCORSSupportMapper {
 					bestMatchBitmask = bitmask;
 				}
 			}
+		}
+
+		if (row > (_maxURLPatternLength - 1)) {
+			currentBitmask = 0;
 		}
 
 		if (currentBitmask == 0) {

@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.exception.AvailableLocaleException;
 import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -34,6 +36,9 @@ import com.liferay.portal.service.base.VirtualHostLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 
 import java.net.IDN;
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -62,6 +67,20 @@ public class VirtualHostLocalServiceImpl
 
 	@Override
 	public VirtualHost fetchVirtualHost(String hostname) {
+		if (Validator.isIPv6Address(hostname)) {
+			try {
+				Inet6Address address = (Inet6Address)InetAddress.getByName(
+					hostname);
+
+				hostname = address.getHostAddress();
+			}
+			catch (UnknownHostException unknownHostException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(unknownHostException, unknownHostException);
+				}
+			}
+		}
+
 		VirtualHost virtualHost = virtualHostPersistence.fetchByHostname(
 			hostname);
 
@@ -247,5 +266,8 @@ public class VirtualHostLocalServiceImpl
 
 		return virtualHosts;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		VirtualHostLocalServiceImpl.class);
 
 }

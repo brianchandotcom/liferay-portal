@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -71,6 +73,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Dictionary;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -95,6 +98,51 @@ public class GetDataMVCResourceCommandTest {
 		_group = GroupTestUtil.addGroup();
 
 		_layout = LayoutTestUtil.addLayout(_group);
+	}
+
+	@Test
+	public void testGetAuthorWithoutPortraitURL() throws Exception {
+		MockContextUtil.testWithMockContext(
+			new MockContextUtil.MockContext.Builder(
+				_classNameLocalService
+			).analyticsReportsInfoItem(
+				MockAnalyticsReportsInfoItem.builder(
+				).build()
+			).infoItemFieldValuesProvider(
+				MockInfoItemFieldValuesProvider.builder(
+				).authorName(
+					RandomTestUtil.randomString()
+				).authorProfileImage(
+					RandomTestUtil.randomString() + "?img_id=0"
+				).build()
+			).layoutDisplayPageProvider(
+				MockLayoutDisplayPageProvider.builder(
+					_classNameLocalService
+				).build()
+			).build(),
+			() -> {
+				MockLiferayResourceResponse mockLiferayResourceResponse =
+					new MockLiferayResourceResponse();
+
+				_mvcResourceCommand.serveResource(
+					_getMockLiferayResourceRequest(),
+					mockLiferayResourceResponse);
+
+				ByteArrayOutputStream byteArrayOutputStream =
+					(ByteArrayOutputStream)
+						mockLiferayResourceResponse.getPortletOutputStream();
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					new String(byteArrayOutputStream.toByteArray()));
+
+				JSONObject contextJSONObject = jsonObject.getJSONObject(
+					"context");
+
+				JSONObject authorJSONObject = contextJSONObject.getJSONObject(
+					"author");
+
+				Assert.assertNull(authorJSONObject.get("url"));
+			});
 	}
 
 	@Test
@@ -194,9 +242,13 @@ public class GetDataMVCResourceCommandTest {
 	public void testGetTrafficSources() throws Exception {
 		PrefsProps prefsProps = PrefsPropsUtil.getPrefsProps();
 
-		PrefsPropsWrapper prefsPropsWrapper = _getPrefsPropsWrapper(prefsProps);
+		ValidPrefsPropsWrapper validPrefsPropsWrapper =
+			new ValidPrefsPropsWrapper(prefsProps);
 
-		String dataSourceId = prefsPropsWrapper.getString(
+		ReflectionTestUtil.setFieldValue(
+			PrefsPropsUtil.class, "_prefsProps", validPrefsPropsWrapper);
+
+		String dataSourceId = validPrefsPropsWrapper.getString(
 			RandomTestUtil.nextLong(), "liferayAnalyticsDataSourceId");
 
 		ReflectionTestUtil.setFieldValue(
@@ -309,6 +361,91 @@ public class GetDataMVCResourceCommandTest {
 							)
 						).toString(),
 						countryKeywordsJSONArray.toString());
+				});
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				PrefsPropsUtil.class, "_prefsProps", prefsProps);
+
+			ReflectionTestUtil.setFieldValue(
+				_mvcResourceCommand, "_http", _http);
+		}
+	}
+
+	@Test
+	public void testGetTrafficSourcesWithInvalidConnection() throws Exception {
+		PrefsProps prefsProps = PrefsPropsUtil.getPrefsProps();
+
+		InvalidPropsWrapper invalidPropsWrapper = new InvalidPropsWrapper(
+			prefsProps);
+
+		ReflectionTestUtil.setFieldValue(
+			PrefsPropsUtil.class, "_prefsProps", invalidPropsWrapper);
+
+		try {
+			MockContextUtil.testWithMockContext(
+				MockContextUtil.MockContext.builder(
+					_classNameLocalService
+				).build(),
+				() -> {
+					MockLiferayResourceResponse mockLiferayResourceResponse =
+						new MockLiferayResourceResponse();
+
+					_mvcResourceCommand.serveResource(
+						_getMockLiferayResourceRequest(),
+						mockLiferayResourceResponse);
+
+					ByteArrayOutputStream byteArrayOutputStream =
+						(ByteArrayOutputStream)
+							mockLiferayResourceResponse.
+								getPortletOutputStream();
+
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+						new String(byteArrayOutputStream.toByteArray()));
+
+					JSONObject contextJSONObject = jsonObject.getJSONObject(
+						"context");
+
+					JSONArray jsonArray = contextJSONObject.getJSONArray(
+						"trafficSources");
+
+					ResourceBundle resourceBundle =
+						ResourceBundleUtil.getBundle(
+							LocaleUtil.getDefault(),
+							_mvcResourceCommand.getClass());
+
+					Assert.assertEquals(
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"helpMessage",
+								ResourceBundleUtil.getString(
+									resourceBundle,
+									"this-number-refers-to-the-volume-of-" +
+										"people-that-find-your-page-through-" +
+											"paid-keywords")
+							).put(
+								"name", "paid"
+							).put(
+								"title",
+								ResourceBundleUtil.getString(
+									resourceBundle, "paid")
+							),
+							JSONUtil.put(
+								"helpMessage",
+								ResourceBundleUtil.getString(
+									resourceBundle,
+									"this-number-refers-to-the-volume-of-" +
+										"people-that-find-your-page-through-" +
+											"a-search-engine")
+							).put(
+								"name", "organic"
+							).put(
+								"title",
+								ResourceBundleUtil.getString(
+									resourceBundle, "organic")
+							)
+						).toJSONString(),
+						jsonArray.toJSONString());
 				});
 		}
 		finally {
@@ -466,15 +603,6 @@ public class GetDataMVCResourceCommandTest {
 		}
 	}
 
-	private PrefsPropsWrapper _getPrefsPropsWrapper(PrefsProps prefsProps) {
-		PrefsPropsWrapper prefsPropsWrapper = new PrefsPropsWrapper(prefsProps);
-
-		ReflectionTestUtil.setFieldValue(
-			PrefsPropsUtil.class, "_prefsProps", prefsPropsWrapper);
-
-		return prefsPropsWrapper;
-	}
-
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
@@ -486,6 +614,9 @@ public class GetDataMVCResourceCommandTest {
 
 	@Inject
 	private Http _http;
+
+	@Inject
+	private Language _language;
 
 	private Layout _layout;
 
@@ -501,9 +632,32 @@ public class GetDataMVCResourceCommandTest {
 	@Inject
 	private Portal _portal;
 
-	private class PrefsPropsWrapper extends PrefsPropsImpl {
+	private class InvalidPropsWrapper extends PrefsPropsImpl {
 
-		public PrefsPropsWrapper(PrefsProps prefsProps) {
+		public InvalidPropsWrapper(PrefsProps prefsProps) {
+			_prefsProps = prefsProps;
+		}
+
+		@Override
+		public String getString(long companyId, String name) {
+			if (Objects.equals("liferayAnalyticsDataSourceId", name) ||
+				Objects.equals(
+					name, "liferayAnalyticsFaroBackendSecuritySignature") ||
+				Objects.equals("liferayAnalyticsFaroBackendURL", name)) {
+
+				return null;
+			}
+
+			return _prefsProps.getString(companyId, name);
+		}
+
+		private final PrefsProps _prefsProps;
+
+	}
+
+	private class ValidPrefsPropsWrapper extends PrefsPropsImpl {
+
+		public ValidPrefsPropsWrapper(PrefsProps prefsProps) {
 			_prefsProps = prefsProps;
 		}
 

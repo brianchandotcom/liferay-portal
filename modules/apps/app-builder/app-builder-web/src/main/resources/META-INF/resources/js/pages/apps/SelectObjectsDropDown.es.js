@@ -125,22 +125,29 @@ export default ({defaultValue, label, onSelect, selectedValue, visible}) => {
 		},
 	};
 
-	const ItemWithLabel = ({name, type}) => (
-		<>
-			<span className="float-left text-left text-truncate w70">
-				{name || label}
-			</span>
+	const ItemWithLabel = ({name, type}) => {
+		const itemName = name || label;
 
-			{type && (
-				<ClayLabel
-					className="dropdown-button-asset float-right"
-					displayType={labelProps[type].displayType}
+		return (
+			<>
+				<span
+					className="float-left text-left text-truncate w50"
+					title={itemName}
 				>
-					{labelProps[type].label}
-				</ClayLabel>
-			)}
-		</>
-	);
+					{itemName}
+				</span>
+
+				{type && (
+					<ClayLabel
+						className="dropdown-button-asset float-right"
+						displayType={labelProps[type].displayType}
+					>
+						{labelProps[type].label}
+					</ClayLabel>
+				)}
+			</>
+		);
+	};
 
 	return (
 		<>

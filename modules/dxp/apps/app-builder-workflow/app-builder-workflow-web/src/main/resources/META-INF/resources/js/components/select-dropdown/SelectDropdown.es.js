@@ -23,6 +23,8 @@ export default function SelectDropdown({
 	selectedValue,
 	...otherProps
 }) {
+	const itemName = selectedValue || label;
+
 	return (
 		<>
 			<DropDownWithSearch
@@ -34,8 +36,11 @@ export default function SelectDropdown({
 						className="clearfix w-100"
 						displayType="secondary"
 					>
-						<span className="float-left text-left text-truncate w90">
-							{selectedValue || label}
+						<span
+							className="float-left text-left text-truncate w90"
+							title={itemName}
+						>
+							{itemName}
 						</span>
 
 						<ClayIcon

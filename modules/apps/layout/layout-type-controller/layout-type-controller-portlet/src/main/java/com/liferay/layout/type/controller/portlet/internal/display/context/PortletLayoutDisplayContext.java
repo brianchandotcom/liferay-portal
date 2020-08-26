@@ -151,46 +151,6 @@ public class PortletLayoutDisplayContext {
 			defaultLayoutListRetrieverContext);
 	}
 
-	public List<Object> getCollection(
-		CollectionStyledLayoutStructureItem collectionStyledLayoutStructureItem,
-		long[] segmentsExperienceIds) {
-
-		JSONObject collectionJSONObject =
-			collectionStyledLayoutStructureItem.getCollectionJSONObject();
-
-		if (collectionJSONObject.length() <= 0) {
-			return Collections.emptyList();
-		}
-
-		ListObjectReference listObjectReference = _getListObjectReference(
-			collectionJSONObject);
-
-		if (listObjectReference == null) {
-			return Collections.emptyList();
-		}
-
-		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
-			(LayoutListRetriever<?, ListObjectReference>)
-				_layoutListRetrieverTracker.getLayoutListRetriever(
-					collectionJSONObject.getString("type"));
-
-		if (layoutListRetriever == null) {
-			return Collections.emptyList();
-		}
-
-		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
-			new DefaultLayoutListRetrieverContext();
-
-		defaultLayoutListRetrieverContext.setSegmentsExperienceIdsOptional(
-			segmentsExperienceIds);
-		defaultLayoutListRetrieverContext.setPagination(
-			Pagination.of(
-				collectionStyledLayoutStructureItem.getNumberOfItems(), 0));
-
-		return layoutListRetriever.getList(
-			listObjectReference, defaultLayoutListRetrieverContext);
-	}
-
 	public LayoutDisplayPageProvider<?> getCollectionLayoutDisplayPageProvider(
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem) {

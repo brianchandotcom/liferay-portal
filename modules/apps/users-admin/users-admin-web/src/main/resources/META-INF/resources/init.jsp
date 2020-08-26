@@ -182,6 +182,7 @@ page import="com.liferay.users.admin.web.internal.display.context.SelectOrganiza
 page import="com.liferay.users.admin.web.internal.display.context.UserActionDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.UserDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.ViewFlatUsersDisplayContext" %><%@
+page import="com.liferay.users.admin.web.internal.display.context.ViewFlatUsersDisplayContextFactory" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.ViewOrganizationsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.ViewTreeManagementToolbarDisplayContext" %><%@
 page import="com.liferay.users.admin.web.internal.util.CSSClassNames" %><%@

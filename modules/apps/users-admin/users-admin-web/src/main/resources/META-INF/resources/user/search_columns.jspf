@@ -51,7 +51,7 @@
 				actionJspServletContext="<%= application %>"
 				cssClass="entry-display-style"
 				resultRow="<%= row %>"
-				rowChecker="<%= searchContainer.getRowChecker() %>"
+				rowChecker="<%= userSearchContainer.getRowChecker() %>"
 				subtitle="<%= user2.getScreenName() %>"
 				title="<%= user2.getFullName() %>"
 				url="<%= String.valueOf(rowURL) %>"

@@ -13,9 +13,16 @@
  */
 
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import {useIsMounted} from 'frontend-js-react-web';
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 
 import {AppContext} from './AppContext';
 import DataSetDisplayContext from './DataSetDisplayContext';
@@ -32,7 +39,12 @@ import {
 	SIDE_PANEL_CLOSED,
 	UPDATE_DATASET_DISPLAY,
 } from './utilities/eventsDefinitions';
-import {executeAsyncAction, getRandomId, loadData} from './utilities/index';
+import {
+	delay,
+	executeAsyncAction,
+	getRandomId,
+	loadData,
+} from './utilities/index';
 import {logError} from './utilities/logError';
 import getJsModule from './utilities/modules';
 import ViewsContext from './views/ViewsContext';
@@ -97,60 +109,9 @@ function DataSetDisplay({
 
 	const selectable = !!(bulkActions?.length && selectedItemsKey);
 
-	useEffect(() => {
-		if (
-			!CurrentViewComponent &&
-			(contentRendererModuleURL || contentRenderer)
-		) {
-			setLoading(true);
-			(contentRenderer
-				? getViewContentRenderer(contentRenderer)
-				: getJsModule(contentRendererModuleURL)
-			)
-				.then((component) => {
-					dispatch(updateViewComponent(activeViewName, component));
-					setLoading(false);
-				})
-				.catch((error) => {
-					logError(
-						`Requested module: ${contentRendererModuleURL} not available`,
-						error
-					);
-					openToast({
-						message: Liferay.Language.get('unexpected-error'),
-						type: 'danger',
-					});
-					setLoading(false);
-				});
-		}
-	}, [
-		contentRenderer,
-		CurrentViewComponent,
-		contentRendererModuleURL,
-		setLoading,
-		dispatch,
-		activeViewName,
-	]);
+	const {apiURL} = useContext(AppContext);
 
-	const formRef = useRef(null);
-
-	function updateDataSetItems(dataSetData) {
-		setTotal(dataSetData.totalCount);
-		updateItems(dataSetData.items);
-	}
-
-	function getData(
-		apiURL,
-		currentURL,
-		filters,
-		searchParam,
-		delta,
-		pageNumber,
-		sorting,
-		successNotification = {}
-	) {
-		setLoading(true);
-
+	const requestData = useCallback(() => {
 		return loadData(
 			apiURL,
 			currentURL,
@@ -159,57 +120,82 @@ function DataSetDisplay({
 			delta,
 			pageNumber,
 			sorting
-		)
-			.then(updateDataSetItems)
-			.then(() => {
-				const {message, showSuccessNotification} = successNotification;
+		).catch((error) => {
+			logError(error);
+			openToast({
+				message: Liferay.Language.get('unexpected-error'),
+				type: 'danger',
+			});
 
-				if (showSuccessNotification) {
-					openToast({
-						message:
-							message ||
-							Liferay.Language.get('table-data-updated'),
-						type: 'success',
-					});
-				}
+			throw error;
+		});
+	}, [apiURL, currentURL, delta, filters, pageNumber, searchParam, sorting]);
 
-				setLoading(false);
-				Liferay.fire(DATASET_DISPLAY_UPDATED, {id});
-			})
-			.catch((error) => {
-				logError(error);
-				setLoading(false);
+	const requestComponent = useCallback(() => {
+		if (
+			!CurrentViewComponent &&
+			(contentRendererModuleURL || contentRenderer)
+		) {
+			return (contentRenderer
+				? getViewContentRenderer(contentRenderer)
+				: getJsModule(contentRendererModuleURL)
+			).catch((error) => {
+				logError(
+					`Requested module: ${contentRendererModuleURL} not available`,
+					error
+				);
 				openToast({
 					message: Liferay.Language.get('unexpected-error'),
 					type: 'danger',
 				});
+
+				throw error;
 			});
+		}
+
+		return Promise.resolve(CurrentViewComponent);
+	}, [contentRenderer, contentRendererModuleURL, CurrentViewComponent]);
+
+	const isMounted = useIsMounted();
+
+	function updateDataSetItems(dataSetData) {
+		setTotal(dataSetData.totalCount);
+		updateItems(dataSetData.items);
 	}
 
-	const {apiURL} = useContext(AppContext);
+	const pendingPromise = useRef(null);
+
 	useEffect(() => {
-		if (apiURL) {
-			getData(
-				apiURL,
-				currentURL,
-				filters.filter((filter) => filter.value),
-				searchParam,
-				delta,
-				pageNumber,
-				sorting,
-				false
-			);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		const promise = Promise.race([
+			delay(200).then(() => {
+				if (isMounted() && pendingPromise.current === promise) {
+					setLoading(true);
+				}
+			}),
+			Promise.all([requestComponent(), requestData()]).then(
+				([component, data]) => {
+					if (isMounted() && pendingPromise.current === promise) {
+						pendingPromise.current = null;
+
+						dispatch(
+							updateViewComponent(activeViewName, component)
+						);
+
+						setLoading(false);
+						updateDataSetItems(data);
+					}
+				}
+			),
+		]);
+
+		pendingPromise.current = promise;
 	}, [
-		apiURL,
-		currentURL,
-		filters,
-		searchParam,
-		delta,
-		pageNumber,
-		sorting,
-		refreshData,
+		activeViewName,
+		dispatch,
+		isMounted,
+		requestComponent,
+		requestData,
+		setLoading,
 	]);
 
 	useEffect(() => {
@@ -253,19 +239,6 @@ function DataSetDisplay({
 		}
 	}
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const refreshData = (successNotification) =>
-		getData(
-			apiURL,
-			currentURL,
-			filters.filter((filter) => filter.value),
-			searchParam,
-			delta,
-			pageNumber,
-			sorting,
-			successNotification
-		);
-
 	useEffect(() => {
 		if (wrapperRef.current) {
 			const form = wrapperRef.current.closest('form');
@@ -275,6 +248,40 @@ function DataSetDisplay({
 			}
 		}
 	}, [wrapperRef]);
+
+	const refreshData = useCallback(
+		(successNotification) => {
+			setLoading(true);
+
+			return requestData()
+				.then((data) => {
+					const {
+						message,
+						showSuccessNotification,
+					} = successNotification;
+
+					if (showSuccessNotification) {
+						openToast({
+							message:
+								message ||
+								Liferay.Language.get('table-data-updated'),
+							type: 'success',
+						});
+					}
+
+					if (isMounted()) {
+						setLoading(false);
+						updateDataSetItems(data);
+
+						Liferay.fire(DATASET_DISPLAY_UPDATED, {id});
+					}
+
+					return data;
+				})
+				.catch(() => setLoading(false));
+		},
+		[id, isMounted, requestData]
+	);
 
 	useEffect(() => {
 		function handleRefreshFromTheOutside(event) {
@@ -358,6 +365,8 @@ function DataSetDisplay({
 			<span aria-hidden="true" className="loading-animation my-7" />
 		);
 
+	const formRef = useRef(null);
+
 	const wrappedView = formId ? view : <form ref={formRef}>{view}</form>;
 
 	const paginationComponent =
@@ -382,10 +391,13 @@ function DataSetDisplay({
 	function executeAsyncItemAction(url, method) {
 		return executeAsyncAction(url, method)
 			.then((_) => {
-				refreshData();
-				Liferay.fire(DATASET_ACTION_PERFORMED, {
-					id,
-				});
+				if (isMounted()) {
+					refreshData();
+
+					Liferay.fire(DATASET_ACTION_PERFORMED, {
+						id,
+					});
+				}
 			})
 			.catch((error) => {
 				logError(error);

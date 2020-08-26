@@ -16,6 +16,12 @@ import {fetch} from 'frontend-js-web';
 
 import createOdataFilter from './odata';
 
+export function delay(duration) {
+	return new Promise((resolve) => {
+		setTimeout(() => resolve(), duration);
+	});
+}
+
 function getAcceptLanguageHeaderParam() {
 	const browserLang = navigator.language ?? navigator.userLanguage;
 	const themeLang = Liferay.ThemeDisplay.getLanguageId().replace('_', '-');

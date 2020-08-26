@@ -14,9 +14,15 @@
 
 package com.liferay.dispatch.service.http;
 
+import com.liferay.dispatch.service.DispatchLogServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.dispatch.service.DispatchLogServiceUtil</code> service
+ * <code>DispatchLogServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,74 @@ package com.liferay.dispatch.service.http;
  */
 @Deprecated
 public class DispatchLogServiceSoap {
+
+	public static void deleteDispatchLog(long dispatchLogId)
+		throws RemoteException {
+
+		try {
+			DispatchLogServiceUtil.deleteDispatchLog(dispatchLogId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.dispatch.model.DispatchLogSoap getDispatchLog(
+			long dispatchLogId)
+		throws RemoteException {
+
+		try {
+			com.liferay.dispatch.model.DispatchLog returnValue =
+				DispatchLogServiceUtil.getDispatchLog(dispatchLogId);
+
+			return com.liferay.dispatch.model.DispatchLogSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.dispatch.model.DispatchLogSoap[] getDispatchLogs(
+			long dispatchTriggerId, int start, int end)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.dispatch.model.DispatchLog> returnValue =
+				DispatchLogServiceUtil.getDispatchLogs(
+					dispatchTriggerId, start, end);
+
+			return com.liferay.dispatch.model.DispatchLogSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getDispatchLogsCount(long dispatchTriggerId)
+		throws RemoteException {
+
+		try {
+			int returnValue = DispatchLogServiceUtil.getDispatchLogsCount(
+				dispatchTriggerId);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DispatchLogServiceSoap.class);
+
 }

@@ -30,6 +30,37 @@ public class DispatchLogServiceWrapper
 		_dispatchLogService = dispatchLogService;
 	}
 
+	@Override
+	public void deleteDispatchLog(long dispatchLogId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_dispatchLogService.deleteDispatchLog(dispatchLogId);
+	}
+
+	@Override
+	public com.liferay.dispatch.model.DispatchLog getDispatchLog(
+			long dispatchLogId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dispatchLogService.getDispatchLog(dispatchLogId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.dispatch.model.DispatchLog>
+			getDispatchLogs(long dispatchTriggerId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dispatchLogService.getDispatchLogs(
+			dispatchTriggerId, start, end);
+	}
+
+	@Override
+	public int getDispatchLogsCount(long dispatchTriggerId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dispatchLogService.getDispatchLogsCount(dispatchTriggerId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

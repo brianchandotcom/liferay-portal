@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -74,6 +75,11 @@ public interface DispatchLogLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public DispatchLog addDispatchLog(DispatchLog dispatchLog);
+
+	public DispatchLog addDispatchLog(
+			long userId, long dispatchTriggerId, String error, String output,
+			int status, Date startDate, Date endDate)
+		throws PortalException;
 
 	/**
 	 * Creates a new dispatch log with the primary key. Does not add the dispatch log to the database.
@@ -117,6 +123,8 @@ public interface DispatchLogLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public DispatchLog deleteDispatchLog(long dispatchLogId)
 		throws PortalException;
+
+	public void deleteDispatchLogs(long dispatchTriggerId);
 
 	/**
 	 * @throws PortalException
@@ -225,6 +233,10 @@ public interface DispatchLogLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DispatchLog> getDispatchLogs(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DispatchLog> getDispatchLogs(
+		long dispatchTriggerId, int start, int end);
+
 	/**
 	 * Returns the number of dispatch logs.
 	 *
@@ -232,6 +244,9 @@ public interface DispatchLogLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDispatchLogsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDispatchLogsCount(long dispatchTriggerId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -263,5 +278,10 @@ public interface DispatchLogLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public DispatchLog updateDispatchLog(DispatchLog dispatchLog);
+
+	public DispatchLog updateDispatchLog(
+			long dispatchLogId, String error, String output, int status,
+			Date endDate)
+		throws PortalException;
 
 }

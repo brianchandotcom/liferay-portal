@@ -17,89 +17,41 @@
 <%@ include file="/init.jsp" %>
 
 <%
-int status = GetterUtil.getInteger(request.getAttribute("view.jsp-status"));
-String usersListView = GetterUtil.getString(request.getAttribute("view.jsp-usersListView"));
-String viewUsersRedirect = GetterUtil.getString(request.getAttribute("view.jsp-viewUsersRedirect"));
-
-String displayStyle = ParamUtil.getString(request, "displayStyle");
-
-if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(UsersAdminPortletKeys.USERS_ADMIN, "display-style", "list");
-}
-else {
-	portalPreferences.setValue(UsersAdminPortletKeys.USERS_ADMIN, "display-style", displayStyle);
-
-	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
-}
-
-String domain = ParamUtil.getString(request, "domain", "company-users");
-String navigation = ParamUtil.getString(request, "navigation", "active");
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-users");
-
-if (navigation.equals("active")) {
-	status = WorkflowConstants.STATUS_APPROVED;
-}
-else if (navigation.equals("inactive")) {
-	status = WorkflowConstants.STATUS_INACTIVE;
-}
+ViewFlatUsersDisplayContext viewFlatUsersDisplayContext = ViewFlatUsersDisplayContextFactory.create(renderRequest, renderResponse);
 
 if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
-	currentURLObj.setParameter("status", String.valueOf(status));
+	currentURLObj.setParameter("status", String.valueOf(viewFlatUsersDisplayContext.getStatus()));
 }
 
-request.setAttribute(UsersAdminWebKeys.STATUS, status);
+request.setAttribute(UsersAdminWebKeys.STATUS, viewFlatUsersDisplayContext.getStatus());
 
-ViewFlatUsersDisplayContext viewFlatUsersDisplayContext = new ViewFlatUsersDisplayContext(request, renderRequest, renderResponse, displayStyle, domain, navigation, status);
-
-SearchContainer<User> searchContainer = viewFlatUsersDisplayContext.getSearchContainer();
-
-PortletURL portletURL = viewFlatUsersDisplayContext.getPortletURL();
-
-portletURL.setParameter("status", String.valueOf(status));
-
-boolean showDeleteButton = viewFlatUsersDisplayContext.isShowDeleteButton();
-boolean showRestoreButton = viewFlatUsersDisplayContext.isShowRestoreButton();
+String displayStyle = viewFlatUsersDisplayContext.getDisplayStyle();
 %>
 
 <clay:management-toolbar
-	actionDropdownItems="<%= viewFlatUsersDisplayContext.getActionDropdownItems() %>"
-	clearResultsURL="<%= viewFlatUsersDisplayContext.getClearResultsURL() %>"
-	creationMenu="<%= viewFlatUsersDisplayContext.getCreationMenu() %>"
-	filterDropdownItems="<%= viewFlatUsersDisplayContext.getFilterDropdownItems() %>"
-	filterLabelItems="<%= viewFlatUsersDisplayContext.getFilterLabelItems() %>"
-	itemsTotal="<%= searchContainer.getTotal() %>"
-	searchActionURL="<%= viewFlatUsersDisplayContext.getSearchActionURL() %>"
-	searchContainerId="users"
-	searchFormName="searchFm"
-	selectable="<%= true %>"
-	showCreationMenu="<%= viewFlatUsersDisplayContext.showCreationMenu() %>"
-	showSearch="<%= true %>"
-	sortingOrder="<%= searchContainer.getOrderByType() %>"
-	sortingURL="<%= viewFlatUsersDisplayContext.getSortingURL() %>"
-	viewTypeItems="<%= viewFlatUsersDisplayContext.getViewTypeItems() %>"
+	displayContext="<%= viewFlatUsersDisplayContext.getManagementToolbarDisplayContext() %>"
 />
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "search();" %>'>
+<aui:form action="<%= currentURLObj.toString() %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "search();" %>'>
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
-	<aui:input name="usersListView" type="hidden" value="<%= usersListView %>" />
-	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:input name="toolbarItem" type="hidden" value="<%= viewFlatUsersDisplayContext.getToolbarItem() %>" />
+	<aui:input name="usersListView" type="hidden" value="<%= viewFlatUsersDisplayContext.getUsersListView() %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURLObj.toString() %>" />
 
 	<liferay-ui:error exception="<%= RequiredUserException.class %>" message="you-cannot-delete-or-deactivate-yourself" />
 
-	<c:if test="<%= Validator.isNotNull(viewUsersRedirect) %>">
-		<aui:input name="viewUsersRedirect" type="hidden" value="<%= viewUsersRedirect %>" />
+	<c:if test="<%= Validator.isNotNull(viewFlatUsersDisplayContext.getViewUsersRedirect()) %>">
+		<aui:input name="viewUsersRedirect" type="hidden" value="<%= viewFlatUsersDisplayContext.getViewUsersRedirect() %>" />
 	</c:if>
 
 	<liferay-ui:search-container
 		cssClass="users-search-container"
-		id="users"
-		searchContainer="<%= searchContainer %>"
+		searchContainer="<%= viewFlatUsersDisplayContext.getSearchContainer() %>"
 		var="userSearchContainer"
 	>
 		<aui:input name="deleteUserIds" type="hidden" />
-		<aui:input name="status" type="hidden" value="<%= status %>" />
+		<aui:input name="status" type="hidden" value="<%= viewFlatUsersDisplayContext.getStatus() %>" />
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.User"
@@ -122,19 +74,6 @@ boolean showRestoreButton = viewFlatUsersDisplayContext.isShowRestoreButton();
 
 			<%@ include file="/user/search_columns.jspf" %>
 		</liferay-ui:search-container-row>
-
-		<%
-		List<User> results = searchContainer.getResults();
-
-		showDeleteButton = !results.isEmpty() && showDeleteButton;
-		showRestoreButton = !results.isEmpty() && showRestoreButton;
-		%>
-
-		<%
-		if (!showDeleteButton && !showRestoreButton) {
-			userSearchContainer.setRowChecker(null);
-		}
-		%>
 
 		<liferay-ui:search-iterator
 			displayStyle="<%= displayStyle %>"

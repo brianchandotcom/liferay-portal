@@ -214,6 +214,8 @@ describe('Navigation', () => {
 				name: 'John Tester',
 				url: '',
 			},
+			canonicalURL:
+				'http://localhost:8080/en/web/guest/-/basic-web-content',
 			languageTag: 'en-US',
 			page: {plid: 20},
 			pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
@@ -230,6 +232,7 @@ describe('Navigation', () => {
 			>
 				<Navigation
 					author={testProps.author}
+					canonicalURL={testProps.canonicalURL}
 					endpoints={{}}
 					languageTag={testProps.languageTag}
 					onSelectedLanguageClick={() => {}}
@@ -261,6 +264,8 @@ describe('Navigation', () => {
 				name: 'John Tester',
 				url: '',
 			},
+			canonicalURL:
+				'http://localhost:8080/en/web/guest/-/basic-web-content',
 			languageTag: 'en-US',
 			page: {plid: 20},
 			pagePublishDate: 'Thu Aug 10 08:17:57 GMT 2020',
@@ -273,6 +278,7 @@ describe('Navigation', () => {
 			<StoreContextProvider>
 				<Navigation
 					author={testProps.author}
+					canonicalURL={testProps.canonicalURL}
 					endpoints={mockEndpoints}
 					languageTag={testProps.languageTag}
 					onSelectedLanguageClick={() => {}}

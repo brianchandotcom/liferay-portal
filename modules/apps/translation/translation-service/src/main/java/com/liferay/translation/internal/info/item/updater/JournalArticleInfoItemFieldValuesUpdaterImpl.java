@@ -29,9 +29,9 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -117,37 +117,51 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 			);
 		}
 
-		Map<Locale, String> titleMap = article.getTitleMap();
-		Map<Locale, String> descriptionMap = article.getDescriptionMap();
-		String translatedContent = article.getContent();
+		JournalArticle latestArticle = _journalArticleService.getLatestArticle(
+			article.getGroupId(), article.getArticleId(),
+			WorkflowConstants.STATUS_ANY);
+
+		Map<Locale, String> titleMap = latestArticle.getTitleMap();
+		Map<Locale, String> descriptionMap = latestArticle.getDescriptionMap();
+		String translatedContent = latestArticle.getContent();
 
 		for (Locale targetLocale : translatedLocales) {
 			titleMap.put(
 				targetLocale,
 				_getTranslatedString(
-					article.getTitle(targetLocale), article.getTitle(),
+					latestArticle.getTitle(targetLocale),
+					latestArticle.getTitle(),
 					importedLocaleTitleMap.get(targetLocale)));
 			descriptionMap.put(
 				targetLocale,
 				_getTranslatedString(
-					article.getDescription(targetLocale),
-					article.getDescription(),
+					latestArticle.getDescription(targetLocale),
+					latestArticle.getDescription(),
 					importedLocaleDescriptionMap.get(targetLocale)));
 			translatedContent = _getTranslatedContent(
-				translatedContent, article.getDDMStructure(),
+				translatedContent, latestArticle.getDDMStructure(),
 				importedLocaleContentMap, targetLocale);
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setFormDate(new Date());
 
+		if (latestArticle.getStatus() != WorkflowConstants.STATUS_APPROVED) {
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+		else {
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+		}
+
+		serviceContext.setScopeGroupId(latestArticle.getGroupId());
+
 		return _journalArticleService.updateArticle(
-			article.getUserId(), article.getGroupId(), article.getFolderId(),
-			article.getArticleId(), article.getVersion(), titleMap,
-			descriptionMap, translatedContent, article.getLayoutUuid(),
-			serviceContext);
+			latestArticle.getUserId(), latestArticle.getGroupId(),
+			latestArticle.getFolderId(), latestArticle.getArticleId(),
+			latestArticle.getVersion(), titleMap, descriptionMap,
+			translatedContent, latestArticle.getLayoutUuid(), serviceContext);
 	}
 
 	private Optional<InfoLocalizedValue<Object>> _getInfoLocalizedValueOptional(

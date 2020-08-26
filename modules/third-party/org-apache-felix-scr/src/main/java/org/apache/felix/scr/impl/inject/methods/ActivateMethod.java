@@ -65,21 +65,6 @@ public class ActivateMethod extends BaseMethod<ActivatorParameter, Object> imple
 
         boolean suitableMethodNotAccessible = false;
 
-        try
-        {
-            // find the declared method in this class
-            final Method method = getMethod( targetClass, getMethodName(), new Class[]
-                { ClassUtils.COMPONENT_CONTEXT_CLASS }, acceptPrivate, acceptPackage, logger );
-            if ( method != null )
-            {
-                return new MethodInfo<>(method);
-            }
-        }
-        catch ( SuitableMethodNotAccessibleException thrown )
-        {
-            logger.log( LogService.LOG_DEBUG, "SuitableMethodNotAccessible", thrown );
-            suitableMethodNotAccessible = true;
-        }
         if (getDSVersion().isDS11())
         {
             List<Method> methods = getSortedMethods( targetClass);
@@ -89,6 +74,14 @@ public class ActivateMethod extends BaseMethod<ActivatorParameter, Object> imple
                 if (parameterTypes.length == 1)
                 {
                     Class<?> type = parameterTypes[0];
+					if (type == ClassUtils.COMPONENT_CONTEXT_CLASS) {
+						if ( accept( m, acceptPrivate, acceptPackage, returnValue() ) ) {
+							return new MethodInfo<>(m);
+						}
+
+						suitableMethodNotAccessible = true;
+					}
+
                     //single parameter method with parameter ComponentContext will already have been found.
                     if (type == ClassUtils.BUNDLE_CONTEXT_CLASS)
                     {
@@ -320,3 +313,4 @@ public class ActivateMethod extends BaseMethod<ActivatorParameter, Object> imple
     }
 
 }
+/* @generated */

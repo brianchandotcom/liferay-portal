@@ -142,7 +142,7 @@ const getFieldTypes = ({
 				},
 				useFieldName: name,
 			}),
-			label: label[editingLanguageId] ?? label[defaultLanguageId],
+			label: label[editingLanguageId] || label[defaultLanguageId],
 			name,
 			nestedDataDefinitionFields: nestedDataDefinitionFields.map(
 				(nestedField) => setDefinitionField(nestedField, true)

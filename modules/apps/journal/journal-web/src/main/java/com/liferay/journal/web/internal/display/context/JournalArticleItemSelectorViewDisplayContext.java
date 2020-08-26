@@ -263,14 +263,14 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			articleSearchContainer.setOrderByType(_getOrderByType());
 
 			int total = JournalArticleServiceUtil.getArticlesCountByStructureId(
-				_themeDisplay.getScopeGroupId(), getDDMStructureKey(),
+				_getGroupId(), getDDMStructureKey(),
 				WorkflowConstants.STATUS_APPROVED);
 
 			articleSearchContainer.setTotal(total);
 
 			List<JournalArticle> results =
 				JournalArticleServiceUtil.getArticlesByStructureId(
-					_themeDisplay.getScopeGroupId(), getDDMStructureKey(),
+					_getGroupId(), getDDMStructureKey(),
 					WorkflowConstants.STATUS_APPROVED,
 					articleSearchContainer.getStart(),
 					articleSearchContainer.getEnd(), orderByComparator);
@@ -362,7 +362,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		}
 		else {
 			int total = JournalFolderServiceUtil.getFoldersAndArticlesCount(
-				_themeDisplay.getScopeGroupId(), 0, _getFolderId(),
+				_getGroupId(), 0, _getFolderId(),
 				_infoItemItemSelectorCriterion.getStatus());
 
 			articleAndFolderSearchContainer.setTotal(total);
@@ -390,7 +390,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 
 			List<Object> results =
 				JournalFolderServiceUtil.getFoldersAndArticles(
-					_themeDisplay.getScopeGroupId(), 0, _getFolderId(),
+					_getGroupId(), 0, _getFolderId(),
 					_infoItemItemSelectorCriterion.getStatus(),
 					_themeDisplay.getLocale(),
 					articleAndFolderSearchContainer.getStart(),
@@ -524,6 +524,11 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		return _folderId;
+	}
+
+	private long _getGroupId() {
+		return ParamUtil.getLong(
+			_portletRequest, "groupId", _themeDisplay.getScopeGroupId());
 	}
 
 	private long[] _getGroupIds() throws PortalException {

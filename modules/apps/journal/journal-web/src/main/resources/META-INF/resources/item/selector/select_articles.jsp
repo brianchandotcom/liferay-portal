@@ -217,6 +217,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 					<%
 					PortletURL rowURL = journalArticleItemSelectorViewDisplayContext.getPortletURL();
 
+					rowURL.setParameter("groupId", String.valueOf(curFolder.getGroupId()));
 					rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 					%>
 

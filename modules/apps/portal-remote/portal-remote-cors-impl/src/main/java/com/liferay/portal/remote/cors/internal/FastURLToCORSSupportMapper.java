@@ -14,6 +14,8 @@
 
 package com.liferay.portal.remote.cors.internal;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +41,7 @@ public class FastURLToCORSSupportMapper extends BaseURLToCORSSupportMapper {
 			_maxURLPatternLength = 64;
 		}
 		else {
-			_maxURLPatternLength = maxURLPatternLength;
+			_maxURLPatternLength = maxURLPatternLength + 1;
 		}
 
 		_extensionTrieMatrix =
@@ -54,13 +56,20 @@ public class FastURLToCORSSupportMapper extends BaseURLToCORSSupportMapper {
 
 	@Override
 	public CORSSupport get(String urlPath) {
-		CORSSupport corsSupport = _getWildcardCORSSupport(urlPath);
+		try {
+			CORSSupport corsSupport = _getWildcardCORSSupport(urlPath);
 
-		if (corsSupport != null) {
-			return corsSupport;
+			if (corsSupport != null) {
+				return corsSupport;
+			}
+
+			return _getExtensionCORSSupport(urlPath);
 		}
-
-		return _getExtensionCORSSupport(urlPath);
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
+			throw new IllegalArgumentException(
+				"urlPath contains invalid characters",
+				indexOutOfBoundsException);
+		}
 	}
 
 	@Override
@@ -71,19 +80,30 @@ public class FastURLToCORSSupportMapper extends BaseURLToCORSSupportMapper {
 			throw new IllegalArgumentException("CORS support is null");
 		}
 
-		if (isWildcardURLPattern(urlPattern)) {
+		if (Validator.isBlank(urlPattern)) {
+			throw new IllegalArgumentException("urlPattern is empty");
+		}
+
+		try {
+			if (isWildcardURLPattern(urlPattern)) {
+				_put(corsSupport, urlPattern, true);
+
+				return;
+			}
+
+			if (isExtensionURLPattern(urlPattern)) {
+				_put(corsSupport, urlPattern, false);
+
+				return;
+			}
+
 			_put(corsSupport, urlPattern, true);
-
-			return;
 		}
-
-		if (isExtensionURLPattern(urlPattern)) {
-			_put(corsSupport, urlPattern, false);
-
-			return;
+		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
+			throw new IllegalArgumentException(
+				"urlPattern contains invalid characters",
+				indexOutOfBoundsException);
 		}
-
-		_put(corsSupport, urlPattern, true);
 	}
 
 	private int _getExactIndex(String urlPath, long[][][] trieMatrix) {

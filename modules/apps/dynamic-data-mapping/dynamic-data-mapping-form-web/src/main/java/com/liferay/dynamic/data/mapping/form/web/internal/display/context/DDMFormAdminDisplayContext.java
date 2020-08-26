@@ -1070,6 +1070,14 @@ public class DDMFormAdminDisplayContext {
 		return false;
 	}
 
+	public boolean hasValidDDMFormFields(DDMFormInstance ddmFormInstance) {
+		if (Validator.isNull(getInvalidDDMFormField(ddmFormInstance))) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean hasValidStorageType(DDMFormInstance ddmFormInstance) {
 		try {
 			DDMStorageAdapter ddmStorageAdapter =

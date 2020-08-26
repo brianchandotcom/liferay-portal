@@ -290,7 +290,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				StringBundler.concat(
 					"javascript:Liferay.fire('",
 					_portal.getPortletNamespace(CTPortletKeys.CHANGE_LISTS),
-					"openDialog', {});")
+					"openDialog', {}); void(0);")
 			).put(
 				"label", _language.get(resourceBundle, "select-a-publication")
 			).put(

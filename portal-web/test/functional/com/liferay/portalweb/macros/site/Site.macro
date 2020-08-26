@@ -513,6 +513,10 @@ definition {
 				value1 = "${localizedSaveButton}");
 		}
 		else {
+			while (IsElementNotPresent(locator1 = "Button#SAVE")) {
+				Pause(locator1 = "1000");
+			}
+
 			Click(locator1 = "Button#SAVE");
 		}
 

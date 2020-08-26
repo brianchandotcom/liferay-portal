@@ -25,6 +25,7 @@ export default ({children, dataLayoutBuilder}) => {
 	const [
 		{
 			config: {allowNestedFields},
+			dataDefinition: {defaultLanguageId},
 			editingLanguageId,
 			hoveredField,
 		},
@@ -39,9 +40,10 @@ export default ({children, dataLayoutBuilder}) => {
 
 	useEffect(() => {
 		dataLayoutBuilder.onEditingLanguageIdChange({
+			defaultLanguageId,
 			editingLanguageId,
 		});
-	}, [dataLayoutBuilder, editingLanguageId]);
+	}, [dataLayoutBuilder, defaultLanguageId, editingLanguageId]);
 
 	useEffect(() => {
 		const duplicateAction = {

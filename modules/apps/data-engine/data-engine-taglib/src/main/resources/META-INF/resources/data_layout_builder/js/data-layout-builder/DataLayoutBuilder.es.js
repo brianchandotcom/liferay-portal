@@ -518,17 +518,20 @@ class DataLayoutBuilder extends React.Component {
 			availableLanguageIds,
 		});
 
+		const props = {
+			availableLanguageIds,
+			defaultLanguageId,
+			editingLanguageId,
+		};
+
 		layoutProvider.props = {
 			...layoutProvider.props,
-			availableLanguageIds,
-			editingLanguageId,
+			...props,
 		};
 
 		this.formBuilderWithLayoutProvider.props.layoutProviderProps = {
 			...this.formBuilderWithLayoutProvider.props.layoutProviderProps,
-			availableLanguageIds,
-			defaultLanguageId,
-			editingLanguageId,
+			...props,
 		};
 
 		this.formBuilderWithLayoutProvider.props.layoutProviderProps = this.formBuilderWithLayoutProvider.props.layoutProviderProps; // eslint-disable-line

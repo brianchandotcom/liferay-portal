@@ -206,7 +206,7 @@ export const localizeField = (field, defaultLanguageId, editingLanguageId) => {
 	if (field.localizable && field.localizedValue) {
 		let localizedValue = field.localizedValue[editingLanguageId];
 
-		if (localizedValue === undefined) {
+		if (!localizedValue) {
 			localizedValue = field.localizedValue[defaultLanguageId];
 		}
 

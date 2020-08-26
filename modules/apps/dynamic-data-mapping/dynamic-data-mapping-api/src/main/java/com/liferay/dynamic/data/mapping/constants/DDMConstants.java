@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.constants;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
+
 /**
  * @author Lino Alves
  */
@@ -33,11 +35,17 @@ public class DDMConstants {
 		"com.liferay.dynamic.data.mapping";
 
 	public static final String[] SUPPORTED_DDM_FORM_FIELD_TYPES = {
-		"checkbox", "ddm-color", "ddm-date", "ddm-decimal",
-		"ddm-documentlibrary", "ddm-geolocation", "ddm-image", "ddm-integer",
-		"ddm-journal-article", "ddm-link-to-page", "ddm-number",
-		"ddm-paragraph", "ddm-separator", "ddm-text-html", "fieldset", "option",
-		"radio", "select", "text", "textarea"
+		DDMFormFieldType.CHECKBOX, DDMFormFieldType.CHECKBOX_MULTIPLE,
+		DDMFormFieldType.COLOR, DDMFormFieldType.DATE, DDMFormFieldType.DECIMAL,
+		DDMFormFieldType.DOCUMENT_LIBRARY, DDMFormFieldType.FIELDSET,
+		DDMFormFieldType.GEOLOCATION, DDMFormFieldType.GRID,
+		DDMFormFieldType.IMAGE, DDMFormFieldType.INTEGER,
+		DDMFormFieldType.JOURNAL_ARTICLE, DDMFormFieldType.LINK_TO_PAGE,
+		DDMFormFieldType.LOCALIZABLE_TEXT, DDMFormFieldType.NUMBER,
+		DDMFormFieldType.NUMERIC, DDMFormFieldType.PASSWORD,
+		DDMFormFieldType.RADIO, DDMFormFieldType.SELECT,
+		DDMFormFieldType.SEPARATOR, DDMFormFieldType.TEXT,
+		DDMFormFieldType.TEXT_AREA, DDMFormFieldType.TEXT_HTML
 	};
 
 }

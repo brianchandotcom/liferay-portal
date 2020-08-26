@@ -10,23 +10,40 @@
  */
 
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 
-export function useDDMFormsSubmit(ddmForms, onSubmitCallback) {
-	const getFormsValues = (reactForms) => {
-		const dataRecord = {
-			dataRecordValues: {},
+export function useDDMFormsSubmit(ddmForms, onSubmit) {
+	useEffect(() => {
+		const forms = ddmForms.map((ddmForm) =>
+			ddmForm.reactComponentRef.current.getFormNode()
+		);
+
+		forms.forEach((formNode) =>
+			formNode.addEventListener('submit', onSubmit)
+		);
+
+		return () => {
+			forms.forEach((form) =>
+				form.removeEventListener('submit', onSubmit)
+			);
 		};
+	}, [ddmForms, onSubmit]);
+}
 
-		const languageId = themeDisplay.getLanguageId();
+export function useDDMFormsValidation(
+	ddmForms,
+	languageId,
+	availableLanguageIds
+) {
+	const getFormsValues = useCallback(
+		(ddmReactForms) => {
+			const dataRecordValues = {};
 
-		reactForms.forEach((reactForm) => {
-			const visitor = new PagesVisitor(reactForm.get('pages'));
+			ddmReactForms.forEach((ddmReactForm) => {
+				const visitor = new PagesVisitor(ddmReactForm.get('pages'));
 
-			visitor.mapFields(
-				({
+				const setDataRecord = ({
 					fieldName,
-					localizable,
 					repeatable,
 					type,
 					value,
@@ -40,57 +57,37 @@ export function useDDMFormsSubmit(ddmForms, onSubmitCallback) {
 						value = '';
 					}
 
-					if (localizable) {
-						if (!dataRecord.dataRecordValues[fieldName]) {
-							dataRecord.dataRecordValues[fieldName] = {
-								[languageId]: [],
-							};
-						}
+					if (!dataRecordValues[fieldName]) {
+						dataRecordValues[fieldName] = {
+							[languageId]: [],
+						};
+					}
 
-						if (repeatable) {
-							dataRecord.dataRecordValues[fieldName][
-								languageId
-							].push(value);
-						}
-						else {
-							dataRecord.dataRecordValues[fieldName] = {
-								[languageId]: value,
-							};
-						}
+					if (repeatable) {
+						dataRecordValues[fieldName][languageId].push(value);
 					}
 					else {
-						dataRecord.dataRecordValues[fieldName] = value;
+						dataRecordValues[fieldName] = {
+							[languageId]: value,
+						};
 					}
-				},
-				true,
-				true
-			);
-		});
 
-		return dataRecord;
-	};
+					availableLanguageIds.forEach((key) => {
+						dataRecordValues[fieldName][key] =
+							dataRecordValues[fieldName][languageId];
+					});
+				};
 
-	const onSubmit = useCallback(
-		(event) => {
-			if (typeof event.stopImmediatePropagation === 'function') {
-				event.stopImmediatePropagation();
-			}
-
-			const reactForms = ddmForms.map(
-				(ddmForm) => ddmForm.reactComponentRef.current
-			);
-
-			validateForms(reactForms).then((isValid) => {
-				if (isValid) {
-					onSubmitCallback(event, getFormsValues(reactForms));
-				}
+				visitor.mapFields(setDataRecord, true, true);
 			});
+
+			return {dataRecordValues};
 		},
-		[ddmForms, onSubmitCallback]
+		[availableLanguageIds, languageId]
 	);
 
-	const validateForms = (reactForms) => {
-		return reactForms
+	const validateForms = (ddmReactForms) => {
+		return ddmReactForms
 			.map(({validate}) => validate)
 			.reduce((promises, validate) => {
 				return promises.then((result) =>
@@ -100,24 +97,34 @@ export function useDDMFormsSubmit(ddmForms, onSubmitCallback) {
 			.then((validations) => validations.every((isValid) => isValid));
 	};
 
-	useEffect(() => {
-		const forms = ddmForms.map((ddmForm) =>
-			ddmForm.reactComponentRef.current.getFormNode()
-		);
+	return useCallback(
+		(event) => {
+			return new Promise((resolve, reject) => {
+				if (typeof event.stopImmediatePropagation === 'function') {
+					event.stopImmediatePropagation();
+				}
 
-		forms.forEach((form) => form.addEventListener('submit', onSubmit));
+				const ddmReactForms = ddmForms.map(
+					(ddmForm) => ddmForm.reactComponentRef.current
+				);
 
-		return () => {
-			forms.forEach((form) =>
-				form.removeEventListener('submit', onSubmit)
-			);
-		};
-	}, [ddmForms, onSubmit]);
-
-	return onSubmit;
+				validateForms(ddmReactForms)
+					.then((isValid) => {
+						if (isValid) {
+							resolve(getFormsValues(ddmReactForms));
+						}
+						else {
+							reject();
+						}
+					})
+					.catch(reject);
+			});
+		},
+		[ddmForms, getFormsValues]
+	);
 }
 
-export default function useDDMForms(containerElementIds, onSubmitCallback) {
+export default function useDDMForms(containerElementIds) {
 	const [ddmForms, setDdmForms] = useState({});
 
 	containerElementIds.forEach((containerElementId) => {
@@ -131,5 +138,5 @@ export default function useDDMForms(containerElementIds, onSubmitCallback) {
 		}
 	});
 
-	return useDDMFormsSubmit(Object.values(ddmForms), onSubmitCallback);
+	return useMemo(() => Object.values(ddmForms), [ddmForms]);
 }

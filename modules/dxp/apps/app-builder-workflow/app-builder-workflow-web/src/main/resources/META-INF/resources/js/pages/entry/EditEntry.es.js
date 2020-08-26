@@ -14,8 +14,9 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {AppContext} from 'app-builder-web/js/AppContext.es';
 import {ControlMenuBase} from 'app-builder-web/js/components/control-menu/ControlMenu.es';
 import {Loading} from 'app-builder-web/js/components/loading/Loading.es';
+import useDataDefinition from 'app-builder-web/js/hooks/useDataDefinition.es';
 import {getItem} from 'app-builder-web/js/utils/client.es';
-import {successToast} from 'app-builder-web/js/utils/toast.es';
+import {errorToast, successToast} from 'app-builder-web/js/utils/toast.es';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {
 	useCallback,
@@ -28,7 +29,10 @@ import {createPortal} from 'react-dom';
 
 import WorkflowInfoBar from '../../components/workflow-info-bar/WorkflowInfoBar.es';
 import useAppWorkflow from '../../hooks/useAppWorkflow.es';
-import useDDMForms from '../../hooks/useDDMForms.es';
+import useDDMForms, {
+	useDDMFormsSubmit,
+	useDDMFormsValidation,
+} from '../../hooks/useDDMForms.es';
 import useDataRecordApps from '../../hooks/useDataRecordApps.es';
 import ReassignEntryModal from './ReassignEntryModal.es';
 
@@ -54,7 +58,12 @@ const WorkflowInfoPortal = ({children}) => {
 	return createPortal(children, portalElement);
 };
 
-export default function EditEntry({dataRecordId, redirect}) {
+export default function EditEntry({
+	dataDefinitionId,
+	dataRecordId,
+	redirect,
+	userLanguageId,
+}) {
 	const {
 		appId,
 		basePortletURL,
@@ -62,6 +71,10 @@ export default function EditEntry({dataRecordId, redirect}) {
 		dataLayoutIds,
 		namespace,
 	} = useContext(AppContext);
+
+	const {availableLanguageIds, defaultLanguageId} = useDataDefinition(
+		dataDefinitionId
+	);
 
 	const dataRecordApps = useDataRecordApps(
 		appId,
@@ -90,6 +103,12 @@ export default function EditEntry({dataRecordId, redirect}) {
 		dataRecordId !== '0'
 			? Liferay.Language.get('edit-entry')
 			: Liferay.Language.get('add-entry');
+
+	const ddmForms = useDDMForms(
+		dataLayoutIds.map(
+			(dataLayoutId) => `${namespace}container${dataLayoutId}`
+		)
+	);
 
 	const doFetch = useCallback(() => {
 		setLoading(true);
@@ -149,78 +168,99 @@ export default function EditEntry({dataRecordId, redirect}) {
 		}
 	};
 
-	const submitDDMForms = useDDMForms(
-		dataLayoutIds.map(
-			(dataLayoutId) => `${namespace}container${dataLayoutId}`
-		),
-		useCallback(
-			({transitionName}, dataRecord) => {
-				const params = {
-					appBuilderAppId: appId,
-					dataRecord: JSON.stringify(dataRecord),
-					dataRecordId,
-				};
-
-				const resource = `${isEdit ? 'update' : 'add'}_data_record`;
-
-				if (workflowInfo) {
-					const {
-						instanceId,
-						tasks = [],
-						taskNames: [taskName],
-					} = workflowInfo;
-
-					//avoids enter submission putting primary action
-
-					const {appWorkflowTransitions: transitions = []} =
-						tasks.find(({name}) => name === taskName) || {};
-
-					const action = transitions.find(({primary}) => primary);
-
-					params.taskName = taskName;
-					params.transitionName = transitionName ?? action.name;
-					params.workflowInstanceId = instanceId;
-				}
-
-				fetch(
-					createResourceURL(baseResourceURL, {
-						p_p_resource_id: `/app_builder/${resource}`,
-					}),
-					{
-						body: new URLSearchParams(
-							Liferay.Util.ns(namespace, params)
-						),
-						method: 'POST',
-					}
-				)
-					.then(() => {
-						successToast(
-							isEdit
-								? Liferay.Language.get('an-entry-was-updated')
-								: Liferay.Language.get('an-entry-was-added')
-						);
-						onCancel();
-					})
-					.catch(() => {
-						setTransitioning(false);
-					});
-			},
-			[
-				appId,
-				baseResourceURL,
+	const saveDataRecord = useCallback(
+		({transitionName}, dataRecord) => {
+			const params = {
+				appBuilderAppId: appId,
+				dataRecord: JSON.stringify(dataRecord),
 				dataRecordId,
-				isEdit,
-				namespace,
-				onCancel,
-				workflowInfo,
-			]
-		)
+			};
+
+			const resource = `${isEdit ? 'update' : 'add'}_data_record`;
+
+			if (workflowInfo) {
+				const {
+					instanceId,
+					tasks = [],
+					taskNames: [taskName],
+				} = workflowInfo;
+
+				//avoids enter submission putting primary action
+
+				const {appWorkflowTransitions: transitions = []} =
+					tasks.find(({name}) => name === taskName) || {};
+
+				const action = transitions.find(({primary}) => primary);
+
+				params.taskName = taskName;
+				params.transitionName = transitionName ?? action.name;
+				params.workflowInstanceId = instanceId;
+			}
+
+			fetch(
+				createResourceURL(baseResourceURL, {
+					p_p_resource_id: `/app_builder/${resource}`,
+				}),
+				{
+					body: new URLSearchParams(
+						Liferay.Util.ns(namespace, params)
+					),
+					method: 'POST',
+				}
+			)
+				.then(() => {
+					successToast(
+						isEdit
+							? Liferay.Language.get('an-entry-was-updated')
+							: Liferay.Language.get('an-entry-was-added')
+					);
+					onCancel();
+				})
+				.catch(() => {
+					errorToast();
+					setTransitioning(false);
+				});
+		},
+		[
+			appId,
+			baseResourceURL,
+			dataRecordId,
+			isEdit,
+			namespace,
+			onCancel,
+			workflowInfo,
+		]
 	);
 
-	const onSubmit = (event) => {
-		setTransitioning(true);
-		submitDDMForms(event);
-	};
+	const validateForms = useDDMFormsValidation(
+		ddmForms,
+		defaultLanguageId,
+		availableLanguageIds
+	);
+
+	const onSubmit = useCallback(
+		(event) => {
+			setTransitioning(true);
+
+			validateForms(event)
+				.then((dataRecord) => saveDataRecord(event, dataRecord))
+				.catch(() => setTransitioning(false));
+		},
+		[saveDataRecord, validateForms]
+	);
+
+	useDDMFormsSubmit(ddmForms, onSubmit);
+
+	useEffect(() => {
+		ddmForms.forEach((ddmForm) => {
+			const ddmReactForm = ddmForm.reactComponentRef.current;
+
+			ddmReactForm.updateEditingLanguageId({
+				editingLanguageId: userLanguageId,
+				preserveValue: true,
+			});
+		});
+	}, [ddmForms, userLanguageId]);
 
 	useEffect(() => {
 		doFetch();

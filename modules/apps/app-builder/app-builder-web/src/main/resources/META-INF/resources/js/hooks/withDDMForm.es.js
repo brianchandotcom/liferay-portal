@@ -27,82 +27,77 @@ export function useDDMFormSubmit(ddmForm, onSubmit) {
 
 export function useDDMFormValidation(
 	ddmForm,
-	onSubmitCallback,
 	languageId,
 	availableLanguageIds
 ) {
 	return useCallback(
 		(event) => {
-			if (typeof event.stopImmediatePropagation === 'function') {
-				event.stopImmediatePropagation();
-			}
-
-			const ddmReactForm = ddmForm.reactComponentRef.current;
-
-			ddmReactForm.validate().then((isValidForm) => {
-				if (!isValidForm) {
-					return;
+			return new Promise((resolve, reject) => {
+				if (typeof event.stopImmediatePropagation === 'function') {
+					event.stopImmediatePropagation();
 				}
 
-				const dataRecordValues = {};
+				const ddmReactForm = ddmForm.reactComponentRef.current;
 
-				const visitor = new PagesVisitor(ddmReactForm.get('pages'));
+				ddmReactForm
+					.validate()
+					.then((isValidForm) => {
+						if (!isValidForm) {
+							return reject();
+						}
 
-				const setDataRecord = ({
-					fieldName,
-					repeatable,
-					type,
-					value,
-					visible,
-				}) => {
-					if (type === 'fieldset') {
-						return;
-					}
+						const dataRecordValues = {};
 
-					let _value = value;
+						const visitor = new PagesVisitor(
+							ddmReactForm.get('pages')
+						);
 
-					if (!visible) {
-						_value = '';
-					}
+						const setDataRecord = ({
+							fieldName,
+							repeatable,
+							type,
+							value,
+							visible,
+						}) => {
+							if (type === 'fieldset') {
+								return;
+							}
 
-					if (!dataRecordValues[fieldName]) {
-						dataRecordValues[fieldName] = {
-							[languageId]: [],
+							if (!visible) {
+								value = '';
+							}
+
+							if (!dataRecordValues[fieldName]) {
+								dataRecordValues[fieldName] = {
+									[languageId]: [],
+								};
+							}
+
+							if (repeatable) {
+								dataRecordValues[fieldName][languageId].push(
+									value
+								);
+							}
+							else {
+								dataRecordValues[fieldName] = {
+									[languageId]: value,
+								};
+							}
+
+							availableLanguageIds.forEach((key) => {
+								dataRecordValues[fieldName][key] =
+									dataRecordValues[fieldName][languageId];
+							});
 						};
-					}
 
-					if (repeatable) {
-						dataRecordValues[fieldName][languageId].push(_value);
-					}
-					else {
-						dataRecordValues[fieldName] = {
-							[languageId]: _value,
-						};
-					}
+						visitor.mapFields(setDataRecord, true, true);
 
-					availableLanguageIds.forEach((key) => {
-						dataRecordValues[fieldName][key] =
-							dataRecordValues[fieldName][languageId];
-					});
-				};
-
-				visitor.mapFields(
-					(field) => {
-						setDataRecord(field);
-					},
-					true,
-					true
-				);
-
-				onSubmitCallback({dataRecordValues});
+						resolve({dataRecordValues});
+					})
+					.catch(reject);
 			});
 		},
-		[
-			availableLanguageIds,
-			ddmForm.reactComponentRef,
-			languageId,
-			onSubmitCallback,
-		]
+		[availableLanguageIds, ddmForm.reactComponentRef, languageId]
 	);
 }
 

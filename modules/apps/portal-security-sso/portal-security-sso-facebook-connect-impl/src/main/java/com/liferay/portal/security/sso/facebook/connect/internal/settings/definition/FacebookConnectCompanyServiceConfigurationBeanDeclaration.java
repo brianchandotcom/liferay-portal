@@ -20,11 +20,9 @@ import com.liferay.portal.security.sso.facebook.connect.configuration.FacebookCo
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author     Mika Koivisto
- * @deprecated As of Athanasius (7.3.x), with no direct replacement
+ * @author Mika Koivisto
  */
 @Component(service = ConfigurationBeanDeclaration.class)
-@Deprecated
 public class FacebookConnectCompanyServiceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 

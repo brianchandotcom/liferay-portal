@@ -15,10 +15,8 @@
 package com.liferay.portal.security.sso.facebook.connect.constants;
 
 /**
- * @author     Michael C. Han
- * @deprecated As of Athanasius (7.3.x), with no direct replacement
+ * @author Michael C. Han
  */
-@Deprecated
 public class FacebookConnectConstants {
 
 	public static final String SERVICE_NAME =

@@ -17,14 +17,12 @@ package com.liferay.portal.security.sso.facebook.connect.internal.auth.publicpat
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author     Stian Sigvartsen
- * @deprecated As of Athanasius (7.3.x), with no direct replacement
+ * @author Stian Sigvartsen
  */
 @Component(
 	immediate = true,
 	property = "auth.public.path=/portal/facebook_connect_oauth",
 	service = Object.class
 )
-@Deprecated
 public class AuthPublicPath {
 }

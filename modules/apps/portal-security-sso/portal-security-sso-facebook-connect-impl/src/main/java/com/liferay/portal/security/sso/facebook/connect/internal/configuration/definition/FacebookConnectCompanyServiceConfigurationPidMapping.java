@@ -21,11 +21,9 @@ import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnec
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author     Mika Koivisto
- * @deprecated As of Athanasius (7.3.x), with no direct replacement
+ * @author Mika Koivisto
  */
 @Component(service = ConfigurationPidMapping.class)
-@Deprecated
 public class FacebookConnectCompanyServiceConfigurationPidMapping
 	implements ConfigurationPidMapping {
 

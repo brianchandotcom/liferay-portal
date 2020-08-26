@@ -17,10 +17,8 @@ package com.liferay.portal.security.sso.facebook.connect.exception;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author     Stian Sigvartsen
- * @deprecated As of Athanasius (7.3.x), with no direct replacement
+ * @author Stian Sigvartsen
  */
-@Deprecated
 public class MustVerifyEmailAddressException extends PortalException {
 
 	public MustVerifyEmailAddressException(long companyId) {

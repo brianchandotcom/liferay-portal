@@ -15,10 +15,8 @@
 package com.liferay.portal.security.sso.facebook.connect.constants;
 
 /**
- * @author     Stian Sigvartsen
- * @deprecated As of Athanasius (7.3.x), with no direct replacement
+ * @author Stian Sigvartsen
  */
-@Deprecated
 public class LegacyFacebookConnectPropsKeys {
 
 	public static final String APP_ID = "facebook.connect.app.id";

@@ -110,6 +110,7 @@ import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -697,6 +698,43 @@ public class DDMFormAdminDisplayContext {
 			getDDMFormBuilderSettingsResponse();
 
 		return ddmFormBuilderSettingsResponse.getFunctionsURL();
+	}
+
+	public String getInvalidDDMFormField(DDMFormInstance ddmFormInstance) {
+		try {
+			String invalidDDMFormFieldType = _invalidDDMFormFieldTypeMap.get(
+				ddmFormInstance.getFormInstanceId());
+
+			if (invalidDDMFormFieldType != null) {
+				return invalidDDMFormFieldType;
+			}
+
+			DDMForm ddmForm = ddmFormInstance.getDDMForm();
+
+			for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
+				DDMFormFieldType ddmFormFieldType =
+					_ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
+						ddmFormField.getType());
+
+				if (ddmFormFieldType == null) {
+					_invalidDDMFormFieldTypeMap.put(
+						ddmFormInstance.getFormInstanceId(),
+						ddmFormField.getType());
+
+					return ddmFormField.getType();
+				}
+			}
+
+			_invalidDDMFormFieldTypeMap.put(
+				ddmFormInstance.getFormInstanceId(), StringPool.BLANK);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+		}
+
+		return null;
 	}
 
 	public DDMStructureVersion getLatestDDMStructureVersion()
@@ -1630,6 +1668,8 @@ public class DDMFormAdminDisplayContext {
 	private String _displayStyle;
 	private final FormInstancePermissionCheckerHelper
 		_formInstancePermissionCheckerHelper;
+	private final Map<Long, String> _invalidDDMFormFieldTypeMap =
+		new HashMap<>();
 	private final NPMResolver _npmResolver;
 	private final Portal _portal;
 

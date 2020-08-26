@@ -117,6 +117,10 @@ a.control-menu-icon,
 	flex-wrap: wrap;
 	justify-content: space-between;
 
+	@include media-breakpoint-up(sm) {
+		flex-wrap: nowrap;
+	}
+
 	> li > .control-menu-nav > .control-menu-nav-item {
 		margin-left: 4px;
 		margin-right: 4px;
@@ -224,7 +228,7 @@ a.control-menu-icon,
 	flex-basis: 0;
 	flex-grow: 1;
 	flex-shrink: 1;
-	min-width: 64px;
+	min-width: 48px;
 	width: 0;
 
 	.clamp-container {
@@ -271,11 +275,16 @@ a.control-menu-icon,
 .tools-control-group {
 	flex: 1;
 	flex-wrap: wrap;
-	min-width: 50px;
 
 	> .control-menu-nav {
-		flex-wrap: wrap;
+		flex-wrap: nowrap;
 		justify-content: center;
+		overflow: hidden;
+
+		@include media-breakpoint-up(md) {
+			flex-wrap: wrap;
+			overflow: auto;
+		}
 
 		> li > .lfr-portal-tooltip > .control-menu-icon {
 			@extend %control-menu-icon-monospaced;

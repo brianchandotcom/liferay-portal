@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>FRAGMENT_COLLECTION</td>
-	<td>//ul[contains(@class,'nav-nested')]//li//*[contains(@class, 'nav-link') and normalize-space(text())='${collectionName}']</td>
+	<td>//a[contains(@class,'nav-link')][span[normalize-space(text())='${collectionName}']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_COLLECTION_SPECIFIC_SCOPE</td>
-	<td>//ul[contains(@class,'nav-stacked') and contains(.,'${scope}')]/li/*[contains(@class, 'nav-link') and normalize-space(text())='${collectionName}']</td>
+	<td>//ul[contains(@class,'nav-stacked') and contains(.,'${scope}')]//a[contains(@class,'nav-link')][span[normalize-space(text())='${collectionName}']]</td>
 	<td></td>
 </tr>
 </tbody>

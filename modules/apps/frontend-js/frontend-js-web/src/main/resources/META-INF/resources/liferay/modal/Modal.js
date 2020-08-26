@@ -528,7 +528,7 @@ Modal.propTypes = {
 	iframeProps: PropTypes.object,
 	onClose: PropTypes.func,
 	onOpen: PropTypes.func,
-	size: PropTypes.oneOf(['full-screen', 'lg', 'sm']),
+	size: PropTypes.oneOf(['full-screen', 'lg', 'md', 'sm']),
 	title: PropTypes.string,
 	url: PropTypes.string,
 };

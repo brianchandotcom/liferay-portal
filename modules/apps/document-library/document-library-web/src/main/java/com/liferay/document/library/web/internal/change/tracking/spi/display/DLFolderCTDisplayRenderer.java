@@ -16,6 +16,7 @@ package com.liferay.document.library.web.internal.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -127,7 +128,15 @@ public class DLFolderCTDisplayRenderer extends BaseCTDisplayRenderer<DLFolder> {
 		).display(
 			"documents",
 			() -> {
-				ThemeDisplay themeDisplay = displayBuilder.getThemeDisplay();
+				DisplayContext<DLFolder> displayContext =
+					displayBuilder.getDisplayContext();
+
+				HttpServletRequest httpServletRequest =
+					displayContext.getHttpServletRequest();
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				int status = WorkflowConstants.STATUS_APPROVED;
 

@@ -136,11 +136,11 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 			String languageKey,
 			UnsafeSupplier<Object, Exception> unsafeSupplier);
 
+		public DisplayContext<T> getDisplayContext();
+
 		public Locale getLocale();
 
 		public T getModel();
-
-		public ThemeDisplay getThemeDisplay();
 
 	}
 
@@ -249,6 +249,11 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 		}
 
 		@Override
+		public DisplayContext<T> getDisplayContext() {
+			return _displayContext;
+		}
+
+		@Override
 		public Locale getLocale() {
 			return _resourceBundle.getLocale();
 		}
@@ -256,11 +261,6 @@ public abstract class BaseCTDisplayRenderer<T extends CTModel<T>>
 		@Override
 		public T getModel() {
 			return _displayContext.getModel();
-		}
-
-		@Override
-		public ThemeDisplay getThemeDisplay() {
-			return _themeDisplay;
 		}
 
 		private DisplayBuilderImpl(

@@ -163,7 +163,7 @@ definition {
 
 		Translations.exportTranslation(
 			defaultLanguage = "English (United States)",
-			exportFileFormat = "application/x-xliff+xml",
+			exportFileFormat = "XLIFF 1.2",
 			languageList = "Spanish (Spain)");
 
 		Translations.translateFile(

@@ -100,25 +100,13 @@ export const getFieldLabel = (dataDefinition, fieldName) => {
 export const getOptionLabel = (
 	options = {},
 	value,
-	defaultLanguage = themeDisplay.getDefaultLanguageId(),
-	withNonMatchValue = false
+	defaultLanguageId = themeDisplay.getDefaultLanguageId(),
 ) => {
-	const languageId = themeDisplay.getLanguageId();
-	const getLabel = (language) => {
-		if (options[language]) {
-			const {label} =
-				options[language].find((option) => option.value === value) ||
-				{};
-
-			return label;
+	const getLabel = (languageId) => {
+		if (options[languageId]) {
+			return options[languageId].find((option) => option.value === value)?.label;
 		}
 	};
 
-	const label = getLabel[languageId] || getLabel(defaultLanguage);
-
-	if (label) {
-		return label;
-	}
-
-	return withNonMatchValue ? value : null;
+	return getLabel(themeDisplay.getLanguageId()) || getLabel(defaultLanguageId);
 };

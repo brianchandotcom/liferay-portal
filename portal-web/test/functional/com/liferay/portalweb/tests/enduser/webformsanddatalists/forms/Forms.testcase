@@ -1352,6 +1352,10 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field Page 1");
 
+		Form.gotoAdvancedTab();
+
+		var textFieldPage1Name = FormFields.getFieldName();
+
 		Form.closeSidebar();
 
 		Form.addPage(formAddNewPageNumber = "1");
@@ -1378,7 +1382,7 @@ definition {
 
 		FormFields.viewTextField(
 			fieldLabel = "Text Field Page 1",
-			fieldName = "TextFieldPage1");
+			fieldName = "${textFieldPage1Name}");
 	}
 
 	@description = "This is a use case for LPS-74997."

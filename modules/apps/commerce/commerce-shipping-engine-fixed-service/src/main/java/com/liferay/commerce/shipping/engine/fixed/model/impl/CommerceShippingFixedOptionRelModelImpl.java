@@ -657,7 +657,7 @@ public class CommerceShippingFixedOptionRelModelImpl
 	@Deprecated
 	public long getOriginalCommerceShippingMethodId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("commerceShippingMethodId"));
+			this.<Long>getColumnOriginalValue("commerceShippingMethodId"));
 	}
 
 	@JSON
@@ -684,7 +684,7 @@ public class CommerceShippingFixedOptionRelModelImpl
 	@Deprecated
 	public long getOriginalCommerceShippingFixedOptionId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("commerceShippingFixedOptionId"));
+			this.<Long>getColumnOriginalValue("commerceShippingFixedOptionId"));
 	}
 
 	@JSON

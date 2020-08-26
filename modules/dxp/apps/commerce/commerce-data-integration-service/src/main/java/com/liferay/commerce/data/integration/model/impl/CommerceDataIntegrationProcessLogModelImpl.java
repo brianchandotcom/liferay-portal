@@ -451,13 +451,8 @@ public class CommerceDataIntegrationProcessLogModelImpl
 	public void setCommerceDataIntegrationProcessLogId(
 		long commerceDataIntegrationProcessLogId) {
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get(
-				"CDataIntegrationProcessLogId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_commerceDataIntegrationProcessLogId =
@@ -472,12 +467,8 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -491,12 +482,8 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userId = userId;
@@ -531,12 +518,8 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userName = userName;
@@ -550,12 +533,8 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_createDate = createDate;
@@ -575,12 +554,8 @@ public class CommerceDataIntegrationProcessLogModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_modifiedDate = modifiedDate;
@@ -594,12 +569,8 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setCDataIntegrationProcessId(long CDataIntegrationProcessId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("CDataIntegrationProcessId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_CDataIntegrationProcessId = CDataIntegrationProcessId;
@@ -612,7 +583,7 @@ public class CommerceDataIntegrationProcessLogModelImpl
 	@Deprecated
 	public long getOriginalCDataIntegrationProcessId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("CDataIntegrationProcessId"));
+			this.<Long>getColumnOriginalValue("CDataIntegrationProcessId"));
 	}
 
 	@JSON
@@ -628,12 +599,8 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setError(String error) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("error");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_error = error;
@@ -652,12 +619,8 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setOutput(String output) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("output_");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_output = output;
@@ -671,12 +634,8 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setStartDate(Date startDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("startDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_startDate = startDate;
@@ -690,12 +649,8 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setEndDate(Date endDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("endDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_endDate = endDate;
@@ -709,12 +664,8 @@ public class CommerceDataIntegrationProcessLogModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("status");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_status = status;
@@ -726,10 +677,29 @@ public class CommerceDataIntegrationProcessLogModelImpl
 	 */
 	@Deprecated
 	public int getOriginalStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("status"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -1046,8 +1016,18 @@ public class CommerceDataIntegrationProcessLogModelImpl
 	private Date _endDate;
 	private int _status;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
+	public <T> T getColumnValue(String columnName) {
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
+
+		Function<CommerceDataIntegrationProcessLog, Object> function =
+			_attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((CommerceDataIntegrationProcessLog)this);
 	}
 
 	public <T> T getColumnOriginalValue(String columnName) {
@@ -1082,10 +1062,29 @@ public class CommerceDataIntegrationProcessLogModelImpl
 		_columnOriginalValues.put("status", _status);
 	}
 
+	private static final Map<String, String> _attributeNames;
+
+	static {
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put(
+			"CDataIntegrationProcessLogId",
+			"commerceDataIntegrationProcessLogId");
+		attributeNames.put("output_", "output");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("CDataIntegrationProcessLogId", 1L);
 
@@ -1114,7 +1113,6 @@ public class CommerceDataIntegrationProcessLogModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommerceDataIntegrationProcessLog _escapedModel;
 

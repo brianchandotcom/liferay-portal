@@ -414,7 +414,8 @@ public class CPDefinitionLocalizationModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCPDefinitionId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CPDefinitionId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CPDefinitionId"));
 	}
 
 	@Override

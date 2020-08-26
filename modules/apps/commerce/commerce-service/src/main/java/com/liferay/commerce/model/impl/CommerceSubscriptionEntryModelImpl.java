@@ -710,7 +710,7 @@ public class CommerceSubscriptionEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -734,7 +734,8 @@ public class CommerceSubscriptionEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -774,7 +775,7 @@ public class CommerceSubscriptionEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@JSON
@@ -883,7 +884,8 @@ public class CommerceSubscriptionEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCProductId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CProductId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CProductId"));
 	}
 
 	@JSON
@@ -908,7 +910,7 @@ public class CommerceSubscriptionEntryModelImpl
 	@Deprecated
 	public long getOriginalCommerceOrderItemId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("commerceOrderItemId"));
+			this.<Long>getColumnOriginalValue("commerceOrderItemId"));
 	}
 
 	@JSON
@@ -1018,7 +1020,7 @@ public class CommerceSubscriptionEntryModelImpl
 	@Deprecated
 	public int getOriginalSubscriptionStatus() {
 		return GetterUtil.getInteger(
-			getColumnOriginalValue("subscriptionStatus"));
+			this.<Integer>getColumnOriginalValue("subscriptionStatus"));
 	}
 
 	@JSON

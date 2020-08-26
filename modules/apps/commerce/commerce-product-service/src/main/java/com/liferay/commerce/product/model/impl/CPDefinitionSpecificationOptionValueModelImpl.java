@@ -558,7 +558,7 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 	@Deprecated
 	public long getOriginalCPDefinitionSpecificationOptionValueId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("CPDSpecificationOptionValueId"));
+			this.<Long>getColumnOriginalValue("CPDSpecificationOptionValueId"));
 	}
 
 	@JSON
@@ -582,7 +582,7 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -606,7 +606,8 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -717,7 +718,8 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCPDefinitionId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CPDefinitionId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CPDefinitionId"));
 	}
 
 	@JSON
@@ -742,7 +744,7 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 	@Deprecated
 	public long getOriginalCPSpecificationOptionId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("CPSpecificationOptionId"));
+			this.<Long>getColumnOriginalValue("CPSpecificationOptionId"));
 	}
 
 	@JSON
@@ -766,7 +768,8 @@ public class CPDefinitionSpecificationOptionValueModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCPOptionCategoryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CPOptionCategoryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CPOptionCategoryId"));
 	}
 
 	@JSON

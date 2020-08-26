@@ -21,6 +21,7 @@ import com.liferay.commerce.data.integration.model.impl.CommerceDataIntegrationP
 import com.liferay.commerce.data.integration.model.impl.CommerceDataIntegrationProcessLogModelImpl;
 import com.liferay.commerce.data.integration.service.persistence.CommerceDataIntegrationProcessLogPersistence;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -30,10 +31,12 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -45,9 +48,16 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * The persistence implementation for the commerce data integration process log service.
@@ -1287,10 +1297,7 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 
 		entityCache.removeResult(
 			CommerceDataIntegrationProcessLogImpl.class,
-			commerceDataIntegrationProcessLog.getPrimaryKey());
-
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			commerceDataIntegrationProcessLog);
 	}
 
 	@Override
@@ -1298,16 +1305,13 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 		List<CommerceDataIntegrationProcessLog>
 			commerceDataIntegrationProcessLogs) {
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (CommerceDataIntegrationProcessLog
 				commerceDataIntegrationProcessLog :
 					commerceDataIntegrationProcessLogs) {
 
 			entityCache.removeResult(
 				CommerceDataIntegrationProcessLogImpl.class,
-				commerceDataIntegrationProcessLog.getPrimaryKey());
+				commerceDataIntegrationProcessLog);
 		}
 	}
 
@@ -1503,10 +1507,8 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 		try {
 			session = openSession();
 
-			if (commerceDataIntegrationProcessLog.isNew()) {
+			if (isNew) {
 				session.save(commerceDataIntegrationProcessLog);
-
-				commerceDataIntegrationProcessLog.setNew(false);
 			}
 			else {
 				commerceDataIntegrationProcessLog =
@@ -1521,93 +1523,13 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 			closeSession(session);
 		}
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-
-		if (isNew) {
-			Object[] args = new Object[] {
-				commerceDataIntegrationProcessLogModelImpl.
-					getCDataIntegrationProcessId()
-			};
-
-			finderCache.removeResult(
-				_finderPathCountByCDataIntegrationProcessId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByCDataIntegrationProcessId,
-				args);
-
-			args = new Object[] {
-				commerceDataIntegrationProcessLogModelImpl.
-					getCDataIntegrationProcessId(),
-				commerceDataIntegrationProcessLogModelImpl.getStatus()
-			};
-
-			finderCache.removeResult(_finderPathCountByC_S, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByC_S, args);
-
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
-		}
-		else {
-			if ((commerceDataIntegrationProcessLogModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByCDataIntegrationProcessId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					commerceDataIntegrationProcessLogModelImpl.
-						getColumnOriginalValue("CDataIntegrationProcessId")
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByCDataIntegrationProcessId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCDataIntegrationProcessId,
-					args);
-
-				args = new Object[] {
-					commerceDataIntegrationProcessLogModelImpl.
-						getCDataIntegrationProcessId()
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByCDataIntegrationProcessId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCDataIntegrationProcessId,
-					args);
-			}
-
-			if ((commerceDataIntegrationProcessLogModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByC_S.getColumnBitmask()) !=
-					 0) {
-
-				Object[] args = new Object[] {
-					commerceDataIntegrationProcessLogModelImpl.
-						getColumnOriginalValue("CDataIntegrationProcessId"),
-					commerceDataIntegrationProcessLogModelImpl.
-						getColumnOriginalValue("status")
-				};
-
-				finderCache.removeResult(_finderPathCountByC_S, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByC_S, args);
-
-				args = new Object[] {
-					commerceDataIntegrationProcessLogModelImpl.
-						getCDataIntegrationProcessId(),
-					commerceDataIntegrationProcessLogModelImpl.getStatus()
-				};
-
-				finderCache.removeResult(_finderPathCountByC_S, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByC_S, args);
-			}
-		}
-
 		entityCache.putResult(
 			CommerceDataIntegrationProcessLogImpl.class,
-			commerceDataIntegrationProcessLog.getPrimaryKey(),
-			commerceDataIntegrationProcessLog, false);
+			commerceDataIntegrationProcessLogModelImpl, false, true);
+
+		if (isNew) {
+			commerceDataIntegrationProcessLog.setNew(false);
+		}
 
 		commerceDataIntegrationProcessLog.resetOriginalValues();
 
@@ -1887,77 +1809,87 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 	 * Initializes the commerce data integration process log persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceDataIntegrationProcessLogImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+		Bundle bundle = FrameworkUtil.getBundle(
+			CommerceDataIntegrationProcessLogPersistenceImpl.class);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceDataIntegrationProcessLogImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+		_bundleContext = bundle.getBundleContext();
 
-		_finderPathCountAll = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_argumentsResolverServiceRegistration = _bundleContext.registerService(
+			ArgumentsResolver.class,
+			new CommerceDataIntegrationProcessLogModelArgumentsResolver(),
+			MapUtil.singletonDictionary(
+				"model.class.name",
+				CommerceDataIntegrationProcessLog.class.getName()));
+
+		_finderPathWithPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathWithoutPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathCountAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
 
 		_finderPathWithPaginationFindByCDataIntegrationProcessId =
-			new FinderPath(
-				CommerceDataIntegrationProcessLogImpl.class,
+			_createFinderPath(
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 				"findByCDataIntegrationProcessId",
 				new String[] {
 					Long.class.getName(), Integer.class.getName(),
 					Integer.class.getName(), OrderByComparator.class.getName()
-				});
+				},
+				new String[] {"CDataIntegrationProcessId"}, true);
 
 		_finderPathWithoutPaginationFindByCDataIntegrationProcessId =
-			new FinderPath(
-				CommerceDataIntegrationProcessLogImpl.class,
+			_createFinderPath(
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCDataIntegrationProcessId",
 				new String[] {Long.class.getName()},
-				CommerceDataIntegrationProcessLogModelImpl.getColumnBitmask(
-					"CDataIntegrationProcessId") |
-				CommerceDataIntegrationProcessLogModelImpl.getColumnBitmask(
-					"modifiedDate"));
+				new String[] {"CDataIntegrationProcessId"}, true);
 
-		_finderPathCountByCDataIntegrationProcessId = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+		_finderPathCountByCDataIntegrationProcessId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCDataIntegrationProcessId",
-			new String[] {Long.class.getName()});
+			new String[] {Long.class.getName()},
+			new String[] {"CDataIntegrationProcessId"}, false);
 
-		_finderPathWithPaginationFindByC_S = new FinderPath(
-			CommerceDataIntegrationProcessLogImpl.class,
+		_finderPathWithPaginationFindByC_S = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
-			});
+			},
+			new String[] {"CDataIntegrationProcessId", "status"}, true);
 
-		_finderPathWithoutPaginationFindByC_S = new FinderPath(
-			CommerceDataIntegrationProcessLogImpl.class,
+		_finderPathWithoutPaginationFindByC_S = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			CommerceDataIntegrationProcessLogModelImpl.getColumnBitmask(
-				"CDataIntegrationProcessId") |
-			CommerceDataIntegrationProcessLogModelImpl.getColumnBitmask(
-				"status") |
-			CommerceDataIntegrationProcessLogModelImpl.getColumnBitmask(
-				"modifiedDate"));
+			new String[] {"CDataIntegrationProcessId", "status"}, true);
 
-		_finderPathCountByC_S = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
-			new String[] {Long.class.getName(), Integer.class.getName()});
+		_finderPathCountByC_S = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			new String[] {"CDataIntegrationProcessId", "status"}, false);
 	}
 
 	public void destroy() {
 		entityCache.removeCache(
 			CommerceDataIntegrationProcessLogImpl.class.getName());
-		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		_argumentsResolverServiceRegistration.unregister();
+
+		for (ServiceRegistration<FinderPath> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
+
+	private BundleContext _bundleContext;
 
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
@@ -1993,5 +1925,113 @@ public class CommerceDataIntegrationProcessLogPersistenceImpl
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"commerceDataIntegrationProcessLogId", "output"});
+
+	private FinderPath _createFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, baseModelResult);
+
+		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
+			_serviceRegistrations.add(
+				_bundleContext.registerService(
+					FinderPath.class, finderPath,
+					MapUtil.singletonDictionary("cache.name", cacheName)));
+		}
+
+		return finderPath;
+	}
+
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
+	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
+		new HashSet<>();
+
+	private static class CommerceDataIntegrationProcessLogModelArgumentsResolver
+		implements ArgumentsResolver {
+
+		@Override
+		public Object[] getArguments(
+			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
+			boolean original) {
+
+			String[] columnNames = finderPath.getColumnNames();
+
+			if ((columnNames == null) || (columnNames.length == 0)) {
+				if (baseModel.isNew()) {
+					return FINDER_ARGS_EMPTY;
+				}
+
+				return null;
+			}
+
+			CommerceDataIntegrationProcessLogModelImpl
+				commerceDataIntegrationProcessLogModelImpl =
+					(CommerceDataIntegrationProcessLogModelImpl)baseModel;
+
+			long columnBitmask =
+				commerceDataIntegrationProcessLogModelImpl.getColumnBitmask();
+
+			if (!checkColumn || (columnBitmask == 0)) {
+				return _getValue(
+					commerceDataIntegrationProcessLogModelImpl, columnNames,
+					original);
+			}
+
+			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
+				finderPath);
+
+			if (finderPathColumnBitmask == null) {
+				finderPathColumnBitmask = 0L;
+
+				for (String columnName : columnNames) {
+					finderPathColumnBitmask |=
+						commerceDataIntegrationProcessLogModelImpl.
+							getColumnBitmask(columnName);
+				}
+
+				_finderPathColumnBitmasksCache.put(
+					finderPath, finderPathColumnBitmask);
+			}
+
+			if ((columnBitmask & finderPathColumnBitmask) != 0) {
+				return _getValue(
+					commerceDataIntegrationProcessLogModelImpl, columnNames,
+					original);
+			}
+
+			return null;
+		}
+
+		private Object[] _getValue(
+			CommerceDataIntegrationProcessLogModelImpl
+				commerceDataIntegrationProcessLogModelImpl,
+			String[] columnNames, boolean original) {
+
+			Object[] arguments = new Object[columnNames.length];
+
+			for (int i = 0; i < arguments.length; i++) {
+				String columnName = columnNames[i];
+
+				if (original) {
+					arguments[i] =
+						commerceDataIntegrationProcessLogModelImpl.
+							getColumnOriginalValue(columnName);
+				}
+				else {
+					arguments[i] =
+						commerceDataIntegrationProcessLogModelImpl.
+							getColumnValue(columnName);
+				}
+			}
+
+			return arguments;
+		}
+
+		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
+			new ConcurrentHashMap<>();
+
+	}
 
 }

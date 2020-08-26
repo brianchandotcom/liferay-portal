@@ -558,7 +558,8 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCommerceDiscountId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceDiscountId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceDiscountId"));
 	}
 
 	@JSON
@@ -583,7 +584,7 @@ public class CommerceDiscountCommerceAccountGroupRelModelImpl
 	@Deprecated
 	public long getOriginalCommerceAccountGroupId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("commerceAccountGroupId"));
+			this.<Long>getColumnOriginalValue("commerceAccountGroupId"));
 	}
 
 	public long getColumnBitmask() {

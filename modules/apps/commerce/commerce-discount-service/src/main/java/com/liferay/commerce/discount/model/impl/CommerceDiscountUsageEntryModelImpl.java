@@ -485,7 +485,8 @@ public class CommerceDiscountUsageEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCommerceAccountId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceAccountId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceAccountId"));
 	}
 
 	@Override
@@ -508,7 +509,8 @@ public class CommerceDiscountUsageEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCommerceOrderId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceOrderId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceOrderId"));
 	}
 
 	@Override
@@ -531,7 +533,8 @@ public class CommerceDiscountUsageEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCommerceDiscountId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceDiscountId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceDiscountId"));
 	}
 
 	public long getColumnBitmask() {

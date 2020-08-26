@@ -481,7 +481,7 @@ public class CommerceWishListModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -505,7 +505,8 @@ public class CommerceWishListModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -545,7 +546,7 @@ public class CommerceWishListModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@JSON
@@ -660,7 +661,8 @@ public class CommerceWishListModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalDefaultWishList() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("defaultWishList"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("defaultWishList"));
 	}
 
 	@Override

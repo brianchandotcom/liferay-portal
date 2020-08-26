@@ -532,7 +532,8 @@ public class CommerceInventoryWarehouseItemModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -646,7 +647,7 @@ public class CommerceInventoryWarehouseItemModelImpl
 	@Deprecated
 	public long getOriginalCommerceInventoryWarehouseId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("commerceInventoryWarehouseId"));
+			this.<Long>getColumnOriginalValue("commerceInventoryWarehouseId"));
 	}
 
 	@JSON

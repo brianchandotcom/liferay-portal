@@ -594,7 +594,7 @@ public class CPDefinitionOptionRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -618,7 +618,8 @@ public class CPDefinitionOptionRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -729,7 +730,8 @@ public class CPDefinitionOptionRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCPDefinitionId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CPDefinitionId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CPDefinitionId"));
 	}
 
 	@JSON
@@ -753,7 +755,8 @@ public class CPDefinitionOptionRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCPOptionId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CPOptionId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CPOptionId"));
 	}
 
 	@JSON
@@ -1058,7 +1061,8 @@ public class CPDefinitionOptionRelModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalRequired() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("required"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("required"));
 	}
 
 	@JSON
@@ -1088,7 +1092,8 @@ public class CPDefinitionOptionRelModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalSkuContributor() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("skuContributor"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("skuContributor"));
 	}
 
 	@JSON

@@ -582,7 +582,7 @@ public class CPDefinitionOptionValueRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -606,7 +606,8 @@ public class CPDefinitionOptionValueRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -718,7 +719,7 @@ public class CPDefinitionOptionValueRelModelImpl
 	@Deprecated
 	public long getOriginalCPDefinitionOptionRelId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("CPDefinitionOptionRelId"));
+			this.<Long>getColumnOriginalValue("CPDefinitionOptionRelId"));
 	}
 
 	@JSON
@@ -958,7 +959,8 @@ public class CPDefinitionOptionValueRelModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalPreselected() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("preselected"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("preselected"));
 	}
 
 	@JSON

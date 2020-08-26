@@ -497,7 +497,8 @@ public class CommerceChannelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -608,7 +609,8 @@ public class CommerceChannelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalSiteGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("siteGroupId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("siteGroupId"));
 	}
 
 	@JSON

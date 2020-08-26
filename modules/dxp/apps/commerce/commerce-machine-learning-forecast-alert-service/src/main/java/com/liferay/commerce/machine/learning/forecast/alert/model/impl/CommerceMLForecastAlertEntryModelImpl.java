@@ -476,12 +476,8 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setUuid(String uuid) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("uuid_");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_uuid = uuid;
@@ -506,13 +502,8 @@ public class CommerceMLForecastAlertEntryModelImpl
 	public void setCommerceMLForecastAlertEntryId(
 		long commerceMLForecastAlertEntryId) {
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get(
-				"commerceMLForecastAlertEntryId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_commerceMLForecastAlertEntryId = commerceMLForecastAlertEntryId;
@@ -526,12 +517,8 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("companyId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_companyId = companyId;
@@ -543,7 +530,8 @@ public class CommerceMLForecastAlertEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -554,12 +542,8 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setUserId(long userId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userId = userId;
@@ -594,12 +578,8 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setUserName(String userName) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("userName");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_userName = userName;
@@ -613,12 +593,8 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("createDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_createDate = createDate;
@@ -638,12 +614,8 @@ public class CommerceMLForecastAlertEntryModelImpl
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("modifiedDate");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_modifiedDate = modifiedDate;
@@ -657,12 +629,8 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setCommerceAccountId(long commerceAccountId) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("commerceAccountId");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_commerceAccountId = commerceAccountId;
@@ -674,7 +642,8 @@ public class CommerceMLForecastAlertEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCommerceAccountId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceAccountId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceAccountId"));
 	}
 
 	@JSON
@@ -685,12 +654,8 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setActual(double actual) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("actual");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_actual = actual;
@@ -704,12 +669,8 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setForecast(double forecast) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("forecast");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_forecast = forecast;
@@ -723,12 +684,8 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setTimestamp(Date timestamp) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("timestamp");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_timestamp = timestamp;
@@ -751,12 +708,8 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setRelativeChange(double relativeChange) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("relativeChange");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_relativeChange = relativeChange;
@@ -768,7 +721,8 @@ public class CommerceMLForecastAlertEntryModelImpl
 	 */
 	@Deprecated
 	public double getOriginalRelativeChange() {
-		return GetterUtil.getDouble(getColumnOriginalValue("relativeChange"));
+		return GetterUtil.getDouble(
+			this.<Double>getColumnOriginalValue("relativeChange"));
 	}
 
 	@JSON
@@ -779,12 +733,8 @@ public class CommerceMLForecastAlertEntryModelImpl
 
 	@Override
 	public void setStatus(int status) {
-		if (_columnOriginalValues != null) {
-			_columnBitmask |= _columnBitmasks.get("status");
-
-			if (_columnOriginalValues == Collections.EMPTY_MAP) {
-				_setColumnOriginalValues();
-			}
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
 		}
 
 		_status = status;
@@ -796,7 +746,8 @@ public class CommerceMLForecastAlertEntryModelImpl
 	 */
 	@Deprecated
 	public int getOriginalStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("status"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	@Override
@@ -807,6 +758,24 @@ public class CommerceMLForecastAlertEntryModelImpl
 	}
 
 	public long getColumnBitmask() {
+		if (_columnBitmask > 0) {
+			return _columnBitmask;
+		}
+
+		if ((_columnOriginalValues == null) ||
+			(_columnOriginalValues == Collections.EMPTY_MAP)) {
+
+			return 0;
+		}
+
+		for (Map.Entry<String, Object> entry :
+				_columnOriginalValues.entrySet()) {
+
+			if (entry.getValue() != getColumnValue(entry.getKey())) {
+				_columnBitmask |= _columnBitmasks.get(entry.getKey());
+			}
+		}
+
 		return _columnBitmask;
 	}
 
@@ -1102,8 +1071,18 @@ public class CommerceMLForecastAlertEntryModelImpl
 	private double _relativeChange;
 	private int _status;
 
-	public static long getColumnBitmask(String columnName) {
-		return _columnBitmasks.get(columnName);
+	public <T> T getColumnValue(String columnName) {
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
+
+		Function<CommerceMLForecastAlertEntry, Object> function =
+			_attributeGetterFunctions.get(columnName);
+
+		if (function == null) {
+			throw new IllegalArgumentException(
+				"No attribute getter function found for " + columnName);
+		}
+
+		return (T)function.apply((CommerceMLForecastAlertEntry)this);
 	}
 
 	public <T> T getColumnOriginalValue(String columnName) {
@@ -1137,10 +1116,26 @@ public class CommerceMLForecastAlertEntryModelImpl
 		_columnOriginalValues.put("status", _status);
 	}
 
+	private static final Map<String, String> _attributeNames;
+
+	static {
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("uuid_", "uuid");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
+	}
+
+	private transient Map<String, Object> _columnOriginalValues;
+
+	public static long getColumnBitmask(String columnName) {
+		return _columnBitmasks.get(columnName);
+	}
+
 	private static final Map<String, Long> _columnBitmasks;
 
 	static {
-		Map<String, Long> columnBitmasks = new LinkedHashMap<>();
+		Map<String, Long> columnBitmasks = new HashMap<>();
 
 		columnBitmasks.put("uuid_", 1L);
 
@@ -1171,7 +1166,6 @@ public class CommerceMLForecastAlertEntryModelImpl
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
-	private transient Map<String, Object> _columnOriginalValues;
 	private long _columnBitmask;
 	private CommerceMLForecastAlertEntry _escapedModel;
 

@@ -574,7 +574,8 @@ public class CommerceWishListItemModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCommerceWishListId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceWishListId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceWishListId"));
 	}
 
 	@JSON
@@ -627,7 +628,8 @@ public class CommerceWishListItemModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCProductId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CProductId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CProductId"));
 	}
 
 	@JSON

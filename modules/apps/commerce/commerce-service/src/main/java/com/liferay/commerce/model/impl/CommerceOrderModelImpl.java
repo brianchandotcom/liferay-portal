@@ -1029,7 +1029,7 @@ public class CommerceOrderModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -1053,7 +1053,8 @@ public class CommerceOrderModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -1093,7 +1094,7 @@ public class CommerceOrderModelImpl
 	 */
 	@Deprecated
 	public long getOriginalUserId() {
-		return GetterUtil.getLong(getColumnOriginalValue("userId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
 	@JSON
@@ -1182,7 +1183,8 @@ public class CommerceOrderModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCommerceAccountId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceAccountId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceAccountId"));
 	}
 
 	@JSON
@@ -1221,7 +1223,8 @@ public class CommerceOrderModelImpl
 	 */
 	@Deprecated
 	public long getOriginalBillingAddressId() {
-		return GetterUtil.getLong(getColumnOriginalValue("billingAddressId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("billingAddressId"));
 	}
 
 	@JSON
@@ -1245,7 +1248,8 @@ public class CommerceOrderModelImpl
 	 */
 	@Deprecated
 	public long getOriginalShippingAddressId() {
-		return GetterUtil.getLong(getColumnOriginalValue("shippingAddressId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("shippingAddressId"));
 	}
 
 	@JSON
@@ -2079,7 +2083,8 @@ public class CommerceOrderModelImpl
 	 */
 	@Deprecated
 	public int getOriginalOrderStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("orderStatus"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("orderStatus"));
 	}
 
 	@JSON

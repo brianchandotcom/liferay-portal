@@ -544,7 +544,8 @@ public class CommerceDiscountRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCommerceDiscountId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceDiscountId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceDiscountId"));
 	}
 
 	@Override
@@ -588,7 +589,8 @@ public class CommerceDiscountRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassNameId() {
-		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("classNameId"));
 	}
 
 	@JSON
@@ -612,7 +614,7 @@ public class CommerceDiscountRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassPK() {
-		return GetterUtil.getLong(getColumnOriginalValue("classPK"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
 	public long getColumnBitmask() {

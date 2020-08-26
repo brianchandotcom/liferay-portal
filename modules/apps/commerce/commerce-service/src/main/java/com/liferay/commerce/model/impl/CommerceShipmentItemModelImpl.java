@@ -468,7 +468,7 @@ public class CommerceShipmentItemModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -594,7 +594,8 @@ public class CommerceShipmentItemModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCommerceShipmentId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceShipmentId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceShipmentId"));
 	}
 
 	@JSON
@@ -619,7 +620,7 @@ public class CommerceShipmentItemModelImpl
 	@Deprecated
 	public long getOriginalCommerceOrderItemId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("commerceOrderItemId"));
+			this.<Long>getColumnOriginalValue("commerceOrderItemId"));
 	}
 
 	@JSON
@@ -646,7 +647,7 @@ public class CommerceShipmentItemModelImpl
 	@Deprecated
 	public long getOriginalCommerceInventoryWarehouseId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("commerceInventoryWarehouseId"));
+			this.<Long>getColumnOriginalValue("commerceInventoryWarehouseId"));
 	}
 
 	@JSON

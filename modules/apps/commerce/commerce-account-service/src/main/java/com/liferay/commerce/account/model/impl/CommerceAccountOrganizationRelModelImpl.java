@@ -411,7 +411,8 @@ public class CommerceAccountOrganizationRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCommerceAccountId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceAccountId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceAccountId"));
 	}
 
 	@JSON
@@ -435,7 +436,8 @@ public class CommerceAccountOrganizationRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalOrganizationId() {
-		return GetterUtil.getLong(getColumnOriginalValue("organizationId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("organizationId"));
 	}
 
 	@JSON

@@ -557,7 +557,8 @@ public class CommerceDiscountRuleModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCommerceDiscountId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceDiscountId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceDiscountId"));
 	}
 
 	@JSON

@@ -491,7 +491,8 @@ public class CPDAvailabilityEstimateModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -605,7 +606,8 @@ public class CPDAvailabilityEstimateModelImpl
 	@Deprecated
 	public long getOriginalCommerceAvailabilityEstimateId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("commerceAvailabilityEstimateId"));
+			this.<Long>getColumnOriginalValue(
+				"commerceAvailabilityEstimateId"));
 	}
 
 	@JSON
@@ -629,7 +631,8 @@ public class CPDAvailabilityEstimateModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCProductId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CProductId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CProductId"));
 	}
 
 	@JSON

@@ -444,7 +444,7 @@ public class CommerceNotificationAttachmentModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@Override
@@ -467,7 +467,8 @@ public class CommerceNotificationAttachmentModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -576,7 +577,7 @@ public class CommerceNotificationAttachmentModelImpl
 	@Deprecated
 	public long getOriginalCommerceNotificationQueueEntryId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("CNotificationQueueEntryId"));
+			this.<Long>getColumnOriginalValue("CNotificationQueueEntryId"));
 	}
 
 	@Override

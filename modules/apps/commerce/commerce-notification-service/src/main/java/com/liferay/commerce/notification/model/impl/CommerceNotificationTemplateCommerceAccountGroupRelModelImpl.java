@@ -641,7 +641,8 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	@Deprecated
 	public long getOriginalCommerceNotificationTemplateId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("commerceNotificationTemplateId"));
+			this.<Long>getColumnOriginalValue(
+				"commerceNotificationTemplateId"));
 	}
 
 	@JSON
@@ -666,7 +667,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	@Deprecated
 	public long getOriginalCommerceAccountGroupId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("commerceAccountGroupId"));
+			this.<Long>getColumnOriginalValue("commerceAccountGroupId"));
 	}
 
 	public long getColumnBitmask() {

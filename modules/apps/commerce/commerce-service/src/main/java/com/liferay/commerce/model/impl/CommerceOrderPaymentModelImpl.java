@@ -493,7 +493,8 @@ public class CommerceOrderPaymentModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCommerceOrderId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceOrderId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceOrderId"));
 	}
 
 	@Override

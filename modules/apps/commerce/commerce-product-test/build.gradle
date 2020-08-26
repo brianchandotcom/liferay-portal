@@ -14,11 +14,3 @@ dependencies {
 	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
 	testIntegrationCompile project(":core:petra:petra-string")
 }
-
-if (!System.getenv("JENKINS_HOME")) {
-	apply plugin: "com.liferay.poshi.runner.resources.defaults"
-
-	poshiRunnerResources {
-		baseNameDir "commerce", "src/testFunctional"
-	}
-}

@@ -553,7 +553,7 @@ public class CommercePriceModifierRelModelImpl
 	@Deprecated
 	public long getOriginalCommercePriceModifierId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("commercePriceModifierId"));
+			this.<Long>getColumnOriginalValue("commercePriceModifierId"));
 	}
 
 	@Override
@@ -597,7 +597,8 @@ public class CommercePriceModifierRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassNameId() {
-		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("classNameId"));
 	}
 
 	@JSON
@@ -621,7 +622,7 @@ public class CommercePriceModifierRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassPK() {
-		return GetterUtil.getLong(getColumnOriginalValue("classPK"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
 	public long getColumnBitmask() {

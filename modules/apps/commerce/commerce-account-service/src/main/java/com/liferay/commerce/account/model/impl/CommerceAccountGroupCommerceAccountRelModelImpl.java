@@ -508,7 +508,8 @@ public class CommerceAccountGroupCommerceAccountRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -620,7 +621,7 @@ public class CommerceAccountGroupCommerceAccountRelModelImpl
 	@Deprecated
 	public long getOriginalCommerceAccountGroupId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("commerceAccountGroupId"));
+			this.<Long>getColumnOriginalValue("commerceAccountGroupId"));
 	}
 
 	@JSON
@@ -644,7 +645,8 @@ public class CommerceAccountGroupCommerceAccountRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCommerceAccountId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceAccountId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceAccountId"));
 	}
 
 	public long getColumnBitmask() {

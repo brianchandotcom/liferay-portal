@@ -591,7 +591,7 @@ public class CommerceNotificationTemplateModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -615,7 +615,8 @@ public class CommerceNotificationTemplateModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -993,7 +994,8 @@ public class CommerceNotificationTemplateModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalEnabled() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("enabled"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("enabled"));
 	}
 
 	@JSON

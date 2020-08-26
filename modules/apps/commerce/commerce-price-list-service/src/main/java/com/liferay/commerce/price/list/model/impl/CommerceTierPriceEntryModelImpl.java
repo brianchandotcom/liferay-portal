@@ -639,7 +639,8 @@ public class CommerceTierPriceEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -751,7 +752,7 @@ public class CommerceTierPriceEntryModelImpl
 	@Deprecated
 	public long getOriginalCommercePriceEntryId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("commercePriceEntryId"));
+			this.<Long>getColumnOriginalValue("commercePriceEntryId"));
 	}
 
 	@JSON
@@ -886,7 +887,8 @@ public class CommerceTierPriceEntryModelImpl
 	 */
 	@Deprecated
 	public int getOriginalMinQuantity() {
-		return GetterUtil.getInteger(getColumnOriginalValue("minQuantity"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("minQuantity"));
 	}
 
 	@JSON

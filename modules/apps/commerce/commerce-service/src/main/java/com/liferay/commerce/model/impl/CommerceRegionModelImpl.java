@@ -491,7 +491,8 @@ public class CommerceRegionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -602,7 +603,8 @@ public class CommerceRegionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCommerceCountryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceCountryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceCountryId"));
 	}
 
 	@JSON
@@ -696,7 +698,8 @@ public class CommerceRegionModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalActive() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("active_"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("active_"));
 	}
 
 	@JSON

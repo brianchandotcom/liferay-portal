@@ -1226,7 +1226,7 @@ public class CPDefinitionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -1250,7 +1250,8 @@ public class CPDefinitionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -1361,7 +1362,8 @@ public class CPDefinitionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCProductId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CProductId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CProductId"));
 	}
 
 	@JSON
@@ -1385,7 +1387,8 @@ public class CPDefinitionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCPTaxCategoryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CPTaxCategoryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CPTaxCategoryId"));
 	}
 
 	@JSON
@@ -1753,7 +1756,7 @@ public class CPDefinitionModelImpl
 	@Deprecated
 	public boolean getOriginalSubscriptionEnabled() {
 		return GetterUtil.getBoolean(
-			getColumnOriginalValue("subscriptionEnabled"));
+			this.<Boolean>getColumnOriginalValue("subscriptionEnabled"));
 	}
 
 	@JSON
@@ -1988,7 +1991,8 @@ public class CPDefinitionModelImpl
 	 */
 	@Deprecated
 	public int getOriginalVersion() {
-		return GetterUtil.getInteger(getColumnOriginalValue("version"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("version"));
 	}
 
 	@JSON
@@ -2012,7 +2016,8 @@ public class CPDefinitionModelImpl
 	 */
 	@Deprecated
 	public int getOriginalStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("status"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	@JSON

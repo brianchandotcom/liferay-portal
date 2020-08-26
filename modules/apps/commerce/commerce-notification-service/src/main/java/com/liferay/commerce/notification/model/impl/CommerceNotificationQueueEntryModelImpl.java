@@ -578,7 +578,7 @@ public class CommerceNotificationQueueEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -724,7 +724,8 @@ public class CommerceNotificationQueueEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassNameId() {
-		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("classNameId"));
 	}
 
 	@JSON
@@ -748,7 +749,7 @@ public class CommerceNotificationQueueEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassPK() {
-		return GetterUtil.getLong(getColumnOriginalValue("classPK"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
 	@JSON
@@ -775,7 +776,8 @@ public class CommerceNotificationQueueEntryModelImpl
 	@Deprecated
 	public long getOriginalCommerceNotificationTemplateId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("commerceNotificationTemplateId"));
+			this.<Long>getColumnOriginalValue(
+				"commerceNotificationTemplateId"));
 	}
 
 	@JSON
@@ -980,7 +982,8 @@ public class CommerceNotificationQueueEntryModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalSent() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("sent"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("sent"));
 	}
 
 	@JSON

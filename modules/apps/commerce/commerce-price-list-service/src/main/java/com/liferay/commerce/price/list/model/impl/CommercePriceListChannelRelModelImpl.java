@@ -506,7 +506,8 @@ public class CommercePriceListChannelRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -617,7 +618,8 @@ public class CommercePriceListChannelRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCommerceChannelId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceChannelId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceChannelId"));
 	}
 
 	@JSON
@@ -642,7 +644,7 @@ public class CommercePriceListChannelRelModelImpl
 	@Deprecated
 	public long getOriginalCommercePriceListId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("commercePriceListId"));
+			this.<Long>getColumnOriginalValue("commercePriceListId"));
 	}
 
 	@JSON

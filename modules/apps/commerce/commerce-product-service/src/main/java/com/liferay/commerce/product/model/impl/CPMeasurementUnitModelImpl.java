@@ -527,7 +527,7 @@ public class CPMeasurementUnitModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -551,7 +551,8 @@ public class CPMeasurementUnitModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -819,7 +820,8 @@ public class CPMeasurementUnitModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalPrimary() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("primary_"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("primary_"));
 	}
 
 	@JSON
@@ -858,7 +860,8 @@ public class CPMeasurementUnitModelImpl
 	 */
 	@Deprecated
 	public int getOriginalType() {
-		return GetterUtil.getInteger(getColumnOriginalValue("type_"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("type_"));
 	}
 
 	@JSON

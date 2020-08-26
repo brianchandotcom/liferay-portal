@@ -511,7 +511,7 @@ public class CPDefinitionGroupedEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -535,7 +535,8 @@ public class CPDefinitionGroupedEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -646,7 +647,8 @@ public class CPDefinitionGroupedEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCPDefinitionId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CPDefinitionId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CPDefinitionId"));
 	}
 
 	@JSON
@@ -670,7 +672,8 @@ public class CPDefinitionGroupedEntryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalEntryCProductId() {
-		return GetterUtil.getLong(getColumnOriginalValue("entryCProductId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("entryCProductId"));
 	}
 
 	@JSON

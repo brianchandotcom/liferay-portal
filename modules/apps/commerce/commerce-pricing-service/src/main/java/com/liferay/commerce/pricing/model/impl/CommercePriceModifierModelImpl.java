@@ -670,7 +670,7 @@ public class CommercePriceModifierModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -694,7 +694,8 @@ public class CommercePriceModifierModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -806,7 +807,7 @@ public class CommercePriceModifierModelImpl
 	@Deprecated
 	public long getOriginalCommercePriceListId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("commercePriceListId"));
+			this.<Long>getColumnOriginalValue("commercePriceListId"));
 	}
 
 	@JSON
@@ -1013,7 +1014,8 @@ public class CommercePriceModifierModelImpl
 	 */
 	@Deprecated
 	public int getOriginalStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("status"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	@JSON

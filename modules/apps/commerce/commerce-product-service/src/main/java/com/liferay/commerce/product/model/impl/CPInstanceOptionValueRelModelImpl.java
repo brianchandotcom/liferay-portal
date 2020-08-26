@@ -514,7 +514,7 @@ public class CPInstanceOptionValueRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -538,7 +538,8 @@ public class CPInstanceOptionValueRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -650,7 +651,7 @@ public class CPInstanceOptionValueRelModelImpl
 	@Deprecated
 	public long getOriginalCPDefinitionOptionRelId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("CPDefinitionOptionRelId"));
+			this.<Long>getColumnOriginalValue("CPDefinitionOptionRelId"));
 	}
 
 	@JSON
@@ -677,7 +678,7 @@ public class CPInstanceOptionValueRelModelImpl
 	@Deprecated
 	public long getOriginalCPDefinitionOptionValueRelId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("CPDefinitionOptionValueRelId"));
+			this.<Long>getColumnOriginalValue("CPDefinitionOptionValueRelId"));
 	}
 
 	@JSON
@@ -701,7 +702,8 @@ public class CPInstanceOptionValueRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCPInstanceId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CPInstanceId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CPInstanceId"));
 	}
 
 	@Override

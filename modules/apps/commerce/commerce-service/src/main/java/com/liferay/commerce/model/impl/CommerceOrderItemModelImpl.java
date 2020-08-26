@@ -814,7 +814,8 @@ public class CommerceOrderItemModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -925,7 +926,8 @@ public class CommerceOrderItemModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCommerceOrderId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceOrderId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceOrderId"));
 	}
 
 	@JSON
@@ -964,7 +966,8 @@ public class CommerceOrderItemModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCProductId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CProductId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CProductId"));
 	}
 
 	@JSON
@@ -988,7 +991,8 @@ public class CommerceOrderItemModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCPInstanceId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CPInstanceId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CPInstanceId"));
 	}
 
 	@JSON
@@ -1013,7 +1017,7 @@ public class CommerceOrderItemModelImpl
 	@Deprecated
 	public long getOriginalParentCommerceOrderItemId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("parentCommerceOrderItemId"));
+			this.<Long>getColumnOriginalValue("parentCommerceOrderItemId"));
 	}
 
 	@JSON
@@ -1480,7 +1484,8 @@ public class CommerceOrderItemModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalSubscription() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("subscription"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("subscription"));
 	}
 
 	@JSON
@@ -1574,7 +1579,8 @@ public class CommerceOrderItemModelImpl
 	 */
 	@Deprecated
 	public long getOriginalBookedQuantityId() {
-		return GetterUtil.getLong(getColumnOriginalValue("bookedQuantityId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("bookedQuantityId"));
 	}
 
 	@JSON

@@ -554,7 +554,8 @@ public class CommerceCurrencyModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -1004,7 +1005,8 @@ public class CommerceCurrencyModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalPrimary() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("primary_"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("primary_"));
 	}
 
 	@JSON
@@ -1049,7 +1051,8 @@ public class CommerceCurrencyModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalActive() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("active_"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("active_"));
 	}
 
 	@JSON

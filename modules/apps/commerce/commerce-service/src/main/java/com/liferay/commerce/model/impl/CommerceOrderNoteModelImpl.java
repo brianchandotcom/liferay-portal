@@ -499,7 +499,8 @@ public class CommerceOrderNoteModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -610,7 +611,8 @@ public class CommerceOrderNoteModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCommerceOrderId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceOrderId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceOrderId"));
 	}
 
 	@JSON
@@ -660,7 +662,8 @@ public class CommerceOrderNoteModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalRestricted() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("restricted"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("restricted"));
 	}
 
 	public long getColumnBitmask() {

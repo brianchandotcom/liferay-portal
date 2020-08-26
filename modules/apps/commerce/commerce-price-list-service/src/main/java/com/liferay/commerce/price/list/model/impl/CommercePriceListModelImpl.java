@@ -658,7 +658,7 @@ public class CommercePriceListModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -682,7 +682,8 @@ public class CommercePriceListModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -793,7 +794,8 @@ public class CommercePriceListModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCommerceCurrencyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceCurrencyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceCurrencyId"));
 	}
 
 	@JSON
@@ -818,7 +820,7 @@ public class CommercePriceListModelImpl
 	@Deprecated
 	public long getOriginalParentCommercePriceListId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("parentCommercePriceListId"));
+			this.<Long>getColumnOriginalValue("parentCommercePriceListId"));
 	}
 
 	@JSON
@@ -849,7 +851,7 @@ public class CommercePriceListModelImpl
 	@Deprecated
 	public boolean getOriginalCatalogBasePriceList() {
 		return GetterUtil.getBoolean(
-			getColumnOriginalValue("catalogBasePriceList"));
+			this.<Boolean>getColumnOriginalValue("catalogBasePriceList"));
 	}
 
 	@JSON
@@ -1012,7 +1014,8 @@ public class CommercePriceListModelImpl
 	 */
 	@Deprecated
 	public int getOriginalStatus() {
-		return GetterUtil.getInteger(getColumnOriginalValue("status"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("status"));
 	}
 
 	@JSON

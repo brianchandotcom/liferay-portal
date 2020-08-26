@@ -560,7 +560,8 @@ public class CommerceTaxFixedRateModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCPTaxCategoryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CPTaxCategoryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CPTaxCategoryId"));
 	}
 
 	@JSON
@@ -585,7 +586,7 @@ public class CommerceTaxFixedRateModelImpl
 	@Deprecated
 	public long getOriginalCommerceTaxMethodId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("commerceTaxMethodId"));
+			this.<Long>getColumnOriginalValue("commerceTaxMethodId"));
 	}
 
 	@JSON

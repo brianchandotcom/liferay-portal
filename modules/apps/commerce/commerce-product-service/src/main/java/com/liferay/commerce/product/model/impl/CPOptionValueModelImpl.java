@@ -528,7 +528,8 @@ public class CPOptionValueModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -639,7 +640,8 @@ public class CPOptionValueModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCPOptionId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CPOptionId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CPOptionId"));
 	}
 
 	@JSON

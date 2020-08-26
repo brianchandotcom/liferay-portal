@@ -497,7 +497,7 @@ public class CPDefinitionLinkModelImpl
 	 */
 	@Deprecated
 	public long getOriginalGroupId() {
-		return GetterUtil.getLong(getColumnOriginalValue("groupId"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -521,7 +521,8 @@ public class CPDefinitionLinkModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -632,7 +633,8 @@ public class CPDefinitionLinkModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCPDefinitionId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CPDefinitionId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CPDefinitionId"));
 	}
 
 	@JSON
@@ -656,7 +658,8 @@ public class CPDefinitionLinkModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCProductId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CProductId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CProductId"));
 	}
 
 	@JSON

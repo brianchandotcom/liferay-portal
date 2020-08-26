@@ -21,6 +21,7 @@ import com.liferay.commerce.bom.model.impl.CommerceBOMEntryImpl;
 import com.liferay.commerce.bom.model.impl.CommerceBOMEntryModelImpl;
 import com.liferay.commerce.bom.service.persistence.CommerceBOMEntryPersistence;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -30,10 +31,12 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -45,9 +48,16 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * The persistence implementation for the commerce bom entry service.
@@ -670,21 +680,14 @@ public class CommerceBOMEntryPersistenceImpl
 	 */
 	@Override
 	public void clearCache(CommerceBOMEntry commerceBOMEntry) {
-		entityCache.removeResult(
-			CommerceBOMEntryImpl.class, commerceBOMEntry.getPrimaryKey());
-
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeResult(CommerceBOMEntryImpl.class, commerceBOMEntry);
 	}
 
 	@Override
 	public void clearCache(List<CommerceBOMEntry> commerceBOMEntries) {
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
 		for (CommerceBOMEntry commerceBOMEntry : commerceBOMEntries) {
 			entityCache.removeResult(
-				CommerceBOMEntryImpl.class, commerceBOMEntry.getPrimaryKey());
+				CommerceBOMEntryImpl.class, commerceBOMEntry);
 		}
 	}
 
@@ -857,10 +860,8 @@ public class CommerceBOMEntryPersistenceImpl
 		try {
 			session = openSession();
 
-			if (commerceBOMEntry.isNew()) {
+			if (isNew) {
 				session.save(commerceBOMEntry);
-
-				commerceBOMEntry.setNew(false);
 			}
 			else {
 				commerceBOMEntry = (CommerceBOMEntry)session.merge(
@@ -874,54 +875,12 @@ public class CommerceBOMEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		entityCache.putResult(
+			CommerceBOMEntryImpl.class, commerceBOMEntryModelImpl, false, true);
 
 		if (isNew) {
-			Object[] args = new Object[] {
-				commerceBOMEntryModelImpl.getCommerceBOMDefinitionId()
-			};
-
-			finderCache.removeResult(
-				_finderPathCountByCommerceBOMDefinitionId, args);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindByCommerceBOMDefinitionId,
-				args);
-
-			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(
-				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+			commerceBOMEntry.setNew(false);
 		}
-		else {
-			if ((commerceBOMEntryModelImpl.getColumnBitmask() &
-				 _finderPathWithoutPaginationFindByCommerceBOMDefinitionId.
-					 getColumnBitmask()) != 0) {
-
-				Object[] args = new Object[] {
-					commerceBOMEntryModelImpl.getColumnOriginalValue(
-						"commerceBOMDefinitionId")
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByCommerceBOMDefinitionId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCommerceBOMDefinitionId,
-					args);
-
-				args = new Object[] {
-					commerceBOMEntryModelImpl.getCommerceBOMDefinitionId()
-				};
-
-				finderCache.removeResult(
-					_finderPathCountByCommerceBOMDefinitionId, args);
-				finderCache.removeResult(
-					_finderPathWithoutPaginationFindByCommerceBOMDefinitionId,
-					args);
-			}
-		}
-
-		entityCache.putResult(
-			CommerceBOMEntryImpl.class, commerceBOMEntry.getPrimaryKey(),
-			commerceBOMEntry, false);
 
 		commerceBOMEntry.resetOriginalValues();
 
@@ -1188,49 +1147,66 @@ public class CommerceBOMEntryPersistenceImpl
 	 * Initializes the commerce bom entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindAll = new FinderPath(
-			CommerceBOMEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]);
+		Bundle bundle = FrameworkUtil.getBundle(
+			CommerceBOMEntryPersistenceImpl.class);
 
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			CommerceBOMEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+		_bundleContext = bundle.getBundleContext();
 
-		_finderPathCountAll = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0]);
+		_argumentsResolverServiceRegistration = _bundleContext.registerService(
+			ArgumentsResolver.class,
+			new CommerceBOMEntryModelArgumentsResolver(),
+			MapUtil.singletonDictionary(
+				"model.class.name", CommerceBOMEntry.class.getName()));
 
-		_finderPathWithPaginationFindByCommerceBOMDefinitionId = new FinderPath(
-			CommerceBOMEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByCommerceBOMDefinitionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
+		_finderPathWithPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathWithoutPaginationFindAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathCountAll = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
+
+		_finderPathWithPaginationFindByCommerceBOMDefinitionId =
+			_createFinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByCommerceBOMDefinitionId",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"commerceBOMDefinitionId"}, true);
 
 		_finderPathWithoutPaginationFindByCommerceBOMDefinitionId =
-			new FinderPath(
-				CommerceBOMEntryImpl.class,
+			_createFinderPath(
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceBOMDefinitionId",
 				new String[] {Long.class.getName()},
-				CommerceBOMEntryModelImpl.getColumnBitmask(
-					"commerceBOMDefinitionId") |
-				CommerceBOMEntryModelImpl.getColumnBitmask("number_"));
+				new String[] {"commerceBOMDefinitionId"}, true);
 
-		_finderPathCountByCommerceBOMDefinitionId = new FinderPath(
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+		_finderPathCountByCommerceBOMDefinitionId = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceBOMDefinitionId",
-			new String[] {Long.class.getName()});
+			new String[] {Long.class.getName()},
+			new String[] {"commerceBOMDefinitionId"}, false);
 	}
 
 	public void destroy() {
 		entityCache.removeCache(CommerceBOMEntryImpl.class.getName());
-		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		_argumentsResolverServiceRegistration.unregister();
+
+		for (ServiceRegistration<FinderPath> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
+
+	private BundleContext _bundleContext;
 
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
@@ -1263,5 +1239,106 @@ public class CommerceBOMEntryPersistenceImpl
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
 		new String[] {"number"});
+
+	private FinderPath _createFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, baseModelResult);
+
+		if (!cacheName.equals(FINDER_CLASS_NAME_LIST_WITH_PAGINATION)) {
+			_serviceRegistrations.add(
+				_bundleContext.registerService(
+					FinderPath.class, finderPath,
+					MapUtil.singletonDictionary("cache.name", cacheName)));
+		}
+
+		return finderPath;
+	}
+
+	private ServiceRegistration<ArgumentsResolver>
+		_argumentsResolverServiceRegistration;
+	private Set<ServiceRegistration<FinderPath>> _serviceRegistrations =
+		new HashSet<>();
+
+	private static class CommerceBOMEntryModelArgumentsResolver
+		implements ArgumentsResolver {
+
+		@Override
+		public Object[] getArguments(
+			FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
+			boolean original) {
+
+			String[] columnNames = finderPath.getColumnNames();
+
+			if ((columnNames == null) || (columnNames.length == 0)) {
+				if (baseModel.isNew()) {
+					return FINDER_ARGS_EMPTY;
+				}
+
+				return null;
+			}
+
+			CommerceBOMEntryModelImpl commerceBOMEntryModelImpl =
+				(CommerceBOMEntryModelImpl)baseModel;
+
+			long columnBitmask = commerceBOMEntryModelImpl.getColumnBitmask();
+
+			if (!checkColumn || (columnBitmask == 0)) {
+				return _getValue(
+					commerceBOMEntryModelImpl, columnNames, original);
+			}
+
+			Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
+				finderPath);
+
+			if (finderPathColumnBitmask == null) {
+				finderPathColumnBitmask = 0L;
+
+				for (String columnName : columnNames) {
+					finderPathColumnBitmask |=
+						commerceBOMEntryModelImpl.getColumnBitmask(columnName);
+				}
+
+				_finderPathColumnBitmasksCache.put(
+					finderPath, finderPathColumnBitmask);
+			}
+
+			if ((columnBitmask & finderPathColumnBitmask) != 0) {
+				return _getValue(
+					commerceBOMEntryModelImpl, columnNames, original);
+			}
+
+			return null;
+		}
+
+		private Object[] _getValue(
+			CommerceBOMEntryModelImpl commerceBOMEntryModelImpl,
+			String[] columnNames, boolean original) {
+
+			Object[] arguments = new Object[columnNames.length];
+
+			for (int i = 0; i < arguments.length; i++) {
+				String columnName = columnNames[i];
+
+				if (original) {
+					arguments[i] =
+						commerceBOMEntryModelImpl.getColumnOriginalValue(
+							columnName);
+				}
+				else {
+					arguments[i] = commerceBOMEntryModelImpl.getColumnValue(
+						columnName);
+				}
+			}
+
+			return arguments;
+		}
+
+		private static Map<FinderPath, Long> _finderPathColumnBitmasksCache =
+			new ConcurrentHashMap<>();
+
+	}
 
 }

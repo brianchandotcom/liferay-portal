@@ -552,7 +552,7 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 	@Deprecated
 	public long getOriginalCommercePricingClassId() {
 		return GetterUtil.getLong(
-			getColumnOriginalValue("commercePricingClassId"));
+			this.<Long>getColumnOriginalValue("commercePricingClassId"));
 	}
 
 	@JSON
@@ -576,7 +576,8 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCPDefinitionId() {
-		return GetterUtil.getLong(getColumnOriginalValue("CPDefinitionId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("CPDefinitionId"));
 	}
 
 	public long getColumnBitmask() {

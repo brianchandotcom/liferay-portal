@@ -598,7 +598,8 @@ public class CommerceAddressRestrictionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassNameId() {
-		return GetterUtil.getLong(getColumnOriginalValue("classNameId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("classNameId"));
 	}
 
 	@JSON
@@ -622,7 +623,7 @@ public class CommerceAddressRestrictionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalClassPK() {
-		return GetterUtil.getLong(getColumnOriginalValue("classPK"));
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
 	@JSON
@@ -646,7 +647,8 @@ public class CommerceAddressRestrictionModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCommerceCountryId() {
-		return GetterUtil.getLong(getColumnOriginalValue("commerceCountryId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("commerceCountryId"));
 	}
 
 	public long getColumnBitmask() {

@@ -559,7 +559,8 @@ public class CommerceCountryModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -783,7 +784,8 @@ public class CommerceCountryModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalBillingAllowed() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("billingAllowed"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("billingAllowed"));
 	}
 
 	@JSON
@@ -813,7 +815,8 @@ public class CommerceCountryModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalShippingAllowed() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("shippingAllowed"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("shippingAllowed"));
 	}
 
 	@JSON
@@ -886,7 +889,8 @@ public class CommerceCountryModelImpl
 	 */
 	@Deprecated
 	public int getOriginalNumericISOCode() {
-		return GetterUtil.getInteger(getColumnOriginalValue("numericISOCode"));
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("numericISOCode"));
 	}
 
 	@JSON
@@ -952,7 +956,8 @@ public class CommerceCountryModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalActive() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("active_"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("active_"));
 	}
 
 	@JSON

@@ -472,7 +472,8 @@ public class CommerceCatalogModelImpl
 	 */
 	@Deprecated
 	public long getOriginalCompanyId() {
-		return GetterUtil.getLong(getColumnOriginalValue("companyId"));
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -649,7 +650,8 @@ public class CommerceCatalogModelImpl
 	 */
 	@Deprecated
 	public boolean getOriginalSystem() {
-		return GetterUtil.getBoolean(getColumnOriginalValue("system_"));
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("system_"));
 	}
 
 	public long getColumnBitmask() {

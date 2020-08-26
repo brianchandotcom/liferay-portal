@@ -37,12 +37,7 @@ public class FastURLToCORSSupportMapper extends BaseURLToCORSSupportMapper {
 			}
 		}
 
-		if (maxURLPatternLength < 1) {
-			_maxURLPatternLength = 64;
-		}
-		else {
-			_maxURLPatternLength = maxURLPatternLength + 1;
-		}
+		_maxURLPatternLength = maxURLPatternLength + 1;
 
 		_extensionTrieMatrix =
 			new long[2][_maxURLPatternLength][_ASCII_CHARACTER_RANGE];

@@ -512,7 +512,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			virtualHostname = StringUtil.toLowerCase(
 				StringUtil.trim(virtualHostname));
 
-			VirtualHost virtualHost = virtualHostPersistence.findByHostname(
+			VirtualHost virtualHost = virtualHostLocalService.fetchVirtualHost(
 				virtualHostname);
 
 			if ((virtualHost == null) && virtualHostname.contains("xn--")) {
@@ -1524,27 +1524,19 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				"Virtual hostname is invalid");
 		}
 		else {
-			try {
-				VirtualHost virtualHost = virtualHostPersistence.findByHostname(
-					virtualHostname);
+			VirtualHost virtualHost = virtualHostLocalService.fetchVirtualHost(
+				virtualHostname);
 
-				Company virtualHostnameCompany =
-					companyPersistence.findByPrimaryKey(
-						virtualHost.getCompanyId());
-
-				if (!webId.equals(virtualHostnameCompany.getWebId())) {
-					throw new CompanyVirtualHostException(
-						"Duplicate virtual hostname " + virtualHostname);
-				}
+			if (virtualHost == null) {
+				return;
 			}
-			catch (NoSuchVirtualHostException noSuchVirtualHostException) {
 
-				// LPS-52675
+			Company virtualHostnameCompany =
+				companyPersistence.findByPrimaryKey(virtualHost.getCompanyId());
 
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						noSuchVirtualHostException, noSuchVirtualHostException);
-				}
+			if (!webId.equals(virtualHostnameCompany.getWebId())) {
+				throw new CompanyVirtualHostException(
+					"Duplicate virtual hostname " + virtualHostname);
 			}
 		}
 	}

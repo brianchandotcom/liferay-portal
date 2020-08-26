@@ -494,6 +494,13 @@ components:
                         contentType:
                             readOnly: true
                             type: string
+                        embeddedStructuredContent:
+                            allOf:
+                                - $ref: "#/components/schemas/StructuredContent"
+                            # @review
+                            description:
+                                optional field with the structured content, can be embedded with nestedFields
+                            readOnly: true
                         id:
                             description:
                                 The resource's ID.

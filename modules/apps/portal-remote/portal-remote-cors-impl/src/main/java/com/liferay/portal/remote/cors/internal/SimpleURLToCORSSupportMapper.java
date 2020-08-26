@@ -77,6 +77,10 @@ public class SimpleURLToCORSSupportMapper extends BaseURLToCORSSupportMapper {
 	protected void put(CORSSupport corsSupport, String urlPattern)
 		throws IllegalArgumentException {
 
+		if (Validator.isBlank(urlPattern)) {
+			throw new IllegalArgumentException("urlPattern is empty");
+		}
+
 		if (isWildcardURLPattern(urlPattern)) {
 			if (!_wildcardURLPatternCORSSupports.containsKey(urlPattern)) {
 				_wildcardURLPatternCORSSupports.put(urlPattern, corsSupport);

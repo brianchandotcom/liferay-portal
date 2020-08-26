@@ -160,16 +160,24 @@ public abstract class BaseBuiltInJSModuleServlet extends HttpServlet {
 			String moduleName = resourceDescriptor.getPackagePath();
 
 			if (extension.equals("map")) {
-				moduleName = moduleName.substring(0, moduleName.length() - 7);
-			}
-			else if (extension.equals("js")) {
-				moduleName = moduleName.substring(0, moduleName.length() - 3);
-			}
+				JSModule jsModule = jsPackage.getJSModule(
+					moduleName.substring(0, moduleName.length() - 7));
 
-			JSModule jsModule = jsPackage.getJSModule(moduleName);
+				if (jsModule != null) {
+					inputStream = jsModule.getSourceMapInputStream();
+				}
+			}
+			else {
+				if (extension.equals("js")) {
+					moduleName = moduleName.substring(
+						0, moduleName.length() - 3);
+				}
 
-			if (jsModule != null) {
-				inputStream = jsModule.getInputStream();
+				JSModule jsModule = jsPackage.getJSModule(moduleName);
+
+				if (jsModule != null) {
+					inputStream = jsModule.getInputStream();
+				}
 			}
 		}
 

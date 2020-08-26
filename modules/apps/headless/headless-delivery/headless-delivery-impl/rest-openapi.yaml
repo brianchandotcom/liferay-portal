@@ -2823,6 +2823,12 @@ components:
             type: object
         TaxonomyCategoryBrief:
             properties:
+                embeddedTaxonomyCategory:
+                    # @review
+                    description:
+                        Optional field with the embedded taxonomy category, can be embedded with nestedFields
+                    readOnly: true
+                    type: object
                 taxonomyCategoryId:
                     description:
                         The category's ID. This can be used to retrieve more information in the

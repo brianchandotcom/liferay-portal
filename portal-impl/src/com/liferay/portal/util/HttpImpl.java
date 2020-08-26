@@ -352,12 +352,12 @@ public class HttpImpl implements Http {
 		}
 
 		path = StringUtil.replace(
-			path, new char[] {CharPool.SLASH, CharPool.TILDE},
-			new String[] {_TEMP_SLASH, _TEMP_TILDE});
+			path, new char[] {CharPool.SLASH, CharPool.TILDE, CharPool.PLUS},
+			new String[] {_TEMP_SLASH, _TEMP_TILDE, _TEMP_PLUS});
 		path = URLCodec.encodeURL(path, true);
 		path = StringUtil.replace(
-			path, new String[] {_TEMP_SLASH, _TEMP_TILDE},
-			new String[] {StringPool.SLASH, StringPool.TILDE});
+			path, new String[] {_TEMP_SLASH, _TEMP_TILDE, _TEMP_PLUS},
+			new String[] {StringPool.SLASH, StringPool.TILDE, StringPool.PLUS});
 
 		return path;
 	}
@@ -2024,6 +2024,8 @@ public class HttpImpl implements Http {
 
 	private static final String _PROXY_USERNAME = GetterUtil.getString(
 		PropsUtil.get(HttpImpl.class.getName() + ".proxy.username"));
+
+	private static final String _TEMP_PLUS = "_LIFERAY_TEMP_PLUS_";
 
 	private static final String _TEMP_SLASH = "_LIFERAY_TEMP_SLASH_";
 

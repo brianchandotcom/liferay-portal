@@ -96,13 +96,9 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 			return false;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			AssetDisplayPageUtil.getAssetDisplayPageLayoutPageTemplateEntry(
-				themeDisplay.getScopeGroupId(),
+				layoutDisplayPageObjectProvider.getGroupId(),
 				layoutDisplayPageObjectProvider.getClassNameId(),
 				layoutDisplayPageObjectProvider.getClassPK(),
 				layoutDisplayPageObjectProvider.getClassTypeId());
@@ -110,6 +106,10 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 		if (layoutPageTemplateEntry == null) {
 			return false;
 		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (AnalyticsReportsUtil.isShowAnalyticsReportsPanel(
 				_analyticsReportsInfoItemTracker, themeDisplay.getCompanyId(),

@@ -87,7 +87,7 @@ public class CommerceProductPricingClassDataSetActionProvider
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setTarget("async");
-				dropdownItem.put("method", "delete");
+				dropdownItem.putData("method", "delete");
 			}
 		).build();
 	}

@@ -30,13 +30,13 @@
 						"minHeight": "auto",
 						"minWidth": "auto",
 						"opacity": 1,
-						"overflow": "visible",
+						"overflow": "",
 						"paddingBottom": "5",
 						"paddingLeft": "5",
 						"paddingRight": "0",
 						"paddingTop": "5",
 						"shadow": "shadow-none",
-						"textAlign": "none",
+						"textAlign": "",
 						"width": "w-auto"
 					}
 				},

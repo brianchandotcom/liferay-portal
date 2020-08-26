@@ -16,6 +16,7 @@ package com.liferay.layout.responsive;
 
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.CommonStylesUtil;
+import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.RowLayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.StyledLayoutStructureItem;
@@ -121,6 +122,24 @@ public class ResponsiveLayoutStructureUtil {
 
 				if (Validator.isNull(value)) {
 					continue;
+				}
+
+				if (styledLayoutStructureItem instanceof
+						ContainerStyledLayoutStructureItem) {
+
+					ContainerStyledLayoutStructureItem
+						containerStyledLayoutStructureItem =
+							(ContainerStyledLayoutStructureItem)
+								styledLayoutStructureItem;
+
+					if (Objects.equals(
+							containerStyledLayoutStructureItem.getWidthType(),
+							"fixed") &&
+						(Objects.equals(key, "marginLeft") ||
+						 Objects.equals(key, "marginRight"))) {
+
+						continue;
+					}
 				}
 
 				String cssClass = StringUtil.replace(

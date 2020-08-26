@@ -1374,6 +1374,7 @@ public class PortalImpl implements Portal {
 		throws PortalException {
 
 		String groupFriendlyURL = StringPool.BLANK;
+		Group siteGroup = themeDisplay.getSiteGroup();
 		boolean includeParametersURL = false;
 		String parametersURL = StringPool.BLANK;
 
@@ -1428,7 +1429,8 @@ public class PortalImpl implements Portal {
 		if (forceLayoutFriendlyURL ||
 			((!layout.isFirstParent() || Validator.isNotNull(parametersURL)) &&
 			 (groupFriendlyURL.contains(
-				 themeDisplay.getLayoutFriendlyURL(layout)) ||
+				 siteGroup.getFriendlyURL() +
+					 themeDisplay.getLayoutFriendlyURL(layout)) ||
 			  groupFriendlyURL.endsWith(
 				  StringPool.SLASH + layout.getLayoutId())))) {
 

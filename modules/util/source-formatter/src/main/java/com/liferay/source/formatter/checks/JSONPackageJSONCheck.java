@@ -73,7 +73,11 @@ public class JSONPackageJSONCheck extends BaseFileCheck {
 
 		_checkIncorrectEntry(fileName, jsonObject, "devDependencies");
 
-		if (absolutePath.contains("/modules/apps/frontend-theme")) {
+		if (absolutePath.endsWith("frontend-theme-admin") ||
+			absolutePath.endsWith("frontend-theme-classic") ||
+			absolutePath.endsWith("frontend-theme-styled") ||
+			absolutePath.endsWith("frontend-theme-unstyled")) {
+
 			_checkScript(
 				fileName, scriptsJSONObject, "build", false, "theme build");
 		}

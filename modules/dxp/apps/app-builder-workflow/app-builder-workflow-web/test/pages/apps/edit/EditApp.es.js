@@ -330,27 +330,33 @@ describe('EditApp', () => {
 
 			getByTextFunc = getByText;
 
-			const deployButton = getByText('deploy');
-			const nameInput = getByPlaceholderText('untitled-app');
-			let stepNameInput = container.querySelector(
-				'.form-group-outlined input'
-			);
-			const steps = container.querySelectorAll('.step');
-
 			expect(queryByText('step-configuration')).toBeTruthy();
 			expect(queryByText('new-workflow-powered-app')).toBeTruthy();
 			expect(queryByText('cancel')).toBeTruthy();
+			expect(getByText('save')).toBeDisabled();
+
+			const steps = container.querySelectorAll('.step');
+
 			expect(steps.length).toBe(2);
 			expect(steps[0]).toHaveTextContent('initial-step');
 			expect(steps[1]).toHaveTextContent('final-step');
+
+			let stepNameInput = container.querySelector(
+				'.form-group-outlined input'
+			);
+
 			expect(stepNameInput.value).toBe('initial-step');
+
+			const nameInput = getByPlaceholderText('untitled-app');
+
 			expect(nameInput.value).toBe('');
-			expect(getByText('save')).toBeDisabled();
 
 			await fireEvent.click(getByText('data-and-views'));
 
-			const sidebarHeader = document.querySelector('div.tab-title');
 			expect(queryByText('step-configuration')).toBeNull();
+
+			const sidebarHeader = document.querySelector('div.tab-title');
+
 			expect(sidebarHeader.children.length).toBe(2);
 			expect(sidebarHeader.children[1]).toHaveTextContent(
 				'data-and-views'
@@ -385,14 +391,18 @@ describe('EditApp', () => {
 
 			await fireEvent.change(nameInput, {target: {value: 'Test'}});
 
+			const deployButton = getByText('deploy');
+
 			expect(deployButton).toBeEnabled();
 
 			await fireEvent.click(getByTitle('create-new-step'));
 
 			expect(deployButton).toBeDisabled();
+
 			stepNameInput = container.querySelector(
 				'.form-group-outlined input'
 			);
+
 			expect(stepNameInput.value).toBe('step-x');
 
 			await fireEvent.mouseDown(getByText('Account Manager'));
@@ -406,6 +416,7 @@ describe('EditApp', () => {
 			await fireEvent.click(getByText('add-new-form-view'));
 
 			const stepFormViews = container.querySelectorAll('.step-form-view');
+
 			expect(stepFormViews[0]).toHaveTextContent('Form 01');
 
 			await fireEvent.click(getAllByText('Form 02')[1]);
@@ -475,14 +486,16 @@ describe('EditApp', () => {
 			);
 
 			const steps = container.querySelectorAll('.step-card');
-			let stepNameInput = container.querySelector(
-				'.form-group-outlined input'
-			);
 
 			expect(steps.length).toBe(3);
 			expect(steps[0]).toHaveTextContent('Start');
 			expect(steps[1]).toHaveTextContent('Step 1');
 			expect(steps[2]).toHaveTextContent('Closed');
+
+			let stepNameInput = container.querySelector(
+				'.form-group-outlined input'
+			);
+
 			expect(stepNameInput.value).toBe('Start');
 
 			const dataAndViewsButton = container.querySelectorAll(
@@ -508,21 +521,21 @@ describe('EditApp', () => {
 
 			await fireEvent.click(steps[1]);
 
-			stepNameInput = container.querySelector(
-				'.form-group-outlined input'
-			);
-
-			expect(stepNameInput.value).toBe('Step 1');
 			expect(container.querySelector('h3.title')).toHaveTextContent(
 				'step-configuration'
 			);
-
 			expect(
 				container.querySelector('.label-dismissible span')
 			).toHaveTextContent('Account Manager');
 			expect(
 				container.querySelectorAll('.tab-button span')[1].parentElement
 			).toHaveTextContent('Form 01');
+
+			stepNameInput = container.querySelector(
+				'.form-group-outlined input'
+			);
+
+			expect(stepNameInput.value).toBe('Step 1');
 
 			await fireEvent.click(steps[2]);
 

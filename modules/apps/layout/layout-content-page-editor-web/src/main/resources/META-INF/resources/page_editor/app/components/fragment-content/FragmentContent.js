@@ -21,6 +21,9 @@ import setFragmentEditables from '../../actions/setFragmentEditables';
 import selectCanConfigureWidgets from '../../selectors/selectCanConfigureWidgets';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector, useSelectorCallback} from '../../store/index';
+import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
+import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
+import loadBackgroundImage from '../../utils/loadBackgroundImage';
 import {
 	useGetContent,
 	useGetFieldValue,
@@ -35,7 +38,12 @@ import FragmentContentProcessor from './FragmentContentProcessor';
 import getAllEditables from './getAllEditables';
 import resolveEditableValue from './resolveEditableValue';
 
-const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
+const FragmentContent = ({
+	elementRef,
+	fragmentEntryLinkId,
+	item,
+	withinTopper = false,
+}) => {
 	const dispatch = useDispatch();
 	const isMounted = useIsMounted();
 	const isProcessorEnabled = useIsProcessorEnabled();
@@ -62,14 +70,14 @@ const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
 			dispatch(
 				setFragmentEditables(
 					fragmentEntryLinkId,
-					toControlsId(itemId),
+					toControlsId(item.itemId),
 					updatedEditableValues
 				)
 			);
 
 			return updatedEditableValues;
 		},
-		[dispatch, fragmentEntryLinkId, isMounted, itemId, toControlsId]
+		[dispatch, fragmentEntryLinkId, isMounted, item, toControlsId]
 	);
 
 	const fragmentEntryLink = useSelectorCallback(
@@ -79,6 +87,9 @@ const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
 
 	const languageId = useSelector((state) => state.languageId);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
 
 	const defaultContent = useGetContent(
 		fragmentEntryLink,
@@ -163,6 +174,74 @@ const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
 		[]
 	);
 
+	const responsiveConfig = getResponsiveConfig(
+		item.config,
+		selectedViewportSize
+	);
+
+	const {
+		backgroundColor,
+		backgroundImage,
+		borderColor,
+		borderRadius,
+		borderWidth,
+		fontFamily,
+		fontSize,
+		fontWeight,
+		height,
+		marginBottom,
+		marginLeft,
+		marginRight,
+		marginTop,
+		maxHeight,
+		maxWidth,
+		minHeight,
+		minWidth,
+		opacity,
+		overflow,
+		paddingBottom,
+		paddingLeft,
+		paddingRight,
+		paddingTop,
+		shadow,
+		textAlign,
+		textColor,
+		width,
+	} = responsiveConfig.styles;
+
+	const [backgroundImageValue, setBackgroundImageValue] = useState('');
+
+	useEffect(() => {
+		loadBackgroundImage(backgroundImage).then(setBackgroundImageValue);
+	}, [backgroundImage]);
+
+	const style = {};
+
+	style.backgroundColor = getFrontendTokenValue(backgroundColor);
+	style.border = `solid ${borderWidth}px`;
+	style.borderColor = getFrontendTokenValue(borderColor);
+	style.borderRadius = getFrontendTokenValue(borderRadius);
+	style.boxShadow = getFrontendTokenValue(shadow);
+	style.color = getFrontendTokenValue(textColor);
+	style.fontFamily = getFrontendTokenValue(fontFamily);
+	style.fontSize = getFrontendTokenValue(fontSize);
+	style.fontWeight = getFrontendTokenValue(fontWeight);
+	style.height = height;
+	style.maxHeight = maxHeight;
+	style.maxWidth = maxWidth;
+	style.minHeight = minHeight;
+	style.minWidth = minWidth;
+	style.opacity = opacity;
+	style.overflow = overflow;
+	style.width = width;
+
+	if (backgroundImageValue) {
+		style.backgroundImage = `url(${backgroundImageValue})`;
+		style.backgroundPosition = '50% 50%';
+		style.backgroundRepeat = 'no-repeat';
+		style.backgroundSize = 'cover';
+	}
+
 	return (
 		<>
 			<FragmentContentInteractionsFilter
@@ -170,14 +249,27 @@ const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
 				itemId={itemId}
 			>
 				<UnsafeHTML
-					className={classNames('page-editor__fragment-content', {
-						'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,
-					})}
+					className={classNames(
+						`mb-${marginBottom}`,
+						`ml-${marginLeft}`,
+						`mr-${marginRight}`,
+						`mt-${marginTop}`,
+						`pb-${paddingBottom}`,
+						`pl-${paddingLeft}`,
+						`pr-${paddingRight}`,
+						`pt-${paddingTop}`,
+						{
+							'page-editor__fragment-content': withinTopper,
+							'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,
+							[textAlign]: textAlign,
+						}
+					)}
 					contentRef={elementRef}
 					getPortals={getPortals}
 					globalContext={globalContext}
 					markup={content}
 					onRender={onRender}
+					style={style}
 				/>
 			</FragmentContentInteractionsFilter>
 
@@ -191,7 +283,7 @@ const FragmentContent = ({elementRef, fragmentEntryLinkId, itemId}) => {
 
 FragmentContent.propTypes = {
 	fragmentEntryLinkId: PropTypes.string.isRequired,
-	itemId: PropTypes.string.isRequired,
+	item: PropTypes.object.isRequired,
 };
 
 export default React.memo(FragmentContent);

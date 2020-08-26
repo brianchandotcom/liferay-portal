@@ -108,6 +108,10 @@ export default class UnsafeHTML extends React.PureComponent {
 	_syncRefProps() {
 		const ref = this.state.ref;
 		ref.className = this.props.className;
+
+		Object.keys(this.props.style).forEach((key) => {
+			ref.style[key] = this.props.style[key];
+		});
 	}
 
 	/**
@@ -164,6 +168,7 @@ UnsafeHTML.defaultProps = {
 	},
 	markup: '',
 	onRender: () => {},
+	style: {},
 };
 
 UnsafeHTML.propTypes = {
@@ -180,4 +185,5 @@ UnsafeHTML.propTypes = {
 	}),
 	markup: PropTypes.string,
 	onRender: PropTypes.func,
+	style: PropTypes.object,
 };

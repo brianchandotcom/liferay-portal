@@ -79,11 +79,12 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 							<c:otherwise>
 
 								<%
+								boolean hasValidDDMFormFields = ddmFormAdminDisplayContext.hasValidDDMFormFields(formInstance);
 								boolean hasValidStorageType = ddmFormAdminDisplayContext.hasValidStorageType(formInstance);
 								%>
 
 								<c:choose>
-									<c:when test="<%= hasValidStorageType %>">
+									<c:when test="<%= hasValidDDMFormFields && hasValidStorageType %>">
 										<liferay-ui:search-container-column-text
 											cssClass="table-cell-expand table-title"
 											href="<%= rowURL %>"
@@ -96,11 +97,23 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 											cssClass="table-cell-expand table-title"
 											name="name"
 										>
+
+											<%
+											String errorMessage = "";
+
+											if (!hasValidDDMFormFields) {
+												errorMessage = LanguageUtil.format(request, "this-form-was-created-using-a-custom-field-type-x-that-is-not-available-for-this-liferay-dxp-installation.-instal-x-to-make-it-available-for-editing", ddmFormAdminDisplayContext.getInvalidDDMFormField(formInstance));
+											}
+											else if (!hasValidStorageType) {
+												errorMessage = LanguageUtil.format(request, "this-form-was-created-using-a-storage-type-x-that-is-not-available-for-this-liferay-dxp-installation.-install-x-to-make-it-available-for-editing", formInstance.getStorageType());
+											}
+											%>
+
 											<span class="error-icon">
 												<liferay-ui:icon
 													icon="exclamation-full"
 													markupView="lexicon"
-													message='<%= LanguageUtil.format(request, "this-form-was-created-using-a-storage-type-x-that-is-not-available-for-this-liferay-dxp-installation.-install-x-to-make-it-available-for-editing", formInstance.getStorageType()) %>'
+													message="<%= errorMessage %>"
 													toolTip="<%= true %>"
 												/>
 											</span>

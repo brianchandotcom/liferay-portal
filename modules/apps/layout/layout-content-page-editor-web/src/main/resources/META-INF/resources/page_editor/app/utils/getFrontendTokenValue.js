@@ -20,7 +20,14 @@ import {config} from '../config/index';
 export function getFrontendTokenValue(styleValue) {
 	const frontendTokens = config.frontendTokens;
 
-	return frontendTokens[styleValue]
-		? frontendTokens[styleValue].value
-		: styleValue;
+	if (frontendTokens[styleValue]) {
+		if (Liferay.Browser.isIe()) {
+			return frontendTokens[styleValue].value;
+		}
+		else {
+			return `var(--${frontendTokens[styleValue].cssVariable})`;
+		}
+	}
+
+	return styleValue;
 }

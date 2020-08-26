@@ -1518,9 +1518,25 @@ public class ContentPageEditorDisplayContext {
 							"defaultValue");
 					}
 
+					JSONArray mappingsJSONArray =
+						frontendTokenJSONObject.getJSONArray("mappings");
+					String cssVariable = StringPool.BLANK;
+
+					for (int l = 0; l < mappingsJSONArray.length(); l++) {
+						JSONObject mapping = mappingsJSONArray.getJSONObject(l);
+
+						if (Objects.equals(
+								mapping.getString("type"), "cssVariable")) {
+
+							cssVariable = mapping.getString("value");
+						}
+					}
+
 					frontendTokens.put(
 						name,
-						HashMapBuilder.put(
+						HashMapBuilder.<String, Object>put(
+							"cssVariable", cssVariable
+						).put(
 							"editorType",
 							frontendTokenJSONObject.get("editorType")
 						).put(

@@ -12,18 +12,15 @@
  * details.
  */
 
-package com.liferay.segments.internal.background.task;
+package com.liferay.segments.internal.messaging;
 
-import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
-import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
-import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
-import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -35,16 +32,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.segments.internal.constants.SegmentsDestinationNames;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
-import java.io.Serializable;
-
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -54,50 +49,36 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo García
+ * @author Preston Crary
  */
 @Component(
 	immediate = true,
-	property = "background.task.executor.class.name=com.liferay.segments.internal.background.task.SegmentsEntryRelIndexerBackgroundTaskExecutor",
-	service = BackgroundTaskExecutor.class
+	property = "destination.name=" + SegmentsDestinationNames.SEGMENTS_ENTRY_REINDEX,
+	service = MessageListener.class
 )
-public class SegmentsEntryRelIndexerBackgroundTaskExecutor
-	extends BaseBackgroundTaskExecutor {
-
-	public static String getBackgroundTaskName(long segmentsEntryId) {
-		return _BACKGROUND_TASK_NAME_PREFIX + segmentsEntryId;
-	}
+public class SegmentsEntryReindexMessageListener extends BaseMessageListener {
 
 	@Override
-	public BackgroundTaskExecutor clone() {
-		return this;
-	}
-
-	@Override
-	public BackgroundTaskResult execute(BackgroundTask backgroundTask) {
-		Map<String, Serializable> taskContextMap =
-			backgroundTask.getTaskContextMap();
-
-		String type = (String)taskContextMap.get("type");
+	protected void doReceive(Message message) {
+		String type = message.getString("type");
 
 		Indexer<Object> indexer = _indexerRegistry.getIndexer(type);
 
 		if (indexer == null) {
-			return BackgroundTaskResult.SUCCESS;
+			return;
 		}
 
-		Number segmentsEntryIdNumber = (Number)taskContextMap.get(
-			"segmentsEntryId");
-
-		long segmentsEntryId = segmentsEntryIdNumber.longValue();
+		long segmentsEntryId = message.getLong("segmentsEntryId");
 
 		if (segmentsEntryId == 0) {
-			return BackgroundTaskResult.SUCCESS;
+			return;
 		}
+
+		long companyId = message.getLong("companyId");
 
 		try {
 			Set<Long> classPKs = SetUtil.symmetricDifference(
-				_getOldClassPKs(
-					backgroundTask.getCompanyId(), segmentsEntryId, indexer),
+				_getOldClassPKs(companyId, segmentsEntryId, indexer),
 				_getNewClassPKs(segmentsEntryId));
 
 			for (long classPK : classPKs) {
@@ -109,25 +90,6 @@ public class SegmentsEntryRelIndexerBackgroundTaskExecutor
 				_log.warn("Unable to index segment members", portalException);
 			}
 		}
-
-		return BackgroundTaskResult.SUCCESS;
-	}
-
-	@Override
-	public BackgroundTaskDisplay getBackgroundTaskDisplay(
-		BackgroundTask backgroundTask) {
-
-		return null;
-	}
-
-	@Override
-	public int getIsolationLevel() {
-		return BackgroundTaskConstants.ISOLATION_LEVEL_TASK_NAME;
-	}
-
-	@Override
-	public boolean isSerial() {
-		return true;
 	}
 
 	private Set<Long> _getNewClassPKs(long segmentsEntryId)
@@ -188,11 +150,8 @@ public class SegmentsEntryRelIndexerBackgroundTaskExecutor
 		);
 	}
 
-	private static final String _BACKGROUND_TASK_NAME_PREFIX =
-		"SegmentsEntryRelIndexerBackgroundTaskExecutor-";
-
 	private static final Log _log = LogFactoryUtil.getLog(
-		SegmentsEntryRelIndexerBackgroundTaskExecutor.class);
+		SegmentsEntryReindexMessageListener.class);
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;

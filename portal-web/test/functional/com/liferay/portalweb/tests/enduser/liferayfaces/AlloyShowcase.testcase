@@ -77,7 +77,8 @@ definition {
 			screenName1 = "John",
 			screenName2 = "Philip",
 			screenName3 = "George",
-			screenName4 = "William");
+			screenName4 = "William",
+			useCase = "selection");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/server-events");
 
@@ -85,7 +86,8 @@ definition {
 			screenName1 = "John",
 			screenName2 = "Philip",
 			screenName3 = "George",
-			screenName4 = "William");
+			screenName4 = "William",
+			useCase = "serverEvents");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/sort-multiple-columns");
 

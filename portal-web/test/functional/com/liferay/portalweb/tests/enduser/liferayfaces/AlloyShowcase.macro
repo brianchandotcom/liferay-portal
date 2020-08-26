@@ -41,16 +41,6 @@ definition {
 			locator1 = "AlloyShowcase#PAGINATOR_DROP_DOWN_SELECTED");
 	}
 
-	//macro selectSummaryPosition {
-	//	Click(
-	//		key_opt = "Top",
-	//		locator1 = "AlloyShowcase#SUMMARY_POSITION_DROP_DOWN");
-
-	//	AssertElementPresent(
-	//		key_pageNum = "«",
-	//		locator1 = "AlloyShowcase#PAGINATOR_DROP_DOWN_SELECTED");
-	//}
-
 	macro viewDataList {
 		var dataListItem1 = "${description1}";
 		var dataListItem2 = "${description2}";
@@ -293,71 +283,12 @@ definition {
 			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_DESCRIPTION");
 
 	macro viewEventPaginator {
-		Click(
-			key_buttonLabel = "nextPage",
-			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "2",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_ACTIVE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#SELECTION_FIRST_NAME_CELL",
-			value1 = "${screenName2}");
-
-		Click(
-			key_pageNum = "3",
-			locator1 = "AlloyShowcase#PAGE_NUMBER_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "3",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_ACTIVE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#SELECTION_FIRST_NAME_CELL",
-			value1 = "${screenName3}");
-
-		Click(
-			key_buttonLabel = "previousPage",
-			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "2",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_ACTIVE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#SELECTION_FIRST_NAME_CELL",
-			value1 = "${screenName2}");
-
-		Click(
-			key_buttonLabel = "lastPage",
-			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "»",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
-		AssertElementPresent(
-			key_pageNum = "›",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#SELECTION_FIRST_NAME_CELL",
-			value1 = "${screenName4}");
-
-		Click(
-			key_buttonLabel = "firstPage",
-			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "«",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
-		AssertElementPresent(
-			key_pageNum = "‹",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#SELECTION_FIRST_NAME_CELL",
-			value1 = "${screenName1}");
+		AlloyShowcase.viewPaginator(
+			screenName1 = "${screenName1}",
+			screenName2 = "${screenName2}",
+			screenName3 = "${screenName3}",
+			screenName4 = "${screenName4}",
+			useCase = "${useCase}");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/server-events");
 
@@ -391,71 +322,11 @@ definition {
 	}
 
 	macro viewMultipleColumnSortPaginator {
-		Click(
-			key_buttonLabel = "nextPage",
-			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "2",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_ACTIVE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "${screenName2}");
-
-		Click(
-			key_pageNum = "3",
-			locator1 = "AlloyShowcase#PAGE_NUMBER_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "3",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_ACTIVE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "${screenName3}");
-
-		Click(
-			key_buttonLabel = "previousPage",
-			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "2",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_ACTIVE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "${screenName2}");
-
-		Click(
-			key_buttonLabel = "lastPage",
-			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "»",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
-		AssertElementPresent(
-			key_pageNum = "›",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "${screenName4}");
-
-		Click(
-			key_buttonLabel = "firstPage",
-			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "«",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
-		AssertElementPresent(
-			key_pageNum = "‹",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "${screenName1}");
+		AlloyShowcase.viewPaginator(
+			screenName1 = "${screenName1}",
+			screenName2 = "${screenName2}",
+			screenName3 = "${screenName3}",
+			screenName4 = "${screenName4}");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/sort-multiple-columns");
 
@@ -487,9 +358,16 @@ definition {
 			key_pageNum = "2",
 			locator1 = "AlloyShowcase#PAGE_BUTTON_ACTIVE");
 
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "${screenName2}");
+		if ("${useCase}" == "selection" || "${useCase}" == "serverEvents") {
+			AssertTextEquals(
+				locator1 = "AlloyShowcase#SELECTION_FIRST_NAME_CELL",
+				value1 = "${screenName2}");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "AlloyShowcase#FIRST_NAME_CELL",
+				value1 = "${screenName2}");
+		}
 
 		Click(
 			key_pageNum = "3",
@@ -499,9 +377,16 @@ definition {
 			key_pageNum = "3",
 			locator1 = "AlloyShowcase#PAGE_BUTTON_ACTIVE");
 
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "${screenName3}");
+		if ("${useCase}" == "selection" || "${useCase}" == "serverEvents") {
+			AssertTextEquals(
+				locator1 = "AlloyShowcase#SELECTION_FIRST_NAME_CELL",
+				value1 = "${screenName3}");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "AlloyShowcase#FIRST_NAME_CELL",
+				value1 = "${screenName3}");
+		}
 
 		Click(
 			key_buttonLabel = "previousPage",
@@ -511,9 +396,16 @@ definition {
 			key_pageNum = "2",
 			locator1 = "AlloyShowcase#PAGE_BUTTON_ACTIVE");
 
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "${screenName2}");
+		if ("${useCase}" == "selection" || "${useCase}" == "serverEvents") {
+			AssertTextEquals(
+				locator1 = "AlloyShowcase#SELECTION_FIRST_NAME_CELL",
+				value1 = "${screenName2}");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "AlloyShowcase#FIRST_NAME_CELL",
+				value1 = "${screenName2}");
+		}
 
 		Click(
 			key_buttonLabel = "lastPage",
@@ -526,9 +418,16 @@ definition {
 			key_pageNum = "›",
 			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
 
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "${screenName4}");
+		if ("${useCase}" == "selection" || "${useCase}" == "serverEvents") {
+			AssertTextEquals(
+				locator1 = "AlloyShowcase#SELECTION_FIRST_NAME_CELL",
+				value1 = "${screenName4}");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "AlloyShowcase#FIRST_NAME_CELL",
+				value1 = "${screenName4}");
+		}
 
 		Click(
 			key_buttonLabel = "firstPage",
@@ -541,77 +440,25 @@ definition {
 			key_pageNum = "‹",
 			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
 
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "${screenName1}");
+		if ("${useCase}" == "selection" || "${useCase}" == "serverEvents") {
+			AssertTextEquals(
+				locator1 = "AlloyShowcase#SELECTION_FIRST_NAME_CELL",
+				value1 = "${screenName1}");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "AlloyShowcase#FIRST_NAME_CELL",
+				value1 = "${screenName1}");
+		}
 	}
 
 	macro viewSelectionPaginator {
-		Click(
-			key_buttonLabel = "nextPage",
-			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "2",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_ACTIVE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#SELECTION_FIRST_NAME_CELL",
-			value1 = "${screenName2}");
-
-		Click(
-			key_pageNum = "3",
-			locator1 = "AlloyShowcase#PAGE_NUMBER_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "3",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_ACTIVE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#SELECTION_FIRST_NAME_CELL",
-			value1 = "${screenName3}");
-
-		Click(
-			key_buttonLabel = "previousPage",
-			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "2",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_ACTIVE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#SELECTION_FIRST_NAME_CELL",
-			value1 = "${screenName2}");
-
-		Click(
-			key_buttonLabel = "lastPage",
-			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "»",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
-		AssertElementPresent(
-			key_pageNum = "›",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#SELECTION_FIRST_NAME_CELL",
-			value1 = "${screenName4}");
-
-		Click(
-			key_buttonLabel = "firstPage",
-			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "«",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
-		AssertElementPresent(
-			key_pageNum = "‹",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#SELECTION_FIRST_NAME_CELL",
-			value1 = "${screenName1}");
+		AlloyShowcase.viewEventPaginator(
+			screenName1 = "${screenName1}",
+			screenName2 = "${screenName2}",
+			screenName3 = "${screenName3}",
+			screenName4 = "${screenName4}",
+			useCase = "${useCase}");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/selection");
 
@@ -625,71 +472,11 @@ definition {
 	}
 
 	macro viewSingleColumnSortPaginator {
-		Click(
-			key_buttonLabel = "nextPage",
-			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "2",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_ACTIVE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "${screenName2}");
-
-		Click(
-			key_pageNum = "3",
-			locator1 = "AlloyShowcase#PAGE_NUMBER_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "3",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_ACTIVE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "${screenName3}");
-
-		Click(
-			key_buttonLabel = "previousPage",
-			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "2",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_ACTIVE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "${screenName2}");
-
-		Click(
-			key_buttonLabel = "lastPage",
-			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "»",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
-		AssertElementPresent(
-			key_pageNum = "›",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "${screenName4}");
-
-		Click(
-			key_buttonLabel = "firstPage",
-			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
-
-		AssertElementPresent(
-			key_pageNum = "«",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
-		AssertElementPresent(
-			key_pageNum = "‹",
-			locator1 = "AlloyShowcase#PAGE_BUTTON_DISABLE");
-
-		AssertTextEquals(
-			locator1 = "AlloyShowcase#FIRST_NAME_CELL",
-			value1 = "${screenName1}");
+		AlloyShowcase.viewPaginator(
+			screenName1 = "${screenName1}",
+			screenName2 = "${screenName2}",
+			screenName3 = "${screenName3}",
+			screenName4 = "${screenName4}");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/sort-single-column");
 

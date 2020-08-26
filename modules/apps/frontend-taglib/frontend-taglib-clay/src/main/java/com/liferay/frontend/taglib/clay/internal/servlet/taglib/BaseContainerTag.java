@@ -33,6 +33,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
@@ -218,6 +219,12 @@ public class BaseContainerTag extends AttributesTagSupport {
 		_propsTransformer = propsTransformer;
 	}
 
+	public void setPropsTransformerServletContext(
+		ServletContext propsTransformerServletContext) {
+
+		_propsTransformerServletContext = propsTransformerServletContext;
+	}
+
 	protected void cleanUp() {
 		_additionalProps = null;
 		_componentId = null;
@@ -230,6 +237,7 @@ public class BaseContainerTag extends AttributesTagSupport {
 		_hydratedContainerElement = "div";
 		_id = null;
 		_propsTransformer = null;
+		_propsTransformerServletContext = null;
 	}
 
 	protected void doClearTag() {
@@ -242,6 +250,14 @@ public class BaseContainerTag extends AttributesTagSupport {
 
 	protected String getHydratedModuleName() {
 		return null;
+	}
+
+	protected ServletContext getPropsTransformerServletContext() {
+		if (_propsTransformerServletContext != null) {
+			return _propsTransformerServletContext;
+		}
+
+		return pageContext.getServletContext();
 	}
 
 	protected Map<String, Object> prepareProps(Map<String, Object> props) {
@@ -297,7 +313,7 @@ public class BaseContainerTag extends AttributesTagSupport {
 
 			if (Validator.isNotNull(_propsTransformer)) {
 				String npmResolvedPackageName = NPMResolvedPackageNameUtil.get(
-					pageContext.getServletContext());
+					getPropsTransformerServletContext());
 
 				propsTransformer =
 					npmResolvedPackageName + "/" + _propsTransformer;
@@ -379,5 +395,6 @@ public class BaseContainerTag extends AttributesTagSupport {
 	private String _hydratedContainerElement = "div";
 	private String _id;
 	private String _propsTransformer;
+	private ServletContext _propsTransformerServletContext;
 
 }

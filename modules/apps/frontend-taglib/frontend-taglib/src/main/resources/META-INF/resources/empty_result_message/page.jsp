@@ -46,6 +46,8 @@
 						displayType="<%= buttonCssClass %>"
 						dropdownItems="<%= actionDropdownItems %>"
 						label="new"
+						propsTransformer="<%= propsTransformer %>"
+						propsTransformerServletContext="<%= propsTransformerServletContext %>"
 						small="<%= true %>"
 					/>
 				</c:when>
@@ -64,6 +66,8 @@
 								defaultEventHandler="<%= defaultEventHandler %>"
 								href='<%= String.valueOf(actionDropdownItem.get("href")) %>'
 								label='<%= String.valueOf(actionDropdownItem.get("label")) %>'
+								propsTransformer="<%= propsTransformer %>"
+								servletContext="<%= application %>"
 							/>
 						</c:when>
 						<c:otherwise>
@@ -73,6 +77,8 @@
 								defaultEventHandler="<%= defaultEventHandler %>"
 								displayType="<%= buttonCssClass %>"
 								label='<%= String.valueOf(actionDropdownItem.get("label")) %>'
+								propsTransformer="<%= propsTransformer %>"
+								servletContext="<%= application %>"
 							/>
 						</c:otherwise>
 					</c:choose>

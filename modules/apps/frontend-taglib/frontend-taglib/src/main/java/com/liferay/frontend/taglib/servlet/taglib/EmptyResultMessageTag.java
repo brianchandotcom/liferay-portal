@@ -23,6 +23,7 @@ import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
@@ -57,6 +58,10 @@ public class EmptyResultMessageTag extends IncludeTag {
 
 	public String getElementType() {
 		return _elementType;
+	}
+
+	public String getPropsTransformer() {
+		return _propsTransformer;
 	}
 
 	public String getTitle() {
@@ -100,6 +105,16 @@ public class EmptyResultMessageTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
+	public void setPropsTransformer(String propsTransformer) {
+		_propsTransformer = propsTransformer;
+	}
+
+	public void setPropsTransformerServletContext(
+		ServletContext propsTransformerServletContext) {
+
+		_propsTransformerServletContext = propsTransformerServletContext;
+	}
+
 	public void setTitle(String title) {
 		_title = title;
 	}
@@ -115,12 +130,22 @@ public class EmptyResultMessageTag extends IncludeTag {
 		_defaultEventHandler = null;
 		_description = null;
 		_elementType = null;
+		_propsTransformer = null;
+		_propsTransformerServletContext = null;
 		_title = null;
 	}
 
 	@Override
 	protected String getPage() {
 		return _PAGE;
+	}
+
+	protected ServletContext getPropsTransformerServletContext() {
+		if (_propsTransformerServletContext != null) {
+			return _propsTransformerServletContext;
+		}
+
+		return servletContext;
 	}
 
 	@Override
@@ -150,6 +175,15 @@ public class EmptyResultMessageTag extends IncludeTag {
 			"liferay-frontend:empty-result-message:elementType", _elementType);
 
 		httpServletRequest.setAttribute(
+			"liferay-frontend:empty-result-message:propsTransformer",
+			_propsTransformer);
+
+		httpServletRequest.setAttribute(
+			"liferay-frontend:empty-result-message:" +
+				"propsTransformerServletContext",
+			getPropsTransformerServletContext());
+
+		httpServletRequest.setAttribute(
 			"liferay-frontend:empty-result-message:title", _title);
 	}
 
@@ -163,6 +197,8 @@ public class EmptyResultMessageTag extends IncludeTag {
 	private String _defaultEventHandler;
 	private String _description;
 	private String _elementType;
+	private String _propsTransformer;
+	private ServletContext _propsTransformerServletContext;
 	private String _title;
 
 }

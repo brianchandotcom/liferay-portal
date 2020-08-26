@@ -26,5 +26,7 @@ String componentId = GetterUtil.getString((String)request.getAttribute("liferay-
 String defaultEventHandler = GetterUtil.getString((String)request.getAttribute("liferay-frontend:empty-result-message:defaultEventHandler"));
 String description = (String)request.getAttribute("liferay-frontend:empty-result-message:description");
 String elementType = (String)request.getAttribute("liferay-frontend:empty-result-message:elementType");
+String propsTransformer = (String)request.getAttribute("liferay-frontend:empty-result-message:propsTransformer");
+ServletContext propsTransformerServletContext = (ServletContext)request.getAttribute("liferay-frontend:empty-result-message:propsTransformerServletContext");
 String title = (String)request.getAttribute("liferay-frontend:empty-result-message:title");
 %>

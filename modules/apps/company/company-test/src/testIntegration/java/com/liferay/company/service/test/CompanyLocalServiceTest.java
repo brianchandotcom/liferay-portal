@@ -780,6 +780,23 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
+	public void testGetCompanyByVirtualHostWithIPv6() throws Exception {
+		String virtualHostName = "::1";
+
+		Company company = CompanyLocalServiceUtil.addCompany(
+			null, virtualHostName, virtualHostName, "test.com", false, 0, true);
+
+		Assert.assertEquals(
+			company,
+			CompanyLocalServiceUtil.getCompanyByVirtualHost(virtualHostName));
+		Assert.assertEquals(
+			company,
+			CompanyLocalServiceUtil.getCompanyByVirtualHost("0:0:0:0:0:0:0:1"));
+
+		CompanyLocalServiceUtil.deleteCompany(company);
+	}
+
+	@Test
 	public void testUpdateDisplay() throws Exception {
 		Company company = addCompany();
 

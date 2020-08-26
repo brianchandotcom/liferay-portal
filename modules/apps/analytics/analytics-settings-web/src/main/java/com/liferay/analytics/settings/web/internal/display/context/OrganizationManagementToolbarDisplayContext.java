@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -98,7 +99,7 @@ public class OrganizationManagementToolbarDisplayContext
 		Map<String, String> entriesMap, PortletURL entryURL,
 		String parameterName, String parameterValue) {
 
-		if ((entriesMap == null) || entriesMap.isEmpty()) {
+		if (MapUtil.isEmpty(entriesMap)) {
 			return null;
 		}
 

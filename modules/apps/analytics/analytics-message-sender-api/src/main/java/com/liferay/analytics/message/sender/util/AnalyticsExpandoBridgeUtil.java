@@ -16,6 +16,7 @@ package com.liferay.analytics.message.sender.util;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -48,8 +49,7 @@ public class AnalyticsExpandoBridgeUtil {
 			false);
 
 		for (Map.Entry<String, Serializable> entry : attributes.entrySet()) {
-			if ((includeAttributeNames != null) &&
-				!includeAttributeNames.isEmpty() &&
+			if (!ListUtil.isEmpty(includeAttributeNames) &&
 				!includeAttributeNames.contains(entry.getKey())) {
 
 				continue;

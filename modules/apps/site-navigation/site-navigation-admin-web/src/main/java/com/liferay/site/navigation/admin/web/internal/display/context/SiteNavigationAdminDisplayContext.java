@@ -98,9 +98,9 @@ public class SiteNavigationAdminDisplayContext {
 					add(
 						dropdownItem -> {
 							dropdownItem.setData(
-								Collections.singletonMap("type", "add-button"));
-							dropdownItem.setHref(
-								_getAddURL(siteNavigationMenuItemType));
+								Collections.singletonMap(
+									"href",
+									_getAddURL(siteNavigationMenuItemType)));
 							dropdownItem.setLabel(
 								siteNavigationMenuItemType.getLabel(
 									themeDisplay.getLocale()));

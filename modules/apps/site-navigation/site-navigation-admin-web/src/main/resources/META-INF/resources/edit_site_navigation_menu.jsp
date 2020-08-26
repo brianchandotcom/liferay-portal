@@ -46,19 +46,13 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 
 				<li class="nav-item">
 					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle nav-btn nav-btn-monospaced" type="button">
-							<clay:icon
-								symbol="plus"
-							/>
-						</button>
-
-						<react:component
-							module="js/add_menu/index"
-							props='<%=
-								HashMapBuilder.<String, Object>put(
-									"dropdownItems", siteNavigationAdminDisplayContext.getAddSiteNavigationMenuItemDropdownItems()
-								).build()
-							%>'
+						<clay:dropdown-menu
+							cssClass="nav-btn nav-btn-monospaced"
+							data-qa-id="addButton"
+							displayType="primary"
+							dropdownItems="<%= siteNavigationAdminDisplayContext.getAddSiteNavigationMenuItemDropdownItems() %>"
+							icon="plus"
+							propsTransformer="js/add_menu/AddMenuPropsTransformer"
 						/>
 					</div>
 				</li>
@@ -103,8 +97,9 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 			<c:otherwise>
 				<liferay-frontend:empty-result-message
 					actionDropdownItems="<%= siteNavigationAdminDisplayContext.getAddSiteNavigationMenuItemDropdownItems() %>"
-					defaultEventHandler='<%= liferayPortletResponse.getNamespace() + "AddMenuDefaultEventHandler" %>'
 					description='<%= LanguageUtil.get(request, "fortunately-it-is-very-easy-to-add-new-ones") %>'
+					propsTransformer="js/add_menu/AddMenuPropsTransformer"
+					propsTransformerServletContext="<%= application %>"
 				/>
 			</c:otherwise>
 		</c:choose>

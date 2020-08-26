@@ -14,9 +14,15 @@
 
 package com.liferay.dispatch.service.http;
 
+import com.liferay.dispatch.service.DispatchTriggerServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.dispatch.service.DispatchTriggerServiceUtil</code> service
+ * <code>DispatchTriggerServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,48 @@ package com.liferay.dispatch.service.http;
  */
 @Deprecated
 public class DispatchTriggerServiceSoap {
+
+	public static void deleteDispatchTrigger(long dispatchTriggerId)
+		throws RemoteException {
+
+		try {
+			DispatchTriggerServiceUtil.deleteDispatchTrigger(dispatchTriggerId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.dispatch.model.DispatchTriggerSoap
+			updateDispatchTrigger(
+				long dispatchTriggerId, boolean active, String cronExpression,
+				int endDateMonth, int endDateDay, int endDateYear,
+				int endDateHour, int endDateMinute, boolean neverEnd,
+				int startDateMonth, int startDateDay, int startDateYear,
+				int startDateHour, int startDateMinute)
+		throws RemoteException {
+
+		try {
+			com.liferay.dispatch.model.DispatchTrigger returnValue =
+				DispatchTriggerServiceUtil.updateDispatchTrigger(
+					dispatchTriggerId, active, cronExpression, endDateMonth,
+					endDateDay, endDateYear, endDateHour, endDateMinute,
+					neverEnd, startDateMonth, startDateDay, startDateYear,
+					startDateHour, startDateMinute);
+
+			return com.liferay.dispatch.model.DispatchTriggerSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DispatchTriggerServiceSoap.class);
+
 }

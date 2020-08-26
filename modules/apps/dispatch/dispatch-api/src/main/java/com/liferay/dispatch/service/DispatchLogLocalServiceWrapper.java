@@ -50,6 +50,17 @@ public class DispatchLogLocalServiceWrapper
 		return _dispatchLogLocalService.addDispatchLog(dispatchLog);
 	}
 
+	@Override
+	public com.liferay.dispatch.model.DispatchLog addDispatchLog(
+			long userId, long dispatchTriggerId, String error, String output,
+			int status, java.util.Date startDate, java.util.Date endDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dispatchLogLocalService.addDispatchLog(
+			userId, dispatchTriggerId, error, output, status, startDate,
+			endDate);
+	}
+
 	/**
 	 * Creates a new dispatch log with the primary key. Does not add the dispatch log to the database.
 	 *
@@ -108,6 +119,11 @@ public class DispatchLogLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _dispatchLogLocalService.deleteDispatchLog(dispatchLogId);
+	}
+
+	@Override
+	public void deleteDispatchLogs(long dispatchTriggerId) {
+		_dispatchLogLocalService.deleteDispatchLogs(dispatchTriggerId);
 	}
 
 	/**
@@ -263,6 +279,14 @@ public class DispatchLogLocalServiceWrapper
 		return _dispatchLogLocalService.getDispatchLogs(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.dispatch.model.DispatchLog>
+		getDispatchLogs(long dispatchTriggerId, int start, int end) {
+
+		return _dispatchLogLocalService.getDispatchLogs(
+			dispatchTriggerId, start, end);
+	}
+
 	/**
 	 * Returns the number of dispatch logs.
 	 *
@@ -271,6 +295,11 @@ public class DispatchLogLocalServiceWrapper
 	@Override
 	public int getDispatchLogsCount() {
 		return _dispatchLogLocalService.getDispatchLogsCount();
+	}
+
+	@Override
+	public int getDispatchLogsCount(long dispatchTriggerId) {
+		return _dispatchLogLocalService.getDispatchLogsCount(dispatchTriggerId);
 	}
 
 	@Override
@@ -316,6 +345,16 @@ public class DispatchLogLocalServiceWrapper
 		com.liferay.dispatch.model.DispatchLog dispatchLog) {
 
 		return _dispatchLogLocalService.updateDispatchLog(dispatchLog);
+	}
+
+	@Override
+	public com.liferay.dispatch.model.DispatchLog updateDispatchLog(
+			long dispatchLogId, String error, String output, int status,
+			java.util.Date endDate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dispatchLogLocalService.updateDispatchLog(
+			dispatchLogId, error, output, status, endDate);
 	}
 
 	@Override

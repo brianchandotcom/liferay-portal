@@ -37,6 +37,31 @@ public class DispatchLogServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.dispatch.service.impl.DispatchLogServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void deleteDispatchLog(long dispatchLogId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().deleteDispatchLog(dispatchLogId);
+	}
+
+	public static com.liferay.dispatch.model.DispatchLog getDispatchLog(
+			long dispatchLogId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getDispatchLog(dispatchLogId);
+	}
+
+	public static java.util.List<com.liferay.dispatch.model.DispatchLog>
+			getDispatchLogs(long dispatchTriggerId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getDispatchLogs(dispatchTriggerId, start, end);
+	}
+
+	public static int getDispatchLogsCount(long dispatchTriggerId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getDispatchLogsCount(dispatchTriggerId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.

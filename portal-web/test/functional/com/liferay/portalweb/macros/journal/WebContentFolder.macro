@@ -35,7 +35,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "${folderName}");
+			value1 = "Web Content");
 
 		LexiconEntry.gotoAdd();
 
@@ -71,7 +71,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "${folderName}");
+			value1 = "Web Content");
 
 		MouseOver(locator1 = "Button#PLUS");
 
@@ -144,7 +144,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
-			value1 = "${folderName}");
+			value1 = "Web Content");
 	}
 
 	macro gotoEditCP {

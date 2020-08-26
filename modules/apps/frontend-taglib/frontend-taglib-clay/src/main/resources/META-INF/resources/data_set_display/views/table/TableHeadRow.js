@@ -35,6 +35,16 @@ const FieldsSelectorDropdown = ({fields}) => {
 	const [filteredFields, setFilteredFields] = useState(fields);
 	const [query, setQuery] = useState('');
 
+	const selectedFieldNames = Object.keys(visibleFieldNames).length
+		? visibleFieldNames
+		: fields.reduce(
+				(selectedFieldNames, field) => ({
+					...selectedFieldNames,
+					[field.fieldName]: true,
+				}),
+				{}
+		  );
+
 	useEffect(() => {
 		setFilteredFields(
 			fields.filter((field) =>
@@ -74,8 +84,8 @@ const FieldsSelectorDropdown = ({fields}) => {
 										id,
 										portletId,
 										visibleFieldNames: {
-											...visibleFieldNames,
-											[fieldName]: !visibleFieldNames[
+											...selectedFieldNames,
+											[fieldName]: !selectedFieldNames[
 												fieldName
 											],
 										},
@@ -83,7 +93,7 @@ const FieldsSelectorDropdown = ({fields}) => {
 								);
 							}}
 						>
-							{visibleFieldNames[fieldName] && (
+							{selectedFieldNames[fieldName] && (
 								<ClayIcon symbol="check" />
 							)}
 							{label}

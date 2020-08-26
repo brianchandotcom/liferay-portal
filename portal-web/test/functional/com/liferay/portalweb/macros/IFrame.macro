@@ -50,6 +50,10 @@ definition {
 		}
 	}
 
+	macro selectTagFrame {
+		SelectFrame(locator1 = "IFrame#SELECT_TAG");
+	}
+
 	macro selectTopFrame {
 		SelectFrame(value1 = "relative=top");
 	}

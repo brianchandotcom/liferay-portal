@@ -33,6 +33,7 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageAdapterTracker;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -148,8 +149,8 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormValuesMerger,
 					_ddmFormWebConfigurationActivator.
 						getDDMFormWebConfiguration(),
-					_ddmStructureLocalService, _ddmStructureService,
-					_jsonFactory, _npmResolver, _portal));
+					_ddmStorageAdapterTracker, _ddmStructureLocalService,
+					_ddmStructureService, _jsonFactory, _npmResolver, _portal));
 		}
 		else {
 			renderRequest.setAttribute(
@@ -169,8 +170,8 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormValuesMerger,
 					_ddmFormWebConfigurationActivator.
 						getDDMFormWebConfiguration(),
-					_ddmStructureLocalService, _ddmStructureService,
-					_jsonFactory, _npmResolver, _portal));
+					_ddmStorageAdapterTracker, _ddmStructureLocalService,
+					_ddmStructureService, _jsonFactory, _npmResolver, _portal));
 		}
 	}
 
@@ -237,6 +238,9 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 	)
 	private volatile DDMFormWebConfigurationActivator
 		_ddmFormWebConfigurationActivator;
+
+	@Reference
+	private DDMStorageAdapterTracker _ddmStorageAdapterTracker;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

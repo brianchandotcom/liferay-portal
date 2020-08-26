@@ -211,6 +211,7 @@ create unique index IX_504CABF5 on Group_ (companyId, classNameId, classPK, ctCo
 create index IX_2442742A on Group_ (companyId, classNameId, ctCollectionId);
 create unique index IX_B894AE04 on Group_ (companyId, classNameId, liveGroupId, groupKey[$COLUMN_LENGTH:150$], ctCollectionId);
 create index IX_B7EBDBB2 on Group_ (companyId, classNameId, parentGroupId, ctCollectionId);
+create index IX_A67A0AA5 on Group_ (companyId, classNameId, site, ctCollectionId);
 create index IX_286EE120 on Group_ (companyId, ctCollectionId);
 create unique index IX_9A7D6AD0 on Group_ (companyId, friendlyURL[$COLUMN_LENGTH:255$], ctCollectionId);
 create unique index IX_BE219CF4 on Group_ (companyId, groupKey[$COLUMN_LENGTH:150$], ctCollectionId);

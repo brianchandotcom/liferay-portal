@@ -43,7 +43,9 @@ jest.mock(
 jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
-		config: {},
+		config: {
+			frontendTokens: {},
+		},
 	})
 );
 
@@ -138,7 +140,7 @@ const renderFragmentContent = ({
 					<FragmentContent
 						elementRef={ref}
 						fragmentEntryLinkId={FRAGMENT_ENTRY_LINK_ID}
-						itemId={item.itemId}
+						item={item}
 					/>
 				</ControlsProvider>
 			</EditableProcessorContextProvider>

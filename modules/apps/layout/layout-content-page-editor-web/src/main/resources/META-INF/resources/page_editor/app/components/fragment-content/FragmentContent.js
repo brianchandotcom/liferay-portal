@@ -37,6 +37,7 @@ import getAllEditables from './getAllEditables';
 import resolveEditableValue from './resolveEditableValue';
 
 const FragmentContent = ({
+	className,
 	elementRef,
 	fragmentEntryLinkId,
 	item,
@@ -243,6 +244,7 @@ const FragmentContent = ({
 	return (
 		<UnsafeHTML
 			className={classNames(
+				className,
 				`mb-${marginBottom}`,
 				`ml-${marginLeft}`,
 				`mr-${marginRight}`,
@@ -251,8 +253,8 @@ const FragmentContent = ({
 				`pl-${paddingLeft}`,
 				`pr-${paddingRight}`,
 				`pt-${paddingTop}`,
+				'page-editor__fragment-content',
 				{
-					'page-editor__fragment-content': withinTopper,
 					'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,
 					[textAlign]: textAlign,
 				}
@@ -268,8 +270,10 @@ const FragmentContent = ({
 };
 
 FragmentContent.propTypes = {
+	className: PropTypes.string,
 	fragmentEntryLinkId: PropTypes.string.isRequired,
 	item: PropTypes.object.isRequired,
+	withinTopper: PropTypes.bool,
 };
 
 export default React.memo(FragmentContent);

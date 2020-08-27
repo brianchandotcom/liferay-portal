@@ -36,14 +36,14 @@ const OPTIONS_TYPES = {
 export default function PageDesignOptionsSidebar() {
 	const dispatch = useDispatch();
 
+	const [selectedStyleBook, setSelectedStyleBook] = useState({
+		frontendTokens: config.frontendTokens,
+		styleBookEntryId: config.styleBookEntryId,
+	});
+
 	const masterLayoutPlid = useSelector(
 		(state) => state.masterLayout?.masterLayoutPlid
 	);
-
-	const [styleBookEntryId, setStyleBookEntryId] = useState(
-		config.styleBookEntryId
-	);
-	const [selectedStyleBook, setSelectedStyleBook] = useState(null);
 
 	const onSelectMasterLayout = useCallback(
 		(masterLayout) => {
@@ -61,8 +61,10 @@ export default function PageDesignOptionsSidebar() {
 			onNetworkStatus: () => {},
 			styleBookEntryId: styleBook.styleBookEntryId,
 		}).then((styleBookWithTokens) => {
-			setStyleBookEntryId(styleBook.styleBookEntryId);
-			setSelectedStyleBook(styleBookWithTokens);
+			setSelectedStyleBook({
+				frontendTokens: styleBookWithTokens.tokenValues,
+				styleBookEntryId: styleBook.styleBookEntryId,
+			});
 		});
 	}, []);
 
@@ -70,7 +72,7 @@ export default function PageDesignOptionsSidebar() {
 		const wrapper = document.getElementById('wrapper');
 
 		if (selectedStyleBook && wrapper) {
-			selectedStyleBook.tokenValues.forEach((token) => {
+			selectedStyleBook.frontendTokens.forEach((token) => {
 				wrapper.style.setProperty(
 					`--${token.cssVariable}`,
 					token.value
@@ -83,7 +85,7 @@ export default function PageDesignOptionsSidebar() {
 		() =>
 			getTabs(
 				masterLayoutPlid,
-				styleBookEntryId,
+				selectedStyleBook.styleBookEntryId,
 				onSelectMasterLayout,
 				onSelectStyleBook
 			),
@@ -91,7 +93,7 @@ export default function PageDesignOptionsSidebar() {
 			masterLayoutPlid,
 			onSelectMasterLayout,
 			onSelectStyleBook,
-			styleBookEntryId,
+			selectedStyleBook,
 		]
 	);
 

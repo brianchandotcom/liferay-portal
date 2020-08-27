@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Frontend Taglib Liferay UI View State
+Bundle-SymbolicName: com.liferay.frontend.taglib.liferay.ui.view.state
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.frontend.taglib.liferay.ui.view.state

@@ -32,7 +32,7 @@ export default ({createLink = true, section, ...props}) => {
 					displayType="unstyled"
 				>
 					{createLink ? (
-						<CreateLink />
+						<CreateLink ui={props.ui || section.title} />
 					) : (
 						<ClayIcon symbol="ellipsis-h" />
 					)}
@@ -42,26 +42,27 @@ export default ({createLink = true, section, ...props}) => {
 		>
 			<ClayDropDown.ItemList>
 				<ClayDropDown.Group>
-					{section.subCategories.map((section, i) => (
-						<Link
-							className="text-decoration-none"
-							key={i}
-							onClick={() => {
-								setActive(false);
-							}}
-							to={'/questions/' + section.title}
-						>
-							<ClayDropDown.Item key={i}>
-								{section.title}
-							</ClayDropDown.Item>
-						</Link>
-					))}
+					{section.subCategories &&
+						section.subCategories.map((section, i) => (
+							<Link
+								className="text-decoration-none"
+								key={i}
+								onClick={() => {
+									setActive(false);
+								}}
+								to={'/questions/' + section.title}
+							>
+								<ClayDropDown.Item key={i}>
+									{section.title}
+								</ClayDropDown.Item>
+							</Link>
+						))}
 				</ClayDropDown.Group>
 			</ClayDropDown.ItemList>
 		</ClayDropDown>
 	);
 
-	function CreateLink() {
+	function CreateLink({ui}) {
 		return (
 			<Link
 				className={props.className}
@@ -70,7 +71,7 @@ export default ({createLink = true, section, ...props}) => {
 				}}
 				to={'/questions/' + section.title}
 			>
-				{section.title}
+				{ui}
 			</Link>
 		);
 	}

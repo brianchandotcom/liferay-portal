@@ -1,7 +1,8 @@
 Bundle-Name: Liferay Users Admin API
 Bundle-SymbolicName: com.liferay.users.admin.api
-Bundle-Version: 5.0.12
+Bundle-Version: 5.1.0
 Export-Package:\
 	com.liferay.users.admin.configuration,\
 	com.liferay.users.admin.constants,\
+	com.liferay.users.admin.management.toolbar,\
 	com.liferay.users.admin.user.action.contributor

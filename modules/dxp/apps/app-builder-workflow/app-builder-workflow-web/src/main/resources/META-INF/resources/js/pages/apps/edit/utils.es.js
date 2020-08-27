@@ -19,10 +19,27 @@ export function canDeployApp(app, config) {
 			({dataLayoutId}) => dataLayoutId
 		);
 
+		let validActionNames = true;
+
+		if (step?.appWorkflowTransitions) {
+			const primaryActionName = step?.appWorkflowTransitions[0].name;
+
+			validActionNames = primaryActionName.trim().length > 0;
+
+			if (step?.appWorkflowTransitions[1]) {
+				const secondaryActionName =
+					step?.appWorkflowTransitions[1].name;
+
+				validActionNames =
+					validActionNames && secondaryActionName.trim().length > 0;
+			}
+		}
+
 		return (
 			assigneeRoles.length &&
 			!duplicatedFields.length &&
 			(isValidFormViews || step.initial !== undefined) &&
+			validActionNames &&
 			step.name.trim().length
 		);
 	});

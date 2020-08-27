@@ -16,11 +16,11 @@ package com.liferay.analytics.reports.web.internal.display.context;
 
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Collections;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -51,9 +51,12 @@ public class AnalyticsReportsDisplayContext<T> {
 			return _data;
 		}
 
-		_data = HashMapBuilder.<String, Object>put(
-			"context", _getContext()
-		).build();
+		_data = Collections.singletonMap(
+			"context",
+			Collections.singletonMap(
+				"analyticsReportsDataURL",
+				String.valueOf(
+					_getResourceURL("/analytics_reports/get_data"))));
 
 		return _data;
 	}
@@ -81,17 +84,6 @@ public class AnalyticsReportsDisplayContext<T> {
 	public String getLiferayAnalyticsURL() {
 		return PrefsPropsUtil.getString(
 			_themeDisplay.getCompanyId(), "liferayAnalyticsURL");
-	}
-
-	private Map<String, Object> _getContext() {
-		return HashMapBuilder.<String, Object>put(
-			"endpoints",
-			HashMapBuilder.<String, Object>put(
-				"getAnalyticsReportsData",
-				() -> String.valueOf(
-					_getResourceURL("/analytics_reports/get_data"))
-			).build()
-		).build();
 	}
 
 	private ResourceURL _getResourceURL(String resourceID) {

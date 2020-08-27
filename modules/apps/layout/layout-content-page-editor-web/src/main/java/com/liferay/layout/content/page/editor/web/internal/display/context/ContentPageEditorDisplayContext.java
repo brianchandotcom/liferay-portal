@@ -155,7 +155,6 @@ import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -1473,77 +1472,6 @@ public class ContentPageEditorDisplayContext {
 		return _fragmentEntryLinks;
 	}
 
-	private Map<String, Map<String, Object>> _getFrontendTokens()
-		throws Exception {
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
-			themeDisplay.getSiteGroupId(), false);
-
-		FrontendTokenDefinition frontendTokenDefinition =
-			_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				layoutSet.getThemeId());
-
-		if (frontendTokenDefinition == null) {
-			return Collections.emptyMap();
-		}
-
-		JSONObject frontendTokenValuesJSONObject =
-			_getFrontendTokenValuesJSONObject();
-
-		Map<String, Map<String, Object>> frontendTokens = new LinkedHashMap<>();
-
-		JSONObject frontendTokenDefinitionJSONObject =
-			JSONFactoryUtil.createJSONObject(
-				frontendTokenDefinition.getJSON(themeDisplay.getLocale()));
-
-		JSONArray frontendTokenCategoriesJSONArray =
-			frontendTokenDefinitionJSONObject.getJSONArray(
-				"frontendTokenCategories");
-
-		Iterator<JSONObject> frontendTokenCategoriesIterator =
-			frontendTokenCategoriesJSONArray.iterator();
-
-		frontendTokenCategoriesIterator.forEachRemaining(
-			frontendTokenCategoryJSONObject -> {
-				JSONArray frontendTokenSetsJSONArray =
-					frontendTokenCategoryJSONObject.getJSONArray(
-						"frontendTokenSets");
-
-				Iterator<JSONObject> frontendTokenSetsIterator =
-					frontendTokenSetsJSONArray.iterator();
-
-				frontendTokenSetsIterator.forEachRemaining(
-					frontendTokenSetJSONObject -> {
-						JSONArray frontendTokensJSONArray =
-							frontendTokenSetJSONObject.getJSONArray(
-								"frontendTokens");
-
-						Iterator<JSONObject> frontendTokensIterator =
-							frontendTokensJSONArray.iterator();
-
-						frontendTokensIterator.forEachRemaining(
-							frontendTokenJSONObject ->
-								_processFrontendTokenJSONObject(
-									frontendTokenJSONObject,
-									frontendTokenValuesJSONObject,
-									frontendTokens));
-					});
-			});
-
-		return frontendTokens;
-	}
-
-	private JSONObject _getFrontendTokenValuesJSONObject() throws Exception {
-		StyleBookEntry styleBookEntry = _getDefaultStyleBookEntry();
-
-		if (styleBookEntry != null) {
-			return JSONFactoryUtil.createJSONObject(
-				styleBookEntry.getFrontendTokensValues());
-		}
-
-		return JSONFactoryUtil.createJSONObject();
-	}
-
 	private ItemSelectorCriterion _getImageItemSelectorCriterion() {
 		if (_imageItemSelectorCriterion != null) {
 			return _imageItemSelectorCriterion;
@@ -2238,54 +2166,6 @@ public class ContentPageEditorDisplayContext {
 		}
 
 		return false;
-	}
-
-	private void _processFrontendTokenJSONObject(
-		JSONObject frontendTokenJSONObject,
-		JSONObject frontendTokenValuesJSONObject,
-		Map<String, Map<String, Object>> frontendTokens) {
-
-		String name = frontendTokenJSONObject.getString("name");
-
-		JSONObject valueJSONObject =
-			frontendTokenValuesJSONObject.getJSONObject(name);
-
-		String value = StringPool.BLANK;
-
-		if (valueJSONObject != null) {
-			value = valueJSONObject.getString("value");
-		}
-		else {
-			value = frontendTokenJSONObject.getString("defaultValue");
-		}
-
-		JSONArray mappingsJSONArray = frontendTokenJSONObject.getJSONArray(
-			"mappings");
-		String cssVariable = StringPool.BLANK;
-
-		for (int l = 0; l < mappingsJSONArray.length(); l++) {
-			JSONObject mappingJSONObject = mappingsJSONArray.getJSONObject(l);
-
-			if (Objects.equals(
-					mappingJSONObject.getString("type"), "cssVariable")) {
-
-				cssVariable = mappingJSONObject.getString("value");
-			}
-		}
-
-		frontendTokens.put(
-			name,
-			HashMapBuilder.<String, Object>put(
-				"cssVariable", cssVariable
-			).put(
-				"editorType", frontendTokenJSONObject.get("editorType")
-			).put(
-				"label", frontendTokenJSONObject.get("label")
-			).put(
-				"name", name
-			).put(
-				"value", value
-			).build());
 	}
 
 	private static final String[] _UNSUPPORTED_PORTLETS_NAMES = {

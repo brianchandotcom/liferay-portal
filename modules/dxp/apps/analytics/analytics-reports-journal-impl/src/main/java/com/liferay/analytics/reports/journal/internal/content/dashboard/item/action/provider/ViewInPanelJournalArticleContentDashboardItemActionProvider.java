@@ -65,6 +65,10 @@ public class ViewInPanelJournalArticleContentDashboardItemActionProvider
 	public boolean isShow(
 		JournalArticle journalArticle, HttpServletRequest httpServletRequest) {
 
+		if (!journalArticle.hasApprovedVersion()) {
+			return false;
+		}
+
 		try {
 			return _analyticsReportsContentDashboardItemActionProvider.
 				isShowContentDashboardItemAction(

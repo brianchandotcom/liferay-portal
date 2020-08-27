@@ -1,21 +1,21 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 
-package com.liferay.commerce.data.integration.web.internal.servlet.taglib.ui;
+package com.liferay.dispatch.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.data.integration.constants.CommerceDataIntegrationConstants;
-import com.liferay.commerce.data.integration.model.CommerceDataIntegrationProcess;
+import com.liferay.dispatch.constants.DispatchConstants;
+import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -43,14 +43,13 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class CommerceDataIntegrationDetailScreenNavigationEntry
+public class DispatchDetailsScreenNavigationCategory
 	implements ScreenNavigationCategory,
-			   ScreenNavigationEntry<CommerceDataIntegrationProcess> {
+			   ScreenNavigationEntry<DispatchTrigger> {
 
 	@Override
 	public String getCategoryKey() {
-		return CommerceDataIntegrationConstants.
-			CATEGORY_KEY_COMMERCE_DATA_INTEGRATION_DETAILS;
+		return DispatchConstants.CATEGORY_KEY_DISPATCH_DETAILS;
 	}
 
 	@Override
@@ -68,8 +67,7 @@ public class CommerceDataIntegrationDetailScreenNavigationEntry
 
 	@Override
 	public String getScreenNavigationKey() {
-		return CommerceDataIntegrationConstants.
-			SCREEN_NAVIGATION_KEY_COMMERCE_DATA_INTEGRATION_GENERAL;
+		return DispatchConstants.SCREEN_NAVIGATION_KEY_DISPATCH_GENERAL;
 	}
 
 	@Override

@@ -54,13 +54,13 @@ public class ApplicationsMenuDisplayContext {
 		Company company = themeDisplay.getCompany();
 
 		return HashMapBuilder.<String, Object>put(
-			"companyName", HtmlUtil.escape(company.getName())
-		).put(
-			"logoURL",
+			"liferayLogoURL",
 			StringBundler.concat(
 				themeDisplay.getPathImage(), "/company_logo?img_id=",
 				company.getLogoId(), "&t=",
 				WebServerServletTokenUtil.getToken(company.getLogoId()))
+		).put(
+			"liferayName", HtmlUtil.escape(company.getName())
 		).put(
 			"panelAppsURL",
 			() -> {

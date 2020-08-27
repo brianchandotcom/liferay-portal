@@ -188,9 +188,9 @@ const Sites = ({mySites, portletNamespace, recentSites, viewAllURL}) => {
 
 const AppsPanel = ({
 	categories = [],
-	companyName,
 	handleCloseButtonClick = () => {},
-	logoURL,
+	liferayLogoURL,
+	liferayName,
 	portletNamespace,
 	selectedPortletId,
 	sites,
@@ -360,14 +360,14 @@ const AppsPanel = ({
 												<img
 													alt=""
 													height="32px"
-													src={logoURL}
+													src={liferayLogoURL}
 												/>
 											</ClaySticker>
 										</ClayLayout.ContentCol>
 
 										<ClayLayout.ContentCol className="c-ml-2">
 											<div className="applications-menu-company c-mb-0">
-												{companyName}
+												{liferayName}
 											</div>
 										</ClayLayout.ContentCol>
 									</ClayLayout.ContentRow>
@@ -390,8 +390,8 @@ const AppsPanel = ({
 };
 
 const ApplicationsMenu = ({
-	companyName,
-	logoURL,
+	liferayLogoURL,
+	liferayName,
 	panelAppsURL,
 	selectedPortletId,
 	virtualInstance,
@@ -460,9 +460,9 @@ const ApplicationsMenu = ({
 				>
 					<ClayModal.Body>
 						<AppsPanel
-							companyName={companyName}
 							handleCloseButtonClick={onClose}
-							logoURL={logoURL}
+							liferayLogoURL={liferayLogoURL}
+							liferayName={liferayName}
 							virtualInstance={virtualInstance}
 							{...appsPanelData}
 						/>
@@ -487,10 +487,11 @@ const ApplicationsMenu = ({
 };
 
 ApplicationsMenu.propTypes = {
-	companyName: PropTypes.string,
-	logoURL: PropTypes.string,
+	liferayLogoURL: PropTypes.string,
+	liferayName: PropTypes.string,
 	panelAppsURL: PropTypes.string,
 	selectedPortletId: PropTypes.string,
+	virtualInstance: PropTypes.object,
 };
 
 export default ApplicationsMenu;

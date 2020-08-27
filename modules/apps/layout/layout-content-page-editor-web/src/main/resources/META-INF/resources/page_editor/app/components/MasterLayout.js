@@ -137,6 +137,7 @@ function Fragment({item}) {
 
 	return (
 		<FragmentContent
+			className="page-editor__fragment-content--master"
 			elementRef={ref}
 			fragmentEntryLinkId={item.config.fragmentEntryLinkId}
 			item={item}

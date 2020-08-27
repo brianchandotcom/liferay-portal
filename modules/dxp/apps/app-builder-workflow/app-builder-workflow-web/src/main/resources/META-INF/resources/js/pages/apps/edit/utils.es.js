@@ -17,9 +17,26 @@ export function canDeployApp(app, config) {
 		const duplicatedFields =
 			step?.errors?.formViews?.duplicatedFields || [];
 
+		let validActionNames = true;
+
+		if (step?.appWorkflowTransitions) {
+			const primaryActionName = step?.appWorkflowTransitions[0].name;
+
+			validActionNames = primaryActionName.trim().length > 0;
+
+			if (step?.appWorkflowTransitions[1]) {
+				const secondaryActionName =
+					step?.appWorkflowTransitions[1].name;
+
+				validActionNames =
+					validActionNames && secondaryActionName.trim().length > 0;
+			}
+		}
+
 		return (
 			assigneeRoles.length > 0 &&
 			duplicatedFields.length === 0 &&
+			validActionNames &&
 			step.name.trim().length > 0
 		);
 	});

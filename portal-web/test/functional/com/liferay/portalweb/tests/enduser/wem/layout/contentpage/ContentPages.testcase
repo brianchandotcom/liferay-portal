@@ -255,7 +255,7 @@ definition {
 		}
 
 		task ("Assert add the third Row in column 1 of the first Row") {
-			DragAndDrop.javaScriptDragAndDropObjectToBottomOfNestedObject(
+			DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
 				key_collectionName = "Layout Elements",
 				key_columnNumber = "1",
 				key_fragmentName = "Grid",

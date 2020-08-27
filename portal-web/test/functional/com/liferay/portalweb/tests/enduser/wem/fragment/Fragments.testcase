@@ -212,7 +212,7 @@ definition {
 		}
 
 		task ("Assert add second Row fragment to the same Section") {
-			DragAndDrop.javaScriptDragAndDropObjectToBottomOfNestedObject(
+			DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
 				key_collectionName = "Layout Elements",
 				key_fragmentName = "Grid",
 				key_targetFragmentName = "Grid",
@@ -699,7 +699,7 @@ definition {
 		}
 
 		task ("Add a Heading below Card inside the Container") {
-			DragAndDrop.javaScriptDragAndDropObjectToBottomOfNestedObject(
+			DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
 				key_collectionName = "Basic Components",
 				key_fragmentName = "Heading",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
@@ -1131,7 +1131,7 @@ definition {
 				locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
 				value1 = "Asset Publisher");
 
-			DragAndDrop.javaScriptDragAndDropObjectToBottomOfNestedObject(
+			DragAndDrop.javaScriptDragAndDropObjectBelowTallNestedObject(
 				key_portletName = "Asset Publisher",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",

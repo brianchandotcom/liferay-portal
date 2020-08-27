@@ -18,14 +18,16 @@ import {config} from '../config/index';
  * Get widget path from the widgets tree by portletId
  */
 export function getFrontendTokenValue(styleValue) {
-	const frontendTokens = config.frontendTokens;
+	const frontendToken = Array.isArray(config.frontendTokens)
+		? config.frontendTokens.find((token) => token.name === styleValue)
+		: config.frontendTokens[styleValue];
 
-	if (frontendTokens[styleValue]) {
+	if (frontendToken) {
 		if (Liferay.Browser.isIe()) {
-			return frontendTokens[styleValue].value;
+			return frontendToken.value;
 		}
 		else {
-			return `var(--${frontendTokens[styleValue].cssVariable})`;
+			return `var(--${frontendToken.cssVariable})`;
 		}
 	}
 

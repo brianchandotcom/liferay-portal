@@ -14,17 +14,14 @@
 
 package com.liferay.layout.type.controller.portlet.internal.display.context;
 
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 /**
@@ -41,15 +38,6 @@ public class PortletLayoutDisplayContext {
 			LayoutPageTemplateEntryLocalServiceUtil.
 				fetchLayoutPageTemplateEntryByPlid(
 					layout.getMasterLayoutPlid());
-
-		if (masterLayoutPageTemplateEntry == null) {
-			masterLayoutPageTemplateEntry =
-				LayoutPageTemplateEntryServiceUtil.
-					fetchDefaultLayoutPageTemplateEntry(
-						groupId,
-						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
-						WorkflowConstants.STATUS_APPROVED);
-		}
 
 		if (masterLayoutPageTemplateEntry == null) {
 			_layoutStructure = _getDefaultMasterLayoutStructure();

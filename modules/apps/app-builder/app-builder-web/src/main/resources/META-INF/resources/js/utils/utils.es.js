@@ -29,5 +29,5 @@ export const isEqualObjects = (firstObj = {}, secondObj = {}) => {
 };
 
 export const getValidName = (defaultName, name) => {
-	return !name || name === 'null' ? defaultName : name;
+	return name && name.toLowerCase() !== 'null' ? name : defaultName;
 };

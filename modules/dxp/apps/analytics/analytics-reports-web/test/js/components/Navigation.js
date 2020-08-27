@@ -177,8 +177,8 @@ const mockViewURLs = [
 
 const mockData = {
 	author: {
-		alt: 'Test Test',
 		authorId: '20125',
+		name: 'Test Test',
 	},
 	canonicalURL: 'http://localhost:8080/-/basic-web-content',
 	endpoints: mockEndpoints,
@@ -210,8 +210,8 @@ describe('Navigation', () => {
 	it('displays an alert error message if there is no valid connection', () => {
 		const testProps = {
 			author: {
-				alt: 'John Tester',
 				authorId: '',
+				name: 'John Tester',
 				url: '',
 			},
 			languageTag: 'en-US',
@@ -257,8 +257,8 @@ describe('Navigation', () => {
 
 		const testProps = {
 			author: {
-				alt: 'John Tester',
 				authorId: '',
+				name: 'John Tester',
 				url: '',
 			},
 			languageTag: 'en-US',

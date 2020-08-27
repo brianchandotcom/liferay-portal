@@ -17,7 +17,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-function Author({author: {alt, authorId, url}}) {
+function Author({author: {authorId, name, url}}) {
 	return (
 		<div className="text-secondary">
 			<ClaySticker
@@ -28,12 +28,12 @@ function Author({author: {alt, authorId, url}}) {
 				size="sm"
 			>
 				{url ? (
-					<img alt={`${alt}.`} className="sticker-img" src={url} />
+					<img alt={`${name}.`} className="sticker-img" src={url} />
 				) : (
 					<ClayIcon symbol="user" />
 				)}
 			</ClaySticker>
-			{Liferay.Util.sub(Liferay.Language.get('authored-by-x'), alt)}
+			{Liferay.Util.sub(Liferay.Language.get('authored-by-x'), name)}
 		</div>
 	);
 }

@@ -200,9 +200,9 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 
 		return JSONUtil.put(
-			"alt", webImage.getAlt()
-		).put(
 			"authorId", analyticsReportsInfoItem.getAuthorUserId(object)
+		).put(
+			"name", webImage.getAlt()
 		).put(
 			"url", authorProfileImage
 		);

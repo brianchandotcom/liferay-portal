@@ -14,11 +14,12 @@
 
 package com.liferay.users.admin.web.internal.display.context;
 
-import com.liferay.account.constants.AccountConstants;
+import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.ManagementToolbarDisplayContext;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -33,9 +34,12 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.search.UserSearch;
 import com.liferay.portlet.usersadmin.search.UserSearchTerms;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
+import com.liferay.users.admin.management.toolbar.FilterContributor;
+import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -88,12 +92,28 @@ public class ViewFlatUsersDisplayContextFactory {
 		UserSearchTerms userSearchTerms =
 			(UserSearchTerms)searchContainer.getSearchTerms();
 
-		viewFlatUsersDisplayContext.setManagementToolbarDisplayContext(
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(renderResponse);
+
+		ManagementToolbarDisplayContext managementToolbarDisplayContext =
 			new ViewFlatUsersManagementToolbarDisplayContext(
-				liferayPortletRequest,
-				PortalUtil.getLiferayPortletResponse(renderResponse),
-				searchContainer, isShowDeleteButton(userSearchTerms),
-				isShowRestoreButton(userSearchTerms)));
+				liferayPortletRequest, liferayPortletResponse, searchContainer,
+				isShowDeleteButton(userSearchTerms),
+				isShowRestoreButton(userSearchTerms));
+
+		Optional<FilterContributor[]> filtersOptional = getFiltersOptional(
+			httpServletRequest);
+
+		if (filtersOptional.isPresent()) {
+			managementToolbarDisplayContext =
+				new FiltersManagementToolbarDisplayContextWrapper(
+					liferayPortletRequest.getHttpServletRequest(),
+					liferayPortletRequest, liferayPortletResponse,
+					managementToolbarDisplayContext, filtersOptional.get());
+		}
+
+		viewFlatUsersDisplayContext.setManagementToolbarDisplayContext(
+			managementToolbarDisplayContext);
 
 		viewFlatUsersDisplayContext.setSearchContainer(searchContainer);
 
@@ -109,6 +129,14 @@ public class ViewFlatUsersDisplayContextFactory {
 				httpServletRequest.getAttribute("view.jsp-viewUsersRedirect")));
 
 		return viewFlatUsersDisplayContext;
+	}
+
+	protected static Optional<FilterContributor[]> getFiltersOptional(
+		HttpServletRequest httpServletRequest) {
+
+		return Optional.ofNullable(
+			(FilterContributor[])httpServletRequest.getAttribute(
+				UsersAdminWebKeys.FILTER_CONTRIBUTORS));
 	}
 
 	protected static boolean isShowDeleteButton(
@@ -174,18 +202,20 @@ public class ViewFlatUsersDisplayContextFactory {
 
 		searchTerms.setStatus(status);
 
-		String domain = ParamUtil.getString(
-			httpServletRequest, "domain", "company-users");
-
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
-		if (domain.equals("company-users")) {
-			params.put("accountEntryIds", new Long[0]);
-		}
-		else if (domain.equals("account-users")) {
-			params.put(
-				"accountEntryIds",
-				new Long[] {AccountConstants.ACCOUNT_ENTRY_ID_ANY});
+		Optional<FilterContributor[]> filtersOptional = getFiltersOptional(
+			httpServletRequest);
+
+		if (filtersOptional.isPresent()) {
+			for (FilterContributor filterContributor : filtersOptional.get()) {
+				params.putAll(
+					filterContributor.getSearchParameters(
+						ParamUtil.getString(
+							httpServletRequest,
+							filterContributor.getParameter(),
+							filterContributor.getDefaultValue())));
+			}
 		}
 
 		int total = UserLocalServiceUtil.searchCount(

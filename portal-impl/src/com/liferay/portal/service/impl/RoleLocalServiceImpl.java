@@ -274,13 +274,12 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkSystemRoles(long companyId) throws PortalException {
-		String companyIdHexString = StringUtil.toHexString(companyId);
-
 		List<Role> roles = roleFinder.findBySystem(companyId);
 
+		Map<String, Role> systemRolesMap = new HashMap<>();
+
 		for (Role role : roles) {
-			_systemRolesMap.put(
-				companyIdHexString.concat(role.getName()), role);
+			systemRolesMap.put(role.getName(), role);
 		}
 
 		// Regular roles
@@ -300,7 +299,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 			int type = RoleConstants.TYPE_REGULAR;
 
-			checkSystemRole(companyId, name, descriptionMap, type);
+			checkSystemRole(
+				systemRolesMap, companyId, name, descriptionMap, type);
 		}
 
 		// Organization roles
@@ -321,7 +321,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 			int type = RoleConstants.TYPE_ORGANIZATION;
 
-			checkSystemRole(companyId, name, descriptionMap, type);
+			checkSystemRole(
+				systemRolesMap, companyId, name, descriptionMap, type);
 		}
 
 		// Site roles
@@ -341,7 +342,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 			int type = RoleConstants.TYPE_SITE;
 
-			checkSystemRole(companyId, name, descriptionMap, type);
+			checkSystemRole(
+				systemRolesMap, companyId, name, descriptionMap, type);
 		}
 
 		String[] allSystemRoles = ArrayUtil.append(
@@ -1543,15 +1545,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	protected void checkSystemRole(
-			long companyId, String name, Map<Locale, String> descriptionMap,
-			int type)
+			Map<String, Role> systemRolesMap, long companyId, String name,
+			Map<Locale, String> descriptionMap, int type)
 		throws PortalException {
 
-		String companyIdHexString = StringUtil.toHexString(companyId);
-
-		String key = companyIdHexString.concat(name);
-
-		Role role = _systemRolesMap.get(key);
+		Role role = systemRolesMap.get(name);
 
 		try {
 			if (role == null) {
@@ -1592,8 +1590,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 				initPersonalControlPanelPortletsPermissions(role);
 			}
 		}
-
-		_systemRolesMap.put(key, role);
 	}
 
 	protected String[] getDefaultControlPanelPortlets() {
@@ -1745,7 +1741,5 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RoleLocalServiceImpl.class);
-
-	private final Map<String, Role> _systemRolesMap = new HashMap<>();
 
 }

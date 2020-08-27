@@ -318,8 +318,7 @@ public class DDMFormValidationException extends PortalException {
 
 		public MustSetValidTypeForFieldType(String fieldType) {
 			super(
-				String.format(
-					"Invalid type entered for field type %s", fieldType));
+				String.format("Invalid type set for field type %s", fieldType));
 
 			_fieldType = fieldType;
 		}

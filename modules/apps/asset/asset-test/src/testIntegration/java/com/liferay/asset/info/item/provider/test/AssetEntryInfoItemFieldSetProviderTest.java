@@ -223,13 +223,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			filteredInfoFieldValues.toString(), 1,
 			filteredInfoFieldValues.size());
 
-		InfoFieldValue<Object> infoFieldValue = filteredInfoFieldValues.get(0);
-
-		Object value = infoFieldValue.getValue(LocaleUtil.ENGLISH);
-
-		List<Category> categories = (List<Category>)value;
-
-		Category category = categories.get(0);
+		Category category = _getCategory(filteredInfoFieldValues);
 
 		Assert.assertEquals(
 			category.getLabel(LocaleUtil.ENGLISH), publicCategoryTitle);
@@ -278,13 +272,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			filteredInfoFieldValues.toString(), 1,
 			filteredInfoFieldValues.size());
 
-		InfoFieldValue<Object> infoFieldValue = filteredInfoFieldValues.get(0);
-
-		Object value = infoFieldValue.getValue(LocaleUtil.ENGLISH);
-
-		List<Category> categories = (List<Category>)value;
-
-		Category category = categories.get(0);
+		Category category = _getCategory(filteredInfoFieldValues);
 
 		Assert.assertEquals(
 			category.getLabel(LocaleUtil.ENGLISH), categoryTitle);
@@ -338,6 +326,18 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 				LocaleUtil.US, RandomTestUtil.randomString()
 			).build(),
 			null, null, visibilityTypePublic, new ServiceContext());
+	}
+
+	private Category _getCategory(
+		List<InfoFieldValue<Object>> filteredInfoFieldValues) {
+
+		InfoFieldValue<Object> infoFieldValue = filteredInfoFieldValues.get(0);
+
+		Object value = infoFieldValue.getValue(LocaleUtil.ENGLISH);
+
+		List<Category> categories = (List<Category>)value;
+
+		return categories.get(0);
 	}
 
 	private List<InfoFieldValue<Object>> _getInfoFieldValues(

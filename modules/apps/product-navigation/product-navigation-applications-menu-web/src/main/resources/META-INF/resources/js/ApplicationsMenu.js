@@ -37,7 +37,19 @@ const OPEN_MENU_TITLE_TPL =
 	'<kbd class="c-kbd">M</kbd>' +
 	'</kbd>';
 
-const EnvironmentsPanel = ({portletNamespace, sites}) => {
+const Environment = ({children, name}) => {
+	return (
+		<>
+			<li className="c-my-3">
+				<h2 className="applications-menu-nav-header">{name}</h2>
+			</li>
+
+			{children}
+		</>
+	);
+};
+
+const EnvironmentsPanel = ({portletNamespace, sites, virtualInstance}) => {
 	return (
 		<div className="applications-menu-environments c-p-3 c-px-md-4">
 			<h2 className="applications-menu-environments-label c-mt-2 c-mt-md-0">
@@ -45,17 +57,50 @@ const EnvironmentsPanel = ({portletNamespace, sites}) => {
 			</h2>
 
 			<ul className="c-my-2 list-unstyled">
+				{virtualInstance && (
+					<Environment
+						name={Liferay.Language.get('virtual-instance')}
+					>
+						<li className="applications-menu-virtual-instance c-mb-4 c-mt-3">
+							<a
+								className="applications-menu-nav-link"
+								href={virtualInstance.url}
+							>
+								<ClayLayout.ContentRow verticalAlign="center">
+									<ClayLayout.ContentCol>
+										<ClaySticker>
+											<img
+												alt=""
+												height="32px"
+												src={virtualInstance.logoURL}
+											/>
+										</ClaySticker>
+									</ClayLayout.ContentCol>
+
+									<ClayLayout.ContentCol className="applications-menu-shrink c-ml-2">
+										<span className="text-truncate">
+											{virtualInstance.label}
+										</span>
+									</ClayLayout.ContentCol>
+								</ClayLayout.ContentRow>
+							</a>
+						</li>
+					</Environment>
+				)}
+
 				{sites && (
-					<Sites
-						mySites={sites.mySites}
-						portletNamespace={portletNamespace}
-						recentSites={sites.recentSites}
-						viewAllURL={sites.viewAllURL}
-					/>
+					<Environment name={Liferay.Language.get('sites')}>
+						<Sites
+							mySites={sites.mySites}
+							portletNamespace={portletNamespace}
+							recentSites={sites.recentSites}
+							viewAllURL={sites.viewAllURL}
+						/>
+					</Environment>
 				)}
 			</ul>
 		</div>
-	)
+	);
 };
 
 const Site = ({current, label, logoURL, url}) => {
@@ -89,12 +134,6 @@ const Site = ({current, label, logoURL, url}) => {
 const Sites = ({mySites, portletNamespace, recentSites, viewAllURL}) => {
 	return (
 		<>
-			<li className="c-my-3">
-				<h2 className="applications-menu-nav-header">
-					{Liferay.Language.get('sites')}
-				</h2>
-			</li>
-
 			{recentSites?.length > 0 &&
 				recentSites.map(({current, key, label, logoURL, url}) => (
 					<Site
@@ -156,6 +195,7 @@ const AppsPanel = ({
 	portletNamespace,
 	selectedPortletId,
 	sites,
+	virtualInstance,
 }) => {
 	let index = categories.findIndex((category) =>
 		category.childCategories.some((childCategory) =>
@@ -299,6 +339,7 @@ const AppsPanel = ({
 							<EnvironmentsPanel
 								portletNamespace={portletNamespace}
 								sites={sites}
+								virtualInstance={virtualInstance}
 							/>
 						</ClayLayout.Col>
 					</ClayLayout.Row>
@@ -364,6 +405,7 @@ const ApplicationsMenu = ({
 	logoURL,
 	panelAppsURL,
 	selectedPortletId,
+	virtualInstance,
 }) => {
 	const [appsPanelData, setAppsPanelData] = useState({});
 	const [visible, setVisible] = useState(false);
@@ -432,6 +474,7 @@ const ApplicationsMenu = ({
 							companyName={companyName}
 							handleCloseButtonClick={onClose}
 							logoURL={logoURL}
+							virtualInstance={virtualInstance}
 							{...appsPanelData}
 						/>
 					</ClayModal.Body>

@@ -193,6 +193,66 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 	}
 
 	@Test
+	public void testGetInfoFieldValuesJournalArticleInternalVocabularyWithCategory()
+		throws Exception {
+
+		AssetVocabulary vocabulary = _assetVocabularyLocalService.addVocabulary(
+			TestPropsValues.getUserId(), _group.getGroupId(), null,
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			null, null, AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL,
+			new ServiceContext());
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			null, vocabulary.getVocabularyId(), null, new ServiceContext());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {assetCategory.getCategoryId()});
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0,
+			PortalUtil.getClassNameId(JournalArticle.class),
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			null,
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			LocaleUtil.getSiteDefault(), false, true, serviceContext);
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		List<InfoFieldValue<Object>> infoFieldValues =
+			_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(assetEntry);
+
+		List<InfoFieldValue<Object>> filteredInfoFieldValues = ListUtil.filter(
+			infoFieldValues,
+			infoFieldValue -> {
+				InfoField infoField = infoFieldValue.getInfoField();
+
+				return Objects.equals(
+					vocabulary.getName(), infoField.getName());
+			});
+
+		Assert.assertEquals(
+			filteredInfoFieldValues.toString(), 0,
+			filteredInfoFieldValues.size());
+	}
+
+	@Test
 	public void testGetInfoFieldValuesJournalArticlePublicVocabularyWithCategory()
 		throws Exception {
 

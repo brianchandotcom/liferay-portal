@@ -102,7 +102,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		InfoFieldSetEntry infoFieldSetEntry = infoFieldSet.getInfoFieldSetEntry(
 			assetVocabulary.getName());
 
-		Assert.assertEquals(assetVocabulary.getName(), infoFieldSetEntry.getName());
+		Assert.assertEquals(
+			assetVocabulary.getName(), infoFieldSetEntry.getName());
 	}
 
 	@Test
@@ -134,7 +135,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		InfoFieldSetEntry infoFieldSetEntry = infoFieldSet.getInfoFieldSetEntry(
 			assetVocabulary.getName());
 
-		Assert.assertEquals(assetVocabulary.getName(), infoFieldSetEntry.getName());
+		Assert.assertEquals(
+			assetVocabulary.getName(), infoFieldSetEntry.getName());
 	}
 
 	@Test
@@ -144,14 +146,15 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		AssetVocabulary assetVocabulary = _assetVocabularyLocalService.addVocabulary(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			RandomTestUtil.randomString(),
-			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			null, null, AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL,
-			serviceContext);
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				HashMapBuilder.put(
+					LocaleUtil.US, RandomTestUtil.randomString()
+				).build(),
+				null, null, AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL,
+				serviceContext);
 
 		AssetEntry assetEntry = AssetTestUtil.addAssetEntry(
 			_group.getGroupId());
@@ -189,7 +192,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		InfoFieldSetEntry infoFieldSetEntry = infoFieldSet.getInfoFieldSetEntry(
 			assetVocabulary.getName());
 
-		Assert.assertEquals(assetVocabulary.getName(), infoFieldSetEntry.getName());
+		Assert.assertEquals(
+			assetVocabulary.getName(), infoFieldSetEntry.getName());
 	}
 
 	@Test
@@ -205,7 +209,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		AssetVocabulary publicAssetVocabulary = _addAssetVocabulary(
 			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
 
-		AssetCategory publicAssetCategory = _addAssetCategory(publicAssetVocabulary);
+		AssetCategory publicAssetCategory = _addAssetCategory(
+			publicAssetVocabulary);
 
 		AssetEntry assetEntry = _addAssetEntry(
 			new long[] {
@@ -282,7 +287,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			HashMapBuilder.put(
 				LocaleUtil.US, RandomTestUtil.randomString()
 			).build(),
-			null, assetVocabulary.getVocabularyId(), null, new ServiceContext());
+			null, assetVocabulary.getVocabularyId(), null,
+			new ServiceContext());
 	}
 
 	private AssetEntry _addAssetEntry(long[] assetCategoryIds)

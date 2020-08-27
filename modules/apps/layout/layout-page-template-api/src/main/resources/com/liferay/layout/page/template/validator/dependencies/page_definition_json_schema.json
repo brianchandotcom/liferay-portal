@@ -465,6 +465,10 @@
 					"title": "The numberOfItems Schema",
 					"type": "integer"
 				},
+				"styles": {
+					"title": "The Styles Schema",
+					"type": "object"
+				},
 				"templateKey": {
 					"title": "The templateKey Schema",
 					"type": "string"
@@ -796,6 +800,10 @@
 					"title": "The fragmentFields Schema",
 					"type": "array"
 				},
+				"styles": {
+					"title": "The Styles Schema",
+					"type": "object"
+				},
 				"widgetInstances": {
 					"items": {
 						"$ref": "#/definitions/WidgetInstance"
@@ -898,6 +906,10 @@
 					},
 					"title": "The rowViewports Schema",
 					"type": "array"
+				},
+				"styles": {
+					"title": "The Styles Schema",
+					"type": "object"
 				},
 				"verticalAlignment": {
 					"title": "The verticalAlignment Schema",
@@ -1184,6 +1196,10 @@
 		"PageWidgetInstanceDefinition": {
 			"additionalProperties": false,
 			"properties": {
+				"styles": {
+					"title": "The Styles Schema",
+					"type": "object"
+				},
 				"widgetInstance": {
 					"$ref": "#/definitions/WidgetInstance",
 					"title": "The widgetInstance Schema",

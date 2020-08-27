@@ -36,7 +36,7 @@ public abstract class BaseTrieURLToCORSSupportMapper
 		}
 		catch (IndexOutOfBoundsException indexOutOfBoundsException) {
 			throw new IllegalArgumentException(
-				"URL Path contains invalid characters",
+				"URL path contains invalid characters",
 				indexOutOfBoundsException);
 		}
 	}

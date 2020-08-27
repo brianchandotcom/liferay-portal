@@ -24,7 +24,7 @@ import BreadcrumbDropdown from './BreadcrumbDropdown.es';
 import Link from './Link.es';
 import NewTopicModal from './NewTopicModal.es';
 
-export default withRouter(({history, section}) => {
+export default withRouter(({allowCreateTopicInRootTopic, history, section}) => {
 	const context = useContext(AppContext);
 
 	const rootSection = context.rootTopic;
@@ -109,7 +109,10 @@ export default withRouter(({history, section}) => {
 					<AllBreadcrumb />
 				)}
 			</ol>
-			{section && section.actions && section.actions['add-subcategory'] && (
+			{((section &&
+				section.actions &&
+				section.actions['add-subcategory']) ||
+				allowCreateTopicInRootTopic) && (
 				<>
 					<NewTopicModal
 						currentSectionId={section && section.id}

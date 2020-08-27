@@ -32,6 +32,7 @@ import {
 	getQuestionThreads,
 	getSectionByRootSection,
 	getSectionBySectionTitle,
+	getSectionsByRootSection,
 } from '../../utils/client.es';
 import {
 	getBasePath,
@@ -89,6 +90,10 @@ export default withRouter(
 		},
 	}) => {
 		const MAX_NUMBER_OF_QUESTIONS = 500;
+		const [
+			allowCreateTopicInRootTopic,
+			setAllowCreateTopicInRootTopic,
+		] = useState(false);
 		const [currentTag, setCurrentTag] = useState('');
 		const [error, setError] = useState({});
 		const [filter, setFilter] = useState();
@@ -124,6 +129,28 @@ export default withRouter(
 		useEffect(() => {
 			setSearch(queryParams.get('search') || '');
 		}, [queryParams]);
+
+		useEffect(() => {
+			if (
+				+context.rootTopic === 0 &&
+				location.pathname.endsWith('/' + context.rootTopic)
+			) {
+				getSectionsByRootSection(context.siteKey, context.rootTopic)
+					.then(({data}) => {
+						setAllowCreateTopicInRootTopic(
+							(data.actions && data.actions.create && true) ||
+								false
+						);
+					})
+					.catch((error) => {
+						if (process.env.NODE_ENV === 'development') {
+							console.error(error);
+						}
+						setLoading(false);
+						setError({message: 'Loading Topics', title: 'Error'});
+					});
+			}
+		}, [context.rootTopic, context.siteKey, location.pathname]);
 
 		useEffect(() => {
 			setTotalCount(
@@ -236,7 +263,10 @@ export default withRouter(
 
 		return (
 			<section className="questions-section questions-section-list">
-				<Breadcrumb section={section} />
+				<Breadcrumb
+					allowCreateTopicInRootTopic={allowCreateTopicInRootTopic}
+					section={section}
+				/>
 				<div className="questions-container">
 					<div className="row">
 						<div className="c-mt-3 col col-xl-12">

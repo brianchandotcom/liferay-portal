@@ -30,7 +30,6 @@ import {
 	useToControlsId,
 } from '../CollectionItemContext';
 import {useGlobalContext} from '../GlobalContext';
-import Layout from '../Layout';
 import UnsafeHTML from '../UnsafeHTML';
 import {useIsProcessorEnabled} from './EditableProcessorContext';
 import getAllEditables from './getAllEditables';
@@ -40,6 +39,7 @@ const FragmentContent = ({
 	className,
 	elementRef,
 	fragmentEntryLinkId,
+	getPortals,
 	item,
 	withinTopper = false,
 }) => {
@@ -152,27 +152,6 @@ const FragmentContent = ({
 		languageId,
 	]);
 
-	const getPortals = useCallback(
-		(element) =>
-			Array.from(element.querySelectorAll('lfr-drop-zone')).map(
-				(dropZoneElement) => {
-					const mainItemId =
-						dropZoneElement.getAttribute('uuid') || '';
-
-					const Component = () =>
-						mainItemId ? <Layout mainItemId={mainItemId} /> : null;
-
-					Component.displayName = `DropZone(${mainItemId})`;
-
-					return {
-						Component,
-						element: dropZoneElement,
-					};
-				}
-			),
-		[]
-	);
-
 	const responsiveConfig = getResponsiveConfig(
 		item.config,
 		selectedViewportSize
@@ -272,6 +251,7 @@ const FragmentContent = ({
 FragmentContent.propTypes = {
 	className: PropTypes.string,
 	fragmentEntryLinkId: PropTypes.string.isRequired,
+	getPortals: PropTypes.func.isRequired,
 	item: PropTypes.object.isRequired,
 	withinTopper: PropTypes.bool,
 };

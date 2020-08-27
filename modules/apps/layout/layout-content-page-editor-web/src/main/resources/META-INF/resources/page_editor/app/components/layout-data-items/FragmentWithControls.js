@@ -12,13 +12,14 @@
  * details.
  */
 
-import React from 'react';
+import React, {useCallback} from 'react';
 
 import useSetRef from '../../../core/hooks/useSetRef';
 import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
+import Layout from '../Layout';
 import Topper from '../Topper';
 import FragmentContent from '../fragment-content/FragmentContent';
 import FragmentContentInteractionsFilter from '../fragment-content/FragmentContentInteractionsFilter';
@@ -26,6 +27,27 @@ import FragmentContentProcessor from '../fragment-content/FragmentContentProcess
 
 const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	const [setRef, itemElement] = useSetRef(ref);
+
+	const getPortals = useCallback(
+		(element) =>
+			Array.from(element.querySelectorAll('lfr-drop-zone')).map(
+				(dropZoneElement) => {
+					const mainItemId =
+						dropZoneElement.getAttribute('uuid') || '';
+
+					const Component = () =>
+						mainItemId ? <Layout mainItemId={mainItemId} /> : null;
+
+					Component.displayName = `DropZone(${mainItemId})`;
+
+					return {
+						Component,
+						element: dropZoneElement,
+					};
+				}
+			),
+		[]
+	);
 
 	return (
 		<Topper item={item} itemElement={itemElement} layoutData={layoutData}>
@@ -36,6 +58,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 				<FragmentContent
 					elementRef={setRef}
 					fragmentEntryLinkId={item.config.fragmentEntryLinkId}
+					getPortals={getPortals}
 					item={item}
 					withinTopper
 				/>

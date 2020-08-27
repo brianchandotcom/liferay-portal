@@ -14,7 +14,7 @@
 
 import {closest} from 'metal-dom';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 
 import {
 	LayoutDataPropTypes,
@@ -135,11 +135,44 @@ function Fragment({item}) {
 		};
 	});
 
+	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+	const masterLayoutData = useSelector(
+		(state) => state.masterLayout?.masterLayoutData
+	);
+
+	const getPortals = useCallback(
+		(element) =>
+			Array.from(element.querySelectorAll('lfr-drop-zone')).map(
+				(dropZoneElement) => {
+					const mainItemId =
+						dropZoneElement.getAttribute('uuid') || '';
+
+					const Component = () =>
+						mainItemId ? (
+							<MasterLayoutDataItem
+								fragmentEntryLinks={fragmentEntryLinks}
+								item={masterLayoutData.items[mainItemId]}
+								layoutData={masterLayoutData}
+							/>
+						) : null;
+
+					Component.displayName = `DropZone(${mainItemId})`;
+
+					return {
+						Component,
+						element: dropZoneElement,
+					};
+				}
+			),
+		[fragmentEntryLinks, masterLayoutData]
+	);
+
 	return (
 		<FragmentContent
 			className="page-editor__fragment-content--master"
 			elementRef={ref}
 			fragmentEntryLinkId={item.config.fragmentEntryLinkId}
+			getPortals={getPortals}
 			item={item}
 		/>
 	);

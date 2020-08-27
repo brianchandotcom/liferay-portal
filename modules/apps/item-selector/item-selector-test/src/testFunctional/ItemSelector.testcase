@@ -178,6 +178,65 @@ definition {
 			noImageFileName = "Document_1.jpg");
 	}
 
+	@description = "This test ensures that web contents can filter by the current site in the item selector."
+	@priority = "5"
+	test FilterWCByCurrentSite {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Web Content Display Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Web Content Display Page",
+			widgetName = "Web Content Display");
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content From Depot",
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "Web Content From Depot");
+
+		JSONWebcontent.addWebContent(
+			content = "Web Content Content From Site",
+			groupName = "Site Name",
+			title = "Web Content From Site");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Web Content Display Page",
+			siteName = "Site Name");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Web Content Display",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertClick(
+			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
+			value1 = "Select");
+
+		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
+
+		ItemSelector.viewWCCurrentSiteFilterResults(
+			noWebContentTitle = "Web Content From Depot",
+			webContentTitle = "Web Content From Site");
+	}
+
 	@description = "This ensures that the background image of a fragment can be added."
 	@priority = "5"
 	test FragmentSmoke {

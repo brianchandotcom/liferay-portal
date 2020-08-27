@@ -438,11 +438,13 @@ definition {
 		PagesFinder.goToFindAPage();
 
 		for (var i : list "1,2,3") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
 			PagesFinder.gotoPageEllipsisItem(
 				item = "View Collection Items",
 				pageName = "Content Collection Page Name");
 
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			Page.gotoCollectionEntryEllipsisItem(
 				item = "View Display Page",
@@ -542,11 +544,13 @@ definition {
 
 		PagesFinder.goToFindAPage();
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		PagesFinder.gotoPageEllipsisItem(
 			item = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Page.gotoCollectionEntryEllipsisItem(
 			item = "Edit Content",
@@ -556,11 +560,13 @@ definition {
 
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		PagesFinder.gotoPageEllipsisItem(
 			item = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Page.gotoCollectionEntryEllipsisItem(
 			item = "Edit Content",
@@ -573,11 +579,13 @@ definition {
 
 		Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		PagesFinder.gotoPageEllipsisItem(
 			item = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Page.gotoCollectionEntryEllipsisItem(
 			item = "Edit Content",
@@ -1130,11 +1138,13 @@ definition {
 
 		PagesFinder.viewPageNameInPagesFinder(pageName = "Content Collection Page Name");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		PagesFinder.gotoPageEllipsisItem(
 			item = "View Collection Items",
 			pageName = "Content Collection Page Name");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		for (var tableHeader : list "Title,Type,Author,Modified Date,Create Date") {
 			AssertElementPresent(

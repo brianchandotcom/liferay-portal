@@ -166,6 +166,8 @@ definition {
 
 		PagesFinder.viewPageNameInPagesFinder(pageName = "Content Collection Page Name");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		PagesFinder.gotoPageEllipsisItem(
 			item = "View Collection Items",
 			pageName = "Content Collection Page Name");

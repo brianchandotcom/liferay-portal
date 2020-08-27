@@ -34,6 +34,8 @@ const OPTIONS_TYPES = {
 };
 
 export default function PageDesignOptionsSidebar() {
+	const dispatch = useDispatch();
+
 	const masterLayoutPlid = useSelector(
 		(state) => state.masterLayout?.masterLayoutPlid
 	);
@@ -42,6 +44,17 @@ export default function PageDesignOptionsSidebar() {
 		config.styleBookEntryId
 	);
 	const [selectedStyleBook, setSelectedStyleBook] = useState(null);
+
+	const onSelectMasterLayout = useCallback(
+		(masterLayout) => {
+			dispatch(
+				changeMasterLayout({
+					masterLayoutPlid: masterLayout.masterLayoutPlid,
+				})
+			);
+		},
+		[dispatch]
+	);
 
 	const onSelectStyleBook = useCallback((styleBook) => {
 		LayoutService.changeStyleBookEntry({
@@ -67,8 +80,19 @@ export default function PageDesignOptionsSidebar() {
 	}, [selectedStyleBook]);
 
 	const tabs = useMemo(
-		() => getTabs(masterLayoutPlid, styleBookEntryId, onSelectStyleBook),
-		[masterLayoutPlid, onSelectStyleBook, styleBookEntryId]
+		() =>
+			getTabs(
+				masterLayoutPlid,
+				styleBookEntryId,
+				onSelectMasterLayout,
+				onSelectStyleBook
+			),
+		[
+			masterLayoutPlid,
+			onSelectMasterLayout,
+			onSelectStyleBook,
+			styleBookEntryId,
+		]
 	);
 
 	const [activeTabId, setActiveTabId] = useState(0);
@@ -130,71 +154,69 @@ export default function PageDesignOptionsSidebar() {
 	);
 }
 
-const OptionList = ({options = [], icon}) => {
-	const dispatch = useDispatch();
-
-	return (
-		<ul className="list-unstyled mt-3">
-			{options.map(
-				(
-					{imagePreviewURL, isActive, name, onClick, subtitle},
-					index
-				) => (
-					<li key={index}>
-						<ClayCard
-							aria-label={name}
-							className={classNames({
-								'page-editor__sidebar__design-options__tab-card--active': isActive,
-							})}
-							displayType="file"
-							onClick={() => {
-								if (!isActive) {
-									onClick(dispatch);
-								}
-							}}
-							selectable
+const OptionList = ({options = [], icon}) => (
+	<ul className="list-unstyled mt-3">
+		{options.map(
+			({imagePreviewURL, isActive, name, onClick, subtitle}, index) => (
+				<li key={index}>
+					<ClayCard
+						aria-label={name}
+						className={classNames({
+							'page-editor__sidebar__design-options__tab-card--active': isActive,
+						})}
+						displayType="file"
+						onClick={() => {
+							if (!isActive) {
+								onClick();
+							}
+						}}
+						selectable
+					>
+						<ClayCard.AspectRatio
+							className="card-item-first"
+							containerAspectRatio="16/9"
 						>
-							<ClayCard.AspectRatio
-								className="card-item-first"
-								containerAspectRatio="16/9"
-							>
-								{imagePreviewURL ? (
-									<img
-										alt="thumbnail"
-										className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid"
-										src={imagePreviewURL}
-									/>
-								) : (
-									<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
-										<ClayIcon symbol={icon} />
-									</div>
-								)}
-							</ClayCard.AspectRatio>
-							<ClayCard.Body>
-								<ClayCard.Row>
-									<div className="autofit-col autofit-col-expand">
-										<section className="autofit-section">
-											<ClayCard.Description displayType="title">
-												{name}
+							{imagePreviewURL ? (
+								<img
+									alt="thumbnail"
+									className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid"
+									src={imagePreviewURL}
+								/>
+							) : (
+								<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
+									<ClayIcon symbol={icon} />
+								</div>
+							)}
+						</ClayCard.AspectRatio>
+						<ClayCard.Body>
+							<ClayCard.Row>
+								<div className="autofit-col autofit-col-expand">
+									<section className="autofit-section">
+										<ClayCard.Description displayType="title">
+											{name}
+										</ClayCard.Description>
+										{subtitle && (
+											<ClayCard.Description displayType="subtitle">
+												{subtitle}
 											</ClayCard.Description>
-											{subtitle && (
-												<ClayCard.Description displayType="subtitle">
-													{subtitle}
-												</ClayCard.Description>
-											)}
-										</section>
-									</div>
-								</ClayCard.Row>
-							</ClayCard.Body>
-						</ClayCard>
-					</li>
-				)
-			)}
-		</ul>
-	);
-};
+										)}
+									</section>
+								</div>
+							</ClayCard.Row>
+						</ClayCard.Body>
+					</ClayCard>
+				</li>
+			)
+		)}
+	</ul>
+);
 
-function getTabs(masterLayoutPlid, styleBookEntryId, onSelectStyleBook) {
+function getTabs(
+	masterLayoutPlid,
+	styleBookEntryId,
+	onSelectMasterLayout,
+	onSelectStyleBook
+) {
 	const styleBooks = [
 		{
 			name:
@@ -230,12 +252,7 @@ function getTabs(masterLayoutPlid, styleBookEntryId, onSelectStyleBook) {
 			options: config.masterLayouts.map((masterLayout) => ({
 				...masterLayout,
 				isActive: masterLayoutPlid === masterLayout.masterLayoutPlid,
-				onClick: (dispatch) =>
-					dispatch(
-						changeMasterLayout({
-							masterLayoutPlid: masterLayout.masterLayoutPlid,
-						})
-					),
+				onClick: () => onSelectMasterLayout(masterLayout),
 			})),
 			type: OPTIONS_TYPES.master,
 		});

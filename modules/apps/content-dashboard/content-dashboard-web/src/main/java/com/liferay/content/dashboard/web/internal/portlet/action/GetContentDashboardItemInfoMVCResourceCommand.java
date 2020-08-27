@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -304,16 +305,25 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 			contentDashboardItem.getContentDashboardItemActions(
 				httpServletRequest, ContentDashboardItemAction.Type.VIEW);
 
+		List<Locale> locales = contentDashboardItem.getAvailableLocales();
+
+		Stream<Locale> stream = locales.stream();
+
 		if (ListUtil.isEmpty(contentDashboardItemActions)) {
-			return JSONFactoryUtil.createJSONArray();
+			return JSONUtil.putAll(
+				stream.map(
+					locale -> JSONUtil.put(
+						"default",
+						Objects.equals(
+							locale, contentDashboardItem.getDefaultLocale())
+					).put(
+						"languageId", LocaleUtil.toBCP47LanguageId(locale)
+					)
+				).toArray());
 		}
 
 		ContentDashboardItemAction contentDashboardItemAction =
 			contentDashboardItemActions.get(0);
-
-		List<Locale> locales = contentDashboardItem.getAvailableLocales();
-
-		Stream<Locale> stream = locales.stream();
 
 		return JSONUtil.putAll(
 			stream.map(
@@ -322,7 +332,7 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					Objects.equals(
 						locale, contentDashboardItem.getDefaultLocale())
 				).put(
-					"languageId", _language.getBCP47LanguageId(locale)
+					"languageId", LocaleUtil.toBCP47LanguageId(locale)
 				).put(
 					"viewURL",
 					_getViewURL(

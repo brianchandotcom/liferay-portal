@@ -51,7 +51,11 @@ export default function PageDesignOptionsSidebar() {
 				changeMasterLayout({
 					masterLayoutPlid: masterLayout.masterLayoutPlid,
 				})
-			);
+			).then(({styleBook}) => {
+				if (styleBook) {
+					setSelectedStyleBook(styleBook);
+				}
+			});
 		},
 		[dispatch]
 	);

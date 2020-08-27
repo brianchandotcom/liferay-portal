@@ -1,6 +1,6 @@
 @import 'atlas-variables';
 
-$toolbarDesktopHeight: 64px;
+$toolbarDesktopHeight: 4rem;
 $toolbarHeight: 6.875rem;
 $toolbarZIndex: 971;
 
@@ -189,8 +189,7 @@ $productMenuWidth: 320px;
 
 				@include media-breakpoint-up(lg) {
 					max-height: calc(
-						100vh - #{$controlMenuHeight + $portletLayoutMargin +
-							$toolbarDesktopHeight}
+						100vh - #{$controlMenuHeight + $portletLayoutMargin} - #{$toolbarDesktopHeight}
 					);
 				}
 
@@ -226,6 +225,10 @@ $productMenuWidth: 320px;
 			top: auto;
 			width: $productMenuWidth;
 			z-index: 1;
+
+			@include media-breakpoint-up(lg) {
+				margin-top: $toolbarDesktopHeight;
+			}
 
 			.article-content-description {
 				@extend .article-content-content;

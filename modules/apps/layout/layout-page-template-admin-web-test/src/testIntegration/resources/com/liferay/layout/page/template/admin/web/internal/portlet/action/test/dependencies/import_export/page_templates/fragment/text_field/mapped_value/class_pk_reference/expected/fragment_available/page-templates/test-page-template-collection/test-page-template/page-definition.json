@@ -24,11 +24,11 @@
 							}
 						}
 					],
-					"styles": {
-						"backgroundImage": {
+					"fragmentStyle": {
+						"backgroundFragmentImage": {
 						},
 						"borderRadius": "rounded-0",
-						"borderWidth": 0,
+						"borderWidth": "0",
 						"fontFamily": "sans-serif",
 						"fontSize": "medium",
 						"fontWeight": "font-weight-normal",
@@ -41,7 +41,7 @@
 						"maxWidth": "none",
 						"minHeight": "auto",
 						"minWidth": "auto",
-						"opacity": 100,
+						"opacity": "100",
 						"overflow": "visible",
 						"paddingBottom": "0",
 						"paddingLeft": "0",

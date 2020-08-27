@@ -44,12 +44,7 @@ definition {
 	macro addCP {
 		var key_categoryName = "${categoryName}";
 
-		if (isSet(vocabularyName)) {
-			var key_vocabularyName = "${vocabularyName}";
-		}
-		else {
-			var key_vocabularyName = "Topic";
-		}
+		var key_vocabularyName = "${vocabularyName}";
 
 		Navigator.gotoNavNested(navNested = "${key_vocabularyName}");
 

@@ -18,7 +18,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchCon
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
@@ -57,7 +56,6 @@ public class ViewFlatUsersManagementToolbarDisplayContext
 			liferayPortletRequest.getHttpServletRequest(),
 			liferayPortletRequest, liferayPortletResponse, searchContainer);
 
-		_domain = ParamUtil.getString(liferayPortletRequest, "domain");
 		_navigation = ParamUtil.getString(
 			liferayPortletRequest, "navigation", "active");
 		_showDeleteButton = showDeleteButton;
@@ -106,7 +104,6 @@ public class ViewFlatUsersManagementToolbarDisplayContext
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();
 
-		clearResultsURL.setParameter("domain", (String)null);
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 		clearResultsURL.setParameter("navigation", (String)null);
 
@@ -126,57 +123,8 @@ public class ViewFlatUsersManagementToolbarDisplayContext
 	}
 
 	@Override
-	public List<DropdownItem> getFilterDropdownItems() {
-		DropdownItemList filterDropdownItems =
-			(DropdownItemList)super.getFilterDropdownItems();
-
-		filterDropdownItems.addGroup(
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(_getDomainDropdownItems());
-				dropdownGroupItem.setLabel(
-					LanguageUtil.get(request, "filter-by-domain"));
-			});
-
-		return filterDropdownItems;
-	}
-
-	@Override
 	public List<LabelItem> getFilterLabelItems() {
 		return LabelItemListBuilder.add(
-			() -> _domain.equals("account-users"),
-			labelItem -> {
-				PortletURL removeLabelURL = getPortletURL();
-
-				removeLabelURL.setParameter("domain", (String)null);
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
-
-				labelItem.setCloseable(true);
-
-				String label = String.format(
-					"%s: %s", LanguageUtil.get(request, "domain"),
-					LanguageUtil.get(request, _domain));
-
-				labelItem.setLabel(label);
-			}
-		).add(
-			() -> _domain.equals("all"),
-			labelItem -> {
-				PortletURL removeLabelURL = getPortletURL();
-
-				removeLabelURL.setParameter("domain", (String)null);
-
-				labelItem.putData("removeLabelURL", removeLabelURL.toString());
-
-				labelItem.setCloseable(true);
-
-				String label = String.format(
-					"%s: %s", LanguageUtil.get(request, "domain"),
-					LanguageUtil.get(request, _domain));
-
-				labelItem.setLabel(label);
-			}
-		).add(
 			() -> !_navigation.equals("active"),
 			labelItem -> {
 				PortletURL removeLabelURL = getPortletURL();
@@ -257,14 +205,6 @@ public class ViewFlatUsersManagementToolbarDisplayContext
 		return portletURL;
 	}
 
-	private List<DropdownItem> _getDomainDropdownItems() {
-		return getDropdownItems(
-			getDefaultEntriesMap(
-				new String[] {"all", "company-users", "account-users"}),
-			getPortletURL(), "domain", _domain);
-	}
-
-	private final String _domain;
 	private final String _navigation;
 	private final boolean _showDeleteButton;
 	private final boolean _showRestoreButton;

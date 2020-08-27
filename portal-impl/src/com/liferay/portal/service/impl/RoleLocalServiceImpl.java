@@ -566,17 +566,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *         with the name could not be found in the company
 	 */
 	@Override
-	@Transactional(enabled = false)
 	public Role fetchRole(long companyId, String name) {
-		String companyIdHexString = StringUtil.toHexString(companyId);
-
-		Role role = _systemRolesMap.get(companyIdHexString.concat(name));
-
-		if (role != null) {
-			return role;
-		}
-
-		return roleLocalService.loadFetchRole(companyId, name);
+		return rolePersistence.fetchByC_N(companyId, name);
 	}
 
 	@Override
@@ -798,17 +789,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @return the role with the name
 	 */
 	@Override
-	@Transactional(enabled = false)
 	public Role getRole(long companyId, String name) throws PortalException {
-		String companyIdHexString = StringUtil.toHexString(companyId);
-
-		Role role = _systemRolesMap.get(companyIdHexString.concat(name));
-
-		if (role != null) {
-			return role;
-		}
-
-		return roleLocalService.loadGetRole(companyId, name);
+		return rolePersistence.findByC_N(companyId, name);
 	}
 
 	/**
@@ -1213,7 +1195,10 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @param  name the role's name (optionally <code>null</code>)
 	 * @return the role with the name, or <code>null</code> if a role with the
 	 *         name could not be found in the company
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #fetchRole(long, String)}
 	 */
+	@Deprecated
 	@Override
 	public Role loadFetchRole(long companyId, String name) {
 		return rolePersistence.fetchByC_N(companyId, name);
@@ -1225,7 +1210,10 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @param  companyId the primary key of the company
 	 * @param  name the role's name
 	 * @return the role with the name in the company
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getRole(long, String)}
 	 */
+	@Deprecated
 	@Override
 	public Role loadGetRole(long companyId, String name)
 		throws PortalException {

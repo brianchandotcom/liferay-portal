@@ -73,6 +73,7 @@ public class JournalArticleItemSelectorViewManagementToolbarDisplayContext
 		PortletURL clearResultsURL = getPortletURL();
 
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		clearResultsURL.setParameter("scope", StringPool.BLANK);
 
 		return clearResultsURL.toString();
 	}

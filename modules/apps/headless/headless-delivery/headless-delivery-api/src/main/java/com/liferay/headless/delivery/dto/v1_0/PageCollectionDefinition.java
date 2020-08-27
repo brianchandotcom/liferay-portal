@@ -194,6 +194,35 @@ public class PageCollectionDefinition {
 	protected Integer numberOfItems;
 
 	@Schema
+	@Valid
+	public Map<String, Object> getStyles() {
+		return styles;
+	}
+
+	public void setStyles(Map<String, Object> styles) {
+		this.styles = styles;
+	}
+
+	@JsonIgnore
+	public void setStyles(
+		UnsafeSupplier<Map<String, Object>, Exception> stylesUnsafeSupplier) {
+
+		try {
+			styles = stylesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, Object> styles;
+
+	@Schema
 	public String getTemplateKey() {
 		return templateKey;
 	}
@@ -305,6 +334,16 @@ public class PageCollectionDefinition {
 			sb.append("\"numberOfItems\": ");
 
 			sb.append(numberOfItems);
+		}
+
+		if (styles != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"styles\": ");
+
+			sb.append(_toJSON(styles));
 		}
 
 		if (templateKey != null) {

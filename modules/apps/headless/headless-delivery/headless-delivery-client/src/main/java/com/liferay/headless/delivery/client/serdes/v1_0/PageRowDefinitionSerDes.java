@@ -130,6 +130,16 @@ public class PageRowDefinitionSerDes {
 			sb.append("]");
 		}
 
+		if (pageRowDefinition.getStyles() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"styles\": ");
+
+			sb.append(_toJSON(pageRowDefinition.getStyles()));
+		}
+
 		if (pageRowDefinition.getVerticalAlignment() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -217,6 +227,13 @@ public class PageRowDefinitionSerDes {
 				String.valueOf(pageRowDefinition.getRowViewports()));
 		}
 
+		if (pageRowDefinition.getStyles() == null) {
+			map.put("styles", null);
+		}
+		else {
+			map.put("styles", String.valueOf(pageRowDefinition.getStyles()));
+		}
+
 		if (pageRowDefinition.getVerticalAlignment() == null) {
 			map.put("verticalAlignment", null);
 		}
@@ -287,6 +304,13 @@ public class PageRowDefinitionSerDes {
 						).toArray(
 							size -> new RowViewport[size]
 						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "styles")) {
+				if (jsonParserFieldValue != null) {
+					pageRowDefinition.setStyles(
+						(Map)PageRowDefinitionSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "verticalAlignment")) {

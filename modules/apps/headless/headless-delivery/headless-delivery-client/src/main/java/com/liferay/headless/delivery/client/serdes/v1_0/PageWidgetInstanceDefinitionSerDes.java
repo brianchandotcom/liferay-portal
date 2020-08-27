@@ -59,6 +59,16 @@ public class PageWidgetInstanceDefinitionSerDes {
 
 		sb.append("{");
 
+		if (pageWidgetInstanceDefinition.getStyles() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"styles\": ");
+
+			sb.append(_toJSON(pageWidgetInstanceDefinition.getStyles()));
+		}
+
 		if (pageWidgetInstanceDefinition.getWidgetInstance() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -93,6 +103,15 @@ public class PageWidgetInstanceDefinitionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (pageWidgetInstanceDefinition.getStyles() == null) {
+			map.put("styles", null);
+		}
+		else {
+			map.put(
+				"styles",
+				String.valueOf(pageWidgetInstanceDefinition.getStyles()));
+		}
+
 		if (pageWidgetInstanceDefinition.getWidgetInstance() == null) {
 			map.put("widgetInstance", null);
 		}
@@ -124,7 +143,14 @@ public class PageWidgetInstanceDefinitionSerDes {
 			PageWidgetInstanceDefinition pageWidgetInstanceDefinition,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "widgetInstance")) {
+			if (Objects.equals(jsonParserFieldName, "styles")) {
+				if (jsonParserFieldValue != null) {
+					pageWidgetInstanceDefinition.setStyles(
+						(Map)PageWidgetInstanceDefinitionSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "widgetInstance")) {
 				if (jsonParserFieldValue != null) {
 					pageWidgetInstanceDefinition.setWidgetInstance(
 						WidgetInstanceSerDes.toDTO(

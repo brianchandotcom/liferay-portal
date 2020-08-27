@@ -98,6 +98,27 @@ public class PageFragmentInstanceDefinition implements Cloneable {
 
 	protected FragmentField[] fragmentFields;
 
+	public Map<String, Object> getStyles() {
+		return styles;
+	}
+
+	public void setStyles(Map<String, Object> styles) {
+		this.styles = styles;
+	}
+
+	public void setStyles(
+		UnsafeSupplier<Map<String, Object>, Exception> stylesUnsafeSupplier) {
+
+		try {
+			styles = stylesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, Object> styles;
+
 	public WidgetInstance[] getWidgetInstances() {
 		return widgetInstances;
 	}

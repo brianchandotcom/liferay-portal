@@ -50,12 +50,12 @@
 </tr>
 <tr>
 	<td>CONVERSION_INPUT_1</td>
-	<td>//div[contains(@class,'showcase-field')]/input[@type='text'] | //div[@class='showcase-field form-group']/input[@type='text'] | //div[contains(@class,'showcase-field')]/input[@type='password']</td>
+	<td>//div[contains(@class,'showcase-')]/input[@type='text'] | //div[contains(@class,'showcase-field')]/input[@type='password']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONVERSION_INPUT_2</td>
-	<td>xpath=(//div[contains(@class,'showcase-field')]/input[@type='text'] | //div[@class='showcase-field form-group']/input[@type='text'] | //div[contains(@class,'showcase-field')]/input[@type='password'])[2]</td>
+	<td>xpath=(//div[contains(@class,'showcase-')]/input[@type='text'] | //div[contains(@class,'showcase-field')]/input[@type='password'])[2]</td>
 	<td></td>
 </tr>
 <tr>

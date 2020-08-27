@@ -14,6 +14,7 @@
 
 package com.liferay.analytics.reports.web.internal.display.context;
 
+import com.liferay.analytics.reports.web.internal.util.AnalyticsReportsUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -84,6 +85,14 @@ public class AnalyticsReportsDisplayContext<T> {
 	public String getLiferayAnalyticsURL() {
 		return PrefsPropsUtil.getString(
 			_themeDisplay.getCompanyId(), "liferayAnalyticsURL");
+	}
+
+	public boolean isAnalyticsSynced() {
+		long groupId = ParamUtil.getLong(
+			_renderRequest, "groupId", _themeDisplay.getScopeGroupId());
+
+		return AnalyticsReportsUtil.isAnalyticsSynced(
+			_themeDisplay.getCompanyId(), groupId);
 	}
 
 	private ResourceURL _getResourceURL(String resourceID) {

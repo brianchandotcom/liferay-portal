@@ -61,10 +61,15 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 				return null;
 			}
 
+			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+				_getLayoutDisplayPageObjectProvider(className, classPK);
+
 			return new AnalyticsReportsContentDashboardItemAction(
 				_resourceBundleLoader,
 				AnalyticsReportsUtil.getAnalyticsReportsPanelURL(
-					_portal.getClassNameId(className), classPK,
+					layoutDisplayPageObjectProvider.getClassNameId(),
+					layoutDisplayPageObjectProvider.getClassPK(),
+					layoutDisplayPageObjectProvider.getGroupId(),
 					httpServletRequest, _portal, _portletURLFactory));
 		}
 		catch (PortalException | WindowStateException exception) {
@@ -78,17 +83,8 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_layoutDisplayPageProviderTracker.
-				getLayoutDisplayPageProviderByClassName(className);
-
-		if (layoutDisplayPageProvider == null) {
-			return false;
-		}
-
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-				new InfoItemReference(className, classPK));
+			_getLayoutDisplayPageObjectProvider(className, classPK);
 
 		if ((layoutDisplayPageObjectProvider == null) ||
 			(layoutDisplayPageObjectProvider.getDisplayObject() == null)) {
@@ -123,6 +119,21 @@ public class AnalyticsReportsContentDashboardItemActionProviderImpl
 		}
 
 		return false;
+	}
+
+	private LayoutDisplayPageObjectProvider<?>
+		_getLayoutDisplayPageObjectProvider(String className, long classPK) {
+
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			_layoutDisplayPageProviderTracker.
+				getLayoutDisplayPageProviderByClassName(className);
+
+		if (layoutDisplayPageProvider == null) {
+			return null;
+		}
+
+		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+			new InfoItemReference(className, classPK));
 	}
 
 	@Reference

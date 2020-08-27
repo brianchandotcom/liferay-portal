@@ -131,6 +131,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 					AnalyticsReportsUtil.getAnalyticsReportsPanelURL(
 						layoutDisplayPageObjectProvider.getClassNameId(),
 						layoutDisplayPageObjectProvider.getClassPK(),
+						layoutDisplayPageObjectProvider.getGroupId(),
 						httpServletRequest, _portal, _portletURLFactory));
 			}
 			catch (WindowStateException windowStateException) {

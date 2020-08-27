@@ -21,7 +21,7 @@ AnalyticsReportsDisplayContext analyticsReportsDisplayContext = (AnalyticsReport
 %>
 
 <c:choose>
-	<c:when test="<%= AnalyticsReportsUtil.isAnalyticsSynced(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId()) %>">
+	<c:when test="<%= analyticsReportsDisplayContext.isAnalyticsSynced() %>">
 		<div id="<portlet:namespace />-analytics-reports-root">
 			<span aria-hidden="true" class="loading-animation loading-animation-sm"></span>
 

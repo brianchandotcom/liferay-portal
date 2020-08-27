@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
@@ -42,8 +43,8 @@ public class UserModelPreFilterContributor
 		BooleanFilter booleanFilter, ModelSearchSettings modelSearchSettings,
 		SearchContext searchContext) {
 
-		long[] accountEntryIds = (long[])searchContext.getAttribute(
-			"accountEntryIds");
+		long[] accountEntryIds = GetterUtil.getLongValues(
+			searchContext.getAttribute("accountEntryIds"), null);
 
 		if (accountEntryIds != null) {
 			if ((accountEntryIds.length == 1) &&

@@ -88,7 +88,6 @@ public class DynamicSizeTrieURLToCORSSupportMapper
 		}
 
 		CORSSupport corsSupport = null;
-
 		TrieNode currentTrieNode = null;
 		TrieNode previousTrieNode = _wildCardTrieNode;
 

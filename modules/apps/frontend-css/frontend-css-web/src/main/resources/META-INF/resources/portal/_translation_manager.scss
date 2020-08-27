@@ -53,5 +53,9 @@
 	.lfr-translation-manager-delete-translation {
 		display: inline-block;
 		padding: 0 2px;
+
+		svg {
+			pointer-events: none;
+		}
 	}
 }

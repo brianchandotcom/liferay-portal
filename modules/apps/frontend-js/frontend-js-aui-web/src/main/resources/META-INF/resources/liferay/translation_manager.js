@@ -93,9 +93,11 @@ AUI.add(
 			' {cssClass}" locale="{locale}">' +
 			TPL_LOCALE_IMAGE +
 			'{displayName} ' +
-			'<i class="' +
+			'<span class="' +
 			CSS_DELETE_TRANSLATION +
-			' icon icon-remove"></i>' +
+			'">' +
+			Liferay.Util.getLexiconIconTpl('times') +
+			'</span>' +
 			'</span>';
 
 		var TPL_CHANGE_DEFAULT_LOCALE =

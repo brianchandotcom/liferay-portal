@@ -16,6 +16,7 @@ package com.liferay.commerce.machine.learning.internal.recommendation.search.ind
 
 import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;
 import com.liferay.commerce.machine.learning.internal.search.index.CommerceMLSearchEngineHelper;
+import com.liferay.portal.search.index.IndexNameBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,16 +45,20 @@ public class UserCommerceMLRecommendationIndexer implements CommerceMLIndexer {
 
 	@Override
 	public String getIndexName(long companyId) {
-		return String.format(_INDEX_NAME_PATTERN, companyId);
+		return String.format(
+			_INDEX_NAME_PATTERN, _indexNameBuilder.getIndexName(companyId));
 	}
 
 	private static final String _INDEX_MAPPING_FILE_NAME =
 		"/META-INF/search/user-commerce-ml-recommendation-document-type.json";
 
 	private static final String _INDEX_NAME_PATTERN =
-		"user-commerce-ml-recommendation-%s";
+		"%s-user-commerce-ml-recommendation";
 
 	@Reference
 	private CommerceMLSearchEngineHelper _commerceMLSearchEngineHelper;
+
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
 
 }

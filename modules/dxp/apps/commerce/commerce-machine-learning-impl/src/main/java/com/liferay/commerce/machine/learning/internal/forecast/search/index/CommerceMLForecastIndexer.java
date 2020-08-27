@@ -16,6 +16,7 @@ package com.liferay.commerce.machine.learning.internal.forecast.search.index;
 
 import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;
 import com.liferay.commerce.machine.learning.internal.search.index.CommerceMLSearchEngineHelper;
+import com.liferay.portal.search.index.IndexNameBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,15 +45,19 @@ public class CommerceMLForecastIndexer implements CommerceMLIndexer {
 
 	@Override
 	public String getIndexName(long companyId) {
-		return String.format(_INDEX_NAME_PATTERN, companyId);
+		return String.format(
+			_INDEX_NAME_PATTERN, _indexNameBuilder.getIndexName(companyId));
 	}
 
 	private static final String _INDEX_MAPPING_FILE_NAME =
 		"/META-INF/search/commerce-ml-forecast-document-type.json";
 
-	private static final String _INDEX_NAME_PATTERN = "commerce-ml-forecast-%s";
+	private static final String _INDEX_NAME_PATTERN = "%s-commerce-ml-forecast";
 
 	@Reference
 	private CommerceMLSearchEngineHelper _commerceMLSearchEngineHelper;
+
+	@Reference
+	private IndexNameBuilder _indexNameBuilder;
 
 }

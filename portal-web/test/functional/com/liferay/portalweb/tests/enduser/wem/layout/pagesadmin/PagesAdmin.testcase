@@ -157,7 +157,7 @@ definition {
 
 		ContentPages.addPublicCollectionPage(
 			collectionName = "Manual Collection Name",
-			menuItem = "Manual Selection",
+			menuItem = "Manual Collection",
 			pageName = "Manual Collection Page Name",
 			selectedAsset = "All Types",
 			tabName = "Collections");
@@ -166,7 +166,7 @@ definition {
 
 		ContentPages.addPublicCollectionPage(
 			collectionName = "Dynamic Collection Name",
-			menuItem = "Dynamic Selection",
+			menuItem = "Dynamic Collection",
 			pageName = "Dynamic Collection Page Name",
 			selectedAsset = "All Types",
 			tabName = "Collections");

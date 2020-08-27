@@ -1014,9 +1014,9 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		MenuItem.viewPresent(menuItem = "Manual Selection");
+		MenuItem.viewPresent(menuItem = "Manual Collection");
 
-		MenuItem.viewPresent(menuItem = "Dynamic Selection");
+		MenuItem.viewPresent(menuItem = "Dynamic Collection");
 
 		Refresh();
 
@@ -1025,11 +1025,11 @@ definition {
 		Click.waitForMenuToggleJSClick(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
 
 		AssertElementPresent(
-			key_menuItem = "Manual Selection",
+			key_menuItem = "Manual Collection",
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 
 		AssertElementPresent(
-			key_menuItem = "Dynamic Selection",
+			key_menuItem = "Dynamic Collection",
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 	}
 

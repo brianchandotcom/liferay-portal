@@ -219,17 +219,13 @@ $productMenuWidth: 320px;
 			border-left: 1px #e7e7ed solid;
 			box-shadow: none;
 			margin-top: $toolbarHeight;
+			max-width: 90vw;
 			overflow-y: scroll;
 			padding-top: 0;
 			position: fixed;
 			top: auto;
-			width: calc(100% - #{$productMenuWidth});
+			width: $productMenuWidth;
 			z-index: 1;
-
-			@include media-breakpoint-up(lg) {
-				margin-top: $toolbarDesktopHeight;
-				width: $productMenuWidth;
-			}
 
 			.article-content-description {
 				@extend .article-content-content;

@@ -159,14 +159,14 @@ export default withRouter(({history}) => {
 								))) || (
 								<ClayEmptyState
 									description={Liferay.Language.get(
-										'there-are-no-topics-inside-this-site-create-the-first-topic'
+										'there-are-no-topics-in-this-page-create-the-first-topic'
 									)}
 									imgSrc={
 										context.includeContextPath +
 										'/assets/no_topics_illustration.png'
 									}
 									title={Liferay.Language.get(
-										'this-site-has-no-topics'
+										'this-page-has-no-topics'
 									)}
 								>
 									{sections && sections.actions.create && (

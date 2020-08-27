@@ -17,7 +17,6 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 import com.liferay.headless.delivery.client.serdes.v1_0.PageRowDefinitionSerDes;
 
-import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -32,6 +31,49 @@ public class PageRowDefinition implements Cloneable {
 	public static PageRowDefinition toDTO(String json) {
 		return PageRowDefinitionSerDes.toDTO(json);
 	}
+
+	public FragmentStyle getFragmentStyle() {
+		return fragmentStyle;
+	}
+
+	public void setFragmentStyle(FragmentStyle fragmentStyle) {
+		this.fragmentStyle = fragmentStyle;
+	}
+
+	public void setFragmentStyle(
+		UnsafeSupplier<FragmentStyle, Exception> fragmentStyleUnsafeSupplier) {
+
+		try {
+			fragmentStyle = fragmentStyleUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FragmentStyle fragmentStyle;
+
+	public FragmentViewport[] getFragmentViewports() {
+		return fragmentViewports;
+	}
+
+	public void setFragmentViewports(FragmentViewport[] fragmentViewports) {
+		this.fragmentViewports = fragmentViewports;
+	}
+
+	public void setFragmentViewports(
+		UnsafeSupplier<FragmentViewport[], Exception>
+			fragmentViewportsUnsafeSupplier) {
+
+		try {
+			fragmentViewports = fragmentViewportsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FragmentViewport[] fragmentViewports;
 
 	public Boolean getGutters() {
 		return gutters;
@@ -159,27 +201,6 @@ public class PageRowDefinition implements Cloneable {
 	}
 
 	protected RowViewport[] rowViewports;
-
-	public Map<String, Object> getStyles() {
-		return styles;
-	}
-
-	public void setStyles(Map<String, Object> styles) {
-		this.styles = styles;
-	}
-
-	public void setStyles(
-		UnsafeSupplier<Map<String, Object>, Exception> stylesUnsafeSupplier) {
-
-		try {
-			styles = stylesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Map<String, Object> styles;
 
 	public String getVerticalAlignment() {
 		return verticalAlignment;

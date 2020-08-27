@@ -17,7 +17,6 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 import com.liferay.headless.delivery.client.serdes.v1_0.PageWidgetInstanceDefinitionSerDes;
 
-import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -33,26 +32,48 @@ public class PageWidgetInstanceDefinition implements Cloneable {
 		return PageWidgetInstanceDefinitionSerDes.toDTO(json);
 	}
 
-	public Map<String, Object> getStyles() {
-		return styles;
+	public FragmentStyle getFragmentStyle() {
+		return fragmentStyle;
 	}
 
-	public void setStyles(Map<String, Object> styles) {
-		this.styles = styles;
+	public void setFragmentStyle(FragmentStyle fragmentStyle) {
+		this.fragmentStyle = fragmentStyle;
 	}
 
-	public void setStyles(
-		UnsafeSupplier<Map<String, Object>, Exception> stylesUnsafeSupplier) {
+	public void setFragmentStyle(
+		UnsafeSupplier<FragmentStyle, Exception> fragmentStyleUnsafeSupplier) {
 
 		try {
-			styles = stylesUnsafeSupplier.get();
+			fragmentStyle = fragmentStyleUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Map<String, Object> styles;
+	protected FragmentStyle fragmentStyle;
+
+	public FragmentViewport[] getFragmentViewports() {
+		return fragmentViewports;
+	}
+
+	public void setFragmentViewports(FragmentViewport[] fragmentViewports) {
+		this.fragmentViewports = fragmentViewports;
+	}
+
+	public void setFragmentViewports(
+		UnsafeSupplier<FragmentViewport[], Exception>
+			fragmentViewportsUnsafeSupplier) {
+
+		try {
+			fragmentViewports = fragmentViewportsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FragmentViewport[] fragmentViewports;
 
 	public WidgetInstance getWidgetInstance() {
 		return widgetInstance;

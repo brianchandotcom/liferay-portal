@@ -17,7 +17,6 @@ package com.liferay.headless.delivery.client.dto.v1_0;
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
 import com.liferay.headless.delivery.client.serdes.v1_0.PageSectionDefinitionSerDes;
 
-import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -122,6 +121,49 @@ public class PageSectionDefinition implements Cloneable {
 
 	protected FragmentLink fragmentLink;
 
+	public FragmentStyle getFragmentStyle() {
+		return fragmentStyle;
+	}
+
+	public void setFragmentStyle(FragmentStyle fragmentStyle) {
+		this.fragmentStyle = fragmentStyle;
+	}
+
+	public void setFragmentStyle(
+		UnsafeSupplier<FragmentStyle, Exception> fragmentStyleUnsafeSupplier) {
+
+		try {
+			fragmentStyle = fragmentStyleUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FragmentStyle fragmentStyle;
+
+	public FragmentViewport[] getFragmentViewports() {
+		return fragmentViewports;
+	}
+
+	public void setFragmentViewports(FragmentViewport[] fragmentViewports) {
+		this.fragmentViewports = fragmentViewports;
+	}
+
+	public void setFragmentViewports(
+		UnsafeSupplier<FragmentViewport[], Exception>
+			fragmentViewportsUnsafeSupplier) {
+
+		try {
+			fragmentViewports = fragmentViewportsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FragmentViewport[] fragmentViewports;
+
 	public Layout getLayout() {
 		return layout;
 	}
@@ -142,27 +184,6 @@ public class PageSectionDefinition implements Cloneable {
 	}
 
 	protected Layout layout;
-
-	public Map<String, Object> getStyles() {
-		return styles;
-	}
-
-	public void setStyles(Map<String, Object> styles) {
-		this.styles = styles;
-	}
-
-	public void setStyles(
-		UnsafeSupplier<Map<String, Object>, Exception> stylesUnsafeSupplier) {
-
-		try {
-			styles = stylesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Map<String, Object> styles;
 
 	@Override
 	public PageSectionDefinition clone() throws CloneNotSupportedException {

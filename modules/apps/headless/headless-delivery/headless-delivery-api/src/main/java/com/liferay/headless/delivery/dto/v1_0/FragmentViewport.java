@@ -34,6 +34,8 @@ import java.util.Set;
 import javax.annotation.Generated;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -42,32 +44,35 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("PageWidgetInstanceDefinition")
+@GraphQLName("FragmentViewport")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "PageWidgetInstanceDefinition")
-public class PageWidgetInstanceDefinition {
+@Schema(requiredProperties = {"fragmentViewportStyle", "id"})
+@XmlRootElement(name = "FragmentViewport")
+public class FragmentViewport {
 
-	public static PageWidgetInstanceDefinition toDTO(String json) {
-		return ObjectMapperUtil.readValue(
-			PageWidgetInstanceDefinition.class, json);
+	public static FragmentViewport toDTO(String json) {
+		return ObjectMapperUtil.readValue(FragmentViewport.class, json);
 	}
 
 	@Schema
 	@Valid
-	public FragmentStyle getFragmentStyle() {
-		return fragmentStyle;
+	public FragmentViewportStyle getFragmentViewportStyle() {
+		return fragmentViewportStyle;
 	}
 
-	public void setFragmentStyle(FragmentStyle fragmentStyle) {
-		this.fragmentStyle = fragmentStyle;
+	public void setFragmentViewportStyle(
+		FragmentViewportStyle fragmentViewportStyle) {
+
+		this.fragmentViewportStyle = fragmentViewportStyle;
 	}
 
 	@JsonIgnore
-	public void setFragmentStyle(
-		UnsafeSupplier<FragmentStyle, Exception> fragmentStyleUnsafeSupplier) {
+	public void setFragmentViewportStyle(
+		UnsafeSupplier<FragmentViewportStyle, Exception>
+			fragmentViewportStyleUnsafeSupplier) {
 
 		try {
-			fragmentStyle = fragmentStyleUnsafeSupplier.get();
+			fragmentViewportStyle = fragmentViewportStyleUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -79,25 +84,22 @@ public class PageWidgetInstanceDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentStyle fragmentStyle;
+	@NotNull
+	protected FragmentViewportStyle fragmentViewportStyle;
 
 	@Schema
-	@Valid
-	public FragmentViewport[] getFragmentViewports() {
-		return fragmentViewports;
+	public String getId() {
+		return id;
 	}
 
-	public void setFragmentViewports(FragmentViewport[] fragmentViewports) {
-		this.fragmentViewports = fragmentViewports;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setFragmentViewports(
-		UnsafeSupplier<FragmentViewport[], Exception>
-			fragmentViewportsUnsafeSupplier) {
-
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
 		try {
-			fragmentViewports = fragmentViewportsUnsafeSupplier.get();
+			id = idUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -109,37 +111,8 @@ public class PageWidgetInstanceDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentViewport[] fragmentViewports;
-
-	@Schema
-	@Valid
-	public WidgetInstance getWidgetInstance() {
-		return widgetInstance;
-	}
-
-	public void setWidgetInstance(WidgetInstance widgetInstance) {
-		this.widgetInstance = widgetInstance;
-	}
-
-	@JsonIgnore
-	public void setWidgetInstance(
-		UnsafeSupplier<WidgetInstance, Exception>
-			widgetInstanceUnsafeSupplier) {
-
-		try {
-			widgetInstance = widgetInstanceUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected WidgetInstance widgetInstance;
+	@NotEmpty
+	protected String id;
 
 	@Override
 	public boolean equals(Object object) {
@@ -147,15 +120,13 @@ public class PageWidgetInstanceDefinition {
 			return true;
 		}
 
-		if (!(object instanceof PageWidgetInstanceDefinition)) {
+		if (!(object instanceof FragmentViewport)) {
 			return false;
 		}
 
-		PageWidgetInstanceDefinition pageWidgetInstanceDefinition =
-			(PageWidgetInstanceDefinition)object;
+		FragmentViewport fragmentViewport = (FragmentViewport)object;
 
-		return Objects.equals(
-			toString(), pageWidgetInstanceDefinition.toString());
+		return Objects.equals(toString(), fragmentViewport.toString());
 	}
 
 	@Override
@@ -170,44 +141,28 @@ public class PageWidgetInstanceDefinition {
 
 		sb.append("{");
 
-		if (fragmentStyle != null) {
+		if (fragmentViewportStyle != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentStyle\": ");
+			sb.append("\"fragmentViewportStyle\": ");
 
-			sb.append(String.valueOf(fragmentStyle));
+			sb.append(String.valueOf(fragmentViewportStyle));
 		}
 
-		if (fragmentViewports != null) {
+		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentViewports\": ");
+			sb.append("\"id\": ");
 
-			sb.append("[");
+			sb.append("\"");
 
-			for (int i = 0; i < fragmentViewports.length; i++) {
-				sb.append(String.valueOf(fragmentViewports[i]));
+			sb.append(_escape(id));
 
-				if ((i + 1) < fragmentViewports.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (widgetInstance != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"widgetInstance\": ");
-
-			sb.append(String.valueOf(widgetInstance));
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -216,7 +171,7 @@ public class PageWidgetInstanceDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageWidgetInstanceDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentViewport",
 		name = "x-class-name"
 	)
 	public String xClassName;

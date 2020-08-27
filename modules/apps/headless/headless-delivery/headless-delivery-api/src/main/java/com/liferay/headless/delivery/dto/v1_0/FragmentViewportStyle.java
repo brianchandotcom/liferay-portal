@@ -33,8 +33,6 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -42,31 +40,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("PageRowDefinition")
+@GraphQLName("FragmentViewportStyle")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "PageRowDefinition")
-public class PageRowDefinition {
+@XmlRootElement(name = "FragmentViewportStyle")
+public class FragmentViewportStyle {
 
-	public static PageRowDefinition toDTO(String json) {
-		return ObjectMapperUtil.readValue(PageRowDefinition.class, json);
+	public static FragmentViewportStyle toDTO(String json) {
+		return ObjectMapperUtil.readValue(FragmentViewportStyle.class, json);
 	}
 
 	@Schema
-	@Valid
-	public FragmentStyle getFragmentStyle() {
-		return fragmentStyle;
+	public String getMarginBottom() {
+		return marginBottom;
 	}
 
-	public void setFragmentStyle(FragmentStyle fragmentStyle) {
-		this.fragmentStyle = fragmentStyle;
+	public void setMarginBottom(String marginBottom) {
+		this.marginBottom = marginBottom;
 	}
 
 	@JsonIgnore
-	public void setFragmentStyle(
-		UnsafeSupplier<FragmentStyle, Exception> fragmentStyleUnsafeSupplier) {
+	public void setMarginBottom(
+		UnsafeSupplier<String, Exception> marginBottomUnsafeSupplier) {
 
 		try {
-			fragmentStyle = fragmentStyleUnsafeSupplier.get();
+			marginBottom = marginBottomUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -78,25 +75,23 @@ public class PageRowDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentStyle fragmentStyle;
+	protected String marginBottom;
 
 	@Schema
-	@Valid
-	public FragmentViewport[] getFragmentViewports() {
-		return fragmentViewports;
+	public String getMarginLeft() {
+		return marginLeft;
 	}
 
-	public void setFragmentViewports(FragmentViewport[] fragmentViewports) {
-		this.fragmentViewports = fragmentViewports;
+	public void setMarginLeft(String marginLeft) {
+		this.marginLeft = marginLeft;
 	}
 
 	@JsonIgnore
-	public void setFragmentViewports(
-		UnsafeSupplier<FragmentViewport[], Exception>
-			fragmentViewportsUnsafeSupplier) {
+	public void setMarginLeft(
+		UnsafeSupplier<String, Exception> marginLeftUnsafeSupplier) {
 
 		try {
-			fragmentViewports = fragmentViewportsUnsafeSupplier.get();
+			marginLeft = marginLeftUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -108,23 +103,23 @@ public class PageRowDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentViewport[] fragmentViewports;
+	protected String marginLeft;
 
 	@Schema
-	public Boolean getGutters() {
-		return gutters;
+	public String getMarginRight() {
+		return marginRight;
 	}
 
-	public void setGutters(Boolean gutters) {
-		this.gutters = gutters;
+	public void setMarginRight(String marginRight) {
+		this.marginRight = marginRight;
 	}
 
 	@JsonIgnore
-	public void setGutters(
-		UnsafeSupplier<Boolean, Exception> guttersUnsafeSupplier) {
+	public void setMarginRight(
+		UnsafeSupplier<String, Exception> marginRightUnsafeSupplier) {
 
 		try {
-			gutters = guttersUnsafeSupplier.get();
+			marginRight = marginRightUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -136,23 +131,23 @@ public class PageRowDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean gutters;
+	protected String marginRight;
 
 	@Schema
-	public Integer getModulesPerRow() {
-		return modulesPerRow;
+	public String getMarginTop() {
+		return marginTop;
 	}
 
-	public void setModulesPerRow(Integer modulesPerRow) {
-		this.modulesPerRow = modulesPerRow;
+	public void setMarginTop(String marginTop) {
+		this.marginTop = marginTop;
 	}
 
 	@JsonIgnore
-	public void setModulesPerRow(
-		UnsafeSupplier<Integer, Exception> modulesPerRowUnsafeSupplier) {
+	public void setMarginTop(
+		UnsafeSupplier<String, Exception> marginTopUnsafeSupplier) {
 
 		try {
-			modulesPerRow = modulesPerRowUnsafeSupplier.get();
+			marginTop = marginTopUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -164,23 +159,23 @@ public class PageRowDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer modulesPerRow;
+	protected String marginTop;
 
 	@Schema
-	public Integer getNumberOfColumns() {
-		return numberOfColumns;
+	public String getPaddingBottom() {
+		return paddingBottom;
 	}
 
-	public void setNumberOfColumns(Integer numberOfColumns) {
-		this.numberOfColumns = numberOfColumns;
+	public void setPaddingBottom(String paddingBottom) {
+		this.paddingBottom = paddingBottom;
 	}
 
 	@JsonIgnore
-	public void setNumberOfColumns(
-		UnsafeSupplier<Integer, Exception> numberOfColumnsUnsafeSupplier) {
+	public void setPaddingBottom(
+		UnsafeSupplier<String, Exception> paddingBottomUnsafeSupplier) {
 
 		try {
-			numberOfColumns = numberOfColumnsUnsafeSupplier.get();
+			paddingBottom = paddingBottomUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -192,23 +187,23 @@ public class PageRowDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer numberOfColumns;
+	protected String paddingBottom;
 
 	@Schema
-	public Boolean getReverseOrder() {
-		return reverseOrder;
+	public String getPaddingLeft() {
+		return paddingLeft;
 	}
 
-	public void setReverseOrder(Boolean reverseOrder) {
-		this.reverseOrder = reverseOrder;
+	public void setPaddingLeft(String paddingLeft) {
+		this.paddingLeft = paddingLeft;
 	}
 
 	@JsonIgnore
-	public void setReverseOrder(
-		UnsafeSupplier<Boolean, Exception> reverseOrderUnsafeSupplier) {
+	public void setPaddingLeft(
+		UnsafeSupplier<String, Exception> paddingLeftUnsafeSupplier) {
 
 		try {
-			reverseOrder = reverseOrderUnsafeSupplier.get();
+			paddingLeft = paddingLeftUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -220,59 +215,23 @@ public class PageRowDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean reverseOrder;
-
-	@Schema(
-		description = "Deprecated as of Athanasius (7.3.x), replaced by rowViewports"
-	)
-	@Valid
-	public RowViewportConfig getRowViewportConfig() {
-		return rowViewportConfig;
-	}
-
-	public void setRowViewportConfig(RowViewportConfig rowViewportConfig) {
-		this.rowViewportConfig = rowViewportConfig;
-	}
-
-	@JsonIgnore
-	public void setRowViewportConfig(
-		UnsafeSupplier<RowViewportConfig, Exception>
-			rowViewportConfigUnsafeSupplier) {
-
-		try {
-			rowViewportConfig = rowViewportConfigUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@Deprecated
-	@GraphQLField(
-		description = "Deprecated as of Athanasius (7.3.x), replaced by rowViewports"
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected RowViewportConfig rowViewportConfig;
+	protected String paddingLeft;
 
 	@Schema
-	@Valid
-	public RowViewport[] getRowViewports() {
-		return rowViewports;
+	public String getPaddingRight() {
+		return paddingRight;
 	}
 
-	public void setRowViewports(RowViewport[] rowViewports) {
-		this.rowViewports = rowViewports;
+	public void setPaddingRight(String paddingRight) {
+		this.paddingRight = paddingRight;
 	}
 
 	@JsonIgnore
-	public void setRowViewports(
-		UnsafeSupplier<RowViewport[], Exception> rowViewportsUnsafeSupplier) {
+	public void setPaddingRight(
+		UnsafeSupplier<String, Exception> paddingRightUnsafeSupplier) {
 
 		try {
-			rowViewports = rowViewportsUnsafeSupplier.get();
+			paddingRight = paddingRightUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -284,23 +243,23 @@ public class PageRowDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected RowViewport[] rowViewports;
+	protected String paddingRight;
 
 	@Schema
-	public String getVerticalAlignment() {
-		return verticalAlignment;
+	public String getPaddingTop() {
+		return paddingTop;
 	}
 
-	public void setVerticalAlignment(String verticalAlignment) {
-		this.verticalAlignment = verticalAlignment;
+	public void setPaddingTop(String paddingTop) {
+		this.paddingTop = paddingTop;
 	}
 
 	@JsonIgnore
-	public void setVerticalAlignment(
-		UnsafeSupplier<String, Exception> verticalAlignmentUnsafeSupplier) {
+	public void setPaddingTop(
+		UnsafeSupplier<String, Exception> paddingTopUnsafeSupplier) {
 
 		try {
-			verticalAlignment = verticalAlignmentUnsafeSupplier.get();
+			paddingTop = paddingTopUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -312,7 +271,7 @@ public class PageRowDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String verticalAlignment;
+	protected String paddingTop;
 
 	@Override
 	public boolean equals(Object object) {
@@ -320,13 +279,14 @@ public class PageRowDefinition {
 			return true;
 		}
 
-		if (!(object instanceof PageRowDefinition)) {
+		if (!(object instanceof FragmentViewportStyle)) {
 			return false;
 		}
 
-		PageRowDefinition pageRowDefinition = (PageRowDefinition)object;
+		FragmentViewportStyle fragmentViewportStyle =
+			(FragmentViewportStyle)object;
 
-		return Objects.equals(toString(), pageRowDefinition.toString());
+		return Objects.equals(toString(), fragmentViewportStyle.toString());
 	}
 
 	@Override
@@ -341,116 +301,114 @@ public class PageRowDefinition {
 
 		sb.append("{");
 
-		if (fragmentStyle != null) {
+		if (marginBottom != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentStyle\": ");
-
-			sb.append(String.valueOf(fragmentStyle));
-		}
-
-		if (fragmentViewports != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fragmentViewports\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < fragmentViewports.length; i++) {
-				sb.append(String.valueOf(fragmentViewports[i]));
-
-				if ((i + 1) < fragmentViewports.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (gutters != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"gutters\": ");
-
-			sb.append(gutters);
-		}
-
-		if (modulesPerRow != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"modulesPerRow\": ");
-
-			sb.append(modulesPerRow);
-		}
-
-		if (numberOfColumns != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"numberOfColumns\": ");
-
-			sb.append(numberOfColumns);
-		}
-
-		if (reverseOrder != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"reverseOrder\": ");
-
-			sb.append(reverseOrder);
-		}
-
-		if (rowViewportConfig != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"rowViewportConfig\": ");
-
-			sb.append(String.valueOf(rowViewportConfig));
-		}
-
-		if (rowViewports != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"rowViewports\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < rowViewports.length; i++) {
-				sb.append(String.valueOf(rowViewports[i]));
-
-				if ((i + 1) < rowViewports.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (verticalAlignment != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"verticalAlignment\": ");
+			sb.append("\"marginBottom\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(verticalAlignment));
+			sb.append(_escape(marginBottom));
+
+			sb.append("\"");
+		}
+
+		if (marginLeft != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"marginLeft\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(marginLeft));
+
+			sb.append("\"");
+		}
+
+		if (marginRight != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"marginRight\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(marginRight));
+
+			sb.append("\"");
+		}
+
+		if (marginTop != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"marginTop\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(marginTop));
+
+			sb.append("\"");
+		}
+
+		if (paddingBottom != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paddingBottom\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(paddingBottom));
+
+			sb.append("\"");
+		}
+
+		if (paddingLeft != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paddingLeft\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(paddingLeft));
+
+			sb.append("\"");
+		}
+
+		if (paddingRight != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paddingRight\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(paddingRight));
+
+			sb.append("\"");
+		}
+
+		if (paddingTop != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paddingTop\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(paddingTop));
 
 			sb.append("\"");
 		}
@@ -461,7 +419,7 @@ public class PageRowDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.PageRowDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FragmentViewportStyle",
 		name = "x-class-name"
 	)
 	public String xClassName;

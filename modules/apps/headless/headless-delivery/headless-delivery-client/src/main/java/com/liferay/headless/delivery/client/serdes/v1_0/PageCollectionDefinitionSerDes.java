@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
+import com.liferay.headless.delivery.client.dto.v1_0.FragmentViewport;
 import com.liferay.headless.delivery.client.dto.v1_0.PageCollectionDefinition;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -66,6 +68,45 @@ public class PageCollectionDefinitionSerDes {
 
 			sb.append(
 				String.valueOf(pageCollectionDefinition.getCollectionConfig()));
+		}
+
+		if (pageCollectionDefinition.getFragmentStyle() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fragmentStyle\": ");
+
+			sb.append(
+				String.valueOf(pageCollectionDefinition.getFragmentStyle()));
+		}
+
+		if (pageCollectionDefinition.getFragmentViewports() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fragmentViewports\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < pageCollectionDefinition.getFragmentViewports().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(
+						pageCollectionDefinition.getFragmentViewports()[i]));
+
+				if ((i + 1) <
+						pageCollectionDefinition.
+							getFragmentViewports().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (pageCollectionDefinition.getListItemStyle() != null) {
@@ -116,16 +157,6 @@ public class PageCollectionDefinitionSerDes {
 			sb.append(pageCollectionDefinition.getNumberOfItems());
 		}
 
-		if (pageCollectionDefinition.getStyles() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"styles\": ");
-
-			sb.append(_toJSON(pageCollectionDefinition.getStyles()));
-		}
-
 		if (pageCollectionDefinition.getTemplateKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -170,6 +201,25 @@ public class PageCollectionDefinitionSerDes {
 				String.valueOf(pageCollectionDefinition.getCollectionConfig()));
 		}
 
+		if (pageCollectionDefinition.getFragmentStyle() == null) {
+			map.put("fragmentStyle", null);
+		}
+		else {
+			map.put(
+				"fragmentStyle",
+				String.valueOf(pageCollectionDefinition.getFragmentStyle()));
+		}
+
+		if (pageCollectionDefinition.getFragmentViewports() == null) {
+			map.put("fragmentViewports", null);
+		}
+		else {
+			map.put(
+				"fragmentViewports",
+				String.valueOf(
+					pageCollectionDefinition.getFragmentViewports()));
+		}
+
 		if (pageCollectionDefinition.getListItemStyle() == null) {
 			map.put("listItemStyle", null);
 		}
@@ -204,14 +254,6 @@ public class PageCollectionDefinitionSerDes {
 			map.put(
 				"numberOfItems",
 				String.valueOf(pageCollectionDefinition.getNumberOfItems()));
-		}
-
-		if (pageCollectionDefinition.getStyles() == null) {
-			map.put("styles", null);
-		}
-		else {
-			map.put(
-				"styles", String.valueOf(pageCollectionDefinition.getStyles()));
 		}
 
 		if (pageCollectionDefinition.getTemplateKey() == null) {
@@ -251,6 +293,26 @@ public class PageCollectionDefinitionSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "fragmentStyle")) {
+				if (jsonParserFieldValue != null) {
+					pageCollectionDefinition.setFragmentStyle(
+						FragmentStyleSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fragmentViewports")) {
+				if (jsonParserFieldValue != null) {
+					pageCollectionDefinition.setFragmentViewports(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> FragmentViewportSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new FragmentViewport[size]
+						));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "listItemStyle")) {
 				if (jsonParserFieldValue != null) {
 					pageCollectionDefinition.setListItemStyle(
@@ -273,13 +335,6 @@ public class PageCollectionDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					pageCollectionDefinition.setNumberOfItems(
 						Integer.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "styles")) {
-				if (jsonParserFieldValue != null) {
-					pageCollectionDefinition.setStyles(
-						(Map)PageCollectionDefinitionSerDes.toMap(
-							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "templateKey")) {

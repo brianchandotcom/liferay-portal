@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
+import com.liferay.headless.delivery.client.dto.v1_0.FragmentViewport;
 import com.liferay.headless.delivery.client.dto.v1_0.PageSectionDefinition;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -102,6 +104,42 @@ public class PageSectionDefinitionSerDes {
 			sb.append(String.valueOf(pageSectionDefinition.getFragmentLink()));
 		}
 
+		if (pageSectionDefinition.getFragmentStyle() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fragmentStyle\": ");
+
+			sb.append(String.valueOf(pageSectionDefinition.getFragmentStyle()));
+		}
+
+		if (pageSectionDefinition.getFragmentViewports() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fragmentViewports\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < pageSectionDefinition.getFragmentViewports().length; i++) {
+
+				sb.append(
+					String.valueOf(
+						pageSectionDefinition.getFragmentViewports()[i]));
+
+				if ((i + 1) <
+						pageSectionDefinition.getFragmentViewports().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (pageSectionDefinition.getLayout() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -110,16 +148,6 @@ public class PageSectionDefinitionSerDes {
 			sb.append("\"layout\": ");
 
 			sb.append(String.valueOf(pageSectionDefinition.getLayout()));
-		}
-
-		if (pageSectionDefinition.getStyles() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"styles\": ");
-
-			sb.append(_toJSON(pageSectionDefinition.getStyles()));
 		}
 
 		sb.append("}");
@@ -180,20 +208,30 @@ public class PageSectionDefinitionSerDes {
 				String.valueOf(pageSectionDefinition.getFragmentLink()));
 		}
 
+		if (pageSectionDefinition.getFragmentStyle() == null) {
+			map.put("fragmentStyle", null);
+		}
+		else {
+			map.put(
+				"fragmentStyle",
+				String.valueOf(pageSectionDefinition.getFragmentStyle()));
+		}
+
+		if (pageSectionDefinition.getFragmentViewports() == null) {
+			map.put("fragmentViewports", null);
+		}
+		else {
+			map.put(
+				"fragmentViewports",
+				String.valueOf(pageSectionDefinition.getFragmentViewports()));
+		}
+
 		if (pageSectionDefinition.getLayout() == null) {
 			map.put("layout", null);
 		}
 		else {
 			map.put(
 				"layout", String.valueOf(pageSectionDefinition.getLayout()));
-		}
-
-		if (pageSectionDefinition.getStyles() == null) {
-			map.put("styles", null);
-		}
-		else {
-			map.put(
-				"styles", String.valueOf(pageSectionDefinition.getStyles()));
 		}
 
 		return map;
@@ -245,17 +283,30 @@ public class PageSectionDefinitionSerDes {
 						FragmentLinkSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "fragmentStyle")) {
+				if (jsonParserFieldValue != null) {
+					pageSectionDefinition.setFragmentStyle(
+						FragmentStyleSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fragmentViewports")) {
+				if (jsonParserFieldValue != null) {
+					pageSectionDefinition.setFragmentViewports(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> FragmentViewportSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new FragmentViewport[size]
+						));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "layout")) {
 				if (jsonParserFieldValue != null) {
 					pageSectionDefinition.setLayout(
 						LayoutSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "styles")) {
-				if (jsonParserFieldValue != null) {
-					pageSectionDefinition.setStyles(
-						(Map)PageSectionDefinitionSerDes.toMap(
-							(String)jsonParserFieldValue));
 				}
 			}
 			else {

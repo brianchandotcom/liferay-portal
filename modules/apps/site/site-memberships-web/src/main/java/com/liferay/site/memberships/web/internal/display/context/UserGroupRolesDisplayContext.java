@@ -203,10 +203,18 @@ public class UserGroupRolesDisplayContext {
 
 		roleSearch.setOrderByType(getOrderByType());
 
+		Group group = GroupLocalServiceUtil.fetchGroup(getGroupId());
+
+		int roleType = RoleConstants.TYPE_SITE;
+
+		if (group.getType() == GroupConstants.TYPE_DEPOT) {
+			roleType = RoleConstants.TYPE_DEPOT;
+		}
+
 		List<Role> roles = RoleLocalServiceUtil.search(
 			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			new Integer[] {RoleConstants.TYPE_SITE}, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, orderByComparator);
+			new Integer[] {roleType}, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			orderByComparator);
 
 		List<Role> selectedRoles = _getSelectedRoles();
 
@@ -225,8 +233,6 @@ public class UserGroupRolesDisplayContext {
 		).collect(
 			Collectors.toList()
 		);
-
-		Group group = GroupLocalServiceUtil.fetchGroup(getGroupId());
 
 		if (group.getType() == GroupConstants.TYPE_DEPOT) {
 			roles = DepotRolesUtil.filterGroupRoles(

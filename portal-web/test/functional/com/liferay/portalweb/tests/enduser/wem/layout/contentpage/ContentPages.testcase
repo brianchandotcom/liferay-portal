@@ -546,6 +546,10 @@ definition {
 				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-4 pt-2')]",
 				locator2 = "max-width",
 				value1 = "${containerWidth}px");
+
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'container')][contains(@class,'ml-0')]");
+
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'container')][contains(@class,'mr-0')]");
 		}
 	}
 

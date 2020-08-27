@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
-import java.util.Iterator;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -117,17 +116,13 @@ public class StyleBookEntryUtil {
 			"mappings");
 		String cssVariable = StringPool.BLANK;
 
-		Iterator<?> iterator = mappingsJSONArray.iterator();
-
-		while (iterator.hasNext()) {
-			JSONObject mappingJSONObject = (JSONObject)iterator.next();
+		for (int l = 0; l < mappingsJSONArray.length(); l++) {
+			JSONObject mappingJSONObject = mappingsJSONArray.getJSONObject(l);
 
 			if (Objects.equals(
 					mappingJSONObject.getString("type"), "cssVariable")) {
 
 				cssVariable = mappingJSONObject.getString("value");
-
-				break;
 			}
 		}
 

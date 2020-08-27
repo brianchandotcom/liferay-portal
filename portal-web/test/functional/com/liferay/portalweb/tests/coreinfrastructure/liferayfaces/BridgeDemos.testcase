@@ -1,7 +1,7 @@
 @component-name = "core-infrastructure"
 definition {
 
-	property custom.properties = "company.default.time.zone=Greenwich";
+	property custom.properties = "company.default.time.zone=America/Los_Angeles";
 	property liferay.faces = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";

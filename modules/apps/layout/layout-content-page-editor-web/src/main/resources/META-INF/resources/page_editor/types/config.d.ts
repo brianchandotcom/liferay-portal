@@ -1,12 +1,15 @@
 import {LayoutTypes} from './LayoutTypes';
 
 export interface Config {
+	addFragmentCompositionURL: string;
 	addFragmentEntryLinkCommentURL: string;
 	addFragmentEntryLinkURL: string;
 	addFragmentEntryLinksURL: string;
 	addItemURL: string;
 	addPortletURL: string;
 	addSegmentsExperienceURL: string;
+
+	autoExtendSessionEnabled: boolean;
 
 	availableLanguages: {
 		[key: string]: {
@@ -31,6 +34,10 @@ export interface Config {
 			sizeId: string;
 		};
 	};
+
+	changeMasterLayoutURL: string;
+	changeStyleBookEntryURL: string;
+	collectionSelectorURL: string;
 
 	commonStyles: Array<{
 		label: string;
@@ -62,6 +69,7 @@ export interface Config {
 	};
 
 	defaultLanguageId: string;
+	defaultStyleBookEntryName: string;
 	defaultSegmentsEntryId: string;
 	defaultSegmentsExperienceId: string;
 	deleteFragmentEntryLinkCommentURL: string;
@@ -74,6 +82,15 @@ export interface Config {
 	editFragmentEntryLinkCommentURL: string;
 	editFragmentEntryLinkURL: string;
 	editSegmentsEntryURL: string;
+	frontendTokens: {
+		[key: string]: {
+			cssVariable: string;
+			editorType: string;
+			label: string;
+			name: string;
+			value: string;
+		};
+	}
 	getAvailableListRenderersURL: string;
 	getAvailableListItemRenderersURL: string;
 	getAvailableTemplatesURL: string;
@@ -94,9 +111,21 @@ export interface Config {
 
 	layoutConversionWarningMessages: string[] | null;
 	layoutType: LayoutTypes[keyof LayoutTypes];
+	lookAndFeelURL: string;
+	mappingFieldsURL: string;
+	markItemForDeletionURL: string;
+	masterLayouts: Array<{
+		imagePreviewURL: string;
+		masterLayoutPlid: string;
+		name: string;
+	}>;
 	masterUsed: boolean;
 	moveItemURL: string;
-	panels: string[][];
+	paddingOptions: Array<{
+		label: string;
+		value: string;
+	}>;
+	panels: string[][]
 	pending: boolean;
 	plid: string;
 	pluginsRootPath: string;
@@ -119,6 +148,12 @@ export interface Config {
 	};
 
 	singleSegmentsExperienceMode: boolean;
+	stylebookEntryId: string;
+	styleBooks: Array<{
+		imagePreviewURL: string;
+		name: string;
+		styleBookEntryId: string;
+	}>;
 	themeColorCssClasses: string[];
 	toolbarId: string;
 
@@ -128,6 +163,7 @@ export interface Config {
 		toolbarPluginId: string;
 	}>;
 
+	unmarkItemForDeletionURL: string;
 	updateConfigurationValuesURL: string;
 	updateItemConfigURL: string;
 	updateLayoutPageTemplateDataURL: string;

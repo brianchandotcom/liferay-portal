@@ -372,16 +372,6 @@ const AppsPanel = ({
 										</ClayLayout.ContentCol>
 									</ClayLayout.ContentRow>
 								</ClayLayout.ContentCol>
-
-								<ClayLayout.ContentCol expand>
-									<span className="applications-menu-powered c-mb-0">
-										Powered by
-									</span>
-
-									<span className="applications-menu-copyright c-mb-0 c-mt-n1">
-										Liferay DXP
-									</span>
-								</ClayLayout.ContentCol>
 							</ClayLayout.ContentRow>
 						</ClayLayout.Col>
 
@@ -390,7 +380,7 @@ const AppsPanel = ({
 							lg="3"
 							md="4"
 						>
-							<div className="applications-menu-sites"></div>
+							<div className="applications-menu-environments"></div>
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 				</ClayLayout.ContainerFluid>

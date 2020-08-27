@@ -22,8 +22,8 @@ describe('BasicInformation', () => {
 	it('renders author, publish date and title', () => {
 		const testProps = {
 			author: {
-				alt: 'John Tester',
 				authorId: '',
+				name: 'John Tester',
 				url: '',
 			},
 			languageTag: 'en-US',
@@ -43,7 +43,7 @@ describe('BasicInformation', () => {
 		expect(getByText(testProps.title)).toBeInTheDocument();
 
 		expect(
-			getByText('authored-by-' + testProps.author.alt)
+			getByText('authored-by-' + testProps.author.name)
 		).toBeInTheDocument();
 
 		const formattedPublishDate = 'February 17, 2020';

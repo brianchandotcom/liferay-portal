@@ -18,12 +18,17 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
+
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Marcellus Tavares
@@ -76,6 +81,43 @@ public class FieldConstants {
 	public static final String TYPE = "type";
 
 	public static final String VALUE = "value";
+
+	public static Serializable getSerializable(
+		Locale defaultLocale, Locale locale, String type, String value) {
+
+		Serializable serializable = null;
+
+		if (isNumericType(type)) {
+			NumberFormat numberFormat = null;
+
+			if (locale.equals(LocaleUtil.ROOT)) {
+				numberFormat = NumberFormat.getInstance(defaultLocale);
+			}
+			else {
+				numberFormat = NumberFormat.getInstance(locale);
+			}
+
+			if (type.equals(FieldConstants.DOUBLE) ||
+				type.equals(FieldConstants.FLOAT)) {
+
+				numberFormat.setMinimumFractionDigits(1);
+			}
+
+			try {
+				Number number = numberFormat.parse(GetterUtil.getString(value));
+
+				serializable = getSerializable(type, number.toString());
+			}
+			catch (ParseException parseException) {
+				serializable = getSerializable(type, value);
+			}
+		}
+		else {
+			serializable = getSerializable(type, value);
+		}
+
+		return serializable;
+	}
 
 	public static final Serializable getSerializable(
 		String type, List<Serializable> values) {

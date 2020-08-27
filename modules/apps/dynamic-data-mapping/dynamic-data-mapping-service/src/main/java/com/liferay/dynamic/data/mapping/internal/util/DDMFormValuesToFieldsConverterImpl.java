@@ -27,14 +27,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
-
-import java.text.NumberFormat;
-import java.text.ParseException;
 
 import java.util.Locale;
 import java.util.Map;
@@ -182,8 +178,9 @@ public class DDMFormValuesToFieldsConverterImpl
 		Field ddmField, String type, Value value) {
 
 		for (Locale availableLocale : value.getAvailableLocales()) {
-			Serializable serializable = _getSerializable(
-				availableLocale, availableLocale, type, value);
+			Serializable serializable = FieldConstants.getSerializable(
+				availableLocale, availableLocale, type,
+				value.getString(availableLocale));
 
 			ddmField.addValue(availableLocale, serializable);
 		}
@@ -192,8 +189,9 @@ public class DDMFormValuesToFieldsConverterImpl
 	protected void setDDMFieldUnlocalizedValue(
 		Field ddmField, String type, Value value, Locale defaultLocale) {
 
-		Serializable serializable = _getSerializable(
-			defaultLocale, LocaleUtil.ROOT, type, value);
+		Serializable serializable = FieldConstants.getSerializable(
+			defaultLocale, LocaleUtil.ROOT, type,
+			value.getString(LocaleUtil.ROOT));
 
 		ddmField.addValue(defaultLocale, serializable);
 	}
@@ -207,47 +205,6 @@ public class DDMFormValuesToFieldsConverterImpl
 		else {
 			setDDMFieldUnlocalizedValue(ddmField, type, value, defaultLocale);
 		}
-	}
-
-	private Serializable _getSerializable(
-		Locale defaultLocale, Locale locale, String type, Value value) {
-
-		Serializable serializable = null;
-
-		if (FieldConstants.isNumericType(type)) {
-			NumberFormat numberFormat = null;
-
-			if (locale.equals(LocaleUtil.ROOT)) {
-				numberFormat = NumberFormat.getInstance(defaultLocale);
-			}
-			else {
-				numberFormat = NumberFormat.getInstance(locale);
-			}
-
-			if (type.equals(FieldConstants.DOUBLE) ||
-				type.equals(FieldConstants.FLOAT)) {
-
-				numberFormat.setMinimumFractionDigits(1);
-			}
-
-			try {
-				Number number = numberFormat.parse(
-					GetterUtil.getString(value.getString(locale)));
-
-				serializable = FieldConstants.getSerializable(
-					type, number.toString());
-			}
-			catch (ParseException parseException) {
-				serializable = FieldConstants.getSerializable(
-					type, value.getString(locale));
-			}
-		}
-		else {
-			serializable = FieldConstants.getSerializable(
-				type, value.getString(locale));
-		}
-
-		return serializable;
 	}
 
 }

@@ -3,24 +3,11 @@
 		"backgroundColor": "",
 		"backgroundFragmentImage": {
 		},
-		"layout": {
-			"borderWidth": 0,
-			"marginBottom": 0,
-			"marginLeft": 0,
-			"marginRight": 0,
-			"marginTop": 0,
-			"opacity": 100,
-			"paddingBottom": 0,
-			"paddingLeft": 0,
-			"paddingRight": 0,
-			"paddingTop": 0,
-			"widthType": "Fluid"
-		},
-		"styles": {
-			"backgroundImage": {
+		"fragmentStyle": {
+			"backgroundFragmentImage": {
 			},
 			"borderRadius": "",
-			"borderWidth": 0,
+			"borderWidth": "0",
 			"fontFamily": "",
 			"fontSize": "",
 			"fontWeight": "",
@@ -33,7 +20,7 @@
 			"maxWidth": "",
 			"minHeight": "",
 			"minWidth": "",
-			"opacity": 100,
+			"opacity": "100",
 			"overflow": "",
 			"paddingBottom": "0",
 			"paddingLeft": "0",
@@ -42,6 +29,19 @@
 			"shadow": "",
 			"textAlign": "",
 			"width": ""
+		},
+		"layout": {
+			"borderWidth": 0,
+			"marginBottom": 0,
+			"marginLeft": 0,
+			"marginRight": 0,
+			"marginTop": 0,
+			"opacity": 100,
+			"paddingBottom": 0,
+			"paddingLeft": 0,
+			"paddingRight": 0,
+			"paddingTop": 0,
+			"widthType": "Fluid"
 		}
 	},
 	"pageElements": [
@@ -89,7 +89,34 @@
 							}
 						}
 					}
-				]
+				],
+				"fragmentStyle": {
+					"backgroundFragmentImage": {
+					},
+					"borderRadius": "0",
+					"borderWidth": "0",
+					"fontFamily": "fontFamilyBase",
+					"fontSize": "fontSizeBase",
+					"fontWeight": "fontWeightNormal",
+					"height": "",
+					"marginBottom": "0",
+					"marginLeft": "0",
+					"marginRight": "0",
+					"marginTop": "0",
+					"maxHeight": "",
+					"maxWidth": "",
+					"minHeight": "",
+					"minWidth": "",
+					"opacity": "100",
+					"overflow": "visible",
+					"paddingBottom": "0",
+					"paddingLeft": "0",
+					"paddingRight": "0",
+					"paddingTop": "0",
+					"shadow": "none",
+					"textAlign": "none",
+					"width": ""
+				}
 			},
 			"type": "Fragment"
 		}

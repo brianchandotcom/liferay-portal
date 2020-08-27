@@ -13,30 +13,24 @@ import {isEqualObjects} from 'app-builder-web/js/utils/utils.es';
 
 export function canDeployApp(app, config) {
 	const isValidSteps = config.steps.every((step) => {
+		const appWorkflowTransitions = step?.appWorkflowTransitions || [];
 		const assigneeRoles = step?.appWorkflowRoleAssignments || [{}];
 		const duplicatedFields =
 			step?.errors?.formViews?.duplicatedFields || [];
 
-		let validActionNames = true;
+		let isValidActionNames = true;
 
-		if (step?.appWorkflowTransitions) {
-			const primaryActionName = step?.appWorkflowTransitions[0].name;
-
-			validActionNames = primaryActionName.trim().length > 0;
-
-			if (step?.appWorkflowTransitions[1]) {
-				const secondaryActionName =
-					step?.appWorkflowTransitions[1].name;
-
-				validActionNames =
-					validActionNames && secondaryActionName.trim().length > 0;
-			}
-		}
+		appWorkflowTransitions.forEach((appWorkflowTransition) => {
+			isValidActionNames =
+				isValidActionNames &&
+				appWorkflowTransition.name &&
+				appWorkflowTransition.name.trim().length > 0;
+		});
 
 		return (
 			assigneeRoles.length > 0 &&
 			duplicatedFields.length === 0 &&
-			validActionNames &&
+			isValidActionNames &&
 			step.name.trim().length > 0
 		);
 	});
